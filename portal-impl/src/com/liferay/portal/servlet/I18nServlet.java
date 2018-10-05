@@ -94,6 +94,8 @@ public class I18nServlet extends HttpServlet {
 		throws IOException, ServletException {
 
 		try {
+			String i18nLanguageId = request.getServletPath();
+
 			I18nData i18nData = getI18nData(request);
 
 			if ((i18nData == null) ||
@@ -102,29 +104,15 @@ public class I18nServlet extends HttpServlet {
 				PortalUtil.sendError(
 					HttpServletResponse.SC_NOT_FOUND,
 					new NoSuchLayoutException(), request, response);
+
+				return;
+			}
+
+			if (i18nLanguageId.contains(StringPool.UNDERLINE)) {
+				_sendRedirect(request, response, i18nData);
 			}
 			else {
-				request.setAttribute(
-					WebKeys.I18N_LANGUAGE_CODE, i18nData.getLanguageCode());
-				request.setAttribute(
-					WebKeys.I18N_LANGUAGE_ID, i18nData.getLanguageId());
-				request.setAttribute(WebKeys.I18N_PATH, i18nData.getI18nPath());
-
-				Locale locale = LocaleUtil.fromLanguageId(
-					i18nData.getLanguageId(), false, false);
-
-				HttpSession session = request.getSession();
-
-				session.setAttribute(Globals.LOCALE_KEY, locale);
-
-				LanguageUtil.updateCookie(request, response, locale);
-
-				ServletContext servletContext = getServletContext();
-
-				RequestDispatcher requestDispatcher =
-					servletContext.getRequestDispatcher(i18nData.getPath());
-
-				requestDispatcher.forward(request, response);
+				_processI18nData(request, response, i18nData);
 			}
 		}
 		catch (Exception e) {
@@ -308,6 +296,56 @@ public class I18nServlet extends HttpServlet {
 		private final String _languageId;
 		private final String _path;
 
+	}
+
+	private void _processI18nData(
+			HttpServletRequest request, HttpServletResponse response,
+			I18nData i18nData)
+		throws Exception {
+
+		_setRequestAttributes(request, response, i18nData);
+
+		ServletContext servletContext = getServletContext();
+
+		RequestDispatcher requestDispatcher =
+			servletContext.getRequestDispatcher(i18nData.getPath());
+
+		requestDispatcher.forward(request, response);
+	}
+
+	private void _sendRedirect(
+		HttpServletRequest request, HttpServletResponse response,
+		I18nData i18nData) {
+
+		_setRequestAttributes(request, response, i18nData);
+
+		Locale locale = LocaleUtil.fromLanguageId(i18nData.getLanguageId());
+
+		response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+
+		response.setHeader(
+			"Location",
+			StringPool.SLASH + locale.toLanguageTag() + i18nData.getPath());
+	}
+
+	private void _setRequestAttributes(
+		HttpServletRequest request, HttpServletResponse response,
+		I18nData i18nData) {
+
+		request.setAttribute(
+			WebKeys.I18N_LANGUAGE_CODE, i18nData.getLanguageCode());
+		request.setAttribute(
+			WebKeys.I18N_LANGUAGE_ID, i18nData.getLanguageId());
+		request.setAttribute(WebKeys.I18N_PATH, i18nData.getI18nPath());
+
+		Locale locale = LocaleUtil.fromLanguageId(
+			i18nData.getLanguageId(), false, false);
+
+		HttpSession session = request.getSession();
+
+		session.setAttribute(Globals.LOCALE_KEY, locale);
+
+		LanguageUtil.updateCookie(request, response, locale);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(I18nServlet.class);

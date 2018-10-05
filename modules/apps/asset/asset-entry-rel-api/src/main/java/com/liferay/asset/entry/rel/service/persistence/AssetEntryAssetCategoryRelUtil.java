@@ -460,6 +460,70 @@ public class AssetEntryAssetCategoryRelUtil {
 	}
 
 	/**
+	* Returns the asset entry asset category rel where assetEntryId = &#63; and assetCategoryId = &#63; or throws a {@link NoSuchEntryAssetCategoryRelException} if it could not be found.
+	*
+	* @param assetEntryId the asset entry ID
+	* @param assetCategoryId the asset category ID
+	* @return the matching asset entry asset category rel
+	* @throws NoSuchEntryAssetCategoryRelException if a matching asset entry asset category rel could not be found
+	*/
+	public static AssetEntryAssetCategoryRel findByA_A(long assetEntryId,
+		long assetCategoryId)
+		throws com.liferay.asset.entry.rel.exception.NoSuchEntryAssetCategoryRelException {
+		return getPersistence().findByA_A(assetEntryId, assetCategoryId);
+	}
+
+	/**
+	* Returns the asset entry asset category rel where assetEntryId = &#63; and assetCategoryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param assetEntryId the asset entry ID
+	* @param assetCategoryId the asset category ID
+	* @return the matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
+	*/
+	public static AssetEntryAssetCategoryRel fetchByA_A(long assetEntryId,
+		long assetCategoryId) {
+		return getPersistence().fetchByA_A(assetEntryId, assetCategoryId);
+	}
+
+	/**
+	* Returns the asset entry asset category rel where assetEntryId = &#63; and assetCategoryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param assetEntryId the asset entry ID
+	* @param assetCategoryId the asset category ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
+	*/
+	public static AssetEntryAssetCategoryRel fetchByA_A(long assetEntryId,
+		long assetCategoryId, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByA_A(assetEntryId, assetCategoryId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the asset entry asset category rel where assetEntryId = &#63; and assetCategoryId = &#63; from the database.
+	*
+	* @param assetEntryId the asset entry ID
+	* @param assetCategoryId the asset category ID
+	* @return the asset entry asset category rel that was removed
+	*/
+	public static AssetEntryAssetCategoryRel removeByA_A(long assetEntryId,
+		long assetCategoryId)
+		throws com.liferay.asset.entry.rel.exception.NoSuchEntryAssetCategoryRelException {
+		return getPersistence().removeByA_A(assetEntryId, assetCategoryId);
+	}
+
+	/**
+	* Returns the number of asset entry asset category rels where assetEntryId = &#63; and assetCategoryId = &#63;.
+	*
+	* @param assetEntryId the asset entry ID
+	* @param assetCategoryId the asset category ID
+	* @return the number of matching asset entry asset category rels
+	*/
+	public static int countByA_A(long assetEntryId, long assetCategoryId) {
+		return getPersistence().countByA_A(assetEntryId, assetCategoryId);
+	}
+
+	/**
 	* Caches the asset entry asset category rel in the entity cache if it is enabled.
 	*
 	* @param assetEntryAssetCategoryRel the asset entry asset category rel

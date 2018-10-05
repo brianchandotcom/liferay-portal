@@ -1038,7 +1038,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 			throw se;
 		}
 
-		if (!processForward(request, response, mapping)) {
+		if (!_processForward(request, response, mapping)) {
 			return;
 		}
 
@@ -1159,6 +1159,29 @@ public class PortalRequestProcessor extends RequestProcessor {
 		catch (Exception e) {
 			throw new ServletException(e);
 		}
+	}
+
+	private boolean _processForward(
+			HttpServletRequest request, HttpServletResponse response,
+			ActionMapping actionMapping)
+		throws IOException, ServletException {
+
+		String forward = actionMapping.getForward();
+
+		if (forward == null) {
+			return true;
+		}
+
+		String actionIdPath = RequestUtils.actionIdURL(
+			forward, moduleConfig, servlet);
+
+		if (actionIdPath != null) {
+			forward = actionIdPath;
+		}
+
+		internalModuleRelativeForward(forward, request, response);
+
+		return false;
 	}
 
 	private void _processLocale(HttpServletRequest request) {

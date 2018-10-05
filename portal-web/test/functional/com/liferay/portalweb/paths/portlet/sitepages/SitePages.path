@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>LIST_GROUP_ITEM_ANGLE_ICON_SPECIFIC</td>
-	<td>//li[contains(@class,'list-group-item')][div/h4[normalize-space()='${key_pageName}']]//*[*[name()='svg'][contains(@class,'icon-angle-right')]]</td>
+	<td>//li[normalize-space()='${key_pageName}']//*[*[name()='svg'][contains(@class,'icon-angle-right')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>LIST_GROUP_ITEM_ELLIPSIS_ICON</td>
-	<td>//li[contains(@class,'list-group-item')][div/h4[normalize-space()='${key_pageName}']]//*[*[name()='svg'][contains(@class,'ellipsis-v')]]</td>
+	<td>//li[contains(.,'${key_pageName}')]//*[*[name()='svg'][contains(@class,'ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>

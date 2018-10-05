@@ -129,8 +129,4 @@
 
 		<action path="/asset/get_categories" type="com.liferay.portlet.asset.action.GetCategoriesAction" />
 	</action-mappings>
-
-	<!-- Custom Request Processor -->
-
-	<controller contentType="text/html; charset=UTF-8" processorClass="com.liferay.portal.struts.PortalRequestProcessor" />
 </struts-config>

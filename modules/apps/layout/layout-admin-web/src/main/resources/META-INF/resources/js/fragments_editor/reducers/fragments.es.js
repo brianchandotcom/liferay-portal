@@ -6,6 +6,7 @@ import {
 } from '../actions/actions.es';
 import {DRAG_POSITIONS} from './placeholders.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLink.es';
+import {setIn} from '../utils/utils.es';
 
 /**
  * @param {!object} state
@@ -261,7 +262,7 @@ function updateEditableValueReducer(state, actionType, payload) {
 				const editableValueId = payload.editableValueId;
 				const editableValues = state.fragmentEntryLinks[payload.fragmentEntryLinkId].editableValues;
 
-				const nextEditableValues = _setIn(
+				const nextEditableValues = setIn(
 					editableValues,
 					[
 						EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
@@ -292,7 +293,7 @@ function updateEditableValueReducer(state, actionType, payload) {
 					}
 				).then(
 					() => {
-						nextState = _setIn(
+						nextState = setIn(
 							nextState,
 							[
 								'fragmentEntryLinks',
@@ -462,35 +463,6 @@ function _removeFragmentEntryLink(
 			method: 'POST'
 		}
 	);
-}
-
-/**
- * Recursively inserts a value inside an object creating
- * a copy of the original target.
- * @param {!object} Original object that will be copied
- * @param {!string[]} Array of strings used for reaching the deep property
- * @param {*} value Value to be inserted
- * @return {!object} Copy of the original object with the new value
- * @review
- */
-
-function _setIn(object, keyPath, value) {
-	const nextKey = keyPath[0];
-	const target = Object.assign({}, object);
-
-	let nextValue = value;
-
-	if (keyPath.length > 1) {
-		nextValue = _setIn(
-			object[nextKey] || {},
-			keyPath.slice(1),
-			value
-		);
-	}
-
-	target[nextKey] = nextValue;
-
-	return target;
 }
 
 /**

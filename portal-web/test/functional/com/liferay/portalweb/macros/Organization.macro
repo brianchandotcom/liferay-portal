@@ -130,7 +130,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#gotoAdd" />
-		
+
 		<var name="menuItem" value="Assign Users" />
 
 		<if>

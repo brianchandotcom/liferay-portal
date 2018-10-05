@@ -63,6 +63,15 @@ AUI.add(
 						value: STR_BLANK
 					},
 
+					propertyList: {
+						value: {
+							strings: {
+								propertyName: Liferay.Language.get('property-name'),
+								value: Liferay.Language.get('value')
+							}
+						}
+					},
+
 					strings: {
 						value: {
 							addNode: Liferay.Language.get('add-node'),
@@ -70,10 +79,8 @@ AUI.add(
 							close: Liferay.Language.get('close'),
 							deleteConnectorsMessage: Liferay.Language.get('are-you-sure-you-want-to-delete-the-selected-connectors'),
 							deleteNodesMessage: Liferay.Language.get('are-you-sure-you-want-to-delete-the-selected-nodes'),
-							propertyName: Liferay.Language.get('property-name'),
 							save: Liferay.Language.get('save'),
-							settings: Liferay.Language.get('settings'),
-							value: Liferay.Language.get('value'),
+							settings: Liferay.Language.get('settings')
 						}
 					},
 				},

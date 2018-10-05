@@ -147,78 +147,12 @@ public class SegmentsEntryRelServiceHttp {
 		}
 	}
 
-	public static int getSegmentsEntryRelsCount(HttpPrincipal httpPrincipal,
-		long segmentsEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SegmentsEntryRelServiceUtil.class,
-					"getSegmentsEntryRelsCount",
-					_getSegmentsEntryRelsCountParameterTypes3);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					segmentsEntryId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return ((Integer)returnObj).intValue();
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static int getSegmentsEntryRelsCount(HttpPrincipal httpPrincipal,
-		long groupId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(SegmentsEntryRelServiceUtil.class,
-					"getSegmentsEntryRelsCount",
-					_getSegmentsEntryRelsCountParameterTypes4);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					classNameId, classPK);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return ((Integer)returnObj).intValue();
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	public static java.util.List<com.liferay.segments.model.SegmentsEntryRel> getSegmentsEntryRels(
 		HttpPrincipal httpPrincipal, long segmentsEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SegmentsEntryRelServiceUtil.class,
-					"getSegmentsEntryRels", _getSegmentsEntryRelsParameterTypes5);
+					"getSegmentsEntryRels", _getSegmentsEntryRelsParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					segmentsEntryId);
@@ -251,7 +185,7 @@ public class SegmentsEntryRelServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SegmentsEntryRelServiceUtil.class,
-					"getSegmentsEntryRels", _getSegmentsEntryRelsParameterTypes6);
+					"getSegmentsEntryRels", _getSegmentsEntryRelsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					classNameId, classPK);
@@ -270,6 +204,72 @@ public class SegmentsEntryRelServiceHttp {
 			}
 
 			return (java.util.List<com.liferay.segments.model.SegmentsEntryRel>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getSegmentsEntryRelsCount(HttpPrincipal httpPrincipal,
+		long segmentsEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(SegmentsEntryRelServiceUtil.class,
+					"getSegmentsEntryRelsCount",
+					_getSegmentsEntryRelsCountParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					segmentsEntryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getSegmentsEntryRelsCount(HttpPrincipal httpPrincipal,
+		long groupId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(SegmentsEntryRelServiceUtil.class,
+					"getSegmentsEntryRelsCount",
+					_getSegmentsEntryRelsCountParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					classNameId, classPK);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -316,16 +316,16 @@ public class SegmentsEntryRelServiceHttp {
 	private static final Class<?>[] _deleteSegmentsEntryRelParameterTypes2 = new Class[] {
 			long.class, long.class, long.class
 		};
-	private static final Class<?>[] _getSegmentsEntryRelsCountParameterTypes3 = new Class[] {
+	private static final Class<?>[] _getSegmentsEntryRelsParameterTypes3 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getSegmentsEntryRelsCountParameterTypes4 = new Class[] {
+	private static final Class<?>[] _getSegmentsEntryRelsParameterTypes4 = new Class[] {
 			long.class, long.class, long.class
 		};
-	private static final Class<?>[] _getSegmentsEntryRelsParameterTypes5 = new Class[] {
+	private static final Class<?>[] _getSegmentsEntryRelsCountParameterTypes5 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getSegmentsEntryRelsParameterTypes6 = new Class[] {
+	private static final Class<?>[] _getSegmentsEntryRelsCountParameterTypes6 = new Class[] {
 			long.class, long.class, long.class
 		};
 	private static final Class<?>[] _hasSegmentsEntryRelParameterTypes7 = new Class[] {

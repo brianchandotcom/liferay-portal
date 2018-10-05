@@ -15,6 +15,18 @@
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Test Site Name" />
 		</execute>
+
+		<execute macro="FragmentsAdmin#openFragmentsAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute macro="FragmentsAdmin#importCollectionFromDependenciesFolder">
+			<var name="collectionZipFile" value="fragment-collection.zip" />
+		</execute>
+
+		<execute macro="PageTemplatesAdmin#openPageTemplatesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
 	</set-up>
 
 	<tear-down>

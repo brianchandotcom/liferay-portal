@@ -55,7 +55,7 @@ public class UploadServletRequestWhenGettingFileAsStreamTest {
 	}
 
 	@Test
-	public void shouldReturnAStream() throws Exception {
+	public void testShouldReturnAStream() throws Exception {
 		Map<String, FileItem[]> fileParameters =
 			PortletContainerTestUtil.getFileParameters(1, _BYTES);
 
@@ -87,7 +87,7 @@ public class UploadServletRequestWhenGettingFileAsStreamTest {
 	}
 
 	@Test
-	public void shouldReturnNullIfFileParametersAreEmpty()
+	public void testShouldReturnNullIfFileParametersAreEmpty()
 		throws Exception {
 
 		LiferayServletRequest liferayServletRequest =
@@ -107,7 +107,7 @@ public class UploadServletRequestWhenGettingFileAsStreamTest {
 	}
 
 	@Test
-	public void shouldReturnNullIfNameIsNotAFileParameter()
+	public void testShouldReturnNullIfNameIsNotAFileParameter()
 		throws Exception {
 
 		Map<String, FileItem[]> fileParameters =

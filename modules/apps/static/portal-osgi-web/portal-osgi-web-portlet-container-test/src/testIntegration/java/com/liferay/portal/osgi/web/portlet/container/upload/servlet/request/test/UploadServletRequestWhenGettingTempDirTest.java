@@ -42,7 +42,7 @@ public class UploadServletRequestWhenGettingTempDirTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void shouldNotReturnPreferencesValueWhenModified()
+	public void testShouldNotReturnPreferencesValueWhenModified()
 		throws IOException {
 
 		File tempDir = UploadServletRequestImpl.getTempDir();
@@ -66,7 +66,7 @@ public class UploadServletRequestWhenGettingTempDirTest {
 	}
 
 	@Test
-	public void shouldReturnPreferencesValue() {
+	public void testShouldReturnPreferencesValue() {
 		File tempDir = UploadServletRequestImpl.getTempDir();
 
 		File expectedTempDir = new File(

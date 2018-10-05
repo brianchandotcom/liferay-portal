@@ -53,7 +53,7 @@ public class UploadServletRequestWhenCleaningUpTest {
 	}
 
 	@Test
-	public void shouldNotRemoveMultipartParameters() throws Exception {
+	public void testShouldNotRemoveMultipartParameters() throws Exception {
 		Map<String, FileItem[]> fileParameters =
 			PortletContainerTestUtil.getFileParameters(1, _BYTES);
 

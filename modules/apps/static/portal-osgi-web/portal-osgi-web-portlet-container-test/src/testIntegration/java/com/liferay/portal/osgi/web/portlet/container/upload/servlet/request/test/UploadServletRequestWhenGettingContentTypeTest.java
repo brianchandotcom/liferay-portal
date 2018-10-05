@@ -53,7 +53,7 @@ public class UploadServletRequestWhenGettingContentTypeTest {
 	}
 
 	@Test
-	public void shouldReturnFirstFileItemContentType() throws Exception {
+	public void testShouldReturnFirstFileItemContentType() throws Exception {
 		Map<String, FileItem[]> fileParameters =
 			PortletContainerTestUtil.getFileParameters(1, _BYTES);
 
@@ -85,7 +85,7 @@ public class UploadServletRequestWhenGettingContentTypeTest {
 	}
 
 	@Test
-	public void shouldReturnNullIfFileParametersAreEmpty()
+	public void testShouldReturnNullIfFileParametersAreEmpty()
 		throws Exception {
 
 		LiferayServletRequest liferayServletRequest =

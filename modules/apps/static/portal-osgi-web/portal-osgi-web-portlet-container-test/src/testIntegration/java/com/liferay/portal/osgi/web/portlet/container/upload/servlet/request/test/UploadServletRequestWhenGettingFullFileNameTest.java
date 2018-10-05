@@ -53,7 +53,7 @@ public class UploadServletRequestWhenGettingFullFileNameTest {
 	}
 
 	@Test
-	public void shouldReturnFirstFileNameFromFileParameters()
+	public void testShouldReturnFirstFileNameFromFileParameters()
 		throws Exception {
 
 		Map<String, FileItem[]> fileParameters =
@@ -87,7 +87,7 @@ public class UploadServletRequestWhenGettingFullFileNameTest {
 	}
 
 	@Test
-	public void shouldReturnNullIfFileParametersAreEmpty()
+	public void testShouldReturnNullIfFileParametersAreEmpty()
 		throws Exception {
 
 		LiferayServletRequest liferayServletRequest =
@@ -105,7 +105,7 @@ public class UploadServletRequestWhenGettingFullFileNameTest {
 	}
 
 	@Test
-	public void shouldReturnNullIfNameIsNotAFileParameter()
+	public void testShouldReturnNullIfNameIsNotAFileParameter()
 		throws Exception {
 
 		Map<String, FileItem[]> fileParameters =

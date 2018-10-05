@@ -54,7 +54,7 @@ public class UploadServletRequestWhenCreatingFromParametrizedConstructorTest {
 	}
 
 	@Test
-	public void shouldNotPopulateParametersWithEmptyParameters()
+	public void testShouldNotPopulateParametersWithEmptyParameters()
 		throws Exception {
 
 		Map<String, FileItem[]> fileParameters = Collections.emptyMap();
@@ -84,7 +84,7 @@ public class UploadServletRequestWhenCreatingFromParametrizedConstructorTest {
 	}
 
 	@Test
-	public void shouldPopulateMultipartParametersWithFileParameters()
+	public void testShouldPopulateMultipartParametersWithFileParameters()
 		throws Exception {
 
 		Map<String, FileItem[]> fileParameters =
@@ -115,7 +115,7 @@ public class UploadServletRequestWhenCreatingFromParametrizedConstructorTest {
 	}
 
 	@Test
-	public void shouldPopulateRegularParametersWithRegularParameters()
+	public void testShouldPopulateRegularParametersWithRegularParameters()
 		throws Exception {
 
 		Map<String, List<String>> regularParameters =

@@ -56,7 +56,7 @@ public class UploadServletRequestWhenGettingParameterNamesTest {
 	}
 
 	@Test
-	public void shouldMergeRegularFileAndRequestParameters()
+	public void testShouldMergeRegularFileAndRequestParameters()
 		throws Exception {
 
 		Map<String, FileItem[]> fileParameters =

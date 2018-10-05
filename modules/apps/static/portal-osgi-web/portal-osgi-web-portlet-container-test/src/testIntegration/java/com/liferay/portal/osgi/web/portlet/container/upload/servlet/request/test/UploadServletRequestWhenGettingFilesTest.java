@@ -56,7 +56,7 @@ public class UploadServletRequestWhenGettingFilesTest {
 	}
 
 	@Test
-	public void shouldReturnArrayWithStoreLocationsFromFileParameters()
+	public void testShouldReturnArrayWithStoreLocationsFromFileParameters()
 		throws Exception {
 
 		Map<String, FileItem[]> fileParameters =
@@ -99,7 +99,7 @@ public class UploadServletRequestWhenGettingFilesTest {
 	}
 
 	@Test
-	public void shouldReturnNullIfFileParametersAreEmpty()
+	public void testShouldReturnNullIfFileParametersAreEmpty()
 		throws Exception {
 
 		LiferayServletRequest liferayServletRequest =
@@ -116,7 +116,7 @@ public class UploadServletRequestWhenGettingFilesTest {
 	}
 
 	@Test
-	public void shouldReturnNullIfNameIsNotAFileParameter()
+	public void testShouldReturnNullIfNameIsNotAFileParameter()
 		throws Exception {
 
 		Map<String, FileItem[]> fileParameters =

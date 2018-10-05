@@ -54,7 +54,7 @@ public class UploadServletRequestWhenCreatingFromMainConstructorTest {
 	}
 
 	@Test
-	public void shouldAddProgressTrackerToSession() throws Exception {
+	public void testShouldAddProgressTrackerToSession() throws Exception {
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
@@ -71,7 +71,7 @@ public class UploadServletRequestWhenCreatingFromMainConstructorTest {
 	}
 
 	@Test
-	public void shouldNotPopulateParameters() throws Exception {
+	public void testShouldNotPopulateParameters() throws Exception {
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);

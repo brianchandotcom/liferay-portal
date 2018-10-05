@@ -49,6 +49,12 @@ public interface BuildData {
 
 	public String getRunID();
 
+	public Integer getTopLevelBuildNumber();
+
+	public String getTopLevelJobName();
+
+	public String getUserContentRelativePath();
+
 	public File getWorkspaceDir();
 
 }

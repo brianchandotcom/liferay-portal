@@ -46,6 +46,20 @@ public abstract class BatchBuildData extends BaseBuildData {
 		return _topLevelBuildData;
 	}
 
+	@Override
+	public Integer getTopLevelBuildNumber() {
+		TopLevelBuildData topLevelBuildData = getTopLevelBuildData();
+
+		return topLevelBuildData.getBuildNumber();
+	}
+
+	@Override
+	public String getTopLevelJobName() {
+		TopLevelBuildData topLevelBuildData = getTopLevelBuildData();
+
+		return topLevelBuildData.getJobName();
+	}
+
 	public String getTopLevelRunID() {
 		return optString("top_level_run_id", null);
 	}

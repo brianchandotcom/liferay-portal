@@ -102,6 +102,13 @@ public abstract class BaseBuildData implements BuildData {
 	}
 
 	@Override
+	public String getUserContentRelativePath() {
+		return JenkinsResultsParserUtil.combine(
+			"jobs/", getTopLevelJobName(), "/builds/",
+			String.valueOf(getTopLevelBuildNumber()), "/");
+	}
+
+	@Override
 	public File getWorkspaceDir() {
 		return new File(getString("workspace_dir"));
 	}

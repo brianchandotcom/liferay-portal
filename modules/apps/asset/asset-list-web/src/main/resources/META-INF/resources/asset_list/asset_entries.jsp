@@ -115,12 +115,15 @@
 				/>
 
 				<liferay-ui:search-container-column-jsp
-					path="/asset_list/asset_selection_action.jsp"
+					path="/asset_list/asset_selection_order_up_action.jsp"
 				/>
 
 				<liferay-ui:search-container-column-jsp
-					cssClass="entry-action-column"
-					path="/asset_list/asset_selection_order_action.jsp"
+					path="/asset_list/asset_selection_order_down_action.jsp"
+				/>
+
+				<liferay-ui:search-container-column-jsp
+					path="/asset_list/asset_selection_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
 

@@ -28,66 +28,18 @@ int position = assetListEntryAssetEntryRel.getPosition();
 boolean last = (position == (searchContainer.getTotal() - 1));
 %>
 
-<c:choose>
-	<c:when test="<%= (position == 0) && last %>">
-	</c:when>
-	<c:when test="<%= (position > 0) && !last %>">
-		<portlet:actionURL name="/asset_list/move_asset_entry_selection" var="moveAssetEntrySelectionUpURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntryAssetEntryRel.getAssetListEntryId()) %>" />
-			<portlet:param name="position" value="<%= String.valueOf(position) %>" />
-			<portlet:param name="newPosition" value="<%= String.valueOf(position - 1) %>" />
-		</portlet:actionURL>
+<c:if test="<%= (position > 0) && !last %>">
+	<portlet:actionURL name="/asset_list/move_asset_entry_selection" var="moveAssetEntrySelectionUpURL">
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntryAssetEntryRel.getAssetListEntryId()) %>" />
+		<portlet:param name="position" value="<%= String.valueOf(position) %>" />
+		<portlet:param name="newPosition" value="<%= String.valueOf(position - 1) %>" />
+	</portlet:actionURL>
 
-		<liferay-ui:icon
-			icon="angle-up"
-			markupView="lexicon"
-			message="up"
-			url="<%= moveAssetEntrySelectionUpURL %>"
-		/>
-
-		<portlet:actionURL name="/asset_list/move_asset_entry_selection" var="moveAssetEntrySelectionDownURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntryAssetEntryRel.getAssetListEntryId()) %>" />
-			<portlet:param name="position" value="<%= String.valueOf(position) %>" />
-			<portlet:param name="newPosition" value="<%= String.valueOf(position + 1) %>" />
-		</portlet:actionURL>
-
-		<liferay-ui:icon
-			icon="angle-down"
-			markupView="lexicon"
-			message="down"
-			url="<%= moveAssetEntrySelectionDownURL %>"
-		/>
-	</c:when>
-	<c:when test="<%= position == 0 %>">
-		<portlet:actionURL name="/asset_list/move_asset_entry_selection" var="moveAssetEntrySelectionDownURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntryAssetEntryRel.getAssetListEntryId()) %>" />
-			<portlet:param name="position" value="<%= String.valueOf(position) %>" />
-			<portlet:param name="newPosition" value="<%= String.valueOf(position + 1) %>" />
-		</portlet:actionURL>
-
-		<liferay-ui:icon
-			icon="angle-down"
-			markupView="lexicon"
-			message="down"
-			url="<%= moveAssetEntrySelectionDownURL %>"
-		/>
-	</c:when>
-	<c:when test="<%= last %>">
-		<portlet:actionURL name="/asset_list/move_asset_entry_selection" var="moveAssetEntrySelectionUpURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntryAssetEntryRel.getAssetListEntryId()) %>" />
-			<portlet:param name="position" value="<%= String.valueOf(position) %>" />
-			<portlet:param name="newPosition" value="<%= String.valueOf(position - 1) %>" />
-		</portlet:actionURL>
-
-		<liferay-ui:icon
-			icon="angle-up"
-			markupView="lexicon"
-			message="up"
-			url="<%= moveAssetEntrySelectionUpURL %>"
-		/>
-	</c:when>
-</c:choose>
+	<liferay-ui:icon
+		icon="angle-up"
+		markupView="lexicon"
+		message="up"
+		url="<%= moveAssetEntrySelectionUpURL %>"
+	/>
+</c:if>

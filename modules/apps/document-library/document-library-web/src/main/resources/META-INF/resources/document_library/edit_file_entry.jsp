@@ -436,6 +436,8 @@ if (portletTitleBasedNavigation) {
 
 							<aui:input checked="<%= dlVersionNumberIncrease == DLVersionNumberIncrease.MINOR %>" label="minor-version" name="versionIncrease" type="radio" value="<%= DLVersionNumberIncrease.MINOR %>" />
 
+							<aui:input checked="<%= dlVersionNumberIncrease == DLVersionNumberIncrease.NONE %>" label="keep-current-version-number" name="versionIncrease" type="radio" value="<%= DLVersionNumberIncrease.NONE %>" />
+
 							<aui:model-context />
 
 							<aui:input label="version-notes" maxLength="75" name="changeLog" />

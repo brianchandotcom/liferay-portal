@@ -72,6 +72,7 @@ import java.io.IOException;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
@@ -118,6 +119,12 @@ import org.apache.struts.util.RequestUtils;
  * @author Neil Griffin
  */
 public class PortalRequestProcessor extends RequestProcessor {
+
+	public static final String INCLUDE_PATH_INFO =
+		"javax.servlet.include.path_info";
+
+	public static final String INCLUDE_SERVLET_PATH =
+		"javax.servlet.include.servlet_path";
 
 	public PortalRequestProcessor() {
 
@@ -985,6 +992,10 @@ public class PortalRequestProcessor extends RequestProcessor {
 
 		return true;
 	}
+
+	protected Map<String, Action> actions = new HashMap<>();
+	protected ModuleConfig moduleConfig;
+	protected ActionServlet servlet;
 
 	private void _process(
 			HttpServletRequest request, HttpServletResponse response)

@@ -15,10 +15,10 @@ import {ClayToast} from 'clay-alert';
 
 function openToast(
 	{
+		events = {},
 		message = '',
 		title = Liferay.Language.get('success'),
-		type = 'success',
-		events = {}
+		type = 'success'
 	} = {}
 ) {
 	var alertContainer = document.getElementById('alertContainer');

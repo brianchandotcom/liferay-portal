@@ -199,35 +199,6 @@ public class PortalRequestProcessor extends RequestProcessor {
 		}
 	}
 
-	protected void callParentDoForward(
-			String uri, HttpServletRequest request,
-			HttpServletResponse response)
-		throws IOException, ServletException {
-
-		super.doForward(uri, request, response);
-	}
-
-	protected HttpServletRequest callParentProcessMultipart(
-		HttpServletRequest request) {
-
-		return super.processMultipart(request);
-	}
-
-	protected String callParentProcessPath(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
-
-		return super.processPath(request, response);
-	}
-
-	protected boolean callParentProcessRoles(
-			HttpServletRequest request, HttpServletResponse response,
-			ActionMapping actionMapping)
-		throws IOException, ServletException {
-
-		return super.processRoles(request, response, actionMapping);
-	}
-
 	protected void cleanUp(HttpServletRequest request) throws Exception {
 
 		// Clean up portlet objects that may have been created by defineObjects

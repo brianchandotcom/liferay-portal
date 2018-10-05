@@ -1050,7 +1050,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 			return;
 		}
 
-		ActionForward actionForward = processActionPerform(
+		ActionForward actionForward = _processActionPerform(
 			request, response, action, actionForm, mapping);
 
 		processForwardConfig(request, response, actionForward);
@@ -1076,6 +1076,20 @@ public class PortalRequestProcessor extends RequestProcessor {
 		}
 
 		return actionForm;
+	}
+
+	private ActionForward _processActionPerform(
+			HttpServletRequest request, HttpServletResponse response,
+			Action action, ActionForm actionForm, ActionMapping actionMapping)
+		throws IOException, ServletException {
+
+		try {
+			return action.execute(actionMapping, actionForm, request, response);
+		}
+		catch (Exception e) {
+			return processException(
+				request, response, e, actionForm, actionMapping);
+		}
 	}
 
 	private void _processCachedMessages(HttpServletRequest request) {

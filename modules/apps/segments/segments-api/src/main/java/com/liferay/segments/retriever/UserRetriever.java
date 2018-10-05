@@ -16,6 +16,7 @@ package com.liferay.segments.retriever;
 
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 
 import java.util.Locale;
@@ -28,6 +29,6 @@ public interface UserRetriever {
 	public PageItems<User> getUsers(
 			long companyId, String criteria, Locale locale,
 			Pagination pagination)
-		throws UserRetrievingException;
+		throws PortalException;
 
 }

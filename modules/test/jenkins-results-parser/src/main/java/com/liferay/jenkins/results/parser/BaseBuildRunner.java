@@ -26,30 +26,9 @@ public abstract class BaseBuildRunner<T extends BuildData>
 
 	@Override
 	public void run() {
+		updateBuildDescription();
+
 		setUpWorkspace();
-	}
-
-	@Override
-	public void setBuildDescription(String buildDescription) {
-		buildDescription = buildDescription.replaceAll("\"", "\\\\\"");
-		buildDescription = buildDescription.replaceAll("\'", "\\\\\'");
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("def job = Jenkins.instance.getItemByFullName(\"");
-		sb.append(_buildData.getJobName());
-		sb.append("\"); ");
-
-		sb.append("def build = job.getBuildByNumber(");
-		sb.append(_buildData.getBuildNumber());
-		sb.append("); ");
-
-		sb.append("build.description = \"");
-		sb.append(buildDescription);
-		sb.append("\";");
-
-		JenkinsResultsParserUtil.executeJenkinsScript(
-			_buildData.getMasterHostname(), "script=" + sb.toString());
 	}
 
 	@Override
@@ -89,6 +68,30 @@ public abstract class BaseBuildRunner<T extends BuildData>
 		}
 
 		workspace.tearDown();
+	}
+
+	protected void updateBuildDescription() {
+		String buildDescription = _buildData.getBuildDescription();
+
+		buildDescription = buildDescription.replaceAll("\"", "\\\\\"");
+		buildDescription = buildDescription.replaceAll("\'", "\\\\\'");
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("def job = Jenkins.instance.getItemByFullName(\"");
+		sb.append(_buildData.getJobName());
+		sb.append("\"); ");
+
+		sb.append("def build = job.getBuildByNumber(");
+		sb.append(_buildData.getBuildNumber());
+		sb.append("); ");
+
+		sb.append("build.description = \"");
+		sb.append(buildDescription);
+		sb.append("\";");
+
+		JenkinsResultsParserUtil.executeJenkinsScript(
+			_buildData.getMasterHostname(), "script=" + sb.toString());
 	}
 
 	protected Workspace workspace;

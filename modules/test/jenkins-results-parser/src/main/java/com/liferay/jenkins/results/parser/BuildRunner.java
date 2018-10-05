@@ -23,8 +23,6 @@ public interface BuildRunner<T extends BuildData> {
 
 	public void run();
 
-	public void setBuildDescription(String buildDescription);
-
 	public void setUp();
 
 	public void tearDown();

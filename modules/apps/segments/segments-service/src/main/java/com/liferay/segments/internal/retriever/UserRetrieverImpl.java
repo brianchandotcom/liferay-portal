@@ -65,13 +65,13 @@ public class UserRetrieverImpl implements UserRetriever {
 
 	@Override
 	public PageItems<User> getUsers(
-			long companyId, String criteria, Locale locale,
-			Pagination pagination)
+		long companyId, String filter, Locale locale,
+		Pagination pagination)
 		throws PortalException {
 
 		try {
 			return _getUsersPageItems(
-				companyId, new Filter(_filterParser.parse(criteria)), locale,
+				companyId, new Filter(_filterParser.parse(filter)), locale,
 				pagination);
 		}
 		catch (Exception e) {

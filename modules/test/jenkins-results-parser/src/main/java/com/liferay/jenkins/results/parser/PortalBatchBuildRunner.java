@@ -61,7 +61,11 @@ public class PortalBatchBuildRunner
 			JenkinsResultsParserUtil.copy(source, target);
 		}
 		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to copy test results file from ", source.getPath(),
+					" to ", target.getPath()),
+				ioe);
 		}
 	}
 

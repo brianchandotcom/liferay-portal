@@ -1239,7 +1239,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 			include = actionIdPath;
 		}
 
-		internalModuleRelativeInclude(include, request, response);
+		doInclude(moduleConfig.getPrefix() + include, request, response);
 
 		return false;
 	}

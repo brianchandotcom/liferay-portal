@@ -152,7 +152,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 		ServletContext servletContext = getServletContext();
 
 		_definitions = (Map<String, Definition>)
-			servletContext.getAttribute(PortalTilesPlugin.DEFINITIONS);
+			servletContext.getAttribute(TilesUtil.DEFINITIONS);
 	}
 
 	@Override
@@ -463,7 +463,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 		Definition definition = _definitions.get(uri);
 
 		if (definition != null) {
-			request.setAttribute(PortalTilesPlugin.DEFINITION, definition);
+			request.setAttribute(TilesUtil.DEFINITION, definition);
 
 			uri = definition.getPath();
 		}

@@ -26,16 +26,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-
-import org.apache.struts.action.ActionServlet;
-import org.apache.struts.action.PlugIn;
-import org.apache.struts.config.ModuleConfig;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
-public class PortalTilesPlugin implements PlugIn {
+public class TilesUtil {
 
 	public static final String DEFINITION =
 		"org.apache.struts.tiles.definition";
@@ -43,15 +38,8 @@ public class PortalTilesPlugin implements PlugIn {
 	public static final String DEFINITIONS =
 		"org.apache.struts.tiles.definitions";
 
-	@Override
-	public void destroy() {
-	}
-
-	@Override
-	public void init(ActionServlet servlet, ModuleConfig moduleConfig)
-		throws ServletException {
-
-		ServletContext servletContext = servlet.getServletContext();
+	public static void loadDefinitions(ServletContext servletContext)
+		throws Exception {
 
 		Map<String, Definition> definitions = new HashMap<>();
 
@@ -95,12 +83,9 @@ public class PortalTilesPlugin implements PlugIn {
 
 			servletContext.setAttribute(DEFINITIONS, definitions);
 		}
-		catch (Exception e) {
-			throw new ServletException(e);
-		}
 	}
 
-	private void _addDefinition(
+	private static void _addDefinition(
 		Map<String, Definition> definitions, Element definitionElement,
 		Definition parentDefinition) {
 

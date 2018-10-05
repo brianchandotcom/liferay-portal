@@ -82,6 +82,7 @@ import com.liferay.portal.servlet.filters.absoluteredirects.AbsoluteRedirectsRes
 import com.liferay.portal.servlet.filters.i18n.I18nFilter;
 import com.liferay.portal.setup.SetupWizardSampleDataUtil;
 import com.liferay.portal.struts.StrutsUtil;
+import com.liferay.portal.struts.TilesUtil;
 import com.liferay.portal.util.ExtRegistry;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PortalInstances;
@@ -865,6 +866,18 @@ public class MainServlet extends ActionServlet {
 
 		serviceDependencyManager.registerDependencies(
 			filters.toArray(new Filter[0]));
+	}
+
+	@Override
+	protected void initModulePlugIns(ModuleConfig moduleConfig)
+		throws ServletException {
+
+		try {
+			TilesUtil.loadDefinitions(getServletContext());
+		}
+		catch (Exception e) {
+			throw new ServletException(e);
+		}
 	}
 
 	protected PluginPackage initPluginPackage() throws Exception {

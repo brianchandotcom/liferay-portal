@@ -23,7 +23,7 @@ if ((sb != null) && themeDisplay.isStateExclusive()) {
 	sb.writeTo(out);
 }
 else {
-	Definition definition = (Definition)request.getAttribute(PortalTilesPlugin.DEFINITION);
+	Definition definition = (Definition)request.getAttribute(TilesUtil.DEFINITION);
 
 	boolean tilesPopUp = false;
 

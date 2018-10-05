@@ -476,7 +476,7 @@ public class SharingEntryLocalServiceTest {
 
 	@Test
 	public void testDeleteExpiredEntries() throws Exception {
-		Group group2 = GroupTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		try (DisableSchedulerDestination disableSchedulerDestination =
 				new DisableSchedulerDestination()) {
@@ -495,7 +495,7 @@ public class SharingEntryLocalServiceTest {
 			SharingEntry sharingEntry =
 				_sharingEntryLocalService.addSharingEntry(
 					_fromUser.getUserId(), _toUser.getUserId(), classNameId,
-					group2.getGroupId(), group2.getGroupId(), true,
+					group.getGroupId(), group.getGroupId(), true,
 					Arrays.asList(SharingEntryAction.VIEW), null,
 					serviceContext);
 
@@ -514,7 +514,7 @@ public class SharingEntryLocalServiceTest {
 					_fromUser.getUserId()));
 		}
 		finally {
-			_groupLocalService.deleteGroup(group2);
+			_groupLocalService.deleteGroup(group);
 		}
 	}
 
@@ -562,6 +562,7 @@ public class SharingEntryLocalServiceTest {
 	public void testDeleteGroupSharingEntriesDoesNotDeleteOtherGroupSharingEntries()
 		throws Exception {
 
+		Group group1 = _group;
 		Group group2 = GroupTestUtil.addGroup();
 
 		try {
@@ -573,7 +574,7 @@ public class SharingEntryLocalServiceTest {
 
 			_sharingEntryLocalService.addSharingEntry(
 				_fromUser.getUserId(), _toUser.getUserId(), classNameId,
-				_group.getGroupId(), _group.getGroupId(), true,
+				group1.getGroupId(), group1.getGroupId(), true,
 				Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
 
 			_sharingEntryLocalService.addSharingEntry(
@@ -581,12 +582,13 @@ public class SharingEntryLocalServiceTest {
 				group2.getGroupId(), group2.getGroupId(), true,
 				Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
 
-			List<SharingEntry> groupSharingEntries =
+			List<SharingEntry> group1SharingEntries =
 				_sharingEntryLocalService.getGroupSharingEntries(
-					_group.getGroupId());
+					group1.getGroupId());
 
 			Assert.assertEquals(
-				groupSharingEntries.toString(), 1, groupSharingEntries.size());
+				group1SharingEntries.toString(), 1,
+				group1SharingEntries.size());
 
 			List<SharingEntry> group2SharingEntries =
 				_sharingEntryLocalService.getGroupSharingEntries(
@@ -597,14 +599,15 @@ public class SharingEntryLocalServiceTest {
 				group2SharingEntries.size());
 
 			_sharingEntryLocalService.deleteGroupSharingEntries(
-				_group.getGroupId());
+				group1.getGroupId());
 
-			groupSharingEntries =
+			group1SharingEntries =
 				_sharingEntryLocalService.getGroupSharingEntries(
-					_group.getGroupId());
+					group1.getGroupId());
 
 			Assert.assertEquals(
-				groupSharingEntries.toString(), 0, groupSharingEntries.size());
+				group1SharingEntries.toString(), 0,
+				group1SharingEntries.size());
 
 			group2SharingEntries =
 				_sharingEntryLocalService.getGroupSharingEntries(
@@ -648,10 +651,10 @@ public class SharingEntryLocalServiceTest {
 			_group.getGroupId(), true, Arrays.asList(SharingEntryAction.VIEW),
 			null, serviceContext);
 
-		Group group2 = GroupTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		try {
-			long classPK2 = group2.getGroupId();
+			long classPK2 = group.getGroupId();
 
 			_sharingEntryLocalService.addSharingEntry(
 				_fromUser.getUserId(), _toUser.getUserId(), classNameId,
@@ -696,7 +699,7 @@ public class SharingEntryLocalServiceTest {
 				sharingEntries.toString(), 0, sharingEntries.size());
 		}
 		finally {
-			_groupLocalService.deleteGroup(group2);
+			_groupLocalService.deleteGroup(group);
 		}
 	}
 
@@ -827,11 +830,11 @@ public class SharingEntryLocalServiceTest {
 			_group.getGroupId(), true, Arrays.asList(SharingEntryAction.VIEW),
 			null, serviceContext);
 
-		Group group2 = GroupTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		try {
 			_sharingEntryLocalService.addSharingEntry(
-				toUserId, fromUserId, classNameId, group2.getGroupId(),
+				toUserId, fromUserId, classNameId, group.getGroupId(),
 				_group.getGroupId(), true,
 				Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
 
@@ -866,7 +869,7 @@ public class SharingEntryLocalServiceTest {
 				fromUserSharingEntries.size());
 		}
 		finally {
-			_groupLocalService.deleteGroup(group2);
+			_groupLocalService.deleteGroup(group);
 		}
 	}
 
@@ -917,9 +920,9 @@ public class SharingEntryLocalServiceTest {
 	public void testGetUniqueToUserIdSharingEntriesByClassNameId()
 		throws Exception {
 
-		long classNameId = _classNameLocalService.getClassNameId(
+		long classNameId1 = _classNameLocalService.getClassNameId(
 			Group.class.getName());
-		long classPK = _group.getGroupId();
+		long classPK1 = _group.getGroupId();
 
 		long classNameId2 = _classNameLocalService.getClassNameId(
 			DLFileVersion.class.getName());
@@ -944,8 +947,8 @@ public class SharingEntryLocalServiceTest {
 				users.add(fromUser);
 
 				_sharingEntryLocalService.addSharingEntry(
-					fromUser.getUserId(), _toUser.getUserId(), classNameId,
-					classPK, _group.getGroupId(), true,
+					fromUser.getUserId(), _toUser.getUserId(), classNameId1,
+					classPK1, _group.getGroupId(), true,
 					Arrays.asList(SharingEntryAction.VIEW),
 					Date.from(Instant.now().plus(2, ChronoUnit.DAYS)),
 					serviceContext);
@@ -960,10 +963,10 @@ public class SharingEntryLocalServiceTest {
 
 			List<SharingEntry> sharingEntriesForClassNameId =
 				_sharingEntryLocalService.getUniqueToUserSharingEntries(
-					_toUser.getUserId(), classNameId, 0,
+					_toUser.getUserId(), classNameId1, 0,
 					_sharingEntryLocalService.
 						getUniqueToUserSharingEntriesCount(
-							_toUser.getUserId(), classNameId),
+							_toUser.getUserId(), classNameId1),
 					new SharingEntryModifiedDateComparator());
 
 			Assert.assertEquals(
@@ -1003,21 +1006,21 @@ public class SharingEntryLocalServiceTest {
 
 	@Test
 	public void testGetUniqueToUserIdSharingEntriesOrder() throws Exception {
-		Group group2 = GroupTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		try {
 			long classNameId = _classNameLocalService.getClassNameId(
 				Group.class.getName());
-			long classPK = _group.getGroupId();
-			long classPK2 = group2.getGroupId();
+			long classPK1 = _group.getGroupId();
+			long classPK2 = group.getGroupId();
 
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-			SharingEntry sharingEntry =
+			SharingEntry sharingEntry1 =
 				_sharingEntryLocalService.addSharingEntry(
 					_fromUser.getUserId(), _toUser.getUserId(), classNameId,
-					classPK, _group.getGroupId(), true,
+					classPK1, _group.getGroupId(), true,
 					Arrays.asList(SharingEntryAction.VIEW),
 					Date.from(Instant.now().plus(2, ChronoUnit.DAYS)),
 					serviceContext);
@@ -1038,7 +1041,7 @@ public class SharingEntryLocalServiceTest {
 							_toUser.getUserId(), classNameId),
 					new SharingEntryModifiedDateComparator(true));
 
-			Assert.assertEquals(sharingEntry, ascendingSharingEntries.get(0));
+			Assert.assertEquals(sharingEntry1, ascendingSharingEntries.get(0));
 			Assert.assertEquals(sharingEntry2, ascendingSharingEntries.get(1));
 
 			List<SharingEntry> descendingSharingEntries =
@@ -1050,10 +1053,10 @@ public class SharingEntryLocalServiceTest {
 					new SharingEntryModifiedDateComparator(false));
 
 			Assert.assertEquals(sharingEntry2, descendingSharingEntries.get(0));
-			Assert.assertEquals(sharingEntry, descendingSharingEntries.get(1));
+			Assert.assertEquals(sharingEntry1, descendingSharingEntries.get(1));
 		}
 		finally {
-			_groupLocalService.deleteGroup(group2);
+			_groupLocalService.deleteGroup(group);
 		}
 	}
 

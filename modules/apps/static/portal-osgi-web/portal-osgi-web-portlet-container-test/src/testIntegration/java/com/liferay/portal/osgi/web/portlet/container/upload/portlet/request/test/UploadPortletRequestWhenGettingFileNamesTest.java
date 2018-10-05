@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.web.portlet.container.upload.portlet.request.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -29,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -50,7 +52,7 @@ public class UploadPortletRequestWhenGettingFileNamesTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_setUp();
+		_portletNamespace = RandomTestUtil.randomString();
 	}
 
 	@Test
@@ -74,11 +76,10 @@ public class UploadPortletRequestWhenGettingFileNamesTest {
 			uploadPortletRequest.getMultipartParameterMap();
 
 		Assert.assertEquals(
-			multipartParameterMap.toString(), 10,
-			multipartParameterMap.size());
+			multipartParameterMap.toString(), 10, multipartParameterMap.size());
 
 		for (Map.Entry<String, FileItem[]> entry :
-			multipartParameterMap.entrySet()) {
+				multipartParameterMap.entrySet()) {
 
 			String key = entry.getKey();
 
@@ -87,23 +88,19 @@ public class UploadPortletRequestWhenGettingFileNamesTest {
 			FileItem[] fileItems = entry.getValue();
 
 			Assert.assertEquals(
-				Arrays.toString(fileNames), fileItems.length,
-				fileNames.length);
+				Arrays.toString(fileNames), fileItems.length, fileNames.length);
 
 			Assert.assertEquals(
 				Arrays.toString(fileNames), 2, fileNames.length);
 
 			for (int i = 0; i < fileNames.length; i++) {
-				Assert.assertEquals(
-					fileItems[i].getFileName(), fileNames[i]);
+				Assert.assertEquals(fileItems[i].getFileName(), fileNames[i]);
 			}
 		}
 	}
 
 	@Test
-	public void shouldReturnNullIfFileParametersAreEmpty()
-		throws Exception {
-
+	public void shouldReturnNullIfFileParametersAreEmpty() throws Exception {
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.getMultipartRequest(
 				_portletNamespace, _BYTES);
@@ -116,14 +113,11 @@ public class UploadPortletRequestWhenGettingFileNamesTest {
 					new HashMap<String, List<String>>()),
 				null, _portletNamespace);
 
-		Assert.assertNull(
-			uploadPortletRequest.getFileNames("irrelevantName"));
+		Assert.assertNull(uploadPortletRequest.getFileNames("irrelevantName"));
 	}
 
 	@Test
-	public void shouldReturnNullIfNameIsNotAFileParameter()
-		throws Exception {
-
+	public void shouldReturnNullIfNameIsNotAFileParameter() throws Exception {
 		Map<String, FileItem[]> fileParameters =
 			PortletContainerTestUtil.getFileParameters(
 				1, _portletNamespace, _BYTES);
@@ -139,8 +133,12 @@ public class UploadPortletRequestWhenGettingFileNamesTest {
 					fileParameters, new HashMap<String, List<String>>()),
 				null, _portletNamespace);
 
-		Assert.assertNull(
-			uploadPortletRequest.getFileNames("nonexistentFile"));
+		Assert.assertNull(uploadPortletRequest.getFileNames("nonexistentFile"));
 	}
+
+	private static final byte[] _BYTES =
+		"Enterprise. Open Source. For Life.".getBytes();
+
+	private static String _portletNamespace;
 
 }

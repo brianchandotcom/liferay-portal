@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -37,6 +38,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
+
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
@@ -52,7 +54,7 @@ public class UploadPortletRequestWhenGettingParameterValuesTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_setUp();
+		_portletNamespace = RandomTestUtil.randomString();
 	}
 
 	@Test
@@ -83,12 +85,12 @@ public class UploadPortletRequestWhenGettingParameterValuesTest {
 				null, _portletNamespace);
 
 		for (Map.Entry<String, List<String>> entry :
-			regularParameters.entrySet()) {
+				regularParameters.entrySet()) {
 
 			String key = entry.getKey();
 
-			String[] parameterValues =
-				uploadPortletRequest.getParameterValues(key);
+			String[] parameterValues = uploadPortletRequest.getParameterValues(
+				key);
 
 			List<String> parameterValuesList = ListUtil.fromArray(
 				parameterValues);
@@ -103,13 +105,11 @@ public class UploadPortletRequestWhenGettingParameterValuesTest {
 		Assert.assertTrue(
 			ArrayUtil.contains(requestParameterValues, parameter));
 
-		for (Map.Entry<String, FileItem[]> entry :
-			fileParameters.entrySet()) {
-
+		for (Map.Entry<String, FileItem[]> entry : fileParameters.entrySet()) {
 			String key = entry.getKey();
 
-			String[] parameterValues =
-				uploadPortletRequest.getParameterValues(key);
+			String[] parameterValues = uploadPortletRequest.getParameterValues(
+				key);
 
 			List<String> parameterValuesList = ListUtil.fromArray(
 				parameterValues);
@@ -119,5 +119,10 @@ public class UploadPortletRequestWhenGettingParameterValuesTest {
 				parameterValuesList.contains(key));
 		}
 	}
+
+	private static final byte[] _BYTES =
+		"Enterprise. Open Source. For Life.".getBytes();
+
+	private static String _portletNamespace;
 
 }

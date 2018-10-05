@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -89,9 +90,7 @@ public class UploadPortletRequestWhenIsFormFieldTest {
 	}
 
 	@Test
-	public void shouldReturnTrueIfFileParametersAreEmpty()
-		throws Exception {
-
+	public void shouldReturnTrueIfFileParametersAreEmpty() throws Exception {
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.getMultipartRequest(
 				_portletNamespace, _BYTES);
@@ -104,14 +103,11 @@ public class UploadPortletRequestWhenIsFormFieldTest {
 					new HashMap<String, List<String>>()),
 				null, _portletNamespace);
 
-		Assert.assertTrue(
-			uploadPortletRequest.isFormField("irrelevantName"));
+		Assert.assertTrue(uploadPortletRequest.isFormField("irrelevantName"));
 	}
 
 	@Test
-	public void shouldReturnTrueIfNameIsNotAFileParameter()
-		throws Exception {
-
+	public void shouldReturnTrueIfNameIsNotAFileParameter() throws Exception {
 		Map<String, FileItem[]> fileParameters =
 			PortletContainerTestUtil.getFileParameters(
 				1, _portletNamespace, _BYTES);
@@ -127,8 +123,12 @@ public class UploadPortletRequestWhenIsFormFieldTest {
 					fileParameters, new HashMap<String, List<String>>()),
 				null, _portletNamespace);
 
-		Assert.assertTrue(
-			uploadPortletRequest.isFormField("nonexistentFile"));
+		Assert.assertTrue(uploadPortletRequest.isFormField("nonexistentFile"));
 	}
+
+	private static final byte[] _BYTES =
+		"Enterprise. Open Source. For Life.".getBytes();
+
+	private static String _portletNamespace;
 
 }

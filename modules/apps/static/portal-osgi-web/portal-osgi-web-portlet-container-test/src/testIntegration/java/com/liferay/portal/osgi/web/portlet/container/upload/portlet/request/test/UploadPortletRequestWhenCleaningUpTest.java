@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.web.portlet.container.upload.portlet.request.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -28,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -49,7 +51,7 @@ public class UploadPortletRequestWhenCleaningUpTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_setUp();
+		_portletNamespace = RandomTestUtil.randomString();
 	}
 
 	@Test
@@ -76,8 +78,12 @@ public class UploadPortletRequestWhenCleaningUpTest {
 
 		Assert.assertNotNull(multipartParameterMap);
 		Assert.assertEquals(
-			multipartParameterMap.toString(), 1,
-			multipartParameterMap.size());
+			multipartParameterMap.toString(), 1, multipartParameterMap.size());
 	}
+
+	private static final byte[] _BYTES =
+		"Enterprise. Open Source. For Life.".getBytes();
+
+	private static String _portletNamespace;
 
 }

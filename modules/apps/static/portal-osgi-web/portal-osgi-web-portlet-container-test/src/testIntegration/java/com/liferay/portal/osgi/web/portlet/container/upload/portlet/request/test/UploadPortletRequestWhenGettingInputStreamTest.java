@@ -16,6 +16,7 @@ package com.liferay.portal.osgi.web.portlet.container.upload.portlet.request.tes
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.servlet.ServletInputStreamAdapter;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -30,6 +31,7 @@ import java.util.List;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -51,7 +53,7 @@ public class UploadPortletRequestWhenGettingInputStreamTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_setUp();
+		_portletNamespace = RandomTestUtil.randomString();
 	}
 
 	@Test
@@ -66,8 +68,7 @@ public class UploadPortletRequestWhenGettingInputStreamTest {
 					(HttpServletRequest)liferayServletRequest.getRequest()),
 				null, _portletNamespace);
 
-		ServletInputStream inputStream =
-			uploadPortletRequest.getInputStream();
+		ServletInputStream inputStream = uploadPortletRequest.getInputStream();
 
 		Assert.assertFalse(inputStream instanceof LiferayInputStream);
 
@@ -95,10 +96,14 @@ public class UploadPortletRequestWhenGettingInputStreamTest {
 					(HttpServletRequest)liferayServletRequest.getRequest()),
 				null, _portletNamespace);
 
-		ServletInputStream inputStream =
-			uploadPortletRequest.getInputStream();
+		ServletInputStream inputStream = uploadPortletRequest.getInputStream();
 
 		Assert.assertTrue(inputStream instanceof ServletInputStreamAdapter);
 	}
+
+	private static final byte[] _BYTES =
+		"Enterprise. Open Source. For Life.".getBytes();
+
+	private static String _portletNamespace;
 
 }

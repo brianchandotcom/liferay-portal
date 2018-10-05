@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.web.portlet.container.upload.portlet.request.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -24,11 +25,13 @@ import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.test.PortletContainerTestUtil;
 
 import java.io.InputStream;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -50,7 +53,7 @@ public class UploadPortletRequestWhenGettingFileAsStreamTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_setUp();
+		_portletNamespace = RandomTestUtil.randomString();
 	}
 
 	@Test
@@ -78,12 +81,11 @@ public class UploadPortletRequestWhenGettingFileAsStreamTest {
 			multipartParametersMap.size());
 
 		for (Map.Entry<String, FileItem[]> entry :
-			multipartParametersMap.entrySet()) {
+				multipartParametersMap.entrySet()) {
 
 			String key = entry.getKey();
 
-			InputStream inputStream = uploadPortletRequest.getFileAsStream(
-				key);
+			InputStream inputStream = uploadPortletRequest.getFileAsStream(key);
 
 			Assert.assertNotNull(inputStream);
 
@@ -94,9 +96,7 @@ public class UploadPortletRequestWhenGettingFileAsStreamTest {
 	}
 
 	@Test
-	public void shouldReturnNullIfFileParametersAreEmpty()
-		throws Exception {
-
+	public void shouldReturnNullIfFileParametersAreEmpty() throws Exception {
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.getMultipartRequest(
 				_portletNamespace, _BYTES);
@@ -116,9 +116,7 @@ public class UploadPortletRequestWhenGettingFileAsStreamTest {
 	}
 
 	@Test
-	public void shouldReturnNullIfNameIsNotAFileParameter()
-		throws Exception {
-
+	public void shouldReturnNullIfNameIsNotAFileParameter() throws Exception {
 		Map<String, FileItem[]> fileParameters =
 			PortletContainerTestUtil.getFileParameters(
 				1, _portletNamespace, _BYTES);
@@ -139,5 +137,10 @@ public class UploadPortletRequestWhenGettingFileAsStreamTest {
 		Assert.assertNull(
 			uploadPortletRequest.getFileAsStream("nonexistentFile", true));
 	}
+
+	private static final byte[] _BYTES =
+		"Enterprise. Open Source. For Life.".getBytes();
+
+	private static String _portletNamespace;
 
 }

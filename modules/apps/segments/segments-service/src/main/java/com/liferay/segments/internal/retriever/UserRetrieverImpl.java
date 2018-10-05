@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.segments.internal.architect.filter.ExpressionVisitorImpl;
+import com.liferay.segments.internal.architect.filter.UserEntityModel;
 import com.liferay.segments.retriever.UserRetriever;
 import com.liferay.structured.content.apio.architect.entity.EntityModel;
 import com.liferay.structured.content.apio.architect.filter.Filter;
@@ -65,8 +67,7 @@ public class UserRetrieverImpl implements UserRetriever {
 
 	@Override
 	public PageItems<User> getUsers(
-		long companyId, String filter, Locale locale,
-		Pagination pagination)
+			long companyId, String filter, Locale locale, Pagination pagination)
 		throws PortalException {
 
 		try {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.internal.retriever;
+package com.liferay.segments.internal.architect.filter;
 
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
 

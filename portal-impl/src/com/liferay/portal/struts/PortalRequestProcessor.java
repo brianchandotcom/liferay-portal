@@ -96,6 +96,7 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.InvalidCancelException;
 import org.apache.struts.action.RequestProcessor;
@@ -999,7 +1000,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 
 		_processNoCache(response);
 
-		processCachedMessages(request, response);
+		_processCachedMessages(request);
 
 		ActionMapping mapping = processMapping(request, response, path);
 
@@ -1053,6 +1054,28 @@ public class PortalRequestProcessor extends RequestProcessor {
 			request, response, action, actionForm, mapping);
 
 		processForwardConfig(request, response, actionForward);
+	}
+
+	private void _processCachedMessages(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+
+		if (session == null) {
+			return;
+		}
+
+		ActionMessages actionMessages = (ActionMessages)session.getAttribute(
+			Globals.MESSAGE_KEY);
+
+		if ((actionMessages != null) && actionMessages.isAccessed()) {
+			session.removeAttribute(Globals.MESSAGE_KEY);
+		}
+
+		actionMessages = (ActionMessages)session.getAttribute(
+			Globals.ERROR_KEY);
+
+		if ((actionMessages != null) && actionMessages.isAccessed()) {
+			session.removeAttribute(Globals.ERROR_KEY);
+		}
 	}
 
 	private void _processContent(HttpServletResponse response) {

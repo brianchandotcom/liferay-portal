@@ -2673,7 +2673,8 @@ public class PortalImpl implements Portal {
 	public String getI18nPathLanguageId(
 		Locale locale, String defaultI18nPathLanguageId) {
 
-		String i18nPathLanguageId = defaultI18nPathLanguageId;
+		String i18nPathLanguageId = StringUtil.replaceFirst(
+			defaultI18nPathLanguageId, CharPool.UNDERLINE, CharPool.DASH);
 
 		if (!LanguageUtil.isDuplicateLanguageCode(locale.getLanguage())) {
 			i18nPathLanguageId = locale.getLanguage();

@@ -125,9 +125,9 @@ ProductMenu.gotoPortlet(
 
 ...
 
-com.liferay.poshi.runner.util.JSONCurlUtil.delete('${curl}');
+com.liferay.poshi.runner.util.JSONCurlUtil.delete("${curl}");
 
-JSONCurlUtil.post('${curl}');
+JSONCurlUtil.post("${curl}");
 
 ```
 
@@ -169,15 +169,17 @@ var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 *Poshi Script:*
 ```javascript
-var breadcrumbNameUppercase = StringUtil.upperCase('${breadcrumbName}');
+var breadcrumbNameUppercase = StringUtil.upperCase("${breadcrumbName}");
 
 ...
 
-var breadcrumbNameUppercase = com.liferay.poshi.runner.util.StringUtil.upperCase('${breadcrumbName}');
+var breadcrumbNameUppercase = com.liferay.poshi.runner.util.StringUtil.upperCase("${breadcrumbName}");
 
 // Notice that while there are two ways to set a variable to a Java method in Poshi XML, there is only one way in Poshi Script.
 
-// Also, note that the full class name is not necessary for classes in the com.liferay.poshi.runner.util package, but it is still valid.
+// The full class name is not necessary for classes in the com.liferay.poshi.runner.util package, but it is still valid.
+
+// Additionally, notice that the parameter is wrapped in double quotes instead of single quotes in Poshi Script.
 
 ```
 
@@ -221,7 +223,7 @@ var siteName = TestCase.getSiteName();
 
 *Examples:*
 ```javascript
-var breadcrumbNameUppercase = StringUtil.upperCase('${breadcrumbName}');
+var breadcrumbNameUppercase = StringUtil.upperCase("${breadcrumbName}");
 ```
 
 ##### Referencing `var`'s
@@ -294,7 +296,7 @@ It is possible to return values from a macro command by using the `return` keywo
 *Example:*
 ```javascript
 macro viewPG {
-	var breadcrumbNameUppercase = StringUtil.upperCase('${breadcrumbName}');
+	var breadcrumbNameUppercase = StringUtil.upperCase("${breadcrumbName}");
 
 	AssertTextEquals(
 		locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
@@ -359,18 +361,18 @@ ProductMenu.gotoPortlet(
 #### Executing Java Methods
 Java method executions are limited to methods from classes in the  [com.liferay.poshi.runner.util](https://github.com/liferay/com-liferay-poshi-runner/tree/master/poshi-runner/src/main/java/com/liferay/poshi/runner/util) package.
 
-Parameter names are not required when invoking Java methods. Parameter may be passed using raw values wrapped in single quotes (same as the syntax used in Poshi XML for "var methods"). Additionally, the full class name or simple class name can be used to invoke methods.
+Parameter names are not required when invoking Java methods. Parametesr may be passed using raw values wrapped in double quotes (different from the single quoted syntax used in Poshi XML for "var method" parameters). Additionally, the full class name or simple class name can be used to invoke methods.
 
 *Examples:*
 
 Java method invocation using the full class name:
 ```javascript
-com.liferay.poshi.runner.util.JSONCurlUtil.post('${curl}');
+com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 ```
 
 Java method invocation using the simple class name:
 ```javascript
-JSONCurlUtil.post('${curl}');
+JSONCurlUtil.post("${curl}");
 ```
 
 ---

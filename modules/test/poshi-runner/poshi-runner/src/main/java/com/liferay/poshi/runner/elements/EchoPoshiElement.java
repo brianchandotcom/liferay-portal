@@ -48,7 +48,7 @@ public class EchoPoshiElement extends PoshiElement {
 
 	@Override
 	public void parsePoshiScript(String poshiScript) {
-		String content = getQuotedContent(poshiScript);
+		String content = getDoubleQuotedContent(poshiScript);
 
 		addAttribute("message", content);
 	}

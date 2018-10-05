@@ -1,19 +1,19 @@
 definition{
 	macro getGoogleResponse {
 		var response = HttpRequestUtil.get(
-			'Poshi.NULL',
-			'Poshi.NULL',
-			'http://www.google.com'
+			"Poshi.NULL",
+			"Poshi.NULL",
+			"http://www.google.com"
 		);
 
 		HttpRequester.getResponse(response = "${response}");
 	}
 
 	macro getResponse {
-		var status = HttpRequestUtil.getStatusCode('${response}');
+		var status = HttpRequestUtil.getStatusCode("${response}");
 
-		var body = HttpRequestUtil.getResponseBody('${response}');
-		var errorMessage = HttpRequestUtil.getResponseErrorMessage('${response}');
+		var body = HttpRequestUtil.getResponseBody("${response}");
+		var errorMessage = HttpRequestUtil.getResponseErrorMessage("${response}");
 
 		echo("Response Code: ${status}");
 		echo("Response: ${body}");
@@ -21,10 +21,10 @@ definition{
 	}
 
 	macro assertResponseStatus {
-		var actualStatus = HttpRequestUtil.getStatusCode('${response}');
+		var actualStatus = HttpRequestUtil.getStatusCode("${response}");
 
 		if (!("${expectedStatus}" == "${actualStatus}")) {
-			var body = HttpRequestUtil.getResponseBody('${response}');
+			var body = HttpRequestUtil.getResponseBody("${response}");
 
 			echo("Expected ${expectedStatus} but got ${actualStatus}");
 			echo("Response: ${body}");

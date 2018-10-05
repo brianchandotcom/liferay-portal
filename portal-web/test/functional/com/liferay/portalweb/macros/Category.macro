@@ -304,7 +304,7 @@
 		</execute>
 	</command>
 
-	<command name="openCategoryAdmin">
+	<command name="openCategoriesAdmin">
 		<execute macro="Navigator#openWithAppendToBaseURL">
 			<var name="urlAppend" value="group/${siteURLKey}/~/control_panel/manage/-/categories_admin/" />
 		</execute>

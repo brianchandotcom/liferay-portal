@@ -20,7 +20,6 @@ import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -72,11 +71,11 @@ public class UserRetrieverTest {
 
 		Thread.sleep(1000);
 
-		_user2 = UserTestUtil.addUser(
+		UserTestUtil.addUser(
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		PageItems<User> pageItems = _segmentsService.getUsers(
+		PageItems<User> pageItems = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
 				"(firstName eq '%s') and (dateModified eq %s)", firstName,
@@ -104,7 +103,7 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		PageItems<User> pageItems = _segmentsService.getUsers(
+		PageItems<User> pageItems = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
 				"(firstName eq '%s') and (dateModified gt %s)", firstName,
@@ -129,13 +128,14 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
 		Thread.sleep(1000);
+
 		Date inBetween = new Date();
 
 		_user2 = UserTestUtil.addUser(
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		PageItems<User> pageItems = _segmentsService.getUsers(
+		PageItems<User> pageItems = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
 				"(firstName eq '%s') and (dateModified ge %s)", firstName,
@@ -163,7 +163,7 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		PageItems<User> pageItems = _segmentsService.getUsers(
+		PageItems<User> pageItems = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
 				"(firstName eq '%s') and (dateModified lt %s)", firstName,
@@ -188,13 +188,14 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
 		Date inBetween = new Date();
+
 		Thread.sleep(1000);
 
-		_user2 = UserTestUtil.addUser(
+		UserTestUtil.addUser(
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		PageItems<User> pageItems = _segmentsService.getUsers(
+		PageItems<User> pageItems = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
 				"(firstName eq '%s') and (dateModified le %s)", firstName,
@@ -215,7 +216,7 @@ public class UserRetrieverTest {
 
 		String expectedEmailAddress = _user1.getEmailAddress();
 
-		PageItems<User> pageItems = _segmentsService.getUsers(
+		PageItems<User> pageItems = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			"(emailAddress eq '" + expectedEmailAddress + "')",
 			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
@@ -236,7 +237,7 @@ public class UserRetrieverTest {
 
 		String expectedFirstName = _user1.getFirstName();
 
-		PageItems<User> pageItems = _segmentsService.getUsers(
+		PageItems<User> pageItems = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			"(firstName eq '" + expectedFirstName + "')",
 			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
@@ -255,13 +256,10 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new long[] {_group1.getGroupId()});
 
-		String expectedFirstName = _user1.getFirstName();
-		String expectedLastName = _user1.getLastName();
-
-		PageItems<User> pageItems = _segmentsService.getUsers(
+		PageItems<User> pageItems = _userRetriever.getUsers(
 			_group1.getCompanyId(),
-			"(firstName eq '" + expectedFirstName + "') and (lastName eq '" +
-				expectedLastName + "') ",
+			"(firstName eq '" + _user1.getFirstName() + "') and (lastName eq " +
+				"'" + _user1.getLastName() + "') ",
 			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
 
 		List<User> users = (List<User>)pageItems.getItems();
@@ -283,13 +281,10 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new long[] {_group1.getGroupId()});
 
-		String expectedFirstName = _user1.getFirstName();
-		String expectedLastName = _user2.getLastName();
-
-		PageItems<User> pageItems = _segmentsService.getUsers(
+		PageItems<User> pageItems = _userRetriever.getUsers(
 			_group1.getCompanyId(),
-			"(firstName eq '" + expectedFirstName + "') or (lastName eq '" +
-				expectedLastName + "') ",
+			"(firstName eq '" + _user1.getFirstName() + "') or (lastName eq '" +
+				_user2.getLastName() + "') ",
 			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
@@ -304,11 +299,9 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new long[] {_group1.getGroupId()});
 
-		String expectedFirstName = _user1.getFirstName();
-
-		PageItems<User> pageItems = _segmentsService.getUsers(
+		PageItems<User> pageItems = _userRetriever.getUsers(
 			_group1.getCompanyId(),
-			"(firstName eq '" + expectedFirstName +
+			"(firstName eq '" + _user1.getFirstName() +
 				"') or (lastName eq 'nonExistingLastName') ",
 			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
 
@@ -328,13 +321,10 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new long[] {_group1.getGroupId()});
 
-		String expectedFirstName = _user1.getFirstName();
-		String expectedLastName = _user1.getLastName();
-
-		PageItems<User> pageItems = _segmentsService.getUsers(
+		PageItems<User> pageItems = _userRetriever.getUsers(
 			_group1.getCompanyId(),
-			"(firstName eq '" + expectedFirstName + "') or (lastName eq '" +
-				expectedLastName + "') ",
+			"(firstName eq '" + _user1.getFirstName() + "') or (lastName eq '" +
+				_user1.getLastName() + "') ",
 			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
 
 		Assert.assertEquals(1, pageItems.getTotalCount());
@@ -353,11 +343,11 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(),
 			new long[] {_group1.getGroupId(), _group2.getGroupId()});
 
-		_user2 = UserTestUtil.addUser(
+		UserTestUtil.addUser(
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		PageItems<User> pageItems = _segmentsService.getUsers(
+		PageItems<User> pageItems = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			"(firstName eq '" + firstName + "') and (groupId eq '" +
 				_group2.getGroupId() + "')",
@@ -379,11 +369,11 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(),
 			new long[] {_group1.getGroupId(), _group2.getGroupId()});
 
-		_user2 = UserTestUtil.addUser(
+		UserTestUtil.addUser(
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		PageItems<User> pageItems = _segmentsService.getUsers(
+		PageItems<User> pageItems = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			"(firstName eq '" + firstName + "') and (groupIds eq '" +
 				_group2.getGroupId() + "')",
@@ -405,11 +395,11 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(),
 			new long[] {_group1.getGroupId(), _group2.getGroupId()});
 
-		_user2 = UserTestUtil.addUser(
+		UserTestUtil.addUser(
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		PageItems<User> pageItems = _segmentsService.getUsers(
+		PageItems<User> pageItems = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			"(firstName eq '" + firstName + "') and ((groupIds eq '" +
 				_group2.getGroupId() + "') or (groupIds eq '" +
@@ -424,12 +414,11 @@ public class UserRetrieverTest {
 		_user1 = UserTestUtil.addUser(
 			_group1.getGroupId(), LocaleUtil.getDefault());
 
-		_user2 = UserTestUtil.addUser(
-			_group1.getGroupId(), LocaleUtil.getDefault());
+		UserTestUtil.addUser(_group1.getGroupId(), LocaleUtil.getDefault());
 
 		String expectedLastName = _user1.getLastName();
 
-		PageItems<User> pageItems = _segmentsService.getUsers(
+		PageItems<User> pageItems = _userRetriever.getUsers(
 			_group1.getCompanyId(), "(lastName eq '" + expectedLastName + "')",
 			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
 
@@ -449,11 +438,11 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(),
 			new long[] {_group1.getGroupId(), _group2.getGroupId()});
 
-		_user2 = UserTestUtil.addUser(
+		UserTestUtil.addUser(
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		PageItems<User> pageItems = _segmentsService.getUsers(
+		PageItems<User> pageItems = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			"(firstName eq '" + firstName + "') and (groupIds eq '" +
 				_group2.getGroupId() + "') and (groupIds eq '" +
@@ -472,12 +461,11 @@ public class UserRetrieverTest {
 		_user1 = UserTestUtil.addUser(
 			_group1.getGroupId(), LocaleUtil.getDefault());
 
-		_user2 = UserTestUtil.addUser(
-			_group1.getGroupId(), LocaleUtil.getDefault());
+		UserTestUtil.addUser(_group1.getGroupId(), LocaleUtil.getDefault());
 
 		String expectedScreenName = _user1.getScreenName();
 
-		PageItems<User> pageItems = _segmentsService.getUsers(
+		PageItems<User> pageItems = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			"(screenName eq '" + expectedScreenName + "')",
 			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
@@ -495,9 +483,6 @@ public class UserRetrieverTest {
 	@DeleteAfterTestRun
 	private Group _group2;
 
-	@Inject
-	private UserRetriever _segmentsService;
-
 	@DeleteAfterTestRun
 	private User _user1;
 
@@ -505,6 +490,6 @@ public class UserRetrieverTest {
 	private User _user2;
 
 	@Inject
-	private UserLocalService _userLocalService;
+	private UserRetriever _userRetriever;
 
 }

@@ -145,10 +145,13 @@ public class PortalRequestProcessor extends RequestProcessor {
 	}
 
 	@Override
-	public void init(ActionServlet servlet, ModuleConfig moduleConfig)
-		throws ServletException {
+	public void init(ActionServlet servlet, ModuleConfig moduleConfig) {
+		synchronized (actions) {
+			actions.clear();
+		}
 
-		super.init(servlet, moduleConfig);
+		this.servlet = servlet;
+		this.moduleConfig = moduleConfig;
 
 		ServletContext servletContext = getServletContext();
 

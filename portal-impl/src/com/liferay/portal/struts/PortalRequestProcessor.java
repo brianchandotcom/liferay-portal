@@ -997,7 +997,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 
 		_processContent(response);
 
-		processNoCache(request, response);
+		_processNoCache(response);
 
 		processCachedMessages(request, response);
 
@@ -1082,6 +1082,16 @@ public class PortalRequestProcessor extends RequestProcessor {
 
 		if (locale != null) {
 			session.setAttribute(Globals.LOCALE_KEY, locale);
+		}
+	}
+
+	private void _processNoCache(HttpServletResponse response) {
+		ControllerConfig controllerConfig = moduleConfig.getControllerConfig();
+
+		if (controllerConfig.getNocache()) {
+			response.setHeader("Pragma", "No-cache");
+			response.setHeader("Cache-Control", "no-cache,no-store,max-age=0");
+			response.setDateHeader("Expires", 1);
 		}
 	}
 

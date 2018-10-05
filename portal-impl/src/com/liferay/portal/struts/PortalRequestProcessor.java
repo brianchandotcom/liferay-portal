@@ -485,8 +485,8 @@ public class PortalRequestProcessor extends RequestProcessor {
 				actionMapping.getPath());
 
 			if (actionConfig != null) {
-				Action originalAction = super.processActionCreate(
-					request, response, actionMapping);
+				Action originalAction = _processActionCreate(
+					response, actionMapping);
 
 				actionAdapter.setOriginalAction(originalAction);
 			}
@@ -494,7 +494,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 			return actionAdapter;
 		}
 
-		return super.processActionCreate(request, response, actionMapping);
+		return _processActionCreate(response, actionMapping);
 	}
 
 	@Override
@@ -1056,6 +1056,43 @@ public class PortalRequestProcessor extends RequestProcessor {
 			request, response, action, actionForm, mapping);
 
 		processForwardConfig(request, response, actionForward);
+	}
+
+	private Action _processActionCreate(
+			HttpServletResponse response, ActionMapping actionMapping)
+		throws IOException {
+
+		String className = actionMapping.getType();
+
+		synchronized (actions) {
+			Action action = (Action)actions.get(className);
+
+			if (action != null) {
+				return action;
+			}
+
+			try {
+				action = (Action)RequestUtils.applicationInstance(className);
+			}
+			catch (Exception e) {
+				MessageResources messageResources = getInternal();
+
+				response.sendError(
+					HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+					messageResources.getMessage(
+						"actionCreate", actionMapping.getPath()));
+
+				return null;
+			}
+
+			actions.put(className, action);
+
+			if (action.getServlet() == null) {
+				action.setServlet(servlet);
+			}
+
+			return action;
+		}
 	}
 
 	private ActionForm _processActionForm(

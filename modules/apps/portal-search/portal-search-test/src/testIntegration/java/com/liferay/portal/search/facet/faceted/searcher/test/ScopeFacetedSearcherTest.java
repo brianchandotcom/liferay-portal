@@ -110,7 +110,7 @@ public class ScopeFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 		Map<String, String> tags = SearchMapUtil.join(
 			toMap(user1, tag1), toMap(user2, tag2));
 
-		assertTags(keyword, hits, tags);
+		assertTags(keyword, hits, tags, searchContext);
 	}
 
 	@Test
@@ -147,7 +147,7 @@ public class ScopeFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		Map<String, String> tags = toMap(user1, tag1);
 
-		assertTags(keyword, hits, tags);
+		assertTags(keyword, hits, tags, searchContext);
 	}
 
 	protected static Map<String, Integer> toMap(Group group, Integer count) {

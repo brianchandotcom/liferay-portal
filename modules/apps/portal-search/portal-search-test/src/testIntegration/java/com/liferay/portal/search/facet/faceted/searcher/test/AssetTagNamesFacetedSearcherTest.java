@@ -80,7 +80,7 @@ public class AssetTagNamesFacetedSearcherTest
 
 		assertEntryClassNames(
 			Arrays.asList(JournalArticle.class.getName(), User.class.getName()),
-			hits, keyword);
+			hits, searchContext);
 
 		Map<String, Integer> frequencies = Collections.singletonMap(
 			StringUtil.toLowerCase(tag), 1);
@@ -149,7 +149,7 @@ public class AssetTagNamesFacetedSearcherTest
 		Hits hits = search(searchContext);
 
 		assertEntryClassNames(
-			Arrays.asList(User.class.getName()), hits, keyword);
+			Arrays.asList(User.class.getName()), hits, searchContext);
 
 		Map<String, Integer> frequencies = Collections.singletonMap(
 			tagToLowerCase, 1);
@@ -188,10 +188,12 @@ public class AssetTagNamesFacetedSearcherTest
 	}
 
 	protected void assertEntryClassNames(
-		Collection<String> entryClassNames, Hits hits, String keyword) {
+		Collection<String> entryClassNames, Hits hits,
+		SearchContext searchContext) {
 
 		DocumentsAssert.assertValuesIgnoreRelevance(
-			keyword, hits.getDocs(), Field.ENTRY_CLASS_NAME, entryClassNames);
+			(String)searchContext.getAttribute("queryString"), hits.getDocs(),
+			Field.ENTRY_CLASS_NAME, entryClassNames);
 	}
 
 	protected void assertTags(String keywords, Map<String, String> expected)
@@ -201,7 +203,7 @@ public class AssetTagNamesFacetedSearcherTest
 
 		Hits hits = search(searchContext);
 
-		assertTags(keywords, hits, expected);
+		assertTags(keywords, hits, expected, searchContext);
 	}
 
 	@Inject

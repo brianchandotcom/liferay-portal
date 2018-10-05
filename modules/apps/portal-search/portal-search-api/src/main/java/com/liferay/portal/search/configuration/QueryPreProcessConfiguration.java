@@ -32,7 +32,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface QueryPreProcessConfiguration {
 
 	@Meta.AD(
-		deflt = "assetCategoryTitles?(_.+)?|emailAddress|license|path|screenName|tag|treePath|userName",
+		deflt = "emailAddress|license|path|screenName|tag|treePath|userName",
 		name = "field-name-patterns", required = false
 	)
 	public String[] fieldNamePatterns();

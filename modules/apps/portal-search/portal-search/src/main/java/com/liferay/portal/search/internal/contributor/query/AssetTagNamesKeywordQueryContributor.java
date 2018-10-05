@@ -14,14 +14,13 @@
 
 package com.liferay.portal.search.internal.contributor.query;
 
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.ParseException;
-import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.query.FieldQueryFactory;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.search.query.QueryHelper;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQueryContributorHelper;
 
@@ -34,11 +33,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	service = {
-		AlwaysPresentFieldsKeywordQueryContributor.class,
+		AssetTagNamesKeywordQueryContributor.class,
 		KeywordQueryContributor.class
 	}
 )
-public class AlwaysPresentFieldsKeywordQueryContributor
+public class AssetTagNamesKeywordQueryContributor
 	implements KeywordQueryContributor {
 
 	@Override
@@ -46,29 +45,33 @@ public class AlwaysPresentFieldsKeywordQueryContributor
 		String keywords, BooleanQuery booleanQuery,
 		KeywordQueryContributorHelper keywordQueryContributorHelper) {
 
-		if (Validator.isBlank(keywords)) {
-			return;
-		}
+		SearchContext searchContext =
+			keywordQueryContributorHelper.getSearchContext();
 
-		for (String field : _ALWAYS_PRESENT_FIELDS) {
-			Query query = fieldQueryFactory.createQuery(
-				field, keywords, false, false);
+		Localization localization = getLocalization();
 
-			try {
-				booleanQuery.add(query, BooleanClauseOccur.SHOULD);
-			}
-			catch (ParseException pe) {
-				throw new SystemException(pe);
-			}
-		}
+		queryHelper.addSearchTerm(
+			booleanQuery, searchContext,
+			localization.getLocalizedName(
+				Field.ASSET_TAG_NAMES,
+				LocaleUtil.toLanguageId(searchContext.getLocale())),
+			false);
 	}
 
-	@Reference
-	protected FieldQueryFactory fieldQueryFactory;
+	protected Localization getLocalization() {
 
-	private static final String[] _ALWAYS_PRESENT_FIELDS = {
-		Field.COMMENTS, Field.CONTENT, Field.DESCRIPTION, Field.PROPERTIES,
-		Field.TITLE, Field.URL, Field.USER_NAME
-	};
+		// See LPS-72507 and LPS-76500
+
+		if (localization != null) {
+			return localization;
+		}
+
+		return LocalizationUtil.getLocalization();
+	}
+
+	protected Localization localization;
+
+	@Reference
+	protected QueryHelper queryHelper;
 
 }

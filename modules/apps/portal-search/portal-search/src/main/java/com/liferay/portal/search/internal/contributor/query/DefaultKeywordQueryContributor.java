@@ -63,7 +63,7 @@ public class DefaultKeywordQueryContributor implements KeywordQueryContributor {
 			return;
 		}
 
-		if (Validator.isNull(keywords)) {
+		if (Validator.isBlank(keywords)) {
 			SearchContext searchContext =
 				keywordQueryContributorHelper.getSearchContext();
 

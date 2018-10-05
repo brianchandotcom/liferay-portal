@@ -17,16 +17,20 @@ package com.liferay.portal.search.internal.query;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.query.QueryHelper;
 
 import java.io.Serializable;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -41,12 +45,9 @@ public class QueryHelperImpl implements QueryHelper {
 		BooleanQuery searchQuery, SearchContext searchContext, String field,
 		boolean like) {
 
-		addSearchTerm(searchQuery, searchContext, field, like);
-
-		String localizedFieldName = Field.getLocalizedName(
-			searchContext.getLocale(), field);
-
-		addSearchTerm(searchQuery, searchContext, localizedFieldName, like);
+		addSearchTerm(
+			searchQuery, searchContext,
+			getLocalizedName(field, searchContext.getLocale()), like);
 	}
 
 	@Override
@@ -54,7 +55,7 @@ public class QueryHelperImpl implements QueryHelper {
 		BooleanQuery searchQuery, SearchContext searchContext, String field,
 		boolean like) {
 
-		if (Validator.isNull(field)) {
+		if (Validator.isBlank(field)) {
 			return null;
 		}
 
@@ -73,17 +74,17 @@ public class QueryHelperImpl implements QueryHelper {
 			}
 		}
 
-		if (Validator.isNotNull(value) &&
+		if (!Validator.isBlank(value) &&
 			(searchContext.getFacet(field) != null)) {
 
 			return null;
 		}
 
-		if (Validator.isNull(value)) {
+		if (Validator.isBlank(value)) {
 			value = searchContext.getKeywords();
 		}
 
-		if (Validator.isNull(value)) {
+		if (Validator.isBlank(value)) {
 			return null;
 		}
 
@@ -103,5 +104,25 @@ public class QueryHelperImpl implements QueryHelper {
 
 		return query;
 	}
+
+	protected Localization getLocalization() {
+
+		// See LPS-72507
+
+		if (localization != null) {
+			return localization;
+		}
+
+		return LocalizationUtil.getLocalization();
+	}
+
+	protected String getLocalizedName(String name, Locale locale) {
+		Localization localization = getLocalization();
+
+		return localization.getLocalizedName(
+			name, LocaleUtil.toLanguageId(locale));
+	}
+
+	protected Localization localization;
 
 }

@@ -14,9 +14,7 @@
 
 package com.liferay.portal.search.internal.searcher;
 
-import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
-import com.liferay.expando.kernel.util.ExpandoBridgeFactory;
-import com.liferay.expando.kernel.util.ExpandoBridgeIndexer;
+import com.liferay.portal.kernel.search.ExpandoQueryContributor;
 import com.liferay.portal.kernel.search.IndexSearcherHelper;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
@@ -24,7 +22,6 @@ import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.search.internal.expando.ExpandoQueryContributorHelper;
 import com.liferay.portal.search.internal.indexer.PreFilterContributorHelper;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,11 +36,8 @@ public class FacetedSearcherManagerImpl implements FacetedSearcherManager {
 	@Override
 	public FacetedSearcher createFacetedSearcher() {
 		return new FacetedSearcherImpl(
-			new ExpandoQueryContributorHelper(
-				expandoBridgeFactory, expandoBridgeIndexer,
-				expandoColumnLocalService, getLocalization()),
-			indexerRegistry, indexSearcherHelper, preFilterContributorHelper,
-			searchEngineHelper);
+			expandoQueryContributor, indexerRegistry, indexSearcherHelper,
+			preFilterContributorHelper, searchEngineHelper);
 	}
 
 	protected Localization getLocalization() {
@@ -58,13 +52,7 @@ public class FacetedSearcherManagerImpl implements FacetedSearcherManager {
 	}
 
 	@Reference
-	protected ExpandoBridgeFactory expandoBridgeFactory;
-
-	@Reference
-	protected ExpandoBridgeIndexer expandoBridgeIndexer;
-
-	@Reference
-	protected ExpandoColumnLocalService expandoColumnLocalService;
+	protected ExpandoQueryContributor expandoQueryContributor;
 
 	@Reference
 	protected IndexerRegistry indexerRegistry;

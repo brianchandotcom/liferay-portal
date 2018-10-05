@@ -54,6 +54,20 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 	}
 
 	@Override
+	public void deleteAssetEntryAssetCategoryRel(
+		long assetEntryId, long assetCategoryId) {
+
+		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
+			assetEntryAssetCategoryRelPersistence.fetchByA_A(
+				assetEntryId, assetCategoryId);
+
+		if (assetEntryAssetCategoryRel != null) {
+			assetEntryAssetCategoryRelPersistence.remove(
+				assetEntryAssetCategoryRel);
+		}
+	}
+
+	@Override
 	public void deleteAssetEntryAssetCategoryRelByAssetCategoryId(
 		long assetCategoryId) {
 

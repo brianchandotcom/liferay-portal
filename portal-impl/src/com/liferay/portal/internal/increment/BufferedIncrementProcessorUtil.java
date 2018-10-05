@@ -14,9 +14,9 @@
 
 package com.liferay.portal.internal.increment;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Preston Crary
@@ -26,47 +26,55 @@ public class BufferedIncrementProcessorUtil {
 	public static BufferedIncrementProcessor getBufferedIncrementProcessor(
 		String configuration) {
 
-		BufferedIncrementConfiguration bufferedIncrementConfiguration =
-			_getBufferedIncrementConfiguration(configuration);
+		Map.Entry<BufferedIncrementConfiguration, BufferedIncrementProcessor>
+			entry = _bufferedIncrementProcessors.computeIfAbsent(
+				configuration,
+				key -> {
+					BufferedIncrementConfiguration
+						bufferedIncrementConfiguration =
+							new BufferedIncrementConfiguration(key);
 
-		if (!bufferedIncrementConfiguration.isEnabled()) {
-			return null;
+					BufferedIncrementProcessor bufferedIncrementProcessor =
+						null;
+
+					if (bufferedIncrementConfiguration.isEnabled()) {
+						bufferedIncrementProcessor =
+							new BufferedIncrementProcessor(
+								bufferedIncrementConfiguration, key);
+					}
+
+					return new HashMap.SimpleEntry<>(
+						bufferedIncrementConfiguration,
+						bufferedIncrementProcessor);
+				});
+
+		BufferedIncrementConfiguration bufferedIncrementConfiguration =
+			entry.getKey();
+
+		if (bufferedIncrementConfiguration.isEnabled()) {
+			return entry.getValue();
 		}
 
-		return _bufferedIncrementProcessors.computeIfAbsent(
-			configuration,
-			key -> new BufferedIncrementProcessor(
-				bufferedIncrementConfiguration, configuration));
+		return null;
 	}
 
 	public void destroy() {
-		for (BufferedIncrementProcessor bufferedIncrementProcessor :
+		for (Map.Entry<?, BufferedIncrementProcessor> entry :
 				_bufferedIncrementProcessors.values()) {
 
-			bufferedIncrementProcessor.destroy();
+			BufferedIncrementProcessor bufferedIncrementProcessor =
+				entry.getValue();
+
+			if (bufferedIncrementProcessor != null) {
+				bufferedIncrementProcessor.destroy();
+			}
 		}
 	}
 
-	private static BufferedIncrementConfiguration
-		_getBufferedIncrementConfiguration(String configuration) {
-
-		BufferedIncrementConfiguration bufferedIncrementConfiguration =
-			_bufferedIncrementConfigurations.get(configuration);
-
-		if (bufferedIncrementConfiguration == null) {
-			bufferedIncrementConfiguration = new BufferedIncrementConfiguration(
-				configuration);
-
-			_bufferedIncrementConfigurations.put(
-				configuration, bufferedIncrementConfiguration);
-		}
-
-		return bufferedIncrementConfiguration;
-	}
-
-	private static final Map<String, BufferedIncrementConfiguration>
-		_bufferedIncrementConfigurations = new ConcurrentHashMap<>();
-	private static final ConcurrentMap<String, BufferedIncrementProcessor>
-		_bufferedIncrementProcessors = new ConcurrentHashMap<>();
+	private static final Map
+		<String,
+		 Map.Entry
+			<BufferedIncrementConfiguration, BufferedIncrementProcessor>>
+				_bufferedIncrementProcessors = new ConcurrentHashMap<>();
 
 }

@@ -28,11 +28,7 @@
 	<aui:input name="assetEntryIds" type="hidden" />
 
 	<liferay-frontend:edit-form-body>
-		<h2 class="sheet-title">
-			<liferay-ui:message key="asset-entries" />
-		</h2>
-
-		<h3 class="sheet-subtitle">
+		<h1 class="sheet-title">
 			<span class="autofit-padded-no-gutters autofit-row">
 				<span class="autofit-col autofit-col-expand">
 					<span class="heading-text">
@@ -45,7 +41,6 @@
 						message="select"
 						showArrow="<%= false %>"
 						showWhenSingleIcon="<%= true %>"
-						triggerCssClass="btn-sm"
 					>
 
 						<%
@@ -69,7 +64,7 @@
 					</liferay-ui:icon-menu>
 				</span>
 			</span>
-		</h3>
+		</h1>
 
 		<liferay-ui:search-container
 			compactEmptyResultsMessage="<%= true %>"

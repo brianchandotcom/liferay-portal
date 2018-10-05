@@ -32,6 +32,10 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 	<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
 
 	<liferay-frontend:edit-form-body>
+		<h1 class="sheet-title">
+			<liferay-ui:message key="source" />
+		</h1>
+
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset
 				cssClass="source-container"

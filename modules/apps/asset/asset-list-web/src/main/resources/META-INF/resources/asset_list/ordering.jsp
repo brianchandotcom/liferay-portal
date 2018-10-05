@@ -27,6 +27,10 @@
 	<aui:input name="assetListEntryId" type="hidden" value="<%= assetListDisplayContext.getAssetListEntryId() %>" />
 
 	<liferay-frontend:edit-form-body>
+		<h1 class="sheet-title">
+			<liferay-ui:message key="ordering" />
+		</h1>
+
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
 				<aui:row id="ordering">

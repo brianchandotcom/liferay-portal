@@ -16,7 +16,7 @@ package com.liferay.saml.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.struts.Definition;
-import com.liferay.portal.struts.PortalTilesPlugin;
+import com.liferay.portal.struts.TilesUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,8 +58,7 @@ public class JspUtil {
 		attributes.put("title", title);
 
 		request.setAttribute(
-			PortalTilesPlugin.DEFINITION,
-			new Definition(StringPool.BLANK, attributes));
+			TilesUtil.DEFINITION, new Definition(StringPool.BLANK, attributes));
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
 			_PATH_HTML_COMMON_THEMES_PORTAL);

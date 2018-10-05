@@ -205,9 +205,8 @@ public class MainServlet extends ActionServlet {
 		ModuleConfig moduleConfig = (ModuleConfig)servletContext.getAttribute(
 			Globals.MODULE_KEY);
 
-		_portalRequestProcessor = new PortalRequestProcessor();
-
-		_portalRequestProcessor.init(this, moduleConfig);
+		_portalRequestProcessor = new PortalRequestProcessor(
+			this, moduleConfig);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Verify patch levels");

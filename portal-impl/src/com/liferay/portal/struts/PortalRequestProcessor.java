@@ -125,7 +125,20 @@ public class PortalRequestProcessor {
 	public static final String INCLUDE_SERVLET_PATH =
 		"javax.servlet.include.servlet_path";
 
-	public PortalRequestProcessor() {
+	public PortalRequestProcessor(
+		ActionServlet servlet, ModuleConfig moduleConfig) {
+
+		synchronized (actions) {
+			actions.clear();
+		}
+
+		this.servlet = servlet;
+		this.moduleConfig = moduleConfig;
+
+		ServletContext servletContext = servlet.getServletContext();
+
+		_definitions = (Map<String, Definition>)
+			servletContext.getAttribute(TilesUtil.DEFINITIONS);
 
 		// auth.forward.last.path.
 
@@ -157,20 +170,6 @@ public class PortalRequestProcessor {
 		_trackerIgnorePaths = new HashSet<>(
 			Arrays.asList(
 				PropsUtil.getArray(PropsKeys.SESSION_TRACKER_IGNORE_PATHS)));
-	}
-
-	public void init(ActionServlet servlet, ModuleConfig moduleConfig) {
-		synchronized (actions) {
-			actions.clear();
-		}
-
-		this.servlet = servlet;
-		this.moduleConfig = moduleConfig;
-
-		ServletContext servletContext = servlet.getServletContext();
-
-		_definitions = (Map<String, Definition>)
-			servletContext.getAttribute(TilesUtil.DEFINITIONS);
 	}
 
 	public void process(
@@ -1481,7 +1480,7 @@ public class PortalRequestProcessor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalRequestProcessor.class);
 
-	private Map<String, Definition> _definitions;
+	private final Map<String, Definition> _definitions;
 	private final Set<String> _lastPaths;
 	private final Set<String> _publicPaths;
 	private final Set<String> _trackerIgnorePaths;

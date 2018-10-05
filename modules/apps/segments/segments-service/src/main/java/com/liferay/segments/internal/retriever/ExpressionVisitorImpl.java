@@ -115,7 +115,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		BinaryExpression.Operation operation, Object left, Object right,
 		Locale locale) {
 
-		Filter filter;
+		Filter filter = null;
 
 		if (Objects.equals(BinaryExpression.Operation.AND, operation)) {
 			filter = _getANDFilter((Filter)left, (Filter)right);

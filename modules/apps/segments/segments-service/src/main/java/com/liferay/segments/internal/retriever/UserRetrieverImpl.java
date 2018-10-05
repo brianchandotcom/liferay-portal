@@ -119,41 +119,6 @@ public class UserRetrieverImpl implements UserRetriever {
 		return booleanQuery;
 	}
 
-	private PageItems<User> _getUsersPageItems(
-			long companyId, Filter filter, Locale locale, Pagination pagination)
-		throws PortalException {
-
-		SearchContext searchContext = _createSearchContext(
-			companyId, pagination.getStartPosition(),
-			pagination.getEndPosition());
-
-		Query fullQuery = _getFullQuery(filter, locale, searchContext);
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		Hits hits;
-
-		if (permissionChecker != null) {
-			if (searchContext.getUserId() == 0) {
-				searchContext.setUserId(permissionChecker.getUserId());
-			}
-
-			SearchResultPermissionFilter searchResultPermissionFilter =
-				_searchResultPermissionFilterFactory.create(
-					searchContext1 -> IndexSearcherHelperUtil.search(
-						searchContext1, fullQuery),
-					permissionChecker);
-
-			hits = searchResultPermissionFilter.search(searchContext);
-		}
-		else {
-			hits = IndexSearcherHelperUtil.search(searchContext, fullQuery);
-		}
-
-		return new PageItems<>(_getUsers(hits), hits.getLength());
-	}
-
 	private com.liferay.portal.kernel.search.filter.Filter _getSearchFilter(
 		Filter filter, Locale locale) {
 
@@ -192,6 +157,41 @@ public class UserRetrieverImpl implements UserRetriever {
 		}
 
 		return users;
+	}
+
+	private PageItems<User> _getUsersPageItems(
+			long companyId, Filter filter, Locale locale, Pagination pagination)
+		throws PortalException {
+
+		SearchContext searchContext = _createSearchContext(
+			companyId, pagination.getStartPosition(),
+			pagination.getEndPosition());
+
+		Query fullQuery = _getFullQuery(filter, locale, searchContext);
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		Hits hits;
+
+		if (permissionChecker != null) {
+			if (searchContext.getUserId() == 0) {
+				searchContext.setUserId(permissionChecker.getUserId());
+			}
+
+			SearchResultPermissionFilter searchResultPermissionFilter =
+				_searchResultPermissionFilterFactory.create(
+					searchContext1 -> IndexSearcherHelperUtil.search(
+						searchContext1, fullQuery),
+					permissionChecker);
+
+			hits = searchResultPermissionFilter.search(searchContext);
+		}
+		else {
+			hits = IndexSearcherHelperUtil.search(searchContext, fullQuery);
+		}
+
+		return new PageItems<>(_getUsers(hits), hits.getLength());
 	}
 
 	@Reference(target = "(entity.model.name=" + UserEntityModel.NAME + ")")

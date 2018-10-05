@@ -1011,7 +1011,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 			return;
 		}
 
-		ActionForm actionForm = processActionForm(request, response, mapping);
+		ActionForm actionForm = _processActionForm(request, mapping);
 
 		processPopulate(request, response, actionForm, mapping);
 
@@ -1053,6 +1053,28 @@ public class PortalRequestProcessor extends RequestProcessor {
 			request, response, action, actionForm, mapping);
 
 		processForwardConfig(request, response, actionForward);
+	}
+
+	private ActionForm _processActionForm(
+		HttpServletRequest request, ActionMapping mapping) {
+
+		ActionForm actionForm = RequestUtils.createActionForm(
+			request, mapping, moduleConfig, servlet);
+
+		if (actionForm == null) {
+			return null;
+		}
+
+		if ("request".equals(mapping.getScope())) {
+			request.setAttribute(mapping.getAttribute(), actionForm);
+		}
+		else {
+			HttpSession session = request.getSession();
+
+			session.setAttribute(mapping.getAttribute(), actionForm);
+		}
+
+		return actionForm;
 	}
 
 	private void _processCachedMessages(HttpServletRequest request) {

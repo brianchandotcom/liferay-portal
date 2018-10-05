@@ -1,4 +1,11 @@
 Bundle-Name: Liferay Document Library Preview Image
 Bundle-SymbolicName: com.liferay.document.library.preview.image
 Bundle-Version: 1.0.0
+Provide-Capability:\
+	soy;\
+		type="document-library-preview-image";\
+		version:Version="${Bundle-Version}"
+Require-Capability:\
+	osgi.extender;\
+		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
 Web-ContextPath: /document-library-preview-image

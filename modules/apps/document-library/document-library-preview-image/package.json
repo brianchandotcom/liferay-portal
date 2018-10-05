@@ -1,0 +1,34 @@
+{
+	"csfConfig": {
+		"path:**/*.js": {
+			"js": {
+				"lint": {
+					"globals": {
+						"$": true,
+						"AlloyEditor": true,
+						"CKEDITOR": true,
+						"MODULE_PATH": true
+					}
+				}
+			}
+		}
+	},
+	"dependencies": {
+		"metal": "^2.13.2",
+		"metal-component": "^2.16.3",
+		"metal-soy": "^2.13.2",
+		"metal-state": "^2.13.2"
+	},
+	"devDependencies": {
+		"check-source-formatting": "^2.0.4",
+		"liferay-module-config-generator": "^1.1.10",
+		"metal-cli": "^4.3.3"
+	},
+	"version": "1.0.0",
+	"name": "document-library-preview-image",
+	"scripts": {
+		"checkFormat": "npm run csf",
+		"csf": "csf src/**/*.js src/**/*.soy",
+		"format": "npm run csf -- -i"
+	}
+}

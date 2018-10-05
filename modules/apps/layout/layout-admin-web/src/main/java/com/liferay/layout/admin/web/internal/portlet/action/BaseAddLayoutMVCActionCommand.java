@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
 
 /**
  * @author Pavel Savinov
@@ -59,7 +60,10 @@ public abstract class BaseAddLayoutMVCActionCommand
 
 		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
 
-		configureLayoutURL.setParameter("redirect", redirectURL.toString());
+		String redirect = HttpUtil.setParameter(
+			redirectURL.toString(), "p_p_state", WindowState.NORMAL.toString());
+
+		configureLayoutURL.setParameter("redirect", redirect);
 
 		String portletResource = ParamUtil.getString(
 			actionRequest, "portletResource");

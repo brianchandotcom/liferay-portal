@@ -29,15 +29,13 @@ public class GitRepositoryFactory {
 			return new CompanionPortalWorkspaceGitRepository(
 				pullRequest, upstreamBranchName, workspaceGitRepository);
 		}
-		else if (repositoryType.equals(
-					OtherPortalWorkspaceGitRepository.TYPE)) {
 
+		if (repositoryType.equals(OtherPortalWorkspaceGitRepository.TYPE)) {
 			return new OtherPortalWorkspaceGitRepository(
 				pullRequest, upstreamBranchName);
 		}
-		else if (repositoryType.equals(
-					PortalPluginsWorkspaceGitRepository.TYPE)) {
 
+		if (repositoryType.equals(PortalPluginsWorkspaceGitRepository.TYPE)) {
 			return new PortalPluginsWorkspaceGitRepository(
 				pullRequest, upstreamBranchName);
 		}
@@ -54,15 +52,13 @@ public class GitRepositoryFactory {
 			return new CompanionPortalWorkspaceGitRepository(
 				remoteGitRef, upstreamBranchName, workspaceGitRepository);
 		}
-		else if (repositoryType.equals(
-					OtherPortalWorkspaceGitRepository.TYPE)) {
 
+		if (repositoryType.equals(OtherPortalWorkspaceGitRepository.TYPE)) {
 			return new OtherPortalWorkspaceGitRepository(
 				remoteGitRef, upstreamBranchName);
 		}
-		else if (repositoryType.equals(
-					PortalPluginsWorkspaceGitRepository.TYPE)) {
 
+		if (repositoryType.equals(PortalPluginsWorkspaceGitRepository.TYPE)) {
 			return new PortalPluginsWorkspaceGitRepository(
 				remoteGitRef, upstreamBranchName);
 		}
@@ -140,11 +136,13 @@ public class GitRepositoryFactory {
 			return new JenkinsWorkspaceGitRepository(
 				pullRequest, upstreamBranchName);
 		}
-		else if (gitHubURL.contains("/liferay-plugins")) {
+
+		if (gitHubURL.contains("/liferay-plugins")) {
 			return new PluginsWorkspaceGitRepository(
 				pullRequest, upstreamBranchName);
 		}
-		else if (gitHubURL.contains("/liferay-portal")) {
+
+		if (gitHubURL.contains("/liferay-portal")) {
 			return new PrimaryPortalWorkspaceGitRepository(
 				pullRequest, upstreamBranchName);
 		}
@@ -160,11 +158,13 @@ public class GitRepositoryFactory {
 			return new JenkinsWorkspaceGitRepository(
 				remoteGitRef, upstreamBranchName);
 		}
-		else if (gitHubURL.contains("/liferay-plugins")) {
+
+		if (gitHubURL.contains("/liferay-plugins")) {
 			return new PluginsWorkspaceGitRepository(
 				remoteGitRef, upstreamBranchName);
 		}
-		else if (gitHubURL.contains("/liferay-portal")) {
+
+		if (gitHubURL.contains("/liferay-portal")) {
 			return new PrimaryPortalWorkspaceGitRepository(
 				remoteGitRef, upstreamBranchName);
 		}

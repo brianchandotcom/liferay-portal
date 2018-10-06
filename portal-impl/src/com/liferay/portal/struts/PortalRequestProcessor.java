@@ -173,7 +173,7 @@ public class PortalRequestProcessor {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		String path = _processPath(request, response);
+		String path = _findPath(request, response);
 
 		ActionMapping actionMapping =
 			(ActionMapping)_moduleConfig.findActionConfig(path);
@@ -533,7 +533,7 @@ public class PortalRequestProcessor {
 			return actionMapping;
 		}
 
-		ActionMapping actionMapping = _processMapping(request, response, path);
+		ActionMapping actionMapping = _findMapping(request, response, path);
 
 		if (actionMapping == null) {
 			MessageResources messageResources = _actionServlet.getInternal();
@@ -555,7 +555,7 @@ public class PortalRequestProcessor {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		String path = GetterUtil.getString(_processPath(request, response));
+		String path = GetterUtil.getString(_findPath(request, response));
 
 		HttpSession session = request.getSession();
 
@@ -951,6 +951,86 @@ public class PortalRequestProcessor {
 		return true;
 	}
 
+	private ActionMapping _findMapping(
+			HttpServletRequest request, HttpServletResponse response,
+			String path)
+		throws IOException {
+
+		ActionMapping actionMapping =
+			(ActionMapping)_moduleConfig.findActionConfig(path);
+
+		if (actionMapping != null) {
+			request.setAttribute(Globals.MAPPING_KEY, actionMapping);
+
+			return actionMapping;
+		}
+
+		for (ActionConfig actionConfig : _moduleConfig.findActionConfigs()) {
+			if (actionConfig.getUnknown()) {
+				request.setAttribute(Globals.MAPPING_KEY, actionConfig);
+
+				return (ActionMapping)actionConfig;
+			}
+		}
+
+		MessageResources messageResources = _actionServlet.getInternal();
+
+		response.sendError(
+			HttpServletResponse.SC_NOT_FOUND,
+			messageResources.getMessage("processInvalid"));
+
+		return null;
+	}
+
+	private String _findPath(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		if (request.getAttribute(Globals.ORIGINAL_URI_KEY) == null) {
+			request.setAttribute(
+				Globals.ORIGINAL_URI_KEY, request.getServletPath());
+		}
+
+		String path = (String)request.getAttribute(INCLUDE_PATH_INFO);
+
+		if (path == null) {
+			path = request.getPathInfo();
+		}
+
+		if ((path != null) && (path.length() > 0)) {
+			return path;
+		}
+
+		path = (String)request.getAttribute(INCLUDE_SERVLET_PATH);
+
+		if (path == null) {
+			path = request.getServletPath();
+		}
+
+		String prefix = _moduleConfig.getPrefix();
+
+		if (!path.startsWith(prefix)) {
+			MessageResources messageResources = _actionServlet.getInternal();
+
+			String message = messageResources.getMessage("processPath");
+
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, message);
+
+			return null;
+		}
+
+		path = path.substring(prefix.length());
+
+		int slash = path.lastIndexOf(CharPool.SLASH);
+		int period = path.lastIndexOf(CharPool.PERIOD);
+
+		if ((period >= 0) && (period > slash)) {
+			path = path.substring(0, period);
+		}
+
+		return path;
+	}
+
 	private void _process(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
@@ -1214,37 +1294,6 @@ public class PortalRequestProcessor {
 		}
 	}
 
-	private ActionMapping _processMapping(
-			HttpServletRequest request, HttpServletResponse response,
-			String path)
-		throws IOException {
-
-		ActionMapping actionMapping =
-			(ActionMapping)_moduleConfig.findActionConfig(path);
-
-		if (actionMapping != null) {
-			request.setAttribute(Globals.MAPPING_KEY, actionMapping);
-
-			return actionMapping;
-		}
-
-		for (ActionConfig actionConfig : _moduleConfig.findActionConfigs()) {
-			if (actionConfig.getUnknown()) {
-				request.setAttribute(Globals.MAPPING_KEY, actionConfig);
-
-				return (ActionMapping)actionConfig;
-			}
-		}
-
-		MessageResources messageResources = _actionServlet.getInternal();
-
-		response.sendError(
-			HttpServletResponse.SC_NOT_FOUND,
-			messageResources.getMessage("processInvalid"));
-
-		return null;
-	}
-
 	private void _processNoCache(HttpServletResponse response) {
 		ControllerConfig controllerConfig = _moduleConfig.getControllerConfig();
 
@@ -1253,55 +1302,6 @@ public class PortalRequestProcessor {
 			response.setHeader("Cache-Control", "no-cache,no-store,max-age=0");
 			response.setDateHeader("Expires", 1);
 		}
-	}
-
-	private String _processPath(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
-
-		if (request.getAttribute(Globals.ORIGINAL_URI_KEY) == null) {
-			request.setAttribute(
-				Globals.ORIGINAL_URI_KEY, request.getServletPath());
-		}
-
-		String path = (String)request.getAttribute(INCLUDE_PATH_INFO);
-
-		if (path == null) {
-			path = request.getPathInfo();
-		}
-
-		if ((path != null) && (path.length() > 0)) {
-			return path;
-		}
-
-		path = (String)request.getAttribute(INCLUDE_SERVLET_PATH);
-
-		if (path == null) {
-			path = request.getServletPath();
-		}
-
-		String prefix = _moduleConfig.getPrefix();
-
-		if (!path.startsWith(prefix)) {
-			MessageResources messageResources = _actionServlet.getInternal();
-
-			String message = messageResources.getMessage("processPath");
-
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, message);
-
-			return null;
-		}
-
-		path = path.substring(prefix.length());
-
-		int slash = path.lastIndexOf(CharPool.SLASH);
-		int period = path.lastIndexOf(CharPool.PERIOD);
-
-		if ((period >= 0) && (period > slash)) {
-			path = path.substring(0, period);
-		}
-
-		return path;
 	}
 
 	private boolean _processValidate(

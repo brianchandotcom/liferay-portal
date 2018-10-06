@@ -821,28 +821,6 @@ public class PortalRequestProcessor {
 		return path;
 	}
 
-	protected void processPopulate(
-			HttpServletRequest request, HttpServletResponse response,
-			ActionForm actionForm, ActionMapping actionMapping)
-		throws ServletException {
-
-		if (actionForm == null) {
-			return;
-		}
-
-		actionForm.setServlet(_actionServlet);
-		actionForm.reset(actionMapping, request);
-
-		if (actionMapping.getMultipartClass() != null) {
-			request.setAttribute(
-				Globals.MULTIPART_KEY, actionMapping.getMultipartClass());
-		}
-
-		RequestUtils.populate(
-			actionForm, actionMapping.getPrefix(), actionMapping.getSuffix(),
-			request);
-	}
-
 	protected boolean processRoles(
 			HttpServletRequest request, HttpServletResponse response,
 			ActionMapping actionMapping)
@@ -963,28 +941,42 @@ public class PortalRequestProcessor {
 
 		_processCachedMessages(request);
 
-		ActionMapping mapping = processMapping(request, response, path);
+		ActionMapping actionMapping = processMapping(request, response, path);
 
-		if (mapping == null) {
+		if (actionMapping == null) {
 			return;
 		}
 
-		if (!processRoles(request, response, mapping)) {
+		if (!processRoles(request, response, actionMapping)) {
 			return;
 		}
 
-		ActionForm actionForm = _processActionForm(request, mapping);
+		ActionForm actionForm = _processActionForm(request, actionMapping);
 
-		processPopulate(request, response, actionForm, mapping);
+		if (actionForm != null) {
+			actionForm.setServlet(_actionServlet);
+			actionForm.reset(actionMapping, request);
+
+			if (actionMapping.getMultipartClass() != null) {
+				request.setAttribute(
+					Globals.MULTIPART_KEY, actionMapping.getMultipartClass());
+			}
+
+			RequestUtils.populate(
+				actionForm, actionMapping.getPrefix(),
+				actionMapping.getSuffix(), request);
+		}
 
 		try {
-			if (!_processValidate(request, response, actionForm, mapping)) {
+			if (!_processValidate(
+					request, response, actionForm, actionMapping)) {
+
 				return;
 			}
 		}
 		catch (InvalidCancelException ice) {
 			ActionForward actionForward = _processException(
-				request, response, ice, actionForm, mapping);
+				request, response, ice, actionForm, actionMapping);
 
 			if (actionForward != null) {
 				internalModuleRelativeForward(
@@ -1000,22 +992,22 @@ public class PortalRequestProcessor {
 			throw se;
 		}
 
-		if (!_processForward(request, response, mapping)) {
+		if (!_processForward(request, response, actionMapping)) {
 			return;
 		}
 
-		if (!_processInclude(request, response, mapping)) {
+		if (!_processInclude(request, response, actionMapping)) {
 			return;
 		}
 
-		Action action = processActionCreate(request, response, mapping);
+		Action action = processActionCreate(request, response, actionMapping);
 
 		if (action == null) {
 			return;
 		}
 
 		ActionForward actionForward = _processActionPerform(
-			request, response, action, actionForm, mapping);
+			request, response, action, actionForm, actionMapping);
 
 		if (actionForward != null) {
 			internalModuleRelativeForward(

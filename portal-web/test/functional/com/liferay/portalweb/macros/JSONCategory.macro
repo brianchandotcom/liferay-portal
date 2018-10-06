@@ -1,0 +1,358 @@
+<definition>
+	<command name="_addCategory">
+		<execute macro="JSONCompany#getPortalURL">
+			<return name="portalURL" />
+		</execute>
+
+		<execute macro="JSONGroup#getGroupName">
+			<return name="groupName" />
+			<var name="groupId" value="${groupId}" />
+		</execute>
+
+		<var name="curl"><![CDATA[
+			${portalURL}/api/jsonws/assetcategory/add-category \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d title=${title} \
+				-d vocabularyId=${vocabularyId}
+		]]></var>
+
+		<echo message="## Assign a 'Category' with the following info using JSONWS:" />
+
+		<echo message="## * Group Name: ${groupName}" />
+
+		<echo message="## * Vocabulary Id: ${vocabularyId}" />
+
+		<echo message="## * Title: ${title}" />
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
+			<arg value="${curl}" />
+		</execute>
+	</command>
+
+	<command name="_addSubcategory">
+		<execute macro="JSONCompany#getPortalURL">
+			<return name="portalURL" />
+		</execute>
+
+		<execute macro="JSONGroup#getGroupName">
+			<return name="groupName" />
+			<var name="groupId" value="${groupId}" />
+		</execute>
+
+		<var name="subcategoryMap"><![CDATA[{"en_US":"${subcategoryName}"}]]></var>
+
+		<var name="curl"><![CDATA[
+			${portalURL}/api/jsonws/assetcategory/add-category \
+			-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d parentCategoryId=${categoryId} \
+				-d titleMap=${subcategoryMap} \
+				-d descriptionMap={} \
+				-d vocabularyId=${vocabularyId} \
+				-d categoryProperties=
+			]]></var>
+
+		<echo message="## Assign a 'Sub-Category' with the following info using JSONWS:" />
+
+		<echo message="## * Group Name: ${groupName}" />
+
+		<echo message="## * Parent Category Id: ${categoryId}" />
+
+		<echo message="## * Vocabulary Id: ${vocabularyId}" />
+
+		<echo message="## * Title Map: ${subcategoryMap}" />
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
+			<arg value="${curl}" />
+		</execute>
+	</command>
+
+	<command name="_addVocabulary">
+		<execute macro="JSONCompany#getPortalURL">
+			<return name="portalURL" />
+		</execute>
+
+		<execute macro="JSONGroup#getGroupName">
+			<return name="groupName" />
+			<var name="groupId" value="${groupId}" />
+		</execute>
+
+		<var name="curl"><![CDATA[
+			${portalURL}/api/jsonws/assetvocabulary/add-vocabulary \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d title=${title}
+		]]></var>
+
+		<echo message="## Assign a 'Vocabulary' with the following info using JSONWS:" />
+
+		<echo message="## * Group Name: ${groupName}" />
+
+		<echo message="## * Title: ${title}" />
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
+			<arg value="${curl}" />
+		</execute>
+	</command>
+
+	<command name="addCategoryByGroupName">
+		<if>
+			<not>
+				<isset var="groupName" />
+			</not>
+			<then>
+				<fail message="Please set 'groupName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="title" />
+			</not>
+			<then>
+				<fail message="Please set 'title'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="vocabularyName" />
+			</not>
+			<then>
+				<fail message="Please set 'vocabularyName'." />
+			</then>
+		</if>
+
+		<execute macro="JSONGroup#getGroupIdByName">
+			<return name="groupId" />
+			<var name="groupName" value="${groupName}" />
+		</execute>
+
+		<execute macro="JSONCategory#getVocabularyIdByName">
+			<return name="vocabularyId" />
+			<var name="groupId" value="${groupId}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="JSONCategory#_addCategory">
+			<var name="groupId" value="${groupId}" />
+			<var name="title" value="${title}" />
+			<var name="vocabularyId" value="${vocabularyId}" />
+		</execute>
+	</command>
+
+	<command name="addSubcategoryByGroupName">
+		<if>
+			<not>
+				<isset var="categoryName" />
+			</not>
+			<then>
+				<fail message="Please set 'categoryName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="groupName" />
+			</not>
+			<then>
+				<fail message="Please set 'groupName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="subcategoryName" />
+			</not>
+			<then>
+				<fail message="Please set 'subcategoryName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="vocabularyName" />
+			</not>
+			<then>
+				<fail message="Please set 'vocabularyName'." />
+			</then>
+		</if>
+
+		<execute macro="JSONGroup#getGroupIdByName">
+			<return name="groupId" />
+			<var name="groupName" value="${groupName}" />
+		</execute>
+
+		<execute macro="JSONCategory#getVocabularyIdByName">
+			<return name="vocabularyId" />
+			<var name="groupId" value="${groupId}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="JSONCategory#getCategoryIdByName">
+			<return name="categoryId" />
+			<var name="categoryName" value="${categoryName}" />
+			<var name="groupId" value="${groupId}" />
+			<var name="vocabularyId" value="${vocabularyId}" />
+		</execute>
+
+		<execute macro="JSONCategory#_addSubcategory">
+			<var name="categoryId" value="${categoryId}" />
+			<var name="groupId" value="${groupId}" />
+			<var name="subcategoryName" value="${subcategoryName}" />
+			<var name="vocabularyId" value="${vocabularyId}" />
+		</execute>
+	</command>
+
+	<command name="addVocabularyByGroupName">
+		<if>
+			<not>
+				<isset var="groupName" />
+			</not>
+			<then>
+				<fail message="Please set 'groupName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="title" />
+			</not>
+			<then>
+				<fail message="Please set 'title'." />
+			</then>
+		</if>
+
+		<execute macro="JSONGroup#getGroupIdByName">
+			<return name="groupId" />
+			<var name="groupName" value="${groupName}" />
+		</execute>
+
+		<execute macro="JSONCategory#_addVocabulary">
+			<var name="groupId" value="${groupId}" />
+			<var name="title" value="${title}" />
+		</execute>
+	</command>
+
+	<command name="getCategoryIdByName">
+		<if>
+			<not>
+				<isset var="groupId" />
+			</not>
+			<then>
+				<fail message="Please set 'groupId'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="categoryName" />
+			</not>
+			<then>
+				<fail message="Please set 'categoryName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="vocabularyId" />
+			</not>
+			<then>
+				<fail message="Please set 'vocabularyId'." />
+			</then>
+		</if>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return name="portalURL" />
+		</execute>
+
+		<execute macro="JSONGroup#getGroupName">
+			<return name="groupName" />
+			<var name="groupId" value="${groupId}" />
+		</execute>
+
+		<var name="curl"><![CDATA[
+			${portalURL}/api/jsonws/assetcategory/get-vocabulary-categories \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d name=${categoryName} \
+				-d vocabularyId=${vocabularyId} \
+				-d <CURL_DATA[start=-1]CURL_DATA> \
+				-d <CURL_DATA[end=-1]CURL_DATA> \
+				-d -obc=
+		]]></var>
+
+		<echo message="## Get a 'Category' with the following info using JSONWS:" />
+
+		<echo message="## * Group Name: ${groupName}" />
+
+		<echo message="## * Category Name: ${categoryName}" />
+
+		<var method="JSONCurlUtil#post('${curl}', '$.[?(@[\'titleCurrentValue\'] == \'${categoryName}\')][\'categoryId\']')" name="categoryId" />
+
+		<var method="StringUtil#replace('${categoryId}', '[&quot;', '')" name="categoryId" />
+
+		<var method="StringUtil#replace('${categoryId}', '&quot;]', '')" name="categoryId" />
+
+		<if>
+			<equals arg1="${categoryId}" arg2="[]" />
+			<then>
+				<fail message="FAIL. Cannot find category." />
+			</then>
+		</if>
+
+		<return value="${categoryId}" />
+	</command>
+
+	<command name="getVocabularyIdByName">
+		<if>
+			<not>
+				<isset var="groupId" />
+			</not>
+			<then>
+				<fail message="Please set 'groupId'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="vocabularyName" />
+			</not>
+			<then>
+				<fail message="Please set 'vocabularyName'." />
+			</then>
+		</if>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return name="portalURL" />
+		</execute>
+
+		<var name="curl"><![CDATA[
+			${portalURL}/api/jsonws/assetvocabulary/get-group-vocabularies \
+				-u test@liferay.com:test \
+				-d groupId=${groupId}
+		]]></var>
+
+		<echo message="## Get a 'Vocabulary' with the following info using JSONWS:" />
+
+		<echo message="## * Group Name: ${groupName}" />
+
+		<echo message="## * Vocabulary Name: ${vocabularyName}" />
+
+		<var method="JSONCurlUtil#post('${curl}', '$.[?(@[\'titleCurrentValue\'] == \'${vocabularyName}\')][\'vocabularyId\']')" name="vocabularyId" />
+
+		<var method="StringUtil#replace('${vocabularyId}', '[&quot;', '')" name="vocabularyId" />
+
+		<var method="StringUtil#replace('${vocabularyId}', '&quot;]', '')" name="vocabularyId" />
+
+		<if>
+			<equals arg1="${vocabularyId}" arg2="[]" />
+			<then>
+				<fail message="FAIL. Cannot find vocabulary." />
+			</then>
+		</if>
+
+		<return value="${vocabularyId}" />
+	</command>
+</definition>

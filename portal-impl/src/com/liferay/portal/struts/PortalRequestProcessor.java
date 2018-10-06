@@ -103,7 +103,6 @@ import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.action.InvalidCancelException;
 import org.apache.struts.config.ActionConfig;
-import org.apache.struts.config.ControllerConfig;
 import org.apache.struts.config.ExceptionConfig;
 import org.apache.struts.config.ForwardConfig;
 import org.apache.struts.config.ModuleConfig;
@@ -539,9 +538,7 @@ public class PortalRequestProcessor {
 
 		_processLocale(request);
 
-		_processContent(response);
-
-		_processNoCache(response);
+		response.setContentType("text/html; charset=UTF-8");
 
 		_processCachedMessages(request);
 
@@ -730,16 +727,6 @@ public class PortalRequestProcessor {
 		}
 	}
 
-	private void _processContent(HttpServletResponse response) {
-		ControllerConfig controllerConfig = _moduleConfig.getControllerConfig();
-
-		String contentType = controllerConfig.getContentType();
-
-		if (contentType != null) {
-			response.setContentType(contentType);
-		}
-	}
-
 	private ActionForward _processException(
 			HttpServletRequest request, HttpServletResponse response,
 			Exception exception, ActionForm actionForm,
@@ -824,12 +811,6 @@ public class PortalRequestProcessor {
 	}
 
 	private void _processLocale(HttpServletRequest request) {
-		ControllerConfig controllerConfig = _moduleConfig.getControllerConfig();
-
-		if (!controllerConfig.getLocale()) {
-			return;
-		}
-
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute(Globals.LOCALE_KEY) != null) {
@@ -886,16 +867,6 @@ public class PortalRequestProcessor {
 		}
 
 		return actionMapping;
-	}
-
-	private void _processNoCache(HttpServletResponse response) {
-		ControllerConfig controllerConfig = _moduleConfig.getControllerConfig();
-
-		if (controllerConfig.getNocache()) {
-			response.setHeader("Pragma", "No-cache");
-			response.setHeader("Cache-Control", "no-cache,no-store,max-age=0");
-			response.setDateHeader("Expires", 1);
-		}
 	}
 
 	private String _processPath(
@@ -1340,19 +1311,7 @@ public class PortalRequestProcessor {
 
 		request.setAttribute(Globals.ERROR_KEY, actionMessages);
 
-		ControllerConfig controllerConfig = _moduleConfig.getControllerConfig();
-
-		if (controllerConfig.getInputForward()) {
-			ForwardConfig forwardConfig = actionMapping.findForward(input);
-
-			if (forwardConfig != null) {
-				_internalModuleRelativeForward(
-					forwardConfig.getPath(), request, response);
-			}
-		}
-		else {
-			_internalModuleRelativeForward(input, request, response);
-		}
+		_internalModuleRelativeForward(input, request, response);
 
 		return false;
 	}

@@ -90,7 +90,7 @@ public class AssetEntriesFacetedSearcherTest
 
 		Hits hits = search(searchContext);
 
-		assertEntryClassNames(_entryClassNames, hits, keyword, facet);
+		assertEntryClassNames(_entryClassNames, hits, facet, searchContext);
 
 		assertFrequencies(
 			facet.getFieldName(), searchContext, toMap(_entryClassNames));
@@ -113,8 +113,8 @@ public class AssetEntriesFacetedSearcherTest
 		Hits hits = search(searchContext);
 
 		assertEntryClassNames(
-			Arrays.asList(JournalArticle.class.getName()), hits, keyword,
-			facet);
+			Arrays.asList(JournalArticle.class.getName()), hits, facet,
+			searchContext);
 
 		assertFrequencies(
 			facet.getFieldName(), searchContext, toMap(_entryClassNames));
@@ -162,10 +162,12 @@ public class AssetEntriesFacetedSearcherTest
 	}
 
 	protected void assertEntryClassNames(
-		List<String> entryclassnames, Hits hits, String keyword, Facet facet) {
+		List<String> entryclassnames, Hits hits, Facet facet,
+		SearchContext searchContext) {
 
 		DocumentsAssert.assertValuesIgnoreRelevance(
-			keyword, hits.getDocs(), facet.getFieldName(), entryclassnames);
+			(String)searchContext.getAttribute("queryString"), hits.getDocs(),
+			facet.getFieldName(), entryclassnames);
 	}
 
 	protected Facet createFacet(SearchContext searchContext) {

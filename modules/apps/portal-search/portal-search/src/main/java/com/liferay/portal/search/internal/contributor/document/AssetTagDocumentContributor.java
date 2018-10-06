@@ -16,15 +16,23 @@ package com.liferay.portal.search.internal.contributor.document;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentContributor;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,19 +54,101 @@ public class AssetTagDocumentContributor implements DocumentContributor {
 		List<AssetTag> assetTags = assetTagLocalService.getTags(
 			classNameId, classPK);
 
-		String[] assetTagNames = ListUtil.toArray(
-			assetTags, AssetTag.NAME_ACCESSOR);
+		if (ListUtil.isEmpty(assetTags)) {
+			return;
+		}
 
-		document.addText(Field.ASSET_TAG_NAMES, assetTagNames);
+		contributeAssetTagIds(document, assetTags);
+		contributeAssetTagNamesLocalized(document, assetTags, baseModel);
+		contributeAssetTagNamesRaw(document, assetTags);
+	}
 
-		long[] assetTagsIds = ListUtil.toLongArray(
-			assetTags, AssetTag.TAG_ID_ACCESSOR);
+	protected void contributeAssetTagIds(
+		Document document, List<AssetTag> assetTags) {
 
-		document.addKeyword(Field.ASSET_TAG_IDS, assetTagsIds);
+		document.addKeyword(Field.ASSET_TAG_IDS, getTagIds(assetTags));
+	}
+
+	protected void contributeAssetTagNamesLocalized(
+		Document document, List<AssetTag> assetTags, BaseModel baseModel) {
+
+		Long groupId = getGroupId(baseModel);
+
+		if (groupId == null) {
+			return;
+		}
+
+		Localization localization = getLocalization();
+
+		document.addText(
+			localization.getLocalizedName(
+				Field.ASSET_TAG_NAMES,
+				LocaleUtil.toLanguageId(getSiteDefaultLocale(groupId))),
+			getNames(assetTags));
+	}
+
+	protected void contributeAssetTagNamesRaw(
+		Document document, List<AssetTag> assetTags) {
+
+		document.addText(Field.ASSET_TAG_NAMES, getNames(assetTags));
+	}
+
+	protected Long getGroupId(BaseModel baseModel) {
+		if (baseModel instanceof GroupedModel) {
+			return ((GroupedModel)baseModel).getGroupId();
+		}
+
+		if (baseModel instanceof User) {
+			return ((User)baseModel).getGroupId();
+		}
+
+		return null;
+	}
+
+	protected Localization getLocalization() {
+
+		// See LPS-72507 and LPS-76500
+
+		if (localization != null) {
+			return localization;
+		}
+
+		return LocalizationUtil.getLocalization();
+	}
+
+	protected String[] getNames(List<AssetTag> assetTags) {
+		Stream<AssetTag> stream = assetTags.stream();
+
+		return stream.map(
+			AssetTag::getName
+		).toArray(
+			String[]::new
+		);
+	}
+
+	protected Locale getSiteDefaultLocale(long groupId) {
+		try {
+			return portal.getSiteDefaultLocale(groupId);
+		}
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
+		}
+	}
+
+	protected Long[] getTagIds(List<AssetTag> assetTags) {
+		Stream<AssetTag> stream = assetTags.stream();
+
+		return stream.map(
+			AssetTag::getTagId
+		).toArray(
+			Long[]::new
+		);
 	}
 
 	@Reference
 	protected AssetTagLocalService assetTagLocalService;
+
+	protected Localization localization;
 
 	@Reference
 	protected Portal portal;

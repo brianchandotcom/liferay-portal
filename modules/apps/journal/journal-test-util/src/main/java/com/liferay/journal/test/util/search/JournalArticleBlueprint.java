@@ -26,6 +26,10 @@ import java.util.Map;
  */
 public class JournalArticleBlueprint {
 
+	public long[] getAssetCategoryIds() {
+		return assetCategoryIds;
+	}
+
 	public String getContentString() {
 		return journalArticleContent.getContentString();
 	}
@@ -63,6 +67,7 @@ public class JournalArticleBlueprint {
 		return workflowEnabled;
 	}
 
+	protected long[] assetCategoryIds;
 	protected boolean draft;
 	protected long groupId;
 	protected JournalArticleContent journalArticleContent;

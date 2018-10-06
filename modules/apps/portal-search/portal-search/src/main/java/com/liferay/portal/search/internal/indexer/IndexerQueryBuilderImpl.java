@@ -50,9 +50,9 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 	public IndexerQueryBuilderImpl(
 		IndexerRegistry indexerRegistry,
 		ModelSearchSettings modelSearchSettings,
-		Iterable<KeywordQueryContributor> modelKeywordQueryContributors,
+		ModelKeywordQueryContributorsHolder modelKeywordQueryContributorsHolder,
 		Iterable<SearchContextContributor> modelSearchContextContributor,
-		Iterable<KeywordQueryContributor> keywordQueryContributors,
+		KeywordQueryContributorsHolder keywordQueryContributorsHolder,
 		PreFilterContributorHelper preFilterContributorHelper,
 		Iterable<SearchContextContributor> searchContextContributors,
 		IndexerPostProcessorsHolder indexerPostProcessorsHolder,
@@ -60,9 +60,10 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 
 		_indexerRegistry = indexerRegistry;
 		_modelSearchSettings = modelSearchSettings;
-		_modelKeywordQueryContributors = modelKeywordQueryContributors;
+		_modelKeywordQueryContributorsHolder =
+			modelKeywordQueryContributorsHolder;
 		_modelSearchContextContributors = modelSearchContextContributor;
-		_keywordQueryContributors = keywordQueryContributors;
+		_keywordQueryContributorsHolder = keywordQueryContributorsHolder;
 		_preFilterContributorHelper = preFilterContributorHelper;
 		_searchContextContributors = searchContextContributors;
 		_indexerPostProcessorsHolder = indexerPostProcessorsHolder;
@@ -119,38 +120,39 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 	protected void addSearchTermsFromModel(
 		BooleanQuery booleanQuery, SearchContext searchContext) {
 
-		contribute(_modelKeywordQueryContributors, searchContext, booleanQuery);
+		contribute(
+			_modelKeywordQueryContributorsHolder.getAll(), booleanQuery,
+			searchContext);
 	}
 
 	protected void contribute(
-		Iterable<KeywordQueryContributor> keywordQueryContributors,
-		SearchContext searchContext, BooleanQuery booleanQuery) {
+		Stream<KeywordQueryContributor> stream, BooleanQuery booleanQuery,
+		SearchContext searchContext) {
 
-		for (KeywordQueryContributor keywordQueryContributor :
-				keywordQueryContributors) {
+		stream.forEach(
+			keywordQueryContributor -> {
+				keywordQueryContributor.contribute(
+					searchContext.getKeywords(), booleanQuery,
+					new KeywordQueryContributorHelper() {
 
-			keywordQueryContributor.contribute(
-				searchContext.getKeywords(), booleanQuery,
-				new KeywordQueryContributorHelper() {
+						@Override
+						public String getClassName() {
+							return _modelSearchSettings.getClassName();
+						}
 
-					@Override
-					public String getClassName() {
-						return _modelSearchSettings.getClassName();
-					}
+						@Override
+						public Stream<String> getSearchClassNamesStream() {
+							return Stream.of(
+								_modelSearchSettings.getSearchClassNames());
+						}
 
-					@Override
-					public Stream<String> getSearchClassNamesStream() {
-						return Stream.of(
-							_modelSearchSettings.getSearchClassNames());
-					}
+						@Override
+						public SearchContext getSearchContext() {
+							return searchContext;
+						}
 
-					@Override
-					public SearchContext getSearchContext() {
-						return searchContext;
-					}
-
-				});
-		}
+					});
+			});
 	}
 
 	protected void contributeSearchContext(SearchContext searchContext) {
@@ -268,7 +270,9 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 	private void _addSearchKeywords(
 		BooleanQuery booleanQuery, SearchContext searchContext) {
 
-		contribute(_keywordQueryContributors, searchContext, booleanQuery);
+		contribute(
+			_keywordQueryContributorsHolder.getAll(), booleanQuery,
+			searchContext);
 	}
 
 	private void _addSearchTermsFromIndexerPostProcessors(
@@ -328,9 +332,10 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 
 	private final IndexerPostProcessorsHolder _indexerPostProcessorsHolder;
 	private final IndexerRegistry _indexerRegistry;
-	private final Iterable<KeywordQueryContributor> _keywordQueryContributors;
-	private final Iterable<KeywordQueryContributor>
-		_modelKeywordQueryContributors;
+	private final KeywordQueryContributorsHolder
+		_keywordQueryContributorsHolder;
+	private final ModelKeywordQueryContributorsHolder
+		_modelKeywordQueryContributorsHolder;
 	private final Iterable<SearchContextContributor>
 		_modelSearchContextContributors;
 	private final ModelSearchSettings _modelSearchSettings;

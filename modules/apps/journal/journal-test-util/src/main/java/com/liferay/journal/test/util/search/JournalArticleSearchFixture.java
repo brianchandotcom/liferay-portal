@@ -51,6 +51,9 @@ public class JournalArticleSearchFixture {
 
 		ServiceContext serviceContext = getServiceContext(groupId, userId);
 
+		serviceContext.setAssetCategoryIds(
+			journalArticleBlueprint.getAssetCategoryIds());
+
 		if (journalArticleBlueprint.isWorkflowEnabled()) {
 			serviceContext.setWorkflowAction(
 				journalArticleBlueprint.getWorkflowAction());

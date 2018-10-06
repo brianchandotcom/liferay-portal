@@ -38,6 +38,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -49,6 +50,19 @@ public class UserSearchFixture {
 		Group group = GroupTestUtil.addGroup();
 
 		_groups.add(group);
+
+		return group;
+	}
+
+	public Group addGroup(GroupBlueprint groupBlueprint) throws Exception {
+		Group group = addGroup();
+
+		Locale locale = groupBlueprint.getDefaultLocale();
+
+		if (locale != null) {
+			GroupTestUtil.updateDisplaySettings(
+				group.getGroupId(), null, locale);
+		}
 
 		return group;
 	}

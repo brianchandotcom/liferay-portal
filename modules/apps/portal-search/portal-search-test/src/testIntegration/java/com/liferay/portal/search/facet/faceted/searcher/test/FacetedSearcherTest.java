@@ -90,7 +90,7 @@ public class FacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		Hits hits = search(searchContext);
 
-		assertTags(keywords, hits, expected);
+		assertTags(keywords, hits, expected, searchContext);
 	}
 
 	protected void deactivate(Group group) {

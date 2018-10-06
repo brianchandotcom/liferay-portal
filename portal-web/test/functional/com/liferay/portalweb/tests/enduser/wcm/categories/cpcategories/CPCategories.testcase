@@ -23,8 +23,8 @@
 			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 	</set-up>
 
@@ -195,10 +195,6 @@
 	</command>
 
 	<command name="AddCategoryViewableByAnyone" priority="4">
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<execute macro="Category#addCategoryViewableByCP">
 			<var name="categoryName" value="Category Name" />
 			<var name="viewableBy" value="Anyone (Guest Role)" />
@@ -217,10 +213,6 @@
 	</command>
 
 	<command name="AddCategoryViewableByOwner" priority="4">
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<execute macro="Category#addCategoryViewableByCP">
 			<var name="categoryName" value="Category Name" />
 			<var name="viewableBy" value="Owner" />
@@ -239,10 +231,6 @@
 	</command>
 
 	<command name="AddCategoryViewableBySiteMembers" priority="4">
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<execute macro="Category#addCategoryViewableByCP">
 			<var name="categoryName" value="Category Name" />
 			<var name="viewableBy" value="Site Members" />
@@ -365,10 +353,6 @@
 	</command>
 
 	<command name="AddVocabularyAssetTypeAllAssetTypes" priority="3">
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
 			<var name="assetType" value="All Asset Types" />
 			<var name="vocabularyName" value="Vocabulary Name 1" />
@@ -381,10 +365,6 @@
 	</command>
 
 	<command name="AddVocabularyAssetTypeBlogsEntry" priority="3">
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
 			<var name="assetType" value="Blogs Entry" />
 			<var name="vocabularyName" value="Vocabulary Name 1" />
@@ -415,10 +395,6 @@
 	</command>
 
 	<command name="AddVocabularyAssetTypeDocument" priority="3">
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
 			<var name="assetType" value="Document" />
 			<var name="vocabularyName" value="Vocabulary Name 1" />
@@ -431,10 +407,6 @@
 	</command>
 
 	<command name="AddVocabularyAssetTypes" priority="3">
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
 			<var name="assetType" value="Blogs Entry" />
 			<var name="vocabularyName" value="Vocabulary Name 1" />
@@ -461,10 +433,6 @@
 	</command>
 
 	<command name="AddVocabularyAssetTypeUser" priority="3">
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
 			<var name="assetType" value="User" />
 			<var name="vocabularyName" value="Vocabulary Name 1" />
@@ -477,10 +445,6 @@
 	</command>
 
 	<command name="AddVocabularyAssetTypeWebContent" priority="3">
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
 			<var name="assetType" value="Web Content Article" />
 			<var name="vocabularyName" value="Vocabulary Name 1" />
@@ -493,10 +457,6 @@
 	</command>
 
 	<command name="AddVocabularyAssetTypeWikiPage" priority="3">
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
 			<var name="assetType" value="Wiki Page" />
 			<var name="vocabularyName" value="Vocabulary Name 1" />
@@ -509,10 +469,6 @@
 	</command>
 
 	<command name="AddVocabularyDisallowMultipleCategories" priority="3">
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<execute macro="Vocabulary#addCP">
 			<var name="allowMultipleCategories" value="false" />
 			<var name="vocabularyName" value="Vocabulary Name 2" />
@@ -529,10 +485,6 @@
 	</command>
 
 	<command name="AddVocabularyViewableByGuest" priority="3">
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<execute macro="Vocabulary#addViewableByCP">
 			<var name="viewableBy" value="Anyone (Guest Role)" />
 			<var name="vocabularyName" value="Vocabulary Name 1" />
@@ -549,10 +501,6 @@
 	</command>
 
 	<command name="AddVocabularyViewableByOwner" priority="3">
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<execute macro="Vocabulary#addViewableByCP">
 			<var name="viewableBy" value="Owner" />
 			<var name="vocabularyName" value="Vocabulary Name 1" />
@@ -569,10 +517,6 @@
 	</command>
 
 	<command name="AddVocabularyViewableBySiteMembers" priority="3">
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<execute macro="Vocabulary#addViewableByCP">
 			<var name="viewableBy" value="Site Members" />
 			<var name="vocabularyName" value="Vocabulary Name 1" />
@@ -589,28 +533,16 @@
 	</command>
 
 	<command name="CannotAddCategoryWithNullTitle" priority="3">
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<execute macro="Category#addWithNullTitleCP">
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 	</command>
 
 	<command name="CannotAddVocabularyWithNullTitle" priority="3">
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<execute macro="Vocabulary#addVocabularyWithNullTitle" />
 	</command>
 
 	<command name="DeleteAssociatedAssetTypeViaVocabulary" priority="3">
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute macro="PortletEntry#inputName">
@@ -811,20 +743,12 @@
 	<command name="DeleteVocabulary" priority="5">
 		<property name="portal.acceptance" value="true" />
 
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<execute macro="Vocabulary#deleteByIconCP">
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 	</command>
 
 	<command name="DeleteVocabularyByMenu" priority="4">
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<execute macro="Vocabulary#deleteByMenuCP">
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
@@ -922,10 +846,6 @@
 		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Training" />
 
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<execute macro="JSONCategory#addCategoryByGroupName">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name 1" />
@@ -953,10 +873,6 @@
 
 	<command name="EditVocabulary" priority="5">
 		<property name="portal.acceptance" value="true" />
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
 
 		<execute macro="Vocabulary#editCP">
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -997,10 +913,6 @@
 	</command>
 
 	<command name="ValidateClickingCloseButtonDoesNotSaveVocabulary" priority="3">
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute macro="PortletEntry#inputName">

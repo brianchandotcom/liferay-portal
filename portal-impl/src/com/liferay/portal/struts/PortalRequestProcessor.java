@@ -457,7 +457,36 @@ public class PortalRequestProcessor {
 			ActionMapping actionMapping)
 		throws IOException {
 
-		Action originalAction = _processActionCreate(response, actionMapping);
+		Action originalAction = _actions.computeIfAbsent(
+			actionMapping.getType(),
+			classNameKey -> {
+				try {
+					Action action = (Action)RequestUtils.applicationInstance(
+						classNameKey);
+
+					if (action.getServlet() == null) {
+						action.setServlet(_actionServlet);
+					}
+
+					return action;
+				}
+				catch (Exception e) {
+					MessageResources messageResources =
+						_actionServlet.getInternal();
+
+					try {
+						response.sendError(
+							HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+							messageResources.getMessage(
+								"actionCreate", actionMapping.getPath()));
+					}
+					catch (IOException ioe) {
+						ReflectionUtil.throwException(ioe);
+					}
+
+					return null;
+				}
+			});
 
 		ActionAdapter actionAdapter =
 			(ActionAdapter)StrutsActionRegistryUtil.getAction(
@@ -1012,42 +1041,6 @@ public class PortalRequestProcessor {
 			internalModuleRelativeForward(
 				actionForward.getPath(), request, response);
 		}
-	}
-
-	private Action _processActionCreate(
-			HttpServletResponse response, ActionMapping actionMapping)
-		throws IOException {
-
-		return _actions.computeIfAbsent(
-			actionMapping.getType(),
-			classNameKey -> {
-				try {
-					Action action = (Action)RequestUtils.applicationInstance(
-						classNameKey);
-
-					if (action.getServlet() == null) {
-						action.setServlet(_actionServlet);
-					}
-
-					return action;
-				}
-				catch (Exception e) {
-					MessageResources messageResources =
-						_actionServlet.getInternal();
-
-					try {
-						response.sendError(
-							HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-							messageResources.getMessage(
-								"actionCreate", actionMapping.getPath()));
-					}
-					catch (IOException ioe) {
-						ReflectionUtil.throwException(ioe);
-					}
-
-					return null;
-				}
-			});
 	}
 
 	private ActionForm _processActionForm(

@@ -293,11 +293,6 @@ public class PortalRequestProcessor {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		if (request.getAttribute(Globals.ORIGINAL_URI_KEY) == null) {
-			request.setAttribute(
-				Globals.ORIGINAL_URI_KEY, request.getServletPath());
-		}
-
 		String path = (String)request.getAttribute(INCLUDE_PATH_INFO);
 
 		if (path == null) {

@@ -110,6 +110,7 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 
 			String methodPatternString = split[0];
 			String urlPatternString = split[1];
+
 			String scopesString = split[2];
 
 			String[] scopes = scopesString.split(StringPool.COMMA);

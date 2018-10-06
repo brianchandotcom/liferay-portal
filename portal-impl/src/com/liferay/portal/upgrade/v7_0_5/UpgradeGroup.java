@@ -146,6 +146,7 @@ public class UpgradeGroup extends UpgradeProcess {
 
 				while (rs1.next()) {
 					long groupId = rs1.getLong(1);
+
 					long parentGroupId = rs1.getLong(2);
 
 					ps2.setLong(1, parentGroupId);

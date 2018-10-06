@@ -165,6 +165,7 @@ public abstract class ClientDataRequestImpl
 		Map<String, String[]> parameterMap = getParameterMap();
 		Map<String, String[]> servletRequestParameterMap =
 			request.getParameterMap();
+
 		RenderParameters renderParameters = getRenderParameters();
 
 		Set<String> renderParameterNames = renderParameters.getNames();

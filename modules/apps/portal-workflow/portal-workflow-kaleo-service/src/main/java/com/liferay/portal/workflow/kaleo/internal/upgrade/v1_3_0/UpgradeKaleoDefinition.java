@@ -33,6 +33,7 @@ public class UpgradeKaleoDefinition extends UpgradeProcess {
 
 			while (rs.next()) {
 				long kaleoDefinitionId = rs.getLong(1);
+
 				String content = rs.getString(2);
 
 				content = content.replace(

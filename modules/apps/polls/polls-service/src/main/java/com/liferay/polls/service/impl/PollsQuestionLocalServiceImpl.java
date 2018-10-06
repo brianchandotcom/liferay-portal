@@ -453,6 +453,7 @@ public class PollsQuestionLocalServiceImpl
 		OrderByComparator<PollsQuestion> orderByComparator) {
 
 		String[] fields = orderByComparator.getOrderByFields();
+
 		boolean reverse = !orderByComparator.isAscending();
 		String field = fields[0];
 

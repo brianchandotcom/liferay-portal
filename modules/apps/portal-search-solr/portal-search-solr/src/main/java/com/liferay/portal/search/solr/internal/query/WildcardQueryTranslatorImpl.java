@@ -50,6 +50,7 @@ public class WildcardQueryTranslatorImpl implements WildcardQueryTranslator {
 	protected String escape(String value) {
 		int x = 0;
 		int y = 0;
+
 		int length = value.length();
 
 		StringBuilder sb = new StringBuilder(length * 2);

@@ -57,6 +57,7 @@ public class ServletAuthorizingFilter extends BasePortalFilter {
 		// Authorize
 
 		long userId = PortalUtil.getUserId(request);
+
 		String remoteUser = request.getRemoteUser();
 
 		if (!PropsValues.PORTAL_JAAS_ENABLE) {

@@ -59,6 +59,7 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
+
 		Date birthday = PortalUtil.getDate(
 			birthdayMonth, birthdayDay, birthdayYear,
 			ContactBirthdayException.class);

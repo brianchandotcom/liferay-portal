@@ -220,6 +220,7 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 			index += 1;
 
 			String path = inputFileName.substring(0, index);
+
 			String fileName = inputFileName.substring(index);
 
 			String outputFileName = _getOutputFileName(fileName);

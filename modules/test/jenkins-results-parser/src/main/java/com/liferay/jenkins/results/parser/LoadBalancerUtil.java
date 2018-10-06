@@ -220,6 +220,7 @@ public class LoadBalancerUtil {
 
 			for (int i = 0; i < overridePropertiesArray.length; i += 2) {
 				String overridePropertyName = overridePropertiesArray[i];
+
 				String overridePropertyValue = overridePropertiesArray[i + 1];
 
 				if (overridePropertyValue == null) {

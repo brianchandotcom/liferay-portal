@@ -226,6 +226,7 @@ public class PortletAppImpl implements PortletApp {
 	public void setSpriteImages(String spriteFileName, Properties properties) {
 		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 			String key = (String)entry.getKey();
+
 			String value = (String)entry.getValue();
 
 			int[] values = StringUtil.split(value, 0);

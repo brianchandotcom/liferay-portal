@@ -97,6 +97,7 @@ public class UpgradeJournalArticleImage extends UpgradeProcess {
 
 				while (rs.next()) {
 					long articleImageId = rs.getLong(1);
+
 					String elName = rs.getString(2);
 
 					int lastIndexOf = elName.lastIndexOf(StringPool.UNDERLINE);

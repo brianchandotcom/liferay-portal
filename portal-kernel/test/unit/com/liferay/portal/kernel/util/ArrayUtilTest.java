@@ -272,6 +272,7 @@ public class ArrayUtilTest {
 	@Test
 	public void testContainsUserArray() throws Exception {
 		User brian = new User("brian", 20);
+
 		User julio = new User("julio", 20);
 		User sergio = new User("sergio", 20);
 

@@ -76,6 +76,7 @@ public abstract class BaseUpgradeDBColumnSizeTestCase {
 	private void _assertSize(int size) throws Exception {
 		try (Connection connection = DataAccess.getConnection()) {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
 			DBInspector dbInspector = new DBInspector(connection);
 
 			String catalog = dbInspector.getCatalog();

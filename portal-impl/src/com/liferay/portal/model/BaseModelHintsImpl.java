@@ -453,6 +453,7 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 						validatorElement.attributeValue("error-message"));
 					String validatorValue = GetterUtil.getString(
 						validatorElement.getText());
+
 					boolean customValidator = isCustomValidator(validatorName);
 
 					if (customValidator) {

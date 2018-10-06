@@ -91,6 +91,7 @@ public class OrganizationServiceVerifyProcess extends VerifyProcess {
 
 					while (rs.next()) {
 						long classPK = rs.getLong("classPK");
+
 						String uuid = rs.getString("uuid");
 
 						ps2.setString(1, uuid);

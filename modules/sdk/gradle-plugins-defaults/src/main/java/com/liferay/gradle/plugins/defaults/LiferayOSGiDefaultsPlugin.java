@@ -696,6 +696,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					}
 
 					Logger logger = task.getLogger();
+
 					Project project = task.getProject();
 
 					boolean deleted = project.delete(oldCachedVersionDir);
@@ -4215,6 +4216,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 
 		Properties releaseVersions = null;
+
 		Properties versions = null;
 
 		if ((versionOverrideFile != null) && versionOverrideFile.exists()) {

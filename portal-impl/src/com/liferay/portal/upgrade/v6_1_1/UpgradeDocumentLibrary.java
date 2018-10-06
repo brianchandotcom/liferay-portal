@@ -68,6 +68,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 			while (rs.next()) {
 				String title = rs.getString("title");
+
 				String extension = GetterUtil.getString(
 					rs.getString("extension"));
 

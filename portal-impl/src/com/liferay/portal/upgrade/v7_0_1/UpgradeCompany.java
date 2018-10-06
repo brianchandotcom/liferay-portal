@@ -43,6 +43,7 @@ public class UpgradeCompany extends UpgradeProcess {
 
 			while (rs.next()) {
 				String companyId = rs.getString("companyId");
+
 				String keyString = rs.getString("key_");
 
 				Key key = (Key)Base64.stringToObject(keyString);

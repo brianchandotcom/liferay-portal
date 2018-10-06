@@ -6183,6 +6183,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		String[] orderByClauses = StringUtil.split(obc.getOrderBy());
+
 		String[] orderByFields = obc.getOrderByFields();
 
 		Sort[] sorts = new Sort[orderByFields.length];

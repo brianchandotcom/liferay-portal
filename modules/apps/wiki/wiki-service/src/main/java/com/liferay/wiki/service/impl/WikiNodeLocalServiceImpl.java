@@ -95,6 +95,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		// Node
 
 		User user = userLocalService.getUser(userId);
+
 		long groupId = serviceContext.getScopeGroupId();
 
 		validate(groupId, name);

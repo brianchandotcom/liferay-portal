@@ -37,6 +37,7 @@ public abstract class IgnoreModuleRequestFilter extends BasePortalFilter {
 
 	protected boolean isModuleRequest(HttpServletRequest request) {
 		String contextPath = request.getContextPath();
+
 		String requestURI = request.getRequestURI();
 
 		String resourcePath = requestURI;

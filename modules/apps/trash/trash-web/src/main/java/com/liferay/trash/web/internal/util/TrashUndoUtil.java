@@ -60,6 +60,7 @@ public class TrashUndoUtil {
 
 			String restoreEntryLink = trashHandler.getRestoreContainedModelLink(
 				actionRequest, entry.getValue());
+
 			String restoreLink = trashHandler.getRestoreContainerModelLink(
 				actionRequest, entry.getValue());
 			String restoreMessage = trashHandler.getRestoreMessage(

@@ -68,6 +68,7 @@ public class AssetCategoryDocumentContributor implements DocumentContributor {
 
 			for (Map.Entry<Locale, String> entry : titleMap.entrySet()) {
 				Locale locale = entry.getKey();
+
 				String title = entry.getValue();
 
 				if (Validator.isNull(title)) {
@@ -85,6 +86,7 @@ public class AssetCategoryDocumentContributor implements DocumentContributor {
 				assetCategoryTitles.entrySet()) {
 
 			Locale locale = entry.getKey();
+
 			List<String> titles = entry.getValue();
 
 			String[] titlesArray = titles.toArray(new String[titles.size()]);

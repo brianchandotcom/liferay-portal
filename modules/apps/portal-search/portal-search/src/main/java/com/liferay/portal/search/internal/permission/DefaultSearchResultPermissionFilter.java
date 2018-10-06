@@ -168,6 +168,7 @@ public class DefaultSearchResultPermissionFilter
 			(searchContext.getEnd() != QueryUtil.ALL_POS)) {
 
 			int end = searchContext.getEnd();
+
 			int start = searchContext.getStart();
 
 			if (start == QueryUtil.ALL_POS) {
@@ -370,6 +371,7 @@ public class DefaultSearchResultPermissionFilter
 			Hits hits, int accumulatedCount, int start, int end) {
 
 			int delta = end - start;
+
 			Document[] docs = hits.getDocs();
 
 			int remaining = docs.length;

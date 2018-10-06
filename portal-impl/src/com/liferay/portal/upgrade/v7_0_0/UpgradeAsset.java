@@ -128,6 +128,7 @@ public class UpgradeAsset extends UpgradeProcess {
 
 			while (rs.next()) {
 				long vocabularyId = rs.getLong("vocabularyId");
+
 				String settings = rs.getString("settings_");
 
 				ps2.setString(1, upgradeVocabularySettings(settings));

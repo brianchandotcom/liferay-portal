@@ -127,12 +127,12 @@ public class PortalRequestProcessor {
 		"javax.servlet.include.servlet_path";
 
 	public PortalRequestProcessor(
-		ActionServlet servlet, ModuleConfig moduleConfig) {
+		ActionServlet actionServlet, ModuleConfig moduleConfig) {
 
-		this.servlet = servlet;
-		this.moduleConfig = moduleConfig;
+		_actionServlet = actionServlet;
+		_moduleConfig = moduleConfig;
 
-		ServletContext servletContext = servlet.getServletContext();
+		ServletContext servletContext = actionServlet.getServletContext();
 
 		_definitions = (Map<String, Definition>)
 			servletContext.getAttribute(TilesUtil.DEFINITIONS);
@@ -176,7 +176,7 @@ public class PortalRequestProcessor {
 		String path = _processPath(request, response);
 
 		ActionMapping actionMapping =
-			(ActionMapping)moduleConfig.findActionConfig(path);
+			(ActionMapping)_moduleConfig.findActionConfig(path);
 
 		if ((actionMapping == null) &&
 			(StrutsActionRegistryUtil.getAction(path) == null)) {
@@ -263,7 +263,8 @@ public class PortalRequestProcessor {
 			HttpServletResponse response)
 		throws ServletException {
 
-		StrutsUtil.forward(uri, servlet.getServletContext(), request, response);
+		StrutsUtil.forward(
+			uri, _actionServlet.getServletContext(), request, response);
 	}
 
 	protected void doInclude(
@@ -271,7 +272,8 @@ public class PortalRequestProcessor {
 			HttpServletResponse response)
 		throws ServletException {
 
-		StrutsUtil.include(uri, servlet.getServletContext(), request, response);
+		StrutsUtil.include(
+			uri, _actionServlet.getServletContext(), request, response);
 	}
 
 	protected String getFriendlyTrackerPath(
@@ -410,7 +412,7 @@ public class PortalRequestProcessor {
 
 		if (contextPath.equals(themeDisplay.getPathMain())) {
 			ActionMapping actionMapping =
-				(ActionMapping)moduleConfig.findActionConfig(
+				(ActionMapping)_moduleConfig.findActionConfig(
 					lastPath.getPath());
 
 			if ((actionMapping == null) || parameters.isEmpty()) {
@@ -477,7 +479,7 @@ public class PortalRequestProcessor {
 				actionMapping.getPath());
 
 		if (actionAdapter != null) {
-			ActionConfig actionConfig = moduleConfig.findActionConfig(
+			ActionConfig actionConfig = _moduleConfig.findActionConfig(
 				actionMapping.getPath());
 
 			if (actionConfig != null) {
@@ -518,12 +520,12 @@ public class PortalRequestProcessor {
 
 		if (action != null) {
 			ActionMapping actionMapping =
-				(ActionMapping)moduleConfig.findActionConfig(path);
+				(ActionMapping)_moduleConfig.findActionConfig(path);
 
 			if (actionMapping == null) {
 				actionMapping = new ActionMapping();
 
-				actionMapping.setModuleConfig(moduleConfig);
+				actionMapping.setModuleConfig(_moduleConfig);
 				actionMapping.setPath(path);
 
 				request.setAttribute(Globals.MAPPING_KEY, actionMapping);
@@ -535,7 +537,7 @@ public class PortalRequestProcessor {
 		ActionMapping actionMapping = _processMapping(request, response, path);
 
 		if (actionMapping == null) {
-			MessageResources messageResources = servlet.getInternal();
+			MessageResources messageResources = _actionServlet.getInternal();
 
 			String msg = messageResources.getMessage("processInvalid");
 
@@ -794,7 +796,7 @@ public class PortalRequestProcessor {
 		}
 
 		ActionMapping actionMapping =
-			(ActionMapping)moduleConfig.findActionConfig(path);
+			(ActionMapping)_moduleConfig.findActionConfig(path);
 
 		if (actionMapping == null) {
 			Action strutsAction = StrutsActionRegistryUtil.getAction(path);
@@ -857,7 +859,7 @@ public class PortalRequestProcessor {
 			return;
 		}
 
-		actionForm.setServlet(servlet);
+		actionForm.setServlet(_actionServlet);
 		actionForm.reset(actionMapping, request);
 
 		if (actionMapping.getMultipartClass() != null) {
@@ -969,10 +971,6 @@ public class PortalRequestProcessor {
 		return true;
 	}
 
-	protected final Map<String, Action> actions = new ConcurrentHashMap<>();
-	protected ModuleConfig moduleConfig;
-	protected ActionServlet servlet;
-
 	private void _process(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
@@ -1049,7 +1047,7 @@ public class PortalRequestProcessor {
 			HttpServletResponse response, ActionMapping actionMapping)
 		throws IOException {
 
-		return actions.computeIfAbsent(
+		return _actions.computeIfAbsent(
 			actionMapping.getType(),
 			classNameKey -> {
 				try {
@@ -1057,13 +1055,14 @@ public class PortalRequestProcessor {
 						classNameKey);
 
 					if (action.getServlet() == null) {
-						action.setServlet(servlet);
+						action.setServlet(_actionServlet);
 					}
 
 					return action;
 				}
 				catch (Exception e) {
-					MessageResources messageResources = servlet.getInternal();
+					MessageResources messageResources =
+						_actionServlet.getInternal();
 
 					try {
 						response.sendError(
@@ -1084,7 +1083,7 @@ public class PortalRequestProcessor {
 		HttpServletRequest request, ActionMapping mapping) {
 
 		ActionForm actionForm = RequestUtils.createActionForm(
-			request, mapping, moduleConfig, servlet);
+			request, mapping, _moduleConfig, _actionServlet);
 
 		if (actionForm == null) {
 			return null;
@@ -1139,7 +1138,7 @@ public class PortalRequestProcessor {
 	}
 
 	private void _processContent(HttpServletResponse response) {
-		ControllerConfig controllerConfig = moduleConfig.getControllerConfig();
+		ControllerConfig controllerConfig = _moduleConfig.getControllerConfig();
 
 		String contentType = controllerConfig.getContentType();
 
@@ -1195,7 +1194,7 @@ public class PortalRequestProcessor {
 		}
 
 		String actionIdPath = RequestUtils.actionIdURL(
-			forward, moduleConfig, servlet);
+			forward, _moduleConfig, _actionServlet);
 
 		if (actionIdPath != null) {
 			forward = actionIdPath;
@@ -1218,19 +1217,19 @@ public class PortalRequestProcessor {
 		}
 
 		String actionIdPath = RequestUtils.actionIdURL(
-			include, moduleConfig, servlet);
+			include, _moduleConfig, _actionServlet);
 
 		if (actionIdPath != null) {
 			include = actionIdPath;
 		}
 
-		doInclude(moduleConfig.getPrefix() + include, request, response);
+		doInclude(_moduleConfig.getPrefix() + include, request, response);
 
 		return false;
 	}
 
 	private void _processLocale(HttpServletRequest request) {
-		ControllerConfig controllerConfig = moduleConfig.getControllerConfig();
+		ControllerConfig controllerConfig = _moduleConfig.getControllerConfig();
 
 		if (!controllerConfig.getLocale()) {
 			return;
@@ -1255,7 +1254,7 @@ public class PortalRequestProcessor {
 		throws IOException {
 
 		ActionMapping actionMapping =
-			(ActionMapping)moduleConfig.findActionConfig(path);
+			(ActionMapping)_moduleConfig.findActionConfig(path);
 
 		if (actionMapping != null) {
 			request.setAttribute(Globals.MAPPING_KEY, actionMapping);
@@ -1263,7 +1262,7 @@ public class PortalRequestProcessor {
 			return actionMapping;
 		}
 
-		for (ActionConfig actionConfig : moduleConfig.findActionConfigs()) {
+		for (ActionConfig actionConfig : _moduleConfig.findActionConfigs()) {
 			if (actionConfig.getUnknown()) {
 				request.setAttribute(Globals.MAPPING_KEY, actionConfig);
 
@@ -1271,7 +1270,7 @@ public class PortalRequestProcessor {
 			}
 		}
 
-		MessageResources messageResources = servlet.getInternal();
+		MessageResources messageResources = _actionServlet.getInternal();
 
 		response.sendError(
 			HttpServletResponse.SC_NOT_FOUND,
@@ -1281,7 +1280,7 @@ public class PortalRequestProcessor {
 	}
 
 	private void _processNoCache(HttpServletResponse response) {
-		ControllerConfig controllerConfig = moduleConfig.getControllerConfig();
+		ControllerConfig controllerConfig = _moduleConfig.getControllerConfig();
 
 		if (controllerConfig.getNocache()) {
 			response.setHeader("Pragma", "No-cache");
@@ -1315,10 +1314,10 @@ public class PortalRequestProcessor {
 			path = request.getServletPath();
 		}
 
-		String prefix = moduleConfig.getPrefix();
+		String prefix = _moduleConfig.getPrefix();
 
 		if (!path.startsWith(prefix)) {
-			MessageResources messageResources = servlet.getInternal();
+			MessageResources messageResources = _actionServlet.getInternal();
 
 			String message = messageResources.getMessage("processPath");
 
@@ -1369,7 +1368,7 @@ public class PortalRequestProcessor {
 		String input = actionMapping.getInput();
 
 		if (input == null) {
-			MessageResources messageResources = servlet.getInternal();
+			MessageResources messageResources = _actionServlet.getInternal();
 
 			response.sendError(
 				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
@@ -1381,7 +1380,7 @@ public class PortalRequestProcessor {
 
 		request.setAttribute(Globals.ERROR_KEY, actionMessages);
 
-		ControllerConfig controllerConfig = moduleConfig.getControllerConfig();
+		ControllerConfig controllerConfig = _moduleConfig.getControllerConfig();
 
 		if (controllerConfig.getInputForward()) {
 			ForwardConfig forwardConfig = actionMapping.findForward(input);
@@ -1468,8 +1467,11 @@ public class PortalRequestProcessor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalRequestProcessor.class);
 
+	private final Map<String, Action> _actions = new ConcurrentHashMap<>();
+	private final ActionServlet _actionServlet;
 	private final Map<String, Definition> _definitions;
 	private final Set<String> _lastPaths;
+	private final ModuleConfig _moduleConfig;
 	private final Set<String> _publicPaths;
 	private final Set<String> _trackerIgnorePaths;
 

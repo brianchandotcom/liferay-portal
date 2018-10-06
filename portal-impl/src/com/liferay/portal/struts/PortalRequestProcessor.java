@@ -14,6 +14,7 @@
 
 package com.liferay.portal.struts;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LayoutPermissionException;
@@ -72,11 +73,11 @@ import java.io.IOException;
 
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
@@ -968,7 +969,7 @@ public class PortalRequestProcessor {
 		return true;
 	}
 
-	protected Map<String, Action> actions = new HashMap<>();
+	protected final Map<String, Action> actions = new ConcurrentHashMap<>();
 	protected ModuleConfig moduleConfig;
 	protected ActionServlet servlet;
 
@@ -1048,37 +1049,35 @@ public class PortalRequestProcessor {
 			HttpServletResponse response, ActionMapping actionMapping)
 		throws IOException {
 
-		String className = actionMapping.getType();
+		return actions.computeIfAbsent(
+			actionMapping.getType(),
+			classNameKey -> {
+				try {
+					Action action = (Action)RequestUtils.applicationInstance(
+						classNameKey);
 
-		synchronized (actions) {
-			Action action = (Action)actions.get(className);
+					if (action.getServlet() == null) {
+						action.setServlet(servlet);
+					}
 
-			if (action != null) {
-				return action;
-			}
+					return action;
+				}
+				catch (Exception e) {
+					MessageResources messageResources = servlet.getInternal();
 
-			try {
-				action = (Action)RequestUtils.applicationInstance(className);
-			}
-			catch (Exception e) {
-				MessageResources messageResources = servlet.getInternal();
+					try {
+						response.sendError(
+							HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+							messageResources.getMessage(
+								"actionCreate", actionMapping.getPath()));
+					}
+					catch (IOException ioe) {
+						ReflectionUtil.throwException(ioe);
+					}
 
-				response.sendError(
-					HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-					messageResources.getMessage(
-						"actionCreate", actionMapping.getPath()));
-
-				return null;
-			}
-
-			actions.put(className, action);
-
-			if (action.getServlet() == null) {
-				action.setServlet(servlet);
-			}
-
-			return action;
-		}
+					return null;
+				}
+			});
 	}
 
 	private ActionForm _processActionForm(

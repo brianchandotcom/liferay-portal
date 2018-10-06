@@ -29,6 +29,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 
+	testCompile group: "commons-configuration", name: "commons-configuration", version: "1.10"
 	testCompile group: "commons-httpclient", name: "commons-httpclient", version: "3.1"
 	testCompile group: "easyconf", name: "easyconf", version: "0.9.5"
 	testCompile group: "org.jabsorb", name: "jabsorb", version: "1.3.1"
@@ -37,4 +38,6 @@ dependencies {
 	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.7"
 	testCompile group: "org.springframework", name: "spring-web", version: "4.1.9.RELEASE"
 	testCompile project(":apps:portal-search:portal-search")
+	testCompile project(":core:petra:petra-memory")
+	testCompile project(":core:petra:petra-reflect")
 }

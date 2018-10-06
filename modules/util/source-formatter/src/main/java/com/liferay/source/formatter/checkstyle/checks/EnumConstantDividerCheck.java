@@ -37,19 +37,21 @@ public class EnumConstantDividerCheck extends BaseEnumConstantCheck {
 	private void _checkDivider(
 		DetailAST enumConstantDefAST1, DetailAST enumConstantDefAST2) {
 
-		int endLineConstant1 = DetailASTUtil.getEndLine(enumConstantDefAST1);
-		int startLineConstant2 = DetailASTUtil.getStartLine(
+		int endLineNumberConstant1 = DetailASTUtil.getEndLineNumber(
+			enumConstantDefAST1);
+		int startLineNumberConstant2 = DetailASTUtil.getStartLineNumber(
 			enumConstantDefAST2);
 
-		if (endLineConstant1 == startLineConstant2) {
+		if (endLineNumberConstant1 == startLineNumberConstant2) {
 			return;
 		}
 
-		String nextLine = getLine(endLineConstant1);
-		String nextNextLine = StringUtil.trim(getLine(endLineConstant1 + 1));
+		String nextLine = getLine(endLineNumberConstant1);
+		String nextNextLine = StringUtil.trim(
+			getLine(endLineNumberConstant1 + 1));
 
 		if (Validator.isNull(nextLine) && !nextNextLine.startsWith("/")) {
-			log(endLineConstant1 + 1, _MSG_UNNECESSARY_EMPTY_LINE);
+			log(endLineNumberConstant1 + 1, _MSG_UNNECESSARY_EMPTY_LINE);
 		}
 	}
 

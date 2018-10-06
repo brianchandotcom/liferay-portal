@@ -31,8 +31,8 @@ public class TernaryOperatorCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		if (DetailASTUtil.getStartLine(detailAST) !=
-				DetailASTUtil.getEndLine(detailAST)) {
+		if (DetailASTUtil.getStartLineNumber(detailAST) !=
+				DetailASTUtil.getEndLineNumber(detailAST)) {
 
 			log(detailAST, _MSG_AVOID_TERNARY_OPERATOR);
 		}

@@ -258,24 +258,6 @@ public class PortalRequestProcessor {
 		request.setAttribute(WebKeys.PORTLET_STRUTS_EXECUTE, Boolean.TRUE);
 	}
 
-	protected void doForward(
-			String uri, HttpServletRequest request,
-			HttpServletResponse response)
-		throws ServletException {
-
-		StrutsUtil.forward(
-			uri, _actionServlet.getServletContext(), request, response);
-	}
-
-	protected void doInclude(
-			String uri, HttpServletRequest request,
-			HttpServletResponse response)
-		throws ServletException {
-
-		StrutsUtil.include(
-			uri, _actionServlet.getServletContext(), request, response);
-	}
-
 	protected String getFriendlyTrackerPath(
 			String path, ThemeDisplay themeDisplay, HttpServletRequest request)
 		throws Exception {
@@ -443,7 +425,8 @@ public class PortalRequestProcessor {
 			uri = definition.getPath();
 		}
 
-		doForward(uri, request, response);
+		StrutsUtil.forward(
+			uri, _actionServlet.getServletContext(), request, response);
 	}
 
 	protected boolean isPortletPath(String path) {
@@ -1223,7 +1206,9 @@ public class PortalRequestProcessor {
 			include = actionIdPath;
 		}
 
-		doInclude(_moduleConfig.getPrefix() + include, request, response);
+		StrutsUtil.include(
+			_moduleConfig.getPrefix() + include,
+			_actionServlet.getServletContext(), request, response);
 
 		return false;
 	}

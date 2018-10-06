@@ -14,12 +14,12 @@
 			<var name="tabName" value="Mapping" />
 		</execute>
 
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD">
 			<var name="key_fragmentName" value="${fragmentName}" />
 			<var name="key_id" value="${id}" />
 		</execute>
 
-		<execute function="Click" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT">
+		<execute function="Click" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD">
 			<var name="key_fragmentName" value="${fragmentName}" />
 			<var name="key_id" value="${id}" />
 		</execute>

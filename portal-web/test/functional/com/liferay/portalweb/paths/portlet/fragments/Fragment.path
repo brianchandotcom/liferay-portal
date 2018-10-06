@@ -81,12 +81,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT</td>
+	<td>PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD</td>
 	<td>//div[contains(@class,'fragment-entry-link')]/div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${key_id}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT_CK_EDITOR</td>
+	<td>PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD_CK_EDITOR</td>
 	<td>//div[contains(@class,'fragment-entry-link')]/div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${key_id}')]//div[contains(@class,'cke_editable_inline')]</td>
 	<td></td>
 </tr>

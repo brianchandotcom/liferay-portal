@@ -535,8 +535,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 			return actionMapping;
 		}
 
-		ActionMapping actionMapping = super.processMapping(
-			request, response, path);
+		ActionMapping actionMapping = _processMapping(request, response, path);
 
 		if (actionMapping == null) {
 			MessageResources messageResources = getInternal();
@@ -1106,6 +1105,37 @@ public class PortalRequestProcessor extends RequestProcessor {
 		if (locale != null) {
 			session.setAttribute(Globals.LOCALE_KEY, locale);
 		}
+	}
+
+	private ActionMapping _processMapping(
+			HttpServletRequest request, HttpServletResponse response,
+			String path)
+		throws IOException {
+
+		ActionMapping actionMapping =
+			(ActionMapping)moduleConfig.findActionConfig(path);
+
+		if (actionMapping != null) {
+			request.setAttribute(Globals.MAPPING_KEY, actionMapping);
+
+			return actionMapping;
+		}
+
+		for (ActionConfig actionConfig : moduleConfig.findActionConfigs()) {
+			if (actionConfig.getUnknown()) {
+				request.setAttribute(Globals.MAPPING_KEY, actionConfig);
+
+				return (ActionMapping)actionConfig;
+			}
+		}
+
+		MessageResources messageResources = getInternal();
+
+		response.sendError(
+			HttpServletResponse.SC_NOT_FOUND,
+			messageResources.getMessage("processInvalid"));
+
+		return null;
 	}
 
 	private void _processNoCache(HttpServletResponse response) {

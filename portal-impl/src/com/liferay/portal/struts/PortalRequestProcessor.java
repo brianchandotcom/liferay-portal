@@ -457,6 +457,8 @@ public class PortalRequestProcessor {
 			ActionMapping actionMapping)
 		throws IOException {
 
+		Action originalAction = _processActionCreate(response, actionMapping);
+
 		ActionAdapter actionAdapter =
 			(ActionAdapter)StrutsActionRegistryUtil.getAction(
 				actionMapping.getPath());
@@ -466,16 +468,13 @@ public class PortalRequestProcessor {
 				actionMapping.getPath());
 
 			if (actionConfig != null) {
-				Action originalAction = _processActionCreate(
-					response, actionMapping);
-
 				actionAdapter.setOriginalAction(originalAction);
 			}
 
 			return actionAdapter;
 		}
 
-		return _processActionCreate(response, actionMapping);
+		return originalAction;
 	}
 
 	protected ActionMapping processMapping(

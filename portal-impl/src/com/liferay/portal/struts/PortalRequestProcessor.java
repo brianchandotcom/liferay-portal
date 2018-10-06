@@ -478,18 +478,6 @@ public class PortalRequestProcessor {
 		return _processActionCreate(response, actionMapping);
 	}
 
-	protected void processForwardConfig(
-			HttpServletRequest request, HttpServletResponse response,
-			ForwardConfig forward)
-		throws IOException, ServletException {
-
-		if (forward == null) {
-			return;
-		}
-
-		internalModuleRelativeForward(forward.getPath(), request, response);
-	}
-
 	protected ActionMapping processMapping(
 			HttpServletRequest request, HttpServletResponse response,
 			String path)
@@ -946,7 +934,10 @@ public class PortalRequestProcessor {
 			ForwardConfig forwardConfig = actionMapping.findForward(
 				_PATH_PORTAL_ERROR);
 
-			processForwardConfig(request, response, forwardConfig);
+			if (forwardConfig != null) {
+				internalModuleRelativeForward(
+					forwardConfig.getPath(), request, response);
+			}
 
 			return false;
 		}
@@ -992,10 +983,13 @@ public class PortalRequestProcessor {
 			}
 		}
 		catch (InvalidCancelException ice) {
-			ActionForward forward = _processException(
+			ActionForward actionForward = _processException(
 				request, response, ice, actionForm, mapping);
 
-			processForwardConfig(request, response, forward);
+			if (actionForward != null) {
+				internalModuleRelativeForward(
+					actionForward.getPath(), request, response);
+			}
 
 			return;
 		}
@@ -1023,7 +1017,10 @@ public class PortalRequestProcessor {
 		ActionForward actionForward = _processActionPerform(
 			request, response, action, actionForm, mapping);
 
-		processForwardConfig(request, response, actionForward);
+		if (actionForward != null) {
+			internalModuleRelativeForward(
+				actionForward.getPath(), request, response);
+		}
 	}
 
 	private Action _processActionCreate(
@@ -1370,7 +1367,10 @@ public class PortalRequestProcessor {
 		if (controllerConfig.getInputForward()) {
 			ForwardConfig forwardConfig = actionMapping.findForward(input);
 
-			processForwardConfig(request, response, forwardConfig);
+			if (forwardConfig != null) {
+				internalModuleRelativeForward(
+					forwardConfig.getPath(), request, response);
+			}
 		}
 		else {
 			internalModuleRelativeForward(input, request, response);

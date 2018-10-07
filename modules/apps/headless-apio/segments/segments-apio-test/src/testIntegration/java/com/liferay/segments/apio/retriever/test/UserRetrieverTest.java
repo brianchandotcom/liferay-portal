@@ -16,7 +16,6 @@ package com.liferay.segments.apio.retriever.test;
 
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
 
-import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -30,7 +29,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.segments.retriever.UserRetriever;
-import com.liferay.segments.util.PaginationTestUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -75,17 +73,14 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		PageItems<User> pageItems = _userRetriever.getUsers(
+		List<User> users = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
 				"(firstName eq '%s') and (dateModified eq %s)", firstName,
 				ISO8601Utils.format(_user1.getModifiedDate())),
-			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
+			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, pageItems.getTotalCount());
-
-		List<User> users = (List<User>)pageItems.getItems();
-
+		Assert.assertEquals(1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -103,18 +98,15 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		PageItems<User> pageItems = _userRetriever.getUsers(
+		List<User> users = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
 				"(firstName eq '%s') and (dateModified gt %s)", firstName,
 				ISO8601Utils.format(_user1.getModifiedDate())),
-			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
+			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, pageItems.getTotalCount());
-
-		List<User> users = (List<User>)pageItems.getItems();
-
-		Assert.assertEquals(_user2, users.get(0));
+		Assert.assertEquals(1, users.size());
+		Assert.assertEquals(_user1, users.get(0));
 	}
 
 	@Test
@@ -135,17 +127,14 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		PageItems<User> pageItems = _userRetriever.getUsers(
+		List<User> users = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
 				"(firstName eq '%s') and (dateModified ge %s)", firstName,
 				ISO8601Utils.format(inBetween)),
-			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
+			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, pageItems.getTotalCount());
-
-		List<User> users = (List<User>)pageItems.getItems();
-
+		Assert.assertEquals(1, users.size());
 		Assert.assertEquals(_user2, users.get(0));
 	}
 
@@ -163,17 +152,14 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		PageItems<User> pageItems = _userRetriever.getUsers(
+		List<User> users = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
 				"(firstName eq '%s') and (dateModified lt %s)", firstName,
 				ISO8601Utils.format(_user2.getModifiedDate())),
-			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
+			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, pageItems.getTotalCount());
-
-		List<User> users = (List<User>)pageItems.getItems();
-
+		Assert.assertEquals(1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -195,17 +181,14 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		PageItems<User> pageItems = _userRetriever.getUsers(
+		List<User> users = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
 				"(firstName eq '%s') and (dateModified le %s)", firstName,
 				ISO8601Utils.format(inBetween)),
-			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
+			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, pageItems.getTotalCount());
-
-		List<User> users = (List<User>)pageItems.getItems();
-
+		Assert.assertEquals(1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -216,15 +199,12 @@ public class UserRetrieverTest {
 
 		String expectedEmailAddress = _user1.getEmailAddress();
 
-		PageItems<User> pageItems = _userRetriever.getUsers(
+		List<User> users = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			"(emailAddress eq '" + expectedEmailAddress + "')",
-			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
+			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, pageItems.getTotalCount());
-
-		List<User> users = (List<User>)pageItems.getItems();
-
+		Assert.assertEquals(1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -237,15 +217,12 @@ public class UserRetrieverTest {
 
 		String expectedFirstName = _user1.getFirstName();
 
-		PageItems<User> pageItems = _userRetriever.getUsers(
+		List<User> users = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			"(firstName eq '" + expectedFirstName + "')",
-			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
+			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, pageItems.getTotalCount());
-
-		List<User> users = (List<User>)pageItems.getItems();
-
+		Assert.assertEquals(1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -256,16 +233,13 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new long[] {_group1.getGroupId()});
 
-		PageItems<User> pageItems = _userRetriever.getUsers(
+		List<User> users = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			"(firstName eq '" + _user1.getFirstName() + "') and (lastName eq " +
 				"'" + _user1.getLastName() + "') ",
-			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
+			LocaleUtil.getDefault(), 0, 2);
 
-		List<User> users = (List<User>)pageItems.getItems();
-
-		Assert.assertEquals(1, pageItems.getTotalCount());
-
+		Assert.assertEquals(1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -281,13 +255,13 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new long[] {_group1.getGroupId()});
 
-		PageItems<User> pageItems = _userRetriever.getUsers(
+		List<User> users = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			"(firstName eq '" + _user1.getFirstName() + "') or (lastName eq '" +
 				_user2.getLastName() + "') ",
-			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
+			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(2, pageItems.getTotalCount());
+		Assert.assertEquals(2, users.size());
 	}
 
 	@Test
@@ -299,16 +273,13 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new long[] {_group1.getGroupId()});
 
-		PageItems<User> pageItems = _userRetriever.getUsers(
+		List<User> users = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			"(firstName eq '" + _user1.getFirstName() +
 				"') or (lastName eq 'nonExistingLastName') ",
-			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
+			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, pageItems.getTotalCount());
-
-		List<User> users = (List<User>)pageItems.getItems();
-
+		Assert.assertEquals(1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -321,16 +292,13 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new long[] {_group1.getGroupId()});
 
-		PageItems<User> pageItems = _userRetriever.getUsers(
+		List<User> users = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			"(firstName eq '" + _user1.getFirstName() + "') or (lastName eq '" +
 				_user1.getLastName() + "') ",
-			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
+			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, pageItems.getTotalCount());
-
-		List<User> users = (List<User>)pageItems.getItems();
-
+		Assert.assertEquals(1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -347,16 +315,13 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		PageItems<User> pageItems = _userRetriever.getUsers(
+		List<User> users = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			"(firstName eq '" + firstName + "') and (groupId eq '" +
 				_group2.getGroupId() + "')",
-			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
+			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, pageItems.getTotalCount());
-
-		List<User> users = (List<User>)pageItems.getItems();
-
+		Assert.assertEquals(1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -373,16 +338,13 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		PageItems<User> pageItems = _userRetriever.getUsers(
+		List<User> users = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			"(firstName eq '" + firstName + "') and (groupIds eq '" +
 				_group2.getGroupId() + "')",
-			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
+			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, pageItems.getTotalCount());
-
-		List<User> users = (List<User>)pageItems.getItems();
-
+		Assert.assertEquals(1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -399,14 +361,14 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		PageItems<User> pageItems = _userRetriever.getUsers(
+		List<User> users = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			"(firstName eq '" + firstName + "') and ((groupIds eq '" +
 				_group2.getGroupId() + "') or (groupIds eq '" +
 					_group1.getGroupId() + "'))",
-			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
+			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(2, pageItems.getTotalCount());
+		Assert.assertEquals(2, users.size());
 	}
 
 	@Test
@@ -418,14 +380,11 @@ public class UserRetrieverTest {
 
 		String expectedLastName = _user1.getLastName();
 
-		PageItems<User> pageItems = _userRetriever.getUsers(
+		List<User> users = _userRetriever.getUsers(
 			_group1.getCompanyId(), "(lastName eq '" + expectedLastName + "')",
-			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
+			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, pageItems.getTotalCount());
-
-		List<User> users = (List<User>)pageItems.getItems();
-
+		Assert.assertEquals(1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -442,17 +401,14 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		PageItems<User> pageItems = _userRetriever.getUsers(
+		List<User> users = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			"(firstName eq '" + firstName + "') and (groupIds eq '" +
 				_group2.getGroupId() + "') and (groupIds eq '" +
 					_group1.getGroupId() + "')",
-			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
+			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, pageItems.getTotalCount());
-
-		List<User> users = (List<User>)pageItems.getItems();
-
+		Assert.assertEquals(1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -465,15 +421,12 @@ public class UserRetrieverTest {
 
 		String expectedScreenName = _user1.getScreenName();
 
-		PageItems<User> pageItems = _userRetriever.getUsers(
+		List<User> users = _userRetriever.getUsers(
 			_group1.getCompanyId(),
 			"(screenName eq '" + expectedScreenName + "')",
-			LocaleUtil.getDefault(), PaginationTestUtil.of(10, 1));
+			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, pageItems.getTotalCount());
-
-		List<User> users = (List<User>)pageItems.getItems();
-
+		Assert.assertEquals(1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 

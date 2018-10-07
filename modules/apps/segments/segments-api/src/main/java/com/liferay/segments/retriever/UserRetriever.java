@@ -14,11 +14,10 @@
 
 package com.liferay.segments.retriever;
 
-import com.liferay.apio.architect.pagination.PageItems;
-import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -26,8 +25,9 @@ import java.util.Locale;
  */
 public interface UserRetriever {
 
-	public PageItems<User> getUsers(
-			long companyId, String filter, Locale locale, Pagination pagination)
+	public List<User> getUsers(
+			long companyId, String filterString, Locale locale, int start,
+			int end)
 		throws PortalException;
 
 }

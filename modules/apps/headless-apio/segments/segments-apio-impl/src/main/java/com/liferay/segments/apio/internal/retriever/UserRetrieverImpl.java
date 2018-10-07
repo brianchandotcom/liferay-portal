@@ -14,8 +14,6 @@
 
 package com.liferay.segments.apio.internal.retriever;
 
-import com.liferay.apio.architect.pagination.PageItems;
-import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -66,14 +64,42 @@ import org.osgi.service.component.annotations.Reference;
 public class UserRetrieverImpl implements UserRetriever {
 
 	@Override
-	public PageItems<User> getUsers(
-			long companyId, String filter, Locale locale, Pagination pagination)
+	public List<User> getUsers(
+			long companyId, String filterString, Locale locale, int start,
+			int end)
 		throws PortalException {
 
 		try {
-			return _getUsersPageItems(
-				companyId, new Filter(_filterParser.parse(filter)), locale,
-				pagination);
+			Filter filter = (Filter)_filterParser.parse(filterString);
+
+			SearchContext searchContext = _createSearchContext(
+				companyId, start, end);
+
+			Query fullQuery = _getFullQuery(filter, locale, searchContext);
+
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			Hits hits;
+
+			if (permissionChecker != null) {
+				if (searchContext.getUserId() == 0) {
+					searchContext.setUserId(permissionChecker.getUserId());
+				}
+
+				SearchResultPermissionFilter searchResultPermissionFilter =
+					_searchResultPermissionFilterFactory.create(
+						searchContext1 -> IndexSearcherHelperUtil.search(
+							searchContext1, fullQuery),
+						permissionChecker);
+
+				hits = searchResultPermissionFilter.search(searchContext);
+			}
+			else {
+				hits = IndexSearcherHelperUtil.search(searchContext, fullQuery);
+			}
+
+			return _getUsers(hits);
 		}
 		catch (Exception e) {
 			throw new PortalException(
@@ -157,41 +183,6 @@ public class UserRetrieverImpl implements UserRetriever {
 		}
 
 		return users;
-	}
-
-	private PageItems<User> _getUsersPageItems(
-			long companyId, Filter filter, Locale locale, Pagination pagination)
-		throws PortalException {
-
-		SearchContext searchContext = _createSearchContext(
-			companyId, pagination.getStartPosition(),
-			pagination.getEndPosition());
-
-		Query fullQuery = _getFullQuery(filter, locale, searchContext);
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		Hits hits;
-
-		if (permissionChecker != null) {
-			if (searchContext.getUserId() == 0) {
-				searchContext.setUserId(permissionChecker.getUserId());
-			}
-
-			SearchResultPermissionFilter searchResultPermissionFilter =
-				_searchResultPermissionFilterFactory.create(
-					searchContext1 -> IndexSearcherHelperUtil.search(
-						searchContext1, fullQuery),
-					permissionChecker);
-
-			hits = searchResultPermissionFilter.search(searchContext);
-		}
-		else {
-			hits = IndexSearcherHelperUtil.search(searchContext, fullQuery);
-		}
-
-		return new PageItems<>(_getUsers(hits), hits.getLength());
 	}
 
 	@Reference(target = "(entity.model.name=" + UserEntityModel.NAME + ")")

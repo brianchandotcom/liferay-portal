@@ -39,18 +39,18 @@ public class DetailASTUtil {
 		return _getAllChildTokens(detailAST, recursive, null, tokenTypes);
 	}
 
-	public static int getEndLine(DetailAST detailAST) {
-		int endLine = detailAST.getLineNo();
+	public static int getEndLineNumber(DetailAST detailAST) {
+		int endLineNumber = detailAST.getLineNo();
 
 		for (DetailAST childAST :
 				getAllChildTokens(detailAST, true, ALL_TYPES)) {
 
-			if (childAST.getLineNo() > endLine) {
-				endLine = childAST.getLineNo();
+			if (childAST.getLineNo() > endLineNumber) {
+				endLineNumber = childAST.getLineNo();
 			}
 		}
 
-		return endLine;
+		return endLineNumber;
 	}
 
 	public static List<String> getImportNames(DetailAST detailAST) {
@@ -235,18 +235,18 @@ public class DetailASTUtil {
 		return sb.toString();
 	}
 
-	public static int getStartLine(DetailAST detailAST) {
-		int startLine = detailAST.getLineNo();
+	public static int getStartLineNumber(DetailAST detailAST) {
+		int startLineNumber = detailAST.getLineNo();
 
 		for (DetailAST childAST :
 				getAllChildTokens(detailAST, true, ALL_TYPES)) {
 
-			if (childAST.getLineNo() < startLine) {
-				startLine = childAST.getLineNo();
+			if (childAST.getLineNo() < startLineNumber) {
+				startLineNumber = childAST.getLineNo();
 			}
 		}
 
-		return startLine;
+		return startLineNumber;
 	}
 
 	public static String getTypeName(

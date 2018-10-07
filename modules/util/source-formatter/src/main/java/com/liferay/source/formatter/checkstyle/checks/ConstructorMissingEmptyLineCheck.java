@@ -52,7 +52,7 @@ public class ConstructorMissingEmptyLineCheck extends BaseCheck {
 			return;
 		}
 
-		int endLine = DetailASTUtil.getEndLine(nextExpressionAST);
+		int endLineNumber = DetailASTUtil.getEndLineNumber(nextExpressionAST);
 
 		while (true) {
 			nextExpressionAST = nextExpressionAST.getNextSibling();
@@ -68,18 +68,19 @@ public class ConstructorMissingEmptyLineCheck extends BaseCheck {
 			if (!_isExpressionAssignsParameter(
 					nextExpressionAST, parameterNames)) {
 
-				int startLine = DetailASTUtil.getStartLine(nextExpressionAST);
+				int startLineNumber = DetailASTUtil.getStartLineNumber(
+					nextExpressionAST);
 
-				if ((endLine + 1) != startLine) {
+				if ((endLineNumber + 1) != startLineNumber) {
 					return;
 				}
 
-				log(startLine, _MSG_MISSING_EMPTY_LINE, startLine);
+				log(startLineNumber, _MSG_MISSING_EMPTY_LINE, startLineNumber);
 
 				return;
 			}
 
-			endLine = DetailASTUtil.getEndLine(nextExpressionAST);
+			endLineNumber = DetailASTUtil.getEndLineNumber(nextExpressionAST);
 		}
 	}
 

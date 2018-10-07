@@ -56,9 +56,9 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		DetailAST parentAST = detailAST.getParent();
 
 		_checkMissingEmptyLineAfterReferencingVariable(
-			parentAST, variableName, DetailASTUtil.getEndLine(detailAST));
+			parentAST, variableName, DetailASTUtil.getEndLineNumber(detailAST));
 		_checkMissingEmptyLineBetweenAssigningAndUsingVariable(
-			parentAST, variableName, DetailASTUtil.getEndLine(detailAST));
+			parentAST, variableName, DetailASTUtil.getEndLineNumber(detailAST));
 	}
 
 	private void _checkMissingEmptyLineAfterMethodCall(DetailAST detailAST) {
@@ -88,12 +88,12 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			return;
 		}
 
-		int endLine = DetailASTUtil.getEndLine(detailAST);
+		int endLineNumber = DetailASTUtil.getEndLineNumber(detailAST);
 
-		int startLineNextExpression = DetailASTUtil.getStartLine(
+		int nextExpressionStartLineNumber = DetailASTUtil.getStartLineNumber(
 			nextSiblingAST);
 
-		if ((endLine + 1) != startLineNextExpression) {
+		if ((endLineNumber + 1) != nextExpressionStartLineNumber) {
 			return;
 		}
 
@@ -109,12 +109,14 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		}
 
 		if (_containsVariableName(nextSiblingAST, variableName)) {
-			log(endLine, _MSG_MISSING_EMPTY_LINE_AFTER_METHOD_CALL, endLine);
+			log(
+				endLineNumber, _MSG_MISSING_EMPTY_LINE_AFTER_METHOD_CALL,
+				endLineNumber);
 		}
 	}
 
 	private void _checkMissingEmptyLineAfterReferencingVariable(
-		DetailAST detailAST, String variableName, int endLine) {
+		DetailAST detailAST, String variableName, int endLineNumber) {
 
 		String lastAssignedVariableName = null;
 		DetailAST previousAST = null;
@@ -143,10 +145,10 @@ public class MissingEmptyLineCheck extends BaseCheck {
 					return;
 				}
 
-				int startLineNextExpression = DetailASTUtil.getStartLine(
-					nextSiblingAST);
+				int nextExpressionStartLineNumber =
+					DetailASTUtil.getStartLineNumber(nextSiblingAST);
 
-				if ((endLine + 1) != startLineNextExpression) {
+				if ((endLineNumber + 1) != nextExpressionStartLineNumber) {
 					return;
 				}
 
@@ -159,9 +161,9 @@ public class MissingEmptyLineCheck extends BaseCheck {
 				}
 
 				log(
-					startLineNextExpression,
+					nextExpressionStartLineNumber,
 					_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE,
-					startLineNextExpression, variableName);
+					nextExpressionStartLineNumber, variableName);
 
 				return;
 			}
@@ -176,7 +178,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 
 			referenced = true;
 
-			endLine = DetailASTUtil.getEndLine(nextSiblingAST);
+			endLineNumber = DetailASTUtil.getEndLineNumber(nextSiblingAST);
 
 			previousAST = nextSiblingAST;
 
@@ -201,10 +203,10 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			return;
 		}
 
-		int startLineNextExpression = DetailASTUtil.getStartLine(
+		int nextExpressionStartLineNumber = DetailASTUtil.getStartLineNumber(
 			nextSiblingAST);
 
-		if ((endLine + 1) != startLineNextExpression) {
+		if ((endLine + 1) != nextExpressionStartLineNumber) {
 			return;
 		}
 
@@ -220,7 +222,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 
 			if (identName.equals(name)) {
 				log(
-					startLineNextExpression,
+					nextExpressionStartLineNumber,
 					_MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_USE, name);
 			}
 		}

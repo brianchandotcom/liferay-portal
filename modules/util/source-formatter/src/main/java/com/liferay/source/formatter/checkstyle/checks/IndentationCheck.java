@@ -420,7 +420,8 @@ public class IndentationCheck extends BaseCheck {
 				genericStartAST, TokenTypes.EXPR);
 
 			if ((exprAST != null) &&
-				!lineNumbers.contains(DetailASTUtil.getStartLine(exprAST))) {
+				!lineNumbers.contains(
+					DetailASTUtil.getStartLineNumber(exprAST))) {
 
 				continue;
 			}
@@ -446,7 +447,8 @@ public class IndentationCheck extends BaseCheck {
 				genericEndAST, TokenTypes.EXPR);
 
 			if ((exprAST != null) &&
-				!lineNumbers.contains(DetailASTUtil.getStartLine(exprAST))) {
+				!lineNumbers.contains(
+					DetailASTUtil.getStartLineNumber(exprAST))) {
 
 				continue;
 			}
@@ -715,7 +717,7 @@ public class IndentationCheck extends BaseCheck {
 	}
 
 	private int _getLeadingTabCount(DetailAST detailAST) {
-		String line = getLine(DetailASTUtil.getStartLine(detailAST) - 1);
+		String line = getLine(DetailASTUtil.getStartLineNumber(detailAST) - 1);
 
 		int leadingTabCount = 0;
 
@@ -986,7 +988,7 @@ public class IndentationCheck extends BaseCheck {
 	}
 
 	private boolean _isAtLineStart(DetailAST detailAST) {
-		String line = getLine(DetailASTUtil.getStartLine(detailAST) - 1);
+		String line = getLine(DetailASTUtil.getStartLineNumber(detailAST) - 1);
 
 		for (int i = 0; i < detailAST.getColumnNo(); i++) {
 			char c = line.charAt(i);

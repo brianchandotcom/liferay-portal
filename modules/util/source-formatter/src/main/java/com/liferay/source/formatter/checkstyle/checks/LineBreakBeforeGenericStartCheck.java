@@ -66,7 +66,7 @@ public class LineBreakBeforeGenericStartCheck extends BaseCheck {
 	}
 
 	private boolean _isAtLineStart(DetailAST detailAST) {
-		String line = getLine(DetailASTUtil.getStartLine(detailAST) - 1);
+		String line = getLine(DetailASTUtil.getStartLineNumber(detailAST) - 1);
 
 		for (int i = 0; i < detailAST.getColumnNo(); i++) {
 			char c = line.charAt(i);

@@ -104,7 +104,7 @@ public class AppendCheck extends StringConcatenationCheck {
 		DetailAST methodCallAST, DetailAST previousMethodCallAST,
 		String literalStringValue, String previousLiteralStringValue) {
 
-		if (DetailASTUtil.getEndLine(previousMethodCallAST) !=
+		if (DetailASTUtil.getEndLineNumber(previousMethodCallAST) !=
 				(methodCallAST.getLineNo() - 1)) {
 
 			return;
@@ -204,8 +204,8 @@ public class AppendCheck extends StringConcatenationCheck {
 	}
 
 	private boolean _hasIncorrectLineBreaks(DetailAST methodCallAST) {
-		if (DetailASTUtil.getStartLine(methodCallAST) !=
-				DetailASTUtil.getEndLine(methodCallAST)) {
+		if (DetailASTUtil.getStartLineNumber(methodCallAST) !=
+				DetailASTUtil.getEndLineNumber(methodCallAST)) {
 
 			log(methodCallAST, _MSG_INCORRECT_LINE_BREAK);
 

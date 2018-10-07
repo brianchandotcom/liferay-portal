@@ -267,12 +267,13 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 	private String _getMethodBody(DetailAST methodDefAST) {
 		DetailAST slistAST = methodDefAST.findFirstToken(TokenTypes.SLIST);
 
-		int start = DetailASTUtil.getStartLine(slistAST);
-		int end = DetailASTUtil.getEndLine(slistAST);
+		int startLineNumber = DetailASTUtil.getStartLineNumber(slistAST);
+		int endLineNumber = DetailASTUtil.getEndLineNumber(slistAST);
 
-		StringBundler sb = new StringBundler((end - start - 1) * 2);
+		StringBundler sb = new StringBundler(
+			(endLineNumber - startLineNumber - 1) * 2);
 
-		for (int i = start + 1; i < end; i++) {
+		for (int i = startLineNumber + 1; i < endLineNumber; i++) {
 			sb.append(getLine(i - 1));
 			sb.append("\n");
 		}

@@ -80,7 +80,7 @@ public class UserRetrieverTest {
 				ISO8601Utils.format(_user1.getModifiedDate())),
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, users.size());
+		Assert.assertEquals(users.toString(), 1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -105,7 +105,7 @@ public class UserRetrieverTest {
 				ISO8601Utils.format(_user1.getModifiedDate())),
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, users.size());
+		Assert.assertEquals(users.toString(), 1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -134,7 +134,7 @@ public class UserRetrieverTest {
 				ISO8601Utils.format(inBetween)),
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, users.size());
+		Assert.assertEquals(users.toString(), 1, users.size());
 		Assert.assertEquals(_user2, users.get(0));
 	}
 
@@ -159,7 +159,7 @@ public class UserRetrieverTest {
 				ISO8601Utils.format(_user2.getModifiedDate())),
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, users.size());
+		Assert.assertEquals(users.toString(), 1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -188,7 +188,7 @@ public class UserRetrieverTest {
 				ISO8601Utils.format(inBetween)),
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, users.size());
+		Assert.assertEquals(users.toString(), 1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -204,7 +204,7 @@ public class UserRetrieverTest {
 			"(emailAddress eq '" + expectedEmailAddress + "')",
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, users.size());
+		Assert.assertEquals(users.toString(), 1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -222,7 +222,7 @@ public class UserRetrieverTest {
 			"(firstName eq '" + expectedFirstName + "')",
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, users.size());
+		Assert.assertEquals(users.toString(), 1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -239,7 +239,7 @@ public class UserRetrieverTest {
 				"'" + _user1.getLastName() + "') ",
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, users.size());
+		Assert.assertEquals(users.toString(), 1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -261,7 +261,7 @@ public class UserRetrieverTest {
 				_user2.getLastName() + "') ",
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(2, users.size());
+		Assert.assertEquals(users.toString(), 2, users.size());
 	}
 
 	@Test
@@ -279,7 +279,7 @@ public class UserRetrieverTest {
 				"') or (lastName eq 'nonExistingLastName') ",
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, users.size());
+		Assert.assertEquals(users.toString(), 1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -298,7 +298,7 @@ public class UserRetrieverTest {
 				_user1.getLastName() + "') ",
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, users.size());
+		Assert.assertEquals(users.toString(), 1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -321,7 +321,7 @@ public class UserRetrieverTest {
 				_group2.getGroupId() + "')",
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, users.size());
+		Assert.assertEquals(users.toString(), 1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -344,7 +344,7 @@ public class UserRetrieverTest {
 				_group2.getGroupId() + "')",
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, users.size());
+		Assert.assertEquals(users.toString(), 1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -368,7 +368,7 @@ public class UserRetrieverTest {
 					_group1.getGroupId() + "'))",
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(2, users.size());
+		Assert.assertEquals(users.toString(), 2, users.size());
 	}
 
 	@Test
@@ -384,7 +384,7 @@ public class UserRetrieverTest {
 			_group1.getCompanyId(), "(lastName eq '" + expectedLastName + "')",
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, users.size());
+		Assert.assertEquals(users.toString(), 1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -408,7 +408,7 @@ public class UserRetrieverTest {
 					_group1.getGroupId() + "')",
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, users.size());
+		Assert.assertEquals(users.toString(), 1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 
@@ -426,7 +426,7 @@ public class UserRetrieverTest {
 			"(screenName eq '" + expectedScreenName + "')",
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(1, users.size());
+		Assert.assertEquals(users.toString(), 1, users.size());
 		Assert.assertEquals(_user1, users.get(0));
 	}
 

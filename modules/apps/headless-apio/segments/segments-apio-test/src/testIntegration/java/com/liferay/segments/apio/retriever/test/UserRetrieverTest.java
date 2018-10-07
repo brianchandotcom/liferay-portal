@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.retriever.test;
+package com.liferay.segments.apio.retriever.test;
 
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.internal.retriever;
+package com.liferay.segments.apio.internal.retriever;
 
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -40,8 +40,8 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.segments.internal.architect.filter.ExpressionVisitorImpl;
-import com.liferay.segments.internal.architect.filter.UserEntityModel;
+import com.liferay.segments.apio.internal.architect.filter.ExpressionVisitorImpl;
+import com.liferay.segments.apio.internal.architect.filter.UserEntityModel;
 import com.liferay.segments.retriever.UserRetriever;
 import com.liferay.structured.content.apio.architect.entity.EntityModel;
 import com.liferay.structured.content.apio.architect.filter.Filter;

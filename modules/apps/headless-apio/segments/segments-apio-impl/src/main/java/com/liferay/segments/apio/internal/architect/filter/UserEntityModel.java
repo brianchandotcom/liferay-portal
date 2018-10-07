@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.internal.architect.filter;
+package com.liferay.segments.apio.internal.architect.filter;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.structured.content.apio.architect.entity.EntityField;

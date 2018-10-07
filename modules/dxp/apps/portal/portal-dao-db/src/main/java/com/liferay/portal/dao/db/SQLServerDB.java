@@ -106,8 +106,18 @@ public class SQLServerDB extends BaseDB {
 	}
 
 	@Override
+	public String getNewUuidFunction() {
+		return "lower(NEWID())";
+	}
+
+	@Override
 	public boolean isSupportsAlterColumnType() {
 		return _SUPPORTS_ALTER_COLUMN_TYPE;
+	}
+
+	@Override
+	public boolean isSupportsNewUuidFunction() {
+		return _SUPPORTS_NEW_UUID_FUNCTION;
 	}
 
 	@Override
@@ -217,5 +227,7 @@ public class SQLServerDB extends BaseDB {
 	private static final int _SQL_SERVER_2000 = 8;
 
 	private static final boolean _SUPPORTS_ALTER_COLUMN_TYPE = false;
+
+	private static final boolean _SUPPORTS_NEW_UUID_FUNCTION = true;
 
 }

@@ -51,6 +51,16 @@ public class SybaseDB extends BaseDB {
 	}
 
 	@Override
+	public String getNewUuidFunction() {
+		return "newid(1)";
+	}
+
+	@Override
+	public boolean isSupportsNewUuidFunction() {
+		return _SUPPORTS_NEW_UUID_FUNCTION;
+	}
+
+	@Override
 	public boolean isSupportsInlineDistinct() {
 		return _SUPPORTS_INLINE_DISTINCT;
 	}
@@ -160,6 +170,8 @@ public class SybaseDB extends BaseDB {
 	protected static final String DROP_COLUMN = "drop column";
 
 	private static final boolean _SUPPORTS_INLINE_DISTINCT = false;
+
+	private static final boolean _SUPPORTS_NEW_UUID_FUNCTION = true;
 
 	private static final String[] _SYBASE = {
 		"--", "1", "0", "'19700101'", "getdate()", " image", " image", " int",

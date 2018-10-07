@@ -59,6 +59,10 @@ public interface DB {
 
 	public int getMinorVersion();
 
+	public default String getNewUuidFunction() {
+		return null;
+	}
+
 	public String getTemplateBlob();
 
 	public String getTemplateFalse();
@@ -78,6 +82,10 @@ public interface DB {
 	public boolean isSupportsAlterColumnType();
 
 	public boolean isSupportsInlineDistinct();
+
+	public default boolean isSupportsNewUuidFunction() {
+		return false;
+	}
 
 	public boolean isSupportsQueryingAfterException();
 

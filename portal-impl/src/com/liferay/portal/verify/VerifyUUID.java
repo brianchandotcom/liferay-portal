@@ -15,6 +15,8 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -77,11 +79,32 @@ public class VerifyUUID extends VerifyProcess {
 	protected void verifyUUID(VerifiableUUIDModel verifiableUUIDModel)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(5);
+		String updateUuidClause = StringBundler.concat(
+			"update ", verifiableUUIDModel.getTableName(), " set uuid_ = ");
 
-		sb.append("update ");
-		sb.append(verifiableUUIDModel.getTableName());
-		sb.append(" set uuid_ = ? where ");
+		String notNullUuidFilter = " where uuid_ is null or uuid_ = ''";
+
+		DB db = DBManagerUtil.getDB();
+
+		if (db.isSupportsNewUuidFunction()) {
+			try (LoggingTimer loggingTimer = new LoggingTimer(
+					verifiableUUIDModel.getTableName());
+				Connection con = DataAccess.getConnection();
+				PreparedStatement ps = con.prepareStatement(
+					StringBundler.concat(
+						updateUuidClause, db.getNewUuidFunction(),
+						notNullUuidFilter))) {
+
+				ps.executeUpdate();
+
+				return;
+			}
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(updateUuidClause);
+		sb.append("? where ");
 		sb.append(verifiableUUIDModel.getPrimaryKeyColumnName());
 		sb.append(" = ?");
 
@@ -92,7 +115,7 @@ public class VerifyUUID extends VerifyProcess {
 				StringBundler.concat(
 					"select ", verifiableUUIDModel.getPrimaryKeyColumnName(),
 					" from ", verifiableUUIDModel.getTableName(),
-					" where uuid_ is null or uuid_ = ''"));
+					notNullUuidFilter));
 			ResultSet rs = ps1.executeQuery();
 			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
 				con.prepareStatement(sb.toString()))) {

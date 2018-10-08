@@ -200,7 +200,7 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 		FileSystemKeyStoreManagerImpl.class);
 
 	private KeyStore _keyStore;
-	private KeyStoreException _keyStoreException;
+	private volatile KeyStoreException _keyStoreException;
 	private volatile FileWatcher _samlKeyStoreFileWatcher;
 
 }

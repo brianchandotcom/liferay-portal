@@ -28,7 +28,6 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -464,24 +463,14 @@ public class JournalManagementToolbarDisplayContext
 					_getFilterNavigationDropdownItem(
 						_journalDisplayContext.isNavigationRecent(), "recent"));
 
-				StringBundler sb = new StringBundler(
-					_journalDisplayContext.isNavigationStructure() ? 4 : 1);
-
-				sb.append(LanguageUtil.get(request, "structures"));
-
-				if (_journalDisplayContext.isNavigationStructure()) {
-					sb.append(StringPool.COLON);
-					sb.append(StringPool.SPACE);
-					sb.append(_journalDisplayContext.getDDMStructureName());
-				}
-
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(
 							_journalDisplayContext.isNavigationStructure());
 						dropdownItem.putData(
 							"action", "openDDMStructuresSelector");
-						dropdownItem.setLabel(sb.toString());
+						dropdownItem.setLabel(
+							LanguageUtil.get(request, "structures"));
 					});
 			}
 		};

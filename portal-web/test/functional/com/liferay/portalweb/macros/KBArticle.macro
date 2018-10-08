@@ -862,7 +862,11 @@
 			</else>
 		</if>
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewSuccessMessageText">
+			<var name="successMessage" value="Your request completed successfully." />
+		</execute>
 	</command>
 
 	<command name="moveArticleCP">

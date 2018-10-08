@@ -22,7 +22,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -55,18 +59,33 @@ public class FileEntryUUIDResolverServlet extends HttpServlet {
 		HttpServletRequest request, HttpServletResponse response) {
 
 		try {
-			long groupId = ParamUtil.getLong(request, "groupId");
-			String uuid = ParamUtil.getString(request, "uuid");
-
-			_sendSuccess(
-				response,
-				_dlAppService.getFileEntryByUuidAndGroupId(uuid, groupId));
+			_sendSuccess(response, _getFileEntryByUuidAndGroupId(request));
 		}
 		catch (PrincipalException pe) {
 			_sendError(response, 403, pe);
 		}
 		catch (Exception e) {
 			_sendError(response, 500, e);
+		}
+	}
+
+	private FileEntry _getFileEntryByUuidAndGroupId(HttpServletRequest request)
+		throws Exception {
+
+		PermissionChecker oldPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_portal.getUser(request)));
+
+		try {
+			long groupId = ParamUtil.getLong(request, "groupId");
+			String uuid = ParamUtil.getString(request, "uuid");
+
+			return _dlAppService.getFileEntryByUuidAndGroupId(uuid, groupId);
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(oldPermissionChecker);
 		}
 	}
 
@@ -110,5 +129,8 @@ public class FileEntryUUIDResolverServlet extends HttpServlet {
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private Portal _portal;
 
 }

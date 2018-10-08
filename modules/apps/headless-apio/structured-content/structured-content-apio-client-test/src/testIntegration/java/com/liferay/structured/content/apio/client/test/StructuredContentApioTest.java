@@ -18,8 +18,6 @@ import com.jayway.jsonpath.JsonPath;
 
 import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
-import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
-import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 import com.liferay.petra.json.web.service.client.internal.JSONWebServiceClientImpl;
 import com.liferay.structured.content.apio.client.test.activator.StructuredContentApioTestBundleActivator;
 
@@ -62,23 +60,17 @@ public class StructuredContentApioTest {
 
 	@Test
 	public void testAdminUserSeeAllStructuredContents() throws Exception {
-		JSONWebServiceClient jsonWebServiceClient = _getJSONWebServiceClient(
-			"test@liferay.com", "test");
-
 		List<String> hrefs = JsonPath.read(
-			_get(
+			_getAsAdmin(
 				JsonPath.read(
-					_get(
-						_rootEndpointURL.toExternalForm(),
-						jsonWebServiceClient),
-					"$._links.content-space.href"),
-				jsonWebServiceClient),
+					_getAsAdmin(_rootEndpointURL.toExternalForm()),
+					"$._links.content-space.href")),
 			"$._embedded.ContentSpace[?(@.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
 					"')]._links.structuredContents.href");
 
 		List<String> titles = JsonPath.read(
-			_get(hrefs.get(0), jsonWebServiceClient),
+			_getAsAdmin(hrefs.get(0)),
 			"$._embedded.StructuredContent[*].title");
 
 		Assert.assertTrue(
@@ -97,26 +89,17 @@ public class StructuredContentApioTest {
 
 	@Test
 	public void testGuestUserSeesRightStructuredContents() throws Exception {
-		JSONWebServiceClient jsonWebServiceClient = _getJSONWebServiceClient(
-			"test@liferay.com", "test");
-
 		List<String> hrefs = JsonPath.read(
-			_get(
+			_getAsAdmin(
 				JsonPath.read(
-					_get(
-						_rootEndpointURL.toExternalForm(),
-						jsonWebServiceClient),
-					"$._links.content-space.href"),
-				jsonWebServiceClient),
+					_getAsAdmin(_rootEndpointURL.toExternalForm()),
+					"$._links.content-space.href")),
 			"$._embedded.ContentSpace[?(@.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
 					"')]._links.structuredContents.href");
 
-		JSONWebServiceClient jsonWebServiceClientGuestLogin =
-			_getJSONWebServiceClient();
-
 		List<String> titles = JsonPath.read(
-			_get(hrefs.get(0), jsonWebServiceClientGuestLogin),
+			_getAsGuest(hrefs.get(0)),
 			"$._embedded.StructuredContent[*].title");
 
 		Assert.assertFalse(
@@ -137,28 +120,21 @@ public class StructuredContentApioTest {
 	public void testNotSiteMemberUserSeesRightStructuredContents()
 		throws Exception {
 
-		JSONWebServiceClient jsonWebServiceClient = _getJSONWebServiceClient(
-			"test@liferay.com", "test");
-
 		List<String> hrefs = JsonPath.read(
-			_get(
+			_getAsAdmin(
 				JsonPath.read(
-					_get(
-						_rootEndpointURL.toExternalForm(),
-						jsonWebServiceClient),
-					"$._links.content-space.href"),
-				jsonWebServiceClient),
+					_getAsAdmin(_rootEndpointURL.toExternalForm()),
+					"$._links.content-space.href")),
 			"$._embedded.ContentSpace[?(@.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
 					"')]._links.structuredContents.href");
 
-		JSONWebServiceClient jsonWebServiceClientNotSiteMemberLogin =
-			_getJSONWebServiceClient(
-				StructuredContentApioTestBundleActivator.
-					NOT_A_SITE_MEMBER_EMAIL_ADDRESS, "test");
-
 		List<String> titles = JsonPath.read(
-			_get(hrefs.get(0), jsonWebServiceClientNotSiteMemberLogin),
+			_getAsUser(
+				hrefs.get(0),
+				StructuredContentApioTestBundleActivator.
+					NOT_A_SITE_MEMBER_EMAIL_ADDRESS,
+				"test"),
 			"$._embedded.StructuredContent[*].title");
 
 		Assert.assertFalse(
@@ -179,28 +155,21 @@ public class StructuredContentApioTest {
 	public void testSiteMemberUserSeesRightStructuredContents()
 		throws Exception {
 
-		JSONWebServiceClient jsonWebServiceClient = _getJSONWebServiceClient(
-			"test@liferay.com", "test");
-
 		List<String> hrefs = JsonPath.read(
-			_get(
+			_getAsGuest(
 				JsonPath.read(
-					_get(
-						_rootEndpointURL.toExternalForm(),
-						jsonWebServiceClient),
-					"$._links.content-space.href"),
-				jsonWebServiceClient),
+					_getAsGuest(_rootEndpointURL.toExternalForm()),
+					"$._links.content-space.href")),
 			"$._embedded.ContentSpace[?(@.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
 					"')]._links.structuredContents.href");
 
-		JSONWebServiceClient jsonWebServiceClientSiteMemberLogin =
-			_getJSONWebServiceClient(
-				StructuredContentApioTestBundleActivator.
-					SITE_MEMBER_EMAIL_ADDRESS, "test");
-
 		List<String> titles = JsonPath.read(
-			_get(hrefs.get(0), jsonWebServiceClientSiteMemberLogin),
+			_getAsUser(
+				hrefs.get(0),
+				StructuredContentApioTestBundleActivator.
+					SITE_MEMBER_EMAIL_ADDRESS,
+				"test"),
 			"$._embedded.StructuredContent[*].title");
 
 		Assert.assertFalse(
@@ -221,16 +190,11 @@ public class StructuredContentApioTest {
 	public void testStructuredContentsExistsInContentSpaceEndpoint()
 		throws Exception {
 
-		JSONWebServiceClient jsonWebServiceClient = _getJSONWebServiceClient();
-
 		List<String> hrefs = JsonPath.read(
-			_get(
+			_getAsGuest(
 				JsonPath.read(
-					_get(
-						_rootEndpointURL.toExternalForm(),
-						jsonWebServiceClient),
-					"$._links.content-space.href"),
-				jsonWebServiceClient),
+					_getAsGuest(_rootEndpointURL.toExternalForm()),
+					"$._links.content-space.href")),
 			"$._embedded.ContentSpace[?(@.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
 					"')]._links.structuredContents.href");
@@ -240,36 +204,47 @@ public class StructuredContentApioTest {
 
 	@Test
 	public void testStructuredContentsMatchesSelfLink() throws Exception {
-		JSONWebServiceClient jsonWebServiceClient = _getJSONWebServiceClient();
-
 		List<String> hrefs = JsonPath.read(
-			_get(
+			_getAsGuest(
 				JsonPath.read(
-					_get(
-						_rootEndpointURL.toExternalForm(),
-						jsonWebServiceClient),
-					"$._links.content-space.href"),
-				jsonWebServiceClient),
+					_getAsGuest(_rootEndpointURL.toExternalForm()),
+					"$._links.content-space.href")),
 			"$._embedded.ContentSpace[?(@.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
 					"')]._links.structuredContents.href");
 
 		String href = JsonPath.read(
-			_get(hrefs.get(0), jsonWebServiceClient), "$._links.self.href");
+			_getAsGuest(hrefs.get(0)), "$._links.self.href");
 
 		Assert.assertTrue(href.startsWith(hrefs.get(0)));
 	}
 
 	private String _get(String url, JSONWebServiceClient jsonWebServiceClient)
-		throws JSONWebServiceInvocationException,
-			   JSONWebServiceTransportException {
+		throws Exception {
 
 		return jsonWebServiceClient.doGet(
 			url, Collections.emptyMap(),
 			Collections.singletonMap("Accept", "application/hal+json"));
 	}
 
-	private JSONWebServiceClient _getJSONWebServiceClient() {
+	private String _getAsAdmin(String url) throws Exception {
+		return _getAsUser(url, "test@liferay.com", "test");
+	}
+
+	private String _getAsGuest(String url) throws Exception {
+		return _get(url, _getGuestJSONWebServiceClient());
+	}
+
+	private String _getAsUser(String url, String login, String password)
+		throws Exception {
+
+		JSONWebServiceClient jsonWebServiceClient = _getJSONWebServiceClient(
+			login, password);
+
+		return _get(url, jsonWebServiceClient);
+	}
+
+	private JSONWebServiceClient _getGuestJSONWebServiceClient() {
 		JSONWebServiceClient jsonWebServiceClient =
 			new JSONWebServiceClientImpl();
 
@@ -287,7 +262,7 @@ public class StructuredContentApioTest {
 			_jsonWebServiceClientMap.get(login);
 
 		if (jsonWebServiceClient == null) {
-			jsonWebServiceClient = _getJSONWebServiceClient();
+			jsonWebServiceClient = _getGuestJSONWebServiceClient();
 
 			jsonWebServiceClient.setLogin(login);
 			jsonWebServiceClient.setPassword(password);
@@ -298,9 +273,8 @@ public class StructuredContentApioTest {
 		return jsonWebServiceClient;
 	}
 
-	private Map<String, JSONWebServiceClient> _jsonWebServiceClientMap =
+	private final Map<String, JSONWebServiceClient> _jsonWebServiceClientMap =
 		new HashMap<>();
-
 	private URL _rootEndpointURL;
 
 	@ArquillianResource

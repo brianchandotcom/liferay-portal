@@ -280,8 +280,12 @@ public class PortletDescriptorParser {
 		}
 
 		for (Element filterElement : rootElement.elements("filter")) {
-			beanFilters.add(
-				_readBeanFilter(bundle, filterElement, filterMappings));
+			BeanFilter beanFilter = _readBeanFilter(
+				bundle, filterElement, filterMappings);
+
+			if (beanFilter != null) {
+				beanFilters.add(beanFilter);
+			}
 		}
 
 		return beanFilters;
@@ -674,12 +678,15 @@ public class PortletDescriptorParser {
 		List<BeanPortlet> beanPortlets = new ArrayList<>();
 
 		for (Element portletElement : rootElement.elements("portlet")) {
-			beanPortlets.add(
-				_readBeanPortlet(
-					bundle, portletElement, beanApp, beanManager,
-					portletBeanMethods, wildcardBeanMethods,
-					preferencesValidators, wildcardPreferencesValidators,
-					displayDescriptorCategories, liferayConfigurations));
+			BeanPortlet beanPortlet = _readBeanPortlet(
+				bundle, portletElement, beanApp, beanManager,
+				portletBeanMethods, wildcardBeanMethods, preferencesValidators,
+				wildcardPreferencesValidators, displayDescriptorCategories,
+				liferayConfigurations);
+
+			if (beanPortlet != null) {
+				beanPortlets.add(beanPortlet);
+			}
 		}
 
 		return beanPortlets;

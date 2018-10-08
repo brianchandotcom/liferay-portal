@@ -129,10 +129,8 @@ public class PortletDescriptorParser {
 			List<Element> aliases = eventDefinitionElement.elements("alias");
 
 			for (Element alias : aliases) {
-				qName = PortletQNameUtil.getQName(
-					alias, null, defaultNamespace);
-
-				aliasQNames.add(qName);
+				aliasQNames.add(
+					PortletQNameUtil.getQName(alias, null, defaultNamespace));
 			}
 
 			events.add(new EventDescriptorImpl(qName, valueType, aliasQNames));

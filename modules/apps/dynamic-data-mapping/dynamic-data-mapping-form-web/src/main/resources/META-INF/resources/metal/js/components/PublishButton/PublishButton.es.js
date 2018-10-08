@@ -1,14 +1,16 @@
 import {Config} from 'metal-state';
 import ClayButton from 'clay-button';
 import Notifications from '../../util/Notifications.es';
-import URLEncodedFetcher from '../../util/URLEncodedFetcher.es';
+import {convertToSearchParams, makeFetch} from '../../util/fetch.es';
+import Component from 'metal-jsx';
 
-class PublishButton extends URLEncodedFetcher {
+class PublishButton extends Component {
 	static PROPS = {
 		namespace: Config.string().required(),
 		published: Config.bool().value(false),
 		resolvePublishURL: Config.func().required(),
-		spritemap: Config.string().required()
+		spritemap: Config.string().required(),
+		url: Config.string()
 	};
 
 	disposeInternal() {
@@ -71,7 +73,12 @@ class PublishButton extends URLEncodedFetcher {
 					[`${namespace}published`]: published
 				};
 
-				return this.fetch(payload).then(
+				return makeFetch(
+					{
+						body: convertToSearchParams(payload),
+						url: this.props.url
+					}
+				).then(
 					() => {
 						this.props.published = published;
 

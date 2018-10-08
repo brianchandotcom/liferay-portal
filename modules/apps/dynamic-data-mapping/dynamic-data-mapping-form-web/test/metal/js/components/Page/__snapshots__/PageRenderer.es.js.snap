@@ -51,6 +51,7 @@ exports[`PageRenderer should change the page title 1`] = `
               <div class="ddm-resize-handle-left"></div>
               <div class="ddm-drag">
                 <div class="ddm-field-not-found">Field doesn't exist.</div>
+                <div class="ddm-field-not-found">Field doesn't exist.</div>
               </div>
               <div class="ddm-field-actions-container">
                 <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
@@ -187,6 +188,7 @@ exports[`PageRenderer should change the page title 2`] = `
             <div class="ddm-field-container">
               <div class="ddm-resize-handle-left"></div>
               <div class="ddm-drag">
+                <div class="ddm-field-not-found">Field doesn't exist.</div>
                 <div class="ddm-field-not-found">Field doesn't exist.</div>
               </div>
               <div class="ddm-field-actions-container">
@@ -342,6 +344,7 @@ exports[`PageRenderer should resize a specific column on the drag and drop layou
             <div class="ddm-field-container">
               <div class="ddm-resize-handle-left"></div>
               <div class="ddm-drag">
+                <div class="ddm-field-not-found">Field doesn't exist.</div>
                 <div class="ddm-field-not-found">Field doesn't exist.</div>
               </div>
               <div class="ddm-field-actions-container">

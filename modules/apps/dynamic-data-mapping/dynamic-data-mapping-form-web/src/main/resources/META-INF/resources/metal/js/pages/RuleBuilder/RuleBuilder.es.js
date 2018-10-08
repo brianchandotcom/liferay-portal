@@ -49,6 +49,8 @@ class RuleBuilder extends Component {
 
 		pages: Config.array().required(),
 
+		rolesURL: Config.string().required(),
+
 		rules: Config.arrayOf(
 			Config.shapeOf(
 				{
@@ -224,7 +226,7 @@ class RuleBuilder extends Component {
 		return (
 			<div class="container">
 				{this.state.mode === 'create' && (
-					<RuleEditor functionsMetadata={this.props.functionsMetadata} key={'create'} pages={pages} spritemap={spritemap} />
+					<RuleEditor functionsMetadata={this.props.functionsMetadata} key={'create'} pages={pages} spritemap={spritemap} url={this.props.rolesURL} />
 				)}
 				{this.state.mode === 'edit' && (
 					<RuleEditor key={'edit'} pages={pages} rules={rules} spritemap={spritemap} />

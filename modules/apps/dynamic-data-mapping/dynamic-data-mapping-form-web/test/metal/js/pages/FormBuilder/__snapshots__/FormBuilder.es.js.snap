@@ -67,6 +67,7 @@ exports[`Builder should render the default markup 1`] = `
                       <div class="ddm-resize-handle-left"></div>
                       <div class="ddm-drag">
                         <div class="ddm-field-not-found">Field doesn't exist.</div>
+                        <div class="ddm-field-not-found">Field doesn't exist.</div>
                       </div>
                       <div class="ddm-field-actions-container">
                         <button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button">
@@ -348,6 +349,7 @@ exports[`Builder should show modal when trash button gets clicked 1`] = `
                     <div class="ddm-field-container">
                       <div class="ddm-resize-handle-left"></div>
                       <div class="ddm-drag">
+                        <div class="ddm-field-not-found">Field doesn't exist.</div>
                         <div class="ddm-field-not-found">Field doesn't exist.</div>
                       </div>
                       <div class="ddm-field-actions-container">

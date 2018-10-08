@@ -1,5 +1,66 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`RuleBuilder should render rule screen creator when click add button 1`] = `
+<div class="container">
+  <div class="form-builder-rule-builder-container">
+    <h1 class="form-builder-section-title text-default">rules</h1>
+    <div class="liferay-ddm-form-rule-rules-list-container">
+      <div class="form-builder-rule-list">
+        <ul class="ddm-form-body-content form-builder-rule-builder-rules-list tabular-list-group">
+          <li class="list-group-item">
+            <div class="clamp-horizontal list-group-item-content">
+              <p class="form-builder-rule-builder-rule-description text-default">
+                <b>if </b>
+                <span>field </span>
+                <span class="label label-lg label-secondary" data-original-title="label text 1" title="label text 1">
+                  <span class="text-truncate-inline">
+                    <span class="text-truncate">label text 1</span>
+                  </span>
+                </span>
+                <b class="text-lowercase">
+                  <em> is-equal-to </em>
+                </b>
+                <span>field </span>
+                <span class="label label-lg label-secondary" data-original-title="label text 2" title="label text 2">
+                  <span class="text-truncate-inline">
+                    <span class="text-truncate">label text 2</span>
+                  </span>
+                </span>
+                <br>
+                <span>
+                  <b>require </b>
+                </span>
+                <span>field </span>
+                <span class="label label-lg label-secondary" data-original-title="label text 1" title="label text 1">
+                  <span class="text-truncate-inline">
+                    <span class="text-truncate">label text 1</span>
+                  </span>
+                </span>
+              </p>
+            </div>
+            <div class="list-group-item-field">
+              <div class="card-col-field">
+                <div class="dropdown dropdown-action">
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    <li class="rule-card-edit" data-card-id="0">
+                      <a href="javascript:;">edit</a>
+                    </li>
+                    <li class="rule-card-delete" data-card-id="0">
+                      <a href="javascript:;">delete</a>
+                    </li>
+                  </ul>
+                  <a class="component-action dropdown-toggle" data-toggle="dropdown" href="#1"></a>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`RuleBuilder should render rule screen editor when click edit button 1`] = `
 <div class="container">
   <div class="form-builder-rule-builder-container">

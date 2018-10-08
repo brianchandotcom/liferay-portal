@@ -28,7 +28,7 @@ String fileEntryUUIDResolverURI = StringBundler.concat(PortalUtil.getPortalURL(r
 
 <aui:script require="metal-dom/src/all/dom as dom,metal-uri/src/Uri" sandbox="<%= true %>">
 	var Uri = metalUriSrcUri.default;
-	var pathnameRegexp = /\/documents\/(\d+)\/(\d+)\/(.+)\/(.+)/;
+	var pathnameRegexp = /\/documents\/(\d+)\/(\d+)\/(.+?)\/([^&]+)/;
 
 	var downloadClickHandler = dom.delegate(
 		document.body,

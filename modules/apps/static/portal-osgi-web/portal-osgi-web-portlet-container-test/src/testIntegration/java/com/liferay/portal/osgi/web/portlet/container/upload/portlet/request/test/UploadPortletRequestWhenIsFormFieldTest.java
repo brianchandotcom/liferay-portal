@@ -90,9 +90,7 @@ public class UploadPortletRequestWhenIsFormFieldTest {
 	}
 
 	@Test
-	public void testShouldReturnTrueIfFileParametersAreEmpty()
-		throws Exception {
-
+	public void testShouldReturnTrueIfFileParametersAreEmpty() {
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.getMultipartRequest(
 				_portletNamespace, _BYTES);

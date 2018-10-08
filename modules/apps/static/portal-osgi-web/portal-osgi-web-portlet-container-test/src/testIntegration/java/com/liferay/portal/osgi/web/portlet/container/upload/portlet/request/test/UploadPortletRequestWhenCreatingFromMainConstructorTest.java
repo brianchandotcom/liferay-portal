@@ -54,7 +54,7 @@ public class UploadPortletRequestWhenCreatingFromMainConstructorTest {
 	}
 
 	@Test
-	public void testShouldNotPopulateParameters() throws Exception {
+	public void testShouldNotPopulateParameters() {
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.getMultipartRequest(
 				_portletNamespace, _BYTES);

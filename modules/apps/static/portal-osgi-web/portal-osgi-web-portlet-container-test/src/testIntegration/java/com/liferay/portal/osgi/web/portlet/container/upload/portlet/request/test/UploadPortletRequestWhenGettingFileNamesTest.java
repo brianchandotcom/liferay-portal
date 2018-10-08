@@ -100,9 +100,7 @@ public class UploadPortletRequestWhenGettingFileNamesTest {
 	}
 
 	@Test
-	public void testShouldReturnNullIfFileParametersAreEmpty()
-		throws Exception {
-
+	public void testShouldReturnNullIfFileParametersAreEmpty() {
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.getMultipartRequest(
 				_portletNamespace, _BYTES);

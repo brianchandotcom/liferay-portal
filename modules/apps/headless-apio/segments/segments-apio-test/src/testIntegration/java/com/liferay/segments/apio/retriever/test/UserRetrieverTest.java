@@ -69,7 +69,7 @@ public class UserRetrieverTest {
 
 		Thread.sleep(1000);
 
-		UserTestUtil.addUser(
+		_user2 = UserTestUtil.addUser(
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
@@ -177,7 +177,7 @@ public class UserRetrieverTest {
 
 		Thread.sleep(1000);
 
-		UserTestUtil.addUser(
+		_user2 = UserTestUtil.addUser(
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
@@ -307,7 +307,7 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(),
 			new long[] {_group1.getGroupId(), _group2.getGroupId()});
 
-		UserTestUtil.addUser(
+		_user2 = UserTestUtil.addUser(
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
@@ -330,7 +330,7 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(),
 			new long[] {_group1.getGroupId(), _group2.getGroupId()});
 
-		UserTestUtil.addUser(
+		_user2 = UserTestUtil.addUser(
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
@@ -353,7 +353,7 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(),
 			new long[] {_group1.getGroupId(), _group2.getGroupId()});
 
-		UserTestUtil.addUser(
+		_user2 = UserTestUtil.addUser(
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
@@ -372,7 +372,8 @@ public class UserRetrieverTest {
 		_user1 = UserTestUtil.addUser(
 			_group1.getGroupId(), LocaleUtil.getDefault());
 
-		UserTestUtil.addUser(_group1.getGroupId(), LocaleUtil.getDefault());
+		_user2 = UserTestUtil.addUser(
+			_group1.getGroupId(), LocaleUtil.getDefault());
 
 		List<User> users = _userRetriever.getUsers(
 			_group1.getCompanyId(),
@@ -392,7 +393,7 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(),
 			new long[] {_group1.getGroupId(), _group2.getGroupId()});
 
-		UserTestUtil.addUser(
+		_user2 = UserTestUtil.addUser(
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
@@ -412,7 +413,8 @@ public class UserRetrieverTest {
 		_user1 = UserTestUtil.addUser(
 			_group1.getGroupId(), LocaleUtil.getDefault());
 
-		UserTestUtil.addUser(_group1.getGroupId(), LocaleUtil.getDefault());
+		_user2 = UserTestUtil.addUser(
+			_group1.getGroupId(), LocaleUtil.getDefault());
 
 		List<User> users = _userRetriever.getUsers(
 			_group1.getCompanyId(),

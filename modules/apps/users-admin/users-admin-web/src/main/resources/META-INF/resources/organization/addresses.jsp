@@ -63,7 +63,7 @@ List<Address> addresses = AddressServiceUtil.getAddresses(Organization.class.get
 <liferay-ui:error exception="<%= NoSuchRegionException.class %>" message="please-select-a-region" />
 
 <c:if test="<%= addresses.isEmpty() %>">
-	<div class="addresses-empty-results-message-wrapper">
+	<div class="contact-information-empty-results-message-wrapper">
 		<liferay-ui:empty-result-message
 			message="this-organization-does-not-have-any-addresses"
 		/>

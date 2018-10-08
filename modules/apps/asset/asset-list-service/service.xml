@@ -101,6 +101,51 @@
 
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
+	<entity local-service="true" name="AssetListEntryUsage" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="assetListEntryUsageId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="assetListEntryId" type="long" />
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="portletId" type="String" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="AssetListEntryId" return-type="Collection">
+			<finder-column name="assetListEntryId" />
+		</finder>
+		<finder name="A_C" return-type="Collection">
+			<finder-column name="assetListEntryId" />
+			<finder-column name="classNameId" />
+		</finder>
+		<finder name="C_C_P" return-type="AssetListEntryUsage" unique="true">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="portletId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
 	<exceptions>
 		<exception>AssetListEntryTitle</exception>
 		<exception>DuplicateAssetListEntryTitle</exception>

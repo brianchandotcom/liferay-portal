@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
@@ -26,12 +27,12 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuPortletKeys;
 import com.liferay.site.navigation.menu.web.internal.display.context.SiteNavigationMenuDisplayContext;
-import com.liferay.site.navigation.model.SiteNavigationMenu;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -86,10 +87,10 @@ public class SiteNavigationMenuAddPortletToolbarContributor
 
 		menu.setDirection("right");
 		menu.setExtended(false);
-		menu.setIcon("pencil");
+		menu.setIcon("plus");
 		menu.setMarkupView("lexicon");
 		menu.setMenuItems(menuItems);
-		menu.setMessage("edit");
+		menu.setMessage("add");
 		menu.setScroll(false);
 		menu.setShowArrow(false);
 		menu.setShowWhenSingleIcon(true);
@@ -110,7 +111,7 @@ public class SiteNavigationMenuAddPortletToolbarContributor
 		long siteNavigationMenuId =
 			siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuId();
 
-		if (siteNavigationMenuId <= 0) {
+		if (siteNavigationMenuId > 0) {
 			return null;
 		}
 
@@ -118,16 +119,27 @@ public class SiteNavigationMenuAddPortletToolbarContributor
 
 		urlMenuItem.setLabel(
 			LanguageUtil.get(
-				_portal.getHttpServletRequest(portletRequest), "edit"));
+				_portal.getHttpServletRequest(portletRequest), "add-page"));
 
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			portletRequest, SiteNavigationMenu.class.getName(),
+			portletRequest, Layout.class.getName(),
 			PortletProvider.Action.EDIT);
 
-		portletURL.setParameter("mvcPath", "/edit_site_navigation_menu.jsp");
+		portletURL.setParameter(
+			"mvcPath", "/select_layout_page_template_entry.jsp");
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 		portletURL.setParameter(
-			"siteNavigationMenuId", String.valueOf(siteNavigationMenuId));
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+
+		Layout layout = themeDisplay.getLayout();
+
+		portletURL.setParameter(
+			"privateLayout", String.valueOf(layout.isPrivateLayout()));
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletURL.setParameter(
+			"portletResource", portletDisplay.getPortletName());
 
 		urlMenuItem.setURL(portletURL.toString());
 

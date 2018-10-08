@@ -19,7 +19,7 @@
       <h4>1 Failed Jobs:</h4>
       <ul>
         <li>
-          <a href="https://test-1-22.liferay.com/job/test-portal-source-format/587/">
+          <a href="${dependencies.url}/GitHubMessageTest/test-portal-source-format_source-format-failure/test-1-22/test-portal-source-format/587/">
             <strike>
               <strong>test-portal-source-format</strong>
             </strike>
@@ -28,7 +28,7 @@
       </ul>
     </div>
     <h5>For more details click
-      <a href="https://test-1-22.liferay.com/userContent/jobs/test-portal-source-format/builds/587/jenkins-report.html">here</a>.
+      <a href="${dependencies.url}/GitHubMessageTest/test-portal-source-format_source-format-failure/test-1-22/test-portal-source-format/587//jenkins-report.html">here</a>.
     </h5>
     <pre>
       <code>     [java] java.lang.Exception: Found 2 formatting issues:
@@ -39,7 +39,7 @@
      [java] 	at com.liferay.source.formatter.SourceFormatter.main(SourceFormatter.java:239)
      [echo] The following error occurred while executing this line:
      [echo] /opt/dev/projects/github/liferay-portal/portal-impl/build.xml:671: Java returned: 1
-      [get] Getting: http://test-1-22/job/test-portal-source-format/587//consoleText
+      [get] Getting: ${dependencies.url}/GitHubMessageTest/test-portal-source-format_source-format-failure/test-1-22/test-portal-source-format/587consoleText
       [get] To: /opt/dev/projects/github/liferay-portal/20181002035842986.txt
    [delete] Deleting: /opt/dev/projects/github/liferay-portal/20181002035842986.txt
   [taskdef] Could not load definitions from resource aQute/bnd/ant/taskdef.properties. It could not be found.
@@ -58,8 +58,7 @@ merge-test-results:
      [copy] Copying 1 file to /opt/dev/projects/github/liferay-jenkins-ee/test-results
      [echo]
      [echo] Ant GC log:
-     [echo]
-     [echo] Java HotSpot(TM) 64-Bit Server VM (25.121-b13) for linux-amd64 JRE (1.8.0_121-b13), built on Dec 12 2016 16:36:53 by "java_re" with gcc 4.3.0 20080428 (Red Hat 4.3.0-8)</code>
+     [echo] </code>
     </pre>
   </details>
 </html>

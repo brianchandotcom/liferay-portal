@@ -132,7 +132,7 @@ exports[`Select should have a predefinedValue 1`] = `
 <div class="form-group">
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
-      <div class="option-selected option-selected-placeholder">Select</div>
+      <div class="option-selected option-selected-placeholder"></div>
       <a class="select-arrow-down-container" href="javascript:;">
         <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
           <title>caret-double</title>
@@ -174,7 +174,7 @@ exports[`Select should have a value 1`] = `
 <div class="form-group">
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
-      <div class="option-selected option-selected-placeholder">value</div>
+      <div class="option-selected option-selected-placeholder"></div>
       <a class="select-arrow-down-container" href="javascript:;">
         <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
           <title>caret-double</title>
@@ -313,7 +313,7 @@ exports[`Select should render options 1`] = `
   <div class="dropdown-menu">
     <ul class="list-unstyled">
       <li class="dropdown-item" data-option-value=""></li>
-      <li class="dropdown-item" data-option-value="name">item</li>
+      <li class="dropdown-item" data-option-value="item">label</li>
     </ul>
   </div>
 </div>

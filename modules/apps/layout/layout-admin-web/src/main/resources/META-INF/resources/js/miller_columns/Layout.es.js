@@ -190,6 +190,30 @@ class Layout extends Component {
 	}
 
 	/**
+	 * @param {!Array} layoutColumns
+	 * @param {!string} sourceColumnIndex
+	 * @param {!Array} sourceItem
+	 * @param {!string} targetColumnIndex
+	 * @private
+	 * @review
+	 */
+
+	_handleEmptyColumn(layoutColumns, sourceColumnIndex, sourceItem, targetColumnIndex) {
+		if (sourceItem.active && (sourceColumnIndex != targetColumnIndex)) {
+			sourceItem.active = false;
+			this._removeFollowingColumns(layoutColumns, sourceColumnIndex);
+		}
+
+		const previousColumn = layoutColumns[sourceColumnIndex - 1];
+
+		const activeItemPlid = this._getLayoutColumnActiveItem(previousColumn);
+
+		const activeItem = this._getLayoutColumnItemByPlid(layoutColumns, activeItemPlid);
+
+		activeItem.hasChild = false;
+	}
+
+	/**
 	 * Handle layout column item check event
 	 * @param {!object} eventData
 	 * @param {string} eventData.delegateTarget.value
@@ -242,21 +266,7 @@ class Layout extends Component {
 			let priority = null;
 
 			if (this._draggingItemPosition === DRAG_POSITIONS.inside) {
-
-				if (targetItem.active && targetItem.hasChild) {
-					const nextColumn = layoutColumns[targetColumnIndex + 1];
-					nextColumn.splice(nextColumn.length, 0, sourceItem);
-				}
-
-				targetItem.hasChild = true;
-
-				if (sourceItem.active) {
-					for (let i = sourceColumnIndex + 1; i < layoutColumns.length; i++) {
-						layoutColumns[i] = [];
-					}
-
-					this._deleteEmptyColumns(layoutColumns);
-				}
+				this._moveItemInside(layoutColumns, sourceColumnIndex, sourceItem, targetItem, targetColumnIndex);
 
 				parentPlid = targetItemPlid;
 			}
@@ -273,21 +283,7 @@ class Layout extends Component {
 			}
 
 			if (sourceColumn.length == 0) {
-				if (sourceItem.active && (sourceColumnIndex != targetColumnIndex)) {
-					sourceItem.active = false;
-
-					for (let i = sourceColumnIndex + 1; i < layoutColumns.length; i++) {
-						layoutColumns[i] = [];
-					}
-				}
-
-				const previousColumn = layoutColumns[sourceColumnIndex - 1];
-
-				const activeItemPlid = this._getLayoutColumnActiveItem(previousColumn);
-
-				const activeItem = this._getLayoutColumnItemByPlid(layoutColumns, activeItemPlid);
-
-				activeItem.hasChild = false;
+				this._handleEmptyColumn(layoutColumns, sourceColumnIndex, sourceItem, targetColumnIndex);
 
 				this._deleteEmptyColumns(layoutColumns);
 			}
@@ -295,24 +291,22 @@ class Layout extends Component {
 			if (sourceItem.active && (sourceColumnIndex != targetColumnIndex)) {
 				sourceItem.active = false;
 
-				for (let i = sourceColumnIndex + 1; i < layoutColumns.length; i++) {
-					layoutColumns[i] = [];
-				}
+				this._removeFollowingColumns(layoutColumns, sourceColumnIndex);
 
 				this._deleteEmptyColumns(layoutColumns);
 			}
 
-			this._moveLayoutColumnItem(parentPlid, sourceItemPlid, priority)
+			this._moveLayoutColumnItemOnServer(parentPlid, sourceItemPlid, priority)
 				.then(
 					() => {
 						this.layoutColumns = layoutColumns;
 
 						requestAnimationFrame(
 							() => {
-						this._initializeLayoutDragDrop();
+								this._initializeLayoutDragDrop();
+							}
+						);
 					}
-				);
-		}
 				);
 		}
 
@@ -344,6 +338,39 @@ class Layout extends Component {
 	}
 
 	/**
+	 * @param {!Array} layoutColumns
+	 * @param {!string} sourceColumnIndex
+	 * @param {!Array} sourceItem
+	 * @param {!Array} targetItem
+	 * @param {!string} targetColumnIndex
+	 * @private
+	 * @review
+	 */
+
+	_moveItemInside(layoutColumns, sourceColumnIndex, sourceItem, targetItem, targetColumnIndex) {
+		if (targetItem.active) {
+			let nextColumn = null;
+
+			if (layoutColumns[targetColumnIndex + 1]) {
+				nextColumn = layoutColumns[targetColumnIndex + 1];
+			}
+			else {
+				nextColumn = [];
+			}
+
+			nextColumn.splice(nextColumn.length, 0, sourceItem);
+		}
+
+		if (sourceItem.active) {
+			this._removeFollowingColumns(layoutColumns, sourceColumnIndex);
+
+			this._deleteEmptyColumns(layoutColumns);
+		}
+
+		targetItem.hasChild = true;
+	}
+
+	/**
 	 * Sends the movement of an item to the server.
 	 * @param {string} parentPlid
 	 * @param {string} plid
@@ -352,7 +379,7 @@ class Layout extends Component {
 	 * @review
 	 */
 
-	_moveLayoutColumnItem(parentPlid, plid, priority) {
+	_moveLayoutColumnItemOnServer(parentPlid, plid, priority) {
 		const formData = new FormData();
 
 		formData.append(`${this.portletNamespace}plid`, plid);
@@ -374,6 +401,19 @@ class Layout extends Component {
 				this._resetHoveredData();
 			}
 		);
+	}
+
+	/**
+	 * @param {!Array} layoutColumns
+	 * @param {!string} startColumnIndex
+	 * @private
+	 * @review
+	 */
+
+	_removeFollowingColumns(layoutColumns, startColumnIndex) {
+		for (let i = startColumnIndex + 1; i < layoutColumns.length; i++) {
+			layoutColumns[i] = [];
+		}
 	}
 
 	/**

@@ -102,6 +102,21 @@ public class DeprecatedModulesUpgrade implements UpgradeStepRegistrator {
 					CacheRegistryUtil.clear();
 				}
 			}
+
+			if (_deprecatedModulesUpgradeConfiguration.
+					removeTwitterModuleData()) {
+
+				Release release = _releaseLocalService.fetchRelease(
+					"com.liferay.twitter.service");
+
+				if (release != null) {
+					UpgradeTwitter upgradeTwitter = new UpgradeTwitter();
+
+					upgradeTwitter.upgrade();
+
+					CacheRegistryUtil.clear();
+				}
+			}
 		}
 		catch (UpgradeException ue) {
 			ReflectionUtil.throwException(ue);

@@ -48,4 +48,7 @@ public interface DeprecatedModulesUpgradeConfiguration {
 	)
 	public boolean removePrivateMessagingModuleData();
 
+	@Meta.AD(deflt = "false", name = "remove-twitter-module", required = false)
+	public boolean removeTwitterModuleData();
+
 }

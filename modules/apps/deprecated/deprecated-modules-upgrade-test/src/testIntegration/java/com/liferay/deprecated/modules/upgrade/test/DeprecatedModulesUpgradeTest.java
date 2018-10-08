@@ -111,6 +111,14 @@ public class DeprecatedModulesUpgradeTest {
 			"com_liferay_shopping_web_portlet_ShoppingPortlet");
 	}
 
+	@Test
+	public void testDeprecatedModulesUpgradeTwitter() throws Exception {
+		_testDeprecatedModulesUpgrade(
+			"removeTwitterModuleData", "com.liferay.twitter.service",
+			"dependencies/twitter-tables.sql",
+			"com_liferay_twitter_web_portlet_TwitterPortlet");
+	}
+
 	private void _testDeprecatedModulesUpgrade(
 			String propertyKey, String servletContextName, String sqlFilePath,
 			String portletPreferencePortletId)
@@ -198,7 +206,8 @@ public class DeprecatedModulesUpgradeTest {
 	private static final String[] _SERVLET_CONTEXT_NAMES = {
 		"com.liferay.chat.service", "com.liferay.mail.reader.service",
 		"com.liferay.shopping.service",
-		"com.liferay.social.privatemessaging.service"
+		"com.liferay.social.privatemessaging.service",
+		"com.liferay.twitter.service"
 	};
 
 	@Inject

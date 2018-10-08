@@ -58,8 +58,8 @@ public class CompositeResourceLoaderBundle implements Bundle {
 
 		List<URL> urls = new ArrayList<>();
 
-		for (Bundle bundle : _bundles) {
-			Enumeration<URL> enumeration = bundle.findEntries(
+		for (int i = _bundles.length - 1; i >= 0; i--) {
+			Enumeration<URL> enumeration = _bundles[i].findEntries(
 				path, filePattern, recurse);
 
 			if ((enumeration != null) && enumeration.hasMoreElements()) {

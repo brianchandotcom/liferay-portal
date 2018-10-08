@@ -70,7 +70,15 @@ List<Address> addresses = AddressServiceUtil.getAddresses(Organization.class.get
 	</div>
 </c:if>
 
-<div class="addresses-table-wrapper table-responsive">
+<%
+CSSClassNameBuilder cssClassNameBuilder = new CSSClassNameBuilder();
+
+cssClassNameBuilder.add("addresses-table-wrapper");
+cssClassNameBuilder.add("hide", addresses.isEmpty());
+cssClassNameBuilder.add("table-responsive");
+%>
+
+<div class="<%= cssClassNameBuilder.build() %>">
 	<table class="table table-autofit">
 		<tbody>
 

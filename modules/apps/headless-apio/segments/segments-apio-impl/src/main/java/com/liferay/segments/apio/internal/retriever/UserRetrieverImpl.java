@@ -70,7 +70,7 @@ public class UserRetrieverImpl implements UserRetriever {
 		throws PortalException {
 
 		try {
-			Filter filter = (Filter)_filterParser.parse(filterString);
+			Filter filter = new Filter(_filterParser.parse(filterString));
 
 			SearchContext searchContext = _createSearchContext(
 				companyId, start, end);

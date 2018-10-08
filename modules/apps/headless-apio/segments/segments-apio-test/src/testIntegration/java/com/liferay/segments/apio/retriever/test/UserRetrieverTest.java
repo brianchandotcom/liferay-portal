@@ -197,11 +197,9 @@ public class UserRetrieverTest {
 		_user1 = UserTestUtil.addUser(
 			_group1.getGroupId(), LocaleUtil.getDefault());
 
-		String expectedEmailAddress = _user1.getEmailAddress();
-
 		List<User> users = _userRetriever.getUsers(
 			_group1.getCompanyId(),
-			"(emailAddress eq '" + expectedEmailAddress + "')",
+			"(emailAddress eq '" + _user1.getEmailAddress() + "')",
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());
@@ -215,11 +213,9 @@ public class UserRetrieverTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new long[] {_group1.getGroupId()});
 
-		String expectedFirstName = _user1.getFirstName();
-
 		List<User> users = _userRetriever.getUsers(
 			_group1.getCompanyId(),
-			"(firstName eq '" + expectedFirstName + "')",
+			"(firstName eq '" + _user1.getFirstName() + "')",
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());
@@ -378,10 +374,9 @@ public class UserRetrieverTest {
 
 		UserTestUtil.addUser(_group1.getGroupId(), LocaleUtil.getDefault());
 
-		String expectedLastName = _user1.getLastName();
-
 		List<User> users = _userRetriever.getUsers(
-			_group1.getCompanyId(), "(lastName eq '" + expectedLastName + "')",
+			_group1.getCompanyId(),
+			"(lastName eq '" + _user1.getLastName() + "')",
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());
@@ -419,11 +414,9 @@ public class UserRetrieverTest {
 
 		UserTestUtil.addUser(_group1.getGroupId(), LocaleUtil.getDefault());
 
-		String expectedScreenName = _user1.getScreenName();
-
 		List<User> users = _userRetriever.getUsers(
 			_group1.getCompanyId(),
-			"(screenName eq '" + expectedScreenName + "')",
+			"(screenName eq '" + _user1.getScreenName() + "')",
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());

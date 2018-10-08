@@ -14,21 +14,33 @@
 
 package com.liferay.structured.content.apio.client.test.activator;
 
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleConstants;
+import com.liferay.journal.model.JournalFolderConstants;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -42,8 +54,28 @@ import org.osgi.framework.BundleContext;
 public class StructuredContentApioTestBundleActivator
 	implements BundleActivator {
 
+	public static final String NOT_A_SITE_MEMBER_EMAIL_ADDRESS =
+		StructuredContentApioTestBundleActivator.class.getSimpleName() +
+			"NotASiteMemberUser@liferay.com";
+
+	public static final String SITE_MEMBER_EMAIL_ADDRESS =
+		StructuredContentApioTestBundleActivator.class.getSimpleName() +
+			"SiteMemberUser@liferay.com";
+
 	public static final String SITE_NAME =
 		StructuredContentApioTestBundleActivator.class.getSimpleName() + "Site";
+
+	public static final String TITLE_NO_GUEST_NO_GROUP =
+		StructuredContentApioTestBundleActivator.class.getSimpleName() +
+			"NoGuestNoGroupTitle";
+
+	public static final String TITLE_NO_GUEST_YES_GROUP =
+		StructuredContentApioTestBundleActivator.class.getSimpleName() +
+			"NoGuestYesGroupTitle";
+
+	public static final String TITLE_YES_GUEST_YES_GROUP =
+		StructuredContentApioTestBundleActivator.class.getSimpleName() +
+			"YesGuestYesGroupTitle";
 
 	@Override
 	public void start(BundleContext bundleContext) {
@@ -62,6 +94,63 @@ public class StructuredContentApioTestBundleActivator
 	@Override
 	public void stop(BundleContext bundleContext) {
 		_cleanUp();
+	}
+
+	private JournalArticle _addJournalArticle(
+			String title, long userId, long groupId,
+			boolean addGuestPermissions, boolean addGroupPermissions)
+		throws Exception {
+
+		Map<Locale, String> stringMap = new HashMap<Locale, String>() {
+			{
+				put(LocaleUtil.getDefault(), title);
+			}
+		};
+
+		long defaultCompanyId = PortalUtil.getDefaultCompanyId();
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(addGroupPermissions);
+		serviceContext.setAddGuestPermissions(addGuestPermissions);
+		serviceContext.setCompanyId(defaultCompanyId);
+		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setUserId(userId);
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT, title, false,
+			stringMap, stringMap, stringMap, null, LocaleUtil.getDefault(),
+			null, true, true, serviceContext);
+
+		_autoCloseables.add(
+			() -> JournalArticleLocalServiceUtil.deleteArticle(journalArticle));
+
+		return journalArticle;
+	}
+
+	private User _addUser(String emailAddress, long companyId, long groupId)
+		throws Exception {
+
+		User existingUser = UserLocalServiceUtil.fetchUserByEmailAddress(
+			companyId, emailAddress);
+
+		if (existingUser != null) {
+			UserLocalServiceUtil.deleteUser(existingUser.getUserId());
+		}
+
+		User user = UserLocalServiceUtil.addUser(
+			UserConstants.USER_ID_DEFAULT, companyId, false, Constants.TEST,
+			Constants.TEST, true, StringUtil.randomString(20), emailAddress, 0,
+			null, PortalUtil.getSiteDefaultLocale(groupId),
+			StringUtil.randomString(20), null, StringUtil.randomString(10), 0,
+			0, true, 1, 1, 2000, null, new long[] {groupId}, new long[0],
+			new long[0], new long[0], false, new ServiceContext());
+
+		_autoCloseables.add(
+			() -> UserLocalServiceUtil.deleteUser(user.getUserId()));
+
+		return user;
 	}
 
 	private void _cleanUp() {
@@ -89,6 +178,26 @@ public class StructuredContentApioTestBundleActivator
 			true, true, ServiceContextTestUtil.getServiceContext());
 
 		_autoCloseables.add(() -> GroupLocalServiceUtil.deleteGroup(group));
+
+		_addUser(
+			SITE_MEMBER_EMAIL_ADDRESS, TestPropsValues.getCompanyId(),
+			group.getGroupId());
+
+		_addUser(
+			NOT_A_SITE_MEMBER_EMAIL_ADDRESS, TestPropsValues.getCompanyId(),
+			GroupConstants.DEFAULT_LIVE_GROUP_ID);
+
+		_addJournalArticle(
+			TITLE_NO_GUEST_NO_GROUP, user.getUserId(), group.getGroupId(),
+			false, false);
+
+		_addJournalArticle(
+			TITLE_NO_GUEST_YES_GROUP, user.getUserId(), group.getGroupId(),
+			false, true);
+
+		_addJournalArticle(
+			TITLE_YES_GUEST_YES_GROUP, user.getUserId(), group.getGroupId(),
+			true, true);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

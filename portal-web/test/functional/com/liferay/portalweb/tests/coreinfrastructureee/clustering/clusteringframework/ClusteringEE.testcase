@@ -368,9 +368,7 @@
 		</execute>
 	</command>
 
-	<!-- LRQA-29556 -->
-
-	<!--<command name="ValidateSchedulerOnSeparateNodes" priority="4">
+	<command name="ValidateSchedulerOnSeparateNodes" priority="4">
 		<property name="test.name.skip.portal.instance" value="ClusteringEE#ValidateSchedulerOnSeparateNodes" />
 
 		<execute macro="Clustering#viewClusterStatusInConsoleEE" />
@@ -473,5 +471,5 @@
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
-	</command>-->
+	</command>
 </definition>

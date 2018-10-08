@@ -350,9 +350,6 @@ public class JournalManagementToolbarDisplayContext
 
 		portletURL.setParameter(
 			"folderId", String.valueOf(_journalDisplayContext.getFolderId()));
-		portletURL.setParameter(
-			"showEditActions",
-			String.valueOf(_journalDisplayContext.isShowEditActions()));
 
 		return portletURL.toString();
 	}
@@ -447,9 +444,8 @@ public class JournalManagementToolbarDisplayContext
 			dropdownItem.setHref(
 				liferayPortletResponse.createRenderURL(), "navigation",
 				navigation, "folderId",
-				String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
-				"showEditActions",
-				String.valueOf(_journalDisplayContext.isShowEditActions()));
+				String.valueOf(
+					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 
 			dropdownItem.setLabel(LanguageUtil.get(request, navigation));
 		};

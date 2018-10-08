@@ -730,11 +730,6 @@ public class JournalDisplayContext {
 			portletURL.setParameter("orderByType", orderByType);
 		}
 
-		if (!isShowEditActions()) {
-			portletURL.setParameter(
-				"showEditActions", String.valueOf(isShowEditActions()));
-		}
-
 		String tabs1 = getTabs1();
 
 		if (Validator.isNotNull(tabs1)) {
@@ -777,7 +772,7 @@ public class JournalDisplayContext {
 
 		if (!showVersions) {
 			EntriesChecker entriesChecker = new EntriesChecker(
-				_liferayPortletRequest, _liferayPortletResponse, _trashHelper);
+				_liferayPortletRequest, _liferayPortletResponse);
 
 			entriesChecker.setCssClass("entry-selector");
 			entriesChecker.setRememberCheckBoxStateURLRegex(
@@ -1172,17 +1167,6 @@ public class JournalDisplayContext {
 		return false;
 	}
 
-	public boolean isShowEditActions() {
-		if (_showEditActions != null) {
-			return _showEditActions;
-		}
-
-		_showEditActions = ParamUtil.getBoolean(
-			_request, "showEditActions", true);
-
-		return _showEditActions;
-	}
-
 	public boolean isShowInfoButton() {
 		if (Validator.isNotNull(getDDMStructureKey())) {
 			return false;
@@ -1519,7 +1503,6 @@ public class JournalDisplayContext {
 	private final PortletPreferences _portletPreferences;
 	private final HttpServletRequest _request;
 	private Integer _restrictionType;
-	private Boolean _showEditActions;
 	private Integer _status;
 	private String _tabs1;
 	private final ThemeDisplay _themeDisplay;

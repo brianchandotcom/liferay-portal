@@ -49,6 +49,12 @@ class Layout extends Component {
 				this.searchContainer_ = searchContainer;
 			}
 		);
+
+		this._deleteEmptyColumns(this.layoutColumns);
+
+		this.layoutColumns = this.layoutColumns.map(
+			layoutColumn => [...layoutColumn]
+		);
 	}
 
 	/**
@@ -73,6 +79,21 @@ class Layout extends Component {
 
 		if (firstRendered) {
 			this._initializeLayoutDragDrop();
+		}
+	}
+
+	/**
+	 * @private
+	 * @review
+	 */
+
+	_deleteEmptyColumns(layoutColumns) {
+		if (layoutColumns.length > 3) {
+			for (let i = 0; i < layoutColumns.length; i++) {
+				if (layoutColumns[i].length === 0) {
+					layoutColumns.splice(i, 1);
+				}
+			}
 		}
 	}
 

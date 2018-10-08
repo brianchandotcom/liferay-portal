@@ -54,6 +54,14 @@ import org.osgi.framework.BundleContext;
 public class StructuredContentApioTestBundleActivator
 	implements BundleActivator {
 
+	public static final String NOT_A_SITE_MEMBER_EMAIL_ADDRESS =
+		StructuredContentApioTestBundleActivator.class.getSimpleName() +
+			"NotASiteMemberUser@liferay.com";
+
+	public static final String SITE_MEMBER_EMAIL_ADDRESS =
+		StructuredContentApioTestBundleActivator.class.getSimpleName() +
+			"SiteMemberUser@liferay.com";
+
 	public static final String SITE_NAME =
 		StructuredContentApioTestBundleActivator.class.getSimpleName() + "Site";
 
@@ -124,6 +132,14 @@ public class StructuredContentApioTestBundleActivator
 			true, true, ServiceContextTestUtil.getServiceContext());
 
 		_autoCloseables.add(() -> GroupLocalServiceUtil.deleteGroup(group));
+
+		_addUser(
+			SITE_MEMBER_EMAIL_ADDRESS, TestPropsValues.getCompanyId(),
+			group.getGroupId());
+
+		_addUser(
+			NOT_A_SITE_MEMBER_EMAIL_ADDRESS, TestPropsValues.getCompanyId(),
+			GroupConstants.DEFAULT_LIVE_GROUP_ID);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

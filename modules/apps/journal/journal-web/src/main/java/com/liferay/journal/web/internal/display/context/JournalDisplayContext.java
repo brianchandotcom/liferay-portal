@@ -288,6 +288,9 @@ public class JournalDisplayContext {
 		PortletURL clearResultsURL = getPortletURL();
 
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		clearResultsURL.setParameter("navigation", StringPool.BLANK);
+		clearResultsURL.setParameter(
+			"status", String.valueOf(WorkflowConstants.STATUS_ANY));
 
 		return clearResultsURL.toString();
 	}

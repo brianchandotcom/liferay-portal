@@ -56,7 +56,11 @@ const configView = {
 			['logical-operator']: 'OR'
 		}
 	],
-	spritemap
+	spritemap,
+
+	rolesURL: '/o/dynamic-data-mapping-form-builder-roles/',
+
+	url: '/o/dynamic-data-mapping-form-builder-roles/'
 };
 
 describe(
@@ -99,6 +103,19 @@ describe(
 				const ruleCardEdit = document.querySelector('.rule-card-edit');
 
 				dom.triggerEvent(ruleCardEdit, 'click', {});
+
+				jest.runAllTimers();
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should render rule screen creator when click add button',
+			() => {
+				const addbutton = document.querySelector('#addFieldButton');
+
+				dom.triggerEvent(addbutton, 'click', {});
 
 				jest.runAllTimers();
 

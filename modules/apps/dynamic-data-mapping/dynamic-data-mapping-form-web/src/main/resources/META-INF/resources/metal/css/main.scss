@@ -145,6 +145,34 @@ textarea[class^="form-builder-page-header"] {
 	}
 }
 
+.form-builder-rule-builder {
+	.add-condition.timeline-increment-icon s {
+		padding-left: 10px;
+	}
+
+	.liferay-ddm-form-rule-builder-timeline {
+		margin-bottom: 0;
+
+		&.can-remove-item {
+			.timeline-item:hover > .container-trash {
+				display: block;
+			}
+		}
+
+		.container-trash {
+			cursor: pointer;
+			display: none;
+			padding: 10px;
+			position: absolute;
+			right: 10px;
+			top: 13px;
+			&:hover {
+				color: #65B6F0;
+			}
+		}
+	}
+}
+
 .form-builder-rule-builder-rule-description {
 	margin-bottom: 0;
 }

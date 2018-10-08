@@ -16,22 +16,26 @@
 			{/if}
 		{/let}
 
-		<label {$attributesLabel}>
-			{if $label and $showLabel}
-				{$label}{sp}
-			{/if}
-			{if $required and $spritemap}
-				<span class="reference-mark">
-					{call ClayIcon.render}
-						{param spritemap: $spritemap /}
-						{param symbol: 'asterisk' /}
-					{/call}
-				</span>
-			{/if}
-		</label>
+		{if $label}
+			<label {$attributesLabel}>
+				{if $label and $showLabel}
+					{$label}{sp}
+				{/if}
+				{if $required and $spritemap}
+					<span class="reference-mark">
+						{call ClayIcon.render}
+							{param spritemap: $spritemap /}
+							{param symbol: 'asterisk' /}
+						{/call}
+					</span>
+				{/if}
+			</label>
+		{/if}
 
 		{$contentRenderer}
 
-		<span class="form-text">{$tip}</span>
+		{if $tip}
+			<span class="form-text">{$tip}</span>
+		{/if}
 	</div>
 {/template}

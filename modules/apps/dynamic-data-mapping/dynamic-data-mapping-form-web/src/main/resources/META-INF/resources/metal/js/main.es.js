@@ -129,6 +129,15 @@ class Form extends Component {
 		 * @memberof Form
 		 * @type {!array}
 		 */
+		rolesURL: Config.string().required(),
+
+		/**
+		 * The rules of a form.
+		 * @default undefined
+		 * @instance
+		 * @memberof Form
+		 * @type {!array}
+		 */
 
 		rules: Config.array(),
 
@@ -457,8 +466,10 @@ class Form extends Component {
 				<LayoutProvider {...layoutProviderProps}>
 					<RuleBuilder
 						functionsMetadata={this.props.functionsMetadata}
+						pages={context.pages}
 						rules={this.props.rules}
 						spritemap={spritemap}
+						url={this.props.rolesURL}
 						visible={showRuleBuilder}
 					/>
 					<Builder

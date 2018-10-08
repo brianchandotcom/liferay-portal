@@ -2,7 +2,6 @@
 
 exports[`Grid should be not edidable 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="liferay-ddm-form-field-grid table-responsive">
     <table class="table table-autofit table-list table-striped">
       <thead>
@@ -21,7 +20,6 @@ exports[`Grid should be not edidable 1`] = `
       </tbody>
     </table>
   </div>
-  <span class="form-text"></span>
 </div>
 `;
 
@@ -46,13 +44,11 @@ exports[`Grid should have a label 1`] = `
       </tbody>
     </table>
   </div>
-  <span class="form-text"></span>
 </div>
 `;
 
 exports[`Grid should have a spritemap 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="liferay-ddm-form-field-grid table-responsive">
     <table class="table table-autofit table-list table-striped">
       <thead>
@@ -71,13 +67,11 @@ exports[`Grid should have a spritemap 1`] = `
       </tbody>
     </table>
   </div>
-  <span class="form-text"></span>
 </div>
 `;
 
 exports[`Grid should have a tip 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="liferay-ddm-form-field-grid table-responsive">
     <table class="table table-autofit table-list table-striped">
       <thead>
@@ -102,7 +96,6 @@ exports[`Grid should have a tip 1`] = `
 
 exports[`Grid should have an id 1`] = `
 <div class="form-group">
-  <label for="ID"></label>
   <div class="liferay-ddm-form-field-grid table-responsive">
     <table class="table table-autofit table-list table-striped">
       <thead>
@@ -121,13 +114,11 @@ exports[`Grid should have an id 1`] = `
       </tbody>
     </table>
   </div>
-  <span class="form-text"></span>
 </div>
 `;
 
 exports[`Grid should not be required 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="liferay-ddm-form-field-grid table-responsive">
     <table class="table table-autofit table-list table-striped">
       <thead>
@@ -146,7 +137,6 @@ exports[`Grid should not be required 1`] = `
       </tbody>
     </table>
   </div>
-  <span class="form-text"></span>
 </div>
 `;
 
@@ -171,13 +161,11 @@ exports[`Grid should render Label if showLabel is true 1`] = `
       </tbody>
     </table>
   </div>
-  <span class="form-text"></span>
 </div>
 `;
 
 exports[`Grid should render columns 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="liferay-ddm-form-field-grid table-responsive">
     <table class="table table-autofit table-list table-striped">
       <thead>
@@ -200,13 +188,11 @@ exports[`Grid should render columns 1`] = `
       </tbody>
     </table>
   </div>
-  <span class="form-text"></span>
 </div>
 `;
 
 exports[`Grid should render no columns when columns comes empty 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="liferay-ddm-form-field-grid table-responsive">
     <table class="table table-autofit table-list table-striped">
       <thead>
@@ -221,13 +207,11 @@ exports[`Grid should render no columns when columns comes empty 1`] = `
       </tbody>
     </table>
   </div>
-  <span class="form-text"></span>
 </div>
 `;
 
 exports[`Grid should render no rows when row comes empty 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="liferay-ddm-form-field-grid table-responsive">
     <table class="table table-autofit table-list table-striped">
       <thead>
@@ -239,13 +223,11 @@ exports[`Grid should render no rows when row comes empty 1`] = `
       <tbody></tbody>
     </table>
   </div>
-  <span class="form-text"></span>
 </div>
 `;
 
 exports[`Grid should render rows 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="liferay-ddm-form-field-grid table-responsive">
     <table class="table table-autofit table-list table-striped">
       <thead>
@@ -270,6 +252,5 @@ exports[`Grid should render rows 1`] = `
       </tbody>
     </table>
   </div>
-  <span class="form-text"></span>
 </div>
 `;

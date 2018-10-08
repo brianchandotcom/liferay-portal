@@ -118,16 +118,19 @@ bs.init(
 			console.error(error);
 		}
 		else {
+			let buildingSoy = false;
 			bs.watch('src/**/*.soy').on(
 				'change',
 				fileName => {
-					if (fileName.indexOf('__tests__') > -1) {
+					if (buildingSoy) {
 						return;
 					}
+					buildingSoy = true;
 					sendEvent(instance, 'building', {fileName});
 					buildSoy(
 						fileName,
 						(error) => {
+							buildingSoy = false;
 							if (error) {
 								sendEvent(instance, 'error', {fileName, error});
 							}
@@ -138,16 +141,19 @@ bs.init(
 					);
 				}
 			);
+			let buildingJS = false;
 			bs.watch('src/main/resources/META-INF/resources/metal/**/*.js').on(
 				'change',
 				fileName => {
-					if (fileName.indexOf('__tests__') > -1) {
+					if (buildingJS) {
 						return;
 					}
+					buildingJS = true;
 					sendEvent(instance, 'building', {fileName})
 					buildJS(
 						fileName,
 						(error) => {
+							buildingJS = false;
 							if (error) {
 								sendEvent(instance, 'error', {fileName, error});
 							}

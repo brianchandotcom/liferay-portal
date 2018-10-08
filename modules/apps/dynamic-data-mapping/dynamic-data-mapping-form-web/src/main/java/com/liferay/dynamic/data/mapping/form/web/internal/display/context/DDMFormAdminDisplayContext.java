@@ -741,6 +741,13 @@ public class DDMFormAdminDisplayContext {
 			getFormLayoutURL(formAdminRequestHelper.getThemeDisplay(), true);
 	}
 
+	public String getRolesURL() throws PortalException {
+		DDMFormBuilderSettingsResponse ddmFormBuilderSettingsResponse =
+			getDDMFormBuilderSettingsResponse();
+
+		return ddmFormBuilderSettingsResponse.getRolesURL();
+	}
+
 	public long getScopeGroupId() {
 		return formAdminRequestHelper.getScopeGroupId();
 	}

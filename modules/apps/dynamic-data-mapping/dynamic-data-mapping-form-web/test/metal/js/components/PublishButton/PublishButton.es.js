@@ -1,4 +1,5 @@
 import PublishButton from 'source/components/PublishButton/PublishButton.es';
+import * as util from 'source/util/fetch.es';
 
 const formInstanceId = '12345';
 const namespace = 'portlet_namespace';
@@ -65,7 +66,7 @@ describe(
 					() => {
 						component = new PublishButton(props);
 
-						const fetchSpy = jest.spyOn(component, 'fetch');
+						const fetchSpy = jest.spyOn(util, 'makeFetch');
 
 						fetchSpy.mockImplementation(
 							() => Promise.resolve(
@@ -78,8 +79,13 @@ describe(
 						return component.publish().then(
 							() => expect(fetchSpy).toHaveBeenCalledWith(
 								{
-									[`${namespace}formInstanceId`]: formInstanceId,
-									[`${namespace}published`]: true
+									body: util.convertToSearchParams(
+										{
+											[`${namespace}formInstanceId`]: formInstanceId,
+											[`${namespace}published`]: true
+										}
+									),
+									url
 								}
 							)
 						);
@@ -96,7 +102,7 @@ describe(
 					() => {
 						component = new PublishButton(props);
 
-						const fetchSpy = jest.spyOn(component, 'fetch');
+						const fetchSpy = jest.spyOn(util, 'makeFetch');
 
 						fetchSpy.mockImplementation(
 							() => Promise.resolve(
@@ -109,8 +115,13 @@ describe(
 						return component.unpublish().then(
 							() => expect(fetchSpy).toHaveBeenCalledWith(
 								{
-									[`${namespace}formInstanceId`]: formInstanceId,
-									[`${namespace}published`]: false
+									body: util.convertToSearchParams(
+										{
+											[`${namespace}formInstanceId`]: formInstanceId,
+											[`${namespace}published`]: true
+										}
+									),
+									url
 								}
 							)
 						);

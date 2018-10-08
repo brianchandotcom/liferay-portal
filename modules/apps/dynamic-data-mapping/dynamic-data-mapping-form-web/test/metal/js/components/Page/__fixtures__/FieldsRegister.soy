@@ -1,5 +1,11 @@
 {namespace FieldsRegister}
 
+{deltemplate FormRenderer.RegisterFieldType variant="'date'"}
+	{call MockField.render data="all"}
+		{param type: 'date' /}
+	{/call}
+{/deltemplate}
+
 {deltemplate FormRenderer.RegisterFieldType variant="'radio'"}
 	{call MockField.render data="all"}
 		{param type: 'radio' /}

@@ -113,7 +113,7 @@
 		"format": "npm run csf -- -i",
 		"lint": "eslint src/main/resources/META-INF/resources/metal/",
 		"test": "npm run build-soy-tests && NODE_ENV=test jest --coverage && npm run clean",
-		"test:snapshots": "npm run soy && NODE_ENV=test jest --coverage -u && npm run clean"
+		"test:snapshots": "npm run build-soy && NODE_ENV=test jest --coverage -u && npm run clean"
 	},
 	"version": "4.0.0"
 }

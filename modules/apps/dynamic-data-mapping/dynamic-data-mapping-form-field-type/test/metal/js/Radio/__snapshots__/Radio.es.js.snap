@@ -2,7 +2,6 @@
 
 exports[`Field Radio should be not edidable 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="ddm-radio">
     <div class="custom-control custom-radio">
       <label>
@@ -21,13 +20,11 @@ exports[`Field Radio should be not edidable 1`] = `
       </label>
     </div>
   </div>
-  <span class="form-text"></span>
 </div>
 `;
 
 exports[`Field Radio should have a helptext 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="ddm-radio">
     <div class="custom-control custom-radio">
       <label>
@@ -71,13 +68,11 @@ exports[`Field Radio should have a label 1`] = `
       </label>
     </div>
   </div>
-  <span class="form-text"></span>
 </div>
 `;
 
 exports[`Field Radio should have a predefined Value 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="ddm-radio">
     <div class="custom-control custom-radio">
       <label>
@@ -96,13 +91,11 @@ exports[`Field Radio should have a predefined Value 1`] = `
       </label>
     </div>
   </div>
-  <span class="form-text"></span>
 </div>
 `;
 
 exports[`Field Radio should have a spritemap 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="ddm-radio">
     <div class="custom-control custom-radio">
       <label>
@@ -121,13 +114,11 @@ exports[`Field Radio should have a spritemap 1`] = `
       </label>
     </div>
   </div>
-  <span class="form-text"></span>
 </div>
 `;
 
 exports[`Field Radio should have a value 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="ddm-radio">
     <div class="custom-control custom-radio">
       <label>
@@ -146,13 +137,11 @@ exports[`Field Radio should have a value 1`] = `
       </label>
     </div>
   </div>
-  <span class="form-text"></span>
 </div>
 `;
 
 exports[`Field Radio should have an id 1`] = `
 <div class="form-group">
-  <label for="ID"></label>
   <div class="ddm-radio">
     <div class="custom-control custom-radio">
       <label>
@@ -171,13 +160,11 @@ exports[`Field Radio should have an id 1`] = `
       </label>
     </div>
   </div>
-  <span class="form-text"></span>
 </div>
 `;
 
 exports[`Field Radio should not be required 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="ddm-radio">
     <div class="custom-control custom-radio">
       <label>
@@ -196,7 +183,6 @@ exports[`Field Radio should not be required 1`] = `
       </label>
     </div>
   </div>
-  <span class="form-text"></span>
 </div>
 `;
 
@@ -221,21 +207,17 @@ exports[`Field Radio should render Label if showLabel is true 1`] = `
       </label>
     </div>
   </div>
-  <span class="form-text"></span>
 </div>
 `;
 
 exports[`Field Radio should render no options when options is empty 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="ddm-radio"></div>
-  <span class="form-text"></span>
 </div>
 `;
 
 exports[`Field Radio should render options 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="ddm-radio">
     <div class="custom-control custom-radio" id="id">
       <label>
@@ -246,6 +228,5 @@ exports[`Field Radio should render options 1`] = `
       </label>
     </div>
   </div>
-  <span class="form-text"></span>
 </div>
 `;

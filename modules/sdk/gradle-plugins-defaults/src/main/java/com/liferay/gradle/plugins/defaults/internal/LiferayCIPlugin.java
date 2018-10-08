@@ -152,7 +152,10 @@ public class LiferayCIPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskNpmInstall(NpmInstallTask npmInstallTask) {
-		npmInstallTask.setNodeModulesCacheDir(_NODE_MODULES_CACHE_DIR);
+		if (Validator.isNull(System.getenv("FIX_PACKS_RELEASE_ENVIRONMENT"))) {
+			npmInstallTask.setNodeModulesCacheDir(_NODE_MODULES_CACHE_DIR);
+		}
+
 		npmInstallTask.setRemoveShrinkwrappedUrls(Boolean.TRUE);
 		npmInstallTask.setUseNpmCI(Boolean.FALSE);
 	}

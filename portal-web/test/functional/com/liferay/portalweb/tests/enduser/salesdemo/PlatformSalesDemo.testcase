@@ -109,7 +109,6 @@
 			<var name="structureName" value="${structureName}" />	
 			<var name="templateDescription" value="${templateDescription}" />
 			<var name="templateFieldNames" value="${structureFieldNames}" />
-			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="${templateName}" />
 		</execute>
 

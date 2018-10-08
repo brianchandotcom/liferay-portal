@@ -1820,7 +1820,6 @@
 			<var name="structureName" value="Structure Name" />
 			<var name="templateDescription" value="Template Description" />
 			<var name="templateFieldNames" value="Text,Text Box" />
-			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="Template Name" />
 		</execute>
 

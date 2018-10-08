@@ -1137,7 +1137,6 @@
 			<var name="structureName" value="WC Structure1 Name" />
 			<var name="templateDescription" value="WC Template11 Description" />
 			<var name="templateFieldNames" value="Text" />
-			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template11 Name" />
 		</execute>
 

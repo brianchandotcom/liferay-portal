@@ -181,9 +181,9 @@
 		</execute>
 
 		<if>
-			<equals arg1="${templateLanguage}" arg2="ftl" />
+			<equals arg1="${templateLanguage}" arg2="vm" />
 			<then>
-				<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="FreeMarker (.ftl)" />
+				<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Velocity (.vm)" />
 			</then>
 			<elseif>
 				<equals arg1="${templateLanguage}" arg2="xsl" />
@@ -192,14 +192,14 @@
 				</then>
 			</elseif>
 			<else>
-				<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Velocity (.vm)" />
+				<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="FreeMarker (.ftl)" />
 			</else>
 		</if>
 
 		<if>
-			<equals arg1="${templateLanguage}" arg2="ftl" />
+			<equals arg1="${templateLanguage}" arg2="vm" />
 			<then>
-				<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="FreeMarker (.ftl)" />
+				<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Velocity (.vm)" />
 			</then>
 			<elseif>
 				<equals arg1="${templateLanguage}" arg2="xsl" />
@@ -208,7 +208,7 @@
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Velocity (.vm)" />
+				<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="FreeMarker (.ftl)" />
 			</else>
 		</if>
 	</command>
@@ -326,9 +326,9 @@
 		</if>
 
 		<if>
-			<equals arg1="${templateLanguage}" arg2="ftl" />
+			<equals arg1="${templateLanguage}" arg2="vm" />
 			<then>
-				<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_LANGUAGE" value1="FreeMarker" />
+				<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_LANGUAGE" value1="Velocity" />
 			</then>
 			<elseif>
 				<equals arg1="${templateLanguage}" arg2="xsl" />
@@ -337,7 +337,7 @@
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_LANGUAGE" value1="Velocity" />
+				<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_LANGUAGE" value1="FreeMarker" />
 			</else>
 		</if>
 
@@ -366,9 +366,9 @@
 				</if>
 
 				<if>
-					<equals arg1="${templateLanguage}" arg2="ftl" />
+					<equals arg1="${templateLanguage}" arg2="vm" />
 					<then>
-						<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="FreeMarker (.ftl)" />
+						<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Velocity (.vm)" />
 					</then>
 					<elseif>
 						<equals arg1="${templateLanguage}" arg2="xsl" />
@@ -377,7 +377,7 @@
 						</then>
 					</elseif>
 					<else>
-						<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Velocity (.vm)" />
+						<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="FreeMarker (.ftl)" />
 					</else>
 				</if>
 

@@ -179,7 +179,6 @@
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
 			<var name="templateFieldNames" value="Text" />
-			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 
@@ -291,8 +290,7 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#viewCP">
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateLanguage" value="ftl" />
+			<var name="templateDescription" value="WC Template Description" />			
 			<var name="templateName" value="WC Template Name" />
 			<var name="userEditPermission" value="noEditPermission" />
 		</execute>
@@ -599,8 +597,7 @@
 
 			<execute macro="WebContentTemplates#viewCP">
 				<var name="structureName" value="Content List" />
-				<var name="templateDescription" value="" />
-				<var name="templateLanguage" value="ftl" />
+				<var name="templateDescription" value="" />				
 				<var name="templateName" value="${templateName}" />
 			</execute>
 		</for>
@@ -674,7 +671,6 @@
 		<execute macro="WebContentTemplates#inputTemplate">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 
@@ -1233,8 +1229,7 @@
 
 		<for list="3 Columns with Images Template,Footer Content Template,1 Column Banner Template,News,Events" param="templateName">
 			<execute macro="WebContentTemplates#viewCP">
-				<var name="templateDescription" value="" />
-				<var name="templateLanguage" value="ftl" />
+				<var name="templateDescription" value="" />				
 				<var name="templateName" value="${templateName}" />
 			</execute>
 
@@ -1421,7 +1416,6 @@
 			<var name="structureName" value="Global WC Structure Name" />
 			<var name="templateDescription" value="Local WC Template Description" />
 			<var name="templateFieldNames" value="Text" />
-			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="Local WC Template Name" />
 		</execute>
 
@@ -1814,8 +1808,7 @@
 		<execute macro="WebContentTemplates#addCP">
 			<var name="structureName" value="Global WC Structure Name" />
 			<var name="templateDescription" value="Global WC Template Description" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateLanguage" value="ftl" />
+			<var name="templateFieldNames" value="Text" />			
 			<var name="templateName" value="Global WC Template Name" />
 		</execute>
 
@@ -1909,8 +1902,7 @@
 		<execute macro="WebContentTemplates#addCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" />
-			<var name="templateLanguage" value="ftl" />
+			<var name="templateFieldNames" value="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" />			
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 
@@ -2002,7 +1994,6 @@
 			<var name="structureName" value="Global WC Structure Name" />
 			<var name="templateFieldNames" value="Text" />
 			<var name="templateDescription" value="Global WC Template Description" />
-			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="Global WC Template Name" />
 		</execute>
 
@@ -2823,7 +2814,6 @@
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
 			<var name="templateFieldNames" value="HTML" />
-			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 
@@ -3094,7 +3084,6 @@
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
 			<var name="templateFieldNames" value="Text,Image" />
-			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 

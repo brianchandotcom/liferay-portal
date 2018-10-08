@@ -310,7 +310,6 @@
 		<execute macro="WebContentTemplates#addCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 
@@ -386,8 +385,7 @@
 
 		<execute macro="WebContentTemplates#addCP">
 			<var name="structureName" value="WC Structure Name" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateLanguage" value="ftl" />
+			<var name="templateFieldNames" value="Text" />			
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 
@@ -520,8 +518,7 @@
 		<execute macro="WebContentTemplates#addCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Text,Text Box" />
-			<var name="templateLanguage" value="ftl" />
+			<var name="templateFieldNames" value="Text,Text Box" />			
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 
@@ -744,7 +741,6 @@
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
 			<var name="templateFieldNames" value="Text" />
-			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 
@@ -758,8 +754,7 @@
 
 		<execute macro="WebContentTemplates#viewCP">
 			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateLanguage" value="ftl" />
+			<var name="templateDescription" value="WC Template Description" />			
 			<var name="templateName" value="WC Template Name" />
 			<var name="templateScript"><![CDATA[${Text.getData()}]]></var>
 		</execute>
@@ -1104,7 +1099,6 @@
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
 			<var name="templateFieldNames" value="Color" />
-			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 
@@ -1196,8 +1190,7 @@
 		<execute macro="WebContentTemplates#addCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Image" />
-			<var name="templateLanguage" value="ftl" />
+			<var name="templateFieldNames" value="Image" />			
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 
@@ -1715,8 +1708,7 @@
 
 		<execute macro="WebContentTemplates#viewCP">
 			<var name="structureName" value="Basic Web Content Edit" />
-			<var name="templateDescription" value="Basic Web Content Description" />
-			<var name="templateLanguage" value="ftl" />
+			<var name="templateDescription" value="Basic Web Content Description" />			
 			<var name="templateName" value="Basic Web Content Edit" />
 			<var name="templateScript"><![CDATA[${Image.getData()}]]></var>
 		</execute>
@@ -2132,8 +2124,7 @@
 		<execute macro="WebContentTemplates#addCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateLanguage" value="ftl" />
+			<var name="templateFieldNames" value="Text" />			
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 

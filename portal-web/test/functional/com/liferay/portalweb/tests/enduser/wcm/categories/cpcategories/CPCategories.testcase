@@ -866,7 +866,7 @@
 		<execute macro="Subcategory#editCP">
 			<var name="categoryName" value="Category Name 1" />
 			<var name="subcategoryName" value="Subcategory Name 1" />
-			<var name="subcategoryNameEdit" value="Subcategory Name Edit" />
+			<var name="subcategoryNameEdit" value="Subcategory Name 1 Edit" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 	</command>

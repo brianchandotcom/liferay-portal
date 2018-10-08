@@ -33,14 +33,13 @@ public class EmailAddressContactInfoManager
 
 	public EmailAddressContactInfoManager(
 		Class entityClass, long entityClassPK,
-		EmailAddressService emailAddressService,
 		EmailAddressLocalService emailAddressLocalService,
-		UsersAdmin usersAdmin) {
+		EmailAddressService emailAddressService, UsersAdmin usersAdmin) {
 
 		_entityClass = entityClass;
 		_entityClassPK = entityClassPK;
-		_emailAddressService = emailAddressService;
 		_emailAddressLocalService = emailAddressLocalService;
+		_emailAddressService = emailAddressService;
 		_usersAdmin = usersAdmin;
 	}
 

@@ -31,13 +31,14 @@ import javax.portlet.ActionRequest;
 public class PhoneContactInfoManager extends BaseContactInfoManager<Phone> {
 
 	public PhoneContactInfoManager(
-		Class entityClass, long entityClassPK, PhoneService phoneService,
-		PhoneLocalService phoneLocalService, UsersAdmin usersAdmin) {
+		Class entityClass, long entityClassPK,
+		PhoneLocalService phoneLocalService, PhoneService phoneService,
+		UsersAdmin usersAdmin) {
 
 		_entityClass = entityClass;
 		_entityClassPK = entityClassPK;
-		_phoneService = phoneService;
 		_phoneLocalService = phoneLocalService;
+		_phoneService = phoneService;
 		_usersAdmin = usersAdmin;
 	}
 

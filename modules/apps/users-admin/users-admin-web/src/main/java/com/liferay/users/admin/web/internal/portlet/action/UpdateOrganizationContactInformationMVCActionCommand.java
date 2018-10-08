@@ -133,13 +133,13 @@ public class UpdateOrganizationContactInformationMVCActionCommand
 		}
 		else if (listType.equals(ListTypeConstants.EMAIL_ADDRESS)) {
 			return new EmailAddressContactInfoManager(
-				Organization.class, organizationId, _emailAddressService,
-				_emailAddressLocalService, _usersAdmin);
+				Organization.class, organizationId, _emailAddressLocalService,
+				_emailAddressService, _usersAdmin);
 		}
 		else if (listType.equals(ListTypeConstants.PHONE)) {
 			return new PhoneContactInfoManager(
-				Organization.class, organizationId, _phoneService,
-				_phoneLocalService, _usersAdmin);
+				Organization.class, organizationId, _phoneLocalService,
+				_phoneService, _usersAdmin);
 		}
 		else if (listType.equals(ListTypeConstants.ORGANIZATION_SERVICE)) {
 			return new OrgLaborContactInfoManager(
@@ -147,8 +147,8 @@ public class UpdateOrganizationContactInformationMVCActionCommand
 		}
 		else if (listType.equals(ListTypeConstants.WEBSITE)) {
 			return new WebsiteContactInfoManager(
-				Organization.class, organizationId, _websiteService,
-				_websiteLocalService, _usersAdmin);
+				Organization.class, organizationId, _websiteLocalService,
+				_websiteService, _usersAdmin);
 		}
 
 		return null;

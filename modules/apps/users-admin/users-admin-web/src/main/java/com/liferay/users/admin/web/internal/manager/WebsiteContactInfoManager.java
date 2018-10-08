@@ -31,13 +31,14 @@ import javax.portlet.ActionRequest;
 public class WebsiteContactInfoManager extends BaseContactInfoManager<Website> {
 
 	public WebsiteContactInfoManager(
-		Class entityClass, long entityClassPK, WebsiteService websiteService,
-		WebsiteLocalService websiteLocalService, UsersAdmin usersAdmin) {
+		Class entityClass, long entityClassPK,
+		WebsiteLocalService websiteLocalService, WebsiteService websiteService,
+		UsersAdmin usersAdmin) {
 
 		_entityClass = entityClass;
 		_entityClassPK = entityClassPK;
-		_websiteService = websiteService;
 		_websiteLocalService = websiteLocalService;
+		_websiteService = websiteService;
 		_usersAdmin = usersAdmin;
 	}
 

@@ -189,21 +189,19 @@ function moveFragmentEntryLinkReducer(state, actionType, payload) {
 function removeFragmentEntryLinkReducer(state, actionType, payload) {
 	return new Promise(
 		resolve => {
+			let nextState = state;
+
 			if (actionType === REMOVE_FRAGMENT_ENTRY_LINK) {
 				const fragmentEntryLinkId = payload.fragmentEntryLinkId;
-				const nextState = Object.assign({}, state);
 
-				const nextData = Object.assign(
-					{},
+				const nextData = setIn(
 					state.layoutData,
-					{
-						structure: [
-							...(state.layoutData.structure || [])
-						]
-					}
+					['structure'],
+					[...state.layoutData.structure]
 				);
 
-				const index = state.layoutData.structure.indexOf(
+				const index = _getFragmentRowIndex(
+					nextData.structure,
 					fragmentEntryLinkId
 				);
 
@@ -217,10 +215,12 @@ function removeFragmentEntryLinkReducer(state, actionType, payload) {
 					fragmentEntryLinkId,
 					nextData
 				).then(
-					(response) => {
-						nextState.layoutData = nextData;
+					() => {
+						nextState = setIn(nextState, ['layoutData'], nextData);
 
-						delete nextState.fragmentEntryLinks[payload.fragmentEntryLinkId];
+						delete nextState.fragmentEntryLinks[
+							payload.fragmentEntryLinkId
+						];
 
 						resolve(nextState);
 					}
@@ -231,7 +231,7 @@ function removeFragmentEntryLinkReducer(state, actionType, payload) {
 				);
 			}
 			else {
-				resolve(state);
+				resolve(nextState);
 			}
 		}
 	);
@@ -362,17 +362,9 @@ function _getDropFragmentPosition(
 ) {
 	let position = structure.length;
 
-	const targetPosition = structure.findIndex(
-		row => {
-			return row.columns.find(
-				column => {
-					return (
-						column.fragmentEntryLinkId ===
-						targetFragmentEntryLinkId
-					);
-				}
-			);
-		}
+	const targetPosition = _getFragmentRowIndex(
+		structure,
+		targetFragmentEntryLinkId
 	);
 
 	if (targetPosition > -1 && targetBorder) {
@@ -418,6 +410,30 @@ function _getFragmentEntryLinkContent(
 				{},
 				fragmentEntryLink,
 				{content: response.content}
+			);
+		}
+	);
+}
+
+/**
+ * Returns the row index of a given fragmentEntryLinkId.
+ * -1 if it is not present.
+ *
+ * @param {array} structure
+ * @param {string} fragmentEntryLinkId
+ * @return {number}
+ */
+
+function _getFragmentRowIndex(structure, fragmentEntryLinkId) {
+	return structure.findIndex(
+		row => {
+			return row.columns.find(
+				column => {
+					return (
+						column.fragmentEntryLinkId ===
+						fragmentEntryLinkId
+					);
+				}
 			);
 		}
 	);

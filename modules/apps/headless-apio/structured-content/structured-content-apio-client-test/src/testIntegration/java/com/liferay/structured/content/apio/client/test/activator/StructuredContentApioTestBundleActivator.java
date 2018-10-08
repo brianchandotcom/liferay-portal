@@ -84,6 +84,39 @@ public class StructuredContentApioTestBundleActivator
 		_cleanUp();
 	}
 
+	private JournalArticle _addJournalArticle(
+			String title, long userId, long groupId,
+			boolean addGuestPermissions, boolean addGroupPermissions)
+		throws Exception {
+
+		Map<Locale, String> stringMap = new HashMap<Locale, String>() {
+			{
+				put(LocaleUtil.getDefault(), title);
+			}
+		};
+
+		long defaultCompanyId = PortalUtil.getDefaultCompanyId();
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(addGroupPermissions);
+		serviceContext.setAddGuestPermissions(addGuestPermissions);
+		serviceContext.setCompanyId(defaultCompanyId);
+		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setUserId(userId);
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT, title, false,
+			stringMap, stringMap, stringMap, null, LocaleUtil.getDefault(),
+			null, true, true, serviceContext);
+
+		_autoCloseables.add(
+			() -> JournalArticleLocalServiceUtil.deleteArticle(journalArticle));
+
+		return journalArticle;
+	}
+
 	private User _addUser(String emailAddress, long companyId, long groupId)
 		throws Exception {
 

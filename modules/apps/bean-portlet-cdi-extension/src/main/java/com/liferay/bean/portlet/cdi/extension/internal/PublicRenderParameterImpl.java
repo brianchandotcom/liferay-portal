@@ -12,20 +12,31 @@
  * details.
  */
 
-package com.liferay.bean.portlet.cdi.extension.internal.xml;
-
-import com.liferay.bean.portlet.cdi.extension.internal.BasePublicRenderParameterImpl;
+package com.liferay.bean.portlet.cdi.extension.internal;
 
 import javax.xml.namespace.QName;
 
 /**
  * @author Neil Griffin
  */
-public class PublicRenderParameterDescriptorImpl
-	extends BasePublicRenderParameterImpl {
+public class PublicRenderParameterImpl implements PublicRenderParameter {
 
-	public PublicRenderParameterDescriptorImpl(String identifier, QName qName) {
-		super(identifier, qName);
+	public PublicRenderParameterImpl(String identifier, QName qName) {
+		_identifer = identifier;
+		_qName = qName;
 	}
+
+	@Override
+	public String getIdentifier() {
+		return _identifer;
+	}
+
+	@Override
+	public QName getQName() {
+		return _qName;
+	}
+
+	private final String _identifer;
+	private final QName _qName;
 
 }

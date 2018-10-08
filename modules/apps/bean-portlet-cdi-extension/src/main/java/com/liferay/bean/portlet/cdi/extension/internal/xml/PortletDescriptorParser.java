@@ -22,6 +22,7 @@ import com.liferay.bean.portlet.cdi.extension.internal.Event;
 import com.liferay.bean.portlet.cdi.extension.internal.PortletDependency;
 import com.liferay.bean.portlet.cdi.extension.internal.Preference;
 import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameter;
+import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameterImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.URLGenerationListener;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
@@ -152,7 +153,7 @@ public class PortletDescriptorParser {
 				qNameElement, nameElement, defaultNamespace);
 
 			PublicRenderParameter publicRenderParameter =
-				new PublicRenderParameterDescriptorImpl(identifier, qName);
+				new PublicRenderParameterImpl(identifier, qName);
 
 			publicRenderParameters.put(identifier, publicRenderParameter);
 		}

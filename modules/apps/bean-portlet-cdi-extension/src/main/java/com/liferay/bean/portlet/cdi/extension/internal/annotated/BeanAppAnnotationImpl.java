@@ -17,6 +17,7 @@ package com.liferay.bean.portlet.cdi.extension.internal.annotated;
 import com.liferay.bean.portlet.cdi.extension.internal.BeanApp;
 import com.liferay.bean.portlet.cdi.extension.internal.Event;
 import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameter;
+import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameterImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.URLGenerationListener;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -31,8 +32,11 @@ import java.util.Set;
 import javax.portlet.annotations.CustomPortletMode;
 import javax.portlet.annotations.EventDefinition;
 import javax.portlet.annotations.PortletApplication;
+import javax.portlet.annotations.PortletQName;
 import javax.portlet.annotations.PublicRenderParameterDefinition;
 import javax.portlet.annotations.RuntimeOption;
+
+import javax.xml.namespace.QName;
 
 /**
  * @author Neil Griffin
@@ -76,9 +80,13 @@ public class BeanAppAnnotationImpl implements BeanApp {
 				publicRenderParameterDefinition:
 					portletApplication.publicParams()) {
 
+			PortletQName portletQName = publicRenderParameterDefinition.qname();
+
 			PublicRenderParameter publicRenderParameter =
-				new PublicRenderParameterAnnotationImpl(
-					publicRenderParameterDefinition);
+				new PublicRenderParameterImpl(
+					publicRenderParameterDefinition.identifier(),
+					new QName(
+						portletQName.namespaceURI(), portletQName.localPart()));
 
 			_publicRenderParameterMap.put(
 				publicRenderParameter.getIdentifier(), publicRenderParameter);

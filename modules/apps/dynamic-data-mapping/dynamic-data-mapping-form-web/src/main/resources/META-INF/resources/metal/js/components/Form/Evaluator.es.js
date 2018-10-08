@@ -60,6 +60,7 @@ const WithEvaluator = ChildComponent => {
 		 * @param {!Object} event
 		 * @private
 		 */
+
 		@autobind
 		_handleFieldEdited(event) {
 			const {fieldInstance} = event;
@@ -73,8 +74,39 @@ const WithEvaluator = ChildComponent => {
 		}
 
 		/**
+		 * Merges fields from two array of pages. This is used to get new information from the evaluator
+		 * and update fields with it while maintaining properties that were not changed by the evaluation process.
 		 * @private
 		 */
+
+		_mergePages(sourcePages, targetPages) {
+			const visitor = new PagesVisitor(sourcePages);
+
+			return visitor.mapFields(
+				(field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
+					const currentField = targetPages[pageIndex].rows[rowIndex].columns[columnIndex].fields[fieldIndex];
+
+					if (currentField.fieldName === 'name') {
+						currentField.visible = true;
+					}
+
+					return {
+						...field,
+						errorMessage: currentField.errorMessage,
+						options: currentField.options,
+						readOnly: currentField.readOnly,
+						required: currentField.required,
+						valid: currentField.valid,
+						visible: currentField.visible
+					};
+				}
+			);
+		}
+
+		/**
+		 * @private
+		 */
+
 		_pagesValueFn() {
 			const {formContext} = this.props;
 
@@ -84,6 +116,7 @@ const WithEvaluator = ChildComponent => {
 		/**
 		 * @private
 		 */
+
 		_processEvaluation({fieldName}) {
 			const {fieldType, formContext, url} = this.props;
 			const {pages} = this.state;
@@ -103,15 +136,13 @@ const WithEvaluator = ChildComponent => {
 				}
 			).then(
 				newPages => {
-					const visitor = new PagesVisitor(pages);
+					const mergedPages = this._mergePages(pages, newPages);
 
-					const combinedPages = visitor.mergeFields(newPages);
-
-					this.emit('evaluated', combinedPages);
+					this.emit('evaluated', mergedPages);
 
 					this.setState(
 						{
-							pages: combinedPages
+							pages: mergedPages
 						}
 					);
 				}
@@ -122,6 +153,7 @@ const WithEvaluator = ChildComponent => {
 		 * Render the call of it's children
 		 * @return {function}
 		 */
+
 		render() {
 			const {pages} = this.state;
 			const events = {

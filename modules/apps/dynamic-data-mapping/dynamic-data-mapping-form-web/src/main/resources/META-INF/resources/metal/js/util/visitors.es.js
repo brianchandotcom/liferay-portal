@@ -73,66 +73,6 @@ class PagesVisitor {
 	mapColumns(mapper) {
 		return this._map(identity, identity, mapper, identity);
 	}
-
-	mergeFields(pages) {
-		return this.mapFields(
-			(field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
-				const currentField = pages[pageIndex].rows[rowIndex].columns[columnIndex].fields[fieldIndex];
-
-				if (currentField.fieldName === 'name') {
-					currentField.visible = true;
-				}
-
-				return {
-					...field,
-					errorMessage: currentField.errorMessage,
-					options: currentField.options,
-					readOnly: currentField.readOnly,
-					required: currentField.required,
-					valid: currentField.valid,
-					visible: currentField.visible
-				};
-			}
-		);
-	}
-
-	formatPageSettings(namespace, fieldType, newFieldName) {
-		const translationManager = Liferay.component(`${namespace}translationManager`);
-
-		return this.mapFields(
-			field => {
-				const {fieldName} = field;
-
-				if (fieldName === 'name') {
-					field = {
-						...field,
-						value: newFieldName,
-						visible: true
-					};
-				}
-				else if (fieldName === 'label') {
-					field = {
-						...field,
-						localizedValue: {
-							...field.localizedValue,
-							[translationManager.get('editingLocale')]: fieldType.label
-						},
-						type: 'text',
-						value: fieldType.label
-					};
-				}
-				else if (fieldName === 'type') {
-					field = {
-						...field,
-						value: fieldType.name
-					};
-				}
-				return {
-					...field
-				};
-			}
-		);
-	}
 }
 
 export {PagesVisitor};

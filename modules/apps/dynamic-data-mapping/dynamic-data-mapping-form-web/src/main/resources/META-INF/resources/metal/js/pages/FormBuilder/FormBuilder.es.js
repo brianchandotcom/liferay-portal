@@ -71,6 +71,7 @@ class Builder extends Component {
 		 * @memberof Builder
 		 * @type {object}
 		 */
+
 		successPageSettings: Config.shapeOf(
 			{
 				body: Config.object(),
@@ -79,6 +80,50 @@ class Builder extends Component {
 			}
 		)
 	};
+
+	/**
+	 * Makes sure newly created fields have its settings form filled up with some default values.
+	 * @private
+	 */
+
+	_normalizeSettingsContextPages(pages, namespace, fieldType, newFieldName) {
+		const translationManager = Liferay.component(`${namespace}translationManager`);
+		const visitor = new PagesVisitor(pages);
+
+		return visitor.mapFields(
+			field => {
+				const {fieldName} = field;
+
+				if (fieldName === 'name') {
+					field = {
+						...field,
+						value: newFieldName,
+						visible: true
+					};
+				}
+				else if (fieldName === 'label') {
+					field = {
+						...field,
+						localizedValue: {
+							...field.localizedValue,
+							[translationManager.get('editingLocale')]: fieldType.label
+						},
+						type: 'text',
+						value: fieldType.label
+					};
+				}
+				else if (fieldName === 'type') {
+					field = {
+						...field,
+						value: fieldType.name
+					};
+				}
+				return {
+					...field
+				};
+			}
+		);
+	}
 
 	/**
 	 * Continues the propagation of event.
@@ -169,9 +214,10 @@ class Builder extends Component {
 	_handleFieldAdded(event) {
 		const {fieldType} = event;
 		const {namespace} = this.props;
+
 		const newFieldName = FormSupport.generateFieldName(fieldType.name);
 		const settingsContext = fieldType.settingsContext;
-		const visitor = new PagesVisitor(settingsContext.pages);
+		const {pages} = settingsContext;
 
 		this.emit(
 			'fieldAdded',
@@ -182,7 +228,7 @@ class Builder extends Component {
 					fieldName: newFieldName,
 					settingsContext: {
 						...settingsContext,
-						pages: visitor.formatPageSettings(namespace, fieldType, newFieldName)
+						pages: this._normalizeSettingsContextPages(pages, namespace, fieldType, newFieldName)
 					},
 					type: fieldType.name
 				}

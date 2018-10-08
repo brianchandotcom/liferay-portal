@@ -93,6 +93,43 @@ public class StructuredContentApioTest {
 					TITLE_YES_GUEST_YES_GROUP));
 	}
 
+	@Test
+	public void testGuestUserSeesRightStructuredContents() throws Exception {
+		JSONWebServiceClient jsonWebServiceClient = _getJSONWebServiceClient(
+			"test@liferay.com");
+
+		List<String> hrefs = JsonPath.read(
+			_get(
+				JsonPath.read(
+					_get(
+						_rootEndpointURL.toExternalForm(),
+						jsonWebServiceClient),
+					"$._links.content-space.href"),
+				jsonWebServiceClient),
+			"$._embedded.ContentSpace[?(@.name == '" +
+				StructuredContentApioTestBundleActivator.SITE_NAME +
+					"')]._links.structuredContents.href");
+
+		JSONWebServiceClient jsonWebServiceClientGuestLogin =
+			_getJSONWebServiceClient();
+
+		List<String> titles = JsonPath.read(
+			_get(hrefs.get(0), jsonWebServiceClientGuestLogin),
+			"$._embedded.StructuredContent[*].title");
+
+		Assert.assertFalse(
+			titles.contains(
+				StructuredContentApioTestBundleActivator.
+					TITLE_NO_GUEST_NO_GROUP));
+		Assert.assertFalse(
+			titles.contains(
+				StructuredContentApioTestBundleActivator.
+					TITLE_NO_GUEST_YES_GROUP));
+		Assert.assertTrue(
+			titles.contains(
+				StructuredContentApioTestBundleActivator.
+					TITLE_YES_GUEST_YES_GROUP));
+	}
 
 
 	}

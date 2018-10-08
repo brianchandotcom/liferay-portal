@@ -189,7 +189,6 @@
 							{param languageId: $languageId /}
 							{param name: $fragmentEntryLink.name /}
 							{param portletNamespace: $portletNamespace /}
-							{param ref: 'fragmentEntryLink_' + $fragmentEntryLink.fragmentEntryLinkId /}
 							{param selectedMappingTypes: $selectedMappingTypes /}
 							{param showMapping: $selectedMappingTypes and $mappingFieldsURL ? true : false /}
 							{param spritemap: $spritemap /}
@@ -198,8 +197,6 @@
 						{/call}
 					</div>
 				{/if}
-			{else}
-				undefined fragment
 			{/if}
 		{elseif length($rows) > 0}
 			{foreach $row in $rows}
@@ -220,8 +217,6 @@
 					{param store: $store /}
 				{/call}
 			{/foreach}
-		{else}
-			empty
 		{/if}
 	</div>
 {/template}

@@ -350,7 +350,7 @@ public class DLAdminManagementToolbarDisplayContext {
 								labelItem.setCloseable(false);
 
 								String label = LanguageUtil.get(
-									_request, "document-types");
+									_request, "document-type");
 
 								String fileEntryTypeName = LanguageUtil.get(
 									_request, "basic-document");
@@ -682,7 +682,7 @@ public class DLAdminManagementToolbarDisplayContext {
 								"action", "openDocumentTypesSelector");
 
 							String label = LanguageUtil.get(
-								_request, "document-types");
+								_request, "document-type");
 
 							if (fileEntryTypeId != -1) {
 								String fileEntryTypeName = LanguageUtil.get(

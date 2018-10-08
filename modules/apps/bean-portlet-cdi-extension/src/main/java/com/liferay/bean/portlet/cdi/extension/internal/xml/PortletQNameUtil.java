@@ -14,18 +14,24 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal.xml;
 
-import com.liferay.bean.portlet.cdi.extension.internal.BasePublicRenderParameterImpl;
-
-import javax.xml.namespace.QName;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.QName;
 
 /**
- * @author Neil Griffin
+ * @author Shuyang Zhou
  */
-public class PublicRenderParameterDescriptorImpl
-	extends BasePublicRenderParameterImpl {
+public class PortletQNameUtil {
 
-	public PublicRenderParameterDescriptorImpl(String identifier, QName qName) {
-		super(identifier, qName);
+	public static javax.xml.namespace.QName getQName(
+		Element qNameEl, Element nameEl, String defaultNamespace) {
+
+		QName qName =
+			com.liferay.portal.kernel.portlet.PortletQNameUtil.getQName(
+				qNameEl, nameEl, defaultNamespace);
+
+		return new javax.xml.namespace.QName(
+			qName.getNamespaceURI(), qName.getLocalPart(),
+			qName.getNamespacePrefix());
 	}
 
 }

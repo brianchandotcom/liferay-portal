@@ -16,7 +16,6 @@ package com.liferay.bean.portlet.cdi.extension.internal.xml;
 
 import com.liferay.bean.portlet.cdi.extension.internal.BaseEventImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.namespace.QName;
@@ -27,23 +26,11 @@ import javax.xml.namespace.QName;
 public class EventDescriptorImpl extends BaseEventImpl {
 
 	public EventDescriptorImpl(
-		com.liferay.portal.kernel.xml.QName qName, String valueType,
-		List<com.liferay.portal.kernel.xml.QName> aliasQNames) {
+		QName qName, String valueType, List<QName> aliasQNames) {
 
-		super(
-			new QName(
-				qName.getNamespaceURI(), qName.getLocalPart(),
-				qName.getNamespacePrefix()),
-			valueType);
+		super(qName, valueType);
 
-		_aliasQNames = new ArrayList<>();
-
-		for (com.liferay.portal.kernel.xml.QName aliasQName : aliasQNames) {
-			_aliasQNames.add(
-				new QName(
-					aliasQName.getNamespaceURI(), aliasQName.getLocalPart(),
-					aliasQName.getNamespacePrefix()));
-		}
+		_aliasQNames = aliasQNames;
 	}
 
 	@Override

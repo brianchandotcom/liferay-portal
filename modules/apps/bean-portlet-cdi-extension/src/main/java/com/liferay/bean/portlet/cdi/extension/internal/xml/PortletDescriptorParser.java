@@ -27,7 +27,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletQNameUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 
 import java.io.IOException;
@@ -56,6 +54,8 @@ import javax.enterprise.inject.spi.BeanManager;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
+
+import javax.xml.namespace.QName;
 
 import org.osgi.framework.Bundle;
 
@@ -503,8 +503,7 @@ public class PortletDescriptorParser {
 				roleElement.elementText("role-link"));
 		}
 
-		Set<javax.xml.namespace.QName> supportedProcessingEvents =
-			new HashSet<>();
+		Set<QName> supportedProcessingEvents = new HashSet<>();
 
 		for (Element supportedProcessingEventElement :
 				portletElement.elements("supported-processing-event")) {
@@ -517,14 +516,10 @@ public class PortletDescriptorParser {
 			QName qName = PortletQNameUtil.getQName(
 				qNameElement, nameElement, beanApp.getDefaultNamespace());
 
-			supportedProcessingEvents.add(
-				new javax.xml.namespace.QName(
-					qName.getNamespaceURI(), qName.getLocalPart(),
-					qName.getNamespacePrefix()));
+			supportedProcessingEvents.add(qName);
 		}
 
-		Set<javax.xml.namespace.QName> supportedPublishingEvents =
-			new HashSet<>();
+		Set<QName> supportedPublishingEvents = new HashSet<>();
 
 		for (Element supportedPublishingEventElement :
 				portletElement.elements("supported-publishing-event")) {
@@ -537,10 +532,7 @@ public class PortletDescriptorParser {
 			QName qName = PortletQNameUtil.getQName(
 				qNameElement, nameElement, beanApp.getDefaultNamespace());
 
-			supportedPublishingEvents.add(
-				new javax.xml.namespace.QName(
-					qName.getNamespaceURI(), qName.getLocalPart(),
-					qName.getNamespacePrefix()));
+			supportedPublishingEvents.add(qName);
 		}
 
 		Map<String, PublicRenderParameter> publicRenderParameters =

@@ -473,7 +473,7 @@ AUI.add(
 						};
 
 						if (instance.instanceReady) {
-							instance._changeLocale(localeChange)
+							instance._changeLocale(localeChange);
 						}
 						else {
 							instance._pendingLocaleChange = localeChange;

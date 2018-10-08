@@ -56,9 +56,10 @@ public class AddressContactInformationHelper
 	protected Address constructEntry(ActionRequest actionRequest)
 		throws Exception {
 
+		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+
 		String city = ParamUtil.getString(actionRequest, "addressCity");
 		long countryId = ParamUtil.getLong(actionRequest, "addressCountryId");
-		long entryId = ParamUtil.getLong(actionRequest, "entryId");
 		boolean mailing = ParamUtil.getBoolean(actionRequest, "addressMailing");
 		boolean primary = ParamUtil.getBoolean(actionRequest, "addressPrimary");
 		long regionId = ParamUtil.getLong(actionRequest, "addressRegionId");

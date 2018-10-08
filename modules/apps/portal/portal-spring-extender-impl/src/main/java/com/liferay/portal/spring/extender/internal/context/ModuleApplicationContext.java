@@ -40,18 +40,18 @@ public class ModuleApplicationContext extends ClassPathXmlApplicationContext {
 
 		super(configLocations, false, null);
 
-		_bundle = bundle;
+		this.bundle = bundle;
 
 		setClassLoader(classLoader);
 	}
 
 	public BundleContext getBundleContext() {
-		return _bundle.getBundleContext();
+		return bundle.getBundleContext();
 	}
 
 	@Override
 	public Resource[] getResources(String locationPattern) {
-		Enumeration<URL> enumeration = _bundle.findEntries(
+		Enumeration<URL> enumeration = bundle.findEntries(
 			locationPattern, "*.xml", false);
 
 		List<Resource> resources = new ArrayList<>();
@@ -68,6 +68,6 @@ public class ModuleApplicationContext extends ClassPathXmlApplicationContext {
 		return new LiferayBeanFactory(getInternalParentBeanFactory());
 	}
 
-	private final Bundle _bundle;
+	protected final Bundle bundle;
 
 }

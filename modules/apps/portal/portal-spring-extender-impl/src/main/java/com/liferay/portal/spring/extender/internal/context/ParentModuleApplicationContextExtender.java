@@ -25,14 +25,17 @@ import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.spring.bean.LiferayBeanFactory;
 import com.liferay.portal.spring.extender.internal.bean.ApplicationContextServicePublisherUtil;
-import com.liferay.portal.spring.extender.internal.bundle.CompositeResourceLoaderBundle;
 import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
 
 import java.io.IOException;
 
 import java.lang.reflect.Method;
 
+import java.net.URL;
+
+import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -66,6 +69,7 @@ import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.beans.factory.xml.ResourceEntityResolver;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 
 import org.w3c.dom.Document;
 
@@ -129,6 +133,14 @@ public class ParentModuleApplicationContextExtender extends AbstractExtender {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ParentModuleApplicationContextExtender.class);
 
+	private static class CacheableURLResource extends UrlResource {
+
+		private CacheableURLResource(URL url) {
+			super(url);
+		}
+
+	}
+
 	private static class CachingXmlBeanDefinitionReader
 		extends XmlBeanDefinitionReader {
 
@@ -136,6 +148,10 @@ public class ParentModuleApplicationContextExtender extends AbstractExtender {
 		protected Document doLoadDocument(
 				InputSource inputSource, Resource resource)
 			throws Exception {
+
+			if (!(resource instanceof CacheableURLResource)) {
+				return super.doLoadDocument(inputSource, resource);
+			}
 
 			Document document = _documents.get(resource.getFilename());
 
@@ -154,7 +170,7 @@ public class ParentModuleApplicationContextExtender extends AbstractExtender {
 			super(beanDefinitionRegistry);
 		}
 
-		private static Map<String, Document> _documents =
+		private static final Map<String, Document> _documents =
 			new ConcurrentReferenceValueHashMap<>(
 				FinalizeManager.SOFT_REFERENCE_FACTORY);
 
@@ -162,6 +178,29 @@ public class ParentModuleApplicationContextExtender extends AbstractExtender {
 
 	private static class ParentModuleApplicationContext
 		extends ModuleApplicationContext {
+
+		@Override
+		public Resource[] getResources(String locationPattern) {
+			List<Resource> resources = new ArrayList<>();
+
+			Enumeration<URL> enumeration = _extenderBundle.findEntries(
+				locationPattern, "*.xml", false);
+
+			while (enumeration.hasMoreElements()) {
+				resources.add(
+					new CacheableURLResource(enumeration.nextElement()));
+			}
+
+			enumeration = bundle.findEntries(locationPattern, "*.xml", false);
+
+			if (enumeration != null) {
+				while (enumeration.hasMoreElements()) {
+					resources.add(new UrlResource(enumeration.nextElement()));
+				}
+			}
+
+			return resources.toArray(new Resource[resources.size()]);
+		}
 
 		@Override
 		public void refresh() {
@@ -220,10 +259,13 @@ public class ParentModuleApplicationContextExtender extends AbstractExtender {
 			Bundle bundle, Bundle extenderBundle) {
 
 			super(
-				new CompositeResourceLoaderBundle(bundle, extenderBundle),
-				new BundleResolverClassLoader(bundle, extenderBundle),
+				bundle, new BundleResolverClassLoader(bundle, extenderBundle),
 				_PARENT_CONFIG_LOCATIONS);
+
+			_extenderBundle = extenderBundle;
 		}
+
+		private final Bundle _extenderBundle;
 
 	}
 

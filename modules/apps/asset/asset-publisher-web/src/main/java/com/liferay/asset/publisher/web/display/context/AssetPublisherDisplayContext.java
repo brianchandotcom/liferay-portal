@@ -1340,8 +1340,6 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public boolean isSelectionStyleDynamic() throws PortalException {
-		String selectionStyle = getSelectionStyle();
-
 		AssetListEntry assetListEntry = fetchAssetListEntry();
 
 		if (isSelectionStyleAssetList() && (assetListEntry != null) &&
@@ -1351,6 +1349,8 @@ public class AssetPublisherDisplayContext {
 			return true;
 		}
 
+		String selectionStyle = getSelectionStyle();
+
 		return selectionStyle.equals("dynamic");
 	}
 
@@ -1359,8 +1359,6 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public boolean isSelectionStyleManual() throws PortalException {
-		String selectionStyle = getSelectionStyle();
-
 		AssetListEntry assetListEntry = fetchAssetListEntry();
 
 		if (isSelectionStyleAssetList() && (assetListEntry != null) &&
@@ -1369,6 +1367,8 @@ public class AssetPublisherDisplayContext {
 
 			return true;
 		}
+
+		String selectionStyle = getSelectionStyle();
 
 		return selectionStyle.equals("manual");
 	}
@@ -1582,9 +1582,6 @@ public class AssetPublisherDisplayContext {
 	}
 
 	protected void setDDMStructure() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		_ddmStructureDisplayFieldValue = StringPool.BLANK;
 		_ddmStructureFieldLabel = StringPool.BLANK;
 		_ddmStructureFieldName = StringPool.BLANK;
@@ -1614,6 +1611,9 @@ public class AssetPublisherDisplayContext {
 
 		if (Validator.isNotNull(_ddmStructureFieldName) &&
 			Validator.isNotNull(_ddmStructureFieldValue)) {
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 			AssetRendererFactory<?> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.

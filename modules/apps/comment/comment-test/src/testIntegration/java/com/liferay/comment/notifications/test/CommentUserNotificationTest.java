@@ -212,13 +212,13 @@ public class CommentUserNotificationTest extends BaseUserNotificationTestCase {
 			long baseEntryId, JSONObject userNotificationEventJSONObject)
 		throws Exception {
 
-		long classPK = userNotificationEventJSONObject.getLong("classPK");
-
 		MBMessage mbMessage = MBMessageLocalServiceUtil.getMessage(baseEntryId);
 
 		if (!mbMessage.isDiscussion()) {
 			return false;
 		}
+
+		long classPK = userNotificationEventJSONObject.getLong("classPK");
 
 		MBDiscussion mbDiscussion =
 			MBDiscussionLocalServiceUtil.getThreadDiscussion(

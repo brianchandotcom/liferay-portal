@@ -1858,12 +1858,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
 
-		String entryURL = (String)workflowContext.get(
-			WorkflowConstants.CONTEXT_URL);
-
 		if (!entry.isApproved()) {
 			return;
 		}
+
+		String entryURL = (String)workflowContext.get(
+			WorkflowConstants.CONTEXT_URL);
 
 		if (Validator.isNull(entryURL)) {
 			String layoutFullURL = serviceContext.getLayoutFullURL();

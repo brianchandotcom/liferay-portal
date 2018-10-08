@@ -2539,8 +2539,6 @@ public class CalendarBookingLocalServiceImpl
 		for (NotificationRecipient notificationRecipient :
 				notificationRecipients) {
 
-			User user = notificationRecipient.getUser();
-
 			long startTime = calendarBooking.getStartTime();
 
 			if (nowTime > startTime) {
@@ -2567,6 +2565,8 @@ public class CalendarBookingLocalServiceImpl
 			if (notificationType == null) {
 				continue;
 			}
+
+			User user = notificationRecipient.getUser();
 
 			NotificationSender notificationSender =
 				NotificationSenderFactory.getNotificationSender(

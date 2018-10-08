@@ -540,8 +540,6 @@ public class AssetCategoriesDisplayContext {
 	public String getCategoryTitle() throws PortalException {
 		AssetCategory category = getCategory();
 
-		AssetVocabulary vocabulary = getVocabulary();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -550,6 +548,8 @@ public class AssetCategoriesDisplayContext {
 		if (category != null) {
 			return category.getTitle(locale);
 		}
+
+		AssetVocabulary vocabulary = getVocabulary();
 
 		return vocabulary.getTitle(locale);
 	}

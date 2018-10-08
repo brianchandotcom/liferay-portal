@@ -275,17 +275,14 @@ public class AssetEntriesCheckerUtil {
 		for (Map.Entry<List<AssetEntry>, List<User>> entry :
 				assetEntriesToUsersMap.entrySet()) {
 
-			List<AssetEntry> filteredAssetEntries = entry.getKey();
-			List<User> users = entry.getValue();
-
 			SubscriptionSender subscriptionSender = _getSubscriptionSender(
-				portletPreferences, filteredAssetEntries);
+				portletPreferences, entry.getKey());
 
 			if (subscriptionSender == null) {
 				continue;
 			}
 
-			for (User user : users) {
+			for (User user : entry.getValue()) {
 				subscriptionSender.addRuntimeSubscribers(
 					user.getEmailAddress(), user.getFullName());
 			}

@@ -601,9 +601,6 @@ public class AssetBrowserDisplayContext {
 	}
 
 	private int _getTotal(long[] groupIds) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
 		if (AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE) {
@@ -612,6 +609,9 @@ public class AssetBrowserDisplayContext {
 				_getKeywords(), _getKeywords(), _getKeywords(), _getKeywords(),
 				_getListable(), false, false);
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		return (int)AssetEntryLocalServiceUtil.searchCount(
 			themeDisplay.getCompanyId(), groupIds, themeDisplay.getUserId(),

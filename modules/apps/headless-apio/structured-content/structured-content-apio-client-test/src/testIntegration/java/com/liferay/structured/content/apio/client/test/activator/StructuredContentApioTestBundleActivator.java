@@ -65,6 +65,18 @@ public class StructuredContentApioTestBundleActivator
 	public static final String SITE_NAME =
 		StructuredContentApioTestBundleActivator.class.getSimpleName() + "Site";
 
+	public static final String TITLE_NO_GUEST_NO_GROUP =
+		StructuredContentApioTestBundleActivator.class.getSimpleName() +
+			"NoGuestNoGroupTitle";
+
+	public static final String TITLE_NO_GUEST_YES_GROUP =
+		StructuredContentApioTestBundleActivator.class.getSimpleName() +
+			"NoGuestYesGroupTitle";
+
+	public static final String TITLE_YES_GUEST_YES_GROUP =
+		StructuredContentApioTestBundleActivator.class.getSimpleName() +
+			"YesGuestYesGroupTitle";
+
 	@Override
 	public void start(BundleContext bundleContext) {
 		_autoCloseables = new ArrayList<>();
@@ -140,6 +152,7 @@ public class StructuredContentApioTestBundleActivator
 
 		return user;
 	}
+
 	private void _cleanUp() {
 		for (AutoCloseable autoCloseable : _autoCloseables) {
 			try {
@@ -173,6 +186,18 @@ public class StructuredContentApioTestBundleActivator
 		_addUser(
 			NOT_A_SITE_MEMBER_EMAIL_ADDRESS, TestPropsValues.getCompanyId(),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID);
+
+		_addJournalArticle(
+			TITLE_NO_GUEST_NO_GROUP, user.getUserId(), group.getGroupId(),
+			false, false);
+
+		_addJournalArticle(
+			TITLE_NO_GUEST_YES_GROUP, user.getUserId(), group.getGroupId(),
+			false, true);
+
+		_addJournalArticle(
+			TITLE_YES_GUEST_YES_GROUP, user.getUserId(), group.getGroupId(),
+			true, true);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

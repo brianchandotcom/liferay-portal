@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.saml.runtime.credential.KeyStoreManager;
 
 import java.io.File;
@@ -76,11 +77,11 @@ public class DLKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 			}
 		}
 		catch (Exception e) {
-			_log.error(
-				"Unable to load keystore: " + getCompanyId() + "/" +
-					_SAML_KEYSTORE_PATH,
+			throw new KeyStoreException(
+				StringBundler.concat(
+					"Unable to load keystore ", getCompanyId() + "/",
+					_SAML_KEYSTORE_PATH, ": ", e.getMessage()),
 				e);
-			throw new KeyStoreException(e);
 		}
 
 		return keyStore;

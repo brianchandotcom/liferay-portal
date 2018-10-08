@@ -14,6 +14,7 @@
 
 package com.liferay.saml.opensaml.integration.internal.credential;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -56,10 +57,13 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 			_keyStore = KeyStore.getInstance(samlKeyStoreType);
 		}
 		catch (KeyStoreException kse) {
-			_keyStoreException = kse;
-			_log.error(
-				"Unable instantiate keystore with type " + samlKeyStoreType,
-				kse);
+			String message = StringBundler.concat(
+				"Unable instantiate keystore with type ", samlKeyStoreType,
+				": ", kse.getMessage());
+
+			_keyStoreException = new KeyStoreException(message, kse);
+
+			_log.error(message, kse);
 
 			return;
 		}
@@ -132,22 +136,24 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 		String samlKeyStorePassword = getSamlKeyStorePassword();
 
 		try (InputStream inputStream = _getInputStream()) {
-			_keyStoreException = null;
 			_keyStore.load(inputStream, samlKeyStorePassword.toCharArray());
-		}
-		catch (Exception e) {
-			_keyStoreException = new KeyStoreException(e);
-			throw e;
 		}
 	}
 
 	protected void loadKeyStore() {
 		try {
+			_keyStoreException = null;
+
 			doLoadKeyStore();
 		}
 		catch (Exception e) {
-			_log.error(
-				"Unable to load SAML keystore " + getSamlKeyStorePath(), e);
+			String message = StringBundler.concat(
+				"Unable to load SAML keystore ", getSamlKeyStorePath(), ": ",
+				e.getMessage());
+
+			_keyStoreException = new KeyStoreException(message, e);
+
+			_log.error(message, e);
 		}
 	}
 

@@ -14,21 +14,34 @@
 
 package com.liferay.sharing.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.service.SharingEntryService;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayAction;
 
+import java.util.ResourceBundle;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,40 +63,91 @@ public class ManageCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] deleteSharingEntryIds = ParamUtil.getLongValues(
-			actionRequest, "deleteSharingEntryIds");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
 
-		for (long sharingEntryId : deleteSharingEntryIds) {
-			_sharingEntryService.deleteSharingEntry(
-				sharingEntryId, serviceContext);
+		try {
+			long[] deleteSharingEntryIds = ParamUtil.getLongValues(
+				actionRequest, "deleteSharingEntryIds");
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				actionRequest);
+
+			for (long sharingEntryId : deleteSharingEntryIds) {
+				_sharingEntryService.deleteSharingEntry(
+					sharingEntryId, serviceContext);
+			}
+
+			String[] sharingEntryIdActionIdPairs = ParamUtil.getParameterValues(
+				actionRequest, "sharingEntryIdActionIdPairs", new String[0],
+				false);
+
+			for (String sharingEntryIdActionIdPair :
+					sharingEntryIdActionIdPairs) {
+
+				String[] parts = StringUtil.split(sharingEntryIdActionIdPair);
+
+				long sharingEntryId = Long.valueOf(parts[0]);
+
+				SharingEntryPermissionDisplayAction
+					sharingEntryPermissionDisplayActionKey =
+						SharingEntryPermissionDisplayAction.parseFromActionId(
+							parts[1]);
+
+				SharingEntry sharingEntry =
+					_sharingEntryLocalService.getSharingEntry(sharingEntryId);
+
+				_sharingEntryService.updateSharingEntry(
+					sharingEntryId,
+					sharingEntryPermissionDisplayActionKey.
+						getSharingEntryActions(),
+					sharingEntry.isShareable(),
+					sharingEntry.getExpirationDate(), serviceContext);
+			}
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put(
+				"successMessage",
+				LanguageUtil.get(resourceBundle, "permissions-changed"));
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
 		}
+		catch (Throwable t) {
+			HttpServletResponse response = _portal.getHttpServletResponse(
+				actionResponse);
 
-		String[] sharingEntryIdActionIdPairs = ParamUtil.getParameterValues(
-			actionRequest, "sharingEntryIdActionIdPairs", new String[0], false);
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
-		for (String sharingEntryIdActionIdPair : sharingEntryIdActionIdPairs) {
-			String[] parts = StringUtil.split(sharingEntryIdActionIdPair);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			long sharingEntryId = Long.valueOf(parts[0]);
+			String errorMessage =
+				"an-unexpected-error-occurred-while-updating-permissions";
 
-			SharingEntryPermissionDisplayAction
-				sharingEntryPermissionDisplayActionKey =
-					SharingEntryPermissionDisplayAction.parseFromActionId(
-						parts[1]);
+			if (t instanceof PrincipalException) {
+				errorMessage =
+					"you-do-not-have-permission-to-update-these-permissions";
+			}
 
-			SharingEntry sharingEntry =
-				_sharingEntryLocalService.getSharingEntry(sharingEntryId);
+			jsonObject.put(
+				"errorMessage", LanguageUtil.get(resourceBundle, errorMessage));
 
-			_sharingEntryService.updateSharingEntry(
-				sharingEntryId,
-				sharingEntryPermissionDisplayActionKey.getSharingEntryActions(),
-				sharingEntry.isShareable(), sharingEntry.getExpirationDate(),
-				serviceContext);
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
+
+			return;
 		}
 	}
+
+	@Reference
+	private Portal _portal;
+
+	@Reference(target = "(bundle.symbolic.name=com.liferay.sharing.web)")
+	private ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;

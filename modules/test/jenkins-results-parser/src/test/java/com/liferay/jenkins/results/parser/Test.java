@@ -33,6 +33,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ErrorCollector;
 
@@ -40,6 +41,11 @@ import org.junit.rules.ErrorCollector;
  * @author Peter Yoo
  */
 public class Test {
+
+	@Before
+	public void setUp() throws Exception {
+		JenkinsResultsParserUtil.clearCache();
+	}
 
 	@Rule
 	public ErrorCollector errorCollector = new ErrorCollector();

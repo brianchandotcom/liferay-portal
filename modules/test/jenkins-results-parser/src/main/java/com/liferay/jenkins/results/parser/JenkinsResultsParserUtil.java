@@ -97,6 +97,20 @@ public class JenkinsResultsParserUtil {
 
 	public static boolean debug;
 
+	public static void clearCache() {
+		File cacheDirectory = new File(
+			System.getProperty("java.io.tmpdir"), "jenkins-cached-files");
+
+		System.out.println(
+			"Clearing cache " + cacheDirectory.getAbsolutePath());
+
+		if (!cacheDirectory.exists()) {
+			return;
+		}
+
+		delete(cacheDirectory);
+	}
+
 	public static String combine(String... strings) {
 		if ((strings == null) || (strings.length == 0)) {
 			return "";

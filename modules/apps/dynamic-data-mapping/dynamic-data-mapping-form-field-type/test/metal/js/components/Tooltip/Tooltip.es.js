@@ -26,9 +26,9 @@ describe(
 			() => {
 				component = new Tooltip(
 					{
-						spritemap,
 						icon: 'question-circle-full',
-						text: 'This is a tooltip information about this component',
+						spritemap,
+						text: 'This is a tooltip information about this component'
 					}
 				);
 
@@ -41,9 +41,9 @@ describe(
 			() => {
 				component = new Tooltip(
 					{
-						spritemap,
 						icon: 'question-circle-full',
-						text: 'This is a tooltip information about this component',
+						spritemap,
+						text: 'This is a tooltip information about this component'
 					}
 				);
 
@@ -66,34 +66,11 @@ describe(
 			() => {
 				component = new Tooltip(
 					{
-						spritemap,
 						icon: 'question-circle-full',
-						text: 'This is a tooltip information about this component',
+						spritemap,
+						text: 'This is a tooltip information about this component'
 					}
 				);
-
-
-				// jest.runAllTimers();
-
-				// const {tooltipTarget} = component.refs;
-
-				// jest.useFakeTimers();
-
-				// MetalTestUtil.triggerEvent(
-				// 	tooltipTarget,
-				// 	'mouseover'
-				// );
-
-				// jest.runAllTimers();
-
-				// jest.useFakeTimers();
-
-				// MetalTestUtil.triggerEvent(
-				// 	tooltipTarget,
-				// 	'moseleave'
-				// );
-
-				// jest.runAllTimers();
 
 				component._handleTooltipHovered();
 				component._handleTooltipLeaved();
@@ -108,16 +85,16 @@ describe(
 			() => {
 				component = new Tooltip(
 					{
-						spritemap,
 						icon: 'question-circle-full',
-						text: 'This is a tooltip information about this component',
+						spritemap,
+						text: 'This is a tooltip information about this component'
 					}
 				);
 
 				jest.runAllTimers();
 
 				component.refs.tooltipSource = {
-					element: document.createElement('div'),
+					element: document.createElement('div')
 				};
 
 				component._handleTooltipHovered();

@@ -404,7 +404,7 @@ describe.only(
 										(field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
 											const {pages} = field.settingsContext;
 
-											if(pages.length){
+											if (pages.length) {
 												pages[0].rows[0].columns[0].fields[1].value = 'Liferay';
 											}
 

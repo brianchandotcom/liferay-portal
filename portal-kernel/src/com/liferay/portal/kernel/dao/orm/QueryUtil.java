@@ -138,8 +138,6 @@ public class QueryUtil {
 			return list(query, dialect, ALL_POS, ALL_POS, true);
 		}
 
-		int[] scrollIds = RandomUtil.nextInts(total, num);
-
 		List<Object> list = new ArrayList<>();
 
 		DB db = DBManagerUtil.getDB();
@@ -153,6 +151,8 @@ public class QueryUtil {
 		}
 
 		ScrollableResults sr = query.scroll();
+
+		int[] scrollIds = RandomUtil.nextInts(total, num);
 
 		for (int scrollId : scrollIds) {
 			if (sr.scroll(scrollId)) {

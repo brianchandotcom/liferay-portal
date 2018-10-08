@@ -29,7 +29,6 @@ public class ActionURLTei extends TagExtraInfo {
 	@Override
 	public VariableInfo[] getVariableInfo(TagData tagData) {
 		String var = tagData.getAttributeString("var");
-		String varImpl = tagData.getAttributeString("varImpl");
 
 		if (Validator.isNotNull(var)) {
 			return new VariableInfo[] {
@@ -37,7 +36,10 @@ public class ActionURLTei extends TagExtraInfo {
 					var, String.class.getName(), true, VariableInfo.AT_END)
 			};
 		}
-		else if (Validator.isNotNull(varImpl)) {
+
+		String varImpl = tagData.getAttributeString("varImpl");
+
+		if (Validator.isNotNull(varImpl)) {
 			return new VariableInfo[] {
 				new VariableInfo(
 					varImpl, LiferayPortletURL.class.getName(), true,

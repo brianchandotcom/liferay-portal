@@ -48,8 +48,6 @@ public abstract class BaseJSPAssetRenderer<T>
 			String template)
 		throws Exception {
 
-		ServletContext servletContext = getServletContext();
-
 		String jspPath = getJspPath(request, template);
 
 		if (Validator.isNull(jspPath)) {
@@ -59,6 +57,8 @@ public abstract class BaseJSPAssetRenderer<T>
 		ResourceBundleLoader resourceBundleLoader =
 			(ResourceBundleLoader)request.getAttribute(
 				WebKeys.RESOURCE_BUNDLE_LOADER);
+
+		ServletContext servletContext = getServletContext();
 
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(jspPath);

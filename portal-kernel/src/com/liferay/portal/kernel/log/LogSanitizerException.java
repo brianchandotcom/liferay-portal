@@ -45,17 +45,15 @@ public class LogSanitizerException extends Exception {
 
 	@Override
 	public String toString() {
-		Class<?> clazz = getClass();
-
-		String className = clazz.getName();
-
 		String localizedMessage = getLocalizedMessage();
 
 		if (localizedMessage != null) {
 			return localizedMessage;
 		}
 
-		return className;
+		Class<?> clazz = getClass();
+
+		return clazz.getName();
 	}
 
 }

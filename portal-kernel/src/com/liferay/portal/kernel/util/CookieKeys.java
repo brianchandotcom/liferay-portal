@@ -190,13 +190,11 @@ public class CookieKeys {
 			return _SESSION_COOKIE_DOMAIN;
 		}
 
-		String host = request.getServerName();
-
 		if (_SESSION_COOKIE_USE_FULL_HOSTNAME) {
 			return StringPool.BLANK;
 		}
 
-		return getDomain(host);
+		return getDomain(request.getServerName());
 	}
 
 	public static String getDomain(String host) {

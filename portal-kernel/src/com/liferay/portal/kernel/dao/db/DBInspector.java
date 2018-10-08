@@ -100,11 +100,8 @@ public class DBInspector {
 			}
 
 			int expectedColumnSize = _getColumnSize(columnType);
-			boolean expectedColumnNullable = _isColumnNullable(columnType);
 
-			int actualColumnDataType = rs.getInt("DATA_TYPE");
 			int actualColumnSize = rs.getInt("COLUMN_SIZE");
-			int actualColumnNullable = rs.getInt("NULLABLE");
 
 			if ((expectedColumnSize != -1) &&
 				(expectedColumnSize != actualColumnSize)) {
@@ -115,9 +112,15 @@ public class DBInspector {
 			int expectedColumnDataType = _getColumnDataType(
 				tableClass, columnName);
 
+			int actualColumnDataType = rs.getInt("DATA_TYPE");
+
 			if (actualColumnDataType != expectedColumnDataType) {
 				return false;
 			}
+
+			boolean expectedColumnNullable = _isColumnNullable(columnType);
+
+			int actualColumnNullable = rs.getInt("NULLABLE");
 
 			if ((expectedColumnNullable &&
 				 (actualColumnNullable != DatabaseMetaData.columnNullable)) ||

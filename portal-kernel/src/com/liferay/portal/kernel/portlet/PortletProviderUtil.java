@@ -97,8 +97,6 @@ public class PortletProviderUtil {
 	protected static PortletProvider getPortletProvider(
 		String className, PortletProvider.Action action) {
 
-		PortletProvider portletProvider = null;
-
 		if (action.equals(PortletProvider.Action.ADD)) {
 			return getPortletProvider(className, _addServiceTrackerMap);
 		}
@@ -118,7 +116,7 @@ public class PortletProviderUtil {
 			return getPortletProvider(className, _viewServiceTrackerMap);
 		}
 
-		return portletProvider;
+		return null;
 	}
 
 	protected static PortletProvider getPortletProvider(

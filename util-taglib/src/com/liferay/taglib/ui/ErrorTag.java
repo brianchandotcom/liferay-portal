@@ -185,12 +185,12 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 	}
 
 	private String _getAlertIcon() {
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-
 		if ((_key != null) && Validator.isNull(_message)) {
 			return "exclamation-full";
 		}
+
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if (SessionErrors.contains(portletRequest, "warning")) {
 			return "warning-full";
@@ -200,12 +200,12 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 	}
 
 	private String _getAlertMessage() {
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-
 		if ((_key != null) && Validator.isNull(_message)) {
 			return _getBodyContentString();
 		}
+
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if (SessionErrors.contains(portletRequest, "warning")) {
 			String alertMessage = _message;
@@ -248,12 +248,12 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 	}
 
 	private String _getAlertStyle() {
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-
 		if ((_key != null) && Validator.isNull(_message)) {
 			return "danger";
 		}
+
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if (SessionErrors.contains(portletRequest, "warning")) {
 			return "warning";
@@ -263,12 +263,12 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 	}
 
 	private String _getAlertTitle() {
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-
 		if ((_key != null) && Validator.isNull(_message)) {
 			return LanguageUtil.get(request, "error");
 		}
+
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if (SessionErrors.contains(portletRequest, "warning")) {
 			return LanguageUtil.get(request, "warning");

@@ -14,7 +14,6 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal.xml;
 
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
@@ -37,9 +36,8 @@ public class DisplayDescriptorParser {
 
 		Map<String, String> displayCategoryMap = new HashMap<>();
 
-		String xml = HttpUtil.URLtoString(displayDescriptorURL);
-
-		Document document = UnsecureSAXReaderUtil.read(xml, true);
+		Document document = UnsecureSAXReaderUtil.read(
+			displayDescriptorURL, true);
 
 		Element rootElement = document.getRootElement();
 

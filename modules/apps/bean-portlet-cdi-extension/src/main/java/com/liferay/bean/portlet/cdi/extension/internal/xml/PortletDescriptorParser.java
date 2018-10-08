@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletQNameUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -76,10 +75,8 @@ public class PortletDescriptorParser {
 			Map<String, Map<String, Set<String>>> liferayConfigurations)
 		throws DocumentException, IOException {
 
-		String xml = HttpUtil.URLtoString(portletDescriptorURL);
-
 		Document document = UnsecureSAXReaderUtil.read(
-			xml, _PORTLET_XML_VALIDATE);
+			portletDescriptorURL, _PORTLET_XML_VALIDATE);
 
 		Element rootElement = document.getRootElement();
 

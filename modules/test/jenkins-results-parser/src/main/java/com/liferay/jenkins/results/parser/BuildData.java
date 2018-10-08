@@ -27,6 +27,8 @@ public interface BuildData {
 
 	public static final String DIST_ROOT_PATH = "/tmp/dist";
 
+	public String getBuildDescription();
+
 	public Integer getBuildNumber();
 
 	public String getBuildURL();
@@ -48,6 +50,14 @@ public interface BuildData {
 	public String getMasterHostname();
 
 	public String getRunID();
+
+	public Integer getTopLevelBuildNumber();
+
+	public String getTopLevelJobName();
+
+	public String getTopLevelMasterHostname();
+
+	public String getUserContentRelativePath();
 
 	public File getWorkspaceDir();
 

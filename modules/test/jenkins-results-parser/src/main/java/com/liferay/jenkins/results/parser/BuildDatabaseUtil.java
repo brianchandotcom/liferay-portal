@@ -86,23 +86,14 @@ public class BuildDatabaseUtil {
 					Arrays.asList(distNodes.split(",")));
 
 				String command = JenkinsResultsParserUtil.combine(
-					"time rsync -sv --timeout=1200 ", distNode, ":", distPath,
+					"time rsync -svI --timeout=1200 ", distNode, ":", distPath,
 					"/", BuildDatabase.BUILD_DATABASE_FILE_NAME, " ",
-					baseDir.getCanonicalPath(), "/",
-					BuildDatabase.BUILD_DATABASE_FILE_NAME);
+					buildDatabaseFile.getCanonicalPath());
 
-				Process process = JenkinsResultsParserUtil.executeBashCommands(
-					command);
+				command = command.replaceAll("\\(", "\\\\(");
+				command = command.replaceAll("\\)", "\\\\)");
 
-				String standardOut = JenkinsResultsParserUtil.readInputStream(
-					process.getInputStream());
-
-				System.out.println(standardOut);
-
-				String standardErr = JenkinsResultsParserUtil.readInputStream(
-					process.getErrorStream());
-
-				System.out.println(standardErr);
+				JenkinsResultsParserUtil.executeBashCommands(command);
 
 				break;
 			}

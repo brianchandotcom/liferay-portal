@@ -29,6 +29,21 @@ import org.json.JSONObject;
  */
 public abstract class TopLevelBuildData extends BaseBuildData {
 
+	@Override
+	public Integer getTopLevelBuildNumber() {
+		return getBuildNumber();
+	}
+
+	@Override
+	public String getTopLevelJobName() {
+		return getJobName();
+	}
+
+	@Override
+	public String getTopLevelMasterHostname() {
+		return getMasterHostname();
+	}
+
 	protected TopLevelBuildData(JSONObject jsonObject) {
 		super(jsonObject);
 

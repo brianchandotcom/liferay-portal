@@ -17,13 +17,18 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.TimeoutException;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
+
+import org.dom4j.Element;
 
 /**
  * @author Michael Hashimoto
@@ -33,13 +38,17 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 	@Override
 	public void run() {
-		super.run();
+		updateBuildDescription();
+
+		setUpWorkspace();
 
 		propagateDistFilesToDistNodes();
 
 		invokeBatchJobs();
 
 		waitForInvokedJobs();
+
+		createJenkinsReport();
 	}
 
 	protected TopLevelBuildRunner(T topLevelBuildData) {
@@ -54,6 +63,83 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		}
 
 		_topLevelBuild = (TopLevelBuild)build;
+	}
+
+	protected void createJenkinsReport() {
+		Element jenkinsReportElement = _topLevelBuild.getJenkinsReportElement();
+
+		try {
+			BuildData buildData = getBuildData();
+
+			String jenkinsReportString = StringEscapeUtils.unescapeXml(
+				Dom4JUtil.format(jenkinsReportElement, true));
+
+			File jenkinsReportFile = new File(
+				buildData.getWorkspaceDir(), "jenkins-report.html");
+
+			JenkinsResultsParserUtil.write(
+				jenkinsReportFile, jenkinsReportString);
+
+			if (!JenkinsResultsParserUtil.isCINode()) {
+				return;
+			}
+
+			String userContentRelativePath =
+				buildData.getUserContentRelativePath();
+
+			userContentRelativePath = userContentRelativePath.replace(
+				")", "\\)");
+			userContentRelativePath = userContentRelativePath.replace(
+				"(", "\\(");
+
+			try {
+				String command = JenkinsResultsParserUtil.combine(
+					"ssh -o NumberOfPasswordPrompts=0 ",
+					buildData.getMasterHostname(),
+					" 'mkdir -p /opt/java/jenkins/userContent/",
+					userContentRelativePath, "'");
+
+				JenkinsResultsParserUtil.executeBashCommands(command);
+			}
+			catch (IOException | TimeoutException e) {
+				throw new RuntimeException(e);
+			}
+
+			int maxRetries = 3;
+			int retries = 0;
+
+			while (retries < maxRetries) {
+				try {
+					retries++;
+
+					String command = JenkinsResultsParserUtil.combine(
+						"time rsync -svI --chmod=go=rx --timeout=1200 ",
+						jenkinsReportFile.getCanonicalPath(), " ",
+						buildData.getMasterHostname(), "::usercontent/",
+						userContentRelativePath);
+
+					JenkinsResultsParserUtil.executeBashCommands(command);
+
+					break;
+				}
+				catch (IOException | TimeoutException e) {
+					if (retries == maxRetries) {
+						throw new RuntimeException(
+							"Unable to send the jenkins-report.html", e);
+					}
+
+					System.out.println(
+						"Unable to execute bash commands, retrying... ");
+
+					e.printStackTrace();
+
+					JenkinsResultsParserUtil.sleep(3000);
+				}
+			}
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	protected Set<String> getBatchNames() {
@@ -163,9 +249,39 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		filePropagator.start(_FILE_PROPAGATOR_THREAD_COUNT);
 	}
 
+	protected void updateJenkinsReport() {
+		if (!_allBuildsAreRunning()) {
+			_lastGeneratedReportTime = -1;
+
+			return;
+		}
+
+		long currentTimeMillis = System.currentTimeMillis();
+
+		if (_lastGeneratedReportTime == -1) {
+			_lastGeneratedReportTime = System.currentTimeMillis();
+
+			createJenkinsReport();
+
+			return;
+		}
+
+		if ((_lastGeneratedReportTime + _REPORT_GENERATION_INTERVAL) >
+				currentTimeMillis) {
+
+			return;
+		}
+
+		_lastGeneratedReportTime = System.currentTimeMillis();
+
+		createJenkinsReport();
+	}
+
 	protected void waitForInvokedJobs() {
 		while (true) {
 			_topLevelBuild.update();
+
+			updateJenkinsReport();
 
 			System.out.println(_topLevelBuild.getStatusSummary());
 
@@ -179,6 +295,21 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 			JenkinsResultsParserUtil.sleep(
 				_WAIT_FOR_INVOKED_JOB_DURATION * 1000);
 		}
+	}
+
+	private boolean _allBuildsAreRunning() {
+		List<Build> runningBuilds = new ArrayList<>();
+
+		runningBuilds.addAll(_topLevelBuild.getDownstreamBuilds("running"));
+		runningBuilds.addAll(_topLevelBuild.getDownstreamBuilds("completed"));
+
+		List<Build> totalBuilds = _topLevelBuild.getDownstreamBuilds(null);
+
+		if (runningBuilds.size() >= totalBuilds.size()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private String _getJenkinsGitHubURL() {
@@ -212,8 +343,11 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 	private static final int _FILE_PROPAGATOR_THREAD_COUNT = 1;
 
+	private static final long _REPORT_GENERATION_INTERVAL = 1000 * 60 * 5;
+
 	private static final int _WAIT_FOR_INVOKED_JOB_DURATION = 30;
 
+	private long _lastGeneratedReportTime = -1;
 	private final TopLevelBuild _topLevelBuild;
 
 }

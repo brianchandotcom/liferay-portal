@@ -76,7 +76,7 @@
 </tr>
 <tr>
 	<td>DATE_SCHEDULE_REPEAT_RADIO</td>
-	<td>//input[contains(@id,'recurrenceType${key_frequency}')]</td>
+	<td>//option[contains(@id,'recurrenceType${key_frequency}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -106,7 +106,7 @@ public class SQLServerDB extends BaseDB {
 	}
 
 	@Override
-	public String getNewUuidFunction() {
+	public String getNewUuidFunctionName() {
 		return "lower(NEWID())";
 	}
 

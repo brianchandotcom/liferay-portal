@@ -51,18 +51,18 @@ public class SybaseDB extends BaseDB {
 	}
 
 	@Override
-	public String getNewUuidFunction() {
+	public String getNewUuidFunctionName() {
 		return "newid(1)";
-	}
-
-	@Override
-	public boolean isSupportsNewUuidFunction() {
-		return _SUPPORTS_NEW_UUID_FUNCTION;
 	}
 
 	@Override
 	public boolean isSupportsInlineDistinct() {
 		return _SUPPORTS_INLINE_DISTINCT;
+	}
+
+	@Override
+	public boolean isSupportsNewUuidFunction() {
+		return _SUPPORTS_NEW_UUID_FUNCTION;
 	}
 
 	@Override

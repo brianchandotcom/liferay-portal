@@ -92,7 +92,7 @@ public class MySQLDB extends BaseDB {
 	}
 
 	@Override
-	public String getNewUuidFunction() {
+	public String getNewUuidFunctionName() {
 		return "UUID()";
 	}
 

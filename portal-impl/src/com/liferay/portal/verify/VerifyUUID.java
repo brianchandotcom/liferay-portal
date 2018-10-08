@@ -92,7 +92,7 @@ public class VerifyUUID extends VerifyProcess {
 				Connection con = DataAccess.getConnection();
 				PreparedStatement ps = con.prepareStatement(
 					StringBundler.concat(
-						updateUuidClause, db.getNewUuidFunction(),
+						updateUuidClause, db.getNewUuidFunctionName(),
 						notNullUuidFilter))) {
 
 				ps.executeUpdate();

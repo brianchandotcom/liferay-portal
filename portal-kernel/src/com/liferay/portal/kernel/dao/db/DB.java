@@ -59,7 +59,7 @@ public interface DB {
 
 	public int getMinorVersion();
 
-	public default String getNewUuidFunction() {
+	public default String getNewUuidFunctionName() {
 		return null;
 	}
 

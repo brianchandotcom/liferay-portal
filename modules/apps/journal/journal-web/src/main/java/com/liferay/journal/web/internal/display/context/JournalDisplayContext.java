@@ -28,16 +28,8 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
@@ -61,7 +53,6 @@ import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.journal.web.internal.search.EntriesChecker;
 import com.liferay.journal.web.internal.search.EntriesMover;
 import com.liferay.journal.web.internal.search.JournalSearcher;
-import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
 import com.liferay.journal.web.util.JournalPortletUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -80,7 +71,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -98,7 +88,6 @@ import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -125,7 +114,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
@@ -155,53 +143,6 @@ public class JournalDisplayContext {
 			_request);
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
-	}
-
-	public List<DropdownItem> getActionDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					SafeConsumer.ignore(
-						dropdownItem -> {
-							dropdownItem.putData("action", "deleteEntries");
-
-							boolean trashEnabled = _trashHelper.isTrashEnabled(
-								_themeDisplay.getScopeGroupId());
-
-							dropdownItem.setIcon(
-								trashEnabled ? "trash" : "times");
-
-							String label = "delete";
-
-							if (trashEnabled) {
-								label = "recycle-bin";
-							}
-
-							dropdownItem.setLabel(
-								LanguageUtil.get(_request, label));
-
-							dropdownItem.setQuickAction(true);
-						}));
-
-				add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "expireEntries");
-						dropdownItem.setIcon("time");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "expire"));
-						dropdownItem.setQuickAction(true);
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "moveEntries");
-						dropdownItem.setIcon("change");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "move"));
-						dropdownItem.setQuickAction(true);
-					});
-			}
-		};
 	}
 
 	public String[] getAddMenuFavItems() throws PortalException {
@@ -284,17 +225,6 @@ public class JournalDisplayContext {
 		return journalServiceConfiguration.charactersblacklist();
 	}
 
-	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-		clearResultsURL.setParameter("navigation", StringPool.BLANK);
-		clearResultsURL.setParameter(
-			"status", String.valueOf(WorkflowConstants.STATUS_ANY));
-
-		return clearResultsURL.toString();
-	}
-
 	public SearchContainer<MBMessage> getCommentsSearchContainer()
 		throws PortalException {
 
@@ -339,84 +269,6 @@ public class JournalDisplayContext {
 			getCommentsSearchContainer();
 
 		return commentsSearchContainer.getTotal();
-	}
-
-	public CreationMenu getCreationMenu() throws PortalException {
-		return new CreationMenu() {
-			{
-				setHelpText(
-					LanguageUtil.get(
-						_request,
-						"you-can-customize-this-menu-or-see-all-you-have-by-" +
-							"clicking-more"));
-
-				if (JournalFolderPermission.contains(
-						_themeDisplay.getPermissionChecker(),
-						_themeDisplay.getScopeGroupId(), getFolderId(),
-						ActionKeys.ADD_FOLDER)) {
-
-					addPrimaryDropdownItem(
-						dropdownItem -> {
-							dropdownItem.setHref(
-								_liferayPortletResponse.createRenderURL(),
-								"mvcPath", "/edit_folder.jsp", "redirect",
-								PortalUtil.getCurrentURL(_request), "groupId",
-								String.valueOf(_themeDisplay.getScopeGroupId()),
-								"parentFolderId",
-								String.valueOf(getFolderId()));
-
-							String label = "folder";
-
-							if (getFolder() != null) {
-								label = "subfolder";
-							}
-
-							dropdownItem.setLabel(
-								LanguageUtil.get(_request, label));
-						});
-				}
-
-				if (JournalFolderPermission.contains(
-						_themeDisplay.getPermissionChecker(),
-						_themeDisplay.getScopeGroupId(), getFolderId(),
-						ActionKeys.ADD_ARTICLE)) {
-
-					List<DDMStructure> ddmStructures = getDDMStructures();
-
-					for (DDMStructure ddmStructure : ddmStructures) {
-						Consumer<DropdownItem> consumer = SafeConsumer.ignore(
-							dropdownItem -> {
-								dropdownItem.setHref(
-									_liferayPortletResponse.createRenderURL(),
-									"mvcPath", "/edit_article.jsp", "redirect",
-									PortalUtil.getCurrentURL(_request),
-									"groupId",
-									String.valueOf(
-										_themeDisplay.getScopeGroupId()),
-									"folderId", String.valueOf(getFolderId()),
-									"ddmStructureKey",
-									ddmStructure.getStructureKey());
-
-								dropdownItem.setLabel(
-									ddmStructure.getUnambiguousName(
-										ddmStructures,
-										_themeDisplay.getScopeGroupId(),
-										_themeDisplay.getLocale()));
-							});
-
-						if (ArrayUtil.contains(
-								getAddMenuFavItems(),
-								ddmStructure.getStructureKey())) {
-
-							addFavoriteDropdownItem(consumer);
-						}
-						else {
-							addRestDropdownItem(consumer);
-						}
-					}
-				}
-			}
-		};
 	}
 
 	public DDMFormValues getDDMFormValues(DDMStructure ddmStructure)
@@ -573,87 +425,6 @@ public class JournalDisplayContext {
 		}
 
 		return _displayViews;
-	}
-
-	public List<DropdownItem> getFilterDropdownItems() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
-					});
-
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getFilterStatusDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-status"));
-					});
-
-				if (!isNavigationRecent()) {
-					addGroup(
-						dropdownGroupItem -> {
-							dropdownGroupItem.setDropdownItems(
-								_getOrderByDropdownItems());
-							dropdownGroupItem.setLabel(
-								LanguageUtil.get(_request, "order-by"));
-						});
-				}
-			}
-		};
-	}
-
-	public List<LabelItem> getFilterLabelItems() {
-		return new LabelItemList() {
-			{
-				if (isNavigationMine()) {
-					add(
-						labelItem -> {
-							ThemeDisplay themeDisplay =
-								(ThemeDisplay)_request.getAttribute(
-									WebKeys.THEME_DISPLAY);
-
-							User user = themeDisplay.getUser();
-
-							labelItem.setLabel(
-								LanguageUtil.get(_request, "owner") + ": " +
-									user.getFullName());
-						});
-				}
-
-				if (isNavigationRecent()) {
-					add(
-						labelItem -> {
-							labelItem.setLabel(
-								LanguageUtil.get(_request, "recent"));
-						});
-				}
-
-				if (isNavigationStructure()) {
-					add(
-						labelItem -> {
-							labelItem.setLabel(
-								LanguageUtil.get(_request, "structures") +
-									": " + getDDMStructureName());
-						});
-				}
-
-				int status = getStatus();
-
-				if (status != WorkflowConstants.STATUS_ANY) {
-					add(
-						labelItem -> {
-							labelItem.setLabel(
-								LanguageUtil.get(_request, "status") + ": " +
-									WorkflowConstants.getStatusLabel(status));
-						});
-				}
-			}
-		};
 	}
 
 	public JournalFolder getFolder() {
@@ -990,16 +761,6 @@ public class JournalDisplayContext {
 		return _restrictionType;
 	}
 
-	public String getSearchActionURL() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("folderId", String.valueOf(getFolderId()));
-		portletURL.setParameter(
-			"showEditActions", String.valueOf(isShowEditActions()));
-
-		return portletURL.toString();
-	}
-
 	public SearchContainer getSearchContainer(boolean showVersions)
 		throws PortalException {
 
@@ -1272,16 +1033,6 @@ public class JournalDisplayContext {
 		return articleSearchContainer;
 	}
 
-	public String getSortingURL() {
-		PortletURL sortingURL = getPortletURL();
-
-		sortingURL.setParameter(
-			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		return sortingURL.toString();
-	}
-
 	public int getStatus() {
 		if (_status != null) {
 			return _status;
@@ -1357,24 +1108,6 @@ public class JournalDisplayContext {
 		return viewContentURL;
 	}
 
-	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
-			{
-				if (ArrayUtil.contains(getDisplayViews(), "icon")) {
-					addCardViewTypeItem();
-				}
-
-				if (ArrayUtil.contains(getDisplayViews(), "descriptive")) {
-					addListViewTypeItem();
-				}
-
-				if (ArrayUtil.contains(getDisplayViews(), "list")) {
-					addTableViewTypeItem();
-				}
-			}
-		};
-	}
-
 	public boolean hasCommentsResults() throws PortalException {
 		if (getCommentsTotal() > 0) {
 			return true;
@@ -1397,24 +1130,6 @@ public class JournalDisplayContext {
 		}
 
 		return false;
-	}
-
-	public boolean isDisabled() throws PortalException {
-		if (hasResults()) {
-			return false;
-		}
-
-		if (isSearch()) {
-			return false;
-		}
-
-		if (!isNavigationHome() ||
-			(getStatus() != WorkflowConstants.STATUS_ANY)) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	public boolean isNavigationHome() {
@@ -1451,39 +1166,6 @@ public class JournalDisplayContext {
 
 	public boolean isSearch() {
 		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isShowAddButton() throws PortalException {
-		Group group = _themeDisplay.getScopeGroup();
-
-		if (group.isLayout()) {
-			group = group.getParentGroup();
-		}
-
-		StagingGroupHelper stagingGroupHelper =
-			StagingGroupHelperUtil.getStagingGroupHelper();
-
-		if ((stagingGroupHelper.isLocalLiveGroup(group) ||
-			 stagingGroupHelper.isRemoteLiveGroup(group)) &&
-			stagingGroupHelper.isStagedPortlet(
-				group, JournalPortletKeys.JOURNAL)) {
-
-			return false;
-		}
-
-		if (JournalFolderPermission.contains(
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroupId(),
-				getFolderId(), ActionKeys.ADD_FOLDER) ||
-			JournalFolderPermission.contains(
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroupId(), getFolderId(),
-				ActionKeys.ADD_ARTICLE)) {
-
 			return true;
 		}
 
@@ -1548,18 +1230,6 @@ public class JournalDisplayContext {
 		}
 
 		return _isShowPublishAction();
-	}
-
-	public boolean isShowSearch() throws PortalException {
-		if (hasResults()) {
-			return true;
-		}
-
-		if (isSearch()) {
-			return true;
-		}
-
-		return false;
 	}
 
 	protected SearchContext buildSearchContext(
@@ -1685,77 +1355,6 @@ public class JournalDisplayContext {
 		return portletURL.toString();
 	}
 
-	private Consumer<DropdownItem> _getFilterNavigationDropdownItem(
-		final boolean active, final String navigation) {
-
-		return dropdownItem -> {
-			dropdownItem.setActive(active);
-
-			dropdownItem.setHref(
-				_liferayPortletResponse.createRenderURL(), "navigation",
-				navigation, "folderId",
-				String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID),
-				"showEditActions", String.valueOf(isShowEditActions()));
-
-			dropdownItem.setLabel(LanguageUtil.get(_request, navigation));
-		};
-	}
-
-	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					_getFilterNavigationDropdownItem(
-						isNavigationHome(), "all"));
-				add(
-					_getFilterNavigationDropdownItem(
-						isNavigationMine(), "mine"));
-				add(
-					_getFilterNavigationDropdownItem(
-						isNavigationRecent(), "recent"));
-
-				StringBundler sb = new StringBundler(
-					isNavigationStructure() ? 4 : 1);
-
-				sb.append(LanguageUtil.get(_request, "structures"));
-
-				if (isNavigationStructure()) {
-					sb.append(StringPool.COLON);
-					sb.append(StringPool.SPACE);
-					sb.append(getDDMStructureName());
-				}
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(isNavigationStructure());
-						dropdownItem.putData(
-							"action", "openDDMStructuresSelector");
-						dropdownItem.setLabel(sb.toString());
-					});
-			}
-		};
-	}
-
-	private List<DropdownItem> _getFilterStatusDropdownItems() {
-		return new DropdownItemList() {
-			{
-				for (int status : _getStatuses()) {
-					add(
-						dropdownItem -> {
-							dropdownItem.setActive(getStatus() == status);
-							dropdownItem.setHref(
-								getPortletURL(), "status",
-								String.valueOf(status));
-							dropdownItem.setLabel(
-								LanguageUtil.get(
-									_request,
-									WorkflowConstants.getStatusLabel(status)));
-						});
-				}
-			}
-		};
-	}
-
 	private JSONArray _getFoldersJSONArray(long groupId, long folderId) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -1788,51 +1387,6 @@ public class JournalDisplayContext {
 		}
 
 		return jsonArray;
-	}
-
-	private Consumer<DropdownItem> _getOrderByDropdownItem(
-		final String orderByCol) {
-
-		return dropdownItem -> {
-			dropdownItem.setActive(orderByCol.equals(getOrderByCol()));
-			dropdownItem.setHref(getPortletURL(), "orderByCol", orderByCol);
-			dropdownItem.setLabel(LanguageUtil.get(_request, orderByCol));
-		};
-	}
-
-	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				for (String orderColumn : getOrderColumns()) {
-					add(_getOrderByDropdownItem(orderColumn));
-				}
-			}
-		};
-	}
-
-	private List<Integer> _getStatuses() {
-		List<Integer> statuses = new ArrayList<>();
-
-		statuses.add(WorkflowConstants.STATUS_ANY);
-		statuses.add(WorkflowConstants.STATUS_DRAFT);
-
-		int workflowDefinitionLinksCount =
-			WorkflowDefinitionLinkLocalServiceUtil.
-				getWorkflowDefinitionLinksCount(
-					_themeDisplay.getCompanyId(),
-					_themeDisplay.getScopeGroupId(),
-					JournalFolder.class.getName());
-
-		if (workflowDefinitionLinksCount > 0) {
-			statuses.add(WorkflowConstants.STATUS_PENDING);
-			statuses.add(WorkflowConstants.STATUS_DENIED);
-		}
-
-		statuses.add(WorkflowConstants.STATUS_SCHEDULED);
-		statuses.add(WorkflowConstants.STATUS_APPROVED);
-		statuses.add(WorkflowConstants.STATUS_EXPIRED);
-
-		return statuses;
 	}
 
 	private boolean _isShowPublishAction() {

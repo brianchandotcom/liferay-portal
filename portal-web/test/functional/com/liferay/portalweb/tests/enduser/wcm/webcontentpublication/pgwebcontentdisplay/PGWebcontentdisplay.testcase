@@ -299,23 +299,12 @@
 		<execute macro="NavItem#gotoTemplates" />
 
 		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="WC Structure Name" />
 			<var name="templateFieldNames" value="Text,Text Box" />
+			<var name="templateFile" value="webcontent-acceptance.txt" />
 			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
-
-		<execute macro="WebContentTemplates#addStructure">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateFieldNames" value="Text,Text Box" />
-			<var name="templateLanguage" value="ftl" />
-		</execute>
-
-		<execute macro="WebContentTemplates#uploadTemplateFile">
-			<var name="templateFile" value="webcontent-acceptance.txt" />
-		</execute>
-
-
-		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Web Content Display Page" />
@@ -401,18 +390,11 @@
 		<execute macro="NavItem#gotoTemplates" />
 
 		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="Basic Web Content" />
 			<var name="templateFieldNames" value="Content,Content,Content" />
 			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="Second Basic Template" />
 		</execute>
-
-		<execute macro="WebContentTemplates#addStructure">
-			<var name="structureName" value="Basic Web Content" />
-			<var name="templateFieldNames" value="Content,Content,Content" />
-			<var name="templateLanguage" value="ftl" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Web Content Page" />

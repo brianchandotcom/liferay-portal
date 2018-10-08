@@ -106,18 +106,12 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="${structureName}" />	
 			<var name="templateDescription" value="${templateDescription}" />
+			<var name="templateFieldNames" value="${structureFieldNames}" />
 			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="${templateName}" />
 		</execute>
-
-		<execute macro="WebContentTemplates#addStructure">
-			<var name="structureName" value="${structureName}" />
-			<var name="templateFieldNames" value="${structureFieldNames}" />
-			<var name="templateLanguage" value="ftl" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#openURL" />
 

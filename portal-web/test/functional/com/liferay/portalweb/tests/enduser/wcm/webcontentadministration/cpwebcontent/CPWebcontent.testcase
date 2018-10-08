@@ -308,16 +308,11 @@
 		<execute macro="NavItem#gotoTemplates" />
 
 		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
 			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
-
-		<execute macro="WebContentTemplates#addStructure">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
@@ -390,17 +385,11 @@
 		<execute macro="NavItem#gotoTemplates" />
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="templateLanguage" value="ftl" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="WebContentTemplates#addStructure">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateFieldNames" value="Text" />
 			<var name="templateLanguage" value="ftl" />
+			<var name="templateName" value="WC Template Name" />
 		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -529,18 +518,12 @@
 		<execute macro="NavItem#gotoTemplates" />
 
 		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
+			<var name="templateFieldNames" value="Text,Text Box" />
 			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
-
-		<execute macro="WebContentTemplates#addStructure">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateFieldNames" value="Text,Text Box" />
-			<var name="templateLanguage" value="ftl" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -669,15 +652,10 @@
 		<execute macro="NavItem#gotoTemplates" />
 
 		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
-
-		<execute macro="WebContentTemplates#addStructure">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -763,18 +741,12 @@
 		<execute macro="NavItem#gotoTemplates" />
 
 		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
+			<var name="templateFieldNames" value="Text" />
 			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
-
-		<execute macro="WebContentTemplates#addStructure">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateLanguage" value="ftl" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -812,8 +784,6 @@
 			<var name="templateLanguage" value="xsl" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
-
-		<execute macro="PortletEntry#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1131,18 +1101,12 @@
 		<execute macro="NavItem#gotoTemplates" />
 
 		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
+			<var name="templateFieldNames" value="Color" />
 			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
-
-		<execute macro="WebContentTemplates#addStructure">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateFieldNames" value="Color" />
-			<var name="templateLanguage" value="ftl" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
@@ -1230,18 +1194,12 @@
 		<execute macro="NavItem#gotoTemplates" />
 
 		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
+			<var name="templateFieldNames" value="Image" />
 			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
-
-		<execute macro="WebContentTemplates#addStructure">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateFieldNames" value="Image" />
-			<var name="templateLanguage" value="ftl" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1338,16 +1296,11 @@
 		<execute macro="NavItem#gotoTemplates" />
 
 		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
+			<var name="templateFieldNames" value="Text" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
-
-		<execute macro="WebContentTemplates#addStructure">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateFieldNames" value="Text" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1728,8 +1681,8 @@
 		</execute>
 
 		<for list="Date,Image" param="templateFieldName">
-			<execute macro="WebContentTemplates#addField">
-				<var name="fieldName" value="${templateFieldName}" />
+			<execute macro="WebContentTemplates#inputField">
+				<var name="templateFieldNames" value="${templateFieldName}" />
 			</execute>
 		</for>
 
@@ -2177,18 +2130,12 @@
 		<execute macro="NavItem#gotoTemplates" />
 
 		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
+			<var name="templateFieldNames" value="Text" />
 			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
-
-		<execute macro="WebContentTemplates#addStructure">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateLanguage" value="ftl" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -2293,16 +2240,11 @@
 		<execute macro="NavItem#gotoTemplates" />
 
 		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
+			<var name="templateFieldNames" value="Text" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
-
-		<execute macro="WebContentTemplates#addStructure">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateFieldNames" value="Text" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -2475,15 +2417,10 @@
 		<execute macro="NavItem#gotoTemplates" />
 
 		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="Test Structure" />
 			<var name="templateDescription" value="Test Template Description" />
 			<var name="templateName" value="Test Template" />
 		</execute>
-
-		<execute macro="WebContentTemplates#addStructure">
-			<var name="structureName" value="Test Structure" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -2960,8 +2897,6 @@
 			<var name="templateDescription" value="Test WC Template Description" />
 			<var name="templateName" value="Test WC Template" />
 		</execute>
-
-		<execute macro="PortletEntry#save" />
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Edit" />

@@ -65,7 +65,9 @@
 			<var name="navItem" value="Templates" />
 		</execute>
 
-		<execute macro="WebContentTemplates#addCP">
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute macro="WebContentTemplates#inputTemplate">
 			<var name="templateDescription" value="WC Template Description" />
 			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template Name" />
@@ -73,13 +75,13 @@
 
 		<execute function="AssertElementPresent" locator1="DDMEditTemplate#CACHEABLE_CHECKBOX" />
 
-		<execute macro="WebContentTemplates#addStructure">
+		<execute macro="WebContentTemplates#inputStructure">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateFieldNames" value="Text" />
 			<var name="templateLanguage" value="ftl" />
 		</execute>
 
-		<execute macro="WebContentStructures#saveCP" />
+		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />

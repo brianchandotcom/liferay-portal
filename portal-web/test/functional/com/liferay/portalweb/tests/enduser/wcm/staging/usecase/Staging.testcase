@@ -1817,17 +1817,12 @@
 		<execute macro="NavItem#gotoTemplates" />
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="templateDescription" value="Template Description" />
-			<var name="templateName" value="Template Name" />
-		</execute>
-
-		<execute macro="WebContentTemplates#addStructure">
 			<var name="structureName" value="Structure Name" />
+			<var name="templateDescription" value="Template Description" />
 			<var name="templateFieldNames" value="Text,Text Box" />
 			<var name="templateLanguage" value="ftl" />
+			<var name="templateName" value="Template Name" />
 		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#openURL" />
 

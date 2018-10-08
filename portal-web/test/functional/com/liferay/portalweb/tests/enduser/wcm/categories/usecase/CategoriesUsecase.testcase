@@ -623,13 +623,8 @@
 
 		<execute macro="WebContentTemplates#addCP">
 			<var name="templateName" value="WC Template Name" />
+			<var name="templateFieldNames" value="Text" />
 		</execute>
-
-		<execute macro="WebContentTemplates#addField">
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#openURL" />
 

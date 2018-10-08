@@ -2,80 +2,18 @@
 	<command name="addCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute macro="PortletEntry#inputName">
+		<execute macro="WebContentTemplates#inputTemplate">
+			<var name="fieldNameLabel" value="${fieldNameLabel}" />
 			<var name="name" value="${templateName}" />
+			<var name="structureName" value="${structureName}" />
+			<var name="templateDescription" value="${templateDescription}" />
+			<var name="templateFieldNames" value="${templateFieldNames}" />
+			<var name="templateFile" value="${templateFile}" />
+			<var name="templateLanguage" value="${templateLanguage}" />
+			<var name="templateScript" value="templateScript" />
 		</execute>
 
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Details" />
-		</execute>
-
-		<if>
-			<isset var="templateDescription" />
-			<then>
-				<execute macro="PortletEntry#inputDescription">
-					<var name="description" value="${templateDescription}" />
-				</execute>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${templateLanguage}" arg2="ftl" />
-			<then>
-				<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="FreeMarker (.ftl)" />
-			</then>
-			<elseif>
-				<equals arg1="${templateLanguage}" arg2="xsl" />
-				<then>
-					<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Extensible Stylesheet Language (.xsl)" />
-				</then>
-			</elseif>
-			<else>
-				<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Velocity (.vm)" />
-			</else>
-		</if>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Details" />
-		</execute>
-
-		<if>
-			<equals arg1="${templateLanguage}" arg2="ftl" />
-			<then>
-				<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="FreeMarker (.ftl)" />
-			</then>
-			<elseif>
-				<equals arg1="${templateLanguage}" arg2="xsl" />
-				<then>
-					<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Extensible Stylesheet Language (.xsl)" />
-				</then>
-			</elseif>
-			<else>
-				<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Velocity (.vm)" />
-			</else>
-		</if>
-
-		<if>
-			<isset var="templateFile" />
-			<then>
-				<execute function="UploadCommonFile" locator1="DDMEditTemplate#SCRIPT_FILE_FIELD" value1="${templateFile}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="templateScript" />
-			<then>
-				<execute function="Type#typeAceEditor" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD_TEXT_AREA" value1="${templateScript}" />
-			</then>
-		</if>
-	</command>
-
-	<command name="addField">
-		<var method="StringUtil#replace('${fieldName}', ' ', '')" name="fieldNameLabel" />
-		<var method="StringUtil#lowerCase('${fieldNameLabel}')" name="fieldNameLabel" />
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="AssertClick" locator1="DDMEditTemplate#SCRIPT_FIELD" value1="${fieldName}" />
+		<execute macro="DDLDataDefinition#save" />
 	</command>
 
 	<command name="addNullCP">
@@ -110,38 +48,6 @@
 		<execute function="SelectFrameTop" />
 	</command>
 
-	<command name="addStructure">
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Details" />
-		</execute>
-
-		<execute function="AssertClick" locator1="DDMEditTemplate#DETAILS_SELECT_STRUCTURE" value1="Select" />
-
-		<execute function="SelectFrameTop" />
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-
-		<var name="key_ddlDataDefinitionName" value="${structureName}" />
-
-		<execute function="AssertClickNoError" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK" value1="${structureName}" />
-
-		<execute function="SelectFrameTop" />
-
-		<if>
-			<equals arg1="${templateLanguage}" arg2="ftl" />
-			<then>
-				<for list="${templateFieldNames}" param="templateFieldName">
-					<execute macro="WebContentTemplates#addField">
-						<var name="fieldName" value="${templateFieldName}" />
-						<var name="fieldNameLabel" value="${fieldNameLabel}" />
-					</execute>
-				</for>
-			</then>
-		</if>
-	</command>
-
 	<command name="deleteCP">
 		<execute macro="Navigator#gotoNavItem">
 			<var name="navItem" value="Templates" />
@@ -166,6 +72,143 @@
 			</then>
 			<else>
 				<execute macro="Alert#viewSuccessMessage" />
+			</else>
+		</if>
+	</command>
+
+	<command name="inputDescription">
+		<if>
+			<isset var="templateDescription" />
+			<then>
+				<execute macro="PortletEntry#inputDescription">
+					<var name="description" value="${templateDescription}" />
+				</execute>
+			</then>
+		</if>
+	</command>
+
+	<command name="inputField">
+			<if>
+			<isset var="templateFieldNames" />
+			<then>				
+				<for list="${templateFieldNames}" param="fieldName">
+					<var method="StringUtil#replace('${fieldName}', ' ', '')" name="templateFieldNameLabel" />
+					<var method="StringUtil#lowerCase('${fieldNameLabel}')" name="templateFieldNameLabel" />
+					<var name="key_fieldName" value="${fieldName}" />
+
+					<execute function="AssertClick" locator1="DDMEditTemplate#SCRIPT_FIELD" value1="${fieldName}" />
+				</for>
+			</then>
+		</if>
+	</command>
+
+	<command name="inputTemplate">
+		<execute macro="PortletEntry#inputName">
+			<var name="templateName" value="${templateName}" />
+		</execute>
+
+		<execute macro="WebContentTemplates#inputStructure">
+			<var name="structureName" value="${structureName}" />
+		</execute>
+
+		<execute macro="WebContentTemplates#inputDescription">
+			<var name="templateDescription" value="${templateDescription}" />
+		</execute>
+
+		<execute macro="WebContentTemplates#inputLanguage">
+			<var name="templateLanguage" value="${templateLanguage}" />
+		</execute>
+
+		<execute macro="WebContentTemplate#inputField">
+			<var name="templateFieldNames" value="${templateFieldNames}" />
+		</execute>
+
+		<execute macro="WebContentTemplate#inputTemplateFile">
+			<var name="templateFile" value="${templateFile}" />
+		</execute>
+
+		<execute macro="WebContentTemplate#inputScript">
+			<var name="templateScript" value="templateScript" />
+		</execute>
+	</command>
+
+	<command name="inputScript">
+		<if>
+			<isset var="templateScript" />
+			<then>
+				<execute function="Type#typeAceEditor" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD_TEXT_AREA" value1="${templateScript}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="inputStructure">
+		<if>
+			<isset var="structureName" />
+			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panel" value="Details" />
+				</execute>
+
+				<execute function="AssertClick" locator1="DDMEditTemplate#DETAILS_SELECT_STRUCTURE" value1="Select" />
+
+				<execute function="SelectFrameTop" />
+
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+				<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+
+				<var name="key_ddlDataDefinitionName" value="${structureName}" />
+
+				<execute function="AssertClickNoError" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK" value1="${structureName}" />
+
+				<execute function="SelectFrameTop" />
+			</then>
+		</if>
+	</command>
+
+	<command name="inputTemplateFile">
+		<if>
+			<isset var="templateFile" />
+			<then>
+				<execute function="UploadCommonFile" locator1="DDMEditTemplate#SCRIPT_FILE_FIELD" value1="${templateFile}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="inputTemplateLanguage">
+		<execute macro="Panel#expandPanel">
+			<var name="panel" value="Details" />
+		</execute>
+
+		<if>
+			<equals arg1="${templateLanguage}" arg2="ftl" />
+			<then>
+				<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="FreeMarker (.ftl)" />
+			</then>
+			<elseif>
+				<equals arg1="${templateLanguage}" arg2="xsl" />
+				<then>
+					<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Extensible Stylesheet Language (.xsl)" />
+				</then>
+			</elseif>
+			<else>
+				<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Velocity (.vm)" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${templateLanguage}" arg2="ftl" />
+			<then>
+				<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="FreeMarker (.ftl)" />
+			</then>
+			<elseif>
+				<equals arg1="${templateLanguage}" arg2="xsl" />
+				<then>
+					<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Extensible Stylesheet Language (.xsl)" />
+				</then>
+			</elseif>
+			<else>
+				<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Velocity (.vm)" />
 			</else>
 		</if>
 	</command>
@@ -346,10 +389,6 @@
 				</if>
 			</then>
 		</if>
-	</command>
-
-	<command name="uploadTemplateFile">
-		<execute function="UploadCommonFile" locator1="DDMEditTemplate#SCRIPT_FILE_FIELD" value1="${templateFile}" />
 	</command>
 
 	<command name="viewTableEntryCP">

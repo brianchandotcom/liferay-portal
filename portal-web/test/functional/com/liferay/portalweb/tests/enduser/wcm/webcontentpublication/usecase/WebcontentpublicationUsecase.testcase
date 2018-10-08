@@ -860,18 +860,12 @@
 		<execute macro="NavItem#gotoTemplates" />
 
 		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
 			<var name="templateFieldNames" value="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" />
 			<var name="templateFile" value="simple_all_fields_template.txt" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
-
-		<execute macro="WebContentTemplates#addStructure">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateFieldNames" value="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1140,18 +1134,12 @@
 		<execute macro="NavItem#gotoTemplates" />
 
 		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="WC Structure1 Name" />
 			<var name="templateDescription" value="WC Template11 Description" />
 			<var name="templateFieldNames" value="Text" />
+			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template11 Name" />
 		</execute>
-
-		<execute macro="WebContentTemplates#addStructure">
-			<var name="structureName" value="WC Structure1 Name" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateLanguage" value="ftl" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />

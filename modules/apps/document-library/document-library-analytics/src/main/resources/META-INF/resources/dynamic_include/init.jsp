@@ -17,5 +17,8 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 
 <%@ page import="com.liferay.document.library.analytics.internal.constants.DocumentLibraryAnalyticsConstants" %><%@
+page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
+page import="com.liferay.portal.kernel.util.Portal" %><%@
+page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>

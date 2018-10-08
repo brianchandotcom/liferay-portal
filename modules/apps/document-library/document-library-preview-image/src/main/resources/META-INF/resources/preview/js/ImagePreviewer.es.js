@@ -1,6 +1,6 @@
 import Component from 'metal-component';
 
-// import {Config} from 'metal-state';
+import {Config} from 'metal-state';
 
 import Soy from 'metal-soy';
 
@@ -23,7 +23,7 @@ class ImagePreviewer extends Component {
  */
 
 ImagePreviewer.STATE = {
-
+	imageURL: Config.string().required()
 };
 
 Soy.register(ImagePreviewer, templates);

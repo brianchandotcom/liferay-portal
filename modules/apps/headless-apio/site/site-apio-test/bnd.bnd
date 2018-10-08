@@ -1,0 +1,32 @@
+Bundle-Name: Liferay Site Apio Test
+Bundle-SymbolicName: com.liferay.site.apio.test
+Bundle-Version: 1.0.0
+Import-Package:\
+	!com.fasterxml.jackson.*,\
+	\
+	!com.jayway.jsonpath.*,\
+	\
+	!com.liferay.apio.architect.internal.endpoint.*,\
+	!com.liferay.petra.json.web.service.client.internal.*,\
+	\
+	!javax.validation.*,\
+	\
+	!org.apache.aries.blueprint,\
+	!org.apache.aries.blueprint.*,\
+	!org.apache.http.*,\
+	\
+	!org.hamcrest.*,\
+	\
+	!org.json.*,\
+	\
+	!org.osgi.service.blueprint.*,\
+	\
+	!org.skyscreamer.jsonassert.*,\
+	\
+	*
+-includeresource:\
+	test-classes/integration,\
+	@lib/assertj-core.jar,\
+	@lib/com.liferay.apio.architect.test.util.jar,\
+	@lib/cxf-rt-frontend-jaxrs.jar,\
+	@lib/jackson-databind.jar

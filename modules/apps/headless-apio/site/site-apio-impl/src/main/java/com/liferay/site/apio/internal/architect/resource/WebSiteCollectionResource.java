@@ -25,9 +25,10 @@ import com.liferay.content.space.apio.architect.util.ContentSpaceUtil;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.comparator.GroupIdComparator;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 import com.liferay.site.apio.internal.model.GroupWrapper;
 
@@ -85,8 +86,6 @@ public class WebSiteCollectionResource
 		).addBidirectionalModel(
 			"webSite", "webSites", WebSiteIdentifier.class,
 			this::_getParentGroupId
-		).addBoolean(
-			"active", Group::isActive
 		).addLinkedModel(
 			"contentSpace", ContentSpaceIdentifier.class, Group::getGroupId
 		).addLinkedModel(
@@ -114,17 +113,18 @@ public class WebSiteCollectionResource
 			long groupId, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		return new GroupWrapper(_groupService.getGroup(groupId), themeDisplay);
+		return new GroupWrapper(
+			_groupLocalService.getGroup(groupId), themeDisplay);
 	}
 
 	private PageItems<GroupWrapper> _getPageItems(
-			Pagination pagination, ThemeDisplay themeDisplay)
-		throws PortalException {
+		Pagination pagination, ThemeDisplay themeDisplay) {
 
 		List<GroupWrapper> groupWrappers = Stream.of(
-			_groupService.getGroups(
-				themeDisplay.getCompanyId(), 0, true,
-				pagination.getStartPosition(), pagination.getEndPosition())
+			_groupLocalService.getActiveGroups(
+				themeDisplay.getCompanyId(), true, true,
+				pagination.getStartPosition(), pagination.getEndPosition(),
+				new GroupIdComparator(true))
 		).flatMap(
 			List::stream
 		).map(
@@ -132,8 +132,9 @@ public class WebSiteCollectionResource
 		).collect(
 			Collectors.toList()
 		);
-		int count = _groupService.getGroupsCount(
-			themeDisplay.getCompanyId(), 0, true);
+
+		int count = _groupLocalService.getActiveGroupsCount(
+			themeDisplay.getCompanyId(), true, true);
 
 		return new PageItems<>(groupWrappers, count);
 	}
@@ -147,6 +148,6 @@ public class WebSiteCollectionResource
 	}
 
 	@Reference
-	private GroupService _groupService;
+	private GroupLocalService _groupLocalService;
 
 }

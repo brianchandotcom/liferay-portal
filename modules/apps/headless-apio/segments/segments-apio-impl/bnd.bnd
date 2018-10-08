@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Segments Apio Implementation
+Bundle-SymbolicName: com.liferay.segments.apio.impl
+Bundle-Version: 1.0.0
+Import-Package:\
+	!com.fasterxml.jackson.*,\
+	\
+	*

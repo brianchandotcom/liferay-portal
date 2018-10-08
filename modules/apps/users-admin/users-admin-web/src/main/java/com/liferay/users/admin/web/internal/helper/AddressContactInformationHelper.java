@@ -56,7 +56,7 @@ public class AddressContactInformationHelper
 	protected Address constructEntry(ActionRequest actionRequest)
 		throws Exception {
 
-		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+		long addressId = ParamUtil.getLong(actionRequest, "primaryKey");
 
 		String city = ParamUtil.getString(actionRequest, "addressCity");
 		long countryId = ParamUtil.getLong(actionRequest, "addressCountryId");
@@ -76,7 +76,7 @@ public class AddressContactInformationHelper
 			return null;
 		}
 
-		Address address = _addressLocalService.createAddress(entryId);
+		Address address = _addressLocalService.createAddress(addressId);
 
 		address.setStreet1(street1);
 		address.setStreet2(street2);

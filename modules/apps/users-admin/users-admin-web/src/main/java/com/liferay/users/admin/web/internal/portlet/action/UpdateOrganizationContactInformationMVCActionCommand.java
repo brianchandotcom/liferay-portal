@@ -179,16 +179,16 @@ public class UpdateOrganizationContactInformationMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+		long primaryKey = ParamUtil.getLong(actionRequest, "primaryKey");
 
 		if (cmd.equals(Constants.DELETE)) {
-			contactInformationHelper.delete(entryId);
+			contactInformationHelper.delete(primaryKey);
 		}
 		else if (cmd.equals(Constants.EDIT)) {
 			contactInformationHelper.edit(actionRequest);
 		}
 		else if (cmd.equals("makePrimary")) {
-			contactInformationHelper.makePrimary(entryId);
+			contactInformationHelper.makePrimary(primaryKey);
 		}
 	}
 

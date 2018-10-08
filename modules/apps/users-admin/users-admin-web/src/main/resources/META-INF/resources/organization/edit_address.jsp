@@ -17,15 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long entryId = ParamUtil.getLong(request, "entryId", 0L);
+long addressId = ParamUtil.getLong(request, "primaryKey", 0L);
 
 Address address = null;
 
 long countryId = 0L;
 long regionId = 0L;
 
-if (entryId > 0L) {
-	address = AddressServiceUtil.getAddress(entryId);
+if (addressId > 0L) {
+	address = AddressServiceUtil.getAddress(addressId);
 
 	countryId = address.getCountryId();
 	regionId = address.getRegionId();
@@ -40,7 +40,7 @@ if (entryId > 0L) {
 	<aui:model-context bean="<%= address %>" model="<%= Address.class %>" />
 
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />
-	<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
+	<aui:input name="primaryKey" type="hidden" value="<%= addressId %>" />
 	<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.ADDRESS %>" />
 
 	<aui:input checked="<%= (address != null)? address.isPrimary() : false %>" id="addressPrimary" label="make-primary" name="addressPrimary" type="checkbox" />

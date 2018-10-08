@@ -58,7 +58,7 @@ public class EmailAddressContactInformationHelper
 	protected EmailAddress constructEntry(ActionRequest actionRequest)
 		throws Exception {
 
-		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+		long emailAddressId = ParamUtil.getLong(actionRequest, "primaryKey");
 
 		String address = ParamUtil.getString(
 			actionRequest, "emailAddressAddress");
@@ -67,7 +67,7 @@ public class EmailAddressContactInformationHelper
 		long typeId = ParamUtil.getLong(actionRequest, "emailAddressTypeId");
 
 		EmailAddress emailAddress =
-			_emailAddressLocalService.createEmailAddress(entryId);
+			_emailAddressLocalService.createEmailAddress(emailAddressId);
 
 		emailAddress.setAddress(address);
 		emailAddress.setTypeId(typeId);

@@ -55,27 +55,25 @@ public class StructuredContentApioTest {
 
 	@Before
 	public void setUp() throws MalformedURLException {
-		_jsonWebServiceClient = new JSONWebServiceClientImpl();
-
 		_rootEndpointURL = new URL(_url, "/o/api");
 
-		_jsonWebServiceClient.setHostName(_rootEndpointURL.getHost());
-		_jsonWebServiceClient.setHostPort(_rootEndpointURL.getPort());
 
-		_jsonWebServiceClient.setLogin("test@liferay.com");
-		_jsonWebServiceClient.setPassword("test");
-		_jsonWebServiceClient.setProtocol(_rootEndpointURL.getProtocol());
 	}
 
 	@Test
 	public void testStructuredContentsExistsInContentSpaceEndpoint()
 		throws Exception {
 
+		JSONWebServiceClient jsonWebServiceClient = _getJSONWebServiceClient();
+
 		List<String> hrefs = JsonPath.read(
 			_get(
 				JsonPath.read(
-					_get(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
+					_get(
+						_rootEndpointURL.toExternalForm(),
+						jsonWebServiceClient),
+					"$._links.content-space.href"),
+				jsonWebServiceClient),
 			"$._embedded.ContentSpace[?(@.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
 					"')]._links.structuredContents.href");
@@ -85,30 +83,55 @@ public class StructuredContentApioTest {
 
 	@Test
 	public void testStructuredContentsMatchesSelfLink() throws Exception {
+		JSONWebServiceClient jsonWebServiceClient = _getJSONWebServiceClient();
+
 		List<String> hrefs = JsonPath.read(
 			_get(
 				JsonPath.read(
-					_get(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
+					_get(
+						_rootEndpointURL.toExternalForm(),
+						jsonWebServiceClient),
+					"$._links.content-space.href"),
+				jsonWebServiceClient),
 			"$._embedded.ContentSpace[?(@.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
 					"')]._links.structuredContents.href");
 
-		String href = JsonPath.read(_get(hrefs.get(0)), "$._links.self.href");
+		String href = JsonPath.read(
+			_get(hrefs.get(0), jsonWebServiceClient), "$._links.self.href");
 
 		Assert.assertTrue(href.startsWith(hrefs.get(0)));
 	}
 
-	private String _get(String url)
+	private String _get(String url, JSONWebServiceClient jsonWebServiceClient)
 		throws JSONWebServiceInvocationException,
 			   JSONWebServiceTransportException {
 
-		return _jsonWebServiceClient.doGet(
+		return jsonWebServiceClient.doGet(
 			url, Collections.emptyMap(),
 			Collections.singletonMap("Accept", "application/hal+json"));
 	}
 
-	private JSONWebServiceClient _jsonWebServiceClient;
+	private JSONWebServiceClient _getJSONWebServiceClient() {
+		JSONWebServiceClient jsonWebServiceClient =
+			new JSONWebServiceClientImpl();
+
+		jsonWebServiceClient.setHostName(_rootEndpointURL.getHost());
+		jsonWebServiceClient.setHostPort(_rootEndpointURL.getPort());
+		jsonWebServiceClient.setProtocol(_rootEndpointURL.getProtocol());
+
+		return jsonWebServiceClient;
+	}
+
+	private JSONWebServiceClient _getJSONWebServiceClient(String login) {
+		JSONWebServiceClient jsonWebServiceClient = _getJSONWebServiceClient();
+
+		jsonWebServiceClient.setLogin(login);
+		jsonWebServiceClient.setPassword("test");
+
+		return jsonWebServiceClient;
+	}
+
 	private URL _rootEndpointURL;
 
 	@ArquillianResource

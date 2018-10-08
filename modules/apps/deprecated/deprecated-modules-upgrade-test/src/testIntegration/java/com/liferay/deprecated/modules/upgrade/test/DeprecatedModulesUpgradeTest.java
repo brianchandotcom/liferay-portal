@@ -92,6 +92,18 @@ public class DeprecatedModulesUpgradeTest {
 	}
 
 	@Test
+	public void testDeprecatedModulesUpgradePrivateMessaging()
+		throws Exception {
+
+		_testDeprecatedModulesUpgrade(
+			"removePrivateMessagingModuleData",
+			"com.liferay.social.privatemessaging.service",
+			"dependencies/private-messaging-tables.sql",
+			"com_liferay_social_privatemessaging_web_portlet_" +
+				"PrivateMessagingPortlet");
+	}
+
+	@Test
 	public void testDeprecatedModulesUpgradeShopping() throws Exception {
 		_testDeprecatedModulesUpgrade(
 			"removeShoppingModuleData", "com.liferay.shopping.service",
@@ -185,7 +197,8 @@ public class DeprecatedModulesUpgradeTest {
 
 	private static final String[] _SERVLET_CONTEXT_NAMES = {
 		"com.liferay.chat.service", "com.liferay.mail.reader.service",
-		"com.liferay.shopping.service"
+		"com.liferay.shopping.service",
+		"com.liferay.social.privatemessaging.service"
 	};
 
 	@Inject

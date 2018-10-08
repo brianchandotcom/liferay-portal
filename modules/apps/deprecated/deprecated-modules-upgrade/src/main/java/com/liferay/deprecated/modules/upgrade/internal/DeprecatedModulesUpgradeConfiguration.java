@@ -42,4 +42,10 @@ public interface DeprecatedModulesUpgradeConfiguration {
 	@Meta.AD(deflt = "false", name = "remove-shopping-module", required = false)
 	public boolean removeShoppingModuleData();
 
+	@Meta.AD(
+		deflt = "false", name = "remove-private-messaging-module",
+		required = false
+	)
+	public boolean removePrivateMessagingModuleData();
+
 }

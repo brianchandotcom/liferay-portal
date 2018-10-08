@@ -14,6 +14,7 @@
 
 package com.liferay.deprecated.modules.upgrade.internal;
 
+import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
@@ -85,6 +86,22 @@ public class DeprecatedModulesUpgrade implements UpgradeStepRegistrator {
 					CacheRegistryUtil.clear();
 				}
 			}
+
+			if (_deprecatedModulesUpgradeConfiguration.
+					removePrivateMessagingModuleData()) {
+
+				Release release = _releaseLocalService.fetchRelease(
+					"com.liferay.social.privatemessaging.service");
+
+				if (release != null) {
+					UpgradePrivateMessaging upgradePrivateMessaging =
+						new UpgradePrivateMessaging(_mbThreadLocalService);
+
+					upgradePrivateMessaging.upgrade();
+
+					CacheRegistryUtil.clear();
+				}
+			}
 		}
 		catch (UpgradeException ue) {
 			ReflectionUtil.throwException(ue);
@@ -103,6 +120,9 @@ public class DeprecatedModulesUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private ImageLocalService _imageLocalService;
+
+	@Reference
+	private MBThreadLocalService _mbThreadLocalService;
 
 	@Reference
 	private ReleaseLocalService _releaseLocalService;

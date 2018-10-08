@@ -51,14 +51,14 @@ public class PhoneContactInformationHelper
 	}
 
 	public Phone constructEntry(ActionRequest actionRequest) {
-		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+		long phoneId = ParamUtil.getLong(actionRequest, "primaryKey");
 
 		String extension = ParamUtil.getString(actionRequest, "phoneExtension");
 		String number = ParamUtil.getString(actionRequest, "phoneNumber");
 		boolean primary = ParamUtil.getBoolean(actionRequest, "phonePrimary");
 		long typeId = ParamUtil.getLong(actionRequest, "phoneTypeId");
 
-		Phone phone = _phoneLocalService.createPhone(entryId);
+		Phone phone = _phoneLocalService.createPhone(phoneId);
 
 		phone.setNumber(number);
 		phone.setExtension(extension);

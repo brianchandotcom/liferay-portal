@@ -12,19 +12,35 @@
  * details.
  */
 
-package com.liferay.users.admin.web.internal.helper;
+package com.liferay.users.admin.web.internal.util;
 
-import javax.portlet.ActionRequest;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 
 /**
  * @author Drew Brokke
  */
-public interface ContactInformationHelper<T> {
+public class CSSClassNameBuilder {
 
-	public void delete(long primaryKey) throws Exception;
+	public void add(String cssClassName) {
+		_add(cssClassName, true);
+	}
 
-	public void edit(ActionRequest actionRequest) throws Exception;
+	public void add(String cssClassName, boolean condition) {
+		_add(cssClassName, condition);
+	}
 
-	public void makePrimary(long primaryKey) throws Exception;
+	public String build() {
+		return _sb.toString();
+	}
+
+	private void _add(String cssClassName, boolean condition) {
+		if (condition) {
+			_sb.append(cssClassName);
+			_sb.append(StringPool.SPACE);
+		}
+	}
+
+	private final StringBundler _sb = new StringBundler();
 
 }

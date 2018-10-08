@@ -17,12 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long entryId = ParamUtil.getLong(request, "entryId", 0L);
+long orgLaborId = ParamUtil.getLong(request, "primaryKey", 0L);
 
 OrgLabor orgLabor = null;
 
-if (entryId > 0L) {
-	orgLabor = OrgLaborServiceUtil.getOrgLabor(entryId);
+if (orgLaborId > 0L) {
+	orgLabor = OrgLaborServiceUtil.getOrgLabor(orgLaborId);
 }
 %>
 
@@ -30,7 +30,7 @@ if (entryId > 0L) {
 	<aui:model-context bean="<%= orgLabor %>" model="<%= OrgLabor.class %>" />
 
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />
-	<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
+	<aui:input name="primaryKey" type="hidden" value="<%= orgLaborId %>" />
 	<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.ORGANIZATION_SERVICE %>" />
 
 	<aui:select label="type-of-service" listType="<%= ListTypeConstants.ORGANIZATION_SERVICE %>" name='<%= "orgLaborTypeId" %>' />

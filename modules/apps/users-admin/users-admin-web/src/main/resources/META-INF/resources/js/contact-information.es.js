@@ -1,12 +1,12 @@
 import dom from 'metal-dom';
 import Uri from 'metal-uri';
 
-function openEditContactInformationWindow(title, entryId, baseRenderURL, height) {
+function openEditContactInformationWindow(title, primaryKey, baseRenderURL, height) {
 	const renderURL = new Uri(baseRenderURL);
 
 	const portletNamespace = Liferay.Util.getPortletNamespace(renderURL.getParameterValue('p_p_id'));
 
-	renderURL.setParameterValue(Liferay.Util.ns(portletNamespace, 'entryId'), entryId);
+	renderURL.setParameterValue(Liferay.Util.ns(portletNamespace, 'primaryKey'), primaryKey);
 
 	const modalId = Liferay.Util.ns(portletNamespace, 'editContactInformationModal');
 
@@ -75,11 +75,11 @@ function registerContactInformationListener(selector, renderURL, height) {
 		event => {
 			event.preventDefault();
 
-			const {entryId, title} = event.delegateTarget.dataset;
+			const {primaryKey, title} = event.delegateTarget.dataset;
 
 			openEditContactInformationWindow(
 				title,
-				entryId ? entryId : 0,
+				primaryKey ? primaryKey : 0,
 				renderURL,
 				height
 			);

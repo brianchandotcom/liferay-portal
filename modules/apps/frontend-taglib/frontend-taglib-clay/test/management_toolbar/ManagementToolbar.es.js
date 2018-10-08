@@ -82,7 +82,7 @@ describe(
 			() => {
 				managementToolbar._handleSelectPageCheckboxChanged(
 					{
-						target: {
+						data: {
 							checked: true
 						}
 					}
@@ -92,7 +92,7 @@ describe(
 
 				managementToolbar._handleSelectPageCheckboxChanged(
 					{
-						target: {
+						data: {
 							checked: false
 						}
 					}

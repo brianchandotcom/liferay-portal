@@ -87,8 +87,6 @@ public class AnnouncementsEntryChecker extends EmptyOnClickRowChecker {
 			return StringPool.BLANK;
 		}
 
-		String name = AnnouncementsEntry.class.getSimpleName();
-
 		boolean showInput = false;
 
 		try {
@@ -127,7 +125,9 @@ public class AnnouncementsEntryChecker extends EmptyOnClickRowChecker {
 
 		return getRowCheckBox(
 			request, checked, disabled,
-			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS + name,
+			StringBundler.concat(
+				_liferayPortletResponse.getNamespace(), RowChecker.ROW_IDS,
+				AnnouncementsEntry.class.getSimpleName()),
 			primaryKey, checkBoxRowIds, checkBoxAllRowIds, StringPool.BLANK);
 	}
 

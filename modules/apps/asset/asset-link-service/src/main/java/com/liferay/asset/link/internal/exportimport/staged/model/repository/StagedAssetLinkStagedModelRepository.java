@@ -71,9 +71,6 @@ public class StagedAssetLinkStagedModelRepository
 			StagedAssetLink stagedAssetLink)
 		throws PortalException {
 
-		long userId = portletDataContext.getUserId(
-			stagedAssetLink.getUserUuid());
-
 		AssetEntry assetEntry1 = fetchAssetEntry(
 			portletDataContext.getScopeGroupId(),
 			stagedAssetLink.getEntry1Uuid());
@@ -86,7 +83,8 @@ public class StagedAssetLinkStagedModelRepository
 		}
 
 		AssetLink assetLink = _assetLinkLocalService.addLink(
-			userId, assetEntry1.getEntryId(), assetEntry2.getEntryId(),
+			portletDataContext.getUserId(stagedAssetLink.getUserUuid()),
+			assetEntry1.getEntryId(), assetEntry2.getEntryId(),
 			stagedAssetLink.getType(), stagedAssetLink.getWeight());
 
 		return ModelAdapterUtil.adapt(

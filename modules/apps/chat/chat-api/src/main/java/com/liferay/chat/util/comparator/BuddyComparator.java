@@ -42,7 +42,6 @@ public class BuddyComparator implements Comparator<Object[]> {
 		String firstName1 = (String)buddy1[2];
 		String middleName1 = (String)buddy1[3];
 		String lastName1 = (String)buddy1[4];
-		boolean awake1 = (Boolean)buddy1[6];
 
 		long userId2 = 0;
 
@@ -53,13 +52,15 @@ public class BuddyComparator implements Comparator<Object[]> {
 		String firstName2 = (String)buddy2[2];
 		String middleName2 = (String)buddy2[3];
 		String lastName2 = (String)buddy2[4];
-		boolean awake2 = (Boolean)buddy2[6];
 
 		int value = 0;
 
 		if (userId1 == userId2) {
 			return value;
 		}
+
+		boolean awake1 = (Boolean)buddy1[6];
+		boolean awake2 = (Boolean)buddy2[6];
 
 		if (awake1 && !awake2) {
 			value = 1;

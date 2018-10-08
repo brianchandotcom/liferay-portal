@@ -66,16 +66,17 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
-				long entryId = rs.getLong("entryId");
-				long groupId = rs.getLong("groupId");
 				long smallImageId = rs.getLong("smallImageId");
-				long userId = rs.getLong("userId");
 
 				Image smallImage = _imageLocalService.fetchImage(smallImageId);
 
 				if (smallImage == null) {
 					continue;
 				}
+
+				long entryId = rs.getLong("entryId");
+				long groupId = rs.getLong("groupId");
+				long userId = rs.getLong("userId");
 
 				byte[] bytes = smallImage.getTextObj();
 

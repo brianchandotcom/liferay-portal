@@ -737,9 +737,6 @@ public class EditAssetListDisplayContext {
 	}
 
 	protected void setDDMStructure() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		_ddmStructureDisplayFieldValue = StringPool.BLANK;
 		_ddmStructureFieldLabel = StringPool.BLANK;
 		_ddmStructureFieldName = StringPool.BLANK;
@@ -768,6 +765,9 @@ public class EditAssetListDisplayContext {
 
 		if (Validator.isNotNull(_ddmStructureFieldName) &&
 			Validator.isNotNull(_ddmStructureFieldValue)) {
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 			AssetRendererFactory<?> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.

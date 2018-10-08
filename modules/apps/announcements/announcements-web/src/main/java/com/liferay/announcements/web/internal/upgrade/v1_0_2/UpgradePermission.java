@@ -264,7 +264,6 @@ public class UpgradePermission extends UpgradeProcess {
 					int scope = rs.getInt("scope");
 					String primKey = rs.getString("primKey");
 					long primKeyId = rs.getLong("primKeyId");
-					long roleId = rs.getLong("roleId");
 
 					updateResourcePermission(
 						resourcePermissionId, actionIds - bitwiseValue);
@@ -279,6 +278,8 @@ public class UpgradePermission extends UpgradeProcess {
 							continue;
 						}
 					}
+
+					long roleId = rs.getLong("roleId");
 
 					addAnnouncementsAdminViewResourcePermission(
 						companyId, scope, primKey, primKeyId, roleId);

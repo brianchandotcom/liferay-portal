@@ -45,7 +45,6 @@ public class UpgradeEntry extends UpgradeProcess {
 			while (rs.next()) {
 				long companyId = rs.getLong("companyId");
 				String emailAddress = rs.getString("emailAddress");
-				long entryId = rs.getLong("entryId");
 
 				User user = _userLocalService.fetchUserByEmailAddress(
 					companyId, emailAddress);
@@ -53,6 +52,8 @@ public class UpgradeEntry extends UpgradeProcess {
 				if (user == null) {
 					continue;
 				}
+
+				long entryId = rs.getLong("entryId");
 
 				runSQL("delete from Contacts_Entry where entryId = " + entryId);
 			}

@@ -53,28 +53,32 @@
 		{/if}
 	{/let}
 
-	<div class="{$entryLinksClasses}" ref="fragmentEntryLinks">
-		{foreach $row in $layoutData.structure}
-			{call .row}
-				{param _handleFragmentMove: $_handleFragmentMove /}
-				{param columns: $row.columns /}
-				{param defaultEditorConfigurations: $defaultEditorConfigurations /}
-				{param defaultLanguageId: $defaultLanguageId /}
-				{param fragmentEntryLinks: $fragmentEntryLinks /}
-				{param hoveredFragmentEntryLinkBorder: $hoveredFragmentEntryLinkBorder /}
-				{param hoveredFragmentEntryLinkId: $hoveredFragmentEntryLinkId /}
-				{param imageSelectorURL: $imageSelectorURL /}
-				{param key: $row.rowId /}
-				{param languageId: $languageId /}
-				{param mappingFieldsURL: $mappingFieldsURL /}
-				{param portletNamespace: $portletNamespace /}
-				{param rowId: $row.rowId /}
-				{param selectedMappingTypes: $selectedMappingTypes /}
-				{param spritemap: $spritemap /}
-				{param store: $store /}
-			{/call}
-		{/foreach}
-	</div>
+	{if $layoutData.structure and (length($layoutData.structure) > 0)}
+		<div class="{$entryLinksClasses}" ref="fragmentEntryLinks">
+			{foreach $row in $layoutData.structure}
+				{call .row}
+					{param _handleFragmentMove: $_handleFragmentMove /}
+					{param columns: $row.columns /}
+					{param defaultEditorConfigurations: $defaultEditorConfigurations /}
+					{param defaultLanguageId: $defaultLanguageId /}
+					{param fragmentEntryLinks: $fragmentEntryLinks /}
+					{param hoveredFragmentEntryLinkBorder: $hoveredFragmentEntryLinkBorder /}
+					{param hoveredFragmentEntryLinkId: $hoveredFragmentEntryLinkId /}
+					{param imageSelectorURL: $imageSelectorURL /}
+					{param key: $row.rowId /}
+					{param languageId: $languageId /}
+					{param mappingFieldsURL: $mappingFieldsURL /}
+					{param portletNamespace: $portletNamespace /}
+					{param rowId: $row.rowId /}
+					{param selectedMappingTypes: $selectedMappingTypes /}
+					{param spritemap: $spritemap /}
+					{param store: $store /}
+				{/call}
+			{/foreach}
+		</div>
+	{else}
+		{call .noFragmentsMessage /}
+	{/if}
 {/template}
 
 /**
@@ -225,7 +229,7 @@
  * No fragments message
  */
 {template .noFragmentsMessage}
-	<div class="taglib-empty-result-message">
+	<div class="no-fragments-message fragment-entry-link-drop-target taglib-empty-result-message">
 		<div class="taglib-empty-result-message-header"></div>
 
 		<div class="text-center text-muted">

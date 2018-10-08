@@ -293,8 +293,12 @@
 	}
 }
 
-.addresses-search-container-wrapper table td:first-child {
-	padding-top: 18px;
+.addresses-empty-results-message-wrapper div:first-child {
+	border-style: none;
+}
+
+.addresses-table-wrapper table td:first-child {
+	padding-right: 0;
 	vertical-align: top;
 }
 

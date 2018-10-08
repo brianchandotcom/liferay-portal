@@ -21,11 +21,7 @@ OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayCo
 
 long organizationId = organizationScreenNavigationDisplayContext.getOrganizationId();
 
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-
-Address address = (Address)row.getObject();
-
-long addressId = address.getAddressId();
+long addressId = ParamUtil.getLong(request, "addressId");
 %>
 
 <liferay-ui:icon-menu

@@ -62,59 +62,68 @@ List<Address> addresses = AddressServiceUtil.getAddresses(Organization.class.get
 <liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + Organization.class.getName() + ListTypeConstants.ADDRESS %>" message="please-select-a-type" />
 <liferay-ui:error exception="<%= NoSuchRegionException.class %>" message="please-select-a-region" />
 
-<liferay-ui:search-container
-	cssClass="addresses-search-container-wrapper lfr-search-container-wrapper"
-	emptyResultsMessage="this-organization-does-not-have-any-addresses"
-	id="addressesSearchContainer"
-	iteratorURL="<%= currentURLObj %>"
-	total="<%= addresses.size() %>"
->
-	<liferay-ui:search-container-results
-		results="<%= addresses.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-	/>
-
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.kernel.model.Address"
-		escapedModel="<%= true %>"
-		keyProperty="addressId"
-		modelVar="address"
-	>
-		<liferay-ui:search-container-column-icon
-			icon="picture"
+<c:if test="<%= addresses.isEmpty() %>">
+	<div class="addresses-empty-results-message-wrapper">
+		<liferay-ui:empty-result-message
+			message="this-organization-does-not-have-any-addresses"
 		/>
+	</div>
+</c:if>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-		>
-			<h4>
-				<liferay-ui:message key="<%= address.getType().getName() %>" />
-			</h4>
+<div class="addresses-table-wrapper table-responsive">
+	<table class="table table-autofit">
+		<tbody>
 
-			<div class="address-display-wrapper">
-				<liferay-text-localizer:address-display
-					address="<%= address %>"
-				/>
-			</div>
+			<%
+			for (Address address : addresses) {
+			%>
 
-			<c:if test="<%= address.isPrimary() %>">
-				<div>
-					<span class="label label-primary">
-						<span class="label-item label-item-expand"><%= StringUtil.toUpperCase(LanguageUtil.get(request, "primary"), locale) %></span>
-					</span>
-				</div>
-			</c:if>
-		</liferay-ui:search-container-column-text>
+				<tr>
+					<td>
+						<div class="sticker sticker-secondary sticker-static">
+							<aui:icon image="picture" markupView="lexicon" />
+						</div>
+					</td>
+					<td class="table-cell-expand">
+						<h4>
 
-		<liferay-ui:search-container-column-jsp
-			cssClass="entry-action-column"
-			path="/organization/address_action.jsp"
-		/>
-	</liferay-ui:search-container-row>
+							<%
+							ListType listType = address.getType();
+							%>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-	/>
-</liferay-ui:search-container>
+							<liferay-ui:message key="<%= listType.getName() %>" />
+						</h4>
+
+						<div class="address-display-wrapper">
+							<liferay-text-localizer:address-display
+								address="<%= address %>"
+							/>
+						</div>
+
+						<c:if test="<%= address.isPrimary() %>">
+							<div>
+								<span class="label label-primary">
+									<span class="label-item label-item-expand"><%= StringUtil.toUpperCase(LanguageUtil.get(request, "primary"), locale) %></span>
+								</span>
+							</div>
+						</c:if>
+					</td>
+					<td>
+						<span class="autofit-col lfr-search-container-wrapper">
+							<liferay-util:include page="/organization/address_action.jsp" servletContext="<%= application %>">
+								<liferay-util:param name="addressId" value="<%= String.valueOf(address.getAddressId()) %>" />
+							</liferay-util:include>
+						</span>
+					</td>
+				</tr>
+
+			<%
+			}
+			%>
+
+		</tbody>
+	</table>
+</div>
 
 <portlet:renderURL var="editAddressRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/organization/edit_address.jsp" />

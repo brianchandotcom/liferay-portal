@@ -6,7 +6,10 @@ import {
 } from '../actions/actions.es';
 import {DRAG_POSITIONS} from './placeholders.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLink.es';
-import {setIn} from '../utils/utils.es';
+import {
+	getFragmentRowIndex,
+	setIn
+} from '../utils/utils.es';
 
 /**
  * @param {!object} state
@@ -107,47 +110,48 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
  * @param {!object} state
  * @param {!string} actionType
  * @param {!object} payload
- * @param {!string} payload.placeholderId
- * @param {!string} payload.placeholderId
- * @param {!string} payload.placeholderId
+ * @param {!string} payload.originFragmentEntryLinkId
+ * @param {!string} payload.originFragmentEntryLinkBorder
+ * @param {!string} payload.targetFragmentEntryLinkId
  * @return {object}
  * @review
  */
 
 function moveFragmentEntryLinkReducer(state, actionType, payload) {
 	return new Promise(
-		(resolve, reject) => {
-			if (actionType === MOVE_FRAGMENT_ENTRY_LINK) {
-				let nextState = Object.assign({}, state);
+		resolve => {
+			let nextState = state;
 
-				const nextData = Object.assign(
-					{},
+			if (actionType === MOVE_FRAGMENT_ENTRY_LINK) {
+				const border = payload.targetFragmentEntryLinkBorder;
+				const originId = payload.originFragmentEntryLinkId;
+				const targetId = payload.targetFragmentEntryLinkId;
+
+				const nextData = setIn(
 					state.layoutData,
-					{
-						structure: [
-							...(state.layoutData.structure || [])
-						]
-					}
+					['structure'],
+					[...state.layoutData.structure]
 				);
 
-				if (payload.targetId && (payload.placeholderId != payload.targetId)) {
-					const placeholderIndex = nextData.structure.indexOf(
-						payload.placeholderId
-					);
+				const originIndex = getFragmentRowIndex(
+					nextData.structure,
+					originId
+				);
 
-					nextData.structure.splice(placeholderIndex, 1);
+				const originContent = nextData.structure[originIndex];
 
-					const targetIndex = nextData.structure.indexOf(
-						payload.targetId
-					);
+				nextData.structure.splice(originIndex, 1);
 
-					if (payload.targetBorder === DRAG_POSITIONS.top) {
-						nextData.structure.splice(targetIndex, 0, payload.placeholderId);
-					}
-					else {
-						nextData.structure.splice(targetIndex + 1, 0, payload.placeholderId);
-					}
+				let targetIndex = getFragmentRowIndex(
+					nextData.structure,
+					targetId
+				);
+
+				if (border !== DRAG_POSITIONS.top) {
+					targetIndex++;
 				}
+
+				nextData.structure.splice(targetIndex, 0, originContent);
 
 				_moveFragmentEntryLink(
 					state.updateLayoutPageTemplateDataURL,
@@ -161,17 +165,22 @@ function moveFragmentEntryLinkReducer(state, actionType, payload) {
 							throw response.error;
 						}
 
-						nextState.layoutData = nextData;
+						nextState = setIn(
+							state,
+							['layoutData'],
+							nextData
+						);
+
 						resolve(nextState);
 					}
 				).catch(
 					() => {
-						resolve(state);
+						resolve(nextState);
 					}
 				);
 			}
 			else {
-				resolve(state);
+				resolve(nextState);
 			}
 		}
 	);
@@ -200,7 +209,7 @@ function removeFragmentEntryLinkReducer(state, actionType, payload) {
 					[...state.layoutData.structure]
 				);
 
-				const index = _getFragmentRowIndex(
+				const index = getFragmentRowIndex(
 					nextData.structure,
 					fragmentEntryLinkId
 				);
@@ -362,7 +371,7 @@ function _getDropFragmentPosition(
 ) {
 	let position = structure.length;
 
-	const targetPosition = _getFragmentRowIndex(
+	const targetPosition = getFragmentRowIndex(
 		structure,
 		targetFragmentEntryLinkId
 	);
@@ -410,30 +419,6 @@ function _getFragmentEntryLinkContent(
 				{},
 				fragmentEntryLink,
 				{content: response.content}
-			);
-		}
-	);
-}
-
-/**
- * Returns the row index of a given fragmentEntryLinkId.
- * -1 if it is not present.
- *
- * @param {array} structure
- * @param {string} fragmentEntryLinkId
- * @return {number}
- */
-
-function _getFragmentRowIndex(structure, fragmentEntryLinkId) {
-	return structure.findIndex(
-		row => {
-			return row.columns.find(
-				column => {
-					return (
-						column.fragmentEntryLinkId ===
-						fragmentEntryLinkId
-					);
-				}
 			);
 		}
 	);

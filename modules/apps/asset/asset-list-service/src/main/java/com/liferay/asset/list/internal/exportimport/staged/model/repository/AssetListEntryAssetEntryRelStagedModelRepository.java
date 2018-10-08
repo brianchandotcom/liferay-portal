@@ -92,8 +92,8 @@ public class AssetListEntryAssetEntryRelStagedModelRepository
 	public AssetListEntryAssetEntryRel fetchMissingReference(
 		String uuid, long groupId) {
 
-		return (AssetListEntryAssetEntryRel)_stagedModelRepositoryHelper.
-			fetchMissingReference(uuid, groupId, this);
+		return _stagedModelRepositoryHelper.fetchMissingReference(
+			uuid, groupId, this);
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 task deployConfigs(type: Copy)
 
+baseline.enabled = false
+
 dependencies {
 	compileInclude group: "org.apache.cxf", name: "cxf-rt-bindings-soap", version: "3.2.5"
 	compileInclude group: "org.apache.cxf", name: "cxf-rt-bindings-xml", version: "3.2.5"

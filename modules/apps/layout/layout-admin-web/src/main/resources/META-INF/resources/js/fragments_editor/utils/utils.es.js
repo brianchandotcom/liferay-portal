@@ -1,4 +1,28 @@
 /**
+ * Returns the row index of a given fragmentEntryLinkId.
+ * -1 if it is not present.
+ *
+ * @param {array} structure
+ * @param {string} fragmentEntryLinkId
+ * @return {number}
+ */
+
+function getFragmentRowIndex(structure, fragmentEntryLinkId) {
+	return structure.findIndex(
+		row => {
+			return row.columns.find(
+				column => {
+					return (
+						column.fragmentEntryLinkId ===
+						fragmentEntryLinkId
+					);
+				}
+			);
+		}
+	);
+}
+
+/**
  * Recursively inserts a value inside an object creating
  * a copy of the original target. It the object (or any in the path),
  * it's an Array, it will generate new Arrays, preserving the same structure.
@@ -32,5 +56,6 @@ function setIn(object, keyPath, value) {
 }
 
 export {
+	getFragmentRowIndex,
 	setIn
 };

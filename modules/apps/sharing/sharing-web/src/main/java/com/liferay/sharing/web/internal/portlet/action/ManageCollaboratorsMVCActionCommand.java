@@ -25,6 +25,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -70,43 +73,52 @@ public class ManageCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
 
 		try {
-			long[] deleteSharingEntryIds = ParamUtil.getLongValues(
-				actionRequest, "deleteSharingEntryIds");
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					long[] deleteSharingEntryIds = ParamUtil.getLongValues(
+						actionRequest, "deleteSharingEntryIds");
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				actionRequest);
+					ServiceContext serviceContext =
+						ServiceContextFactory.getInstance(actionRequest);
 
-			for (long sharingEntryId : deleteSharingEntryIds) {
-				_sharingEntryService.deleteSharingEntry(
-					sharingEntryId, serviceContext);
-			}
+					for (long sharingEntryId : deleteSharingEntryIds) {
+						_sharingEntryService.deleteSharingEntry(
+							sharingEntryId, serviceContext);
+					}
 
-			String[] sharingEntryIdActionIdPairs = ParamUtil.getParameterValues(
-				actionRequest, "sharingEntryIdActionIdPairs", new String[0],
-				false);
+					String[] sharingEntryIdActionIdPairs =
+						ParamUtil.getParameterValues(
+							actionRequest, "sharingEntryIdActionIdPairs",
+							new String[0], false);
 
-			for (String sharingEntryIdActionIdPair :
-					sharingEntryIdActionIdPairs) {
+					for (String sharingEntryIdActionIdPair :
+							sharingEntryIdActionIdPairs) {
 
-				String[] parts = StringUtil.split(sharingEntryIdActionIdPair);
+						String[] parts = StringUtil.split(
+							sharingEntryIdActionIdPair);
 
-				long sharingEntryId = Long.valueOf(parts[0]);
+						long sharingEntryId = Long.valueOf(parts[0]);
 
-				SharingEntryPermissionDisplayAction
-					sharingEntryPermissionDisplayActionKey =
-						SharingEntryPermissionDisplayAction.parseFromActionId(
-							parts[1]);
+						SharingEntryPermissionDisplayAction
+							sharingEntryPermissionDisplayActionKey =
+								SharingEntryPermissionDisplayAction.
+									parseFromActionId(parts[1]);
 
-				SharingEntry sharingEntry =
-					_sharingEntryLocalService.getSharingEntry(sharingEntryId);
+						SharingEntry sharingEntry =
+							_sharingEntryLocalService.getSharingEntry(
+								sharingEntryId);
 
-				_sharingEntryService.updateSharingEntry(
-					sharingEntryId,
-					sharingEntryPermissionDisplayActionKey.
-						getSharingEntryActions(),
-					sharingEntry.isShareable(),
-					sharingEntry.getExpirationDate(), serviceContext);
-			}
+						_sharingEntryService.updateSharingEntry(
+							sharingEntryId,
+							sharingEntryPermissionDisplayActionKey.
+								getSharingEntryActions(),
+							sharingEntry.isShareable(),
+							sharingEntry.getExpirationDate(), serviceContext);
+					}
+
+					return null;
+				});
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -142,6 +154,10 @@ public class ManageCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 	}
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private Portal _portal;

@@ -61,7 +61,7 @@ public class StructuredContentApioTest {
 	@Test
 	public void testAdminUserSeeAllStructuredContents() throws Exception {
 		JSONWebServiceClient jsonWebServiceClient = _getJSONWebServiceClient(
-			"test@liferay.com");
+			"test@liferay.com", "test");
 
 		List<String> hrefs = JsonPath.read(
 			_get(
@@ -96,7 +96,7 @@ public class StructuredContentApioTest {
 	@Test
 	public void testGuestUserSeesRightStructuredContents() throws Exception {
 		JSONWebServiceClient jsonWebServiceClient = _getJSONWebServiceClient(
-			"test@liferay.com");
+			"test@liferay.com", "test");
 
 		List<String> hrefs = JsonPath.read(
 			_get(
@@ -136,7 +136,7 @@ public class StructuredContentApioTest {
 		throws Exception {
 
 		JSONWebServiceClient jsonWebServiceClient = _getJSONWebServiceClient(
-			"test@liferay.com");
+			"test@liferay.com", "test");
 
 		List<String> hrefs = JsonPath.read(
 			_get(
@@ -153,7 +153,7 @@ public class StructuredContentApioTest {
 		JSONWebServiceClient jsonWebServiceClientNotSiteMemberLogin =
 			_getJSONWebServiceClient(
 				StructuredContentApioTestBundleActivator.
-					NOT_A_SITE_MEMBER_EMAIL_ADDRESS);
+					NOT_A_SITE_MEMBER_EMAIL_ADDRESS, "test");
 
 		List<String> titles = JsonPath.read(
 			_get(hrefs.get(0), jsonWebServiceClientNotSiteMemberLogin),
@@ -178,7 +178,7 @@ public class StructuredContentApioTest {
 		throws Exception {
 
 		JSONWebServiceClient jsonWebServiceClient = _getJSONWebServiceClient(
-			"test@liferay.com");
+			"test@liferay.com", "test");
 
 		List<String> hrefs = JsonPath.read(
 			_get(
@@ -195,7 +195,7 @@ public class StructuredContentApioTest {
 		JSONWebServiceClient jsonWebServiceClientSiteMemberLogin =
 			_getJSONWebServiceClient(
 				StructuredContentApioTestBundleActivator.
-					SITE_MEMBER_EMAIL_ADDRESS);
+					SITE_MEMBER_EMAIL_ADDRESS, "test");
 
 		List<String> titles = JsonPath.read(
 			_get(hrefs.get(0), jsonWebServiceClientSiteMemberLogin),
@@ -278,11 +278,13 @@ public class StructuredContentApioTest {
 		return jsonWebServiceClient;
 	}
 
-	private JSONWebServiceClient _getJSONWebServiceClient(String login) {
+	private JSONWebServiceClient _getJSONWebServiceClient(
+		String login, String password) {
+
 		JSONWebServiceClient jsonWebServiceClient = _getJSONWebServiceClient();
 
 		jsonWebServiceClient.setLogin(login);
-		jsonWebServiceClient.setPassword("test");
+		jsonWebServiceClient.setPassword(password);
 
 		return jsonWebServiceClient;
 	}

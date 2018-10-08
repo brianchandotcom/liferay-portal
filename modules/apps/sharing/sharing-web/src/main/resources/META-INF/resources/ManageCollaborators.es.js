@@ -64,7 +64,8 @@ class ManageCollaborators extends PortletBase {
 		let sharingEntryId = event.delegateTarget.dataset.sharingentryId;
 
 		this.collaborators = this.collaborators.filter(
-			collaborator => collaborator.id != collaboratorId);
+			collaborator => collaborator.id != collaboratorId
+		);
 
 		this._deleteSharingEntryIds.push(sharingEntryId);
 	}

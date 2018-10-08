@@ -19,7 +19,8 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/soy" prefix="soy" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib prefix="liferay-util" uri="http://liferay.com/tld/util" %>
 
 <%@ page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@

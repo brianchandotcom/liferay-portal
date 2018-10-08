@@ -32,6 +32,13 @@ String previewFileURL = DLUtil.getPreviewURL(fileVersion.getFileEntry(), fileVer
 String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_view_file_entry_preview") + StringPool.UNDERLINE;
 %>
 
+
+<liferay-util:html-top
+	outputKey="social_bookmarks_css"
+>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/preview/css/main.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <div class="lfr-preview-file lfr-preview-image" id="<portlet:namespace /><%= randomNamespace %>previewFile">
 	<div class="lfr-preview-file-content lfr-preview-image-content" id="<portlet:namespace /><%= randomNamespace %>previewFileContent">
 		<div class="lfr-preview-file-image-current-column">

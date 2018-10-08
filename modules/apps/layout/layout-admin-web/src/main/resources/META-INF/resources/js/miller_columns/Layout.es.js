@@ -179,11 +179,26 @@ class Layout extends Component {
 		const targetColumnIndex = this.layoutColumns.indexOf(targetColumn);
 		const targetItem = this._getLayoutColumnItemByPlid(this.layoutColumns, eventData.targetItemPlid);
 
-		if (sourceItem != targetItem &&
-			this.layoutColumns.indexOf(targetColumn) != 0 &&
-			!(sourceItem.active && sourceColumnIndex < targetColumnIndex) &&
-			!(targetItem.active && eventData.position === DRAG_POSITIONS.inside &&
-				targetColumnIndex === sourceColumnIndex - 1)) {
+		const targetInFirstColumn = this.layoutColumns.indexOf(targetColumn) === 0;
+		const targetIsSource = sourceItem === targetItem;
+
+		const targetIsChild = (
+			sourceItem.active &&
+			(sourceColumnIndex < targetColumnIndex)
+		);
+
+		const targetIsParent = (
+			targetItem.active &&
+			(eventData.position === DRAG_POSITIONS.inside) &&
+			(targetColumnIndex === (sourceColumnIndex - 1))
+		);
+
+		if (
+			!targetInFirstColumn &&
+			!targetIsSource &&
+			!targetIsChild &&
+			!targetIsParent
+			) {
 			this._draggingItemPosition = eventData.position;
 			this._hoveredLayoutColumnItemPlid = eventData.targetItemPlid;
 		}

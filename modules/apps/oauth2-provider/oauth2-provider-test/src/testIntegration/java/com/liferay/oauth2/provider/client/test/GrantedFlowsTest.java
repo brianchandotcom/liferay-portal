@@ -73,12 +73,12 @@ public class GrantedFlowsTest extends BaseClientTestCase {
 		Assert.assertNotNull(tokenString);
 
 		errorString = getToken(
-			"oauthTestApplicationCode", null,
+			"oauthTestApplicationNoGrants", null,
 			getAuthorizationCodePKCEBiFunction(
 				"test@liferay.com", "test", null),
 			this::parseError);
 
-		Assert.assertEquals("invalid_client", errorString);
+		Assert.assertEquals("unauthorized_client", errorString);
 
 		tokenString = getToken(
 			"oauthTestApplicationCode", null,
@@ -88,11 +88,11 @@ public class GrantedFlowsTest extends BaseClientTestCase {
 		Assert.assertNotNull(tokenString);
 
 		errorString = getToken(
-			"oauthTestApplicationCodePKCE", null,
+			"oauthTestApplicationPassword", null,
 			getAuthorizationCodeBiFunction("test@liferay.com", "test", null),
 			this::parseError);
 
-		Assert.assertEquals("invalid_client", errorString);
+		Assert.assertEquals("unauthorized_client", errorString);
 
 		tokenString = getToken(
 			"oauthTestApplicationCodePKCE", null,
@@ -127,6 +127,12 @@ public class GrantedFlowsTest extends BaseClientTestCase {
 				defaultCompanyId, user, "oauthTestApplicationClient",
 				Collections.singletonList(GrantType.CLIENT_CREDENTIALS),
 				Collections.singletonList("everything"));
+
+			createOAuth2Application(
+				defaultCompanyId, user, "oauthTestApplicationNoGrants", null,
+				Collections.emptyList(),
+				Collections.singletonList("everything"),
+				Collections.singletonList("http://redirecturi:8080"));
 
 			createOAuth2Application(
 				defaultCompanyId, user, "oauthTestApplicationPassword",

@@ -118,16 +118,17 @@ public class PortletDescriptorParser {
 		for (Element eventDefinitionElement :
 				rootElement.elements("event-definition")) {
 
-			List<QName> aliasQNames = new ArrayList<>();
-
 			Element qNameElement = eventDefinitionElement.element("qname");
 			Element nameElement = eventDefinitionElement.element("name");
-			String valueType = eventDefinitionElement.elementText("value-type");
 
 			QName qName = PortletQNameUtil.getQName(
 				qNameElement, nameElement, defaultNamespace);
 
+			String valueType = eventDefinitionElement.elementText("value-type");
+
 			List<Element> aliases = eventDefinitionElement.elements("alias");
+
+			List<QName> aliasQNames = new ArrayList<>(aliases.size());
 
 			for (Element alias : aliases) {
 				aliasQNames.add(

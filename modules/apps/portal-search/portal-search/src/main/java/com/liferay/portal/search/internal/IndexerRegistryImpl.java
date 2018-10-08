@@ -118,7 +118,7 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 		synchronized (_queuedIndexerPostProcessors) {
 			List<IndexerPostProcessor> indexerPostProcessors =
 				_queuedIndexerPostProcessors.getOrDefault(
-					clazz.getName(), new ArrayList<IndexerPostProcessor>());
+					clazz.getName(), new ArrayList<>());
 
 			Optional.ofNullable(
 				_queuedIndexerPostProcessors.get(indexer.getClassName())
@@ -127,8 +127,7 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 			);
 
 			indexerPostProcessors.forEach(
-				indexerPostProcessor -> indexer.registerIndexerPostProcessor(
-					indexerPostProcessor));
+				indexer::registerIndexerPostProcessor);
 
 			_queuedIndexerPostProcessors.remove(clazz.getName());
 
@@ -158,7 +157,7 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 
 		modified(properties);
 
-		_indexerServiceTracker = new ServiceTracker<Indexer<?>, Indexer<?>>(
+		_indexerServiceTracker = new ServiceTracker<>(
 			bundleContext, Indexer.class.getName(),
 			new ServiceTrackerCustomizer<Indexer<?>, Indexer<?>>() {
 

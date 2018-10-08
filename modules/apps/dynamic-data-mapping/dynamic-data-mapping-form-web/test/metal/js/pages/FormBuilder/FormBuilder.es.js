@@ -207,6 +207,27 @@ describe(
 		);
 
 		it(
+			'should open the sidebar when a field is clicked',
+			() => {
+				const {FormRenderer} = component.refs;
+				const spy = jest.spyOn(component, 'openSidebar');
+
+				FormRenderer.emit(
+					'fieldClicked',
+					{
+						columnIndex: 0,
+						pageIndex: 0,
+						rowIndex: 0
+					},
+				);
+
+				jest.runAllTimers();
+
+				expect(spy).toHaveBeenCalled();
+			}
+		);
+
+		it(
 			'should continue to propagate the pageAdded event',
 			() => {
 				const {FormRenderer} = component.refs;

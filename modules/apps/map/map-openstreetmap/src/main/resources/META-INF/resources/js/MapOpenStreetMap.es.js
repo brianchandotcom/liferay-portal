@@ -34,10 +34,27 @@ class MapOpenStreetMap extends MapBase {
 			zoom: this.zoom,
 		};
 
-		return L.map(
+		const map = L.map(
 			toElement(this.boundingBox),
 			Object.assign(mapConfig, controlsConfig)
 		);
+
+		if (this.data && this.data.features) {
+			const bounds = new L.LatLngBounds();
+
+			this.data.features.forEach(
+				feature => bounds.extend(
+					new L.LatLng(
+						feature.geometry.coordinates[1],
+						feature.geometry.coordinates[0]
+					)
+				)
+			);
+
+			map.fitBounds(bounds);
+		}
+
+		return map;
 	}
 
 	/**

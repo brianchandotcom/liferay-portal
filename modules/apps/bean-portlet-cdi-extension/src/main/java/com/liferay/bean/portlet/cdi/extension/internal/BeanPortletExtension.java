@@ -322,7 +322,8 @@ public class BeanPortletExtension implements Extension {
 		URL displayDescriptorURL = bundle.getEntry(
 			"WEB-INF/liferay-display.xml");
 
-		Map<String, String> descriptorDisplayCategories = null;
+		Map<String, String> descriptorDisplayCategories =
+			Collections.emptyMap();
 
 		if (displayDescriptorURL != null) {
 			try {
@@ -334,15 +335,11 @@ public class BeanPortletExtension implements Extension {
 			}
 		}
 
-		if (descriptorDisplayCategories == null) {
-			descriptorDisplayCategories = Collections.emptyMap();
-		}
-
 		URL liferayDescriptorURL = bundle.getEntry(
 			"WEB-INF/liferay-portlet.xml");
 
 		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations =
-			null;
+			Collections.emptyMap();
 
 		if (liferayDescriptorURL != null) {
 			try {
@@ -352,10 +349,6 @@ public class BeanPortletExtension implements Extension {
 			catch (Exception e) {
 				_log.error(e, e);
 			}
-		}
-
-		if (descriptorLiferayConfigurations == null) {
-			descriptorLiferayConfigurations = Collections.emptyMap();
 		}
 
 		Map<String, Set<BeanMethod>> portletBeanMethods =

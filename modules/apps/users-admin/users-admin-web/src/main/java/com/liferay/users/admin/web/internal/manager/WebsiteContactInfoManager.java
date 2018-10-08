@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.web.internal.helper;
+package com.liferay.users.admin.web.internal.manager;
 
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -28,10 +28,9 @@ import javax.portlet.ActionRequest;
 /**
  * @author Drew Brokke
  */
-public class WebsiteContactInformationHelper
-	extends BaseContactInformationHelper<Website> {
+public class WebsiteContactInfoManager extends BaseContactInfoManager<Website> {
 
-	public WebsiteContactInformationHelper(
+	public WebsiteContactInfoManager(
 		Class entityClass, long entityClassPK, WebsiteService websiteService,
 		WebsiteLocalService websiteLocalService, UsersAdmin usersAdmin) {
 
@@ -43,16 +42,7 @@ public class WebsiteContactInformationHelper
 	}
 
 	@Override
-	protected Website addEntry(Website website) throws Exception {
-		return _websiteService.addWebsite(
-			_entityClass.getName(), _entityClassPK, website.getUrl(),
-			website.getTypeId(), website.isPrimary(), new ServiceContext());
-	}
-
-	@Override
-	protected Website constructEntry(ActionRequest actionRequest)
-		throws Exception {
-
+	protected Website construct(ActionRequest actionRequest) throws Exception {
 		long websiteId = ParamUtil.getLong(actionRequest, "primaryKey");
 
 		boolean primary = ParamUtil.getBoolean(actionRequest, "websitePrimary");
@@ -69,41 +59,48 @@ public class WebsiteContactInformationHelper
 	}
 
 	@Override
-	protected void deleteEntry(long websiteId) throws Exception {
+	protected Website doAdd(Website website) throws Exception {
+		return _websiteService.addWebsite(
+			_entityClass.getName(), _entityClassPK, website.getUrl(),
+			website.getTypeId(), website.isPrimary(), new ServiceContext());
+	}
+
+	@Override
+	protected void doDelete(long websiteId) throws Exception {
 		_websiteService.deleteWebsite(websiteId);
 	}
 
 	@Override
-	protected List<Website> getEntries() throws Exception {
+	protected void doUpdate(Website website) throws Exception {
+		_websiteService.updateWebsite(
+			website.getWebsiteId(), website.getUrl(), website.getTypeId(),
+			website.isPrimary());
+	}
+
+	@Override
+	protected Website get(long websiteId) throws Exception {
+		return _websiteService.getWebsite(websiteId);
+	}
+
+	@Override
+	protected List<Website> getAll() throws Exception {
 		return _websiteService.getWebsites(
 			_entityClass.getName(), _entityClassPK);
 	}
 
 	@Override
-	protected Website getEntry(long websiteId) throws Exception {
-		return _websiteService.getWebsite(websiteId);
-	}
-
-	@Override
-	protected long getEntryId(Website website) {
+	protected long getPrimaryKey(Website website) {
 		return website.getWebsiteId();
 	}
 
 	@Override
-	protected boolean isPrimaryEntry(Website website) {
+	protected boolean isPrimary(Website website) {
 		return website.isPrimary();
 	}
 
 	@Override
-	protected void setEntryPrimary(Website website, boolean primary) {
+	protected void setPrimary(Website website, boolean primary) {
 		website.setPrimary(primary);
-	}
-
-	@Override
-	protected void updateEntry(Website website) throws Exception {
-		_websiteService.updateWebsite(
-			website.getWebsiteId(), website.getUrl(), website.getTypeId(),
-			website.isPrimary());
 	}
 
 	private final Class _entityClass;

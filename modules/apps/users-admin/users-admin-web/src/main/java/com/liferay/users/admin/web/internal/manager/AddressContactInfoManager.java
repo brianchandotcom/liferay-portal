@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.web.internal.helper;
+package com.liferay.users.admin.web.internal.manager;
 
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.service.AddressLocalService;
@@ -28,10 +28,9 @@ import javax.portlet.ActionRequest;
 /**
  * @author Samuel Trong Tran
  */
-public class AddressContactInformationHelper
-	extends BaseContactInformationHelper<Address> {
+public class AddressContactInfoManager extends BaseContactInfoManager<Address> {
 
-	public AddressContactInformationHelper(
+	public AddressContactInfoManager(
 		Class entityClass, long entityClassPK,
 		AddressLocalService addressLocalService,
 		AddressService addressService) {
@@ -43,19 +42,7 @@ public class AddressContactInformationHelper
 	}
 
 	@Override
-	protected Address addEntry(Address address) throws Exception {
-		return _addressService.addAddress(
-			_entityClass.getName(), _entityClassPK, address.getStreet1(),
-			address.getStreet2(), address.getStreet3(), address.getCity(),
-			address.getZip(), address.getRegionId(), address.getCountryId(),
-			address.getTypeId(), address.isMailing(), address.isPrimary(),
-			new ServiceContext());
-	}
-
-	@Override
-	protected Address constructEntry(ActionRequest actionRequest)
-		throws Exception {
-
+	protected Address construct(ActionRequest actionRequest) throws Exception {
 		long addressId = ParamUtil.getLong(actionRequest, "primaryKey");
 
 		String city = ParamUtil.getString(actionRequest, "addressCity");
@@ -93,43 +80,53 @@ public class AddressContactInformationHelper
 	}
 
 	@Override
-	protected void deleteEntry(long addressId) throws Exception {
+	protected Address doAdd(Address address) throws Exception {
+		return _addressService.addAddress(
+			_entityClass.getName(), _entityClassPK, address.getStreet1(),
+			address.getStreet2(), address.getStreet3(), address.getCity(),
+			address.getZip(), address.getRegionId(), address.getCountryId(),
+			address.getTypeId(), address.isMailing(), address.isPrimary(),
+			new ServiceContext());
+	}
+
+	@Override
+	protected void doDelete(long addressId) throws Exception {
 		_addressService.deleteAddress(addressId);
 	}
 
 	@Override
-	protected List<Address> getEntries() throws Exception {
-		return _addressService.getAddresses(
-			_entityClass.getName(), _entityClassPK);
-	}
-
-	@Override
-	protected Address getEntry(long addressId) throws Exception {
-		return _addressService.getAddress(addressId);
-	}
-
-	@Override
-	protected long getEntryId(Address address) {
-		return address.getAddressId();
-	}
-
-	@Override
-	protected boolean isPrimaryEntry(Address address) {
-		return address.isPrimary();
-	}
-
-	@Override
-	protected void setEntryPrimary(Address address, boolean primary) {
-		address.setPrimary(primary);
-	}
-
-	@Override
-	protected void updateEntry(Address address) throws Exception {
+	protected void doUpdate(Address address) throws Exception {
 		_addressService.updateAddress(
 			address.getAddressId(), address.getStreet1(), address.getStreet2(),
 			address.getStreet3(), address.getCity(), address.getZip(),
 			address.getRegionId(), address.getCountryId(), address.getTypeId(),
 			address.isMailing(), address.isPrimary());
+	}
+
+	@Override
+	protected Address get(long addressId) throws Exception {
+		return _addressService.getAddress(addressId);
+	}
+
+	@Override
+	protected List<Address> getAll() throws Exception {
+		return _addressService.getAddresses(
+			_entityClass.getName(), _entityClassPK);
+	}
+
+	@Override
+	protected long getPrimaryKey(Address address) {
+		return address.getAddressId();
+	}
+
+	@Override
+	protected boolean isPrimary(Address address) {
+		return address.isPrimary();
+	}
+
+	@Override
+	protected void setPrimary(Address address, boolean primary) {
+		address.setPrimary(primary);
 	}
 
 	private final AddressLocalService _addressLocalService;

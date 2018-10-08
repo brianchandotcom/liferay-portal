@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.web.internal.helper;
+package com.liferay.users.admin.web.internal.manager;
 
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.service.PhoneLocalService;
@@ -28,10 +28,9 @@ import javax.portlet.ActionRequest;
 /**
  * @author Drew Brokke
  */
-public class PhoneContactInformationHelper
-	extends BaseContactInformationHelper<Phone> {
+public class PhoneContactInfoManager extends BaseContactInfoManager<Phone> {
 
-	public PhoneContactInformationHelper(
+	public PhoneContactInfoManager(
 		Class entityClass, long entityClassPK, PhoneService phoneService,
 		PhoneLocalService phoneLocalService, UsersAdmin usersAdmin) {
 
@@ -42,15 +41,7 @@ public class PhoneContactInformationHelper
 		_usersAdmin = usersAdmin;
 	}
 
-	@Override
-	public Phone addEntry(Phone phone) throws Exception {
-		return _phoneService.addPhone(
-			_entityClass.getName(), _entityClassPK, phone.getNumber(),
-			phone.getExtension(), phone.getTypeId(), phone.isPrimary(),
-			new ServiceContext());
-	}
-
-	public Phone constructEntry(ActionRequest actionRequest) {
+	public Phone construct(ActionRequest actionRequest) {
 		long phoneId = ParamUtil.getLong(actionRequest, "primaryKey");
 
 		String extension = ParamUtil.getString(actionRequest, "phoneExtension");
@@ -69,40 +60,48 @@ public class PhoneContactInformationHelper
 	}
 
 	@Override
-	public void deleteEntry(long phoneId) throws Exception {
+	public Phone doAdd(Phone phone) throws Exception {
+		return _phoneService.addPhone(
+			_entityClass.getName(), _entityClassPK, phone.getNumber(),
+			phone.getExtension(), phone.getTypeId(), phone.isPrimary(),
+			new ServiceContext());
+	}
+
+	@Override
+	public void doDelete(long phoneId) throws Exception {
 		_phoneService.deletePhone(phoneId);
 	}
 
 	@Override
-	public List<Phone> getEntries() throws Exception {
-		return _phoneService.getPhones(_entityClass.getName(), _entityClassPK);
+	public void doUpdate(Phone phone) throws Exception {
+		_phoneService.updatePhone(
+			phone.getPhoneId(), phone.getNumber(), phone.getExtension(),
+			phone.getTypeId(), phone.isPrimary());
 	}
 
 	@Override
-	public Phone getEntry(long phoneId) throws Exception {
+	public Phone get(long phoneId) throws Exception {
 		return _phoneService.getPhone(phoneId);
 	}
 
 	@Override
-	public long getEntryId(Phone phone) {
+	public List<Phone> getAll() throws Exception {
+		return _phoneService.getPhones(_entityClass.getName(), _entityClassPK);
+	}
+
+	@Override
+	public long getPrimaryKey(Phone phone) {
 		return phone.getPhoneId();
 	}
 
 	@Override
-	public boolean isPrimaryEntry(Phone phone) {
+	public boolean isPrimary(Phone phone) {
 		return phone.isPrimary();
 	}
 
 	@Override
-	public void setEntryPrimary(Phone phone, boolean primary) {
+	public void setPrimary(Phone phone, boolean primary) {
 		phone.setPrimary(primary);
-	}
-
-	@Override
-	public void updateEntry(Phone phone) throws Exception {
-		_phoneService.updatePhone(
-			phone.getPhoneId(), phone.getNumber(), phone.getExtension(),
-			phone.getTypeId(), phone.isPrimary());
 	}
 
 	private final Class _entityClass;

@@ -52,12 +52,12 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
-import com.liferay.users.admin.web.internal.helper.AddressContactInformationHelper;
-import com.liferay.users.admin.web.internal.helper.ContactInformationHelper;
-import com.liferay.users.admin.web.internal.helper.EmailAddressContactInformationHelper;
-import com.liferay.users.admin.web.internal.helper.OrgLaborContactInformationHelper;
-import com.liferay.users.admin.web.internal.helper.PhoneContactInformationHelper;
-import com.liferay.users.admin.web.internal.helper.WebsiteContactInformationHelper;
+import com.liferay.users.admin.web.internal.manager.AddressContactInfoManager;
+import com.liferay.users.admin.web.internal.manager.ContactInfoManager;
+import com.liferay.users.admin.web.internal.manager.EmailAddressContactInfoManager;
+import com.liferay.users.admin.web.internal.manager.OrgLaborContactInfoManager;
+import com.liferay.users.admin.web.internal.manager.PhoneContactInfoManager;
+import com.liferay.users.admin.web.internal.manager.WebsiteContactInfoManager;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -119,7 +119,7 @@ public class UpdateOrganizationContactInformationMVCActionCommand
 		}
 	}
 
-	protected ContactInformationHelper getContactInformationHelper(
+	protected ContactInfoManager getContactInformationHelper(
 		ActionRequest actionRequest) {
 
 		String listType = ParamUtil.getString(actionRequest, "listType");
@@ -127,26 +127,26 @@ public class UpdateOrganizationContactInformationMVCActionCommand
 			actionRequest, "organizationId");
 
 		if (listType.equals(ListTypeConstants.ADDRESS)) {
-			return new AddressContactInformationHelper(
+			return new AddressContactInfoManager(
 				Organization.class, organizationId, _addressLocalService,
 				_addressService);
 		}
 		else if (listType.equals(ListTypeConstants.EMAIL_ADDRESS)) {
-			return new EmailAddressContactInformationHelper(
+			return new EmailAddressContactInfoManager(
 				Organization.class, organizationId, _emailAddressService,
 				_emailAddressLocalService, _usersAdmin);
 		}
 		else if (listType.equals(ListTypeConstants.PHONE)) {
-			return new PhoneContactInformationHelper(
+			return new PhoneContactInfoManager(
 				Organization.class, organizationId, _phoneService,
 				_phoneLocalService, _usersAdmin);
 		}
 		else if (listType.equals(ListTypeConstants.ORGANIZATION_SERVICE)) {
-			return new OrgLaborContactInformationHelper(
+			return new OrgLaborContactInfoManager(
 				organizationId, _orgLaborLocalService, _orgLaborService);
 		}
 		else if (listType.equals(ListTypeConstants.WEBSITE)) {
-			return new WebsiteContactInformationHelper(
+			return new WebsiteContactInfoManager(
 				Organization.class, organizationId, _websiteService,
 				_websiteLocalService, _usersAdmin);
 		}
@@ -170,7 +170,7 @@ public class UpdateOrganizationContactInformationMVCActionCommand
 			themeDisplay.getPermissionChecker(), organization,
 			ActionKeys.UPDATE);
 
-		ContactInformationHelper contactInformationHelper =
+		ContactInfoManager contactInformationHelper =
 			getContactInformationHelper(actionRequest);
 
 		if (contactInformationHelper == null) {

@@ -89,13 +89,9 @@ class Layout extends Component {
 	 */
 
 	_deleteEmptyColumns(layoutColumns) {
-		if (layoutColumns.length > 3) {
-			for (let i = 0; i < layoutColumns.length; i++) {
-				if (layoutColumns[i].length === 0) {
-					layoutColumns.splice(i, 1);
-				}
-			}
-		}
+		return layoutColumns.length > 3 ?
+			layoutColumns.filter(layoutColumn => layoutColumn.length > 0) :
+			layoutColumns;
 	}
 
 	/**
@@ -198,22 +194,30 @@ class Layout extends Component {
 			!targetIsSource &&
 			!targetIsChild &&
 			!targetIsParent
-			) {
+		) {
 			this._draggingItemPosition = eventData.position;
 			this._hoveredLayoutColumnItemPlid = eventData.targetItemPlid;
 		}
 	}
 
 	/**
+	 * Method executed when a column is left empty after dragging.
+	 * Updates target item's status and removes empty columns if any.
+	 *
 	 * @param {!Array} layoutColumns
-	 * @param {!string} sourceColumnIndex
+	 * @param {!number} sourceColumnIndex
 	 * @param {!Array} sourceItem
-	 * @param {!string} targetColumnIndex
+	 * @param {!number} targetColumnIndex
 	 * @private
 	 * @review
 	 */
 
-	_handleEmptyColumn(layoutColumns, sourceColumnIndex, sourceItem, targetColumnIndex) {
+	_handleEmptyColumn(
+		layoutColumns,
+		sourceColumnIndex,
+		sourceItem,
+		targetColumnIndex
+	) {
 		if (sourceItem.active && (sourceColumnIndex != targetColumnIndex)) {
 			sourceItem.active = false;
 			this._removeFollowingColumns(layoutColumns, sourceColumnIndex);
@@ -223,7 +227,10 @@ class Layout extends Component {
 
 		const activeItemPlid = this._getLayoutColumnActiveItem(previousColumn);
 
-		const activeItem = this._getLayoutColumnItemByPlid(layoutColumns, activeItemPlid);
+		const activeItem = this._getLayoutColumnItemByPlid(
+			layoutColumns,
+			activeItemPlid
+		);
 
 		activeItem.hasChild = false;
 	}
@@ -266,11 +273,25 @@ class Layout extends Component {
 			const sourceItemPlid = eventData.sourceItemPlid;
 			const targetItemPlid = eventData.targetItemPlid;
 
-			const sourceItem = this._getLayoutColumnItemByPlid(layoutColumns, sourceItemPlid);
-			const targetItem = this._getLayoutColumnItemByPlid(layoutColumns, targetItemPlid);
+			const sourceItem = this._getLayoutColumnItemByPlid(
+				layoutColumns,
+				sourceItemPlid
+			);
 
-			const sourceColumn = this._getParentColumnByPlid(layoutColumns, sourceItemPlid);
-			const targetColumn = this._getParentColumnByPlid(layoutColumns, targetItemPlid);
+			const targetItem = this._getLayoutColumnItemByPlid(
+				layoutColumns,
+				targetItemPlid
+			);
+
+			const sourceColumn = this._getParentColumnByPlid(
+				layoutColumns,
+				sourceItemPlid
+			);
+
+			const targetColumn = this._getParentColumnByPlid(
+				layoutColumns,
+				targetItemPlid
+			);
 
 			const sourceColumnIndex = layoutColumns.indexOf(sourceColumn);
 			const targetColumnIndex = layoutColumns.indexOf(targetColumn);
@@ -281,7 +302,13 @@ class Layout extends Component {
 			let priority = null;
 
 			if (this._draggingItemPosition === DRAG_POSITIONS.inside) {
-				this._moveItemInside(layoutColumns, sourceColumnIndex, sourceItem, targetItem, targetColumnIndex);
+				this._moveItemInside(
+					layoutColumns,
+					sourceColumnIndex,
+					sourceItem,
+					targetItem,
+					targetColumnIndex
+				);
 
 				parentPlid = targetItemPlid;
 			}
@@ -294,11 +321,18 @@ class Layout extends Component {
 
 				targetColumn.splice(priority, 0, sourceItem);
 
-				parentPlid = this._getLayoutColumnActiveItem(layoutColumns[targetColumnIndex - 1]);
+				parentPlid = this._getLayoutColumnActiveItem(
+					layoutColumns[targetColumnIndex - 1]
+				);
 			}
 
-			if (sourceColumn.length == 0) {
-				this._handleEmptyColumn(layoutColumns, sourceColumnIndex, sourceItem, targetColumnIndex);
+			if (sourceColumn.length === 0) {
+				this._handleEmptyColumn(
+					layoutColumns,
+					sourceColumnIndex,
+					sourceItem,
+					targetColumnIndex
+				);
 
 				this._deleteEmptyColumns(layoutColumns);
 			}
@@ -311,7 +345,11 @@ class Layout extends Component {
 				this._deleteEmptyColumns(layoutColumns);
 			}
 
-			this._moveLayoutColumnItemOnServer(parentPlid, sourceItemPlid, priority)
+			this._moveLayoutColumnItemOnServer(
+				parentPlid,
+				sourceItemPlid,
+				priority
+			)
 				.then(
 					() => {
 						this.layoutColumns = layoutColumns;
@@ -354,10 +392,10 @@ class Layout extends Component {
 
 	/**
 	 * @param {!Array} layoutColumns
-	 * @param {!string} sourceColumnIndex
+	 * @param {!number} sourceColumnIndex
 	 * @param {!Array} sourceItem
 	 * @param {!Array} targetItem
-	 * @param {!string} targetColumnIndex
+	 * @param {!number} targetColumnIndex
 	 * @private
 	 * @review
 	 */
@@ -420,7 +458,7 @@ class Layout extends Component {
 
 	/**
 	 * @param {!Array} layoutColumns
-	 * @param {!string} startColumnIndex
+	 * @param {!number} startColumnIndex
 	 * @private
 	 * @review
 	 */

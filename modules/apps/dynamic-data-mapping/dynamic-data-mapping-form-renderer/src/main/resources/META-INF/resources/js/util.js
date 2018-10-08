@@ -81,7 +81,7 @@ AUI.add(
 
 		var Util = {
 			compare: function(valueA, valueB) {
-				return _.isEqual(valueA, valueB);
+				return Liferay.Util.isEqual(valueA, valueB);
 			},
 
 			generateInstanceId: function(length) {

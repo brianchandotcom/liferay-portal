@@ -792,7 +792,7 @@ AUI.add(
 					_isSameState: function(state1, state2) {
 						var instance = this;
 
-						return AUI._.isEqual(
+						return Liferay.Util.isEqual(
 							state1,
 							state2,
 							function(value1, value2, key) {

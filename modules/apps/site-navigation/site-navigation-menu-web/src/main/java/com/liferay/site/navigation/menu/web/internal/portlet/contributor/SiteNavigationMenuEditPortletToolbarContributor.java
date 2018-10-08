@@ -55,10 +55,10 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = {
 		PortletToolbarContributor.class,
-		SiteNavigationMenuPortletToolbarContributor.class
+		SiteNavigationMenuEditPortletToolbarContributor.class
 	}
 )
-public class SiteNavigationMenuPortletToolbarContributor
+public class SiteNavigationMenuEditPortletToolbarContributor
 	implements PortletToolbarContributor {
 
 	@Override
@@ -165,7 +165,7 @@ public class SiteNavigationMenuPortletToolbarContributor
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SiteNavigationMenuPortletToolbarContributor.class);
+		SiteNavigationMenuEditPortletToolbarContributor.class);
 
 	@Reference
 	private Portal _portal;

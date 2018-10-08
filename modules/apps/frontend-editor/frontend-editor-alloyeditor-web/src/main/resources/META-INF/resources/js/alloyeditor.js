@@ -138,7 +138,7 @@ AUI.add(
 
 						// LPS-84186
 
-						var localeChangeHandle = window[instance.get('namespace')]._localeChangeHandle = Liferay.on('inputLocalized:localeChanged', instance._onLocaleChangedHandler, instance);
+						var localeChangeHandle = window[instance.get('namespace')]._localeChangeHandle;
 
 						if (localeChangeHandle) {
 							localeChangeHandle.detach();
@@ -272,6 +272,17 @@ AUI.add(
 						);
 					},
 
+					_changeLocale: function(localeChange) {
+						var instance = this;
+
+						var nativeEditor = instance.getNativeEditor();
+
+						var editable = nativeEditor.editable();
+
+						editable.changeAttr('dir', localeChange.dir);
+						editable.changeAttr('lang', localeChange.lang);
+					},
+
 					_getEditorMethod: function(method) {
 						return Lang.isFunction(method) ? method : (window[method] || method);
 					},
@@ -384,6 +395,12 @@ AUI.add(
 
 						var editorNamespace = instance.get('namespace');
 
+						if (instance._pendingLocaleChange) {
+							instance._changeLocale(instance._pendingLocaleChange);
+
+							instance._pendingLocaleChange = null;
+						}
+
 						if (instance.customDataProcessorLoaded || !instance.get('useCustomDataProcessor')) {
 							instance._initializeData();
 						}
@@ -450,12 +467,17 @@ AUI.add(
 						var contentsLanguage = event.item.getAttribute('data-value');
 						var contentsLanguageDir = Liferay.Language.direction[contentsLanguage];
 
-						var nativeEditor = instance.getNativeEditor();
+						var localeChange = {
+							dir: contentsLanguageDir,
+							lang: contentsLanguage
+						};
 
-						var editable = nativeEditor.editable();
-
-						editable.changeAttr('dir', contentsLanguageDir);
-						editable.changeAttr('lang', contentsLanguage);
+						if (instance.instanceReady) {
+							instance._changeLocale(localeChange);
+						}
+						else {
+							instance._pendingLocaleChange = localeChange;
+						}
 					},
 
 					_onSetData: function(event) {

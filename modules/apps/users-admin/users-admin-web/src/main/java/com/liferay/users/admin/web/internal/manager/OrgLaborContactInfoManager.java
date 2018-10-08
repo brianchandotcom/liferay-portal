@@ -30,10 +30,10 @@ public class OrgLaborContactInfoManager
 	extends BaseContactInfoManager<OrgLabor> {
 
 	public OrgLaborContactInfoManager(
-		long entityClassPK, OrgLaborLocalService orgLaborLocalService,
+		long classPK, OrgLaborLocalService orgLaborLocalService,
 		OrgLaborService orgLaborService) {
 
-		_entityClassPK = entityClassPK;
+		_classPK = classPK;
 		_orgLaborLocalService = orgLaborLocalService;
 		_orgLaborService = orgLaborService;
 	}
@@ -82,7 +82,7 @@ public class OrgLaborContactInfoManager
 	@Override
 	protected OrgLabor doAdd(OrgLabor orgLabor) throws Exception {
 		return _orgLaborService.addOrgLabor(
-			_entityClassPK, orgLabor.getTypeId(), orgLabor.getSunOpen(),
+			_classPK, orgLabor.getTypeId(), orgLabor.getSunOpen(),
 			orgLabor.getSunClose(), orgLabor.getMonOpen(),
 			orgLabor.getMonClose(), orgLabor.getTueOpen(),
 			orgLabor.getTueClose(), orgLabor.getWedOpen(),
@@ -117,7 +117,7 @@ public class OrgLaborContactInfoManager
 
 	@Override
 	protected List<OrgLabor> getAll() throws Exception {
-		return _orgLaborService.getOrgLabors(_entityClassPK);
+		return _orgLaborService.getOrgLabors(_classPK);
 	}
 
 	@Override
@@ -134,7 +134,7 @@ public class OrgLaborContactInfoManager
 	protected void setPrimary(OrgLabor orgLabor, boolean primary) {
 	}
 
-	private final long _entityClassPK;
+	private final long _classPK;
 	private final OrgLaborLocalService _orgLaborLocalService;
 	private final OrgLaborService _orgLaborService;
 

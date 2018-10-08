@@ -31,12 +31,11 @@ import javax.portlet.ActionRequest;
 public class WebsiteContactInfoManager extends BaseContactInfoManager<Website> {
 
 	public WebsiteContactInfoManager(
-		Class entityClass, long entityClassPK,
-		WebsiteLocalService websiteLocalService, WebsiteService websiteService,
-		UsersAdmin usersAdmin) {
+		Class clazz, long classPK, WebsiteLocalService websiteLocalService,
+		WebsiteService websiteService, UsersAdmin usersAdmin) {
 
-		_entityClass = entityClass;
-		_entityClassPK = entityClassPK;
+		_clazz = clazz;
+		_classPK = classPK;
 		_websiteLocalService = websiteLocalService;
 		_websiteService = websiteService;
 		_usersAdmin = usersAdmin;
@@ -62,8 +61,8 @@ public class WebsiteContactInfoManager extends BaseContactInfoManager<Website> {
 	@Override
 	protected Website doAdd(Website website) throws Exception {
 		return _websiteService.addWebsite(
-			_entityClass.getName(), _entityClassPK, website.getUrl(),
-			website.getTypeId(), website.isPrimary(), new ServiceContext());
+			_clazz.getName(), _classPK, website.getUrl(), website.getTypeId(),
+			website.isPrimary(), new ServiceContext());
 	}
 
 	@Override
@@ -85,8 +84,7 @@ public class WebsiteContactInfoManager extends BaseContactInfoManager<Website> {
 
 	@Override
 	protected List<Website> getAll() throws Exception {
-		return _websiteService.getWebsites(
-			_entityClass.getName(), _entityClassPK);
+		return _websiteService.getWebsites(_clazz.getName(), _classPK);
 	}
 
 	@Override
@@ -104,8 +102,8 @@ public class WebsiteContactInfoManager extends BaseContactInfoManager<Website> {
 		website.setPrimary(primary);
 	}
 
-	private final Class _entityClass;
-	private final long _entityClassPK;
+	private final long _classPK;
+	private final Class _clazz;
 	private final UsersAdmin _usersAdmin;
 	private final WebsiteLocalService _websiteLocalService;
 	private final WebsiteService _websiteService;

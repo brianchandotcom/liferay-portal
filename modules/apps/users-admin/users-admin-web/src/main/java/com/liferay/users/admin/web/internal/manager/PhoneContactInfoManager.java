@@ -31,12 +31,11 @@ import javax.portlet.ActionRequest;
 public class PhoneContactInfoManager extends BaseContactInfoManager<Phone> {
 
 	public PhoneContactInfoManager(
-		Class entityClass, long entityClassPK,
-		PhoneLocalService phoneLocalService, PhoneService phoneService,
-		UsersAdmin usersAdmin) {
+		Class clazz, long classPK, PhoneLocalService phoneLocalService,
+		PhoneService phoneService, UsersAdmin usersAdmin) {
 
-		_entityClass = entityClass;
-		_entityClassPK = entityClassPK;
+		_clazz = clazz;
+		_classPK = classPK;
 		_phoneLocalService = phoneLocalService;
 		_phoneService = phoneService;
 		_usersAdmin = usersAdmin;
@@ -63,9 +62,8 @@ public class PhoneContactInfoManager extends BaseContactInfoManager<Phone> {
 	@Override
 	public Phone doAdd(Phone phone) throws Exception {
 		return _phoneService.addPhone(
-			_entityClass.getName(), _entityClassPK, phone.getNumber(),
-			phone.getExtension(), phone.getTypeId(), phone.isPrimary(),
-			new ServiceContext());
+			_clazz.getName(), _classPK, phone.getNumber(), phone.getExtension(),
+			phone.getTypeId(), phone.isPrimary(), new ServiceContext());
 	}
 
 	@Override
@@ -87,7 +85,7 @@ public class PhoneContactInfoManager extends BaseContactInfoManager<Phone> {
 
 	@Override
 	public List<Phone> getAll() throws Exception {
-		return _phoneService.getPhones(_entityClass.getName(), _entityClassPK);
+		return _phoneService.getPhones(_clazz.getName(), _classPK);
 	}
 
 	@Override
@@ -105,8 +103,8 @@ public class PhoneContactInfoManager extends BaseContactInfoManager<Phone> {
 		phone.setPrimary(primary);
 	}
 
-	private final Class _entityClass;
-	private final long _entityClassPK;
+	private final long _classPK;
+	private final Class _clazz;
 	private final PhoneLocalService _phoneLocalService;
 	private final PhoneService _phoneService;
 	private final UsersAdmin _usersAdmin;

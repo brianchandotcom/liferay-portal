@@ -31,12 +31,11 @@ import javax.portlet.ActionRequest;
 public class AddressContactInfoManager extends BaseContactInfoManager<Address> {
 
 	public AddressContactInfoManager(
-		Class entityClass, long entityClassPK,
-		AddressLocalService addressLocalService,
+		Class clazz, long classPK, AddressLocalService addressLocalService,
 		AddressService addressService) {
 
-		_entityClass = entityClass;
-		_entityClassPK = entityClassPK;
+		_clazz = clazz;
+		_classPK = classPK;
 		_addressLocalService = addressLocalService;
 		_addressService = addressService;
 	}
@@ -82,7 +81,7 @@ public class AddressContactInfoManager extends BaseContactInfoManager<Address> {
 	@Override
 	protected Address doAdd(Address address) throws Exception {
 		return _addressService.addAddress(
-			_entityClass.getName(), _entityClassPK, address.getStreet1(),
+			_clazz.getName(), _classPK, address.getStreet1(),
 			address.getStreet2(), address.getStreet3(), address.getCity(),
 			address.getZip(), address.getRegionId(), address.getCountryId(),
 			address.getTypeId(), address.isMailing(), address.isPrimary(),
@@ -110,8 +109,7 @@ public class AddressContactInfoManager extends BaseContactInfoManager<Address> {
 
 	@Override
 	protected List<Address> getAll() throws Exception {
-		return _addressService.getAddresses(
-			_entityClass.getName(), _entityClassPK);
+		return _addressService.getAddresses(_clazz.getName(), _classPK);
 	}
 
 	@Override
@@ -131,7 +129,7 @@ public class AddressContactInfoManager extends BaseContactInfoManager<Address> {
 
 	private final AddressLocalService _addressLocalService;
 	private final AddressService _addressService;
-	private final Class _entityClass;
-	private final long _entityClassPK;
+	private final long _classPK;
+	private final Class _clazz;
 
 }

@@ -31,4 +31,19 @@
 		<field name="position" type="int" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
+	<model name="com.liferay.asset.list.model.AssetListEntryUsage">
+		<field name="uuid" type="String" />
+		<field name="assetListEntryUsageId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="assetListEntryId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="portletId" type="String" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
 </model-hints>

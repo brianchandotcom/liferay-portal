@@ -59,7 +59,7 @@ class RuleEditor extends Component {
 					operator: Config.string()
 				}
 			)
-		).internal().value([]),
+		).internal().setter('_setConditions').value([]),
 
 		fieldOptions: Config.arrayOf(
 			Config.shapeOf(
@@ -484,13 +484,18 @@ class RuleEditor extends Component {
 
 	_handleConditionAdded() {
 		const {conditions} = this;
-		const newCondition = {operands: [{type: '', value: ''}], operator: ''};
 
-		if (conditions.length == 0) {
-			conditions.push(newCondition);
-		}
-
-		conditions.push(newCondition);
+		conditions.push(
+			{
+				operands: [
+					{
+						type: '',
+						value: ''
+					}
+				],
+				operator: ''
+			}
+		);
 
 		this.setState(
 			{
@@ -696,6 +701,24 @@ class RuleEditor extends Component {
 			value === 'less-than' ||
 			value === 'less-than-equals'
 		);
+	}
+
+	_setConditions(conditions) {
+		if (conditions.length === 0) {
+			conditions.push(
+				{
+					operands: [
+						{
+							type: '',
+							value: ''
+						}
+					],
+					operator: ''
+				}
+			);
+		}
+
+		return conditions;
 	}
 }
 

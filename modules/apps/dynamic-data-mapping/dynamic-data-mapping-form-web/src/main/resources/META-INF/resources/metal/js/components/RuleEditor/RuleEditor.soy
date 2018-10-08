@@ -108,25 +108,6 @@
 					{param spritemap: $spritemap /}
 					{param strings: $strings /}
 				{/call}
-
-				{ifempty}
-					{call .condition}
-						{param _handleDeleteCondition: $_handleDeleteCondition /}
-						{param _handleFirstOperandFieldEdited: $_handleFirstOperandFieldEdited /}
-						{param _handleOperatorEdited: $_handleOperatorEdited /}
-						{param _handleSecondOperandFieldEdited: $_handleSecondOperandFieldEdited /}
-						{param _handleSecondOperandTypeEdited: $_handleSecondOperandTypeEdited /}
-						{param binaryOperator: false /}
-						{param fieldOptions: $fieldOptions /}
-						{param fixedOptions: $fixedOptions /}
-						{param index: 0 /}
-						{param operators: [] /}
-						{param readOnly: $readOnly /}
-						{param roles: $roles /}
-						{param secondOperandFieldName: '' /}
-						{param spritemap: $spritemap /}
-						{param strings: $strings /}
-					{/call}
 			{/foreach}
 		</ul>
 

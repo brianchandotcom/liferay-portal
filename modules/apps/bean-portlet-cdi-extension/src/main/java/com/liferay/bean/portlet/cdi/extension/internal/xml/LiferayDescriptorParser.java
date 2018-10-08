@@ -26,7 +26,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -46,17 +45,14 @@ public class LiferayDescriptorParser {
 		Element rootElement = document.getRootElement();
 
 		for (Element portletElement : rootElement.elements("portlet")) {
-			String portletName = null;
+			String portletName = portletElement.elementText("portlet-name");
 
 			Map<String, Set<String>> configuration = new HashMap<>();
 
 			for (Element element : portletElement.elements()) {
 				String elementName = element.getName();
 
-				if (Objects.equals(elementName, "portlet-name")) {
-					portletName = element.getText();
-				}
-				else {
+				if (!"portlet-name".equals(elementName)) {
 					String key = "com.liferay.portlet.".concat(elementName);
 
 					Set<String> values = configuration.get(key);
@@ -71,9 +67,7 @@ public class LiferayDescriptorParser {
 				}
 			}
 
-			if (portletName != null) {
-				configurations.put(portletName, configuration);
-			}
+			configurations.put(portletName, configuration);
 		}
 
 		return configurations;

@@ -106,7 +106,7 @@ public class UserRetrieverTest {
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());
-		Assert.assertEquals(_user1, users.get(0));
+		Assert.assertEquals(_user2, users.get(0));
 	}
 
 	@Test

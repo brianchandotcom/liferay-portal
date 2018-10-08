@@ -22,4 +22,7 @@ public class DocumentLibraryAnalyticsConstants {
 	public static final String JS_PREFIX =
 		"_com_liferay_document_library_analytics_";
 
+	public static final String SERVLET_PATTERN =
+		"/document_library/analytics/resolve-file-entry";
+
 }

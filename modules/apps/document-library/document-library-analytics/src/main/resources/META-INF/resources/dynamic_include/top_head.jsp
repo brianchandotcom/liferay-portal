@@ -16,6 +16,10 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
+<%
+String fileEntryUUIDResolverURI = StringBundler.concat(PortalUtil.getPortalURL(request), Portal.PATH_MODULE, DocumentLibraryAnalyticsConstants.SERVLET_PATTERN);
+%>
+
 <script data-senna-track="temporary" type="text/javascript">
 	if (window.Analytics) {
 		window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry = false;
@@ -24,7 +28,7 @@
 
 <aui:script require="metal-dom/src/all/dom as dom,metal-uri/src/Uri" sandbox="<%= true %>">
 	var Uri = metalUriSrcUri.default;
-	var pathnameRegexp = /\/documents\/(\d+)\/(\d+)\/(.+)\/(.+)/;
+	var pathnameRegexp = /\/documents\/(\d+)\/(\d+)\/(.+?)\/([^&]+)/;
 
 	var downloadClickHandler = dom.delegate(
 		document.body,
@@ -38,17 +42,32 @@
 				var match = pathnameRegexp.exec(uri.getPathname());
 
 				if (match) {
-					Analytics.send(
-						'documentDownloaded',
-						'Document',
+					var groupId = match[1];
+					var fileEntryUUID = match[4];
+
+					fetch(
+						'<%= fileEntryUUIDResolverURI %>?groupId=' + encodeURIComponent(groupId) + '&uuid=' + encodeURIComponent(fileEntryUUID),
 						{
-							groupId: match[1],
-							fileEntryUUID: match[4],
-							preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
-							title: decodeURIComponent(match[3].replace(/\+/ig, ' ')),
-							version: uri.getParameterValue('version')
+							credentials: 'include',
+							method: 'GET'
 						}
-					);
+					).then(function(response) {
+						return response.json();
+					}).then(function(response) {
+						Analytics.send(
+							'documentDownloaded',
+							'Document',
+							{
+								groupId: groupId,
+								fileEntryId: response.fileEntryId,
+								preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
+								title: decodeURIComponent(match[3].replace(/\+/ig, ' ')),
+								version: uri.getParameterValue('version')
+							}
+						);
+					}).catch(function() {
+						return;
+					});
 				}
 			}
 		}

@@ -37,7 +37,7 @@ long orgLaborId = ParamUtil.getLong(request, "orgLaborId");
 			new HashMap<String, Object>() {
 				{
 					put("title", LanguageUtil.get(request, "edit-opening-hours"));
-					put("entry-id", String.valueOf(orgLaborId));
+					put("primary-key", String.valueOf(orgLaborId));
 				}
 			}
 		%>"
@@ -48,9 +48,9 @@ long orgLaborId = ParamUtil.getLong(request, "orgLaborId");
 	<portlet:actionURL name="/users_admin/update_organization_contact_information" var="removeOpeningHoursUrl">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="entryId" value="<%= String.valueOf(orgLaborId) %>" />
 		<portlet:param name="listType" value="<%= ListTypeConstants.ORGANIZATION_SERVICE %>" />
 		<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
+		<portlet:param name="primaryKey" value="<%= String.valueOf(orgLaborId) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon

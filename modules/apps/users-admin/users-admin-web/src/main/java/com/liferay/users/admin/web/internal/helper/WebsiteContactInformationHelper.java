@@ -53,13 +53,13 @@ public class WebsiteContactInformationHelper
 	protected Website constructEntry(ActionRequest actionRequest)
 		throws Exception {
 
-		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+		long websiteId = ParamUtil.getLong(actionRequest, "primaryKey");
 
 		boolean primary = ParamUtil.getBoolean(actionRequest, "websitePrimary");
 		long typeId = ParamUtil.getLong(actionRequest, "websiteTypeId");
 		String url = ParamUtil.getString(actionRequest, "websiteUrl");
 
-		Website website = _websiteLocalService.createWebsite(entryId);
+		Website website = _websiteLocalService.createWebsite(websiteId);
 
 		website.setUrl(url);
 		website.setTypeId(typeId);

@@ -21,10 +21,10 @@ import javax.portlet.ActionRequest;
  */
 public interface ContactInformationHelper<T> {
 
-	public void delete(long entryId) throws Exception;
+	public void delete(long primaryKey) throws Exception;
 
 	public void edit(ActionRequest actionRequest) throws Exception;
 
-	public void makePrimary(long entryId) throws Exception;
+	public void makePrimary(long primaryKey) throws Exception;
 
 }

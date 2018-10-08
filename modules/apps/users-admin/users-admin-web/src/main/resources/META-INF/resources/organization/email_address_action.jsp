@@ -41,7 +41,7 @@ long emailAddressId = emailAddress.getEmailAddressId();
 			new HashMap<String, Object>() {
 				{
 					put("title", LanguageUtil.get(request, "edit-email-address"));
-					put("entry-id", String.valueOf(emailAddressId));
+					put("primary-key", String.valueOf(emailAddressId));
 				}
 			}
 		%>"
@@ -53,9 +53,9 @@ long emailAddressId = emailAddress.getEmailAddressId();
 	<portlet:actionURL name="/users_admin/update_organization_contact_information" var="makePrimaryURL">
 		<portlet:param name="<%= Constants.CMD %>" value="makePrimary" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="entryId" value="<%= String.valueOf(emailAddressId) %>" />
 		<portlet:param name="listType" value="<%= ListTypeConstants.EMAIL_ADDRESS %>" />
 		<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
+		<portlet:param name="primaryKey" value="<%= String.valueOf(emailAddressId) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon
@@ -66,9 +66,9 @@ long emailAddressId = emailAddress.getEmailAddressId();
 	<portlet:actionURL name="/users_admin/update_organization_contact_information" var="removeEmailAddressURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="entryId" value="<%= String.valueOf(emailAddressId) %>" />
 		<portlet:param name="listType" value="<%= ListTypeConstants.EMAIL_ADDRESS %>" />
 		<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
+		<portlet:param name="primaryKey" value="<%= String.valueOf(emailAddressId) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon

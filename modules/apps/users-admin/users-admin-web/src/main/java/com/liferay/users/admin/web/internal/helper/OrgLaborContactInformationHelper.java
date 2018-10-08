@@ -55,7 +55,7 @@ public class OrgLaborContactInformationHelper
 	protected OrgLabor constructEntry(ActionRequest actionRequest)
 		throws Exception {
 
-		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+		long orgLaborId = ParamUtil.getLong(actionRequest, "primaryKey");
 
 		long typeId = ParamUtil.getLong(actionRequest, "orgLaborTypeId");
 		int sunOpen = ParamUtil.getInteger(actionRequest, "sunOpen", -1);
@@ -73,7 +73,7 @@ public class OrgLaborContactInformationHelper
 		int satOpen = ParamUtil.getInteger(actionRequest, "satOpen", -1);
 		int satClose = ParamUtil.getInteger(actionRequest, "satClose", -1);
 
-		OrgLabor orgLabor = _orgLaborLocalService.createOrgLabor(entryId);
+		OrgLabor orgLabor = _orgLaborLocalService.createOrgLabor(orgLaborId);
 
 		orgLabor.setTypeId(typeId);
 		orgLabor.setSunOpen(sunOpen);

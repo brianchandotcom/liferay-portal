@@ -17,12 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long entryId = ParamUtil.getLong(request, "entryId", 0L);
+long phoneId = ParamUtil.getLong(request, "primaryKey", 0L);
 
 Phone phone = null;
 
-if (entryId > 0L) {
-	phone = PhoneServiceUtil.getPhone(entryId);
+if (phoneId > 0L) {
+	phone = PhoneServiceUtil.getPhone(phoneId);
 }
 %>
 
@@ -30,7 +30,7 @@ if (entryId > 0L) {
 	<aui:model-context bean="<%= phone %>" model="<%= Phone.class %>" />
 
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />
-	<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
+	<aui:input name="primaryKey" type="hidden" value="<%= phoneId %>" />
 	<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.PHONE %>" />
 
 	<aui:input checked="<%= (phone != null)? phone.isPrimary() : false %>" id="phonePrimary" label="make-primary" name="phonePrimary" type="checkbox" />

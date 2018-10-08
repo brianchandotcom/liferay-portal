@@ -17,12 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long entryId = ParamUtil.getLong(request, "entryId", 0L);
+long emailAddressId = ParamUtil.getLong(request, "primaryKey", 0L);
 
 EmailAddress emailAddress = null;
 
-if (entryId > 0L) {
-	emailAddress = EmailAddressServiceUtil.getEmailAddress(entryId);
+if (emailAddressId > 0L) {
+	emailAddress = EmailAddressServiceUtil.getEmailAddress(emailAddressId);
 }
 %>
 
@@ -30,7 +30,7 @@ if (entryId > 0L) {
 	<aui:model-context bean="<%= emailAddress %>" model="<%= EmailAddress.class %>" />
 
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />
-	<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
+	<aui:input name="primaryKey" type="hidden" value="<%= emailAddressId %>" />
 	<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.EMAIL_ADDRESS %>" />
 
 	<aui:input checked="<%= (emailAddress != null)? emailAddress.isPrimary() : false %>" id="emailAddressPrimary" label="make-primary" name="emailAddressPrimary" type="checkbox" />

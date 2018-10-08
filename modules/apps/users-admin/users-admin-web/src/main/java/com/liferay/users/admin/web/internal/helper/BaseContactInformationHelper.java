@@ -25,10 +25,10 @@ public abstract class BaseContactInformationHelper<T>
 	implements ContactInformationHelper<T> {
 
 	@Override
-	public void delete(long entryId) throws Exception {
-		T entry = getEntry(entryId);
+	public void delete(long primaryKey) throws Exception {
+		T entry = getEntry(primaryKey);
 
-		deleteEntry(entryId);
+		deleteEntry(primaryKey);
 
 		if (isPrimaryEntry(entry)) {
 			List<T> entries = getEntries();
@@ -74,8 +74,8 @@ public abstract class BaseContactInformationHelper<T>
 	}
 
 	@Override
-	public void makePrimary(long entryId) throws Exception {
-		makePrimary(getEntry(entryId));
+	public void makePrimary(long primaryKey) throws Exception {
+		makePrimary(getEntry(primaryKey));
 	}
 
 	protected abstract T addEntry(T entry) throws Exception;
@@ -83,11 +83,11 @@ public abstract class BaseContactInformationHelper<T>
 	protected abstract T constructEntry(ActionRequest actionRequest)
 		throws Exception;
 
-	protected abstract void deleteEntry(long entryId) throws Exception;
+	protected abstract void deleteEntry(long primaryKey) throws Exception;
 
 	protected abstract List<T> getEntries() throws Exception;
 
-	protected abstract T getEntry(long entryId) throws Exception;
+	protected abstract T getEntry(long primaryKey) throws Exception;
 
 	protected abstract long getEntryId(T entry);
 

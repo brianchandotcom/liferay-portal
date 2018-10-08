@@ -56,6 +56,43 @@ public class StructuredContentApioTest {
 	@Before
 	public void setUp() throws MalformedURLException {
 		_rootEndpointURL = new URL(_url, "/o/api");
+	}
+
+	@Test
+	public void testAdminUserSeeAllStructuredContents() throws Exception {
+		JSONWebServiceClient jsonWebServiceClient = _getJSONWebServiceClient(
+			"test@liferay.com");
+
+		List<String> hrefs = JsonPath.read(
+			_get(
+				JsonPath.read(
+					_get(
+						_rootEndpointURL.toExternalForm(),
+						jsonWebServiceClient),
+					"$._links.content-space.href"),
+				jsonWebServiceClient),
+			"$._embedded.ContentSpace[?(@.name == '" +
+				StructuredContentApioTestBundleActivator.SITE_NAME +
+					"')]._links.structuredContents.href");
+
+		List<String> titles = JsonPath.read(
+			_get(hrefs.get(0), jsonWebServiceClient),
+			"$._embedded.StructuredContent[*].title");
+
+		Assert.assertTrue(
+			titles.contains(
+				StructuredContentApioTestBundleActivator.
+					TITLE_NO_GUEST_NO_GROUP));
+		Assert.assertTrue(
+			titles.contains(
+				StructuredContentApioTestBundleActivator.
+					TITLE_NO_GUEST_YES_GROUP));
+		Assert.assertTrue(
+			titles.contains(
+				StructuredContentApioTestBundleActivator.
+					TITLE_YES_GUEST_YES_GROUP));
+	}
+
 
 
 	}

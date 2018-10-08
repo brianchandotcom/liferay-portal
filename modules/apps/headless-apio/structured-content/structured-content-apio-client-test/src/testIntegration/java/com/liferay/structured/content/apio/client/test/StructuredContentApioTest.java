@@ -27,7 +27,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -281,13 +283,23 @@ public class StructuredContentApioTest {
 	private JSONWebServiceClient _getJSONWebServiceClient(
 		String login, String password) {
 
-		JSONWebServiceClient jsonWebServiceClient = _getJSONWebServiceClient();
+		JSONWebServiceClient jsonWebServiceClient =
+			_jsonWebServiceClientMap.get(login);
 
-		jsonWebServiceClient.setLogin(login);
-		jsonWebServiceClient.setPassword(password);
+		if (jsonWebServiceClient == null) {
+			jsonWebServiceClient = _getJSONWebServiceClient();
+
+			jsonWebServiceClient.setLogin(login);
+			jsonWebServiceClient.setPassword(password);
+
+			_jsonWebServiceClientMap.put(login, jsonWebServiceClient);
+		}
 
 		return jsonWebServiceClient;
 	}
+
+	private Map<String, JSONWebServiceClient> _jsonWebServiceClientMap =
+		new HashMap<>();
 
 	private URL _rootEndpointURL;
 

@@ -17,28 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String searchContainerId = ParamUtil.getString(request, "searchContainerId");
+JournalManagementToolbarDisplayContext journaManagementToolbarlDisplayContext = new JournalManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalDisplayContext, trashHelper);
 %>
 
 <clay:management-toolbar
-	actionDropdownItems="<%= journalDisplayContext.getActionDropdownItems() %>"
-	clearResultsURL="<%= journalDisplayContext.getClearResultsURL() %>"
-	componentId="journalWebManagementToolbar"
-	creationMenu="<%= journalDisplayContext.getCreationMenu() %>"
-	disabled="<%= journalDisplayContext.isDisabled() %>"
-	filterDropdownItems="<%= journalDisplayContext.getFilterDropdownItems() %>"
-	filterLabelItems="<%= journalDisplayContext.getFilterLabelItems() %>"
-	infoPanelId="infoPanelId"
-	itemsTotal="<%= journalDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= journalDisplayContext.getSearchActionURL() %>"
-	searchContainerId="<%= searchContainerId %>"
-	searchFormName="fm1"
-	showCreationMenu="<%= journalDisplayContext.isShowAddButton() %>"
-	showInfoButton="<%= journalDisplayContext.isShowInfoButton() %>"
-	showSearch="<%= journalDisplayContext.isShowSearch() %>"
-	sortingOrder="<%= journalDisplayContext.getOrderByType() %>"
-	sortingURL="<%= journalDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= journalDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= journaManagementToolbarlDisplayContext %>"
 />
 
 <aui:script sandbox="<%= true %>">

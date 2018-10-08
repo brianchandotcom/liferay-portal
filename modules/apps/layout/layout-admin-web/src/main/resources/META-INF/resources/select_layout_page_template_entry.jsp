@@ -19,8 +19,16 @@
 <%
 SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplayContext = new SelectLayoutPageTemplateEntryDisplayContext(request);
 
+String backURL = layoutsAdminDisplayContext.getRedirect();
+
+if (Validator.isNull(backURL)) {
+	PortletURL portletURL = layoutsAdminDisplayContext.getPortletURL();
+
+	backURL = portletURL.toString();
+}
+
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(String.valueOf(layoutsAdminDisplayContext.getPortletURL()));
+portletDisplay.setURLBack(backURL);
 
 renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 %>

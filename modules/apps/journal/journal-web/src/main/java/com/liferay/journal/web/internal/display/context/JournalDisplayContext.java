@@ -644,7 +644,7 @@ public class JournalDisplayContext {
 
 				int status = getStatus();
 
-				if (status != -1) {
+				if (status != WorkflowConstants.STATUS_ANY) {
 					add(
 						labelItem -> {
 							labelItem.setLabel(

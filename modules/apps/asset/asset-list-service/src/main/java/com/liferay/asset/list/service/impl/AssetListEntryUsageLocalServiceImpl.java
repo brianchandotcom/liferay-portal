@@ -14,29 +14,107 @@
 
 package com.liferay.asset.list.service.impl;
 
+import com.liferay.asset.list.model.AssetListEntryUsage;
 import com.liferay.asset.list.service.base.AssetListEntryUsageLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.Date;
+import java.util.List;
 
 /**
- * The implementation of the asset list entry usage local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.asset.list.service.AssetListEntryUsageLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see AssetListEntryUsageLocalServiceBaseImpl
- * @see com.liferay.asset.list.service.AssetListEntryUsageLocalServiceUtil
+ * @author Pavel Savinov
  */
 public class AssetListEntryUsageLocalServiceImpl
 	extends AssetListEntryUsageLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.asset.list.service.AssetListEntryUsageLocalServiceUtil} to access the asset list entry usage local service.
-	 */
+	@Override
+	public AssetListEntryUsage addAssetListEntryUsage(
+			long userId, long groupId, long assetListEntryId, long classNameId,
+			long classPK, String portletId, ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		long assetListEntryUsageId = counterLocalService.increment();
+
+		AssetListEntryUsage assetListEntryUsage =
+			assetListEntryUsagePersistence.create(assetListEntryUsageId);
+
+		assetListEntryUsage.setUuid(serviceContext.getUuid());
+		assetListEntryUsage.setGroupId(groupId);
+		assetListEntryUsage.setCompanyId(user.getCompanyId());
+		assetListEntryUsage.setUserId(userId);
+		assetListEntryUsage.setUserName(user.getFullName());
+		assetListEntryUsage.setCreateDate(
+			serviceContext.getCreateDate(new Date()));
+		assetListEntryUsage.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
+
+		assetListEntryUsage.setAssetListEntryId(assetListEntryId);
+		assetListEntryUsage.setClassNameId(classNameId);
+		assetListEntryUsage.setClassPK(classPK);
+		assetListEntryUsage.setPortletId(portletId);
+
+		return assetListEntryUsagePersistence.update(assetListEntryUsage);
+	}
+
+	@Override
+	public AssetListEntryUsage fetchAssetListEntryUsage(
+		long classNameId, long classPK, String portletId) {
+
+		return assetListEntryUsagePersistence.fetchByC_C_P(
+			classNameId, classPK, portletId);
+	}
+
+	@Override
+	public List<AssetListEntryUsage> getAssetListEntryUsages(
+		long assetListEntryId) {
+
+		return assetListEntryUsagePersistence.findByAssetListEntryId(
+			assetListEntryId);
+	}
+
+	@Override
+	public List<AssetListEntryUsage> getAssetListEntryUsages(
+		long assetListEntryId, int start, int end,
+		OrderByComparator<AssetListEntryUsage> orderByComparator) {
+
+		return assetListEntryUsagePersistence.findByAssetListEntryId(
+			assetListEntryId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<AssetListEntryUsage> getAssetListEntryUsages(
+		long assetListEntryId, long classNameId) {
+
+		return assetListEntryUsagePersistence.findByA_C(
+			assetListEntryId, classNameId);
+	}
+
+	@Override
+	public List<AssetListEntryUsage> getAssetListEntryUsages(
+		long assetListEntryId, long classNameId, int start, int end,
+		OrderByComparator<AssetListEntryUsage> orderByComparator) {
+
+		return assetListEntryUsagePersistence.findByA_C(
+			assetListEntryId, classNameId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getAssetListEntryUsagesCount(long assetListEntryId) {
+		return assetListEntryUsagePersistence.countByAssetListEntryId(
+			assetListEntryId);
+	}
+
+	@Override
+	public int getAssetListEntryUsagesCount(
+		long assetListEntryId, long classNameId) {
+
+		return assetListEntryUsagePersistence.countByA_C(
+			assetListEntryId, classNameId);
+	}
 
 }

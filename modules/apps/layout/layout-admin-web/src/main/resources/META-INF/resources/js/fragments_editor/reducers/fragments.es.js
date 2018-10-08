@@ -20,21 +20,12 @@ import {setIn} from '../utils/utils.es';
 
 function addFragmentEntryLinkReducer(state, actionType, payload) {
 	return new Promise(
-		(resolve, reject) => {
-			let nextState = Object.assign({}, state);
+		resolve => {
+			let nextState = state;
 
 			if (actionType === ADD_FRAGMENT_ENTRY_LINK) {
 				let fragmentEntryLink;
-
-				const nextData = Object.assign(
-					{},
-					state.layoutData,
-					{
-						structure: [
-							...(state.layoutData.structure || [])
-						]
-					}
-				);
+				let nextData;
 
 				_addFragmentEntryLink(
 					state.addFragmentEntryLinkURL,
@@ -49,15 +40,15 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 							fragmentEntryLink = response;
 
 							const position = _getDropFragmentPosition(
-								nextData.structure,
+								state.layoutData.structure,
 								state.hoveredFragmentEntryLinkId,
 								state.hoveredFragmentEntryLinkBorder
 							);
 
-							nextData.structure.splice(
-								position,
-								0,
-								fragmentEntryLink.fragmentEntryLinkId
+							nextData = _addSingleFragmentRow(
+								state.layoutData,
+								fragmentEntryLink.fragmentEntryLinkId,
+								position
 							);
 
 							return _updateData(
@@ -82,13 +73,20 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 						response => {
 							fragmentEntryLink = response;
 
-							nextState.fragmentEntryLinks = Object.assign(
-								{},
-								nextState.fragmentEntryLinks,
-								{[fragmentEntryLink.fragmentEntryLinkId]: fragmentEntryLink}
+							nextState = setIn(
+								nextState,
+								[
+									'fragmentEntryLinks',
+									fragmentEntryLink.fragmentEntryLinkId
+								],
+								fragmentEntryLink
 							);
 
-							nextState.layoutData = nextData;
+							nextState = setIn(
+								nextState,
+								['layoutData'],
+								nextData
+							);
 
 							resolve(nextState);
 						}
@@ -363,7 +361,19 @@ function _getDropFragmentPosition(
 	targetBorder
 ) {
 	let position = structure.length;
-	const targetPosition = structure.indexOf(targetFragmentEntryLinkId);
+
+	const targetPosition = structure.findIndex(
+		row => {
+			return row.columns.find(
+				column => {
+					return (
+						column.fragmentEntryLinkId ===
+						targetFragmentEntryLinkId
+					);
+				}
+			);
+		}
+	);
 
 	if (targetPosition > -1 && targetBorder) {
 		if (targetBorder === DRAG_POSITIONS.top) {
@@ -411,6 +421,45 @@ function _getFragmentEntryLinkContent(
 			);
 		}
 	);
+}
+
+/**
+ * Returns a new layoutData with the given fragmentEntryLinkId inserted
+ * into a single-column new row. The row will be created at the given position.
+ *
+ * @param {object} layoutData
+ * @param {string} fragmentEntryLinkId
+ * @param {number} position
+ * @return {object}
+ */
+
+function _addSingleFragmentRow(layoutData, fragmentEntryLinkId, position) {
+	const nextColumnId = layoutData.nextColumnId || 0;
+	const nextRowId = layoutData.nextRowId || 0;
+	const nextStructure = [...layoutData.structure];
+
+	nextStructure.splice(
+		position,
+		0,
+		{
+			columns: [
+				{
+					columnId: nextColumnId,
+					fragmentEntryLinkId: fragmentEntryLinkId,
+					rows: [],
+					size: 12
+				}
+			],
+			rowId: nextRowId
+		}
+	);
+
+	let nextData = setIn(layoutData, ['structure'], nextStructure);
+
+	nextData = setIn(nextData, ['nextColumnId'], nextColumnId + 1);
+	nextData = setIn(nextData, ['nextRowId'], nextRowId + 1);
+
+	return nextData;
 }
 
 function _moveFragmentEntryLink(

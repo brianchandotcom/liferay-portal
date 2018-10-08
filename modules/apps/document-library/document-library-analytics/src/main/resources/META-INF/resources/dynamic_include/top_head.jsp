@@ -51,28 +51,22 @@ String fileEntryUUIDResolverURI = StringBundler.concat(PortalUtil.getPortalURL(r
 							credentials: 'include',
 							method: 'GET'
 						}
-					)
-					.then(
-						function(response) {
-							if (!response.ok) {
-								return;
+					).then(function(response) {
+						return response.json();
+					}).then(function(response) {
+						Analytics.send(
+							'documentDownloaded',
+							'Document',
+							{
+								groupId: groupId,
+								fileEntryId: response.fileEntryId,
+								preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
+								title: decodeURIComponent(match[3].replace(/\+/ig, ' ')),
+								version: uri.getParameterValue('version')
 							}
-
-							var json = response.json();
-
-							var fileEntryId = json['fileEntryId'];
-
-							Analytics.send(
-								'documentDownloaded',
-								'Document',
-								{
-									groupId: groupId,
-									fileEntryId: fileEntryId,
-									preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
-									title: decodeURIComponent(match[3].replace(/\+/ig, ' ')),
-									version: uri.getParameterValue('version')
-								}
-							);
+						);
+					}).catch(function() {
+						return;
 					});
 				}
 			}

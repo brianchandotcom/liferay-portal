@@ -15,16 +15,13 @@
 package com.liferay.document.library.analytics.internal.servlet;
 
 import com.liferay.document.library.analytics.internal.constants.DocumentLibraryAnalyticsConstants;
-import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -72,21 +69,10 @@ public class FileEntryUUIDResolverServlet extends HttpServlet {
 	private FileEntry _getFileEntryByUuidAndGroupId(HttpServletRequest request)
 		throws Exception {
 
-		PermissionChecker oldPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		long groupId = ParamUtil.getLong(request, "groupId");
+		String uuid = ParamUtil.getString(request, "uuid");
 
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(_portal.getUser(request)));
-
-		try {
-			long groupId = ParamUtil.getLong(request, "groupId");
-			String uuid = ParamUtil.getString(request, "uuid");
-
-			return _dlAppService.getFileEntryByUuidAndGroupId(uuid, groupId);
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(oldPermissionChecker);
-		}
+		return _dlAppLocalService.getFileEntryByUuidAndGroupId(uuid, groupId);
 	}
 
 	private void _sendError(
@@ -128,7 +114,7 @@ public class FileEntryUUIDResolverServlet extends HttpServlet {
 		FileEntryUUIDResolverServlet.class);
 
 	@Reference
-	private DLAppService _dlAppService;
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private Portal _portal;

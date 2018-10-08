@@ -213,8 +213,8 @@
 	</command>
 
 	<command name="editDisplayDateYear">
-		<var method="selenium#getElementValue(TextInput#DISPLAY_DATE_DAY)" name="displayDateDay" />
-		<var method="selenium#getElementValue(TextInput#DISPLAY_DATE_MONTH)" name="displayDateMonth" />
+		<var method="selenium#getElementValue('TextInput#DISPLAY_DATE_DAY')" name="displayDateDay" />
+		<var method="selenium#getElementValue('TextInput#DISPLAY_DATE_MONTH')" name="displayDateMonth" />
 		<var method="DateUtil#getCurrentYear()" name="displayDateYear" />
 
 		<var method="MathUtil#sum('${displayDateYear}','1')" name="displayDateYear" />
@@ -467,18 +467,18 @@
 	</command>
 
 	<command name="scheduleBlogEntry">
-		<var method="selenium#getElementValue(TextInput#DISPLAY_DATE_DAY)" name="displayDateDay" />
-		<var method="selenium#getElementValue(TextInput#DISPLAY_DATE_MONTH)" name="displayDateMonth" />
+		<var method="selenium#getElementValue('TextInput#DISPLAY_DATE_DAY')" name="displayDateDay" />
+		<var method="selenium#getElementValue('TextInput#DISPLAY_DATE_MONTH')" name="displayDateMonth" />
 
 		<var method="MathUtil#sum('${displayDateMonth}','1')" name="displayDateMonth" />
 
-		<var method="selenium#getElementValue(TextInput#DISPLAY_DATE_YEAR)" name="displayDateYear" />
+		<var method="selenium#getElementValue('TextInput#DISPLAY_DATE_YEAR')" name="displayDateYear" />
 
 		<var name="displayDate" value="${displayDateMonth}/${displayDateDay}/${displayDateYear}" />
 
 		<execute function="Type" locator1="TextInput#DISPLAY_DATE" value1="${displayDate}" />
 
-		<var method="selenium#getElementValue(TextInput#DISPLAY_DATE_HOUR)" name="displayDateHour" />
+		<var method="selenium#getElementValue('TextInput#DISPLAY_DATE_HOUR')" name="displayDateHour" />
 
 		<var method="StringUtil#length('${displayDateHour}')" name="displayDateHourLength" />
 
@@ -489,7 +489,7 @@
 			</then>
 		</if>
 
-		<var method="selenium#getElementValue(TextInput#DISPLAY_DATE_MINUTE)" name="displayDateMinute" />
+		<var method="selenium#getElementValue('TextInput#DISPLAY_DATE_MINUTE')" name="displayDateMinute" />
 
 		<var method="MathUtil#sum('${displayDateMinute}','3')" name="displayDateMinuteFuture" />
 
@@ -502,7 +502,7 @@
 			</then>
 		</if>
 
-		<var method="selenium#getElementValue(TextInput#DISPLAY_DATE_MERIDIAN)" name="displayDateMeridian" />
+		<var method="selenium#getElementValue('TextInput#DISPLAY_DATE_MERIDIAN')" name="displayDateMeridian" />
 
 		<var method="StringUtil#replace('${displayDateMeridian}', '0', 'AM')" name="displayDateMeridian" />
 		<var method="StringUtil#replace('${displayDateMeridian}', '1', 'PM')" name="displayDateMeridian" />
@@ -953,7 +953,7 @@
 
 		<execute function="AssertClick" locator1="BlogsEntry#TITLE_LINK" value1="${entryTitle}" />
 
-		<var method="selenium#getText(BlogsEntry#ENTRY_VIEW_COUNT)" name="entryViewCount" />
+		<var method="selenium#getText('BlogsEntry#ENTRY_VIEW_COUNT')" name="entryViewCount" />
 
 		<var method="StringUtil#extractLast('${entryViewCount}','-')" name="entryViewCount" />
 		<var method="StringUtil#extractDigits('${entryViewCount}')" name="entryViewCount" />

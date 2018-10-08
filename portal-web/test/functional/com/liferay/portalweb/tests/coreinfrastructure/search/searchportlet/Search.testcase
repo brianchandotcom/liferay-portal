@@ -941,7 +941,7 @@
 			<var name="entryTitle" value="Potato Blog" />
 		</execute>
 
-		<var method="DateUtil#getFormattedDate(0,'MMM d, YYYY')" name="currentDate" />
+		<var method="DateUtil#getFormattedDate('0','MMM d, YYYY')" name="currentDate" />
 
 		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 

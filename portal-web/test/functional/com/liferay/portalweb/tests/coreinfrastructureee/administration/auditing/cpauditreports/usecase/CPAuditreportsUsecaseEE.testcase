@@ -57,7 +57,7 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getElementValue(UsersAndOrganizationsEditUser#DETAILS_USER_ID_FIELD)" name="userId" />
+		<var method="selenium#getElementValue('UsersAndOrganizationsEditUser#DETAILS_USER_ID_FIELD')" name="userId" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />

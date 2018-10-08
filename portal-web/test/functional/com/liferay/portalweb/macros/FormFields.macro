@@ -209,7 +209,7 @@
 	<command name="getFieldName">
 		<execute function="Pause" locator1="3000" />
 
-		<var method="selenium#getElementValue(FormFields#FIELD_NAME_EDIT)" name="fieldName" />
+		<var method="selenium#getElementValue('FormFields#FIELD_NAME_EDIT')" name="fieldName" />
 
 		<return value="${fieldName}" />
 	</command>

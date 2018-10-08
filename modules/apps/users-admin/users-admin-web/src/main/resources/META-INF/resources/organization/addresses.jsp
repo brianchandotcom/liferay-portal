@@ -63,7 +63,6 @@ List<Address> addresses = AddressServiceUtil.getAddresses(Organization.class.get
 <liferay-ui:error exception="<%= NoSuchRegionException.class %>" message="please-select-a-region" />
 
 <liferay-ui:search-container
-	compactEmptyResultsMessage="<%= true %>"
 	cssClass="addresses-search-container-wrapper lfr-search-container-wrapper"
 	emptyResultsMessage="this-organization-does-not-have-any-addresses"
 	id="addressesSearchContainer"
@@ -91,11 +90,11 @@ List<Address> addresses = AddressServiceUtil.getAddresses(Organization.class.get
 				<liferay-ui:message key="<%= address.getType().getName() %>" />
 			</h4>
 
-			<h8>
+			<div class="address-display-wrapper">
 				<liferay-text-localizer:address-display
 					address="<%= address %>"
 				/>
-			</h8>
+			</div>
 
 			<c:if test="<%= address.isPrimary() %>">
 				<div>

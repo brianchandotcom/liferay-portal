@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
@@ -108,13 +107,8 @@ public class PortletDescriptorParser {
 	}
 
 	private static BeanApp _readBeanApp(Element rootElement) {
-		String specVersion = "3.0";
-
-		Attribute versionAttribute = rootElement.attribute("version");
-
-		if (versionAttribute != null) {
-			specVersion = versionAttribute.getValue();
-		}
+		String specVersion = GetterUtil.get(
+			rootElement.attributeValue("version"), "3.0");
 
 		String defaultNamespace = rootElement.elementText("default-namespace");
 

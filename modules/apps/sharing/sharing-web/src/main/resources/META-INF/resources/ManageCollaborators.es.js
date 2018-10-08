@@ -86,15 +86,32 @@ class ManageCollaborators extends PortletBase {
 			}
 		)
 			.then(
-				() => {
+				response => {
+					this.submitting = false;
+
+					const jsonResponse = response.json();
+
+					return response.ok ?
+						jsonResponse :
+						jsonResponse.then(
+							json => {
+								const error = new Error(json.errorMessage || response.statusText);
+								throw Object.assign(error, {response});
+							}
+						)
+					;
+				}
+			)
+			.then(
+				json => {
 					this._loadingResponse = false;
-					this._showNotification(this.strings.successMessage, false);
+					this._showNotification(json.successMessage);
 				}
 			)
 			.catch(
-				() => {
+				error => {
 					this._loadingResponse = false;
-					this._showNotification(this.strings.errorMessage, true);
+					this._showNotification(error.message, true);
 				}
 			);
 
@@ -162,20 +179,7 @@ ManageCollaborators.STATE = {
 	 * @memberof ManageCollaborators
 	 * @type {String}
 	 */
-	spritemap: Config.string().required(),
-
-	/**
-	 * Dialog's messages
-	 * @instance
-	 * @memberof ManageCollaborators
-	 * @type {!string}
-	 */
-	strings: Config.object().value(
-		{
-			errorMessage: Liferay.Language.get('an-unexpected-error-occurred-while-updating-permissions'),
-			successMessage: Liferay.Language.get('permissions-changed')
-		}
-	)
+	spritemap: Config.string().required()
 };
 
 // Register component

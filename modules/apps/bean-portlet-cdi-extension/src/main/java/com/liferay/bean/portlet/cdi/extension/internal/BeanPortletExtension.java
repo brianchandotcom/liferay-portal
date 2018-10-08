@@ -31,7 +31,6 @@ import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBean;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.BeanFilterMergedImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.DisplayDescriptorParser;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.LiferayDescriptorParser;
-import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletDescriptor;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletDescriptorParser;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletScannerUtil;
 import com.liferay.petra.string.StringBundler;
@@ -704,28 +703,12 @@ public class BeanPortletExtension implements Extension {
 
 		if (portletDescriptorURL != null) {
 			try {
-				PortletDescriptor portletDescriptor =
-					PortletDescriptorParser.parse(
-						bundle, portletDescriptorURL, beanManager,
-						portletBeanMethods, wildcardBeanMethods,
-						preferencesValidators, wildcardPreferencesValidators,
-						descriptorDisplayCategories,
-						descriptorLiferayConfigurations);
-
-				_beanApp = portletDescriptor.getBeanApp();
-
-				for (BeanFilter beanFilter :
-						portletDescriptor.getBeanFilters()) {
-
-					_beanFilters.put(beanFilter.getFilterName(), beanFilter);
-				}
-
-				for (BeanPortlet beanPortlet :
-						portletDescriptor.getBeanPortlets()) {
-
-					_beanPortlets.put(
-						beanPortlet.getPortletName(), beanPortlet);
-				}
+				_beanApp = PortletDescriptorParser.parse(
+					_beanFilters, _beanPortlets, bundle, portletDescriptorURL,
+					beanManager, portletBeanMethods, wildcardBeanMethods,
+					preferencesValidators, wildcardPreferencesValidators,
+					descriptorDisplayCategories,
+					descriptorLiferayConfigurations);
 			}
 			catch (Exception e) {
 				_log.error(e, e);

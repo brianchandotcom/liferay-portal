@@ -65,8 +65,10 @@ import org.osgi.framework.Bundle;
  */
 public class PortletDescriptorParser {
 
-	public static PortletDescriptor parse(
-			Bundle bundle, URL portletDescriptorURL, BeanManager beanManager,
+	public static BeanApp parse(
+			Map<String, BeanFilter> beanFilters,
+			Map<String, BeanPortlet> beanPortlets, Bundle bundle,
+			URL portletDescriptorURL, BeanManager beanManager,
 			Map<String, Set<BeanMethod>> portletBeanMethods,
 			Set<BeanMethod> wildcardBeanMethods,
 			Map<String, String> preferencesValidators,
@@ -82,15 +84,15 @@ public class PortletDescriptorParser {
 
 		BeanApp beanApp = _readBeanApp(rootElement);
 
-		List<BeanFilter> beanFilters = _readBeanFilters(bundle, rootElement);
+		_populateBeanFilters(beanFilters, bundle, rootElement);
 
-		List<BeanPortlet> beanPortlets = _readBeanPortlets(
-			bundle, rootElement, beanApp, beanManager, portletBeanMethods,
-			wildcardBeanMethods, preferencesValidators,
+		_populateBeanPortlets(
+			beanPortlets, bundle, rootElement, beanApp, beanManager,
+			portletBeanMethods, wildcardBeanMethods, preferencesValidators,
 			wildcardPreferencesValidators, displayDescriptorCategories,
 			liferayConfigurations);
 
-		return new PortletDescriptor(beanApp, beanFilters, beanPortlets);
+		return beanApp;
 	}
 
 	private static String _getLang(Element element) {
@@ -105,6 +107,61 @@ public class PortletDescriptorParser {
 
 	private static boolean _isCustomPortletMode(String portletModeName) {
 		return PortalUtil.isCustomPortletMode(new PortletMode(portletModeName));
+	}
+
+	private static void _populateBeanFilters(
+		Map<String, BeanFilter> beanFilters, Bundle bundle,
+		Element rootElement) {
+
+		Map<String, Set<String>> filterMappings = new HashMap<>();
+
+		for (Element filterMappingElement :
+				rootElement.elements("filter-mapping")) {
+
+			String filterName = filterMappingElement.elementText("filter-name");
+
+			Set<String> portletNames = new HashSet<>();
+
+			for (Element portletNameElement :
+					filterMappingElement.elements("portlet-name")) {
+
+				portletNames.add(portletNameElement.getTextTrim());
+			}
+
+			filterMappings.put(filterName, portletNames);
+		}
+
+		for (Element filterElement : rootElement.elements("filter")) {
+			BeanFilter beanFilter = _readBeanFilter(
+				bundle, filterElement, filterMappings);
+
+			if (beanFilter != null) {
+				beanFilters.put(beanFilter.getFilterName(), beanFilter);
+			}
+		}
+	}
+
+	private static void _populateBeanPortlets(
+		Map<String, BeanPortlet> beanPortlets, Bundle bundle,
+		Element rootElement, BeanApp beanApp, BeanManager beanManager,
+		Map<String, Set<BeanMethod>> portletBeanMethods,
+		Set<BeanMethod> wildcardBeanMethods,
+		Map<String, String> preferencesValidators,
+		Set<String> wildcardPreferencesValidators,
+		Map<String, String> displayDescriptorCategories,
+		Map<String, Map<String, Set<String>>> liferayConfigurations) {
+
+		for (Element portletElement : rootElement.elements("portlet")) {
+			BeanPortlet beanPortlet = _readBeanPortlet(
+				bundle, portletElement, beanApp, beanManager,
+				portletBeanMethods, wildcardBeanMethods, preferencesValidators,
+				wildcardPreferencesValidators, displayDescriptorCategories,
+				liferayConfigurations);
+
+			if (beanPortlet != null) {
+				beanPortlets.put(beanPortlet.getPortletName(), beanPortlet);
+			}
+		}
 	}
 
 	private static BeanApp _readBeanApp(Element rootElement) {
@@ -254,41 +311,6 @@ public class PortletDescriptorParser {
 		return new BeanFilterDescriptorImpl(
 			filterName, filterClass, ordinal, filterMappings.get(filterName),
 			lifecycles, initParams);
-	}
-
-	private static List<BeanFilter> _readBeanFilters(
-		Bundle bundle, Element rootElement) {
-
-		List<BeanFilter> beanFilters = new ArrayList<>();
-
-		Map<String, Set<String>> filterMappings = new HashMap<>();
-
-		for (Element filterMappingElement :
-				rootElement.elements("filter-mapping")) {
-
-			String filterName = filterMappingElement.elementText("filter-name");
-
-			Set<String> portletNames = new HashSet<>();
-
-			for (Element portletNameElement :
-					filterMappingElement.elements("portlet-name")) {
-
-				portletNames.add(portletNameElement.getTextTrim());
-			}
-
-			filterMappings.put(filterName, portletNames);
-		}
-
-		for (Element filterElement : rootElement.elements("filter")) {
-			BeanFilter beanFilter = _readBeanFilter(
-				bundle, filterElement, filterMappings);
-
-			if (beanFilter != null) {
-				beanFilters.add(beanFilter);
-			}
-		}
-
-		return beanFilters;
 	}
 
 	private static BeanPortlet _readBeanPortlet(
@@ -663,33 +685,6 @@ public class PortletDescriptorParser {
 			multiPartMaxRequestSize,
 			displayDescriptorCategories.get(portletName),
 			liferayConfigurations.get(portletName));
-	}
-
-	private static List<BeanPortlet> _readBeanPortlets(
-		Bundle bundle, Element rootElement, BeanApp beanApp,
-		BeanManager beanManager,
-		Map<String, Set<BeanMethod>> portletBeanMethods,
-		Set<BeanMethod> wildcardBeanMethods,
-		Map<String, String> preferencesValidators,
-		Set<String> wildcardPreferencesValidators,
-		Map<String, String> displayDescriptorCategories,
-		Map<String, Map<String, Set<String>>> liferayConfigurations) {
-
-		List<BeanPortlet> beanPortlets = new ArrayList<>();
-
-		for (Element portletElement : rootElement.elements("portlet")) {
-			BeanPortlet beanPortlet = _readBeanPortlet(
-				bundle, portletElement, beanApp, beanManager,
-				portletBeanMethods, wildcardBeanMethods, preferencesValidators,
-				wildcardPreferencesValidators, displayDescriptorCategories,
-				liferayConfigurations);
-
-			if (beanPortlet != null) {
-				beanPortlets.add(beanPortlet);
-			}
-		}
-
-		return beanPortlets;
 	}
 
 	private static final String _ENGLISH_EN = Locale.ENGLISH.getLanguage();

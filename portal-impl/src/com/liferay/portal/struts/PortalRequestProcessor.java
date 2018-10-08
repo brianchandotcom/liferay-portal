@@ -14,6 +14,7 @@
 
 package com.liferay.portal.struts;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LayoutPermissionException;
@@ -70,10 +71,13 @@ import com.liferay.portlet.RenderResponseFactory;
 
 import java.io.IOException;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
@@ -92,13 +96,19 @@ import javax.servlet.jsp.PageContext;
 import org.apache.struts.Globals;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.ActionServlet;
-import org.apache.struts.action.RequestProcessor;
+import org.apache.struts.action.ExceptionHandler;
+import org.apache.struts.action.InvalidCancelException;
 import org.apache.struts.config.ActionConfig;
+import org.apache.struts.config.ExceptionConfig;
 import org.apache.struts.config.ForwardConfig;
 import org.apache.struts.config.ModuleConfig;
+import org.apache.struts.upload.MultipartRequestHandler;
 import org.apache.struts.util.MessageResources;
+import org.apache.struts.util.RequestUtils;
 
 /**
  * @author Brian Wing Shun Chan
@@ -107,17 +117,32 @@ import org.apache.struts.util.MessageResources;
  * @author Mika Koivisto
  * @author Neil Griffin
  */
-public class PortalRequestProcessor extends RequestProcessor {
+public class PortalRequestProcessor {
 
-	public PortalRequestProcessor() {
+	public static final String INCLUDE_PATH_INFO =
+		"javax.servlet.include.path_info";
+
+	public static final String INCLUDE_SERVLET_PATH =
+		"javax.servlet.include.servlet_path";
+
+	public PortalRequestProcessor(
+		ActionServlet actionServlet, ModuleConfig moduleConfig) {
+
+		_actionServlet = actionServlet;
+		_moduleConfig = moduleConfig;
+
+		ServletContext servletContext = actionServlet.getServletContext();
+
+		_definitions = (Map<String, Definition>)
+			servletContext.getAttribute(TilesUtil.DEFINITIONS);
 
 		// auth.forward.last.path.
 
-		_lastPaths = new HashSet<>();
+		_lastPaths = new HashSet<>(
+			Arrays.asList(
+				PropsUtil.getArray(PropsKeys.AUTH_FORWARD_LAST_PATHS)));
 
 		_lastPaths.add(_PATH_PORTAL_LAYOUT);
-
-		addPaths(_lastPaths, PropsKeys.AUTH_FORWARD_LAST_PATHS);
 
 		// auth.public.path.
 
@@ -138,37 +163,24 @@ public class PortalRequestProcessor extends RequestProcessor {
 		_publicPaths.add(_PATH_PORTAL_VERIFY_EMAIL_ADDRESS);
 		_publicPaths.add(PropsValues.AUTH_LOGIN_DISABLED_PATH);
 
-		_trackerIgnorePaths = new HashSet<>();
-
-		addPaths(_trackerIgnorePaths, PropsKeys.SESSION_TRACKER_IGNORE_PATHS);
+		_trackerIgnorePaths = new HashSet<>(
+			Arrays.asList(
+				PropsUtil.getArray(PropsKeys.SESSION_TRACKER_IGNORE_PATHS)));
 	}
 
-	@Override
-	public void init(ActionServlet servlet, ModuleConfig moduleConfig)
-		throws ServletException {
-
-		super.init(servlet, moduleConfig);
-
-		ServletContext servletContext = getServletContext();
-
-		_definitions = (Map<String, Definition>)
-			servletContext.getAttribute(TilesUtil.DEFINITIONS);
-	}
-
-	@Override
 	public void process(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		String path = super.processPath(request, response);
+		String path = _findPath(request, response);
 
 		ActionMapping actionMapping =
-			(ActionMapping)moduleConfig.findActionConfig(path);
+			(ActionMapping)_moduleConfig.findActionConfig(path);
 
 		if ((actionMapping == null) &&
 			(StrutsActionRegistryUtil.getAction(path) == null)) {
 
-			String lastPath = getLastPath(request);
+			String lastPath = _getLastPath(request);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Last path " + lastPath);
@@ -179,11 +191,11 @@ public class PortalRequestProcessor extends RequestProcessor {
 			return;
 		}
 
-		super.process(request, response);
+		_process(request, response);
 
 		try {
-			if (isPortletPath(path)) {
-				cleanUp(request);
+			if (_isPortletPath(path)) {
+				_cleanUp(request);
 			}
 		}
 		catch (Exception e) {
@@ -191,44 +203,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 		}
 	}
 
-	protected void addPaths(Set<String> paths, String propsKey) {
-		String[] pathsArray = PropsUtil.getArray(propsKey);
-
-		for (String path : pathsArray) {
-			paths.add(path);
-		}
-	}
-
-	protected void callParentDoForward(
-			String uri, HttpServletRequest request,
-			HttpServletResponse response)
-		throws IOException, ServletException {
-
-		super.doForward(uri, request, response);
-	}
-
-	protected HttpServletRequest callParentProcessMultipart(
-		HttpServletRequest request) {
-
-		return super.processMultipart(request);
-	}
-
-	protected String callParentProcessPath(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
-
-		return super.processPath(request, response);
-	}
-
-	protected boolean callParentProcessRoles(
-			HttpServletRequest request, HttpServletResponse response,
-			ActionMapping actionMapping)
-		throws IOException, ServletException {
-
-		return super.processRoles(request, response, actionMapping);
-	}
-
-	protected void cleanUp(HttpServletRequest request) throws Exception {
+	private void _cleanUp(HttpServletRequest request) throws Exception {
 
 		// Clean up portlet objects that may have been created by defineObjects
 		// for portlets that are called directly from a Struts path
@@ -243,7 +218,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 		}
 	}
 
-	protected void defineObjects(
+	private void _defineObjects(
 			HttpServletRequest request, HttpServletResponse response,
 			Portlet portlet)
 		throws Exception {
@@ -282,25 +257,82 @@ public class PortalRequestProcessor extends RequestProcessor {
 		request.setAttribute(WebKeys.PORTLET_STRUTS_EXECUTE, Boolean.TRUE);
 	}
 
-	@Override
-	protected void doForward(
-			String uri, HttpServletRequest request,
-			HttpServletResponse response)
-		throws ServletException {
+	private ActionMapping _findMapping(
+			HttpServletRequest request, HttpServletResponse response,
+			String path)
+		throws IOException {
 
-		StrutsUtil.forward(uri, getServletContext(), request, response);
+		ActionMapping actionMapping =
+			(ActionMapping)_moduleConfig.findActionConfig(path);
+
+		if (actionMapping != null) {
+			request.setAttribute(Globals.MAPPING_KEY, actionMapping);
+
+			return actionMapping;
+		}
+
+		for (ActionConfig actionConfig : _moduleConfig.findActionConfigs()) {
+			if (actionConfig.getUnknown()) {
+				request.setAttribute(Globals.MAPPING_KEY, actionConfig);
+
+				return (ActionMapping)actionConfig;
+			}
+		}
+
+		MessageResources messageResources = _actionServlet.getInternal();
+
+		response.sendError(
+			HttpServletResponse.SC_NOT_FOUND,
+			messageResources.getMessage("processInvalid"));
+
+		return null;
 	}
 
-	@Override
-	protected void doInclude(
-			String uri, HttpServletRequest request,
-			HttpServletResponse response)
-		throws ServletException {
+	private String _findPath(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
 
-		StrutsUtil.include(uri, getServletContext(), request, response);
+		String path = (String)request.getAttribute(INCLUDE_PATH_INFO);
+
+		if (path == null) {
+			path = request.getPathInfo();
+		}
+
+		if ((path != null) && (path.length() > 0)) {
+			return path;
+		}
+
+		path = (String)request.getAttribute(INCLUDE_SERVLET_PATH);
+
+		if (path == null) {
+			path = request.getServletPath();
+		}
+
+		String prefix = _moduleConfig.getPrefix();
+
+		if (!path.startsWith(prefix)) {
+			MessageResources messageResources = _actionServlet.getInternal();
+
+			String message = messageResources.getMessage("processPath");
+
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, message);
+
+			return null;
+		}
+
+		path = path.substring(prefix.length());
+
+		int slash = path.lastIndexOf(CharPool.SLASH);
+		int period = path.lastIndexOf(CharPool.PERIOD);
+
+		if ((period >= 0) && (period > slash)) {
+			path = path.substring(0, period);
+		}
+
+		return path;
 	}
 
-	protected String getFriendlyTrackerPath(
+	private String _getFriendlyTrackerPath(
 			String path, ThemeDisplay themeDisplay, HttpServletRequest request)
 		throws Exception {
 
@@ -378,7 +410,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 			request.getQueryString());
 	}
 
-	protected String getLastPath(HttpServletRequest request) {
+	private String _getLastPath(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -436,7 +468,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 
 		if (contextPath.equals(themeDisplay.getPathMain())) {
 			ActionMapping actionMapping =
-				(ActionMapping)moduleConfig.findActionConfig(
+				(ActionMapping)_moduleConfig.findActionConfig(
 					lastPath.getPath());
 
 			if ((actionMapping == null) || parameters.isEmpty()) {
@@ -454,8 +486,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 		return lastPathSB.toString();
 	}
 
-	@Override
-	protected void internalModuleRelativeForward(
+	private void _internalModuleRelativeForward(
 			String uri, HttpServletRequest request,
 			HttpServletResponse response)
 		throws IOException, ServletException {
@@ -468,10 +499,11 @@ public class PortalRequestProcessor extends RequestProcessor {
 			uri = definition.getPath();
 		}
 
-		doForward(uri, request, response);
+		StrutsUtil.forward(
+			uri, _actionServlet.getServletContext(), request, response);
 	}
 
-	protected boolean isPortletPath(String path) {
+	private boolean _isPortletPath(String path) {
 		if ((path != null) && !path.equals(_PATH_C) &&
 			!path.startsWith(_PATH_COMMON) &&
 			!path.contains(_PATH_J_SECURITY_CHECK) &&
@@ -483,7 +515,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 		return false;
 	}
 
-	protected boolean isPublicPath(String path) {
+	private boolean _isPublicPath(String path) {
 		if ((path != null) &&
 			(_publicPaths.contains(path) || path.startsWith(_PATH_COMMON) ||
 			 AuthPublicPathRegistry.contains(path))) {
@@ -494,48 +526,305 @@ public class PortalRequestProcessor extends RequestProcessor {
 		return false;
 	}
 
-	@Override
-	protected Action processActionCreate(
-			HttpServletRequest request, HttpServletResponse response,
-			ActionMapping actionMapping)
+	private void _process(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException {
+
+		String path = _processPath(request, response);
+
+		if (path == null) {
+			return;
+		}
+
+		_processLocale(request);
+
+		response.setContentType("text/html; charset=UTF-8");
+
+		_processCachedMessages(request);
+
+		ActionMapping actionMapping = _processMapping(request, response, path);
+
+		if (actionMapping == null) {
+			return;
+		}
+
+		if (!_processRoles(request, response, actionMapping)) {
+			return;
+		}
+
+		ActionForm actionForm = _processActionForm(request, actionMapping);
+
+		if (actionForm != null) {
+			actionForm.setServlet(_actionServlet);
+			actionForm.reset(actionMapping, request);
+
+			if (actionMapping.getMultipartClass() != null) {
+				request.setAttribute(
+					Globals.MULTIPART_KEY, actionMapping.getMultipartClass());
+			}
+
+			RequestUtils.populate(
+				actionForm, actionMapping.getPrefix(),
+				actionMapping.getSuffix(), request);
+		}
+
+		try {
+			if (!_processValidate(
+					request, response, actionForm, actionMapping)) {
+
+				return;
+			}
+		}
+		catch (InvalidCancelException ice) {
+			ActionForward actionForward = _processException(
+				request, response, ice, actionForm, actionMapping);
+
+			if (actionForward != null) {
+				_internalModuleRelativeForward(
+					actionForward.getPath(), request, response);
+			}
+
+			return;
+		}
+		catch (IOException ioe) {
+			throw ioe;
+		}
+		catch (ServletException se) {
+			throw se;
+		}
+
+		if (!_processForward(request, response, actionMapping)) {
+			return;
+		}
+
+		if (!_processInclude(request, response, actionMapping)) {
+			return;
+		}
+
+		Action action = _processActionCreate(response, actionMapping);
+
+		if (action == null) {
+			return;
+		}
+
+		ActionForward actionForward = _processActionPerform(
+			request, response, action, actionForm, actionMapping);
+
+		if (actionForward != null) {
+			_internalModuleRelativeForward(
+				actionForward.getPath(), request, response);
+		}
+	}
+
+	private Action _processActionCreate(
+			HttpServletResponse response, ActionMapping actionMapping)
 		throws IOException {
+
+		Action originalAction = _actions.computeIfAbsent(
+			actionMapping.getType(),
+			classNameKey -> {
+				try {
+					Action action = (Action)RequestUtils.applicationInstance(
+						classNameKey);
+
+					if (action.getServlet() == null) {
+						action.setServlet(_actionServlet);
+					}
+
+					return action;
+				}
+				catch (Exception e) {
+					MessageResources messageResources =
+						_actionServlet.getInternal();
+
+					try {
+						response.sendError(
+							HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+							messageResources.getMessage(
+								"actionCreate", actionMapping.getPath()));
+					}
+					catch (IOException ioe) {
+						ReflectionUtil.throwException(ioe);
+					}
+
+					return null;
+				}
+			});
 
 		ActionAdapter actionAdapter =
 			(ActionAdapter)StrutsActionRegistryUtil.getAction(
 				actionMapping.getPath());
 
 		if (actionAdapter != null) {
-			ActionConfig actionConfig = moduleConfig.findActionConfig(
+			ActionConfig actionConfig = _moduleConfig.findActionConfig(
 				actionMapping.getPath());
 
 			if (actionConfig != null) {
-				Action originalAction = super.processActionCreate(
-					request, response, actionMapping);
-
 				actionAdapter.setOriginalAction(originalAction);
 			}
 
 			return actionAdapter;
 		}
 
-		return super.processActionCreate(request, response, actionMapping);
+		return originalAction;
 	}
 
-	@Override
-	protected void processForwardConfig(
+	private ActionForm _processActionForm(
+		HttpServletRequest request, ActionMapping mapping) {
+
+		ActionForm actionForm = RequestUtils.createActionForm(
+			request, mapping, _moduleConfig, _actionServlet);
+
+		if (actionForm == null) {
+			return null;
+		}
+
+		if ("request".equals(mapping.getScope())) {
+			request.setAttribute(mapping.getAttribute(), actionForm);
+		}
+		else {
+			HttpSession session = request.getSession();
+
+			session.setAttribute(mapping.getAttribute(), actionForm);
+		}
+
+		return actionForm;
+	}
+
+	private ActionForward _processActionPerform(
 			HttpServletRequest request, HttpServletResponse response,
-			ForwardConfig forward)
+			Action action, ActionForm actionForm, ActionMapping actionMapping)
 		throws IOException, ServletException {
 
-		if (forward == null) {
+		try {
+			return action.execute(actionMapping, actionForm, request, response);
+		}
+		catch (Exception e) {
+			return _processException(
+				request, response, e, actionForm, actionMapping);
+		}
+	}
+
+	private void _processCachedMessages(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+
+		if (session == null) {
 			return;
 		}
 
-		internalModuleRelativeForward(forward.getPath(), request, response);
+		ActionMessages actionMessages = (ActionMessages)session.getAttribute(
+			Globals.MESSAGE_KEY);
+
+		if ((actionMessages != null) && actionMessages.isAccessed()) {
+			session.removeAttribute(Globals.MESSAGE_KEY);
+		}
+
+		actionMessages = (ActionMessages)session.getAttribute(
+			Globals.ERROR_KEY);
+
+		if ((actionMessages != null) && actionMessages.isAccessed()) {
+			session.removeAttribute(Globals.ERROR_KEY);
+		}
 	}
 
-	@Override
-	protected ActionMapping processMapping(
+	private ActionForward _processException(
+			HttpServletRequest request, HttpServletResponse response,
+			Exception exception, ActionForm actionForm,
+			ActionMapping actionMapping)
+		throws IOException, ServletException {
+
+		ExceptionConfig exceptionConfig = actionMapping.findException(
+			exception.getClass());
+
+		if (exceptionConfig == null) {
+			if (exception instanceof IOException) {
+				throw (IOException)exception;
+			}
+			else if (exception instanceof ServletException) {
+				throw (ServletException)exception;
+			}
+			else {
+				throw new ServletException(exception);
+			}
+		}
+
+		try {
+			ExceptionHandler exceptionHandler =
+				(ExceptionHandler)RequestUtils.applicationInstance(
+					exceptionConfig.getHandler());
+
+			return exceptionHandler.execute(
+				exception, exceptionConfig, actionMapping, actionForm, request,
+				response);
+		}
+		catch (Exception e) {
+			throw new ServletException(e);
+		}
+	}
+
+	private boolean _processForward(
+			HttpServletRequest request, HttpServletResponse response,
+			ActionMapping actionMapping)
+		throws IOException, ServletException {
+
+		String forward = actionMapping.getForward();
+
+		if (forward == null) {
+			return true;
+		}
+
+		String actionIdPath = RequestUtils.actionIdURL(
+			forward, _moduleConfig, _actionServlet);
+
+		if (actionIdPath != null) {
+			forward = actionIdPath;
+		}
+
+		_internalModuleRelativeForward(forward, request, response);
+
+		return false;
+	}
+
+	private boolean _processInclude(
+			HttpServletRequest request, HttpServletResponse response,
+			ActionMapping actionMapping)
+		throws IOException, ServletException {
+
+		String include = actionMapping.getInclude();
+
+		if (include == null) {
+			return true;
+		}
+
+		String actionIdPath = RequestUtils.actionIdURL(
+			include, _moduleConfig, _actionServlet);
+
+		if (actionIdPath != null) {
+			include = actionIdPath;
+		}
+
+		StrutsUtil.include(
+			_moduleConfig.getPrefix() + include,
+			_actionServlet.getServletContext(), request, response);
+
+		return false;
+	}
+
+	private void _processLocale(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+
+		if (session.getAttribute(Globals.LOCALE_KEY) != null) {
+			return;
+		}
+
+		Locale locale = request.getLocale();
+
+		if (locale != null) {
+			session.setAttribute(Globals.LOCALE_KEY, locale);
+		}
+	}
+
+	private ActionMapping _processMapping(
 			HttpServletRequest request, HttpServletResponse response,
 			String path)
 		throws IOException {
@@ -548,12 +837,12 @@ public class PortalRequestProcessor extends RequestProcessor {
 
 		if (action != null) {
 			ActionMapping actionMapping =
-				(ActionMapping)moduleConfig.findActionConfig(path);
+				(ActionMapping)_moduleConfig.findActionConfig(path);
 
 			if (actionMapping == null) {
 				actionMapping = new ActionMapping();
 
-				actionMapping.setModuleConfig(moduleConfig);
+				actionMapping.setModuleConfig(_moduleConfig);
 				actionMapping.setPath(path);
 
 				request.setAttribute(Globals.MAPPING_KEY, actionMapping);
@@ -562,11 +851,10 @@ public class PortalRequestProcessor extends RequestProcessor {
 			return actionMapping;
 		}
 
-		ActionMapping actionMapping = super.processMapping(
-			request, response, path);
+		ActionMapping actionMapping = _findMapping(request, response, path);
 
 		if (actionMapping == null) {
-			MessageResources messageResources = getInternal();
+			MessageResources messageResources = _actionServlet.getInternal();
 
 			String msg = messageResources.getMessage("processInvalid");
 
@@ -581,21 +869,11 @@ public class PortalRequestProcessor extends RequestProcessor {
 		return actionMapping;
 	}
 
-	@Override
-	protected HttpServletRequest processMultipart(HttpServletRequest request) {
-
-		// Disable Struts from automatically wrapping a multipart request
-
-		return request;
-	}
-
-	@Override
-	protected String processPath(
+	private String _processPath(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		String path = GetterUtil.getString(
-			super.processPath(request, response));
+		String path = GetterUtil.getString(_findPath(request, response));
 
 		HttpSession session = request.getSession();
 
@@ -616,7 +894,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 
 			try {
 				if (PropsValues.SESSION_TRACKER_FRIENDLY_PATHS_ENABLED) {
-					fullPath = getFriendlyTrackerPath(
+					fullPath = _getFriendlyTrackerPath(
 						path, themeDisplay, request);
 				}
 			}
@@ -825,7 +1103,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 				}
 			}
 		}
-		else if (!isPublicPath(path)) {
+		else if (!_isPublicPath(path)) {
 
 			// Users must sign in
 
@@ -835,7 +1113,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 		}
 
 		ActionMapping actionMapping =
-			(ActionMapping)moduleConfig.findActionConfig(path);
+			(ActionMapping)_moduleConfig.findActionConfig(path);
 
 		if (actionMapping == null) {
 			Action strutsAction = StrutsActionRegistryUtil.getAction(path);
@@ -850,7 +1128,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 
 		// Define the portlet objects
 
-		if (isPortletPath(path)) {
+		if (_isPortletPath(path)) {
 			try {
 				Portlet portlet = null;
 
@@ -868,7 +1146,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 				}
 
 				if ((portlet != null) && portlet.isActive()) {
-					defineObjects(request, response, portlet);
+					_defineObjects(request, response, portlet);
 				}
 			}
 			catch (Exception e) {
@@ -889,28 +1167,14 @@ public class PortalRequestProcessor extends RequestProcessor {
 		return path;
 	}
 
-	@Override
-	protected void processPopulate(
-			HttpServletRequest request, HttpServletResponse response,
-			ActionForm actionForm, ActionMapping actionMapping)
-		throws ServletException {
-
-		if (actionForm == null) {
-			return;
-		}
-
-		super.processPopulate(request, response, actionForm, actionMapping);
-	}
-
-	@Override
-	protected boolean processRoles(
+	private boolean _processRoles(
 			HttpServletRequest request, HttpServletResponse response,
 			ActionMapping actionMapping)
 		throws IOException, ServletException {
 
 		String path = actionMapping.getPath();
 
-		if (isPublicPath(path)) {
+		if (_isPublicPath(path)) {
 			return true;
 		}
 
@@ -924,7 +1188,7 @@ public class PortalRequestProcessor extends RequestProcessor {
 		catch (Exception e) {
 		}
 
-		if ((user != null) && isPortletPath(path)) {
+		if ((user != null) && _isPortletPath(path)) {
 			try {
 
 				// Authenticated users can always log out
@@ -994,12 +1258,62 @@ public class PortalRequestProcessor extends RequestProcessor {
 			ForwardConfig forwardConfig = actionMapping.findForward(
 				_PATH_PORTAL_ERROR);
 
-			processForwardConfig(request, response, forwardConfig);
+			if (forwardConfig != null) {
+				_internalModuleRelativeForward(
+					forwardConfig.getPath(), request, response);
+			}
 
 			return false;
 		}
 
 		return true;
+	}
+
+	private boolean _processValidate(
+			HttpServletRequest request, HttpServletResponse response,
+			ActionForm actionForm, ActionMapping actionMapping)
+		throws InvalidCancelException, IOException, ServletException {
+
+		if (actionForm == null) {
+			return true;
+		}
+
+		if (!actionMapping.getValidate()) {
+			return true;
+		}
+
+		ActionMessages actionMessages = actionForm.validate(
+			actionMapping, request);
+
+		if ((actionMessages == null) || actionMessages.isEmpty()) {
+			return true;
+		}
+
+		MultipartRequestHandler multipartRequestHandler =
+			actionForm.getMultipartRequestHandler();
+
+		if (multipartRequestHandler != null) {
+			multipartRequestHandler.rollback();
+		}
+
+		String input = actionMapping.getInput();
+
+		if (input == null) {
+			MessageResources messageResources = _actionServlet.getInternal();
+
+			response.sendError(
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+				messageResources.getMessage(
+					"noInput", actionMapping.getPath()));
+
+			return false;
+		}
+
+		request.setAttribute(Globals.ERROR_KEY, actionMessages);
+
+		_internalModuleRelativeForward(input, request, response);
+
+		return false;
 	}
 
 	private static final String _PATH_C = "/c";
@@ -1075,8 +1389,11 @@ public class PortalRequestProcessor extends RequestProcessor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalRequestProcessor.class);
 
-	private Map<String, Definition> _definitions;
+	private final Map<String, Action> _actions = new ConcurrentHashMap<>();
+	private final ActionServlet _actionServlet;
+	private final Map<String, Definition> _definitions;
 	private final Set<String> _lastPaths;
+	private final ModuleConfig _moduleConfig;
 	private final Set<String> _publicPaths;
 	private final Set<String> _trackerIgnorePaths;
 

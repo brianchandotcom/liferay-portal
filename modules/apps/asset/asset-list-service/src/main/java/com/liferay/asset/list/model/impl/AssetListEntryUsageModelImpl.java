@@ -102,7 +102,7 @@ public class AssetListEntryUsageModelImpl extends BaseModelImpl<AssetListEntryUs
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetListEntryUsage (uuid_ VARCHAR(75) null,assetListEntryUsageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryId LONG,classNameId LONG,classPK LONG,portletId VARCHAR(75) null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table AssetListEntryUsage (uuid_ VARCHAR(75) null,assetListEntryUsageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryId LONG,classNameId LONG,classPK LONG,portletId VARCHAR(200) null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table AssetListEntryUsage";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetListEntryUsage.assetListEntryUsageId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetListEntryUsage.assetListEntryUsageId ASC";

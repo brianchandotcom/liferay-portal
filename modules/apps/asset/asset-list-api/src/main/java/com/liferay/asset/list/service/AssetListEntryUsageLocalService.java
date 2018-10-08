@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -73,6 +74,11 @@ public interface AssetListEntryUsageLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetListEntryUsage addAssetListEntryUsage(
 		AssetListEntryUsage assetListEntryUsage);
+
+	public AssetListEntryUsage addAssetListEntryUsage(long userId,
+		long groupId, long assetListEntryId, long classNameId, long classPK,
+		String portletId, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new asset list entry usage with the primary key. Does not add the asset list entry usage to the database.
@@ -175,6 +181,10 @@ public interface AssetListEntryUsageLocalService extends BaseLocalService,
 	public AssetListEntryUsage fetchAssetListEntryUsage(
 		long assetListEntryUsageId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetListEntryUsage fetchAssetListEntryUsage(long classNameId,
+		long classPK, String portletId);
+
 	/**
 	* Returns the asset list entry usage matching the UUID and group.
 	*
@@ -226,6 +236,24 @@ public interface AssetListEntryUsageLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetListEntryUsage> getAssetListEntryUsages(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetListEntryUsage> getAssetListEntryUsages(
+		long assetListEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetListEntryUsage> getAssetListEntryUsages(
+		long assetListEntryId, int start, int end,
+		OrderByComparator<AssetListEntryUsage> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetListEntryUsage> getAssetListEntryUsages(
+		long assetListEntryId, long classNameId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetListEntryUsage> getAssetListEntryUsages(
+		long assetListEntryId, long classNameId, int start, int end,
+		OrderByComparator<AssetListEntryUsage> orderByComparator);
+
 	/**
 	* Returns all the asset list entry usages matching the UUID and company.
 	*
@@ -259,6 +287,13 @@ public interface AssetListEntryUsageLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAssetListEntryUsagesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAssetListEntryUsagesCount(long assetListEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAssetListEntryUsagesCount(long assetListEntryId,
+		long classNameId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(

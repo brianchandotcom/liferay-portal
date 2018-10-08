@@ -76,7 +76,7 @@ public class LiferayDescriptorParser {
 			}
 		}
 
-		return new HashMap(configurations);
+		return configurations;
 	}
 
 }

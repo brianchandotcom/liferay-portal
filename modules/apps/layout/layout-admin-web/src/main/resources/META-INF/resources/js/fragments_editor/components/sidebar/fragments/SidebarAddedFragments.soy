@@ -5,27 +5,31 @@
  */
 {template .render}
 	{@param fragmentEntryLinks: ?}
+	{@param layoutData: ?}
 	{@param spritemap: string}
 	{@param? _handleFragmentRemoveButtonClick: any}
-	{@param? layoutData: ?}
 	{@param? store: ?}
 
 	<div class="sidebar-added-fragments">
 		{if $fragmentEntryLinks and $layoutData and $layoutData.structure}
-			{foreach $fragmentEntryLinkId in $layoutData.structure}
-				{let $fragmentEntryLink: $fragmentEntryLinks[$fragmentEntryLinkId] /}
+			{foreach $row in $layoutData.structure}
+				{foreach $column in $row.columns}
+					{foreach $fragmentEntryLinkId in $column.fragmentEntryLinkIds}
+						{let $fragmentEntryLink: $fragmentEntryLinks[$fragmentEntryLinkId] /}
 
-				{if $fragmentEntryLink}
-					{call com.liferay.layout.admin.web.FragmentsEditorSidebarCard.render}
-						{param events: ['itemClick': $_handleFragmentRemoveButtonClick] /}
-						{param icon: 'times' /}
-						{param itemId: $fragmentEntryLink.fragmentEntryLinkId /}
-						{param itemName: $fragmentEntryLink.name /}
-						{param key: $fragmentEntryLink.fragmentEntryLinkId /}
-						{param spritemap: $spritemap /}
-						{param store: $store /}
-					{/call}
-				{/if}
+						{if $fragmentEntryLink}
+							{call com.liferay.layout.admin.web.FragmentsEditorSidebarCard.render}
+								{param events: ['itemClick': $_handleFragmentRemoveButtonClick] /}
+								{param icon: 'times' /}
+								{param itemId: $fragmentEntryLink.fragmentEntryLinkId /}
+								{param itemName: $fragmentEntryLink.name /}
+								{param key: $fragmentEntryLink.fragmentEntryLinkId /}
+								{param spritemap: $spritemap /}
+								{param store: $store /}
+							{/call}
+						{/if}
+					{/foreach}
+				{/foreach}
 			{/foreach}
 		{/if}
 	</div>

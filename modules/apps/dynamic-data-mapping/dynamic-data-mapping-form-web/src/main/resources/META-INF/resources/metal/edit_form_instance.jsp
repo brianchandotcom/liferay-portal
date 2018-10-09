@@ -193,6 +193,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 					packageName.DDMForm(
 						{
 							context: context,
+							dataProviderInstancesURL: '<%= dataProviderInstancesURL %>',
 							defaultLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
 							dependencies: ['dynamic-data-mapping-form-field-type/metal'],
 							fieldTypes: <%= ddmFormAdminDisplayContext.getDDMFormFieldTypesJSONArray() %>,

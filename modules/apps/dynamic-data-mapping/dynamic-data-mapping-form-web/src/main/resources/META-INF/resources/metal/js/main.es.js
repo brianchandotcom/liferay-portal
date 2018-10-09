@@ -43,6 +43,15 @@ class Form extends Component {
 		).required().setter('_setContext'),
 
 		/**
+		 * The rules of a form.
+		 * @default undefined
+		 * @instance
+		 * @memberof Form
+		 * @type {!array}
+		 */
+		dataProviderInstancesURL: Config.string().required(),
+
+		/**
 		 * The default language id of the form.
 		 * @default undefined
 		 * @instance

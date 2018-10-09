@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.web.internal;
+package com.liferay.users.admin.web.internal.util;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;

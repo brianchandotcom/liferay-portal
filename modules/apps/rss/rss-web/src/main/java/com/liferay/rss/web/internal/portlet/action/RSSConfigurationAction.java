@@ -78,12 +78,13 @@ public class RSSConfigurationAction extends DefaultConfigurationAction {
 		for (int subscriptionIndex : subscriptionIndexes) {
 			String url = ParamUtil.getString(
 				actionRequest, "url" + subscriptionIndex);
-			String title = ParamUtil.getString(
-				actionRequest, "title" + subscriptionIndex);
 
 			if (Validator.isNull(url)) {
 				continue;
 			}
+
+			String title = ParamUtil.getString(
+				actionRequest, "title" + subscriptionIndex);
 
 			subscriptions.put(url, title);
 		}

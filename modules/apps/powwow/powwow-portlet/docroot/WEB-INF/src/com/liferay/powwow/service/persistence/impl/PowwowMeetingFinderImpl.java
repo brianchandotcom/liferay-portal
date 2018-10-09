@@ -66,13 +66,13 @@ public class PowwowMeetingFinderImpl
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
-			QueryPos qPos = QueryPos.getInstance(q);
-
 			User user = UserLocalServiceUtil.fetchUser(userId);
 
 			if (user == null) {
 				return 0;
 			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(user.getUserId());
 			qPos.add(user.getUserId());
@@ -126,13 +126,13 @@ public class PowwowMeetingFinderImpl
 
 			q.addEntity("PowwowMeeting", PowwowMeetingImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
-
 			User user = UserLocalServiceUtil.fetchUser(userId);
 
 			if (user == null) {
 				return Collections.emptyList();
 			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(user.getUserId());
 			qPos.add(user.getUserId());

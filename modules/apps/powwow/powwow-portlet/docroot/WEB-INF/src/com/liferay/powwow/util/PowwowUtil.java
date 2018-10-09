@@ -213,15 +213,16 @@ public class PowwowUtil {
 				participantsJSONArray.getJSONObject(i);
 
 			String name = participantJSONObject.getString("name");
-			long participantUserId = participantJSONObject.getLong(
-				"participantUserId");
 			String emailAddress = participantJSONObject.getString(
 				"emailAddress");
-			int type = participantJSONObject.getInt("type");
 
 			if (Validator.isNull(name) && Validator.isNull(emailAddress)) {
 				continue;
 			}
+
+			long participantUserId = participantJSONObject.getLong(
+				"participantUserId");
+			int type = participantJSONObject.getInt("type");
 
 			PowwowParticipant powwowParticipant = _getPowwowParticipant(
 				powwowMeetingId, name, participantUserId, emailAddress, type);

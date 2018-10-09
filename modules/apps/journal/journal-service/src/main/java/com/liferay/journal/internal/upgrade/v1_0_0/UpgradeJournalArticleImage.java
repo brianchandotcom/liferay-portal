@@ -96,8 +96,6 @@ public class UpgradeJournalArticleImage extends UpgradeProcess {
 								"articleImageId = ?"))) {
 
 				while (rs.next()) {
-					long articleImageId = rs.getLong(1);
-
 					String elName = rs.getString(2);
 
 					int lastIndexOf = elName.lastIndexOf(StringPool.UNDERLINE);
@@ -113,7 +111,7 @@ public class UpgradeJournalArticleImage extends UpgradeProcess {
 					}
 
 					ps2.setString(1, elName.substring(0, lastIndexOf));
-					ps2.setLong(2, articleImageId);
+					ps2.setLong(2, rs.getLong(1));
 
 					ps2.addBatch();
 				}

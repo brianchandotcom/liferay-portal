@@ -462,9 +462,6 @@ public class ActionUtil {
 	public static boolean hasArticle(ActionRequest actionRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String articleId = ParamUtil.getString(actionRequest, "articleId");
 
 		if (Validator.isNull(articleId)) {
@@ -477,6 +474,9 @@ public class ActionUtil {
 
 			articleId = articleIds[0];
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		int pos = articleId.lastIndexOf(JournalPortlet.VERSION_SEPARATOR);
 

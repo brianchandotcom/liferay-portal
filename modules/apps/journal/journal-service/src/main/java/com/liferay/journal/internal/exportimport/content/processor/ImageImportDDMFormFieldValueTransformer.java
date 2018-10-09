@@ -79,18 +79,16 @@ public class ImageImportDDMFormFieldValueTransformer
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				valueString);
 
-			String alt = jsonObject.getString("alt");
-			long oldClassPK = jsonObject.getLong("fileEntryId");
-			String type = jsonObject.getString("type");
-
 			FileEntry importedFileEntry = fetchImportedFileEntry(
-				_portletDataContext, oldClassPK);
+				_portletDataContext, jsonObject.getLong("fileEntryId"));
 
 			if (importedFileEntry == null) {
 				continue;
 			}
 
-			String fileEntryJSON = toJSON(importedFileEntry, type, alt);
+			String fileEntryJSON = toJSON(
+				importedFileEntry, jsonObject.getString("type"),
+				jsonObject.getString("alt"));
 
 			value.addString(locale, fileEntryJSON);
 

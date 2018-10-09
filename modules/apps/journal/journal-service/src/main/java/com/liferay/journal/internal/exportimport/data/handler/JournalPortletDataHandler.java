@@ -714,11 +714,6 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		ManifestSummary manifestSummary =
 			portletDataContext.getManifestSummary();
 
-		ChangesetCollection changesetCollection =
-			_changesetCollectionLocalService.fetchChangesetCollection(
-				portletDataContext.getScopeGroupId(),
-				StagingConstants.RANGE_FROM_LAST_PUBLISH_DATE_CHANGESET_NAME);
-
 		StagedModelType articleStagedModelType = new StagedModelType(
 			JournalArticle.class);
 
@@ -728,6 +723,11 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		if (modelAdditionCount > -1) {
 			return;
 		}
+
+		ChangesetCollection changesetCollection =
+			_changesetCollectionLocalService.fetchChangesetCollection(
+				portletDataContext.getScopeGroupId(),
+				StagingConstants.RANGE_FROM_LAST_PUBLISH_DATE_CHANGESET_NAME);
 
 		if (changesetCollection != null) {
 			modelAdditionCount =

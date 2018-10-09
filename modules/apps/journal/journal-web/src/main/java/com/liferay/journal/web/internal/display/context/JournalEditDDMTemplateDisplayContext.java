@@ -90,14 +90,14 @@ public class JournalEditDDMTemplateDisplayContext {
 			return _ddmStructure;
 		}
 
-		DDMTemplate ddmTemplate = getDDMTemplate();
-
 		_ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
 			getClassPK());
 
 		if (_ddmStructure != null) {
 			return _ddmStructure;
 		}
+
+		DDMTemplate ddmTemplate = getDDMTemplate();
 
 		if (ddmTemplate != null) {
 			_ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(

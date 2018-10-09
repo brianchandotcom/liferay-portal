@@ -209,15 +209,15 @@ public class UpgradeJournalArticles extends BaseUpgradePortletId {
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
-				long portletPreferencesId = rs.getLong("portletPreferencesId");
-				long plid = rs.getLong("plid");
-				String portletId = rs.getString("portletId");
-
 				String preferences = rs.getString("preferences");
 
 				if (preferences.equals("<portlet-preferences />")) {
 					continue;
 				}
+
+				long portletPreferencesId = rs.getLong("portletPreferencesId");
+				long plid = rs.getLong("plid");
+				String portletId = rs.getString("portletId");
 
 				String newPreferences = getNewPreferences(plid, preferences);
 

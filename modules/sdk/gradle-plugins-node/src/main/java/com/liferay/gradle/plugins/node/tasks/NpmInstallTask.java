@@ -234,6 +234,7 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		}
 		else {
 			completeArgs.add("install");
+			completeArgs.add("--no-optional");
 		}
 
 		return completeArgs;

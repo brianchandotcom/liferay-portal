@@ -59,9 +59,6 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
-					long userNotificationEventId = rs.getLong(
-						"userNotificationEventId");
-
 					String payload = rs.getString("payload");
 
 					JSONObject payloadJSONObject =
@@ -73,6 +70,9 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 					if (notificationType != 0) {
 						return;
 					}
+
+					long userNotificationEventId = rs.getLong(
+						"userNotificationEventId");
 
 					payloadJSONObject.put(
 						"notificationType",

@@ -133,8 +133,6 @@ public class FacebookConnectAction extends BaseStrutsAction {
 
 		JSONObject stateJSONObject = JSONFactoryUtil.createJSONObject(state);
 
-		String redirect = stateJSONObject.getString("redirect");
-
 		String stateNonce = stateJSONObject.getString("stateNonce");
 
 		if (!stateNonce.equals(nonce)) {
@@ -149,6 +147,8 @@ public class FacebookConnectAction extends BaseStrutsAction {
 
 			return _forwards.get("/common/referer_jsp.jsp");
 		}
+
+		String redirect = stateJSONObject.getString("redirect");
 
 		redirect = _portal.escapeRedirect(redirect);
 

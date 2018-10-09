@@ -456,11 +456,11 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 			module.getContextName());
 
 		for (Module curModule : modules) {
-			App app = appPersistence.findByPrimaryKey(curModule.getAppId());
-
 			if (curModule.getAppId() == module.getAppId()) {
 				continue;
 			}
+
+			App app = appPersistence.findByPrimaryKey(curModule.getAppId());
 
 			if (app.isInstalled()) {
 				return true;

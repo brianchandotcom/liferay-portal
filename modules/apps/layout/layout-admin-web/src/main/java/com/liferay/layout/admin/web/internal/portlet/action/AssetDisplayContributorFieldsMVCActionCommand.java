@@ -52,9 +52,6 @@ public class AssetDisplayContributorFieldsMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String className = ParamUtil.getString(actionRequest, "className");
 
 		AssetDisplayContributor assetDisplayContributor =
@@ -68,6 +65,9 @@ public class AssetDisplayContributorFieldsMVCActionCommand
 
 			return;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 

@@ -74,9 +74,9 @@ public class CheckEntryMessageListener extends BaseMessageListener {
 				endDate.getTime() - _ANNOUNCEMENTS_ENTRY_CHECK_INTERVAL);
 		}
 
-		_announcementsEntryLocalService.checkEntries(startDate, endDate);
-
 		_previousEndDate = endDate;
+
+		_announcementsEntryLocalService.checkEntries(startDate, endDate);
 	}
 
 	@Reference(unbind = "-")

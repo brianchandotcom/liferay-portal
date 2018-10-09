@@ -91,18 +91,18 @@ public class CodeTemplatesTest {
 
 		new CodeTemplates(codeTemplatesArgs);
 
+		File javaDir = new File(projectDir, "src/main/java");
+
 		File actionCommandFile = new File(
-			projectDir,
-			"src/main/java/com/liferay/actioncommand/FooActionCommand.java");
+			javaDir, "com/liferay/actioncommand/FooActionCommand.java");
 
 		Assert.assertTrue(actionCommandFile.exists());
 
 		_testContainsOrNot(
-			projectDir,
-			"src/main/java/com/liferay/actioncommand/FooActionCommand.java",
-			false, true, "mvc.command.name=foo");
+			javaDir, "com/liferay/actioncommand/FooActionCommand.java", false,
+			true, "mvc.command.name=foo");
 
-		File restDir = new File(projectDir, "src/main/java/com/liferay/rest");
+		File restDir = new File(javaDir, "com/liferay/rest");
 
 		Assert.assertFalse(restDir.exists());
 
@@ -150,16 +150,16 @@ public class CodeTemplatesTest {
 
 		new CodeTemplates(codeTemplatesArgs);
 
+		File javaDir = new File(projectDir, "src/main/java");
+
 		File lifecycelactionFile = new File(
-			projectDir,
-			"src/main/java/com/liferay/lifecycleaction/FooAction.java");
+			javaDir, "com/liferay/lifecycleaction/FooAction.java");
 
 		Assert.assertTrue(lifecycelactionFile.exists());
 
 		_testContainsOrNot(
-			projectDir,
-			"src/main/java/com/liferay/lifecycleaction/FooAction.java", false,
-			true, "FooAction login.events.pre=");
+			javaDir, "com/liferay/lifecycleaction/FooAction.java", false, true,
+			"FooAction login.events.pre=");
 
 		if (Validator.isNotNull(ProjectTemplatesTest.BUILD_PROJECTS) &&
 			ProjectTemplatesTest.BUILD_PROJECTS.equals("true")) {
@@ -215,16 +215,16 @@ public class CodeTemplatesTest {
 
 		new CodeTemplates(codeTemplatesArgs);
 
+		File javaDir = new File(projectDir, "src/main/java");
+
 		File modellistenerFile = new File(
-			projectDir,
-			"src/main/java/com/liferay/modellistener/FooModelListener.java");
+			javaDir, "com/liferay/modellistener/FooModelListener.java");
 
 		Assert.assertTrue(modellistenerFile.exists());
 
 		_testContainsOrNot(
-			projectDir,
-			"src/main/java/com/liferay/modellistener/FooModelListener.java",
-			false, true, "Layout");
+			javaDir, "com/liferay/modellistener/FooModelListener.java", false,
+			true, "Layout");
 
 		if (Validator.isNotNull(ProjectTemplatesTest.BUILD_PROJECTS) &&
 			ProjectTemplatesTest.BUILD_PROJECTS.equals("true")) {
@@ -277,15 +277,15 @@ public class CodeTemplatesTest {
 
 		new CodeTemplates(codeTemplatesArgs);
 
+		File javaDir = new File(projectDir, "src/main/java");
+
 		File renderCommandFile = new File(
-			projectDir,
-			"src/main/java/com/liferay/rendercommand/FooMVCRenderCommand.java");
+			javaDir, "com/liferay/rendercommand/FooMVCRenderCommand.java");
 
 		Assert.assertTrue(renderCommandFile.exists());
 
 		_testContainsOrNot(
-			projectDir,
-			"src/main/java/com/liferay/rendercommand/FooMVCRenderCommand.java",
+			javaDir, "com/liferay/rendercommand/FooMVCRenderCommand.java",
 			false, true, "mvc.command.name=/rendercommand/foo");
 
 		if (Validator.isNotNull(ProjectTemplatesTest.BUILD_PROJECTS) &&
@@ -404,21 +404,38 @@ public class CodeTemplatesTest {
 		codeTemplatesArgs.setPackageName("com.liferay");
 		codeTemplatesArgs.setTemplate("rest");
 
+		File javaDir = new File(projectDir, "src/main/java");
+
 		new CodeTemplates(codeTemplatesArgs);
 
 		File restFile = new File(
-			projectDir, "src/main/java/com/liferay/rest/FooApplication.java");
+			javaDir, "com/liferay/rest/FooApplication.java");
 
 		Assert.assertTrue(restFile.exists());
 
 		_testContainsOrNot(
-			projectDir, "src/main/java/com/liferay/rest/FooApplication.java",
-			false, true, "fred");
+			javaDir, "com/liferay/rest/FooApplication.java", false, true,
+			"fred");
 
-		File modellistenerDir = new File(
-			projectDir, "src/main/java/com/liferay/modellistener");
+		if (Validator.isNotNull(ProjectTemplatesTest.BUILD_PROJECTS) &&
+			ProjectTemplatesTest.BUILD_PROJECTS.equals("true")) {
 
-		Assert.assertFalse(modellistenerDir.exists());
+			File buildGradle = new File(projectDir, "build.gradle");
+
+			String content = new String(
+				Files.readAllBytes(buildGradle.toPath()));
+
+			String deps =
+				"compileOnly group: \"javax.ws.rs\", name: " +
+					"\"javax.ws.rs-api\", version: \"2.0.1\"\ncompileOnly";
+
+			content = content.replaceFirst("compileOnly", deps);
+
+			Files.write(buildGradle.toPath(), content.getBytes());
+
+			ProjectTemplatesTest.executeGradle(
+				projectDir, _GRADLE_TASK_PATH_BUILD);
+		}
 	}
 
 	@Test
@@ -456,16 +473,37 @@ public class CodeTemplatesTest {
 
 		new CodeTemplates(codeTemplatesArgs);
 
+		File javaDir = new File(projectDir, "src/main/java");
+
 		File searchKeywordFile = new File(
-			projectDir,
-			"src/main/java/com/liferay/searchkeywordquerycontributor" +
+			javaDir,
+			"com/liferay/searchkeywordquerycontributor" +
 				"/FooKeywordQueryContributor.java");
 
 		Assert.assertTrue(searchKeywordFile.exists());
 
-		File restDir = new File(projectDir, "src/main/java/com/liferay/rest");
+		if (Validator.isNotNull(ProjectTemplatesTest.BUILD_PROJECTS) &&
+			ProjectTemplatesTest.BUILD_PROJECTS.equals("true")) {
 
-		Assert.assertFalse(restDir.exists());
+			File buildGradle = new File(projectDir, "build.gradle");
+
+			String content = new String(
+				Files.readAllBytes(buildGradle.toPath()));
+
+			String deps =
+				"compileOnly group: \"com.liferay\", name: " +
+					"\"com.liferay.portal.search.api\", version: \"2.0.0\"\n" +
+						"compileOnly group: \"com.liferay\", name: " +
+							"\"com.liferay.portal.search.spi\",  version: " +
+								"\"2.0.0\"\ncompileOnly";
+
+			content = content.replaceFirst("compileOnly", deps);
+
+			Files.write(buildGradle.toPath(), content.getBytes());
+
+			ProjectTemplatesTest.executeGradle(
+				projectDir, _GRADLE_TASK_PATH_BUILD);
+		}
 	}
 
 	@Test
@@ -503,16 +541,37 @@ public class CodeTemplatesTest {
 
 		new CodeTemplates(codeTemplatesArgs);
 
+		File javaDir = new File(projectDir, "src/main/java");
+
 		File searchKeywordModelPreFilterContributorFile = new File(
-			projectDir,
-			"src/main/java/com/liferay/searchmodelprefiltercontributor" +
+			javaDir,
+			"com/liferay/searchmodelprefiltercontributor" +
 				"/FooModelPreFilterContributor.java");
 
 		Assert.assertTrue(searchKeywordModelPreFilterContributorFile.exists());
 
-		File restDir = new File(projectDir, "src/main/java/com/liferay/rest");
+		if (Validator.isNotNull(ProjectTemplatesTest.BUILD_PROJECTS) &&
+			ProjectTemplatesTest.BUILD_PROJECTS.equals("true")) {
 
-		Assert.assertFalse(restDir.exists());
+			File buildGradle = new File(projectDir, "build.gradle");
+
+			String content = new String(
+				Files.readAllBytes(buildGradle.toPath()));
+
+			String deps =
+				"compileOnly group: \"com.liferay\", name: " +
+					"\"com.liferay.portal.search.api\", version: \"2.0.0\"\n" +
+						"compileOnly group: \"com.liferay\", name: " +
+							"\"com.liferay.portal.search.spi\", version: " +
+								"\"2.0.0\"\ncompileOnly";
+
+			content = content.replaceFirst("compileOnly", deps);
+
+			Files.write(buildGradle.toPath(), content.getBytes());
+
+			ProjectTemplatesTest.executeGradle(
+				projectDir, _GRADLE_TASK_PATH_BUILD);
+		}
 	}
 
 	@Test
@@ -561,20 +620,23 @@ public class CodeTemplatesTest {
 
 		new CodeTemplates(codeTemplatesArgs);
 
+		File javaDir = new File(projectDir, "src/main/java");
+
 		File serviceWrapperFile = new File(
-			projectDir,
-			"src/main/java/com/liferay/servicewrapper/FooServiceWrapper.java");
+			javaDir, "com/liferay/servicewrapper/FooServiceWrapper.java");
 
 		Assert.assertTrue(serviceWrapperFile.exists());
 
 		_testContainsOrNot(
-			projectDir,
-			"src/main/java/com/liferay/servicewrapper/FooServiceWrapper.java",
-			false, true, "extends UserLocalServiceWrapper");
+			javaDir, "com/liferay/servicewrapper/FooServiceWrapper.java", false,
+			true, "extends UserLocalServiceWrapper");
 
-		File restDir = new File(projectDir, "src/main/java/com/liferay/rest");
+		if (Validator.isNotNull(ProjectTemplatesTest.BUILD_PROJECTS) &&
+			ProjectTemplatesTest.BUILD_PROJECTS.equals("true")) {
 
-		Assert.assertFalse(restDir.exists());
+			ProjectTemplatesTest.executeGradle(
+				projectDir, _GRADLE_TASK_PATH_BUILD);
+		}
 	}
 
 	@Rule

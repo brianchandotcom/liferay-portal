@@ -107,6 +107,39 @@ AssetListUsagesDisplayContext assetListUsagesDisplayContext = new AssetListUsage
 				<clay:management-toolbar
 					displayContext="<%= assetListUsagesDisplayContext.getManagementToolbarDisplayContext() %>"
 				/>
+
+				<liferay-ui:search-container
+					id="assetListUsages"
+					searchContainer="<%= assetListUsagesDisplayContext.getSearchContainer() %>"
+				>
+					<liferay-ui:search-container-row
+						className="com.liferay.asset.list.model.AssetListEntryUsage"
+						keyProperty="assetListEntryUsageId"
+						modelVar="assetListEntryUsage"
+					>
+						<liferay-ui:search-container-column-text
+							name="name"
+							value="<%= assetListUsagesDisplayContext.getAssetListEntryUsageName(assetListEntryUsage) %>"
+						/>
+
+						<liferay-ui:search-container-column-text
+							name="type"
+							translate="<%= true %>"
+							value="<%= assetListUsagesDisplayContext.getAssetListEntryUsageTypeLabel(assetListEntryUsage) %>"
+						/>
+
+						<liferay-ui:search-container-column-date
+							name="modified-date"
+							value="<%= assetListEntryUsage.getModifiedDate() %>"
+						/>
+					</liferay-ui:search-container-row>
+
+					<liferay-ui:search-iterator
+						displayStyle="list"
+						markupView="lexicon"
+						searchResultCssClass="show-quick-actions-on-hover table table-autofit"
+					/>
+				</liferay-ui:search-container>
 			</div>
 		</div>
 	</div>

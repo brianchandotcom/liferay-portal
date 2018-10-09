@@ -8,5 +8,4 @@ dependencies {
 	compileOnly project(":apps:apio-architect:apio-architect-api")
 	compileOnly project(":apps:headless-apio:person:person-apio-api")
 	compileOnly project(":apps:headless-apio:role:role-apio-api")
-	compileOnly project(":apps:headless-apio:workflow:workflow-apio-api")
 }

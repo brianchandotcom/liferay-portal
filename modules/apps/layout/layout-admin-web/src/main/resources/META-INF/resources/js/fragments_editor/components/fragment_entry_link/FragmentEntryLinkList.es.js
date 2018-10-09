@@ -1,6 +1,7 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import {Drag, DragDrop} from 'metal-drag-drop';
+import {getFragmentRowIndex} from '../../utils/utils.es';
 import position from 'metal-position';
 import Soy from 'metal-soy';
 
@@ -13,6 +14,7 @@ import {
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../actions/actions.es';
 import {DRAG_POSITIONS} from '../../reducers/placeholders.es';
+import state from '../../store/state.es';
 import templates from './FragmentEntryLinkList.soy';
 
 /**
@@ -116,10 +118,12 @@ class FragmentEntryLinkList extends Component {
 	_handleDrop(data, event) {
 		event.preventDefault();
 
-		if (data.target) {
-			const placeholderId = data.source.dataset.fragmentEntryLinkId;
-			const targetId = data.target.dataset.fragmentEntryLinkId;
+		const placeholderId = data.source.dataset.fragmentEntryLinkId;
+		const targetId = data.target ?
+			data.target.dataset.fragmentEntryLinkId :
+			'';
 
+		if (targetId && targetId !== placeholderId) {
 			requestAnimationFrame(
 				() => {
 					this._initializeDragAndDrop();
@@ -136,9 +140,9 @@ class FragmentEntryLinkList extends Component {
 				.dispatchAction(
 					MOVE_FRAGMENT_ENTRY_LINK,
 					{
-						placeholderId: placeholderId,
-						targetBorder: this._targetBorder,
-						targetId: targetId
+						originFragmentEntryLinkId: placeholderId,
+						targetFragmentEntryLinkBorder: this._targetBorder,
+						targetFragmentEntryLinkId: targetId
 					}
 				)
 				.dispatchAction(
@@ -167,8 +171,21 @@ class FragmentEntryLinkList extends Component {
 
 	_handleFragmentMove(event) {
 		const placeholderId = event.fragmentEntryLinkId;
-		const placeholderIndex = this.layoutData.structure.indexOf(placeholderId);
-		const targetId = this.layoutData.structure[placeholderIndex + event.direction];
+
+		const rowIndex = getFragmentRowIndex(
+			this.layoutData.structure,
+			placeholderId
+		);
+
+		let targetId;
+
+		const targetRow = this
+			.layoutData
+			.structure[rowIndex + event.direction];
+
+		if (targetRow && targetRow.columns.length) {
+			targetId = targetRow.columns[0].fragmentEntryLinkId;
+		}
 
 		if (event.direction === 1) {
 			this._targetBorder = DRAG_POSITIONS.bottom;
@@ -177,7 +194,7 @@ class FragmentEntryLinkList extends Component {
 			this._targetBorder = DRAG_POSITIONS.top;
 		}
 
-		if (targetId) {
+		if (targetId && targetId !== placeholderId) {
 			this.store
 				.dispatchAction(
 					UPDATE_SAVING_CHANGES_STATUS,
@@ -188,9 +205,9 @@ class FragmentEntryLinkList extends Component {
 				.dispatchAction(
 					MOVE_FRAGMENT_ENTRY_LINK,
 					{
-						placeholderId: placeholderId,
-						targetBorder: this._targetBorder,
-						targetId: targetId
+						originFragmentEntryLinkId: placeholderId,
+						targetFragmentEntryLinkBorder: this._targetBorder,
+						targetFragmentEntryLinkId: targetId
 					}
 				)
 				.dispatchAction(
@@ -278,24 +295,14 @@ FragmentEntryLinkList.STATE = {
 
 	/**
 	 * Data associated to the layout
-	 * @default {structure: []}
+	 * @default {object}
 	 * @instance
 	 * @memberOf FragmentEntryLinkList
 	 * @review
-	 * @type {{structure: Array<string>}}
+	 * @type {object}
 	 */
 
-	layoutData: Config
-		.shapeOf(
-			{
-				structure: Config.arrayOf(Config.string())
-			}
-		)
-		.value(
-			{
-				structure: []
-			}
-		),
+	layoutData: state.layoutData,
 
 	/**
 	 * Internal DragDrop instance.

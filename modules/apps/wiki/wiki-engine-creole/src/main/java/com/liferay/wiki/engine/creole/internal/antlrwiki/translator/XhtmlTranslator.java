@@ -228,9 +228,12 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 	protected void appendWikiHref(LinkNode linkNode) {
 		WikiPage page = null;
 
+		String link = linkNode.getLink();
+
+		link = link.replaceAll(_NON_BREAKING_SPACE_PATTERN, StringPool.SPACE);
+
 		try {
-			page = WikiPageLocalServiceUtil.getPage(
-				_page.getNodeId(), linkNode.getLink());
+			page = WikiPageLocalServiceUtil.getPage(_page.getNodeId(), link);
 		}
 		catch (NoSuchPageException nspe) {
 		}
@@ -249,7 +252,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 			return;
 		}
 
-		String pageTitle = linkNode.getLink();
+		String pageTitle = link;
 
 		if ((page != null) && (_viewPageURL != null)) {
 			_viewPageURL.setParameter("title", pageTitle);
@@ -302,6 +305,8 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 	}
 
 	private static final String _HEADING_ANCHOR_PREFIX = "section-";
+
+	private static final String _NON_BREAKING_SPACE_PATTERN = "\u00A0";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		XhtmlTranslator.class);

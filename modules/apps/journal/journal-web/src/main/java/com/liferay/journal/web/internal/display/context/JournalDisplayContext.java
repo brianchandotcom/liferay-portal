@@ -254,7 +254,6 @@ public class JournalDisplayContext {
 		long groupId = ParamUtil.getLong(_request, "groupId");
 		String articleId = ParamUtil.getString(_request, "articleId");
 		double version = ParamUtil.getDouble(_request, "version");
-		int page = ParamUtil.getInteger(_request, "page");
 
 		JournalArticle article = JournalArticleLocalServiceUtil.fetchArticle(
 			groupId, articleId, version);
@@ -262,6 +261,8 @@ public class JournalDisplayContext {
 		if (article == null) {
 			return _articleDisplay;
 		}
+
+		int page = ParamUtil.getInteger(_request, "page");
 
 		_articleDisplay = JournalArticleLocalServiceUtil.getArticleDisplay(
 			article, null, null, _themeDisplay.getLanguageId(), page,

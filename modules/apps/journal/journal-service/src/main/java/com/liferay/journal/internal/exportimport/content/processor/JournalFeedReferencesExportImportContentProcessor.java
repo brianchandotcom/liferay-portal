@@ -125,8 +125,6 @@ public class JournalFeedReferencesExportImportContentProcessor
 			return null;
 		}
 
-		Map<String, String> map = new HashMap<>();
-
 		String journalFeedReference = content.substring(
 			beginPos + _JOURNAL_FEED_FRIENDLY_URL.length(), endPos);
 
@@ -135,6 +133,8 @@ public class JournalFeedReferencesExportImportContentProcessor
 		if (pathArray.length < 2) {
 			return null;
 		}
+
+		Map<String, String> map = new HashMap<>();
 
 		map.put("endPos", String.valueOf(endPos));
 		map.put("feedId", pathArray[1]);

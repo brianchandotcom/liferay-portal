@@ -80,6 +80,7 @@ public class SPIStatusStoppedNotificationMessageListener
 
 		String fromName = NotificationUtil.getNotificationEmailFromName(
 			portletPreferences);
+
 		String fromAddress = NotificationUtil.getNotificationEmailFromAddress(
 			portletPreferences);
 

@@ -254,6 +254,7 @@ public class SharepointServerResponseConverter {
 	private SharepointFileEntry _createFileEntry(JSONObject jsonObject) {
 		String extRepositoryModelKey = jsonObject.getString(
 			"ServerRelativeUrl");
+
 		String name = jsonObject.getString("Name");
 
 		String title = name;

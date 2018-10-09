@@ -143,6 +143,7 @@ public class FilterConstraintTest {
 	@Test
 	public void testGetCombinationsWithNullLeftFilter() {
 		List<FilterConstraint> leftFilterConstraint = new ArrayList<>();
+
 		List<FilterConstraint> rightFilterConstraint = new ArrayList<>();
 
 		rightFilterConstraint.add(getFilterConstraint("description", "test2"));

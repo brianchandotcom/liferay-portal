@@ -89,6 +89,7 @@ public class UpgradeReportEntry extends UpgradeProcess {
 				while (rs.next()) {
 					long companyId = rs.getLong("companyId");
 					long definitionId = rs.getLong("entryId");
+
 					String reportParameters = rs.getString("reportParameters");
 
 					String updatedReportParameters = updateEntryParameters(

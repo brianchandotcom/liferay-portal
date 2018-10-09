@@ -119,6 +119,7 @@ public class UpgradePortletId
 
 			while (rs.next()) {
 				long plid = rs.getLong("plid");
+
 				String typeSettings = rs.getString("typeSettings");
 
 				String newTypeSettings = getNewTypeSettings(

@@ -484,7 +484,7 @@ class Sidebar extends Component {
 								aria-hidden="true"
 								class="lexicon-icon lexicon-icon-caret-bottom"
 							>
-								<use xlinkHref={`${spritemap}#caret-bottom`} />
+								<use xlink:href={`${spritemap}#caret-bottom`} />
 							</svg>
 						</a>
 						<div
@@ -559,6 +559,7 @@ class Sidebar extends Component {
 								id={`ddm-field-types-${key}-body`}
 								role="tabpanel"
 							>
+							
 								<div class="panel-body p-0 m-0 list-group">
 									{fieldTypesGroup[key].fields.map(
 										fieldType => (
@@ -637,7 +638,7 @@ class Sidebar extends Component {
 							class="lexicon-icon lexicon-icon-times"
 						>
 							<use
-								xlinkHref={`${spritemap}#times`}
+								xlink:href={`${spritemap}#times`}
 							/>
 						</svg>
 					</a>

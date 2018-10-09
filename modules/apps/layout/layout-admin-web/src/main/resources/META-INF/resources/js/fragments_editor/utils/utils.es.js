@@ -12,9 +12,10 @@ function getFragmentRowIndex(structure, fragmentEntryLinkId) {
 		row => {
 			return row.columns.find(
 				column => {
-					return (
-						column.fragmentEntryLinkId ===
-						fragmentEntryLinkId
+					return column.fragmentEntryLinkIds.find(
+						_fragmentEntryLinkId => (
+							_fragmentEntryLinkId === fragmentEntryLinkId
+						)
 					);
 				}
 			);

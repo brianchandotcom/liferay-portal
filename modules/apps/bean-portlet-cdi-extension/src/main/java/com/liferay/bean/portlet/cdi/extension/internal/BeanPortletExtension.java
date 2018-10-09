@@ -75,15 +75,10 @@ import javax.enterprise.inject.spi.ProcessAnnotatedType;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletSession;
-import javax.portlet.annotations.ActionMethod;
 import javax.portlet.annotations.ContextPath;
 import javax.portlet.annotations.CustomPortletMode;
 import javax.portlet.annotations.CustomWindowState;
-import javax.portlet.annotations.DestroyMethod;
 import javax.portlet.annotations.EventDefinition;
-import javax.portlet.annotations.EventMethod;
-import javax.portlet.annotations.HeaderMethod;
-import javax.portlet.annotations.InitMethod;
 import javax.portlet.annotations.Namespace;
 import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
@@ -96,10 +91,8 @@ import javax.portlet.annotations.PortletRequestScoped;
 import javax.portlet.annotations.PortletSerializable;
 import javax.portlet.annotations.PortletSessionScoped;
 import javax.portlet.annotations.PublicRenderParameterDefinition;
-import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.RenderStateScoped;
 import javax.portlet.annotations.RuntimeOption;
-import javax.portlet.annotations.ServeResourceMethod;
 import javax.portlet.annotations.UserAttribute;
 import javax.portlet.annotations.WindowId;
 import javax.portlet.filter.PortletFilter;
@@ -263,32 +256,7 @@ public class BeanPortletExtension implements Extension {
 			_liferayPortletConfigurationClasses.add(annotatedClass);
 		}
 
-		_scanMethods(
-			_scannedMethods, annotatedClass, MethodType.ACTION,
-			ActionMethod.class);
-
-		_scanMethods(
-			_scannedMethods, annotatedClass, MethodType.DESTROY,
-			DestroyMethod.class);
-
-		_scanMethods(
-			_scannedMethods, annotatedClass, MethodType.EVENT,
-			EventMethod.class);
-
-		_scanMethods(
-			_scannedMethods, annotatedClass, MethodType.HEADER,
-			HeaderMethod.class);
-
-		_scanMethods(
-			_scannedMethods, annotatedClass, MethodType.INIT, InitMethod.class);
-
-		_scanMethods(
-			_scannedMethods, annotatedClass, MethodType.RENDER,
-			RenderMethod.class);
-
-		_scanMethods(
-			_scannedMethods, annotatedClass, MethodType.SERVE_RESOURCE,
-			ServeResourceMethod.class);
+		_scanMethods(_scannedMethods, annotatedClass);
 	}
 
 	public void step3AfterBeanDiscovery(
@@ -976,15 +944,14 @@ public class BeanPortletExtension implements Extension {
 	}
 
 	private void _scanMethods(
-		List<ScannedMethod> scannedMethods, Class<?> javaClass,
-		MethodType methodType, Class<? extends Annotation> annotationClass) {
+		List<ScannedMethod> scannedMethods, Class<?> javaClass) {
 
 		for (Method method : javaClass.getMethods()) {
-			if ((method.getAnnotation(annotationClass) != null) &&
-				methodType.isMatch(method)) {
-
-				scannedMethods.add(
-					new ScannedMethod(javaClass, methodType, method));
+			for (MethodType methodType : MethodType.values()) {
+				if (methodType.isMatch(method)) {
+					scannedMethods.add(
+						new ScannedMethod(javaClass, methodType, method));
+				}
 			}
 		}
 	}

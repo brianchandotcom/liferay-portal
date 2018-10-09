@@ -5,10 +5,6 @@ buildService {
 	testDir = "../invitation-invite-members-test/src/testIntegration/java"
 }
 
-buildUpgradeTable {
-	upgradeTableDir = "src/main/java/com/liferay/invitation/invite/members/upgrade/v1_0_0/util"
-}
-
 dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

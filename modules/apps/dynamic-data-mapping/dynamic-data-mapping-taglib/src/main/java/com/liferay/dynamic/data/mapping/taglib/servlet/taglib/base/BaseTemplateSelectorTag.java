@@ -134,15 +134,15 @@ public abstract class BaseTemplateSelectorTag extends com.liferay.taglib.util.In
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ddm:template-selector:className", _className);
-		request.setAttribute("liferay-ddm:template-selector:defaultDisplayStyle", _defaultDisplayStyle);
-		request.setAttribute("liferay-ddm:template-selector:displayStyle", _displayStyle);
-		request.setAttribute("liferay-ddm:template-selector:displayStyleGroupId", String.valueOf(_displayStyleGroupId));
-		request.setAttribute("liferay-ddm:template-selector:displayStyles", _displayStyles);
-		request.setAttribute("liferay-ddm:template-selector:icon", _icon);
-		request.setAttribute("liferay-ddm:template-selector:label", _label);
-		request.setAttribute("liferay-ddm:template-selector:refreshURL", _refreshURL);
-		request.setAttribute("liferay-ddm:template-selector:showEmptyOption", String.valueOf(_showEmptyOption));
+		setNamespacedAttribute(request, "className", _className);
+		setNamespacedAttribute(request, "defaultDisplayStyle", _defaultDisplayStyle);
+		setNamespacedAttribute(request, "displayStyle", _displayStyle);
+		setNamespacedAttribute(request, "displayStyleGroupId", _displayStyleGroupId);
+		setNamespacedAttribute(request, "displayStyles", _displayStyles);
+		setNamespacedAttribute(request, "icon", _icon);
+		setNamespacedAttribute(request, "label", _label);
+		setNamespacedAttribute(request, "refreshURL", _refreshURL);
+		setNamespacedAttribute(request, "showEmptyOption", _showEmptyOption);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "liferay-ddm:template-selector:";

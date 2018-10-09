@@ -1,11 +1,6 @@
 <?xml version="1.0"?>
 
-<taglib
-	version="2.1"
-	xmlns="http://java.sun.com/xml/ns/javaee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
->
+<taglib xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
 	<tlib-version>1.0</tlib-version>
 	<short-name>liferay-ddm</short-name>
 	<uri>http://liferay.com/tld/ddm</uri>
@@ -38,6 +33,11 @@
 			<type>com.liferay.dynamic.data.mapping.storage.DDMFormValues</type>
 		</attribute>
 		<attribute>
+			<name>documentLibrarySelectorURL</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>fieldsNamespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -47,6 +47,11 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>imageSelectorURL</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>localizable</name>

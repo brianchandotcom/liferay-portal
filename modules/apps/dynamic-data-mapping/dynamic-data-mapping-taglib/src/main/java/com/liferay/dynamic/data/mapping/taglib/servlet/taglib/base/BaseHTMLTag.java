@@ -49,12 +49,20 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		return _ddmFormValues;
 	}
 
+	public java.lang.String getDocumentLibrarySelectorURL() {
+		return _documentLibrarySelectorURL;
+	}
+
 	public java.lang.String getFieldsNamespace() {
 		return _fieldsNamespace;
 	}
 
 	public boolean getIgnoreRequestValue() {
 		return _ignoreRequestValue;
+	}
+
+	public java.lang.String getImageSelectorURL() {
+		return _imageSelectorURL;
 	}
 
 	public boolean getLocalizable() {
@@ -93,12 +101,20 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		_ddmFormValues = ddmFormValues;
 	}
 
+	public void setDocumentLibrarySelectorURL(java.lang.String documentLibrarySelectorURL) {
+		_documentLibrarySelectorURL = documentLibrarySelectorURL;
+	}
+
 	public void setFieldsNamespace(java.lang.String fieldsNamespace) {
 		_fieldsNamespace = fieldsNamespace;
 	}
 
 	public void setIgnoreRequestValue(boolean ignoreRequestValue) {
 		_ignoreRequestValue = ignoreRequestValue;
+	}
+
+	public void setImageSelectorURL(java.lang.String imageSelectorURL) {
+		_imageSelectorURL = imageSelectorURL;
 	}
 
 	public void setLocalizable(boolean localizable) {
@@ -136,18 +152,15 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		_classNameId = 0;
 		_classPK = 0;
 		_ddmFormValues = null;
+		_documentLibrarySelectorURL = null;
 		_fieldsNamespace = null;
 		_ignoreRequestValue = false;
+		_imageSelectorURL = null;
 		_localizable = true;
 		_readOnly = false;
 		_repeatable = true;
 		_requestedLocale = null;
 		_showEmptyFieldLabel = true;
-	}
-
-	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
 	}
 
 	@Override
@@ -157,23 +170,22 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ddm:html:checkRequired", String.valueOf(_checkRequired));
-		request.setAttribute("liferay-ddm:html:classNameId", String.valueOf(_classNameId));
-		request.setAttribute("liferay-ddm:html:classPK", String.valueOf(_classPK));
-		request.setAttribute("liferay-ddm:html:ddmFormValues", _ddmFormValues);
-		request.setAttribute("liferay-ddm:html:fieldsNamespace", _fieldsNamespace);
-		request.setAttribute("liferay-ddm:html:ignoreRequestValue", String.valueOf(_ignoreRequestValue));
-		request.setAttribute("liferay-ddm:html:localizable", String.valueOf(_localizable));
-		request.setAttribute("liferay-ddm:html:readOnly", String.valueOf(_readOnly));
-		request.setAttribute("liferay-ddm:html:repeatable", String.valueOf(_repeatable));
-		request.setAttribute("liferay-ddm:html:requestedLocale", _requestedLocale);
-		request.setAttribute("liferay-ddm:html:showEmptyFieldLabel", String.valueOf(_showEmptyFieldLabel));
+		setNamespacedAttribute(request, "checkRequired", _checkRequired);
+		setNamespacedAttribute(request, "classNameId", _classNameId);
+		setNamespacedAttribute(request, "classPK", _classPK);
+		setNamespacedAttribute(request, "ddmFormValues", _ddmFormValues);
+		setNamespacedAttribute(request, "documentLibrarySelectorURL", _documentLibrarySelectorURL);
+		setNamespacedAttribute(request, "fieldsNamespace", _fieldsNamespace);
+		setNamespacedAttribute(request, "ignoreRequestValue", _ignoreRequestValue);
+		setNamespacedAttribute(request, "imageSelectorURL", _imageSelectorURL);
+		setNamespacedAttribute(request, "localizable", _localizable);
+		setNamespacedAttribute(request, "readOnly", _readOnly);
+		setNamespacedAttribute(request, "repeatable", _repeatable);
+		setNamespacedAttribute(request, "requestedLocale", _requestedLocale);
+		setNamespacedAttribute(request, "showEmptyFieldLabel", _showEmptyFieldLabel);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "liferay-ddm:html:";
-
-	private static final String _END_PAGE =
-		"/html/end.jsp";
 
 	private static final String _START_PAGE =
 		"/html/start.jsp";
@@ -182,8 +194,10 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 	private long _classNameId = 0;
 	private long _classPK = 0;
 	private com.liferay.dynamic.data.mapping.storage.DDMFormValues _ddmFormValues = null;
+	private java.lang.String _documentLibrarySelectorURL = null;
 	private java.lang.String _fieldsNamespace = null;
 	private boolean _ignoreRequestValue = false;
+	private java.lang.String _imageSelectorURL = null;
 	private boolean _localizable = true;
 	private boolean _readOnly = false;
 	private boolean _repeatable = true;

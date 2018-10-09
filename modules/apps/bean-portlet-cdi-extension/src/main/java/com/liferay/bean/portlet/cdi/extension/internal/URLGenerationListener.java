@@ -19,16 +19,7 @@ package com.liferay.bean.portlet.cdi.extension.internal;
  */
 public class URLGenerationListener {
 
-	public URLGenerationListener(
-		String listenerName, int ordinal, String listenerClassName) {
-
-		if (listenerName == null) {
-			_listenerName = listenerClassName;
-		}
-		else {
-			_listenerName = listenerName;
-		}
-
+	public URLGenerationListener(int ordinal, String listenerClassName) {
 		_ordinal = ordinal;
 		_listenerClassName = listenerClassName;
 	}
@@ -42,7 +33,6 @@ public class URLGenerationListener {
 	}
 
 	private final String _listenerClassName;
-	private final String _listenerName;
 	private final int _ordinal;
 
 }

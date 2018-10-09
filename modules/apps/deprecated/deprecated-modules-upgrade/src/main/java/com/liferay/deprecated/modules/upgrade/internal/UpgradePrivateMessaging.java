@@ -14,7 +14,7 @@
 
 package com.liferay.deprecated.modules.upgrade.internal;
 
-import com.liferay.message.boards.kernel.service.MBThreadLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 

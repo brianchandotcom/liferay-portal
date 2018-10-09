@@ -132,11 +132,6 @@ public abstract class BaseGadgetPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			themeDisplay.getCompanyId(), portletDisplay.getId());
-
 		Gadget gadget = getGadget(renderRequest);
 
 		if (gadget == null) {
@@ -144,6 +139,11 @@ public abstract class BaseGadgetPortlet extends MVCPortlet {
 		}
 
 		GadgetSpec gadgetSpec = ShindigUtil.getGadgetSpec(gadget.getUrl());
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			themeDisplay.getCompanyId(), portletDisplay.getId());
 
 		overrideConfiguration(gadgetSpec, portlet, portletDisplay);
 

@@ -352,13 +352,13 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		throws SchedulerException {
 
 		try {
-			Scheduler scheduler = getScheduler(storageType);
-
 			Trigger quartzTrigger = (Trigger)trigger.getWrappedTrigger();
 
 			if (quartzTrigger == null) {
 				return;
 			}
+
+			Scheduler scheduler = getScheduler(storageType);
 
 			description = fixMaxLength(
 				description, _descriptionMaxLength, storageType);
@@ -887,22 +887,22 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		JobDetail jobDetail = scheduler.getJobDetail(jobKey);
 
-		TriggerKey triggerKey = new TriggerKey(
-			jobKey.getName(), jobKey.getGroup());
-
 		if (jobDetail == null) {
 			return;
 		}
 
-		JobDataMap jobDataMap = jobDetail.getJobDataMap();
-
-		JobState jobState = getJobState(jobDataMap);
+		TriggerKey triggerKey = new TriggerKey(
+			jobKey.getName(), jobKey.getGroup());
 
 		Trigger trigger = scheduler.getTrigger(triggerKey);
 
 		if (trigger == null) {
 			return;
 		}
+
+		JobDataMap jobDataMap = jobDetail.getJobDataMap();
+
+		JobState jobState = getJobState(jobDataMap);
 
 		jobState.setTriggerDate(SchedulerEngine.END_TIME, new Date());
 		jobState.setTriggerDate(

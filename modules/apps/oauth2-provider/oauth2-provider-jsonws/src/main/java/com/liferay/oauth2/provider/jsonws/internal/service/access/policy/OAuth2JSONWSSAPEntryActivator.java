@@ -52,7 +52,6 @@ public class OAuth2JSONWSSAPEntryActivator {
 	public void addSAPEntries(long companyId) throws PortalException {
 		for (String[] sapEntryObjectArray : _SAP_ENTRY_OBJECT_ARRAYS) {
 			String name = sapEntryObjectArray[0];
-			String allowedServiceSignatures = sapEntryObjectArray[1];
 
 			SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
 				companyId, name);
@@ -60,6 +59,8 @@ public class OAuth2JSONWSSAPEntryActivator {
 			if (sapEntry != null) {
 				continue;
 			}
+
+			String allowedServiceSignatures = sapEntryObjectArray[1];
 
 			ResourceBundleLoader resourceBundleLoader =
 				ResourceBundleLoaderUtil.

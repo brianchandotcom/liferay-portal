@@ -323,7 +323,6 @@ public class GoogleAuthorizationImpl implements GoogleAuthorization {
 		throws Exception {
 
 		String emailAddress = userinfoplus.getEmail();
-		String googleUserId = userinfoplus.getId();
 		String firstName = userinfoplus.getGivenName();
 		String lastName = userinfoplus.getFamilyName();
 		boolean male = Objects.equals(userinfoplus.getGender(), "male");
@@ -352,6 +351,8 @@ public class GoogleAuthorizationImpl implements GoogleAuthorization {
 		long[] userGroupIds = null;
 
 		ServiceContext serviceContext = new ServiceContext();
+
+		String googleUserId = userinfoplus.getId();
 
 		if (!StringUtil.equalsIgnoreCase(
 				googleUserId, user.getGoogleUserId())) {

@@ -179,8 +179,6 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 			boolean inheritable, long expirationTime, boolean renew)
 		throws PortalException {
 
-		Date now = new Date();
-
 		Lock lock = lockPersistence.fetchByC_K(className, key);
 
 		if (lock != null) {
@@ -216,6 +214,8 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		else if (!renew) {
 			return lock;
 		}
+
+		Date now = new Date();
 
 		lock.setCreateDate(now);
 

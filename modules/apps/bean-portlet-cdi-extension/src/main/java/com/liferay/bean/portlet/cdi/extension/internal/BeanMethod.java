@@ -137,10 +137,6 @@ public class BeanMethod implements Comparable<BeanMethod> {
 		return _method;
 	}
 
-	public int getParameterCount() {
-		return _method.getParameterCount();
-	}
-
 	public PortletMode getPortletMode() {
 		RenderMethod renderMethod = _method.getAnnotation(RenderMethod.class);
 

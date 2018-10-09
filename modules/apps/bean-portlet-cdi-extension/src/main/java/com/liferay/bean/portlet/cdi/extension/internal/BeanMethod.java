@@ -53,7 +53,6 @@ public class BeanMethod {
 
 		_beanManager = beanManager;
 		_type = type;
-		_beanClass = beanClass;
 		_method = method;
 		_ordinal = ordinal;
 
@@ -74,10 +73,7 @@ public class BeanMethod {
 
 		BeanMethod beanMethod = (BeanMethod)obj;
 
-		Class<?> beanClass = beanMethod.getBeanClass();
-
 		if ((_ordinal == beanMethod.getOrdinal()) &&
-			Objects.equals(_beanClass.getName(), beanClass.getName()) &&
 			Objects.equals(_method, beanMethod.getMethod()) &&
 			(_type == beanMethod.getType())) {
 
@@ -106,10 +102,6 @@ public class BeanMethod {
 		}
 
 		return processAction.name();
-	}
-
-	public Class<?> getBeanClass() {
-		return _beanClass;
 	}
 
 	public String getInclude() {
@@ -179,7 +171,7 @@ public class BeanMethod {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(_beanClass.getName(), _method, _ordinal, _type);
+		return Objects.hash(_method, _ordinal, _type);
 	}
 
 	public Object invoke(Object... args)
@@ -222,7 +214,6 @@ public class BeanMethod {
 	}
 
 	private final Bean<?> _bean;
-	private final Class<?> _beanClass;
 	private final BeanManager _beanManager;
 	private final Method _method;
 	private final int _ordinal;

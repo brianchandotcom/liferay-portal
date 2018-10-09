@@ -47,6 +47,7 @@ import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.parser.apio.architect.entity.EntityModel;
+import com.liferay.parser.apio.architect.filter.ExpressionConvert;
 import com.liferay.parser.apio.architect.filter.Filter;
 import com.liferay.parser.apio.architect.filter.InvalidFilterException;
 import com.liferay.parser.apio.architect.sort.Sort;
@@ -613,14 +614,8 @@ public class StructuredContentNestedCollectionResource
 		}
 
 		try {
-			Expression expression = filter.getExpression();
-
-			Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
-				PropsUtil.get(PropsKeys.INDEX_DATE_FORMAT_PATTERN));
-
-			return (com.liferay.portal.kernel.search.filter.Filter)
-				expression.accept(
-					new ExpressionVisitorImpl(format, locale, _entityModel));
+			return _expressionConvert.convert(
+				filter.getExpression(), locale, _entityModel);
 		}
 		catch (Exception e) {
 			throw new InvalidFilterException(
@@ -736,6 +731,12 @@ public class StructuredContentNestedCollectionResource
 		target = "(entity.model.name=" + StructuredContentEntityModel.NAME + ")"
 	)
 	private EntityModel _entityModel;
+
+	@Reference(
+		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"
+	)
+	private ExpressionConvert<com.liferay.portal.kernel.search.filter.Filter>
+		_expressionConvert;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"

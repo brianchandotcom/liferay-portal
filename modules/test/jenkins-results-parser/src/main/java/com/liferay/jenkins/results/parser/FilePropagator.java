@@ -145,7 +145,7 @@ public class FilePropagator {
 			}
 			else {
 				commands.add(
-					"rsync -svI " + sourceFileName + " " + targetFileName);
+					"rsync -sqI " + sourceFileName + " " + targetFileName);
 			}
 
 			String targetDirName = targetFileName.substring(
@@ -262,7 +262,7 @@ public class FilePropagator {
 						filePropagatorTask._targetFileName));
 
 				commands.add(
-					"rsync -svI " + _mirrorSlave + ":" +
+					"rsync -sqI " + _mirrorSlave + ":" +
 						filePropagatorTask._targetFileName + " " +
 							filePropagatorTask._targetFileName);
 			}

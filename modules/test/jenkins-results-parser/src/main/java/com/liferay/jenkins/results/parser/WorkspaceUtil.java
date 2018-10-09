@@ -220,7 +220,7 @@ public class WorkspaceUtil {
 		private String _getRepositoryName() {
 			return JenkinsResultsParserUtil.getProperty(
 				_getWorkspaceProperties(), "repository.name", _repositoryType,
-				_getParentUpstreamBranchName());
+				getUpstreamBranchName());
 		}
 
 		private String _getUpstreamGitHubURL() {

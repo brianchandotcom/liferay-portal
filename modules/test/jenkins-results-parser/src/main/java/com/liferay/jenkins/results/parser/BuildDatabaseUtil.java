@@ -86,7 +86,7 @@ public class BuildDatabaseUtil {
 					Arrays.asList(distNodes.split(",")));
 
 				String command = JenkinsResultsParserUtil.combine(
-					"time rsync -svI --timeout=1200 ", distNode, ":", distPath,
+					"time rsync -sqI --timeout=1200 ", distNode, ":", distPath,
 					"/", BuildDatabase.BUILD_DATABASE_FILE_NAME, " ",
 					buildDatabaseFile.getCanonicalPath());
 

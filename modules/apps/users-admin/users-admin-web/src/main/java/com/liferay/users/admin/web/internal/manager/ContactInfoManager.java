@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.users.admin.web.internal.helper;
+package com.liferay.users.admin.web.internal.manager;
 
 import javax.portlet.ActionRequest;
 
 /**
  * @author Drew Brokke
  */
-public interface ContactInformationHelper<T> {
+public interface ContactInfoManager<T> {
 
-	public void delete(long entryId) throws Exception;
+	public void delete(long primaryKey) throws Exception;
 
 	public void edit(ActionRequest actionRequest) throws Exception;
 
-	public void makePrimary(long entryId) throws Exception;
+	public void makePrimary(long primaryKey) throws Exception;
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.web.internal.helper;
+package com.liferay.users.admin.web.internal.manager;
 
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.service.PhoneLocalService;
@@ -28,37 +28,28 @@ import javax.portlet.ActionRequest;
 /**
  * @author Drew Brokke
  */
-public class PhoneContactInformationHelper
-	extends BaseContactInformationHelper<Phone> {
+public class PhoneContactInfoManager extends BaseContactInfoManager<Phone> {
 
-	public PhoneContactInformationHelper(
-		Class entityClass, long entityClassPK, PhoneService phoneService,
-		PhoneLocalService phoneLocalService, UsersAdmin usersAdmin) {
+	public PhoneContactInfoManager(
+		Class clazz, long classPK, PhoneLocalService phoneLocalService,
+		PhoneService phoneService, UsersAdmin usersAdmin) {
 
-		_entityClass = entityClass;
-		_entityClassPK = entityClassPK;
-		_phoneService = phoneService;
+		_clazz = clazz;
+		_classPK = classPK;
 		_phoneLocalService = phoneLocalService;
+		_phoneService = phoneService;
 		_usersAdmin = usersAdmin;
 	}
 
-	@Override
-	public Phone addEntry(Phone phone) throws Exception {
-		return _phoneService.addPhone(
-			_entityClass.getName(), _entityClassPK, phone.getNumber(),
-			phone.getExtension(), phone.getTypeId(), phone.isPrimary(),
-			new ServiceContext());
-	}
-
-	public Phone constructEntry(ActionRequest actionRequest) {
-		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+	public Phone construct(ActionRequest actionRequest) {
+		long phoneId = ParamUtil.getLong(actionRequest, "primaryKey");
 
 		String extension = ParamUtil.getString(actionRequest, "phoneExtension");
 		String number = ParamUtil.getString(actionRequest, "phoneNumber");
 		boolean primary = ParamUtil.getBoolean(actionRequest, "phonePrimary");
 		long typeId = ParamUtil.getLong(actionRequest, "phoneTypeId");
 
-		Phone phone = _phoneLocalService.createPhone(entryId);
+		Phone phone = _phoneLocalService.createPhone(phoneId);
 
 		phone.setNumber(number);
 		phone.setExtension(extension);
@@ -69,44 +60,51 @@ public class PhoneContactInformationHelper
 	}
 
 	@Override
-	public void deleteEntry(long phoneId) throws Exception {
+	public Phone doAdd(Phone phone) throws Exception {
+		return _phoneService.addPhone(
+			_clazz.getName(), _classPK, phone.getNumber(), phone.getExtension(),
+			phone.getTypeId(), phone.isPrimary(), new ServiceContext());
+	}
+
+	@Override
+	public void doDelete(long phoneId) throws Exception {
 		_phoneService.deletePhone(phoneId);
 	}
 
 	@Override
-	public List<Phone> getEntries() throws Exception {
-		return _phoneService.getPhones(_entityClass.getName(), _entityClassPK);
-	}
-
-	@Override
-	public Phone getEntry(long phoneId) throws Exception {
-		return _phoneService.getPhone(phoneId);
-	}
-
-	@Override
-	public long getEntryId(Phone phone) {
-		return phone.getPhoneId();
-	}
-
-	@Override
-	public boolean isPrimaryEntry(Phone phone) {
-		return phone.isPrimary();
-	}
-
-	@Override
-	public void setEntryPrimary(Phone phone, boolean primary) {
-		phone.setPrimary(primary);
-	}
-
-	@Override
-	public void updateEntry(Phone phone) throws Exception {
+	public void doUpdate(Phone phone) throws Exception {
 		_phoneService.updatePhone(
 			phone.getPhoneId(), phone.getNumber(), phone.getExtension(),
 			phone.getTypeId(), phone.isPrimary());
 	}
 
-	private final Class _entityClass;
-	private final long _entityClassPK;
+	@Override
+	public Phone get(long phoneId) throws Exception {
+		return _phoneService.getPhone(phoneId);
+	}
+
+	@Override
+	public List<Phone> getAll() throws Exception {
+		return _phoneService.getPhones(_clazz.getName(), _classPK);
+	}
+
+	@Override
+	public long getPrimaryKey(Phone phone) {
+		return phone.getPhoneId();
+	}
+
+	@Override
+	public boolean isPrimary(Phone phone) {
+		return phone.isPrimary();
+	}
+
+	@Override
+	public void setPrimary(Phone phone, boolean primary) {
+		phone.setPrimary(primary);
+	}
+
+	private final long _classPK;
+	private final Class _clazz;
 	private final PhoneLocalService _phoneLocalService;
 	private final PhoneService _phoneService;
 	private final UsersAdmin _usersAdmin;

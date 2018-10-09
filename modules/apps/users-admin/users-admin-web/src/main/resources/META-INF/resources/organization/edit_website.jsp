@@ -17,12 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long entryId = ParamUtil.getLong(request, "entryId", 0L);
+long primaryKey = ParamUtil.getLong(request, "primaryKey", 0L);
 
 Website website = null;
 
-if (entryId > 0L) {
-	website = WebsiteServiceUtil.getWebsite(entryId);
+if (primaryKey > 0L) {
+	website = WebsiteServiceUtil.getWebsite(primaryKey);
 }
 %>
 
@@ -30,7 +30,7 @@ if (entryId > 0L) {
 	<aui:model-context bean="<%= website %>" model="<%= Website.class %>" />
 
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />
-	<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
+	<aui:input name="primaryKey" type="hidden" value="<%= primaryKey %>" />
 	<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.WEBSITE %>" />
 
 	<aui:input checked="<%= (website != null)? website.isPrimary() : false %>" id="websitePrimary" label="make-primary" name="websitePrimary" type="checkbox" />

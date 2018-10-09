@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.web.internal.helper;
+package com.liferay.users.admin.web.internal.manager;
 
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -28,38 +28,28 @@ import javax.portlet.ActionRequest;
 /**
  * @author Drew Brokke
  */
-public class WebsiteContactInformationHelper
-	extends BaseContactInformationHelper<Website> {
+public class WebsiteContactInfoManager extends BaseContactInfoManager<Website> {
 
-	public WebsiteContactInformationHelper(
-		Class entityClass, long entityClassPK, WebsiteService websiteService,
-		WebsiteLocalService websiteLocalService, UsersAdmin usersAdmin) {
+	public WebsiteContactInfoManager(
+		Class clazz, long classPK, WebsiteLocalService websiteLocalService,
+		WebsiteService websiteService, UsersAdmin usersAdmin) {
 
-		_entityClass = entityClass;
-		_entityClassPK = entityClassPK;
-		_websiteService = websiteService;
+		_clazz = clazz;
+		_classPK = classPK;
 		_websiteLocalService = websiteLocalService;
+		_websiteService = websiteService;
 		_usersAdmin = usersAdmin;
 	}
 
 	@Override
-	protected Website addEntry(Website website) throws Exception {
-		return _websiteService.addWebsite(
-			_entityClass.getName(), _entityClassPK, website.getUrl(),
-			website.getTypeId(), website.isPrimary(), new ServiceContext());
-	}
-
-	@Override
-	protected Website constructEntry(ActionRequest actionRequest)
-		throws Exception {
-
-		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+	protected Website construct(ActionRequest actionRequest) throws Exception {
+		long websiteId = ParamUtil.getLong(actionRequest, "primaryKey");
 
 		boolean primary = ParamUtil.getBoolean(actionRequest, "websitePrimary");
 		long typeId = ParamUtil.getLong(actionRequest, "websiteTypeId");
 		String url = ParamUtil.getString(actionRequest, "websiteUrl");
 
-		Website website = _websiteLocalService.createWebsite(entryId);
+		Website website = _websiteLocalService.createWebsite(websiteId);
 
 		website.setUrl(url);
 		website.setTypeId(typeId);
@@ -69,45 +59,51 @@ public class WebsiteContactInformationHelper
 	}
 
 	@Override
-	protected void deleteEntry(long websiteId) throws Exception {
+	protected Website doAdd(Website website) throws Exception {
+		return _websiteService.addWebsite(
+			_clazz.getName(), _classPK, website.getUrl(), website.getTypeId(),
+			website.isPrimary(), new ServiceContext());
+	}
+
+	@Override
+	protected void doDelete(long websiteId) throws Exception {
 		_websiteService.deleteWebsite(websiteId);
 	}
 
 	@Override
-	protected List<Website> getEntries() throws Exception {
-		return _websiteService.getWebsites(
-			_entityClass.getName(), _entityClassPK);
-	}
-
-	@Override
-	protected Website getEntry(long websiteId) throws Exception {
-		return _websiteService.getWebsite(websiteId);
-	}
-
-	@Override
-	protected long getEntryId(Website website) {
-		return website.getWebsiteId();
-	}
-
-	@Override
-	protected boolean isPrimaryEntry(Website website) {
-		return website.isPrimary();
-	}
-
-	@Override
-	protected void setEntryPrimary(Website website, boolean primary) {
-		website.setPrimary(primary);
-	}
-
-	@Override
-	protected void updateEntry(Website website) throws Exception {
+	protected void doUpdate(Website website) throws Exception {
 		_websiteService.updateWebsite(
 			website.getWebsiteId(), website.getUrl(), website.getTypeId(),
 			website.isPrimary());
 	}
 
-	private final Class _entityClass;
-	private final long _entityClassPK;
+	@Override
+	protected Website get(long websiteId) throws Exception {
+		return _websiteService.getWebsite(websiteId);
+	}
+
+	@Override
+	protected List<Website> getAll() throws Exception {
+		return _websiteService.getWebsites(_clazz.getName(), _classPK);
+	}
+
+	@Override
+	protected long getPrimaryKey(Website website) {
+		return website.getWebsiteId();
+	}
+
+	@Override
+	protected boolean isPrimary(Website website) {
+		return website.isPrimary();
+	}
+
+	@Override
+	protected void setPrimary(Website website, boolean primary) {
+		website.setPrimary(primary);
+	}
+
+	private final long _classPK;
+	private final Class _clazz;
 	private final UsersAdmin _usersAdmin;
 	private final WebsiteLocalService _websiteLocalService;
 	private final WebsiteService _websiteService;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.web.internal.helper;
+package com.liferay.users.admin.web.internal.manager;
 
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.service.EmailAddressLocalService;
@@ -28,37 +28,26 @@ import javax.portlet.ActionRequest;
 /**
  * @author Drew Brokke
  */
-public class EmailAddressContactInformationHelper
-	extends BaseContactInformationHelper<EmailAddress> {
+public class EmailAddressContactInfoManager
+	extends BaseContactInfoManager<EmailAddress> {
 
-	public EmailAddressContactInformationHelper(
-		Class entityClass, long entityClassPK,
-		EmailAddressService emailAddressService,
+	public EmailAddressContactInfoManager(
+		Class clazz, long classPK,
 		EmailAddressLocalService emailAddressLocalService,
-		UsersAdmin usersAdmin) {
+		EmailAddressService emailAddressService, UsersAdmin usersAdmin) {
 
-		_entityClass = entityClass;
-		_entityClassPK = entityClassPK;
-		_emailAddressService = emailAddressService;
+		_clazz = clazz;
+		_classPK = classPK;
 		_emailAddressLocalService = emailAddressLocalService;
+		_emailAddressService = emailAddressService;
 		_usersAdmin = usersAdmin;
 	}
 
 	@Override
-	protected EmailAddress addEntry(EmailAddress emailAddress)
+	protected EmailAddress construct(ActionRequest actionRequest)
 		throws Exception {
 
-		return _emailAddressService.addEmailAddress(
-			_entityClass.getName(), _entityClassPK, emailAddress.getAddress(),
-			emailAddress.getTypeId(), emailAddress.isPrimary(),
-			new ServiceContext());
-	}
-
-	@Override
-	protected EmailAddress constructEntry(ActionRequest actionRequest)
-		throws Exception {
-
-		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+		long emailAddressId = ParamUtil.getLong(actionRequest, "primaryKey");
 
 		String address = ParamUtil.getString(
 			actionRequest, "emailAddressAddress");
@@ -67,7 +56,7 @@ public class EmailAddressContactInformationHelper
 		long typeId = ParamUtil.getLong(actionRequest, "emailAddressTypeId");
 
 		EmailAddress emailAddress =
-			_emailAddressLocalService.createEmailAddress(entryId);
+			_emailAddressLocalService.createEmailAddress(emailAddressId);
 
 		emailAddress.setAddress(address);
 		emailAddress.setTypeId(typeId);
@@ -77,47 +66,55 @@ public class EmailAddressContactInformationHelper
 	}
 
 	@Override
-	protected void deleteEntry(long emailAddressId) throws Exception {
+	protected EmailAddress doAdd(EmailAddress emailAddress) throws Exception {
+		return _emailAddressService.addEmailAddress(
+			_clazz.getName(), _classPK, emailAddress.getAddress(),
+			emailAddress.getTypeId(), emailAddress.isPrimary(),
+			new ServiceContext());
+	}
+
+	@Override
+	protected void doDelete(long emailAddressId) throws Exception {
 		_emailAddressService.deleteEmailAddress(emailAddressId);
 	}
 
 	@Override
-	protected List<EmailAddress> getEntries() throws Exception {
-		return _emailAddressService.getEmailAddresses(
-			_entityClass.getName(), _entityClassPK);
-	}
-
-	@Override
-	protected EmailAddress getEntry(long emailAddressId) throws Exception {
-		return _emailAddressService.getEmailAddress(emailAddressId);
-	}
-
-	@Override
-	protected long getEntryId(EmailAddress emailAddress) {
-		return emailAddress.getEmailAddressId();
-	}
-
-	@Override
-	protected boolean isPrimaryEntry(EmailAddress emailAddress) {
-		return emailAddress.isPrimary();
-	}
-
-	@Override
-	protected void setEntryPrimary(EmailAddress emailAddress, boolean primary) {
-		emailAddress.setPrimary(primary);
-	}
-
-	@Override
-	protected void updateEntry(EmailAddress emailAddress) throws Exception {
+	protected void doUpdate(EmailAddress emailAddress) throws Exception {
 		_emailAddressService.updateEmailAddress(
 			emailAddress.getEmailAddressId(), emailAddress.getAddress(),
 			emailAddress.getTypeId(), emailAddress.isPrimary());
 	}
 
+	@Override
+	protected EmailAddress get(long emailAddressId) throws Exception {
+		return _emailAddressService.getEmailAddress(emailAddressId);
+	}
+
+	@Override
+	protected List<EmailAddress> getAll() throws Exception {
+		return _emailAddressService.getEmailAddresses(
+			_clazz.getName(), _classPK);
+	}
+
+	@Override
+	protected long getPrimaryKey(EmailAddress emailAddress) {
+		return emailAddress.getEmailAddressId();
+	}
+
+	@Override
+	protected boolean isPrimary(EmailAddress emailAddress) {
+		return emailAddress.isPrimary();
+	}
+
+	@Override
+	protected void setPrimary(EmailAddress emailAddress, boolean primary) {
+		emailAddress.setPrimary(primary);
+	}
+
+	private final long _classPK;
+	private final Class _clazz;
 	private final EmailAddressLocalService _emailAddressLocalService;
 	private final EmailAddressService _emailAddressService;
-	private final Class _entityClass;
-	private final long _entityClassPK;
 	private final UsersAdmin _usersAdmin;
 
 }

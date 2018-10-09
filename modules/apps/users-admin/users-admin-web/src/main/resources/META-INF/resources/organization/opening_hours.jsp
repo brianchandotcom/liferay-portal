@@ -57,52 +57,64 @@ List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 
 <liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + Organization.class.getName() + ListTypeConstants.ORGANIZATION_SERVICE %>" message="please-select-a-type" />
 
-<%
-for (OrgLabor orgLabor : orgLabors) {
-	OrgLaborDisplay orgLaborDisplay = new OrgLaborDisplay(locale, orgLabor);
-%>
-
-	<div class="opening-hours-entry">
-		<div class="autofit-row opening-hours-header">
-			<span class="autofit-col">
-				<h5><%= orgLaborDisplay.getTitle() %></h5>
-			</span>
-			<span class="autofit-col lfr-search-container-wrapper">
-				<liferay-util:include page="/organization/opening_hours_action.jsp" servletContext="<%= application %>">
-					<liferay-util:param name="orgLaborId" value="<%= String.valueOf(orgLabor.getOrgLaborId()) %>" />
-				</liferay-util:include>
-			</span>
-		</div>
-
-		<div class="table-responsive">
-			<table class="table table-autofit">
-				<tbody>
-
-					<%
-					for (KeyValuePair dayKeyValuePair : orgLaborDisplay.getDayKeyValuePairs()) {
-					%>
-
-						<tr>
-							<td class="table-cell-expand">
-								<span class="table-title"><%= dayKeyValuePair.getKey() %></span>
-							</td>
-							<td class="table-cell-expand">
-								<span><%= dayKeyValuePair.getValue() %></span>
-							</td>
-						</tr>
-
-					<%
-					}
-					%>
-
-				</tbody>
-			</table>
-		</div>
+<c:if test="<%= orgLabors.isEmpty() %>">
+	<div class="contact-information-empty-results-message-wrapper">
+		<liferay-ui:empty-result-message
+			message="this-organization-does-not-have-any-opening-hours"
+		/>
 	</div>
+</c:if>
 
-<%
-}
-%>
+<div class="opening-hours-wrapper <%= orgLabors.isEmpty() ? "hide" : "" %>">
+
+	<%
+	for (OrgLabor orgLabor : orgLabors) {
+		OrgLaborDisplay orgLaborDisplay = new OrgLaborDisplay(locale, orgLabor);
+	%>
+
+		<div class="opening-hours-entry">
+			<div class="autofit-row opening-hours-header">
+				<span class="autofit-col">
+					<h5><%= orgLaborDisplay.getTitle() %></h5>
+				</span>
+				<span class="autofit-col lfr-search-container-wrapper">
+					<liferay-util:include page="/organization/opening_hours_action.jsp" servletContext="<%= application %>">
+						<liferay-util:param name="orgLaborId" value="<%= String.valueOf(orgLabor.getOrgLaborId()) %>" />
+					</liferay-util:include>
+				</span>
+			</div>
+
+			<div class="table-responsive">
+				<table class="table table-autofit">
+					<tbody>
+
+						<%
+						for (KeyValuePair dayKeyValuePair : orgLaborDisplay.getDayKeyValuePairs()) {
+						%>
+
+							<tr>
+								<td class="table-cell-expand">
+									<span class="table-title"><%= dayKeyValuePair.getKey() %></span>
+								</td>
+								<td class="table-cell-expand">
+									<span><%= dayKeyValuePair.getValue() %></span>
+								</td>
+							</tr>
+
+						<%
+						}
+						%>
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	<%
+	}
+	%>
+
+</div>
 
 <portlet:renderURL var="editOpeningHoursRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/organization/edit_opening_hours.jsp" />

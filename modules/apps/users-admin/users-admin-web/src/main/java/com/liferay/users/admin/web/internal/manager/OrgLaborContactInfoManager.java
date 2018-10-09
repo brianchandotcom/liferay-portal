@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.web.internal.helper;
+package com.liferay.users.admin.web.internal.manager;
 
 import com.liferay.portal.kernel.model.OrgLabor;
 import com.liferay.portal.kernel.service.OrgLaborLocalService;
@@ -26,36 +26,21 @@ import javax.portlet.ActionRequest;
 /**
  * @author Samuel Trong Tran
  */
-public class OrgLaborContactInformationHelper
-	extends BaseContactInformationHelper<OrgLabor> {
+public class OrgLaborContactInfoManager
+	extends BaseContactInfoManager<OrgLabor> {
 
-	public OrgLaborContactInformationHelper(
-		long entityClassPK, OrgLaborLocalService orgLaborLocalService,
+	public OrgLaborContactInfoManager(
+		long classPK, OrgLaborLocalService orgLaborLocalService,
 		OrgLaborService orgLaborService) {
 
-		_entityClassPK = entityClassPK;
+		_classPK = classPK;
 		_orgLaborLocalService = orgLaborLocalService;
 		_orgLaborService = orgLaborService;
 	}
 
 	@Override
-	protected OrgLabor addEntry(OrgLabor orgLabor) throws Exception {
-		return _orgLaborService.addOrgLabor(
-			_entityClassPK, orgLabor.getTypeId(), orgLabor.getSunOpen(),
-			orgLabor.getSunClose(), orgLabor.getMonOpen(),
-			orgLabor.getMonClose(), orgLabor.getTueOpen(),
-			orgLabor.getTueClose(), orgLabor.getWedOpen(),
-			orgLabor.getWedClose(), orgLabor.getThuOpen(),
-			orgLabor.getThuClose(), orgLabor.getFriOpen(),
-			orgLabor.getFriClose(), orgLabor.getSatOpen(),
-			orgLabor.getSatClose());
-	}
-
-	@Override
-	protected OrgLabor constructEntry(ActionRequest actionRequest)
-		throws Exception {
-
-		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+	protected OrgLabor construct(ActionRequest actionRequest) throws Exception {
+		long orgLaborId = ParamUtil.getLong(actionRequest, "primaryKey");
 
 		long typeId = ParamUtil.getLong(actionRequest, "orgLaborTypeId");
 		int sunOpen = ParamUtil.getInteger(actionRequest, "sunOpen", -1);
@@ -73,7 +58,7 @@ public class OrgLaborContactInformationHelper
 		int satOpen = ParamUtil.getInteger(actionRequest, "satOpen", -1);
 		int satClose = ParamUtil.getInteger(actionRequest, "satClose", -1);
 
-		OrgLabor orgLabor = _orgLaborLocalService.createOrgLabor(entryId);
+		OrgLabor orgLabor = _orgLaborLocalService.createOrgLabor(orgLaborId);
 
 		orgLabor.setTypeId(typeId);
 		orgLabor.setSunOpen(sunOpen);
@@ -95,36 +80,25 @@ public class OrgLaborContactInformationHelper
 	}
 
 	@Override
-	protected void deleteEntry(long orgLaborId) throws Exception {
+	protected OrgLabor doAdd(OrgLabor orgLabor) throws Exception {
+		return _orgLaborService.addOrgLabor(
+			_classPK, orgLabor.getTypeId(), orgLabor.getSunOpen(),
+			orgLabor.getSunClose(), orgLabor.getMonOpen(),
+			orgLabor.getMonClose(), orgLabor.getTueOpen(),
+			orgLabor.getTueClose(), orgLabor.getWedOpen(),
+			orgLabor.getWedClose(), orgLabor.getThuOpen(),
+			orgLabor.getThuClose(), orgLabor.getFriOpen(),
+			orgLabor.getFriClose(), orgLabor.getSatOpen(),
+			orgLabor.getSatClose());
+	}
+
+	@Override
+	protected void doDelete(long orgLaborId) throws Exception {
 		_orgLaborService.deleteOrgLabor(orgLaborId);
 	}
 
 	@Override
-	protected List<OrgLabor> getEntries() throws Exception {
-		return _orgLaborService.getOrgLabors(_entityClassPK);
-	}
-
-	@Override
-	protected OrgLabor getEntry(long orgLaborId) throws Exception {
-		return _orgLaborService.getOrgLabor(orgLaborId);
-	}
-
-	@Override
-	protected long getEntryId(OrgLabor orgLabor) {
-		return orgLabor.getOrgLaborId();
-	}
-
-	@Override
-	protected boolean isPrimaryEntry(OrgLabor orgLabor) {
-		return false;
-	}
-
-	@Override
-	protected void setEntryPrimary(OrgLabor orgLabor, boolean primary) {
-	}
-
-	@Override
-	protected void updateEntry(OrgLabor orgLabor) throws Exception {
+	protected void doUpdate(OrgLabor orgLabor) throws Exception {
 		_orgLaborService.updateOrgLabor(
 			orgLabor.getOrgLaborId(), orgLabor.getTypeId(),
 			orgLabor.getSunOpen(), orgLabor.getSunClose(),
@@ -136,7 +110,31 @@ public class OrgLaborContactInformationHelper
 			orgLabor.getSatOpen(), orgLabor.getSatClose());
 	}
 
-	private final long _entityClassPK;
+	@Override
+	protected OrgLabor get(long orgLaborId) throws Exception {
+		return _orgLaborService.getOrgLabor(orgLaborId);
+	}
+
+	@Override
+	protected List<OrgLabor> getAll() throws Exception {
+		return _orgLaborService.getOrgLabors(_classPK);
+	}
+
+	@Override
+	protected long getPrimaryKey(OrgLabor orgLabor) {
+		return orgLabor.getOrgLaborId();
+	}
+
+	@Override
+	protected boolean isPrimary(OrgLabor orgLabor) {
+		return false;
+	}
+
+	@Override
+	protected void setPrimary(OrgLabor orgLabor, boolean primary) {
+	}
+
+	private final long _classPK;
 	private final OrgLaborLocalService _orgLaborLocalService;
 	private final OrgLaborService _orgLaborService;
 

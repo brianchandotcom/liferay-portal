@@ -21,23 +21,23 @@ OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayCo
 
 long organizationId = organizationScreenNavigationDisplayContext.getOrganizationId();
 
-long orgLaborId = ParamUtil.getLong(request, "orgLaborId");
+long addressId = ParamUtil.getLong(request, "addressId");
 %>
 
 <liferay-ui:icon-menu
-	direction="right-side"
+	direction="left-side"
 	icon="<%= StringPool.BLANK %>"
 	markupView="lexicon"
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
 	<liferay-ui:icon
-		cssClass="modify-opening-hours-link"
+		cssClass="modify-address-link"
 		data="<%=
 			new HashMap<String, Object>() {
 				{
-					put("title", LanguageUtil.get(request, "edit-opening-hours"));
-					put("primary-key", String.valueOf(orgLaborId));
+					put("title", LanguageUtil.get(request, "edit-address"));
+					put("primary-key", String.valueOf(addressId));
 				}
 			}
 		%>"
@@ -45,16 +45,29 @@ long orgLaborId = ParamUtil.getLong(request, "orgLaborId");
 		url="javascript:;"
 	/>
 
-	<portlet:actionURL name="/users_admin/update_organization_contact_information" var="removeOpeningHoursUrl">
+	<portlet:actionURL name="/users_admin/update_organization_contact_information" var="makePrimaryURL">
+		<portlet:param name="<%= Constants.CMD %>" value="makePrimary" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="listType" value="<%= ListTypeConstants.ADDRESS %>" />
+		<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
+		<portlet:param name="primaryKey" value="<%= String.valueOf(addressId) %>" />
+	</portlet:actionURL>
+
+	<liferay-ui:icon
+		message="make-primary"
+		url="<%= makePrimaryURL %>"
+	/>
+
+	<portlet:actionURL name="/users_admin/update_organization_contact_information" var="removeAddressURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="listType" value="<%= ListTypeConstants.ORGANIZATION_SERVICE %>" />
+		<portlet:param name="listType" value="<%= ListTypeConstants.ADDRESS %>" />
 		<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
-		<portlet:param name="primaryKey" value="<%= String.valueOf(orgLaborId) %>" />
+		<portlet:param name="primaryKey" value="<%= String.valueOf(addressId) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon
 		message="remove"
-		url="<%= removeOpeningHoursUrl %>"
+		url="<%= removeAddressURL %>"
 	/>
 </liferay-ui:icon-menu>

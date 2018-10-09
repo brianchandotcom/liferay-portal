@@ -41,7 +41,7 @@ long websiteId = website.getWebsiteId();
 			new HashMap<String, Object>() {
 				{
 					put("title", LanguageUtil.get(request, "edit-website"));
-					put("entry-id", String.valueOf(websiteId));
+					put("primary-key", String.valueOf(websiteId));
 				}
 			}
 		%>"
@@ -52,9 +52,9 @@ long websiteId = website.getWebsiteId();
 	<portlet:actionURL name="/users_admin/update_organization_contact_information" var="makePrimaryURL">
 		<portlet:param name="<%= Constants.CMD %>" value="makePrimary" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="entryId" value="<%= String.valueOf(websiteId) %>" />
 		<portlet:param name="listType" value="<%= ListTypeConstants.WEBSITE %>" />
 		<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
+		<portlet:param name="primaryKey" value="<%= String.valueOf(websiteId) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon
@@ -65,9 +65,9 @@ long websiteId = website.getWebsiteId();
 	<portlet:actionURL name="/users_admin/update_organization_contact_information" var="removeWebsiteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="entryId" value="<%= String.valueOf(websiteId) %>" />
 		<portlet:param name="listType" value="<%= ListTypeConstants.WEBSITE %>" />
 		<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
+		<portlet:param name="primaryKey" value="<%= String.valueOf(websiteId) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon

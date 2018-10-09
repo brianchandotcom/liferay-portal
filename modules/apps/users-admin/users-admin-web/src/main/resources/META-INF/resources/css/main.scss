@@ -293,6 +293,15 @@
 	}
 }
 
+.contact-information-empty-results-message-wrapper div:first-child {
+	border-style: none;
+}
+
+.addresses-table-wrapper table td:first-child {
+	padding-right: 0;
+	vertical-align: top;
+}
+
 .contact-information-edit-form {
 	background-color: white;
 }

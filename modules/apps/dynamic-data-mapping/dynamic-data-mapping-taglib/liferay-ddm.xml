@@ -79,6 +79,12 @@
 				<outputType>boolean</outputType>
 				<defaultValue>true</defaultValue>
 			</attribute>
+			<attribute>
+				<name>synchronousFormSubmission</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
 		</attributes>
 	</component>
 	<component bodyContent="true" name="HTMLField" writeEndJSP="false" writeJSP="true">

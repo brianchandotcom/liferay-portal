@@ -704,9 +704,8 @@ public class BeanPortletExtension implements Extension {
 					beanMethods = new HashSet<>(beanMethods);
 				}
 
-				beanMethods.addAll(
-					PortletScannerUtil.getNonannotatedBeanMethods(
-						beanManager, clazz));
+				PortletScannerUtil.scanNonannotatedBeanMethods(
+					beanManager, clazz, beanMethods);
 
 				_addBeanPortlet(
 					clazz, beanMethods, wildcardBeanMethods,
@@ -730,9 +729,8 @@ public class BeanPortletExtension implements Extension {
 				beanMethods = new HashSet<>(beanMethods);
 			}
 
-			beanMethods.addAll(
-				PortletScannerUtil.getNonannotatedBeanMethods(
-					beanManager, clazz));
+			PortletScannerUtil.scanNonannotatedBeanMethods(
+				beanManager, clazz, beanMethods);
 
 			_addBeanPortlet(
 				clazz, beanMethods, wildcardBeanMethods, portletConfiguration,

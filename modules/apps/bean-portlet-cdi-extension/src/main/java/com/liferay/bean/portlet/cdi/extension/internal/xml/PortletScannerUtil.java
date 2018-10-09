@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.lang.reflect.Method;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.enterprise.inject.spi.Bean;
@@ -55,13 +54,12 @@ import javax.portlet.annotations.ServeResourceMethod;
  */
 public class PortletScannerUtil {
 
-	public static Set<BeanMethod> getNonannotatedBeanMethods(
-		BeanManager beanManager, Class<?> beanPortletClass) {
+	public static void scanNonannotatedBeanMethods(
+		BeanManager beanManager, Class<?> beanPortletClass,
+		Set<BeanMethod> beanMethods) {
 
 		Bean<?> bean = beanManager.resolve(
 			beanManager.getBeans(beanPortletClass));
-
-		Set<BeanMethod> beanMethods = new HashSet<>();
 
 		if (Portlet.class.isAssignableFrom(beanPortletClass)) {
 			try {
@@ -164,8 +162,6 @@ public class PortletScannerUtil {
 				_log.error(nsme, nsme);
 			}
 		}
-
-		return beanMethods;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -668,9 +668,8 @@ public class PortletDescriptorParser {
 			return null;
 		}
 
-		beanMethods.addAll(
-			PortletScannerUtil.getNonannotatedBeanMethods(
-				beanManager, portletClass));
+		PortletScannerUtil.scanNonannotatedBeanMethods(
+			beanManager, portletClass, beanMethods);
 
 		return new BeanPortletDescriptorImpl(
 			portletName, beanMethods, wildcardBeanMethods, displayNames,

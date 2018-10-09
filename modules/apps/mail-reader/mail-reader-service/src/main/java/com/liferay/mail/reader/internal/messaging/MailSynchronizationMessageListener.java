@@ -46,13 +46,9 @@ public class MailSynchronizationMessageListener extends BaseMessageListener {
 	}
 
 	protected void flagMessage(Message message) throws Exception {
-		long userId = message.getLong("userId");
-		long accountId = message.getLong("accountId");
 		String password = message.getString("password");
-		long folderId = message.getLong("folderId");
+
 		long messageId = message.getLong("messageId");
-		int flag = message.getInteger("flag");
-		boolean flagValue = message.getBoolean("flagValue");
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Flagging message for messageId " + messageId);
@@ -61,6 +57,12 @@ public class MailSynchronizationMessageListener extends BaseMessageListener {
 		if (Validator.isNull(password)) {
 			return;
 		}
+
+		long userId = message.getLong("userId");
+		long accountId = message.getLong("accountId");
+		long folderId = message.getLong("folderId");
+		int flag = message.getInteger("flag");
+		boolean flagValue = message.getBoolean("flagValue");
 
 		Mailbox mailbox = MailboxFactoryUtil.getMailbox(
 			UserLocalServiceUtil.getUser(userId),

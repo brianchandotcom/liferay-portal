@@ -44,9 +44,6 @@ public class CreateAnonymousAccountMVCRenderCommand
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		PortletConfig portletConfig = (PortletConfig)renderRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG);
 
@@ -55,6 +52,9 @@ public class CreateAnonymousAccountMVCRenderCommand
 		if (!portletName.equals(LoginPortletKeys.FAST_LOGIN)) {
 			return "/login.jsp";
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		renderResponse.setTitle(themeDisplay.translate("anonymous-account"));
 

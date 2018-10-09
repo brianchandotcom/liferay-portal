@@ -112,18 +112,19 @@ public class KBArticleModelResourcePermissionRegistrar {
 				return null;
 			}
 
-			long parentResourceClassNameId =
-				kbArticle.getParentResourceClassNameId();
 			long parentResourcePrimKey = kbArticle.getParentResourcePrimKey();
-
-			long kbFolderClassNameId = PortalUtil.getClassNameId(
-				KBFolderConstants.getClassName());
 
 			if (parentResourcePrimKey ==
 					KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 				return null;
 			}
+
+			long parentResourceClassNameId =
+				kbArticle.getParentResourceClassNameId();
+
+			long kbFolderClassNameId = PortalUtil.getClassNameId(
+				KBFolderConstants.getClassName());
 
 			if (parentResourceClassNameId == kbFolderClassNameId) {
 				if (!_kbFolderModelResourcePermission.contains(

@@ -57,11 +57,12 @@ public class MBMessageSocialActivityManager
 			message.getThreadId());
 
 		long classNameId = _classNameLocalService.getClassNameId(className);
-		long classPK = discussion.getClassPK();
 
 		if (discussion.getClassNameId() != classNameId) {
 			return;
 		}
+
+		long classPK = discussion.getClassPK();
 
 		List<SocialActivity> socialActivities =
 			_socialActivityLocalService.getActivities(

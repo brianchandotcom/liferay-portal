@@ -93,13 +93,13 @@ public class MDRRuleGroupLocalServiceImpl
 		Map<Locale, String> nameMap = ruleGroup.getNameMap();
 
 		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
-			Locale locale = entry.getKey();
-
 			String name = entry.getValue();
 
 			if (Validator.isNull(name)) {
 				continue;
 			}
+
+			Locale locale = entry.getKey();
 
 			String postfix = LanguageUtil.get(
 				locale,

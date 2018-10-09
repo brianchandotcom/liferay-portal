@@ -426,8 +426,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			actionRequest, "selectedFileName");
 		long[] removeFileEntryIds = ParamUtil.getLongValues(
 			actionRequest, "removeFileEntryIds");
-		int workflowAction = ParamUtil.getInteger(
-			actionRequest, "workflowAction");
 
 		KBArticle kbArticle = null;
 
@@ -457,6 +455,9 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		if (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE)) {
 			return;
 		}
+
+		int workflowAction = ParamUtil.getInteger(
+			actionRequest, "workflowAction");
 
 		if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
 			String editURL = buildEditURL(

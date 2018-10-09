@@ -36,8 +36,6 @@ public class KBArticleMainUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 
 	@Override
 	public Object getNewValue(Object oldValue) throws Exception {
-		Long kbArticleId = (Long)_kbArticleIdColumn.getOldValue();
-
 		Long resourcePrimKey = (Long)_resourcePrimKeyColumn.getOldValue();
 
 		KBArticle kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
@@ -53,6 +51,8 @@ public class KBArticleMainUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 
 		kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
 			resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
+
+		Long kbArticleId = (Long)_kbArticleIdColumn.getOldValue();
 
 		if (kbArticle.getKbArticleId() != kbArticleId) {
 			return Boolean.FALSE;

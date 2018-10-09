@@ -127,13 +127,13 @@ public class IMAPMailbox extends BaseMailbox {
 		Attachment attachment = AttachmentLocalServiceUtil.getAttachment(
 			attachmentId);
 
-		Message message = MessageLocalServiceUtil.getMessage(
-			attachment.getMessageId());
-
 		if (account.getDraftFolderId() == attachment.getFolderId()) {
 			return new DefaultAttachmentHandler(
 				AttachmentLocalServiceUtil.getInputStream(attachmentId), null);
 		}
+
+		Message message = MessageLocalServiceUtil.getMessage(
+			attachment.getMessageId());
 
 		return _imapAccessor.getAttachment(
 			attachment.getFolderId(), message.getRemoteMessageId(),

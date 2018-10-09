@@ -14,10 +14,11 @@
 
 package com.liferay.asset.list.internal.exportimport.data.handler;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
-import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
-import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.asset.util.StagingAssetEntryHelper;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -72,6 +73,13 @@ public class AssetListEntryAssetEntryRelStagedModelDataHandler
 
 		Element entryElement = portletDataContext.getExportDataElement(
 			assetListEntryAssetEntryRel);
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			assetListEntryAssetEntryRel.getAssetEntryId());
+
+		_stagingAssetEntryHelper.addAssetReference(
+			portletDataContext, assetListEntryAssetEntryRel, entryElement,
+			assetEntry);
 
 		portletDataContext.addClassedModel(
 			entryElement,
@@ -158,11 +166,7 @@ public class AssetListEntryAssetEntryRelStagedModelDataHandler
 	}
 
 	@Reference
-	private AssetListEntryAssetEntryRelLocalService
-		_assetListEntryAssetEntryRelLocalService;
-
-	@Reference
-	private AssetListEntryLocalService _assetListEntryLocalService;
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.asset.list.model.AssetListEntryAssetEntryRel)",
@@ -170,5 +174,8 @@ public class AssetListEntryAssetEntryRelStagedModelDataHandler
 	)
 	private StagedModelRepository<AssetListEntryAssetEntryRel>
 		_stagedModelRepository;
+
+	@Reference
+	private StagingAssetEntryHelper _stagingAssetEntryHelper;
 
 }

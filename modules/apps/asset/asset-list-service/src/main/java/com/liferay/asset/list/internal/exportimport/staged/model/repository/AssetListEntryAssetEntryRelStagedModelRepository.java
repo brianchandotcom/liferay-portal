@@ -14,8 +14,10 @@
 
 package com.liferay.asset.list.internal.exportimport.staged.model.repository;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
+import com.liferay.asset.util.StagingAssetEntryHelper;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
@@ -47,6 +49,14 @@ public class AssetListEntryAssetEntryRelStagedModelRepository
 			AssetListEntryAssetEntryRel assetListEntryAssetEntryRel)
 		throws PortalException {
 
+		AssetEntry assetEntry = _stagingAssetEntryHelper.fetchAssetEntry(
+			portletDataContext.getScopeGroupId(),
+			assetListEntryAssetEntryRel.getAssetEntryUuid());
+
+		if (assetEntry == null) {
+			return null;
+		}
+
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			assetListEntryAssetEntryRel);
 
@@ -57,7 +67,7 @@ public class AssetListEntryAssetEntryRelStagedModelRepository
 		return _assetListEntryAssetEntryRelLocalService.
 			addAssetListEntryAssetEntryRel(
 				assetListEntryAssetEntryRel.getAssetListEntryId(),
-				assetListEntryAssetEntryRel.getAssetEntryId(),
+				assetEntry.getEntryId(),
 				assetListEntryAssetEntryRel.getPosition(), serviceContext);
 	}
 
@@ -159,5 +169,8 @@ public class AssetListEntryAssetEntryRelStagedModelRepository
 
 	@Reference
 	private StagedModelRepositoryHelper _stagedModelRepositoryHelper;
+
+	@Reference
+	private StagingAssetEntryHelper _stagingAssetEntryHelper;
 
 }

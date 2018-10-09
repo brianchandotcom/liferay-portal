@@ -1,4 +1,4 @@
-## Module tests
+## Module Tests
 
 For Arquillian integration test, we have to namespace the test class into a
 `test` subpackage, to avoid the package name conflicts with the production code.

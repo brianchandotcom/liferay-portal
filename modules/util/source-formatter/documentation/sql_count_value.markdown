@@ -5,7 +5,7 @@ the format `SELECT COUNT(*)`, we should use the type `int` when retrieving the
 value for `count` instead of `long`.
 
 The call `long count = recordSet.getLong(1)` will fail with a
-`java.lang.ClassCastException`
+`java.lang.ClassCastException`.
 
 ### Example
 

@@ -1,4 +1,4 @@
-## String concatenation
+## String Concatenation
 
 When concatenating more than 3 String objects, we should make use of
 `StringBundler` instead of using the plus operator.

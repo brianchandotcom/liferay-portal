@@ -1,9 +1,10 @@
 ## ServiceUtil
 
 Do not make calls to `portal-kernel/.../*ServiceUtil` from a '`*ServiceImpl`
-class. Instead create a reference via `service.xml`
+class. Instead create a reference via `service.xml`.
 
 ### Example
+
 Incorrect:
 
 In `UserLocalServiceImpl.java`

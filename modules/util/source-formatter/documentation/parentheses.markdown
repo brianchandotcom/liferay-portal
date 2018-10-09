@@ -25,9 +25,9 @@ if (a || (b && c)) {
 ```
 
 When we break one of the above rules, it will result in either missing or
-redundant parentheses
+redundant parentheses.
 
-#### Examples of missing parentheses
+#### Examples of Missing Parentheses
 
 Incorrect:
 
@@ -61,7 +61,7 @@ if (a || (b && c)) {
 }
 ```
 
-#### Examples of redundant parentheses
+#### Examples of Redundant Parentheses
 
 Incorrect:
 
@@ -111,11 +111,11 @@ if ((a < 0) || (b < 0)) {
 }
 ```
 
-### JSP attributes
+### JSP Attributes
 
-For attributes in JSP files, we use the same rules
+For attributes in JSP files, we use the same rules.
 
-#### Example of missing parentheses
+#### Example of Missing Parentheses
 
 Incorrect:
 
@@ -129,7 +129,7 @@ Correct:
 <aui:option disabled="<%= (user != null) && (user.isActive() || user.isFemale()) %>" label="name" value="0" />
 ```
 
-#### Example of redundant parentheses
+#### Example of Redundant Parentheses
 
 Incorrect:
 

@@ -1,4 +1,4 @@
-## Test method naming
+## Test Method Naming
 
 Methods with one of the following annotations, should follow our naming
 standards.

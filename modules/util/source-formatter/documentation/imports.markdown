@@ -1,6 +1,6 @@
 ## Imports
 
-### Do not use wildcards:
+### Do Not Use Wildcards
 
 #### Example
 
@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 ```
 
-### Import classes, not methods:
+### Import Classes, Not Methods
 
 #### Example
 
@@ -42,9 +42,9 @@ import org.junit.Assert;
 Assert.assertTrue(user.isActive());
 ```
 
-### Do not import constants:
+### Do Not Import Constants
 
-Avoid importing constants, instead import the class
+Avoid importing constants, instead import the class.
 
 #### Example
 

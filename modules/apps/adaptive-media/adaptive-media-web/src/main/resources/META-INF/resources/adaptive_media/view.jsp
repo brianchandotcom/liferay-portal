@@ -160,10 +160,10 @@ PortletURL portletURL = renderResponse.createRenderURL();
 							<portlet:param name="entryUuid" value="<%= uuid %>" />
 						</portlet:resourceURL>
 
-						<aui:script require="adaptive-media-web/adaptive_media/js/AdaptiveMediaProgress.es">
+						<aui:script require="adaptive-media-web@3.0.0/adaptive_media/js/AdaptiveMediaProgress.es as AdaptiveMediaProgress">
 							var component = Liferay.component(
 								'<portlet:namespace />AdaptRemaining<%= uuid %>',
-								new adaptiveMediaWebAdaptive_mediaJsAdaptiveMediaProgressEs.default(
+								new AdaptiveMediaProgress.default(
 									{
 										adaptedImages: <%= Math.min(adaptedImages, totalImages) %>,
 										disabled: <%= !amImageConfigurationEntry.isEnabled() %>,

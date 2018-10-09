@@ -803,8 +803,6 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public String getSerializedFormBuilderContext() throws PortalException {
-		ThemeDisplay themeDisplay = formAdminRequestHelper.getThemeDisplay();
-
 		String serializedFormBuilderContext = ParamUtil.getString(
 			_renderRequest, "serializedFormBuilderContext");
 
@@ -813,6 +811,8 @@ public class DDMFormAdminDisplayContext {
 		}
 
 		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
+
+		ThemeDisplay themeDisplay = formAdminRequestHelper.getThemeDisplay();
 
 		DDMFormBuilderContextRequest ddmFormBuilderContextRequest =
 			DDMFormBuilderContextRequest.with(

@@ -167,14 +167,14 @@ public class DDMFormPortlet extends MVCPortlet {
 			DDMFormDisplayContext ddmFormDisplayContext)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		DDMFormInstance formInstance = ddmFormDisplayContext.getFormInstance();
 
 		if (formInstance == null) {
 			return;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		DDMFormInstanceSettings formInstanceSettings =
 			formInstance.getSettingsModel();

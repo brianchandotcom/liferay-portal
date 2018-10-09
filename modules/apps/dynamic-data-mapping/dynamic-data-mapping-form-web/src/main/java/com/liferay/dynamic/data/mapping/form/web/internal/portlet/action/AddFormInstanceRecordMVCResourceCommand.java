@@ -114,9 +114,6 @@ public class AddFormInstanceRecordMVCResourceCommand
 			return;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long formInstanceId = ParamUtil.getLong(
 			resourceRequest, "formInstanceId");
 
@@ -129,6 +126,9 @@ public class AddFormInstanceRecordMVCResourceCommand
 		if (ddmFormValues == null) {
 			return;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
 			_ddmFormInstanceRecordVersionLocalService.

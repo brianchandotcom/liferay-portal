@@ -156,14 +156,15 @@ public abstract class BaseDDMTemplateHandler extends BaseTemplateHandler {
 
 			String fieldName = fieldNameVariableName.getKey();
 
-			String label = ddmStructure.getFieldLabel(fieldName, locale);
-			String tip = ddmStructure.getFieldTip(fieldName, locale);
 			String dataType = ddmStructure.getFieldDataType(fieldName);
-			boolean repeatable = ddmStructure.getFieldRepeatable(fieldName);
 
 			if (Validator.isNull(dataType)) {
 				continue;
 			}
+
+			String label = ddmStructure.getFieldLabel(fieldName, locale);
+			String tip = ddmStructure.getFieldTip(fieldName, locale);
+			boolean repeatable = ddmStructure.getFieldRepeatable(fieldName);
 
 			templateVariableGroup.addFieldVariable(
 				label, getFieldVariableClass(),

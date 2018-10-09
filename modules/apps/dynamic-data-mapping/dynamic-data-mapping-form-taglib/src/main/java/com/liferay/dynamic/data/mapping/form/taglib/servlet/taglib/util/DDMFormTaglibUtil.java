@@ -49,8 +49,6 @@ public class DDMFormTaglibUtil {
 	public static DDMForm getDDMForm(
 		long ddmStructureId, long ddmStructureVersionId) {
 
-		DDMForm ddmForm = new DDMForm();
-
 		if (ddmStructureVersionId > 0) {
 			DDMStructureVersion ddmStructureVersion =
 				_ddmStructureVersionLocalService.fetchDDMStructureVersion(
@@ -70,7 +68,7 @@ public class DDMFormTaglibUtil {
 			}
 		}
 
-		return ddmForm;
+		return new DDMForm();
 	}
 
 	public static DDMFormBuilderSettingsResponse getDDMFormBuilderSettings(

@@ -380,9 +380,11 @@ public class DLAdminManagementToolbarDisplayContext {
 						labelItem -> {
 							labelItem.setCloseable(false);
 
+							User user = _themeDisplay.getUser();
+
 							String label = String.format(
 								"%s: %s", LanguageUtil.get(_request, "owner"),
-								_themeDisplay.getUser().getFullName());
+								user.getFullName());
 
 							labelItem.setLabel(label);
 						});

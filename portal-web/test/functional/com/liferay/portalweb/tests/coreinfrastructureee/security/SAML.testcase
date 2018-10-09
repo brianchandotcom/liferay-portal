@@ -620,7 +620,7 @@
 		</execute>
 
 		<execute macro="ServerAdministration#addCategoryLogLevels">
-			<var name="categoryName" value="com.liferay.saml" />
+			<var name="categoryName" value="com.liferay.saml.opensaml.integration" />
 			<var name="categoryPriority" value="DEBUG" />
 		</execute>
 

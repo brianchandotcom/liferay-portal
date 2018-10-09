@@ -58,9 +58,12 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getSegmentsEntryName(loc
 
 				<aui:input checked="<%= (segmentsEntry == null) ? false : segmentsEntry.isActive() %>" name="active" type="toggle-switch" />
 
-				<aui:input name="criteria" type="textarea" />
+				<aui:select disabled="<%= segmentsEntry != null %>" name="type">
+					<aui:option label="organizations" value="<%= SegmentsConstants.TYPE_ORGANIZATIONS %>" />
+					<aui:option label="users" value="<%= SegmentsConstants.TYPE_USERS %>" />
+				</aui:select>
 
-				<aui:input disabled="<%= segmentsEntry != null %>" name="type" />
+				<aui:input name="criteria" type="textarea" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</div>

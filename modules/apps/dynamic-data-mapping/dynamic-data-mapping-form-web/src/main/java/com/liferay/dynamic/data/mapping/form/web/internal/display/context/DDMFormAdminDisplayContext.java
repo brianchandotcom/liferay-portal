@@ -748,6 +748,12 @@ public class DDMFormAdminDisplayContext {
 		return ddmFormBuilderSettingsResponse.getRolesURL();
 	}
 
+	public String getDataProviderInstancesURL() throws PortalException {
+		DDMFormBuilderSettingsResponse ddmFormBuilderSettingsResponse =
+			getDDMFormBuilderSettingsResponse();
+		return ddmFormBuilderSettingsResponse.getDataProviderInstancesURL();
+	}
+
 	public long getScopeGroupId() {
 		return formAdminRequestHelper.getScopeGroupId();
 	}

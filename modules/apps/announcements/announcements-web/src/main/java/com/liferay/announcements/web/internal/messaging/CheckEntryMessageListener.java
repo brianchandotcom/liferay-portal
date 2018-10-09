@@ -15,6 +15,7 @@
 package com.liferay.announcements.web.internal.messaging;
 
 import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
+import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -39,8 +40,25 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Tina Tian
  */
-@Component(immediate = true, service = CheckEntryMessageListener.class)
-public class CheckEntryMessageListener extends BaseMessageListener {
+@Component(
+	immediate = true,
+	service = {
+		CheckEntryMessageListener.class,
+		ClusterMasterTokenTransitionListener.class
+	}
+)
+public class CheckEntryMessageListener
+	extends BaseMessageListener
+	implements ClusterMasterTokenTransitionListener {
+
+	@Override
+	public void masterTokenAcquired() {
+	}
+
+	@Override
+	public void masterTokenReleased() {
+		_previousEndDate = null;
+	}
 
 	@Activate
 	protected void activate() {

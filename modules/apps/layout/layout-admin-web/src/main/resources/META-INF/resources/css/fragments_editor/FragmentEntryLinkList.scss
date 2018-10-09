@@ -1,8 +1,36 @@
 @import "./variables";
 
+.contextual-sidebar-content > .fragment-entry-link-list {
+	margin-top: calc(#{$managementBarHeight} + 2px);
+}
+
 .fragment-entry-link-list {
-	margin-top: $managementBarHeight;
-	padding: $fragmentEntryLinkControlHeight;
+	padding: 0;
+
+	&__row-section {
+		border: $fragmentEntryLinkSectionBorder;
+		padding: $fragmentEntryLinkSpacing 0;
+
+		&:hover {
+			border: $fragmentEntryLinkSectionHoverBorder;
+		}
+	}
+
+	&__col {
+		position: relative;
+
+		&:after {
+			border: 1px dashed #CDCED9;
+			content: '';
+			display: block;
+			height: calc(100% + 2px);
+			left: $fragmentEntryLinkSpacing - 1;
+			pointer-events: none;
+			position: absolute;
+			top: -1px;
+			width: calc(100% - #{$fragmentEntryLinkSpacing * 2} + 2px);
+		}
+	}
 }
 
 .no-fragments-message {

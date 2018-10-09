@@ -15,6 +15,7 @@
 package com.liferay.bean.portlet.cdi.extension.internal.annotated;
 
 import com.liferay.bean.portlet.cdi.extension.internal.BaseEventImpl;
+import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletQNameUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,19 +31,13 @@ import javax.xml.namespace.QName;
 public class EventAnnotationImpl extends BaseEventImpl {
 
 	public EventAnnotationImpl(EventDefinition eventDefinition) {
-		this(eventDefinition.qname(), eventDefinition.payloadType());
+		super(
+			PortletQNameUtil.toQName(eventDefinition.qname()),
+			_getClassName(eventDefinition.payloadType()));
 
 		for (PortletQName portletQName : eventDefinition.alias()) {
-			_aliasQNames.add(
-				new QName(
-					portletQName.namespaceURI(), portletQName.localPart()));
+			_aliasQNames.add(PortletQNameUtil.toQName(portletQName));
 		}
-	}
-
-	public EventAnnotationImpl(PortletQName portletQName, Class<?> valueType) {
-		super(
-			new QName(portletQName.namespaceURI(), portletQName.localPart()),
-			_getClassName(valueType));
 	}
 
 	@Override

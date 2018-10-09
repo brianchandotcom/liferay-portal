@@ -24,12 +24,15 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryRel;
 import com.liferay.segments.service.SegmentsEntryRelService;
@@ -54,6 +57,7 @@ public class EditSegmentsEntryDisplayContext {
 	public EditSegmentsEntryDisplayContext(
 		HttpServletRequest request, RenderRequest renderRequest,
 		RenderResponse renderResponse,
+		OrganizationLocalService organizationLocalService,
 		SegmentsEntryService segmentsEntryService,
 		SegmentsEntryRelService segmentsEntryRelService,
 		UserLocalService userLocalService) {
@@ -61,6 +65,7 @@ public class EditSegmentsEntryDisplayContext {
 		_request = request;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+		_organizationLocalService = organizationLocalService;
 		_segmentsEntryService = segmentsEntryService;
 		_segmentsEntryRelService = segmentsEntryRelService;
 		_userLocalService = userLocalService;
@@ -69,14 +74,30 @@ public class EditSegmentsEntryDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public List<DropdownItem> getActionDropdownItems() {
+	public List<DropdownItem> getActionDropdownItems() throws PortalException {
+		SegmentsEntry segmentsEntry = getSegmentsEntry();
+
+		if (segmentsEntry == null) {
+			return new DropdownItemList();
+		}
+
 		return new DropdownItemList() {
 			{
 				add(
 					SafeConsumer.ignore(
 						dropdownItem -> {
-							dropdownItem.putData(
-								"action", "deleteSegmentsEntryUsers");
+							if (SegmentsConstants.TYPE_ORGANIZATIONS.equals(
+									segmentsEntry.getType())) {
+
+								dropdownItem.putData(
+									"action",
+									"deleteSegmentsEntryOrganizations");
+							}
+							else {
+								dropdownItem.putData(
+									"action", "deleteSegmentsEntryUsers");
+							}
+
 							dropdownItem.setIcon("times");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "delete"));
@@ -112,21 +133,81 @@ public class EditSegmentsEntryDisplayContext {
 							LanguageUtil.get(_request, "details"));
 					});
 
-				if (getSegmentsEntry() != null) {
+				SegmentsEntry segmentsEntry = getSegmentsEntry();
+
+				if (segmentsEntry != null) {
 					add(
 						navigationItem -> {
+							String type = segmentsEntry.getType();
+
 							String activeTab = ParamUtil.getString(
 								_request, "tabs1", "details");
 
-							navigationItem.setActive(activeTab.equals("users"));
+							navigationItem.setActive(activeTab.equals(type));
 
-							navigationItem.setHref(_getUsersURL());
-							navigationItem.setLabel(
-								LanguageUtil.get(_request, "users"));
+							if (type.equals(
+									SegmentsConstants.TYPE_ORGANIZATIONS)) {
+
+								navigationItem.setHref(_getOrganizationsURL());
+								navigationItem.setLabel(
+									LanguageUtil.get(
+										_request, "organizations"));
+							}
+							else {
+								navigationItem.setHref(_getUsersURL());
+								navigationItem.setLabel(
+									LanguageUtil.get(_request, "users"));
+							}
 						});
 				}
 			}
 		};
+	}
+
+	public SearchContainer getOrganizationSearchContainer()
+		throws PortalException {
+
+		if (_organizationSearchContainer != null) {
+			return _organizationSearchContainer;
+		}
+
+		SearchContainer organizationSearchContainer = new SearchContainer(
+			_renderRequest, getPortletURL(SegmentsConstants.TYPE_ORGANIZATIONS),
+			null, "there-are-no-organizations-in-this-segment");
+
+		organizationSearchContainer.setId("segmentsEntryOrganizations");
+		organizationSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
+
+		int total = _segmentsEntryRelService.getSegmentsEntryRelsCount(
+			getSegmentsEntryId());
+
+		organizationSearchContainer.setTotal(total);
+
+		List<SegmentsEntryRel> segmentsEntryRels =
+			_segmentsEntryRelService.getSegmentsEntryRels(getSegmentsEntryId());
+
+		Stream<SegmentsEntryRel> stream = segmentsEntryRels.stream();
+
+		List<Organization> organizations = stream.map(
+			segmentsEntryRel -> _organizationLocalService.fetchOrganization(
+				segmentsEntryRel.getClassPK())
+		).collect(
+			Collectors.toList()
+		);
+
+		organizationSearchContainer.setResults(organizations);
+
+		_organizationSearchContainer = organizationSearchContainer;
+
+		return _organizationSearchContainer;
+	}
+
+	public int getOrganizationTotalItems() throws PortalException {
+		SearchContainer<?> organizationSearchContainer =
+			getOrganizationSearchContainer();
+
+		return organizationSearchContainer.getTotal();
 	}
 
 	public SegmentsEntry getSegmentsEntry() throws PortalException {
@@ -170,22 +251,16 @@ public class EditSegmentsEntryDisplayContext {
 		return _segmentsEntryName;
 	}
 
-	public int getTotalItems() throws PortalException {
-		SearchContainer<?> userSearchContainer = getUserSearchContainer();
-
-		return userSearchContainer.getTotal();
-	}
-
 	public SearchContainer getUserSearchContainer() throws PortalException {
 		if (_userSearchContainer != null) {
 			return _userSearchContainer;
 		}
 
 		SearchContainer userSearchContainer = new SearchContainer(
-			_renderRequest, getPortletURL(), null,
-			"there-are-no-users-in-this-segments");
+			_renderRequest, getPortletURL(SegmentsConstants.TYPE_USERS), null,
+			"there-are-no-users-in-this-segment");
 
-		userSearchContainer.setId("userId");
+		userSearchContainer.setId("segmentsEntryUsers");
 		userSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 
@@ -213,11 +288,17 @@ public class EditSegmentsEntryDisplayContext {
 		return _userSearchContainer;
 	}
 
-	protected PortletURL getPortletURL() {
+	public int getUserTotalItems() throws PortalException {
+		SearchContainer<?> userSearchContainer = getUserSearchContainer();
+
+		return userSearchContainer.getTotal();
+	}
+
+	protected PortletURL getPortletURL(String tabs1) {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcRenderCommandName", "editSegmentsEntry");
-		portletURL.setParameter("tabs1", "users");
+		portletURL.setParameter("tabs1", tabs1);
 
 		String displayStyle = getDisplayStyle();
 
@@ -240,6 +321,19 @@ public class EditSegmentsEntryDisplayContext {
 		return portletURL.toString();
 	}
 
+	private String _getOrganizationsURL() {
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editSegmentsEntryOrganizations");
+		portletURL.setParameter("tabs1", "organizations");
+		portletURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+		portletURL.setParameter(
+			"segmentsEntryId", String.valueOf(getSegmentsEntryId()));
+
+		return portletURL.toString();
+	}
+
 	private String _getUsersURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
@@ -254,6 +348,8 @@ public class EditSegmentsEntryDisplayContext {
 	}
 
 	private String _displayStyle;
+	private final OrganizationLocalService _organizationLocalService;
+	private SearchContainer _organizationSearchContainer;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;

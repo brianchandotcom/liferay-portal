@@ -37,52 +37,56 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getSegmentsEntryName(loc
 
 <clay:management-toolbar
 	actionDropdownItems="<%= editSegmentsEntryDisplayContext.getActionDropdownItems() %>"
-	componentId="segmentsEntryUsersManagementToolbar"
-	disabled="<%= editSegmentsEntryDisplayContext.getUserTotalItems() == 0 %>"
-	itemsTotal="<%= editSegmentsEntryDisplayContext.getUserTotalItems() %>"
-	searchContainerId="segmentsEntryUsers"
+	componentId="segmentsEntryOrganizationsManagementToolbar"
+	disabled="<%= editSegmentsEntryDisplayContext.getOrganizationTotalItems() == 0 %>"
+	itemsTotal="<%= editSegmentsEntryDisplayContext.getOrganizationTotalItems() %>"
+	searchContainerId="segmentsEntryOrganizations"
 	selectable="<%= true %>"
 	showCreationMenu="<%= true %>"
 	showSearch="<%= false %>"
 />
 
-<portlet:actionURL name="deleteSegmentsEntryUser" var="deleteSegmentsEntryUserURL">
+<portlet:actionURL name="deleteSegmentsEntryOrganization" var="deleteSegmentsEntryOrganizationURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<portlet:renderURL var="editSegmentsEntryUsersRenderURL">
-	<portlet:param name="mvcRenderCommandName" value="editSegmentsEntryUsers" />
-	<portlet:param name="tabs1" value="users" />
+<portlet:renderURL var="editSegmentsEntryOrganizationsRenderURL">
+	<portlet:param name="mvcRenderCommandName" value="editSegmentsEntryOrganizations" />
+	<portlet:param name="tabs1" value="organizations" />
 	<portlet:param name="backURL" value="<%= backURL %>" />
 	<portlet:param name="segmentsEntryId" value="<%= String.valueOf(segmentsEntryId) %>" />
 </portlet:renderURL>
 
-<aui:form action="<%= deleteSegmentsEntryUserURL %>" cssClass="container-fluid-1280" method="post" name="fmSegmentsEntryUsers">
-	<aui:input name="redirect" type="hidden" value="<%= editSegmentsEntryUsersRenderURL %>" />
-	<aui:input name="tabs1" type="hidden" value="users" />
+<aui:form action="<%= deleteSegmentsEntryOrganizationURL %>" cssClass="container-fluid-1280" method="post" name="fmSegmentsEntryOrganizations">
+	<aui:input name="redirect" type="hidden" value="<%= editSegmentsEntryOrganizationsRenderURL %>" />
+	<aui:input name="tabs1" type="hidden" value="organizations" />
 	<aui:input name="segmentsEntryId" type="hidden" value="<%= segmentsEntryId %>" />
 
 	<liferay-ui:search-container
-		searchContainer="<%= editSegmentsEntryDisplayContext.getUserSearchContainer() %>"
+		searchContainer="<%= editSegmentsEntryDisplayContext.getOrganizationSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.kernel.model.User"
+			className="com.liferay.portal.kernel.model.Organization"
 			escapedModel="<%= true %>"
-			keyProperty="userId"
-			modelVar="user2"
-			rowIdProperty="screenName"
+			keyProperty="organizationId"
+			modelVar="organization"
 		>
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand table-cell-minw-200 table-title"
 				name="name"
-				value="<%= user2.getFullName() %>"
+				property="name"
+				truncate="<%= true %>"
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand table-cell-minw-200"
-				name="screen-name"
+				name="parent-organization"
+				truncate="<%= true %>"
+				value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				name="type"
 				orderable="<%= true %>"
-				property="screenName"
+				value="<%= LanguageUtil.get(request, organization.getType()) %>"
 			/>
 		</liferay-ui:search-container-row>
 
@@ -92,54 +96,54 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getSegmentsEntryName(loc
 	</liferay-ui:search-container>
 </aui:form>
 
-<portlet:actionURL name="addSegmentsEntryUser" var="addSegmentsEntryUserURL" />
+<portlet:actionURL name="addSegmentsEntryOrganization" var="addSegmentsEntryOrganizationURL" />
 
-<aui:form action="<%= addSegmentsEntryUserURL %>" cssClass="hide" method="post" name="addSegmentsEntryUserFm">
-	<aui:input name="redirect" type="hidden" value="<%= editSegmentsEntryUsersRenderURL %>" />
-	<aui:input name="tabs1" type="hidden" value="users" />
+<aui:form action="<%= addSegmentsEntryOrganizationURL %>" cssClass="hide" method="post" name="addSegmentsEntryOrganizationFm">
+	<aui:input name="redirect" type="hidden" value="<%= editSegmentsEntryOrganizationsRenderURL %>" />
+	<aui:input name="tabs1" type="hidden" value="organizations" />
 	<aui:input name="segmentsEntryId" type="hidden" value="<%= segmentsEntryId %>" />
 </aui:form>
 
 <aui:script use="liferay-item-selector-dialog,liferay-portlet-url">
-	var addSegmentsEntryUsers = function(event) {
+	var addSegmentsEntryOrganizations = function(event) {
 		event.preventDefault();
 
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 			{
-				eventName: '<portlet:namespace />selectSegmentsEntryUsers',
+				eventName: '<portlet:namespace />selectSegmentsEntryOrganizations',
 				on: {
 					selectedItemChange: function(event) {
 						var selectedItem = event.newVal;
 
 						if (selectedItem) {
-							var addSegmentsEntryUserFm = $(document.<portlet:namespace />addSegmentsEntryUserFm);
+							var addSegmentsEntryOrganizationFm = $(document.<portlet:namespace />addSegmentsEntryOrganizationFm);
 
-							addSegmentsEntryUserFm.append(selectedItem);
+							addSegmentsEntryOrganizationFm.append(selectedItem);
 
-							submitForm(addSegmentsEntryUserFm);
+							submitForm(addSegmentsEntryOrganizationFm);
 						}
 					}
 				},
 				'strings.add': '<liferay-ui:message key="done" />',
-				title: '<liferay-ui:message key="assign-users-to-this-segment" />',
-				url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="selectSegmentsEntryUsers" /><portlet:param name="segmentsEntryId" value="<%= String.valueOf(segmentsEntryId) %>" /></portlet:renderURL>'
+				title: '<liferay-ui:message key="assign-organizations-to-this-segment" />',
+				url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="selectSegmentsEntryOrganizations" /><portlet:param name="segmentsEntryId" value="<%= String.valueOf(segmentsEntryId) %>" /></portlet:renderURL>'
 			}
 		);
 
 		itemSelectorDialog.open();
 	}
 
-	var deleteSegmentsEntryUsers = function() {
+	var deleteSegmentsEntryOrganizations = function() {
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
-			submitForm(document.querySelector('#<portlet:namespace />fmSegmentsEntryUsers'));
+			submitForm(document.querySelector('#<portlet:namespace />fmSegmentsEntryOrganizations'));
 		}
 	};
 
 	var ACTIONS = {
-		'deleteSegmentsEntryUsers': deleteSegmentsEntryUsers
+		'deleteSegmentsEntryOrganizations': deleteSegmentsEntryOrganizations
 	};
 
-	Liferay.componentReady('segmentsEntryUsersManagementToolbar').then(
+	Liferay.componentReady('segmentsEntryOrganizationsManagementToolbar').then(
 		function(managementToolbar) {
 			managementToolbar.on(
 				'actionItemClicked',
@@ -151,7 +155,7 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getSegmentsEntryName(loc
 					}
 				}
 			);
-			managementToolbar.on('creationButtonClicked', addSegmentsEntryUsers);
+			managementToolbar.on('creationButtonClicked', addSegmentsEntryOrganizations);
 		}
 	);
 </aui:script>

@@ -170,8 +170,17 @@ public class AnnouncementsEntryLocalServiceImpl
 				now.getTime() - _ANNOUNCEMENTS_ENTRY_CHECK_INTERVAL);
 		}
 
+		checkEntries(_previousCheckDate, now);
+
+		_previousCheckDate = now;
+	}
+
+	@Override
+	public void checkEntries(Date startDate, Date endDate)
+		throws PortalException {
+
 		List<AnnouncementsEntry> entries =
-			announcementsEntryFinder.findByDisplayDate(now, _previousCheckDate);
+			announcementsEntryFinder.findByDisplayDate(endDate, startDate);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Processing " + entries.size() + " entries");
@@ -180,8 +189,6 @@ public class AnnouncementsEntryLocalServiceImpl
 		for (AnnouncementsEntry entry : entries) {
 			notifyUsers(entry);
 		}
-
-		_previousCheckDate = now;
 	}
 
 	@Override

@@ -179,8 +179,8 @@ if (amImageConfigurationEntry != null) {
 </liferay-frontend:edit-form>
 
 <c:if test="<%= configurationEntryEditable %>">
-	<aui:script require="adaptive-media-web@3.0.0/adaptive_media/js/EditAdaptiveMediaConfig.es">
-		new adaptiveMediaWeb300Adaptive_mediaJsEditAdaptiveMediaConfigEs.default(
+	<aui:script require="adaptive-media-web@3.0.0/adaptive_media/js/EditAdaptiveMediaConfig.es as EditAdaptiveMediaConfig">
+		new EditAdaptiveMediaConfig.default(
 			{
 				namespace: '<portlet:namespace />'
 			}

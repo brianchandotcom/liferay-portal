@@ -145,10 +145,10 @@ String entryUuid = String.valueOf(amImageConfigurationEntry.getUUID());
 	</c:choose>
 </liferay-ui:icon-menu>
 
-<aui:script require="adaptive-media-web@3.0.0/adaptive_media/js/AdaptiveMediaOptionsHandler.es">
+<aui:script require="adaptive-media-web@3.0.0/adaptive_media/js/AdaptiveMediaOptionsHandler.es as AdaptiveMediaOptionsHandler">
 	var component = Liferay.component(
 		'<portlet:namespace />OptionsHandler<%= entryUuid %>',
-		new adaptiveMediaWeb300Adaptive_mediaJsAdaptiveMediaOptionsHandlerEs.default(
+		new AdaptiveMediaOptionsHandler.default(
 			{
 				namespace: '<portlet:namespace />',
 				uuid: '<%= entryUuid %>'

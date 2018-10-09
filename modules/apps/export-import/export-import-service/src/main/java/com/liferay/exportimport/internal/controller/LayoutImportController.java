@@ -756,6 +756,7 @@ public class LayoutImportController implements ImportController {
 
 				if (SitesUtil.isLayoutModifiedSinceLastMerge(layout)) {
 					modifiedLayouts.add(layout);
+
 					continue;
 				}
 

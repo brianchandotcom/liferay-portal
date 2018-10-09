@@ -326,7 +326,6 @@
 					AUI().use(
 						'liferay-item-selector-dialog',
 						function(A) {
-
 							itemSelectorDialog = new A.LiferayItemSelectorDialog(
 								{
 									eventName: eventName,
@@ -359,6 +358,14 @@
 				return itemSrc;
 			},
 
+			_isEmptySelection: function(editor) {
+				var selection = editor.getSelection();
+
+				var ranges = selection.getRanges();
+
+				return selection.getType() === CKEDITOR.SELECTION_NONE || (ranges.length === 1 && ranges[0].collapsed);
+			},
+
 			_onSelectedAudioChange: function(editor, callback, event) {
 				var instance = this;
 
@@ -386,7 +393,6 @@
 				if (selectedItem) {
 					var eventName = editor.name + 'selectItem';
 					var imageSrc = instance._getItemSrc(editor, selectedItem);
-					var isSelectionEmpty = editor.isSelectionEmpty();
 
 					Liferay.Util.getWindow(eventName).onceAfter(
 						'destroy',
@@ -398,7 +404,7 @@
 								else {
 									editor.insertHtml('<img src="' + imageSrc + '">');
 
-									if (isSelectionEmpty) {
+									if (instance._isEmptySelection(editor)) {
 										editor.execCommand('enter');
 									}
 

@@ -4,6 +4,8 @@
 	{@param? type: string}
 
 	{switch $type}
+		{case 'date'}
+			{call .Date /}
 		{case 'text'}
 			{call .Text /}
 		{case 'select'}
@@ -13,6 +15,10 @@
 		{default}
 			<div class="ddm-template-undefined">Undefined template.</div>
 	{/switch}
+{/template}
+
+{template .Date}
+	<p>Date Field</p>
 {/template}
 
 {template .Text}

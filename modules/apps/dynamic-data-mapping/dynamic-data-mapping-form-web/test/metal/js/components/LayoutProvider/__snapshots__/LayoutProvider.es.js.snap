@@ -23,7 +23,18 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Radio",
+                "fieldName": "radio",
+                "label": "Radio Field",
+                "options": Array [
+                  Object {
+                    "label": "Option 1",
+                    "value": "option1",
+                  },
+                  Object {
+                    "label": "Option 2",
+                    "value": "option2",
+                  },
+                ],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -43,7 +54,17 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Text",
+                "fieldName": "text1",
+                "label": "Text Field 1",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "text",
+              },
+              Object {
+                "fieldName": "text2",
+                "label": "Text Field 2",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
@@ -56,15 +77,18 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "items": Array [
+                "fieldName": "select",
+                "label": "Select Field",
+                "options": Array [
                   Object {
-                    "name": "Foo",
+                    "label": "Option 1",
+                    "value": "option1",
                   },
                   Object {
-                    "name": "Bar",
+                    "label": "Option 2",
+                    "value": "option2",
                   },
                 ],
-                "label": "Select",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
@@ -85,12 +109,13 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Second row",
+                "fieldName": "date",
+                "label": "Date Field",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
-                "type": "text",
+                "type": "date",
               },
             ],
             "size": 12,
@@ -126,7 +151,18 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Radio",
+                "fieldName": "radio",
+                "label": "Radio Field",
+                "options": Array [
+                  Object {
+                    "label": "Option 1",
+                    "value": "option1",
+                  },
+                  Object {
+                    "label": "Option 2",
+                    "value": "option2",
+                  },
+                ],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -146,7 +182,17 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Text",
+                "fieldName": "text1",
+                "label": "Text Field 1",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "text",
+              },
+              Object {
+                "fieldName": "text2",
+                "label": "Text Field 2",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
@@ -159,15 +205,18 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "items": Array [
+                "fieldName": "select",
+                "label": "Select Field",
+                "options": Array [
                   Object {
-                    "name": "Foo",
+                    "label": "Option 1",
+                    "value": "option1",
                   },
                   Object {
-                    "name": "Bar",
+                    "label": "Option 2",
+                    "value": "option2",
                   },
                 ],
-                "label": "Select",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
@@ -188,12 +237,13 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Second row",
+                "fieldName": "date",
+                "label": "Date Field",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
-                "type": "text",
+                "type": "date",
               },
             ],
             "size": 12,
@@ -215,7 +265,18 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Radio",
+                "fieldName": "radio",
+                "label": "Radio Field",
+                "options": Array [
+                  Object {
+                    "label": "Option 1",
+                    "value": "option1",
+                  },
+                  Object {
+                    "label": "Option 2",
+                    "value": "option2",
+                  },
+                ],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -239,15 +300,18 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "items": Array [
+                "fieldName": "select",
+                "label": "Select Field",
+                "options": Array [
                   Object {
-                    "name": "Foo",
+                    "label": "Option 1",
+                    "value": "option1",
                   },
                   Object {
-                    "name": "Bar",
+                    "label": "Option 2",
+                    "value": "option2",
                   },
                 ],
-                "label": "Select",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
@@ -268,12 +332,13 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Second row",
+                "fieldName": "date",
+                "label": "Date Field",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
-                "type": "text",
+                "type": "date",
               },
             ],
             "size": 12,
@@ -296,8 +361,18 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "name0000",
-                "label": "Radio",
+                "label": "Radio Field",
                 "name": "name0000",
+                "options": Array [
+                  Object {
+                    "label": "Option 1",
+                    "value": "option1",
+                  },
+                  Object {
+                    "label": "Option 2",
+                    "value": "option2",
+                  },
+                ],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -320,6 +395,16 @@ Array [
                 "fieldName": "name0010",
                 "label": "copy-of-x",
                 "name": "name0010",
+                "options": Array [
+                  Object {
+                    "label": "Option 1",
+                    "value": "option1",
+                  },
+                  Object {
+                    "label": "Option 2",
+                    "value": "option2",
+                  },
+                ],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -336,8 +421,18 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "name0020",
-                "label": "Text",
+                "label": "Text Field 1",
                 "name": "name0020",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "text",
+              },
+              Object {
+                "fieldName": "name1020",
+                "label": "Text Field 2",
+                "name": "name1020",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
@@ -351,16 +446,18 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "name0120",
-                "items": Array [
+                "label": "Select Field",
+                "name": "name0120",
+                "options": Array [
                   Object {
-                    "name": "Foo",
+                    "label": "Option 1",
+                    "value": "option1",
                   },
                   Object {
-                    "name": "Bar",
+                    "label": "Option 2",
+                    "value": "option2",
                   },
                 ],
-                "label": "Select",
-                "name": "name0120",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
@@ -382,13 +479,13 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "name0030",
-                "label": "Second row",
+                "label": "Date Field",
                 "name": "name0030",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
-                "type": "text",
+                "type": "date",
               },
             ],
             "size": 12,
@@ -410,15 +507,18 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "items": Array [
+                "fieldName": "select",
+                "label": "Select Field",
+                "options": Array [
                   Object {
-                    "name": "Foo",
+                    "label": "Option 1",
+                    "value": "option1",
                   },
                   Object {
-                    "name": "Bar",
+                    "label": "Option 2",
+                    "value": "option2",
                   },
                 ],
-                "label": "Select",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
@@ -435,7 +535,18 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Radio",
+                "fieldName": "radio",
+                "label": "Radio Field",
+                "options": Array [
+                  Object {
+                    "label": "Option 1",
+                    "value": "option1",
+                  },
+                  Object {
+                    "label": "Option 2",
+                    "value": "option2",
+                  },
+                ],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -455,7 +566,17 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Text",
+                "fieldName": "text1",
+                "label": "Text Field 1",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "text",
+              },
+              Object {
+                "fieldName": "text2",
+                "label": "Text Field 2",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
@@ -480,12 +601,13 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Second row",
+                "fieldName": "date",
+                "label": "Date Field",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
-                "type": "text",
+                "type": "date",
               },
             ],
             "size": 12,
@@ -507,7 +629,17 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Text",
+                "fieldName": "text1",
+                "label": "Text Field 1",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "text",
+              },
+              Object {
+                "fieldName": "text2",
+                "label": "Text Field 2",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
@@ -524,7 +656,18 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Radio",
+                "fieldName": "radio",
+                "label": "Radio Field",
+                "options": Array [
+                  Object {
+                    "label": "Option 1",
+                    "value": "option1",
+                  },
+                  Object {
+                    "label": "Option 2",
+                    "value": "option2",
+                  },
+                ],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -548,15 +691,18 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "items": Array [
+                "fieldName": "select",
+                "label": "Select Field",
+                "options": Array [
                   Object {
-                    "name": "Foo",
+                    "label": "Option 1",
+                    "value": "option1",
                   },
                   Object {
-                    "name": "Bar",
+                    "label": "Option 2",
+                    "value": "option2",
                   },
                 ],
-                "label": "Select",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
@@ -577,12 +723,13 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Second row",
+                "fieldName": "date",
+                "label": "Date Field",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
-                "type": "text",
+                "type": "date",
               },
             ],
             "size": 12,
@@ -604,7 +751,18 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Radio",
+                "fieldName": "radio",
+                "label": "Radio Field",
+                "options": Array [
+                  Object {
+                    "label": "Option 1",
+                    "value": "option1",
+                  },
+                  Object {
+                    "label": "Option 2",
+                    "value": "option2",
+                  },
+                ],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -624,7 +782,17 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Text",
+                "fieldName": "text1",
+                "label": "Text Field 1",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "text",
+              },
+              Object {
+                "fieldName": "text2",
+                "label": "Text Field 2",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
@@ -637,15 +805,18 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "items": Array [
+                "fieldName": "select",
+                "label": "Select Field",
+                "options": Array [
                   Object {
-                    "name": "Foo",
+                    "label": "Option 1",
+                    "value": "option1",
                   },
                   Object {
-                    "name": "Bar",
+                    "label": "Option 2",
+                    "value": "option2",
                   },
                 ],
-                "label": "Select",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
@@ -666,12 +837,13 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Second row",
+                "fieldName": "date",
+                "label": "Date Field",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
-                "type": "text",
+                "type": "date",
               },
             ],
             "size": 12,
@@ -693,12 +865,13 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Second row",
+                "fieldName": "date",
+                "label": "Date Field",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
-                "type": "text",
+                "type": "date",
               },
             ],
             "size": 12,
@@ -710,7 +883,18 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Radio",
+                "fieldName": "radio",
+                "label": "Radio Field",
+                "options": Array [
+                  Object {
+                    "label": "Option 1",
+                    "value": "option1",
+                  },
+                  Object {
+                    "label": "Option 2",
+                    "value": "option2",
+                  },
+                ],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -730,7 +914,17 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Text",
+                "fieldName": "text1",
+                "label": "Text Field 1",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "text",
+              },
+              Object {
+                "fieldName": "text2",
+                "label": "Text Field 2",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
@@ -743,15 +937,18 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "items": Array [
+                "fieldName": "select",
+                "label": "Select Field",
+                "options": Array [
                   Object {
-                    "name": "Foo",
+                    "label": "Option 1",
+                    "value": "option1",
                   },
                   Object {
-                    "name": "Bar",
+                    "label": "Option 2",
+                    "value": "option2",
                   },
                 ],
-                "label": "Select",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
@@ -790,7 +987,18 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Radio",
+                "fieldName": "radio",
+                "label": "Radio Field",
+                "options": Array [
+                  Object {
+                    "label": "Option 1",
+                    "value": "option1",
+                  },
+                  Object {
+                    "label": "Option 2",
+                    "value": "option2",
+                  },
+                ],
                 "settingsContext": Object {
                   "pages": Array [],
                 },
@@ -810,7 +1018,17 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Text",
+                "fieldName": "text1",
+                "label": "Text Field 1",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "text",
+              },
+              Object {
+                "fieldName": "text2",
+                "label": "Text Field 2",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
@@ -823,15 +1041,18 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "items": Array [
+                "fieldName": "select",
+                "label": "Select Field",
+                "options": Array [
                   Object {
-                    "name": "Foo",
+                    "label": "Option 1",
+                    "value": "option1",
                   },
                   Object {
-                    "name": "Bar",
+                    "label": "Option 2",
+                    "value": "option2",
                   },
                 ],
-                "label": "Select",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
@@ -852,12 +1073,13 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "label": "Second row",
+                "fieldName": "date",
+                "label": "Date Field",
                 "required": true,
                 "settingsContext": Object {
                   "pages": Array [],
                 },
-                "type": "text",
+                "type": "date",
               },
             ],
             "size": 12,

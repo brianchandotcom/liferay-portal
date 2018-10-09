@@ -5,20 +5,38 @@
 
 	<div id="fields-rule">
 		{switch $type}
-			{case 'text'}
-				{call .Text /}
+			{case 'checkbox_multiple'}
+				{call .CheckboxMultiple /}
+			{case 'date'}
+				{call .Date /}
+			{case 'radio'}
+				{call .Radio /}
 			{case 'select'}
 				{call .Select /}
+			{case 'text'}
+				{call .Text /}
 			{default}
 				<div class="ddm-template-undefined">Undefined template.</div>
 		{/switch}
 	</div>
 {/template}
 
-{template .Text}
-	<p>Text Field</p>
+{template .CheckboxMultiple}
+	<p>Checkbox Multiple Field</p>
+{/template}
+
+{template .Date}
+	<p>Date Field</p>
+{/template}
+
+{template .Radio}
+	<p>Radio Field</p>
 {/template}
 
 {template .Select}
 	<p>Select Field</p>
+{/template}
+
+{template .Text}
+	<p>Text Field</p>
 {/template}

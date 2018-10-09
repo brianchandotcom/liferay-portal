@@ -76,6 +76,10 @@ public class XMLWebFileCheck extends BaseFileCheck {
 			urlPatterns.add(languageCode);
 
 			urlPatterns.add(locale);
+
+			urlPatterns.add(
+				StringUtil.replaceFirst(
+					locale, CharPool.UNDERLINE, CharPool.DASH));
 		}
 
 		StringBundler sb = new StringBundler(6 * urlPatterns.size());

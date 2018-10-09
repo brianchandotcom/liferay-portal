@@ -64,6 +64,10 @@ public enum MethodType {
 		new Class<?>[] {ResourceRequest.class, ResourceResponse.class}, true);
 
 	public boolean isMatch(Method method) {
+		if (method.getAnnotation(_annotation) == null) {
+			return false;
+		}
+
 		Class<?> returnType = method.getReturnType();
 
 		Class<?>[] parameterTypes = method.getParameterTypes();

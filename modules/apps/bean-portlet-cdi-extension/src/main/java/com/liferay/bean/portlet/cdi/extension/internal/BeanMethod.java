@@ -18,7 +18,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Objects;
-import java.util.Set;
 
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
@@ -41,24 +40,20 @@ import javax.xml.namespace.QName;
 public class BeanMethod {
 
 	public BeanMethod(
-		BeanManager beanManager, MethodType type, Class<?> beanClass,
-		Method method) {
+		BeanManager beanManager, Bean<?> bean, MethodType type, Method method) {
 
-		this(beanManager, type, beanClass, method, 0);
+		this(beanManager, bean, type, method, 0);
 	}
 
 	public BeanMethod(
-		BeanManager beanManager, MethodType type, Class<?> beanClass,
-		Method method, int ordinal) {
+		BeanManager beanManager, Bean<?> bean, MethodType type, Method method,
+		int ordinal) {
 
 		_beanManager = beanManager;
+		_bean = bean;
 		_type = type;
 		_method = method;
 		_ordinal = ordinal;
-
-		Set<Bean<?>> beans = beanManager.getBeans(beanClass);
-
-		_bean = beanManager.resolve(beans);
 	}
 
 	@Override

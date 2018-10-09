@@ -795,8 +795,8 @@ public class BeanPortletExtension implements Extension {
 			int ordinal = scannedMethod.getOrdinal();
 
 			BeanMethod beanMethod = new BeanMethod(
-				beanManager, scannedMethod.getMethodType(), clazz, method,
-				ordinal);
+				beanManager, beanManager.resolve(beanManager.getBeans(clazz)),
+				scannedMethod.getMethodType(), method, ordinal);
 
 			for (String portletName : portletNames) {
 				Set<BeanMethod> beanMethods = portletBeanMethods.get(
@@ -878,8 +878,9 @@ public class BeanPortletExtension implements Extension {
 				int ordinal = scannedMethod.getOrdinal();
 
 				BeanMethod beanMethod = new BeanMethod(
-					beanManager, scannedMethod.getMethodType(), clazz, method,
-					ordinal);
+					beanManager,
+					beanManager.resolve(beanManager.getBeans(clazz)),
+					scannedMethod.getMethodType(), method, ordinal);
 
 				wildcardBeanMethods.add(beanMethod);
 			}

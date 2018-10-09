@@ -24,6 +24,7 @@ import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 
 import javax.portlet.ActionRequest;
@@ -57,6 +58,9 @@ public class PortletScannerUtil {
 	public static Set<BeanMethod> getNonannotatedBeanMethods(
 		BeanManager beanManager, Class<?> beanPortletClass) {
 
+		Bean<?> bean = beanManager.resolve(
+			beanManager.getBeans(beanPortletClass));
+
 		Set<BeanMethod> beanMethods = new HashSet<>();
 
 		if (Portlet.class.isAssignableFrom(beanPortletClass)) {
@@ -69,7 +73,7 @@ public class PortletScannerUtil {
 
 					beanMethods.add(
 						new BeanMethod(
-							beanManager, MethodType.ACTION, beanPortletClass,
+							beanManager, bean, MethodType.ACTION,
 							processActionMethod));
 				}
 
@@ -78,7 +82,7 @@ public class PortletScannerUtil {
 				if (!destroyMethod.isAnnotationPresent(DestroyMethod.class)) {
 					beanMethods.add(
 						new BeanMethod(
-							beanManager, MethodType.DESTROY, beanPortletClass,
+							beanManager, bean, MethodType.DESTROY,
 							destroyMethod));
 				}
 
@@ -88,8 +92,7 @@ public class PortletScannerUtil {
 				if (!initMethod.isAnnotationPresent(InitMethod.class)) {
 					beanMethods.add(
 						new BeanMethod(
-							beanManager, MethodType.INIT, beanPortletClass,
-							initMethod));
+							beanManager, bean, MethodType.INIT, initMethod));
 				}
 
 				Method renderMethod = beanPortletClass.getMethod(
@@ -98,7 +101,7 @@ public class PortletScannerUtil {
 				if (!renderMethod.isAnnotationPresent(RenderMethod.class)) {
 					beanMethods.add(
 						new BeanMethod(
-							beanManager, MethodType.RENDER, beanPortletClass,
+							beanManager, bean, MethodType.RENDER,
 							renderMethod));
 				}
 			}
@@ -115,8 +118,7 @@ public class PortletScannerUtil {
 				if (!eventMethod.isAnnotationPresent(EventMethod.class)) {
 					beanMethods.add(
 						new BeanMethod(
-							beanManager, MethodType.EVENT, beanPortletClass,
-							eventMethod));
+							beanManager, bean, MethodType.EVENT, eventMethod));
 				}
 			}
 			catch (NoSuchMethodException nsme) {
@@ -134,7 +136,7 @@ public class PortletScannerUtil {
 
 					beanMethods.add(
 						new BeanMethod(
-							beanManager, MethodType.HEADER, beanPortletClass,
+							beanManager, bean, MethodType.HEADER,
 							renderHeadersMethod));
 				}
 			}
@@ -154,8 +156,8 @@ public class PortletScannerUtil {
 
 					beanMethods.add(
 						new BeanMethod(
-							beanManager, MethodType.SERVE_RESOURCE,
-							beanPortletClass, serveResourceMethod));
+							beanManager, bean, MethodType.SERVE_RESOURCE,
+							serveResourceMethod));
 				}
 			}
 			catch (NoSuchMethodException nsme) {

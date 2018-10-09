@@ -210,8 +210,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 								StandardCharsets.UTF_8);
 
 							String newContent = content.replace(
-								"\"" + version + "\"",
-								"\"" + newVersion + "\"");
+								version, newVersion);
 
 							Files.write(
 								file.toPath(),
@@ -287,8 +286,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 								StandardCharsets.UTF_8);
 
 							String newContent = content.replace(
-								"\"" + version + "\"",
-								"\"" + newVersion + "\"");
+								version, newVersion);
 
 							Files.write(
 								file.toPath(),

@@ -1414,17 +1414,25 @@ public class JenkinsResultsParserUtil {
 			for (int i = 1; properties.containsKey(_getRedactTokenKey(i));
 				 i++) {
 
-				String key = properties.getProperty(_getRedactTokenKey(i));
+				String key = _getRedactTokenKey(i);
 
-				String redactToken = key;
+				String redactToken = getProperty(properties, key);
 
-				if (key.startsWith("${") && key.endsWith("}")) {
-					redactToken = properties.getProperty(
-						key.substring(2, key.length() - 1));
-				}
+				if (redactToken != null) {
+					if ((redactToken.length() < 5) &&
+						redactToken.matches("\\d+")) {
 
-				if ((redactToken != null) && !redactToken.isEmpty()) {
-					_redactTokens.add(redactToken);
+						System.out.println(
+							combine(
+								"Ignoring ", key,
+								" because the value is numeric and ",
+								"less than 5 characters long."));
+					}
+					else {
+						if (!redactToken.isEmpty()) {
+							_redactTokens.add(redactToken);
+						}
+					}
 				}
 			}
 

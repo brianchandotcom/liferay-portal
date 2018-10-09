@@ -5,11 +5,7 @@ import {PagesVisitor} from 'source/util/visitors.es';
 
 let component;
 
-const spritemap = 'icons.svg';
-
-const pages = [...mockPages];
-
-const url = '/o/dynamic-data-mapping-form-builder-roles/';
+const dataProviderUrl = '/o/dynamic-data-mapping-form-builder-data-provider-instances/';
 
 const functionsMetadata = {
 	radio: [
@@ -32,6 +28,12 @@ const functionsMetadata = {
 		{name: 'belongs-to', parameterTypes: ['text'], returnType: 'boolean', value: 'Belongs to'}
 	]
 };
+
+const pages = [...mockPages];
+
+const spritemap = 'icons.svg';
+
+const rolesUrl = '/o/dynamic-data-mapping-form-builder-roles/';
 
 describe(
 	'Rule Editor',
@@ -74,8 +76,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -110,8 +112,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -134,7 +136,7 @@ describe(
 
 								jest.runAllTimers();
 
-								component.refs.confirmationModal.element.querySelector('.btn-primary').click();
+								component.refs.confirmationModalCondition.element.querySelector('.btn-primary').click();
 
 								jest.runAllTimers();
 
@@ -155,8 +157,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -179,8 +181,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -212,8 +214,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -233,8 +235,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -254,8 +256,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -275,8 +277,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -311,8 +313,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -347,8 +349,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -383,8 +385,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -418,8 +420,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -444,8 +446,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -465,6 +467,7 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
+										rolesUrl,
 										spritemap
 									}
 								);
@@ -485,8 +488,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -512,8 +515,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -537,8 +540,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -562,8 +565,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -606,8 +609,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -664,8 +667,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -692,8 +695,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -730,8 +733,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -780,8 +783,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -819,8 +822,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -849,8 +852,8 @@ describe(
 										conditions: [],
 										functionsMetadata,
 										pages,
-										spritemap,
-										url
+										rolesUrl,
+										spritemap
 									}
 								);
 
@@ -870,6 +873,157 @@ describe(
 								jest.runAllTimers();
 
 								expect(component).toMatchSnapshot();
+							}
+						);
+					}
+				);
+
+				describe(
+					'When the user choose any of the options of the action a select target should be displayed',
+					() => {
+						it(
+							'should display the action target according to action type (Show, Enable or Required)',
+							() => {
+								component = new RuleEditor(
+									{
+										actions: [],
+										conditions: [],
+										dataProviderUrl,
+										functionsMetadata,
+										pages,
+										rolesUrl,
+										spritemap
+									}
+								);
+
+								component.refs.action0.emitFieldEdited(['show']);
+
+								jest.runAllTimers();
+
+								expect(component.refs.actionTarget0).toBeTruthy();
+							}
+						);
+						it(
+							'should refresh the target when the user changes any of the options of the first action select between (Show, Enable or Required)',
+							() => {
+								component = new RuleEditor(
+									{
+										actions: [],
+										conditions: [],
+										dataProviderUrl,
+										functionsMetadata,
+										pages,
+										rolesUrl,
+										spritemap
+									}
+								);
+
+								component.refs.action0.emitFieldEdited(['show']);
+
+								jest.runAllTimers();
+
+								component.refs.actionTarget0.emitFieldEdited(['date']);
+
+								jest.runAllTimers();
+								component.refs.action0.emitFieldEdited(['enable']);
+
+								jest.runAllTimers();
+
+								expect(component.refs.actionTarget0.value).toEqual(['']);
+							}
+						);
+
+						it(
+							'should refresh the target when the user changes de Action from autofill to Show, Enable or Required',
+							() => {
+								component = new RuleEditor(
+									{
+										actions: [],
+										conditions: [],
+										dataProviderUrl,
+										functionsMetadata,
+										pages,
+										rolesUrl,
+										spritemap
+									}
+								);
+
+								component.refs.action0.emitFieldEdited(['autofill']);
+
+								jest.runAllTimers();
+
+								component.refs.actionTarget0.emitFieldEdited(['38701']);
+
+								jest.runAllTimers();
+
+								component.refs.action0.emitFieldEdited(['enable']);
+
+								jest.runAllTimers();
+
+								expect(component.refs.actionTarget0.value).toEqual(['']);
+							}
+						);
+
+						it(
+							'should display the action target according to action type (Autofill)',
+							() => {
+								component = new RuleEditor(
+									{
+										actions: [],
+										conditions: [],
+										dataProviderUrl,
+										functionsMetadata,
+										pages,
+										rolesUrl,
+										spritemap
+									}
+								);
+
+								component.refs.action0.emitFieldEdited(['autofill']);
+
+								jest.runAllTimers();
+
+								expect(component.refs.actionTarget0).toBeTruthy();
+							}
+						);
+
+						it(
+							'should duplicate an action when duplicate field is clicked',
+							() => {
+								component = new RuleEditor(
+									{
+										actions: [],
+										conditions: [],
+										dataProviderUrl,
+										functionsMetadata,
+										pages,
+										rolesUrl,
+										spritemap
+									}
+								);
+
+								component.refs.action0.emitFieldEdited(['show']);
+
+								jest.runAllTimers();
+
+								component.refs.addActionButton.emit('click');
+
+								jest.runAllTimers();
+
+								component.refs.trashButtonAction0.emit(
+									'click',
+									{
+										currentTarget: component.refs.trashButtonAction0.element
+									}
+								);
+
+								jest.runAllTimers();
+
+								component.refs.confirmationModalAction.element.querySelector('.btn-primary').click();
+
+								jest.runAllTimers();
+
+								expect(component.actions.length).toBe(1);
 							}
 						);
 					}
@@ -918,8 +1072,8 @@ describe(
 								conditions: [],
 								functionsMetadata,
 								pages,
-								spritemap,
-								url
+								rolesUrl,
+								spritemap
 							}
 						);
 

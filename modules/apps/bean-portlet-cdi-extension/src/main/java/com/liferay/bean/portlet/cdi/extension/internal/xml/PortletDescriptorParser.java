@@ -16,6 +16,7 @@ package com.liferay.bean.portlet.cdi.extension.internal.xml;
 
 import com.liferay.bean.portlet.cdi.extension.internal.BeanApp;
 import com.liferay.bean.portlet.cdi.extension.internal.BeanFilter;
+import com.liferay.bean.portlet.cdi.extension.internal.BeanFilterImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.BeanMethod;
 import com.liferay.bean.portlet.cdi.extension.internal.BeanPortlet;
 import com.liferay.bean.portlet.cdi.extension.internal.Event;
@@ -309,7 +310,7 @@ public class PortletDescriptorParser {
 				initParamElement.elementText("value"));
 		}
 
-		return new BeanFilterDescriptorImpl(
+		return new BeanFilterImpl(
 			filterName, filterClass, ordinal, filterMappings.get(filterName),
 			lifecycles, initParams);
 	}

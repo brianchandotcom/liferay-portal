@@ -12,17 +12,20 @@
  * details.
  */
 
-package com.liferay.bean.portlet.cdi.extension.internal.xml;
+package com.liferay.bean.portlet.cdi.extension.internal;
 
+import com.liferay.portal.kernel.util.HashMapDictionary;
+
+import java.util.Dictionary;
 import java.util.Map;
 import java.util.Set;
 
 /**
  * @author Neil Griffin
  */
-public class BeanFilterDescriptorImpl extends BaseBeanFilterImpl {
+public class BeanFilterImpl implements BeanFilter {
 
-	public BeanFilterDescriptorImpl(
+	public BeanFilterImpl(
 		String filterName, Class<?> filterClass, int ordinal,
 		Set<String> portletNames, Set<String> lifecycles,
 		Map<String, String> initParams) {
@@ -63,6 +66,32 @@ public class BeanFilterDescriptorImpl extends BaseBeanFilterImpl {
 	@Override
 	public Set<String> getPortletNames() {
 		return _portletNames;
+	}
+
+	@Override
+	public Dictionary<String, Object> toDictionary() {
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+
+		Set<String> lifecycles = getLifecycles();
+
+		if (!lifecycles.isEmpty()) {
+			dictionary.put("filter.lifecycles", lifecycles);
+		}
+
+		dictionary.put("service.ranking:Integer", getOrdinal());
+
+		Map<String, String> initParams = getInitParams();
+
+		for (Map.Entry<String, String> entry : initParams.entrySet()) {
+			String value = entry.getValue();
+
+			if (value != null) {
+				dictionary.put(
+					"javax.portlet.init-param.".concat(entry.getKey()), value);
+			}
+		}
+
+		return dictionary;
 	}
 
 	private final Class<?> _filterClass;

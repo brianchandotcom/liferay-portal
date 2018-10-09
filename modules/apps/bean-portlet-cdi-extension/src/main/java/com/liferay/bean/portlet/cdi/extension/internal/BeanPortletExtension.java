@@ -17,7 +17,6 @@ package com.liferay.bean.portlet.cdi.extension.internal;
 import com.liferay.bean.portlet.LiferayPortletConfiguration;
 import com.liferay.bean.portlet.LiferayPortletConfigurations;
 import com.liferay.bean.portlet.cdi.extension.internal.annotated.BeanAppAnnotationImpl;
-import com.liferay.bean.portlet.cdi.extension.internal.annotated.BeanFilterAnnotationImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.annotated.BeanPortletAnnotationImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.annotated.type.ApplicationScopedAnnotatedTypeImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.annotated.type.PortletConfigAnnotatedTypeImpl;
@@ -28,7 +27,6 @@ import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletRequestBeanC
 import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletSessionBeanContext;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.RenderStateBeanContext;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBean;
-import com.liferay.bean.portlet.cdi.extension.internal.xml.BeanFilterMergedImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.DisplayDescriptorParser;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.LiferayDescriptorParser;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletDescriptorParser;
@@ -50,11 +48,13 @@ import java.net.URL;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -75,11 +75,13 @@ import javax.enterprise.inject.spi.ProcessAnnotatedType;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.annotations.ContextPath;
 import javax.portlet.annotations.CustomPortletMode;
 import javax.portlet.annotations.CustomWindowState;
 import javax.portlet.annotations.EventDefinition;
+import javax.portlet.annotations.InitParameter;
 import javax.portlet.annotations.Namespace;
 import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
@@ -96,7 +98,12 @@ import javax.portlet.annotations.RenderStateScoped;
 import javax.portlet.annotations.RuntimeOption;
 import javax.portlet.annotations.UserAttribute;
 import javax.portlet.annotations.WindowId;
+import javax.portlet.filter.ActionFilter;
+import javax.portlet.filter.EventFilter;
+import javax.portlet.filter.HeaderFilter;
 import javax.portlet.filter.PortletFilter;
+import javax.portlet.filter.RenderFilter;
+import javax.portlet.filter.ResourceFilter;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
@@ -550,8 +557,43 @@ public class BeanPortletExtension implements Extension {
 			PortletLifecycleFilter portletLifecycleFilter =
 				annotatedClass.getAnnotation(PortletLifecycleFilter.class);
 
-			BeanFilter annotatedBeanFilter = new BeanFilterAnnotationImpl(
-				annotatedClass, portletLifecycleFilter);
+			Map<String, String> initParams = new HashMap<>();
+
+			for (InitParameter initParameter :
+					portletLifecycleFilter.initParams()) {
+
+				initParams.put(initParameter.name(), initParameter.value());
+			}
+
+			Set<String> lifecycles = new LinkedHashSet<>();
+
+			if (ActionFilter.class.isAssignableFrom(annotatedClass)) {
+				lifecycles.add(PortletRequest.ACTION_PHASE);
+			}
+
+			if (EventFilter.class.isAssignableFrom(annotatedClass)) {
+				lifecycles.add(PortletRequest.EVENT_PHASE);
+			}
+
+			if (HeaderFilter.class.isAssignableFrom(annotatedClass)) {
+				lifecycles.add(PortletRequest.HEADER_PHASE);
+			}
+
+			if (RenderFilter.class.isAssignableFrom(annotatedClass)) {
+				lifecycles.add(PortletRequest.RENDER_PHASE);
+			}
+
+			if (ResourceFilter.class.isAssignableFrom(annotatedClass)) {
+				lifecycles.add(PortletRequest.RESOURCE_PHASE);
+			}
+
+			Set<String> portletNames = new HashSet<>(
+				Arrays.asList(portletLifecycleFilter.portletNames()));
+
+			BeanFilter annotatedBeanFilter = new BeanFilterImpl(
+				portletLifecycleFilter.filterName(), annotatedClass,
+				portletLifecycleFilter.ordinal(), portletNames, lifecycles,
+				initParams);
 
 			BeanFilter descriptorBeanFilter = _beanFilters.get(
 				portletLifecycleFilter.filterName());
@@ -561,10 +603,19 @@ public class BeanPortletExtension implements Extension {
 					portletLifecycleFilter.filterName(), annotatedBeanFilter);
 			}
 			else {
+				portletNames.addAll(descriptorBeanFilter.getPortletNames());
+
+				lifecycles.addAll(descriptorBeanFilter.getLifecycles());
+
+				initParams.putAll(descriptorBeanFilter.getInitParams());
+
 				_beanFilters.put(
 					portletLifecycleFilter.filterName(),
-					new BeanFilterMergedImpl(
-						annotatedBeanFilter, descriptorBeanFilter));
+					new BeanFilterImpl(
+						descriptorBeanFilter.getFilterName(),
+						descriptorBeanFilter.getFilterClass(),
+						descriptorBeanFilter.getOrdinal(), portletNames,
+						lifecycles, initParams));
 			}
 		}
 	}

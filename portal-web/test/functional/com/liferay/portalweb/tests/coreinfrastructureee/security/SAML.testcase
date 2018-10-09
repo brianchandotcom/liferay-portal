@@ -366,9 +366,7 @@
 			<var name="categoryPriority" value="DEBUG" />
 		</execute>
 
-		<execute macro="User#logoutPG">
-			<var name="specificURL" value="http://www.able.com:9080" />
-		</execute>
+		<execute macro="User#logoutPG" />
 
 		<execute macro="User#viewLoggedOutPG" />
 

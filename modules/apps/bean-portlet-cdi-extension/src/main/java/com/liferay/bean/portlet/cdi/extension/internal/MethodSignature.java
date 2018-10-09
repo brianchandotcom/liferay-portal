@@ -76,26 +76,23 @@ public class MethodSignature {
 
 		Class<?>[] parameterTypes = method.getParameterTypes();
 
+		// Exact match
+
 		if (returnType.equals(Void.TYPE) && _isAssignableFrom(parameterTypes)) {
 			return true;
 		}
-		else if (_variant && returnType.equals(Void.TYPE) &&
-				 (parameterTypes.length == 0)) {
+
+		// Variant match
+
+		if (_variant && (parameterTypes.length == 0) &&
+			(returnType.equals(Void.TYPE) || returnType.equals(String.class))) {
 
 			return true;
 		}
-		else if (_variant && returnType.equals(String.class) &&
-				 (parameterTypes.length == 0)) {
-
-			return true;
-		}
-
-		Class<?> declaringClass = method.getDeclaringClass();
 
 		_log.error(
 			StringBundler.concat(
-				"Method ", declaringClass.getName(), ".", method.getName(),
-				" does not have a valid signature for @",
+				"Method ", method, " does not have a valid signature for @",
 				_annotation.getSimpleName()));
 
 		return false;

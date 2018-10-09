@@ -349,9 +349,6 @@ public class DLAdminManagementToolbarDisplayContext {
 							labelItem -> {
 								labelItem.setCloseable(false);
 
-								String label = LanguageUtil.get(
-									_request, "document-type");
-
 								String fileEntryTypeName = LanguageUtil.get(
 									_request, "basic-document");
 
@@ -367,8 +364,10 @@ public class DLAdminManagementToolbarDisplayContext {
 										_request.getLocale());
 								}
 
-								label = String.format(
-									"%s: %s", label, fileEntryTypeName);
+								String label = String.format(
+									"%s: %s",
+									LanguageUtil.get(_request, "document-type"),
+									fileEntryTypeName);
 
 								labelItem.setLabel(label);
 							}));
@@ -381,10 +380,8 @@ public class DLAdminManagementToolbarDisplayContext {
 						labelItem -> {
 							labelItem.setCloseable(false);
 
-							String label = LanguageUtil.get(_request, "owner");
-
-							label = String.format(
-								"%s: %s", label,
+							String label = String.format(
+								"%s: %s", LanguageUtil.get(_request, "owner"),
 								_themeDisplay.getUser().getFullName());
 
 							labelItem.setLabel(label);

@@ -231,9 +231,7 @@ public class SegmentsEntryServiceTest {
 				_group, _companyAdminUser.getUserId());
 
 		SegmentsEntry segmentsEntry1 = _addSegmentsEntry(serviceContext);
-
 		SegmentsEntry segmentsEntry2 = _addSegmentsEntry(serviceContext);
-
 		SegmentsEntry segmentsEntry3 = _addSegmentsEntry(serviceContext);
 
 		for (Role role :
@@ -261,8 +259,8 @@ public class SegmentsEntryServiceTest {
 			Assert.assertEquals(
 				segmentsEntries.toString(), 2, segmentsEntries.size());
 
-			Assert.assertTrue(segmentsEntries.contains(segmentsEntry3));
 			Assert.assertTrue(segmentsEntries.contains(segmentsEntry1));
+			Assert.assertTrue(segmentsEntries.contains(segmentsEntry3));
 		}
 	}
 
@@ -273,9 +271,7 @@ public class SegmentsEntryServiceTest {
 				_group, _companyAdminUser.getUserId());
 
 		SegmentsEntry segmentsEntry1 = _addSegmentsEntry(serviceContext);
-
 		SegmentsEntry segmentsEntry2 = _addSegmentsEntry(serviceContext);
-
 		SegmentsEntry segmentsEntry3 = _addSegmentsEntry(serviceContext);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
@@ -288,9 +284,9 @@ public class SegmentsEntryServiceTest {
 			Assert.assertEquals(
 				segmentsEntries.toString(), 3, segmentsEntries.size());
 
-			Assert.assertTrue(segmentsEntries.contains(segmentsEntry3));
-			Assert.assertTrue(segmentsEntries.contains(segmentsEntry2));
 			Assert.assertTrue(segmentsEntries.contains(segmentsEntry1));
+			Assert.assertTrue(segmentsEntries.contains(segmentsEntry2));
+			Assert.assertTrue(segmentsEntries.contains(segmentsEntry3));
 		}
 	}
 

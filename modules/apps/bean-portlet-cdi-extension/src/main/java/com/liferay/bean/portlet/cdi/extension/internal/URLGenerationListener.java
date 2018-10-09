@@ -49,15 +49,11 @@ public class URLGenerationListener {
 			(URLGenerationListener)obj;
 
 		return Objects.equals(
-			_listenerName, urlGenerationListener.getListenerName());
+			_listenerName, urlGenerationListener._listenerName);
 	}
 
 	public String getListenerClassName() {
 		return _listenerClassName;
-	}
-
-	public String getListenerName() {
-		return _listenerName;
 	}
 
 	public int getOrdinal() {

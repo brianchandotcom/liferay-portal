@@ -364,9 +364,7 @@
 
 				var ranges = selection.getRanges();
 
-				var collapsedRange = ranges.length === 1 && ranges[0].collapsed;
-
-				return selection.getType() === CKEDITOR.SELECTION_NONE || collapsedRange;
+				return selection.getType() === CKEDITOR.SELECTION_NONE || (ranges.length === 1 && ranges[0].collapsed);
 			},
 
 			_onSelectedAudioChange: function(editor, callback, event) {

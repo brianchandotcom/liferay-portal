@@ -207,6 +207,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.MissingEmptyLineCheck">
 			<message key="empty.line.missing.after.method.call" value="There should be an empty line after line ''{0}''" />
 			<message key="empty.line.missing.after.variable.reference" value="There should be an empty line before line ''{0}'', as we finished referencing variable ''{1}''" />
+			<message key="empty.line.missing.before.variable.definition" value="There should be an empty line before variable definition of variable ''{0}''" />
 			<message key="empty.line.missing.before.variable.use" value="There should be an empty line between assigning and using variable ''{0}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MissingModifierCheck">

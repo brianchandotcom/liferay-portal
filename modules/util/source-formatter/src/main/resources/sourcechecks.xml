@@ -88,6 +88,7 @@
 		<check name="GradleIndentationCheck" />
 		<check name="GradlePropertiesCheck" />
 		<check name="GradleProvidedDependenciesCheck" />
+		<check name="GradleTaskCreationCheck" />
 		<check name="GradleTestDependencyVersionCheck">
 			<property name="allowedDependencyNames" value="com.liferay.arquillian.arquillian-container-liferay" />
 			<property name="allowedDependencyNames" value="com.liferay.arquillian.arquillian-deployment-generator-bnd" />

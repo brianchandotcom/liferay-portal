@@ -103,6 +103,10 @@ AssetListUsagesDisplayContext assetListUsagesDisplayContext = new AssetListUsage
 						</c:otherwise>
 					</c:choose>
 				</h3>
+
+				<clay:management-toolbar
+					displayContext="<%= assetListUsagesDisplayContext.getManagementToolbarDisplayContext() %>"
+				/>
 			</div>
 		</div>
 	</div>

@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
+import com.liferay.workflow.apio.architect.identifier.ReusableWorkflowTaskIdentifier;
+import com.liferay.workflow.apio.architect.identifier.WorkflowTaskIdentifier;
 
 import java.util.Arrays;
 
@@ -84,6 +86,14 @@ public class MyUserAccountCollectionResource
 			"myOrganizations", OrganizationIdentifier.class);
 		userWrapperFirstStep.addRelatedCollection(
 			"myWebSites", WebSiteIdentifier.class);
+		userWrapperFirstStep.addRelatedCollection(
+			"tasksAssignedToMe", WorkflowTaskIdentifier.class,
+			__ -> ReusableWorkflowTaskIdentifier.create(
+				ReusableWorkflowTaskIdentifier.WorkflowTaskType.TO_ME));
+		userWrapperFirstStep.addRelatedCollection(
+			"tasksAssignedToMyRoles", WorkflowTaskIdentifier.class,
+			__ -> ReusableWorkflowTaskIdentifier.create(
+				ReusableWorkflowTaskIdentifier.WorkflowTaskType.TO_MY_ROLE));
 
 		return userWrapperFirstStep.build();
 	}

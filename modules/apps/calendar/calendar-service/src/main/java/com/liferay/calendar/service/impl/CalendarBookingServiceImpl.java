@@ -990,6 +990,7 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 
 			if (isPendingInWorkflow(calendarBooking)) {
 				itr.remove();
+
 				continue;
 			}
 

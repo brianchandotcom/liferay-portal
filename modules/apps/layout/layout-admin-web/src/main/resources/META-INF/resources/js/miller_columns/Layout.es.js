@@ -102,6 +102,28 @@ class Layout extends Component {
 	}
 
 	/**
+	 * @private
+	 * @review
+	 */
+
+	_getItemChildren(plid) {
+		const formData = new FormData();
+
+		formData.append(`${this.portletNamespace}plid`, plid);
+
+		return fetch(
+			this.getItemChildrenURL,
+			{
+				body: formData,
+				credentials: 'include',
+				method: 'POST'
+			}
+		).then(
+			response => response.json()
+		);
+	}
+
+	/**
 	 * @param {Array} layoutColumn
 	 * @private
 	 * @return {string}
@@ -174,9 +196,13 @@ class Layout extends Component {
 	 */
 
 	_handleDragLayoutColumnItem(eventData) {
-		const targetColumn = this._getParentColumnByPlid(this.layoutColumns, eventData.targetItemPlid);
+		const targetItemPlid = eventData.targetItemPlid;
+
+		const targetItem = this._getLayoutColumnItemByPlid(this.layoutColumns, targetItemPlid);
+
+		if (targetItem) {
+			const targetColumn = this._getParentColumnByPlid(this.layoutColumns, targetItemPlid);
 		const targetColumnIndex = this.layoutColumns.indexOf(targetColumn);
-		const targetItem = this._getLayoutColumnItemByPlid(this.layoutColumns, eventData.targetItemPlid);
 
 		const targetInFirstColumn = this.layoutColumns.indexOf(targetColumn) === 0;
 		const targetIsSource = this._draggingItem === targetItem;
@@ -189,7 +215,8 @@ class Layout extends Component {
 		const targetIsParent = (
 			targetItem.active &&
 			(eventData.position === DRAG_POSITIONS.inside) &&
-			(targetColumnIndex === (this._draggingItemColumnIndex - 1))
+				(targetColumnIndex === (this._draggingItemColumnIndex - 1)) &&
+				!this._currentPathItemPlid
 		);
 
 		if (
@@ -199,7 +226,15 @@ class Layout extends Component {
 			!targetIsParent
 		) {
 			this._draggingItemPosition = eventData.position;
-			this._hoveredLayoutColumnItemPlid = eventData.targetItemPlid;
+				this._hoveredLayoutColumnItemPlid = targetItemPlid;
+			}
+
+			if (
+				this._draggingItemPosition === DRAG_POSITIONS.inside &&
+				this._currentPathItemPlid != targetItemPlid
+			) {
+				this._updatePath(targetColumnIndex, targetItemPlid);
+			}
 		}
 	}
 
@@ -314,7 +349,7 @@ class Layout extends Component {
 				);
 			}
 
-			if (sourceColumn.length === 0) {
+			if (sourceColumn.length === 0 && !this._currentPathItemPlid) {
 				this._handleEmptyColumn(
 					layoutColumns,
 					targetColumnIndex
@@ -350,6 +385,7 @@ class Layout extends Component {
 		}
 
 		this._resetHoveredData();
+		this._currentPathItemPlid = null;
 		this._draggingItem = null;
 		this._draggingItemColumnIndex = null;
 	}
@@ -420,7 +456,7 @@ class Layout extends Component {
 			nextColumn.splice(nextColumn.length, 0, this._draggingItem);
 		}
 
-		if (this._draggingItem.active) {
+		if (this._draggingItem.active && !this._currentPathItemPlid) {
 			this._removeFollowingColumns(layoutColumns, this._draggingItemColumnIndex);
 
 			this._deleteEmptyColumns(layoutColumns);
@@ -501,6 +537,53 @@ class Layout extends Component {
 			}
 		}
 	}
+
+	/**
+	 * @param {string} targetColumnIndex
+	 * @param {string} targetItemPlid
+	 * @private
+	 * @review
+	 */
+
+	_updatePath(targetColumnIndex, targetItemPlid) {
+		this._removeFollowingColumns(this.layoutColumns, targetColumnIndex);
+
+		const targetColumn = this.layoutColumns[targetColumnIndex];
+		const targetItem = this._getLayoutColumnItemByPlid(this.layoutColumns, targetItemPlid);
+
+		const activeItemPlid = this._getLayoutColumnActiveItem(targetColumn);
+
+		const activeItem = this._getLayoutColumnItemByPlid(this.layoutColumns, activeItemPlid);
+
+		if (activeItem && (activeItem != targetItem)) {
+			activeItem.active = false;
+		}
+
+		targetItem.active = true;
+
+		this._currentPathItemPlid = targetItemPlid;
+
+		this._deleteEmptyColumns(this.layoutColumns);
+
+		this._getItemChildren(targetItemPlid)
+			.then(
+				response => {
+					const children = response.children;
+					const lastElementIndex = this.layoutColumns.length - 1;
+
+					if (this.layoutColumns[lastElementIndex].length === 0) {
+						this.layoutColumns[lastElementIndex] = children;
+					}
+					else {
+						this.layoutColumns.push(children);
+					}
+
+					this.layoutColumns = this.layoutColumns.map(
+						layoutColumn => [...layoutColumn]
+					);
+				}
+			);
+	}
 }
 
 /**
@@ -527,6 +610,16 @@ Layout.STATE = {
 			}
 		)
 	).required(),
+
+	/**
+	 * URL for get the children of an item
+	 * @default undefined
+	 * @instance
+	 * @review
+	 * @type {!string}
+	 */
+
+	getItemChildrenURL: Config.string().required(),
 
 	/**
 	 * Layout blocks
@@ -589,6 +682,16 @@ Layout.STATE = {
 	 */
 
 	siteNavigationMenuNames: Config.string().required(),
+
+	/**
+	 * Wether the path is refreshing or not
+	 * @default undefined
+	 * @instance
+	 * @review
+	 * @type {!string}
+	 */
+
+	_currentPathItemPlid: Config.string().internal(),
 
 	/**
 	 * Item that is being dragged.

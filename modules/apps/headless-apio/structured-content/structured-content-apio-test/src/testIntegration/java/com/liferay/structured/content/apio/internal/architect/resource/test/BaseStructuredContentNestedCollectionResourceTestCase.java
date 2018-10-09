@@ -54,8 +54,6 @@ public abstract class BaseStructuredContentNestedCollectionResourceTestCase {
 				_nestedCollectionResource, journalArticleId, themeDisplay);
 		}
 		catch (InvocationTargetException ite) {
-			ite.printStackTrace();
-
 			throw ite.getCause();
 		}
 	}

@@ -2992,6 +2992,11 @@ AUI.add(
 
 					requestedLocale: {
 						validator: Lang.isString
+					},
+
+					synchronousFormSubmission: {
+						validator: Lang.isBoolean,
+						value: true
 					}
 				},
 
@@ -3031,10 +3036,15 @@ AUI.add(
 									instance._afterUpdateRepeatableFields,
 									instance
 								),
-								formNode.on('submit', instance._onSubmitForm, instance),
 								Liferay.after('form:registered', instance._afterFormRegistered, instance),
-								Liferay.on('submitForm', instance._onLiferaySubmitForm, instance)
 							);
+
+							if (instance.get('synchronousFormSubmission')) {
+								instance.eventHandlers.push(
+									formNode.on('submit', instance._onSubmitForm, instance),
+									Liferay.on('submitForm', instance._onLiferaySubmitForm, instance)
+								);
+							}
 						}
 					},
 

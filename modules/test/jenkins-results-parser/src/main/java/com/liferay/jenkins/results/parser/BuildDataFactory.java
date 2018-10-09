@@ -14,80 +14,55 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.Map;
-
-import org.json.JSONObject;
-
 /**
  * @author Michael Hashimoto
  */
 public class BuildDataFactory {
 
-	public static BatchBuildData newBatchBuildData(JSONObject jsonObject) {
-		if (PortalBatchBuildData.isValidJSONObject(jsonObject)) {
-			return new PortalBatchBuildData(jsonObject);
-		}
-
-		throw new RuntimeException("Invalid JSONObject " + jsonObject);
+	public static BatchBuildData newBatchBuildData(String jobName) {
+		return newBatchBuildData(jobName, null, null);
 	}
 
 	public static BatchBuildData newBatchBuildData(
-		Map<String, String> buildParameters) {
+		String jobName, String runID) {
 
-		return new PortalBatchBuildData(buildParameters);
+		return newBatchBuildData(jobName, runID, null);
 	}
 
-	public static BuildData newBuildData(JSONObject jsonObject) {
-		if (PortalBatchBuildData.isValidJSONObject(jsonObject)) {
-			return new PortalBatchBuildData(jsonObject);
-		}
-		else if (PortalTopLevelBuildData.isValidJSONObject(jsonObject)) {
-			return new PortalTopLevelBuildData(jsonObject);
+	public static BatchBuildData newBatchBuildData(
+		String jobName, String runID, String buildURL) {
+
+		if (jobName.contains("git-bisect-tool") || jobName.contains("portal")) {
+			return new PortalBatchBuildData(runID, buildURL);
 		}
 
-		throw new RuntimeException("Invalid JSONObject " + jsonObject);
+		return new DefaultBatchBuildData(runID, buildURL);
 	}
 
-	public static BuildData newBuildData(Map<String, String> buildParameters) {
-		if (buildParameters.containsKey("RUN_ID")) {
-			String runID = buildParameters.get("RUN_ID");
-
-			BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
-
-			if (buildDatabase.hasBuildData(runID)) {
-				return buildDatabase.getBuildData(runID);
-			}
-		}
-
-		if (!buildParameters.containsKey("BUILD_URL")) {
-			throw new RuntimeException("Please set BUILD_URL");
-		}
-
-		String buildURL = buildParameters.get("BUILD_URL");
-
-		String jobName = BaseBuildData.getJobName(buildURL);
+	public static BuildData newBuildData(
+		String jobName, String runID, String buildURL) {
 
 		if (jobName.endsWith("-batch")) {
-			return newBatchBuildData(buildParameters);
+			return newBatchBuildData(jobName, runID, buildURL);
 		}
 
-		return newTopLevelBuildData(buildParameters);
+		return newTopLevelBuildData(jobName, runID, buildURL);
 	}
 
 	public static TopLevelBuildData newTopLevelBuildData(
-		JSONObject jsonObject) {
+		String jobName, String runID) {
 
-		if (PortalTopLevelBuildData.isValidJSONObject(jsonObject)) {
-			return new PortalTopLevelBuildData(jsonObject);
-		}
-
-		throw new RuntimeException("Invalid JSONObject " + jsonObject);
+		return newTopLevelBuildData(jobName, runID, null);
 	}
 
 	public static TopLevelBuildData newTopLevelBuildData(
-		Map<String, String> buildParameters) {
+		String jobName, String runID, String buildURL) {
 
-		return new PortalTopLevelBuildData(buildParameters);
+		if (jobName.contains("git-bisect-tool") || jobName.contains("portal")) {
+			return new PortalTopLevelBuildData(runID, buildURL);
+		}
+
+		return new DefaultTopLevelBuildData(runID, buildURL);
 	}
 
 }

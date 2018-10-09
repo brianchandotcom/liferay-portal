@@ -14,18 +14,21 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.Map;
-
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
 public class PortalBatchBuildData
-	extends BatchBuildData implements PortalBuildData {
+	extends BaseBatchBuildData implements PortalBuildData {
 
 	public static boolean isValidJSONObject(JSONObject jsonObject) {
 		return isValidJSONObject(jsonObject, _TYPE);
+	}
+
+	@Override
+	public String getPortalBranchSHA() {
+		return optString("portal_branch_sha");
 	}
 
 	@Override
@@ -33,44 +36,39 @@ public class PortalBatchBuildData
 		return getString("portal_github_url");
 	}
 
-	public PortalTopLevelBuildData getPortalTopLevelBuildData() {
-		if (_portalTopLevelBuildData != null) {
-			return _portalTopLevelBuildData;
-		}
-
-		TopLevelBuildData topLevelBuildData = getTopLevelBuildData();
-
-		if (!(topLevelBuildData instanceof PortalTopLevelBuildData)) {
-			throw new RuntimeException(
-				"Invalid build data " + topLevelBuildData.toString());
-		}
-
-		_portalTopLevelBuildData = (PortalTopLevelBuildData)topLevelBuildData;
-
-		return _portalTopLevelBuildData;
-	}
-
 	@Override
 	public String getPortalUpstreamBranchName() {
 		return getString("portal_upstream_branch_name");
 	}
 
-	protected PortalBatchBuildData(JSONObject jsonObject) {
-		super(jsonObject);
-
-		validateKeys(_REQUIRED_KEYS);
+	@Override
+	public void setPortalBranchSHA(String portalBranchSHA) {
+		put("portal_branch_sha", portalBranchSHA);
 	}
 
-	protected PortalBatchBuildData(Map<String, String> buildParameters) {
-		super(buildParameters);
+	@Override
+	public void setPortalGitHubURL(String portalGitHubURL) {
+		put("portal_github_url", portalGitHubURL);
+	}
 
-		_portalTopLevelBuildData =
-			(PortalTopLevelBuildData)getTopLevelBuildData();
+	@Override
+	public void setPortalUpstreamBranchName(String portalUpstreamBranchName) {
+		put("portal_upstream_branch_name", portalUpstreamBranchName);
+	}
 
-		put("portal_github_url", _getPortalGitHubURL(buildParameters));
-		put(
-			"portal_upstream_branch_name",
-			_getPortalUpstreamBranchName(buildParameters));
+	protected PortalBatchBuildData() {
+		this(null, null);
+	}
+
+	protected PortalBatchBuildData(String runID) {
+		this(runID, null);
+	}
+
+	protected PortalBatchBuildData(String runID, String buildURL) {
+		super(runID, buildURL);
+
+		setPortalUpstreamBranchName(DEFAULT_PORTAL_UPSTREAM_BRANCH_NAME);
+		setPortalGitHubURL(DEFAULT_PORTAL_GITHUB_URL);
 
 		validateKeys(_REQUIRED_KEYS);
 	}
@@ -80,44 +78,9 @@ public class PortalBatchBuildData
 		return _TYPE;
 	}
 
-	private String _getPortalGitHubURL(Map<String, String> buildParameters) {
-		PortalTopLevelBuildData portalTopLevelBuildData =
-			getPortalTopLevelBuildData();
-
-		if (portalTopLevelBuildData != null) {
-			return portalTopLevelBuildData.getPortalGitHubURL();
-		}
-
-		if (!buildParameters.containsKey("PORTAL_GITHUB_URL")) {
-			throw new RuntimeException("Please set PORTAL_GITHUB_URL");
-		}
-
-		return buildParameters.get("PORTAL_GITHUB_URL");
-	}
-
-	private String _getPortalUpstreamBranchName(
-		Map<String, String> buildParameters) {
-
-		PortalTopLevelBuildData portalTopLevelBuildData =
-			getPortalTopLevelBuildData();
-
-		if (portalTopLevelBuildData != null) {
-			return portalTopLevelBuildData.getPortalUpstreamBranchName();
-		}
-
-		if (!buildParameters.containsKey("PORTAL_UPSTREAM_BRANCH_NAME")) {
-			throw new RuntimeException(
-				"Please set PORTAL_UPSTREAM_BRANCH_NAME");
-		}
-
-		return buildParameters.get("PORTAL_UPSTREAM_BRANCH_NAME");
-	}
-
 	private static final String[] _REQUIRED_KEYS =
 		{"portal_github_url", "portal_upstream_branch_name"};
 
 	private static final String _TYPE = "portal_batch";
-
-	private PortalTopLevelBuildData _portalTopLevelBuildData;
 
 }

@@ -16,14 +16,17 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
-import java.util.List;
-
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
 public interface BuildData {
+
+	public static final String DEFAULT_JENKINS_GITHUB_URL =
+		"https://github.com/liferay/liferay-jenkins-ee/tree/master";
+
+	public static final File DEFAULT_WORKSPACE_DIR = new File(".");
 
 	public static final String DIST_ROOT_PATH = "/tmp/dist";
 
@@ -34,10 +37,6 @@ public interface BuildData {
 	public String getBuildURL();
 
 	public String getCohortName();
-
-	public List<String> getDistNodes();
-
-	public String getDistPath();
 
 	public String getHostname();
 
@@ -57,8 +56,14 @@ public interface BuildData {
 
 	public String getTopLevelMasterHostname();
 
+	public String getTopLevelRunID();
+
 	public String getUserContentRelativePath();
 
 	public File getWorkspaceDir();
+
+	public void setJenkinsGitHubURL(String jenkinsGitHubURL);
+
+	public void setWorkspaceDir(File workspaceDir);
 
 }

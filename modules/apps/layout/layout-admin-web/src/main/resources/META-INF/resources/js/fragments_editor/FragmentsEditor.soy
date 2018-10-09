@@ -21,7 +21,15 @@
 	{@param imageSelectorURL: string}
 	{@param languageId: string}
 	{@param layoutData: [
-		structure: list<string>
+		structure: list<[
+			rowId: number,
+			columns: list<[
+				columnId: number,
+				fragmentEntryLinkId: string,
+				rows: list<?>,
+				size: number
+			]>
+		]>
 	]}
 	{@param portletNamespace: string}
 	{@param redirectURL: string}

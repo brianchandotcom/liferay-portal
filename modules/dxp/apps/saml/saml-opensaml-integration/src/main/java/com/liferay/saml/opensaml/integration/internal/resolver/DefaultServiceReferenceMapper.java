@@ -15,6 +15,7 @@
 package com.liferay.saml.opensaml.integration.internal.resolver;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -40,7 +41,9 @@ public class DefaultServiceReferenceMapper
 
 		if (companyId == 0) {
 			_log.error(
-				"Invalid company ID " + companyId + " for " + serviceReference);
+				StringBundler.concat(
+					"Invalid company ID ", companyId, " for ",
+					serviceReference));
 
 			return;
 		}

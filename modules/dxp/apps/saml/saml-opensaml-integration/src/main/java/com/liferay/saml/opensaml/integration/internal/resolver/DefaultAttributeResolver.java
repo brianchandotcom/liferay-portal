@@ -15,6 +15,7 @@
 package com.liferay.saml.opensaml.integration.internal.resolver;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
@@ -224,7 +225,16 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				));
 		}
 		catch (Exception e) {
-			_log.error("Unable to get groups for user " + user.getUserId(), e);
+			String message = StringBundler.concat(
+				"Unable to get groups for user ", user.getUserId(), ": ",
+				e.getMessage());
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(message, e);
+			}
+			else {
+				_log.error(message);
+			}
 		}
 	}
 
@@ -286,9 +296,16 @@ public class DefaultAttributeResolver implements AttributeResolver {
 			}
 		}
 		catch (Exception e) {
-			_log.error(
-				"Unable to get organization roles for user " + user.getUserId(),
-				e);
+			String message = StringBundler.concat(
+				"Unable to get organization roles for user ", user.getUserId(),
+				": ", e.getMessage());
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(message, e);
+			}
+			else {
+				_log.error(message);
+			}
 		}
 	}
 
@@ -329,8 +346,16 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				));
 		}
 		catch (Exception e) {
-			_log.error(
-				"Unable to get organizations for user " + user.getUserId(), e);
+			String message = StringBundler.concat(
+				"Unable to get organizations for user ", user.getUserId(), ": ",
+				e.getMessage());
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(message, e);
+			}
+			else {
+				_log.error(message);
+			}
 		}
 	}
 
@@ -416,7 +441,16 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				));
 		}
 		catch (Exception e) {
-			_log.error("Unable to get roles for user " + user.getUserId(), e);
+			String message = StringBundler.concat(
+				"Unable to get roles for user  ", user.getUserId(), ": ",
+				e.getMessage());
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(message, e);
+			}
+			else {
+				_log.error(message);
+			}
 		}
 	}
 
@@ -536,9 +570,16 @@ public class DefaultAttributeResolver implements AttributeResolver {
 			}
 		}
 		catch (Exception e) {
-			_log.error(
-				"Unable to get user group roles for user " + user.getUserId(),
-				e);
+			String message = StringBundler.concat(
+				"Unable to get user group roles for user ", user.getUserId(),
+				": ", e.getMessage());
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(message, e);
+			}
+			else {
+				_log.error(message);
+			}
 		}
 	}
 
@@ -634,8 +675,16 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				));
 		}
 		catch (Exception e) {
-			_log.error(
-				"Unable to get user groups for user " + user.getUserId(), e);
+			String message = StringBundler.concat(
+				"Unable to get user groups for user ", user.getUserId(), ": ",
+				e.getMessage());
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(message, e);
+			}
+			else {
+				_log.error(message);
+			}
 		}
 	}
 

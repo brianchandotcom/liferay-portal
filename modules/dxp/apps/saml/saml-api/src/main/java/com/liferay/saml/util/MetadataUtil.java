@@ -21,7 +21,7 @@ import java.io.InputStream;
  */
 public interface MetadataUtil {
 
-	public InputStream getMetadata(String url);
+	public InputStream getMetadata(String url) throws Exception;
 
 	public String parseMetadataXml(InputStream inputStream, String entityId)
 		throws Exception;

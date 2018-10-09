@@ -14,8 +14,6 @@
 
 package com.liferay.saml.runtime.internal.auto.login;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
@@ -96,16 +94,9 @@ public class WebSsoAutoLogin extends BaseAutoLogin {
 			return credentials;
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
-
 			throw new AutoLoginException(e);
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		WebSsoAutoLogin.class);
 
 	@Reference
 	private SamlIdpSsoSessionLocalService _samlIdpSsoSessionLocalService;

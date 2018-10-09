@@ -73,7 +73,14 @@ public class DLKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 				keyStore.load(null, null);
 			}
 			catch (Exception e) {
-				_log.error("Unable to load blank keystore ", e);
+				String message = "Unable to load blank keystore";
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(message, e);
+				}
+				else {
+					_log.error(message);
+				}
 			}
 		}
 		catch (Exception e) {

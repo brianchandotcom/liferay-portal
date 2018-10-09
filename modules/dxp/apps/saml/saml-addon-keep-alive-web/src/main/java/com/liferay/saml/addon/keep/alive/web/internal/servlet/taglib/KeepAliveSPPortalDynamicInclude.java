@@ -110,8 +110,14 @@ public class KeepAliveSPPortalDynamicInclude extends BaseDynamicInclude {
 				SamlKeepAliveConstants.EXPANDO_COLUMN_NAME_KEEP_ALIVE_URL);
 		}
 		catch (PortalException pe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get IDP keep alive URL", pe);
+			String message =
+				"Unable to get IdP keep alive URL: " + pe.getMessage();
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(message, pe);
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn(message);
 			}
 		}
 

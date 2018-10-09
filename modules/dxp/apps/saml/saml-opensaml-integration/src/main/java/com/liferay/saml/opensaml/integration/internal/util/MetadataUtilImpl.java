@@ -14,9 +14,8 @@
 
 package com.liferay.saml.opensaml.integration.internal.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.saml.util.MetadataUtil;
@@ -56,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 public class MetadataUtilImpl implements MetadataUtil {
 
 	@Override
-	public InputStream getMetadata(String url) {
+	public InputStream getMetadata(String url) throws Exception {
 		HttpGet httpGet = new HttpGet(url);
 
 		try (CloseableHttpResponse closeableHttpResponse =
@@ -65,7 +64,12 @@ public class MetadataUtilImpl implements MetadataUtil {
 			StatusLine statusLine = closeableHttpResponse.getStatusLine();
 
 			if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
-				return null;
+				throw new Exception(
+					StringBundler.concat(
+						"Unable to get SAML metadata from ", url,
+						", invalid status code returned: ",
+						statusLine.getStatusCode(), " ",
+						statusLine.getReasonPhrase()));
 			}
 
 			HttpEntity httpEntity = closeableHttpResponse.getEntity();
@@ -94,21 +98,9 @@ public class MetadataUtilImpl implements MetadataUtil {
 
 			return new ByteArrayInputStream(bytes);
 		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get SAML metadata from " + url, e);
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to get SAML metadata from " + url + ": " +
-						e.getMessage());
-			}
-		}
 		finally {
 			httpGet.releaseConnection();
 		}
-
-		return null;
 	}
 
 	@Override
@@ -139,8 +131,5 @@ public class MetadataUtilImpl implements MetadataUtil {
 
 	@Reference
 	protected ParserPool parserPool;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		MetadataUtilImpl.class);
 
 }

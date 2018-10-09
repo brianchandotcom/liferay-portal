@@ -51,7 +51,12 @@ public abstract class BaseSamlStrutsAction extends BaseStrutsAction {
 			return doExecute(request, response);
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+			else {
+				_log.error(e.getMessage());
+			}
 
 			Class<?> clazz = e.getClass();
 

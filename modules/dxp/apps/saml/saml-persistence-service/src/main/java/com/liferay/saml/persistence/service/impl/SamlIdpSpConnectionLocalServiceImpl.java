@@ -14,9 +14,8 @@
 
 package com.liferay.saml.persistence.service.impl;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
@@ -98,7 +97,10 @@ public class SamlIdpSpConnectionLocalServiceImpl
 			}
 			catch (Exception e) {
 				throw new SamlIdpSpConnectionMetadataUrlException(
-					"Unable to get metadata from " + metadataUrl, e);
+					StringBundler.concat(
+						"Unable to get metadata from ", metadataUrl, ": ",
+						e.getMessage()),
+					e);
 			}
 		}
 
@@ -168,11 +170,17 @@ public class SamlIdpSpConnectionLocalServiceImpl
 			return;
 		}
 
-		InputStream metadataXmlInputStream = _metadataUtil.getMetadata(
-			metadataUrl);
+		InputStream metadataXmlInputStream = null;
 
-		if (metadataXmlInputStream == null) {
-			return;
+		try {
+			metadataXmlInputStream = _metadataUtil.getMetadata(metadataUrl);
+		}
+		catch (Exception e) {
+			throw new SamlIdpSpConnectionMetadataUrlException(
+				StringBundler.concat(
+					"Unable to get metadata from ", metadataUrl, ": ",
+					e.getMessage()),
+				e);
 		}
 
 		String metadataXml = StringPool.BLANK;
@@ -183,18 +191,14 @@ public class SamlIdpSpConnectionLocalServiceImpl
 				samlIdpSpConnection.getSamlSpEntityId());
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to parse SAML metadata from " + metadataUrl, e);
-			}
+			throw new SamlIdpSpConnectionMetadataXmlException(
+				"Unable to parse SAML metadata from " + metadataUrl, e);
 		}
 
-		if (Validator.isNotNull(metadataXml)) {
-			samlIdpSpConnection.setMetadataUpdatedDate(new Date());
-			samlIdpSpConnection.setMetadataXml(metadataXml);
+		samlIdpSpConnection.setMetadataUpdatedDate(new Date());
+		samlIdpSpConnection.setMetadataXml(metadataXml);
 
-			samlIdpSpConnectionPersistence.update(samlIdpSpConnection);
-		}
+		samlIdpSpConnectionPersistence.update(samlIdpSpConnection);
 	}
 
 	@Override
@@ -248,12 +252,10 @@ public class SamlIdpSpConnectionLocalServiceImpl
 			}
 			catch (Exception e) {
 				throw new SamlIdpSpConnectionMetadataUrlException(
-					"Unable to get metadata from " + metadataUrl, e);
-			}
-
-			if (metadataXmlInputStream == null) {
-				throw new SamlIdpSpConnectionMetadataUrlException(
-					"Unable to get metadata from " + metadataUrl);
+					StringBundler.concat(
+						"Unable to get metadata from ", metadataUrl, ": ",
+						e.getMessage()),
+					e);
 			}
 		}
 
@@ -299,9 +301,6 @@ public class SamlIdpSpConnectionLocalServiceImpl
 
 		return metadataXml;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SamlIdpSpConnectionLocalServiceImpl.class);
 
 	@ServiceReference(type = MetadataUtil.class)
 	private MetadataUtil _metadataUtil;

@@ -460,8 +460,14 @@ public class MetadataManagerImpl
 			return true;
 		}
 		catch (MetadataProviderException | SamlException e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Error retrieving metadata information", e);
+			String message =
+				"Error retrieving metadata information: " + e.getMessage();
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(message, e);
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn(message);
 			}
 
 			return false;

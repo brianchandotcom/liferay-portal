@@ -14,6 +14,7 @@
 
 package com.liferay.saml.opensaml.integration.internal.provider;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -115,11 +116,15 @@ public class CachingChainingMetadataProvider extends BaseMetadataProvider {
 					}
 				}
 				catch (MetadataProviderException mpe) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to retrieve metadata from provider " +
-								metadataProvider.getClass(),
-							mpe);
+					String message = StringBundler.concat(
+						"Unable to retrieve metadata from provider ",
+						metadataProvider.getClass(), ": ", mpe.getMessage());
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(message, mpe);
+					}
+					else if (_log.isWarnEnabled()) {
+						_log.warn(message);
 					}
 				}
 			}
@@ -170,11 +175,15 @@ public class CachingChainingMetadataProvider extends BaseMetadataProvider {
 					}
 				}
 				catch (MetadataProviderException mpe) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to retrieve metadata from provider " +
-								metadataProvider.getClass(),
-							mpe);
+					String message = StringBundler.concat(
+						"Unable to retrieve metadata from provider ",
+						metadataProvider.getClass(), ": ", mpe.getMessage());
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(message, mpe);
+					}
+					else if (_log.isWarnEnabled()) {
+						_log.warn(message);
 					}
 				}
 			}
@@ -236,11 +245,15 @@ public class CachingChainingMetadataProvider extends BaseMetadataProvider {
 					}
 				}
 				catch (MetadataProviderException mpe) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to retrieve metadata from provider " +
-								metadataProvider.getClass(),
-							mpe);
+					String message = StringBundler.concat(
+						"Unable to retrieve metadata from provider ",
+						metadataProvider.getClass(), ": ", mpe.getMessage());
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(message, mpe);
+					}
+					else if (_log.isWarnEnabled()) {
+						_log.warn(message);
 					}
 				}
 			}
@@ -293,11 +306,15 @@ public class CachingChainingMetadataProvider extends BaseMetadataProvider {
 					}
 				}
 				catch (MetadataProviderException mpe) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to retrieve metadata from provider " +
-								metadataProvider.getClass(),
-							mpe);
+					String message = StringBundler.concat(
+						"Unable to retrieve metadata from provider ",
+						metadataProvider.getClass(), ": ", mpe.getMessage());
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(message, mpe);
+					}
+					else if (_log.isWarnEnabled()) {
+						_log.warn(message);
 					}
 				}
 			}
@@ -367,8 +384,16 @@ public class CachingChainingMetadataProvider extends BaseMetadataProvider {
 				}
 			}
 			catch (MetadataProviderException mpe) {
-				_log.error(
-					"Unable to get metadata from metadata provider", mpe);
+				String message =
+					"Unable to retrieve metadata from provider: " +
+						mpe.getMessage();
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(message, mpe);
+				}
+				else {
+					_log.error(message);
+				}
 			}
 			finally {
 				lock.unlock();
@@ -482,8 +507,16 @@ public class CachingChainingMetadataProvider extends BaseMetadataProvider {
 				}
 			}
 			catch (MetadataProviderException mpe) {
-				_log.error(
-					"Unable to build a list of metadata descriptors", mpe);
+				String message =
+					"Unable to build a list of metadata descriptors: " +
+						mpe.getMessage();
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(message, mpe);
+				}
+				else {
+					_log.error(message);
+				}
 			}
 
 			return xmlObjects;

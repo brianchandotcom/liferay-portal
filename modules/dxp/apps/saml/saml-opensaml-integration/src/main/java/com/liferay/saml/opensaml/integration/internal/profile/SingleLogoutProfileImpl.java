@@ -131,8 +131,14 @@ public class SingleLogoutProfileImpl
 			}
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to verify single logout support", e);
+			String message =
+				"Unable to verify single logout support: " + e.getMessage();
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(message, e);
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn(message);
 			}
 		}
 
@@ -316,7 +322,12 @@ public class SingleLogoutProfileImpl
 				StringPool.BLANK, 0);
 		}
 		catch (SystemException se) {
-			_log.error(se, se);
+			if (_log.isDebugEnabled()) {
+				_log.debug(se.getMessage(), se);
+			}
+			else {
+				_log.error(se.getMessage());
+			}
 		}
 	}
 
@@ -349,7 +360,12 @@ public class SingleLogoutProfileImpl
 				}
 			}
 			catch (SystemException se) {
-				_log.error(se, se);
+				if (_log.isDebugEnabled()) {
+					_log.debug(se.getMessage(), se);
+				}
+				else {
+					_log.error(se.getMessage());
+				}
 			}
 		}
 

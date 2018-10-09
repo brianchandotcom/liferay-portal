@@ -63,7 +63,12 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 
 			_keyStoreException = new KeyStoreException(message, kse);
 
-			_log.error(message, kse);
+			if (_log.isDebugEnabled()) {
+				_log.debug(message, kse);
+			}
+			else {
+				_log.error(message);
+			}
 
 			return;
 		}
@@ -123,8 +128,13 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 			_samlKeyStoreFileWatcher.close();
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to close file watcher", e);
+			String message = "Unable to close file watcher: " + e.getMessage();
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(message, e);
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn(message);
 			}
 		}
 		finally {
@@ -153,7 +163,12 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 
 			_keyStoreException = new KeyStoreException(message, e);
 
-			_log.error(message, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug(message, e);
+			}
+			else {
+				_log.error(message);
+			}
 		}
 	}
 

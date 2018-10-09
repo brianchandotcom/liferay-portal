@@ -166,8 +166,15 @@ public class DefaultViewMVCRenderCommand implements MVCRenderCommand {
 						Boolean.TRUE);
 				}
 				else {
+					String message =
+						"Unable to get local entity certificate: " +
+							e.getMessage();
+
 					if (_log.isDebugEnabled()) {
-						_log.debug("Unable to get local entity certificate", e);
+						_log.debug(message, e);
+					}
+					else if (_log.isWarnEnabled()) {
+						_log.warn(message);
 					}
 				}
 			}
@@ -205,8 +212,14 @@ public class DefaultViewMVCRenderCommand implements MVCRenderCommand {
 					SamlWebKeys.SAML_SP_IDP_CONNECTION, samlSpIdpConnection);
 			}
 			catch (Exception e) {
+				String message =
+					"Unable to calculate clock skew: " + e.getMessage();
+
 				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to calculate clock skew", e);
+					_log.debug(message, e);
+				}
+				else if (_log.isWarnEnabled()) {
+					_log.warn(message);
 				}
 			}
 		}

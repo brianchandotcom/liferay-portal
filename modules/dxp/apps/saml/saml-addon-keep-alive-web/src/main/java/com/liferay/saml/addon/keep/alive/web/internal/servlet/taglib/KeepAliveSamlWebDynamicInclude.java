@@ -15,6 +15,7 @@
 package com.liferay.saml.addon.keep.alive.web.internal.servlet.taglib;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -99,8 +100,14 @@ public class KeepAliveSamlWebDynamicInclude extends BaseDynamicInclude {
 					SamlKeepAliveConstants.EXPANDO_COLUMN_NAME_KEEP_ALIVE_URL);
 			}
 			catch (PortalException pe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to get SP keep alive URL", pe);
+				String message =
+					"Unable to get SP keep alive URL: " + pe.getMessage();
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(message, pe);
+				}
+				else if (_log.isWarnEnabled()) {
+					_log.warn(message);
 				}
 			}
 		}
@@ -132,13 +139,26 @@ public class KeepAliveSamlWebDynamicInclude extends BaseDynamicInclude {
 					SamlKeepAliveConstants.EXPANDO_COLUMN_NAME_KEEP_ALIVE_URL);
 			}
 			catch (NoSuchSpIdpConnectionException nssice) {
+				String message = StringBundler.concat(
+					"No SPIDP connection for default entity ", defaultEntityId,
+					" configured: ", nssice.getMessage());
+
 				if (_log.isDebugEnabled()) {
-					_log.debug("No SPIDP connection configured", nssice);
+					_log.debug(message, nssice);
+				}
+				else if (_log.isWarnEnabled()) {
+					_log.warn(message);
 				}
 			}
 			catch (PortalException pe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to get IDP keep alive URL", pe);
+				String message =
+					"Unable to get IdP keep alive URL: " + pe.getMessage();
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(message, pe);
+				}
+				else if (_log.isWarnEnabled()) {
+					_log.warn(message);
 				}
 			}
 		}

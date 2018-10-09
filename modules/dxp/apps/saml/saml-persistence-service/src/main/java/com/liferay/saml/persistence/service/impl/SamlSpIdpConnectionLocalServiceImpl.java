@@ -15,10 +15,9 @@
 package com.liferay.saml.persistence.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -94,7 +93,10 @@ public class SamlSpIdpConnectionLocalServiceImpl
 			}
 			catch (Exception e) {
 				throw new SamlSpIdpConnectionMetadataUrlException(
-					"Unable to get metadata from " + metadataUrl, e);
+					StringBundler.concat(
+						"Unable to get metadata from ", metadataUrl, ": ",
+						e.getMessage()),
+					e);
 			}
 		}
 
@@ -166,15 +168,17 @@ public class SamlSpIdpConnectionLocalServiceImpl
 			return;
 		}
 
-		InputStream metadataXmlInputStream = _metadataUtil.getMetadata(
-			metadataUrl);
+		InputStream metadataXmlInputStream = null;
 
-		if (metadataXmlInputStream == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get metadata from " + metadataUrl);
-			}
-
-			return;
+		try {
+			metadataXmlInputStream = _metadataUtil.getMetadata(metadataUrl);
+		}
+		catch (Exception e) {
+			throw new SamlSpIdpConnectionMetadataUrlException(
+				StringBundler.concat(
+					"Unable to get metadata from ", metadataUrl, ": ",
+					e.getMessage()),
+				e);
 		}
 
 		String metadataXml = StringPool.BLANK;
@@ -185,15 +189,17 @@ public class SamlSpIdpConnectionLocalServiceImpl
 				samlSpIdpConnection.getSamlIdpEntityId());
 		}
 		catch (Exception e) {
-			_log.warn("Unable to parse metadata", e);
+			throw new SamlSpIdpConnectionMetadataXmlException(
+				StringBundler.concat(
+					"Unable to parse metadata from ", metadataUrl, ": ",
+					e.getMessage()),
+				e);
 		}
 
-		if (Validator.isNotNull(metadataXml)) {
-			samlSpIdpConnection.setMetadataUpdatedDate(new Date());
-			samlSpIdpConnection.setMetadataXml(metadataXml);
+		samlSpIdpConnection.setMetadataUpdatedDate(new Date());
+		samlSpIdpConnection.setMetadataXml(metadataXml);
 
-			samlSpIdpConnectionPersistence.update(samlSpIdpConnection);
-		}
+		samlSpIdpConnectionPersistence.update(samlSpIdpConnection);
 	}
 
 	@Override
@@ -251,12 +257,10 @@ public class SamlSpIdpConnectionLocalServiceImpl
 			}
 			catch (Exception e) {
 				throw new SamlSpIdpConnectionMetadataUrlException(
-					"Unable to get metadata from " + metadataUrl, e);
-			}
-
-			if (metadataXmlInputStream == null) {
-				throw new SamlSpIdpConnectionMetadataUrlException(
-					"Unable to get metadata from " + metadataUrl);
+					StringBundler.concat(
+						"Unable to get metadata from ", metadataUrl, ": ",
+						e.getMessage()),
+					e);
 			}
 		}
 
@@ -304,9 +308,6 @@ public class SamlSpIdpConnectionLocalServiceImpl
 
 		return metadataXml;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SamlSpIdpConnectionLocalServiceImpl.class);
 
 	@ServiceReference(type = MetadataUtil.class)
 	private MetadataUtil _metadataUtil;

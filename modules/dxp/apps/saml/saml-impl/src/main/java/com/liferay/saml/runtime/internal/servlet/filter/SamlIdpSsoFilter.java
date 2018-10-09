@@ -77,8 +77,11 @@ public class SamlIdpSsoFilter extends BaseSamlPortalFilter {
 			}
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug(e.getMessage(), e);
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn(e.getMessage());
 			}
 		}
 

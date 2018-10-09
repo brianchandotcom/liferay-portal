@@ -225,10 +225,9 @@ public class NpmInstallTask extends ExecuteNpmTask {
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = super.getCompleteArgs();
 
-		if (_npmCacheClean) {
+		if (_npmCacheVerify) {
 			completeArgs.add("cache");
-			completeArgs.add("clean");
-			completeArgs.add("--force");
+			completeArgs.add("verify");
 		}
 		else if (isUseNpmCI() && (getPackageLockJsonFile() != null)) {
 			completeArgs.add("ci");
@@ -465,11 +464,11 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		return false;
 	}
 
-	private void _npmCacheClean() {
+	private void _npmCacheVerify() {
 		Logger logger = getLogger();
 
 		try {
-			_npmCacheClean = true;
+			_npmCacheVerify = true;
 
 			super.executeNode();
 		}
@@ -485,7 +484,7 @@ public class NpmInstallTask extends ExecuteNpmTask {
 			}
 		}
 		finally {
-			_npmCacheClean = false;
+			_npmCacheVerify = false;
 		}
 	}
 
@@ -514,7 +513,7 @@ public class NpmInstallTask extends ExecuteNpmTask {
 						ioe.getMessage() + ". Running \"npm install\" again");
 				}
 
-				_npmCacheClean();
+				_npmCacheVerify();
 			}
 		}
 	}
@@ -575,7 +574,7 @@ public class NpmInstallTask extends ExecuteNpmTask {
 	private Object _nodeModulesCacheDir;
 	private boolean _nodeModulesCacheNativeSync = true;
 	private Object _nodeModulesDigestFile;
-	private boolean _npmCacheClean;
+	private boolean _npmCacheVerify;
 	private Object _removeShrinkwrappedUrls;
 	private Object _useNpmCI;
 

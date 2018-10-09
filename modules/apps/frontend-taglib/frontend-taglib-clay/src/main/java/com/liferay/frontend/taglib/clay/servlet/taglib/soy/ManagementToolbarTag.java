@@ -274,6 +274,10 @@ public class ManagementToolbarTag extends BaseClayTag {
 				managementToolbarDisplayContext.getClearResultsURL());
 		}
 
+		if (context.get("componentId") == null) {
+			setComponentId(managementToolbarDisplayContext.getComponentId());
+		}
+
 		if (context.get("contentRenderer") == null) {
 			setContentRenderer(
 				managementToolbarDisplayContext.getContentRenderer());

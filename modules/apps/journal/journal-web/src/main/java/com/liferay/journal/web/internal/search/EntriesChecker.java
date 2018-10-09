@@ -18,7 +18,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.journal.web.internal.display.context.JournalDisplayContext;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
 import com.liferay.petra.string.StringBundler;
@@ -31,9 +30,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.trash.TrashHelper;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,15 +41,9 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 
 	public EntriesChecker(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		TrashHelper trashHelper) {
+		LiferayPortletResponse liferayPortletResponse) {
 
 		super(liferayPortletResponse);
-
-		_journalDisplayContext = new JournalDisplayContext(
-			PortalUtil.getHttpServletRequest(liferayPortletRequest),
-			liferayPortletRequest, liferayPortletResponse,
-			liferayPortletRequest.getPreferences(), trashHelper);
 
 		_liferayPortletResponse = liferayPortletResponse;
 
@@ -77,10 +68,6 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 	public String getRowCheckBox(
 		HttpServletRequest request, boolean checked, boolean disabled,
 		String primaryKey) {
-
-		if (!_journalDisplayContext.isShowEditActions()) {
-			return StringPool.BLANK;
-		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -159,7 +146,6 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 			StringPool.BLANK);
 	}
 
-	private final JournalDisplayContext _journalDisplayContext;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PermissionChecker _permissionChecker;
 

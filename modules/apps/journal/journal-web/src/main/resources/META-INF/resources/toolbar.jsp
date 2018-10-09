@@ -17,27 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String searchContainerId = ParamUtil.getString(request, "searchContainerId");
+JournalManagementToolbarDisplayContext journaManagementToolbarlDisplayContext = new JournalManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalDisplayContext, trashHelper);
 %>
 
 <clay:management-toolbar
-	actionDropdownItems="<%= journalDisplayContext.getActionDropdownItems() %>"
-	clearResultsURL="<%= journalDisplayContext.getClearResultsURL() %>"
-	componentId="journalWebManagementToolbar"
-	creationMenu="<%= journalDisplayContext.getCreationMenu() %>"
-	disabled="<%= journalDisplayContext.isDisabled() %>"
-	filterDropdownItems="<%= journalDisplayContext.getFilterDropdownItems() %>"
-	infoPanelId="infoPanelId"
-	itemsTotal="<%= journalDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= journalDisplayContext.getSearchActionURL() %>"
-	searchContainerId="<%= searchContainerId %>"
-	searchFormName="fm1"
-	showCreationMenu="<%= journalDisplayContext.isShowAddButton() %>"
-	showInfoButton="<%= journalDisplayContext.isShowInfoButton() %>"
-	showSearch="<%= journalDisplayContext.isShowSearch() %>"
-	sortingOrder="<%= journalDisplayContext.getOrderByType() %>"
-	sortingURL="<%= journalDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= journalDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= journaManagementToolbarlDisplayContext %>"
 />
 
 <aui:script sandbox="<%= true %>">
@@ -73,7 +57,6 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	<portlet:renderURL var="viewDDMStructureArticlesURL">
 		<portlet:param name="navigation" value="structure" />
 		<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-		<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
 	</portlet:renderURL>
 
 	var openDDMStructuresSelector = function() {

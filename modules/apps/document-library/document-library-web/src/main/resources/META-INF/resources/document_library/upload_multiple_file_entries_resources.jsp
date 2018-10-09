@@ -192,6 +192,7 @@ else {
 										fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
 										localizable="<%= false %>"
 										requestedLocale="<%= locale %>"
+										synchronousFormSubmission="<%= false %>"
 									/>
 								</div>
 

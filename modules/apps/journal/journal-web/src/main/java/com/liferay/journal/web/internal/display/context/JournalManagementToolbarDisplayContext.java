@@ -26,7 +26,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -261,9 +260,9 @@ public class JournalManagementToolbarDisplayContext
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
-							_getFilterNavigationDropdownItems());
+							getFilterNavigationDropdownItems());
 						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "filter-by-navigation"));
+							getFilterNavigationDropdownItemsLabel());
 					});
 
 				addGroup(
@@ -278,9 +277,9 @@ public class JournalManagementToolbarDisplayContext
 					addGroup(
 						dropdownGroupItem -> {
 							dropdownGroupItem.setDropdownItems(
-								_getOrderByDropdownItems());
+								getOrderByDropdownItems());
 							dropdownGroupItem.setLabel(
-								LanguageUtil.get(request, "order-by"));
+								getOrderByDropdownItemsLabel());
 						});
 				}
 			}
@@ -434,46 +433,30 @@ public class JournalManagementToolbarDisplayContext
 		return _journalDisplayContext.isShowInfoButton();
 	}
 
-	private Consumer<DropdownItem> _getFilterNavigationDropdownItem(
-		final boolean active, final String navigation) {
+	@Override
+	protected List<DropdownItem> getFilterNavigationDropdownItems() {
+		List<DropdownItem> filterNavigationDropdownItems =
+			super.getFilterNavigationDropdownItems();
 
-		return dropdownItem -> {
-			dropdownItem.setActive(active);
+		DropdownItem dropdownItem = new DropdownItem();
 
-			dropdownItem.setHref(
-				liferayPortletResponse.createRenderURL(), "navigation",
-				navigation, "folderId",
-				String.valueOf(
-					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+		dropdownItem.setActive(_journalDisplayContext.isNavigationStructure());
+		dropdownItem.putData("action", "openDDMStructuresSelector");
+		dropdownItem.setLabel(LanguageUtil.get(request, "structures"));
 
-			dropdownItem.setLabel(LanguageUtil.get(request, navigation));
-		};
+		filterNavigationDropdownItems.add(dropdownItem);
+
+		return filterNavigationDropdownItems;
 	}
 
-	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					_getFilterNavigationDropdownItem(
-						_journalDisplayContext.isNavigationHome(), "all"));
-				add(
-					_getFilterNavigationDropdownItem(
-						_journalDisplayContext.isNavigationMine(), "mine"));
-				add(
-					_getFilterNavigationDropdownItem(
-						_journalDisplayContext.isNavigationRecent(), "recent"));
+	@Override
+	protected String[] getNavigationKeys() {
+		return new String[] {"all", "mine", "recent"};
+	}
 
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							_journalDisplayContext.isNavigationStructure());
-						dropdownItem.putData(
-							"action", "openDDMStructuresSelector");
-						dropdownItem.setLabel(
-							LanguageUtil.get(request, "structures"));
-					});
-			}
-		};
+	@Override
+	protected String[] getOrderByKeys() {
+		return _journalDisplayContext.getOrderColumns();
 	}
 
 	private List<DropdownItem> _getFilterStatusDropdownItems() {
@@ -492,28 +475,6 @@ public class JournalManagementToolbarDisplayContext
 									request,
 									WorkflowConstants.getStatusLabel(status)));
 						});
-				}
-			}
-		};
-	}
-
-	private Consumer<DropdownItem> _getOrderByDropdownItem(
-		final String orderByCol) {
-
-		return dropdownItem -> {
-			dropdownItem.setActive(orderByCol.equals(getOrderByCol()));
-			dropdownItem.setHref(getPortletURL(), "orderByCol", orderByCol);
-			dropdownItem.setLabel(LanguageUtil.get(request, orderByCol));
-		};
-	}
-
-	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				for (String orderColumn :
-						_journalDisplayContext.getOrderColumns()) {
-
-					add(_getOrderByDropdownItem(orderColumn));
 				}
 			}
 		};

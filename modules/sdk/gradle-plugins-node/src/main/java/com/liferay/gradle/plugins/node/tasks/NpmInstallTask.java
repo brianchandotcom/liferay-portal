@@ -474,7 +474,7 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		}
 		catch (Exception e) {
 			if (logger.isWarnEnabled()) {
-				String message = "Unable to run \"npm cache clean --force\"";
+				String message = "Unable to run \"npm cache verify\"";
 
 				if (Validator.isNotNull(e.getMessage())) {
 					message = e.getMessage() + ". " + message;

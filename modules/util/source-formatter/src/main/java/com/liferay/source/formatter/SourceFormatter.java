@@ -282,6 +282,7 @@ public class SourceFormatter {
 
 		_progressStatusThread.start();
 
+		_sourceProcessors.add(new BNDRunSourceProcessor());
 		_sourceProcessors.add(new BNDSourceProcessor());
 		_sourceProcessors.add(new CodeownersSourceProcessor());
 		_sourceProcessors.add(new ConfigSourceProcessor());

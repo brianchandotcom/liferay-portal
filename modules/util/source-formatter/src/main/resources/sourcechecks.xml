@@ -9,6 +9,9 @@
 			<property name="enabled" value="false" />
 		</check>
 	</source-processor>
+	<source-processor name="BNDRunSourceProcessor">
+		<check name="BNDRunInstructionsOrderCheck" />
+	</source-processor>
 	<source-processor name="BNDSourceProcessor">
 		<check name="BNDBundleCheck" />
 		<check name="BNDCapabilityCheck" />

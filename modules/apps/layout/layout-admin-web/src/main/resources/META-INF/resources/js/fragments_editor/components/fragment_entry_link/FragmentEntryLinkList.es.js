@@ -14,6 +14,7 @@ import {
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../actions/actions.es';
 import {DRAG_POSITIONS} from '../../reducers/placeholders.es';
+import state from '../../store/state.es';
 import templates from './FragmentEntryLinkList.soy';
 
 /**
@@ -171,7 +172,7 @@ class FragmentEntryLinkList extends Component {
 	_handleFragmentMove(event) {
 		const placeholderId = event.fragmentEntryLinkId;
 
-		const placeholderIndex = getFragmentRowIndex(
+		const rowIndex = getFragmentRowIndex(
 			this.layoutData.structure,
 			placeholderId
 		);
@@ -180,7 +181,7 @@ class FragmentEntryLinkList extends Component {
 
 		const targetRow = this
 			.layoutData
-			.structure[placeholderIndex + event.direction];
+			.structure[rowIndex + event.direction];
 
 		if (targetRow && targetRow.columns.length) {
 			targetId = targetRow.columns[0].fragmentEntryLinkId;
@@ -294,24 +295,14 @@ FragmentEntryLinkList.STATE = {
 
 	/**
 	 * Data associated to the layout
-	 * @default {structure: []}
+	 * @default {object}
 	 * @instance
 	 * @memberOf FragmentEntryLinkList
 	 * @review
-	 * @type {{structure: Array}}
+	 * @type {object}
 	 */
 
-	layoutData: Config
-		.shapeOf(
-			{
-				structure: Config.array()
-			}
-		)
-		.value(
-			{
-				structure: []
-			}
-		),
+	layoutData: state.layoutData,
 
 	/**
 	 * Internal DragDrop instance.

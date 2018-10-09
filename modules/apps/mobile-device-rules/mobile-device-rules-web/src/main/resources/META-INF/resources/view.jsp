@@ -78,7 +78,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 
 		<c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
 			<portlet:renderURL var="viewRulesURL">
-				<portlet:param name="mvcRenderCommandName" value="/view.jsp" />
+				<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/view" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				<portlet:param name="className" value="<%= className %>" />
 				<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />

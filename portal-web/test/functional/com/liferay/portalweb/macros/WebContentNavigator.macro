@@ -83,9 +83,7 @@
 				</execute>
 			</then>
 			<else>
-				<execute macro="MenuItem#click">
-					<var name="menuItem" value="More" />
-				</execute>
+				<execute macro="Button#clickMore" />
 
 				<execute macro="IFrame#selectConfigurationFrame" />
 
@@ -171,8 +169,8 @@
 		<execute macro="LexiconEntry#gotoAdd" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
-				<var name="key_menuItem" value="More" />
+			<condition function="IsElementPresent" locator1="Button#ANY">
+				<var name="key_text" value="More" />
 			</condition>
 
 			<then>
@@ -182,9 +180,7 @@
 			</then>
 		</if>
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="More" />
-		</execute>
+		<execute macro="Button#clickMore" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>

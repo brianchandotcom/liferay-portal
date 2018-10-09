@@ -57,6 +57,12 @@
 		</execute>
 	</command>
 
+	<command name="clickMore">
+		<execute macro="Button#click">
+			<var name="button" value="More" />
+		</execute>
+	</command>
+
 	<command name="clickNext">
 		<execute macro="Button#click">
 			<var name="button" value="Next" />

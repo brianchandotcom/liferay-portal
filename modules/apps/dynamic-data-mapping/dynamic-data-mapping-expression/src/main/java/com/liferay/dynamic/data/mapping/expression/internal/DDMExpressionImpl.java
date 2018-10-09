@@ -146,14 +146,12 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 	}
 
 	protected Map<String, DDMExpressionFunction> getDDMExpressionFunctions() {
-		Set<String> expressionFunctionNames = getExpressionFunctionNames();
-
 		if (_ddmExpressionFunctionTracker == null) {
 			return Collections.emptyMap();
 		}
 
 		return _ddmExpressionFunctionTracker.getDDMExpressionFunctions(
-			expressionFunctionNames);
+			getExpressionFunctionNames());
 	}
 
 	protected Set<String> getExpressionFunctionNames() {

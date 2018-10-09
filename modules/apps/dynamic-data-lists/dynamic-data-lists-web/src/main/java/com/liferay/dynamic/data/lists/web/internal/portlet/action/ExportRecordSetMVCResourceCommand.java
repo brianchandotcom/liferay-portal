@@ -62,13 +62,6 @@ public class ExportRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long recordSetId = ParamUtil.getLong(resourceRequest, "recordSetId");
-
-		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
-
 		String fileExtension = ParamUtil.getString(
 			resourceRequest, "fileExtension");
 
@@ -80,6 +73,13 @@ public class ExportRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 
 			return;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long recordSetId = ParamUtil.getLong(resourceRequest, "recordSetId");
+
+		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
 
 		String fileName =
 			recordSet.getName(themeDisplay.getLocale()) + CharPool.PERIOD +

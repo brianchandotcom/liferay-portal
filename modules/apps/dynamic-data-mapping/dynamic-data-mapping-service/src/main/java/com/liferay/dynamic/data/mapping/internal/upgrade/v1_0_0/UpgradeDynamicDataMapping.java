@@ -1239,18 +1239,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 			while (rs.next()) {
 				long structureId = rs.getLong("structureId");
-				long groupId = rs.getLong("groupId");
-				long companyId = rs.getLong("companyId");
-				long userId = rs.getLong("userId");
-				String userName = rs.getString("userName");
-				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
-				long parentStructureId = rs.getLong("parentStructureId");
 				long classNameId = rs.getLong("classNameId");
 				String version = rs.getString("version");
-				String name = rs.getString("name");
-				String description = rs.getString("description");
-				String storageType = rs.getString("storageType");
-				int type = rs.getInt("type_");
 
 				_structureClassNameIds.put(structureId, classNameId);
 
@@ -1278,6 +1268,17 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				if (hasStructureVersion(structureId, version)) {
 					continue;
 				}
+
+				long groupId = rs.getLong("groupId");
+				long companyId = rs.getLong("companyId");
+				long userId = rs.getLong("userId");
+				String userName = rs.getString("userName");
+				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+				long parentStructureId = rs.getLong("parentStructureId");
+				String name = rs.getString("name");
+				String description = rs.getString("description");
+				String storageType = rs.getString("storageType");
+				int type = rs.getInt("type_");
 
 				long structureVersionId = increment();
 
@@ -1399,19 +1400,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
-				long companyId = rs.getLong("companyId");
-				long userId = rs.getLong("userId");
-				String userName = rs.getString("userName");
-				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
 				long classNameId = rs.getLong("classNameId");
 				long classPK = rs.getLong("classPK");
 				long templateId = rs.getLong("templateId");
-				String version = rs.getString("version");
-				String name = rs.getString("name");
-				String description = rs.getString("description");
-				String language = rs.getString("language");
-				String script = rs.getString("script");
 
 				// Template resource class name ID
 
@@ -1423,6 +1414,17 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 					continue;
 				}
+
+				long groupId = rs.getLong("groupId");
+				long companyId = rs.getLong("companyId");
+				long userId = rs.getLong("userId");
+				String userName = rs.getString("userName");
+				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+				String version = rs.getString("version");
+				String name = rs.getString("name");
+				String description = rs.getString("description");
+				String language = rs.getString("language");
+				String script = rs.getString("script");
 
 				ps2.setLong(1, resourceClassNameId);
 

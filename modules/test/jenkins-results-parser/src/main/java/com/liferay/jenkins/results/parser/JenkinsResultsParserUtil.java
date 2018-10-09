@@ -1423,8 +1423,21 @@ public class JenkinsResultsParserUtil {
 						key.substring(2, key.length() - 1));
 				}
 
-				if ((redactToken != null) && !redactToken.isEmpty()) {
-					_redactTokens.add(redactToken);
+				if (redactToken != null) {
+					if ((redactToken.length() < 5) &&
+						redactToken.matches("\\d+")) {
+
+						System.out.println(
+							combine(
+								"Ignoring ", key,
+								" because the value is numeric and ",
+								"less than 5 characters long."));
+					}
+					else {
+						if (!redactToken.isEmpty()) {
+							_redactTokens.add(redactToken);
+						}
+					}
 				}
 			}
 

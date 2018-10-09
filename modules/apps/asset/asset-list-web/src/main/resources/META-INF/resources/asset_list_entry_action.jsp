@@ -89,6 +89,16 @@ AssetListEntry assetListEntry = (AssetListEntry)row.getObject();
 		useDialog="<%= true %>"
 	/>
 
+	<portlet:renderURL var="viewAssetListUsagesURL">
+		<portlet:param name="mvcPath" value="/view_usages.jsp" />
+		<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntry.getAssetListEntryId()) %>" />
+	</portlet:renderURL>
+
+	<liferay-ui:icon
+		message="view-usages"
+		url="<%= viewAssetListUsagesURL %>"
+	/>
+
 	<c:if test="<%= AssetListEntryPermission.contains(permissionChecker, assetListEntry, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="/asset_list/delete_asset_list_entry" var="deleteAssetListEntryURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />

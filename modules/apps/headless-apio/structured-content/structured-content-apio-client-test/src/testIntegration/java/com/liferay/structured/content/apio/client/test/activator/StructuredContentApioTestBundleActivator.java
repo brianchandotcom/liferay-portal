@@ -152,6 +152,8 @@ public class StructuredContentApioTestBundleActivator
 	}
 
 	private void _cleanUp() {
+		Collections.reverse(_autoCloseables);
+
 		for (AutoCloseable autoCloseable : _autoCloseables) {
 			try {
 				autoCloseable.close();

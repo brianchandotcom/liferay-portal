@@ -14,6 +14,58 @@ import {makeFetch} from '../../util/fetch.es';
 
 class RuleEditor extends Component {
 	static STATE = {
+		actions: Config.arrayOf(
+			Config.shapeOf(
+				{
+					action: Config.string(),
+					expression: Config.string(),
+					label: Config.string(),
+					target: Config.string()
+				}
+			)
+		).internal().value([]),
+
+		actionList: Config.arrayOf(
+			Config.shapeOf(
+				{
+					label: Config.string(),
+					value: Config.string()
+				}
+			)
+		).internal().value(
+			[
+				{
+					label: 'Show',
+					value: 'show'
+				},
+				{
+					label: 'Enable',
+					value: 'enable'
+				},
+				{
+					label: 'Require',
+					value: 'require'
+				},
+				{
+					label: 'Autofill',
+					value: 'autofill'
+				},
+				{
+					label: 'Calculate',
+					value: 'calculate'
+				}
+			]
+		),
+
+		/**
+		 * Used for tracking which action we are currently focused on
+		 * when trying to delete an action.
+		 * @default 0
+		 * @instance
+		 * @memberof RuleEditor
+		 * @type {Number}
+		 */
+		activeActionIndex: Config.number().value(-1),
 
 		/**
 		 * Used for tracking which condition we are currently focused on
@@ -25,6 +77,28 @@ class RuleEditor extends Component {
 		 */
 
 		activeConditionIndex: Config.number().value(-1),
+
+		dataProvider: Config.arrayOf(
+			Config.shapeOf(
+				{
+					id: Config.string(),
+					name: Config.string(),
+					uuid: Config.string()
+				}
+			)
+		).internal(),
+
+		dataProviderUrl: Config.string().required(),
+
+		/**
+		 * Used for telling whether the delete conditional modal is visible or not.
+		 * @default false
+		 * @instance
+		 * @memberof RuleEditor
+		 * @type {Boolean}
+		 */
+
+		deleteActionModalVisible: Config.bool().value(false),
 
 		/**
 		 * Used for telling whether the delete conditional modal is visible or not.
@@ -204,12 +278,15 @@ class RuleEditor extends Component {
 				chooseAnOption: Liferay.Language.get('choose-an-option'),
 				condition: Liferay.Language.get('condition'),
 				delete: Liferay.Language.get('delete'),
+				deleteAction: Liferay.Language.get('delete-action'),
+				deleteActionQuestion: Liferay.Language.get('are-you-sure-you-want-to-delete-this-action'),
 				deleteCondition: Liferay.Language.get('delete-condition'),
 				deleteConditionQuestion: Liferay.Language.get('are-you-sure-you-want-to-delete-this-condition'),
 				description: Liferay.Language.get('define-condition-and-action-to-change-fields-and-elements-on-the-form'),
 				dismiss: Liferay.Language.get('dismiss'),
 				do: Liferay.Language.get('do'),
 				enable: Liferay.Language.get('enable'),
+				fromDataProvider: Liferay.Language.get('from-data-provider'),
 				if: Liferay.Language.get('if'),
 				jumpToPage: Liferay.Language.get('jump-to-page'),
 				or: Liferay.Language.get('or'),
@@ -224,12 +301,16 @@ class RuleEditor extends Component {
 			}
 		},
 
-		url: Config.string()
+		rolesUrl: Config.string()
 	}
 
 	created() {
-		if (this.url) {
+		if (this.rolesUrl) {
 			this._fetchRoles();
+		}
+
+		if (this.dataProviderUrl) {
+			this._fetchDataProvider();
 		}
 	}
 
@@ -332,6 +413,24 @@ class RuleEditor extends Component {
 		}
 	}
 
+	_clearAction(index) {
+		const {actions} = this;
+
+		const newActions = actions;
+
+		newActions[index] = {
+			action: '',
+			label: '',
+			target: ''
+		};
+
+		this.setState(
+			{
+				actions: newActions
+			}
+		);
+	}
+
 	_clearAllFieldValues(index) {
 		let {conditions, secondOperandSelectedList} = this;
 
@@ -381,13 +480,41 @@ class RuleEditor extends Component {
 		return secondOperandSelectedList;
 	}
 
-	_fetchRoles() {
-		const {url} = this;
+	_fetchDataProvider() {
+		const {dataProviderUrl} = this;
 
 		makeFetch(
 			{
 				method: 'GET',
-				url
+				url: dataProviderUrl
+			}
+		).then(
+			responseData => {
+				this._pendingRequest = null;
+				this.setState(
+					{
+						dataProvider: responseData.map(
+							data => {
+								return {
+									...data,
+									label: data.name,
+									value: data.id
+								};
+							}
+						)
+					}
+				);
+			}
+		);
+	}
+
+	_fetchRoles() {
+		const {rolesUrl} = this;
+
+		makeFetch(
+			{
+				method: 'GET',
+				rolesUrl
 			}
 		).then(
 			responseData => {
@@ -482,6 +609,58 @@ class RuleEditor extends Component {
 		);
 	}
 
+	_handleActionAdded() {
+		const {actions} = this;
+		const newAction = {action: '', label: '', target: ''};
+
+		if (actions.length == 0) {
+			actions.push(newAction);
+		}
+
+		actions.push(newAction);
+
+		this.setState(
+			{
+				actions
+			}
+		);
+	}
+
+	_handleActionSelection(event) {
+		const {fieldInstance, value} = event;
+		const index = this._getConditionIndex(fieldInstance, '.action-type');
+
+		const {actions} = this;
+
+		const newActions = actions;
+
+		if (value && value.length > 0 && value[0]) {
+			const fieldName = value[0];
+
+			if (actions.length > 0) {
+				const previousAction = actions[index].action;
+
+				if (fieldName !== previousAction) {
+					newActions[index].action = fieldName;
+					newActions[index].target = '';
+					newActions[index].label = '';
+				}
+			}
+			else {
+				newActions.push({action: fieldName});
+			}
+		}
+		else {
+			this._clearAction(index);
+		}
+
+		this.setState(
+			{
+				actions: newActions
+			}
+		);
+	}
+
 	_handleConditionAdded() {
 		const {conditions} = this;
 
@@ -500,6 +679,18 @@ class RuleEditor extends Component {
 		this.setState(
 			{
 				conditions
+			}
+		);
+	}
+
+	_handleDeleteAction(event) {
+		const {currentTarget} = event;
+		const index = currentTarget.getAttribute('data-index');
+
+		this.setState(
+			{
+				activeActionIndex: parseInt(index, 10),
+				deleteActionModalVisible: true
 			}
 		);
 	}
@@ -577,18 +768,30 @@ class RuleEditor extends Component {
 		event.stopPropagation();
 
 		if (!event.target.classList.contains('close-modal')) {
+			const activeActionIndex = this.activeActionIndex;
 			const activeConditionIndex = this.activeConditionIndex;
-			const {conditions} = this;
 
-			conditions.splice(activeConditionIndex, 1);
+			const {actions, conditions} = this;
+
+			if (activeConditionIndex > -1) {
+				conditions.splice(activeConditionIndex, 1);
+			}
+
+			if (activeActionIndex > -1) {
+				actions.splice(activeActionIndex, 1);
+			}
 
 			this.setState(
 				{
+					actions,
+					activeActionIndex: -1,
 					activeConditionIndex: -1,
 					conditions,
+					deleteActionModalVisible: false,
 					deleteConditionModalVisible: false
 				}
 			);
+
 		}
 	}
 
@@ -687,6 +890,26 @@ class RuleEditor extends Component {
 				conditions
 			}
 		);
+	}
+
+	_handleTargetSelection(event) {
+		const {fieldInstance, value} = event;
+		const index = this._getConditionIndex(fieldInstance, '.target-action');
+
+		const {actions} = this;
+
+		actions[index].target = value[0];
+		actions[index].label = value[0];
+
+		this.setState(
+			{
+				actions
+			}
+		);
+	}
+
+	_isFieldAction(fieldName) {
+		return (fieldName == 'enable' || fieldName == 'show' || fieldName == 'require');
 	}
 
 	_isBinary(value) {

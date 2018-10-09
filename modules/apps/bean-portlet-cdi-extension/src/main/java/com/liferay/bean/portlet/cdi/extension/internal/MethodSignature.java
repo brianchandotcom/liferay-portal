@@ -112,8 +112,8 @@ public class MethodSignature {
 
 	private boolean _isAssignableFrom(Class<?>[] parameterTypes) {
 		if (parameterTypes.length == _parameterTypes.length) {
-			for (int i = 1; i < parameterTypes.length; i++) {
-				if (!parameterTypes[i].isAssignableFrom(_parameterTypes[i])) {
+			for (int i = 0; i < parameterTypes.length; i++) {
+				if (!_parameterTypes[i].isAssignableFrom(parameterTypes[i])) {
 					return false;
 				}
 			}

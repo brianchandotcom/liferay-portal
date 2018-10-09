@@ -58,34 +58,32 @@ public class MethodSignature {
 
 	public static final MethodSignature HEADER = new MethodSignature(
 		HeaderMethod.class,
-		new Class<?>[] {HeaderRequest.class, HeaderResponse.class}, true, true);
+		new Class<?>[] {HeaderRequest.class, HeaderResponse.class}, true);
 
 	public static final MethodSignature INIT = new MethodSignature(
 		InitMethod.class, new Class<?>[] {PortletConfig.class});
 
 	public static final MethodSignature RENDER = new MethodSignature(
 		RenderMethod.class,
-		new Class<?>[] {RenderRequest.class, RenderResponse.class}, true, true);
+		new Class<?>[] {RenderRequest.class, RenderResponse.class}, true);
 
 	public static final MethodSignature SERVE_RESOURCE = new MethodSignature(
 		ServeResourceMethod.class,
-		new Class<?>[] {ResourceRequest.class, ResourceResponse.class}, true,
-		true);
+		new Class<?>[] {ResourceRequest.class, ResourceResponse.class}, true);
 
 	public MethodSignature(
 		Class<? extends Annotation> annotation, Class<?>[] parameterTypes) {
 
-		this(annotation, parameterTypes, false, false);
+		this(annotation, parameterTypes, false);
 	}
 
 	public MethodSignature(
 		Class<? extends Annotation> annotation, Class<?>[] parameterTypes,
-		boolean variant1, boolean variant2) {
+		boolean variant) {
 
 		_annotation = annotation;
 		_parameterTypes = parameterTypes;
-		_variant1 = variant1;
-		_variant2 = variant2;
+		_variant = variant;
 	}
 
 	public boolean isMatch(Method method) {
@@ -96,12 +94,12 @@ public class MethodSignature {
 		if (returnType.equals(Void.TYPE) && _isAssignableFrom(parameterTypes)) {
 			return true;
 		}
-		else if (_variant1 && returnType.equals(Void.TYPE) &&
+		else if (_variant && returnType.equals(Void.TYPE) &&
 				 (parameterTypes.length == 0)) {
 
 			return true;
 		}
-		else if (_variant2 && returnType.equals(String.class) &&
+		else if (_variant && returnType.equals(String.class) &&
 				 (parameterTypes.length == 0)) {
 
 			return true;
@@ -137,7 +135,6 @@ public class MethodSignature {
 
 	private final Class<? extends Annotation> _annotation;
 	private final Class<?>[] _parameterTypes;
-	private final boolean _variant1;
-	private final boolean _variant2;
+	private final boolean _variant;
 
 }

@@ -115,7 +115,7 @@
 	]}
 	{@param? store: ?}
 
-	<section class="row-section">
+	<section class="fragment-entry-link-list__row-section">
 		<div class="container row-container">
 			<div class="row" data-row-id="{$rowId}">
 				{foreach $column in $columns}
@@ -174,7 +174,7 @@
 	]}
 	{@param? store: ?}
 
-	<div class="col col-{$size}" data-column-id="{$columnId}">
+	<div class="col col-{$size} fragment-entry-link-list__col" data-column-id="{$columnId}">
 		{foreach $fragmentEntryLinkId in $fragmentEntryLinkIds}
 			{let $fragmentEntryLink: $fragmentEntryLinks[$fragmentEntryLinkId] /}
 

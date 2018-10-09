@@ -14,16 +14,24 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
+import java.util.List;
+
 import javax.xml.namespace.QName;
 
 /**
  * @author Neil Griffin
  */
-public abstract class BaseEventImpl implements Event {
+public class EventImpl implements Event {
 
-	public BaseEventImpl(QName qName, String valueType) {
+	public EventImpl(QName qName, String valueType, List<QName> aliasQNames) {
 		_qName = qName;
 		_valueType = valueType;
+		_aliasQNames = aliasQNames;
+	}
+
+	@Override
+	public List<QName> getAliasQNames() {
+		return _aliasQNames;
 	}
 
 	@Override
@@ -36,6 +44,7 @@ public abstract class BaseEventImpl implements Event {
 		return _valueType;
 	}
 
+	private final List<QName> _aliasQNames;
 	private final QName _qName;
 	private final String _valueType;
 

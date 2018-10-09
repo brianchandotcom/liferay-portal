@@ -19,6 +19,7 @@ import com.liferay.bean.portlet.cdi.extension.internal.BeanFilter;
 import com.liferay.bean.portlet.cdi.extension.internal.BeanMethod;
 import com.liferay.bean.portlet.cdi.extension.internal.BeanPortlet;
 import com.liferay.bean.portlet.cdi.extension.internal.Event;
+import com.liferay.bean.portlet.cdi.extension.internal.EventImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.PortletDependency;
 import com.liferay.bean.portlet.cdi.extension.internal.Preference;
 import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameter;
@@ -192,7 +193,7 @@ public class PortletDescriptorParser {
 					PortletQNameUtil.getQName(alias, null, defaultNamespace));
 			}
 
-			events.add(new EventDescriptorImpl(qName, valueType, aliasQNames));
+			events.add(new EventImpl(qName, valueType, aliasQNames));
 		}
 
 		Map<String, PublicRenderParameter> publicRenderParameters =

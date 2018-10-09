@@ -16,8 +16,10 @@ package com.liferay.bean.portlet.cdi.extension.internal.annotated;
 
 import com.liferay.bean.portlet.cdi.extension.internal.BeanApp;
 import com.liferay.bean.portlet.cdi.extension.internal.Event;
+import com.liferay.bean.portlet.cdi.extension.internal.EventImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameter;
 import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameterImpl;
+import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletQNameUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.ArrayList;
@@ -70,7 +72,24 @@ public class BeanAppAnnotationImpl implements BeanApp {
 		_eventDefinitions = new ArrayList<>();
 
 		for (EventDefinition eventDefinition : portletApplication.events()) {
-			_eventDefinitions.add(new EventAnnotationImpl(eventDefinition));
+			String valueType = null;
+
+			Class<?> payloadType = eventDefinition.payloadType();
+
+			if (payloadType != null) {
+				valueType = payloadType.getName();
+			}
+
+			List<QName> aliasQNames = new ArrayList<>();
+
+			for (PortletQName portletQName : eventDefinition.alias()) {
+				aliasQNames.add(PortletQNameUtil.toQName(portletQName));
+			}
+
+			_eventDefinitions.add(
+				new EventImpl(
+					PortletQNameUtil.toQName(eventDefinition.qname()),
+					valueType, aliasQNames));
 		}
 
 		_publicRenderParameterMap = new HashMap<>();

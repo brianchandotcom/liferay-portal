@@ -186,35 +186,17 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 					/>
 				</c:if>
 
-				<c:if test="<%= folder.isMountPoint() %>">
+				<c:if test="<%= folder.isMountPoint() && folder.isRepositoryCapabilityProvided(TemporaryFileEntriesCapability.class) %>">
+					<portlet:actionURL name="/document_library/edit_folder" var="deleteExpiredTemporaryFileEntriesURL">
+						<portlet:param name="<%= Constants.CMD %>" value="deleteExpiredTemporaryFileEntries" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="repositoryId" value="<%= String.valueOf(folder.getRepositoryId()) %>" />
+					</portlet:actionURL>
 
-					<%
-					LocalRepository localRepository = null;
-
-					try {
-						localRepository = RepositoryProviderUtil.getLocalRepository(folder.getRepositoryId());
-					}
-					catch (RepositoryException re) {
-					}
-
-					if ((localRepository != null) && localRepository.isCapabilityProvided(TemporaryFileEntriesCapability.class)) {
-					%>
-
-						<portlet:actionURL name="/document_library/edit_folder" var="deleteExpiredTemporaryFileEntriesURL">
-							<portlet:param name="<%= Constants.CMD %>" value="deleteExpiredTemporaryFileEntries" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="repositoryId" value="<%= String.valueOf(folder.getRepositoryId()) %>" />
-						</portlet:actionURL>
-
-						<liferay-ui:icon
-							message="delete-expired-temporary-files"
-							url="<%= deleteExpiredTemporaryFileEntriesURL %>"
-						/>
-
-					<%
-					}
-					%>
-
+					<liferay-ui:icon
+						message="delete-expired-temporary-files"
+						url="<%= deleteExpiredTemporaryFileEntriesURL %>"
+					/>
 				</c:if>
 			</c:when>
 			<c:otherwise>

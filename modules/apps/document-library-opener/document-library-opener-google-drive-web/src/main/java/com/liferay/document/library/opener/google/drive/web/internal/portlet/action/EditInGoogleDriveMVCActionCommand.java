@@ -166,17 +166,20 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 		else if (cmd.equals(
 					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKIN)) {
 
-			boolean majorVersion = ParamUtil.getBoolean(
-				actionRequest, "majorVersion");
+			DLVersionNumberIncrease dlVersionNumberIncrease =
+				DLVersionNumberIncrease.valueOf(
+					ParamUtil.getString(
+						actionRequest, "versionIncrease",
+						DLVersionNumberIncrease.NONE.toString()));
+
 			String changeLog = ParamUtil.getString(actionRequest, "changeLog");
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				actionRequest);
 
 			_dlAppService.checkInFileEntry(
-				fileEntryId,
-				DLVersionNumberIncrease.fromMajorVersion(majorVersion),
-				changeLog, serviceContext);
+				fileEntryId, dlVersionNumberIncrease, changeLog,
+				serviceContext);
 		}
 		else if (cmd.equals(
 					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_CHECKOUT)) {

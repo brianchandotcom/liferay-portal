@@ -89,9 +89,16 @@ class Layout extends Component {
 	 */
 
 	_deleteEmptyColumns(layoutColumns) {
-		return layoutColumns.length > 3 ?
-			layoutColumns.filter(layoutColumn => layoutColumn.length > 0) :
-			layoutColumns;
+		if (layoutColumns.length > 3) {
+			for (let i = 0; i < layoutColumns.length; i++) {
+				if (
+					layoutColumns[i].length === 0 &&
+					layoutColumns.length > 3
+				) {
+					layoutColumns.splice(i, 1);
+				}
+			}
+		}
 	}
 
 	/**

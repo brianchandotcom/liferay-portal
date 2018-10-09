@@ -2,8 +2,6 @@
 
 @import "mixins";
 
-@import "mixins/fragment_entry_link_states";
-
 @import "variables";
 
 .drag-bottom {
@@ -29,9 +27,20 @@
 }
 
 .fragment-entry-link-wrapper {
-	box-shadow: 0 0 0 $fragmentEntryLinkBorderWidth fade_out($fragmentEntryLinkBorderColor, 1);
 	position: relative;
-	transition: box-shadow ease 0.3s;
+
+	&:after {
+		box-shadow: inset 0 0 0 $fragmentEntryLinkBorderWidth fade_out($fragmentEntryLinkBorderColor, 1);
+		content: '';
+		display: block;
+		height: 100%;
+		left: 0;
+		pointer-events: none;
+		position: absolute;
+		top: 0;
+		transition: box-shadow ease 0.3s;
+		width: 100%;
+	}
 
 	.portlet {
 		> .portlet-topper {
@@ -70,14 +79,14 @@
 		bottom: 100%;
 		box-shadow: 0 0 0 $fragmentEntryLinkBorderWidth $fragmentEntryLinkBorderColor;
 		color: $fragmentEntryLinkControlColor;
-		left: 0;
+		left: 1px;
 		opacity: 0;
 		padding: 0.5em 1em;
 		pointer-events: none;
 		position: absolute;
 		transform: translateY(100%);
 		transition: box-shadow ease 0.3s, transform ease 0.6s, opacity ease 0.2s;
-		width: 100%;
+		width: calc(100% - 2px);
 		z-index: $fragmentEntryLinkControlZIndex;
 
 		&__fragment-name {
@@ -105,17 +114,17 @@
 }
 
 .fragment-entry-link-wrapper:hover {
-	@include fragment-entry-link-wrapper-hover;
-}
+	z-index: $fragmentEntryLinkControlHoverZIndex;
 
-.fragment-entry-link-wrapper:focus {
-	@include fragment-entry-link-wrapper-hover;
+	&:after {
+		box-shadow: inset 0 0 0 $fragmentEntryLinkBorderWidth $fragmentEntryLinkBorderColor;
+	}
 
-	@include fragment-entry-link-wrapper-focus;
-}
-
-.fragment-entry-link-wrapper:focus-within {
-	@include fragment-entry-link-wrapper-hover;
-
-	@include fragment-entry-link-wrapper-focus;
+	.fragment-entry-link-control {
+		opacity: 1;
+		pointer-events: all;
+		transform: translateY(1px);
+		transition: box-shadow ease 0.3s, transform ease 0.2s, opacity ease 0.3s;
+		z-index: $fragmentEntryLinkControlHoverZIndex;
+	}
 }

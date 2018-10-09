@@ -138,7 +138,8 @@
 						p_l_id: <%= themeDisplay.getPlid() %>,
 						portletNamespace: '<portlet:namespace />',
 						repeatable: <%= repeatable %>,
-						requestedLocale: '<%= (requestedLocale == null) ? StringPool.BLANK : HtmlUtil.escapeJS(requestedLocale.toString()) %>'
+						requestedLocale: '<%= (requestedLocale == null) ? StringPool.BLANK : HtmlUtil.escapeJS(requestedLocale.toString()) %>',
+						synchronousFormSubmission: <%= synchronousFormSubmission %>
 
 						<c:if test="<%= ddmFormValues != null %>">
 							, values: <%= DDMUtil.getDDMFormValuesJSONString(ddmFormValues) %>

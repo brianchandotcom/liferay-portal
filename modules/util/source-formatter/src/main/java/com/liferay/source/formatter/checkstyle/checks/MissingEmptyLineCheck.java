@@ -322,6 +322,10 @@ public class MissingEmptyLineCheck extends BaseCheck {
 	private boolean _containsVariableName(
 		List<DetailAST> identASTList, String variableName) {
 
+		if (variableName == null) {
+			return false;
+		}
+
 		for (DetailAST identAST : identASTList) {
 			if (variableName.equals(identAST.getText())) {
 				return true;

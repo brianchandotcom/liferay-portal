@@ -73,9 +73,6 @@ public class WorkflowTaskItemResource
 			"WorkflowTask"
 		).identifier(
 			WorkflowTask::getWorkflowTaskId
-		).addBidirectionalModel(
-			"assignee", "tasks", MyUserAccountIdentifier.class,
-			WorkflowTask::getAssigneeUserId
 		).addBoolean(
 			"completed", WorkflowTask::isCompleted
 		).addDate(

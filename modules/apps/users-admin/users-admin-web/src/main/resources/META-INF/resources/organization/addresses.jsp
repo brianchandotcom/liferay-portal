@@ -70,7 +70,15 @@ List<Address> addresses = AddressServiceUtil.getAddresses(Organization.class.get
 	</div>
 </c:if>
 
-<div class="addresses-table-wrapper table-responsive <%= addresses.isEmpty() ? "hide" : "" %>">
+<div
+	class="<%=
+		CSSClassNames.builder(
+			"addresses-table-wrapper", "table-responsive"
+		).add(
+			"hide", addresses.isEmpty()
+		).build()
+	%>"
+>
 	<table class="table table-autofit">
 		<tbody>
 

@@ -119,6 +119,7 @@ public class AssetCategoryTitlesMultiLanguageSearchTest {
 		String categoryTitleString = "你好";
 		String journalArticleContentString = "English";
 		String journalArticleTitleString = "English";
+
 		Locale locale = LocaleUtil.CHINA;
 
 		Group group = _userSearchFixture.addGroup(
@@ -162,6 +163,7 @@ public class AssetCategoryTitlesMultiLanguageSearchTest {
 		String categoryTitleString = "testCategory";
 		String journalArticleContentString = "testContent";
 		String journalArticleTitleString = "testTitle";
+
 		Locale locale = LocaleUtil.US;
 
 		Group group = _userSearchFixture.addGroup(

@@ -17,6 +17,8 @@ package com.liferay.staging.bar.web.internal.product.navigation.control.menu;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
@@ -86,6 +88,13 @@ public class StagingProductNavigationControlMenuEntry
 		}
 
 		if (!themeDisplay.isShowStagingIcon()) {
+			return false;
+		}
+
+		String layoutMode = ParamUtil.getString(
+			request, "p_l_mode", Constants.VIEW);
+
+		if (layoutMode.equals(Constants.EDIT)) {
 			return false;
 		}
 

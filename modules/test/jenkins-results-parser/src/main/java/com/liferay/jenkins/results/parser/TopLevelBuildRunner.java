@@ -113,7 +113,7 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 					retries++;
 
 					String command = JenkinsResultsParserUtil.combine(
-						"time rsync -svI --chmod=go=rx --timeout=1200 ",
+						"time rsync -sqI --chmod=go=rx --timeout=1200 ",
 						jenkinsReportFile.getCanonicalPath(), " ",
 						buildData.getMasterHostname(), "::usercontent/",
 						userContentRelativePath);

@@ -72,11 +72,12 @@ List<Address> addresses = AddressServiceUtil.getAddresses(Organization.class.get
 
 <div
 	class="<%=
-		CSSClassNames.builder(
-			"addresses-table-wrapper", "table-responsive"
-		).add(
-			"hide", addresses.isEmpty()
-		).build()
+		CSSClassNames.build(
+			builder -> builder.add(
+				"addresses-table-wrapper", "table-responsive"
+			).add(
+				"hide", addresses.isEmpty()
+			))
 	%>"
 >
 	<table class="table table-autofit">

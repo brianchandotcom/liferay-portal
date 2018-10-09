@@ -167,7 +167,6 @@ page import="com.liferay.users.admin.constants.UsersAdminPortletKeys" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdmin" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %><%@
 page import="com.liferay.users.admin.user.action.contributor.UserActionContributor" %><%@
-page import="com.liferay.users.admin.web.internal.CSSClassNames" %><%@
 page import="com.liferay.users.admin.web.internal.CustomFieldsUtil" %><%@
 page import="com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.InitDisplayContext" %><%@
@@ -183,6 +182,7 @@ page import="com.liferay.users.admin.web.internal.display.context.ViewOrganizati
 page import="com.liferay.users.admin.web.internal.display.context.ViewTreeManagementToolbarDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.ViewUsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.search.OrganizationResultRowSplitter" %><%@
+page import="com.liferay.users.admin.web.internal.util.CSSClassNames" %><%@
 page import="com.liferay.users.admin.web.internal.util.UsersAdminPortletURLUtil" %>
 
 <%@ page import="java.text.Format" %>

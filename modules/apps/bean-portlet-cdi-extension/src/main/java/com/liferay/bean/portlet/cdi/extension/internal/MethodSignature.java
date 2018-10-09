@@ -47,21 +47,21 @@ public class MethodSignature {
 
 	public static final MethodSignature ACTION = new MethodSignature(
 		ActionMethod.class,
-		new Class<?>[] {ActionRequest.class, ActionResponse.class});
+		new Class<?>[] {ActionRequest.class, ActionResponse.class}, false);
 
 	public static final MethodSignature DESTROY = new MethodSignature(
-		DestroyMethod.class, new Class<?>[0]);
+		DestroyMethod.class, new Class<?>[0], false);
 
 	public static final MethodSignature EVENT = new MethodSignature(
 		EventMethod.class,
-		new Class<?>[] {EventRequest.class, EventResponse.class});
+		new Class<?>[] {EventRequest.class, EventResponse.class}, false);
 
 	public static final MethodSignature HEADER = new MethodSignature(
 		HeaderMethod.class,
 		new Class<?>[] {HeaderRequest.class, HeaderResponse.class}, true);
 
 	public static final MethodSignature INIT = new MethodSignature(
-		InitMethod.class, new Class<?>[] {PortletConfig.class});
+		InitMethod.class, new Class<?>[] {PortletConfig.class}, false);
 
 	public static final MethodSignature RENDER = new MethodSignature(
 		RenderMethod.class,
@@ -70,21 +70,6 @@ public class MethodSignature {
 	public static final MethodSignature SERVE_RESOURCE = new MethodSignature(
 		ServeResourceMethod.class,
 		new Class<?>[] {ResourceRequest.class, ResourceResponse.class}, true);
-
-	public MethodSignature(
-		Class<? extends Annotation> annotation, Class<?>[] parameterTypes) {
-
-		this(annotation, parameterTypes, false);
-	}
-
-	public MethodSignature(
-		Class<? extends Annotation> annotation, Class<?>[] parameterTypes,
-		boolean variant) {
-
-		_annotation = annotation;
-		_parameterTypes = parameterTypes;
-		_variant = variant;
-	}
 
 	public boolean isMatch(Method method) {
 		Class<?> returnType = method.getReturnType();
@@ -114,6 +99,15 @@ public class MethodSignature {
 				_annotation.getSimpleName()));
 
 		return false;
+	}
+
+	private MethodSignature(
+		Class<? extends Annotation> annotation, Class<?>[] parameterTypes,
+		boolean variant) {
+
+		_annotation = annotation;
+		_parameterTypes = parameterTypes;
+		_variant = variant;
 	}
 
 	private boolean _isAssignableFrom(Class<?>[] parameterTypes) {

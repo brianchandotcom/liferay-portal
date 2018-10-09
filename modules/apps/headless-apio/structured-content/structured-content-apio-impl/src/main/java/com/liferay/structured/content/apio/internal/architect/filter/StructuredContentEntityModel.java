@@ -27,10 +27,10 @@ import java.util.stream.Stream;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Provides the entity data model from the Indexed Entity (JournalArticle).
+ * Provides the entity data model from the indexed entity ({@code
+ * com.liferay.journal.model.JournalArticle}).
  *
  * @author Julio Camarero
- * @review
  */
 @Component(
 	immediate = true,

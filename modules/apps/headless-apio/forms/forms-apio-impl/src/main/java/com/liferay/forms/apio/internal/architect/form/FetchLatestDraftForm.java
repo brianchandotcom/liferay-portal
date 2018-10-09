@@ -22,12 +22,11 @@ import com.liferay.apio.architect.form.Form;
 public class FetchLatestDraftForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code FetchLatestDraftForm}
-	 * depending on the HTTP body.
+	 * Builds a {@code Form} that generates a {@code FetchLatestDraftForm} that
+	 * depends on the HTTP body.
 	 *
 	 * @param  formBuilder the {@code Form} builder
 	 * @return a context form instance
-	 * @review
 	 */
 	public static Form<FetchLatestDraftForm> buildForm(
 		Form.Builder<FetchLatestDraftForm> formBuilder) {

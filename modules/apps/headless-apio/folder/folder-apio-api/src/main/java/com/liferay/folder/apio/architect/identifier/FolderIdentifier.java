@@ -17,11 +17,11 @@ package com.liferay.folder.apio.architect.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code Folder} identifier. It's identified by the
- * internal {@code Folder#getFolderId()}.
+ * Holds information about a {@code com.liferay.mail.reader.model.Folder}
+ * identifier. The internal method {@code Folder#getFolderId()} returns a
+ * folder's ID.
  *
  * @author Javier Gamarra
- * @review
  */
 public interface FolderIdentifier extends Identifier<Long> {
 }

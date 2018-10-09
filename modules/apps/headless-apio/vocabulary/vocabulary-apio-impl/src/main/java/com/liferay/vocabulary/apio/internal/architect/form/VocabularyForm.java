@@ -21,22 +21,19 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Instances of this class represent the values extracted from a vocabulary
- * form.
+ * Represents the values extracted from a vocabulary form.
  *
  * @author Eduardo Perez
  * @author Javier Gamarra
- * @review
  */
 public class VocabularyForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code VocabularyForm} depending on
-	 * the HTTP body.
+	 * Builds a {@code Form} that generates a {@code VocabularyForm} that
+	 * depends on the HTTP body.
 	 *
-	 * @param  builder the {@code Form} builder
-	 * @return a vocabulary form
-	 * @review
+	 * @param  builder the form builder
+	 * @return the vocabulary form
 	 */
 	public static Form<VocabularyForm> buildForm(
 		Form.Builder<VocabularyForm> builder) {
@@ -57,8 +54,7 @@ public class VocabularyForm {
 	/**
 	 * Returns the vocabulary's description map.
 	 *
-	 * @return the vocabulary's description map
-	 * @review
+	 * @return the description map
 	 */
 	public Map<Locale, String> getDescriptions(Locale locale) {
 		return Collections.singletonMap(locale, _description);
@@ -67,8 +63,7 @@ public class VocabularyForm {
 	/**
 	 * Returns the vocabulary's title map.
 	 *
-	 * @return the vocabulary's title map
-	 * @review
+	 * @return the title map
 	 */
 	public Map<Locale, String> getTitles(Locale locale) {
 		return Collections.singletonMap(locale, _name);

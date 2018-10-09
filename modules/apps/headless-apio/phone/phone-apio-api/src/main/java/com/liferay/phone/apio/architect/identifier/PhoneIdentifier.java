@@ -20,7 +20,6 @@ import com.liferay.apio.architect.identifier.Identifier;
  * Holds information about a {@code Phone} identifier.
  *
  * @author Javier Gamarra
- * @review
  */
 public interface PhoneIdentifier extends Identifier<Long> {
 }

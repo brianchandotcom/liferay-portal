@@ -15,27 +15,24 @@
 package com.liferay.structured.content.apio.architect.filter.expression;
 
 /**
- * Represents a literal expression node in the expression tree. <code
- * LiteralExpression></code> is not validated by default
+ * Represents a literal expression node in the expression tree. This expression
+ * is not validated by default.
  *
  * @author Cristina González
- * @review
  */
 public interface LiteralExpression extends Expression {
 
 	/**
-	 * Returns the text value of the literal expression.
+	 * Returns the literal expression's text value.
 	 *
-	 * @return the text value of the literal expression
-	 * @review
+	 * @return the text value
 	 */
 	public String getText();
 
 	/**
-	 * Returns the <code>Type</code> of the LiteralExpression.
+	 * Returns the literal expression's type.
 	 *
-	 * @return the text value of the literal expression
-	 * @review
+	 * @return the type
 	 */
 	public Type getType();
 

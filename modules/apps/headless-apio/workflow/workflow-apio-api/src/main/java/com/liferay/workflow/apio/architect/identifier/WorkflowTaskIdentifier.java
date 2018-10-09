@@ -17,11 +17,13 @@ package com.liferay.workflow.apio.architect.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code WorkflowTask} identifier. It's identified by
- * the internal {@code WorkflowTask#getWorkflowTaskId()}.
+ * Holds information about a {@code
+ * com.liferay.portal.kernel.workflow.WorkflowTask} identifier. The internal
+ * method {@code
+ * com.liferay.portal.kernel.workflow.WorkflowTask#getWorkflowTaskId()} returns
+ * the workflow task's ID.
  *
  * @author Sarai Díaz
- * @review
  */
 public interface WorkflowTaskIdentifier extends Identifier<Long> {
 }

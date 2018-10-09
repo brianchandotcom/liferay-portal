@@ -30,11 +30,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Utility for parsing Sort strings. It uses a model to create a list of {@link
- * SortField}.
+ * Parses {@code Sort} strings. This class uses a model to create a {@code
+ * SortField} list.
  *
  * @author Cristina González
- * @review
  */
 public class SortParserImpl implements SortParser {
 
@@ -43,22 +42,30 @@ public class SortParserImpl implements SortParser {
 	}
 
 	/**
-	 * Returns a List of {@link SortField} obtained from a comma-separated list
-	 * of field names and sort directions.
+	 * Returns a {@code SortField} list from a comma-separated list of field
+	 * names and sort directions.
 	 *
-	 * Sort directions supported are desc and asc and can be appended to each
-	 * sort field, separated by the ':' character.
+	 * <p>
+	 * Sort directions {@code desc} and {@code asc} can be appended to each sort
+	 * field, separated by the {@code :} character. If a sort direction isn't
+	 * provided, ascending order is used by default.
+	 * </p>
 	 *
-	 * If a sort direction is not provided, the sort field will be 'asc'.
+	 * <p>
+	 * For example,
+	 * </p>
 	 *
-	 * For example:
-	 * - field1,field2,field3
-	 * - field1:asc,field2:desc,field3
-	 * - field1:asc,field2,field3:desc
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * field1,field2,field3
+	 * field1:asc,field2:desc,field3
+	 * field1:asc,field2,field3:desc
+	 * </code>
+	 * </pre></p>
 	 *
-	 * @param  sortString - String to be parsed
-	 * @return a  {@link List<SortField>}
-	 * @review
+	 * @param  sortString the string to parse
+	 * @return the sort field list
 	 */
 	public List<SortField> parse(String sortString) {
 		if (Validator.isNull(sortString)) {

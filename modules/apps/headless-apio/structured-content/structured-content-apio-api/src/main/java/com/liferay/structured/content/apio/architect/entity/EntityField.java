@@ -20,22 +20,19 @@ import java.util.Locale;
 import java.util.function.Function;
 
 /**
- * Models a <code>EntityField</code>.
+ * Models an entity field.
  *
  * @author Cristina González
- * @review
  */
 public class EntityField {
 
 	/**
-	 * Creates a new <code>EntityField</code>
+	 * Creates a new {@code EntityField} with a {@code Function} to convert the
+	 * entity field's name to a filterable/sortable field name for a locale.
 	 *
-	 * @param  name - the name of the EntityField
-	 * @param  type - the {@link Type}
-	 * @param  filterableAndSortableFieldNameFunction - the {@link Function} to
-	 *         convert the entity field name to a filterable/sortable field name
-	 *         given a locale
-	 * @review
+	 * @param name the entity field's name
+	 * @param type the type
+	 * @param filterableAndSortableFieldNameFunction the {@code Function}
 	 */
 	public EntityField(
 		String name, Type type,
@@ -47,15 +44,15 @@ public class EntityField {
 	}
 
 	/**
-	 * Creates a new <code>EntityField</code>
+	 * Creates a new {@code EntityField} with separate functions for converting
+	 * the entity field's name to a sortable and filterable field name for a
+	 * locale.
 	 *
-	 * @param  name - the name of the EntityField
-	 * @param  type - the {@link Type}
-	 * @param  sortableFieldNameFunction - the {@link Function} to convert the
-	 *         entity field name to a sortable field name given a locale
-	 * @param  filterableFieldNameFunction - the {@link Function} to convert the
-	 *         entity field name to a filterable field name given a locale
-	 * @review
+	 * @param name the entity field's name
+	 * @param type the type
+	 * @param sortableFieldNameFunction the sortable field name {@code Function}
+	 * @param filterableFieldNameFunction the filterable field name {@code
+	 *        Function}
 	 */
 	public EntityField(
 		String name, Type type,
@@ -87,40 +84,38 @@ public class EntityField {
 	}
 
 	/**
-	 * Returns the filterable name of the <code>EntityField</code>
+	 * Returns the entity field's filterable name.
 	 *
-	 * @param  locale
-	 * @return the filterable name of the <code>EntityField</code>
-	 * @review
+	 * @param  locale the locale
+	 * @return the filterable name
 	 */
 	public String getFilterableName(Locale locale) {
 		return _filterableFieldNameFunction.apply(locale);
 	}
 
 	/**
-	 * Returns the name of the <code>EntityField</code>
+	 * Returns the entity field's name.
 	 *
-	 * @return the name of the <code>EntityField</code>
+	 * @return the name
 	 */
 	public String getName() {
 		return _name;
 	}
 
 	/**
-	 * Returns the sortable name of the <code>EntityField</code>
+	 * Returns the entity field's sortable name for a locale.
 	 *
-	 * @param  locale
-	 * @return the sortable name of the <code>EntityField</code>
-	 * @review
+	 * @param  locale the locale
+	 * @return the sortable name
 	 */
 	public String getSortableName(Locale locale) {
 		return _sortableNameFunction.apply(locale);
 	}
 
 	/**
-	 * Returns the {@link Type} of the <code>EntityField</code>
+	 * Returns the entity field's type.
 	 *
-	 * @return the {@link Type}
+	 * @return the type
 	 */
 	public Type getType() {
 		return _type;

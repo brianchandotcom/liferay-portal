@@ -17,11 +17,13 @@ package com.liferay.workflow.apio.architect.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code WorkflowLog} identifier. It's identified by
- * the internal {@code WorkflowLog#getWorkflowLogId()}.
+ * Holds information about a {@code
+ * com.liferay.portal.kernel.workflow.WorkflowLog} identifier. The internal
+ * method {@code
+ * com.liferay.portal.kernel.workflow.WorkflowLog#getWorkflowLogId()} returns
+ * the workflow log's ID.
  *
  * @author Sarai Díaz
- * @review
  */
 public interface WorkflowLogIdentifier extends Identifier<Long> {
 }

@@ -17,11 +17,10 @@ package com.liferay.keyword.apio.architect.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code Keyword} identifier. It's identified by the
- * internal {@code AssetTag#getTagId()}.
+ * Holds information about a {@code Keyword} identifier. The internal method
+ * {@code AssetTag#getTagId()} returns the ID.
  *
  * @author Javier Gamarra
- * @review
  */
 public interface KeywordIdentifier extends Identifier<Long> {
 }

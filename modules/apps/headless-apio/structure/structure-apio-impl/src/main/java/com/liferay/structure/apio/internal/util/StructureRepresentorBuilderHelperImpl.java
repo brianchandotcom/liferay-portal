@@ -49,7 +49,7 @@ import java.util.stream.Stream;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Provides the information necessary to expose Structure resources through a
+ * Provides the information necessary to expose structure resources through a
  * web API. The resources are mapped from the internal model {@code
  * DDMStructure}.
  *

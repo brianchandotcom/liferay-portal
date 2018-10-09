@@ -18,14 +18,13 @@ import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.portal.apio.identifier.ClassNameClassPK;
 
 /**
- * Holds information about an {@code AggregateRating} identifier. It's
- * identified by a {@link ClassNameClassPK} instance, that can be created either
- * through {@code
+ * Holds information about an {@code AggregateRating} identifier. A {@code
+ * ClassNameClassPK} identifies the aggregate rating. The {@code
+ * ClassNameClassPK} instance can be created with {@code
  * ClassNameClassPK#create(com.liferay.portal.kernel.model.ClassedModel)} or
- * {@link ClassNameClassPK#create(String, long)}.
+ * {@code ClassNameClassPK#create(String, long)}.
  *
  * @author Javier Gamarra
- * @review
  */
 public interface AggregateRatingIdentifier
 	extends Identifier<ClassNameClassPK> {

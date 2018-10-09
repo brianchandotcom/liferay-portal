@@ -15,45 +15,46 @@
 package com.liferay.structured.content.apio.architect.filter.expression;
 
 /**
- * Generic interface to define expression visitors with arbitrary return types.
+ * Defines expression visitors with arbitrary return types. This interface's
+ * methods are called when an expression node of the expression tree is
+ * traversed.
  *
  * @author Cristina González
- * @review
  */
 public interface ExpressionVisitor<T> {
 
 	/**
-	 * Called for each traversed <code>BinaryExpression</code>
+	 * Called for each {@link BinaryExpression}.
 	 *
-	 * @param  operation - operation
-	 * @param  left - return value of left sub tree
-	 * @param  right -return value of right sub tree
-	 * @return T
-	 * @throws ExpressionVisitException
-	 * @review
+	 * @param  operation the binary expression's operation
+	 * @param  left the return value of the left subtree
+	 * @param  right the return value of the right subtree
+	 * @return T the object of type {@code T}
+	 * @throws ExpressionVisitException if an expression visit exception
+	 *         occurred
 	 */
 	public T visitBinaryExpressionOperation(
 			BinaryExpression.Operation operation, T left, T right)
 		throws ExpressionVisitException;
 
 	/**
-	 * Called for each traversed <code>LiteralExpression</code>
+	 * Called for each {@link LiteralExpression}.
 	 *
-	 * @param  literalExpression - LiteralExpression
-	 * @return T
-	 * @throws ExpressionVisitException
-	 * @review
+	 * @param  literalExpression the literal expression
+	 * @return T the object of type {@code T}
+	 * @throws ExpressionVisitException if an expression visit exception
+	 *         occurred
 	 */
 	public T visitLiteralExpression(LiteralExpression literalExpression)
 		throws ExpressionVisitException;
 
 	/**
-	 * Called for each traversed <code>MemberExpression</code>
+	 * Called for each {@link MemberExpression}.
 	 *
-	 * @param  memberExpression - MemberExpression
-	 * @return T
-	 * @throws ExpressionVisitException
-	 * @review
+	 * @param  memberExpression the member expression
+	 * @return T the object of type {@code T}
+	 * @throws ExpressionVisitException if an expression visit exception
+	 *         occurred
 	 */
 	public T visitMemberExpression(MemberExpression memberExpression)
 		throws ExpressionVisitException;

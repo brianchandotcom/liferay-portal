@@ -15,34 +15,30 @@
 package com.liferay.structured.content.apio.architect.filter.expression;
 
 /**
- * Represents a binary expression node in the expression tree
+ * Represents a binary expression node in the expression tree.
  *
  * @author Cristina González
- * @review
  */
 public interface BinaryExpression extends Expression {
 
 	/**
-	 * Returns a Expression sub tree of the left operation.
+	 * Returns an {@link Expression} subtree of the left operation.
 	 *
-	 * @return Expression sub tree of the left operation
-	 * @review
+	 * @return the expression subtree
 	 */
 	public Expression getLeftOperationExpression();
 
 	/**
-	 * Returns the operation of the binary Expression.
+	 * Returns the binary expression's operation.
 	 *
-	 * @return the operation of the binary Expression
-	 * @review
+	 * @return the operation
 	 */
 	public Operation getOperation();
 
 	/**
-	 * Returns a Expression sub tree of the right operation.
+	 * Returns an {@link Expression} subtree of the right operation.
 	 *
-	 * @return Expression sub tree of the right operation
-	 * @review
+	 * @return the expression subtree
 	 */
 	public Expression getRightOperationExpression();
 

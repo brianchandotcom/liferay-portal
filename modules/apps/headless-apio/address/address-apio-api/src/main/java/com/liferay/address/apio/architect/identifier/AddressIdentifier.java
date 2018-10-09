@@ -17,10 +17,9 @@ package com.liferay.address.apio.architect.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code Address} identifier.
+ * Holds information about an {@code Address} identifier.
  *
  * @author Javier Gamarra
- * @review
  */
 public interface AddressIdentifier extends Identifier<Long> {
 }

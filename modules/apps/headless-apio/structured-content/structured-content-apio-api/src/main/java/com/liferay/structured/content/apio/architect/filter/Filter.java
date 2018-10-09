@@ -17,33 +17,30 @@ package com.liferay.structured.content.apio.architect.filter;
 import com.liferay.structured.content.apio.architect.filter.expression.Expression;
 
 /**
- * Represents a Filter for retrieving structured content by different fields. A
- * OData {@link Expression} is needed to create a new instance. This
- * instantiation is performed in the FilterProvider.
+ * Represents a filter for retrieving structured content by different fields. An
+ * OData {@link Expression} is needed to create a new filter instance. The
+ * {@code FilterProvider} performs this instantiation.
  *
  * @author Cristina González
  * @author David Arques
- * @review
  */
 public class Filter {
 
 	public static final Filter EMPTY_FILTER = new Filter();
 
 	/**
-	 * Returns an empty Filter.
+	 * Returns an empty filter.
 	 *
-	 * @return - an empty Filter
-	 * @review
+	 * @return the empty filter
 	 */
 	public static Filter emptyFilter() {
 		return EMPTY_FILTER;
 	}
 
 	/**
-	 * Creates a new {@link Filter} a given {@link Expression}
+	 * Creates a new filter, given an OData {@code Expression}.
 	 *
-	 * @param  expression -  an OData Expression
-	 * @review
+	 * @param expression the OData expression
 	 */
 	public Filter(Expression expression) {
 		if (expression == null) {
@@ -54,10 +51,9 @@ public class Filter {
 	}
 
 	/**
-	 * Returns the OData Expression.
+	 * Returns the OData {@code Expression}.
 	 *
-	 * @return the filter expression
-	 * @review
+	 * @return the OData expression
 	 */
 	public Expression getExpression() {
 		return _expression;

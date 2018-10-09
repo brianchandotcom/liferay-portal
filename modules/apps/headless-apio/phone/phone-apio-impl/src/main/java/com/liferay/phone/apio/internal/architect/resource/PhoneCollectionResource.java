@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Reference;
  * a web API.
  *
  * @author Javier Gamarra
- * @review
  */
 @Component(immediate = true, service = ItemResource.class)
 public class PhoneCollectionResource

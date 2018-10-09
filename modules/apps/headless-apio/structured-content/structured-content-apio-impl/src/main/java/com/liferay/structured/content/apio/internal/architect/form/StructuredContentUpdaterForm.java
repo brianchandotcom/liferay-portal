@@ -30,21 +30,18 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Instances of this class represent the values extracted from a structured
- * content form.
+ * Represents the values extracted from a structured content form.
  *
  * @author Alejandro Hernández
- * @review
  */
 public class StructuredContentUpdaterForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code StructuredContentUpdaterForm}
-	 * depending on the HTTP body.
+	 * Builds a {@code Form} that generates a {@code
+	 * StructuredContentUpdaterForm} that depends on the HTTP body.
 	 *
-	 * @param  formBuilder the {@code Form} builder
-	 * @return a structured content updater form
-	 * @review
+	 * @param  formBuilder the form builder
+	 * @return the form
 	 */
 	public static Form<StructuredContentUpdaterForm> buildForm(
 		Form.Builder<StructuredContentUpdaterForm> formBuilder) {
@@ -79,18 +76,16 @@ public class StructuredContentUpdaterForm {
 	/**
 	 * Returns the structured content's description map.
 	 *
-	 * @return the structured content's description map
-	 * @review
+	 * @return the description map
 	 */
 	public Optional<Map<Locale, String>> getDescriptionMapOptional() {
 		return _getStringMapOptional(Locale.getDefault(), _description);
 	}
 
 	/**
-	 * Returns the structured content's description map.
+	 * Returns the structured content's description map for the supplied locale.
 	 *
-	 * @return the structured content's description map
-	 * @review
+	 * @return the description map
 	 */
 	public Optional<Map<Locale, String>> getDescriptionMapOptional(
 		Locale locale) {
@@ -103,61 +98,55 @@ public class StructuredContentUpdaterForm {
 	}
 
 	/**
-	 * Returns the structured content's published date day.
+	 * Returns the day from the structured content's publication date.
 	 *
-	 * @return the structured content's published date day
-	 * @review
+	 * @return the publication date's day
 	 */
 	public Optional<Integer> getPublishedDateDayOptional() {
 		return Optional.ofNullable(_publishedDateDay);
 	}
 
 	/**
-	 * Returns the structured content's published date hour.
+	 * Returns the hour from the structured content's publication date.
 	 *
-	 * @return the structured content's published date hour
-	 * @review
+	 * @return the publication date's hour
 	 */
 	public Optional<Integer> getPublishedDateHourOptional() {
 		return Optional.ofNullable(_publishedDateHour);
 	}
 
 	/**
-	 * Returns the structured content's published date minute.
+	 * Returns the minute from the structured content's publication date.
 	 *
-	 * @return the structured content's published date minute
-	 * @review
+	 * @return the publication date's minute
 	 */
 	public Optional<Integer> getPublishedDateMinuteOptional() {
 		return Optional.ofNullable(_publishedDateMinute);
 	}
 
 	/**
-	 * Returns the structured content's published date month.
+	 * Returns the month from the structured content's publication date.
 	 *
-	 * @return the structured content's published date month
-	 * @review
+	 * @return the publication date's month
 	 */
 	public Optional<Integer> getPublishedDateMonthOptional() {
 		return Optional.ofNullable(_publishedDateMonth);
 	}
 
 	/**
-	 * Returns the structured content's published date year.
+	 * Returns the year from the structured content's publication date.
 	 *
-	 * @return the structured content's published date year
-	 * @review
+	 * @return the publication date's year
 	 */
 	public Optional<Integer> getPublishedDateYearOptional() {
 		return Optional.ofNullable(_publishedDateYear);
 	}
 
 	/**
-	 * Returns the service context related with this form
+	 * Returns this form's service context.
 	 *
 	 * @param  groupId the group ID
 	 * @return the service context
-	 * @review
 	 */
 	public ServiceContext getServiceContext(long groupId) {
 		ServiceContext serviceContext = new ServiceContext();
@@ -186,18 +175,16 @@ public class StructuredContentUpdaterForm {
 	/**
 	 * Returns the structured content's title map.
 	 *
-	 * @return the structured content's title map
-	 * @review
+	 * @return the title map
 	 */
 	public Optional<Map<Locale, String>> getTitleMapOptional() {
 		return _getStringMapOptional(Locale.getDefault(), _title);
 	}
 
 	/**
-	 * Returns the structured content's title map.
+	 * Returns the structured content's title map for the supplied locale.
 	 *
-	 * @return the structured content's title map
-	 * @review
+	 * @return the title map
 	 */
 	public Optional<Map<Locale, String>> getTitleMapOptional(Locale locale) {
 		return _getStringMapOptional(locale, _title);

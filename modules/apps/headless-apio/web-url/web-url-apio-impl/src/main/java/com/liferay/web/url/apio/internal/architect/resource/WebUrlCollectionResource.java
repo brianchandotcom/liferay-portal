@@ -27,11 +27,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides the information necessary to expose {@code WebSite} resources
- * through a web API.
+ * Provides the information necessary to expose {@code
+ * com.liferay.portal.kernel.model.WebSite} resources through a web API.
  *
  * @author Javier Gamarra
- * @review
  */
 @Component(immediate = true, service = ItemResource.class)
 public class WebUrlCollectionResource

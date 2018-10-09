@@ -17,11 +17,11 @@ package com.liferay.blog.apio.architect.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code BlogPosting} identifier. It's identified by
- * the internal {@code BlogsEntry#getEntryId()}.
+ * Holds information about a {@code BlogPosting} identifier. The internal method
+ * {@code com.liferay.blogs.model.BlogsEntry#getEntryId()} returns the blog
+ * entry's ID.
  *
  * @author Javier Gamarra
- * @review
  */
 public interface BlogPostingIdentifier extends Identifier<Long> {
 }

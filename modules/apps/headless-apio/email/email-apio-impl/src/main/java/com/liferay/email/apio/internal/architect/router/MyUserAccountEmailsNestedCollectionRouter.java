@@ -24,12 +24,11 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * Provides the information necessary to expose the <a
- * href="http://schema.org/Email">Email</a> resources contained inside an
- * myUserAccount through a web API. The resources are mapped from the internal
- * model {@link EmailAddress}.
+ * href="http://schema.org/email">Email</a> resources of a {@code MyUserAccount}
+ * through a web API. The resources are mapped from the internal model {@code
+ * EmailAddress}.
  *
  * @author Eduardo Perez
- * @review
  */
 @Component(immediate = true, service = NestedCollectionRouter.class)
 public class MyUserAccountEmailsNestedCollectionRouter

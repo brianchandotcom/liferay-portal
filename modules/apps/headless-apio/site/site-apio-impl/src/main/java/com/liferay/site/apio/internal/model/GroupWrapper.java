@@ -18,11 +18,10 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 /**
- * Group wrapper that includes a {@code ThemeDisplay} object to allow getting
- * the different absolute URLs.
+ * Defines a group wrapper that includes a {@code ThemeDisplay} object to permit
+ * retrieval of absolute URLs.
  *
  * @author Eduardo Perez
- * @review
  */
 public class GroupWrapper extends com.liferay.portal.kernel.model.GroupWrapper {
 
@@ -36,7 +35,6 @@ public class GroupWrapper extends com.liferay.portal.kernel.model.GroupWrapper {
 	 * Returns the group's private URL.
 	 *
 	 * @return the private URL
-	 * @review
 	 */
 	public String getPrivateURL() {
 		return _getDisplayURL(true);
@@ -46,7 +44,6 @@ public class GroupWrapper extends com.liferay.portal.kernel.model.GroupWrapper {
 	 * Returns the group's public URL.
 	 *
 	 * @return the public URL
-	 * @review
 	 */
 	public String getPublicURL() {
 		return _getDisplayURL(false);

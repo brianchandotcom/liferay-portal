@@ -17,10 +17,9 @@ package com.liferay.email.apio.architect.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code Email} identifier.
+ * Holds information about an {@code Email} identifier.
  *
  * @author Javier Gamarra
- * @review
  */
 public interface EmailIdentifier extends Identifier<Long> {
 }

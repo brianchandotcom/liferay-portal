@@ -34,21 +34,18 @@ import java.util.Optional;
 import javax.ws.rs.BadRequestException;
 
 /**
- * Instances of this class represent the values extracted from a blog posting
- * form.
+ * Represents the values extracted from a blog posting form.
  *
  * @author Alejandro Hernández
- * @review
  */
 public class BlogPostingForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code BlogPostingForm} depending on
-	 * the HTTP body.
+	 * Builds a {@code Form} that generates a {@code BlogPostingForm} that
+	 * depends on the HTTP body.
 	 *
 	 * @param  formBuilder the {@code Form} builder
-	 * @return a blog posting form
-	 * @review
+	 * @return the blog posting form
 	 */
 	public static Form<BlogPostingForm> buildForm(
 		Form.Builder<BlogPostingForm> formBuilder) {
@@ -89,12 +86,10 @@ public class BlogPostingForm {
 	}
 
 	/**
-	 * Returns the blog posting's alternative headline if present. Returns an
-	 * empty {@code String} otherwise.
+	 * Returns the blog posting's alternative headline, if present; otherwise,
+	 * returns an empty string.
 	 *
-	 * @return the blog posting's alternative headline if present; an empty
-	 *         {@code String} otherwise
-	 * @review
+	 * @return the alternative headline, if present; an empty string otherwise
 	 */
 	public String getAlternativeHeadline() {
 		return Optional.ofNullable(
@@ -105,23 +100,20 @@ public class BlogPostingForm {
 	}
 
 	/**
-	 * Returns the blog posting's body
+	 * Returns the blog post's body.
 	 *
-	 * @return the blog posting's body
-	 * @review
+	 * @return the blog post's body
 	 */
 	public String getArticleBody() {
 		return _articleBody;
 	}
 
 	/**
-	 * Returns the blog posting's creator ID if present. Returns the provided
-	 * default ID otherwise.
+	 * Returns the blog post's creator ID, if present; otherwise, returns the
+	 * provided default ID.
 	 *
 	 * @param  defaultCreatorId the default creator ID
-	 * @return the blog posting's creator ID, if present; the provided default
-	 *         ID otherwise.
-	 * @review
+	 * @return the creator ID, if present; the default ID otherwise
 	 */
 	public long getCreatorId(long defaultCreatorId) {
 		return Optional.ofNullable(
@@ -132,12 +124,10 @@ public class BlogPostingForm {
 	}
 
 	/**
-	 * Returns the blog posting's description if present. Returns an empty
-	 * {@code String} otherwise.
+	 * Returns the blog post's description, if present; otherwise, returns an
+	 * empty string.
 	 *
-	 * @return the blog posting's description if present; an empty {@code
-	 *         String} otherwise
-	 * @review
+	 * @return the description, if present; an empty string otherwise
 	 */
 	public String getDescription() {
 		return Optional.ofNullable(
@@ -148,12 +138,10 @@ public class BlogPostingForm {
 	}
 
 	/**
-	 * Returns the blog posting's display date if present. Returns today's date
-	 * otherwise.
+	 * Returns the blog post's display date, if present; otherwise, returns
+	 * today's date.
 	 *
-	 * @return the blog posting's display date if present; today's date
-	 *         otherwise.
-	 * @review
+	 * @return the display date, if present; today's date otherwise
 	 */
 	public Date getDisplayDate() {
 		return Optional.ofNullable(
@@ -164,12 +152,10 @@ public class BlogPostingForm {
 	}
 
 	/**
-	 * Returns the blog posting's friendly URL if present. Returns an empty
-	 * {@code String} otherwise.
+	 * Returns the blog post's friendly URL, if present; otherwise, returns an
+	 * empty string.
 	 *
-	 * @return the blog posting's friendly URL if present; an empty {@code
-	 *         String} otherwise
-	 * @review
+	 * @return the friendly URL if present; an empty string otherwise
 	 */
 	public String getFriendlyURLPath() {
 		return Optional.ofNullable(
@@ -180,22 +166,19 @@ public class BlogPostingForm {
 	}
 
 	/**
-	 * Returns the blog posting's headline
+	 * Returns the blog post's headline.
 	 *
-	 * @return the blog posting's headline
-	 * @review
+	 * @return the headline
 	 */
 	public String getHeadline() {
 		return _headline;
 	}
 
 	/**
-	 * Returns the blog posting's image caption if present. Returns empty {@code
-	 * String} otherwise.
+	 * Returns the blog post's image caption, if present; otherwise, returns an
+	 * empty string.
 	 *
-	 * @return the blog posting's image caption if present; empty {@code String}
-	 *         otherwise
-	 * @review
+	 * @return the image caption, if present; an empty string otherwise
 	 */
 	public String getImageCaption() {
 		return Optional.ofNullable(
@@ -206,14 +189,13 @@ public class BlogPostingForm {
 	}
 
 	/**
-	 * Returns the {@link ImageSelector} for the blog posting's image, if an
-	 * image ID is present. Returns {@code null} otherwise.
+	 * Returns the {@code ImageSelector} for the blog post's image, if an image
+	 * ID is present; otherwise, returns {@code null}.
 	 *
-	 * @param  function a function that transforms a file entry ID into a {@link
+	 * @param  function a function that transforms a file entry ID into a {@code
 	 *         FileEntry}
-	 * @return the {@link ImageSelector} for the blog posting's image, if an
-	 *         image ID is present; {@code null} otherwise
-	 * @review
+	 * @return the {@code ImageSelector}, if an image ID is present; {@code
+	 *         null} otherwise
 	 */
 	public ImageSelector getImageSelector(
 		ThrowableFunction<Long, FileEntry> function) {
@@ -236,11 +218,10 @@ public class BlogPostingForm {
 	}
 
 	/**
-	 * Returns the service context related with this form
+	 * Returns the service context related to this form.
 	 *
 	 * @param  groupId the group ID
 	 * @return the service context
-	 * @review
 	 */
 	public ServiceContext getServiceContext(long groupId) {
 		ServiceContext serviceContext = new ServiceContext();

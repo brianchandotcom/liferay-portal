@@ -33,12 +33,11 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose the <a
- * href="http://schema.org/Address">Address</a> resources contained inside an <a
+ * href="http://schema.org/address">Address</a> resources of an <a
  * href="http://schema.org/Organization">Organization</a> through a web API. The
- * resources are mapped from the internal model {@link Address}.
+ * resources are mapped from the internal model {@code Address}.
  *
  * @author Javier Gamarra
- * @review
  */
 @Component(immediate = true, service = NestedCollectionRouter.class)
 public class OrganizationAddressNestedCollectionRouter

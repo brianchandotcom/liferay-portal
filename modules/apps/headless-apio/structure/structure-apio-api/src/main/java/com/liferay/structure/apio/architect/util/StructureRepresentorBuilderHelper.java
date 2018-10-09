@@ -29,12 +29,11 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
- * Provides the information necessary to expose Structure resources through a
+ * Provides the information necessary to expose structure resources through a
  * web API. The resources are mapped from the internal model {@code
  * DDMStructure}.
  *
  * @author Javier Gamarra
- * @review
  */
 public interface StructureRepresentorBuilderHelper {
 

@@ -25,10 +25,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 /**
- * Utility class to calculate the fileEntry of the StructuredContent
+ * Calculates the structured content's file entry.
  *
  * @author Javier Gamarra
- * @review
  */
 public class StructuredContentUtil {
 

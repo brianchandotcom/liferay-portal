@@ -17,21 +17,18 @@ package com.liferay.forms.apio.internal.architect.form;
 import com.liferay.apio.architect.form.Form;
 
 /**
- * Instances of this class represent the values extracted from a form context
- * form.
+ * Represents the values extracted from a form context form.
  *
  * @author Victor Oliveira
- * @review
  */
 public class FormContextForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code FormContextForm} depending on
-	 * the HTTP body.
+	 * Builds a {@code Form} that generates a {@code FormContextForm} that
+	 * depends on the HTTP body.
 	 *
 	 * @param  formBuilder the {@code Form} builder
 	 * @return a context form instance
-	 * @review
 	 */
 	public static Form<FormContextForm> buildForm(
 		Form.Builder<FormContextForm> formBuilder) {

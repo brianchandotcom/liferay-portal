@@ -17,10 +17,10 @@ package com.liferay.web.url.apio.architect.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code Website} identifier.
+ * Holds information about a {@code com.liferay.portal.kernel.model.Website}
+ * identifier.
  *
  * @author Javier Gamarra
- * @review
  */
 public interface WebUrlIdentifier extends Identifier<Long> {
 }

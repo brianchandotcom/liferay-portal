@@ -15,23 +15,18 @@
 package com.liferay.structured.content.apio.architect.filter.expression;
 
 /**
- * <code>Expression</code> provides a common abstraction for expression
- * evaluation
+ * Provides a common abstraction for expression evaluation.
  *
  * @author Cristina González
- * @review
  */
 public interface Expression {
 
 	/**
-	 * This method is called when traversing the expression tree.
+	 * Called when traversing the expression tree.
 	 *
-	 * @param  expressionVisitor - Visitor object (implementing
-	 *         ExpressionVisitor) whose methods are called during traversing a
-	 *         expression node of the expression tree.
-	 * @return Object of type T which should be passed to the processing
-	 *         algorithm of the parent expression node
-	 * @review
+	 * @param  expressionVisitor the {@link ExpressionVisitor}
+	 * @return the object of type {@code T}, which should be passed to the
+	 *         processing algorithm of the parent expression node
 	 */
 	public <T> T accept(ExpressionVisitor<T> expressionVisitor)
 		throws ExpressionVisitException;

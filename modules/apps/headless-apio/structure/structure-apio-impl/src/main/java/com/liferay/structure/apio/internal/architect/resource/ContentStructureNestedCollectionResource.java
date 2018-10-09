@@ -39,12 +39,11 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides the information necessary to expose Structure resources associated
- * to a JournalArticle through a web API. The resources are mapped from the
+ * Provides the information necessary to expose the structure resources of a
+ * {@code JournalArticle} through a web API. The resources are mapped from the
  * internal model {@code DDMStructure}.
  *
  * @author Paulo Cruz
- * @review
  */
 @Component(service = NestedCollectionResource.class)
 public class ContentStructureNestedCollectionResource

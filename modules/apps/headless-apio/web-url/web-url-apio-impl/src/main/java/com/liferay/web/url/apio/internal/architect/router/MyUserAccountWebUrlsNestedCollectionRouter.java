@@ -24,12 +24,11 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * Provides the information necessary to expose the <a
- * href="http://schema.org/Website">WebSite</a> resources contained inside a
- * myUserAccount through a web API. The resources are mapped from the internal
- * model {@link Website}.
+ * href="http://schema.org/WebSite">WebSite</a> resources of a {@code
+ * MyUserAccount} through a web API. The resources are mapped from the internal
+ * model {@code Website}.
  *
  * @author Eduardo Perez
- * @review
  */
 @Component(immediate = true, service = NestedCollectionRouter.class)
 public class MyUserAccountWebUrlsNestedCollectionRouter

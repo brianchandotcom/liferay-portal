@@ -17,11 +17,11 @@ package com.liferay.structured.content.apio.architect.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about an StructuredContent identifier. It's identified by
- * the internal {@code JournalArticle#getArticleId()}.
+ * Holds information about a structured content identifier. The internal method
+ * {@code com.liferay.journal.model.JournalArticle#getArticleId()} returns the
+ * ID of the structured content ({@code JournalArticle}).
  *
  * @author Alejandro Hernández
- * @review
  */
 public interface StructuredContentIdentifier extends Identifier<Long> {
 }

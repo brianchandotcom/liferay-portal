@@ -17,11 +17,11 @@ package com.liferay.folder.apio.architect.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a root {@code Folder} identifier. It's identified by
- * the internal {@code Group#getGroupId()}.
+ * Holds information about a root folder identifier. The internal method {@code
+ * com.liferay.portal.kernel.model.Group#getGroupId()} returns the root folder's
+ * ID.
  *
  * @author Eduardo Perez
- * @review
  */
 public interface RootFolderIdentifier extends Identifier<Long> {
 }

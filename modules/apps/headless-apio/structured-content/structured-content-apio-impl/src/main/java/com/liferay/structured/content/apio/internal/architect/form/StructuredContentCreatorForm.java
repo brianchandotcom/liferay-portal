@@ -31,21 +31,18 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Instances of this class represent the values extracted from a structured
- * content form.
+ * Represents the values extracted from a structured content form.
  *
  * @author Alejandro Hernández
- * @review
  */
 public class StructuredContentCreatorForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code StructuredContentCreatorForm}
-	 * depending on the HTTP body.
+	 * Builds a {@code Form} that generates a {@code
+	 * StructuredContentCreatorForm} that depends on the HTTP body.
 	 *
-	 * @param  formBuilder the {@code Form} builder
-	 * @return a structured content creator form
-	 * @review
+	 * @param  formBuilder the form builder
+	 * @return the form
 	 */
 	public static Form<StructuredContentCreatorForm> buildForm(
 		Form.Builder<StructuredContentCreatorForm> formBuilder) {
@@ -83,8 +80,7 @@ public class StructuredContentCreatorForm {
 	/**
 	 * Returns the structured content's structure ID.
 	 *
-	 * @return the structured content's structure ID
-	 * @review
+	 * @return the structure ID
 	 */
 	public Long getContentStructureId() {
 		return _contentStructureId;
@@ -93,8 +89,7 @@ public class StructuredContentCreatorForm {
 	/**
 	 * Returns the structured content's description map.
 	 *
-	 * @return the structured content's description map
-	 * @review
+	 * @return the description map
 	 */
 	public Map<Locale, String> getDescriptionMap(Locale locale) {
 		Map<Locale, String> descriptionMap = new HashMap<>();
@@ -105,61 +100,55 @@ public class StructuredContentCreatorForm {
 	}
 
 	/**
-	 * Returns the structured content's published date day.
+	 * Returns the day from the structured content's publication date.
 	 *
-	 * @return the structured content's published date day
-	 * @review
+	 * @return the publication date's day
 	 */
 	public Optional<Integer> getPublishedDateDayOptional() {
 		return Optional.ofNullable(_publishedDateDay);
 	}
 
 	/**
-	 * Returns the structured content's published date hour.
+	 * Returns the hour from the structured content's publication date.
 	 *
-	 * @return the structured content's published date hour
-	 * @review
+	 * @return the publication date's hour
 	 */
 	public Optional<Integer> getPublishedDateHourOptional() {
 		return Optional.ofNullable(_publishedDateHour);
 	}
 
 	/**
-	 * Returns the structured content's published date minute.
+	 * Returns the minute from the structured content's publication date.
 	 *
-	 * @return the structured content's published date minute
-	 * @review
+	 * @return the publication date's minute
 	 */
 	public Optional<Integer> getPublishedDateMinuteOptional() {
 		return Optional.ofNullable(_publishedDateMinute);
 	}
 
 	/**
-	 * Returns the structured content's published date month.
+	 * Returns the month from the structured content's publication date.
 	 *
-	 * @return the structured content's published date month
-	 * @review
+	 * @return the publication date's month
 	 */
 	public Optional<Integer> getPublishedDateMonthOptional() {
 		return Optional.ofNullable(_publishedDateMonth);
 	}
 
 	/**
-	 * Returns the structured content's published date year.
+	 * Returns the year from the structured content's publication date.
 	 *
-	 * @return the structured content's published date year
-	 * @review
+	 * @return the publication date's year
 	 */
 	public Optional<Integer> getPublishedDateYearOptional() {
 		return Optional.ofNullable(_publishedDateYear);
 	}
 
 	/**
-	 * Returns the service context related with this form
+	 * Returns this form's service context.
 	 *
 	 * @param  groupId the group ID
 	 * @return the service context
-	 * @review
 	 */
 	public ServiceContext getServiceContext(long groupId) {
 		ServiceContext serviceContext = new ServiceContext();
@@ -188,8 +177,7 @@ public class StructuredContentCreatorForm {
 	/**
 	 * Returns the structured content's title map.
 	 *
-	 * @return the structured content's title map
-	 * @review
+	 * @return the title map
 	 */
 	public Map<Locale, String> getTitleMap(Locale locale) {
 		Map<Locale, String> titleMap = new HashMap<>();

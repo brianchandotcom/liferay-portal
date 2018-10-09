@@ -29,13 +29,12 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose the <a
- * href="http://schema.org/MediaObject">MediaObject</a> resources contained
- * inside a <a href="http://schema.org/BlogPosting">BlogPosting</a> through a
- * web API. The resources are mapped from the internal model {@link Comment} and
- * {@code FileEntry}.
+ * href="http://schema.org/Comment">Comment</a> resources of a <a
+ * href="http://schema.org/MediaObject">MediaObject</a> through a web API. The
+ * resources are mapped from the internal models {@code Comment} and {@code
+ * com.liferay.portal.kernel.repository.model.FileEntry}.
  *
  * @author Eduardo Perez
- * @review
  */
 @Component(immediate = true, service = NestedCollectionRouter.class)
 public class MediaObjectCommentNestedCollectionRouter

@@ -17,12 +17,12 @@ package com.liferay.vocabulary.apio.architect.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code Taxonomy} identifier. It's identified by the
- * internal {@code AssetVocabulary#getId()}.
+ * Holds information about a {@code Taxonomy} identifier. The internal method
+ * {@code com.liferay.asset.kernel.model.AssetVocabulary#getVocabularyId()}
+ * returns the ID.
  *
  * @author Eduardo Pérez
  * @author Javier Gamarra
- * @review
  */
 public interface VocabularyIdentifier extends Identifier<Long> {
 }

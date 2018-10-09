@@ -32,11 +32,10 @@ import org.apache.olingo.server.api.uri.queryoption.FilterOption;
 import org.apache.olingo.server.core.uri.parser.Parser;
 
 /**
- * <code>FilterParserImpl</code> transforms a String containing an oData filter
- * in a manageable expression {@link Expression}.
+ * Transforms a string containing an OData filter into a manageable {@code
+ * Expression}.
  *
  * @author David Arques
- * @review
  */
 public class FilterParserImpl implements FilterParser {
 

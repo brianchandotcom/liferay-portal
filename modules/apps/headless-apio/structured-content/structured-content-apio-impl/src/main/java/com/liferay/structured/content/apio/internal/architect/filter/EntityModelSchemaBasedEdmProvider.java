@@ -35,18 +35,16 @@ import org.apache.olingo.commons.api.edm.provider.CsdlSchema;
 import org.apache.olingo.server.core.SchemaBasedEdmProvider;
 
 /**
- * <p>
- * Provider of the Common Schema Definition Language (CSDL) for an Entity Data
+ * Provides the Common Schema Definition Language (CSDL) for an Entity Data
  * Model (EDM) used by a service.
+ *
+ * <p>
+ * To formalize the description of the resources they expose, OData services use
+ * EDM as their underlying abstract data model. CSDL defines the entity model's
+ * XML-based representation.
  * </p>
  *
- * <p>
- * EDM is the underlying abstract data model used by OData services to
- * formalize the description of the resources it exposes. Meanwhile, CSDL
- * defines an XML-based representation of the entity model.
- *
  * @author David Arques
- * @review
  */
 public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 

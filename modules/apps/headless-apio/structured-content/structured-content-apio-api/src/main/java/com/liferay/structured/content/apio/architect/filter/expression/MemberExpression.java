@@ -21,15 +21,13 @@ import java.util.List;
  * is used to describe access paths to properties.
  *
  * @author Cristina González
- * @review
  */
 public interface MemberExpression extends Expression {
 
 	/**
-	 * Returns the resource path of the Member Expression
+	 * Returns the member expression's resource path.
 	 *
-	 * @return the resource path of the Member Expression
-	 * @review
+	 * @return the resource path
 	 */
 	public List<String> getResourcePath();
 

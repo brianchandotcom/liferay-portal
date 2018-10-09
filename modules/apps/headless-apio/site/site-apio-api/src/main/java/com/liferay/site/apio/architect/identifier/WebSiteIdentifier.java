@@ -17,11 +17,11 @@ package com.liferay.site.apio.architect.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code WebSite} identifier. It's identified by the
- * internal {@code Group#getGroupId()}.
+ * Holds information about a {@code WebSite} identifier. The internal method
+ * {@code com.liferay.portal.kernel.model.Group#getGroupId()} returns the site's
+ * ID.
  *
  * @author Pavel Savinov
- * @review
  */
 public interface WebSiteIdentifier extends Identifier<Long> {
 }

@@ -90,7 +90,47 @@ exports[`Rule Editor Acceptance Criteria When a condition is added and there's m
     </li>
   </ul>
   <div class="addbutton-timeline-item">
-    <div class="add-condition timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus" focusable="false">
+    <div class="add-item timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus" focusable="false">
+          <title>plus</title>
+          <use xlink:href="icons.svg#plus"></use>
+        </svg></button></div>
+  </div>
+  <ul class="action-list liferay-ddm-form-builder-rule-action-list liferay-ddm-form-rule-builder-timeline timeline ">
+    <li class="timeline-item">
+      <div class="panel panel-default">
+        <div class="flex-container panel-body">
+          <div class="h4 panel-title">actions</div>
+          <div class="timeline-increment"><span class="timeline-icon"></span></div>
+        </div>
+      </div>
+    </li>
+    <li class="form-builder-rule-action-container-0 timeline-item">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="form-group-autofit">
+            <div class="form-group-item form-group-item-label form-group-item-shrink">
+              <h4><span class="text-truncate-inline"><span class="text-truncate">do</span></span></h4>
+            </div>
+            <div action-type-index="0" class="action-type form-group-item">
+              <div id="fields-rule">
+                <p>Select Field</p>
+              </div>
+            </div>
+            <div class="form-group-item form-group-item-label form-group-item-shrink hide target-message-0">
+              <h4><span class="text-truncate-inline"><span class="text-truncate">from-data-provider</span></span></h4>
+            </div>
+          </div>
+          <div class="timeline-increment"><span class="timeline-icon"></span></div>
+        </div>
+      </div>
+      <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="0"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+            <title>trash</title>
+            <use xlink:href="icons.svg#trash"></use>
+          </svg></button></div>
+    </li>
+  </ul>
+  <div class="addbutton-timeline-item">
+    <div class="add-item timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus" focusable="false">
           <title>plus</title>
           <use xlink:href="icons.svg#plus"></use>
         </svg></button></div>
@@ -106,6 +146,32 @@ exports[`Rule Editor Acceptance Criteria When a condition is added and there's m
         </div>
         <div class="modal-body">
           <h4>are-you-sure-you-want-to-delete-this-condition</h4>
+        </div>
+        <div class="modal-footer">
+          <div class="modal-item-first">
+            <div class="btn-group"></div>
+          </div>
+          <div class="modal-item-last">
+            <div class="btn-group">
+              <div class="btn-group-item"><button class="btn close-modal btn-secondary" type="button">dismiss</button></div>
+              <div class="btn-group-item"><button class="btn btn-primary" type="button">delete</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fade modal" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">delete-action</div><button class="btn close btn-unstyled" aria-label="close" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times" focusable="false">
+              <title>times</title>
+              <use xlink:href="icons.svg#times"></use>
+            </svg></button>
+        </div>
+        <div class="modal-body">
+          <h4>are-you-sure-you-want-to-delete-this-action</h4>
         </div>
         <div class="modal-footer">
           <div class="modal-item-first">
@@ -214,7 +280,47 @@ exports[`Rule Editor Acceptance Criteria should configure the conditions accordi
     </li>
   </ul>
   <div class="addbutton-timeline-item">
-    <div class="add-condition timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus" focusable="false">
+    <div class="add-item timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus" focusable="false">
+          <title>plus</title>
+          <use xlink:href="icons.svg#plus"></use>
+        </svg></button></div>
+  </div>
+  <ul class="action-list liferay-ddm-form-builder-rule-action-list liferay-ddm-form-rule-builder-timeline timeline ">
+    <li class="timeline-item">
+      <div class="panel panel-default">
+        <div class="flex-container panel-body">
+          <div class="h4 panel-title">actions</div>
+          <div class="timeline-increment"><span class="timeline-icon"></span></div>
+        </div>
+      </div>
+    </li>
+    <li class="form-builder-rule-action-container-0 timeline-item">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="form-group-autofit">
+            <div class="form-group-item form-group-item-label form-group-item-shrink">
+              <h4><span class="text-truncate-inline"><span class="text-truncate">do</span></span></h4>
+            </div>
+            <div action-type-index="0" class="action-type form-group-item">
+              <div id="fields-rule">
+                <p>Select Field</p>
+              </div>
+            </div>
+            <div class="form-group-item form-group-item-label form-group-item-shrink hide target-message-0">
+              <h4><span class="text-truncate-inline"><span class="text-truncate">from-data-provider</span></span></h4>
+            </div>
+          </div>
+          <div class="timeline-increment"><span class="timeline-icon"></span></div>
+        </div>
+      </div>
+      <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="0"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+            <title>trash</title>
+            <use xlink:href="icons.svg#trash"></use>
+          </svg></button></div>
+    </li>
+  </ul>
+  <div class="addbutton-timeline-item">
+    <div class="add-item timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus" focusable="false">
           <title>plus</title>
           <use xlink:href="icons.svg#plus"></use>
         </svg></button></div>
@@ -230,6 +336,32 @@ exports[`Rule Editor Acceptance Criteria should configure the conditions accordi
         </div>
         <div class="modal-body">
           <h4>are-you-sure-you-want-to-delete-this-condition</h4>
+        </div>
+        <div class="modal-footer">
+          <div class="modal-item-first">
+            <div class="btn-group"></div>
+          </div>
+          <div class="modal-item-last">
+            <div class="btn-group">
+              <div class="btn-group-item"><button class="btn close-modal btn-secondary" type="button">dismiss</button></div>
+              <div class="btn-group-item"><button class="btn btn-primary" type="button">delete</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fade modal" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">delete-action</div><button class="btn close btn-unstyled" aria-label="close" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times" focusable="false">
+              <title>times</title>
+              <use xlink:href="icons.svg#times"></use>
+            </svg></button>
+        </div>
+        <div class="modal-body">
+          <h4>are-you-sure-you-want-to-delete-this-action</h4>
         </div>
         <div class="modal-footer">
           <div class="modal-item-first">
@@ -338,7 +470,47 @@ exports[`Rule Editor Acceptance Criteria should configure the conditions accordi
     </li>
   </ul>
   <div class="addbutton-timeline-item">
-    <div class="add-condition timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus" focusable="false">
+    <div class="add-item timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus" focusable="false">
+          <title>plus</title>
+          <use xlink:href="icons.svg#plus"></use>
+        </svg></button></div>
+  </div>
+  <ul class="action-list liferay-ddm-form-builder-rule-action-list liferay-ddm-form-rule-builder-timeline timeline ">
+    <li class="timeline-item">
+      <div class="panel panel-default">
+        <div class="flex-container panel-body">
+          <div class="h4 panel-title">actions</div>
+          <div class="timeline-increment"><span class="timeline-icon"></span></div>
+        </div>
+      </div>
+    </li>
+    <li class="form-builder-rule-action-container-0 timeline-item">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="form-group-autofit">
+            <div class="form-group-item form-group-item-label form-group-item-shrink">
+              <h4><span class="text-truncate-inline"><span class="text-truncate">do</span></span></h4>
+            </div>
+            <div action-type-index="0" class="action-type form-group-item">
+              <div id="fields-rule">
+                <p>Select Field</p>
+              </div>
+            </div>
+            <div class="form-group-item form-group-item-label form-group-item-shrink hide target-message-0">
+              <h4><span class="text-truncate-inline"><span class="text-truncate">from-data-provider</span></span></h4>
+            </div>
+          </div>
+          <div class="timeline-increment"><span class="timeline-icon"></span></div>
+        </div>
+      </div>
+      <div class="container-trash"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="trash" type="button" data-index="0"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-trash" focusable="false">
+            <title>trash</title>
+            <use xlink:href="icons.svg#trash"></use>
+          </svg></button></div>
+    </li>
+  </ul>
+  <div class="addbutton-timeline-item">
+    <div class="add-item timeline-increment-icon"><button class="btn rounded-circle btn-monospaced btn-sm btn-primary" aria-label="plus" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus" focusable="false">
           <title>plus</title>
           <use xlink:href="icons.svg#plus"></use>
         </svg></button></div>
@@ -354,6 +526,32 @@ exports[`Rule Editor Acceptance Criteria should configure the conditions accordi
         </div>
         <div class="modal-body">
           <h4>are-you-sure-you-want-to-delete-this-condition</h4>
+        </div>
+        <div class="modal-footer">
+          <div class="modal-item-first">
+            <div class="btn-group"></div>
+          </div>
+          <div class="modal-item-last">
+            <div class="btn-group">
+              <div class="btn-group-item"><button class="btn close-modal btn-secondary" type="button">dismiss</button></div>
+              <div class="btn-group-item"><button class="btn btn-primary" type="button">delete</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fade modal" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">delete-action</div><button class="btn close btn-unstyled" aria-label="close" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-times" focusable="false">
+              <title>times</title>
+              <use xlink:href="icons.svg#times"></use>
+            </svg></button>
+        </div>
+        <div class="modal-body">
+          <h4>are-you-sure-you-want-to-delete-this-action</h4>
         </div>
         <div class="modal-footer">
           <div class="modal-item-first">

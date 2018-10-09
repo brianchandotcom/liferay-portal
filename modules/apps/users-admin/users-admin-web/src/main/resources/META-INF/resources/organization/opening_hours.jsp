@@ -65,7 +65,15 @@ List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 	</div>
 </c:if>
 
-<div class="opening-hours-wrapper <%= orgLabors.isEmpty() ? "hide" : "" %>">
+<div
+	class="<%=
+		CSSClassNames.builder(
+			"opening-hours-wrapper"
+		).add(
+			"hide", orgLabors.isEmpty()
+		).build()
+	%>"
+>
 
 	<%
 	for (OrgLabor orgLabor : orgLabors) {

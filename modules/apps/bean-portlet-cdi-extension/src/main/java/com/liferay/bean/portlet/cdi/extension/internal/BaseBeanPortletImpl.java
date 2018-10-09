@@ -26,7 +26,6 @@ import java.lang.reflect.Modifier;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -633,8 +632,7 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 					(methodType == MethodType.SERVE_RESOURCE)) {
 
 					int index = Collections.binarySearch(
-						beanMethods, beanMethod,
-						Comparator.comparingInt(BeanMethod::getOrdinal));
+						beanMethods, beanMethod);
 
 					if (index < 0) {
 						index = -index - 1;

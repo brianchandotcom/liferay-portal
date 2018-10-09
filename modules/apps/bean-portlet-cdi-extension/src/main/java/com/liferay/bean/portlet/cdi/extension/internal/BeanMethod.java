@@ -37,7 +37,7 @@ import javax.xml.namespace.QName;
 /**
  * @author Neil Griffin
  */
-public class BeanMethod {
+public class BeanMethod implements Comparable<BeanMethod> {
 
 	public BeanMethod(
 		BeanManager beanManager, Bean<?> bean, MethodType type, Method method) {
@@ -57,6 +57,11 @@ public class BeanMethod {
 	}
 
 	@Override
+	public int compareTo(BeanMethod beanMethod) {
+		return Integer.compare(_ordinal, beanMethod._ordinal);
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
@@ -68,7 +73,7 @@ public class BeanMethod {
 
 		BeanMethod beanMethod = (BeanMethod)obj;
 
-		if ((_ordinal == beanMethod.getOrdinal()) &&
+		if ((_ordinal == beanMethod._ordinal) &&
 			Objects.equals(_method, beanMethod.getMethod()) &&
 			(_type == beanMethod.getType())) {
 
@@ -130,10 +135,6 @@ public class BeanMethod {
 
 	public Method getMethod() {
 		return _method;
-	}
-
-	public int getOrdinal() {
-		return _ordinal;
 	}
 
 	public int getParameterCount() {

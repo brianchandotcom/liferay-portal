@@ -1414,14 +1414,9 @@ public class JenkinsResultsParserUtil {
 			for (int i = 1; properties.containsKey(_getRedactTokenKey(i));
 				 i++) {
 
-				String key = properties.getProperty(_getRedactTokenKey(i));
+				String key = _getRedactTokenKey(i);
 
-				String redactToken = key;
-
-				if (key.startsWith("${") && key.endsWith("}")) {
-					redactToken = properties.getProperty(
-						key.substring(2, key.length() - 1));
-				}
+				String redactToken = getProperty(properties, key);
 
 				if (redactToken != null) {
 					if ((redactToken.length() < 5) &&

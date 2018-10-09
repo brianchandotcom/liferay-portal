@@ -92,6 +92,23 @@ class LayoutDragDrop extends State {
 	}
 
 	/**
+	 * Callback that is executed when a target starts being dragged.
+	 * @private
+	 * @review
+	 */
+
+	_handleDragStart(data, event) {
+		const sourceItemPlid = event.target.getActiveDrag().dataset.layoutColumnItemPlid;
+
+		this.emit(
+			'startMovingLayoutColumnItem',
+			{
+				sourceItemPlid
+			}
+		);
+	}
+
+	/**
 	 * Callback that is executed when an item is dropped.
 	 * @param {!object} data
 	 * @param {!HTMLElement} data.source
@@ -147,6 +164,11 @@ class LayoutDragDrop extends State {
 		this._dragDrop.on(
 			DragDrop.Events.END,
 			this._handleDrop.bind(this)
+		);
+
+		this._dragDrop.on(
+			Drag.Events.START,
+			this._handleDragStart.bind(this)
 		);
 
 		this._dragDrop.on(

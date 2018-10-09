@@ -176,17 +176,16 @@ class Layout extends Component {
 	_handleDragLayoutColumnItem(eventData) {
 		const sourceColumn = this._getParentColumnByPlid(this.layoutColumns, eventData.sourceItemPlid);
 		const sourceColumnIndex = this.layoutColumns.indexOf(sourceColumn);
-		const sourceItem = this._getLayoutColumnItemByPlid(this.layoutColumns, eventData.sourceItemPlid);
 
 		const targetColumn = this._getParentColumnByPlid(this.layoutColumns, eventData.targetItemPlid);
 		const targetColumnIndex = this.layoutColumns.indexOf(targetColumn);
 		const targetItem = this._getLayoutColumnItemByPlid(this.layoutColumns, eventData.targetItemPlid);
 
 		const targetInFirstColumn = this.layoutColumns.indexOf(targetColumn) === 0;
-		const targetIsSource = sourceItem === targetItem;
+		const targetIsSource = this._draggingItem === targetItem;
 
 		const targetIsChild = (
-			sourceItem.active &&
+			this._draggingItem.active &&
 			(sourceColumnIndex < targetColumnIndex)
 		);
 
@@ -213,7 +212,6 @@ class Layout extends Component {
 	 *
 	 * @param {!Array} layoutColumns
 	 * @param {!number} sourceColumnIndex
-	 * @param {!Array} sourceItem
 	 * @param {!number} targetColumnIndex
 	 * @private
 	 * @review
@@ -222,11 +220,10 @@ class Layout extends Component {
 	_handleEmptyColumn(
 		layoutColumns,
 		sourceColumnIndex,
-		sourceItem,
 		targetColumnIndex
 	) {
-		if (sourceItem.active && (sourceColumnIndex != targetColumnIndex)) {
-			sourceItem.active = false;
+		if (this._draggingItem.active && (sourceColumnIndex != targetColumnIndex)) {
+			this._draggingItem.active = false;
 			this._removeFollowingColumns(layoutColumns, sourceColumnIndex);
 		}
 
@@ -280,11 +277,6 @@ class Layout extends Component {
 			const sourceItemPlid = eventData.sourceItemPlid;
 			const targetItemPlid = eventData.targetItemPlid;
 
-			const sourceItem = this._getLayoutColumnItemByPlid(
-				layoutColumns,
-				sourceItemPlid
-			);
-
 			const targetItem = this._getLayoutColumnItemByPlid(
 				layoutColumns,
 				targetItemPlid
@@ -303,7 +295,7 @@ class Layout extends Component {
 			const sourceColumnIndex = layoutColumns.indexOf(sourceColumn);
 			const targetColumnIndex = layoutColumns.indexOf(targetColumn);
 
-			sourceColumn.splice(sourceColumn.indexOf(sourceItem), 1);
+			sourceColumn.splice(sourceColumn.indexOf(this._draggingItem), 1);
 
 			let parentPlid = null;
 			let priority = null;
@@ -312,7 +304,6 @@ class Layout extends Component {
 				this._moveItemInside(
 					layoutColumns,
 					sourceColumnIndex,
-					sourceItem,
 					targetItem,
 					targetColumnIndex
 				);
@@ -326,7 +317,7 @@ class Layout extends Component {
 					priority++;
 				}
 
-				targetColumn.splice(priority, 0, sourceItem);
+				targetColumn.splice(priority, 0, this._draggingItem);
 
 				parentPlid = this._getLayoutColumnActiveItem(
 					layoutColumns[targetColumnIndex - 1]
@@ -337,15 +328,14 @@ class Layout extends Component {
 				this._handleEmptyColumn(
 					layoutColumns,
 					sourceColumnIndex,
-					sourceItem,
 					targetColumnIndex
 				);
 
 				this._deleteEmptyColumns(layoutColumns);
 			}
 
-			if (sourceItem.active && (sourceColumnIndex != targetColumnIndex)) {
-				sourceItem.active = false;
+			if (this._draggingItem.active && (sourceColumnIndex != targetColumnIndex)) {
+				this._draggingItem.active = false;
 
 				this._removeFollowingColumns(layoutColumns, sourceColumnIndex);
 
@@ -370,7 +360,19 @@ class Layout extends Component {
 				);
 		}
 
+		this._draggingItem = null;
 		this._resetHoveredData();
+	}
+
+	/**
+	 * @param {!object} eventData
+	 * @param {!string} eventData.sourceItemPlid
+	 * @private
+	 * @review
+	 */
+
+	_handleStartMovingLayoutColumnItem(eventData) {
+		this._draggingItem = this._getLayoutColumnItemByPlid(this.layoutColumns, eventData.sourceItemPlid);
 	}
 
 	/**
@@ -395,19 +397,23 @@ class Layout extends Component {
 			'moveLayoutColumnItem',
 			this._handleMoveLayoutColumnItem.bind(this)
 		);
+
+		this._layoutDragDrop.on(
+			'startMovingLayoutColumnItem',
+			this._handleStartMovingLayoutColumnItem.bind(this)
+		);
 	}
 
 	/**
 	 * @param {!Array} layoutColumns
 	 * @param {!number} sourceColumnIndex
-	 * @param {!Array} sourceItem
 	 * @param {!Array} targetItem
 	 * @param {!number} targetColumnIndex
 	 * @private
 	 * @review
 	 */
 
-	_moveItemInside(layoutColumns, sourceColumnIndex, sourceItem, targetItem, targetColumnIndex) {
+	_moveItemInside(layoutColumns, sourceColumnIndex, targetItem, targetColumnIndex) {
 		if (targetItem.active) {
 			let nextColumn = null;
 
@@ -418,10 +424,10 @@ class Layout extends Component {
 				nextColumn = [];
 			}
 
-			nextColumn.splice(nextColumn.length, 0, sourceItem);
+			nextColumn.splice(nextColumn.length, 0, this._draggingItem);
 		}
 
-		if (sourceItem.active) {
+		if (this._draggingItem.active) {
 			this._removeFollowingColumns(layoutColumns, sourceColumnIndex);
 
 			this._deleteEmptyColumns(layoutColumns);
@@ -590,6 +596,16 @@ Layout.STATE = {
 	 */
 
 	siteNavigationMenuNames: Config.string().required(),
+
+	/**
+	 * Item that is being dragged.
+	 * @default undefined
+	 * @instance
+	 * @review
+	 * @type {!object}
+	 */
+
+	_draggingItem: Config.internal(),
 
 	/**
 	 * Nearest border of the hovered layout column item when dragging.

@@ -14,7 +14,7 @@
 
 package com.liferay.deprecated.modules.upgrade.internal;
 
-import com.liferay.message.boards.kernel.service.MBThreadLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;

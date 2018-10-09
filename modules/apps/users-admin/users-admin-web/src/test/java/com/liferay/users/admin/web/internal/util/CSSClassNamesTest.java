@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.web.internal;
-
-import com.liferay.users.admin.web.internal.util.CSSClassNames;
+package com.liferay.users.admin.web.internal.util;
 
 import org.junit.Assert;
 import org.junit.Test;

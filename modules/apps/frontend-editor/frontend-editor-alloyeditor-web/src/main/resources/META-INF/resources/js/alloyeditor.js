@@ -343,9 +343,10 @@ AUI.add(
 						var instance = this;
 
 						if (instance._pendingData) {
-							instance.getNativeEditor().setData(instance._pendingData);
+							var pendingData = instance._pendingData;
 
 							instance._pendingData = null;
+							instance.getNativeEditor().setData(pendingData);
 						}
 						else {
 							instance._dataReady = true;

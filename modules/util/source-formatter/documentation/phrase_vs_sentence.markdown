@@ -1,6 +1,6 @@
 ## Phrase vs. Sentence
 
-Use either a single phrase or multiple sentences
+Use either a single phrase or multiple sentences.
 
 ### Example
 

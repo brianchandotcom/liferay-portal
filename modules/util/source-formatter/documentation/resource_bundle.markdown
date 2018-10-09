@@ -9,6 +9,7 @@ Instead, use
 `com.liferay.portal.kernel.util.ResourceBundleLoader.loadResourceBundle`.
 
 ### Example
+
 Incorrect:
 
 ```java

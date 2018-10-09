@@ -1,8 +1,9 @@
-## @see annotation
+## @see Annotation
 
 Do not nest annotations inside a `@see` annotation.
 
 ### Example
+
 Incorrect:
 
 ```java

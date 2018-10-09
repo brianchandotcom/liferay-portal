@@ -3,7 +3,7 @@
 To avoid ClassCastExceptions, we want to use
 
 `PortalUtil.getLiferayPortletRequest(renderRequest)` or
-`PortalUtil.getLiferayPortletResponse(renderResponse)`
+`PortalUtil.getLiferayPortletResponse(renderResponse)`.
 
 ### Example
 

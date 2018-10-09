@@ -1,6 +1,6 @@
 ## Enhanced For-Loop
 
-When possible, use an Enhanced For-Loop
+When possible, use an Enhanced For-Loop.
 
 ### Arrays
 

@@ -1,4 +1,4 @@
-## Gradle versioning
+## Gradle Versioning
 
 Do not use `default` as the version number in gradle files. Instead use the
 exact version:

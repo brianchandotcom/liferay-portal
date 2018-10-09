@@ -118,6 +118,7 @@ public class OrgLaborFormDisplay {
 
 		for (int i = 0; i < _SHORT_DAY_NAMES.length; i++) {
 			String longDayName = days[i];
+
 			String shortDayName = _SHORT_DAY_NAMES[i];
 
 			List<SelectOptionDisplay> closeSelectOptionDisplays =

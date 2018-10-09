@@ -125,11 +125,12 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 			WebKeys.THEME_DISPLAY);
 
 		String name = ParamUtil.getString(renderRequest, "name");
-		int version = ParamUtil.getInteger(renderRequest, "version");
 
 		if (Validator.isNull(name)) {
 			return;
 		}
+
+		int version = ParamUtil.getInteger(renderRequest, "version");
 
 		WorkflowDefinition workflowDefinition =
 			WorkflowDefinitionManagerUtil.getWorkflowDefinition(

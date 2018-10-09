@@ -132,7 +132,6 @@ public class DefaultPortalKaleoManager
 	public void deployDefaultDefinitions(long companyId) throws Exception {
 		for (Map.Entry<String, String> entry : _definitionFiles.entrySet()) {
 			String definitionName = entry.getKey();
-			String fileName = entry.getValue();
 
 			ServiceContext serviceContext = new ServiceContext();
 
@@ -149,6 +148,8 @@ public class DefaultPortalKaleoManager
 			Class<?> clazz = getClass();
 
 			ClassLoader classLoader = clazz.getClassLoader();
+
+			String fileName = entry.getValue();
 
 			InputStream inputStream = classLoader.getResourceAsStream(fileName);
 

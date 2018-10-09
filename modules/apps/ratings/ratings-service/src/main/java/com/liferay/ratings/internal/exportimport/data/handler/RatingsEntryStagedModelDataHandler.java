@@ -110,8 +110,6 @@ public class RatingsEntryStagedModelDataHandler
 			PortletDataContext portletDataContext, RatingsEntry entry)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(entry.getUserUuid());
-
 		Map<Long, Long> relatedClassPKs =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				entry.getClassName());
@@ -152,6 +150,8 @@ public class RatingsEntryStagedModelDataHandler
 
 			return;
 		}
+
+		long userId = portletDataContext.getUserId(entry.getUserUuid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			entry);

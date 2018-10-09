@@ -57,8 +57,6 @@ public class StateNodeExecutor extends BaseNodeExecutor {
 		KaleoInstanceToken kaleoInstanceToken =
 			executionContext.getKaleoInstanceToken();
 
-		String transitionName = executionContext.getTransitionName();
-
 		if (!currentKaleoNode.hasKaleoTransition()) {
 			kaleoInstanceToken =
 				_kaleoInstanceTokenLocalService.completeKaleoInstanceToken(
@@ -74,6 +72,8 @@ public class StateNodeExecutor extends BaseNodeExecutor {
 
 			return;
 		}
+
+		String transitionName = executionContext.getTransitionName();
 
 		KaleoTransition kaleoTransition = null;
 

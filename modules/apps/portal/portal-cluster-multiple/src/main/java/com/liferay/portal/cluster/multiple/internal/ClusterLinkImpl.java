@@ -182,13 +182,14 @@ public class ClusterLinkImpl implements ClusterLink {
 		for (String key : keys) {
 			String channelPropertiesString = channelPropertiesStrings.get(key);
 			String channelName = channelNames.get(key);
-			String channelLogicName = channelLogicNames.get(key);
 
 			if (Validator.isNull(channelPropertiesString) ||
 				Validator.isNull(channelName)) {
 
 				continue;
 			}
+
+			String channelLogicName = channelLogicNames.get(key);
 
 			ClusterReceiver clusterReceiver = new ClusterForwardReceiver(this);
 

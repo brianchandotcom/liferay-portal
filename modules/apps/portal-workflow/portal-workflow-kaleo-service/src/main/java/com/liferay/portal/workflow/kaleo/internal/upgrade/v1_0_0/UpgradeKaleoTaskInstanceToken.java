@@ -111,9 +111,6 @@ public class UpgradeKaleoTaskInstanceToken extends UpgradeProcess {
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
-				long kaleoTaskInstanceTokenId = rs.getLong(
-					"kaleoTaskInstanceTokenId");
-
 				long oldKaleoInstanceTokenId = rs.getLong(
 					"kaleoInstanceTokenId");
 
@@ -130,6 +127,10 @@ public class UpgradeKaleoTaskInstanceToken extends UpgradeProcess {
 				sb.append("kaleoInstanceTokenId = ");
 				sb.append(newKaleoInstanceTokenId);
 				sb.append(" where kaleoTaskInstanceTokenId = ");
+
+				long kaleoTaskInstanceTokenId = rs.getLong(
+					"kaleoTaskInstanceTokenId");
+
 				sb.append(kaleoTaskInstanceTokenId);
 
 				String sql = sb.toString();

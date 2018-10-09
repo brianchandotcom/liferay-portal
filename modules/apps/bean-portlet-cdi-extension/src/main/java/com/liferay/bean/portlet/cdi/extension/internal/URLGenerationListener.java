@@ -14,8 +14,6 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
-import java.util.Objects;
-
 /**
  * @author Neil Griffin
  */
@@ -35,34 +33,12 @@ public class URLGenerationListener {
 		_listenerClassName = listenerClassName;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof URLGenerationListener)) {
-			return false;
-		}
-
-		URLGenerationListener urlGenerationListener =
-			(URLGenerationListener)obj;
-
-		return Objects.equals(
-			_listenerName, urlGenerationListener._listenerName);
-	}
-
 	public String getListenerClassName() {
 		return _listenerClassName;
 	}
 
 	public int getOrdinal() {
 		return _ordinal;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(_listenerName);
 	}
 
 	private final String _listenerClassName;

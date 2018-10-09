@@ -4,12 +4,12 @@
 
 		<execute macro="WebContentTemplates#inputTemplate">
 			<var name="fieldNameLabel" value="${fieldNameLabel}" />
-			<var name="name" value="${templateName}" />
 			<var name="structureName" value="${structureName}" />
 			<var name="templateDescription" value="${templateDescription}" />
 			<var name="templateFieldNames" value="${templateFieldNames}" />
 			<var name="templateFile" value="${templateFile}" />
 			<var name="templateLanguage" value="${templateLanguage}" />
+			<var name="templateName" value="${templateName}" />
 			<var name="templateScript" value="templateScript" />
 		</execute>
 
@@ -88,48 +88,17 @@
 	</command>
 
 	<command name="inputField">
-			<if>
+		<if>
 			<isset var="templateFieldNames" />
-			<then>				
+			<then>
 				<for list="${templateFieldNames}" param="fieldName">
-					<var method="StringUtil#replace('${fieldName}', ' ', '')" name="templateFieldNameLabel" />
-					<var method="StringUtil#lowerCase('${fieldNameLabel}')" name="templateFieldNameLabel" />
 					<var name="key_fieldName" value="${fieldName}" />
+					<var method="StringUtil#lowerCase('${fieldNameLabel}')" name="templateFieldNameLabel" />
 
 					<execute function="AssertClick" locator1="DDMEditTemplate#SCRIPT_FIELD" value1="${fieldName}" />
 				</for>
 			</then>
 		</if>
-	</command>
-
-	<command name="inputTemplate">
-		<execute macro="PortletEntry#inputName">
-			<var name="templateName" value="${templateName}" />
-		</execute>
-
-		<execute macro="WebContentTemplates#inputStructure">
-			<var name="structureName" value="${structureName}" />
-		</execute>
-
-		<execute macro="WebContentTemplates#inputDescription">
-			<var name="templateDescription" value="${templateDescription}" />
-		</execute>
-
-		<execute macro="WebContentTemplates#inputLanguage">
-			<var name="templateLanguage" value="${templateLanguage}" />
-		</execute>
-
-		<execute macro="WebContentTemplate#inputField">
-			<var name="templateFieldNames" value="${templateFieldNames}" />
-		</execute>
-
-		<execute macro="WebContentTemplate#inputTemplateFile">
-			<var name="templateFile" value="${templateFile}" />
-		</execute>
-
-		<execute macro="WebContentTemplate#inputScript">
-			<var name="templateScript" value="templateScript" />
-		</execute>
 	</command>
 
 	<command name="inputScript">
@@ -164,6 +133,36 @@
 				<execute function="SelectFrameTop" />
 			</then>
 		</if>
+	</command>
+
+	<command name="inputTemplate">
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${templateName}" />
+		</execute>
+
+		<execute macro="WebContentTemplates#inputStructure">
+			<var name="structureName" value="${structureName}" />
+		</execute>
+
+		<execute macro="WebContentTemplates#inputDescription">
+			<var name="templateDescription" value="${templateDescription}" />
+		</execute>
+
+		<execute macro="WebContentTemplates#inputTemplateLanguage">
+			<var name="templateLanguage" value="${templateLanguage}" />
+		</execute>
+
+		<execute macro="WebContentTemplates#inputField">
+			<var name="templateFieldNames" value="${templateFieldNames}" />
+		</execute>
+
+		<execute macro="WebContentTemplates#inputTemplateFile">
+			<var name="templateFile" value="${templateFile}" />
+		</execute>
+
+		<execute macro="WebContentTemplates#inputScript">
+			<var name="templateScript" value="templateScript" />
+		</execute>
 	</command>
 
 	<command name="inputTemplateFile">

@@ -385,7 +385,7 @@
 
 		<execute macro="WebContentTemplates#addCP">
 			<var name="structureName" value="WC Structure Name" />
-			<var name="templateFieldNames" value="Text" />			
+			<var name="templateFieldNames" value="Text" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 
@@ -518,7 +518,7 @@
 		<execute macro="WebContentTemplates#addCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Text,Text Box" />			
+			<var name="templateFieldNames" value="Text,Text Box" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 
@@ -754,7 +754,7 @@
 
 		<execute macro="WebContentTemplates#viewCP">
 			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />			
+			<var name="templateDescription" value="WC Template Description" />
 			<var name="templateName" value="WC Template Name" />
 			<var name="templateScript"><![CDATA[${Text.getData()}]]></var>
 		</execute>
@@ -1190,7 +1190,7 @@
 		<execute macro="WebContentTemplates#addCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Image" />			
+			<var name="templateFieldNames" value="Image" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 
@@ -1360,27 +1360,13 @@
 		<execute macro="NavItem#gotoTemplates" />
 
 		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
+			<var name="templateFieldNames" value="Text" />
 			<var name="templateFile" value="xsl_template.xsl" />
 			<var name="templateLanguage" value="xsl" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="WebContentNavigator#gotoViewTemplate">
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="WebContentTemplates#addStructure">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateLanguage" value="xsl" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
-
-		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
@@ -1708,7 +1694,7 @@
 
 		<execute macro="WebContentTemplates#viewCP">
 			<var name="structureName" value="Basic Web Content Edit" />
-			<var name="templateDescription" value="Basic Web Content Description" />			
+			<var name="templateDescription" value="Basic Web Content Description" />
 			<var name="templateName" value="Basic Web Content Edit" />
 			<var name="templateScript"><![CDATA[${Image.getData()}]]></var>
 		</execute>
@@ -2124,7 +2110,7 @@
 		<execute macro="WebContentTemplates#addCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Text" />			
+			<var name="templateFieldNames" value="Text" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 

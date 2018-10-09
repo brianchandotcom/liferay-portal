@@ -622,8 +622,8 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="templateName" value="WC Template Name" />
 			<var name="templateFieldNames" value="Text" />
+			<var name="templateName" value="WC Template Name" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

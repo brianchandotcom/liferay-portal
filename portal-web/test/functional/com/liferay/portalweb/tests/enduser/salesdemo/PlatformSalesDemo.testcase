@@ -106,7 +106,7 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="${structureName}" />	
+			<var name="structureName" value="${structureName}" />
 			<var name="templateDescription" value="${templateDescription}" />
 			<var name="templateFieldNames" value="${structureFieldNames}" />
 			<var name="templateName" value="${templateName}" />

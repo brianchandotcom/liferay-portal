@@ -39,19 +39,11 @@ public class BuddyComparator implements Comparator<Object[]> {
 			userId1 = (Long)buddy1[0];
 		}
 
-		String firstName1 = (String)buddy1[2];
-		String middleName1 = (String)buddy1[3];
-		String lastName1 = (String)buddy1[4];
-
 		long userId2 = 0;
 
 		if (buddy2[0] instanceof Long) {
 			userId2 = (Long)buddy2[0];
 		}
-
-		String firstName2 = (String)buddy2[2];
-		String middleName2 = (String)buddy2[3];
-		String lastName2 = (String)buddy2[4];
 
 		int value = 0;
 
@@ -70,8 +62,17 @@ public class BuddyComparator implements Comparator<Object[]> {
 		}
 
 		if (value == 0) {
+			String firstName1 = (String)buddy1[2];
+			String middleName1 = (String)buddy1[3];
+			String lastName1 = (String)buddy1[4];
+
 			String fullName1 = ContactConstants.getFullName(
 				firstName1, middleName1, lastName1);
+
+			String lastName2 = (String)buddy2[4];
+			String firstName2 = (String)buddy2[2];
+			String middleName2 = (String)buddy2[3];
+
 			String fullName2 = ContactConstants.getFullName(
 				firstName2, middleName2, lastName2);
 

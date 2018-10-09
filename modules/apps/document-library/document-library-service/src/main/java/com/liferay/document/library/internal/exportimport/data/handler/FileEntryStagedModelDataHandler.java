@@ -367,8 +367,6 @@ public class FileEntryStagedModelDataHandler
 			PortletDataContext portletDataContext, FileEntry fileEntry)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(fileEntry.getUserUuid());
-
 		if (RepositoryUtil.isExternalRepository(fileEntry.getRepositoryId())) {
 
 			// References has been automatically imported, nothing to do here
@@ -401,6 +399,9 @@ public class FileEntryStagedModelDataHandler
 
 		serviceContext.setAttribute(
 			"sourceFileName", "A." + fileEntry.getExtension());
+
+		long userId = portletDataContext.getUserId(fileEntry.getUserUuid());
+
 		serviceContext.setUserId(userId);
 
 		Element fileEntryElement = portletDataContext.getImportDataElement(

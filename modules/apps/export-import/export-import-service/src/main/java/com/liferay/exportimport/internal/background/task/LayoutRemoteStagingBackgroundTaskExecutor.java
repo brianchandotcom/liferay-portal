@@ -215,7 +215,6 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 			for (Map.Entry<Long, Boolean> entry : entrySet) {
 				long plid = GetterUtil.getLong(String.valueOf(entry.getKey()));
-				boolean includeChildren = entry.getValue();
 
 				Layout layout = null;
 
@@ -253,6 +252,8 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 						layouts.add(parentLayout);
 					}
 				}
+
+				boolean includeChildren = entry.getValue();
 
 				if (includeChildren) {
 					for (Layout childLayout : layout.getAllChildren()) {

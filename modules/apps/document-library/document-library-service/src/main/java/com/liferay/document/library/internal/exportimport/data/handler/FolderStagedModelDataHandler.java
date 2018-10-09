@@ -414,8 +414,6 @@ public class FolderStagedModelDataHandler
 		for (Element referenceElement : referenceElements) {
 			long referenceDLFileEntryTypeId = GetterUtil.getLong(
 				referenceElement.attributeValue("class-pk"));
-			String referenceDLFileEntryTypeUuid =
-				referenceElement.attributeValue("uuid");
 
 			Map<Long, Long> dlFileEntryTypeIds =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -436,7 +434,9 @@ public class FolderStagedModelDataHandler
 			currentFolderFileEntryTypeIds.add(
 				existingDLFileEntryType.getFileEntryTypeId());
 
-			if (defaultFileEntryTypeUuid.equals(referenceDLFileEntryTypeUuid)) {
+			if (defaultFileEntryTypeUuid.equals(
+					referenceElement.attributeValue("uuid"))) {
+
 				defaultFileEntryTypeId =
 					existingDLFileEntryType.getFileEntryTypeId();
 			}

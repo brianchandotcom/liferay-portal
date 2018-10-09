@@ -1255,13 +1255,13 @@ public class UIItemsBuilder {
 				fileVersion = _fileEntry.getLatestFileVersion();
 			}
 
-			StagedModelDataHandler stagedModelDataHandler =
-				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
-					FileEntry.class.getName());
-
 			if (fileVersion == null) {
 				return false;
 			}
+
+			StagedModelDataHandler stagedModelDataHandler =
+				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+					FileEntry.class.getName());
 
 			if (ArrayUtil.contains(
 					stagedModelDataHandler.getExportableStatuses(),

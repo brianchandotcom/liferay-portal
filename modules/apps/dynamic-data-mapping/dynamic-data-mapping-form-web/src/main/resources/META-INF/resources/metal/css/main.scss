@@ -115,7 +115,7 @@ textarea[class^="form-builder-page-header"] {
 }
 
 .form-builder-rule-builder {
-	.add-condition.timeline-increment-icon s {
+	.add-item.timeline-increment-icon {
 		padding-left: 10px;
 	}
 
@@ -126,6 +126,10 @@ textarea[class^="form-builder-page-header"] {
 			.timeline-item:hover > .container-trash {
 				display: block;
 			}
+		}
+
+		&.liferay-ddm-form-builder-rule-action-list .timeline-item:last-child:before {
+			bottom: 0;
 		}
 
 		.container-trash {

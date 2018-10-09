@@ -85,6 +85,7 @@ JSONArray collaboratorsJSONArray = JSONFactoryUtil.createJSONArray();
 <clay:button
 	id='<%= liferayPortletResponse.getNamespace() + "manageCollaboratorsButton" %>'
 	label='<%= LanguageUtil.get(resourceBundle, "manage-collaborators") %>'
+	size="sm"
 	style="link"
 />
 
@@ -108,7 +109,7 @@ manageCollaboratorsRenderURL.setWindowState(LiferayWindowState.POP_UP);
 					dialog: {
 						destroyOnHide: true,
 						height: 470,
-						width: 350,
+						width: 600,
 						on: {
 							visibleChange: function(event) {
 								if (!event.newVal) {

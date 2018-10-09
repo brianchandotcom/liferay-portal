@@ -382,7 +382,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 				roleIdsToActionIds.entrySet()) {
 
 			long roleId = entry.getKey();
-			Set<String> availableActionIds = entry.getValue();
 
 			Role role = RoleLocalServiceUtil.fetchRole(roleId);
 
@@ -403,7 +402,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			}
 
 			KeyValuePair permission = new KeyValuePair(
-				roleName, StringUtil.merge(availableActionIds));
+				roleName, StringUtil.merge(entry.getValue()));
 
 			permissions.add(permission);
 		}

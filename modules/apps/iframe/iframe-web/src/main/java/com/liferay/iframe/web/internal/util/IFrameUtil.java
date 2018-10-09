@@ -92,13 +92,13 @@ public class IFrameUtil {
 
 		Group layoutGroup = layout.getGroup();
 
-		String roleName = PropsValues.IFRAME_PASSWORD_PASSWORD_TOKEN_ROLE;
-
 		if (layout.isPrivateLayout() && layoutGroup.isUser() &&
 			(themeDisplay.getRealUserId() == layoutGroup.getClassPK())) {
 
 			return true;
 		}
+
+		String roleName = PropsValues.IFRAME_PASSWORD_PASSWORD_TOKEN_ROLE;
 
 		if (Validator.isNull(roleName)) {
 			return false;

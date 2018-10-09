@@ -208,10 +208,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			String portletId = _http.getParameter(redirect, "p_p_id", false);
 
-			int workflowAction = ParamUtil.getInteger(
-				actionRequest, "workflowAction",
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-
 			boolean ajax = ParamUtil.getBoolean(actionRequest, "ajax");
 
 			if (ajax) {
@@ -230,6 +226,10 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				return;
 			}
+
+			int workflowAction = ParamUtil.getInteger(
+				actionRequest, "workflowAction",
+				WorkflowConstants.ACTION_SAVE_DRAFT);
 
 			if ((entry != null) &&
 				(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {

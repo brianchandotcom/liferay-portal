@@ -162,15 +162,13 @@ public class ContactsCenterPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long[] userIds = getUserIds(actionRequest);
-
 		int type = ParamUtil.getInteger(actionRequest, "type");
 
 		if (type == SocialRelationConstants.TYPE_BI_CONNECTION) {
 			return;
 		}
 
-		for (long userId : userIds) {
+		for (long userId : getUserIds(actionRequest)) {
 			if (userId == themeDisplay.getUserId()) {
 				continue;
 			}

@@ -97,9 +97,6 @@ public class FragmentEntryDisplayConfigurationAction
 	private long _getFragmentEntryLinkId(ActionRequest actionRequest)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long fragmentEntryId = ParamUtil.getLong(
 			actionRequest, "fragmentEntryId");
 
@@ -127,6 +124,9 @@ public class FragmentEntryDisplayConfigurationAction
 		if (fragmentEntry == null) {
 			return 0;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		String portletResource = ParamUtil.getString(
 			actionRequest, "portletResource");

@@ -90,6 +90,12 @@ public class AnnouncementsEntryLocalServiceUtil {
 		getService().checkEntries();
 	}
 
+	public static void checkEntries(java.util.Date startDate,
+		java.util.Date endDate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().checkEntries(startDate, endDate);
+	}
+
 	/**
 	* Creates a new announcements entry with the primary key. Does not add the announcements entry to the database.
 	*

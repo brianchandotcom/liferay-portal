@@ -14,8 +14,11 @@
 
 package com.liferay.users.admin.web.internal;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Drew Brokke
@@ -43,23 +46,31 @@ public class CSSClassNames {
 		}
 
 		public String build() {
-			return _sb.toString();
+			return _cssClassNamesStreamBuilder.build(
+			).distinct(
+			).sorted(
+			).collect(
+				_JOIN_BY_SPACE_COLLECTOR
+			);
 		}
 
 		private Builder _add(String cssClassName, boolean condition) {
 			if (condition) {
-				_sb.append(cssClassName);
-				_sb.append(StringPool.SPACE);
+				_cssClassNamesStreamBuilder.accept(cssClassName);
 			}
 
 			return this;
 		}
 
-		private final StringBundler _sb = new StringBundler();
+		private final Stream.Builder<String> _cssClassNamesStreamBuilder =
+			Stream.builder();
 
 	}
 
 	private CSSClassNames() {
 	}
+
+	private static final Collector<CharSequence, ?, String>
+		_JOIN_BY_SPACE_COLLECTOR = Collectors.joining(StringPool.SPACE);
 
 }

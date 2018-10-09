@@ -4720,6 +4720,12 @@ an invalid `.hotfix-xxx-xxx` qualifier.
 - [LPS-80388]: Update the [Liferay Gradle Plugins Baseline] dependency to
 version 1.3.5.
 
+## 5.5.71 - 2018-10-07
+
+### Changed
+- [LPS-84119]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.155.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

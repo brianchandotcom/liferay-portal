@@ -265,31 +265,30 @@ public class BeanPortletExtension implements Extension {
 
 		_scanMethods(
 			_scannedMethods, annotatedClass, MethodType.ACTION,
-			ActionMethod.class, MethodSignature.ACTION);
+			ActionMethod.class);
 
 		_scanMethods(
 			_scannedMethods, annotatedClass, MethodType.DESTROY,
-			DestroyMethod.class, MethodSignature.DESTROY);
+			DestroyMethod.class);
 
 		_scanMethods(
 			_scannedMethods, annotatedClass, MethodType.EVENT,
-			EventMethod.class, MethodSignature.EVENT);
+			EventMethod.class);
 
 		_scanMethods(
 			_scannedMethods, annotatedClass, MethodType.HEADER,
-			HeaderMethod.class, MethodSignature.HEADER);
+			HeaderMethod.class);
 
 		_scanMethods(
-			_scannedMethods, annotatedClass, MethodType.INIT, InitMethod.class,
-			MethodSignature.INIT);
+			_scannedMethods, annotatedClass, MethodType.INIT, InitMethod.class);
 
 		_scanMethods(
 			_scannedMethods, annotatedClass, MethodType.RENDER,
-			RenderMethod.class, MethodSignature.RENDER);
+			RenderMethod.class);
 
 		_scanMethods(
 			_scannedMethods, annotatedClass, MethodType.SERVE_RESOURCE,
-			ServeResourceMethod.class, MethodSignature.SERVE_RESOURCE);
+			ServeResourceMethod.class);
 	}
 
 	public void step3AfterBeanDiscovery(
@@ -978,12 +977,11 @@ public class BeanPortletExtension implements Extension {
 
 	private void _scanMethods(
 		List<ScannedMethod> scannedMethods, Class<?> javaClass,
-		MethodType methodType, Class<? extends Annotation> annotationClass,
-		MethodSignature methodSignature) {
+		MethodType methodType, Class<? extends Annotation> annotationClass) {
 
 		for (Method method : javaClass.getMethods()) {
 			if ((method.getAnnotation(annotationClass) != null) &&
-				methodSignature.isMatch(method)) {
+				methodType.isMatch(method)) {
 
 				scannedMethods.add(
 					new ScannedMethod(javaClass, methodType, method));

@@ -30,13 +30,6 @@ import javax.portlet.annotations.ServeResourceMethod;
 public class ScannedMethod {
 
 	public ScannedMethod(Class<?> clazz, MethodType methodType, Method method) {
-		this(clazz, methodType, method, null);
-	}
-
-	public ScannedMethod(
-		Class<?> clazz, MethodType methodType, Method method,
-		String configuredPortletName) {
-
 		_clazz = clazz;
 		_methodType = methodType;
 		_method = method;
@@ -100,10 +93,6 @@ public class ScannedMethod {
 				ordinal = serveResourceMethod.ordinal();
 				portletNames = serveResourceMethod.portletNames();
 			}
-		}
-
-		if ((portletNames == null) && (configuredPortletName != null)) {
-			portletNames = new String[] {configuredPortletName};
 		}
 
 		_ordinal = ordinal;

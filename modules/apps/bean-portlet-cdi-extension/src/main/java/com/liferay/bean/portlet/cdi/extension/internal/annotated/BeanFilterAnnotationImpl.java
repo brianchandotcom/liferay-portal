@@ -41,11 +41,13 @@ public class BeanFilterAnnotationImpl extends BaseBeanFilterImpl {
 		Class<?> filterClass, PortletLifecycleFilter portletLifecycleFilter) {
 
 		_filterClass = filterClass;
-		_portletLifecycleFilter = portletLifecycleFilter;
+		_filterName = portletLifecycleFilter.filterName();
+		_ordinal = portletLifecycleFilter.ordinal();
+
 		_initParams = new HashMap<>();
 
 		for (InitParameter initParameter :
-				_portletLifecycleFilter.initParams()) {
+				portletLifecycleFilter.initParams()) {
 
 			_initParams.put(initParameter.name(), initParameter.value());
 		}
@@ -73,7 +75,7 @@ public class BeanFilterAnnotationImpl extends BaseBeanFilterImpl {
 		}
 
 		_portletNames = new HashSet<>(
-			Arrays.asList(_portletLifecycleFilter.portletNames()));
+			Arrays.asList(portletLifecycleFilter.portletNames()));
 	}
 
 	@Override
@@ -83,7 +85,7 @@ public class BeanFilterAnnotationImpl extends BaseBeanFilterImpl {
 
 	@Override
 	public String getFilterName() {
-		return _portletLifecycleFilter.filterName();
+		return _filterName;
 	}
 
 	@Override
@@ -98,7 +100,7 @@ public class BeanFilterAnnotationImpl extends BaseBeanFilterImpl {
 
 	@Override
 	public int getOrdinal() {
-		return _portletLifecycleFilter.ordinal();
+		return _ordinal;
 	}
 
 	@Override
@@ -107,9 +109,10 @@ public class BeanFilterAnnotationImpl extends BaseBeanFilterImpl {
 	}
 
 	private final Class<?> _filterClass;
+	private final String _filterName;
 	private final Map<String, String> _initParams;
 	private final Set<String> _lifecycles;
-	private final PortletLifecycleFilter _portletLifecycleFilter;
+	private final int _ordinal;
 	private final Set<String> _portletNames;
 
 }

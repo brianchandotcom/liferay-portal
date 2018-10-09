@@ -263,40 +263,33 @@ public class BeanPortletExtension implements Extension {
 			_liferayPortletConfigurationClasses.add(annotatedClass);
 		}
 
-		_scannedMethods.addAll(
-			_scanMethods(
-				annotatedClass, MethodType.ACTION, ActionMethod.class,
-				MethodSignature.ACTION));
+		_scanMethods(
+			_scannedMethods, annotatedClass, MethodType.ACTION,
+			ActionMethod.class, MethodSignature.ACTION);
 
-		_scannedMethods.addAll(
-			_scanMethods(
-				annotatedClass, MethodType.DESTROY, DestroyMethod.class,
-				MethodSignature.DESTROY));
+		_scanMethods(
+			_scannedMethods, annotatedClass, MethodType.DESTROY,
+			DestroyMethod.class, MethodSignature.DESTROY);
 
-		_scannedMethods.addAll(
-			_scanMethods(
-				annotatedClass, MethodType.EVENT, EventMethod.class,
-				MethodSignature.EVENT));
+		_scanMethods(
+			_scannedMethods, annotatedClass, MethodType.EVENT,
+			EventMethod.class, MethodSignature.EVENT);
 
-		_scannedMethods.addAll(
-			_scanMethods(
-				annotatedClass, MethodType.HEADER, HeaderMethod.class,
-				MethodSignature.HEADER));
+		_scanMethods(
+			_scannedMethods, annotatedClass, MethodType.HEADER,
+			HeaderMethod.class, MethodSignature.HEADER);
 
-		_scannedMethods.addAll(
-			_scanMethods(
-				annotatedClass, MethodType.INIT, InitMethod.class,
-				MethodSignature.INIT));
+		_scanMethods(
+			_scannedMethods, annotatedClass, MethodType.INIT, InitMethod.class,
+			MethodSignature.INIT);
 
-		_scannedMethods.addAll(
-			_scanMethods(
-				annotatedClass, MethodType.RENDER, RenderMethod.class,
-				MethodSignature.RENDER));
+		_scanMethods(
+			_scannedMethods, annotatedClass, MethodType.RENDER,
+			RenderMethod.class, MethodSignature.RENDER);
 
-		_scannedMethods.addAll(
-			_scanMethods(
-				annotatedClass, MethodType.SERVE_RESOURCE,
-				ServeResourceMethod.class, MethodSignature.SERVE_RESOURCE));
+		_scanMethods(
+			_scannedMethods, annotatedClass, MethodType.SERVE_RESOURCE,
+			ServeResourceMethod.class, MethodSignature.SERVE_RESOURCE);
 	}
 
 	public void step3AfterBeanDiscovery(
@@ -983,12 +976,10 @@ public class BeanPortletExtension implements Extension {
 		return null;
 	}
 
-	private List<ScannedMethod> _scanMethods(
-		Class<?> javaClass, MethodType methodType,
-		Class<? extends Annotation> annotationClass,
+	private void _scanMethods(
+		List<ScannedMethod> scannedMethods, Class<?> javaClass,
+		MethodType methodType, Class<? extends Annotation> annotationClass,
 		MethodSignature methodSignature) {
-
-		List<ScannedMethod> scannedMethods = new ArrayList<>();
 
 		for (Method method : javaClass.getMethods()) {
 			if ((method.getAnnotation(annotationClass) != null) &&
@@ -998,8 +989,6 @@ public class BeanPortletExtension implements Extension {
 					new ScannedMethod(javaClass, methodType, method));
 			}
 		}
-
-		return scannedMethods;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

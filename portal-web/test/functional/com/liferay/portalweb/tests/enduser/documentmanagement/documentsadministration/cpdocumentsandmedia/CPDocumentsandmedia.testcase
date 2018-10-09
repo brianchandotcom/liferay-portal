@@ -143,6 +143,7 @@
 	</command>
 
 	<command name="EditDocument" priority="5">
+		<property name="environment.acceptance" value="true" />
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Navigator#openURL" />

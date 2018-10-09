@@ -3910,14 +3910,41 @@ log.sanitizer.enabled=false</echo>
 
 						<wait-for-app-server-log-message log.message="Hook for com.liferay.faces.test.setup.hook is available for use" />
 
+						<execute dir="${liferay.faces.bridge.impl.dir}/tck">
+							mvn clean install --quiet
+						</execute>
+
+						<execute dir="${liferay.faces.bridge.impl.dir}/tck/bridge-tck-main-portlet" failonerror="false">
+							mvn verify -P selenium,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=300
+						</execute>
+
+						<!--
+						In order to build the Bridge Impl and Portal tests, first build the JSF Showcase tests
+						since the Alloy, Bridge Impl, and Portal Showcase tests depend on the JSF Showcase tests.
+						-->
+
 						<execute dir="${liferay.faces.showcase.dir}/jsf-showcase-webapp">
 							mvn clean install --quiet -P selenium -Dit.test=none -DfailIfNoTests=false
 						</execute>
 
 						<!--
-						Ensure the Alloy Showcase tests use the appropriate JSF Showcase test version
-						and Liferay Faces Test Selenium version since the Alloy Showcase tests may
-						depend on a different version of the JSF Showcase tests.
+						Next build the Alloy Showcase tests that the Bridge Impl tests depend on. In order to build the
+						Alloy Showcase, ensure that the Alloy Showcase depends on the current JSF Showcase version
+						(built above) and its transitive dependencies like Test Selenium:
+
+						1. Extract the Test Selenium version used by the JSF Showcase.
+						-->
+
+						<xmltask source="${liferay.faces.showcase.dir}/jsf-showcase-webapp/pom.xml">
+							<copy
+								path="//*[local-name()='artifactId'][text()='com.liferay.faces.test.selenium']/../*[local-name()='version']/text()"
+								property="liferay.faces.test.selenium.version"
+							/>
+						</xmltask>
+
+						<!--
+						2. Replace the Test Selenium dependency version in the Alloy Showcase with the one extracted from
+						the JSF Showcase above.
 						-->
 
 						<xmltask
@@ -3930,24 +3957,26 @@ log.sanitizer.enabled=false</echo>
 							/>
 						</xmltask>
 
-						<xmltask dest="${liferay.faces.alloy.dir}/pom.xml" source="${liferay.faces.alloy.dir}/pom.xml">
-							<replace
-								path="//*[local-name()='liferay.faces.showcase.version']/text()"
-								withText="${liferay.faces.showcase.version}"
-							/>
-						</xmltask>
-
-						<xmltask source="${liferay.faces.showcase.dir}/jsf-showcase-webapp/pom.xml">
-							<copy
-								path="//*[local-name()='artifactId'][text()='com.liferay.faces.test.selenium']/../*[local-name()='version']/text()"
-								property="liferay.faces.test.selenium.version"
-							/>
-						</xmltask>
+						<!--
+						3. Extract the current JSF Showcase version.
+						-->
 
 						<xmltask source="${liferay.faces.showcase.dir}/pom.xml">
 							<copy
 								path="/*[local-name()='project']/*[local-name()='version']/text()"
 								property="liferay.faces.showcase.version"
+							/>
+						</xmltask>
+
+						<!--
+						4. Replace the JSF Showcase dependency version in the Alloy Showcase with the one extracted from
+						the JSF Showcase above.
+						-->
+
+						<xmltask dest="${liferay.faces.alloy.dir}/pom.xml" source="${liferay.faces.alloy.dir}/pom.xml">
+							<replace
+								path="//*[local-name()='liferay.faces.showcase.version']/text()"
+								withText="${liferay.faces.showcase.version}"
 							/>
 						</xmltask>
 
@@ -3959,26 +3988,18 @@ log.sanitizer.enabled=false</echo>
 							mvn clean install --quiet
 						</execute>
 
-						<execute dir="${liferay.faces.portal.dir}/test/integration">
-							mvn clean install --quiet
-						</execute>
-
-						<execute dir="${liferay.faces.bridge.impl.dir}/tck">
-							mvn clean install --quiet
-						</execute>
-
 						<execute dir="${liferay.faces.bridge.impl.dir}/test/integration" failonerror="false">
-							mvn verify -P selenium-jsf-showcase,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=300
+							mvn verify -P selenium,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=300
 						</execute>
 
 						<!--
-						Move the JSF Showcase results to a different folder so that they are not
-						overwritten by the Bridge Impl test results.
+						Move the Bridge Impl test results to a different folder so they are not overwritten by the
+						Showcase test results.
 						-->
 
 						<move
 							file="${liferay.faces.bridge.impl.dir}/test/integration/target/failsafe-reports"
-							tofile="${liferay.faces.bridge.impl.dir}/test/integration/target/selenium-jsf-showcase-failsafe-reports"
+							tofile="${liferay.faces.bridge.impl.dir}/test/integration/target/selenium-bridge-impl-failsafe-reports"
 						/>
 
 						<execute dir="${liferay.faces.bridge.impl.dir}/test/integration" failonerror="false">
@@ -3986,8 +4007,8 @@ log.sanitizer.enabled=false</echo>
 						</execute>
 
 						<!--
-						Move the Alloy Showcase results to a different folder so that they are not
-						overwritten by the Bridge Impl test results.
+						Move the Alloy Showcase test results to a different folder so they are not overwritten by the
+						JSF Showcase test results.
 						-->
 
 						<move
@@ -3995,22 +4016,27 @@ log.sanitizer.enabled=false</echo>
 							tofile="${liferay.faces.bridge.impl.dir}/test/integration/target/selenium-alloy-showcase-failsafe-reports"
 						/>
 
-						<echo file="${liferay.faces.bridge.impl.dir}/test/integration/bridge-impl-excluded-tests">
-							**/showcase/**
-							*FACES_1470*
-						</echo>
-
 						<execute dir="${liferay.faces.bridge.impl.dir}/test/integration" failonerror="false">
-							mvn verify -P selenium,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=300 -Dfailsafe.excludesFile=bridge-impl-excluded-tests
+							mvn verify -P selenium-jsf-showcase,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=300
 						</execute>
 
-						<execute dir="${liferay.faces.bridge.impl.dir}/tck/bridge-tck-main-portlet" failonerror="false">
-							mvn verify -P selenium,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=300
+						<execute dir="${liferay.faces.portal.dir}/test/integration">
+							mvn clean install --quiet
 						</execute>
 
 						<execute dir="${liferay.faces.portal.dir}/test/integration" failonerror="false">
 							mvn verify -P selenium,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=300
 						</execute>
+
+						<!--
+						Move the Portal test results to a different folder so they are not overwritten by the
+						Showcase test results.
+						-->
+
+						<move
+							file="${liferay.faces.portal.dir}/test/integration/target/failsafe-reports"
+							tofile="${liferay.faces.portal.dir}/test/integration/target/selenium-portal-failsafe-reports"
+						/>
 
 						<execute dir="${liferay.faces.portal.dir}/test/integration" failonerror="false">
 							mvn verify -P selenium-portal-showcase,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=300

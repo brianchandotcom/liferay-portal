@@ -2,11 +2,19 @@ apply plugin: "com.liferay.alloy.taglib"
 apply plugin: "com.liferay.lang.merger"
 
 buildTaglibs {
+	classpath = configurations.alloyTaglib
 	componentsXmlFiles "liferay-ddm.xml"
 	javaPackage = "com.liferay.dynamic.data.mapping.taglib.servlet"
 }
 
+configurations {
+	alloyTaglib
+}
+
 dependencies {
+	alloyTaglib group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	alloyTaglib project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"

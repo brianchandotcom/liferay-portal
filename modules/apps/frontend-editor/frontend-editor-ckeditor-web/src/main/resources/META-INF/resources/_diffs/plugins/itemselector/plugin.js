@@ -326,7 +326,6 @@
 					AUI().use(
 						'liferay-item-selector-dialog',
 						function(A) {
-
 							itemSelectorDialog = new A.LiferayItemSelectorDialog(
 								{
 									eventName: eventName,
@@ -394,7 +393,6 @@
 				if (selectedItem) {
 					var eventName = editor.name + 'selectItem';
 					var imageSrc = instance._getItemSrc(editor, selectedItem);
-					var isSelectionEmpty = instance._isEmptySelection(editor);
 
 					Liferay.Util.getWindow(eventName).onceAfter(
 						'destroy',
@@ -406,7 +404,7 @@
 								else {
 									editor.insertHtml('<img src="' + imageSrc + '">');
 
-									if (isSelectionEmpty) {
+									if (instance._isEmptySelection(editor)) {
 										editor.execCommand('enter');
 									}
 

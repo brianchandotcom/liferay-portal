@@ -16,6 +16,10 @@ package com.liferay.asset.list.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.portal.kernel.util.Validator;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -25,5 +29,23 @@ public class AssetListEntryAssetEntryRelImpl
 
 	public AssetListEntryAssetEntryRelImpl() {
 	}
+
+	@Override
+	public String getAssetEntryUuid() {
+		if (Validator.isNotNull(_assetEntryUuid)) {
+			return _assetEntryUuid;
+		}
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(
+			getAssetEntryId());
+
+		if (assetEntry != null) {
+			_assetEntryUuid = assetEntry.getClassUuid();
+		}
+
+		return _assetEntryUuid;
+	}
+
+	private String _assetEntryUuid;
 
 }

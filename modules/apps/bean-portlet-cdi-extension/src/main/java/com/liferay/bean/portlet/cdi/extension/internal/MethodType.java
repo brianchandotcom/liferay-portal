@@ -64,7 +64,7 @@ public enum MethodType {
 		new Class<?>[] {ResourceRequest.class, ResourceResponse.class}, true);
 
 	public boolean isMatch(Method method) {
-		if (method.getAnnotation(_annotation) == null) {
+		if (!method.isAnnotationPresent(_annotation)) {
 			return false;
 		}
 

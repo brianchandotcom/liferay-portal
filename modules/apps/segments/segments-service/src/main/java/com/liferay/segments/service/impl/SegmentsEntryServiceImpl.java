@@ -73,7 +73,7 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 		_portletResourcePermission.check(
 			getPermissionChecker(), groupId, ActionKeys.VIEW);
 
-		return segmentsEntryLocalService.getSegmentsEntries(
+		return segmentsEntryPersistence.filterFindByGroupId(
 			groupId, start, end, orderByComparator);
 	}
 
@@ -82,7 +82,7 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 		_portletResourcePermission.check(
 			getPermissionChecker(), groupId, ActionKeys.VIEW);
 
-		return segmentsEntryLocalService.getSegmentsEntriesCount(groupId);
+		return segmentsEntryPersistence.filterCountByGroupId(groupId);
 	}
 
 	@Override

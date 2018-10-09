@@ -25,7 +25,10 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.util.PropsValues;
+
+import java.util.Date;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -63,7 +66,17 @@ public class CheckEntryMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		_announcementsEntryLocalService.checkEntries();
+		Date startDate = _previousEndDate;
+		Date endDate = new Date();
+
+		if (startDate == null) {
+			startDate = new Date(
+				endDate.getTime() - _ANNOUNCEMENTS_ENTRY_CHECK_INTERVAL);
+		}
+
+		_announcementsEntryLocalService.checkEntries(startDate, endDate);
+
+		_previousEndDate = endDate;
 	}
 
 	@Reference(unbind = "-")
@@ -85,7 +98,11 @@ public class CheckEntryMessageListener extends BaseMessageListener {
 		_schedulerEngineHelper = schedulerEngineHelper;
 	}
 
+	private static final long _ANNOUNCEMENTS_ENTRY_CHECK_INTERVAL =
+		PropsValues.ANNOUNCEMENTS_ENTRY_CHECK_INTERVAL * Time.MINUTE;
+
 	private AnnouncementsEntryLocalService _announcementsEntryLocalService;
+	private Date _previousEndDate;
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 	@Reference

@@ -404,12 +404,12 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		SolrDocument solrDocument, Document document, QueryConfig queryConfig,
 		QueryResponse queryResponse) {
 
-		Map<String, Map<String, List<String>>> highlights =
-			queryResponse.getHighlighting();
-
 		if (!queryConfig.isHighlightEnabled()) {
 			return;
 		}
+
+		Map<String, Map<String, List<String>>> highlights =
+			queryResponse.getHighlighting();
 
 		if (MapUtil.isEmpty(highlights)) {
 			return;

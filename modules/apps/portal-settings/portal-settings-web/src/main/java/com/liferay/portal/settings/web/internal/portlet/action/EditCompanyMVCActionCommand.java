@@ -218,11 +218,6 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 	private void _validateAvailableLanguages(ActionRequest actionRequest)
 		throws PortalException {
 
-		long companyId = _portal.getCompanyId(actionRequest);
-
-		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
-			companyId);
-
 		UnicodeProperties properties = PropertiesParamUtil.getProperties(
 			actionRequest, "settings--");
 
@@ -231,6 +226,11 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 		if (Validator.isNull(newLanguageIds)) {
 			return;
 		}
+
+		long companyId = _portal.getCompanyId(actionRequest);
+
+		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
+			companyId);
 
 		String oldLanguageIds = portletPreferences.getValue(
 			PropsKeys.LOCALES, StringPool.BLANK);

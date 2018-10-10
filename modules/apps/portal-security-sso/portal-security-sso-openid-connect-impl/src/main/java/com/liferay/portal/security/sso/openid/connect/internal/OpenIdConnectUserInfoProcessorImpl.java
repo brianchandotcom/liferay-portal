@@ -48,9 +48,6 @@ public class OpenIdConnectUserInfoProcessorImpl
 	public long processUserInfo(UserInfo userInfo, long companyId)
 		throws PortalException {
 
-		String firstName = userInfo.getGivenName();
-		String lastName = userInfo.getFamilyName();
-
 		InternetAddress internetAddress = userInfo.getEmail();
 
 		String emailAddress = internetAddress.getAddress();
@@ -61,6 +58,9 @@ public class OpenIdConnectUserInfoProcessorImpl
 		if (user != null) {
 			return user.getUserId();
 		}
+
+		String firstName = userInfo.getGivenName();
+		String lastName = userInfo.getFamilyName();
 
 		if (Validator.isNull(firstName) || Validator.isNull(lastName) ||
 			Validator.isNull(emailAddress)) {

@@ -529,7 +529,6 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			searchPermissionContext._rolesTermsFilter;
 
 		long[] roleIds = searchPermissionContext._roleIds;
-		long[] regularRoleIds = searchPermissionContext._regularRoleIds;
 
 		if (resourcePermissionLocalService.hasResourcePermission(
 				companyId, className, ResourceConstants.SCOPE_COMPANY,
@@ -537,6 +536,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 			return null;
 		}
+
+		long[] regularRoleIds = searchPermissionContext._regularRoleIds;
 
 		if (resourcePermissionLocalService.hasResourcePermission(
 				companyId, className, ResourceConstants.SCOPE_GROUP_TEMPLATE,

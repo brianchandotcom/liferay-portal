@@ -177,8 +177,6 @@ public class CASFilter extends BaseFilter {
 				new CompanyServiceSettingsLocator(
 					companyId, CASConstants.SERVICE_NAME));
 
-		String pathInfo = request.getPathInfo();
-
 		Object forceLogout = session.getAttribute(CASWebKeys.CAS_FORCE_LOGOUT);
 
 		if (forceLogout != null) {
@@ -190,6 +188,8 @@ public class CASFilter extends BaseFilter {
 
 			return;
 		}
+
+		String pathInfo = request.getPathInfo();
 
 		if (Validator.isNotNull(pathInfo) &&
 			pathInfo.contains("/portal/logout")) {

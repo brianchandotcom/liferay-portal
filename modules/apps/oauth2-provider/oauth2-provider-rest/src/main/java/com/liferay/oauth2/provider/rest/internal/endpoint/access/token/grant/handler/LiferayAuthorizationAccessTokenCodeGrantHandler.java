@@ -111,10 +111,6 @@ public class LiferayAuthorizationAccessTokenCodeGrantHandler
 			return false;
 		}
 
-		OAuth2Application oAuth2Application =
-			_liferayOAuthDataProvider.resolveOAuth2Application(
-				serverAuthorizationCodeGrant.getClient());
-
 		if (client.isConfidential()) {
 			if (!_oAuth2ProviderConfiguration.allowAuthorizationCodeGrant()) {
 				if (_log.isDebugEnabled()) {
@@ -169,6 +165,10 @@ public class LiferayAuthorizationAccessTokenCodeGrantHandler
 				return false;
 			}
 		}
+
+		OAuth2Application oAuth2Application =
+			_liferayOAuthDataProvider.resolveOAuth2Application(
+				serverAuthorizationCodeGrant.getClient());
 
 		UserSubject userSubject = serverAuthorizationCodeGrant.getSubject();
 

@@ -44,8 +44,6 @@ public class AssetEntryDocumentContributor implements DocumentContributor {
 	public void contribute(Document document, BaseModel baseModel) {
 		String className = document.get(Field.ENTRY_CLASS_NAME);
 
-		long classPK = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
-
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
@@ -55,6 +53,8 @@ public class AssetEntryDocumentContributor implements DocumentContributor {
 
 			return;
 		}
+
+		long classPK = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
 
 		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
 			className, classPK);

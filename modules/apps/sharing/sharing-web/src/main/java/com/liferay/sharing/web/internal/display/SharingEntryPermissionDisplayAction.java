@@ -29,8 +29,8 @@ public enum SharingEntryPermissionDisplayAction {
 		"COMMENTS", "comments", "collaborators-can-comment-on-the-document",
 		"comment", SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.VIEW),
 	UPDATE(
-		"UPDATE", "edition",
-		"collaborators-can-view-comment-update-the-document", "edit",
+		"UPDATE", "update",
+		"collaborators-can-view-comment-update-the-document", "update",
 		SharingEntryAction.ADD_DISCUSSION, SharingEntryAction.UPDATE,
 		SharingEntryAction.VIEW),
 	VIEW(

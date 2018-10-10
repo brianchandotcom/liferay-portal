@@ -99,7 +99,7 @@ public class SharingNotificationUtil {
 		if (_sharingEntryLocalService.hasSharingPermission(
 				sharingEntry, SharingEntryAction.UPDATE)) {
 
-			return ResourceBundleUtil.getString(resourceBundle, "editing");
+			return ResourceBundleUtil.getString(resourceBundle, "updating");
 		}
 		else if (_sharingEntryLocalService.hasSharingPermission(
 					sharingEntry, SharingEntryAction.ADD_DISCUSSION)) {

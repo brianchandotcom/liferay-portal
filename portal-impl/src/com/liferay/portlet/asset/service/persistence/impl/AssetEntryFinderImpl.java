@@ -298,8 +298,6 @@ public class AssetEntryFinderImpl
 	}
 
 	protected void buildAnyCategoriesSQL(long[] categoryIds, StringBundler sb) {
-		String sql = CustomSQLUtil.get(FIND_BY_AND_CATEGORY_IDS);
-
 		String categoryIdsString = null;
 
 		if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
@@ -320,8 +318,12 @@ public class AssetEntryFinderImpl
 		}
 
 		sb.append(" AND (");
+
+		String sql = CustomSQLUtil.get(FIND_BY_AND_CATEGORY_IDS);
+
 		sb.append(
 			StringUtil.replace(sql, "[$CATEGORY_ID$]", categoryIdsString));
+
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 	}
 

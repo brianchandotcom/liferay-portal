@@ -265,9 +265,6 @@ public class SessionAuthToken implements AuthToken {
 		String tokenKey = WebKeys.AUTHENTICATION_TOKEN.concat(key);
 
 		while (currentRequest instanceof HttpServletRequestWrapper) {
-			HttpServletRequestWrapper httpServletRequestWrapper =
-				(HttpServletRequestWrapper)currentRequest;
-
 			session = currentRequest.getSession();
 
 			sessionAuthenticationToken = (String)session.getAttribute(tokenKey);
@@ -275,6 +272,9 @@ public class SessionAuthToken implements AuthToken {
 			if (Validator.isNotNull(sessionAuthenticationToken)) {
 				break;
 			}
+
+			HttpServletRequestWrapper httpServletRequestWrapper =
+				(HttpServletRequestWrapper)currentRequest;
 
 			currentRequest =
 				(HttpServletRequest)httpServletRequestWrapper.getRequest();

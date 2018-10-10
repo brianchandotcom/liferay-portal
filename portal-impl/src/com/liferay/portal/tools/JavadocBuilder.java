@@ -358,9 +358,6 @@ public class JavadocBuilder {
 
 		String srcFile = fileName.substring(pos + 1);
 
-		String className = StringUtil.replace(
-			srcFile.substring(0, srcFile.length() - 5), '/', '.');
-
 		JavaDocBuilder builder = new JavaDocBuilder();
 
 		if (reader == null) {
@@ -375,6 +372,9 @@ public class JavadocBuilder {
 		else {
 			builder.addSource(reader);
 		}
+
+		String className = StringUtil.replace(
+			srcFile.substring(0, srcFile.length() - 5), '/', '.');
 
 		return builder.getClassByName(className);
 	}

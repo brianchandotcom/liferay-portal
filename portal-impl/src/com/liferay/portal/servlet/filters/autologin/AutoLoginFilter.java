@@ -67,7 +67,6 @@ public class AutoLoginFilter extends BasePortalFilter {
 
 		String jUsername = credentials[0];
 		String jPassword = credentials[1];
-		boolean encPassword = GetterUtil.getBoolean(credentials[2]);
 
 		if (Validator.isNull(jUsername) || Validator.isNull(jPassword)) {
 			return null;
@@ -99,7 +98,7 @@ public class AutoLoginFilter extends BasePortalFilter {
 		// Not having access to the unencrypted password will not allow you to
 		// connect to external resources that require it (mail server)
 
-		if (encPassword) {
+		if (GetterUtil.getBoolean(credentials[2])) {
 			session.setAttribute("j_password", jPassword);
 		}
 		else {

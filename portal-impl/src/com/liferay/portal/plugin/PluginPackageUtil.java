@@ -1397,13 +1397,11 @@ public class PluginPackageUtil {
 			for (PluginPackage pluginPackage :
 					_installedPluginPackages.getPluginPackages()) {
 
-				PluginPackage availablePluginPackage = null;
-
 				if (_isIgnored(pluginPackage)) {
 					continue;
 				}
 
-				availablePluginPackage =
+				PluginPackage availablePluginPackage =
 					PluginPackageUtil.getLatestAvailablePluginPackage(
 						pluginPackage.getGroupId(),
 						pluginPackage.getArtifactId());

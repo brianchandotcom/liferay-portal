@@ -227,16 +227,17 @@ public class PluginsEnvironmentBuilder {
 
 					String name = GetterUtil.getString(
 						dependencyElement.attributeValue("name"));
-					String org = GetterUtil.getString(
-						dependencyElement.attributeValue("org"));
-					String rev = GetterUtil.getString(
-						dependencyElement.attributeValue("rev"));
 
 					string = sb.toString();
 
 					if (string.contains(name)) {
 						continue;
 					}
+
+					String org = GetterUtil.getString(
+						dependencyElement.attributeValue("org"));
+					String rev = GetterUtil.getString(
+						dependencyElement.attributeValue("rev"));
 
 					addIvyCacheJar(sb, ivyDirName, org + "/" + name, rev);
 				}

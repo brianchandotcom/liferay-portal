@@ -352,10 +352,10 @@ class Layout extends Component {
 			let priority = null;
 
 			if (this._draggingItemPosition === DRAG_POSITIONS.inside) {
-				this._moveItemInside(
+				layoutColumns = this._moveItemInside(
 					layoutColumns,
-					targetItem,
-					targetColumnIndex
+					this._draggingItem,
+					targetItem
 				);
 
 				parentPlid = targetItemPlid;
@@ -476,37 +476,67 @@ class Layout extends Component {
 	}
 
 	/**
+	 * Moves sourceItem inside targetItem and refresh targetItem children
 	 * @param {!Array} layoutColumns
+	 * @param {!Array} sourceItem
 	 * @param {!Array} targetItem
 	 * @param {!number} targetColumnIndex
 	 * @private
 	 * @review
 	 */
 
-	_moveItemInside(layoutColumns, targetItem, targetColumnIndex) {
-		if (targetItem.active) {
-			let nextColumn = null;
+	_moveItemInside(layoutColumns, sourceItem, targetItem) {
+		let nextLayoutColumns = layoutColumns;
 
-			if (layoutColumns[targetColumnIndex + 1]) {
-				nextColumn = layoutColumns[targetColumnIndex + 1];
+		const targetColumn = this._getParentColumnByPlid(
+			nextLayoutColumns,
+			targetItem.plid
+		);
+
+		const targetColumnIndex = nextLayoutColumns.indexOf(targetColumn);
+
+		if (targetItem.active) {
+			const nextColumn = nextLayoutColumns[targetColumnIndex + 1];
+
+			if (nextColumn) {
+				nextLayoutColumns = setIn(
+					nextLayoutColumns,
+					[
+						targetColumnIndex + 1,
+						nextColumn.length
+					],
+					sourceItem
+				);
 			}
 			else {
-				nextColumn = [];
-			}
+				nextLayoutColumns = setIn(
+					nextLayoutColumns,
+					[targetColumnIndex + 1],
+					[]
+				);
 
-			nextColumn.splice(nextColumn.length, 0, this._draggingItem);
+				nextLayoutColumns = setIn(
+					nextLayoutColumns,
+					[targetColumnIndex + 1, 0],
+					sourceItem
+				);
+			}
 		}
 
-		if (this._draggingItem.active && !this._currentPathItemPlid) {
-			layoutColumns = this._clearFollowingColumns(
-				layoutColumns,
+		if (sourceItem.active && !this._currentPathItemPlid) {
+			nextLayoutColumns = this._clearFollowingColumns(
+				nextLayoutColumns,
 				this._draggingItemColumnIndex
 			);
 
-			layoutColumns = this._deleteEmptyColumns(layoutColumns);
+			nextLayoutColumns = this._deleteEmptyColumns(nextLayoutColumns);
 		}
 
-		targetItem.hasChild = true;
+		return setIn(
+			nextLayoutColumns,
+			[targetColumnIndex, targetColumn.indexOf(targetItem), 'hasChild'],
+			true
+		);
 	}
 
 	/**

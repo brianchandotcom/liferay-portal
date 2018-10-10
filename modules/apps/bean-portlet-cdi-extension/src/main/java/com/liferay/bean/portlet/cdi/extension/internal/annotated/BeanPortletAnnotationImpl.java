@@ -99,11 +99,11 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 				if (values == null) {
 					values = new LinkedHashSet<>();
+
+					_liferayConfiguration.put(propertyName, values);
 				}
 
 				values.add(propertyValue);
-
-				_liferayConfiguration.put(propertyName, values);
 			}
 		}
 

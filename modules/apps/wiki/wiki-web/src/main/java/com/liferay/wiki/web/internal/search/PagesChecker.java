@@ -87,8 +87,6 @@ public class PagesChecker extends EmptyOnClickRowChecker {
 			return StringPool.BLANK;
 		}
 
-		String name = WikiPage.class.getSimpleName();
-
 		boolean showInput = false;
 
 		try {
@@ -113,7 +111,11 @@ public class PagesChecker extends EmptyOnClickRowChecker {
 		sb.append("['");
 		sb.append(_liferayPortletResponse.getNamespace());
 		sb.append(RowChecker.ROW_IDS);
-		sb.append(WikiPage.class.getSimpleName());
+
+		String name = WikiPage.class.getSimpleName();
+
+		sb.append(name);
+
 		sb.append("']");
 
 		String checkBoxRowIds = sb.toString();

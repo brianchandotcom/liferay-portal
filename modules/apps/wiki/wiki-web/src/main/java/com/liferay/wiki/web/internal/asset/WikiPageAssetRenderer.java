@@ -273,16 +273,16 @@ public class WikiPageAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, WikiPortletKeys.WIKI,
-			PortletRequest.RENDER_PHASE);
-
 		WikiPage previousVersionPage =
 			WikiPageLocalServiceUtil.getPreviousVersionPage(_page);
 
 		if (previousVersionPage.getVersion() == _page.getVersion()) {
 			return null;
 		}
+
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, WikiPortletKeys.WIKI,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/wiki/compare_versions");

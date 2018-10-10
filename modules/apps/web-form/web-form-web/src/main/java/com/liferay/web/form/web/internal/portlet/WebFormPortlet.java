@@ -137,9 +137,6 @@ public class WebFormPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String portletId = _portal.getPortletId(actionRequest);
 
 		PortletPreferences preferences =
@@ -184,12 +181,12 @@ public class WebFormPortlet extends MVCPortlet {
 			String fieldLabel = preferences.getValue(
 				"fieldLabel" + i, StringPool.BLANK);
 
-			String fieldType = preferences.getValue(
-				"fieldType" + i, StringPool.BLANK);
-
 			if (Validator.isNull(fieldLabel)) {
 				break;
 			}
+
+			String fieldType = preferences.getValue(
+				"fieldType" + i, StringPool.BLANK);
 
 			if (StringUtil.equalsIgnoreCase(fieldType, "paragraph")) {
 				continue;
@@ -199,6 +196,9 @@ public class WebFormPortlet extends MVCPortlet {
 		}
 
 		Set<String> validationErrors = null;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		WebFormServiceConfiguration webFormServiceConfiguration =
 			getWebFormServiceConfiguration(themeDisplay.getCompanyId());
@@ -359,16 +359,17 @@ public class WebFormPortlet extends MVCPortlet {
 			String fieldLabel = preferences.getValue(
 				"fieldLabel" + i, StringPool.BLANK);
 
-			String localizedfieldLabel = LocalizationUtil.getPreferencesValue(
-				preferences, "fieldLabel" + i, themeDisplay.getLanguageId());
-
 			if (Validator.isNull(fieldLabel)) {
 				break;
 			}
 
 			fieldLabels.add(fieldLabel);
 
+			String localizedfieldLabel = LocalizationUtil.getPreferencesValue(
+				preferences, "fieldLabel" + i, themeDisplay.getLanguageId());
+
 			sb.append(getCSVFormattedValue(localizedfieldLabel));
+
 			sb.append(csvSeparator);
 		}
 
@@ -593,6 +594,10 @@ public class WebFormPortlet extends MVCPortlet {
 			String fieldType = preferences.getValue(
 				"fieldType" + (i + 1), StringPool.BLANK);
 
+			if (Objects.equals(fieldType, "paragraph")) {
+				continue;
+			}
+
 			String fieldLabel = preferences.getValue(
 				"fieldLabel" + (i + 1), StringPool.BLANK);
 
@@ -601,10 +606,6 @@ public class WebFormPortlet extends MVCPortlet {
 			boolean fieldOptional = GetterUtil.getBoolean(
 				preferences.getValue(
 					"fieldOptional" + (i + 1), StringPool.BLANK));
-
-			if (Objects.equals(fieldType, "paragraph")) {
-				continue;
-			}
 
 			if (!fieldOptional && Validator.isNotNull(fieldLabel) &&
 				Validator.isNull(fieldValue)) {

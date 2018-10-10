@@ -49,16 +49,8 @@ import javax.xml.namespace.QName;
  */
 public abstract class BaseBeanPortletImpl implements BeanPortlet {
 
-	public BaseBeanPortletImpl(
-		Set<BeanMethod> beanMethods, Set<BeanMethod> wildcardBeanMethods) {
-
-		if (beanMethods != null) {
-			for (BeanMethod beanMethod : beanMethods) {
-				_addBeanMethod(beanMethod);
-			}
-		}
-
-		for (BeanMethod beanMethod : wildcardBeanMethods) {
+	public BaseBeanPortletImpl(Set<BeanMethod> beanMethods) {
+		for (BeanMethod beanMethod : beanMethods) {
 			_addBeanMethod(beanMethod);
 		}
 

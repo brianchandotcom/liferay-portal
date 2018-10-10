@@ -46,14 +46,13 @@ import javax.portlet.annotations.Supports;
 public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 	public BeanPortletAnnotationImpl(
-		Set<BeanMethod> beanMethods, Set<BeanMethod> wildcardBeanMethods,
-		String portletClassName, PortletConfiguration portletConfiguration,
-		String preferencesValidator,
+		Set<BeanMethod> beanMethods, String portletClassName,
+		PortletConfiguration portletConfiguration, String preferencesValidator,
 		LiferayPortletConfiguration liferayPortletConfiguration,
 		Map<String, Set<String>> descriptorLiferayConfiguration,
 		String descriptorDisplayCategory) {
 
-		super(beanMethods, wildcardBeanMethods);
+		super(beanMethods);
 
 		_portletClassName = portletClassName;
 		_preferencesValidator = preferencesValidator;

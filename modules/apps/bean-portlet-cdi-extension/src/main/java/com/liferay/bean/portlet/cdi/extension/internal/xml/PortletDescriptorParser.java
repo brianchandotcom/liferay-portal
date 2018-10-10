@@ -654,10 +654,12 @@ public class PortletDescriptorParser {
 		Set<BeanMethod> beanMethods = portletBeanMethods.get(portletName);
 
 		if (beanMethods == null) {
-			beanMethods = new HashSet<>();
+			beanMethods = new HashSet<>(wildcardBeanMethods);
 		}
 		else {
 			beanMethods = new HashSet<>(beanMethods);
+
+			beanMethods.addAll(wildcardBeanMethods);
 		}
 
 		Class<?> portletClass = null;
@@ -675,16 +677,15 @@ public class PortletDescriptorParser {
 			beanManager, portletClass, beanMethods);
 
 		return new BeanPortletDescriptorImpl(
-			portletName, beanMethods, wildcardBeanMethods, displayNames,
-			portletClassName, initParams, expirationCache,
-			supportedPortletModes, supportedWindowStates, supportedLocales,
-			resourceBundle, titles, shortTitles, keywords, descriptions,
-			preferences, preferencesValidator, securityRoleRefs,
-			supportedProcessingEvents, supportedPublishingEvents,
-			supportedPublicRenderParameters, containerRuntimeOptions,
-			portletDependencies, asyncSupported, multiPartSupported,
-			multiPartFileSizeThreshold, multiPartLocation, multiPartMaxFileSize,
-			multiPartMaxRequestSize,
+			portletName, beanMethods, displayNames, portletClassName,
+			initParams, expirationCache, supportedPortletModes,
+			supportedWindowStates, supportedLocales, resourceBundle, titles,
+			shortTitles, keywords, descriptions, preferences,
+			preferencesValidator, securityRoleRefs, supportedProcessingEvents,
+			supportedPublishingEvents, supportedPublicRenderParameters,
+			containerRuntimeOptions, portletDependencies, asyncSupported,
+			multiPartSupported, multiPartFileSizeThreshold, multiPartLocation,
+			multiPartMaxFileSize, multiPartMaxRequestSize,
 			displayDescriptorCategories.get(portletName),
 			liferayConfigurations.get(portletName));
 	}

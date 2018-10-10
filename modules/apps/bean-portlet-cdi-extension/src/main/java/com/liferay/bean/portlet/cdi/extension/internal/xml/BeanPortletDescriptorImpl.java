@@ -33,9 +33,9 @@ public class BeanPortletDescriptorImpl extends BaseBeanPortletImpl {
 
 	public BeanPortletDescriptorImpl(
 		String portletName, Set<BeanMethod> beanMethods,
-		Set<BeanMethod> wildcardBeanMethods, Map<String, String> displayNames,
-		String portletClassName, Map<String, String> initParams,
-		int expirationCache, Map<String, Set<String>> supportedPortletModes,
+		Map<String, String> displayNames, String portletClassName,
+		Map<String, String> initParams, int expirationCache,
+		Map<String, Set<String>> supportedPortletModes,
 		Map<String, Set<String>> supportedWindowStates,
 		Set<String> supportedLocales, String resourceBundle,
 		Map<String, String> titles, Map<String, String> shortTitles,
@@ -52,7 +52,7 @@ public class BeanPortletDescriptorImpl extends BaseBeanPortletImpl {
 		long multiPartMaxRequestSize, String displayCategory,
 		Map<String, Set<String>> liferayConfiguration) {
 
-		super(beanMethods, wildcardBeanMethods);
+		super(beanMethods);
 
 		_portletName = portletName;
 		_displayNames = displayNames;

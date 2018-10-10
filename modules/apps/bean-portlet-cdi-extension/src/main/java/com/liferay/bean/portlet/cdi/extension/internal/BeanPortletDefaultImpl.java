@@ -29,11 +29,10 @@ import java.util.Set;
 public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 
 	public BeanPortletDefaultImpl(
-		String portletName, Set<BeanMethod> beanMethods,
-		Set<BeanMethod> wildcardBeanMethods, String displayCategory,
+		String portletName, Set<BeanMethod> beanMethods, String displayCategory,
 		Map<String, Set<String>> liferayConfiguration) {
 
-		super(beanMethods, wildcardBeanMethods);
+		super(beanMethods);
 
 		_portletName = portletName;
 		_displayCategory = displayCategory;

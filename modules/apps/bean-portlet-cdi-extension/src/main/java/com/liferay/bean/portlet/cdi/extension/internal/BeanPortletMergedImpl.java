@@ -17,7 +17,6 @@ package com.liferay.bean.portlet.cdi.extension.internal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -38,8 +37,7 @@ public class BeanPortletMergedImpl extends BaseBeanPortletImpl {
 		super(
 			_mergeBeanMethods(
 				annotatedBeanPortlet.getBeanMethods(),
-				descriptorBeanPortlet.getBeanMethods()),
-			Collections.emptySet());
+				descriptorBeanPortlet.getBeanMethods()));
 
 		if (annotatedBeanPortlet.isAsyncSupported() ||
 			descriptorBeanPortlet.isAsyncSupported()) {

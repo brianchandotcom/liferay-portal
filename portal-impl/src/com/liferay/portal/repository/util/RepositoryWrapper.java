@@ -43,6 +43,10 @@ import java.util.List;
 public class RepositoryWrapper implements Repository {
 
 	public RepositoryWrapper(Repository repository) {
+		setRepository(repository);
+	}
+
+	public void setRepository(Repository repository) {
 		_repository = repository;
 	}
 
@@ -954,6 +958,6 @@ public class RepositoryWrapper implements Repository {
 		return _repository.verifyInheritableLock(folderId, lockUuid);
 	}
 
-	private final Repository _repository;
+	private Repository _repository;
 
 }

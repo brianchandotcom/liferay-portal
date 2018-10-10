@@ -2298,14 +2298,8 @@
 	<command name="ImportAndUseGlobalStructureAndTemplate" priority="5">
 		<property name="testray.component.names" value="Training" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
@@ -2323,10 +2317,8 @@
 			<var name="uploadFrom" value="dependencies" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/site-name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

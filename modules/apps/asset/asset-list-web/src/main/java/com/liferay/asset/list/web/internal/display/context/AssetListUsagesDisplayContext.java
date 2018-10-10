@@ -20,8 +20,8 @@ import com.liferay.asset.list.service.AssetListEntryUsageLocalServiceUtil;
 import com.liferay.asset.list.util.comparator.AssetListEntryUsageModifiedDateComparator;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -67,8 +67,7 @@ public class AssetListUsagesDisplayContext {
 	}
 
 	public String getAssetListEntryUsageName(
-			AssetListEntryUsage assetListEntryUsage)
-		throws PortalException {
+		AssetListEntryUsage assetListEntryUsage) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -76,15 +75,23 @@ public class AssetListUsagesDisplayContext {
 		long classNameId = assetListEntryUsage.getClassNameId();
 
 		if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
-			Layout layout = LayoutLocalServiceUtil.getLayout(
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(
 				assetListEntryUsage.getClassPK());
+
+			if (layout == null) {
+				return StringPool.BLANK;
+			}
 
 			return layout.getName(themeDisplay.getLocale());
 		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			LayoutPageTemplateEntryLocalServiceUtil.getLayoutPageTemplateEntry(
-				assetListEntryUsage.getClassPK());
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntry(assetListEntryUsage.getClassPK());
+
+		if (layoutPageTemplateEntry == null) {
+			return StringPool.BLANK;
+		}
 
 		return layoutPageTemplateEntry.getName();
 	}
@@ -177,7 +184,7 @@ public class AssetListUsagesDisplayContext {
 		return _redirect;
 	}
 
-	public SearchContainer getSearchContainer() throws PortalException {
+	public SearchContainer getSearchContainer() {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}

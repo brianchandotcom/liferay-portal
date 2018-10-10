@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-
 import java.io.IOException;
 
 import java.util.List;
@@ -86,11 +85,10 @@ public class DDMDataProviderInstancesServlet extends BaseDDMFormBuilderServlet {
 		HttpServletRequest request) {
 
 		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 			String languageId = themeDisplay.getLanguageId();
-
 
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 

@@ -12,10 +12,10 @@
 		]>
 	}
 	{@param actionList: list<[
-            value: string,
-            name: string
-        ]>
-    }
+			value: string,
+			name: string
+		]>
+	}
 	{@param conditions: list<[
 			binaryOperator: bool,
 			firstOperandOptions: list<[
@@ -242,10 +242,10 @@
 	{@param? _handleTargetSelection: any}
 
 	{@param actionList: list<[
-            value: string,
-            name: string
-        ]>
-    }
+			value: string,
+			name: string
+		]>
+	}
 	{@param? dataProvider: list<[
 			id: string,
 			name: string
@@ -264,7 +264,7 @@
 	}
 	{@param? actionSelected: string}
 	{@param? targetSelected: string}
-    {@param index: int}
+	{@param index: int}
 	{@param strings: [
 		chooseAnOption: string,
 		do: string,
@@ -283,6 +283,7 @@
 							</span>
 						</h4>
 					</div>
+
 					<div action-type-index="{$index}" class="action-type form-group-item">
 						{delcall PageRenderer.RegisterFieldType variant="'select'"}
 							{param events: [
@@ -319,11 +320,13 @@
 						{/call}
 					{/if}
 				</div>
+
 				<div class="timeline-increment">
 					<span class="timeline-icon"></span>
 				</div>
 			</div>
 		</div>
+
 		<div class="container-trash">
 			{call ClayButton.render}
 				{param events: [

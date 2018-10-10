@@ -249,6 +249,13 @@ public class DDMFormAdminDisplayContext {
 		return _ddmFormWebConfiguration.csvExport();
 	}
 
+	public String getDataProviderInstancesURL() throws PortalException {
+		DDMFormBuilderSettingsResponse ddmFormBuilderSettingsResponse =
+			getDDMFormBuilderSettingsResponse();
+
+		return ddmFormBuilderSettingsResponse.getDataProviderInstancesURL();
+	}
+
 	public JSONArray getDDMFormFieldTypesJSONArray() throws PortalException {
 		List<DDMFormFieldType> formFieldTypes =
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes();
@@ -746,12 +753,6 @@ public class DDMFormAdminDisplayContext {
 			getDDMFormBuilderSettingsResponse();
 
 		return ddmFormBuilderSettingsResponse.getRolesURL();
-	}
-
-	public String getDataProviderInstancesURL() throws PortalException {
-		DDMFormBuilderSettingsResponse ddmFormBuilderSettingsResponse =
-			getDDMFormBuilderSettingsResponse();
-		return ddmFormBuilderSettingsResponse.getDataProviderInstancesURL();
 	}
 
 	public long getScopeGroupId() {

@@ -177,6 +177,7 @@ class Select extends Component {
 		}
 
 		const selectedValue = newValue && newValue.length ? newValue[0] : '';
+
 		const selectedLabel = this._getSelectedLabel(selectedValue);
 
 		return {

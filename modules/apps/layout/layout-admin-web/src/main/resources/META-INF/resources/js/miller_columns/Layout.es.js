@@ -149,13 +149,13 @@ class Layout extends Component {
 	_getLayoutColumnItemByPlid(layoutColumns, plid) {
 		let item = null;
 
-		for (let i = 0; i < layoutColumns.length; i++) {
-			for (let j = 0; j < layoutColumns[i].length; j++) {
-				if (layoutColumns[i][j].plid === plid) {
-					item = layoutColumns[i][j];
-				}
+		layoutColumns.forEach(
+			layoutColumn => {
+				item = layoutColumn.find(
+					_item => _item.plid === plid
+				);
 			}
-		}
+		);
 
 		return item;
 	}
@@ -171,13 +171,17 @@ class Layout extends Component {
 	_getParentColumnByPlid(layoutColumns, plid) {
 		let column = null;
 
-		for (let i = 0; i < layoutColumns.length; i++) {
-			for (let j = 0; j < layoutColumns[i].length; j++) {
-				if (layoutColumns[i][j].plid === plid) {
-					column = layoutColumns[i];
+		layoutColumns.forEach(
+			layoutColumn => {
+				const item = layoutColumn.find(
+					_item => _item.plid === plid
+				);
+
+				if (item) {
+					column = layoutColumn;
 				}
 			}
-		}
+		);
 
 		return column;
 	}

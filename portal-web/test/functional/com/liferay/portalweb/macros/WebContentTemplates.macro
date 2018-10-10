@@ -80,6 +80,10 @@
 		<if>
 			<isset var="templateDescription" />
 			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panel" value="Details" />
+				</execute>
+
 				<execute macro="PortletEntry#inputDescription">
 					<var name="description" value="${templateDescription}" />
 				</execute>

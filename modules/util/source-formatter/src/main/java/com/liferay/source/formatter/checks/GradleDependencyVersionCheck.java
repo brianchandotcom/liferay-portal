@@ -202,8 +202,6 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 		_publishedMajorVersionsMap = new HashMap<>();
 
 		for (Map.Entry<String, String> entry : bundleVersionsMap.entrySet()) {
-			String bundleSymbolicName = entry.getKey();
-
 			String bundleVersion = entry.getValue();
 
 			String majorVersion = _getMajorVersion(bundleVersion);
@@ -221,7 +219,7 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 			}
 
 			_publishedMajorVersionsMap.put(
-				bundleSymbolicName, publishedMajorVersion);
+				entry.getKey(), publishedMajorVersion);
 		}
 
 		return _publishedMajorVersionsMap;

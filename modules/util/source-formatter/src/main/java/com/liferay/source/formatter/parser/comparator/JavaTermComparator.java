@@ -177,11 +177,12 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 
 	private int _compareParameterTypes(JavaTerm javaTerm1, JavaTerm javaTerm2) {
 		JavaSignature javaSignature1 = javaTerm1.getSignature();
-		JavaSignature javaSignature2 = javaTerm2.getSignature();
 
 		if ((javaSignature1 == null) || (javaSignature1 == null)) {
 			return 0;
 		}
+
+		JavaSignature javaSignature2 = javaTerm2.getSignature();
 
 		List<JavaParameter> parameters1 = javaSignature1.getParameters();
 		List<JavaParameter> parameters2 = javaSignature2.getParameters();

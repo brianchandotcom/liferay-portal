@@ -113,14 +113,14 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 
 		List<String> columnNames = new ArrayList<>();
 
-		Pattern pattern = Pattern.compile(
-			"create table " + entityName + "_? \\(\n([\\s\\S]*?)\n\\);");
-
 		String tablesContent = _getTablesContent(fileName, absolutePath);
 
 		if (tablesContent == null) {
 			return columnNames;
 		}
+
+		Pattern pattern = Pattern.compile(
+			"create table " + entityName + "_? \\(\n([\\s\\S]*?)\n\\);");
 
 		Matcher matcher = pattern.matcher(tablesContent);
 

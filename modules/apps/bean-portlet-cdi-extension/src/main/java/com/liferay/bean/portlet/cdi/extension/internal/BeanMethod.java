@@ -14,6 +14,8 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
+import com.liferay.petra.lang.HashUtil;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -163,7 +165,11 @@ public class BeanMethod implements Comparable<BeanMethod> {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(_method, _ordinal, _type);
+		int hashCode = HashUtil.hash(0, _method);
+
+		hashCode = HashUtil.hash(hashCode, _ordinal);
+
+		return HashUtil.hash(hashCode, _type);
 	}
 
 	public Object invoke(Object... args)

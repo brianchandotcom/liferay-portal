@@ -152,13 +152,13 @@ public class LayoutTemplateImpl
 
 	@Override
 	public String getStaticResourcePath() {
-		String proxyPath = PortalUtil.getPathProxy();
-
 		String contextPath = getContextPath();
 
 		if (!isWARFile()) {
 			return contextPath;
 		}
+
+		String proxyPath = PortalUtil.getPathProxy();
 
 		return proxyPath.concat(contextPath);
 	}

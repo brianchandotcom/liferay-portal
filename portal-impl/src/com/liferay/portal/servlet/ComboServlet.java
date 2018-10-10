@@ -408,10 +408,6 @@ public class ComboServlet extends HttpServlet {
 			return null;
 		}
 
-		PortletApp portletApp = portlet.getPortletApp();
-
-		ServletContext servletContext = portletApp.getServletContext();
-
 		String resourcePath = getResourcePath(modulePath);
 
 		if (!PortalUtil.isValidResourceId(resourcePath)) {
@@ -425,6 +421,10 @@ public class ComboServlet extends HttpServlet {
 
 			return null;
 		}
+
+		PortletApp portletApp = portlet.getPortletApp();
+
+		ServletContext servletContext = portletApp.getServletContext();
 
 		return servletContext.getRequestDispatcher(resourcePath);
 	}

@@ -44,15 +44,15 @@ public abstract class BaseConnectionPoolMetrics
 	protected abstract String getPoolName();
 
 	protected void initializeConnectionPool() {
-		LazyConnectionDataSourceProxy lazyConnectionDataSourceProxy =
-			(LazyConnectionDataSourceProxy)PortalBeanLocatorUtil.locate(
-				"counterDataSource");
-
 		Object dataSource = getDataSource();
 
 		if (dataSource == null) {
 			return;
 		}
+
+		LazyConnectionDataSourceProxy lazyConnectionDataSourceProxy =
+			(LazyConnectionDataSourceProxy)PortalBeanLocatorUtil.locate(
+				"counterDataSource");
 
 		if (dataSource.equals(
 				lazyConnectionDataSourceProxy.getTargetDataSource())) {

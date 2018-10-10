@@ -973,19 +973,8 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected long updateStructure(ResultSet rs) throws Exception {
-		String uuid_ = rs.getString("uuid_");
-		long id_ = rs.getLong("id_");
 		long groupId = rs.getLong("groupId");
-		long companyId = rs.getLong("companyId");
-		long userId = rs.getLong("userId");
-		String userName = rs.getString("userName");
-		Timestamp createDate = rs.getTimestamp("createDate");
-		Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
 		String structureId = rs.getString("structureId");
-		String parentStructureId = rs.getString("parentStructureId");
-		String name = rs.getString("name");
-		String description = rs.getString("description");
-		String xsd = rs.getString("xsd");
 
 		Long ddmStructureId = _ddmStructureIds.get(groupId + "#" + structureId);
 
@@ -995,10 +984,23 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 		ddmStructureId = increment();
 
+		String uuid_ = rs.getString("uuid_");
+		long companyId = rs.getLong("companyId");
+		long userId = rs.getLong("userId");
+		String userName = rs.getString("userName");
+		Timestamp createDate = rs.getTimestamp("createDate");
+		Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+		String parentStructureId = rs.getString("parentStructureId");
+		String name = rs.getString("name");
+		String description = rs.getString("description");
+		String xsd = rs.getString("xsd");
+
 		addDDMStructure(
 			uuid_, ddmStructureId, groupId, companyId, userId, userName,
 			createDate, modifiedDate, parentStructureId, structureId, name,
 			description, xsd);
+
+		long id_ = rs.getLong("id_");
 
 		updateJournalArticleClassNameIdAndClassPK(id_, ddmStructureId);
 

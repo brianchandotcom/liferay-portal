@@ -51,7 +51,32 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 
 	public BaseBeanPortletImpl(Set<BeanMethod> beanMethods) {
 		for (BeanMethod beanMethod : beanMethods) {
-			_addBeanMethod(beanMethod);
+			_beanMethods.compute(
+				beanMethod.getType(),
+				(methodType, valueBeanMethods) -> {
+					if (valueBeanMethods == null) {
+						valueBeanMethods = new ArrayList<>();
+					}
+
+					if ((methodType == MethodType.HEADER) ||
+						(methodType == MethodType.RENDER) ||
+						(methodType == MethodType.SERVE_RESOURCE)) {
+
+						int index = Collections.binarySearch(
+							valueBeanMethods, beanMethod);
+
+						if (index < 0) {
+							index = -index - 1;
+						}
+
+						valueBeanMethods.add(index, beanMethod);
+					}
+					else {
+						valueBeanMethods.add(beanMethod);
+					}
+
+					return valueBeanMethods;
+				});
 		}
 
 		List<BeanMethod> eventBeanMethods = _beanMethods.get(MethodType.EVENT);
@@ -607,35 +632,6 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 		if (defaultValue != null) {
 			dictionary.put(key, defaultValue);
 		}
-	}
-
-	private void _addBeanMethod(BeanMethod beanMethod) {
-		_beanMethods.compute(
-			beanMethod.getType(),
-			(methodType, beanMethods) -> {
-				if (beanMethods == null) {
-					beanMethods = new ArrayList<>();
-				}
-
-				if ((methodType == MethodType.HEADER) ||
-					(methodType == MethodType.RENDER) ||
-					(methodType == MethodType.SERVE_RESOURCE)) {
-
-					int index = Collections.binarySearch(
-						beanMethods, beanMethod);
-
-					if (index < 0) {
-						index = -index - 1;
-					}
-
-					beanMethods.add(index, beanMethod);
-				}
-				else {
-					beanMethods.add(beanMethod);
-				}
-
-				return beanMethods;
-			});
 	}
 
 	private String _getPublicRenderParameterNamespaceURI(

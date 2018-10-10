@@ -141,9 +141,6 @@ public class BookmarksFolderStagedModelRepository
 			BookmarksFolder bookmarksFolder)
 		throws PortletDataException {
 
-		long userId = portletDataContext.getUserId(
-			bookmarksFolder.getUserUuid());
-
 		BookmarksFolder existingFolder = fetchStagedModelByUuidAndGroupId(
 			bookmarksFolder.getUuid(), portletDataContext.getScopeGroupId());
 
@@ -159,6 +156,9 @@ public class BookmarksFolderStagedModelRepository
 
 		try {
 			if (trashHandler.isRestorable(existingFolder.getFolderId())) {
+				long userId = portletDataContext.getUserId(
+					bookmarksFolder.getUserUuid());
+
 				trashHandler.restoreTrashEntry(
 					userId, existingFolder.getFolderId());
 			}

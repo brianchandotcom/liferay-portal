@@ -159,14 +159,14 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		int type = ParamUtil.getInteger(actionRequest, "type");
 
 		if (type == SocialRelationConstants.TYPE_BI_CONNECTION) {
 			return;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		for (long userId : getUserIds(actionRequest)) {
 			if (userId == themeDisplay.getUserId()) {

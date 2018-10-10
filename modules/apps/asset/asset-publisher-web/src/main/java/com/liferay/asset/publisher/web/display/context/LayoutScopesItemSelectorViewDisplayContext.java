@@ -86,11 +86,11 @@ public class LayoutScopesItemSelectorViewDisplayContext
 			List<Group> groups, Boolean privateLayout)
 		throws Exception {
 
-		List<Group> filteredGroups = new ArrayList();
-
 		if (privateLayout == null) {
 			return groups;
 		}
+
+		List<Group> filteredGroups = new ArrayList();
 
 		for (Group group : groups) {
 			if (!group.isLayout()) {

@@ -88,10 +88,6 @@ public class DeleteFolderPortletConfigurationIcon
 
 		deleteURL.setParameter(Constants.CMD, cmd);
 
-		PortletURL parentFolderURL = _portal.getControlPanelPortletURL(
-			portletRequest, BookmarksPortletKeys.BOOKMARKS_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
 		BookmarksFolder folder = null;
 
 		try {
@@ -100,6 +96,10 @@ public class DeleteFolderPortletConfigurationIcon
 		catch (Exception e) {
 			return null;
 		}
+
+		PortletURL parentFolderURL = _portal.getControlPanelPortletURL(
+			portletRequest, BookmarksPortletKeys.BOOKMARKS_ADMIN,
+			PortletRequest.RENDER_PHASE);
 
 		long parentFolderId = folder.getParentFolderId();
 

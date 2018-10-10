@@ -117,14 +117,15 @@ public class AssetCategoriesSelectorPortlet extends MVCPortlet {
 
 		long categoryId = ParamUtil.getLong(portletRequest, "categoryId");
 		long vocabularyId = ParamUtil.getLong(portletRequest, "vocabularyId");
-		int start = ParamUtil.getInteger(
-			portletRequest, "start", QueryUtil.ALL_POS);
-		int end = ParamUtil.getInteger(
-			portletRequest, "end", QueryUtil.ALL_POS);
 
 		if ((categoryId <= 0) && (vocabularyId <= 0)) {
 			return Collections.emptyList();
 		}
+
+		int start = ParamUtil.getInteger(
+			portletRequest, "start", QueryUtil.ALL_POS);
+		int end = ParamUtil.getInteger(
+			portletRequest, "end", QueryUtil.ALL_POS);
 
 		if (categoryId > 0) {
 			return _assetCategoryService.getChildCategories(

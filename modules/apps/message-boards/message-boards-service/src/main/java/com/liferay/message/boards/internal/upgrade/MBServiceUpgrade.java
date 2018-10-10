@@ -17,9 +17,22 @@ package com.liferay.message.boards.internal.upgrade;
 import com.liferay.message.boards.internal.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.message.boards.internal.upgrade.v1_0_1.UpgradeUnsupportedGuestPermissions;
 import com.liferay.message.boards.internal.upgrade.v1_1_0.UpgradeMBThread;
+import com.liferay.message.boards.internal.upgrade.v2_0_0.util.MBBanTable;
+import com.liferay.message.boards.internal.upgrade.v2_0_0.util.MBCategoryTable;
+import com.liferay.message.boards.internal.upgrade.v2_0_0.util.MBDiscussionTable;
+import com.liferay.message.boards.internal.upgrade.v2_0_0.util.MBMailingListTable;
+import com.liferay.message.boards.internal.upgrade.v2_0_0.util.MBMessageTable;
+import com.liferay.message.boards.internal.upgrade.v2_0_0.util.MBStatsUserTable;
+import com.liferay.message.boards.internal.upgrade.v2_0_0.util.MBThreadFlagTable;
+import com.liferay.message.boards.internal.upgrade.v2_0_0.util.MBThreadTable;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -44,6 +57,24 @@ public class MBServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.message.boards.service", "1.0.1", "1.1.0",
 			new UpgradeMBThread());
+
+		DB db = DBManagerUtil.getDB();
+
+		if (db.getDBType() == DBType.SQLSERVER) {
+			Class<?>[] upgradeDatetimeTableClasses = {
+				MBBanTable.class, MBCategoryTable.class,
+				MBDiscussionTable.class, MBMailingListTable.class,
+				MBMessageTable.class, MBStatsUserTable.class,
+				MBThreadFlagTable.class, MBThreadTable.class
+			};
+
+			registry.register(
+				"2.0.2", "3.0.0",
+				new BaseUpgradeSQLServerDatetime(upgradeDatetimeTableClasses));
+		}
+		else {
+			registry.register("2.0.2", "3.0.0", new DummyUpgradeStep());
+		}
 	}
 
 	@Reference

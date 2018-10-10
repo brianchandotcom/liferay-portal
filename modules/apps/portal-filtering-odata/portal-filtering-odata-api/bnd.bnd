@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal Filtering OData API
+Bundle-SymbolicName: com.liferay.portal.filtering.odata.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.filtering.odata.architect.entity,\
+	com.liferay.portal.filtering.odata.architect.filter,\
+	com.liferay.portal.filtering.odata.architect.filter.expression,\
+	com.liferay.portal.filtering.odata.architect.sort

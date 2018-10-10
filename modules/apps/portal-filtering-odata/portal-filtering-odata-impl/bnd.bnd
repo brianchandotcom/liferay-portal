@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Portal Filtering OData Implementation
+Bundle-SymbolicName: com.liferay.portal.filtering.odata.impl
+Bundle-Version: 1.0.0
+Import-Package:\
+	!com.fasterxml.jackson.*,\
+	\
+	*

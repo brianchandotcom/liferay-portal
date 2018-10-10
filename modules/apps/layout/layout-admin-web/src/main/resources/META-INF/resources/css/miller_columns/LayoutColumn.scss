@@ -71,6 +71,11 @@
 	width: 24px;
 }
 
+.list-group-item.drag-layout-column-item {
+	height: 68px;
+	max-height: 68px;
+}
+
 .list-group-item.drag-layout-column-item.dragging {
 	background-color: #F0F5FF;
 	border: none;
@@ -94,7 +99,7 @@
 	}
 }
 
-.list-group-item:last-child {
+.list-group-item.drag-layout-column-item:last-child {
 	border-radius: 0;
 }
 

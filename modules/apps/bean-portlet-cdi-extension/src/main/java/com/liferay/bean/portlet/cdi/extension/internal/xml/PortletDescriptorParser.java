@@ -15,6 +15,7 @@
 package com.liferay.bean.portlet.cdi.extension.internal.xml;
 
 import com.liferay.bean.portlet.cdi.extension.internal.BeanApp;
+import com.liferay.bean.portlet.cdi.extension.internal.BeanAppImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.BeanFilter;
 import com.liferay.bean.portlet.cdi.extension.internal.BeanFilterImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.BeanMethod;
@@ -270,7 +271,7 @@ public class PortletDescriptorParser {
 					ordinal, listenerClassName));
 		}
 
-		return new BeanAppDescriptorImpl(
+		return new BeanAppImpl(
 			specVersion, defaultNamespace, events, publicRenderParameters,
 			containerRuntimeOptions, validCustomPortletModes, portletListeners);
 	}

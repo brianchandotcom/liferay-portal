@@ -16,7 +16,6 @@ package com.liferay.bean.portlet.cdi.extension.internal;
 
 import com.liferay.bean.portlet.LiferayPortletConfiguration;
 import com.liferay.bean.portlet.LiferayPortletConfigurations;
-import com.liferay.bean.portlet.cdi.extension.internal.annotated.BeanAppAnnotationImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.annotated.BeanPortletAnnotationImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.annotated.type.ApplicationScopedAnnotatedTypeImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.annotated.type.PortletConfigAnnotatedTypeImpl;
@@ -30,11 +29,13 @@ import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBean;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.DisplayDescriptorParser;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.LiferayDescriptorParser;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletDescriptorParser;
+import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletQNameUtil;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletScannerUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PortletServlet;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
@@ -90,6 +91,7 @@ import javax.portlet.annotations.PortletLifecycleFilter;
 import javax.portlet.annotations.PortletListener;
 import javax.portlet.annotations.PortletName;
 import javax.portlet.annotations.PortletPreferencesValidator;
+import javax.portlet.annotations.PortletQName;
 import javax.portlet.annotations.PortletRequestScoped;
 import javax.portlet.annotations.PortletSerializable;
 import javax.portlet.annotations.PortletSessionScoped;
@@ -108,6 +110,8 @@ import javax.portlet.filter.ResourceFilter;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
+
+import javax.xml.namespace.QName;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -651,14 +655,100 @@ public class BeanPortletExtension implements Extension {
 			portletApplication = _portletApplication;
 		}
 
-		BeanApp annotatedBeanApp = new BeanAppAnnotationImpl(
-			portletApplication, portletListeners);
+		String specVersion = GetterUtil.getString(
+			portletApplication.version(), "3.0");
+
+		String defaultNamespace = portletApplication.defaultNamespaceURI();
+
+		List<Event> events = new ArrayList<>();
+
+		for (EventDefinition eventDefinition : portletApplication.events()) {
+			String valueType = null;
+
+			Class<?> payloadType = eventDefinition.payloadType();
+
+			if (payloadType != null) {
+				valueType = payloadType.getName();
+			}
+
+			List<QName> aliasQNames = new ArrayList<>();
+
+			for (PortletQName portletQName : eventDefinition.alias()) {
+				aliasQNames.add(PortletQNameUtil.toQName(portletQName));
+			}
+
+			events.add(
+				new EventImpl(
+					PortletQNameUtil.toQName(eventDefinition.qname()),
+					valueType, aliasQNames));
+		}
+
+		Map<String, PublicRenderParameter> publicRenderParameters =
+			new HashMap<>();
+
+		for (PublicRenderParameterDefinition
+				publicRenderParameterDefinition:
+					portletApplication.publicParams()) {
+
+			PortletQName portletQName = publicRenderParameterDefinition.qname();
+
+			PublicRenderParameter publicRenderParameter =
+				new PublicRenderParameterImpl(
+					publicRenderParameterDefinition.identifier(),
+					new QName(
+						portletQName.namespaceURI(), portletQName.localPart()));
+
+			publicRenderParameters.put(
+				publicRenderParameter.getIdentifier(), publicRenderParameter);
+		}
+
+		Map<String, List<String>> containerRuntimeOptions = new HashMap<>();
+
+		for (RuntimeOption runtimeOption :
+				portletApplication.runtimeOptions()) {
+
+			containerRuntimeOptions.put(
+				runtimeOption.name(), Arrays.asList(runtimeOption.values()));
+		}
+
+		Set<String> customPortletModes = new LinkedHashSet<>();
+
+		for (CustomPortletMode customPortletMode :
+				portletApplication.customPortletModes()) {
+
+			if (!customPortletMode.portalManaged()) {
+				customPortletModes.add(customPortletMode.name());
+			}
+		}
 
 		if (_beanApp == null) {
-			_beanApp = annotatedBeanApp;
+			_beanApp = new BeanAppImpl(
+				specVersion, defaultNamespace, events, publicRenderParameters,
+				containerRuntimeOptions, customPortletModes, portletListeners);
 		}
 		else {
-			_beanApp = new BeanAppMergedImpl(annotatedBeanApp, _beanApp);
+			if (Validator.isNotNull(_beanApp.getSpecVersion())) {
+				specVersion = _beanApp.getSpecVersion();
+			}
+
+			if (Validator.isNotNull(_beanApp.getDefaultNamespace())) {
+				defaultNamespace = _beanApp.getDefaultNamespace();
+			}
+
+			events.addAll(_beanApp.getEvents());
+
+			publicRenderParameters.putAll(_beanApp.getPublicRenderParameters());
+
+			containerRuntimeOptions.putAll(
+				_beanApp.getContainerRuntimeOptions());
+
+			customPortletModes.addAll(_beanApp.getCustomPortletModes());
+
+			portletListeners.addAll(_beanApp.getPortletListeners());
+
+			_beanApp = new BeanAppImpl(
+				specVersion, defaultNamespace, events, publicRenderParameters,
+				containerRuntimeOptions, customPortletModes, portletListeners);
 		}
 
 		String preferencesValidator = preferencesValidators.get(

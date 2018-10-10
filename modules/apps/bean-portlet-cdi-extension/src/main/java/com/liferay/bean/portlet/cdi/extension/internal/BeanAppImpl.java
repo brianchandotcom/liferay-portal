@@ -14,11 +14,6 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
-import com.liferay.portal.kernel.util.Validator;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -26,50 +21,22 @@ import java.util.Set;
 /**
  * @author Neil Griffin
  */
-public class BeanAppMergedImpl implements BeanApp {
+public class BeanAppImpl implements BeanApp {
 
-	public BeanAppMergedImpl(
-		BeanApp annotatedBeanApp, BeanApp descriptorBeanApp) {
+	public BeanAppImpl(
+		String specVersion, String defaultNamespace, List<Event> events,
+		Map<String, PublicRenderParameter> publicRenderParameters,
+		Map<String, List<String>> containerRuntimeOptions,
+		Set<String> customPortletModes,
+		List<Map.Entry<Integer, String>> portletListeners) {
 
-		_containerRuntimeOptions = new HashMap<>(
-			annotatedBeanApp.getContainerRuntimeOptions());
-
-		_containerRuntimeOptions.putAll(
-			descriptorBeanApp.getContainerRuntimeOptions());
-
-		_customPortletModes = new LinkedHashSet<>(
-			annotatedBeanApp.getCustomPortletModes());
-
-		_customPortletModes.addAll(descriptorBeanApp.getCustomPortletModes());
-
-		if (Validator.isNull(descriptorBeanApp.getDefaultNamespace())) {
-			_defaultNamespace = annotatedBeanApp.getDefaultNamespace();
-		}
-		else {
-			_defaultNamespace = descriptorBeanApp.getDefaultNamespace();
-		}
-
-		_events = new ArrayList<>(annotatedBeanApp.getEvents());
-
-		_events.addAll(descriptorBeanApp.getEvents());
-
-		_publicRenderParameterMap = new HashMap<>(
-			annotatedBeanApp.getPublicRenderParameters());
-
-		_publicRenderParameterMap.putAll(
-			descriptorBeanApp.getPublicRenderParameters());
-
-		if (Validator.isNull(descriptorBeanApp.getSpecVersion())) {
-			_specVersion = annotatedBeanApp.getSpecVersion();
-		}
-		else {
-			_specVersion = descriptorBeanApp.getSpecVersion();
-		}
-
-		_portletListeners = new ArrayList<>(
-			annotatedBeanApp.getPortletListeners());
-
-		_portletListeners.addAll(descriptorBeanApp.getPortletListeners());
+		_specVersion = specVersion;
+		_defaultNamespace = defaultNamespace;
+		_events = events;
+		_publicRenderParameters = publicRenderParameters;
+		_containerRuntimeOptions = containerRuntimeOptions;
+		_customPortletModes = customPortletModes;
+		_portletListeners = portletListeners;
 	}
 
 	@Override
@@ -99,7 +66,7 @@ public class BeanAppMergedImpl implements BeanApp {
 
 	@Override
 	public Map<String, PublicRenderParameter> getPublicRenderParameters() {
-		return _publicRenderParameterMap;
+		return _publicRenderParameters;
 	}
 
 	@Override
@@ -112,7 +79,7 @@ public class BeanAppMergedImpl implements BeanApp {
 	private final String _defaultNamespace;
 	private final List<Event> _events;
 	private final List<Map.Entry<Integer, String>> _portletListeners;
-	private final Map<String, PublicRenderParameter> _publicRenderParameterMap;
+	private final Map<String, PublicRenderParameter> _publicRenderParameters;
 	private final String _specVersion;
 
 }

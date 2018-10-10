@@ -367,12 +367,12 @@ public class SiteNavigationAdminDisplayContext {
 	}
 
 	public boolean isShowAddButton() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		if (!hasEditPermission()) {
 			return false;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		if (SiteNavigationPermission.contains(
 				themeDisplay.getPermissionChecker(),

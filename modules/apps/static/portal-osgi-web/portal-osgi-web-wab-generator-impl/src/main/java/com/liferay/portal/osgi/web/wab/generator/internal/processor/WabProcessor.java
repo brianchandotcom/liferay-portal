@@ -609,7 +609,6 @@ public class WabProcessor {
 					_importPackageParameters.entrySet()) {
 
 				String importPackageName = entry.getKey();
-				Attrs attrs = entry.getValue();
 
 				boolean containedInClasspath = false;
 
@@ -628,6 +627,8 @@ public class WabProcessor {
 				}
 
 				sb.append(importPackageName);
+
+				Attrs attrs = entry.getValue();
 
 				if (!attrs.isEmpty()) {
 					sb.append(";");

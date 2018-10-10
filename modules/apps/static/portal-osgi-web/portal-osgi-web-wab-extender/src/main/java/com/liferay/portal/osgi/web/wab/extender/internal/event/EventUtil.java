@@ -194,11 +194,11 @@ public class EventUtil
 
 		properties.put("timestamp", System.currentTimeMillis());
 
-		Event event = new Event(eventTopic, properties);
-
 		if (_eventAdmin == null) {
 			return;
 		}
+
+		Event event = new Event(eventTopic, properties);
 
 		_eventAdmin.sendEvent(event);
 	}

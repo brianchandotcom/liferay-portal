@@ -14,16 +14,14 @@
 
 package com.liferay.layout.type.controller.content.internal.display.context;
 
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
-import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.util.FragmentEntryRenderUtil;
-import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.page.template.util.LayoutPageTemplateStructureRenderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.Validator;
-
-import java.util.List;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,30 +39,20 @@ public class ContentLayoutTypeControllerDisplayContext {
 	}
 
 	public String getRenderedContent() throws PortalException {
-		List<FragmentEntryLink> fragmentEntryLinks =
-			(List<FragmentEntryLink>)_request.getAttribute(
-				ContentLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS);
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		if ((fragmentEntryLinks == null) || fragmentEntryLinks.isEmpty()) {
-			return StringPool.BLANK;
-		}
+		Layout layout = themeDisplay.getLayout();
 
-		StringBundler sb = new StringBundler(fragmentEntryLinks.size());
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(),
+					PortalUtil.getClassNameId(Layout.class.getName()),
+					layout.getPlid(), true);
 
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			sb.append(
-				FragmentEntryRenderUtil.renderFragmentEntryLink(
-					fragmentEntryLink, FragmentEntryLinkConstants.VIEW,
-					_request, _response));
-		}
-
-		String renderedContent = sb.toString();
-
-		if (Validator.isNull(renderedContent)) {
-			return StringPool.BLANK;
-		}
-
-		return renderedContent;
+		return LayoutPageTemplateStructureRenderUtil.renderLayoutContent(
+			_request, _response, layoutPageTemplateStructure);
 	}
 
 	private final HttpServletRequest _request;

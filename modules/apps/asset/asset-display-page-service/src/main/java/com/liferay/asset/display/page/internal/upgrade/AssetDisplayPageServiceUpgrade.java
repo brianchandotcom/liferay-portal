@@ -12,29 +12,26 @@
  * details.
  */
 
-package com.liferay.trash.internal.upgrade;
+package com.liferay.asset.display.page.internal.upgrade;
 
+import com.liferay.asset.display.page.internal.upgrade.v2_0_0.util.AssetDisplayPageEntryTable;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.trash.internal.upgrade.v1_0_0.UpgradeClassNames;
-import com.liferay.trash.internal.upgrade.v2_0_0.util.TrashEntryTable;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Eudaldo Alonso
+ * @author José Ángel Jiménez
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class TrashServiceUpgrade implements UpgradeStepRegistrator {
+public class AssetDisplayPageServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register("0.0.1", "1.0.0", new UpgradeClassNames());
-
 		registry.register(
 			"1.0.0", "2.0.0",
 			new BaseUpgradeSQLServerDatetime(
-				new Class<?>[] {TrashEntryTable.class}));
+				new Class<?>[] {AssetDisplayPageEntryTable.class}));
 	}
 
 }

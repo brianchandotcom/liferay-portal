@@ -47,6 +47,9 @@ import com.liferay.journal.internal.upgrade.v1_1_2.UpgradeCheckIntervalConfigura
 import com.liferay.journal.internal.upgrade.v1_1_3.UpgradeResourcePermissions;
 import com.liferay.journal.internal.upgrade.v1_1_4.UpgradeUrlTitle;
 import com.liferay.journal.internal.upgrade.v1_1_5.UpgradeContentImages;
+import com.liferay.journal.internal.upgrade.v2_0_0.util.JournalArticleTable;
+import com.liferay.journal.internal.upgrade.v2_0_0.util.JournalFeedTable;
+import com.liferay.journal.internal.upgrade.v2_0_0.util.JournalFolderTable;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -64,6 +67,7 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
@@ -171,6 +175,14 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.1.4", "1.1.5",
 			new UpgradeContentImages(_journalArticleImageUpgradeUtil));
+
+		registry.register(
+			"1.1.5", "2.0.0",
+			new BaseUpgradeSQLServerDatetime(
+				new Class<?>[] {
+					JournalArticleTable.class, JournalFeedTable.class,
+					JournalFolderTable.class
+				}));
 	}
 
 	protected void deleteTempImages() throws Exception {

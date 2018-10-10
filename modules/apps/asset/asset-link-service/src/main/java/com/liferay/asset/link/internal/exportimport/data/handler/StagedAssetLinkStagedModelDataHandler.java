@@ -15,16 +15,15 @@
 package com.liferay.asset.link.internal.exportimport.data.handler;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.adapter.StagedAssetLink;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.link.internal.exportimport.staged.model.repository.StagedAssetLinkStagedModelRepository;
+import com.liferay.asset.util.StagingAssetEntryHelper;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
-import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.xml.Element;
 
 import org.osgi.service.component.annotations.Component;
@@ -45,33 +44,6 @@ public class StagedAssetLinkStagedModelDataHandler
 		return CLASS_NAMES;
 	}
 
-	protected void addAssetReference(
-		PortletDataContext portletDataContext, StagedAssetLink stagedAssetLink,
-		Element stagedAssetLinkElement, AssetEntry assetEntry) {
-
-		AssetRenderer<? extends StagedModel> assetRenderer = null;
-		StagedModel stagedModel = null;
-
-		try {
-			assetRenderer =
-				(AssetRenderer<? extends StagedModel>)
-					assetEntry.getAssetRenderer();
-
-			stagedModel = assetRenderer.getAssetObject();
-		}
-		catch (Exception e) {
-			return;
-		}
-
-		if (stagedModel == null) {
-			return;
-		}
-
-		portletDataContext.addReferenceElement(
-			stagedAssetLink, stagedAssetLinkElement, stagedModel,
-			PortletDataContext.REFERENCE_TYPE_DEPENDENCY_DISPOSABLE, true);
-	}
-
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext,
@@ -84,14 +56,14 @@ public class StagedAssetLinkStagedModelDataHandler
 		AssetEntry assetEntry1 = _assetEntryLocalService.fetchEntry(
 			stagedAssetLink.getEntryId1());
 
-		addAssetReference(
+		_stagingAssetEntryHelper.addAssetReference(
 			portletDataContext, stagedAssetLink, stagedAssetLinkElement,
 			assetEntry1);
 
 		AssetEntry assetEntry2 = _assetEntryLocalService.fetchEntry(
 			stagedAssetLink.getEntryId2());
 
-		addAssetReference(
+		_stagingAssetEntryHelper.addAssetReference(
 			portletDataContext, stagedAssetLink, stagedAssetLinkElement,
 			assetEntry2);
 
@@ -154,5 +126,8 @@ public class StagedAssetLinkStagedModelDataHandler
 	private AssetEntryLocalService _assetEntryLocalService;
 	private StagedAssetLinkStagedModelRepository
 		_stagedAssetLinkStagedModelRepository;
+
+	@Reference
+	private StagingAssetEntryHelper _stagingAssetEntryHelper;
 
 }

@@ -48,6 +48,15 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 
 	@Override
 	public com.liferay.asset.list.model.AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
+		long assetListEntryId, long assetEntryId, int position,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetListEntryAssetEntryRelLocalService.addAssetListEntryAssetEntryRel(assetListEntryId,
+			assetEntryId, position, serviceContext);
+	}
+
+	@Override
+	public com.liferay.asset.list.model.AssetListEntryAssetEntryRel addAssetListEntryAssetEntryRel(
 		long assetListEntryId, long assetEntryId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -99,6 +108,12 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetListEntryAssetEntryRelLocalService.deleteAssetListEntryAssetEntryRel(assetListEntryId,
 			position);
+	}
+
+	@Override
+	public void deleteAssetListEntryAssetEntryRelByAssetListEntryId(
+		long assetListEntryId) {
+		_assetListEntryAssetEntryRelLocalService.deleteAssetListEntryAssetEntryRelByAssetListEntryId(assetListEntryId);
 	}
 
 	/**
@@ -370,6 +385,15 @@ public class AssetListEntryAssetEntryRelLocalServiceWrapper
 	public com.liferay.asset.list.model.AssetListEntryAssetEntryRel updateAssetListEntryAssetEntryRel(
 		com.liferay.asset.list.model.AssetListEntryAssetEntryRel assetListEntryAssetEntryRel) {
 		return _assetListEntryAssetEntryRelLocalService.updateAssetListEntryAssetEntryRel(assetListEntryAssetEntryRel);
+	}
+
+	@Override
+	public com.liferay.asset.list.model.AssetListEntryAssetEntryRel updateAssetListEntryAssetEntryRel(
+		long assetListEntryAssetEntryRelId, long assetListEntryId,
+		long assetEntryId, int position)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetListEntryAssetEntryRelLocalService.updateAssetListEntryAssetEntryRel(assetListEntryAssetEntryRelId,
+			assetListEntryId, assetEntryId, position);
 	}
 
 	@Override

@@ -176,6 +176,11 @@ public class AssetListEntryAssetEntryRelWrapper
 		return _assetListEntryAssetEntryRel.getAssetEntryId();
 	}
 
+	@Override
+	public String getAssetEntryUuid() {
+		return _assetListEntryAssetEntryRel.getAssetEntryUuid();
+	}
+
 	/**
 	* Returns the asset list entry asset entry rel ID of this asset list entry asset entry rel.
 	*

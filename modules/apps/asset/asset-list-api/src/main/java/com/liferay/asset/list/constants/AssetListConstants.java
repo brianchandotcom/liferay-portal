@@ -21,4 +21,6 @@ public class AssetListConstants {
 
 	public static final String RESOURCE_NAME = "com.liferay.asset.list";
 
+	public static final String SERVICE_NAME = "com.liferay.asset.list";
+
 }

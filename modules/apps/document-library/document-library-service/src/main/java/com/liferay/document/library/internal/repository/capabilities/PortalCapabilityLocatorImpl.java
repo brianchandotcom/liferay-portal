@@ -16,10 +16,14 @@ package com.liferay.document.library.internal.repository.capabilities;
 
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.sync.service.DLSyncEventLocalService;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
+import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.capabilities.CommentCapability;
 import com.liferay.portal.kernel.repository.capabilities.ConfigurationCapability;
+import com.liferay.portal.kernel.repository.capabilities.DynamicCapability;
 import com.liferay.portal.kernel.repository.capabilities.PortalCapabilityLocator;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.capabilities.RelatedModelCapability;
@@ -41,7 +45,10 @@ import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
 import com.liferay.trash.service.TrashEntryLocalService;
 import com.liferay.trash.service.TrashVersionLocalService;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -74,6 +81,13 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 		return new ConfigurationCapabilityImpl(
 			documentRepository,
 			RepositoryServiceAdapter.create(documentRepository));
+	}
+
+	@Override
+	public DynamicCapability getDynamicCapability(
+		DocumentRepository documentRepository) {
+
+		return new LiferayDynamicCapability(_dynamicCapabilities);
 	}
 
 	@Override
@@ -167,6 +181,17 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 			DLFileVersionServiceAdapter.create(documentRepository));
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_dynamicCapabilities = ServiceTrackerListFactory.open(
+			bundleContext, Capability.class);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_dynamicCapabilities.close();
+	}
+
 	private final ProcessorCapability _alwaysGeneratingProcessorCapability =
 		new LiferayProcessorCapability(
 			ProcessorCapability.ResourceGenerationStrategy.ALWAYS_GENERATE);
@@ -179,6 +204,7 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 	@Reference
 	private DLSyncEventLocalService _dlSyncEventLocalService;
 
+	private ServiceTrackerList<Capability, Capability> _dynamicCapabilities;
 	private final RepositoryEntryConverter _repositoryEntryConverter =
 		new RepositoryEntryConverter();
 	private final ProcessorCapability _reusingProcessorCapability =

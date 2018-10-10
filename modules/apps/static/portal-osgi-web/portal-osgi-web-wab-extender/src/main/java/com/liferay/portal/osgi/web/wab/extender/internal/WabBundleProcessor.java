@@ -588,14 +588,14 @@ public class WabBundleProcessor {
 			Bundle bundle, ServletContext servletContext)
 		throws IOException {
 
-		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
 		Enumeration<URL> initializerResources = bundle.getResources(
 			"META-INF/services/javax.servlet.ServletContainerInitializer");
 
 		if (initializerResources == null) {
 			return;
 		}
+
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
 		while (initializerResources.hasMoreElements()) {
 			URL url = initializerResources.nextElement();

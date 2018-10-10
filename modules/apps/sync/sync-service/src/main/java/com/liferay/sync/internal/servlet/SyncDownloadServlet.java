@@ -168,7 +168,6 @@ public class SyncDownloadServlet extends HttpServlet {
 			}
 			else {
 				long groupId = GetterUtil.getLong(pathArray[0]);
-				String fileUuid = pathArray[1];
 
 				Group group = _groupLocalService.fetchGroup(groupId);
 
@@ -182,9 +181,9 @@ public class SyncDownloadServlet extends HttpServlet {
 					return;
 				}
 
-				boolean patch = ParamUtil.getBoolean(request, "patch");
+				String fileUuid = pathArray[1];
 
-				if (patch) {
+				if (ParamUtil.getBoolean(request, "patch")) {
 					sendPatch(
 						request, response, user.getUserId(), groupId, fileUuid);
 				}

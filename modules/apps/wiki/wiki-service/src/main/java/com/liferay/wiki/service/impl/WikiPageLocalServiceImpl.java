@@ -360,11 +360,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			List<ObjectValuePair<String, InputStream>> inputStreamOVPs)
 		throws PortalException {
 
-		List<FileEntry> fileEntries = new ArrayList<>();
-
 		if (inputStreamOVPs.isEmpty()) {
 			return Collections.emptyList();
 		}
+
+		List<FileEntry> fileEntries = new ArrayList<>();
 
 		for (ObjectValuePair<String, InputStream> inputStreamOVP :
 				inputStreamOVPs) {

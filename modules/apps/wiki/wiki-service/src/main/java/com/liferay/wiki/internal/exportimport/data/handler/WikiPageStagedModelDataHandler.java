@@ -336,8 +336,6 @@ public class WikiPageStagedModelDataHandler
 			PortletDataContext portletDataContext, WikiPage page)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(page.getUserUuid());
-
 		WikiPage existingPage = fetchStagedModelByUuidAndGroupId(
 			page.getUuid(), portletDataContext.getScopeGroupId());
 
@@ -349,6 +347,8 @@ public class WikiPageStagedModelDataHandler
 			WikiPage.class.getName());
 
 		if (trashHandler.isRestorable(existingPage.getResourcePrimKey())) {
+			long userId = portletDataContext.getUserId(page.getUserUuid());
+
 			trashHandler.restoreTrashEntry(
 				userId, existingPage.getResourcePrimKey());
 		}

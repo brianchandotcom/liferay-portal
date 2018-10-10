@@ -41,12 +41,12 @@ public class TrashUndoUtil {
 			List<ObjectValuePair<String, Long>> entries)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		if ((entries == null) || entries.isEmpty()) {
 			return;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		List<String> restoreClassNames = new ArrayList<>();
 		List<String> restoreEntryLinks = new ArrayList<>();

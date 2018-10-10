@@ -229,9 +229,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			String cmd)
 		throws Exception {
 
-		LiferayActionResponse liferayActionResponse =
-			(LiferayActionResponse)actionResponse;
-
 		String className = StringUtil.replaceFirst(
 			cmd, "convertProcess.", StringPool.BLANK);
 
@@ -273,6 +270,9 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		String path = convertProcess.getPath();
 
 		if (path != null) {
+			LiferayActionResponse liferayActionResponse =
+				(LiferayActionResponse)actionResponse;
+
 			PortletURL portletURL = liferayActionResponse.createRenderURL();
 
 			portletURL.setParameter("mvcRenderCommandName", path);

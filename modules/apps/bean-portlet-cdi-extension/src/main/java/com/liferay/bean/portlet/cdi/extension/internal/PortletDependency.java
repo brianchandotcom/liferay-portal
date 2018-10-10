@@ -14,6 +14,7 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
@@ -66,7 +67,11 @@ public class PortletDependency {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(_name, _scope, _version);
+		int hashCode = HashUtil.hash(0, _name);
+
+		hashCode = HashUtil.hash(hashCode, _scope);
+
+		return HashUtil.hash(hashCode, _version);
 	}
 
 	@Override

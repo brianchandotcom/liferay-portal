@@ -126,9 +126,6 @@ public class RPCResponseTest {
 			AsyncBroker<Long, Serializable> asyncBroker =
 				NettyChannelAttributes.getAsyncBroker(_embeddedChannel);
 
-			NoticeableFuture<Serializable> noticeableFuture = asyncBroker.post(
-				_ID);
-
 			rpcResponse.execute(_embeddedChannel);
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
@@ -139,7 +136,11 @@ public class RPCResponseTest {
 				return;
 			}
 
+			NoticeableFuture<Serializable> noticeableFuture = asyncBroker.post(
+				_ID);
+
 			Assert.assertTrue(noticeableFuture.isCancelled());
+
 			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.remove(0);

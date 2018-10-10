@@ -1072,7 +1072,6 @@ public class PortalImpl implements Portal {
 
 		Layout layout = null;
 		String layoutQueryStringCompositeFriendlyURL = friendlyURL;
-		String queryString = StringPool.BLANK;
 
 		if (Validator.isNull(friendlyURL)) {
 
@@ -1099,7 +1098,7 @@ public class PortalImpl implements Portal {
 		}
 
 		return new LayoutQueryStringComposite(
-			layout, layoutQueryStringCompositeFriendlyURL, queryString);
+			layout, layoutQueryStringCompositeFriendlyURL, StringPool.BLANK);
 	}
 
 	@Override

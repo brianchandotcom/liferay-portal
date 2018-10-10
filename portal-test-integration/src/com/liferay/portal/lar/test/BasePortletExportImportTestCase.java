@@ -638,9 +638,6 @@ public abstract class BasePortletExportImportTestCase
 				AssetEntry importedLinkSourceAssetEntry =
 					AssetEntryLocalServiceUtil.getEntry(
 						importedLink.getEntryId1());
-				AssetEntry importedLinkTargetAssetEntry =
-					AssetEntryLocalServiceUtil.getEntry(
-						importedLink.getEntryId2());
 
 				if (!Objects.equals(
 						sourceAssetEntry.getClassUuid(),
@@ -648,6 +645,10 @@ public abstract class BasePortletExportImportTestCase
 
 					continue;
 				}
+
+				AssetEntry importedLinkTargetAssetEntry =
+					AssetEntryLocalServiceUtil.getEntry(
+						importedLink.getEntryId2());
 
 				if (!Objects.equals(
 						targetAssetEntry.getClassUuid(),

@@ -19,8 +19,12 @@ package com.liferay.structured.content.apio.architect.filter.expression;
  * methods are called when an expression node of the expression tree is
  * traversed.
  *
- * @author Cristina González
+ * @author     Cristina González
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+ *             com.liferay.parser.apio.architect.filter.expression.ExpressionVisitor}
+ * @review
  */
+@Deprecated
 public interface ExpressionVisitor<T> {
 
 	/**

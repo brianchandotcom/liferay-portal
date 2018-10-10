@@ -17,8 +17,11 @@ package com.liferay.structured.content.apio.architect.filter.expression;
 /**
  * Represents a binary expression node in the expression tree.
  *
- * @author Cristina González
+ * @author     Cristina González
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+ *             com.liferay.parser.apio.architect.filter.expression.BinaryExpression}
  */
+@Deprecated
 public interface BinaryExpression extends Expression {
 
 	/**

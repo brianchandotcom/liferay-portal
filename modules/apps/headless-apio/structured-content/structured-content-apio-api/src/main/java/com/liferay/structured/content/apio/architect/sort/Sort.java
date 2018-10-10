@@ -23,8 +23,11 @@ import java.util.List;
  * Models a sort parameter for sorting structured content by different fields
  * and sort directives.
  *
- * @author Cristina González
+ * @author     Cristina González
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+ *             com.liferay.parser.apio.architect.sort.Sort}
  */
+@Deprecated
 public class Sort {
 
 	public static final Sort EMPTY_SORT = new Sort();

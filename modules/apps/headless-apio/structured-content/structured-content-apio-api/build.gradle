@@ -6,4 +6,5 @@ dependencies {
 	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	compileOnly project(":apps:apio-architect:apio-architect-api")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	compileOnly project(":apps:headless-apio:parser:parser-apio-api")
 }

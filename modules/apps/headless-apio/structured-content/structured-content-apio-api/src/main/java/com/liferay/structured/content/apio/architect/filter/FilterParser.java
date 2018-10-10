@@ -21,8 +21,11 @@ import com.liferay.structured.content.apio.architect.filter.expression.Expressio
  * Transforms a string containing an OData filter into a manageable {@code
  * Expression}.
  *
- * @author David Arques
+ * @author     David Arques
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+ *             com.liferay.parser.apio.architect.filter.FilterParser}
  */
+@Deprecated
 public interface FilterParser {
 
 	/**

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.comparator.GroupIdComparator;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -104,11 +105,20 @@ public class ContentSpaceCollectionResource
 	private PageItems<Group> _getPageItems(
 		Pagination pagination, Company company, AcceptLanguage acceptLanguage) {
 
-		List<Group> groups = _groupLocalService.getActiveGroups(
-			company.getCompanyId(), true, true, pagination.getStartPosition(),
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>() {
+				{
+					put("active", Boolean.TRUE);
+					put("site", Boolean.TRUE);
+				}
+			};
+
+		List<Group> groups = _groupLocalService.search(
+			company.getCompanyId(), null, params, pagination.getStartPosition(),
 			pagination.getEndPosition(), new GroupIdComparator(true));
-		int count = _groupLocalService.getActiveGroupsCount(
-			company.getCompanyId(), true, true);
+
+		int count = _groupLocalService.searchCount(
+			company.getCompanyId(), null, params);
 
 		return new PageItems<>(groups, count);
 	}

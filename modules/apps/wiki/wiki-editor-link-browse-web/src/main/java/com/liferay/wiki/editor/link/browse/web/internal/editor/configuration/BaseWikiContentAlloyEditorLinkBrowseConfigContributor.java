@@ -62,8 +62,6 @@ public abstract class BaseWikiContentAlloyEditorLinkBrowseConfigContributor
 		String documentBrowseLinkUrl = jsonObject.getString(
 			"documentBrowseLinkUrl");
 
-		PortletURL itemSelectorURL = null;
-
 		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
 
 		String itemSelectedEventName = null;
@@ -122,7 +120,7 @@ public abstract class BaseWikiContentAlloyEditorLinkBrowseConfigContributor
 			}
 		}
 
-		itemSelectorURL = itemSelector.getItemSelectorURL(
+		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, itemSelectedEventName,
 			itemSelectorCriteria.toArray(
 				new ItemSelectorCriterion[itemSelectorCriteria.size()]));

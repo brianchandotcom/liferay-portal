@@ -87,8 +87,6 @@ public class NodesChecker extends EmptyOnClickRowChecker {
 			return StringPool.BLANK;
 		}
 
-		String name = WikiNode.class.getSimpleName();
-
 		boolean showInput = false;
 
 		try {
@@ -113,7 +111,11 @@ public class NodesChecker extends EmptyOnClickRowChecker {
 		sb.append("['");
 		sb.append(_liferayPortletResponse.getNamespace());
 		sb.append(RowChecker.ROW_IDS);
-		sb.append(WikiNode.class.getSimpleName());
+
+		String name = WikiNode.class.getSimpleName();
+
+		sb.append(name);
+
 		sb.append("']");
 
 		String checkBoxRowIds = sb.toString();

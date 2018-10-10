@@ -42,18 +42,12 @@ public class AddressContactInfoManager extends BaseContactInfoManager<Address> {
 
 	@Override
 	protected Address construct(ActionRequest actionRequest) throws Exception {
-		long addressId = ParamUtil.getLong(actionRequest, "primaryKey");
-
 		String street1 = ParamUtil.getString(actionRequest, "addressStreet1");
 		String street2 = ParamUtil.getString(actionRequest, "addressStreet2");
 		String street3 = ParamUtil.getString(actionRequest, "addressStreet3");
 		String city = ParamUtil.getString(actionRequest, "addressCity");
 		String zip = ParamUtil.getString(actionRequest, "addressZip");
-		long regionId = ParamUtil.getLong(actionRequest, "addressRegionId");
 		long countryId = ParamUtil.getLong(actionRequest, "addressCountryId");
-		long typeId = ParamUtil.getLong(actionRequest, "addressTypeId");
-		boolean mailing = ParamUtil.getBoolean(actionRequest, "addressMailing");
-		boolean primary = ParamUtil.getBoolean(actionRequest, "addressPrimary");
 
 		if (Validator.isNull(street1) && Validator.isNull(street2) &&
 			Validator.isNull(street3) && Validator.isNull(city) &&
@@ -62,7 +56,14 @@ public class AddressContactInfoManager extends BaseContactInfoManager<Address> {
 			return null;
 		}
 
+		long addressId = ParamUtil.getLong(actionRequest, "primaryKey");
+
 		Address address = _addressLocalService.createAddress(addressId);
+
+		long regionId = ParamUtil.getLong(actionRequest, "addressRegionId");
+		long typeId = ParamUtil.getLong(actionRequest, "addressTypeId");
+		boolean mailing = ParamUtil.getBoolean(actionRequest, "addressMailing");
+		boolean primary = ParamUtil.getBoolean(actionRequest, "addressPrimary");
 
 		address.setStreet1(street1);
 		address.setStreet2(street2);

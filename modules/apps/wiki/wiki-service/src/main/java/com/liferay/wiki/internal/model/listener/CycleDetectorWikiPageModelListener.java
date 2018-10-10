@@ -53,13 +53,13 @@ public class CycleDetectorWikiPageModelListener
 	}
 
 	protected boolean isCycleDetectedInWikiPagesGraph(WikiPage wikiPage) {
-		WikiPage parentPage = wikiPage;
-
 		String title = wikiPage.getTitle();
 
 		if (Validator.isBlank(title)) {
 			return false;
 		}
+
+		WikiPage parentPage = wikiPage;
 
 		title = title.trim();
 

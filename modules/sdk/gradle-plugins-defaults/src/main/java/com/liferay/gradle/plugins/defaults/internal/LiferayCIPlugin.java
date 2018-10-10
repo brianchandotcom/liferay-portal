@@ -161,82 +161,6 @@ public class LiferayCIPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskNpmRunBuild(ExecuteNpmTask executeNpmTask) {
-		Project project = executeNpmTask.getProject();
-
-		project.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					String[] fileNames =
-						{"bnd.bnd", "package.json", "package-lock.json"};
-
-					for (String fileName : fileNames) {
-						File file = project.file(fileName);
-
-						if (!file.exists()) {
-							continue;
-						}
-
-						String version = null;
-
-						if (fileName.endsWith(".bnd")) {
-							Properties properties = GUtil.loadProperties(file);
-
-							version = properties.getProperty("Bundle-Version");
-						}
-						else if (fileName.endsWith(".json")) {
-							JsonSlurper jsonSlurper = new JsonSlurper();
-
-							Map<String, Object> map =
-								(Map<String, Object>)jsonSlurper.parse(file);
-
-							version = (String)map.get("version");
-						}
-
-						if (version == null) {
-							continue;
-						}
-
-						String newVersion = _fixHotfixVersion(version);
-
-						if (version.equals(newVersion)) {
-							continue;
-						}
-
-						try {
-							String content = new String(
-								Files.readAllBytes(file.toPath()),
-								StandardCharsets.UTF_8);
-
-							String newContent = content.replace(
-								version, newVersion);
-
-							Files.write(
-								file.toPath(),
-								newContent.getBytes(StandardCharsets.UTF_8));
-						}
-						catch (IOException ioe) {
-							throw new UncheckedIOException(ioe);
-						}
-					}
-				}
-
-				private String _fixHotfixVersion(String version) {
-					int index = version.indexOf(".hotfix");
-
-					if (index == -1) {
-						return version;
-					}
-
-					String prefix = version.substring(0, index);
-					String suffix = version.substring(index + 7);
-
-					return prefix + "-hotfix" + suffix.replace('-', '.');
-				}
-
-			});
-
 		executeNpmTask.doLast(
 			new Action<Task>() {
 
@@ -309,6 +233,83 @@ public class LiferayCIPlugin implements Plugin<Project> {
 					String suffix = version.substring(index + 7);
 
 					return prefix + ".hotfix" + suffix.replace('.', '-');
+				}
+
+			});
+
+		Project project = executeNpmTask.getProject();
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+
+					String[] fileNames =
+						{"bnd.bnd", "package.json", "package-lock.json"};
+
+					for (String fileName : fileNames) {
+						File file = project.file(fileName);
+
+						if (!file.exists()) {
+							continue;
+						}
+
+						String version = null;
+
+						if (fileName.endsWith(".bnd")) {
+							Properties properties = GUtil.loadProperties(file);
+
+							version = properties.getProperty("Bundle-Version");
+						}
+						else if (fileName.endsWith(".json")) {
+							JsonSlurper jsonSlurper = new JsonSlurper();
+
+							Map<String, Object> map =
+								(Map<String, Object>)jsonSlurper.parse(file);
+
+							version = (String)map.get("version");
+						}
+
+						if (version == null) {
+							continue;
+						}
+
+						String newVersion = _fixHotfixVersion(version);
+
+						if (version.equals(newVersion)) {
+							continue;
+						}
+
+						try {
+							String content = new String(
+								Files.readAllBytes(file.toPath()),
+								StandardCharsets.UTF_8);
+
+							String newContent = content.replace(
+								version, newVersion);
+
+							Files.write(
+								file.toPath(),
+								newContent.getBytes(StandardCharsets.UTF_8));
+						}
+						catch (IOException ioe) {
+							throw new UncheckedIOException(ioe);
+						}
+					}
+				}
+
+				private String _fixHotfixVersion(String version) {
+					int index = version.indexOf(".hotfix");
+
+					if (index == -1) {
+						return version;
+					}
+
+					String prefix = version.substring(0, index);
+					String suffix = version.substring(index + 7);
+
+					return prefix + "-hotfix" + suffix.replace('-', '.');
 				}
 
 			});

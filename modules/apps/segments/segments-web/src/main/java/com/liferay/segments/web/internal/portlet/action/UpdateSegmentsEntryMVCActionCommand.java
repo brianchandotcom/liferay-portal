@@ -14,12 +14,16 @@
 
 package com.liferay.segments.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -34,6 +38,8 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,16 +81,30 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 			SegmentsEntry.class.getName(), actionRequest);
 
 		try {
+			SegmentsEntry segmentsEntry = null;
+
 			if (segmentsEntryId <= 0) {
-				_segmentsEntryService.addSegmentsEntry(
+				segmentsEntry = _segmentsEntryService.addSegmentsEntry(
 					nameMap, descriptionMap, active, criteria, key, type,
 					serviceContext);
 			}
 			else {
-				_segmentsEntryService.updateSegmentsEntry(
+				segmentsEntry = _segmentsEntryService.updateSegmentsEntry(
 					segmentsEntryId, nameMap, descriptionMap, active, criteria,
 					key, serviceContext);
 			}
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			boolean saveAndContinue = ParamUtil.get(
+				actionRequest, "saveAndContinue", false);
+
+			if (saveAndContinue) {
+				redirect = getSaveAndContinueRedirect(
+					actionRequest, segmentsEntry, redirect);
+			}
+
+			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchEntryException ||
@@ -104,6 +124,32 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 				throw e;
 			}
 		}
+	}
+
+	protected String getSaveAndContinueRedirect(
+			ActionRequest actionRequest, SegmentsEntry segmentsEntry,
+			String redirect)
+		throws Exception {
+
+		PortletConfig portletConfig = (PortletConfig)actionRequest.getAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG);
+
+		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
+			actionRequest, portletConfig.getPortletName(),
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcRenderCommandName", "editSegmentsEntry");
+
+		portletURL.setParameter(Constants.CMD, Constants.UPDATE, false);
+		portletURL.setParameter("redirect", redirect, false);
+		portletURL.setParameter(
+			"groupId", String.valueOf(segmentsEntry.getGroupId()), false);
+		portletURL.setParameter(
+			"segmentsEntryId",
+			String.valueOf(segmentsEntry.getSegmentsEntryId()), false);
+		portletURL.setWindowState(actionRequest.getWindowState());
+
+		return portletURL.toString();
 	}
 
 	@Reference

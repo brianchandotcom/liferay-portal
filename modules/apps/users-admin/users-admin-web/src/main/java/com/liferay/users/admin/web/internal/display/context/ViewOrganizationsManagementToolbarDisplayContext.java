@@ -150,6 +150,9 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
+		portletURL.setParameter("cur", String.valueOf(_getCur()));
+		portletURL.setParameter("delta", String.valueOf(_getDelta()));
+
 		portletURL.setParameter("displayStyle", _displayStyle);
 
 		String[] keywords = ParamUtil.getStringValues(_request, "keywords");
@@ -296,6 +299,14 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 
 		return PortalPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), ActionKeys.ADD_ORGANIZATION);
+	}
+
+	private int _getCur() {
+		return _organizationSearch.getCur();
+	}
+
+	private int _getDelta() {
+		return _organizationSearch.getDelta();
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {

@@ -149,7 +149,7 @@ class Layout extends Component {
 
 		layoutColumns.forEach(
 			layoutColumn => {
-				item = layoutColumn.find(
+				item = item || layoutColumn.find(
 					_item => _item.plid === plid
 				);
 			}

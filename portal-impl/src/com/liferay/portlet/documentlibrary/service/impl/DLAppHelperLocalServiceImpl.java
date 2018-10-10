@@ -1371,8 +1371,6 @@ public class DLAppHelperLocalServiceImpl
 
 		FileVersion fileVersion = fileEntry.getLatestFileVersion(true);
 
-		int oldStatus = fileVersion.getStatus();
-
 		dlFileEntryLocalService.updateStatus(
 			userId, fileVersion.getFileVersionId(),
 			WorkflowConstants.STATUS_IN_TRASH, new ServiceContext(),
@@ -1395,10 +1393,6 @@ public class DLAppHelperLocalServiceImpl
 
 		// Trash
 
-		DLFileVersion oldDLFileVersion = (DLFileVersion)fileVersion.getModel();
-
-		int oldDLFileVersionStatus = oldDLFileVersion.getStatus();
-
 		for (DLFileVersion curDLFileVersion : dlFileVersions) {
 			curDLFileVersion.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
@@ -1410,6 +1404,10 @@ public class DLAppHelperLocalServiceImpl
 		if (!DLAppHelperThreadLocal.isEnabled()) {
 			return fileEntry;
 		}
+
+		DLFileVersion oldDLFileVersion = (DLFileVersion)fileVersion.getModel();
+
+		int oldDLFileVersionStatus = oldDLFileVersion.getStatus();
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 
@@ -1449,6 +1447,8 @@ public class DLAppHelperLocalServiceImpl
 			extraDataJSONObject.toString(), 0);
 
 		// Workflow
+
+		int oldStatus = fileVersion.getStatus();
 
 		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
 			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(

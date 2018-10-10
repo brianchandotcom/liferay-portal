@@ -605,8 +605,6 @@ public class DLFileEntryTypeLocalServiceImpl
 			groupId, false, folderId, false);
 
 		for (DLFolder subfolder : subfolders) {
-			long subfolderId = subfolder.getFolderId();
-
 			if (subfolder.getRestrictionType() ==
 					DLFolderConstants.RESTRICTION_TYPE_INHERIT) {
 
@@ -614,8 +612,8 @@ public class DLFileEntryTypeLocalServiceImpl
 			}
 
 			cascadeFileEntryTypes(
-				userId, groupId, subfolderId, defaultFileEntryTypeId,
-				fileEntryTypeIds, serviceContext);
+				userId, groupId, subfolder.getFolderId(),
+				defaultFileEntryTypeId, fileEntryTypeIds, serviceContext);
 		}
 	}
 

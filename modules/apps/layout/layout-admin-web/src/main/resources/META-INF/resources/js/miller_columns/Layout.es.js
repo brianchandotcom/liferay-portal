@@ -86,7 +86,7 @@ class Layout extends Component {
 	 */
 
 	_deleteEmptyColumns(layoutColumns) {
-		let columns = [...layoutColumns];
+		const columns = [...layoutColumns];
 
 		for (let i = 3; (i < columns.length) && (columns[i].length === 0); i++) {
 			columns.splice(i, 1);
@@ -538,6 +538,7 @@ class Layout extends Component {
 	 */
 
 	_removeFollowingColumns(layoutColumns, startColumnIndex) {
+		c
 		for (let i = startColumnIndex + 1; i < layoutColumns.length; i++) {
 			layoutColumns[i] = [];
 		}

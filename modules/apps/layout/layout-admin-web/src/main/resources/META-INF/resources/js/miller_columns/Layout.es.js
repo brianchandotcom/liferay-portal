@@ -49,8 +49,6 @@ class Layout extends Component {
 				this.searchContainer_ = searchContainer;
 			}
 		);
-
-		this.layoutColumns = this._deleteEmptyColumns(this.layoutColumns);
 	}
 
 	/**

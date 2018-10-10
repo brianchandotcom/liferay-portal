@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.CommentCapability;
+import com.liferay.portal.kernel.repository.capabilities.DynamicCapability;
 import com.liferay.portal.kernel.repository.capabilities.PortalCapabilityLocator;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.capabilities.RelatedModelCapability;
@@ -113,6 +114,9 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 		capabilityRegistry.addSupportedCapability(
 			SyncCapability.class,
 			_portalCapabilityLocator.getSyncCapability(documentRepository));
+		capabilityRegistry.addSupportedCapability(
+			DynamicCapability.class,
+			_portalCapabilityLocator.getDynamicCapability(documentRepository));
 	}
 
 	@Override

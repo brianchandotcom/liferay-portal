@@ -37,7 +37,8 @@ public class BeanPortletMergedImpl extends BaseBeanPortletImpl {
 		super(
 			_mergeBeanMethods(
 				annotatedBeanPortlet.getBeanMethods(),
-				descriptorBeanPortlet.getBeanMethods()));
+				descriptorBeanPortlet.getBeanMethods()),
+			new HashSet<QName>(), new HashSet<QName>());
 
 		if (annotatedBeanPortlet.isAsyncSupported() ||
 			descriptorBeanPortlet.isAsyncSupported()) {

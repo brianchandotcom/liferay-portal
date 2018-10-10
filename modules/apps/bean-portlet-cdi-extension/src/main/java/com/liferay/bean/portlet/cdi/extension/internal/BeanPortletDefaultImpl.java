@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.xml.namespace.QName;
+
 /**
  * @author Neil Griffin
  */
@@ -32,7 +34,7 @@ public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 		String portletName, Set<BeanMethod> beanMethods, String displayCategory,
 		Map<String, Set<String>> liferayConfiguration) {
 
-		super(beanMethods);
+		super(beanMethods, new HashSet<QName>(), new HashSet<QName>());
 
 		_portletName = portletName;
 		_displayCategory = displayCategory;

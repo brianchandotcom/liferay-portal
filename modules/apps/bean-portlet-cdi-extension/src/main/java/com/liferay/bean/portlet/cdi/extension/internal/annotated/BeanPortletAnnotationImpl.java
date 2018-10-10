@@ -39,6 +39,8 @@ import javax.portlet.annotations.RuntimeOption;
 import javax.portlet.annotations.SecurityRoleRef;
 import javax.portlet.annotations.Supports;
 
+import javax.xml.namespace.QName;
+
 /**
  * @author Neil Griffin
  * @author Raymond Augé
@@ -52,7 +54,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 		Map<String, Set<String>> descriptorLiferayConfiguration,
 		String descriptorDisplayCategory) {
 
-		super(beanMethods);
+		super(beanMethods, new HashSet<QName>(), new HashSet<QName>());
 
 		_portletClassName = portletClassName;
 		_preferencesValidator = preferencesValidator;

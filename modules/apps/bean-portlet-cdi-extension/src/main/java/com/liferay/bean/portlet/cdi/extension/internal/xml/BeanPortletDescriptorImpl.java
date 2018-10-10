@@ -19,7 +19,6 @@ import com.liferay.bean.portlet.cdi.extension.internal.BeanMethod;
 import com.liferay.bean.portlet.cdi.extension.internal.PortletDependency;
 import com.liferay.bean.portlet.cdi.extension.internal.Preference;
 
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -52,7 +51,8 @@ public class BeanPortletDescriptorImpl extends BaseBeanPortletImpl {
 		long multiPartMaxRequestSize, String displayCategory,
 		Map<String, Set<String>> liferayConfiguration) {
 
-		super(beanMethods);
+		super(
+			beanMethods, supportedProcessingEvents, supportedPublishingEvents);
 
 		_portletName = portletName;
 		_displayNames = displayNames;
@@ -70,17 +70,6 @@ public class BeanPortletDescriptorImpl extends BaseBeanPortletImpl {
 		_preferences = preferences;
 		_preferencesValidator = preferencesValidator;
 		_securityRoleRefs = securityRoleRefs;
-
-		_supportedProcessingEvents = new LinkedHashSet<>(
-			supportedProcessingEvents);
-
-		_supportedProcessingEvents.addAll(super.getSupportedProcessingEvents());
-
-		_supportedPublishingEvents = new LinkedHashSet<>(
-			supportedPublishingEvents);
-
-		_supportedPublishingEvents.addAll(super.getSupportedPublishingEvents());
-
 		_supportedPublicRenderParameters = supportedPublicRenderParameters;
 		_containerRuntimeOptions = containerRuntimeOptions;
 		_portletDependencies = portletDependencies;
@@ -205,18 +194,8 @@ public class BeanPortletDescriptorImpl extends BaseBeanPortletImpl {
 	}
 
 	@Override
-	public Set<QName> getSupportedProcessingEvents() {
-		return _supportedProcessingEvents;
-	}
-
-	@Override
 	public Set<String> getSupportedPublicRenderParameters() {
 		return _supportedPublicRenderParameters;
-	}
-
-	@Override
-	public Set<QName> getSupportedPublishingEvents() {
-		return _supportedPublishingEvents;
 	}
 
 	@Override
@@ -263,9 +242,7 @@ public class BeanPortletDescriptorImpl extends BaseBeanPortletImpl {
 	private final Map<String, String> _shortTitles;
 	private final Set<String> _supportedLocales;
 	private final Map<String, Set<String>> _supportedPortletModes;
-	private final Set<QName> _supportedProcessingEvents;
 	private final Set<String> _supportedPublicRenderParameters;
-	private final Set<QName> _supportedPublishingEvents;
 	private final Map<String, Set<String>> _supportedWindowStates;
 	private final Map<String, String> _titles;
 

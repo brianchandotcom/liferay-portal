@@ -49,7 +49,10 @@ import javax.xml.namespace.QName;
  */
 public abstract class BaseBeanPortletImpl implements BeanPortlet {
 
-	public BaseBeanPortletImpl(Set<BeanMethod> beanMethods) {
+	public BaseBeanPortletImpl(
+		Set<BeanMethod> beanMethods, Set<QName> supportedProcessingEvents,
+		Set<QName> supportedPublishingEvents) {
+
 		for (BeanMethod beanMethod : beanMethods) {
 			_beanMethods.compute(
 				beanMethod.getType(),
@@ -95,7 +98,7 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 				for (PortletQName portletQName :
 						eventMethod.processingEvents()) {
 
-					_supportedProcessingEvents.add(
+					supportedProcessingEvents.add(
 						new QName(
 							portletQName.namespaceURI(),
 							portletQName.localPart()));
@@ -104,13 +107,15 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 				for (PortletQName portletQName :
 						eventMethod.publishingEvents()) {
 
-					_supportedPublishingEvents.add(
+					supportedPublishingEvents.add(
 						new QName(
 							portletQName.namespaceURI(),
 							portletQName.localPart()));
 				}
 			}
 		}
+
+		_supportedProcessingEvents = supportedProcessingEvents;
 
 		List<BeanMethod> actionMethods = _beanMethods.get(MethodType.ACTION);
 
@@ -128,13 +133,15 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 				for (PortletQName portletQName :
 						actionMethod.publishingEvents()) {
 
-					_supportedPublishingEvents.add(
+					supportedPublishingEvents.add(
 						new QName(
 							portletQName.namespaceURI(),
 							portletQName.localPart()));
 				}
 			}
 		}
+
+		_supportedPublishingEvents = supportedPublishingEvents;
 	}
 
 	@Override
@@ -659,7 +666,7 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 
 	private final EnumMap<MethodType, List<BeanMethod>> _beanMethods =
 		new EnumMap<>(MethodType.class);
-	private final Set<QName> _supportedProcessingEvents = new HashSet<>();
-	private final Set<QName> _supportedPublishingEvents = new HashSet<>();
+	private final Set<QName> _supportedProcessingEvents;
+	private final Set<QName> _supportedPublishingEvents;
 
 }

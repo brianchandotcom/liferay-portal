@@ -43,6 +43,7 @@ page import="com.liferay.asset.list.model.AssetListEntry" %><%@
 page import="com.liferay.asset.list.model.AssetListEntryAssetEntryRel" %><%@
 page import="com.liferay.asset.list.web.internal.display.context.AssetListDisplayContext" %><%@
 page import="com.liferay.asset.list.web.internal.display.context.AssetListUsagesDisplayContext" %><%@
+page import="com.liferay.asset.list.web.internal.display.context.AssetListUsagesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.asset.list.web.internal.display.context.EditAssetListDisplayContext" %><%@
 page import="com.liferay.asset.list.web.internal.display.context.SelectAssetListDisplayContext" %><%@
 page import="com.liferay.asset.list.web.internal.security.permission.resource.AssetListEntryPermission" %><%@

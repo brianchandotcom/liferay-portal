@@ -14,13 +14,19 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -61,18 +67,52 @@ public class DeleteLayoutPageTemplateEntryMVCActionCommand
 				actionRequest, "rowIds");
 		}
 
-		try {
-			_layoutPageTemplateEntryService.deleteLayoutPageTemplateEntries(
-				deleteLayoutPageTemplateEntryIds);
+		List<Long> deleteLayoutPageTemplateIdsList = new ArrayList<>();
+
+		for (long deleteLayoutPageTemplateEntryId :
+				deleteLayoutPageTemplateEntryIds) {
+
+			int assetDisplayPageEntriesCount =
+				_assetDisplayPageEntryLocalService.
+					getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
+						deleteLayoutPageTemplateEntryId);
+
+			try {
+				if (assetDisplayPageEntriesCount > 0) {
+					deleteLayoutPageTemplateIdsList.add(
+						deleteLayoutPageTemplateEntryId);
+				}
+				else {
+					_layoutPageTemplateEntryService.
+						deleteLayoutPageTemplateEntry(
+							deleteLayoutPageTemplateEntryId);
+				}
+			}
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
+
+				deleteLayoutPageTemplateIdsList.add(
+					deleteLayoutPageTemplateEntryId);
+			}
 		}
-		catch (RequiredLayoutPageTemplateEntryException rlptee) {
-			SessionErrors.add(actionRequest, rlptee.getClass());
+
+		if (!deleteLayoutPageTemplateIdsList.isEmpty()) {
+			SessionErrors.add(actionRequest, PortalException.class);
 
 			hideDefaultErrorMessage(actionRequest);
 
 			sendRedirect(actionRequest, actionResponse);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DeleteLayoutPageTemplateEntryMVCActionCommand.class);
+
+	@Reference
+	private AssetDisplayPageEntryLocalService
+		_assetDisplayPageEntryLocalService;
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;

@@ -77,56 +77,56 @@
 	{@param? _loadingResponse: bool}
 	{@param spritemap: string}
 	{@param user: ?}
-		<div class="autofit-row autofit-row-center">
+	<div class="autofit-row autofit-row-center">
 
-			<div class="autofit-col">
-				{call ClaySticker.render}
-					{param size: 'xl' /}
-					{param imageSrc: $user.imageSrc /}
-					{param shape: 'circle' /}
+		<div class="autofit-col">
+			{call ClaySticker.render}
+				{param size: 'xl' /}
+				{param imageSrc: $user.imageSrc /}
+				{param shape: 'circle' /}
+			{/call}
+		</div>
+
+		<div class="autofit-col autofit-col-expand">
+			<h4>{$user.name}</h4>
+		</div>
+
+		<div class="autofit-col expiration-icon">
+			{let $expiratonDateMsg kind="text"}
+				{msg desc=""}set-expiration-date{/msg}
+			{/let}
+			{let $tooltipMessage: $expiratonDateMsg/}
+
+			<span class="lfr-portal-tooltip" title="{$tooltipMessage}">
+				{call ClayIcon.render}
+					{param spritemap: $spritemap /}
+					{param symbol: 'time' /}
 				{/call}
-			</div>
+			</span>
+		</div>
 
-			<div class="autofit-col autofit-col-expand">
-				<h4>{$user.name}</h4>
-			</div>
+		<div class="autofit-col">
+			{call ClaySelect.render}
+				{param name: $user.sharingEntryId /}
+				{param options: $user.sharingEntryPermissionDisplaySelectOptions /}
+				{param events: [
+					'change': $_handleChangePermission
+				] /}
+			{/call}
+		</div>
 
-			<div class="autofit-col expiration-icon">
-				{let $expiratonDateMsg kind="text"}
-					{msg desc=""}set-expiration-date{/msg}
-				{/let}
-				{let $tooltipMessage: $expiratonDateMsg/}
-
-				<span class="lfr-portal-tooltip" title="{$tooltipMessage}">
-					{call ClayIcon.render}
-						{param spritemap: $spritemap /}
-						{param symbol: 'time' /}
-					{/call}
-				</span>
-			</div>
-
-			<div class="autofit-col">
-				{call ClaySelect.render}
-					{param name: $user.sharingEntryId /}
-					{param options: $user.sharingEntryPermissionDisplaySelectOptions /}
-					{param events: [
-						'change': $_handleChangePermission
-					] /}
-				{/call}
-			</div>
-
-			<div class="autofit-col">
-				<button
-					class="btn btn-link btn-monospaced btn-remove text-muted"
-					data-collaborator-id="{$user.id}"
-					data-sharingentry-id="{$user.sharingEntryId}"
-					data-onclick="{$_handleDeleteCollaborator}"
-					{if $_loadingResponse}disabled{/if}
-				>
-					<svg class="lexicon-icon">
-						<use xlink:href="{$spritemap}#times-circle"></use>
-					</svg>
-				</button>
-			</div>
+		<div class="autofit-col">
+			<button
+				class="btn btn-link btn-monospaced btn-remove text-muted"
+				data-collaborator-id="{$user.id}"
+				data-sharingentry-id="{$user.sharingEntryId}"
+				data-onclick="{$_handleDeleteCollaborator}"
+				{if $_loadingResponse}disabled{/if}
+			>
+				<svg class="lexicon-icon">
+					<use xlink:href="{$spritemap}#times-circle"></use>
+				</svg>
+			</button>
+		</div>
 	</div>
 {/template}

@@ -48,6 +48,7 @@ import java.lang.reflect.Type;
 
 import java.net.URL;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Dictionary;
@@ -329,14 +330,14 @@ public class BeanPortletExtension implements Extension {
 
 		_addBeanFiltersFromAnnotatedClasses();
 
-		List<URLGenerationListener> urlGenerationListeners =
-			_collectURLGenerationListeners();
+		List<Map.Entry<Integer, String>> portletListeners =
+			_collectPortletListeners();
 
 		_addBeanPortletsFromAnnotatedClasses(
 			beanManager, portletBeanMethods, wildcardBeanMethods,
 			preferencesValidators, wildcardPreferencesValidators,
 			descriptorDisplayCategories, descriptorLiferayConfigurations,
-			urlGenerationListeners);
+			portletListeners);
 
 		_addBeanBeanPortletsFromScannedMethods(
 			portletBeanMethods, wildcardBeanMethods,
@@ -576,7 +577,7 @@ public class BeanPortletExtension implements Extension {
 		Set<String> wildcardPreferencesValidators,
 		Map<String, String> descriptorDisplayCategories,
 		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations,
-		List<URLGenerationListener> urlGenerationListeners) {
+		List<Map.Entry<Integer, String>> portletListeners) {
 
 		String configuredPortletName = portletConfiguration.portletName();
 
@@ -600,7 +601,7 @@ public class BeanPortletExtension implements Extension {
 		}
 
 		BeanApp annotatedBeanApp = new BeanAppAnnotationImpl(
-			portletApplication, urlGenerationListeners);
+			portletApplication, portletListeners);
 
 		if (_beanApp == null) {
 			_beanApp = annotatedBeanApp;
@@ -684,7 +685,7 @@ public class BeanPortletExtension implements Extension {
 		Set<String> wildcardPreferencesValidators,
 		Map<String, String> descriptorDisplayCategories,
 		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations,
-		List<URLGenerationListener> urlGenerationListeners) {
+		List<Map.Entry<Integer, String>> portletListeners) {
 
 		for (Class<?> clazz : _portletConfigurationsClasses) {
 			PortletConfigurations portletConfigurations = clazz.getAnnotation(
@@ -711,7 +712,7 @@ public class BeanPortletExtension implements Extension {
 					clazz, beanMethods, wildcardBeanMethods,
 					portletConfiguration, preferencesValidators,
 					wildcardPreferencesValidators, descriptorDisplayCategories,
-					descriptorLiferayConfigurations, urlGenerationListeners);
+					descriptorLiferayConfigurations, portletListeners);
 			}
 		}
 
@@ -737,7 +738,7 @@ public class BeanPortletExtension implements Extension {
 				clazz, beanMethods, wildcardBeanMethods, portletConfiguration,
 				preferencesValidators, wildcardPreferencesValidators,
 				descriptorDisplayCategories, descriptorLiferayConfigurations,
-				urlGenerationListeners);
+				portletListeners);
 		}
 	}
 
@@ -814,6 +815,21 @@ public class BeanPortletExtension implements Extension {
 		return portletBeanMethods;
 	}
 
+	private List<Map.Entry<Integer, String>> _collectPortletListeners() {
+		List<Map.Entry<Integer, String>> portletListeners = new ArrayList<>();
+
+		for (Class<?> portletListenerClass : _portletListenerClasses) {
+			PortletListener portletListener =
+				portletListenerClass.getAnnotation(PortletListener.class);
+
+			portletListeners.add(
+				new AbstractMap.SimpleImmutableEntry<>(
+					portletListener.ordinal(), portletListenerClass.getName()));
+		}
+
+		return portletListeners;
+	}
+
 	private Map<String, String> _collectPreferencesValidators() {
 		Map<String, String> preferencesValidators = new HashMap<>();
 
@@ -846,23 +862,6 @@ public class BeanPortletExtension implements Extension {
 		}
 
 		return preferencesValidators;
-	}
-
-	private List<URLGenerationListener> _collectURLGenerationListeners() {
-		List<URLGenerationListener> urlGenerationListeners = new ArrayList<>();
-
-		for (Class<?> portletListenerClass : _portletListenerClasses) {
-			PortletListener portletListener =
-				portletListenerClass.getAnnotation(PortletListener.class);
-
-			URLGenerationListener urlGenerationListener =
-				new URLGenerationListener(
-					portletListener.ordinal(), portletListenerClass.getName());
-
-			urlGenerationListeners.add(urlGenerationListener);
-		}
-
-		return urlGenerationListeners;
 	}
 
 	private Set<BeanMethod> _collectWildcardBeanMethods(

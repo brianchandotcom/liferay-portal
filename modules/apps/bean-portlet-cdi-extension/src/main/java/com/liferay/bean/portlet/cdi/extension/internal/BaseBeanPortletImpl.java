@@ -549,23 +549,19 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 
 		// javax.portlet.listener
 
-		List<String> urlGenerationListeners = new ArrayList<>();
+		List<String> portletListeners = new ArrayList<>();
 
-		for (URLGenerationListener urlGenerationListener :
-				beanApp.getURLGenerationListeners()) {
-
-			String listenerClassName =
-				urlGenerationListener.getListenerClassName();
+		for (Map.Entry<Integer, String> entry : beanApp.getPortletListeners()) {
+			String listenerClassName = entry.getValue();
 
 			String listener = listenerClassName.concat(
-				StringPool.SEMICOLON).concat(
-					String.valueOf(urlGenerationListener.getOrdinal()));
+				StringPool.SEMICOLON).concat(String.valueOf(entry.getKey()));
 
-			urlGenerationListeners.add(listener);
+			portletListeners.add(listener);
 		}
 
-		if (!urlGenerationListeners.isEmpty()) {
-			dictionary.put("javax.portlet.listener", urlGenerationListeners);
+		if (!portletListeners.isEmpty()) {
+			dictionary.put("javax.portlet.listener", portletListeners);
 		}
 
 		// javax.portlet.version

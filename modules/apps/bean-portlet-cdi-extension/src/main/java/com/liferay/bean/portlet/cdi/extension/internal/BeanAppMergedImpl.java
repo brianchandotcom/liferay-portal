@@ -66,11 +66,10 @@ public class BeanAppMergedImpl implements BeanApp {
 			_specVersion = descriptorBeanApp.getSpecVersion();
 		}
 
-		_urlGenerationListeners = new ArrayList<>(
-			annotatedBeanApp.getURLGenerationListeners());
+		_portletListeners = new ArrayList<>(
+			annotatedBeanApp.getPortletListeners());
 
-		_urlGenerationListeners.addAll(
-			descriptorBeanApp.getURLGenerationListeners());
+		_portletListeners.addAll(descriptorBeanApp.getPortletListeners());
 	}
 
 	@Override
@@ -94,6 +93,11 @@ public class BeanAppMergedImpl implements BeanApp {
 	}
 
 	@Override
+	public List<Map.Entry<Integer, String>> getPortletListeners() {
+		return _portletListeners;
+	}
+
+	@Override
 	public Map<String, PublicRenderParameter> getPublicRenderParameters() {
 		return _publicRenderParameterMap;
 	}
@@ -103,17 +107,12 @@ public class BeanAppMergedImpl implements BeanApp {
 		return _specVersion;
 	}
 
-	@Override
-	public List<URLGenerationListener> getURLGenerationListeners() {
-		return _urlGenerationListeners;
-	}
-
 	private final Map<String, List<String>> _containerRuntimeOptions;
 	private final Set<String> _customPortletModes;
 	private final String _defaultNamespace;
 	private final List<Event> _events;
+	private final List<Map.Entry<Integer, String>> _portletListeners;
 	private final Map<String, PublicRenderParameter> _publicRenderParameterMap;
 	private final String _specVersion;
-	private final List<URLGenerationListener> _urlGenerationListeners;
 
 }

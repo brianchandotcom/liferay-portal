@@ -18,7 +18,6 @@ import com.liferay.bean.portlet.cdi.extension.internal.BeanApp;
 import com.liferay.bean.portlet.cdi.extension.internal.Event;
 import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameter;
 import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameterImpl;
-import com.liferay.bean.portlet.cdi.extension.internal.URLGenerationListener;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class BeanAppAnnotationImpl implements BeanApp {
 
 	public BeanAppAnnotationImpl(
 		PortletApplication portletApplication,
-		List<URLGenerationListener> urlGenerationListeners) {
+		List<Map.Entry<Integer, String>> portletListeners) {
 
 		_containerRuntimeOptions = new HashMap<>();
 
@@ -95,7 +94,7 @@ public class BeanAppAnnotationImpl implements BeanApp {
 		_specVersion = GetterUtil.getString(
 			portletApplication.version(), "3.0");
 
-		_urlGenerationListeners = urlGenerationListeners;
+		_portletListeners = portletListeners;
 	}
 
 	@Override
@@ -119,6 +118,11 @@ public class BeanAppAnnotationImpl implements BeanApp {
 	}
 
 	@Override
+	public List<Map.Entry<Integer, String>> getPortletListeners() {
+		return _portletListeners;
+	}
+
+	@Override
 	public Map<String, PublicRenderParameter> getPublicRenderParameters() {
 		return _publicRenderParameterMap;
 	}
@@ -128,17 +132,12 @@ public class BeanAppAnnotationImpl implements BeanApp {
 		return _specVersion;
 	}
 
-	@Override
-	public List<URLGenerationListener> getURLGenerationListeners() {
-		return _urlGenerationListeners;
-	}
-
 	private final Map<String, List<String>> _containerRuntimeOptions;
 	private final Set<String> _customPortletModes;
 	private final String _defaultNamespace;
 	private final List<Event> _eventDefinitions;
+	private final List<Map.Entry<Integer, String>> _portletListeners;
 	private final Map<String, PublicRenderParameter> _publicRenderParameterMap;
 	private final String _specVersion;
-	private final List<URLGenerationListener> _urlGenerationListeners;
 
 }

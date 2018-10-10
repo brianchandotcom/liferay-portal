@@ -17,7 +17,6 @@ package com.liferay.bean.portlet.cdi.extension.internal.xml;
 import com.liferay.bean.portlet.cdi.extension.internal.BeanApp;
 import com.liferay.bean.portlet.cdi.extension.internal.Event;
 import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameter;
-import com.liferay.bean.portlet.cdi.extension.internal.URLGenerationListener;
 
 import java.util.List;
 import java.util.Map;
@@ -33,7 +32,7 @@ public class BeanAppDescriptorImpl implements BeanApp {
 		Map<String, PublicRenderParameter> publicRenderParameters,
 		Map<String, List<String>> containerRuntimeOptions,
 		Set<String> customPortletModes,
-		List<URLGenerationListener> urlGenerationListeners) {
+		List<Map.Entry<Integer, String>> portletListeners) {
 
 		_specVersion = specVersion;
 		_defaultNamespace = defaultNamespace;
@@ -41,7 +40,7 @@ public class BeanAppDescriptorImpl implements BeanApp {
 		_publicRenderParameters = publicRenderParameters;
 		_containerRuntimeOptions = containerRuntimeOptions;
 		_customPortletModes = customPortletModes;
-		_urlGenerationListeners = urlGenerationListeners;
+		_portletListeners = portletListeners;
 	}
 
 	@Override
@@ -65,6 +64,11 @@ public class BeanAppDescriptorImpl implements BeanApp {
 	}
 
 	@Override
+	public List<Map.Entry<Integer, String>> getPortletListeners() {
+		return _portletListeners;
+	}
+
+	@Override
 	public Map<String, PublicRenderParameter> getPublicRenderParameters() {
 		return _publicRenderParameters;
 	}
@@ -74,17 +78,12 @@ public class BeanAppDescriptorImpl implements BeanApp {
 		return _specVersion;
 	}
 
-	@Override
-	public List<URLGenerationListener> getURLGenerationListeners() {
-		return _urlGenerationListeners;
-	}
-
 	private final Map<String, List<String>> _containerRuntimeOptions;
 	private final Set<String> _customPortletModes;
 	private final String _defaultNamespace;
 	private final List<Event> _events;
+	private final List<Map.Entry<Integer, String>> _portletListeners;
 	private final Map<String, PublicRenderParameter> _publicRenderParameters;
 	private final String _specVersion;
-	private final List<URLGenerationListener> _urlGenerationListeners;
 
 }

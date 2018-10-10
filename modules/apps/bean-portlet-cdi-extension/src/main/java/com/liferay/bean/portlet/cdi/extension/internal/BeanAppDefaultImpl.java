@@ -45,6 +45,11 @@ public class BeanAppDefaultImpl implements BeanApp {
 	}
 
 	@Override
+	public List<Map.Entry<Integer, String>> getPortletListeners() {
+		return Collections.emptyList();
+	}
+
+	@Override
 	public Map<String, PublicRenderParameter> getPublicRenderParameters() {
 		return Collections.emptyMap();
 	}
@@ -52,11 +57,6 @@ public class BeanAppDefaultImpl implements BeanApp {
 	@Override
 	public String getSpecVersion() {
 		return "3.0";
-	}
-
-	@Override
-	public List<URLGenerationListener> getURLGenerationListeners() {
-		return Collections.emptyList();
 	}
 
 }

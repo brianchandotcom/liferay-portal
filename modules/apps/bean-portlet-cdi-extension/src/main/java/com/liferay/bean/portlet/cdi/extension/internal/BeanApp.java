@@ -31,10 +31,10 @@ public interface BeanApp {
 
 	public List<Event> getEvents();
 
+	public List<Map.Entry<Integer, String>> getPortletListeners();
+
 	public Map<String, PublicRenderParameter> getPublicRenderParameters();
 
 	public String getSpecVersion();
-
-	public List<URLGenerationListener> getURLGenerationListeners();
 
 }

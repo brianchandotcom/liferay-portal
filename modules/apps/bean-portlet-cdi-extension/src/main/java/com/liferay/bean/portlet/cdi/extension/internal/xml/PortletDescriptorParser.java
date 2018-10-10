@@ -23,7 +23,6 @@ import com.liferay.bean.portlet.cdi.extension.internal.PortletDependency;
 import com.liferay.bean.portlet.cdi.extension.internal.Preference;
 import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameter;
 import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameterImpl;
-import com.liferay.bean.portlet.cdi.extension.internal.URLGenerationListener;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -42,6 +41,7 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -254,7 +254,7 @@ public class PortletDescriptorParser {
 			validCustomPortletModes.add(portletMode);
 		}
 
-		List<URLGenerationListener> urlGenerationListeners = new ArrayList<>();
+		List<Map.Entry<Integer, String>> portletListeners = new ArrayList<>();
 
 		for (Element listenerElement : rootElement.elements("listener")) {
 			int ordinal = GetterUtil.getInteger(
@@ -263,14 +263,14 @@ public class PortletDescriptorParser {
 			String listenerClassName = listenerElement.elementText(
 				"listener-class");
 
-			urlGenerationListeners.add(
-				new URLGenerationListener(ordinal, listenerClassName));
+			portletListeners.add(
+				new AbstractMap.SimpleImmutableEntry<>(
+					ordinal, listenerClassName));
 		}
 
 		return new BeanAppDescriptorImpl(
 			specVersion, defaultNamespace, events, publicRenderParameters,
-			containerRuntimeOptions, validCustomPortletModes,
-			urlGenerationListeners);
+			containerRuntimeOptions, validCustomPortletModes, portletListeners);
 	}
 
 	private static BeanFilter _readBeanFilter(

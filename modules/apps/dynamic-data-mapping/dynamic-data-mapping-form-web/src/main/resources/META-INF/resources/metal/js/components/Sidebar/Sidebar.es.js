@@ -559,7 +559,7 @@ class Sidebar extends Component {
 								id={`ddm-field-types-${key}-body`}
 								role="tabpanel"
 							>
-							
+
 								<div class="panel-body p-0 m-0 list-group">
 									{fieldTypesGroup[key].fields.map(
 										fieldType => (

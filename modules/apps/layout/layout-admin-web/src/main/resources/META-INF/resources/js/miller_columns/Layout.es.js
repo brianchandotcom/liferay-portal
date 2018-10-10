@@ -573,8 +573,8 @@ class Layout extends Component {
 	}
 
 	/**
-	 * Removes following columns starting at position indicated 
-	 * by startColumnIndex 
+	 * Removes following columns starting at position indicated
+	 * by startColumnIndex
 	 * @param {!Array} layoutColumns
 	 * @param {!number} startColumnIndex
 	 * @private
@@ -633,15 +633,17 @@ class Layout extends Component {
 	 */
 
 	_updatePath(targetColumnIndex, targetItemPlid) {
-		this.layoutColumns = this._clearFollowingColumns(
-			this.layoutColumns,
+		let nextLayoutColumns = this.layoutColumns;
+
+		nextLayoutColumns = this._clearFollowingColumns(
+			nextLayoutColumns,
 			targetColumnIndex
 		);
 
-		const targetColumn = this.layoutColumns[targetColumnIndex];
+		const targetColumn = nextLayoutColumns[targetColumnIndex];
 
 		const targetItem = this._getLayoutColumnItemByPlid(
-			this.layoutColumns,
+			nextLayoutColumns,
 			targetItemPlid
 		);
 
@@ -650,36 +652,50 @@ class Layout extends Component {
 		);
 
 		const activeItem = this._getLayoutColumnItemByPlid(
-			this.layoutColumns,
+			nextLayoutColumns,
 			activeItemPlid
 		);
 
 		if (activeItem && (activeItem !== targetItem)) {
-			activeItem.active = false;
+			nextLayoutColumns = setIn(
+				nextLayoutColumns,
+				[targetColumnIndex, targetColumn.indexOf(activeItem), 'active'],
+				false
+			);
 		}
 
-		targetItem.active = true;
+		nextLayoutColumns = setIn(
+			nextLayoutColumns,
+			[targetColumnIndex, targetColumn.indexOf(targetItem), 'active'],
+			true
+		);
 
 		this._currentPathItemPlid = targetItemPlid;
 
-		this.layoutColumns = this._deleteEmptyColumns(this.layoutColumns);
+		nextLayoutColumns = this._deleteEmptyColumns(nextLayoutColumns);
 
 		this._getItemChildren(targetItemPlid)
 			.then(
 				response => {
 					const children = response.children;
-					const lastElementIndex = this.layoutColumns.length - 1;
+					const lastColumnIndex = nextLayoutColumns.length - 1;
 
-					if (this.layoutColumns[lastElementIndex].length === 0) {
-						this.layoutColumns[lastElementIndex] = children;
+					if (nextLayoutColumns[lastColumnIndex].length === 0) {
+						nextLayoutColumns = setIn(
+							nextLayoutColumns,
+							[lastColumnIndex],
+							children
+						);
 					}
 					else {
-						this.layoutColumns.push(children);
+						nextLayoutColumns = setIn(
+							nextLayoutColumns,
+							[nextLayoutColumns.length],
+							children
+						);
 					}
 
-					this.layoutColumns = this.layoutColumns.map(
-						layoutColumn => [...layoutColumn]
-					);
+					this.layoutColumns = nextLayoutColumns;
 				}
 			);
 	}

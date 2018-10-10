@@ -133,7 +133,7 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 				<thead>
 					<tr>
 						<th>
-							<liferay-ui:message key="roles" />
+							<liferay-ui:message key="role" />
 						</th>
 
 						<%

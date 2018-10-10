@@ -34,21 +34,21 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = SharingEntryInterpreterProvider.class)
-public class SharingEntryInterpreterProviderImpl<T>
-	implements SharingEntryInterpreterProvider<T> {
+public class SharingEntryInterpreterProviderImpl
+	implements SharingEntryInterpreterProvider {
 
 	@Override
-	public SharingEntryInterpreter<T> getSharingEntryInterpreter(
+	public SharingEntryInterpreter getSharingEntryInterpreter(
 		SharingEntry sharingEntry) {
 
-		SharingEntryInterpreter<T> sharingEntryInterpreter =
-			(SharingEntryInterpreter<T>)_serviceTrackerMap.getService(
+		SharingEntryInterpreter sharingEntryInterpreter =
+			(SharingEntryInterpreter)_serviceTrackerMap.getService(
 				sharingEntry.getClassNameId());
 
 		if ((sharingEntryInterpreter == null) &&
 			_isAssetObject(sharingEntry.getClassNameId())) {
 
-			return (SharingEntryInterpreter<T>)
+			return (SharingEntryInterpreter)
 				_assetRendererSharingEntryInterpreter;
 		}
 
@@ -58,7 +58,7 @@ public class SharingEntryInterpreterProviderImpl<T>
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap =
-			(ServiceTrackerMap<Long, SharingEntryInterpreter<?>>)
+			(ServiceTrackerMap<Long, SharingEntryInterpreter>)
 				(ServiceTrackerMap)
 					ServiceTrackerMapFactory.openSingleValueMap(
 						bundleContext, SharingEntryInterpreter.class,
@@ -96,7 +96,6 @@ public class SharingEntryInterpreterProviderImpl<T>
 	@Reference
 	private Portal _portal;
 
-	private ServiceTrackerMap<Long, SharingEntryInterpreter<?>>
-		_serviceTrackerMap;
+	private ServiceTrackerMap<Long, SharingEntryInterpreter> _serviceTrackerMap;
 
 }

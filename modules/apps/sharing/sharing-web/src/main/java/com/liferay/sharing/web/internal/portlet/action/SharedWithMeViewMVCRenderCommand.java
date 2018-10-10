@@ -96,7 +96,7 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 							sharingEntryId));
 				}
 
-				SharingEntryInterpreter<Object> sharingEntryInterpreter =
+				SharingEntryInterpreter sharingEntryInterpreter =
 					_sharingEntryInterpreterProvider.getSharingEntryInterpreter(
 						sharingEntry);
 
@@ -106,12 +106,11 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 							sharingEntry.getClassNameId());
 				}
 
-				SharingEntryViewRenderer<Object> sharingEntryViewRenderer =
+				SharingEntryViewRenderer sharingEntryViewRenderer =
 					sharingEntryInterpreter.getSharingEntryViewRenderer();
 
 				sharingEntryViewRenderer.render(
-					sharingEntryInterpreter.getEntry(sharingEntry),
-					_portal.getHttpServletRequest(renderRequest),
+					sharingEntry, _portal.getHttpServletRequest(renderRequest),
 					_portal.getHttpServletResponse(renderResponse));
 
 				return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;

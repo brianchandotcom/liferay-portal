@@ -19,9 +19,9 @@ import com.liferay.sharing.model.SharingEntry;
 /**
  * @author Alejandro Tardín
  */
-public interface SharingEntryInterpreterProvider<T> {
+public interface SharingEntryInterpreterProvider {
 
-	public SharingEntryInterpreter<T> getSharingEntryInterpreter(
+	public SharingEntryInterpreter getSharingEntryInterpreter(
 		SharingEntry sharingEntry);
 
 }

@@ -56,7 +56,7 @@ public class SharedWithMeViewDisplayContext {
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest request,
 		SharingEntryLocalService sharingEntryLocalService,
-		Function<SharingEntry, SharingEntryInterpreter<Object>>
+		Function<SharingEntry, SharingEntryInterpreter>
 			sharingEntryInterpreterFunction,
 		List<SharedWithMeFilterItem> sharedWithMeFilterItems) {
 
@@ -73,7 +73,7 @@ public class SharedWithMeViewDisplayContext {
 	}
 
 	public String getAssetTypeTitle(SharingEntry sharingEntry) {
-		SharingEntryInterpreter<Object> sharingEntryInterpreter =
+		SharingEntryInterpreter sharingEntryInterpreter =
 			_sharingEntryInterpreterFunction.apply(sharingEntry);
 
 		if (sharingEntryInterpreter == null) {
@@ -131,7 +131,7 @@ public class SharedWithMeViewDisplayContext {
 	}
 
 	public String getTitle(SharingEntry sharingEntry) {
-		SharingEntryInterpreter<Object> sharingEntryInterpreter =
+		SharingEntryInterpreter sharingEntryInterpreter =
 			_sharingEntryInterpreterFunction.apply(sharingEntry);
 
 		if (sharingEntryInterpreter == null) {
@@ -147,19 +147,18 @@ public class SharedWithMeViewDisplayContext {
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {
 
-		SharingEntryInterpreter<Object> sharingEntryInterpreter =
+		SharingEntryInterpreter sharingEntryInterpreter =
 			_sharingEntryInterpreterFunction.apply(sharingEntry);
 
 		if (sharingEntryInterpreter == null) {
 			return null;
 		}
 
-		SharingEntryEditRenderer<Object> sharingEntryEditRenderer =
+		SharingEntryEditRenderer sharingEntryEditRenderer =
 			sharingEntryInterpreter.getSharingEntryEditRenderer();
 
 		return sharingEntryEditRenderer.getURLEdit(
-			sharingEntryInterpreter.getEntry(sharingEntry),
-			liferayPortletRequest, liferayPortletResponse);
+			sharingEntry, liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public boolean hasEditPermission(long classNameId, long classPK) {
@@ -296,7 +295,7 @@ public class SharedWithMeViewDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final HttpServletRequest _request;
 	private final List<SharedWithMeFilterItem> _sharedWithMeFilterItems;
-	private final Function<SharingEntry, SharingEntryInterpreter<Object>>
+	private final Function<SharingEntry, SharingEntryInterpreter>
 		_sharingEntryInterpreterFunction;
 	private final SharingEntryLocalService _sharingEntryLocalService;
 	private final ThemeDisplay _themeDisplay;

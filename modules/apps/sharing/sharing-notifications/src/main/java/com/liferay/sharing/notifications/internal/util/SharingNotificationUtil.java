@@ -80,7 +80,7 @@ public class SharingNotificationUtil {
 	public String getSharingEntryObjectTitle(
 		SharingEntry sharingEntry, Locale locale) {
 
-		SharingEntryInterpreter<Object> sharingEntryInterpreter =
+		SharingEntryInterpreter sharingEntryInterpreter =
 			_sharingEntryInterpreterProvider.getSharingEntryInterpreter(
 				sharingEntry);
 

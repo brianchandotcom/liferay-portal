@@ -14,7 +14,6 @@
 
 package com.liferay.sharing.web.internal.interpreter;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -28,6 +27,7 @@ import com.liferay.sharing.renderer.SharingEntryEditRenderer;
 import com.liferay.sharing.renderer.SharingEntryViewRenderer;
 import com.liferay.sharing.web.internal.renderer.AssetRendererSharingEntryEditRenderer;
 import com.liferay.sharing.web.internal.renderer.AssetRendererSharingEntryViewRenderer;
+import com.liferay.sharing.web.internal.util.AssetRendererSharingUtil;
 
 import java.util.Locale;
 
@@ -44,11 +44,12 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, service = AssetRendererSharingEntryInterpreter.class
 )
 public class AssetRendererSharingEntryInterpreter
-	implements SharingEntryInterpreter<AssetRenderer> {
+	implements SharingEntryInterpreter {
 
 	@Override
 	public String getAssetTypeTitle(SharingEntry sharingEntry, Locale locale) {
-		AssetRenderer assetRenderer = getEntry(sharingEntry);
+		AssetRenderer assetRenderer = AssetRendererSharingUtil.getAssetRenderer(
+			sharingEntry);
 
 		AssetRendererFactory assetRendererFactory =
 			assetRenderer.getAssetRendererFactory();
@@ -57,45 +58,20 @@ public class AssetRendererSharingEntryInterpreter
 	}
 
 	@Override
-	public AssetRenderer getEntry(SharingEntry sharingEntry) {
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				sharingEntry.getClassName());
-
-		if (assetRendererFactory == null) {
-			return null;
-		}
-
-		AssetRenderer<?> assetRenderer = null;
-
-		try {
-			assetRenderer = assetRendererFactory.getAssetRenderer(
-				sharingEntry.getClassPK());
-		}
-		catch (Exception e) {
-		}
-
-		return assetRenderer;
-	}
-
-	@Override
-	public SharingEntryEditRenderer<AssetRenderer>
-		getSharingEntryEditRenderer() {
-
+	public SharingEntryEditRenderer getSharingEntryEditRenderer() {
 		return _assetRendererSharingEntryEditRenderer;
 	}
 
 	@Override
-	public SharingEntryViewRenderer<AssetRenderer>
-		getSharingEntryViewRenderer() {
-
+	public SharingEntryViewRenderer getSharingEntryViewRenderer() {
 		return _assetRendererSharingEntryViewRenderer;
 	}
 
 	@Override
 	public String getTitle(SharingEntry sharingEntry) {
 		try {
-			AssetRenderer assetRenderer = getEntry(sharingEntry);
+			AssetRenderer assetRenderer =
+				AssetRendererSharingUtil.getAssetRenderer(sharingEntry);
 
 			AssetRendererFactory assetRendererFactory =
 				assetRenderer.getAssetRendererFactory();

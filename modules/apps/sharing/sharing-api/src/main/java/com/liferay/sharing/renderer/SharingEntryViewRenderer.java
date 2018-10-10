@@ -14,6 +14,8 @@
 
 package com.liferay.sharing.renderer;
 
+import com.liferay.sharing.model.SharingEntry;
+
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,10 +24,11 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Sergio González
  */
-public interface SharingEntryViewRenderer<T> {
+public interface SharingEntryViewRenderer {
 
 	public void render(
-			T entry, HttpServletRequest request, HttpServletResponse response)
+			SharingEntry sharingEntry, HttpServletRequest request,
+			HttpServletResponse response)
 		throws IOException;
 
 }

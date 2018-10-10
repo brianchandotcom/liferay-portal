@@ -182,6 +182,15 @@ public class ViewUsersManagementToolbarDisplayContext {
 		portletURL.setParameter("orderByType", getOrderByType());
 		portletURL.setParameter("status", String.valueOf(_status));
 
+		if (_userSearch != null) {
+			portletURL.setParameter(
+				_userSearch.getCurParam(),
+				String.valueOf(_userSearch.getCur()));
+			portletURL.setParameter(
+				_userSearch.getDeltaParam(),
+				String.valueOf(_userSearch.getDelta()));
+		}
+
 		return portletURL;
 	}
 

@@ -171,6 +171,15 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 
 		portletURL.setParameter("usersListView", usersListView);
 
+		if (_organizationSearch != null) {
+			portletURL.setParameter(
+				_organizationSearch.getCurParam(),
+				String.valueOf(_organizationSearch.getCur()));
+			portletURL.setParameter(
+				_organizationSearch.getDeltaParam(),
+				String.valueOf(_organizationSearch.getDelta()));
+		}
+
 		return portletURL;
 	}
 

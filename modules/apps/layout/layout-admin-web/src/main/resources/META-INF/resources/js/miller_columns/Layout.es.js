@@ -5,6 +5,7 @@ import Soy from 'metal-soy';
 import './LayoutBreadcrumbs.es';
 import './LayoutColumn.es';
 import {DRAG_POSITIONS, LayoutDragDrop} from './utils/LayoutDragDrop.es';
+import {setIn} from '../utils/utils.es';
 import templates from './Layout.soy';
 
 /**
@@ -244,7 +245,8 @@ class Layout extends Component {
 
 	/**
 	 * Method executed when a column is left empty after dragging.
-	 * Updates target item's status and removes empty columns if any.
+	 * Updates target item's status, removes empty columns if any
+	 * and returns a new columns array.
 	 *
 	 * @param {!Array} layoutColumns
 	 * @param {!number} targetColumnIndex
@@ -256,30 +258,40 @@ class Layout extends Component {
 		layoutColumns,
 		targetColumnIndex
 	) {
+		let nextLayoutColumns = layoutColumns;
+
 		if (
 			this._draggingItem.active &&
 			(this._draggingItemColumnIndex !== targetColumnIndex)
 		) {
 			this._draggingItem.active = false;
 
-			layoutColumns = this._clearFollowingColumns(
-				layoutColumns,
+			nextLayoutColumns = this._clearFollowingColumns(
+				nextLayoutColumns,
 				this._draggingItemColumnIndex
 			);
 		}
 
-		const previousColumn = layoutColumns[this._draggingItemColumnIndex - 1];
+		const previousColumn = nextLayoutColumns[this._draggingItemColumnIndex - 1];
 
 		const activeItemPlid = this._getLayoutColumnActiveItemPlid(
 			previousColumn
 		);
 
 		const activeItem = this._getLayoutColumnItemByPlid(
-			layoutColumns,
+			nextLayoutColumns,
 			activeItemPlid
 		);
 
-		activeItem.hasChild = false;
+		return setIn(
+			nextLayoutColumns,
+			[
+				this._draggingItemColumnIndex - 1,
+				previousColumn.indexOf(activeItem),
+				'hasChild'
+			],
+			false
+		);
 	}
 
 	/**
@@ -363,7 +375,7 @@ class Layout extends Component {
 			}
 
 			if (sourceColumn.length === 0 && !this._currentPathItemPlid) {
-				this._handleEmptyColumn(
+				layoutColumns = this._handleEmptyColumn(
 					layoutColumns,
 					targetColumnIndex
 				);

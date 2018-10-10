@@ -17,18 +17,23 @@ $fragmentEditableFieldGridSize: 8px;
 $fragmentEditableFieldGridTranslatedColor: #3DC513;
 $fragmentEditableFieldTooltipZIndex: 3;
 
-$fragmentEntryLinkBorderColor: #FF8F39;
 $fragmentEntryLinkBorderRadius: 3px;
 $fragmentEntryLinkBorderWidth: 1px;
 $fragmentEntryLinkContentZIndex: 0;
 $fragmentEntryLinkContentHoverZIndex: auto;
-$fragmentEntryLinkControlBackgroundColor: #FFF4EC;
-$fragmentEntryLinkControlColor: #B95000;
 $fragmentEntryLinkControlHeight: 48px;
 $fragmentEntryLinkControlZIndex: 1;
 $fragmentEntryLinkControlHoverZIndex: 2;
-$fragmentEntryLinkFocusedBorderWidth: 2px;
 $fragmentEntryLinkZIndex: 5;
+
+$fragmentEntryLinkBorderColor: #0B5FFF;
+$fragmentEntryLinkControlColor: #FFF;
+$fragmentEntryLinkControlBackgroundColor: #0B5FFF;
+$fragmentEntryLinkHoverBorder: 1px solid #0B5FFF;
+$fragmentEntryLinkColumnBorder: 1px dashed #CDCED9;
+$fragmentEntryLinkSectionBorder: 1px solid #CDCED9;
+$fragmentEntryLinkSectionHoverBorder: 1px solid #0B5FFF;
+$fragmentEntryLinkSpacing: 12px;
 
 $fragmentEntryLinkListPadding: 48px;
 

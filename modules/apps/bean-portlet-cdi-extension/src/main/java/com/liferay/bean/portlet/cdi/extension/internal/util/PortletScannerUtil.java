@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bean.portlet.cdi.extension.internal.xml;
+package com.liferay.bean.portlet.cdi.extension.internal.util;
 
 import com.liferay.bean.portlet.cdi.extension.internal.BeanMethod;
 import com.liferay.bean.portlet.cdi.extension.internal.MethodType;

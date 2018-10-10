@@ -29,6 +29,7 @@ import com.liferay.bean.portlet.cdi.extension.internal.Preference;
 import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameter;
 import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameterImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.util.BeanMethodIndexUtil;
+import com.liferay.bean.portlet.cdi.extension.internal.util.PortletScannerUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

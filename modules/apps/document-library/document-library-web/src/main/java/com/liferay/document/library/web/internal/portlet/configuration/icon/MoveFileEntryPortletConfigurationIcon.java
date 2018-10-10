@@ -64,10 +64,6 @@ public class MoveFileEntryPortletConfigurationIcon
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/move_entry");
 
-		PortletURL redirectURL = _portal.getControlPanelPortletURL(
-			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
 		FileEntry fileEntry = null;
 
 		try {
@@ -76,6 +72,10 @@ public class MoveFileEntryPortletConfigurationIcon
 		catch (Exception e) {
 			return null;
 		}
+
+		PortletURL redirectURL = _portal.getControlPanelPortletURL(
+			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+			PortletRequest.RENDER_PHASE);
 
 		long folderId = fileEntry.getFolderId();
 

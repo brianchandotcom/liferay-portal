@@ -61,9 +61,6 @@ public class DownloadFileEntryPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		FileEntry fileEntry = null;
 		FileVersion fileVersion = null;
 
@@ -75,6 +72,9 @@ public class DownloadFileEntryPortletConfigurationIcon
 		catch (Exception e) {
 			return null;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		return DLUtil.getDownloadURL(
 			fileEntry, fileVersion, themeDisplay, StringPool.BLANK);

@@ -55,12 +55,13 @@ public class LinkToPageDDMFormFieldValueRenderer
 					value.getString(locale));
 
 				long groupId = jsonObject.getLong("groupId");
-				boolean privateLayout = jsonObject.getBoolean("privateLayout");
 				long layoutId = jsonObject.getLong("layoutId");
 
 				if ((groupId == 0) && (layoutId == 0)) {
 					return StringPool.BLANK;
 				}
+
+				boolean privateLayout = jsonObject.getBoolean("privateLayout");
 
 				try {
 					return LayoutServiceUtil.getLayoutName(

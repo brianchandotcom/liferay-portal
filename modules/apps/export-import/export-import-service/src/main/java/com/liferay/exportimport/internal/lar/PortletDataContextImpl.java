@@ -1694,8 +1694,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		for (KeyValuePair permission : permissions) {
 			String roleName = permission.getKey();
 
-			Role role = null;
-
 			Team team = null;
 
 			if (ExportImportPermissionUtil.isTeamRoleName(roleName)) {
@@ -1713,6 +1711,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 					continue;
 				}
 			}
+
+			Role role = null;
 
 			try {
 				if (team != null) {

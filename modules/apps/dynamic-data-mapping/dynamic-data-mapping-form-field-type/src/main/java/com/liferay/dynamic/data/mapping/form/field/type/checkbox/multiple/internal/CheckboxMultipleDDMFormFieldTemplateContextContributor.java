@@ -84,8 +84,6 @@ public class CheckboxMultipleDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
-
 		List<Map<String, String>> keyValuePairs =
 			(List<Map<String, String>>)
 				ddmFormFieldRenderingContext.getProperty("options");
@@ -93,6 +91,8 @@ public class CheckboxMultipleDDMFormFieldTemplateContextContributor
 		if (ListUtil.isEmpty(keyValuePairs)) {
 			return ddmFormField.getDDMFormFieldOptions();
 		}
+
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
 
 		for (Map<String, String> keyValuePair : keyValuePairs) {
 			ddmFormFieldOptions.addOptionLabel(

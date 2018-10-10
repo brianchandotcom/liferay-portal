@@ -240,8 +240,6 @@ public class FileShortcutStagedModelDataHandler
 			PortletDataContext portletDataContext, FileShortcut fileShortcut)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(fileShortcut.getUserUuid());
-
 		FileShortcut existingFileShortcut = fetchStagedModelByUuidAndGroupId(
 			fileShortcut.getUuid(), portletDataContext.getScopeGroupId());
 
@@ -263,6 +261,9 @@ public class FileShortcutStagedModelDataHandler
 
 		if (trashHandler.isRestorable(
 				existingFileShortcut.getFileShortcutId())) {
+
+			long userId = portletDataContext.getUserId(
+				fileShortcut.getUserUuid());
 
 			trashHandler.restoreTrashEntry(
 				userId, existingFileShortcut.getFileShortcutId());

@@ -44,12 +44,12 @@ public class CheckboxMultipleDDMFormFieldValueRenderer
 			checkboxMultipleDDMFormFieldValueAccessor.getValue(
 				ddmFormFieldValue, locale);
 
-		DDMFormFieldOptions ddmFormFieldOptions = getDDMFormFieldOptions(
-			ddmFormFieldValue);
-
 		if (optionsValuesJSONArray.length() == 0) {
 			return StringPool.BLANK;
 		}
+
+		DDMFormFieldOptions ddmFormFieldOptions = getDDMFormFieldOptions(
+			ddmFormFieldValue);
 
 		StringBundler sb = new StringBundler(
 			optionsValuesJSONArray.length() * 2 - 1);

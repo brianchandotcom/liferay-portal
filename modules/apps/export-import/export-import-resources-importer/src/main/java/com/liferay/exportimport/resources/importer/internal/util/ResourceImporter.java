@@ -143,16 +143,16 @@ public class ResourceImporter extends FileSystemImporter {
 			String ddmStructureKey, String dirName, String fileName)
 		throws Exception {
 
-		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
-			groupId, PortalUtil.getClassNameId(DDLRecordSet.class),
-			ddmStructureKey);
-
 		Set<String> resourcePaths = servletContext.getResourcePaths(
 			_getResourcePath(dirName) + StringPool.SLASH + fileName);
 
 		if (resourcePaths == null) {
 			return;
 		}
+
+		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+			groupId, PortalUtil.getClassNameId(DDLRecordSet.class),
+			ddmStructureKey);
 
 		for (String resourcePath : resourcePaths) {
 			URL url = servletContext.getResource(resourcePath);
@@ -177,16 +177,16 @@ public class ResourceImporter extends FileSystemImporter {
 			String ddmStructureKey, String dirName, String fileName)
 		throws Exception {
 
-		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
-			groupId, PortalUtil.getClassNameId(DDLRecordSet.class),
-			ddmStructureKey);
-
 		Set<String> resourcePaths = servletContext.getResourcePaths(
 			_getResourcePath(dirName) + StringPool.SLASH + fileName);
 
 		if (resourcePaths == null) {
 			return;
 		}
+
+		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+			groupId, PortalUtil.getClassNameId(DDLRecordSet.class),
+			ddmStructureKey);
 
 		for (String resourcePath : resourcePaths) {
 			URL url = servletContext.getResource(resourcePath);

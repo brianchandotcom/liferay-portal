@@ -21,14 +21,12 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -39,9 +37,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.PortletMode;
-import javax.portlet.annotations.ActionMethod;
-import javax.portlet.annotations.EventMethod;
-import javax.portlet.annotations.PortletQName;
 
 import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
@@ -52,7 +47,7 @@ import javax.xml.namespace.QName;
 public class BeanPortletImpl implements BeanPortlet {
 
 	public BeanPortletImpl(
-		String portletName, Set<BeanMethod> beanMethods,
+		String portletName, Map<MethodType, List<BeanMethod>> beanMethodMap,
 		Map<String, String> displayNames, String portletClassName,
 		Map<String, String> initParams, int expirationCache,
 		Map<String, Set<String>> supportedPortletModes,
@@ -73,6 +68,7 @@ public class BeanPortletImpl implements BeanPortlet {
 		Map<String, Set<String>> liferayConfiguration) {
 
 		_portletName = portletName;
+		_beanMethodMap = beanMethodMap;
 		_displayNames = displayNames;
 		_portletClassName = portletClassName;
 		_initParams = initParams;
@@ -88,97 +84,8 @@ public class BeanPortletImpl implements BeanPortlet {
 		_preferences = preferences;
 		_preferencesValidator = preferencesValidator;
 		_securityRoleRefs = securityRoleRefs;
-
-		for (BeanMethod beanMethod : beanMethods) {
-			_beanMethods.compute(
-				beanMethod.getType(),
-				(methodType, valueBeanMethods) -> {
-					if (valueBeanMethods == null) {
-						valueBeanMethods = new ArrayList<>();
-					}
-
-					if ((methodType == MethodType.HEADER) ||
-						(methodType == MethodType.RENDER) ||
-						(methodType == MethodType.SERVE_RESOURCE)) {
-
-						int index = Collections.binarySearch(
-							valueBeanMethods, beanMethod);
-
-						if (index < 0) {
-							index = -index - 1;
-						}
-
-						valueBeanMethods.add(index, beanMethod);
-					}
-					else {
-						valueBeanMethods.add(beanMethod);
-					}
-
-					return valueBeanMethods;
-				});
-		}
-
-		List<BeanMethod> eventBeanMethods = _beanMethods.get(MethodType.EVENT);
-
-		if (eventBeanMethods != null) {
-			for (BeanMethod beanMethod : eventBeanMethods) {
-				Method beanEventMethod = beanMethod.getMethod();
-
-				EventMethod eventMethod = beanEventMethod.getAnnotation(
-					EventMethod.class);
-
-				if (eventMethod == null) {
-					continue;
-				}
-
-				for (PortletQName portletQName :
-						eventMethod.processingEvents()) {
-
-					supportedProcessingEvents.add(
-						new QName(
-							portletQName.namespaceURI(),
-							portletQName.localPart()));
-				}
-
-				for (PortletQName portletQName :
-						eventMethod.publishingEvents()) {
-
-					supportedPublishingEvents.add(
-						new QName(
-							portletQName.namespaceURI(),
-							portletQName.localPart()));
-				}
-			}
-		}
-
 		_supportedProcessingEvents = supportedProcessingEvents;
-
-		List<BeanMethod> actionMethods = _beanMethods.get(MethodType.ACTION);
-
-		if (actionMethods != null) {
-			for (BeanMethod beanMethod : actionMethods) {
-				Method method = beanMethod.getMethod();
-
-				ActionMethod actionMethod = method.getAnnotation(
-					ActionMethod.class);
-
-				if (actionMethod == null) {
-					continue;
-				}
-
-				for (PortletQName portletQName :
-						actionMethod.publishingEvents()) {
-
-					supportedPublishingEvents.add(
-						new QName(
-							portletQName.namespaceURI(),
-							portletQName.localPart()));
-				}
-			}
-		}
-
 		_supportedPublishingEvents = supportedPublishingEvents;
-
 		_supportedPublicRenderParameters = supportedPublicRenderParameters;
 		_containerRuntimeOptions = containerRuntimeOptions;
 		_portletDependencies = portletDependencies;
@@ -193,11 +100,13 @@ public class BeanPortletImpl implements BeanPortlet {
 	}
 
 	public BeanPortletImpl(
-		String portletName, Set<BeanMethod> beanMethods, String displayCategory,
+		String portletName, Map<MethodType, List<BeanMethod>> beanMethodMap,
+		Set<QName> supportedProcessingEvents,
+		Set<QName> supportedPublishingEvents, String displayCategory,
 		Map<String, Set<String>> liferayConfiguration) {
 
 		this(
-			portletName, beanMethods, Collections.emptyMap(), null,
+			portletName, beanMethodMap, Collections.emptyMap(), null,
 			Collections.emptyMap(), 0,
 			Collections.singletonMap(
 				"text/html", Collections.singleton("view")),
@@ -208,15 +117,15 @@ public class BeanPortletImpl implements BeanPortlet {
 			Collections.emptySet(), null, Collections.emptyMap(),
 			Collections.emptyMap(), Collections.emptyMap(),
 			Collections.emptyMap(), Collections.emptyMap(), null,
-			Collections.emptyMap(), new HashSet<QName>(), new HashSet<QName>(),
-			Collections.emptySet(), Collections.emptyMap(),
-			Collections.emptySet(), false, false, 0, null, -1, -1,
-			displayCategory, liferayConfiguration);
+			Collections.emptyMap(), supportedProcessingEvents,
+			supportedPublishingEvents, Collections.emptySet(),
+			Collections.emptyMap(), Collections.emptySet(), false, false, 0,
+			null, -1, -1, displayCategory, liferayConfiguration);
 	}
 
 	@Override
 	public Map<MethodType, List<BeanMethod>> getBeanMethods() {
-		return _beanMethods;
+		return _beanMethodMap;
 	}
 
 	@Override
@@ -870,8 +779,7 @@ public class BeanPortletImpl implements BeanPortlet {
 	private static final String _ENGLISH_EN = Locale.ENGLISH.getLanguage();
 
 	private final boolean _asyncSupported;
-	private final EnumMap<MethodType, List<BeanMethod>> _beanMethods =
-		new EnumMap<>(MethodType.class);
+	private final Map<MethodType, List<BeanMethod>> _beanMethodMap;
 	private final Map<String, List<String>> _containerRuntimeOptions;
 	private final Map<String, String> _descriptions;
 	private final String _displayCategory;

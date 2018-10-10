@@ -25,6 +25,7 @@ import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletRequestBeanC
 import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletSessionBeanContext;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.RenderStateBeanContext;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBean;
+import com.liferay.bean.portlet.cdi.extension.internal.util.BeanMethodIndexUtil;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.DisplayDescriptorParser;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.LiferayDescriptorParser;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletDescriptorParser;
@@ -539,8 +540,17 @@ public class BeanPortletExtension implements Extension {
 			BeanPortlet beanPortlet = _beanPortlets.get(portletName);
 
 			if (beanPortlet == null) {
+				Set<QName> supportedProcessingEvents = new HashSet<>();
+				Set<QName> supportedPublishingEvents = new HashSet<>();
+
+				Map<MethodType, List<BeanMethod>> beanMethodMap =
+					BeanMethodIndexUtil.indexBeanMethods(
+						portletBeanMethodsFunction.apply(portletName),
+						supportedProcessingEvents, supportedPublishingEvents);
+
 				beanPortlet = new BeanPortletImpl(
-					portletName, portletBeanMethodsFunction.apply(portletName),
+					portletName, beanMethodMap, supportedProcessingEvents,
+					supportedPublishingEvents,
 					descriptorDisplayCategories.get(portletName),
 					descriptorLiferayConfigurations.get(portletName));
 
@@ -920,6 +930,9 @@ public class BeanPortletExtension implements Extension {
 		Set<String> supportedLocales = new LinkedHashSet<>(
 			Arrays.asList(portletConfiguration.supportedLocales()));
 
+		Set<QName> supportedProcessingEvents = new HashSet<>();
+		Set<QName> supportedPublishingEvents = new HashSet<>();
+
 		Set<String> supportedPublicRenderParameters = new LinkedHashSet<>(
 			Arrays.asList(portletConfiguration.publicParams()));
 
@@ -932,19 +945,24 @@ public class BeanPortletExtension implements Extension {
 				runtimeOption.name(), Arrays.asList(runtimeOption.values()));
 		}
 
+		Map<MethodType, List<BeanMethod>> beanMethodMap =
+			BeanMethodIndexUtil.indexBeanMethods(
+				beanMethods, supportedProcessingEvents,
+				supportedPublishingEvents);
+
 		BeanPortlet annotatedBeanPortlet = new BeanPortletImpl(
-			portletConfiguration.portletName(), beanMethods, displayNames,
+			portletConfiguration.portletName(), beanMethodMap, displayNames,
 			beanPortletClass.getName(), initParams,
 			portletConfiguration.cacheExpirationTime(), supportedPortletModes,
 			supportedWindowStates, supportedLocales,
 			portletConfiguration.resourceBundle(), titles, shortTitles,
 			keywords, descriptions, preferences, preferencesValidator,
-			securityRoleRefs, new HashSet<QName>(), new HashSet<QName>(),
-			supportedPublicRenderParameters, containerRuntimeOptions,
-			portletDependencies, portletConfiguration.asyncSupported(),
-			multiPartSupported, multiPartFileSizeThreshold, multiPartLocation,
-			multiPartMaxFileSize, multiPartMaxRequestSize, displayCategory,
-			liferayConfiguration);
+			securityRoleRefs, supportedProcessingEvents,
+			supportedPublishingEvents, supportedPublicRenderParameters,
+			containerRuntimeOptions, portletDependencies,
+			portletConfiguration.asyncSupported(), multiPartSupported,
+			multiPartFileSizeThreshold, multiPartLocation, multiPartMaxFileSize,
+			multiPartMaxRequestSize, displayCategory, liferayConfiguration);
 
 		if (descriptorBeanPortlet == null) {
 			_beanPortlets.put(configuredPortletName, annotatedBeanPortlet);
@@ -956,14 +974,18 @@ public class BeanPortletExtension implements Extension {
 				portletName = portletConfiguration.portletName();
 			}
 
-			Map<MethodType, List<BeanMethod>> beanMethodMap =
+			Map<MethodType, List<BeanMethod>> descriptorBeanMethodMap =
 				descriptorBeanPortlet.getBeanMethods();
 
 			for (Map.Entry<MethodType, List<BeanMethod>>
-					entry: beanMethodMap.entrySet()) {
+					entry: descriptorBeanMethodMap.entrySet()) {
 
 				beanMethods.addAll(entry.getValue());
 			}
+
+			beanMethodMap = BeanMethodIndexUtil.indexBeanMethods(
+				beanMethods, supportedProcessingEvents,
+				supportedPublishingEvents);
 
 			displayNames.putAll(descriptorBeanPortlet.getDisplayNames());
 
@@ -1016,18 +1038,6 @@ public class BeanPortletExtension implements Extension {
 
 			securityRoleRefs.putAll(
 				descriptorBeanPortlet.getSecurityRoleRefs());
-
-			Set<QName> supportedProcessingEvents = new LinkedHashSet<>(
-				annotatedBeanPortlet.getSupportedProcessingEvents());
-
-			supportedProcessingEvents.addAll(
-				descriptorBeanPortlet.getSupportedProcessingEvents());
-
-			Set<QName> supportedPublishingEvents = new LinkedHashSet<>(
-				annotatedBeanPortlet.getSupportedPublishingEvents());
-
-			supportedPublishingEvents.addAll(
-				descriptorBeanPortlet.getSupportedPublishingEvents());
 
 			supportedPublicRenderParameters.addAll(
 				descriptorBeanPortlet.getSupportedPublicRenderParameters());
@@ -1110,7 +1120,7 @@ public class BeanPortletExtension implements Extension {
 			}
 
 			BeanPortlet mergedBeanPortlet = new BeanPortletImpl(
-				portletConfiguration.portletName(), beanMethods, displayNames,
+				portletConfiguration.portletName(), beanMethodMap, displayNames,
 				beanPortletClass.getName(), initParams,
 				portletConfiguration.cacheExpirationTime(),
 				supportedPortletModes, supportedWindowStates, supportedLocales,
@@ -1213,8 +1223,17 @@ public class BeanPortletExtension implements Extension {
 			BeanPortlet beanPortlet = _beanPortlets.get(portletName);
 
 			if (beanPortlet == null) {
+				Set<QName> supportedProcessingEvents = new HashSet<>();
+				Set<QName> supportedPublishingEvents = new HashSet<>();
+
+				Map<MethodType, List<BeanMethod>> beanMethodMap =
+					BeanMethodIndexUtil.indexBeanMethods(
+						portletBeanMethodsFunction.apply(portletName),
+						supportedProcessingEvents, supportedPublishingEvents);
+
 				beanPortlet = new BeanPortletImpl(
-					portletName, portletBeanMethodsFunction.apply(portletName),
+					portletName, beanMethodMap, supportedProcessingEvents,
+					supportedPublishingEvents,
 					descriptorDisplayCategories.get(portletName),
 					entry.getValue());
 

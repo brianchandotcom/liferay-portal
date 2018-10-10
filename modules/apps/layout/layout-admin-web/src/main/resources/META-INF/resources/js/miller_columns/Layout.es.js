@@ -126,16 +126,16 @@ class Layout extends Component {
 	 * @review
 	 */
 
-	_getLayoutColumnActiveItem(layoutColumn) {
-		let activeItemPlid = null;
+	_getLayoutColumnActiveItemPlid(layoutColumn) {
+		const layoutColumnItem = layoutColumn.find(
+			layoutColumnItem => layoutColumnItem.active
+		);
 
-		for (let i = 0; i < layoutColumn.length; i++) {
-			if (layoutColumn[i].active) {
-				activeItemPlid = layoutColumn[i].plid;
-			}
-		}
-
-		return activeItemPlid;
+		return (
+			layoutColumnItem ?
+				layoutColumnItem.plid :
+				null
+		);
 	}
 
 	/**
@@ -258,7 +258,7 @@ class Layout extends Component {
 
 		const previousColumn = layoutColumns[this._draggingItemColumnIndex - 1];
 
-		const activeItemPlid = this._getLayoutColumnActiveItem(previousColumn);
+		const activeItemPlid = this._getLayoutColumnActiveItemPlid(previousColumn);
 
 		const activeItem = this._getLayoutColumnItemByPlid(
 			layoutColumns,
@@ -343,7 +343,7 @@ class Layout extends Component {
 
 				targetColumn.splice(priority, 0, this._draggingItem);
 
-				parentPlid = this._getLayoutColumnActiveItem(
+				parentPlid = this._getLayoutColumnActiveItemPlid(
 					layoutColumns[targetColumnIndex - 1]
 				);
 			}
@@ -553,7 +553,7 @@ class Layout extends Component {
 		const targetColumn = this.layoutColumns[targetColumnIndex];
 		const targetItem = this._getLayoutColumnItemByPlid(this.layoutColumns, targetItemPlid);
 
-		const activeItemPlid = this._getLayoutColumnActiveItem(targetColumn);
+		const activeItemPlid = this._getLayoutColumnActiveItemPlid(targetColumn);
 
 		const activeItem = this._getLayoutColumnItemByPlid(this.layoutColumns, activeItemPlid);
 

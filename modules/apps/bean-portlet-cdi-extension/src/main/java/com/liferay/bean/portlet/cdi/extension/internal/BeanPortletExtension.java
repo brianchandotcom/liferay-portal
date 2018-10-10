@@ -953,11 +953,11 @@ public class BeanPortletExtension implements Extension {
 
 				if (beanMethods == null) {
 					beanMethods = new HashSet<>();
+
+					portletBeanMethods.put(portletName, beanMethods);
 				}
 
 				beanMethods.add(beanMethod);
-
-				portletBeanMethods.put(portletName, beanMethods);
 			}
 		}
 

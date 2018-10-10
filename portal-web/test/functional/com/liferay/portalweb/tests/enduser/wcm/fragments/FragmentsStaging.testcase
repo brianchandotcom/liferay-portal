@@ -73,6 +73,12 @@
 			<var name="site" value="false" />
 		</execute>
 
+		<execute macro="JSONFragment#assertFragmentNotInGroup">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Fragment Name" />
+			<var name="groupName" value="Test Site Name" />
+		</execute>
+
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Test Site Name" />
@@ -82,29 +88,10 @@
 
 		<execute macro="Staging#publishToLive" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="NavItem#gotoPageTemplates" />
-
-		<execute macro="PageTemplatesAdmin#addCollection">
-			<var name="collectionName" value="Page Template Collection" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Page Template Collection" />
-		</execute>
-
-		<execute macro="PageTemplatesAdmin#add">
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-
-		<execute macro="PageEditor#addFragment">
+		<execute macro="JSONFragment#assertFragmentInGroup">
 			<var name="collectionName" value="Collection Name" />
 			<var name="fragmentName" value="Fragment Name" />
+			<var name="groupName" value="Test Site Name" />
 		</execute>
 	</command>
 </definition>

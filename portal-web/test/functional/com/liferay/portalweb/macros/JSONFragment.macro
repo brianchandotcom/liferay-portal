@@ -39,6 +39,25 @@
 		</execute>
 	</command>
 
+	<command name="_getFragmentName">
+		<execute macro="JSONCompany#getPortalURL">
+			<return name="portalURL" />
+		</execute>
+
+		<var name="curl"><![CDATA[
+			${portalURL}/api/jsonws/fragment.fragmententry/get-fragment-entries \
+			-u test@liferay.com:test \
+			-d groupId=${groupId} \
+			-d fragmentCollectionId=${fragmentCollectionId} \
+			-d <CURL_DATA[start=-1]CURL_DATA> \
+			-d <CURL_DATA[end=-1]CURL_DATA>
+		]]></var>
+
+		<var method="JSONCurlUtil#post('${curl}', '$..[?(@[\'name\'] == \'${fragmentName}\')]')" name="fragmentNameResult" />
+
+		<return value="${fragmentNameResult}" />
+	</command>
+
 	<command name="addFragment">
 		<if>
 			<isset var="groupName" />
@@ -186,6 +205,136 @@
 			<var name="groupId" value="${groupId}" />
 			<var name="name" value="${name}" />
 		</execute>
+	</command>
+
+	<command name="assertFragmentInGroup">
+		<if>
+			<not>
+				<isset var="collectionName" />
+			</not>
+			<then>
+				<fail message="Please set 'collectionName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="fragmentName" />
+			</not>
+			<then>
+				<fail message="Please set 'fragmentName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="groupName" />
+			</not>
+			<then>
+				<fail message="Please set 'groupName'." />
+			</then>
+		</if>
+
+		<execute macro="JSONGroup#getGroupIdByName">
+			<return name="groupId" />
+			<var name="groupName" value="${groupName}" />
+		</execute>
+
+		<execute macro="JSONFragment#getCollectionIdByName">
+			<return name="fragmentCollectionId" />
+			<var name="collectionName" value="${collectionName}" />
+			<var name="groupId" value="${groupId}" />
+		</execute>
+
+		<echo message="## Asserts a 'Fragment' exists in a group using JSONWS:" />
+
+		<echo message="## * Collection Name: ${collectionName}" />
+
+		<echo message="## * Fragment Name: ${fragmentName}" />
+
+		<echo message="## * Group Name: ${groupName}" />
+
+		<execute macro="JSONFragment#_getFragmentName">
+			<return name="fragmentNameResult" />
+			<var name="fragmentCollectionId" value="${fragmentCollectionId}" />
+			<var name="fragmentName" value="${fragmentName}" />
+			<var name="groupId" value="${groupId}" />
+		</execute>
+
+		<if>
+			<equals arg1="${fragmentNameResult}" arg2="[]" />
+			<then>
+				<fail message="The fragment ${fragmentName} was not found." />
+			</then>
+			<else>
+				<echo message="The fragment ${fragmentName} was found." />
+			</else>
+		</if>
+	</command>
+
+	<command name="assertFragmentNotInGroup">
+		<if>
+			<not>
+				<isset var="collectionName" />
+			</not>
+			<then>
+				<fail message="Please set 'collectionName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="fragmentName" />
+			</not>
+			<then>
+				<fail message="Please set 'fragmentName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="groupName" />
+			</not>
+			<then>
+				<fail message="Please set 'groupName'." />
+			</then>
+		</if>
+
+		<execute macro="JSONGroup#getGroupIdByName">
+			<return name="groupId" />
+			<var name="groupName" value="${groupName}" />
+		</execute>
+
+		<execute macro="JSONFragment#getCollectionIdByName">
+			<return name="fragmentCollectionId" />
+			<var name="collectionName" value="${collectionName}" />
+			<var name="groupId" value="${groupId}" />
+		</execute>
+
+		<echo message="## Asserts a 'Fragment' doesn't exist in a group using JSONWS:" />
+
+		<echo message="## * Collection Name: ${collectionName}" />
+
+		<echo message="## * Fragment Name: ${fragmentName}" />
+
+		<echo message="## * Group Name: ${groupName}" />
+
+		<execute macro="JSONFragment#_getFragmentName">
+			<return name="fragmentNameResult" />
+			<var name="fragmentCollectionId" value="${fragmentCollectionId}" />
+			<var name="fragmentName" value="${fragmentName}" />
+			<var name="groupId" value="${groupId}" />
+		</execute>
+
+		<if>
+			<equals arg1="${fragmentNameResult}" arg2="[]" />
+			<then>
+				<echo message="The fragment ${fragmentName} was not found." />
+			</then>
+			<else>
+				<fail message="The fragment ${fragmentName} was found." />
+			</else>
+		</if>
 	</command>
 
 	<command name="getCollectionIdByName">

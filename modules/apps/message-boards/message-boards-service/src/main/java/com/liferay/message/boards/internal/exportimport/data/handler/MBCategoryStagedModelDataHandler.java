@@ -203,8 +203,6 @@ public class MBCategoryStagedModelDataHandler
 			PortletDataContext portletDataContext, MBCategory category)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(category.getUserUuid());
-
 		MBCategory existingCategory = fetchStagedModelByUuidAndGroupId(
 			category.getUuid(), portletDataContext.getScopeGroupId());
 
@@ -216,6 +214,8 @@ public class MBCategoryStagedModelDataHandler
 			MBCategory.class.getName());
 
 		if (trashHandler.isRestorable(existingCategory.getCategoryId())) {
+			long userId = portletDataContext.getUserId(category.getUserUuid());
+
 			trashHandler.restoreTrashEntry(
 				userId, existingCategory.getCategoryId());
 		}

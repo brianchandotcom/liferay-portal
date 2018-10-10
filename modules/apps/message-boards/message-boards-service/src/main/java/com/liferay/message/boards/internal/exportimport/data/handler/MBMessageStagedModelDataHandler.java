@@ -449,14 +449,14 @@ public class MBMessageStagedModelDataHandler
 			PortletDataContext portletDataContext, MBMessage message)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(message.getUserUuid());
-
 		MBMessage existingMessage = fetchStagedModelByUuidAndGroupId(
 			message.getUuid(), portletDataContext.getScopeGroupId());
 
 		if (existingMessage == null) {
 			return;
 		}
+
+		long userId = portletDataContext.getUserId(message.getUserUuid());
 
 		if (existingMessage.isInTrash()) {
 			TrashHandler trashHandler =

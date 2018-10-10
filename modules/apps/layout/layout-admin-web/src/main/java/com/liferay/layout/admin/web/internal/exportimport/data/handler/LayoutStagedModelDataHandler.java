@@ -403,7 +403,6 @@ public class LayoutStagedModelDataHandler
 				Layout.class + ".layout");
 
 		Layout existingLayout = null;
-		Layout importedLayout = null;
 
 		String friendlyURL = layout.getFriendlyURL();
 
@@ -528,6 +527,8 @@ public class LayoutStagedModelDataHandler
 				_log.debug(sb.toString());
 			}
 		}
+
+		Layout importedLayout = null;
 
 		if (existingLayout == null) {
 			long plid = _counterLocalService.increment();
@@ -1336,15 +1337,6 @@ public class LayoutStagedModelDataHandler
 			return;
 		}
 
-		Map<String, String[]> parameterMap =
-			portletDataContext.getParameterMap();
-
-		boolean permissions = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.PERMISSIONS);
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
 		_permissionImporter.clearCache();
 
 		Element portletsElement = layoutElement.element("portlets");
@@ -1355,6 +1347,15 @@ public class LayoutStagedModelDataHandler
 
 			return;
 		}
+
+		Map<String, String[]> parameterMap =
+			portletDataContext.getParameterMap();
+
+		boolean permissions = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.PERMISSIONS);
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinks(

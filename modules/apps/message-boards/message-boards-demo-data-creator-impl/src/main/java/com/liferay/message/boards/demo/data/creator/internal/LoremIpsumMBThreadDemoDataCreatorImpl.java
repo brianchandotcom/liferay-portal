@@ -41,8 +41,6 @@ public class LoremIpsumMBThreadDemoDataCreatorImpl
 	public MBThread create(List<Long> userIds, long categoryId)
 		throws IOException, PortalException {
 
-		MBThread thread = null;
-
 		int firstLevelReplyCount = RandomUtil.nextInt(10);
 
 		if (firstLevelReplyCount <= 0) {
@@ -53,6 +51,8 @@ public class LoremIpsumMBThreadDemoDataCreatorImpl
 
 		MBMessage rootMessage = _mbMessageDemoDataCreator.create(
 			userId, categoryId);
+
+		MBThread thread = null;
 
 		for (int i = 0; i < firstLevelReplyCount; i++) {
 			userId = userIds.get(RandomUtil.nextInt(userIds.size()));

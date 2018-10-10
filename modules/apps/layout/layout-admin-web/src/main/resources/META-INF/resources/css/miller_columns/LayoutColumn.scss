@@ -62,7 +62,13 @@
 }
 
 .layout-drag-handler {
+	color: #CDCED9;
 	cursor: move;
+}
+
+.layout-drag-handler svg {
+	height: 24px;
+	width: 24px;
 }
 
 .list-group-item.drag-layout-column-item.dragging {

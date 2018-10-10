@@ -1291,27 +1291,6 @@ public class SitesImpl implements Sites {
 			return;
 		}
 
-		UnicodeProperties settingsProperties =
-			layoutSet.getSettingsProperties();
-
-		long lastMergeTime = GetterUtil.getLong(
-			settingsProperties.getProperty(LAST_MERGE_TIME));
-
-		LayoutSetPrototype layoutSetPrototype =
-			LayoutSetPrototypeLocalServiceUtil.
-				getLayoutSetPrototypeByUuidAndCompanyId(
-					layoutSet.getLayoutSetPrototypeUuid(),
-					layoutSet.getCompanyId());
-
-		LayoutSet layoutSetPrototypeLayoutSet =
-			layoutSetPrototype.getLayoutSet();
-
-		UnicodeProperties layoutSetPrototypeSettingsProperties =
-			layoutSetPrototypeLayoutSet.getSettingsProperties();
-
-		int mergeFailCount = GetterUtil.getInteger(
-			layoutSetPrototypeSettingsProperties.getProperty(MERGE_FAIL_COUNT));
-
 		String owner = PortalUUIDUtil.generate();
 
 		try {
@@ -1350,11 +1329,22 @@ public class SitesImpl implements Sites {
 			return;
 		}
 
+		UnicodeProperties settingsProperties =
+			layoutSet.getSettingsProperties();
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutSetPrototypeLocalServiceUtil.
+				getLayoutSetPrototypeByUuidAndCompanyId(
+					layoutSet.getLayoutSetPrototypeUuid(),
+					layoutSet.getCompanyId());
+
 		try {
 			MergeLayoutPrototypesThreadLocal.setInProgress(true);
 
 			boolean importData = true;
 
+			long lastMergeTime = GetterUtil.getLong(
+				settingsProperties.getProperty(LAST_MERGE_TIME));
 			long lastResetTime = GetterUtil.getLong(
 				settingsProperties.getProperty(LAST_RESET_TIME));
 
@@ -1375,6 +1365,16 @@ public class SitesImpl implements Sites {
 				layoutSet.isPrivateLayout(), parameterMap, importData);
 		}
 		catch (Exception e) {
+			LayoutSet layoutSetPrototypeLayoutSet =
+				layoutSetPrototype.getLayoutSet();
+
+			UnicodeProperties layoutSetPrototypeSettingsProperties =
+				layoutSetPrototypeLayoutSet.getSettingsProperties();
+
+			int mergeFailCount = GetterUtil.getInteger(
+				layoutSetPrototypeSettingsProperties.getProperty(
+					MERGE_FAIL_COUNT));
+
 			mergeFailCount++;
 
 			if (_log.isWarnEnabled()) {

@@ -375,8 +375,6 @@ public class PortalRequestProcessor {
 				request.getQueryString());
 		}
 
-		String namespace = PortalUtil.getPortletNamespace(portletId);
-
 		FriendlyURLMapper friendlyURLMapper =
 			portlet.getFriendlyURLMapperInstance();
 
@@ -384,6 +382,8 @@ public class PortalRequestProcessor {
 			return layoutFriendlyURL.concat(StringPool.QUESTION).concat(
 				request.getQueryString());
 		}
+
+		String namespace = PortalUtil.getPortletNamespace(portletId);
 
 		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
 			request, portlet, layout, PortletRequest.RENDER_PHASE);

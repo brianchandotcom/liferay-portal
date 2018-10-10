@@ -59,8 +59,6 @@ public class DialectDetector {
 			dbMinorVersion = databaseMetaData.getDatabaseMinorVersion();
 			dbName = databaseMetaData.getDatabaseProductName();
 
-			String driverName = databaseMetaData.getDriverName();
-
 			StringBundler sb = new StringBundler(5);
 
 			sb.append(dbName);
@@ -83,6 +81,8 @@ public class DialectDetector {
 						"Determine dialect for ", dbName, " ", dbMajorVersion,
 						".", dbMinorVersion));
 			}
+
+			String driverName = databaseMetaData.getDriverName();
 
 			if (dbName.startsWith("HSQL")) {
 				dialect = new HSQLDialect();

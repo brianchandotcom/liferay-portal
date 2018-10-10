@@ -123,11 +123,11 @@ public class PortletCategoryUtil {
 		for (PortletCategory curPortletCategory :
 				portletCategory.getCategories()) {
 
-			Set<String> portletIds = new HashSet<>();
-
 			if (curPortletCategory.isHidden()) {
 				continue;
 			}
+
+			Set<String> portletIds = new HashSet<>();
 
 			for (String portletId : curPortletCategory.getPortletIds()) {
 				Portlet portlet = PortletLocalServiceUtil.getPortletById(

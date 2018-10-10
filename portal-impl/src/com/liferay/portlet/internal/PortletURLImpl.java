@@ -915,8 +915,6 @@ public class PortletURLImpl
 	}
 
 	protected String generateToString() {
-		StringBundler sb = new StringBundler(64);
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -948,6 +946,8 @@ public class PortletURLImpl
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		StringBundler sb = new StringBundler(64);
 
 		Key key = _getKey();
 
@@ -1599,14 +1599,14 @@ public class PortletURLImpl
 	private Map<String, String[]> _mergeWithRenderParametersV2(
 		Map<String, String[]> portletURLParams) {
 
-		String namespace = getNamespace();
-
 		Map<String, String[]> renderParameters = RenderParametersPool.get(
 			_request, _plid, _portlet.getPortletId());
 
 		if (renderParameters == null) {
 			return portletURLParams;
 		}
+
+		String namespace = getNamespace();
 
 		Map<String, String[]> mergedRenderParams = new LinkedHashMap<>(
 			portletURLParams);

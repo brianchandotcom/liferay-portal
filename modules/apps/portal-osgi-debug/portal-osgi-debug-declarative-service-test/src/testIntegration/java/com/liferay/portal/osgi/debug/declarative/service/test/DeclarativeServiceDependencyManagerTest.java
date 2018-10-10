@@ -86,7 +86,7 @@ public class DeclarativeServiceDependencyManagerTest {
 			_configurationAdmin.getConfiguration(
 				"com.liferay.portal.osgi.debug.declarative.service.internal." +
 					"configuration.UnsatisfiedComponentScannerConfiguration",
-				null);
+				"?");
 
 		_properties = _unsatisfiedComponentScannerConfiguration.getProperties();
 
@@ -235,7 +235,7 @@ public class DeclarativeServiceDependencyManagerTest {
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put("unsatisfiedComponentScanningInterval", "1");
+		properties.put("unsatisfiedComponentScanningInterval", 1);
 
 		_unsatisfiedComponentScannerConfiguration.update(properties);
 

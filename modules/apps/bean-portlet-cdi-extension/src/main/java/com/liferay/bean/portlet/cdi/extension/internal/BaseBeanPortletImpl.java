@@ -100,6 +100,15 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 							portletQName.namespaceURI(),
 							portletQName.localPart()));
 				}
+
+				for (PortletQName portletQName :
+						eventMethod.publishingEvents()) {
+
+					_supportedPublishingEvents.add(
+						new QName(
+							portletQName.namespaceURI(),
+							portletQName.localPart()));
+				}
 			}
 		}
 
@@ -118,30 +127,6 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 
 				for (PortletQName portletQName :
 						actionMethod.publishingEvents()) {
-
-					_supportedPublishingEvents.add(
-						new QName(
-							portletQName.namespaceURI(),
-							portletQName.localPart()));
-				}
-			}
-		}
-
-		List<BeanMethod> eventMethods = _beanMethods.get(MethodType.EVENT);
-
-		if (eventMethods != null) {
-			for (BeanMethod beanMethod : eventMethods) {
-				Method method = beanMethod.getMethod();
-
-				EventMethod eventMethod = method.getAnnotation(
-					EventMethod.class);
-
-				if (eventMethod == null) {
-					continue;
-				}
-
-				for (PortletQName portletQName :
-						eventMethod.publishingEvents()) {
 
 					_supportedPublishingEvents.add(
 						new QName(

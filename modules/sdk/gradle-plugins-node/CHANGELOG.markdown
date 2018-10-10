@@ -256,6 +256,11 @@ task's `useNpmCI` property is set to `true`.
 ### Changed
 - [LPS-85959]: Delete the NPM cached data before retrying `npm install`.
 
+## 4.4.2 - 2018-10-08
+
+### Changed
+- [LPS-85959]: Verify the NPM cached data before retrying `npm install`.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573

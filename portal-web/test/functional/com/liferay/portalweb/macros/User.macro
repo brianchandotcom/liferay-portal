@@ -1323,6 +1323,32 @@
 			<var name="button" value="Sign In" />
 		</execute>
 
+		<if>
+			<condition function="IsElementPresent" locator1="Message#ERROR_FORM_FIELD_REQUIRED" />
+			<then>
+				<echo message="Sign in failed due to empty required field. Retrying..." />
+
+				<if>
+					<and>
+						<isset var="authenticationMethod" />
+						<equals arg1="${authenticationMethod}" arg2="By Screen Name" />
+					</and>
+					<then>
+						<execute function="Type" locator1="TextInput#SCREEN_NAME" value1="${userScreenName}" />
+					</then>
+					<else>
+						<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
+					</else>
+				</if>
+
+				<execute function="Type" locator1="TextInput#PASSWORD" value1="${password}" />
+
+				<execute macro="Button#click">
+					<var name="button" value="Sign In" />
+				</execute>
+			</then>
+		</if>
+
 		<execute macro="Button#viewNotPresent">
 			<var name="button" value="Sign In" />
 		</execute>

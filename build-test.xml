@@ -4091,7 +4091,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 	</macrodef>
 
 	<macrodef name="uninstall-patches">
-		<attribute name="patching.tool.dir" />
+		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
 
 		<sequential>
 			<delete file="@{patching.tool.dir}/default.properties" />

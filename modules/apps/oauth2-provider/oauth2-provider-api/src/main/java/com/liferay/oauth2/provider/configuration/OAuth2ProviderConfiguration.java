@@ -72,4 +72,12 @@ public interface OAuth2ProviderConfiguration {
 	)
 	public boolean allowRefreshTokenGrant();
 
+	@Meta.AD(
+		deflt = "false",
+		description = "oauth2-recycle-refresh-token-description",
+		id = "oauth2.recycle.refresh.token",
+		name = "oauth2-recycle-refresh-token", required = false
+	)
+	public boolean recycleRefreshToken();
+
 }

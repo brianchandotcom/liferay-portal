@@ -565,6 +565,10 @@ public class LiferayOAuthDataProvider
 
 		RefreshToken newRefreshToken = doCreateNewRefreshToken(accessToken);
 
+		if (_oAuth2ProviderConfiguration.recycleRefreshToken()) {
+			newRefreshToken.setTokenKey(oldRefreshToken.getTokenKey());
+		}
+
 		List<String> accessTokens = newRefreshToken.getAccessTokens();
 
 		accessTokens.add(accessToken.getTokenKey());

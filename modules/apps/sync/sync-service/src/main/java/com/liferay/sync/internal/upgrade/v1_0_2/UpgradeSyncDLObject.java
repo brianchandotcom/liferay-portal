@@ -296,8 +296,6 @@ public class UpgradeSyncDLObject extends UpgradeProcess {
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
-				long folderId = rs.getLong("folderId");
-
 				String name = rs.getString("name");
 
 				String extension = FileUtil.getExtension(name);
@@ -317,7 +315,7 @@ public class UpgradeSyncDLObject extends UpgradeProcess {
 
 				ps2.setString(1, extraSettingsJSONObject.toString());
 
-				ps2.setLong(2, folderId);
+				ps2.setLong(2, rs.getLong("folderId"));
 
 				ps2.addBatch();
 			}

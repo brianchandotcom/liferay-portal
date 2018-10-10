@@ -474,11 +474,12 @@ class Form extends Component {
 			<div class={'ddm-form-builder'}>
 				<LayoutProvider {...layoutProviderProps}>
 					<RuleBuilder
+						dataProviderInstancesURL={this.props.dataProviderInstancesURL}
 						functionsMetadata={this.props.functionsMetadata}
 						pages={context.pages}
+						rolesURL={this.props.rolesURL}
 						rules={this.props.rules}
 						spritemap={spritemap}
-						url={this.props.rolesURL}
 						visible={showRuleBuilder}
 					/>
 					<Builder

@@ -11,7 +11,7 @@
 			target: string
 		]>
 	}
-	{@param actionList: list<[
+	{@param actionTypes: list<[
 			value: string,
 			name: string
 		]>
@@ -92,9 +92,9 @@
 		<ul class="liferay-ddm-form-builder-rule-condition-list liferay-ddm-form-rule-builder-timeline timeline {length($conditions) > 1 ? 'can-remove-item' : ''}">
 			{let $enableLogicalOperator: (length($conditions) > 1) ? true : false /}
 
-			{call .header}
+			{call .renderHeader}
 				{param extraContent kind="html"}
-					{call .logicalOperatorDropDown}
+					{call .renderConditionLogicalOperatorDropdown}
 						{param _handleLogicalOperationChange: $_handleLogicalOperationChange /}
 						{param enableLogicalOperator: $enableLogicalOperator /}
 						{param logicalOperator: $strings[$logicalOperator] /}
@@ -106,7 +106,7 @@
 			{/call}
 
 			{foreach $condition in $conditions}
-				{call .condition}
+				{call .renderCondition}
 					{param _handleDeleteCondition: $_handleDeleteCondition /}
 					{param _handleFirstOperandFieldEdited: $_handleFirstOperandFieldEdited /}
 					{param _handleOperatorEdited: $_handleOperatorEdited /}
@@ -133,22 +133,23 @@
 			{/foreach}
 		</ul>
 
-		{call .addItem}
+		{call .renderAddItemButton}
 			{param _handleItemAdded: $_handleConditionAdded /}
 			{param spritemap: $spritemap /}
 			{param type: 'addConditionButton' /}
 		{/call}
 
 		<ul class="action-list liferay-ddm-form-builder-rule-action-list liferay-ddm-form-rule-builder-timeline timeline {length($actions) > 1 ? 'can-remove-item' : ''}">
-			{call .header}
+			{call .renderHeader}
 				{param title: $strings.actions /}
 			{/call}
+
 			{foreach $action in $actions}
-				{call .action}
+				{call .renderAction}
 					{param _handleActionSelection: $_handleActionSelection /}
 					{param _handleDeleteAction: $_handleDeleteAction /}
 					{param _handleTargetSelection: $_handleTargetSelection /}
-					{param actionList: $actionList /}
+					{param actionTypes: $actionTypes /}
 					{param actionSelected: $action.action /}
 					{param strings: $strings /}
 					{param dataProvider: $dataProvider /}
@@ -157,48 +158,35 @@
 					{param spritemap: $spritemap /}
 					{param targetSelected: $action.target /}
 				{/call}
-
-				{ifempty}
-					{call .action}
-						{param _handleActionSelection: $_handleActionSelection /}
-						{param _handleDeleteAction: $_handleDeleteAction /}
-						{param _handleTargetSelection: $_handleTargetSelection /}
-						{param actionList: $actionList /}
-						{param dataProvider: $dataProvider /}
-						{param fieldOptions: $fieldOptions /}
-						{param index: 0 /}
-						{param spritemap: $spritemap /}
-						{param strings: $strings /}
-					{/call}
 			{/foreach}
 		</ul>
 
-		{call .addItem}
+		{call .renderAddItemButton}
 			{param _handleItemAdded: $_handleActionAdded /}
 			{param spritemap: $spritemap /}
 			{param type: 'addActionButton' /}
 		{/call}
 
-		{call .modal}
+		{call .renderModal}
+			{param _handleModalButtonClicked: $_handleModalButtonClicked /}
 			{param modalVisibility: $deleteConditionModalVisible /}
+			{param question: $strings.deleteConditionQuestion /}
+			{param spritemap: $spritemap /}
 			{param title: $strings.deleteCondition /}
 			{param type: 'Condition' /}
-			{param question: $strings.deleteConditionQuestion /}
-			{param _handleModalButtonClicked: $_handleModalButtonClicked /}
-			{param spritemap: $spritemap /}
 		{/call}
 
-		{call .modal}
+		{call .renderModal}
+			{param _handleModalButtonClicked: $_handleModalButtonClicked /}
 			{param modalVisibility: $deleteActionModalVisible /}
+			{param question: $strings.deleteActionQuestion /}
+			{param spritemap: $spritemap /}
 			{param title: $strings.deleteAction /}
 			{param type: 'Action' /}
-			{param question: $strings.deleteActionQuestion /}
-			{param _handleModalButtonClicked: $_handleModalButtonClicked /}
-			{param spritemap: $spritemap /}
 		{/call}
 	</div>
 {/template}
-{template .modal}
+{template .renderModal}
 	{@param question: string}
 	{@param modalVisibility: bool}
 	{@param title: string}
@@ -236,12 +224,12 @@
 
 {/template}
 
-{template .action}
+{template .renderAction}
 	{@param? _handleActionSelection: any}
 	{@param? _handleDeleteAction: any}
 	{@param? _handleTargetSelection: any}
 
-	{@param actionList: list<[
+	{@param actionTypes: list<[
 			value: string,
 			name: string
 		]>
@@ -289,11 +277,11 @@
 							{param events: [
 								'fieldEdited': $_handleActionSelection
 							] /}
-							{param options: $actionList /}
+							{param options: $actionTypes /}
 							{param placeholder: $strings.chooseAnOption /}
 							{param ref: 'action' + $index /}
 							{param spritemap: $spritemap /}
-							{param value: $actionSelected /}
+							{param value: [$actionSelected] /}
 						{/delcall}
 					</div>
 
@@ -309,7 +297,8 @@
 					</div>
 					{if $showTargetDefault or $showTargetAutofill}
 						{let $options: ($showTargetAutofill) ? $dataProvider : ($showTargetDefault ? $fieldOptions : []) /}
-						{call .targetAction}
+
+						{call .renderActionTarget}
 							{param _handleTargetSelection: $_handleTargetSelection /}
 							{param index: $index /}
 							{param options: $options /}
@@ -344,7 +333,7 @@
 	</li>
 {/template}
 
-{template .targetAction}
+{template .renderActionTarget}
 	{@param? _handleTargetSelection: any}
 	{@param index: int}
 	{@param options: any}
@@ -367,7 +356,7 @@
 	</div>
 {/template}
 
-{template .condition}
+{template .renderCondition}
 	{@param binaryOperator: bool}
 	{@param fieldOptions : list<[
 		label: string,
@@ -443,7 +432,7 @@
 						{/delcall}
 					</div>
 
-					{call .operators}
+					{call .renderConditionOperators}
 						{param _handleOperatorEdited: $_handleOperatorEdited /}
 						{param firstOperandType: $firstOperandType /}
 						{param index: $index /}
@@ -456,7 +445,7 @@
 					{if $firstOperandType and $selectedOperator}
 						{if $firstOperandType != 'user'}
 							{if $binaryOperator}
-								{call .secondOperandTypeSelector}
+								{call .renderConditionSecondOperandTypeSelector}
 									{param _handleSecondOperandTypeEdited: $_handleSecondOperandTypeEdited /}
 									{param index: $index /}
 									{param secondOperandType: $secondOperandType /}
@@ -514,7 +503,7 @@
 							{/if}
 						{else}
 							<div class="condition-type-value form-group-item" condition-type-value-index="{$index}">
-								{call .userRolesSelector}
+								{call .renderConditionUserRolesSelector}
 									{param _handleSecondOperandFieldEdited: $_handleSecondOperandFieldEdited /}
 									{param index: $index /}
 									{param selectedOperator: $selectedOperator /}
@@ -555,7 +544,7 @@
 	</li>
 {/template}
 
-{template .operators}
+{template .renderConditionOperators}
 	{@param index: int}
 	{@param strings: [
 		chooseAnOption: string
@@ -589,7 +578,7 @@
 	</div>
 {/template}
 
-{template .secondOperandTypeSelector}
+{template .renderConditionSecondOperandTypeSelector}
 	{@param index: int}
 	{@param strings: [
 		chooseAnOption: string,
@@ -633,7 +622,7 @@
 	{/if}
 {/template}
 
-{template .userRolesSelector}
+{template .renderConditionUserRolesSelector}
 	{@param index: int}
 	{@param strings: [
 		chooseAnOption: string
@@ -666,7 +655,7 @@
 /**
  * Prints Logical Operator Dropdown
  */
-{template .logicalOperatorDropDown}
+{template .renderConditionLogicalOperatorDropdown}
 	{@param strings: ?}
 	{@param _handleLogicalOperationChange: any}
 	{@param? enableLogicalOperator: bool}
@@ -699,7 +688,7 @@
 /**
  * Prints header.
  */
-{template .header}
+{template .renderHeader}
 	{@param title: string}
 	{@param? extraContent: html}
 
@@ -723,7 +712,7 @@
 /**
  * Prints the add condition button.
  */
-{template .addItem}
+{template .renderAddItemButton}
 	{@param? _handleItemAdded: any}
 	{@param? spritemap: string}
 	{@param? type: string}

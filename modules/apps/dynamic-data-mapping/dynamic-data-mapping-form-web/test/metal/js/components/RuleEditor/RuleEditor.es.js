@@ -5,7 +5,7 @@ import {PagesVisitor} from 'source/util/visitors.es';
 
 let component;
 
-const dataProviderUrl = '/o/dynamic-data-mapping-form-builder-data-provider-instances/';
+const dataProviderInstancesURL = '/o/dynamic-data-mapping-form-builder-data-provider-instances/';
 
 const functionsMetadata = {
 	radio: [
@@ -34,6 +34,15 @@ const pages = [...mockPages];
 const spritemap = 'icons.svg';
 
 const rolesUrl = '/o/dynamic-data-mapping-form-builder-roles/';
+
+const getBaseConfig = () => ({
+	conditions: [],
+	dataProviderInstancesURL,
+	functionsMetadata,
+	pages,
+	rolesUrl,
+	spritemap
+});
 
 describe(
 	'Rule Editor',
@@ -73,11 +82,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -109,11 +114,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -154,11 +155,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -178,11 +175,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -211,11 +204,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -232,11 +221,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -253,11 +238,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -274,11 +255,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -310,11 +287,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -346,11 +319,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -382,11 +351,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -417,11 +382,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -443,11 +404,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -464,11 +421,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -485,11 +438,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -512,11 +461,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -537,11 +482,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -562,11 +503,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -606,11 +543,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -664,11 +597,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -692,11 +621,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -730,11 +655,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -780,11 +701,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -819,11 +736,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -849,11 +762,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -886,13 +795,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										actions: [],
-										conditions: [],
-										dataProviderUrl,
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -908,13 +811,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										actions: [],
-										conditions: [],
-										dataProviderUrl,
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -938,13 +835,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										actions: [],
-										conditions: [],
-										dataProviderUrl,
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -969,13 +860,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										actions: [],
-										conditions: [],
-										dataProviderUrl,
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -992,13 +877,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										actions: [],
-										conditions: [],
-										dataProviderUrl,
-										functionsMetadata,
-										pages,
-										rolesUrl,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -1069,11 +948,7 @@ describe(
 					() => {
 						component = new RuleEditor(
 							{
-								conditions: [],
-								functionsMetadata,
-								pages,
-								rolesUrl,
-								spritemap
+								...getBaseConfig()
 							}
 						);
 

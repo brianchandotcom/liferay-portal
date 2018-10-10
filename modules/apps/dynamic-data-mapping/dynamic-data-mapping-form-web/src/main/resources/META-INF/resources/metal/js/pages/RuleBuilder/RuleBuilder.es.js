@@ -228,7 +228,7 @@ class RuleBuilder extends Component {
 		return (
 			<div class="container">
 				{this.state.mode === 'create' && (
-					<RuleEditor dataProviderUrl={this.props.dataProviderInstancesURL} functionsMetadata={this.props.functionsMetadata} key={'create'} pages={pages} rolesUrl={this.props.rolesURL} spritemap={spritemap} />
+					<RuleEditor dataProviderInstancesURL={this.props.dataProviderInstancesURL} functionsMetadata={this.props.functionsMetadata} key={'create'} pages={pages} rolesUrl={this.props.rolesURL} spritemap={spritemap} />
 				)}
 				{this.state.mode === 'edit' && (
 					<RuleEditor key={'edit'} pages={pages} rules={rules} spritemap={spritemap} />

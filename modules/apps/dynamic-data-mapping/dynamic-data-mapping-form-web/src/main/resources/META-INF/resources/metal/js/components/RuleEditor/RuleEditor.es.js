@@ -23,9 +23,9 @@ class RuleEditor extends Component {
 					target: Config.string()
 				}
 			)
-		).internal().value([]),
+		).internal().setter('_setActions').value([]),
 
-		actionList: Config.arrayOf(
+		actionTypes: Config.arrayOf(
 			Config.shapeOf(
 				{
 					label: Config.string(),
@@ -49,10 +49,6 @@ class RuleEditor extends Component {
 				{
 					label: 'Autofill',
 					value: 'autofill'
-				},
-				{
-					label: 'Calculate',
-					value: 'calculate'
 				}
 			]
 		),
@@ -88,7 +84,7 @@ class RuleEditor extends Component {
 			)
 		).internal(),
 
-		dataProviderUrl: Config.string().required(),
+		dataProviderInstancesURL: Config.string().required(),
 
 		/**
 		 * Used for telling whether the delete conditional modal is visible or not.
@@ -233,6 +229,8 @@ class RuleEditor extends Component {
 			)
 		).internal(),
 
+		rolesURL: Config.string(),
+
 		secondOperandList: Config.arrayOf(
 			Config.shapeOf(
 				{
@@ -299,19 +297,12 @@ class RuleEditor extends Component {
 				user: Liferay.Language.get('user'),
 				value: Liferay.Language.get('value')
 			}
-		},
-
-		rolesUrl: Config.string()
+		}
 	}
 
 	created() {
-		if (this.rolesUrl) {
-			this._fetchRoles();
-		}
-
-		if (this.dataProviderUrl) {
-			this._fetchDataProvider();
-		}
+		this._fetchDataProvider();
+		this._fetchRoles();
 	}
 
 	prepareStateForRender(state) {
@@ -481,45 +472,48 @@ class RuleEditor extends Component {
 	}
 
 	_fetchDataProvider() {
-		const {dataProviderUrl} = this;
+		const {dataProviderInstancesURL} = this;
 
 		makeFetch(
 			{
 				method: 'GET',
-				url: dataProviderUrl
+				url: dataProviderInstancesURL
 			}
 		).then(
 			responseData => {
-				this._pendingRequest = null;
-				this.setState(
-					{
-						dataProvider: responseData.map(
-							data => {
-								return {
-									...data,
-									label: data.name,
-									value: data.id
-								};
-							}
-						)
-					}
-				);
+				if (!this.isDisposed()) {
+					this.setState(
+						{
+							dataProvider: responseData.map(
+								data => {
+									return {
+										...data,
+										label: data.name,
+										value: data.id
+									};
+								}
+							)
+						}
+					);
+				}
+			}
+		).catch(
+			error => {
+				console.log(error);
 			}
 		);
 	}
 
 	_fetchRoles() {
-		const {rolesUrl} = this;
+		const {rolesURL} = this;
 
 		makeFetch(
 			{
 				method: 'GET',
-				rolesUrl
+				rolesURL
 			}
 		).then(
 			responseData => {
-				this._pendingRequest = null;
-
 				if (!this.isDisposed()) {
 					this.setState(
 						{
@@ -924,6 +918,21 @@ class RuleEditor extends Component {
 			value === 'less-than' ||
 			value === 'less-than-equals'
 		);
+	}
+
+	_setActions(actions) {
+		if (actions.length == 0) {
+			actions.push(
+				{
+					action: '',
+					expression: '',
+					label: '',
+					target: ''
+				}
+			);
+		}
+
+		return actions;
 	}
 
 	_setConditions(conditions) {

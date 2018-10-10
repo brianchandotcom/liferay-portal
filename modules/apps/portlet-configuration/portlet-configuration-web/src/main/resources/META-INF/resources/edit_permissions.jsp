@@ -46,6 +46,7 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.kernel.model.Role"
+					cssClass="table-title"
 					escapedModel="<%= true %>"
 					keyProperty="roleId"
 					modelVar="role"
@@ -120,6 +121,7 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 					%>
 
 						<liferay-ui:search-container-column-text
+							cssClass="table-column-text-center"
 							name="<%= ResourceActionsUtil.getAction(request, action) %>"
 						>
 							<c:if test="<%= disabled && checked %>">

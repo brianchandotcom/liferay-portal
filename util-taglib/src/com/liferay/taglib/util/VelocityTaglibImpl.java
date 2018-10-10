@@ -34,7 +34,7 @@ import com.liferay.taglib.portletext.IconPortletTag;
 import com.liferay.taglib.portletext.RuntimeTag;
 import com.liferay.taglib.security.DoAsURLTag;
 import com.liferay.taglib.security.PermissionsURLTag;
-import com.liferay.taglib.servlet.PipingPageContext;
+import com.liferay.taglib.servlet.PageContextWrapper;
 import com.liferay.taglib.theme.LayoutIconTag;
 import com.liferay.taglib.theme.MetaTagsTag;
 import com.liferay.taglib.theme.WrapPortletTag;
@@ -927,7 +927,12 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 			writer = _response.getWriter();
 		}
 
-		tagSupport.setPageContext(new PipingPageContext(_pageContext, writer));
+		PageContextWrapper pageContextWrapper = new PageContextWrapper(
+			_pageContext);
+
+		pageContextWrapper.pushBody(writer);
+
+		tagSupport.setPageContext(pageContextWrapper);
 	}
 
 	private final Map<String, Object> _contextObjects;

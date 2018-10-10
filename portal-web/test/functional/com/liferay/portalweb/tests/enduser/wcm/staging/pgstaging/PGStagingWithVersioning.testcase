@@ -88,25 +88,6 @@
 			<var name="pageVariationName" value="Page Variation Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Navigation Menus" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Default" />
-		</execute>
-
-		<execute macro="NavigationMenusAdmin#deleteItem">
-			<var name="itemName" value="Staging Test Page" />
-		</execute>
-
 		<execute macro="Navigator#openStagingSiteURL">
 			<var name="siteName" value="Site Name" />
 		</execute>

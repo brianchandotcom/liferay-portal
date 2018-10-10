@@ -53,6 +53,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.enterprise.inject.spi.BeanManager;
 
@@ -72,8 +73,7 @@ public class PortletDescriptorParser {
 			Map<String, BeanFilter> beanFilters,
 			Map<String, BeanPortlet> beanPortlets, Bundle bundle,
 			URL portletDescriptorURL, BeanManager beanManager,
-			Map<String, Set<BeanMethod>> portletBeanMethods,
-			Set<BeanMethod> wildcardBeanMethods,
+			Function<String, Set<BeanMethod>> portletBeanMethodsFunction,
 			Map<String, String> preferencesValidators,
 			Set<String> wildcardPreferencesValidators,
 			Map<String, String> displayDescriptorCategories,
@@ -91,7 +91,7 @@ public class PortletDescriptorParser {
 
 		_populateBeanPortlets(
 			beanPortlets, bundle, rootElement, beanApp, beanManager,
-			portletBeanMethods, wildcardBeanMethods, preferencesValidators,
+			portletBeanMethodsFunction, preferencesValidators,
 			wildcardPreferencesValidators, displayDescriptorCategories,
 			liferayConfigurations);
 
@@ -147,8 +147,7 @@ public class PortletDescriptorParser {
 	private static void _populateBeanPortlets(
 		Map<String, BeanPortlet> beanPortlets, Bundle bundle,
 		Element rootElement, BeanApp beanApp, BeanManager beanManager,
-		Map<String, Set<BeanMethod>> portletBeanMethods,
-		Set<BeanMethod> wildcardBeanMethods,
+		Function<String, Set<BeanMethod>> portletBeanMethodsFunction,
 		Map<String, String> preferencesValidators,
 		Set<String> wildcardPreferencesValidators,
 		Map<String, String> displayDescriptorCategories,
@@ -157,7 +156,7 @@ public class PortletDescriptorParser {
 		for (Element portletElement : rootElement.elements("portlet")) {
 			BeanPortlet beanPortlet = _readBeanPortlet(
 				bundle, portletElement, beanApp, beanManager,
-				portletBeanMethods, wildcardBeanMethods, preferencesValidators,
+				portletBeanMethodsFunction, preferencesValidators,
 				wildcardPreferencesValidators, displayDescriptorCategories,
 				liferayConfigurations);
 
@@ -319,8 +318,7 @@ public class PortletDescriptorParser {
 	private static BeanPortlet _readBeanPortlet(
 		Bundle bundle, Element portletElement, BeanApp beanApp,
 		BeanManager beanManager,
-		Map<String, Set<BeanMethod>> portletBeanMethods,
-		Set<BeanMethod> wildcardBeanMethods,
+		Function<String, Set<BeanMethod>> portletBeanMethodsFunction,
 		Map<String, String> preferencesValidators,
 		Set<String> wildcardPreferencesValidators,
 		Map<String, String> displayDescriptorCategories,
@@ -651,16 +649,8 @@ public class PortletDescriptorParser {
 				multiPartMaxRequestSize);
 		}
 
-		Set<BeanMethod> beanMethods = portletBeanMethods.get(portletName);
-
-		if (beanMethods == null) {
-			beanMethods = new HashSet<>(wildcardBeanMethods);
-		}
-		else {
-			beanMethods = new HashSet<>(beanMethods);
-
-			beanMethods.addAll(wildcardBeanMethods);
-		}
+		Set<BeanMethod> beanMethods = new HashSet<>(
+			portletBeanMethodsFunction.apply(portletName));
 
 		Class<?> portletClass = null;
 

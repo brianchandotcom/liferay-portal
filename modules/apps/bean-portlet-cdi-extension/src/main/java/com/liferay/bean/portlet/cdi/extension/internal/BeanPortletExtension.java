@@ -60,6 +60,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Destroyed;
@@ -322,11 +323,8 @@ public class BeanPortletExtension implements Extension {
 			}
 		}
 
-		Map<String, Set<BeanMethod>> portletBeanMethods =
+		Function<String, Set<BeanMethod>> portletBeanMethodsFunction =
 			_collectPortletBeanMethods(beanManager);
-
-		Set<BeanMethod> wildcardBeanMethods = _collectWildcardBeanMethods(
-			beanManager);
 
 		Map<String, String> preferencesValidators =
 			_collectPreferencesValidators();
@@ -335,25 +333,25 @@ public class BeanPortletExtension implements Extension {
 			_collectWildcardPreferencesValidators();
 
 		_addBeanPortletsAndFiltersFromPortletDescriptor(
-			bundle, beanManager, portletBeanMethods, wildcardBeanMethods,
+			bundle, beanManager, portletBeanMethodsFunction,
 			preferencesValidators, wildcardPreferencesValidators,
 			descriptorDisplayCategories, descriptorLiferayConfigurations);
 
 		_addBeanFiltersFromAnnotatedClasses();
 
 		_addBeanPortletsFromAnnotatedClasses(
-			beanManager, portletBeanMethods, wildcardBeanMethods,
-			preferencesValidators, wildcardPreferencesValidators,
-			descriptorDisplayCategories, descriptorLiferayConfigurations);
+			beanManager, portletBeanMethodsFunction, preferencesValidators,
+			wildcardPreferencesValidators, descriptorDisplayCategories,
+			descriptorLiferayConfigurations);
 
 		_addBeanBeanPortletsFromScannedMethods(
-			portletBeanMethods, wildcardBeanMethods,
-			descriptorDisplayCategories, descriptorLiferayConfigurations);
+			portletBeanMethodsFunction, descriptorDisplayCategories,
+			descriptorLiferayConfigurations);
 
 		if (!descriptorLiferayConfigurations.isEmpty()) {
 			_addBeanPortletsFromLiferayDescriptor(
-				portletBeanMethods, wildcardBeanMethods,
-				descriptorDisplayCategories, descriptorLiferayConfigurations);
+				portletBeanMethodsFunction, descriptorDisplayCategories,
+				descriptorLiferayConfigurations);
 		}
 
 		List<String> beanPortletIds = (List<String>)servletContext.getAttribute(
@@ -518,8 +516,7 @@ public class BeanPortletExtension implements Extension {
 	}
 
 	private void _addBeanBeanPortletsFromScannedMethods(
-		Map<String, Set<BeanMethod>> portletBeanMethods,
-		Set<BeanMethod> wildcardBeanMethods,
+		Function<String, Set<BeanMethod>> portletBeanMethodsFunction,
 		Map<String, String> descriptorDisplayCategories,
 		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations) {
 
@@ -537,20 +534,8 @@ public class BeanPortletExtension implements Extension {
 			BeanPortlet beanPortlet = _beanPortlets.get(portletName);
 
 			if (beanPortlet == null) {
-				Set<BeanMethod> beanMethods = portletBeanMethods.get(
-					portletName);
-
-				if (beanMethods == null) {
-					beanMethods = wildcardBeanMethods;
-				}
-				else {
-					beanMethods = new HashSet<>(beanMethods);
-
-					beanMethods.addAll(wildcardBeanMethods);
-				}
-
 				beanPortlet = new BeanPortletDefaultImpl(
-					portletName, beanMethods,
+					portletName, portletBeanMethodsFunction.apply(portletName),
 					descriptorDisplayCategories.get(portletName),
 					descriptorLiferayConfigurations.get(portletName));
 
@@ -795,8 +780,7 @@ public class BeanPortletExtension implements Extension {
 
 	private void _addBeanPortletsAndFiltersFromPortletDescriptor(
 		Bundle bundle, BeanManager beanManager,
-		Map<String, Set<BeanMethod>> portletBeanMethods,
-		Set<BeanMethod> wildcardBeanMethods,
+		Function<String, Set<BeanMethod>> portletBeanMethodsFunction,
 		Map<String, String> preferencesValidators,
 		Set<String> wildcardPreferencesValidators,
 		Map<String, String> descriptorDisplayCategories,
@@ -808,7 +792,7 @@ public class BeanPortletExtension implements Extension {
 			try {
 				_beanApp = PortletDescriptorParser.parse(
 					_beanFilters, _beanPortlets, bundle, portletDescriptorURL,
-					beanManager, portletBeanMethods, wildcardBeanMethods,
+					beanManager, portletBeanMethodsFunction,
 					preferencesValidators, wildcardPreferencesValidators,
 					descriptorDisplayCategories,
 					descriptorLiferayConfigurations);
@@ -821,8 +805,7 @@ public class BeanPortletExtension implements Extension {
 
 	private void _addBeanPortletsFromAnnotatedClasses(
 		BeanManager beanManager,
-		Map<String, Set<BeanMethod>> portletBeanMethods,
-		Set<BeanMethod> wildcardBeanMethods,
+		Function<String, Set<BeanMethod>> portletBeanMethodsFunction,
 		Map<String, String> preferencesValidators,
 		Set<String> wildcardPreferencesValidators,
 		Map<String, String> descriptorDisplayCategories,
@@ -835,17 +818,9 @@ public class BeanPortletExtension implements Extension {
 			for (PortletConfiguration portletConfiguration :
 					portletConfigurations.value()) {
 
-				Set<BeanMethod> beanMethods = portletBeanMethods.get(
-					portletConfiguration.portletName());
-
-				if (beanMethods == null) {
-					beanMethods = new HashSet<>(wildcardBeanMethods);
-				}
-				else {
-					beanMethods = new HashSet<>(beanMethods);
-
-					beanMethods.addAll(wildcardBeanMethods);
-				}
+				Set<BeanMethod> beanMethods = new HashSet<>(
+					portletBeanMethodsFunction.apply(
+						portletConfiguration.portletName()));
 
 				PortletScannerUtil.scanNonannotatedBeanMethods(
 					beanManager, clazz, beanMethods);
@@ -862,17 +837,9 @@ public class BeanPortletExtension implements Extension {
 			PortletConfiguration portletConfiguration = clazz.getAnnotation(
 				PortletConfiguration.class);
 
-			Set<BeanMethod> beanMethods = portletBeanMethods.get(
-				portletConfiguration.portletName());
-
-			if (beanMethods == null) {
-				beanMethods = new HashSet<>(wildcardBeanMethods);
-			}
-			else {
-				beanMethods = new HashSet<>(beanMethods);
-
-				beanMethods.addAll(wildcardBeanMethods);
-			}
+			Set<BeanMethod> beanMethods = new HashSet<>(
+				portletBeanMethodsFunction.apply(
+					portletConfiguration.portletName()));
 
 			PortletScannerUtil.scanNonannotatedBeanMethods(
 				beanManager, clazz, beanMethods);
@@ -885,8 +852,7 @@ public class BeanPortletExtension implements Extension {
 	}
 
 	private void _addBeanPortletsFromLiferayDescriptor(
-		Map<String, Set<BeanMethod>> portletBeanMethods,
-		Set<BeanMethod> wildcardBeanMethods,
+		Function<String, Set<BeanMethod>> portletBeanMethodsFunction,
 		Map<String, String> descriptorDisplayCategories,
 		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations) {
 
@@ -898,20 +864,8 @@ public class BeanPortletExtension implements Extension {
 			BeanPortlet beanPortlet = _beanPortlets.get(portletName);
 
 			if (beanPortlet == null) {
-				Set<BeanMethod> beanMethods = portletBeanMethods.get(
-					portletName);
-
-				if (beanMethods == null) {
-					beanMethods = wildcardBeanMethods;
-				}
-				else {
-					beanMethods = new HashSet<>(beanMethods);
-
-					beanMethods.addAll(wildcardBeanMethods);
-				}
-
 				beanPortlet = new BeanPortletDefaultImpl(
-					portletName, beanMethods,
+					portletName, portletBeanMethodsFunction.apply(portletName),
 					descriptorDisplayCategories.get(portletName),
 					entry.getValue());
 
@@ -920,8 +874,11 @@ public class BeanPortletExtension implements Extension {
 		}
 	}
 
-	private Map<String, Set<BeanMethod>> _collectPortletBeanMethods(
+	private Function<String, Set<BeanMethod>> _collectPortletBeanMethods(
 		BeanManager beanManager) {
+
+		Set<BeanMethod> wildcardBeanMethods = _collectWildcardBeanMethods(
+			beanManager);
 
 		Map<String, Set<BeanMethod>> portletBeanMethods = new HashMap<>();
 
@@ -961,7 +918,15 @@ public class BeanPortletExtension implements Extension {
 			}
 		}
 
-		return portletBeanMethods;
+		return portletName -> {
+			Set<BeanMethod> beanMethods = portletBeanMethods.get(portletName);
+
+			if (beanMethods == null) {
+				return wildcardBeanMethods;
+			}
+
+			return beanMethods;
+		};
 	}
 
 	private Map<String, String> _collectPreferencesValidators() {

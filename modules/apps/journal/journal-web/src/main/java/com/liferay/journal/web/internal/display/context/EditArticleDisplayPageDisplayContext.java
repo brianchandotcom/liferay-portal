@@ -58,7 +58,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -157,28 +156,13 @@ public class EditArticleDisplayPageDisplayContext {
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			getAssetDisplayPageEntry();
 
-		int displayPageType = AssetDisplayPageConstants.TYPE_NONE;
-
 		if (assetDisplayPageEntry == null) {
-			_displayPageType = displayPageType;
+			_displayPageType = AssetDisplayPageConstants.TYPE_NONE;
 
 			return _displayPageType;
 		}
 
-		if (Objects.equals(
-				assetDisplayPageEntry.getType(),
-				AssetDisplayPageConstants.TYPE_SPECIFIC)) {
-
-			displayPageType = AssetDisplayPageConstants.TYPE_SPECIFIC;
-		}
-		else if (Objects.equals(
-					assetDisplayPageEntry.getType(),
-					AssetDisplayPageConstants.TYPE_DEFAULT)) {
-
-			displayPageType = AssetDisplayPageConstants.TYPE_DEFAULT;
-		}
-
-		_displayPageType = displayPageType;
+		_displayPageType = assetDisplayPageEntry.getType();
 
 		return _displayPageType;
 	}

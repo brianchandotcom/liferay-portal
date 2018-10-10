@@ -14,14 +14,12 @@
 
 package com.liferay.layout.page.template.service.impl;
 
-import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
-import com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
@@ -198,17 +196,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	public LayoutPageTemplateEntry deleteLayoutPageTemplateEntry(
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws PortalException {
-
-		// Layout page template entry
-
-		int assetDisplayPageEntriesCount =
-			_assetDisplayPageEntryLocalService.
-				getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
-
-		if (assetDisplayPageEntriesCount > 0) {
-			throw new RequiredLayoutPageTemplateEntryException();
-		}
 
 		layoutPageTemplateEntryPersistence.remove(layoutPageTemplateEntry);
 
@@ -568,10 +555,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 					" with name ", name));
 		}
 	}
-
-	@ServiceReference(type = AssetDisplayPageEntryLocalService.class)
-	private AssetDisplayPageEntryLocalService
-		_assetDisplayPageEntryLocalService;
 
 	@ServiceReference(type = CompanyLocalService.class)
 	private CompanyLocalService _companyLocalService;

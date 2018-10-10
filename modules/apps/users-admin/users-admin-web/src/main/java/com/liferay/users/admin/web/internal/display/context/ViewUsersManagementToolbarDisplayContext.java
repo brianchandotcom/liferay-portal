@@ -169,6 +169,9 @@ public class ViewUsersManagementToolbarDisplayContext {
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
+		portletURL.setParameter(_getCurParam(), String.valueOf(_getCur()));
+		portletURL.setParameter("delta", String.valueOf(_getDelta()));
+
 		portletURL.setParameter("displayStyle", _displayStyle);
 
 		String[] keywords = ParamUtil.getStringValues(_request, "keywords");
@@ -181,15 +184,6 @@ public class ViewUsersManagementToolbarDisplayContext {
 		portletURL.setParameter("orderByCol", getOrderByCol());
 		portletURL.setParameter("orderByType", getOrderByType());
 		portletURL.setParameter("status", String.valueOf(_status));
-
-		if (_userSearch != null) {
-			portletURL.setParameter(
-				_userSearch.getCurParam(),
-				String.valueOf(_userSearch.getCur()));
-			portletURL.setParameter(
-				_userSearch.getDeltaParam(),
-				String.valueOf(_userSearch.getDelta()));
-		}
 
 		return portletURL;
 	}
@@ -209,7 +203,7 @@ public class ViewUsersManagementToolbarDisplayContext {
 			"view.jsp-portletURL");
 
 		UserSearch userSearch = new UserSearch(
-			_renderRequest, "cur2", portletURL);
+			_renderRequest, _getCurParam(), portletURL);
 
 		RowChecker rowChecker = new EmptyOnClickRowChecker(_renderResponse);
 
@@ -302,6 +296,18 @@ public class ViewUsersManagementToolbarDisplayContext {
 
 		return PortalPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), ActionKeys.ADD_USER);
+	}
+
+	private int _getCur() {
+		return _userSearch.getCur();
+	}
+
+	private String _getCurParam() {
+		return "cur2";
+	}
+
+	private int _getDelta() {
+		return _userSearch.getDelta();
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {

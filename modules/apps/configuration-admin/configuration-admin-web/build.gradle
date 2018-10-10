@@ -18,7 +18,7 @@ copyTestLibs {
 }
 
 dependencies {
-	compileOnly group: "com.liferay", name: "org.apache.felix.fileinstall", version: "3.5.4.LIFERAY-PATCHED-3"
+	compileOnly group: "com.liferay", name: "org.apache.felix.fileinstall", version: "3.6.4.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"

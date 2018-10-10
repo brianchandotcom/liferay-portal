@@ -386,13 +386,13 @@ public class ChainingCheck extends BaseCheck {
 		}
 
 		while (true) {
-			DetailAST childAST = detailAST.getFirstChild();
-
 			if ((detailAST.getType() != TokenTypes.DOT) &&
 				(detailAST.getType() != TokenTypes.METHOD_CALL)) {
 
 				return null;
 			}
+
+			DetailAST childAST = detailAST.getFirstChild();
 
 			if ((detailAST.getType() == TokenTypes.DOT) &&
 				(childAST.getType() != TokenTypes.METHOD_CALL)) {

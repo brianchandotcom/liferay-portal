@@ -1516,8 +1516,6 @@ public class ServiceBuilder {
 	}
 
 	public String getTypeGenericsName(JavaType javaType) {
-		StringBundler sb = new StringBundler();
-
 		if (!(javaType instanceof DefaultJavaParameterizedType)) {
 			return javaType.getFullyQualifiedName();
 		}
@@ -1531,6 +1529,8 @@ public class ServiceBuilder {
 		if (ListUtil.isEmpty(actualTypeArguments)) {
 			return javaType.getFullyQualifiedName();
 		}
+
+		StringBundler sb = new StringBundler();
 
 		sb.append(javaType.getFullyQualifiedName());
 
@@ -4505,7 +4505,6 @@ public class ServiceBuilder {
 				@Override
 				public int compare(Entity entity1, Entity entity2) {
 					String name1 = entity1.getName();
-					String name2 = entity2.getName();
 
 					if (Objects.equals(
 							entity1.getPackagePath(), "com.liferay.portal") &&
@@ -4513,6 +4512,8 @@ public class ServiceBuilder {
 
 						return -1;
 					}
+
+					String name2 = entity2.getName();
 
 					if (Objects.equals(
 							entity2.getPackagePath(), "com.liferay.portal") &&
@@ -4913,6 +4914,12 @@ public class ServiceBuilder {
 		JavaClass javaClass = _javaClasses.get(fullyQualifiedClassName);
 
 		if (javaClass == null) {
+			File file = new File(fileName);
+
+			if (!file.exists()) {
+				return null;
+			}
+
 			ClassLibraryBuilder classLibraryBuilder =
 				new SortedClassLibraryBuilder();
 
@@ -4922,12 +4929,6 @@ public class ServiceBuilder {
 
 			JavaProjectBuilder builder = new JavaProjectBuilder(
 				classLibraryBuilder);
-
-			File file = new File(fileName);
-
-			if (!file.exists()) {
-				return null;
-			}
 
 			builder.addSource(file);
 

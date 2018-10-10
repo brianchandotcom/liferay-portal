@@ -97,13 +97,13 @@ public class UnprocessedExceptionCheck extends BaseCheck {
 			return;
 		}
 
-		String originalExceptionClassName = exceptionClassName;
-
 		JavaProjectBuilder javaProjectBuilder = _getJavaProjectBuilder(content);
 
 		if (javaProjectBuilder == null) {
 			return;
 		}
+
+		String originalExceptionClassName = exceptionClassName;
 
 		if (!exceptionClassName.contains(StringPool.PERIOD)) {
 			for (String importedExceptionClassName :

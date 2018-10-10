@@ -272,14 +272,14 @@ public class DefaultJSONWebServiceRegistrator
 				}
 			}
 
-			Class<?> serviceBeanClass = methodDescriptor.getDeclaringClass();
-
 			String httpMethod =
 				_jsonWebServiceMappingResolver.resolveHttpMethod(method);
 
 			if (!_jsonWebServiceNaming.isValidHttpMethod(httpMethod)) {
 				continue;
 			}
+
+			Class<?> serviceBeanClass = methodDescriptor.getDeclaringClass();
 
 			if (_wireViaUtil) {
 				Class<?> utilClass = loadUtilClass(serviceBeanClass);

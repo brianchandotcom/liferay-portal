@@ -146,8 +146,6 @@ public class ServicePreAction extends Action {
 
 		Company company = PortalUtil.getCompany(request);
 
-		long companyId = company.getCompanyId();
-
 		// CDN host
 
 		String cdnHost = PortalUtil.getCDNHost(request);
@@ -237,10 +235,6 @@ public class ServicePreAction extends Action {
 			companyLogoHeight = companyLogoImage.getHeight();
 			companyLogoWidth = companyLogoImage.getWidth();
 		}
-
-		String realCompanyLogo = companyLogo;
-		int realCompanyLogoHeight = companyLogoHeight;
-		int realCompanyLogoWidth = companyLogoWidth;
 
 		// User
 
@@ -371,7 +365,7 @@ public class ServicePreAction extends Action {
 
 			if (layoutGroup.isUser()) {
 				User layoutUser = UserLocalServiceUtil.getUserById(
-					companyId, layoutGroup.getClassPK());
+					company.getCompanyId(), layoutGroup.getClassPK());
 
 				updateUserLayouts(layoutUser);
 
@@ -687,14 +681,16 @@ public class ServicePreAction extends Action {
 			(layout.isTypeControlPanel() || group.isControlPanel())) {
 
 			String themeId = PrefsPropsUtil.getString(
-				companyId, PropsKeys.CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID);
+				company.getCompanyId(),
+				PropsKeys.CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID);
 			String colorSchemeId =
 				ColorSchemeFactoryUtil.getDefaultRegularColorSchemeId();
 
-			theme = ThemeLocalServiceUtil.getTheme(companyId, themeId);
+			theme = ThemeLocalServiceUtil.getTheme(
+				company.getCompanyId(), themeId);
 
 			colorScheme = ThemeLocalServiceUtil.getColorScheme(
-				companyId, theme.getThemeId(), colorSchemeId);
+				company.getCompanyId(), theme.getThemeId(), colorSchemeId);
 
 			request.setAttribute(WebKeys.COLOR_SCHEME, colorScheme);
 
@@ -810,9 +806,9 @@ public class ServicePreAction extends Action {
 		themeDisplay.setPermissionChecker(permissionChecker);
 		themeDisplay.setPlid(plid);
 		themeDisplay.setPpid(ppid);
-		themeDisplay.setRealCompanyLogo(realCompanyLogo);
-		themeDisplay.setRealCompanyLogoHeight(realCompanyLogoHeight);
-		themeDisplay.setRealCompanyLogoWidth(realCompanyLogoWidth);
+		themeDisplay.setRealCompanyLogo(companyLogo);
+		themeDisplay.setRealCompanyLogoHeight(companyLogoHeight);
+		themeDisplay.setRealCompanyLogoWidth(companyLogoWidth);
 		themeDisplay.setRealUser(realUser);
 		themeDisplay.setRefererGroupId(refererGroupId);
 		themeDisplay.setScopeGroupId(scopeGroupId);
@@ -1016,7 +1012,7 @@ public class ServicePreAction extends Action {
 
 		if (!user.isActive() ||
 			(PrefsPropsUtil.getBoolean(
-				companyId, PropsKeys.TERMS_OF_USE_REQUIRED) &&
+				company.getCompanyId(), PropsKeys.TERMS_OF_USE_REQUIRED) &&
 			 !user.isAgreedToTermsOfUse())) {
 
 			themeDisplay.setShowMyAccountIcon(false);

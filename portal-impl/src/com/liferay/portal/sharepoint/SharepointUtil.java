@@ -68,11 +68,11 @@ public class SharepointUtil {
 	}
 
 	public static SharepointStorage getStorage(String path) {
-		String storageClass = null;
-
 		if (path == null) {
 			return null;
 		}
+
+		String storageClass = null;
 
 		String[] pathArray = getPathArray(path);
 

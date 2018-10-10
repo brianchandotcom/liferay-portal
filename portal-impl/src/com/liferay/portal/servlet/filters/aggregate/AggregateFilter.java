@@ -295,8 +295,6 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 		String cacheFileName = bundleId;
 
-		String[] fileNames = JavaScriptBundleUtil.getFileNames(bundleId);
-
 		File cacheFile = new File(_tempDir, cacheFileName);
 
 		if (cacheFile.exists()) {
@@ -331,6 +329,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		}
 
 		String content = null;
+
+		String[] fileNames = JavaScriptBundleUtil.getFileNames(bundleId);
 
 		if (fileNames.length == 0) {
 			content = StringPool.BLANK;

@@ -1593,8 +1593,6 @@ public class LayoutTypePortletImpl
 	protected String[] getStaticPortletIds(String position) {
 		Layout layout = getLayout();
 
-		String selector1 = StringPool.BLANK;
-
 		Group group = _getGroup();
 
 		if (group == null) {
@@ -1602,6 +1600,8 @@ public class LayoutTypePortletImpl
 
 			return new String[0];
 		}
+
+		String selector1 = StringPool.BLANK;
 
 		if (group.isUser()) {
 			selector1 = LayoutTypePortletConstants.STATIC_PORTLET_USER_SELECTOR;

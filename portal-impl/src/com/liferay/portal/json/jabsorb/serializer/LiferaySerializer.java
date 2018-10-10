@@ -382,11 +382,11 @@ public class LiferaySerializer extends AbstractSerializer {
 						fieldName = fieldName.substring(1);
 					}
 
-					Object value = null;
-
 					if (!serializableJSONObject.has(fieldName)) {
 						continue;
 					}
+
+					Object value = null;
 
 					try {
 						value = ser.unmarshall(

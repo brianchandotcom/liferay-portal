@@ -109,8 +109,6 @@ public class ServiceWrapperRegistry {
 
 			Class<?> clazz = serviceWrapper.getClass();
 
-			ClassLoader classLoader = clazz.getClassLoader();
-
 			Method method = clazz.getMethod(
 				"getWrappedService", new Class<?>[0]);
 
@@ -145,6 +143,8 @@ public class ServiceWrapperRegistry {
 
 				return null;
 			}
+
+			ClassLoader classLoader = clazz.getClassLoader();
 
 			try {
 				AdvisedSupport advisedSupport =

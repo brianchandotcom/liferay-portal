@@ -1074,7 +1074,7 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			<delete file="@{patching.tool.dir}/default.properties" />
 
 			<if>
-				<equals arg1="${app.server.type}" arg2="tomcat" />
+				<available file="${app.server.parent.dir}/.liferay-home" />
 				<then>
 					<execute dir="@{patching.tool.dir}" failonerror="true">
 						patching-tool${file.suffix.bat} auto-discovery
@@ -4097,21 +4097,21 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<delete file="@{patching.tool.dir}/default.properties" />
 
 			<if>
-				<equals arg1="${app.server.type}" arg2="weblogic" />
+				<available file="${app.server.parent.dir}/.liferay-home" />
 				<then>
-					<echo file="@{patching.tool.dir}/default.properties">global.lib.path=${app.server.weblogic.lib.global.dir}
-liferay.home=${liferay.home}
-patching.mode=binary
-war.path=${app.server.weblogic.portal.dir}/</echo>
-
 					<execute dir="@{patching.tool.dir}" failonerror="true">
+						patching-tool${file.suffix.bat} auto-discovery
 						patching-tool${file.suffix.bat} revert -force
 						patching-tool${file.suffix.bat} update-plugins
 					</execute>
 				</then>
 				<else>
+					<echo file="@{patching.tool.dir}/default.properties">global.lib.path=${app.server.lib.global.dir}
+liferay.home=${liferay.home}
+patching.mode=binary
+war.path=${app.server.portal.dir}/</echo>
+
 					<execute dir="@{patching.tool.dir}" failonerror="true">
-						patching-tool${file.suffix.bat} auto-discovery
 						patching-tool${file.suffix.bat} revert -force
 						patching-tool${file.suffix.bat} update-plugins
 					</execute>

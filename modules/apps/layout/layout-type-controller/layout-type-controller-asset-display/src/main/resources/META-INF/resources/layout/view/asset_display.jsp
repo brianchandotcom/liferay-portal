@@ -16,23 +16,19 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String renderedContent = assetDisplayLayoutTypeControllerDisplayContext.getRenderedContent();
+%>
+
 <c:choose>
-	<c:when test="<%= ListUtil.isNotEmpty(fragmentEntryLinks) %>">
+	<c:when test="<%= Validator.isNotNull(renderedContent) %>">
 
 		<%
-		Map<String, Object> fieldValues = assetDisplayLayoutTypeControllerDisplayContext.getAssetDisplayFieldsValues();
-
-		StringBundler sb = new StringBundler(fragmentEntryLinks.size());
-
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			sb.append(FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE, fieldValues, request, response));
-		}
-
 		try {
 			request.setAttribute(WebKeys.PORTLET_DECORATE, Boolean.FALSE);
 		%>
 
-			<%= sb.toString() %>
+			<%= renderedContent %>
 
 		<%
 		}
@@ -42,7 +38,12 @@
 		%>
 
 	</c:when>
-	<c:when test="<%= assetEntry != null %>">
+	<c:when test="<%= assetDisplayLayoutTypeControllerDisplayContext.getAssetEntry() != null %>">
+
+		<%
+		AssetEntry assetEntry = assetDisplayLayoutTypeControllerDisplayContext.getAssetEntry();
+		%>
+
 		<div class="sheet">
 			<div class="sheet-header">
 				<h2 class="sheet-title">

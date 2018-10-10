@@ -262,7 +262,7 @@ class Layout extends Component {
 		) {
 			this._draggingItem.active = false;
 
-			this._removeFollowingColumns(
+			layoutColumns = this._clearFollowingColumns(
 				layoutColumns,
 				this._draggingItemColumnIndex
 			);
@@ -377,7 +377,7 @@ class Layout extends Component {
 			) {
 				this._draggingItem.active = false;
 
-				this._removeFollowingColumns(
+				layoutColumns = this._clearFollowingColumns(
 					layoutColumns,
 					this._draggingItemColumnIndex
 				);
@@ -486,7 +486,7 @@ class Layout extends Component {
 		}
 
 		if (this._draggingItem.active && !this._currentPathItemPlid) {
-			this._removeFollowingColumns(
+			layoutColumns = this._clearFollowingColumns(
 				layoutColumns,
 				this._draggingItemColumnIndex
 			);
@@ -531,17 +531,23 @@ class Layout extends Component {
 	}
 
 	/**
+	 * Removes following columns starting at position indicated 
+	 * by startColumnIndex 
 	 * @param {!Array} layoutColumns
 	 * @param {!number} startColumnIndex
 	 * @private
+	 * @return {Array}
 	 * @review
 	 */
 
-	_removeFollowingColumns(layoutColumns, startColumnIndex) {
-		c
-		for (let i = startColumnIndex + 1; i < layoutColumns.length; i++) {
-			layoutColumns[i] = [];
+	_clearFollowingColumns(layoutColumns, startColumnIndex) {
+		const columns = [...layoutColumns];
+
+		for (let i = startColumnIndex + 1; i < columns.length; i++) {
+			columns[i] = [];
 		}
+
+		return columns;
 	}
 
 	/**
@@ -579,7 +585,7 @@ class Layout extends Component {
 	 */
 
 	_updatePath(targetColumnIndex, targetItemPlid) {
-		this._removeFollowingColumns(
+		this.layoutColumns = this._clearFollowingColumns(
 			this.layoutColumns,
 			targetColumnIndex
 		);

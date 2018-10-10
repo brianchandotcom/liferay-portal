@@ -1123,6 +1123,14 @@ AUI.add(
 					getDocumentLibrarySelectorURL: function() {
 						var instance = this;
 
+						var form = instance.getForm();
+
+						var documentLibrarySelectorURL = form.get('documentLibrarySelectorURL');
+
+						if (documentLibrarySelectorURL) {
+							return documentLibrarySelectorURL;
+						}
+
 						return instance.getDocumentLibraryURL('com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion');
 					},
 
@@ -2475,6 +2483,14 @@ AUI.add(
 					getDocumentLibrarySelectorURL: function() {
 						var instance = this;
 
+						var form = instance.getForm();
+
+						var imageSelectorURL = form.get('imageSelectorURL');
+
+						if (imageSelectorURL) {
+							return imageSelectorURL;
+						}
+
 						return instance.getDocumentLibraryURL('com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion,com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion');
 					},
 
@@ -2955,8 +2971,14 @@ AUI.add(
 						setter: A.one
 					},
 
+					documentLibrarySelectorURL: {
+					},
+
 					formNode: {
 						valueFn: '_valueFormNode'
+					},
+
+					imageSelectorURL: {
 					},
 
 					liferayForm: {
@@ -2970,6 +2992,11 @@ AUI.add(
 
 					requestedLocale: {
 						validator: Lang.isString
+					},
+
+					synchronousFormSubmission: {
+						validator: Lang.isBoolean,
+						value: true
 					}
 				},
 
@@ -3009,10 +3036,15 @@ AUI.add(
 									instance._afterUpdateRepeatableFields,
 									instance
 								),
-								formNode.on('submit', instance._onSubmitForm, instance),
 								Liferay.after('form:registered', instance._afterFormRegistered, instance),
-								Liferay.on('submitForm', instance._onLiferaySubmitForm, instance)
 							);
+
+							if (instance.get('synchronousFormSubmission')) {
+								instance.eventHandlers.push(
+									formNode.on('submit', instance._onSubmitForm, instance),
+									Liferay.on('submitForm', instance._onLiferaySubmitForm, instance)
+								);
+							}
 						}
 					},
 

@@ -119,11 +119,6 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 	}
 
 	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
-	}
-
-	@Override
 	protected String getStartPage() {
 		return _START_PAGE;
 	}
@@ -141,9 +136,6 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "liferay-ddm:html-field:";
-
-	private static final String _END_PAGE =
-		"/html_field/end.jsp";
 
 	private static final String _START_PAGE =
 		"/html_field/start.jsp";

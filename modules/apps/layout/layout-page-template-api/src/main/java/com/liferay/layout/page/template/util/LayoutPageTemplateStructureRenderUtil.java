@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -39,6 +41,17 @@ public class LayoutPageTemplateStructureRenderUtil {
 	public static String renderLayoutContent(
 			HttpServletRequest request, HttpServletResponse response,
 			LayoutPageTemplateStructure layoutPageTemplateStructure)
+		throws PortalException {
+
+		return renderLayoutContent(
+			request, response, layoutPageTemplateStructure,
+			FragmentEntryLinkConstants.VIEW, null);
+	}
+
+	public static String renderLayoutContent(
+			HttpServletRequest request, HttpServletResponse response,
+			LayoutPageTemplateStructure layoutPageTemplateStructure,
+			String mode, Map<String, Object> parameterMap)
 		throws PortalException {
 
 		String data = layoutPageTemplateStructure.getData();
@@ -98,10 +111,21 @@ public class LayoutPageTemplateStructureRenderUtil {
 						continue;
 					}
 
-					sb.append(
-						FragmentEntryRenderUtil.renderFragmentEntryLink(
-							fragmentEntryLink, FragmentEntryLinkConstants.VIEW,
-							request, response));
+					String renderFragmentEntryLink = StringPool.BLANK;
+
+					if (parameterMap != null) {
+						renderFragmentEntryLink =
+							FragmentEntryRenderUtil.renderFragmentEntryLink(
+								fragmentEntryLink, mode, parameterMap, request,
+								response);
+					}
+					else {
+						renderFragmentEntryLink =
+							FragmentEntryRenderUtil.renderFragmentEntryLink(
+								fragmentEntryLink, mode, request, response);
+					}
+
+					sb.append(renderFragmentEntryLink);
 				}
 
 				sb.append("</div>");

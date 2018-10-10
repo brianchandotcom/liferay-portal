@@ -50,11 +50,7 @@ class Layout extends Component {
 			}
 		);
 
-		this._deleteEmptyColumns(this.layoutColumns);
-
-		this.layoutColumns = this.layoutColumns.map(
-			layoutColumn => [...layoutColumn]
-		);
+		this.layoutColumns = this._deleteEmptyColumns(this.layoutColumns);
 	}
 
 	/**
@@ -83,16 +79,22 @@ class Layout extends Component {
 	}
 
 	/**
-	 * Removes extra empty columns when there are more than three.
+	 * Removes extra empty columns when there are more than three and returns
+	 * a new Array with the removed columns.
 	 * @param {Array} layoutColumns
 	 * @private
+	 * @return {Array}
 	 * @review
 	 */
 
 	_deleteEmptyColumns(layoutColumns) {
-		for (let i = 3; (i < layoutColumns.length) && (layoutColumns[i].length === 0); i++) {
-			layoutColumns.splice(i, 1);
+		let columns = [...layoutColumns];
+
+		for (let i = 3; (i < columns.length) && (columns[i].length === 0); i++) {
+			columns.splice(i, 1);
 		}
+
+		return columns;
 	}
 
 	/**
@@ -297,7 +299,7 @@ class Layout extends Component {
 
 	_handleMoveLayoutColumnItem(eventData) {
 		if (this._draggingItemPosition) {
-			const layoutColumns = this.layoutColumns.map(
+			let layoutColumns = this.layoutColumns.map(
 				layoutColumn => [...layoutColumn]
 			);
 
@@ -352,7 +354,7 @@ class Layout extends Component {
 					targetColumnIndex
 				);
 
-				this._deleteEmptyColumns(layoutColumns);
+				layoutColumns = this._deleteEmptyColumns(layoutColumns);
 			}
 
 			if (
@@ -363,7 +365,7 @@ class Layout extends Component {
 
 				this._removeFollowingColumns(layoutColumns, this._draggingItemColumnIndex);
 
-				this._deleteEmptyColumns(layoutColumns);
+				layoutColumns = this._deleteEmptyColumns(layoutColumns);
 			}
 
 			this._moveLayoutColumnItemOnServer(
@@ -459,7 +461,7 @@ class Layout extends Component {
 		if (this._draggingItem.active && !this._currentPathItemPlid) {
 			this._removeFollowingColumns(layoutColumns, this._draggingItemColumnIndex);
 
-			this._deleteEmptyColumns(layoutColumns);
+			layoutColumns = this._deleteEmptyColumns(layoutColumns);
 		}
 
 		targetItem.hasChild = true;
@@ -563,7 +565,7 @@ class Layout extends Component {
 
 		this._currentPathItemPlid = targetItemPlid;
 
-		this._deleteEmptyColumns(this.layoutColumns);
+		this.layoutColumns = this._deleteEmptyColumns(this.layoutColumns);
 
 		this._getItemChildren(targetItemPlid)
 			.then(

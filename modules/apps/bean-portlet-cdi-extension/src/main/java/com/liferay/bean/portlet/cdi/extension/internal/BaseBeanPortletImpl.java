@@ -618,11 +618,9 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 	}
 
 	private void _addBeanMethod(BeanMethod beanMethod) {
-		MethodType methodType = beanMethod.getType();
-
 		_beanMethods.compute(
-			methodType,
-			(keyMethodType, beanMethods) -> {
+			beanMethod.getType(),
+			(methodType, beanMethods) -> {
 				if (beanMethods == null) {
 					beanMethods = new ArrayList<>();
 				}

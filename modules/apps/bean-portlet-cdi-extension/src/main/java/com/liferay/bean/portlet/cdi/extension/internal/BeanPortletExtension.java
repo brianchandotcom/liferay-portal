@@ -26,11 +26,11 @@ import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletSessionBeanC
 import com.liferay.bean.portlet.cdi.extension.internal.scope.RenderStateBeanContext;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBean;
 import com.liferay.bean.portlet.cdi.extension.internal.util.BeanMethodIndexUtil;
+import com.liferay.bean.portlet.cdi.extension.internal.util.PortletScannerUtil;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.DisplayDescriptorParser;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.LiferayDescriptorParser;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletDescriptorParser;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletQNameUtil;
-import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletScannerUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;

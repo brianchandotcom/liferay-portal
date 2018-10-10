@@ -149,7 +149,7 @@ public class BlogsEntryLocalServiceTest {
 		BlogsEntry entry = addEntry(false);
 
 		byte[] bytes = FileUtil.getBytes(
-			RandomTestUtil.randomInputStream(randomValue -> true));
+			new UnsyncByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY));
 
 		BlogsEntryLocalServiceUtil.addCoverImage(
 			entry.getEntryId(),

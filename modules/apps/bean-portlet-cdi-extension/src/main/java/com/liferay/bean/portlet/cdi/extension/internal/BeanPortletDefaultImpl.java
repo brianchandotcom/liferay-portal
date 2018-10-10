@@ -14,9 +14,9 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -186,28 +186,12 @@ public class BeanPortletDefaultImpl extends BaseBeanPortletImpl {
 	}
 
 	private static final Map<String, Set<String>> _supportedPortletModes =
-		new HashMap<String, Set<String>>() {
-			{
-				Set<String> portletModes = new HashSet<>();
-
-				portletModes.add("view");
-
-				put("text/html", portletModes);
-			}
-		};
-
+		Collections.singletonMap("text/html", Collections.singleton("view"));
 	private static final Map<String, Set<String>> _supportedWindowStates =
-		new HashMap<String, Set<String>>() {
-			{
-				Set<String> windowStates = new LinkedHashSet<>();
-
-				windowStates.add("normal");
-				windowStates.add("minimized");
-				windowStates.add("maximized");
-
-				put("text/html", windowStates);
-			}
-		};
+		Collections.singletonMap(
+			"text/html",
+			new LinkedHashSet<>(
+				Arrays.asList("normal", "minimized", "maximized")));
 
 	private final String _displayCategory;
 	private final Map<String, Set<String>> _liferayConfiguration;

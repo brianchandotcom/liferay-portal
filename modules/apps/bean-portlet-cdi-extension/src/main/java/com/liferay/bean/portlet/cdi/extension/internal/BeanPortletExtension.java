@@ -26,6 +26,7 @@ import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletRequestBeanC
 import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletSessionBeanContext;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.RenderStateBeanContext;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBean;
+import com.liferay.bean.portlet.cdi.extension.internal.xml.BeanPortletDescriptorImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.DisplayDescriptorParser;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.LiferayDescriptorParser;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletDescriptorParser;
@@ -540,7 +541,7 @@ public class BeanPortletExtension implements Extension {
 			BeanPortlet beanPortlet = _beanPortlets.get(portletName);
 
 			if (beanPortlet == null) {
-				beanPortlet = new BeanPortletDefaultImpl(
+				beanPortlet = new BeanPortletDescriptorImpl(
 					portletName, portletBeanMethodsFunction.apply(portletName),
 					descriptorDisplayCategories.get(portletName),
 					descriptorLiferayConfigurations.get(portletName));
@@ -1041,7 +1042,7 @@ public class BeanPortletExtension implements Extension {
 			BeanPortlet beanPortlet = _beanPortlets.get(portletName);
 
 			if (beanPortlet == null) {
-				beanPortlet = new BeanPortletDefaultImpl(
+				beanPortlet = new BeanPortletDescriptorImpl(
 					portletName, portletBeanMethodsFunction.apply(portletName),
 					descriptorDisplayCategories.get(portletName),
 					entry.getValue());

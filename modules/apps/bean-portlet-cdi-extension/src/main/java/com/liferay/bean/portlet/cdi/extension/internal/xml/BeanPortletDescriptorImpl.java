@@ -19,6 +19,10 @@ import com.liferay.bean.portlet.cdi.extension.internal.BeanMethod;
 import com.liferay.bean.portlet.cdi.extension.internal.PortletDependency;
 import com.liferay.bean.portlet.cdi.extension.internal.Preference;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -81,6 +85,28 @@ public class BeanPortletDescriptorImpl extends BaseBeanPortletImpl {
 		_multiPartMaxRequestSize = multiPartMaxRequestSize;
 		_displayCategory = displayCategory;
 		_liferayConfiguration = liferayConfiguration;
+	}
+
+	public BeanPortletDescriptorImpl(
+		String portletName, Set<BeanMethod> beanMethods, String displayCategory,
+		Map<String, Set<String>> liferayConfiguration) {
+
+		this(
+			portletName, beanMethods, Collections.emptyMap(), null,
+			Collections.emptyMap(), 0,
+			Collections.singletonMap(
+				"text/html", Collections.singleton("view")),
+			Collections.singletonMap(
+				"text/html",
+				new LinkedHashSet<>(
+					Arrays.asList("normal", "minimized", "maximized"))),
+			Collections.emptySet(), null, Collections.emptyMap(),
+			Collections.emptyMap(), Collections.emptyMap(),
+			Collections.emptyMap(), Collections.emptyMap(), null,
+			Collections.emptyMap(), new HashSet<QName>(), new HashSet<QName>(),
+			Collections.emptySet(), Collections.emptyMap(),
+			Collections.emptySet(), false, false, 0, null, -1, -1,
+			displayCategory, liferayConfiguration);
 	}
 
 	@Override

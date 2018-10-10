@@ -22,10 +22,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -39,14 +42,14 @@ public class ProjectTemplatesUtil {
 			return _archetypeMap.get(artifactId);
 		}
 
-		Properties archetypesListProperties = _getArchetypes();
+		Properties archetypesListProperties = getArchetypes();
 
 		if (archetypesListProperties.containsKey(artifactId)) {
 			String version = String.valueOf(
 				archetypesListProperties.get(artifactId));
 
 			try {
-				String jarName = "/" + artifactId + "-" + version + ".jar";
+				String jarName = getArchetypeJarName(artifactId, version);
 
 				InputStream inputStream =
 					ProjectTemplatesUtil.class.getResourceAsStream(jarName);
@@ -117,8 +120,51 @@ public class ProjectTemplatesUtil {
 		return returnValue;
 	}
 
+	public static String getArchetypeJarName(
+		String artifactId, String version) {
+
+		String jarName = "/" + artifactId + "-" + version + ".jar";
+
+		return jarName;
+	}
+
+	public static Collection<String> getArchetypeJarNames() {
+		Properties archetypes = getArchetypes();
+		Collection<String> archetypeJarNames = new ArrayList<>();
+		Set<String> artifactIds = archetypes.stringPropertyNames();
+
+		for (String artifactId : artifactIds) {
+			String version = archetypes.getProperty(artifactId);
+
+			String jarName = getArchetypeJarName(artifactId, version);
+
+			archetypeJarNames.add(jarName);
+		}
+
+		return archetypeJarNames;
+	}
+
+	public static Properties getArchetypes() {
+		if (_archetypes == null) {
+			_archetypes = new Properties();
+
+			InputStream archetypesList =
+				ProjectTemplatesUtil.class.getResourceAsStream(
+					"/project-template-jar-versions.properties");
+
+			try {
+				_archetypes.load(archetypesList);
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(ioe);
+			}
+		}
+
+		return _archetypes;
+	}
+
 	public static String getArchetypeVersion(String artifactId) {
-		Properties archetypesListProperties = _getArchetypes();
+		Properties archetypesListProperties = getArchetypes();
 
 		return archetypesListProperties.getProperty(artifactId);
 	}
@@ -136,25 +182,6 @@ public class ProjectTemplatesUtil {
 		templateName = templateName.replace('.', '-');
 
 		return templateName;
-	}
-
-	private static Properties _getArchetypes() {
-		if (_archetypes == null) {
-			_archetypes = new Properties();
-
-			InputStream archetypesList =
-					ProjectTemplatesUtil.class.getResourceAsStream(
-						"/project-template-jar-versions.properties");
-
-			try {
-				_archetypes.load(archetypesList);
-			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
-			}
-		}
-
-		return _archetypes;
 	}
 
 	private static final Map<String, File> _archetypeMap = new HashMap<>();

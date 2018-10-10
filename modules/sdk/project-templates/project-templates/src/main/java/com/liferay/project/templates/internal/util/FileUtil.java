@@ -21,7 +21,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import java.net.URL;
-import java.net.URLClassLoader;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
@@ -33,9 +32,6 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.PosixFilePermission;
-
-import java.security.CodeSource;
-import java.security.ProtectionDomain;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -137,10 +133,11 @@ public class FileUtil {
 			String dirName, final Path destinationDirPath)
 		throws Exception {
 
-		Map<URL, String> resources = getResources(dirName);
+		Map<URL, String> resources = _getResources(dirName);
 
 		for (Map.Entry<URL, String> entry : resources.entrySet()) {
 			URL suburl = entry.getKey();
+
 			String substring = entry.getValue();
 
 			Path subpath = Paths.get(
@@ -194,77 +191,6 @@ public class FileUtil {
 		return null;
 	}
 
-	public static File getJarFile(Class<?> clazz) throws Exception {
-		if (clazz == null) {
-			return null;
-		}
-
-		try {
-			ProtectionDomain protectionDomain = clazz.getProtectionDomain();
-
-			CodeSource codeSource = protectionDomain.getCodeSource();
-
-			URL url = codeSource.getLocation();
-
-			return new File(url.toURI());
-		}
-		catch (SecurityException se) {
-		}
-		catch (NullPointerException npe) {
-		}
-
-		ClassLoader loader = clazz.getClassLoader();
-
-		if (loader instanceof URLClassLoader) {
-			URL[] urls = ((URLClassLoader)loader).getURLs();
-
-			for (URL url : urls) {
-				File file = new File(url.toURI());
-
-				if (file.isFile()) {
-					String fileName = file.getName();
-
-					if (fileName.startsWith("com.liferay.project.templates-")) {
-						return new File(url.toURI());
-					}
-				}
-			}
-		}
-
-		URL classResource = clazz.getResource(clazz.getSimpleName() + ".class");
-
-		if (classResource == null) {
-			return null;
-		}
-
-		String url = classResource.toString();
-
-		String canonicalName = clazz.getCanonicalName();
-
-		canonicalName = canonicalName.replace('.', '/');
-
-		String suffix = canonicalName + ".class";
-
-		if (!url.endsWith(suffix)) {
-			return null;
-		}
-
-		String base = url.substring(0, url.length() - suffix.length());
-
-		String path = base;
-
-		if (path.startsWith("jar:")) {
-			path = path.substring(4, path.length() - 2);
-		}
-
-		try {
-			return new File(new URL(path).toURI());
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
 	public static String getManifestProperty(File file, String name)
 		throws IOException {
 
@@ -275,60 +201,6 @@ public class FileUtil {
 
 			return attributes.getValue(name);
 		}
-	}
-
-	public static Map<URL, String> getResources(final String path)
-		throws IOException {
-
-		Map<URL, String> urlListToReturn = new HashMap<>();
-
-		Thread currentThread = Thread.currentThread();
-
-		final ClassLoader loader = currentThread.getContextClassLoader();
-
-		try (final InputStream inputStream = loader.getResourceAsStream(path);
-			final InputStreamReader inputStreamReader = new InputStreamReader(
-				inputStream, StandardCharsets.UTF_8);
-			final BufferedReader bufferedReader =
-			new BufferedReader(inputStreamReader)) {
-
-			List<URL> urls;
-
-			try (Stream<String> lines = bufferedReader.lines()) {
-				urls = lines.map(
-					l -> path + "/" + l
-				).map(
-					r -> loader.getResource(r)
-				).collect(
-					Collectors.toList()
-				);
-			}
-
-			if ((urls != null) && !urls.isEmpty()) {
-				for (URL url : urls) {
-					if (url != null) {
-						String urlString = url.toString();
-
-						String[] urlSplit = urlString.split(File.separator);
-
-						String name =
-							path + File.separator + urlSplit[urlSplit.length -
-								1];
-
-						if (_isDirectory(url)) {
-							urlListToReturn.putAll(getResources(name));
-						}
-						else {
-							urlListToReturn.put(url, name);
-						}
-					}
-				}
-			}
-		}
-		catch (Throwable e) {
-		}
-
-		return urlListToReturn;
 	}
 
 	public static Path getRootDir(Path dirPath, String markerFileName) {
@@ -371,6 +243,60 @@ public class FileUtil {
 		}
 		catch (UnsupportedOperationException uoe) {
 		}
+	}
+
+	private static Map<URL, String> _getResources(final String path)
+		throws IOException {
+
+		Map<URL, String> urlListToReturn = new HashMap<>();
+
+		Thread currentThread = Thread.currentThread();
+
+		final ClassLoader loader = currentThread.getContextClassLoader();
+
+		try (final InputStream inputStream = loader.getResourceAsStream(path);
+			final InputStreamReader inputStreamReader = new InputStreamReader(
+				inputStream, StandardCharsets.UTF_8);
+			final BufferedReader bufferedReader =
+				new BufferedReader(inputStreamReader)) {
+
+			List<URL> urls;
+
+			try (Stream<String> lines = bufferedReader.lines()) {
+				urls = lines.map(
+					l -> path + "/" + l
+				).map(
+					r -> loader.getResource(r)
+				).collect(
+					Collectors.toList()
+				);
+			}
+
+			if ((urls != null) && !urls.isEmpty()) {
+				for (URL url : urls) {
+					if (url != null) {
+						String urlString = url.toString();
+
+						String[] urlSplit = urlString.split(File.separator);
+
+						String name =
+							path + File.separator + urlSplit[urlSplit.length -
+								1];
+
+						if (_isDirectory(url)) {
+							urlListToReturn.putAll(_getResources(name));
+						}
+						else {
+							urlListToReturn.put(url, name);
+						}
+					}
+				}
+			}
+		}
+		catch (Throwable e) {
+		}
+
+		return urlListToReturn;
 	}
 
 	private static boolean _isDirectory(URL url) throws IOException {

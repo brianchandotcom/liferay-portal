@@ -65,12 +65,6 @@ public class ProjectTemplates {
 
 		Map<String, String> templates = new TreeMap<>();
 
-		File projectTemplatesFile = FileUtil.getJarFile(ProjectTemplates.class);
-
-		if (!templatesFiles.contains(projectTemplatesFile)) {
-			templatesFiles.add(projectTemplatesFile);
-		}
-
 		for (File templatesFile : templatesFiles) {
 			if (templatesFile.isDirectory()) {
 				try (DirectoryStream<Path> directoryStream =
@@ -98,10 +92,6 @@ public class ProjectTemplates {
 				}
 			}
 			else {
-				ClassLoader classLoader =
-					ProjectTemplates.class.getClassLoader();
-				Collection<String> templateJarNames = new HashSet<>();
-
 				try (JarFile jarFile = new JarFile(templatesFile)) {
 					Enumeration<JarEntry> enumeration = jarFile.entries();
 
@@ -118,18 +108,12 @@ public class ProjectTemplates {
 							continue;
 						}
 
-						templateJarNames.add(template);
-					}
+						template = ProjectTemplatesUtil.getTemplateName(
+							template);
 
-					for (String templateJarName : templateJarNames) {
-						String templateName =
-							ProjectTemplatesUtil.getTemplateName(
-								templateJarName);
-
-						if (!templateName.startsWith(WorkspaceUtil.WORKSPACE)) {
+						if (!template.startsWith(WorkspaceUtil.WORKSPACE)) {
 							try (InputStream inputStream =
-									classLoader.getResourceAsStream(
-										templateJarName);
+									jarFile.getInputStream(jarEntry);
 								JarInputStream jarInputStream =
 									new JarInputStream(inputStream)) {
 
@@ -142,11 +126,36 @@ public class ProjectTemplates {
 								String bundleDescription = attributes.getValue(
 									"Bundle-Description");
 
-								templates.put(templateName, bundleDescription);
+								templates.put(template, bundleDescription);
 							}
 						}
 					}
+				}
+			}
+		}
 
+		Collection<String> projectTemplateJarNames =
+			ProjectTemplatesUtil.getArchetypeJarNames();
+
+		for (String projectTemplateJarName : projectTemplateJarNames) {
+			String templateName = ProjectTemplatesUtil.getTemplateName(
+				projectTemplateJarName);
+
+			if (!templateName.startsWith(WorkspaceUtil.WORKSPACE)) {
+				try (InputStream inputStream =
+						ProjectTemplates.class.getResourceAsStream(
+							projectTemplateJarName);
+					JarInputStream jarInputStream =
+						new JarInputStream(inputStream)) {
+
+					Manifest manifest = jarInputStream.getManifest();
+
+					Attributes attributes = manifest.getMainAttributes();
+
+					String bundleDescription = attributes.getValue(
+						"Bundle-Description");
+
+					templates.put(templateName, bundleDescription);
 				}
 			}
 		}
@@ -160,14 +169,7 @@ public class ProjectTemplates {
 		JCommander jCommander = new JCommander(projectTemplatesArgs);
 
 		try {
-			File jarFile = FileUtil.getJarFile(ProjectTemplates.class);
-
-			if (jarFile.isFile()) {
-				jCommander.setProgramName("java -jar " + jarFile.getName());
-			}
-			else {
-				jCommander.setProgramName(ProjectTemplates.class.getName());
-			}
+			jCommander.setProgramName(ProjectTemplates.class.getName());
 
 			jCommander.parse(args);
 

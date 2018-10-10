@@ -198,34 +198,40 @@ class Layout extends Component {
 	_handleDragLayoutColumnItem(eventData) {
 		const targetItemPlid = eventData.targetItemPlid;
 
-		const targetItem = this._getLayoutColumnItemByPlid(this.layoutColumns, targetItemPlid);
-
-		if (targetItem) {
-			const targetColumn = this._getParentColumnByPlid(this.layoutColumns, targetItemPlid);
-		const targetColumnIndex = this.layoutColumns.indexOf(targetColumn);
-
-		const targetInFirstColumn = this.layoutColumns.indexOf(targetColumn) === 0;
-		const targetIsSource = this._draggingItem === targetItem;
-
-		const targetIsChild = (
-			this._draggingItem.active &&
-			(this._draggingItemColumnIndex < targetColumnIndex)
+		const targetItem = this._getLayoutColumnItemByPlid(
+			this.layoutColumns,
+			targetItemPlid
 		);
 
-		const targetIsParent = (
-			targetItem.active &&
-			(eventData.position === DRAG_POSITIONS.inside) &&
-				(targetColumnIndex === (this._draggingItemColumnIndex - 1)) &&
-				!this._currentPathItemPlid
+		const targetColumn = this._getParentColumnByPlid(
+			this.layoutColumns,
+			targetItemPlid
 		);
 
-		if (
-			!targetInFirstColumn &&
-			!targetIsSource &&
-			!targetIsChild &&
-			!targetIsParent
-		) {
-			this._draggingItemPosition = eventData.position;
+		if (targetItem && targetColumn) {
+			const targetColumnIndex = this.layoutColumns.indexOf(targetColumn);
+			const targetInFirstColumn = (this.layoutColumns.indexOf(targetColumn) === 0);
+			const targetIsSource = (this._draggingItem === targetItem);
+
+			const targetIsChild = (
+				this._draggingItem.active &&
+				(this._draggingItemColumnIndex < targetColumnIndex)
+			);
+
+			const targetIsParent = (
+				targetItem.active &&
+				(eventData.position === DRAG_POSITIONS.inside) &&
+					(targetColumnIndex === (this._draggingItemColumnIndex - 1)) &&
+					!this._currentPathItemPlid
+			);
+
+			if (
+				!targetInFirstColumn &&
+				!targetIsSource &&
+				!targetIsChild &&
+				!targetIsParent
+			) {
+				this._draggingItemPosition = eventData.position;
 				this._hoveredLayoutColumnItemPlid = targetItemPlid;
 			}
 
@@ -257,12 +263,18 @@ class Layout extends Component {
 			(this._draggingItemColumnIndex !== targetColumnIndex)
 		) {
 			this._draggingItem.active = false;
-			this._removeFollowingColumns(layoutColumns, this._draggingItemColumnIndex);
+
+			this._removeFollowingColumns(
+				layoutColumns,
+				this._draggingItemColumnIndex
+			);
 		}
 
 		const previousColumn = layoutColumns[this._draggingItemColumnIndex - 1];
 
-		const activeItemPlid = this._getLayoutColumnActiveItemPlid(previousColumn);
+		const activeItemPlid = this._getLayoutColumnActiveItemPlid(
+			previousColumn
+		);
 
 		const activeItem = this._getLayoutColumnItemByPlid(
 			layoutColumns,
@@ -367,7 +379,10 @@ class Layout extends Component {
 			) {
 				this._draggingItem.active = false;
 
-				this._removeFollowingColumns(layoutColumns, this._draggingItemColumnIndex);
+				this._removeFollowingColumns(
+					layoutColumns,
+					this._draggingItemColumnIndex
+				);
 
 				layoutColumns = this._deleteEmptyColumns(layoutColumns);
 			}
@@ -404,10 +419,20 @@ class Layout extends Component {
 	 */
 
 	_handleStartMovingLayoutColumnItem(eventData) {
-		const sourceItemColumn = this._getParentColumnByPlid(this.layoutColumns, eventData.sourceItemPlid);
-		const sourceItemColumnIndex = this.layoutColumns.indexOf(sourceItemColumn);
+		const sourceItemColumn = this._getParentColumnByPlid(
+			this.layoutColumns,
+			eventData.sourceItemPlid
+		);
 
-		this._draggingItem = this._getLayoutColumnItemByPlid(this.layoutColumns, eventData.sourceItemPlid);
+		const sourceItemColumnIndex = this.layoutColumns.indexOf(
+			sourceItemColumn
+		);
+
+		this._draggingItem = this._getLayoutColumnItemByPlid(
+			this.layoutColumns,
+			eventData.sourceItemPlid
+		);
+
 		this._draggingItemColumnIndex = sourceItemColumnIndex;
 	}
 
@@ -463,7 +488,10 @@ class Layout extends Component {
 		}
 
 		if (this._draggingItem.active && !this._currentPathItemPlid) {
-			this._removeFollowingColumns(layoutColumns, this._draggingItemColumnIndex);
+			this._removeFollowingColumns(
+				layoutColumns,
+				this._draggingItemColumnIndex
+			);
 
 			layoutColumns = this._deleteEmptyColumns(layoutColumns);
 		}
@@ -552,14 +580,26 @@ class Layout extends Component {
 	 */
 
 	_updatePath(targetColumnIndex, targetItemPlid) {
-		this._removeFollowingColumns(this.layoutColumns, targetColumnIndex);
+		this._removeFollowingColumns(
+			this.layoutColumns,
+			targetColumnIndex
+		);
 
 		const targetColumn = this.layoutColumns[targetColumnIndex];
-		const targetItem = this._getLayoutColumnItemByPlid(this.layoutColumns, targetItemPlid);
 
-		const activeItemPlid = this._getLayoutColumnActiveItemPlid(targetColumn);
+		const targetItem = this._getLayoutColumnItemByPlid(
+			this.layoutColumns,
+			targetItemPlid
+		);
 
-		const activeItem = this._getLayoutColumnItemByPlid(this.layoutColumns, activeItemPlid);
+		const activeItemPlid = this._getLayoutColumnActiveItemPlid(
+			targetColumn
+		);
+
+		const activeItem = this._getLayoutColumnItemByPlid(
+			this.layoutColumns,
+			activeItemPlid
+		);
 
 		if (activeItem && (activeItem !== targetItem)) {
 			activeItem.active = false;

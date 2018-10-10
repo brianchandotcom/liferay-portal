@@ -16,8 +16,17 @@ package com.liferay.knowledge.base.internal.upgrade;
 
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.knowledge.base.internal.upgrade.v2_0_2.UpgradeKBArticle;
+import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBArticleTable;
+import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBCommentTable;
+import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBFolderTable;
+import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBTemplateTable;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -123,6 +132,22 @@ public class KnowledgeBaseServiceUpgrade implements UpgradeStepRegistrator {
 				UpgradePortletSettings(_settingsFactory));
 
 		registry.register("2.0.1", "2.0.2", new UpgradeKBArticle());
+
+		DB db = DBManagerUtil.getDB();
+
+		if (db.getDBType() == DBType.SQLSERVER) {
+			Class<?>[] upgradeDatetimeTableClasses = {
+				KBArticleTable.class, KBCommentTable.class, KBFolderTable.class,
+				KBTemplateTable.class
+			};
+
+			registry.register(
+				"2.0.2", "3.0.0",
+				new BaseUpgradeSQLServerDatetime(upgradeDatetimeTableClasses));
+		}
+		else {
+			registry.register("2.0.2", "3.0.0", new DummyUpgradeStep());
+		}
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

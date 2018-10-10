@@ -12,40 +12,31 @@
  * details.
  */
 
-package com.liferay.invitation.invite.members.internal.upgrade;
+package com.liferay.reading.time.internal.upgrade;
 
-import com.liferay.invitation.invite.members.internal.upgrade.v1_0_0.UpgradeNamespace;
-import com.liferay.invitation.invite.members.internal.upgrade.v1_0_0.UpgradePortletId;
-import com.liferay.invitation.invite.members.internal.upgrade.v2_0_0.util.MemberRequestTable;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.reading.time.internal.upgrade.v2_0_0.util.ReadingTimeEntryTable;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Adolfo Pérez
+ * @author José Ángel Jiménez
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class InviteMembersServiceUpgrade implements UpgradeStepRegistrator {
+public class ReadingTimeServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"0.0.1", "1.0.1", new UpgradeNamespace(), new UpgradePortletId());
-
-		// See LPS-65946
-
-		registry.register(
-			"1.0.0", "1.0.1", new UpgradeNamespace(), new UpgradePortletId());
-
 		DB db = DBManagerUtil.getDB();
 
 		if (db.getDBType() == DBType.SQLSERVER) {
-			Class<?>[] upgradeDatetimeTableClasses = {MemberRequestTable.class};
+			Class<?>[] upgradeDatetimeTableClasses =
+				{ReadingTimeEntryTable.class};
 
 			registry.register(
 				"1.0.0", "2.0.0",

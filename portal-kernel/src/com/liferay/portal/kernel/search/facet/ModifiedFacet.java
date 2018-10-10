@@ -79,14 +79,14 @@ public class ModifiedFacet extends RangeFacet {
 
 		now.set(Calendar.HOUR_OF_DAY, now.get(Calendar.HOUR_OF_DAY) + 1);
 
-		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyyMMddHHmmss");
-
 		JSONObject dataJSONObject = facetConfiguration.getData();
 
 		if (!dataJSONObject.has("ranges")) {
 			return;
 		}
+
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyyMMddHHmmss");
 
 		JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 

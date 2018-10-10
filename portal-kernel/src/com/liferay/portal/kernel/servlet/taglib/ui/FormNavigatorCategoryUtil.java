@@ -50,14 +50,14 @@ public class FormNavigatorCategoryUtil {
 	}
 
 	public static String[] getKeys(String formNavigatorId) {
-		List<String> keys = new ArrayList<>();
-
 		List<FormNavigatorCategory> formNavigatorCategories =
 			getFormNavigatorCategories(formNavigatorId);
 
 		if (ListUtil.isEmpty(formNavigatorCategories)) {
 			return new String[] {""};
 		}
+
+		List<String> keys = new ArrayList<>();
 
 		for (FormNavigatorCategory formNavigatorCategory :
 				formNavigatorCategories) {
@@ -73,14 +73,14 @@ public class FormNavigatorCategoryUtil {
 	}
 
 	public static String[] getLabels(String formNavigatorId, Locale locale) {
-		List<String> labels = new ArrayList<>();
-
 		List<FormNavigatorCategory> formNavigatorCategories =
 			getFormNavigatorCategories(formNavigatorId);
 
 		if (ListUtil.isEmpty(formNavigatorCategories)) {
 			return new String[] {""};
 		}
+
+		List<String> labels = new ArrayList<>();
 
 		for (FormNavigatorCategory formNavigatorCategory :
 				formNavigatorCategories) {

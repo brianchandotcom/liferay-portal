@@ -90,8 +90,6 @@ public class UnicodeFormatter {
 	}
 
 	public static String parseString(String hexString) {
-		StringBuilder sb = new StringBuilder();
-
 		char[] array = hexString.toCharArray();
 
 		if ((array.length % 6) != 0) {
@@ -99,6 +97,8 @@ public class UnicodeFormatter {
 
 			return hexString;
 		}
+
+		StringBuilder sb = new StringBuilder();
 
 		for (int i = 2; i < hexString.length(); i = i + 6) {
 			String s = hexString.substring(i, i + 4);

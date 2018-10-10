@@ -393,7 +393,8 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 		int end) {
 
 		if (Validator.isNull(name)) {
-			name = "%";
+			return organizationPersistence.filterFindByC_P(
+				companyId, parentOrganizationId, start, end);
 		}
 
 		return organizationPersistence.filterFindByC_P_LikeN(
@@ -428,7 +429,8 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
-			name = "%";
+			return organizationPersistence.filterCountByC_P(
+				companyId, parentOrganizationId);
 		}
 
 		return organizationPersistence.filterCountByC_P_LikeN(

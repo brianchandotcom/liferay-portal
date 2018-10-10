@@ -499,7 +499,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		long companyId, String name, int start, int end) {
 
 		if (Validator.isNull(name)) {
-			name = "%";
+			return userGroupPersistence.findByCompanyId(companyId, start, end);
 		}
 
 		return userGroupPersistence.findByC_LikeN(companyId, name, start, end);
@@ -529,7 +529,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	@Override
 	public int getUserGroupsCount(long companyId, String name) {
 		if (Validator.isNull(name)) {
-			name = "%";
+			return userGroupPersistence.countByCompanyId(companyId);
 		}
 
 		return userGroupPersistence.countByC_LikeN(companyId, name);

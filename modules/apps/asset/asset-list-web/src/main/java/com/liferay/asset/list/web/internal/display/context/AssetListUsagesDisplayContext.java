@@ -81,14 +81,12 @@ public class AssetListUsagesDisplayContext {
 
 			return layout.getName(themeDisplay.getLocale());
 		}
-		else {
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				LayoutPageTemplateEntryLocalServiceUtil.
-					getLayoutPageTemplateEntry(
-						assetListEntryUsage.getClassPK());
 
-			return layoutPageTemplateEntry.getName();
-		}
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.getLayoutPageTemplateEntry(
+				assetListEntryUsage.getClassPK());
+
+		return layoutPageTemplateEntry.getName();
 	}
 
 	public String getAssetListEntryUsageTypeLabel(
@@ -101,7 +99,8 @@ public class AssetListUsagesDisplayContext {
 
 			return "display-page";
 		}
-		else if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
+
+		if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
 			return "page";
 		}
 

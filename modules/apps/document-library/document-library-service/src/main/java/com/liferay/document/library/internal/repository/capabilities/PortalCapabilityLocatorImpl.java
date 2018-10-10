@@ -45,11 +45,16 @@ import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
 import com.liferay.trash.service.TrashEntryLocalService;
 import com.liferay.trash.service.TrashVersionLocalService;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Adolfo Pérez
@@ -87,7 +92,12 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 	public DynamicCapability getDynamicCapability(
 		DocumentRepository documentRepository) {
 
-		return new LiferayDynamicCapability(_dynamicCapabilities);
+		LiferayDynamicCapability liferayDynamicCapability =
+			new LiferayDynamicCapability();
+
+		_liferayDynamicCapabilities.add(liferayDynamicCapability);
+
+		return liferayDynamicCapability;
 	}
 
 	@Override
@@ -183,18 +193,60 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_dynamicCapabilities = ServiceTrackerListFactory.open(
-			bundleContext, Capability.class);
+		_capabilities = ServiceTrackerListFactory.open(
+			bundleContext, Capability.class, null,
+			new ServiceTrackerCustomizer<Capability, Capability>() {
+
+				@Override
+				public Capability addingService(
+					ServiceReference<Capability> serviceReference) {
+
+					Capability capability = bundleContext.getService(
+						serviceReference);
+
+					for (LiferayDynamicCapability liferayDynamicCapability :
+							_liferayDynamicCapabilities) {
+
+						liferayDynamicCapability.addCapability(capability);
+					}
+
+					return capability;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<Capability> serviceReference,
+					Capability capability) {
+
+					removedService(serviceReference, capability);
+
+					addingService(serviceReference);
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<Capability> serviceReference,
+					Capability capability) {
+
+					for (LiferayDynamicCapability liferayDynamicCapability :
+							_liferayDynamicCapabilities) {
+
+						liferayDynamicCapability.removeCapability(capability);
+					}
+				}
+
+			});
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_dynamicCapabilities.close();
+		_capabilities.close();
 	}
 
 	private final ProcessorCapability _alwaysGeneratingProcessorCapability =
 		new LiferayProcessorCapability(
 			ProcessorCapability.ResourceGenerationStrategy.ALWAYS_GENERATE);
+	private ServiceTrackerList<Capability, Capability> _capabilities;
 	private final CommentCapability _commentCapability =
 		new LiferayCommentCapability();
 
@@ -204,7 +256,8 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 	@Reference
 	private DLSyncEventLocalService _dlSyncEventLocalService;
 
-	private ServiceTrackerList<Capability, Capability> _dynamicCapabilities;
+	private final Set<LiferayDynamicCapability> _liferayDynamicCapabilities =
+		new HashSet<>();
 	private final RepositoryEntryConverter _repositoryEntryConverter =
 		new RepositoryEntryConverter();
 	private final ProcessorCapability _reusingProcessorCapability =

@@ -14,16 +14,20 @@
 
 package com.liferay.document.library.internal.repository.capabilities;
 
-import com.liferay.document.library.internal.repository.LiferayDynamicLocalRepositoryWrapper;
-import com.liferay.document.library.internal.repository.LiferayDynamicRepositoryWrapper;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.capabilities.DynamicCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventAware;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
+import com.liferay.portal.repository.util.LocalRepositoryWrapper;
+import com.liferay.portal.repository.util.RepositoryWrapper;
 import com.liferay.portal.repository.util.RepositoryWrapperAware;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Alejandro Tardín
@@ -31,10 +35,10 @@ import com.liferay.portal.repository.util.RepositoryWrapperAware;
 public class LiferayDynamicCapability
 	implements DynamicCapability, RepositoryEventAware, RepositoryWrapperAware {
 
-	public LiferayDynamicCapability(
-		ServiceTrackerList<Capability, Capability> dynamicCapabilities) {
+	public void addCapability(Capability capability) {
+		_dynamicCapabilities.add(capability);
 
-		_dynamicCapabilities = dynamicCapabilities;
+		_updateRepositoryWrappers();
 	}
 
 	@Override
@@ -42,21 +46,87 @@ public class LiferayDynamicCapability
 		RepositoryEventRegistry repositoryEventRegistry) {
 	}
 
+	public void removeCapability(Capability capability) {
+		_dynamicCapabilities.remove(capability);
+		_updateRepositoryWrappers();
+	}
+
 	@Override
 	public LocalRepository wrapLocalRepository(
 		LocalRepository localRepository) {
 
-		return new LiferayDynamicLocalRepositoryWrapper(
-			localRepository, _dynamicCapabilities);
+		LocalRepository wrappedLocalRepository = localRepository;
+
+		for (Capability capability : _dynamicCapabilities) {
+			if (capability instanceof RepositoryWrapperAware) {
+				RepositoryWrapperAware repositoryWrapperAware =
+					(RepositoryWrapperAware)capability;
+
+				wrappedLocalRepository =
+					repositoryWrapperAware.wrapLocalRepository(
+						wrappedLocalRepository);
+			}
+		}
+
+		LocalRepositoryWrapper localRepositoryWrapper =
+			new LocalRepositoryWrapper(wrappedLocalRepository);
+
+		_localRepositoriesMap.put(localRepositoryWrapper, localRepository);
+
+		return localRepositoryWrapper;
 	}
 
 	@Override
 	public Repository wrapRepository(Repository repository) {
-		return new LiferayDynamicRepositoryWrapper(
-			repository, _dynamicCapabilities);
+		Repository wrappedRepository = repository;
+
+		for (Capability capability : _dynamicCapabilities) {
+			if (capability instanceof RepositoryWrapperAware) {
+				RepositoryWrapperAware repositoryWrapperAware =
+					(RepositoryWrapperAware)capability;
+
+				wrappedRepository = repositoryWrapperAware.wrapRepository(
+					wrappedRepository);
+			}
+		}
+
+		RepositoryWrapper repositoryWrapper = new RepositoryWrapper(
+			wrappedRepository);
+
+		_repositoriesMap.put(repositoryWrapper, repository);
+
+		return repositoryWrapper;
 	}
 
-	private final ServiceTrackerList<Capability, Capability>
-		_dynamicCapabilities;
+	private void _updateRepositoryWrappers() {
+		for (Map.Entry<LocalRepositoryWrapper, LocalRepository>
+				localRepositoryEntry : _localRepositoriesMap.entrySet()) {
+
+			LocalRepository originalLocalRepository =
+				localRepositoryEntry.getValue();
+
+			LocalRepositoryWrapper localRepositoryWrapper =
+				localRepositoryEntry.getKey();
+
+			localRepositoryWrapper.setLocalRepository(
+				wrapLocalRepository(originalLocalRepository));
+		}
+
+		for (Map.Entry<RepositoryWrapper, Repository> repositoryWrapperEntry :
+				_repositoriesMap.entrySet()) {
+
+			Repository originalRepository = repositoryWrapperEntry.getValue();
+			RepositoryWrapper repositoryWrapper =
+				repositoryWrapperEntry.getKey();
+
+			repositoryWrapper.setRepository(wrapRepository(originalRepository));
+		}
+	}
+
+	private final Set<Capability> _dynamicCapabilities = new HashSet<>();
+	private final Map<LocalRepositoryWrapper, LocalRepository>
+		_localRepositoriesMap = new HashMap<>();
+	private final Map<RepositoryWrapper, Repository> _repositoriesMap =
+		new HashMap<>();
 
 }

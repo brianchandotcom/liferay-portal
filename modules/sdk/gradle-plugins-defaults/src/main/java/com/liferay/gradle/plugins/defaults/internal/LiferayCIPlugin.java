@@ -16,7 +16,6 @@ package com.liferay.gradle.plugins.defaults.internal;
 
 import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
@@ -160,7 +159,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 		npmInstallTask.setUseNpmCI(Boolean.FALSE);
 	}
 
-	private void _configureTaskNpmRunBuild(ExecuteNpmTask executeNpmTask) {
+	private void _configureTaskExecuteNpm(ExecuteNpmTask executeNpmTask) {
 		executeNpmTask.doLast(
 			new Action<Task>() {
 
@@ -237,13 +236,13 @@ public class LiferayCIPlugin implements Plugin<Project> {
 
 			});
 
-		Project project = executeNpmTask.getProject();
-
-		project.afterEvaluate(
-			new Action<Project>() {
+		executeNpmTask.doFirst(
+			new Action<Task>() {
 
 				@Override
-				public void execute(Project project) {
+				public void execute(Task task) {
+					Project project = task.getProject();
+
 					String[] fileNames =
 						{"bnd.bnd", "package.json", "package-lock.json"};
 
@@ -358,9 +357,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 				public void execute(ExecuteNpmTask executeNpmTask) {
 					String name = executeNpmTask.getName();
 
-					if (name.equals(NodePlugin.NPM_RUN_BUILD_TASK_NAME)) {
-						_configureTaskNpmRunBuild(executeNpmTask);
-					}
+					_configureTaskExecuteNpm(executeNpmTask);
 
 					if (Validator.isNotNull(ciRegistry)) {
 						_configureTaskExecuteNpm(executeNpmTask, ciRegistry);

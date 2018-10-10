@@ -253,13 +253,13 @@ public class KBArticleMarkdownConverter {
 	}
 
 	protected String getUrlTitle(String heading) {
-		String urlTitle = null;
-
 		int x = heading.indexOf("[](id=");
 
 		if (x == -1) {
 			return null;
 		}
+
+		String urlTitle = null;
 
 		int y = heading.indexOf(StringPool.CLOSE_PARENTHESIS, x);
 

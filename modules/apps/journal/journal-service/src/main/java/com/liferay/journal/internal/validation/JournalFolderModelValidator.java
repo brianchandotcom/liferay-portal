@@ -157,8 +157,6 @@ public class JournalFolderModelValidator
 
 	@Override
 	public ModelValidationResults validateModel(JournalFolder folder) {
-		long folderId = folder.getFolderId();
-
 		long[] ddmStructureIds = null;
 
 		try {
@@ -185,6 +183,8 @@ public class JournalFolderModelValidator
 				pe
 			).getResults();
 		}
+
+		long folderId = folder.getFolderId();
 
 		try {
 			validateArticleDDMStructures(folderId, ddmStructureIds);

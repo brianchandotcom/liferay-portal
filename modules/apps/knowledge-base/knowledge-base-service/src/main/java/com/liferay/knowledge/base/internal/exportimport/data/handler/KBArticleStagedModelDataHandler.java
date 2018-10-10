@@ -425,9 +425,6 @@ public class KBArticleStagedModelDataHandler
 		Element stagedModelElement =
 			portletDataContext.getImportDataStagedModelElement(stagedModel);
 
-		long kbArticleClassNameId = _portal.getClassNameId(
-			KBArticleConstants.getClassName());
-
 		long kbFolderClassNameId = _portal.getClassNameId(
 			KBFolderConstants.getClassName());
 
@@ -438,6 +435,9 @@ public class KBArticleStagedModelDataHandler
 		if (referencesElement == null) {
 			return;
 		}
+
+		long kbArticleClassNameId = _portal.getClassNameId(
+			KBArticleConstants.getClassName());
 
 		List<Element> referenceElements = referencesElement.elements();
 

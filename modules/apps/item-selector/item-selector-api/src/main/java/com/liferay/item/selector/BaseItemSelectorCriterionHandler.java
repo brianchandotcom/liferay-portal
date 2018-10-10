@@ -40,14 +40,14 @@ public abstract class BaseItemSelectorCriterionHandler
 	public List<ItemSelectorView<T>> getItemSelectorViews(
 		ItemSelectorCriterion itemSelectorCriterion) {
 
-		List<ItemSelectorView<T>> filteredItemSelectedViews = new ArrayList<>();
-
 		List<ItemSelectorView> itemSelectorViews =
 			_serviceTrackerMap.getService(itemSelectorCriterion.getClass());
 
 		if (itemSelectorViews == null) {
 			return Collections.emptyList();
 		}
+
+		List<ItemSelectorView<T>> filteredItemSelectedViews = new ArrayList<>();
 
 		for (ItemSelectorView itemSelectorView : itemSelectorViews) {
 			List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =

@@ -541,6 +541,11 @@ public class AssetBrowserDisplayContext {
 			}
 		}
 
+		if (isMultipleSelection()) {
+			portletURL.setParameter(
+				"multipleSelection", Boolean.TRUE.toString());
+		}
+
 		portletURL.setParameter(
 			"refererAssetEntryId", String.valueOf(getRefererAssetEntryId()));
 		portletURL.setParameter("typeSelection", getTypeSelection());

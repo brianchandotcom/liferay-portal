@@ -104,8 +104,12 @@ AssetListUsagesDisplayContext assetListUsagesDisplayContext = new AssetListUsage
 					</c:choose>
 				</h3>
 
+				<%
+				AssetListUsagesManagementToolbarDisplayContext assetListUsagesManagementToolbarDisplayContext = new AssetListUsagesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetListUsagesDisplayContext.getSearchContainer());
+				%>
+
 				<clay:management-toolbar
-					displayContext="<%= assetListUsagesDisplayContext.getManagementToolbarDisplayContext() %>"
+					displayContext="<%= assetListUsagesManagementToolbarDisplayContext %>"
 				/>
 
 				<liferay-ui:search-container

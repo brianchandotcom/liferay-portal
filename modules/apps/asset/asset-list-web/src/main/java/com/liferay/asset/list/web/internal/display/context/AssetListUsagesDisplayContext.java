@@ -18,14 +18,10 @@ import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.list.model.AssetListEntryUsage;
 import com.liferay.asset.list.service.AssetListEntryUsageLocalServiceUtil;
 import com.liferay.asset.list.util.comparator.AssetListEntryUsageModifiedDateComparator;
-import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -42,8 +38,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Pavel Savinov
  */
@@ -54,8 +48,6 @@ public class AssetListUsagesDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-
-		_request = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	public int getAllUsageCount() {
@@ -120,35 +112,6 @@ public class AssetListUsagesDisplayContext {
 		return AssetListEntryUsageLocalServiceUtil.getAssetListEntryUsagesCount(
 			getAssetListEntryId(),
 			PortalUtil.getClassNameId(AssetDisplayPageEntry.class));
-	}
-
-	public SearchContainerManagementToolbarDisplayContext
-		getManagementToolbarDisplayContext() throws PortalException {
-
-		return new SearchContainerManagementToolbarDisplayContext(
-			PortalUtil.getLiferayPortletRequest(_renderRequest),
-			PortalUtil.getLiferayPortletResponse(_renderResponse), _request,
-			getSearchContainer()) {
-
-			@Override
-			public List<DropdownItem> getOrderByDropdownItems() {
-				return new DropdownItemList() {
-					{
-						add(
-							dropdownItem -> {
-								dropdownItem.setActive(true);
-								dropdownItem.setHref(
-									getPortletURL(), "orderByCol",
-									"modified-date");
-								dropdownItem.setLabel(
-									LanguageUtil.get(
-										_request, "modified-date"));
-							});
-					}
-				};
-			}
-
-		};
 	}
 
 	public String getNavigation() {
@@ -298,7 +261,6 @@ public class AssetListUsagesDisplayContext {
 	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
 	private SearchContainer _searchContainer;
 
 }

@@ -147,94 +147,9 @@ public class LiferayCIPlugin implements Plugin<Project> {
 	private void _configureTaskExecuteNpm(
 		ExecuteNpmTask executeNpmTask, String registry) {
 
-		executeNpmTask.setRegistry(registry);
-	}
-
-	private void _configureTaskNpmInstall(NpmInstallTask npmInstallTask) {
-		if (Validator.isNull(System.getenv("FIX_PACKS_RELEASE_ENVIRONMENT"))) {
-			npmInstallTask.setNodeModulesCacheDir(_NODE_MODULES_CACHE_DIR);
+		if (Validator.isNotNull(registry)) {
+			executeNpmTask.setRegistry(registry);
 		}
-
-		npmInstallTask.setRemoveShrinkwrappedUrls(Boolean.TRUE);
-		npmInstallTask.setUseNpmCI(Boolean.FALSE);
-	}
-
-	private void _configureTaskExecuteNpm(ExecuteNpmTask executeNpmTask) {
-		executeNpmTask.doLast(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					Project project = task.getProject();
-
-					String[] fileNames =
-						{"bnd.bnd", "package.json", "package-lock.json"};
-
-					for (String fileName : fileNames) {
-						File file = project.file(fileName);
-
-						if (!file.exists()) {
-							continue;
-						}
-
-						String version = null;
-
-						if (fileName.endsWith(".bnd")) {
-							Properties properties = GUtil.loadProperties(file);
-
-							version = properties.getProperty("Bundle-Version");
-						}
-						else if (fileName.endsWith(".json")) {
-							JsonSlurper jsonSlurper = new JsonSlurper();
-
-							Map<String, Object> map =
-								(Map<String, Object>)jsonSlurper.parse(file);
-
-							version = (String)map.get("version");
-						}
-
-						if (version == null) {
-							continue;
-						}
-
-						String newVersion = _fixHotfixVersion(version);
-
-						if (version.equals(newVersion)) {
-							continue;
-						}
-
-						try {
-							String content = new String(
-								Files.readAllBytes(file.toPath()),
-								StandardCharsets.UTF_8);
-
-							String newContent = content.replace(
-								version, newVersion);
-
-							Files.write(
-								file.toPath(),
-								newContent.getBytes(StandardCharsets.UTF_8));
-						}
-						catch (IOException ioe) {
-							throw new UncheckedIOException(ioe);
-						}
-					}
-				}
-
-				private String _fixHotfixVersion(String version) {
-					int index = version.indexOf("-hotfix");
-
-					if (index == -1) {
-						return version;
-					}
-
-					String prefix = version.substring(0, index);
-					String suffix = version.substring(index + 7);
-
-					return prefix + ".hotfix" + suffix.replace('.', '-');
-				}
-
-			});
 
 		executeNpmTask.doFirst(
 			new Action<Task>() {
@@ -311,6 +226,91 @@ public class LiferayCIPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		executeNpmTask.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					String[] fileNames =
+						{"bnd.bnd", "package.json", "package-lock.json"};
+
+					for (String fileName : fileNames) {
+						File file = project.file(fileName);
+
+						if (!file.exists()) {
+							continue;
+						}
+
+						String version = null;
+
+						if (fileName.endsWith(".bnd")) {
+							Properties properties = GUtil.loadProperties(file);
+
+							version = properties.getProperty("Bundle-Version");
+						}
+						else if (fileName.endsWith(".json")) {
+							JsonSlurper jsonSlurper = new JsonSlurper();
+
+							Map<String, Object> map =
+								(Map<String, Object>)jsonSlurper.parse(file);
+
+							version = (String)map.get("version");
+						}
+
+						if (version == null) {
+							continue;
+						}
+
+						String newVersion = _fixHotfixVersion(version);
+
+						if (version.equals(newVersion)) {
+							continue;
+						}
+
+						try {
+							String content = new String(
+								Files.readAllBytes(file.toPath()),
+								StandardCharsets.UTF_8);
+
+							String newContent = content.replace(
+								version, newVersion);
+
+							Files.write(
+								file.toPath(),
+								newContent.getBytes(StandardCharsets.UTF_8));
+						}
+						catch (IOException ioe) {
+							throw new UncheckedIOException(ioe);
+						}
+					}
+				}
+
+				private String _fixHotfixVersion(String version) {
+					int index = version.indexOf("-hotfix");
+
+					if (index == -1) {
+						return version;
+					}
+
+					String prefix = version.substring(0, index);
+					String suffix = version.substring(index + 7);
+
+					return prefix + ".hotfix" + suffix.replace('.', '-');
+				}
+
+			});
+	}
+
+	private void _configureTaskNpmInstall(NpmInstallTask npmInstallTask) {
+		if (Validator.isNull(System.getenv("FIX_PACKS_RELEASE_ENVIRONMENT"))) {
+			npmInstallTask.setNodeModulesCacheDir(_NODE_MODULES_CACHE_DIR);
+		}
+
+		npmInstallTask.setRemoveShrinkwrappedUrls(Boolean.TRUE);
+		npmInstallTask.setUseNpmCI(Boolean.FALSE);
 	}
 
 	private void _configureTasksDownloadNode(Project project) {
@@ -355,13 +355,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(ExecuteNpmTask executeNpmTask) {
-					String name = executeNpmTask.getName();
-
-					_configureTaskExecuteNpm(executeNpmTask);
-
-					if (Validator.isNotNull(ciRegistry)) {
-						_configureTaskExecuteNpm(executeNpmTask, ciRegistry);
-					}
+					_configureTaskExecuteNpm(executeNpmTask, ciRegistry);
 				}
 
 			});

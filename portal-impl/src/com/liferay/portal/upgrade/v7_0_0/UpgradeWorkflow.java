@@ -30,7 +30,6 @@ public class UpgradeWorkflow extends UpgradeProcess {
 			for (String[] orphanedAttachedModel : getOrphanedAttachedModels()) {
 				String tableName = orphanedAttachedModel[0];
 				String columnName = orphanedAttachedModel[1];
-				String columnValue = orphanedAttachedModel[2];
 
 				if (!hasTable(tableName) || !hasColumn(tableName, columnName)) {
 					continue;
@@ -44,6 +43,8 @@ public class UpgradeWorkflow extends UpgradeProcess {
 
 					continue;
 				}
+
+				String columnValue = orphanedAttachedModel[2];
 
 				deleteOrphaned(
 					tableName, columnName, columnValue, orphanedTableName,

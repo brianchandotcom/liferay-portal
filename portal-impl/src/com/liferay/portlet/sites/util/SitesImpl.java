@@ -938,9 +938,6 @@ public class SitesImpl implements Sites {
 
 	@Override
 	public boolean isContentSharingWithChildrenEnabled(Group group) {
-		UnicodeProperties typeSettingsProperties =
-			group.getParentLiveGroupTypeSettingsProperties();
-
 		int companyContentSharingEnabled = PrefsPropsUtil.getInteger(
 			group.getCompanyId(),
 			PropsKeys.SITES_CONTENT_SHARING_WITH_CHILDREN_ENABLED);
@@ -950,6 +947,9 @@ public class SitesImpl implements Sites {
 
 			return false;
 		}
+
+		UnicodeProperties typeSettingsProperties =
+			group.getParentLiveGroupTypeSettingsProperties();
 
 		int groupContentSharingEnabled = GetterUtil.getInteger(
 			typeSettingsProperties.getProperty(

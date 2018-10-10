@@ -161,13 +161,13 @@ public class LiferayCIPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskNpmRunBuild(ExecuteNpmTask executeNpmTask) {
-		executeNpmTask.doFirst(
-			new Action<Task>() {
+		Project project = executeNpmTask.getProject();
+
+		project.afterEvaluate(
+			new Action<Project>() {
 
 				@Override
-				public void execute(Task task) {
-					Project project = task.getProject();
-
+				public void execute(Project project) {
 					String[] fileNames =
 						{"bnd.bnd", "package.json", "package-lock.json"};
 

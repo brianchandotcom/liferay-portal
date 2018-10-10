@@ -14,7 +14,7 @@
 
 package com.liferay.structured.content.apio.internal.architect.filter;
 
-import com.liferay.structured.content.apio.architect.entity.EntityModel;
+import com.liferay.parser.apio.architect.entity.EntityModel;
 
 import org.junit.Assert;
 import org.junit.Test;

@@ -19,9 +19,12 @@ import java.util.Map;
 /**
  * Models a <code>EntityModel</code>.
  *
- * @author Cristina González
+ * @author     Cristina González
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+ *             com.liferay.parser.apio.architect.entity.EntityModel}
  * @review
  */
+@Deprecated
 public interface EntityModel {
 
 	/**

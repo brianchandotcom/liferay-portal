@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Parser Apio API
+Bundle-SymbolicName: com.liferay.parser.apio.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.parser.apio.architect.entity,\
+	com.liferay.parser.apio.architect.filter,\
+	com.liferay.parser.apio.architect.filter.expression,\
+	com.liferay.parser.apio.architect.sort

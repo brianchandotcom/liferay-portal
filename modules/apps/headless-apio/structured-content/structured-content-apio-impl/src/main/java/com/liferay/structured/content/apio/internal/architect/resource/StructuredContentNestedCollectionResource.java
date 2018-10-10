@@ -46,6 +46,12 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
+import com.liferay.parser.apio.architect.entity.EntityModel;
+import com.liferay.parser.apio.architect.filter.ExpressionConvert;
+import com.liferay.parser.apio.architect.filter.Filter;
+import com.liferay.parser.apio.architect.filter.InvalidFilterException;
+import com.liferay.parser.apio.architect.sort.Sort;
+import com.liferay.parser.apio.architect.sort.SortField;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.identifier.ClassNameClassPK;
 import com.liferay.portal.apio.permission.HasPermission;
@@ -72,30 +78,18 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.structure.apio.architect.identifier.ContentStructureIdentifier;
-import com.liferay.structured.content.apio.architect.entity.EntityModel;
-import com.liferay.structured.content.apio.architect.filter.Filter;
-import com.liferay.structured.content.apio.architect.filter.InvalidFilterException;
-import com.liferay.structured.content.apio.architect.filter.expression.Expression;
 import com.liferay.structured.content.apio.architect.identifier.StructuredContentIdentifier;
-import com.liferay.structured.content.apio.architect.sort.Sort;
-import com.liferay.structured.content.apio.architect.sort.SortField;
 import com.liferay.structured.content.apio.architect.util.StructuredContentUtil;
-import com.liferay.structured.content.apio.internal.architect.filter.ExpressionVisitorImpl;
 import com.liferay.structured.content.apio.internal.architect.filter.StructuredContentEntityModel;
 import com.liferay.structured.content.apio.internal.architect.form.StructuredContentCreatorForm;
 import com.liferay.structured.content.apio.internal.architect.form.StructuredContentUpdaterForm;
 import com.liferay.structured.content.apio.internal.model.JournalArticleWrapper;
 import com.liferay.structured.content.apio.internal.model.RenderedJournalArticle;
 import com.liferay.structured.content.apio.internal.util.JournalArticleContentHelper;
-
-import java.text.Format;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -620,14 +614,8 @@ public class StructuredContentNestedCollectionResource
 		}
 
 		try {
-			Expression expression = filter.getExpression();
-
-			Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
-				PropsUtil.get(PropsKeys.INDEX_DATE_FORMAT_PATTERN));
-
-			return (com.liferay.portal.kernel.search.filter.Filter)
-				expression.accept(
-					new ExpressionVisitorImpl(format, locale, _entityModel));
+			return _expressionConvert.convert(
+				filter.getExpression(), locale, _entityModel);
 		}
 		catch (Exception e) {
 			throw new InvalidFilterException(
@@ -743,6 +731,12 @@ public class StructuredContentNestedCollectionResource
 		target = "(entity.model.name=" + StructuredContentEntityModel.NAME + ")"
 	)
 	private EntityModel _entityModel;
+
+	@Reference(
+		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"
+	)
+	private ExpressionConvert<com.liferay.portal.kernel.search.filter.Filter>
+		_expressionConvert;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"

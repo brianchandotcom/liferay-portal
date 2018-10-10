@@ -14,13 +14,13 @@
 
 package com.liferay.structured.content.apio.internal.architect.provider;
 
+import com.liferay.parser.apio.architect.filter.Filter;
+import com.liferay.parser.apio.architect.filter.FilterParser;
+import com.liferay.parser.apio.architect.filter.InvalidFilterException;
+import com.liferay.parser.apio.architect.filter.expression.ExpressionVisitException;
+import com.liferay.parser.apio.architect.filter.expression.ExpressionVisitor;
+import com.liferay.parser.apio.architect.filter.expression.LiteralExpression;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.structured.content.apio.architect.filter.Filter;
-import com.liferay.structured.content.apio.architect.filter.FilterParser;
-import com.liferay.structured.content.apio.architect.filter.InvalidFilterException;
-import com.liferay.structured.content.apio.architect.filter.expression.ExpressionVisitException;
-import com.liferay.structured.content.apio.architect.filter.expression.LiteralExpression;
-import com.liferay.structured.content.apio.internal.architect.filter.expression.LiteralExpressionImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -79,8 +79,26 @@ public class FilterProviderTest {
 	public void testCreateContextWithValidFilter() {
 		FilterProvider filterProvider = new FilterProvider();
 
-		FilterParser filterParser = filterString -> new LiteralExpressionImpl(
-			"some String", LiteralExpression.Type.STRING);
+		FilterParser filterParser = filterString -> new LiteralExpression() {
+
+			@Override
+			public <T> T accept(ExpressionVisitor<T> expressionVisitor)
+				throws ExpressionVisitException {
+
+				return expressionVisitor.visitLiteralExpression(this);
+			}
+
+			@Override
+			public String getText() {
+				return "some String";
+			}
+
+			@Override
+			public Type getType() {
+				return LiteralExpression.Type.STRING;
+			}
+
+		};
 
 		filterProvider.setFilterParser(filterParser);
 

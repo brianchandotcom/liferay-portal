@@ -22,8 +22,11 @@ import java.util.function.Function;
 /**
  * Models an entity field.
  *
- * @author Cristina González
+ * @author     Cristina González
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+ *             com.liferay.parser.apio.architect.entity.EntityField}
  */
+@Deprecated
 public class EntityField {
 
 	/**

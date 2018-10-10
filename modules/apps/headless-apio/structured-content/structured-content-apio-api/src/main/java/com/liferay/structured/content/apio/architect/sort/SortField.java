@@ -23,8 +23,11 @@ import java.util.Locale;
 /**
  * Models a sort field.
  *
- * @author Cristina González
+ * @author     Cristina González
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+ *             com.liferay.parser.apio.architect.sort.SortField}
  */
+@Deprecated
 public class SortField implements Serializable {
 
 	/**

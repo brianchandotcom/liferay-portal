@@ -232,8 +232,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		LiferayActionResponse liferayActionResponse =
 			(LiferayActionResponse)actionResponse;
 
-		PortletSession portletSession = actionRequest.getPortletSession();
-
 		String className = StringUtil.replaceFirst(
 			cmd, "convertProcess.", StringPool.BLANK);
 
@@ -282,6 +280,8 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 			return portletURL.toString();
 		}
+
+		PortletSession portletSession = actionRequest.getPortletSession();
 
 		MaintenanceUtil.maintain(portletSession.getId(), className);
 

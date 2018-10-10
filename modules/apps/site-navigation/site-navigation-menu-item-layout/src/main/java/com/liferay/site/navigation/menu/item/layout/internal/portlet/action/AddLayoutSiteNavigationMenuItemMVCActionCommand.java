@@ -93,12 +93,8 @@ public class AddLayoutSiteNavigationMenuItemMVCActionCommand
 
 		try {
 			for (String layoutUuid : layoutUUIDs) {
-				UnicodeProperties curTypeSettingsProperties =
-					new UnicodeProperties(true);
-
 				long groupId = GetterUtil.getLong(
 					typeSettingsProperties.get("groupId"));
-
 				boolean privateLayout = GetterUtil.getBoolean(
 					typeSettingsProperties.get("privateLayout"));
 
@@ -108,6 +104,9 @@ public class AddLayoutSiteNavigationMenuItemMVCActionCommand
 				if (layout == null) {
 					continue;
 				}
+
+				UnicodeProperties curTypeSettingsProperties =
+					new UnicodeProperties(true);
 
 				curTypeSettingsProperties.setProperty(
 					"groupId", String.valueOf(groupId));

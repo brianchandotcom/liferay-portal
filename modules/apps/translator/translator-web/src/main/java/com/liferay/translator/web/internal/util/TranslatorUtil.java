@@ -52,13 +52,13 @@ public class TranslatorUtil {
 				}
 			}
 
-			String toLanguageId = translationId.substring(pos + 1);
-
 			if (!languageIdsMap.containsKey(fromLanguageId)) {
 				return null;
 			}
 
-			return new String[] {fromLanguageId, toLanguageId};
+			return new String[] {
+				fromLanguageId, translationId.substring(pos + 1)
+			};
 		}
 		catch (Exception e) {
 			ReflectionUtil.throwException(e);

@@ -94,9 +94,6 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 	}
 
 	public JSONArray getSiteNavigationMenuItemsJSONArray() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -144,6 +141,9 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 		jsonObject.put("disabled", true);
 		jsonObject.put("icon", "page");
 		jsonObject.put("id", "0");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			themeDisplay.getLocale(),

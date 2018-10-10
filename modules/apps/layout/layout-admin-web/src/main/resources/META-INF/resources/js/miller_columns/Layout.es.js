@@ -225,7 +225,7 @@ class Layout extends Component {
 
 			if (
 				this._draggingItemPosition === DRAG_POSITIONS.inside &&
-				this._currentPathItemPlid != targetItemPlid
+				this._currentPathItemPlid !== targetItemPlid
 			) {
 				this._updatePath(targetColumnIndex, targetItemPlid);
 			}
@@ -246,7 +246,10 @@ class Layout extends Component {
 		layoutColumns,
 		targetColumnIndex
 	) {
-		if (this._draggingItem.active && (this._draggingItemColumnIndex != targetColumnIndex)) {
+		if (
+			this._draggingItem.active &&
+			(this._draggingItemColumnIndex !== targetColumnIndex)
+		) {
 			this._draggingItem.active = false;
 			this._removeFollowingColumns(layoutColumns, this._draggingItemColumnIndex);
 		}
@@ -352,7 +355,10 @@ class Layout extends Component {
 				this._deleteEmptyColumns(layoutColumns);
 			}
 
-			if (this._draggingItem.active && (this._draggingItemColumnIndex != targetColumnIndex)) {
+			if (
+				this._draggingItem.active &&
+				(this._draggingItemColumnIndex !== targetColumnIndex)
+			) {
 				this._draggingItem.active = false;
 
 				this._removeFollowingColumns(layoutColumns, this._draggingItemColumnIndex);
@@ -474,7 +480,7 @@ class Layout extends Component {
 		formData.append(`${this.portletNamespace}plid`, plid);
 		formData.append(`${this.portletNamespace}parentPlid`, parentPlid);
 
-		if (priority != null) {
+		if (priority) {
 			formData.append(`${this.portletNamespace}priority`, priority);
 		}
 
@@ -549,7 +555,7 @@ class Layout extends Component {
 
 		const activeItem = this._getLayoutColumnItemByPlid(this.layoutColumns, activeItemPlid);
 
-		if (activeItem && (activeItem != targetItem)) {
+		if (activeItem && (activeItem !== targetItem)) {
 			activeItem.active = false;
 		}
 

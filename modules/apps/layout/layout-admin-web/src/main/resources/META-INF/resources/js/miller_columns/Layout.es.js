@@ -580,13 +580,19 @@ class Layout extends Component {
 	 */
 
 	_setLayoutColumnItemChecked(plid) {
-		for (let i = 0; i < this.layoutColumns.length; i++) {
-			for (let j = 0; j < this.layoutColumns[i].length; j++) {
-				if (this.layoutColumns[i][j].plid === plid) {
-					this.layoutColumns[i][j].checked = true;
-				}
-			}
-		}
+		const column = this._getParentColumnByPlid(this.layoutColumns, plid);
+		const columnIndex = this.layoutColumns.indexOf(column);
+		const item = this._getLayoutColumnItemByPlid(this.layoutColumns, plid);
+
+		this.layoutColumns = setIn(
+			this.layoutColumns,
+			[
+				columnIndex,
+				column.indexOf(item),
+				'checked'
+			],
+			true
+		);
 	}
 
 	/**

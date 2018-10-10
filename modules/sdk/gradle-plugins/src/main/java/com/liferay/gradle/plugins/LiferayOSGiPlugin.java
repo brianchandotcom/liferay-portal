@@ -398,8 +398,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 					Project project = directDeployTask.getProject();
 
-					File warFile = directDeployTask.getWebAppFile();
-
 					Jar jar = (Jar)GradleUtil.getTask(
 						project, JavaPlugin.JAR_TASK_NAME);
 
@@ -449,6 +447,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					};
 
 					FileUtil.jar(project, warFile, "preserve", true, filesets);
+
+					File warFile = directDeployTask.getWebAppFile();
 
 					warFile.renameTo(jar.getArchivePath());
 				}

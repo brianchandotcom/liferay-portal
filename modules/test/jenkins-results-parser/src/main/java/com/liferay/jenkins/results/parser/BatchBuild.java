@@ -266,8 +266,6 @@ public class BatchBuild extends BaseBuild {
 
 			axisBuildURLMatcher.find();
 
-			String axisVariable = axisBuildURLMatcher.group("axisVariable");
-
 			JSONObject resultJSONObject = childReportJSONObject.optJSONObject(
 				"result");
 
@@ -280,6 +278,8 @@ public class BatchBuild extends BaseBuild {
 			if (suitesJSONArray == null) {
 				continue;
 			}
+
+			String axisVariable = axisBuildURLMatcher.group("axisVariable");
 
 			AxisBuild axisBuild = getAxisBuild(axisVariable);
 
@@ -310,12 +310,11 @@ public class BatchBuild extends BaseBuild {
 	public void update() {
 		super.update();
 
-		String status = getStatus();
-
 		if (badBuildNumbers.size() >= MAX_REINVOCATIONS) {
 			return;
 		}
 
+		String status = getStatus();
 		String result = getResult();
 
 		if ((status.equals("completed") && result.equals("SUCCESS")) ||

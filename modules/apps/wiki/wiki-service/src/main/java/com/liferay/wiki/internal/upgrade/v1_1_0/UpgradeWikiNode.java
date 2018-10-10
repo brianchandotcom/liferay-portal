@@ -39,13 +39,13 @@ public class UpgradeWikiNode extends UpgradeProcess {
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
-				long nodeId = rs.getLong("nodeId");
-
 				String name = rs.getString("name");
 
 				if (!Validator.isNumber(name)) {
 					continue;
 				}
+
+				long nodeId = rs.getLong("nodeId");
 
 				runSQL(
 					StringBundler.concat(

@@ -4764,6 +4764,10 @@ version 1.3.5.
 - [LPS-85959]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
 2.0.10.
 
+### Fixed
+- [LPS-85987]: When running the `npmRunBuild` task on Jenkins, change the
+`.hotfix-xxx-xxx` qualifier before running any tasks.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

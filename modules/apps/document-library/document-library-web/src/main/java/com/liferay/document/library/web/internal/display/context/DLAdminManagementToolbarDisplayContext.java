@@ -31,6 +31,8 @@ import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -336,6 +338,61 @@ public class DLAdminManagementToolbarDisplayContext {
 		};
 	}
 
+	public List<LabelItem> getFilterLabelItems() {
+		return new LabelItemList() {
+			{
+				long fileEntryTypeId = _getFileEntryTypeId();
+
+				if (fileEntryTypeId != -1) {
+					add(
+						SafeConsumer.ignore(
+							labelItem -> {
+								labelItem.setCloseable(false);
+
+								String fileEntryTypeName = LanguageUtil.get(
+									_request, "basic-document");
+
+								if (fileEntryTypeId !=
+										DLFileEntryTypeConstants.
+											FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+
+									DLFileEntryType fileEntryType =
+										DLFileEntryTypeLocalServiceUtil.
+											getFileEntryType(fileEntryTypeId);
+
+									fileEntryTypeName = fileEntryType.getName(
+										_request.getLocale());
+								}
+
+								String label = String.format(
+									"%s: %s",
+									LanguageUtil.get(_request, "document-type"),
+									fileEntryTypeName);
+
+								labelItem.setLabel(label);
+							}));
+				}
+
+				String navigation = _getNavigation();
+
+				if (navigation.equals("mine")) {
+					add(
+						labelItem -> {
+							labelItem.setCloseable(false);
+
+							User user = _themeDisplay.getUser();
+
+							String label = String.format(
+								"%s: %s", LanguageUtil.get(_request, "owner"),
+								user.getFullName());
+
+							labelItem.setLabel(label);
+						});
+				}
+			}
+		};
+	}
+
 	public PortletURL getSearchURL() {
 		PortletURL searchURL = _liferayPortletResponse.createRenderURL();
 
@@ -624,7 +681,7 @@ public class DLAdminManagementToolbarDisplayContext {
 								"action", "openDocumentTypesSelector");
 
 							String label = LanguageUtil.get(
-								_request, "document-types");
+								_request, "document-type");
 
 							if (fileEntryTypeId != -1) {
 								String fileEntryTypeName = LanguageUtil.get(

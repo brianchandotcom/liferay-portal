@@ -23,6 +23,7 @@
 	creationMenu="<%= dlAdminManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= dlAdminManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= dlAdminManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	filterLabelItems="<%= dlAdminManagementToolbarDisplayContext.getFilterLabelItems() %>"
 	infoPanelId="infoPanelId"
 	itemsTotal="<%= dlAdminManagementToolbarDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= String.valueOf(dlAdminManagementToolbarDisplayContext.getSearchURL()) %>"

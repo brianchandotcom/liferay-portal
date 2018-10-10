@@ -20,8 +20,6 @@
 DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayContext(renderRequest, renderResponse, request);
 %>
 
-<liferay-ui:error key="<%= RequiredLayoutPageTemplateEntryException.class.getName() %>" message="you-cannot-delete-asset-display-pages-that-are-used-by-one-or-more-assets" />
-
 <clay:navigation-bar
 	inverted="<%= true %>"
 	navigationItems="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
@@ -48,6 +46,8 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 </portlet:actionURL>
 
 <aui:form action="<%= deleteDisplayPageURL %>" cssClass="container-fluid-1280" name="fm">
+	<liferay-ui:error key="<%= PortalException.class.getName() %>" message="one-or-more-entries-could-not-be-deleted" />
+
 	<liferay-ui:search-container
 		id="displayPages"
 		searchContainer="<%= displayPageDisplayContext.getDisplayPagesSearchContainer() %>"

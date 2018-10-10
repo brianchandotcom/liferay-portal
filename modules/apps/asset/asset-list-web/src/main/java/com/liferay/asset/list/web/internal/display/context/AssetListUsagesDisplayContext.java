@@ -130,28 +130,6 @@ public class AssetListUsagesDisplayContext {
 		return _navigation;
 	}
 
-	public String getOrderByCol() {
-		if (Validator.isNotNull(_orderByCol)) {
-			return _orderByCol;
-		}
-
-		_orderByCol = ParamUtil.getString(
-			_renderRequest, "orderByCol", "modified-date");
-
-		return _orderByCol;
-	}
-
-	public String getOrderByType() {
-		if (Validator.isNotNull(_orderByType)) {
-			return _orderByType;
-		}
-
-		_orderByType = ParamUtil.getString(
-			_renderRequest, "orderByType", "asc");
-
-		return _orderByType;
-	}
-
 	public int getPagesUsageCount() {
 		return AssetListEntryUsageLocalServiceUtil.getAssetListEntryUsagesCount(
 			getAssetListEntryId(), PortalUtil.getClassNameId(Layout.class));
@@ -195,7 +173,7 @@ public class AssetListUsagesDisplayContext {
 
 		boolean orderByAsc = false;
 
-		String orderByType = getOrderByType();
+		String orderByType = _getOrderByType();
 
 		if (orderByType.equals("asc")) {
 			orderByAsc = true;
@@ -204,9 +182,9 @@ public class AssetListUsagesDisplayContext {
 		OrderByComparator<AssetListEntryUsage> orderByComparator =
 			new AssetListEntryUsageModifiedDateComparator(orderByAsc);
 
-		assetListUsagesSearchContainer.setOrderByCol(getOrderByCol());
+		assetListUsagesSearchContainer.setOrderByCol(_getOrderByCol());
 		assetListUsagesSearchContainer.setOrderByComparator(orderByComparator);
-		assetListUsagesSearchContainer.setOrderByType(getOrderByType());
+		assetListUsagesSearchContainer.setOrderByType(_getOrderByType());
 
 		List<AssetListEntryUsage> assetListEntryUsages = null;
 
@@ -258,6 +236,28 @@ public class AssetListUsagesDisplayContext {
 		_searchContainer = assetListUsagesSearchContainer;
 
 		return _searchContainer;
+	}
+
+	private String _getOrderByCol() {
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = ParamUtil.getString(
+			_renderRequest, "orderByCol", "modified-date");
+
+		return _orderByCol;
+	}
+
+	private String _getOrderByType() {
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = ParamUtil.getString(
+			_renderRequest, "orderByType", "asc");
+
+		return _orderByType;
 	}
 
 	private Long _assetListEntryId;

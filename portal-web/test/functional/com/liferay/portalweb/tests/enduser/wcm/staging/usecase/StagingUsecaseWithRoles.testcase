@@ -713,7 +713,7 @@
 	</command>
 
 	<command name="StagingDemoLocalLive4" priority="5">
-		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -1293,7 +1293,7 @@
 	</command>
 
 	<command name="StagingPublishPage" priority="5">
-		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">

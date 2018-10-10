@@ -8573,7 +8573,10 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					src="${bundle.file.name}"
 				/>
 
-				<move todir="${app.server.parent.dir}" verbose="true">
+				<move
+					todir="${app.server.parent.dir}"
+					verbose="true"
+				>
 					<fileset
 						dir="${project.dir}"
 						includes="liferay-*/**"
@@ -8737,7 +8740,10 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					src="${bundle.file.name}"
 				/>
 
-				<move todir="${project.dir}/sql" verbose="true">
+				<move
+					todir="${project.dir}/sql"
+					verbose="true"
+				>
 					<fileset
 						dir="${project.dir}"
 						includes="liferay-*/data/hypersonic/*"

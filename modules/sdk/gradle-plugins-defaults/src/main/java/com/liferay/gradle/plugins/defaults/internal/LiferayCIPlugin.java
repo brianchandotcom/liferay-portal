@@ -244,7 +244,6 @@ public class LiferayCIPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-
 					String[] fileNames =
 						{"bnd.bnd", "package.json", "package-lock.json"};
 

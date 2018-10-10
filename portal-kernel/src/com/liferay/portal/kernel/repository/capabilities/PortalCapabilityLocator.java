@@ -49,6 +49,9 @@ public interface PortalCapabilityLocator {
 	public SyncCapability getSyncCapability(
 		DocumentRepository documentRepository);
 
+	public DynamicCapability getDynamicCapability(
+		DocumentRepository documentRepository);
+
 	public TemporaryFileEntriesCapability getTemporaryFileEntriesCapability(
 		DocumentRepository documentRepository);
 

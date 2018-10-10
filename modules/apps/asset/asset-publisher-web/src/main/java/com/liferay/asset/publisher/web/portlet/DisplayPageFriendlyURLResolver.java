@@ -17,9 +17,8 @@ package com.liferay.asset.publisher.web.portlet;
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.asset.display.contributor.constants.AssetDisplayWebKeys;
-import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
-import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.asset.display.page.util.AssetDisplayPageHelper;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -33,7 +32,6 @@ import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -116,9 +114,10 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 			journalArticle.getResourcePrimKey());
 
 		if (Validator.isNull(journalArticle.getLayoutUuid()) &&
-			_isShowDisplayPageEntry(assetEntry)) {
+			AssetDisplayPageHelper.hasAssetDisplayPage(groupId, assetEntry)) {
 
-			return _getDisplayPageURL(assetEntry, mainPath, requestContext);
+			return _getDisplayPageURL(
+				groupId, assetEntry, mainPath, requestContext);
 		}
 
 		return _getBasicLayoutURL(
@@ -185,7 +184,8 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 			journalArticle.getResourcePrimKey());
 
 		try {
-			Layout layout = _getAssetDisplayPageEntryLayout(assetEntry);
+			Layout layout = _getAssetDisplayPageEntryLayout(
+				groupId, assetEntry);
 
 			if (layout != null) {
 				return layout;
@@ -263,10 +263,11 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 		return _createAssetDisplayLayout(groupId);
 	}
 
-	private Layout _getAssetDisplayPageEntryLayout(AssetEntry assetEntry)
+	private Layout _getAssetDisplayPageEntryLayout(
+			long groupId, AssetEntry assetEntry)
 		throws PortalException {
 
-		if (_isShowDisplayPageEntry(assetEntry)) {
+		if (AssetDisplayPageHelper.hasAssetDisplayPage(groupId, assetEntry)) {
 			return _getAssetDisplayLayout(assetEntry.getGroupId());
 		}
 
@@ -394,7 +395,7 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 	}
 
 	private String _getDisplayPageURL(
-			AssetEntry assetEntry, String mainPath,
+			long groupId, AssetEntry assetEntry, String mainPath,
 			Map<String, Object> requestContext)
 		throws PortalException {
 
@@ -419,40 +420,9 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 		_portal.addPageSubtitle(assetEntry.getTitle(locale), request);
 		_portal.addPageDescription(assetEntry.getDescription(locale), request);
 
-		Layout layout = _getAssetDisplayPageEntryLayout(assetEntry);
+		Layout layout = _getAssetDisplayPageEntryLayout(groupId, assetEntry);
 
 		return _portal.getLayoutActualURL(layout, mainPath);
-	}
-
-	private boolean _isShowDisplayPageEntry(AssetEntry assetEntry) {
-		AssetDisplayPageEntry assetDisplayPageEntry =
-			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
-				assetEntry.getGroupId(), assetEntry.getClassNameId(),
-				assetEntry.getClassPK());
-
-		if ((assetDisplayPageEntry == null) ||
-			(assetDisplayPageEntry.getType() ==
-				AssetDisplayPageConstants.TYPE_NONE)) {
-
-			return false;
-		}
-
-		if (assetDisplayPageEntry.getType() ==
-				AssetDisplayPageConstants.TYPE_SPECIFIC) {
-
-			return true;
-		}
-
-		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(
-				assetEntry.getGroupId(), assetEntry.getClassNameId(),
-				assetEntry.getClassTypeId());
-
-		if (defaultLayoutPageTemplateEntry != null) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

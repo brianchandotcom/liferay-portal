@@ -1,5 +1,7 @@
+import 'clay-icon';
 import 'clay-sticker';
 import 'clay-select';
+import dom from 'metal-dom';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 import templates from './ManageCollaborators.soy';
@@ -68,6 +70,10 @@ class ManageCollaborators extends PortletBase {
 		);
 
 		this._deleteSharingEntryIds.push(sharingEntryId);
+	}
+
+	_handleHoverCollaborator(event) {
+		dom.toggleClasses(event.delegateTarget, 'active');
 	}
 
 	/**

@@ -12,6 +12,14 @@
 	.list-group-item {
 		border: 0;
 		padding: .5rem;
+
+		.expiration-icon {
+			visibility: hidden;
+		}
+
+		&.active .expiration-icon {
+			visibility: visible;
+		}
 	}
 
 	.modal-body.inline-scroller {

@@ -56,8 +56,12 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 		super(beanMethods, wildcardBeanMethods);
 
 		_portletClassName = portletClassName;
-		_portletConfiguration = portletConfiguration;
 		_preferencesValidator = preferencesValidator;
+
+		_asyncSupported = portletConfiguration.asyncSupported();
+		_expirationCache = portletConfiguration.cacheExpirationTime();
+		_portletName = portletConfiguration.portletName();
+		_resourceBundle = portletConfiguration.resourceBundle();
 
 		String displayCategory = descriptorDisplayCategory;
 
@@ -111,7 +115,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 		_containerRuntimeOptions = new HashMap<>();
 
 		for (RuntimeOption runtimeOption :
-				_portletConfiguration.runtimeOptions()) {
+				portletConfiguration.runtimeOptions()) {
 
 			_containerRuntimeOptions.put(
 				runtimeOption.name(), Arrays.asList(runtimeOption.values()));
@@ -131,7 +135,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 		_initParams = new HashMap<>();
 
-		for (InitParameter initParameter : _portletConfiguration.initParams()) {
+		for (InitParameter initParameter : portletConfiguration.initParams()) {
 			String value = initParameter.value();
 
 			if (value != null) {
@@ -141,7 +145,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 		_keywords = new HashMap<>();
 
-		for (LocaleString localeString : _portletConfiguration.keywords()) {
+		for (LocaleString localeString : portletConfiguration.keywords()) {
 			_keywords.put(localeString.locale(), localeString.value());
 		}
 
@@ -204,7 +208,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 		_supportedPortletModes = new HashMap<>();
 		_supportedWindowStates = new HashMap<>();
 
-		for (Supports supports : _portletConfiguration.supports()) {
+		for (Supports supports : portletConfiguration.supports()) {
 			_supportedPortletModes.put(
 				supports.mimeType(),
 				new LinkedHashSet<>(Arrays.asList(supports.portletModes())));
@@ -245,7 +249,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 	@Override
 	public int getExpirationCache() {
-		return _portletConfiguration.cacheExpirationTime();
+		return _expirationCache;
 	}
 
 	@Override
@@ -295,7 +299,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 	@Override
 	public String getPortletName() {
-		return _portletConfiguration.portletName();
+		return _portletName;
 	}
 
 	@Override
@@ -310,7 +314,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 	@Override
 	public String getResourceBundle() {
-		return _portletConfiguration.resourceBundle();
+		return _resourceBundle;
 	}
 
 	@Override
@@ -350,7 +354,7 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 	@Override
 	public boolean isAsyncSupported() {
-		return _portletConfiguration.asyncSupported();
+		return _asyncSupported;
 	}
 
 	@Override
@@ -358,10 +362,12 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 		return _multiPartSupported;
 	}
 
+	private final boolean _asyncSupported;
 	private final Map<String, List<String>> _containerRuntimeOptions;
 	private final Map<String, String> _descriptions;
 	private final String _displayCategory;
 	private final Map<String, String> _displayNames;
+	private final int _expirationCache;
 	private final Map<String, String> _initParams;
 	private final Map<String, String> _keywords;
 	private final Map<String, Set<String>> _liferayConfiguration;
@@ -371,10 +377,11 @@ public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 	private final long _multiPartMaxRequestSize;
 	private final boolean _multiPartSupported;
 	private final String _portletClassName;
-	private final PortletConfiguration _portletConfiguration;
 	private final Set<PortletDependency> _portletDependencies;
+	private final String _portletName;
 	private final Map<String, Preference> _preferences;
 	private final String _preferencesValidator;
+	private final String _resourceBundle;
 	private final Map<String, String> _securityRoleRefs;
 	private final Map<String, String> _shortTitles;
 	private final Set<String> _supportedLocales;

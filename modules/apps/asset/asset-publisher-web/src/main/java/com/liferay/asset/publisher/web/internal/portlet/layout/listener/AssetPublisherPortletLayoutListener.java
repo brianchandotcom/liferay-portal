@@ -14,20 +14,32 @@
 
 package com.liferay.asset.publisher.web.internal.portlet.layout.listener;
 
+import com.liferay.asset.list.model.AssetListEntryUsage;
+import com.liferay.asset.list.service.AssetListEntryUsageLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletLayoutListenerException;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.subscription.service.SubscriptionLocalService;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -82,6 +94,8 @@ public class AssetPublisherPortletLayoutListener
 				layout.getCompanyId(), PortletPreferences.class.getName(),
 				_assetPublisherWebUtil.getSubscriptionClassPK(
 					ownerId, ownerType, plid, portletId));
+
+			_removeAssetListUsage(plid, portletId);
 		}
 		catch (Exception e) {
 			throw new PortletLayoutListenerException(e);
@@ -90,6 +104,30 @@ public class AssetPublisherPortletLayoutListener
 
 	@Override
 	public void onSetup(String portletId, long plid) {
+		Layout layout = _layoutLocalService.fetchLayout(plid);
+
+		if (layout == null) {
+			return;
+		}
+
+		javax.portlet.PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+				layout, portletId);
+
+		String selectionStyle = portletPreferences.getValue(
+			"selectionStyle", "dynamic");
+
+		long assetListEntryId = GetterUtil.getLong(
+			portletPreferences.getValue("assetListEntryId", null));
+
+		if (Objects.equals(selectionStyle, "asset-list") &&
+			(assetListEntryId > 0)) {
+
+			_addAssetListUsage(assetListEntryId, plid, portletId);
+		}
+		else if (!Objects.equals(selectionStyle, "asset-list")) {
+			_removeAssetListUsage(plid, portletId);
+		}
 	}
 
 	@Override
@@ -129,11 +167,64 @@ public class AssetPublisherPortletLayoutListener
 		_subscriptionLocalService = subscriptionLocalService;
 	}
 
+	private void _addAssetListUsage(
+		long assetListEntryId, long plid, String portletId) {
+
+		AssetListEntryUsage assetListEntryUsage =
+			_assetListEntryUsageLocalService.fetchAssetListEntryUsage(
+				_portal.getClassNameId(Layout.class), plid, portletId);
+
+		if (assetListEntryUsage != null) {
+			assetListEntryUsage.setAssetListEntryId(assetListEntryId);
+
+			_assetListEntryUsageLocalService.updateAssetListEntryUsage(
+				assetListEntryUsage);
+
+			return;
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		try {
+			_assetListEntryUsageLocalService.addAssetListEntryUsage(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				assetListEntryId, _portal.getClassNameId(Layout.class), plid,
+				portletId, serviceContext);
+		}
+		catch (PortalException pe) {
+			_log.error("Unable to add Asset List usage", pe);
+		}
+	}
+
+	private void _removeAssetListUsage(long plid, String portletId) {
+		AssetListEntryUsage assetListEntryUsage =
+			_assetListEntryUsageLocalService.fetchAssetListEntryUsage(
+				_portal.getClassNameId(Layout.class), plid, portletId);
+
+		if (assetListEntryUsage != null) {
+			_assetListEntryUsageLocalService.deleteAssetListEntryUsage(
+				assetListEntryUsage);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetPublisherPortletLayoutListener.class);
+
+	@Reference
+	private AssetListEntryUsageLocalService _assetListEntryUsageLocalService;
+
 	@Reference
 	private AssetPublisherWebUtil _assetPublisherWebUtil;
 
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
+
 	private SubscriptionLocalService _subscriptionLocalService;
 
 }

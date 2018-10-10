@@ -282,10 +282,6 @@ public class LayoutSiteNavigationMenuItemType
 		SiteNavigationMenuItem siteNavigationMenuItem,
 		SiteNavigationMenuItem importedSiteNavigationMenuItem) {
 
-		Map<Long, Long> layoutPlids =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				Layout.class);
-
 		Layout layout = _getLayout(importedSiteNavigationMenuItem);
 
 		if (layout == null) {
@@ -300,6 +296,10 @@ public class LayoutSiteNavigationMenuItemType
 
 			return false;
 		}
+
+		Map<Long, Long> layoutPlids =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Layout.class);
 
 		long plid = MapUtil.getLong(
 			layoutPlids, layout.getPlid(), layout.getPlid());

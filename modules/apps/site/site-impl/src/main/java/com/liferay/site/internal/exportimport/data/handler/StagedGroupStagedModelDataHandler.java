@@ -501,12 +501,7 @@ public class StagedGroupStagedModelDataHandler
 		_permissionImporter.clearCache();
 
 		for (Element portletElement : sitePortletElements) {
-			String portletPath = portletElement.attributeValue("path");
 			String portletId = portletElement.attributeValue("portlet-id");
-			long layoutId = GetterUtil.getLong(
-				portletElement.attributeValue("layout-id"));
-			long oldPlid = GetterUtil.getLong(
-				portletElement.attributeValue("old-plid"));
 
 			Portlet portlet = _portletLocalService.getPortletById(
 				portletDataContext.getCompanyId(), portletId);
@@ -514,6 +509,9 @@ public class StagedGroupStagedModelDataHandler
 			if (!portlet.isActive() || portlet.isUndeployedPortlet()) {
 				continue;
 			}
+
+			long layoutId = GetterUtil.getLong(
+				portletElement.attributeValue("layout-id"));
 
 			Layout layout = layouts.get(layoutId);
 
@@ -528,7 +526,12 @@ public class StagedGroupStagedModelDataHandler
 			}
 
 			portletDataContext.setPlid(plid);
+
+			long oldPlid = GetterUtil.getLong(
+				portletElement.attributeValue("old-plid"));
+
 			portletDataContext.setOldPlid(oldPlid);
+
 			portletDataContext.setPortletId(portletId);
 
 			if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
@@ -536,6 +539,8 @@ public class StagedGroupStagedModelDataHandler
 					"portlet", portletId,
 					portletDataContext.getManifestSummary());
 			}
+
+			String portletPath = portletElement.attributeValue("path");
 
 			Document portletDocument = SAXReaderUtil.read(
 				portletDataContext.getZipEntryAsString(portletPath));

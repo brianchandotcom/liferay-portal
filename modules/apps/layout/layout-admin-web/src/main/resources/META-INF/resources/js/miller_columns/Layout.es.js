@@ -83,21 +83,15 @@ class Layout extends Component {
 	}
 
 	/**
+	 * Removes extra empty columns when there are more than three.
 	 * @param {Array} layoutColumns
 	 * @private
 	 * @review
 	 */
 
 	_deleteEmptyColumns(layoutColumns) {
-		if (layoutColumns.length > 3) {
-			for (let i = 0; i < layoutColumns.length; i++) {
-				if (
-					layoutColumns[i].length === 0 &&
-					layoutColumns.length > 3
-				) {
-					layoutColumns.splice(i, 1);
-				}
-			}
+		for (let i = 3; (i < layoutColumns.length) && (layoutColumns[i].length === 0); i++) {
+			layoutColumns.splice(i, 1);
 		}
 	}
 

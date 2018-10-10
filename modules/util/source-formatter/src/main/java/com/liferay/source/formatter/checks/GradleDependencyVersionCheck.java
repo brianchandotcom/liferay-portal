@@ -179,8 +179,6 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 			return _publishedMajorVersionsMap;
 		}
 
-		Map<String, String> bundleVersionsMap = new HashMap<>();
-
 		String content = getPortalContent(_MODULES_PROPERTIES_FILE_NAME);
 
 		if (Validator.isNull(content)) {
@@ -188,6 +186,8 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 
 			return _publishedMajorVersionsMap;
 		}
+
+		Map<String, String> bundleVersionsMap = new HashMap<>();
 
 		List<String> lines = ListUtil.fromString(content);
 

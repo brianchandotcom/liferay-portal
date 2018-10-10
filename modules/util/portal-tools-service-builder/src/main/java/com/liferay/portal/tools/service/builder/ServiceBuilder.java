@@ -4663,8 +4663,6 @@ public class ServiceBuilder {
 	}
 
 	private String _getCreateTableSQL(Entity entity) {
-		List<EntityColumn> pkEntityColumns = entity.getPKEntityColumns();
-
 		List<EntityColumn> regularEntityColumns =
 			entity.getRegularEntityColumns();
 
@@ -4824,6 +4822,8 @@ public class ServiceBuilder {
 
 		if (entity.hasCompoundPK()) {
 			sb.append("\tprimary key (");
+
+			List<EntityColumn> pkEntityColumns = entity.getPKEntityColumns();
 
 			for (int j = 0; j < pkEntityColumns.size(); j++) {
 				EntityColumn pk = pkEntityColumns.get(j);

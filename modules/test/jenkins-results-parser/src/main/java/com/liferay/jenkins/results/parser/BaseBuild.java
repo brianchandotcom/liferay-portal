@@ -175,14 +175,14 @@ public abstract class BaseBuild implements Build {
 			return 0;
 		}
 
-		long totalDelayTime = 0;
-
 		List<Build> allDownstreamBuilds = JenkinsResultsParserUtil.flatten(
 			getDownstreamBuilds(null));
 
 		if (allDownstreamBuilds.isEmpty()) {
 			return 0;
 		}
+
+		long totalDelayTime = 0;
 
 		for (Build downstreamBuild : allDownstreamBuilds) {
 			totalDelayTime += downstreamBuild.getDelayTime();
@@ -1695,13 +1695,13 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected int getDownstreamBuildCountByResult(String result) {
-		int count = 0;
-
 		List<Build> downstreamBuilds = getDownstreamBuilds(null);
 
 		if (result == null) {
 			return downstreamBuilds.size();
 		}
+
+		int count = 0;
 
 		for (Build downstreamBuild : downstreamBuilds) {
 			String downstreamBuildResult = downstreamBuild.getResult();
@@ -2054,13 +2054,13 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected Map<String, String> getTempMap(String tempMapName) {
-		JSONObject tempMapJSONObject = null;
-
 		String tempMapURL = getTempMapURL(tempMapName);
 
 		if (tempMapURL == null) {
 			return Collections.emptyMap();
 		}
+
+		JSONObject tempMapJSONObject = null;
 
 		try {
 			tempMapJSONObject = JenkinsResultsParserUtil.toJSONObject(
@@ -2116,15 +2116,12 @@ public abstract class BaseBuild implements Build {
 			return 0;
 		}
 
-		int failCount = testReportJSONObject.getInt("failCount");
-		int passCount = testReportJSONObject.getInt("passCount");
-
 		if (status.equals("FAILURE")) {
-			return failCount;
+			return testReportJSONObject.getInt("failCount");
 		}
 
 		if (status.equals("SUCCESS")) {
-			return passCount;
+			return testReportJSONObject.getInt("passCount");
 		}
 
 		throw new IllegalArgumentException("Invalid status: " + status);

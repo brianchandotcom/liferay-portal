@@ -45,8 +45,6 @@ public class CheckOSGiBundleStateTask extends DefaultTask {
 
 	@TaskAction
 	public void checkOSGiBundleState() throws Exception {
-		Logger logger = getLogger();
-
 		String bundleState = getBundleState();
 
 		String bundleSymbolicName = getBundleSymbolicName();
@@ -104,6 +102,8 @@ public class CheckOSGiBundleStateTask extends DefaultTask {
 				}
 			}
 		}
+
+		Logger logger = getLogger();
 
 		if (singleBundle) {
 			if (logger.isWarnEnabled()) {

@@ -221,8 +221,6 @@ public class BatchBuild extends BaseBuild {
 			return Collections.emptyList();
 		}
 
-		List<TestResult> testResults = new ArrayList<>();
-
 		JSONObject testReportJSONObject = getTestReportJSONObject();
 
 		JSONArray childReportsJSONArray = testReportJSONObject.optJSONArray(
@@ -231,6 +229,8 @@ public class BatchBuild extends BaseBuild {
 		if (childReportsJSONArray == null) {
 			return Collections.emptyList();
 		}
+
+		List<TestResult> testResults = new ArrayList<>();
 
 		for (int i = 0; i < childReportsJSONArray.length(); i++) {
 			JSONObject childReportJSONObject =

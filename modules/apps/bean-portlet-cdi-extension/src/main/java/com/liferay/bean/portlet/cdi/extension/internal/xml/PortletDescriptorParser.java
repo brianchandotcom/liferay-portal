@@ -165,6 +165,9 @@ public class PortletDescriptorParser {
 			Set<BeanMethod> beanMethods = new HashSet<>(
 				portletBeanMethodsFunction.apply(portletName));
 
+			PortletScannerUtil.scanNonannotatedBeanMethods(
+				beanManager, portletClass, beanMethods);
+
 			String preferencesValidator = preferencesValidatorFunction.apply(
 				portletName);
 
@@ -176,9 +179,9 @@ public class PortletDescriptorParser {
 			beanPortlets.put(
 				portletName,
 				_readBeanPortlet(
-					portletElement, portletClass, portletName, beanApp,
-					beanManager, beanMethods, preferencesValidator,
-					categoryName, liferayConfiguration));
+					portletElement, portletClassName, portletName, beanApp,
+					beanMethods, preferencesValidator, categoryName,
+					liferayConfiguration));
 		}
 	}
 
@@ -332,8 +335,8 @@ public class PortletDescriptorParser {
 	}
 
 	private static BeanPortlet _readBeanPortlet(
-		Element portletElement, Class<?> portletClass, String portletName,
-		BeanApp beanApp, BeanManager beanManager, Set<BeanMethod> beanMethods,
+		Element portletElement, String portletClassName, String portletName,
+		BeanApp beanApp, Set<BeanMethod> beanMethods,
 		String preferencesValidator, String categoryName,
 		Map<String, Set<String>> liferayConfiguration) {
 
@@ -599,16 +602,13 @@ public class PortletDescriptorParser {
 					-1));
 		}
 
-		PortletScannerUtil.scanNonannotatedBeanMethods(
-			beanManager, portletClass, beanMethods);
-
 		Map<MethodType, List<BeanMethod>> beanMethodMap =
 			BeanMethodIndexUtil.indexBeanMethods(
 				beanMethods, supportedProcessingEvents,
 				supportedPublishingEvents);
 
 		return new BeanPortletImpl(
-			portletName, beanMethodMap, displayNames, portletClass.getName(),
+			portletName, beanMethodMap, displayNames, portletClassName,
 			initParams, expirationCache, supportedPortletModes,
 			supportedWindowStates, supportedLocales, resourceBundle, titles,
 			shortTitles, keywords, descriptions, preferences,

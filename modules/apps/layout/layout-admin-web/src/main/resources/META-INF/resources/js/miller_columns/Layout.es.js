@@ -328,14 +328,14 @@ class Layout extends Component {
 
 	/**
 	 * Handle layout column item check event
-	 * @param {!object} eventData
-	 * @param {string} eventData.delegateTarget.value
+	 * @param {!object} event
+	 * @param {string} event.delegateTarget.value
 	 * @private
 	 * @review
 	 */
 
-	_handleLayoutColumnItemCheck(eventData) {
-		this._setLayoutColumnItemChecked(eventData.delegateTarget.value);
+	_handleLayoutColumnItemCheck(event) {
+		this._setLayoutColumnItemChecked(event.delegateTarget.value);
 	}
 
 	/**

@@ -85,7 +85,7 @@ public class SessionScopedAnnotatedTypeImpl<X> extends AnnotatedTypeWrapper<X> {
 		return false;
 	}
 
-	private static final PortletSessionScoped _portletSessionScoped =
+	private static final Annotation _portletSessionScoped =
 		new PortletSessionScoped() {
 
 			@Override

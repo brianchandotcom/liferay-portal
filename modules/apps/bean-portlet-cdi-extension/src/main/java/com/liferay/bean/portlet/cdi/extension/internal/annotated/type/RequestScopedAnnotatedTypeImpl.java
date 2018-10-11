@@ -88,7 +88,7 @@ public class RequestScopedAnnotatedTypeImpl<X> extends AnnotatedTypeWrapper<X> {
 		return false;
 	}
 
-	private static final PortletRequestScoped _portletRequestScoped =
+	private static final Annotation _portletRequestScoped =
 		new PortletRequestScoped() {
 
 			@Override

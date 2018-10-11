@@ -42,13 +42,7 @@ public interface BeanPortlet {
 
 	public Map<String, Set<String>> getLiferayConfiguration();
 
-	public int getMultiPartFileSizeThreshold();
-
-	public String getMultiPartLocation();
-
-	public long getMultiPartMaxFileSize();
-
-	public long getMultiPartMaxRequestSize();
+	public MultiPartConfig getMultiPartConfig();
 
 	public String getPortletClassName();
 
@@ -77,8 +71,6 @@ public interface BeanPortlet {
 	public Map<String, String> getTitles();
 
 	public boolean isAsyncSupported();
-
-	public boolean isMultiPartSupported();
 
 	public Dictionary<String, Object> toDictionary(BeanApp beanApp);
 

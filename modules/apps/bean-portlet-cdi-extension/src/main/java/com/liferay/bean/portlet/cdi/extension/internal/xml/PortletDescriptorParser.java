@@ -24,6 +24,7 @@ import com.liferay.bean.portlet.cdi.extension.internal.BeanPortletImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.Event;
 import com.liferay.bean.portlet.cdi.extension.internal.EventImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.MethodType;
+import com.liferay.bean.portlet.cdi.extension.internal.MultiPartConfig;
 import com.liferay.bean.portlet.cdi.extension.internal.PortletDependency;
 import com.liferay.bean.portlet.cdi.extension.internal.Preference;
 import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameter;
@@ -581,26 +582,21 @@ public class PortletDescriptorParser {
 		boolean asyncSupported = GetterUtil.getBoolean(
 			portletElement.elementText("async-supported"));
 
-		boolean multiPartSupported = false;
-		int multiPartFileSizeThreshold = 0;
-		String multiPartLocation = null;
-		long multiPartMaxFileSize = -1L;
-		long multiPartMaxRequestSize = -1L;
+		MultiPartConfig multiPartConfig = MultiPartConfig.UNSUPPORTED;
 
 		Element multipartConfigElement = portletElement.element(
 			"multipart-config");
 
 		if (multipartConfigElement != null) {
-			multiPartSupported = true;
-			multiPartFileSizeThreshold = GetterUtil.getInteger(
-				multipartConfigElement.elementText("file-size-threshold"));
-			multiPartLocation = multipartConfigElement.elementText("location");
-			multiPartMaxFileSize = GetterUtil.getLong(
-				multipartConfigElement.elementText("max-file-size"),
-				multiPartMaxFileSize);
-			multiPartMaxRequestSize = GetterUtil.getLong(
-				multipartConfigElement.elementText("max-request-size"),
-				multiPartMaxRequestSize);
+			multiPartConfig = new MultiPartConfig(
+				GetterUtil.getInteger(
+					multipartConfigElement.elementText("file-size-threshold")),
+				multipartConfigElement.elementText("location"),
+				GetterUtil.getLong(
+					multipartConfigElement.elementText("max-file-size"), -1),
+				GetterUtil.getLong(
+					multipartConfigElement.elementText("max-request-size"),
+					-1));
 		}
 
 		PortletScannerUtil.scanNonannotatedBeanMethods(
@@ -619,9 +615,7 @@ public class PortletDescriptorParser {
 			preferencesValidator, securityRoleRefs, supportedProcessingEvents,
 			supportedPublishingEvents, supportedPublicRenderParameters,
 			containerRuntimeOptions, portletDependencies, asyncSupported,
-			multiPartSupported, multiPartFileSizeThreshold, multiPartLocation,
-			multiPartMaxFileSize, multiPartMaxRequestSize, categoryName,
-			liferayConfiguration);
+			multiPartConfig, categoryName, liferayConfiguration);
 	}
 
 	private static Map<String, String> _toLocaleMap(List<Element> elements) {

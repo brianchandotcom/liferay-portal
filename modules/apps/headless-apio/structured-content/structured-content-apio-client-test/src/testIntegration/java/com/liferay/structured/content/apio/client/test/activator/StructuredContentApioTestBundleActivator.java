@@ -97,15 +97,10 @@ public class StructuredContentApioTestBundleActivator
 	}
 
 	private JournalArticle _addJournalArticle(
-			String title, long userId, long groupId,
-			boolean addGuestPermissions, boolean addGroupPermissions)
+			Map<Locale, String> stringMap, long userId, long groupId,
+			Locale defaultLocale, boolean addGuestPermissions,
+			boolean addGroupPermissions)
 		throws Exception {
-
-		Map<Locale, String> stringMap = new HashMap<Locale, String>() {
-			{
-				put(LocaleUtil.getDefault(), title);
-			}
-		};
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -117,14 +112,30 @@ public class StructuredContentApioTestBundleActivator
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			JournalArticleConstants.CLASSNAME_ID_DEFAULT, title, false,
-			stringMap, stringMap, stringMap, null, LocaleUtil.getDefault(),
-			null, true, true, serviceContext);
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT, StringUtil.randomId(),
+			false, stringMap, stringMap, stringMap, null, defaultLocale, null,
+			true, true, serviceContext);
 
 		_autoCloseables.add(
 			() -> JournalArticleLocalServiceUtil.deleteArticle(journalArticle));
 
 		return journalArticle;
+	}
+
+	private JournalArticle _addJournalArticle(
+			String title, long userId, long groupId,
+			boolean addGuestPermissions, boolean addGroupPermissions)
+		throws Exception {
+
+		Map<Locale, String> stringMap = new HashMap<Locale, String>() {
+			{
+				put(LocaleUtil.getDefault(), title);
+			}
+		};
+
+		return _addJournalArticle(
+			stringMap, userId, groupId, LocaleUtil.getDefault(),
+			addGuestPermissions, addGroupPermissions);
 	}
 
 	private User _addUser(String emailAddress, long companyId, long groupId)

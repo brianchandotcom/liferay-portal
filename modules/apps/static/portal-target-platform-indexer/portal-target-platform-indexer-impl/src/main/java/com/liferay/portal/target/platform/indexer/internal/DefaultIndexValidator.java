@@ -14,11 +14,17 @@
 
 package com.liferay.portal.target.platform.indexer.internal;
 
+import static org.osgi.framework.namespace.BundleNamespace.BUNDLE_NAMESPACE;
+import static org.osgi.framework.namespace.HostNamespace.HOST_NAMESPACE;
+import static org.osgi.framework.namespace.IdentityNamespace.CAPABILITY_TYPE_ATTRIBUTE;
+import static org.osgi.framework.namespace.IdentityNamespace.IDENTITY_NAMESPACE;
+import static org.osgi.framework.namespace.IdentityNamespace.TYPE_BUNDLE;
+
 import aQute.bnd.build.model.EE;
 import aQute.bnd.build.model.OSGI_CORE;
 import aQute.bnd.osgi.repository.XMLResourceParser;
+import aQute.bnd.osgi.resource.CapReqBuilder;
 import aQute.bnd.osgi.resource.ResourceBuilder;
-
 import biz.aQute.resolve.ResolverValidator;
 
 import com.liferay.portal.target.platform.indexer.IndexValidator;
@@ -38,6 +44,7 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
+import org.osgi.framework.Constants;
 import org.osgi.resource.Resource;
 
 /**
@@ -69,6 +76,8 @@ public class DefaultIndexValidator implements IndexValidator {
 
 			resourceBuilder.addEE(EE.JavaSE_1_7);
 			resourceBuilder.addManifest(OSGI_CORE.R6_0_0.getManifest());
+
+			_includeSystemBundleAlias(resourceBuilder);
 
 			_includeTargetPlatform(resourceBuilder, identities);
 
@@ -137,6 +146,26 @@ public class DefaultIndexValidator implements IndexValidator {
 		finally {
 			xmlStreamReader.close();
 		}
+	}
+
+	private void _includeSystemBundleAlias(ResourceBuilder resourceBuilder)
+		throws Exception {
+
+		CapReqBuilder cap = new CapReqBuilder(BUNDLE_NAMESPACE);
+		cap.addAttribute(
+			cap.getNamespace(), Constants.SYSTEM_BUNDLE_SYMBOLICNAME);
+		resourceBuilder.addCapability(cap);
+
+		cap = new CapReqBuilder(HOST_NAMESPACE);
+		cap.addAttribute(
+			cap.getNamespace(), Constants.SYSTEM_BUNDLE_SYMBOLICNAME);
+		resourceBuilder.addCapability(cap);
+
+		cap = new CapReqBuilder(IDENTITY_NAMESPACE);
+		cap.addAttribute(
+			cap.getNamespace(), Constants.SYSTEM_BUNDLE_SYMBOLICNAME);
+		cap.addAttribute(CAPABILITY_TYPE_ATTRIBUTE, TYPE_BUNDLE);
+		resourceBuilder.addCapability(cap);
 	}
 
 	private void _includeTargetPlatform(

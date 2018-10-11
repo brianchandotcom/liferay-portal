@@ -300,19 +300,19 @@ public class BeanPortletExtension implements Extension {
 		Map<String, String> preferencesValidators =
 			_collectPreferencesValidators();
 
-		Set<String> wildcardPreferencesValidators =
-			_collectWildcardPreferencesValidators();
+		String wildcardPreferencesValidator =
+			_collectWildcardPreferencesValidator();
 
 		_addBeanPortletsAndFiltersFromPortletDescriptor(
 			bundle, beanManager, portletBeanMethodsFunction,
-			preferencesValidators, wildcardPreferencesValidators,
+			preferencesValidators, wildcardPreferencesValidator,
 			descriptorDisplayCategories, descriptorLiferayConfigurations);
 
 		_addBeanFiltersFromAnnotatedClasses();
 
 		_addBeanPortletsFromAnnotatedClasses(
 			beanManager, portletBeanMethodsFunction, preferencesValidators,
-			wildcardPreferencesValidators, descriptorDisplayCategories,
+			wildcardPreferencesValidator, descriptorDisplayCategories,
 			descriptorLiferayConfigurations);
 
 		_addBeanBeanPortletsFromScannedMethods(
@@ -590,7 +590,7 @@ public class BeanPortletExtension implements Extension {
 		Class<?> beanPortletClass, Set<BeanMethod> beanMethods,
 		PortletConfiguration portletConfiguration,
 		Map<String, String> preferencesValidators,
-		Set<String> wildcardPreferencesValidators,
+		String wildcardPreferencesValidator,
 		Map<String, String> descriptorDisplayCategories,
 		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations) {
 
@@ -718,21 +718,17 @@ public class BeanPortletExtension implements Extension {
 		String preferencesValidator = preferencesValidators.get(
 			configuredPortletName);
 
-		for (String wildcardPreferencesValidator :
-				wildcardPreferencesValidators) {
-
-			if (preferencesValidator == null) {
-				preferencesValidator = wildcardPreferencesValidator;
-			}
-			else {
-				_log.error(
-					StringBundler.concat(
-						"Unable to associate @PortletPreferencesValidator ",
-						wildcardPreferencesValidator, " to portletName \"",
-						configuredPortletName,
-						"\" since is already associated with ",
-						preferencesValidator));
-			}
+		if (preferencesValidator == null) {
+			preferencesValidator = wildcardPreferencesValidator;
+		}
+		else {
+			_log.error(
+				StringBundler.concat(
+					"Unable to associate @PortletPreferencesValidator ",
+					wildcardPreferencesValidator, " to portletName \"",
+					configuredPortletName,
+					"\" since is already associated with ",
+					preferencesValidator));
 		}
 
 		Map<String, String> displayNames = new HashMap<>();
@@ -1104,7 +1100,7 @@ public class BeanPortletExtension implements Extension {
 		Bundle bundle, BeanManager beanManager,
 		Function<String, Set<BeanMethod>> portletBeanMethodsFunction,
 		Map<String, String> preferencesValidators,
-		Set<String> wildcardPreferencesValidators,
+		String wildcardPreferencesValidator,
 		Map<String, String> descriptorDisplayCategories,
 		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations) {
 
@@ -1115,7 +1111,7 @@ public class BeanPortletExtension implements Extension {
 				_beanApp = PortletDescriptorParser.parse(
 					_beanFilters, _beanPortlets, bundle, portletDescriptorURL,
 					beanManager, portletBeanMethodsFunction,
-					preferencesValidators, wildcardPreferencesValidators,
+					preferencesValidators, wildcardPreferencesValidator,
 					descriptorDisplayCategories,
 					descriptorLiferayConfigurations);
 			}
@@ -1129,7 +1125,7 @@ public class BeanPortletExtension implements Extension {
 		BeanManager beanManager,
 		Function<String, Set<BeanMethod>> portletBeanMethodsFunction,
 		Map<String, String> preferencesValidators,
-		Set<String> wildcardPreferencesValidators,
+		String wildcardPreferencesValidator,
 		Map<String, String> descriptorDisplayCategories,
 		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations) {
 
@@ -1153,7 +1149,7 @@ public class BeanPortletExtension implements Extension {
 
 				_addBeanPortlet(
 					annotatedClass, beanMethods, portletConfiguration,
-					preferencesValidators, wildcardPreferencesValidators,
+					preferencesValidators, wildcardPreferencesValidator,
 					descriptorDisplayCategories,
 					descriptorLiferayConfigurations);
 			}
@@ -1176,7 +1172,7 @@ public class BeanPortletExtension implements Extension {
 
 			_addBeanPortlet(
 				annotatedClass, beanMethods, portletConfiguration,
-				preferencesValidators, wildcardPreferencesValidators,
+				preferencesValidators, wildcardPreferencesValidator,
 				descriptorDisplayCategories, descriptorLiferayConfigurations);
 		}
 	}
@@ -1329,9 +1325,7 @@ public class BeanPortletExtension implements Extension {
 		return wildcardBeanMethods;
 	}
 
-	private Set<String> _collectWildcardPreferencesValidators() {
-		Set<String> wildcardPreferencesValidators = new HashSet<>();
-
+	private String _collectWildcardPreferencesValidator() {
 		for (Class<?> annotatedClass : _annotatedClasses) {
 			PortletPreferencesValidator portletPreferencesValidator =
 				annotatedClass.getAnnotation(PortletPreferencesValidator.class);
@@ -1344,12 +1338,12 @@ public class BeanPortletExtension implements Extension {
 
 			for (String portletName : portletNames) {
 				if (Objects.equals(portletName, "*")) {
-					wildcardPreferencesValidators.add(annotatedClass.getName());
+					return annotatedClass.getName();
 				}
 			}
 		}
 
-		return wildcardPreferencesValidators;
+		return null;
 	}
 
 	private LiferayPortletConfiguration _getAnnotatedLiferayConfiguration(

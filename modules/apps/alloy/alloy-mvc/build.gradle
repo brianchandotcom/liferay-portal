@@ -1,3 +1,6 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 dependencies {
 	compileInclude group: "org.ow2.asm", name: "asm", version: "4.1"
 	compileInclude group: "org.ow2.asm", name: "asm-util", version: "4.1"

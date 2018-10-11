@@ -32,7 +32,10 @@ import org.aopalliance.intercept.MethodInterceptor;
 /**
  * @author Brian Wing Shun Chan
  * @author Wesley Gong
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+ *             com.liferay.portal.spring.transaction.TransactionInvokerImpl}
  */
+@Deprecated
 public class ServiceBeanMethodInvocationFactoryImpl
 	implements ServiceBeanMethodInvocationFactory {
 

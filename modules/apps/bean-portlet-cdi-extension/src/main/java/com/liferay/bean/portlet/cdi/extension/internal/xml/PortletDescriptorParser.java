@@ -79,7 +79,7 @@ public class PortletDescriptorParser {
 			URL portletDescriptorURL, BeanManager beanManager,
 			Function<String, Set<BeanMethod>> portletBeanMethodsFunction,
 			Map<String, String> preferencesValidators,
-			Set<String> wildcardPreferencesValidators,
+			String wildcardPreferencesValidator,
 			Map<String, String> displayDescriptorCategories,
 			Map<String, Map<String, Set<String>>> liferayConfigurations)
 		throws DocumentException, IOException {
@@ -96,7 +96,7 @@ public class PortletDescriptorParser {
 		_populateBeanPortlets(
 			beanPortlets, bundle, rootElement, beanApp, beanManager,
 			portletBeanMethodsFunction, preferencesValidators,
-			wildcardPreferencesValidators, displayDescriptorCategories,
+			wildcardPreferencesValidator, displayDescriptorCategories,
 			liferayConfigurations);
 
 		return beanApp;
@@ -153,7 +153,7 @@ public class PortletDescriptorParser {
 		Element rootElement, BeanApp beanApp, BeanManager beanManager,
 		Function<String, Set<BeanMethod>> portletBeanMethodsFunction,
 		Map<String, String> preferencesValidators,
-		Set<String> wildcardPreferencesValidators,
+		String wildcardPreferencesValidator,
 		Map<String, String> displayDescriptorCategories,
 		Map<String, Map<String, Set<String>>> liferayConfigurations) {
 
@@ -161,7 +161,7 @@ public class PortletDescriptorParser {
 			BeanPortlet beanPortlet = _readBeanPortlet(
 				bundle, portletElement, beanApp, beanManager,
 				portletBeanMethodsFunction, preferencesValidators,
-				wildcardPreferencesValidators, displayDescriptorCategories,
+				wildcardPreferencesValidator, displayDescriptorCategories,
 				liferayConfigurations);
 
 			if (beanPortlet != null) {
@@ -324,7 +324,7 @@ public class PortletDescriptorParser {
 		BeanManager beanManager,
 		Function<String, Set<BeanMethod>> portletBeanMethodsFunction,
 		Map<String, String> preferencesValidators,
-		Set<String> wildcardPreferencesValidators,
+		String wildcardPreferencesValidator,
 		Map<String, String> displayDescriptorCategories,
 		Map<String, Map<String, Set<String>>> liferayConfigurations) {
 
@@ -509,20 +509,16 @@ public class PortletDescriptorParser {
 		if (preferencesValidator == null) {
 			preferencesValidator = preferencesValidators.get(portletName);
 
-			for (String wildcardPreferencesValidator :
-					wildcardPreferencesValidators) {
-
-				if (preferencesValidator == null) {
-					preferencesValidator = wildcardPreferencesValidator;
-				}
-				else {
-					_log.error(
-						StringBundler.concat(
-							"Unable to associate @PortletPreferencesValidator ",
-							wildcardPreferencesValidator, " to portletName \"",
-							portletName, "\" since is already associated with ",
-							preferencesValidator));
-				}
+			if (preferencesValidator == null) {
+				preferencesValidator = wildcardPreferencesValidator;
+			}
+			else {
+				_log.error(
+					StringBundler.concat(
+						"Unable to associate @PortletPreferencesValidator ",
+						wildcardPreferencesValidator, " to portletName \"",
+						portletName, "\" since is already associated with ",
+						preferencesValidator));
 			}
 		}
 

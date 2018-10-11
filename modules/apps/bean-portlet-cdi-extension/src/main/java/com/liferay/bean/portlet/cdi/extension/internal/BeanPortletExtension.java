@@ -198,7 +198,7 @@ public class BeanPortletExtension implements Extension {
 
 		if (annotatedType.isAnnotationPresent(PortletSessionScoped.class)) {
 			PortletSessionScoped portletSessionScoped =
-				annotatedClass.getAnnotation(PortletSessionScoped.class);
+				annotatedType.getAnnotation(PortletSessionScoped.class);
 
 			if ((PortletSession.APPLICATION_SCOPE !=
 					portletSessionScoped.value()) &&

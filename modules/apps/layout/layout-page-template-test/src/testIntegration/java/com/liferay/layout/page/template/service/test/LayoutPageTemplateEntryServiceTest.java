@@ -26,11 +26,9 @@ import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
-import com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -306,42 +304,6 @@ public class LayoutPageTemplateEntryServiceTest {
 			actualLayoutPageTemplateEntries.toString(),
 			originalLayoutPageTemplateEntries.size() + 2,
 			actualLayoutPageTemplateEntries.size());
-	}
-
-	@Test(expected = RequiredLayoutPageTemplateEntryException.class)
-	public void testAddRequiredLayoutPageTemplateEntries() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			LayoutPageTemplateCollectionServiceUtil.
-				addLayoutPageTemplateCollection(
-					_group.getGroupId(), "Layout Page Template Collection",
-					null, serviceContext);
-
-		_layoutPageTemplateCollections.add(layoutPageTemplateCollection);
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
-				_group.getGroupId(),
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				"Layout Page Template Entry",
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-				serviceContext);
-
-		AssetDisplayPageEntry assetDisplayPageEntry =
-			AssetDisplayPageEntryLocalServiceUtil.addAssetDisplayPageEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-				serviceContext);
-
-		_assetDisplayPageEntries.add(assetDisplayPageEntry);
-
-		LayoutPageTemplateEntryLocalServiceUtil.deleteLayoutPageTemplateEntry(
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 	}
 
 	@Test

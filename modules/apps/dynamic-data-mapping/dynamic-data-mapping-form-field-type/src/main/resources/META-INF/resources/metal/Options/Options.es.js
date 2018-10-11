@@ -73,6 +73,15 @@ class Options extends Component {
 		label: Config.string(),
 
 		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FieldBase
+		 * @type {?(bool|undefined)}
+		 */
+
+		repeatable: Config.bool(),
+
+		/**
 		 * @default false
 		 * @instance
 		 * @memberof Options

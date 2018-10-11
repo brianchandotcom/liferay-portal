@@ -40,6 +40,15 @@ class Select extends Component {
 
 		key: Config.string(),
 
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		fieldName: Config.string(),
+
 		fixedOptions: Config.arrayOf(
 			Config.shapeOf(
 				{
@@ -127,6 +136,15 @@ class Select extends Component {
 		required: Config.bool().value(false),
 
 		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FieldBase
+		 * @type {?(bool|undefined)}
+		 */
+
+		repeatable: Config.bool(),
+
+		/**
 		 * @default false
 		 * @instance
 		 * @memberof Select
@@ -143,6 +161,19 @@ class Select extends Component {
 		 */
 
 		spritemap: Config.string(),
+
+		/**
+		 * @default {}
+		 * @instance
+		 * @memberof Select
+		 * @type {object}
+		 */
+
+		strings: Config.object().value(
+			{
+				chooseAnOption: Liferay.Language.get('choose-an-option')
+			}
+		),
 
 		/**
 		 * @default undefined

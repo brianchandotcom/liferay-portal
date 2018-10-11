@@ -211,6 +211,56 @@ describe(
 		);
 
 		it(
+			'should continue to propagate the fieldEdited event',
+			() => {
+				component = new FormRenderer(
+					{
+						dragAndDropDisabled: true,
+						editable: true,
+						pages,
+						paginationMode: 'wizard',
+						spritemap,
+						successPageSettings
+					}
+				);
+
+				const spy = jest.spyOn(component, 'emit');
+				const {pageRenderer} = component.refs;
+				const mockEvent = jest.fn();
+
+				pageRenderer.emit('fieldEdited', mockEvent);
+
+				expect(spy).toHaveBeenCalled();
+				expect(spy).toHaveBeenCalledWith('fieldEdited', expect.anything());
+			}
+		);
+
+		it(
+			'should continue to propagate the fieldClicked event',
+			() => {
+				component = new FormRenderer(
+					{
+						dragAndDropDisabled: true,
+						editable: true,
+						pages,
+						paginationMode: 'wizard',
+						spritemap,
+						successPageSettings
+					}
+				);
+
+				const spy = jest.spyOn(component, 'emit');
+				const {pageRenderer} = component.refs;
+				const mockEvent = jest.fn();
+
+				pageRenderer.emit('fieldClicked', mockEvent);
+
+				expect(spy).toHaveBeenCalled();
+				expect(spy).toHaveBeenCalledWith('fieldClicked', expect.anything());
+			}
+		);
+
+		it(
 			'should change the active page',
 			() => {
 				const newPages = [...pages, ...pages];
@@ -384,7 +434,7 @@ describe(
 		);
 
 		it(
-			'should change the active by clicking on the arrow right icon in the pagination button',
+			'should change the active page by clicking on the arrow right icon in the pagination button',
 			() => {
 				const newPages = [...pages, ...pages];
 
@@ -409,6 +459,74 @@ describe(
 				expect(spy).toHaveBeenCalledWith(
 					'activePageUpdated',
 					1
+				);
+			}
+		);
+
+		it(
+			'should change the page from a normal page to a success page by clicking on the arrow right',
+			() => {
+				const newPages = [...pages];
+
+				component = new FormRenderer(
+					{
+						activePage: 0,
+						dragAndDropDisabled: true,
+						editable: true,
+						pages: newPages,
+						paginationMode: 'pagination',
+						spritemap,
+						successPageSettings: {
+							...successPageSettings,
+							enabled: true
+						}
+					}
+				);
+
+				jest.runAllTimers();
+
+				const spy = jest.spyOn(component, 'emit');
+
+				component._handlePaginationRightClicked();
+
+				expect(spy).toHaveBeenCalledWith(
+					'activePageUpdated',
+					-1
+				);
+			}
+		);
+
+		it(
+			'should change the page from a success page to a normal page by clicking on the arrow left',
+			() => {
+				const newPages = [...pages];
+
+				component = new FormRenderer(
+					{
+						activePage: 0,
+						dragAndDropDisabled: true,
+						editable: true,
+						pages: newPages,
+						paginationMode: 'pagination',
+						spritemap,
+						successPageSettings: {
+							...successPageSettings,
+							enabled: true
+						}
+					}
+				);
+
+				component.activePage = -1;
+
+				jest.runAllTimers();
+
+				const spy = jest.spyOn(component, 'emit');
+
+				component._handlePaginationLeftClicked();
+
+				expect(spy).toHaveBeenCalledWith(
+					'activePageUpdated',
+					0
 				);
 			}
 		);
@@ -824,6 +942,107 @@ describe(
 						jest.runAllTimers();
 
 						expect(component).toMatchSnapshot();
+					}
+				);
+
+				it(
+					'should add a success page',
+					() => {
+						component = new FormRenderer(
+							{
+								editable: true,
+								pages,
+								paginationMode: 'wizard',
+								spritemap,
+								successPageSettings
+							}
+						);
+
+						component._handlePageSettingsClicked(
+							{
+								data: {
+									item: {
+										settingsItem: 'add-success-page'
+									}
+								}
+							}
+						);
+
+						jest.runAllTimers();
+
+						expect(component).toMatchSnapshot();
+					}
+				);
+
+				it(
+					'should delete the success page',
+					() => {
+						component = new FormRenderer(
+							{
+								editable: true,
+								pages,
+								paginationMode: 'wizard',
+								spritemap,
+								successPageSettings
+							}
+						);
+
+						component._handlePageSettingsClicked(
+							{
+								data: {
+									item: {
+										settingsItem: 'add-success-page'
+									}
+								}
+							}
+						);
+
+						jest.runAllTimers();
+
+						jest.useFakeTimers();
+
+						component._handlePageSettingsClicked(
+							{
+								data: {
+									item: {
+										settingsItem: 'delete-page'
+									}
+								}
+							}
+						);
+
+						jest.runAllTimers();
+
+						expect(component).toMatchSnapshot();
+					}
+				);
+
+				it(
+					'should propagate success page changed when some success page field is changed',
+					() => {
+						component = new FormRenderer(
+							{
+								dragAndDropDisabled: true,
+								editable: true,
+								pages,
+								paginationMode: 'wizard',
+								spritemap,
+								successPageSettings
+							}
+						);
+
+						component.activePage = -1;
+
+						jest.runAllTimers();
+
+						const spy = jest.spyOn(component, 'emit');
+						const {successPage} = component.refs;
+						const mockEvent = jest.fn();
+
+						successPage.emit('successPageChanged', mockEvent);
+
+						expect(spy).toHaveBeenCalled();
+						expect(spy).toHaveBeenCalledWith('successPageChanged', expect.anything());
 					}
 				);
 

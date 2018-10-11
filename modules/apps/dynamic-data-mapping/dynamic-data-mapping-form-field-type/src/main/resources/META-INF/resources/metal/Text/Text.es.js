@@ -18,15 +18,6 @@ class Text extends Component {
 		displayStyle: Config.string().value('singleline'),
 
 		/**
-		 * @default false
-		 * @instance
-		 * @memberof Text
-		 * @type {?bool}
-		 */
-
-		readOnly: Config.bool().value(true),
-
-		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof Text
@@ -34,15 +25,6 @@ class Text extends Component {
 		 */
 
 		fieldName: Config.string(),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Text
-		 * @type {?(string|undefined)}
-		 */
-
-		tip: Config.string(),
 
 		/**
 		 * @default undefined
@@ -84,10 +66,28 @@ class Text extends Component {
 		 * @default false
 		 * @instance
 		 * @memberof Text
+		 * @type {?bool}
+		 */
+
+		readOnly: Config.bool().value(false),
+
+		/**
+		 * @default false
+		 * @instance
+		 * @memberof Text
 		 * @type {?(bool|undefined)}
 		 */
 
 		required: Config.bool().value(false),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FieldBase
+		 * @type {?(bool|undefined)}
+		 */
+
+		repeatable: Config.bool(),
 
 		/**
 		 * @default true
@@ -106,6 +106,24 @@ class Text extends Component {
 		 */
 
 		spritemap: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		tip: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FieldBase
+		 * @type {?(string|undefined)}
+		 */
+
+		tooltip: Config.string(),
 
 		/**
 		 * @default undefined

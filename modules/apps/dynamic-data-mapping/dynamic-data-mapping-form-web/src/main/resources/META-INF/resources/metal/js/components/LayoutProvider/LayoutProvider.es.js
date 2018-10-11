@@ -5,6 +5,8 @@ import {PagesVisitor} from '../../util/visitors.es';
 import {setLocalizedValue} from '../../util/i18n.es';
 import {sub} from '../../util/strings.es';
 import Component from 'metal-jsx';
+import autobind from 'autobind-decorator';
+import {generateInstanceId} from '../../util/fieldSupport.es';
 
 /**
  * LayoutProvider listens to your children's events to
@@ -132,10 +134,10 @@ class LayoutProvider extends Component {
 	 * @private
 	 */
 
-	_handleClickedField(data) {
+	_handleFieldClicked(focusedField) {
 		this.setState(
 			{
-				focusedField: data
+				focusedField
 			}
 		);
 	}
@@ -153,6 +155,7 @@ class LayoutProvider extends Component {
 
 		const fieldProperties = {
 			...fieldType,
+			instanceId: generateInstanceId(8),
 			name: fieldType.name,
 			spritemap,
 			type: fieldType.name
@@ -229,16 +232,17 @@ class LayoutProvider extends Component {
 	_handleFieldDuplicated({rowIndex, pageIndex, columnIndex}) {
 		const {pages} = this.state;
 		const field = FormSupport.getField(pages, pageIndex, rowIndex, columnIndex);
+		const label = sub(
+			Liferay.Language.get('copy-of-x'),
+			[field.label]
+		);
 		const newFieldName = FormSupport.generateFieldName(field.type);
 		const visitor = new PagesVisitor(field.settingsContext.pages);
 
 		const duplicatedField = {
 			...field,
 			fieldName: newFieldName,
-			label: sub(
-				Liferay.Language.get('copy-of-x'),
-				[field.label]
-			),
+			label,
 			name: newFieldName,
 			settingsContext: {
 				...field.settingsContext,
@@ -249,14 +253,20 @@ class LayoutProvider extends Component {
 								...field,
 								value: newFieldName
 							};
-
 						}
-						return field;
+						else if (field.fieldName === 'label') {
+							field = {
+								...field,
+								value: label
+							};
+						}
+						return {
+							...field
+						};
 					}
 				)
 			}
 		};
-
 		const newRowIndex = rowIndex + 1;
 
 		const newPages = FormSupport.addRow(pages, newRowIndex, pageIndex);
@@ -265,6 +275,12 @@ class LayoutProvider extends Component {
 
 		this.setState(
 			{
+				focusedField: {
+					...duplicatedField,
+					columnIndex,
+					pageIndex,
+					rowIndex: newRowIndex
+				},
 				pages: newPages
 			}
 		);
@@ -335,6 +351,21 @@ class LayoutProvider extends Component {
 		);
 	}
 
+	@autobind
+	_handleFocusedFieldChanged(focusedField) {
+		const {columnIndex, pageIndex, rowIndex} = focusedField;
+		let {pages} = this.state;
+
+		pages = this._setColumnFields(pages, {columnIndex, pageIndex, rowIndex}, [focusedField]);
+
+		this.setState(
+			{
+				focusedField,
+				pages
+			}
+		);
+	}
+
 	/**
 	 * @param {!Number} pageIndex
 	 * @private
@@ -380,19 +411,6 @@ class LayoutProvider extends Component {
 		this.setState(
 			{
 				pages: [this.createNewPage()]
-			}
-		);
-	}
-
-	/**
-	 * @param {!Array} pages
-	 * @private
-	 */
-
-	_handlePagesUpdated(pages) {
-		this.setState(
-			{
-				pages
 			}
 		);
 	}
@@ -493,11 +511,12 @@ class LayoutProvider extends Component {
 				activePageUpdated: this._handleActivePageUpdated.bind(this),
 				fieldAdded: this._handleFieldAdded.bind(this),
 				fieldBlurred: this._handleFieldBlurred.bind(this),
-				fieldClicked: this._handleClickedField.bind(this),
+				fieldClicked: this._handleFieldClicked.bind(this),
 				fieldDeleted: this._handleFieldDeleted.bind(this),
 				fieldDuplicated: this._handleFieldDuplicated.bind(this),
 				fieldEdited: this._handleFieldEdited.bind(this),
 				fieldMoved: this._handleFieldMoved.bind(this),
+				focusedFieldUpdated: this._handleFocusedFieldChanged,
 				pageAdded: this._handlePageAdded.bind(this),
 				pageDeleted: this._handlePageDeleted.bind(this),
 				pageReset: this._handlePageReset.bind(this),

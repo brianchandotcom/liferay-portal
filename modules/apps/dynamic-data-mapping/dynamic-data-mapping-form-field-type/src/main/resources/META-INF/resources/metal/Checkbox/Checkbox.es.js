@@ -25,6 +25,15 @@ class Checkbox extends Component {
 		fieldName: Config.string(),
 
 		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FieldBase
+		 * @type {?bool}
+		 */
+
+		evaluable: Config.bool().value(false),
+
+		/**
 		 * @default false
 		 * @instance
 		 * @memberof Checkbox
@@ -68,6 +77,15 @@ class Checkbox extends Component {
 		 */
 
 		predefinedValue: Config.bool(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FieldBase
+		 * @type {?(bool|undefined)}
+		 */
+
+		repeatable: Config.bool(),
 
 		/**
 		 * @default false

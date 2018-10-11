@@ -3,14 +3,17 @@
 exports[`Layout Render should render fields 1`] = `
 <div class="container">
   <div class="form-group">
-    <label class="toggle-switch">
+    <label class="ddm-empty"></label>
+    <label class="ddm-toggle-switch toggle-switch">
       <input checked="" class="toggle-switch-check" type="checkbox">
       <span aria-hidden="true" class="toggle-switch-bar">
         <span class="toggle-switch-handle"></span>
+        <span class="toggle-switch-text toggle-switch-text-right"></span>
       </span>
     </label>
   </div>
   <div class="form-group">
+    <label></label>
     <div class="input-group">
       <div class="input-group-item input-group-prepend">
         <input class="form-control" placeholder="__/__/____" type="text" disabled="">
@@ -26,6 +29,7 @@ exports[`Layout Render should render fields 1`] = `
     </div>
   </div>
   <div class="form-group">
+    <label></label>
     <div class="liferay-ddm-form-field-grid table-responsive">
       <table class="table table-autofit table-list table-striped">
         <thead>
@@ -46,6 +50,7 @@ exports[`Layout Render should render fields 1`] = `
     </div>
   </div>
   <div class="form-group">
+    <label></label>
     <div class="form-builder-select-field input-group-container">
       <div class="form-control select-field-trigger">
         <div class="option-selected option-selected-placeholder"></div>
@@ -64,8 +69,11 @@ exports[`Layout Render should render fields 1`] = `
     </div>
   </div>
   <div class="form-group">
+    <label></label>
     <input class="form-control" name="textField" type="text" disabled="disabled" value="">
   </div>
-  <div class="form-group"></div>
+  <div class="form-group">
+    <label></label>
+  </div>
 </div>
 `;

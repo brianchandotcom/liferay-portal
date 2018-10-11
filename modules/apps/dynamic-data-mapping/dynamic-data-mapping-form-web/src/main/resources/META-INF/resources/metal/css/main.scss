@@ -11,40 +11,9 @@
 	min-width: 100%;
 }
 
-.sidebar-body {
-	overflow: visible;
-}
-
-.sidebar-container {
-	bottom: 0;
-	position: fixed;
-	right: 0;
-	top: 56px;
-	width: 380px;
-	z-index: 12;
-}
-
-.sidebar-container {
-	transform: translateX(100%);
-	transition: transform 0.3s ease-in-out;
-}
-
-.sidebar-container.open {
-	transform: translateX(0%);
-}
-
-.list-group-item:hover {
-	background-color: #F0F5FF;
-}
-
-.ddm-sidebar-body {
-	height: calc(100vh - 160px);
-	overflow: auto;
-}
-
 .ddm-field-actions-container {
 	display: flex;
-	justify-content: space-around;
+	justify-content: space-between;
 	opacity: 0;
 	position: absolute;
 	right: 15px;

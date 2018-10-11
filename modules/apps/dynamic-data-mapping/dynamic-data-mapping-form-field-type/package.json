@@ -47,7 +47,7 @@
 		"clay-radio": "^2.2.0",
 		"incremental-dom-string": "0.0.2",
 		"metal-component": "^2.14.0",
-		"metal-position": "^2.1.1",
+		"metal-position": "^2.1.2",
 		"metal-soy": "^2.16.0",
 		"text-mask-addons": "^3.7.1",
 		"vanilla-text-mask": "^5.0.1"
@@ -86,6 +86,7 @@
 			"/__fixtures__/",
 			"/classes/"
 		],
+		"setupTestFrameworkScriptFile": "<rootDir>/test/metal/setup/setup_framework.es.js",
 		"snapshotSerializers": [
 			"metal-jest-serializer"
 		],
@@ -113,7 +114,7 @@
 		"format": "npm run csf -- -i",
 		"lint": "eslint src/main/resources/META-INF/resources/metal/",
 		"test": "npm run build-soy-tests && NODE_ENV=test jest --coverage && npm run clean",
-		"test:snapshots": "npm run build-soy && NODE_ENV=test jest --coverage -u && npm run clean"
+		"test:snapshots": "npm run build-soy-tests && NODE_ENV=test jest --coverage -u && npm run clean"
 	},
 	"version": "4.0.0"
 }

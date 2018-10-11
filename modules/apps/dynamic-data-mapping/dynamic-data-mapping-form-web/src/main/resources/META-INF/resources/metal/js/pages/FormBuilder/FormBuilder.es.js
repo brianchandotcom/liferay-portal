@@ -9,6 +9,7 @@ import dom from 'metal-dom';
 import FormRenderer from '../../components/Form/index.es';
 import FormSupport from '../../components/Form/FormSupport.es';
 import Sidebar from '../../components/Sidebar/index.es';
+import {formatFieldName} from '../../util/fieldSupport.es';
 
 /**
  * Builder.
@@ -70,6 +71,7 @@ class Builder extends Component {
 		 * @memberof Builder
 		 * @type {object}
 		 */
+
 		successPageSettings: Config.shapeOf(
 			{
 				body: Config.object(),
@@ -80,13 +82,91 @@ class Builder extends Component {
 	};
 
 	/**
-	 * Continues the propagation of event.
-	 * @param {!Object} indexAllocateField
+	 * Makes sure newly created fields have its settings form filled up with some default values.
 	 * @private
 	 */
 
-	_handleFieldClicked(indexAllocateField) {
-		this.emit('fieldClicked', indexAllocateField);
+	_normalizeSettingsContextPages(pages, namespace, fieldType, newFieldName) {
+		const translationManager = Liferay.component(`${namespace}translationManager`);
+		const visitor = new PagesVisitor(pages);
+
+		return visitor.mapFields(
+			field => {
+				const {fieldName} = field;
+
+				if (fieldName === 'name') {
+					field = {
+						...field,
+						value: newFieldName,
+						visible: true
+					};
+				}
+				else if (fieldName === 'label') {
+					field = {
+						...field,
+						localizedValue: {
+							...field.localizedValue,
+							[translationManager.get('editingLocale')]: fieldType.label
+						},
+						type: 'text',
+						value: fieldType.label
+					};
+				}
+				else if (fieldName === 'type') {
+					field = {
+						...field,
+						value: fieldType.name
+					};
+				}
+				return {
+					...field
+				};
+			}
+		);
+	}
+
+	/**
+	 * Continues the propagation of event.
+	 * @param {!Object} index
+	 * @private
+	 */
+
+	_handleFieldClicked({pageIndex, rowIndex, columnIndex}) {
+		const {pages} = this.props;
+		const fieldProperties = FormSupport.getField(pages, pageIndex, rowIndex, columnIndex);
+		const {spritemap} = this.props;
+		const {settingsContext} = fieldProperties;
+		const visitor = new PagesVisitor(settingsContext.pages);
+
+		this.openSidebar();
+
+		this.emit(
+			'fieldClicked',
+			{
+				...fieldProperties,
+				columnIndex,
+				pageIndex,
+				rowIndex,
+				settingsContext: {
+					...settingsContext,
+					pages: visitor.mapFields(
+						field => {
+							const {fieldName} = field;
+
+							if (fieldName === 'name') {
+								field.visible = true;
+							}
+							else if (fieldName === 'label') {
+								field.type = 'text';
+							}
+
+							return field;
+						}
+					)
+				},
+				spritemap
+			}
+		);
 	}
 
 	_handleDeleteFieldClicked(indexes) {
@@ -132,54 +212,25 @@ class Builder extends Component {
 	 */
 
 	_handleFieldAdded(event) {
+		const {fieldType} = event;
 		const {namespace} = this.props;
-		const newFieldName = FormSupport.generateFieldName(event.fieldType.name);
-		const settingsContext = event.fieldType.settingsContext;
-		const translationManager = Liferay.component(`${namespace}translationManager`);
-		const visitor = new PagesVisitor(settingsContext.pages);
+
+		const newFieldName = FormSupport.generateFieldName(fieldType.name);
+		const settingsContext = fieldType.settingsContext;
+		const {pages} = settingsContext;
 
 		this.emit(
 			'fieldAdded',
 			{
 				...event,
 				fieldType: {
-					...event.fieldType,
+					...fieldType,
 					fieldName: newFieldName,
 					settingsContext: {
 						...settingsContext,
-						pages: visitor.mapFields(
-							field => {
-								const {fieldName} = field;
-
-								if (fieldName === 'name') {
-									field = {
-										...field,
-										value: newFieldName,
-										visible: true
-									};
-								}
-								else if (fieldName === 'label') {
-									field = {
-										...field,
-										localizedValue: {
-											...field.localizedValue,
-											[translationManager.get('editingLocale')]: event.fieldType.label
-										},
-										type: 'text',
-										value: event.fieldType.label
-									};
-								}
-								else if (fieldName === 'type') {
-									field = {
-										...field,
-										value: event.fieldType.name
-									};
-								}
-								return field;
-							}
-						)
+						pages: this._normalizeSettingsContextPages(pages, namespace, fieldType, newFieldName)
 					},
-					type: event.fieldType.name
+					type: fieldType.name
 				}
 			}
 		);
@@ -203,13 +254,19 @@ class Builder extends Component {
 	 * @private
 	 */
 
-	_handleFieldEdited({fieldInstance, property, value}) {
+	_handleFieldEdited({fieldInstance, value}) {
 		const {focusedField, namespace} = this.props;
-		const {settingsContext} = focusedField;
-		const {columnIndex, pageIndex, rowIndex} = focusedField;
+		const {columnIndex, instanceId, pageIndex, rowIndex, settingsContext} = focusedField;
 		const properties = {columnIndex, pageIndex, rowIndex};
+		const {fieldName, initialConfig_: {locale}} = fieldInstance;
 
-		properties[property || fieldInstance.fieldName] = value;
+		if (fieldName === 'name') {
+			properties[fieldName] = formatFieldName(instanceId, locale, value);
+			properties.fieldName = value;
+		}
+		else {
+			properties[fieldName] = value;
+		}
 
 		const visitor = new PagesVisitor(settingsContext.pages);
 
@@ -217,9 +274,11 @@ class Builder extends Component {
 
 		properties.settingsContext = {
 			...settingsContext,
+			columnIndex,
+			pageIndex,
 			pages: visitor.mapFields(
 				field => {
-					if (field.fieldName === fieldInstance.fieldName) {
+					if (field.fieldName === fieldName) {
 						field = {
 							...field,
 							value
@@ -231,10 +290,16 @@ class Builder extends Component {
 							};
 						}
 					}
+
 					return field;
 				}
-			)
+			),
+			rowIndex
 		};
+
+		if (fieldName === 'predefinedValue') {
+			properties.value = value;
+		}
 
 		this.emit('fieldEdited', properties);
 	}
@@ -258,9 +323,19 @@ class Builder extends Component {
 	 * @param {!Object}
 	 * @private
 	 */
-
+	@autobind
 	_handleFieldDuplicated(indexes) {
 		this.emit('fieldDuplicated', indexes);
+	}
+
+	/**
+	 * Continues the propagation of event.
+	 * @param {!Object}
+	 * @private
+	 */
+	@autobind
+	_handleFocusedFieldChanged(focusedField) {
+		this.emit('focusedFieldUpdated', focusedField);
 	}
 
 	willReceiveProps(changes) {
@@ -418,7 +493,10 @@ class Builder extends Component {
 	 */
 
 	render() {
-		const {_handleModalButtonClicked, props} = this;
+		const {
+			_handleModalButtonClicked,
+			props
+		} = this;
 		const {
 			activePage,
 			fieldTypes,
@@ -434,7 +512,7 @@ class Builder extends Component {
 			activePageUpdated: this._handleActivePageUpdated.bind(this),
 			fieldClicked: this._handleFieldClicked.bind(this),
 			fieldDeleted: this._handleDeleteFieldClicked.bind(this),
-			fieldDuplicated: this._handleFieldDuplicated.bind(this),
+			fieldDuplicated: this._handleFieldDuplicated,
 			fieldMoved: this._handleFieldMoved.bind(this),
 			pageAdded: this._handlePageAdded.bind(this),
 			pageDeleted: this._handlePageDeleted.bind(this),
@@ -447,7 +525,10 @@ class Builder extends Component {
 		const sidebarEvents = {
 			fieldAdded: this._handleFieldAdded.bind(this),
 			fieldBlurred: this._handleFieldBlurred.bind(this),
-			fieldEdited: this._handleFieldEdited.bind(this)
+			fieldDeleted: this._handleDeleteFieldClicked.bind(this),
+			fieldDuplicated: this._handleFieldDuplicated,
+			fieldEdited: this._handleFieldEdited.bind(this),
+			focusedFieldUpdated: this._handleFocusedFieldChanged
 		};
 
 		return (

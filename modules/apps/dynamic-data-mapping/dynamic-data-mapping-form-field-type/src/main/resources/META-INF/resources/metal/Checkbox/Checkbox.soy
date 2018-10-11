@@ -5,6 +5,7 @@
 	{@param? readOnly: bool}
 	{@param? id: string}
 	{@param? label: string}
+	{@param? repeatable: bool}
 	{@param? required: bool}
 	{@param? showAsSwitcher: bool}
 	{@param? showLabel: bool}
@@ -26,6 +27,7 @@
 
 		{param id: $id /}
 		{param label: $label /}
+		{param repeatable: $repeatable /}
 		{param required: $required /}
 		{param showLabel: not $showAsSwitcher and $showLabel /}
 		{param spritemap: $spritemap /}
@@ -41,11 +43,11 @@
 	{@param? showAsSwitcher: bool}
 
 	{if $showAsSwitcher}
-		<label class="toggle-switch">
+		<label class="ddm-toggle-switch toggle-switch">
 			<input {if $checked}checked{/if} class="toggle-switch-check" data-onchange="{$_handleToggleChanged}" type="checkbox">
 			<span aria-hidden="true" class="toggle-switch-bar">
-				<span class="toggle-switch-handle" data-label-off="{$label}" data-label-on="{$label}">
-				</span>
+				<span class="toggle-switch-handle"></span>
+				<span class="toggle-switch-text toggle-switch-text-right">{$label}</span>
 			</span>
 		</label>
 	{else}

@@ -1,23 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LayoutProvider Field events fieldAdded should listen the fieldAdded event and add the field in the column to the pages 1`] = `
+exports[`LayoutProvider Field events activePageUpdated should listen the activePageUpdated event and change the state of the active page for the data wich was received 1`] = `
 Array [
   Object {
     "rows": Array [
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "name": "text",
-                "spritemap": "icons.svg",
-                "type": "text",
-              },
-            ],
-            "size": 12,
-          },
-        ],
-      },
       Object {
         "columns": Array [
           Object {
@@ -36,7 +22,45 @@ Array [
                   },
                 ],
                 "settingsContext": Object {
-                  "pages": Array [],
+                  "pages": Array [
+                    Object {
+                      "rows": Array [
+                        Object {
+                          "columns": Array [
+                            Object {
+                              "fields": Array [
+                                Object {
+                                  "fieldName": "label",
+                                  "localizable": true,
+                                  "settingsContext": Object {
+                                    "pages": Array [
+                                      Object {
+                                        "rows": Array [
+                                          Object {
+                                            "columns": Array [],
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                },
+                                Object {
+                                  "fieldName": "name",
+                                },
+                                Object {
+                                  "fieldName": "required",
+                                },
+                                Object {
+                                  "fieldName": "type",
+                                },
+                              ],
+                              "size": 12,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
                 },
                 "type": "radio",
               },
@@ -128,133 +152,7 @@ Array [
 ]
 `;
 
-exports[`LayoutProvider Field events fieldAdded should listen the fieldAdded event and add the field in the row to the pages 1`] = `
-Array [
-  Object {
-    "rows": Array [
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "name": "text",
-                "spritemap": "icons.svg",
-                "type": "text",
-              },
-            ],
-            "size": 12,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "radio",
-                "label": "Radio Field",
-                "options": Array [
-                  Object {
-                    "label": "Option 1",
-                    "value": "option1",
-                  },
-                  Object {
-                    "label": "Option 2",
-                    "value": "option2",
-                  },
-                ],
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "radio",
-              },
-            ],
-            "size": 3,
-          },
-          Object {
-            "fields": Array [],
-            "size": 9,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "text1",
-                "label": "Text Field 1",
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "text",
-              },
-              Object {
-                "fieldName": "text2",
-                "label": "Text Field 2",
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "text",
-              },
-            ],
-            "size": 4,
-          },
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "select",
-                "label": "Select Field",
-                "options": Array [
-                  Object {
-                    "label": "Option 1",
-                    "value": "option1",
-                  },
-                  Object {
-                    "label": "Option 2",
-                    "value": "option2",
-                  },
-                ],
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "select",
-              },
-            ],
-            "size": 6,
-          },
-          Object {
-            "fields": Array [],
-            "size": 2,
-          },
-        ],
-      },
-      Object {
-        "columns": Array [
-          Object {
-            "fields": Array [
-              Object {
-                "fieldName": "date",
-                "label": "Date Field",
-                "required": true,
-                "settingsContext": Object {
-                  "pages": Array [],
-                },
-                "type": "date",
-              },
-            ],
-            "size": 12,
-          },
-        ],
-      },
-    ],
-    "title": "Untitled name",
-  },
-]
-`;
+exports[`LayoutProvider Field events fieldBlurred should listen the fieldBlurred event and change the state of the focusedField to the data receive 1`] = `Object {}`;
 
 exports[`LayoutProvider Field events fieldDeleted should listen the fieldDeleted event and delete the field in the column to the pages 1`] = `
 Array [
@@ -278,7 +176,45 @@ Array [
                   },
                 ],
                 "settingsContext": Object {
-                  "pages": Array [],
+                  "pages": Array [
+                    Object {
+                      "rows": Array [
+                        Object {
+                          "columns": Array [
+                            Object {
+                              "fields": Array [
+                                Object {
+                                  "fieldName": "label",
+                                  "localizable": true,
+                                  "settingsContext": Object {
+                                    "pages": Array [
+                                      Object {
+                                        "rows": Array [
+                                          Object {
+                                            "columns": Array [],
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                },
+                                Object {
+                                  "fieldName": "name",
+                                },
+                                Object {
+                                  "fieldName": "required",
+                                },
+                                Object {
+                                  "fieldName": "type",
+                                },
+                              ],
+                              "size": 12,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
                 },
                 "type": "radio",
               },
@@ -374,7 +310,46 @@ Array [
                   },
                 ],
                 "settingsContext": Object {
-                  "pages": Array [],
+                  "pages": Array [
+                    Object {
+                      "rows": Array [
+                        Object {
+                          "columns": Array [
+                            Object {
+                              "fields": Array [
+                                Object {
+                                  "fieldName": "label",
+                                  "localizable": true,
+                                  "settingsContext": Object {
+                                    "pages": Array [
+                                      Object {
+                                        "rows": Array [
+                                          Object {
+                                            "columns": Array [],
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                },
+                                Object {
+                                  "fieldName": "name",
+                                  "value": "Liferay",
+                                },
+                                Object {
+                                  "fieldName": "required",
+                                },
+                                Object {
+                                  "fieldName": "type",
+                                },
+                              ],
+                              "size": 12,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
                 },
                 "type": "radio",
               },
@@ -406,7 +381,47 @@ Array [
                   },
                 ],
                 "settingsContext": Object {
-                  "pages": Array [],
+                  "pages": Array [
+                    Object {
+                      "rows": Array [
+                        Object {
+                          "columns": Array [
+                            Object {
+                              "fields": Array [
+                                Object {
+                                  "fieldName": "label",
+                                  "localizable": true,
+                                  "settingsContext": Object {
+                                    "pages": Array [
+                                      Object {
+                                        "rows": Array [
+                                          Object {
+                                            "columns": Array [],
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                  "value": "copy-of-x",
+                                },
+                                Object {
+                                  "fieldName": "name",
+                                  "value": "Liferay",
+                                },
+                                Object {
+                                  "fieldName": "required",
+                                },
+                                Object {
+                                  "fieldName": "type",
+                                },
+                              ],
+                              "size": 12,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
                 },
                 "type": "radio",
               },
@@ -498,6 +513,158 @@ Array [
 ]
 `;
 
+exports[`LayoutProvider Field events fieldEdited should listen the fieldEdited event and change the state of the focusedField and pages for the data wich was received 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "radio",
+                "label": "Radio Field",
+                "options": Array [
+                  Object {
+                    "label": "Option 1",
+                    "value": "option1",
+                  },
+                  Object {
+                    "label": "Option 2",
+                    "value": "option2",
+                  },
+                ],
+                "settingsContext": Object {
+                  "pages": Array [
+                    Object {
+                      "rows": Array [
+                        Object {
+                          "columns": Array [
+                            Object {
+                              "fields": Array [
+                                Object {
+                                  "fieldName": "label",
+                                  "localizable": true,
+                                  "settingsContext": Object {
+                                    "pages": Array [
+                                      Object {
+                                        "rows": Array [
+                                          Object {
+                                            "columns": Array [],
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                },
+                                Object {
+                                  "fieldName": "name",
+                                },
+                                Object {
+                                  "fieldName": "required",
+                                },
+                                Object {
+                                  "fieldName": "type",
+                                },
+                              ],
+                              "size": 12,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "text1",
+                "label": "Text Field 1",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "text",
+              },
+              Object {
+                "fieldName": "text2",
+                "label": "Text Field 2",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "text",
+              },
+            ],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "select",
+                "label": "Select Field",
+                "options": Array [
+                  Object {
+                    "label": "Option 1",
+                    "value": "option1",
+                  },
+                  Object {
+                    "label": "Option 2",
+                    "value": "option2",
+                  },
+                ],
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "date",
+                "label": "Date Field",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "date",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
 exports[`LayoutProvider Field events fieldMoved should listen to the fieldMoved event and move the field to the column in pages 1`] = `
 Array [
   Object {
@@ -548,7 +715,45 @@ Array [
                   },
                 ],
                 "settingsContext": Object {
-                  "pages": Array [],
+                  "pages": Array [
+                    Object {
+                      "rows": Array [
+                        Object {
+                          "columns": Array [
+                            Object {
+                              "fields": Array [
+                                Object {
+                                  "fieldName": "label",
+                                  "localizable": true,
+                                  "settingsContext": Object {
+                                    "pages": Array [
+                                      Object {
+                                        "rows": Array [
+                                          Object {
+                                            "columns": Array [],
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                },
+                                Object {
+                                  "fieldName": "name",
+                                },
+                                Object {
+                                  "fieldName": "required",
+                                },
+                                Object {
+                                  "fieldName": "type",
+                                },
+                              ],
+                              "size": 12,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
                 },
                 "type": "radio",
               },
@@ -669,7 +874,45 @@ Array [
                   },
                 ],
                 "settingsContext": Object {
-                  "pages": Array [],
+                  "pages": Array [
+                    Object {
+                      "rows": Array [
+                        Object {
+                          "columns": Array [
+                            Object {
+                              "fields": Array [
+                                Object {
+                                  "fieldName": "label",
+                                  "localizable": true,
+                                  "settingsContext": Object {
+                                    "pages": Array [
+                                      Object {
+                                        "rows": Array [
+                                          Object {
+                                            "columns": Array [],
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                },
+                                Object {
+                                  "fieldName": "name",
+                                },
+                                Object {
+                                  "fieldName": "required",
+                                },
+                                Object {
+                                  "fieldName": "type",
+                                },
+                              ],
+                              "size": 12,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
                 },
                 "type": "radio",
               },
@@ -764,7 +1007,45 @@ Array [
                   },
                 ],
                 "settingsContext": Object {
-                  "pages": Array [],
+                  "pages": Array [
+                    Object {
+                      "rows": Array [
+                        Object {
+                          "columns": Array [
+                            Object {
+                              "fields": Array [
+                                Object {
+                                  "fieldName": "label",
+                                  "localizable": true,
+                                  "settingsContext": Object {
+                                    "pages": Array [
+                                      Object {
+                                        "rows": Array [
+                                          Object {
+                                            "columns": Array [],
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                },
+                                Object {
+                                  "fieldName": "name",
+                                },
+                                Object {
+                                  "fieldName": "required",
+                                },
+                                Object {
+                                  "fieldName": "type",
+                                },
+                              ],
+                              "size": 12,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
                 },
                 "type": "radio",
               },
@@ -896,7 +1177,45 @@ Array [
                   },
                 ],
                 "settingsContext": Object {
-                  "pages": Array [],
+                  "pages": Array [
+                    Object {
+                      "rows": Array [
+                        Object {
+                          "columns": Array [
+                            Object {
+                              "fields": Array [
+                                Object {
+                                  "fieldName": "label",
+                                  "localizable": true,
+                                  "settingsContext": Object {
+                                    "pages": Array [
+                                      Object {
+                                        "rows": Array [
+                                          Object {
+                                            "columns": Array [],
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                },
+                                Object {
+                                  "fieldName": "name",
+                                },
+                                Object {
+                                  "fieldName": "required",
+                                },
+                                Object {
+                                  "fieldName": "type",
+                                },
+                              ],
+                              "size": 12,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
                 },
                 "type": "radio",
               },
@@ -1000,7 +1319,805 @@ Array [
                   },
                 ],
                 "settingsContext": Object {
+                  "pages": Array [
+                    Object {
+                      "rows": Array [
+                        Object {
+                          "columns": Array [
+                            Object {
+                              "fields": Array [
+                                Object {
+                                  "fieldName": "label",
+                                  "localizable": true,
+                                  "settingsContext": Object {
+                                    "pages": Array [
+                                      Object {
+                                        "rows": Array [
+                                          Object {
+                                            "columns": Array [],
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                },
+                                Object {
+                                  "fieldName": "name",
+                                },
+                                Object {
+                                  "fieldName": "required",
+                                },
+                                Object {
+                                  "fieldName": "type",
+                                },
+                              ],
+                              "size": 12,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "text1",
+                "label": "Text Field 1",
+                "required": true,
+                "settingsContext": Object {
                   "pages": Array [],
+                },
+                "type": "text",
+              },
+              Object {
+                "fieldName": "text2",
+                "label": "Text Field 2",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "text",
+              },
+            ],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "select",
+                "label": "Select Field",
+                "options": Array [
+                  Object {
+                    "label": "Option 1",
+                    "value": "option1",
+                  },
+                  Object {
+                    "label": "Option 2",
+                    "value": "option2",
+                  },
+                ],
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "date",
+                "label": "Date Field",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "date",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
+exports[`LayoutProvider Field events focusedFieldUpdated should listen the focusedFieldUpdated event and change the state of the focusedField and pages for the data wich was received 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "columnIndex": 0,
+                "pageIndex": 0,
+                "rowIndex": 0,
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "text1",
+                "label": "Text Field 1",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "text",
+              },
+              Object {
+                "fieldName": "text2",
+                "label": "Text Field 2",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "text",
+              },
+            ],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "select",
+                "label": "Select Field",
+                "options": Array [
+                  Object {
+                    "label": "Option 1",
+                    "value": "option1",
+                  },
+                  Object {
+                    "label": "Option 2",
+                    "value": "option2",
+                  },
+                ],
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "date",
+                "label": "Date Field",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "date",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
+exports[`LayoutProvider Field events pageAdded should listen the pageAdded event and change the state of pages for the data wich was received 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "radio",
+                "label": "Radio Field",
+                "options": Array [
+                  Object {
+                    "label": "Option 1",
+                    "value": "option1",
+                  },
+                  Object {
+                    "label": "Option 2",
+                    "value": "option2",
+                  },
+                ],
+                "settingsContext": Object {
+                  "pages": Array [
+                    Object {
+                      "rows": Array [
+                        Object {
+                          "columns": Array [
+                            Object {
+                              "fields": Array [
+                                Object {
+                                  "fieldName": "label",
+                                  "localizable": true,
+                                  "settingsContext": Object {
+                                    "pages": Array [
+                                      Object {
+                                        "rows": Array [
+                                          Object {
+                                            "columns": Array [],
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                },
+                                Object {
+                                  "fieldName": "name",
+                                },
+                                Object {
+                                  "fieldName": "required",
+                                },
+                                Object {
+                                  "fieldName": "type",
+                                },
+                              ],
+                              "size": 12,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "text1",
+                "label": "Text Field 1",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "text",
+              },
+              Object {
+                "fieldName": "text2",
+                "label": "Text Field 2",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "text",
+              },
+            ],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "select",
+                "label": "Select Field",
+                "options": Array [
+                  Object {
+                    "label": "Option 1",
+                    "value": "option1",
+                  },
+                  Object {
+                    "label": "Option 2",
+                    "value": "option2",
+                  },
+                ],
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "date",
+                "label": "Date Field",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "date",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+  Object {
+    "description": "",
+    "enabled": true,
+    "localizedDescription": Object {
+      "en_US": "",
+    },
+    "localizedTitle": Object {
+      "en_US": "",
+    },
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "showRequiredFieldsWarning": true,
+    "title": "",
+  },
+]
+`;
+
+exports[`LayoutProvider Field events pageDeleted should listen the pageDeleted event and change the state of pages for the data wich was received 1`] = `Array []`;
+
+exports[`LayoutProvider Field events pageReset should listen the pageReset event and change the state of pages for the data wich was received 1`] = `
+Array [
+  Object {
+    "description": "",
+    "enabled": true,
+    "localizedDescription": Object {
+      "en_US": "",
+    },
+    "localizedTitle": Object {
+      "en_US": "",
+    },
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "showRequiredFieldsWarning": true,
+    "title": "",
+  },
+]
+`;
+
+exports[`LayoutProvider Field events paginationModeUpdated should listen the paginationModeUpdated event and change the state of pagination mode for the data wich was received 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "radio",
+                "label": "Radio Field",
+                "options": Array [
+                  Object {
+                    "label": "Option 1",
+                    "value": "option1",
+                  },
+                  Object {
+                    "label": "Option 2",
+                    "value": "option2",
+                  },
+                ],
+                "settingsContext": Object {
+                  "pages": Array [
+                    Object {
+                      "rows": Array [
+                        Object {
+                          "columns": Array [
+                            Object {
+                              "fields": Array [
+                                Object {
+                                  "fieldName": "label",
+                                  "localizable": true,
+                                  "settingsContext": Object {
+                                    "pages": Array [
+                                      Object {
+                                        "rows": Array [
+                                          Object {
+                                            "columns": Array [],
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                },
+                                Object {
+                                  "fieldName": "name",
+                                },
+                                Object {
+                                  "fieldName": "required",
+                                },
+                                Object {
+                                  "fieldName": "type",
+                                },
+                              ],
+                              "size": 12,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "text1",
+                "label": "Text Field 1",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "text",
+              },
+              Object {
+                "fieldName": "text2",
+                "label": "Text Field 2",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "text",
+              },
+            ],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "select",
+                "label": "Select Field",
+                "options": Array [
+                  Object {
+                    "label": "Option 1",
+                    "value": "option1",
+                  },
+                  Object {
+                    "label": "Option 2",
+                    "value": "option2",
+                  },
+                ],
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "date",
+                "label": "Date Field",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "date",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
+exports[`LayoutProvider Field events paginationModeUpdated should listen the paginationModeUpdated event and change the state of pagination mode from pagination to wizard 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "radio",
+                "label": "Radio Field",
+                "options": Array [
+                  Object {
+                    "label": "Option 1",
+                    "value": "option1",
+                  },
+                  Object {
+                    "label": "Option 2",
+                    "value": "option2",
+                  },
+                ],
+                "settingsContext": Object {
+                  "pages": Array [
+                    Object {
+                      "rows": Array [
+                        Object {
+                          "columns": Array [
+                            Object {
+                              "fields": Array [
+                                Object {
+                                  "fieldName": "label",
+                                  "localizable": true,
+                                  "settingsContext": Object {
+                                    "pages": Array [
+                                      Object {
+                                        "rows": Array [
+                                          Object {
+                                            "columns": Array [],
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                },
+                                Object {
+                                  "fieldName": "name",
+                                },
+                                Object {
+                                  "fieldName": "required",
+                                },
+                                Object {
+                                  "fieldName": "type",
+                                },
+                              ],
+                              "size": 12,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+                "type": "radio",
+              },
+            ],
+            "size": 3,
+          },
+          Object {
+            "fields": Array [],
+            "size": 9,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "text1",
+                "label": "Text Field 1",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "text",
+              },
+              Object {
+                "fieldName": "text2",
+                "label": "Text Field 2",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "text",
+              },
+            ],
+            "size": 4,
+          },
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "select",
+                "label": "Select Field",
+                "options": Array [
+                  Object {
+                    "label": "Option 1",
+                    "value": "option1",
+                  },
+                  Object {
+                    "label": "Option 2",
+                    "value": "option2",
+                  },
+                ],
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "select",
+              },
+            ],
+            "size": 6,
+          },
+          Object {
+            "fields": Array [],
+            "size": 2,
+          },
+        ],
+      },
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "date",
+                "label": "Date Field",
+                "required": true,
+                "settingsContext": Object {
+                  "pages": Array [],
+                },
+                "type": "date",
+              },
+            ],
+            "size": 12,
+          },
+        ],
+      },
+    ],
+    "title": "Untitled name",
+  },
+]
+`;
+
+exports[`LayoutProvider Field events successPageChanged should listen the successPageChanged event and change the state of success page for the data wich was received 1`] = `
+Array [
+  Object {
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "fields": Array [
+              Object {
+                "fieldName": "radio",
+                "label": "Radio Field",
+                "options": Array [
+                  Object {
+                    "label": "Option 1",
+                    "value": "option1",
+                  },
+                  Object {
+                    "label": "Option 2",
+                    "value": "option2",
+                  },
+                ],
+                "settingsContext": Object {
+                  "pages": Array [
+                    Object {
+                      "rows": Array [
+                        Object {
+                          "columns": Array [
+                            Object {
+                              "fields": Array [
+                                Object {
+                                  "fieldName": "label",
+                                  "localizable": true,
+                                  "settingsContext": Object {
+                                    "pages": Array [
+                                      Object {
+                                        "rows": Array [
+                                          Object {
+                                            "columns": Array [],
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                },
+                                Object {
+                                  "fieldName": "name",
+                                },
+                                Object {
+                                  "fieldName": "required",
+                                },
+                                Object {
+                                  "fieldName": "type",
+                                },
+                              ],
+                              "size": 12,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
                 },
                 "type": "radio",
               },

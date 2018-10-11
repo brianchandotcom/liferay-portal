@@ -29,9 +29,15 @@ const addFieldToColumn = (pages, pageIndex, rowIndex, columnIndex, field) => {
 		if (rowIndex >= numberOfRows) {
 			pages = addRow(pages, numberOfRows, pageIndex);
 		}
-		pages[Number(pageIndex)].rows[Number(rowIndex)].columns[
+
+		const col = pages[Number(pageIndex)].rows[Number(rowIndex)].columns[
 			Number(columnIndex)
-		].fields.push(field);
+		];
+
+		col.fields = [
+			...col.fields,
+			field
+		];
 	}
 
 	return pages;

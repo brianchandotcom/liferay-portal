@@ -2,7 +2,7 @@ const identity = value => value;
 
 class PagesVisitor {
 	constructor(pages) {
-		this._pages = pages;
+		this._pages = [...pages];
 	}
 
 	_map(pageMapper, rowMapper, columnMapper, fieldMapper) {

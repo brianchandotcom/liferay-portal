@@ -8,7 +8,13 @@ import ClayButton from 'clay-button';
 import Component, {Fragment} from 'metal-jsx';
 import dom from 'metal-dom';
 import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es.js';
+import autobind from 'autobind-decorator';
 import FormRenderer, {FormSupport} from '../Form/index.es.js';
+import WithEvaluator from '../Form/Evaluator.es';
+import {ClayActionsDropdown} from 'clay-dropdown';
+
+const EVALUATOR_URL = '/o/dynamic-data-mapping-form-context-provider/';
+const FormWithEvaluator = WithEvaluator(FormRenderer);
 
 /**
  * Sidebar is a tooling to mount forms.
@@ -138,7 +144,6 @@ class Sidebar extends Component {
 	 * @return {string|boolean} The name of the transitionend event or false
 	 * if not supported
 	 */
-
 	_getTransitionEndEvent() {
 		const el = document.createElement('metalClayTransitionEnd');
 
@@ -162,6 +167,34 @@ class Sidebar extends Component {
 		return eventName;
 	}
 
+	_checkSettingsActionsVisibility(target) {
+		const {fieldSettingsActions} = this.refs;
+		let dropdownPortal;
+
+		if (fieldSettingsActions) {
+			const {dropdown} = fieldSettingsActions.refs;
+			const {portal} = dropdown.refs;
+
+			dropdownPortal = portal.element.contains(target);
+		}
+
+		return dropdownPortal;
+	}
+
+	_deleteField(indexes) {
+		this.emit(
+			'fieldDeleted',
+			indexes
+		);
+	}
+
+	_duplicateField(indexes) {
+		this.emit(
+			'fieldDuplicated',
+			indexes
+		);
+	}
+
 	_openValueFn() {
 		const {open} = this.props;
 
@@ -175,11 +208,13 @@ class Sidebar extends Component {
 	 * @protected
 	 */
 
-	_handleDocumentMouseDown(event) {
+	_handleDocumentMouseDown({target}) {
 		const {open} = this.state;
 		const {transitionEnd} = this;
+		const fieldColumnNode = dom.closest(target, '.col-ddm');
+		const modalNode = dom.closest(target, '.modal-dialog');
 
-		if (!open || this.element.contains(event.target)) {
+		if (!open || this.element.contains(target) || fieldColumnNode || this._checkSettingsActionsVisibility(target)) {
 			return;
 		}
 
@@ -190,6 +225,10 @@ class Sidebar extends Component {
 			transitionEnd,
 			() => this.emit('fieldBlurred')
 		);
+
+		if (!modalNode) {
+			setTimeout(() => this.emit('fieldBlurred'), 500);
+		}
 	}
 
 	/**
@@ -203,10 +242,31 @@ class Sidebar extends Component {
 
 	/**
 	 * Continues the propagation of event.
+	 * @param {array} data
+	 * @protected
+	 */
+	@autobind
+	_handleEvaluatorChanged(pages) {
+		const {focusedField} = this.props;
+
+		this.emit(
+			'focusedFieldUpdated',
+			{
+				...focusedField,
+				settingsContext: {
+					...focusedField.settingsContext,
+					pages
+				}
+			}
+		);
+	}
+
+	/**
+	 * Continues the propagation of event.
 	 * @param {Object} data
 	 * @protected
 	 */
-
+	@autobind
 	_handleFieldEdited(data) {
 		this.emit('fieldEdited', data);
 	}
@@ -242,6 +302,28 @@ class Sidebar extends Component {
 				target: indexes
 			}
 		);
+	}
+
+	/**
+	 * Handle click on the field settings dropdown
+	 * @protected
+	 */
+	@autobind
+	_handleFieldSettingsClicked({data: {item}}) {
+		const {columnIndex, pageIndex, rowIndex} = this.props.focusedField;
+		const {settingsItem} = item;
+		const indexes = {
+			columnIndex,
+			pageIndex,
+			rowIndex
+		};
+
+		if (settingsItem === 'duplicate-field') {
+			this._duplicateField(indexes);
+		}
+		else if (settingsItem === 'delete-field') {
+			this._deleteField(indexes);
+		}
 	}
 
 	/**
@@ -447,17 +529,14 @@ class Sidebar extends Component {
 			spritemap
 		} = this.props;
 
-		let settingsContext;
+		const {settingsContext} = focusedField;
 
 		const layoutRenderEvents = {
-			fieldEdited: this._handleFieldEdited.bind(this)
+			evaluated: this._handleEvaluatorChanged,
+			fieldEdited: this._handleFieldEdited
 		};
 
 		const editMode = this._isEditMode();
-
-		if (editMode) {
-			settingsContext = focusedField.settingsContext;
-		}
 
 		const styles = classnames('sidebar-container', {open});
 
@@ -501,16 +580,19 @@ class Sidebar extends Component {
 							this._groupFieldTypes()
 						}
 						{editMode && (
-							<div class="sidebar-body">
+							<div class="sidebar-body ddm-field-settings">
 								<div class="tab-content">
-									<FormRenderer
+									<FormWithEvaluator
 										activePage={activeTab}
 										editable={true}
 										events={layoutRenderEvents}
+										fieldType={focusedField.type}
+										formContext={settingsContext}
 										modeRenderer="list"
 										pages={settingsContext.pages}
 										ref="FormRenderer"
 										spritemap={spritemap}
+										url={EVALUATOR_URL}
 									/>
 								</div>
 							</div>
@@ -582,6 +664,16 @@ class Sidebar extends Component {
 	_renderTopBar() {
 		const {fieldTypes, focusedField, spritemap} = this.props;
 		const editMode = this._isEditMode();
+		const fieldActions = [
+			{
+				label: Liferay.Language.get('duplicate-field'),
+				settingsItem: 'duplicate-field'
+			},
+			{
+				label: Liferay.Language.get('remove-field'),
+				settingsItem: 'delete-field'
+			}
+		];
 		const focusedFieldType = fieldTypes.find(({name}) => name === focusedField.type);
 		const previousButtonEvents = {
 			click: this._handlePreviousButtonClicked.bind(this)
@@ -622,6 +714,17 @@ class Sidebar extends Component {
 									style="secondary"
 								/>
 							</div>
+						</li>
+						<li class="tbar-item">
+							<ClayActionsDropdown
+								events={{
+									itemClicked: this._handleFieldSettingsClicked
+								}}
+								items={fieldActions}
+								ref="fieldSettingsActions"
+								spritemap={spritemap}
+								triggerClasses={'component-action'}
+							/>
 						</li>
 					</Fragment>
 				)}

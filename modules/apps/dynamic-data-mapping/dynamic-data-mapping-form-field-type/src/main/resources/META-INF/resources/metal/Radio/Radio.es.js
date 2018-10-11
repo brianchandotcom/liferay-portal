@@ -18,6 +18,15 @@ class Radio extends Component {
 		/**
 		 * @default undefined
 		 * @instance
+		 * @memberof FieldBase
+		 * @type {?bool}
+		 */
+
+		evaluable: Config.bool().value(false),
+
+		/**
+		 * @default undefined
+		 * @instance
 		 * @memberof Radio
 		 * @type {?(string|undefined)}
 		 */
@@ -103,6 +112,15 @@ class Radio extends Component {
 		 */
 
 		predefinedValue: Config.string().value('Option 1'),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof FieldBase
+		 * @type {?(bool|undefined)}
+		 */
+
+		repeatable: Config.bool(),
 
 		/**
 		 * @default false

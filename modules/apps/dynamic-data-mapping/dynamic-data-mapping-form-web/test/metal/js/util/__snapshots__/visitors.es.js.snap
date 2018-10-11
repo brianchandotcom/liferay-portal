@@ -22,7 +22,45 @@ Array [
                   },
                 ],
                 "settingsContext": Object {
-                  "pages": Array [],
+                  "pages": Array [
+                    Object {
+                      "rows": Array [
+                        Object {
+                          "columns": Array [
+                            Object {
+                              "fields": Array [
+                                Object {
+                                  "fieldName": "label",
+                                  "localizable": true,
+                                  "settingsContext": Object {
+                                    "pages": Array [
+                                      Object {
+                                        "rows": Array [
+                                          Object {
+                                            "columns": Array [],
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                },
+                                Object {
+                                  "fieldName": "name",
+                                },
+                                Object {
+                                  "fieldName": "required",
+                                },
+                                Object {
+                                  "fieldName": "type",
+                                },
+                              ],
+                              "size": 12,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
                 },
                 "type": "radio",
               },
@@ -136,7 +174,45 @@ Array [
                   },
                 ],
                 "settingsContext": Object {
-                  "pages": Array [],
+                  "pages": Array [
+                    Object {
+                      "rows": Array [
+                        Object {
+                          "columns": Array [
+                            Object {
+                              "fields": Array [
+                                Object {
+                                  "fieldName": "label",
+                                  "localizable": true,
+                                  "settingsContext": Object {
+                                    "pages": Array [
+                                      Object {
+                                        "rows": Array [
+                                          Object {
+                                            "columns": Array [],
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                },
+                                Object {
+                                  "fieldName": "name",
+                                },
+                                Object {
+                                  "fieldName": "required",
+                                },
+                                Object {
+                                  "fieldName": "type",
+                                },
+                              ],
+                              "size": 12,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
                 },
                 "type": "radio",
               },
@@ -250,7 +326,45 @@ Array [
                   },
                 ],
                 "settingsContext": Object {
-                  "pages": Array [],
+                  "pages": Array [
+                    Object {
+                      "rows": Array [
+                        Object {
+                          "columns": Array [
+                            Object {
+                              "fields": Array [
+                                Object {
+                                  "fieldName": "label",
+                                  "localizable": true,
+                                  "settingsContext": Object {
+                                    "pages": Array [
+                                      Object {
+                                        "rows": Array [
+                                          Object {
+                                            "columns": Array [],
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                },
+                                Object {
+                                  "fieldName": "name",
+                                },
+                                Object {
+                                  "fieldName": "required",
+                                },
+                                Object {
+                                  "fieldName": "type",
+                                },
+                              ],
+                              "size": 12,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
                 },
                 "type": "radio",
               },

@@ -33,10 +33,7 @@ import javax.portlet.annotations.PortletRequestScoped;
  */
 public class RequestScopedAnnotatedTypeImpl<X> extends AnnotatedTypeWrapper<X> {
 
-	public RequestScopedAnnotatedTypeImpl(
-		AnnotatedType<X> annotatedType,
-		Set<Class<? extends Annotation>> annotationClasses) {
-
+	public RequestScopedAnnotatedTypeImpl(AnnotatedType<X> annotatedType) {
 		super(annotatedType);
 
 		for (Annotation annotation : annotatedType.getAnnotations()) {
@@ -48,7 +45,7 @@ public class RequestScopedAnnotatedTypeImpl<X> extends AnnotatedTypeWrapper<X> {
 			}
 		}
 
-		if (!annotationClasses.contains(PortletRequestScoped.class)) {
+		if (!annotatedType.isAnnotationPresent(PortletRequestScoped.class)) {
 			_annotations.add(_portletRequestScoped);
 		}
 	}

@@ -181,15 +181,13 @@ public class BeanPortletExtension implements Extension {
 		}
 
 		if (annotationClasses.contains(RequestScoped.class)) {
-			annotatedType = new RequestScopedAnnotatedTypeImpl<>(
-				annotatedType, annotationClasses);
+			annotatedType = new RequestScopedAnnotatedTypeImpl<>(annotatedType);
 
 			processAnnotatedType.setAnnotatedType(annotatedType);
 		}
 
 		if (annotationClasses.contains(SessionScoped.class)) {
-			annotatedType = new SessionScopedAnnotatedTypeImpl<>(
-				annotatedType, annotationClasses);
+			annotatedType = new SessionScopedAnnotatedTypeImpl<>(annotatedType);
 
 			processAnnotatedType.setAnnotatedType(annotatedType);
 		}

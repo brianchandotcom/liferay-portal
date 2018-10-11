@@ -19,6 +19,7 @@ dependencies {
 	compileOnly project(":apps:headless-apio:structured-content:structured-content-apio-api")
 	compileOnly project(":apps:journal:journal-api")
 	compileOnly project(":apps:portal-odata:portal-odata-api")
+	compileOnly project(":core:petra:petra-string")
 
 	testCompile group: "org.apache.cxf", name: "cxf-rt-frontend-jaxrs", version: "3.2.4"
 	testCompile group: "org.assertj", name: "assertj-core", version: "3.10.0"

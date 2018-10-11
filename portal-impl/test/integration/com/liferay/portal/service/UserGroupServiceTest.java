@@ -85,32 +85,39 @@ public class UserGroupServiceTest {
 
 	@Test
 	public void testGetUserGroupsLikeName() throws Exception {
-		String name = RandomTestUtil.randomString(10);
+		UserGroup markerUserGroup = UserGroupTestUtil.addUserGroup();
 
-		List<UserGroup> expectedUserGroups = new ArrayList<>();
+		try {
+			String name = RandomTestUtil.randomString(10);
 
-		for (int i = 0; i < 10; i++) {
-			UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+			List<UserGroup> expectedUserGroups = new ArrayList<>();
 
-			userGroup.setName(name + i);
+			for (int i = 0; i < 10; i++) {
+				UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
-			UserGroupLocalServiceUtil.updateUserGroup(userGroup);
+				userGroup.setName(name + i);
 
-			expectedUserGroups.add(userGroup);
+				UserGroupLocalServiceUtil.updateUserGroup(userGroup);
+
+				expectedUserGroups.add(userGroup);
+			}
+
+			_userGroups.addAll(expectedUserGroups);
+			_userGroups.add(UserGroupTestUtil.addUserGroup());
+			_userGroups.add(UserGroupTestUtil.addUserGroup());
+			_userGroups.add(UserGroupTestUtil.addUserGroup());
+
+			assertExpectedUserGroups(expectedUserGroups, name + "%");
+			assertExpectedUserGroups(
+				expectedUserGroups, StringUtil.toLowerCase(name) + "%");
+			assertExpectedUserGroups(
+				expectedUserGroups, StringUtil.toUpperCase(name) + "%");
+			assertExpectedUserGroups(_userGroups, null);
+			assertExpectedUserGroups(_userGroups, "");
 		}
-
-		_userGroups.addAll(expectedUserGroups);
-		_userGroups.add(UserGroupTestUtil.addUserGroup());
-		_userGroups.add(UserGroupTestUtil.addUserGroup());
-		_userGroups.add(UserGroupTestUtil.addUserGroup());
-
-		assertExpectedUserGroups(expectedUserGroups, name + "%");
-		assertExpectedUserGroups(
-			expectedUserGroups, StringUtil.toLowerCase(name) + "%");
-		assertExpectedUserGroups(
-			expectedUserGroups, StringUtil.toUpperCase(name) + "%");
-		assertExpectedUserGroups(_userGroups, null);
-		assertExpectedUserGroups(_userGroups, "");
+		finally {
+			UserGroupLocalServiceUtil.deleteUserGroup(markerUserGroup);
+		}
 	}
 
 	protected void assertExpectedUserGroups(

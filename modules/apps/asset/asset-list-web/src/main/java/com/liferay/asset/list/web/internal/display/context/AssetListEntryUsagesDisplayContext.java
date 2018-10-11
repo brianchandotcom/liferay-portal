@@ -41,9 +41,9 @@ import javax.portlet.RenderResponse;
 /**
  * @author Pavel Savinov
  */
-public class AssetListUsagesDisplayContext {
+public class AssetListEntryUsagesDisplayContext {
 
-	public AssetListUsagesDisplayContext(
+	public AssetListEntryUsagesDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_renderRequest = renderRequest;
@@ -167,9 +167,10 @@ public class AssetListUsagesDisplayContext {
 			return _searchContainer;
 		}
 
-		SearchContainer assetListUsagesSearchContainer = new SearchContainer(
-			_renderRequest, _renderResponse.createRenderURL(), null,
-			"there-are-no-asset-list-usages");
+		SearchContainer assetListEntryUsagesSearchContainer =
+			new SearchContainer(
+				_renderRequest, _renderResponse.createRenderURL(), null,
+				"there-are-no-asset-list-usages");
 
 		boolean orderByAsc = false;
 
@@ -182,9 +183,10 @@ public class AssetListUsagesDisplayContext {
 		OrderByComparator<AssetListEntryUsage> orderByComparator =
 			new AssetListEntryUsageModifiedDateComparator(orderByAsc);
 
-		assetListUsagesSearchContainer.setOrderByCol(_getOrderByCol());
-		assetListUsagesSearchContainer.setOrderByComparator(orderByComparator);
-		assetListUsagesSearchContainer.setOrderByType(_getOrderByType());
+		assetListEntryUsagesSearchContainer.setOrderByCol(_getOrderByCol());
+		assetListEntryUsagesSearchContainer.setOrderByComparator(
+			orderByComparator);
+		assetListEntryUsagesSearchContainer.setOrderByType(_getOrderByType());
 
 		List<AssetListEntryUsage> assetListEntryUsages = null;
 
@@ -195,8 +197,9 @@ public class AssetListUsagesDisplayContext {
 				AssetListEntryUsageLocalServiceUtil.getAssetListEntryUsages(
 					getAssetListEntryId(),
 					PortalUtil.getClassNameId(Layout.class),
-					assetListUsagesSearchContainer.getStart(),
-					assetListUsagesSearchContainer.getEnd(), orderByComparator);
+					assetListEntryUsagesSearchContainer.getStart(),
+					assetListEntryUsagesSearchContainer.getEnd(),
+					orderByComparator);
 
 			assetListEntryUsagesCount = getPagesUsageCount();
 		}
@@ -205,8 +208,9 @@ public class AssetListUsagesDisplayContext {
 				AssetListEntryUsageLocalServiceUtil.getAssetListEntryUsages(
 					getAssetListEntryId(),
 					PortalUtil.getClassNameId(LayoutPageTemplateEntry.class),
-					assetListUsagesSearchContainer.getStart(),
-					assetListUsagesSearchContainer.getEnd(), orderByComparator);
+					assetListEntryUsagesSearchContainer.getStart(),
+					assetListEntryUsagesSearchContainer.getEnd(),
+					orderByComparator);
 
 			assetListEntryUsagesCount = getDisplayPagesUsageCount();
 		}
@@ -215,8 +219,9 @@ public class AssetListUsagesDisplayContext {
 				AssetListEntryUsageLocalServiceUtil.getAssetListEntryUsages(
 					getAssetListEntryId(),
 					PortalUtil.getClassNameId(AssetDisplayPageEntry.class),
-					assetListUsagesSearchContainer.getStart(),
-					assetListUsagesSearchContainer.getEnd(), orderByComparator);
+					assetListEntryUsagesSearchContainer.getStart(),
+					assetListEntryUsagesSearchContainer.getEnd(),
+					orderByComparator);
 
 			assetListEntryUsagesCount = getDisplayPagesUsageCount();
 		}
@@ -224,16 +229,17 @@ public class AssetListUsagesDisplayContext {
 			assetListEntryUsages =
 				AssetListEntryUsageLocalServiceUtil.getAssetListEntryUsages(
 					getAssetListEntryId(),
-					assetListUsagesSearchContainer.getStart(),
-					assetListUsagesSearchContainer.getEnd(), orderByComparator);
+					assetListEntryUsagesSearchContainer.getStart(),
+					assetListEntryUsagesSearchContainer.getEnd(),
+					orderByComparator);
 
 			assetListEntryUsagesCount = getAllUsageCount();
 		}
 
-		assetListUsagesSearchContainer.setResults(assetListEntryUsages);
-		assetListUsagesSearchContainer.setTotal(assetListEntryUsagesCount);
+		assetListEntryUsagesSearchContainer.setResults(assetListEntryUsages);
+		assetListEntryUsagesSearchContainer.setTotal(assetListEntryUsagesCount);
 
-		_searchContainer = assetListUsagesSearchContainer;
+		_searchContainer = assetListEntryUsagesSearchContainer;
 
 		return _searchContainer;
 	}

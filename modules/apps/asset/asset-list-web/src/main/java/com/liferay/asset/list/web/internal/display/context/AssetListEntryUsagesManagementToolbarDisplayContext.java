@@ -24,10 +24,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class AssetListUsagesManagementToolbarDisplayContext
+public class AssetListEntryUsagesManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
-	public AssetListUsagesManagementToolbarDisplayContext(
+	public AssetListEntryUsagesManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest request, SearchContainer searchContainer) {

@@ -17,7 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AssetListUsagesDisplayContext assetListUsagesDisplayContext = new AssetListUsagesDisplayContext(renderRequest, renderResponse);
+AssetListEntryUsagesDisplayContext
+	assetListEntryUsagesDisplayContext = new AssetListEntryUsagesDisplayContext(renderRequest, renderResponse);
 %>
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">
@@ -34,49 +35,49 @@ AssetListUsagesDisplayContext assetListUsagesDisplayContext = new AssetListUsage
 							<li class="nav-item">
 
 								<%
-								PortletURL allNavigationURL = assetListUsagesDisplayContext.getPortletURL();
+								PortletURL allNavigationURL = assetListEntryUsagesDisplayContext.getPortletURL();
 
 								allNavigationURL.setParameter("navigation", "all");
 								%>
 
-								<a class="nav-link <%= Objects.equals(assetListUsagesDisplayContext.getNavigation(), "all") ? "active" : StringPool.BLANK %>" href="<%= allNavigationURL.toString() %>">
-									<liferay-ui:message arguments="<%= assetListUsagesDisplayContext.getAllUsageCount() %>" key="all-x" />
+								<a class="nav-link <%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "all") ? "active" : StringPool.BLANK %>" href="<%= allNavigationURL.toString() %>">
+									<liferay-ui:message arguments="<%= assetListEntryUsagesDisplayContext.getAllUsageCount() %>" key="all-x" />
 								</a>
 							</li>
 							<li class="nav-item">
 
 								<%
-								PortletURL pagesNavigationURL = assetListUsagesDisplayContext.getPortletURL();
+								PortletURL pagesNavigationURL = assetListEntryUsagesDisplayContext.getPortletURL();
 
 								pagesNavigationURL.setParameter("navigation", "pages");
 								%>
 
-								<a class="nav-link <%= Objects.equals(assetListUsagesDisplayContext.getNavigation(), "pages") ? "active" : StringPool.BLANK %>" href="<%= pagesNavigationURL.toString() %>">
-									<liferay-ui:message arguments="<%= assetListUsagesDisplayContext.getPagesUsageCount() %>" key="pages-x" />
+								<a class="nav-link <%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "pages") ? "active" : StringPool.BLANK %>" href="<%= pagesNavigationURL.toString() %>">
+									<liferay-ui:message arguments="<%= assetListEntryUsagesDisplayContext.getPagesUsageCount() %>" key="pages-x" />
 								</a>
 							</li>
 							<li class="nav-item">
 
 								<%
-								PortletURL pageTemplatesNavigationURL = assetListUsagesDisplayContext.getPortletURL();
+								PortletURL pageTemplatesNavigationURL = assetListEntryUsagesDisplayContext.getPortletURL();
 
 								pageTemplatesNavigationURL.setParameter("navigation", "page-templates");
 								%>
 
-								<a class="nav-link <%= Objects.equals(assetListUsagesDisplayContext.getNavigation(), "page-templates") ? "active" : StringPool.BLANK %>" href="<%= pageTemplatesNavigationURL.toString() %>">
-									<liferay-ui:message arguments="<%= assetListUsagesDisplayContext.getPageTemplatesUsageCount() %>" key="page-templates-x" />
+								<a class="nav-link <%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "page-templates") ? "active" : StringPool.BLANK %>" href="<%= pageTemplatesNavigationURL.toString() %>">
+									<liferay-ui:message arguments="<%= assetListEntryUsagesDisplayContext.getPageTemplatesUsageCount() %>" key="page-templates-x" />
 								</a>
 							</li>
 							<li class="nav-item">
 
 								<%
-								PortletURL displayPagesNavigationURL = assetListUsagesDisplayContext.getPortletURL();
+								PortletURL displayPagesNavigationURL = assetListEntryUsagesDisplayContext.getPortletURL();
 
 								displayPagesNavigationURL.setParameter("navigation", "display-pages");
 								%>
 
-								<a class="nav-link <%= Objects.equals(assetListUsagesDisplayContext.getNavigation(), "display-pages") ? "active" : StringPool.BLANK %>" href="<%= displayPagesNavigationURL.toString() %>">
-									<liferay-ui:message arguments="<%= assetListUsagesDisplayContext.getDisplayPagesUsageCount() %>" key="display-pages-x" />
+								<a class="nav-link <%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "display-pages") ? "active" : StringPool.BLANK %>" href="<%= displayPagesNavigationURL.toString() %>">
+									<liferay-ui:message arguments="<%= assetListEntryUsagesDisplayContext.getDisplayPagesUsageCount() %>" key="display-pages-x" />
 								</a>
 							</li>
 						</ul>
@@ -89,32 +90,32 @@ AssetListUsagesDisplayContext assetListUsagesDisplayContext = new AssetListUsage
 			<div class="sheet">
 				<h3 class="sheet-title">
 					<c:choose>
-						<c:when test='<%= Objects.equals(assetListUsagesDisplayContext.getNavigation(), "pages") %>'>
-							<liferay-ui:message arguments="<%= assetListUsagesDisplayContext.getPagesUsageCount() %>" key="pages-x" />
+						<c:when test='<%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "pages") %>'>
+							<liferay-ui:message arguments="<%= assetListEntryUsagesDisplayContext.getPagesUsageCount() %>" key="pages-x" />
 						</c:when>
-						<c:when test='<%= Objects.equals(assetListUsagesDisplayContext.getNavigation(), "page-templates") %>'>
-							<liferay-ui:message arguments="<%= assetListUsagesDisplayContext.getPageTemplatesUsageCount() %>" key="page-templates-x" />
+						<c:when test='<%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "page-templates") %>'>
+							<liferay-ui:message arguments="<%= assetListEntryUsagesDisplayContext.getPageTemplatesUsageCount() %>" key="page-templates-x" />
 						</c:when>
-						<c:when test='<%= Objects.equals(assetListUsagesDisplayContext.getNavigation(), "display-pages") %>'>
-							<liferay-ui:message arguments="<%= assetListUsagesDisplayContext.getDisplayPagesUsageCount() %>" key="display-pages-x" />
+						<c:when test='<%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "display-pages") %>'>
+							<liferay-ui:message arguments="<%= assetListEntryUsagesDisplayContext.getDisplayPagesUsageCount() %>" key="display-pages-x" />
 						</c:when>
 						<c:otherwise>
-							<liferay-ui:message arguments="<%= assetListUsagesDisplayContext.getAllUsageCount() %>" key="all-x" />
+							<liferay-ui:message arguments="<%= assetListEntryUsagesDisplayContext.getAllUsageCount() %>" key="all-x" />
 						</c:otherwise>
 					</c:choose>
 				</h3>
 
 				<%
-				AssetListUsagesManagementToolbarDisplayContext assetListUsagesManagementToolbarDisplayContext = new AssetListUsagesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetListUsagesDisplayContext.getSearchContainer());
+				AssetListEntryUsagesManagementToolbarDisplayContext assetListEntryUsagesManagementToolbarDisplayContext = new AssetListEntryUsagesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetListEntryUsagesDisplayContext.getSearchContainer());
 				%>
 
 				<clay:management-toolbar
-					displayContext="<%= assetListUsagesManagementToolbarDisplayContext %>"
+					displayContext="<%= assetListEntryUsagesManagementToolbarDisplayContext %>"
 				/>
 
 				<liferay-ui:search-container
-					id="assetListUsages"
-					searchContainer="<%= assetListUsagesDisplayContext.getSearchContainer() %>"
+					id="assetListEntryUsages"
+					searchContainer="<%= assetListEntryUsagesDisplayContext.getSearchContainer() %>"
 				>
 					<liferay-ui:search-container-row
 						className="com.liferay.asset.list.model.AssetListEntryUsage"
@@ -123,13 +124,13 @@ AssetListUsagesDisplayContext assetListUsagesDisplayContext = new AssetListUsage
 					>
 						<liferay-ui:search-container-column-text
 							name="name"
-							value="<%= assetListUsagesDisplayContext.getAssetListEntryUsageName(assetListEntryUsage) %>"
+							value="<%= assetListEntryUsagesDisplayContext.getAssetListEntryUsageName(assetListEntryUsage) %>"
 						/>
 
 						<liferay-ui:search-container-column-text
 							name="type"
 							translate="<%= true %>"
-							value="<%= assetListUsagesDisplayContext.getAssetListEntryUsageTypeLabel(assetListEntryUsage) %>"
+							value="<%= assetListEntryUsagesDisplayContext.getAssetListEntryUsageTypeLabel(assetListEntryUsage) %>"
 						/>
 
 						<liferay-ui:search-container-column-date

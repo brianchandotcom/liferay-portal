@@ -5466,8 +5466,8 @@ to version 2.3.241.
 ## 3.12.117 - 2018-08-28
 
 ### Changed
-- [LPS-84094]: Allow properties defined in `gradle-ext.properties` to be
-overridden by values defined in a `gradle-ext.properties` file
+- [LPS-84094]: Allow properties defined in a `gradle.properties` file to be
+overridden by values defined in a `gradle-ext.properties` file.
 - [LPS-84094]: Update the [Liferay Gradle Util] dependency to version 1.0.30.
 
 ## 3.12.118 - 2018-08-29

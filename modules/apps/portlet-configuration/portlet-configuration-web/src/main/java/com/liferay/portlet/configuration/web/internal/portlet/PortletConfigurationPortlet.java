@@ -799,9 +799,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			ActionRequest actionRequest, Portlet portlet)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		Layout layout = themeDisplay.getLayout();
 
 		PortletPreferences portletPreferences = actionRequest.getPreferences();
@@ -812,6 +809,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		if (Validator.isNull(scopeType)) {
 			return null;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		String scopeName = null;
 

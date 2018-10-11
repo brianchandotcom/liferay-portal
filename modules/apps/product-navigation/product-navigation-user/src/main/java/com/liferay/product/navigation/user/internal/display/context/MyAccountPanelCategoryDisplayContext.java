@@ -126,8 +126,6 @@ public class MyAccountPanelCategoryDisplayContext {
 	}
 
 	protected String getGroupAdministrationURL(Group group) {
-		PortletURL groupAdministrationURL = null;
-
 		if (_panelCategoryHelper == null) {
 			return null;
 		}
@@ -137,9 +135,10 @@ public class MyAccountPanelCategoryDisplayContext {
 			_themeDisplay.getPermissionChecker(), group);
 
 		if (Validator.isNotNull(portletId)) {
-			groupAdministrationURL = PortalUtil.getControlPanelPortletURL(
-				_portletRequest, group, portletId, 0, 0,
-				PortletRequest.RENDER_PHASE);
+			PortletURL groupAdministrationURL =
+				PortalUtil.getControlPanelPortletURL(
+					_portletRequest, group, portletId, 0, 0,
+					PortletRequest.RENDER_PHASE);
 
 			if (groupAdministrationURL != null) {
 				return groupAdministrationURL.toString();

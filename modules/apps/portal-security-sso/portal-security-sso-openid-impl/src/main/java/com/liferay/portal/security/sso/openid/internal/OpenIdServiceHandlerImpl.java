@@ -98,10 +98,6 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 
 		request = _portal.getOriginalServletRequest(request);
 
-		String receivingURL = ParamUtil.getString(request, "openid.return_to");
-		ParameterList parameterList = new ParameterList(
-			request.getParameterMap());
-
 		HttpSession session = request.getSession();
 
 		DiscoveryInformation discoveryInformation =
@@ -111,6 +107,10 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 		if (discoveryInformation == null) {
 			return null;
 		}
+
+		String receivingURL = ParamUtil.getString(request, "openid.return_to");
+		ParameterList parameterList = new ParameterList(
+			request.getParameterMap());
 
 		AuthSuccess authSuccess = null;
 		String firstName = null;

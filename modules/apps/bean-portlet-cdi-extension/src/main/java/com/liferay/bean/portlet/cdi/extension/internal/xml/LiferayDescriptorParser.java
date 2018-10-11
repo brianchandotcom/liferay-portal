@@ -59,11 +59,11 @@ public class LiferayDescriptorParser {
 
 					if (values == null) {
 						values = new LinkedHashSet<>();
+
+						configuration.put(key, values);
 					}
 
 					values.add(element.getText());
-
-					configuration.put(key, values);
 				}
 			}
 

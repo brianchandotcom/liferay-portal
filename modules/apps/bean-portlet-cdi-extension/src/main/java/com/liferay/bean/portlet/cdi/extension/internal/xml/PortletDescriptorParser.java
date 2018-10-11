@@ -406,10 +406,12 @@ public class PortletDescriptorParser {
 					LiferayWindowState.EXCLUSIVE.toString());
 				mimeTypeWindowStates.add(LiferayWindowState.POP_UP.toString());
 			}
-
-			for (Element windowStateElement : windowStateElements) {
-				mimeTypeWindowStates.add(
-					StringUtil.toLowerCase(windowStateElement.getTextTrim()));
+			else {
+				for (Element windowStateElement : windowStateElements) {
+					mimeTypeWindowStates.add(
+						StringUtil.toLowerCase(
+							windowStateElement.getTextTrim()));
+				}
 			}
 
 			supportedWindowStates.put(mimeType, mimeTypeWindowStates);

@@ -20,6 +20,7 @@ import com.liferay.bean.portlet.cdi.extension.internal.BeanFilter;
 import com.liferay.bean.portlet.cdi.extension.internal.BeanFilterImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.BeanMethod;
 import com.liferay.bean.portlet.cdi.extension.internal.BeanPortlet;
+import com.liferay.bean.portlet.cdi.extension.internal.BeanPortletImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.Event;
 import com.liferay.bean.portlet.cdi.extension.internal.EventImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.PortletDependency;
@@ -666,7 +667,7 @@ public class PortletDescriptorParser {
 		PortletScannerUtil.scanNonannotatedBeanMethods(
 			beanManager, portletClass, beanMethods);
 
-		return new BeanPortletDescriptorImpl(
+		return new BeanPortletImpl(
 			portletName, beanMethods, displayNames, portletClassName,
 			initParams, expirationCache, supportedPortletModes,
 			supportedWindowStates, supportedLocales, resourceBundle, titles,

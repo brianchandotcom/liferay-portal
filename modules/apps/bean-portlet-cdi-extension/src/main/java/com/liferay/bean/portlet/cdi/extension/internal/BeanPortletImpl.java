@@ -25,12 +25,14 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -47,11 +49,45 @@ import javax.xml.namespace.QName;
 /**
  * @author Neil Griffin
  */
-public abstract class BaseBeanPortletImpl implements BeanPortlet {
+public class BeanPortletImpl implements BeanPortlet {
 
-	public BaseBeanPortletImpl(
-		Set<BeanMethod> beanMethods, Set<QName> supportedProcessingEvents,
-		Set<QName> supportedPublishingEvents) {
+	public BeanPortletImpl(
+		String portletName, Set<BeanMethod> beanMethods,
+		Map<String, String> displayNames, String portletClassName,
+		Map<String, String> initParams, int expirationCache,
+		Map<String, Set<String>> supportedPortletModes,
+		Map<String, Set<String>> supportedWindowStates,
+		Set<String> supportedLocales, String resourceBundle,
+		Map<String, String> titles, Map<String, String> shortTitles,
+		Map<String, String> keywords, Map<String, String> descriptions,
+		Map<String, Preference> preferences, String preferencesValidator,
+		Map<String, String> securityRoleRefs,
+		Set<QName> supportedProcessingEvents,
+		Set<QName> supportedPublishingEvents,
+		Set<String> supportedPublicRenderParameters,
+		Map<String, List<String>> containerRuntimeOptions,
+		Set<PortletDependency> portletDependencies, boolean asyncSupported,
+		boolean multiPartSupported, int multiPartFileSizeThreshold,
+		String multiPartLocation, long multiPartMaxFileSize,
+		long multiPartMaxRequestSize, String displayCategory,
+		Map<String, Set<String>> liferayConfiguration) {
+
+		_portletName = portletName;
+		_displayNames = displayNames;
+		_portletClassName = portletClassName;
+		_initParams = initParams;
+		_expirationCache = expirationCache;
+		_supportedPortletModes = supportedPortletModes;
+		_supportedWindowStates = supportedWindowStates;
+		_supportedLocales = supportedLocales;
+		_resourceBundle = resourceBundle;
+		_titles = titles;
+		_shortTitles = shortTitles;
+		_keywords = keywords;
+		_descriptions = descriptions;
+		_preferences = preferences;
+		_preferencesValidator = preferencesValidator;
+		_securityRoleRefs = securityRoleRefs;
 
 		for (BeanMethod beanMethod : beanMethods) {
 			_beanMethods.compute(
@@ -142,6 +178,40 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 		}
 
 		_supportedPublishingEvents = supportedPublishingEvents;
+
+		_supportedPublicRenderParameters = supportedPublicRenderParameters;
+		_containerRuntimeOptions = containerRuntimeOptions;
+		_portletDependencies = portletDependencies;
+		_asyncSupported = asyncSupported;
+		_multiPartSupported = multiPartSupported;
+		_multiPartFileSizeThreshold = multiPartFileSizeThreshold;
+		_multiPartLocation = multiPartLocation;
+		_multiPartMaxFileSize = multiPartMaxFileSize;
+		_multiPartMaxRequestSize = multiPartMaxRequestSize;
+		_displayCategory = displayCategory;
+		_liferayConfiguration = liferayConfiguration;
+	}
+
+	public BeanPortletImpl(
+		String portletName, Set<BeanMethod> beanMethods, String displayCategory,
+		Map<String, Set<String>> liferayConfiguration) {
+
+		this(
+			portletName, beanMethods, Collections.emptyMap(), null,
+			Collections.emptyMap(), 0,
+			Collections.singletonMap(
+				"text/html", Collections.singleton("view")),
+			Collections.singletonMap(
+				"text/html",
+				new LinkedHashSet<>(
+					Arrays.asList("normal", "minimized", "maximized"))),
+			Collections.emptySet(), null, Collections.emptyMap(),
+			Collections.emptyMap(), Collections.emptyMap(),
+			Collections.emptyMap(), Collections.emptyMap(), null,
+			Collections.emptyMap(), new HashSet<QName>(), new HashSet<QName>(),
+			Collections.emptySet(), Collections.emptyMap(),
+			Collections.emptySet(), false, false, 0, null, -1, -1,
+			displayCategory, liferayConfiguration);
 	}
 
 	@Override
@@ -150,13 +220,148 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 	}
 
 	@Override
+	public Map<String, List<String>> getContainerRuntimeOptions() {
+		return _containerRuntimeOptions;
+	}
+
+	@Override
+	public Map<String, String> getDescriptions() {
+		return _descriptions;
+	}
+
+	@Override
+	public String getDisplayCategory() {
+		return _displayCategory;
+	}
+
+	@Override
+	public Map<String, String> getDisplayNames() {
+		return _displayNames;
+	}
+
+	@Override
+	public int getExpirationCache() {
+		return _expirationCache;
+	}
+
+	@Override
+	public Map<String, String> getInitParams() {
+		return _initParams;
+	}
+
+	@Override
+	public Map<String, String> getKeywords() {
+		return _keywords;
+	}
+
+	@Override
+	public Map<String, Set<String>> getLiferayConfiguration() {
+		return _liferayConfiguration;
+	}
+
+	@Override
+	public int getMultiPartFileSizeThreshold() {
+		return _multiPartFileSizeThreshold;
+	}
+
+	@Override
+	public String getMultiPartLocation() {
+		return _multiPartLocation;
+	}
+
+	@Override
+	public long getMultiPartMaxFileSize() {
+		return _multiPartMaxFileSize;
+	}
+
+	@Override
+	public long getMultiPartMaxRequestSize() {
+		return _multiPartMaxRequestSize;
+	}
+
+	@Override
+	public String getPortletClassName() {
+		return _portletClassName;
+	}
+
+	@Override
+	public Set<PortletDependency> getPortletDependencies() {
+		return _portletDependencies;
+	}
+
+	@Override
+	public String getPortletName() {
+		return _portletName;
+	}
+
+	@Override
+	public Map<String, Preference> getPreferences() {
+		return _preferences;
+	}
+
+	@Override
+	public String getPreferencesValidator() {
+		return _preferencesValidator;
+	}
+
+	@Override
+	public String getResourceBundle() {
+		return _resourceBundle;
+	}
+
+	@Override
+	public Map<String, String> getSecurityRoleRefs() {
+		return _securityRoleRefs;
+	}
+
+	@Override
+	public Map<String, String> getShortTitles() {
+		return _shortTitles;
+	}
+
+	@Override
+	public Set<String> getSupportedLocales() {
+		return _supportedLocales;
+	}
+
+	@Override
+	public Map<String, Set<String>> getSupportedPortletModes() {
+		return _supportedPortletModes;
+	}
+
+	@Override
 	public Set<QName> getSupportedProcessingEvents() {
 		return _supportedProcessingEvents;
 	}
 
 	@Override
+	public Set<String> getSupportedPublicRenderParameters() {
+		return _supportedPublicRenderParameters;
+	}
+
+	@Override
 	public Set<QName> getSupportedPublishingEvents() {
 		return _supportedPublishingEvents;
+	}
+
+	@Override
+	public Map<String, Set<String>> getSupportedWindowStates() {
+		return _supportedWindowStates;
+	}
+
+	@Override
+	public Map<String, String> getTitles() {
+		return _titles;
+	}
+
+	@Override
+	public boolean isAsyncSupported() {
+		return _asyncSupported;
+	}
+
+	@Override
+	public boolean isMultiPartSupported() {
+		return _multiPartSupported;
 	}
 
 	public Dictionary<String, Object> toDictionary(BeanApp beanApp) {
@@ -664,9 +869,36 @@ public abstract class BaseBeanPortletImpl implements BeanPortlet {
 
 	private static final String _ENGLISH_EN = Locale.ENGLISH.getLanguage();
 
+	private final boolean _asyncSupported;
 	private final EnumMap<MethodType, List<BeanMethod>> _beanMethods =
 		new EnumMap<>(MethodType.class);
+	private final Map<String, List<String>> _containerRuntimeOptions;
+	private final Map<String, String> _descriptions;
+	private final String _displayCategory;
+	private final Map<String, String> _displayNames;
+	private final int _expirationCache;
+	private final Map<String, String> _initParams;
+	private final Map<String, String> _keywords;
+	private final Map<String, Set<String>> _liferayConfiguration;
+	private final int _multiPartFileSizeThreshold;
+	private final String _multiPartLocation;
+	private final long _multiPartMaxFileSize;
+	private final long _multiPartMaxRequestSize;
+	private final boolean _multiPartSupported;
+	private final String _portletClassName;
+	private final Set<PortletDependency> _portletDependencies;
+	private final String _portletName;
+	private final Map<String, Preference> _preferences;
+	private final String _preferencesValidator;
+	private final String _resourceBundle;
+	private final Map<String, String> _securityRoleRefs;
+	private final Map<String, String> _shortTitles;
+	private final Set<String> _supportedLocales;
+	private final Map<String, Set<String>> _supportedPortletModes;
 	private final Set<QName> _supportedProcessingEvents;
+	private final Set<String> _supportedPublicRenderParameters;
 	private final Set<QName> _supportedPublishingEvents;
+	private final Map<String, Set<String>> _supportedWindowStates;
+	private final Map<String, String> _titles;
 
 }

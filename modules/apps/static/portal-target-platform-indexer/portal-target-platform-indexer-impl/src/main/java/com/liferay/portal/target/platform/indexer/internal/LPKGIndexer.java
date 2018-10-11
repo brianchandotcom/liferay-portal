@@ -14,9 +14,9 @@
 
 package com.liferay.portal.target.platform.indexer.internal;
 
-import com.liferay.portal.target.platform.indexer.Indexer;
-
 import aQute.bnd.osgi.repository.SimpleIndexer;
+
+import com.liferay.portal.target.platform.indexer.Indexer;
 
 import java.io.File;
 import java.io.IOException;
@@ -92,11 +92,13 @@ public class LPKGIndexer implements Indexer {
 				return;
 			}
 
-			new SimpleIndexer().files(files)
-				.base(tempDir.toURI())
-				.compress(false)
-				.name(_getRepositoryName(_lpkgFile))
-				.index(outputStream);
+			SimpleIndexer simpleIndexer = new SimpleIndexer();
+
+			simpleIndexer.files(files);
+			simpleIndexer.base(tempDir.toURI());
+			simpleIndexer.compress(false);
+			simpleIndexer.name(_getRepositoryName(_lpkgFile));
+			simpleIndexer.index(outputStream);
 		}
 		finally {
 			PathUtil.deltree(tempPath);

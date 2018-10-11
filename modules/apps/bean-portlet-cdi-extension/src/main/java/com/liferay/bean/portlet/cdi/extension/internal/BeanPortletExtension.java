@@ -312,7 +312,7 @@ public class BeanPortletExtension implements Extension {
 			preferencesValidatorFunction, descriptorDisplayCategories,
 			descriptorLiferayConfigurations);
 
-		_addBeanBeanPortletsFromScannedMethods(
+		_addBeanPortletsFromScannedMethods(
 			portletBeanMethodsFunction, descriptorDisplayCategories,
 			descriptorLiferayConfigurations);
 
@@ -471,47 +471,6 @@ public class BeanPortletExtension implements Extension {
 		}
 
 		_resourceBundleLoaderRegistrations.clear();
-	}
-
-	private void _addBeanBeanPortletsFromScannedMethods(
-		Function<String, Set<BeanMethod>> portletBeanMethodsFunction,
-		Map<String, String> descriptorDisplayCategories,
-		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations) {
-
-		Set<String> portletNames = new HashSet<>();
-
-		for (ScannedMethod scannedMethod : _scannedMethods) {
-			Collections.addAll(portletNames, scannedMethod.getPortletNames());
-		}
-
-		for (String portletName : portletNames) {
-			if (Objects.equals("*", portletName)) {
-				continue;
-			}
-
-			BeanPortlet beanPortlet = _beanPortlets.get(portletName);
-
-			if (beanPortlet == null) {
-				Map<MethodType, List<BeanMethod>> beanMethodMap =
-					BeanMethodIndexUtil.indexBeanMethods(
-						portletBeanMethodsFunction.apply(portletName));
-
-				Set<QName> supportedProcessingEvents = new HashSet<>();
-				Set<QName> supportedPublishingEvents = new HashSet<>();
-
-				BeanMethodIndexUtil.scanSupportedEvents(
-					beanMethodMap, supportedProcessingEvents,
-					supportedPublishingEvents);
-
-				beanPortlet = new BeanPortletImpl(
-					portletName, beanMethodMap, supportedProcessingEvents,
-					supportedPublishingEvents,
-					descriptorDisplayCategories.get(portletName),
-					descriptorLiferayConfigurations.get(portletName));
-
-				_beanPortlets.put(portletName, beanPortlet);
-			}
-		}
 	}
 
 	private void _addBeanFiltersFromAnnotatedClasses() {
@@ -1170,6 +1129,47 @@ public class BeanPortletExtension implements Extension {
 					supportedPublishingEvents,
 					descriptorDisplayCategories.get(portletName),
 					entry.getValue());
+
+				_beanPortlets.put(portletName, beanPortlet);
+			}
+		}
+	}
+
+	private void _addBeanPortletsFromScannedMethods(
+		Function<String, Set<BeanMethod>> portletBeanMethodsFunction,
+		Map<String, String> descriptorDisplayCategories,
+		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations) {
+
+		Set<String> portletNames = new HashSet<>();
+
+		for (ScannedMethod scannedMethod : _scannedMethods) {
+			Collections.addAll(portletNames, scannedMethod.getPortletNames());
+		}
+
+		for (String portletName : portletNames) {
+			if (Objects.equals("*", portletName)) {
+				continue;
+			}
+
+			BeanPortlet beanPortlet = _beanPortlets.get(portletName);
+
+			if (beanPortlet == null) {
+				Map<MethodType, List<BeanMethod>> beanMethodMap =
+					BeanMethodIndexUtil.indexBeanMethods(
+						portletBeanMethodsFunction.apply(portletName));
+
+				Set<QName> supportedProcessingEvents = new HashSet<>();
+				Set<QName> supportedPublishingEvents = new HashSet<>();
+
+				BeanMethodIndexUtil.scanSupportedEvents(
+					beanMethodMap, supportedProcessingEvents,
+					supportedPublishingEvents);
+
+				beanPortlet = new BeanPortletImpl(
+					portletName, beanMethodMap, supportedProcessingEvents,
+					supportedPublishingEvents,
+					descriptorDisplayCategories.get(portletName),
+					descriptorLiferayConfigurations.get(portletName));
 
 				_beanPortlets.put(portletName, beanPortlet);
 			}

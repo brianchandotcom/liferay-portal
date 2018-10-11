@@ -168,6 +168,9 @@ public class PortletDescriptorParser {
 			PortletScannerUtil.scanNonannotatedBeanMethods(
 				beanManager, portletClass, beanMethods);
 
+			Map<MethodType, List<BeanMethod>> beanMethodMap =
+				BeanMethodIndexUtil.indexBeanMethods(beanMethods);
+
 			String preferencesValidator = preferencesValidatorFunction.apply(
 				portletName);
 
@@ -180,7 +183,7 @@ public class PortletDescriptorParser {
 				portletName,
 				_readBeanPortlet(
 					portletElement, portletClassName, portletName, beanApp,
-					beanMethods, preferencesValidator, categoryName,
+					beanMethodMap, preferencesValidator, categoryName,
 					liferayConfiguration));
 		}
 	}
@@ -336,7 +339,7 @@ public class PortletDescriptorParser {
 
 	private static BeanPortlet _readBeanPortlet(
 		Element portletElement, String portletClassName, String portletName,
-		BeanApp beanApp, Set<BeanMethod> beanMethods,
+		BeanApp beanApp, Map<MethodType, List<BeanMethod>> beanMethodMap,
 		String preferencesValidator, String categoryName,
 		Map<String, Set<String>> liferayConfiguration) {
 
@@ -522,6 +525,10 @@ public class PortletDescriptorParser {
 			supportedPublishingEvents.add(qName);
 		}
 
+		BeanMethodIndexUtil.scanSupportedEvents(
+			beanMethodMap, supportedProcessingEvents,
+			supportedPublishingEvents);
+
 		Map<String, PublicRenderParameter> publicRenderParameters =
 			beanApp.getPublicRenderParameters();
 
@@ -601,13 +608,6 @@ public class PortletDescriptorParser {
 					multipartConfigElement.elementText("max-request-size"),
 					-1));
 		}
-
-		Map<MethodType, List<BeanMethod>> beanMethodMap =
-			BeanMethodIndexUtil.indexBeanMethods(beanMethods);
-
-		BeanMethodIndexUtil.scanSupportedEvents(
-			beanMethodMap, supportedProcessingEvents,
-			supportedPublishingEvents);
 
 		return new BeanPortletImpl(
 			portletName, beanMethodMap, displayNames, portletClassName,

@@ -145,6 +145,20 @@ public class PortletDescriptorParser {
 		Map<String, Map<String, Set<String>>> liferayConfigurations) {
 
 		for (Element portletElement : rootElement.elements("portlet")) {
+			String portletClassName = GetterUtil.getString(
+				portletElement.elementText("portlet-class"));
+
+			Class<?> portletClass = null;
+
+			try {
+				portletClass = bundle.loadClass(portletClassName);
+			}
+			catch (ClassNotFoundException cnfe) {
+				_log.error("Unable to load portlet-class " + portletClassName);
+
+				continue;
+			}
+
 			String portletName = portletElement.elementText("portlet-name");
 
 			Set<BeanMethod> beanMethods = new HashSet<>(
@@ -158,14 +172,12 @@ public class PortletDescriptorParser {
 			Map<String, Set<String>> liferayConfiguration =
 				liferayConfigurations.get(portletName);
 
-			BeanPortlet beanPortlet = _readBeanPortlet(
-				bundle, portletElement, portletName, beanApp, beanManager,
-				beanMethods, preferencesValidator, categoryName,
-				liferayConfiguration);
-
-			if (beanPortlet != null) {
-				beanPortlets.put(beanPortlet.getPortletName(), beanPortlet);
-			}
+			beanPortlets.put(
+				portletName,
+				_readBeanPortlet(
+					portletElement, portletClass, portletName, beanApp,
+					beanManager, beanMethods, preferencesValidator,
+					categoryName, liferayConfiguration));
 		}
 	}
 
@@ -319,16 +331,13 @@ public class PortletDescriptorParser {
 	}
 
 	private static BeanPortlet _readBeanPortlet(
-		Bundle bundle, Element portletElement, String portletName,
+		Element portletElement, Class<?> portletClass, String portletName,
 		BeanApp beanApp, BeanManager beanManager, Set<BeanMethod> beanMethods,
 		String preferencesValidator, String categoryName,
 		Map<String, Set<String>> liferayConfiguration) {
 
 		Map<String, String> displayNames = _toLocaleMap(
 			portletElement.elements("display-name"));
-
-		String portletClassName = GetterUtil.getString(
-			portletElement.elementText("portlet-class"));
 
 		Map<String, String> initParams = new HashMap<>();
 
@@ -594,17 +603,6 @@ public class PortletDescriptorParser {
 				multiPartMaxRequestSize);
 		}
 
-		Class<?> portletClass = null;
-
-		try {
-			portletClass = bundle.loadClass(portletClassName);
-		}
-		catch (ClassNotFoundException cnfe) {
-			_log.error("Unable to load portlet-class " + portletClassName);
-
-			return null;
-		}
-
 		PortletScannerUtil.scanNonannotatedBeanMethods(
 			beanManager, portletClass, beanMethods);
 
@@ -614,7 +612,7 @@ public class PortletDescriptorParser {
 				supportedPublishingEvents);
 
 		return new BeanPortletImpl(
-			portletName, beanMethodMap, displayNames, portletClassName,
+			portletName, beanMethodMap, displayNames, portletClass.getName(),
 			initParams, expirationCache, supportedPortletModes,
 			supportedWindowStates, supportedLocales, resourceBundle, titles,
 			shortTitles, keywords, descriptions, preferences,

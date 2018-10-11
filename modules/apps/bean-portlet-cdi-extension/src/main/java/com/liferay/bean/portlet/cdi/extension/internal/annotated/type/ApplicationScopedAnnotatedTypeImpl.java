@@ -88,7 +88,7 @@ public class ApplicationScopedAnnotatedTypeImpl<X>
 		return false;
 	}
 
-	private static final ApplicationScoped _applicationScoped =
+	private static final Annotation _applicationScoped =
 		new ApplicationScoped() {
 
 			@Override

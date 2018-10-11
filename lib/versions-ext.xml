@@ -2058,6 +2058,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/portal/jersey-common.jar</file-name>
+				<version>2.26</version>
+				<project-name>Jersey core common packages</project-name>
+				<project-url>https://jersey.github.io/</project-url>
+				<licenses>
+					<license>
+						<license-name>CDDL 1.1</license-name>
+						<license-url>https://oss.oracle.com/licenses/CDDL+GPL-1.1</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/portal/jfreechart.jar</file-name>
 				<version>1.0.13</version>
 				<project-name>JFreeChart</project-name>

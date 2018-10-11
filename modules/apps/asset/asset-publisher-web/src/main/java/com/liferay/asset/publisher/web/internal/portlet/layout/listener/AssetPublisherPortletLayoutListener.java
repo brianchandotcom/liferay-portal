@@ -95,7 +95,7 @@ public class AssetPublisherPortletLayoutListener
 				_assetPublisherWebUtil.getSubscriptionClassPK(
 					ownerId, ownerType, plid, portletId));
 
-			_removeAssetListUsage(plid, portletId);
+			_removeAssetListEntryUsage(plid, portletId);
 		}
 		catch (Exception e) {
 			throw new PortletLayoutListenerException(e);
@@ -126,7 +126,7 @@ public class AssetPublisherPortletLayoutListener
 			_addAssetListEntryUsage(assetListEntryId, plid, portletId);
 		}
 		else if (!Objects.equals(selectionStyle, "asset-list")) {
-			_removeAssetListUsage(plid, portletId);
+			_removeAssetListEntryUsage(plid, portletId);
 		}
 	}
 
@@ -197,7 +197,7 @@ public class AssetPublisherPortletLayoutListener
 		}
 	}
 
-	private void _removeAssetListUsage(long plid, String portletId) {
+	private void _removeAssetListEntryUsage(long plid, String portletId) {
 		AssetListEntryUsage assetListEntryUsage =
 			_assetListEntryUsageLocalService.fetchAssetListEntryUsage(
 				_portal.getClassNameId(Layout.class), plid, portletId);

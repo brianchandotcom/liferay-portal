@@ -22,9 +22,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
-import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
-import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionNameComparator;
 import com.liferay.petra.string.StringBundler;
@@ -349,19 +348,12 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public long getFirstLayoutPageTemplateCollectionId() {
-		LayoutPageTemplateCollectionService
-			layoutPageTemplateCollectionService =
-				(LayoutPageTemplateCollectionService)_liferayPortletRequest.
-					getAttribute(
-						LayoutAdminWebKeys.
-							LAYOUT_PAGE_TEMPLATE_COLLECTION_SERVICE);
-
 		LayoutPageTemplateCollectionNameComparator
 			layoutPageTemplateCollectionNameComparator =
 				new LayoutPageTemplateCollectionNameComparator(true);
 
 		List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
-			layoutPageTemplateCollectionService.
+			LayoutPageTemplateCollectionLocalServiceUtil.
 				getLayoutPageTemplateCollections(
 					getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					layoutPageTemplateCollectionNameComparator);

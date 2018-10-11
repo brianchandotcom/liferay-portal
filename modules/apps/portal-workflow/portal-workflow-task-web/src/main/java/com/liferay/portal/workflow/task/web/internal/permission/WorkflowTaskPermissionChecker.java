@@ -150,8 +150,6 @@ public class WorkflowTaskPermissionChecker {
 
 		String className = MapUtil.getString(
 			optionalAttributes, WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME);
-		long classPK = MapUtil.getLong(
-			optionalAttributes, WorkflowConstants.CONTEXT_ENTRY_CLASS_PK);
 
 		WorkflowHandler<?> workflowHandler =
 			WorkflowHandlerRegistryUtil.getWorkflowHandler(className);
@@ -159,6 +157,9 @@ public class WorkflowTaskPermissionChecker {
 		if (workflowHandler == null) {
 			return false;
 		}
+
+		long classPK = MapUtil.getLong(
+			optionalAttributes, WorkflowConstants.CONTEXT_ENTRY_CLASS_PK);
 
 		try {
 			AssetRenderer<?> assetRenderer = workflowHandler.getAssetRenderer(

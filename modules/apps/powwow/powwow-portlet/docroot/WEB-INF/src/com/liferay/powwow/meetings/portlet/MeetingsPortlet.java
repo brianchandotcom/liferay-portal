@@ -138,16 +138,10 @@ public class MeetingsPortlet extends MVCPortlet {
 
 		long powwowMeetingId = ParamUtil.getLong(
 			actionRequest, "powwowMeetingId");
-		long powwowParticipantId = ParamUtil.getLong(
-			actionRequest, "powwowParticipantId");
 
 		String hash = ParamUtil.getString(actionRequest, "hash");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		PowwowParticipant powwowParticipant =
-			PowwowParticipantLocalServiceUtil.fetchPowwowParticipant(
-				powwowParticipantId);
 
 		if (powwowMeetingId > 0) {
 			if (!hash.equals(PowwowUtil.getHash(powwowMeetingId))) {
@@ -158,6 +152,13 @@ public class MeetingsPortlet extends MVCPortlet {
 				return;
 			}
 		}
+
+		long powwowParticipantId = ParamUtil.getLong(
+			actionRequest, "powwowParticipantId");
+
+		PowwowParticipant powwowParticipant =
+			PowwowParticipantLocalServiceUtil.fetchPowwowParticipant(
+				powwowParticipantId);
 
 		try {
 			PowwowMeeting powwowMeeting =

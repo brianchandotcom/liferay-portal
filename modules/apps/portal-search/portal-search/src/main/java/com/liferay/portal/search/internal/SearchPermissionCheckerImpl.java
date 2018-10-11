@@ -350,9 +350,6 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			return null;
 		}
 
-		Role organizationUserRole = roleLocalService.getRole(
-			companyId, RoleConstants.ORGANIZATION_USER);
-
 		Collection<Group> groups = userBag.getGroups();
 
 		List<UsersGroupIdRoles> usersGroupIdsRoles = new ArrayList<>(
@@ -372,6 +369,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			return null;
 		}
 
+		Role organizationUserRole = roleLocalService.getRole(
+			companyId, RoleConstants.ORGANIZATION_USER);
 		Role siteMemberRole = roleLocalService.getRole(
 			companyId, RoleConstants.SITE_MEMBER);
 

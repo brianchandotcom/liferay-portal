@@ -799,11 +799,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			ActionRequest actionRequest, Portlet portlet)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
 		PortletPreferences portletPreferences = actionRequest.getPreferences();
 
 		String scopeType = GetterUtil.getString(
@@ -813,6 +808,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			return null;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		String scopeName = null;
 
 		if (scopeType.equals("company")) {
@@ -821,6 +819,8 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		else if (scopeType.equals("layout")) {
 			String scopeLayoutUuid = GetterUtil.getString(
 				portletPreferences.getValue("lfrScopeLayoutUuid", null));
+
+			Layout layout = themeDisplay.getLayout();
 
 			Layout scopeLayout =
 				_layoutLocalService.fetchLayoutByUuidAndGroupId(

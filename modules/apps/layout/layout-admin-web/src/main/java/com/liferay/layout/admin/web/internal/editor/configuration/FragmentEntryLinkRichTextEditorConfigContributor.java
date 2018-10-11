@@ -68,12 +68,11 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append(getAllowedContentText());
-		sb.append(" a[*](*); div[*](*); img[*](*){*}; ");
+		sb.append(" a[*](*); div[*](*){text-align}; img[*](*){*}; ");
 		sb.append(getAllowedContentLists());
-		sb.append(" p {text-align}; ");
 		sb.append(getAllowedContentTable());
 		sb.append(" span[*](*){*}; ");
 
@@ -105,7 +104,7 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 	}
 
 	protected String getAllowedContentText() {
-		return "b code em h1 h2 h3 h4 h5 h6 hr i pre strong u;";
+		return "b code em h1 h2 h3 h4 h5 h6 hr i p pre strong u [*]{*};";
 	}
 
 	protected String getExtraPluginsLists() {
@@ -296,6 +295,11 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		jsonArray.put("ol");
 		jsonArray.put("ul");
 		jsonArray.put("linkBrowse");
+
+		jsonArray.put("paragraphLeft");
+		jsonArray.put("paragraphCenter");
+		jsonArray.put("paragraphRight");
+		jsonArray.put("paragraphJustify");
 
 		jsonObject.put("buttons", jsonArray);
 

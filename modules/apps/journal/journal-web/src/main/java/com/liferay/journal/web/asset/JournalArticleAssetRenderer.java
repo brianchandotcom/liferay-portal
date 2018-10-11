@@ -14,9 +14,7 @@
 
 package com.liferay.journal.web.asset;
 
-import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
-import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
-import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
+import com.liferay.asset.display.page.util.AssetDisplayPageHelper;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
@@ -32,8 +30,6 @@ import com.liferay.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -385,27 +381,9 @@ public class JournalArticleAssetRenderer
 		String linkToLayoutUuid = GetterUtil.getString(
 			portletSetup.getValue("portletSetupLinkToLayoutUuid", null));
 
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
-
-		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
-			JournalArticle.class.getName(), getClassPK());
-
-		AssetDisplayPageEntry assetDisplayPageEntry =
-			AssetDisplayPageEntryLocalServiceUtil.fetchAssetDisplayPageEntry(
-				assetEntry.getGroupId(), assetEntry.getClassNameId(),
-				getClassPK());
-
 		Group group = themeDisplay.getScopeGroup();
 
-		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
-			LayoutPageTemplateEntryServiceUtil.
-				fetchDefaultLayoutPageTemplateEntry(
-					group.getGroupId(), assetEntry.getClassNameId(),
-					assetEntry.getClassTypeId());
-
-		if (_isShowDisplayPage(
-				_article, assetDisplayPageEntry,
-				defaultLayoutPageTemplateEntry) &&
+		if (_isShowDisplayPage(group.getGroupId(), _article) &&
 			Validator.isNull(linkToLayoutUuid)) {
 
 			if (group.getGroupId() != _article.getGroupId()) {
@@ -610,26 +588,22 @@ public class JournalArticleAssetRenderer
 	protected void setJournalServiceConfiguration() {
 	}
 
-	private boolean _isShowDisplayPage(
-		JournalArticle article, AssetDisplayPageEntry assetDisplayPageEntry,
-		LayoutPageTemplateEntry defaultAssetDisplayPageEntry) {
+	private boolean _isShowDisplayPage(long groupId, JournalArticle article)
+		throws PortalException {
 
-		if (Validator.isNull(article.getLayoutUuid()) &&
-			(assetDisplayPageEntry == null)) {
+		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
+		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+			JournalArticle.class.getName(), getClassPK());
+
+		boolean hasDisplayPage = AssetDisplayPageHelper.hasAssetDisplayPage(
+			groupId, assetEntry);
+
+		if (Validator.isNull(article.getLayoutUuid()) && !hasDisplayPage) {
 			return false;
 		}
 
-		if ((assetDisplayPageEntry != null) &&
-			(Objects.equals(
-				assetDisplayPageEntry.getType(),
-				AssetDisplayPageConstants.TYPE_SPECIFIC) ||
-			 (defaultAssetDisplayPageEntry != null))) {
-
-			return true;
-		}
-
-		return false;
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

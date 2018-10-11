@@ -14,9 +14,7 @@
 
 package com.liferay.journal.web.internal.display.context;
 
-import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
-import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
-import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
+import com.liferay.asset.display.page.util.AssetDisplayPageHelper;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
@@ -1408,7 +1406,9 @@ public class JournalDisplayContext {
 		}
 	}
 
-	private boolean _isShowViewContentURL(JournalArticle article) {
+	private boolean _isShowViewContentURL(JournalArticle article)
+		throws PortalException {
+
 		if (article == null) {
 			return false;
 		}
@@ -1422,38 +1422,16 @@ public class JournalDisplayContext {
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			JournalArticle.class.getName(), classPK);
 
-		if (assetEntry == null) {
-			return false;
-		}
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			AssetDisplayPageHelper.getAssetDisplayPageLayoutPageTemplateEntry(
+				_themeDisplay.getScopeGroupId(), assetEntry);
 
-		AssetDisplayPageEntry assetDisplayPageEntry =
-			AssetDisplayPageEntryLocalServiceUtil.fetchAssetDisplayPageEntry(
-				assetEntry.getGroupId(), assetEntry.getClassNameId(),
-				assetEntry.getClassPK());
-
-		if ((assetDisplayPageEntry == null) ||
-			(assetDisplayPageEntry.getType() ==
-				AssetDisplayPageConstants.TYPE_NONE)) {
-
-			return false;
-		}
-
-		if (assetDisplayPageEntry.getType() ==
-				AssetDisplayPageConstants.TYPE_SPECIFIC) {
-
+		if (layoutPageTemplateEntry != null) {
 			return true;
 		}
 
 		Map<Long, LayoutPageTemplateEntry> defaultLayoutPageTemplateEntriesMap =
 			_getDefaultLayoutPageTemplateEntriesMap();
-
-		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
-			defaultLayoutPageTemplateEntriesMap.get(
-				assetEntry.getClassTypeId());
-
-		if (defaultLayoutPageTemplateEntry != null) {
-			return true;
-		}
 
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
 			_themeDisplay.getSiteGroupId(),
@@ -1464,11 +1442,10 @@ public class JournalDisplayContext {
 			return false;
 		}
 
-		defaultLayoutPageTemplateEntry =
-			defaultLayoutPageTemplateEntriesMap.get(
-				ddmStructure.getStructureId());
+		layoutPageTemplateEntry = defaultLayoutPageTemplateEntriesMap.get(
+			ddmStructure.getStructureId());
 
-		if (defaultLayoutPageTemplateEntry != null) {
+		if (layoutPageTemplateEntry != null) {
 			return true;
 		}
 

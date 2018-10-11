@@ -49,7 +49,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
+import com.liferay.portal.spring.aop.AdvisedSupportUtil;
 import com.liferay.portlet.exportimport.staging.ProxiedLayoutsThreadLocal;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 
@@ -83,7 +83,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 	}
 
 	public void afterPropertiesSet() throws Exception {
-		AdvisedSupport advisedSupport = ServiceBeanAopProxy.getAdvisedSupport(
+		AdvisedSupport advisedSupport = AdvisedSupportUtil.getAdvisedSupport(
 			_beanFactory.getBean(LayoutLocalService.class.getName()));
 
 		advisedSupport.setTarget(

@@ -39,7 +39,7 @@ public class ServiceWrapperProxyUtil {
 				springServiceProxy + " is not a Spring service proxy");
 		}
 
-		AdvisedSupport advisedSupport = ServiceBeanAopProxy.getAdvisedSupport(
+		AdvisedSupport advisedSupport = AdvisedSupportUtil.getAdvisedSupport(
 			springServiceProxy);
 
 		final Object targetService = advisedSupport.getTarget();

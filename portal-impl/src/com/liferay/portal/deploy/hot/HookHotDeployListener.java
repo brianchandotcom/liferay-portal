@@ -118,7 +118,7 @@ import com.liferay.portal.repository.util.ExternalRepositoryFactoryImpl;
 import com.liferay.portal.security.auth.AuthVerifierPipeline;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.servlet.taglib.ui.DeprecatedFormNavigatorEntry;
-import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
+import com.liferay.portal.spring.aop.AdvisedSupportUtil;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.util.JavaScriptBundleUtil;
 import com.liferay.portal.util.PortalInstances;
@@ -1774,7 +1774,7 @@ public class HookHotDeployListener
 			Constructor<?> serviceImplConstructor, Object serviceProxy)
 		throws Exception {
 
-		AdvisedSupport advisedSupport = ServiceBeanAopProxy.getAdvisedSupport(
+		AdvisedSupport advisedSupport = AdvisedSupportUtil.getAdvisedSupport(
 			serviceProxy);
 
 		Object previousService = advisedSupport.getTarget();
@@ -2233,7 +2233,7 @@ public class HookHotDeployListener
 
 		if (ProxyUtil.isProxyClass(proxyClass)) {
 			AdvisedSupport advisedSupport =
-				ServiceBeanAopProxy.getAdvisedSupport(serviceProxy);
+				AdvisedSupportUtil.getAdvisedSupport(serviceProxy);
 
 			Object previousService = advisedSupport.getTarget();
 

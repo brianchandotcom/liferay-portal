@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.AdvisedSupportProxy;
-import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
+import com.liferay.portal.spring.aop.AdvisedSupportUtil;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -75,7 +75,7 @@ public class ServiceJSONWebServiceScannerStrategy
 
 			if (invocationHandler instanceof AdvisedSupportProxy) {
 				AdvisedSupport advisedSupport =
-					ServiceBeanAopProxy.getAdvisedSupport(service);
+					AdvisedSupportUtil.getAdvisedSupport(service);
 
 				service = advisedSupport.getTarget();
 			}

@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.service.impl.PortletPreferencesLocalServiceImpl;
 import com.liferay.portal.service.impl.SynchronousInvocationHandler;
 import com.liferay.portal.service.test.ServiceTestUtil;
-import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
+import com.liferay.portal.spring.aop.AdvisedSupportUtil;
 import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
 import com.liferay.portal.test.rule.ExpectedDBType;
 import com.liferay.portal.test.rule.ExpectedLog;
@@ -80,7 +80,7 @@ public class PortletPreferencesLocalServiceConcurrentTest {
 			_threadCount = PropsValues.RETRY_ADVICE_MAX_RETRIES;
 		}
 
-		AdvisedSupport advisedSupport = ServiceBeanAopProxy.getAdvisedSupport(
+		AdvisedSupport advisedSupport = AdvisedSupportUtil.getAdvisedSupport(
 			PortletPreferencesLocalServiceUtil.getService());
 
 		final PortletPreferencesLocalServiceImpl

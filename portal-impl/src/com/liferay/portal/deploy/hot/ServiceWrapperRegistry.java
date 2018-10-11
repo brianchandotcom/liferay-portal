@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
+import com.liferay.portal.spring.aop.AdvisedSupportUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -148,7 +148,7 @@ public class ServiceWrapperRegistry {
 
 			try {
 				AdvisedSupport advisedSupport =
-					ServiceBeanAopProxy.getAdvisedSupport(serviceProxy);
+					AdvisedSupportUtil.getAdvisedSupport(serviceProxy);
 
 				serviceWrapper.setWrappedService((T)advisedSupport.getTarget());
 

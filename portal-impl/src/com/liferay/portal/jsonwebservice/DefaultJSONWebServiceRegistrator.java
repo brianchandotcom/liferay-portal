@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.aop.AdvisedSupportProxy;
-import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
+import com.liferay.portal.spring.aop.AdvisedSupportUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.InvocationHandler;
@@ -176,7 +176,7 @@ public class DefaultJSONWebServiceRegistrator
 
 			if (invocationHandler instanceof AdvisedSupportProxy) {
 				AdvisedSupport advisedSupport =
-					ServiceBeanAopProxy.getAdvisedSupport(service);
+					AdvisedSupportUtil.getAdvisedSupport(service);
 
 				service = advisedSupport.getTarget();
 			}

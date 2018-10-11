@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
+import com.liferay.portal.spring.aop.AdvisedSupportUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
@@ -116,7 +116,7 @@ public class ApplicationContextServicePublisherUtil {
 
 			if (ProxyUtil.isProxyClass(clazz)) {
 				AdvisedSupport advisedSupport =
-					ServiceBeanAopProxy.getAdvisedSupport(bean);
+					AdvisedSupportUtil.getAdvisedSupport(bean);
 
 				if (advisedSupport != null) {
 					Object target = advisedSupport.getTarget();

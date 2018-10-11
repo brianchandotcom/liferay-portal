@@ -139,7 +139,7 @@ public class ServiceBeanMethodInvocation
 
 			if (ProxyUtil.isProxyClass(argument.getClass())) {
 				AdvisedSupport advisedSupport =
-					ServiceBeanAopProxy.getAdvisedSupport(argument);
+					AdvisedSupportUtil.getAdvisedSupport(argument);
 
 				if (advisedSupport != null) {
 					argument = advisedSupport.getTarget();

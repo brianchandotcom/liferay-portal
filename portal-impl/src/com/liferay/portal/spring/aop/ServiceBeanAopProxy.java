@@ -29,20 +29,15 @@ import org.aopalliance.intercept.MethodInterceptor;
 public class ServiceBeanAopProxy
 	implements AdvisedSupportProxy, AopProxy, InvocationHandler {
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link AdvisedSupportUtil#
+	 *             getAdvisedSupport(Object)}
+	 */
+	@Deprecated
 	public static AdvisedSupport getAdvisedSupport(Object proxy)
 		throws Exception {
 
-		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
-			proxy);
-
-		if (invocationHandler instanceof AdvisedSupportProxy) {
-			AdvisedSupportProxy advisableSupportProxy =
-				(AdvisedSupportProxy)invocationHandler;
-
-			return advisableSupportProxy.getAdvisedSupport();
-		}
-
-		return null;
+		return AdvisedSupportUtil.getAdvisedSupport(proxy);
 	}
 
 	/**

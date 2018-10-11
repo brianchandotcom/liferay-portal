@@ -38,11 +38,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -101,58 +97,72 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 				return;
 			}
 
-			List<FragmentEntryLink> fragmentEntryLinks =
-				_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-					layout.getGroupId(),
-					_portal.getClassNameId(
-						LayoutPageTemplateEntry.class.getName()),
-					layoutPageTemplateEntryId);
-
-			Stream<FragmentEntryLink> stream = fragmentEntryLinks.stream();
-
-			Map<Long, FragmentEntryLink> fragmentEntryLinksMap = stream.collect(
-				Collectors.toMap(
-					FragmentEntryLink::getFragmentEntryLinkId,
-					fragmentEntryLink -> fragmentEntryLink));
-
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
 
-			JSONArray newStructureJSONArray = JSONFactoryUtil.createJSONArray();
-
 			for (int i = 0; i < structureJSONArray.length(); i++) {
-				FragmentEntryLink fragmentEntryLink = fragmentEntryLinksMap.get(
-					structureJSONArray.getLong(i));
+				JSONObject rowJSONObject = structureJSONArray.getJSONObject(i);
 
-				if (fragmentEntryLink == null) {
-					continue;
+				JSONArray columnsJSONArray = rowJSONObject.getJSONArray(
+					"columns");
+
+				for (int j = 0; j < columnsJSONArray.length(); j++) {
+					JSONObject columnJSONObject =
+						columnsJSONArray.getJSONObject(j);
+
+					JSONArray fragmentEntryLinkIdsJSONArray =
+						columnJSONObject.getJSONArray("fragmentEntryLinkIds");
+
+					JSONArray newFragmentEntryLinkIdsJSONArray =
+						JSONFactoryUtil.createJSONArray();
+
+					for (int k = 0; k < fragmentEntryLinkIdsJSONArray.length();
+						 k++) {
+
+						long fragmentEntryLinkId =
+							fragmentEntryLinkIdsJSONArray.getLong(k);
+
+						if (fragmentEntryLinkId <= 0) {
+							continue;
+						}
+
+						FragmentEntryLink fragmentEntryLink =
+							_fragmentEntryLinkLocalService.
+								fetchFragmentEntryLink(fragmentEntryLinkId);
+
+						if (fragmentEntryLink == null) {
+							continue;
+						}
+
+						FragmentEntryLink newFragmentEntryLink =
+							_fragmentEntryLinkLocalService.addFragmentEntryLink(
+								fragmentEntryLink.getUserId(),
+								fragmentEntryLink.getGroupId(),
+								fragmentEntryLink.getFragmentEntryLinkId(),
+								fragmentEntryLink.getFragmentEntryId(),
+								_portal.getClassNameId(Layout.class.getName()),
+								layout.getPlid(), fragmentEntryLink.getCss(),
+								fragmentEntryLink.getHtml(),
+								fragmentEntryLink.getJs(),
+								fragmentEntryLink.getEditableValues(),
+								fragmentEntryLink.getPosition(),
+								serviceContext);
+
+						newFragmentEntryLinkIdsJSONArray.put(
+							newFragmentEntryLink.getFragmentEntryLinkId());
+					}
+
+					columnJSONObject.put(
+						"fragmentEntryLinkIds",
+						newFragmentEntryLinkIdsJSONArray);
 				}
-
-				FragmentEntryLink newFragmentEntryLink =
-					_fragmentEntryLinkLocalService.addFragmentEntryLink(
-						fragmentEntryLink.getUserId(),
-						fragmentEntryLink.getGroupId(),
-						fragmentEntryLink.getFragmentEntryLinkId(),
-						fragmentEntryLink.getFragmentEntryId(),
-						_portal.getClassNameId(Layout.class.getName()),
-						layout.getPlid(), fragmentEntryLink.getCss(),
-						fragmentEntryLink.getHtml(), fragmentEntryLink.getJs(),
-						fragmentEntryLink.getEditableValues(),
-						fragmentEntryLink.getPosition(), serviceContext);
-
-				newStructureJSONArray.put(
-					newFragmentEntryLink.getFragmentEntryLinkId());
 			}
-
-			JSONObject newDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-			newDataJSONObject.put("structure", newStructureJSONArray);
 
 			_layoutPageTemplateStructureLocalService.
 				addLayoutPageTemplateStructure(
 					layout.getUserId(), layout.getGroupId(),
 					_portal.getClassNameId(Layout.class), layout.getPlid(),
-					newDataJSONObject.toString(), serviceContext);
+					dataJSONObject.toString(), serviceContext);
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {

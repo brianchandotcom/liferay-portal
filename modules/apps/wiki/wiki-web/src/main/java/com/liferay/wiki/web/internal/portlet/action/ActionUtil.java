@@ -370,8 +370,6 @@ public class ActionUtil {
 	public static List<WikiPage> getPages(PortletRequest portletRequest)
 		throws PortalException {
 
-		long nodeId = ParamUtil.getLong(portletRequest, "nodeId");
-
 		String[] titles = ParamUtil.getStringValues(
 			portletRequest, "rowIdsWikiPage");
 
@@ -380,6 +378,8 @@ public class ActionUtil {
 		}
 
 		List<WikiPage> pages = new ArrayList<>();
+
+		long nodeId = ParamUtil.getLong(portletRequest, "nodeId");
 
 		for (String title : titles) {
 			if (Validator.isNotNull(title)) {

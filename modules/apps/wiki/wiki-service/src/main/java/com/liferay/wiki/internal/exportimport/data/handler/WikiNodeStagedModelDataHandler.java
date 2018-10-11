@@ -185,8 +185,6 @@ public class WikiNodeStagedModelDataHandler
 			PortletDataContext portletDataContext, WikiNode node)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(node.getUserUuid());
-
 		WikiNode existingNode = fetchStagedModelByUuidAndGroupId(
 			node.getUuid(), portletDataContext.getScopeGroupId());
 
@@ -198,6 +196,8 @@ public class WikiNodeStagedModelDataHandler
 			WikiNode.class.getName());
 
 		if (trashHandler.isRestorable(existingNode.getNodeId())) {
+			long userId = portletDataContext.getUserId(node.getUserUuid());
+
 			trashHandler.restoreTrashEntry(userId, existingNode.getNodeId());
 		}
 	}

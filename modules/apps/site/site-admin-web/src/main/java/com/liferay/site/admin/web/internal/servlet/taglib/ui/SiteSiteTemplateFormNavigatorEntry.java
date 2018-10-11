@@ -69,11 +69,6 @@ public class SiteSiteTemplateFormNavigatorEntry
 			return false;
 		}
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
 		LayoutSet privateLayoutSet = null;
 		LayoutSet publicLayoutSet = null;
 
@@ -98,9 +93,12 @@ public class SiteSiteTemplateFormNavigatorEntry
 			return false;
 		}
 
-		LayoutSetPrototype privateLayoutSetPrototype = null;
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
-		LayoutSetPrototype publicLayoutSetPrototype = null;
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		LayoutSetPrototype privateLayoutSetPrototype = null;
 
 		if (Validator.isNotNull(privateLayoutSet.getLayoutSetPrototypeUuid())) {
 			privateLayoutSetPrototype =
@@ -109,6 +107,8 @@ public class SiteSiteTemplateFormNavigatorEntry
 						privateLayoutSet.getLayoutSetPrototypeUuid(),
 						themeDisplay.getCompanyId());
 		}
+
+		LayoutSetPrototype publicLayoutSetPrototype = null;
 
 		if (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
 			publicLayoutSetPrototype =

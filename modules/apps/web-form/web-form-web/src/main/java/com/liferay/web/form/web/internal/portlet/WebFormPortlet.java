@@ -145,16 +145,6 @@ public class WebFormPortlet extends MVCPortlet {
 
 		boolean requireCaptcha = GetterUtil.getBoolean(
 			preferences.getValue("requireCaptcha", StringPool.BLANK));
-		String successURL = GetterUtil.getString(
-			preferences.getValue("successURL", StringPool.BLANK));
-		boolean sendAsEmail = GetterUtil.getBoolean(
-			preferences.getValue("sendAsEmail", StringPool.BLANK));
-		boolean saveToDatabase = GetterUtil.getBoolean(
-			preferences.getValue("saveToDatabase", StringPool.BLANK));
-		String databaseTableName = GetterUtil.getString(
-			preferences.getValue("databaseTableName", StringPool.BLANK));
-		boolean saveToFile = GetterUtil.getBoolean(
-			preferences.getValue("saveToFile", StringPool.BLANK));
 
 		if (requireCaptcha) {
 			try {
@@ -216,17 +206,30 @@ public class WebFormPortlet extends MVCPortlet {
 			return;
 		}
 
+		String successURL = GetterUtil.getString(
+			preferences.getValue("successURL", StringPool.BLANK));
+
 		if (validationErrors.isEmpty()) {
 			boolean emailSuccess = true;
 			boolean databaseSuccess = true;
 			boolean fileSuccess = true;
+
+			boolean sendAsEmail = GetterUtil.getBoolean(
+				preferences.getValue("sendAsEmail", StringPool.BLANK));
 
 			if (sendAsEmail) {
 				emailSuccess = sendEmail(
 					fieldsMap, preferences, webFormServiceConfiguration);
 			}
 
+			boolean saveToDatabase = GetterUtil.getBoolean(
+				preferences.getValue("saveToDatabase", StringPool.BLANK));
+
 			if (saveToDatabase) {
+				String databaseTableName = GetterUtil.getString(
+					preferences.getValue(
+						"databaseTableName", StringPool.BLANK));
+
 				if (Validator.isNull(databaseTableName)) {
 					databaseTableName = WebFormUtil.getNewDatabaseTableName(
 						portletId);
@@ -241,6 +244,9 @@ public class WebFormPortlet extends MVCPortlet {
 					themeDisplay.getCompanyId(), fieldsMap, preferences,
 					databaseTableName);
 			}
+
+			boolean saveToFile = GetterUtil.getBoolean(
+				preferences.getValue("saveToFile", StringPool.BLANK));
 
 			if (saveToFile) {
 				String fileName = WebFormUtil.getFileName(

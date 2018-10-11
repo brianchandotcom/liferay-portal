@@ -78,14 +78,14 @@ public class SharingUtil {
 			PermissionChecker permissionChecker, long classNameId, long classPK,
 			long groupId, Locale locale) {
 
-		List<SharingEntryAction> sharingEntryActions = new ArrayList<>();
-
 		SharingPermissionChecker sharingPermissionChecker =
 			_serviceTrackerMap.getService(classNameId);
 
 		if (sharingPermissionChecker == null) {
 			return Collections.emptyList();
 		}
+
+		List<SharingEntryAction> sharingEntryActions = new ArrayList<>();
 
 		try {
 			if (sharingPermissionChecker.hasPermission(

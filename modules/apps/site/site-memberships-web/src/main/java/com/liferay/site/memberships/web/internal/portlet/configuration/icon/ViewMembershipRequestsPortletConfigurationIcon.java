@@ -74,14 +74,14 @@ public class ViewMembershipRequestsPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String tabs1 = ParamUtil.getString(portletRequest, "tabs1", "users");
 
 		if (!tabs1.equals("users")) {
 			return false;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		Group group = themeDisplay.getScopeGroup();
 

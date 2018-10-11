@@ -19,50 +19,34 @@ package com.liferay.jenkins.results.parser;
  */
 public class BuildDataFactory {
 
-	public static BatchBuildData newBatchBuildData(String jobName) {
-		return newBatchBuildData(jobName, null, null);
-	}
-
 	public static BatchBuildData newBatchBuildData(
-		String jobName, String runID) {
-
-		return newBatchBuildData(jobName, runID, null);
-	}
-
-	public static BatchBuildData newBatchBuildData(
-		String jobName, String runID, String buildURL) {
+		String runID, String jobName, String buildURL) {
 
 		if (jobName.contains("git-bisect-tool") || jobName.contains("portal")) {
-			return new PortalBatchBuildData(runID, buildURL);
+			return new PortalBatchBuildData(runID, jobName, buildURL);
 		}
 
-		return new DefaultBatchBuildData(runID, buildURL);
+		return new DefaultBatchBuildData(runID, jobName, buildURL);
 	}
 
 	public static BuildData newBuildData(
-		String jobName, String runID, String buildURL) {
+		String runID, String jobName, String buildURL) {
 
 		if (jobName.endsWith("-batch")) {
-			return newBatchBuildData(jobName, runID, buildURL);
+			return newBatchBuildData(runID, jobName, buildURL);
 		}
 
-		return newTopLevelBuildData(jobName, runID, buildURL);
+		return newTopLevelBuildData(runID, jobName, buildURL);
 	}
 
 	public static TopLevelBuildData newTopLevelBuildData(
-		String jobName, String runID) {
-
-		return newTopLevelBuildData(jobName, runID, null);
-	}
-
-	public static TopLevelBuildData newTopLevelBuildData(
-		String jobName, String runID, String buildURL) {
+		String runID, String jobName, String buildURL) {
 
 		if (jobName.contains("git-bisect-tool") || jobName.contains("portal")) {
-			return new PortalTopLevelBuildData(runID, buildURL);
+			return new PortalTopLevelBuildData(runID, jobName, buildURL);
 		}
 
-		return new DefaultTopLevelBuildData(runID, buildURL);
+		return new DefaultTopLevelBuildData(runID, jobName, buildURL);
 	}
 
 }

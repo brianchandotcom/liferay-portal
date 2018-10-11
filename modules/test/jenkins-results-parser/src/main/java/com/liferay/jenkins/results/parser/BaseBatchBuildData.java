@@ -43,7 +43,7 @@ public abstract class BaseBatchBuildData
 
 		TopLevelBuildData topLevelBuildData =
 			BuildDataFactory.newTopLevelBuildData(
-				topLevelJobName, getTopLevelRunID());
+				getTopLevelRunID(), topLevelJobName, null);
 
 		_topLevelBuildData = topLevelBuildData;
 
@@ -86,16 +86,10 @@ public abstract class BaseBatchBuildData
 		put("test_list", testList);
 	}
 
-	protected BaseBatchBuildData() {
-		this(null, null);
-	}
+	protected BaseBatchBuildData(
+		String runID, String jobName, String buildURL) {
 
-	protected BaseBatchBuildData(String runID) {
-		this(runID, null);
-	}
-
-	protected BaseBatchBuildData(String runID, String buildURL) {
-		super(_getDefaultRunID(runID), buildURL);
+		super(_getDefaultRunID(runID), jobName, buildURL);
 
 		if (buildURL == null) {
 			return;

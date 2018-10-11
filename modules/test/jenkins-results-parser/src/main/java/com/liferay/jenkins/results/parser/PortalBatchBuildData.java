@@ -56,16 +56,10 @@ public class PortalBatchBuildData
 		put("portal_upstream_branch_name", portalUpstreamBranchName);
 	}
 
-	protected PortalBatchBuildData() {
-		this(null, null);
-	}
+	protected PortalBatchBuildData(
+		String runID, String jobName, String buildURL) {
 
-	protected PortalBatchBuildData(String runID) {
-		this(runID, null);
-	}
-
-	protected PortalBatchBuildData(String runID, String buildURL) {
-		super(runID, buildURL);
+		super(runID, jobName, buildURL);
 
 		setPortalUpstreamBranchName(DEFAULT_PORTAL_UPSTREAM_BRANCH_NAME);
 		setPortalGitHubURL(DEFAULT_PORTAL_GITHUB_URL);

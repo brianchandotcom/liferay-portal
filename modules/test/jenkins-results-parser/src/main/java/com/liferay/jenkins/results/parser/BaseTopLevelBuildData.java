@@ -64,16 +64,10 @@ public abstract class BaseTopLevelBuildData
 		return getRunID();
 	}
 
-	protected BaseTopLevelBuildData() {
-		this(null, null);
-	}
+	protected BaseTopLevelBuildData(
+		String runID, String jobName, String buildURL) {
 
-	protected BaseTopLevelBuildData(String runID) {
-		this(runID, null);
-	}
-
-	protected BaseTopLevelBuildData(String runID, String buildURL) {
-		super(_getDefaultRunID(runID), buildURL);
+		super(_getDefaultRunID(runID), jobName, buildURL);
 
 		put("dist_nodes", _getDistNodes());
 		put("dist_path", _getDistPath());

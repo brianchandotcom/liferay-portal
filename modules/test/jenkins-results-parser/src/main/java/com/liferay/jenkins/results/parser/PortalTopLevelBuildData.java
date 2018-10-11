@@ -56,16 +56,10 @@ public class PortalTopLevelBuildData
 		put("portal_upstream_branch_name", portalUpstreamBranchName);
 	}
 
-	protected PortalTopLevelBuildData() {
-		this(null, null);
-	}
+	protected PortalTopLevelBuildData(
+		String runID, String jobName, String buildURL) {
 
-	protected PortalTopLevelBuildData(String runID) {
-		this(runID, null);
-	}
-
-	protected PortalTopLevelBuildData(String runID, String buildURL) {
-		super(runID, buildURL);
+		super(runID, jobName, buildURL);
 
 		setPortalUpstreamBranchName(DEFAULT_PORTAL_UPSTREAM_BRANCH_NAME);
 		setPortalGitHubURL(DEFAULT_PORTAL_GITHUB_URL);

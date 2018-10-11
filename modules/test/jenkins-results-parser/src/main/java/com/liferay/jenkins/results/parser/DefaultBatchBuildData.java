@@ -19,16 +19,10 @@ package com.liferay.jenkins.results.parser;
  */
 public class DefaultBatchBuildData extends BaseBatchBuildData {
 
-	protected DefaultBatchBuildData() {
-		this(null, null);
-	}
+	protected DefaultBatchBuildData(
+		String runID, String jobName, String buildURL) {
 
-	protected DefaultBatchBuildData(String runID) {
-		this(runID, null);
-	}
-
-	protected DefaultBatchBuildData(String runID, String buildURL) {
-		super(runID, buildURL);
+		super(runID, jobName, buildURL);
 	}
 
 	@Override

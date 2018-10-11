@@ -146,14 +146,16 @@ public abstract class BaseBuildData implements BuildData {
 		return false;
 	}
 
-	protected BaseBuildData(String runID) {
-		this(runID, null);
-	}
-
-	protected BaseBuildData(String runID, String buildURL) {
+	protected BaseBuildData(String runID, String jobName, String buildURL) {
 		_jsonObject = buildDatabase.getBuildDataJSONObject(runID);
 
 		put("run_id", runID);
+
+		if (jobName == null) {
+			throw new RuntimeException("Please set a job name");
+		}
+
+		put("job_name", jobName);
 
 		if (buildURL == null) {
 			return;
@@ -254,7 +256,6 @@ public abstract class BaseBuildData implements BuildData {
 		put("build_url", buildURL);
 		put("cohort_name", matcher.group("cohortName"));
 		put("hostname", JenkinsResultsParserUtil.getHostName("default"));
-		put("job_name", matcher.group("jobName"));
 		put("master_hostname", matcher.group("masterHostname"));
 		put("type", getType());
 	}

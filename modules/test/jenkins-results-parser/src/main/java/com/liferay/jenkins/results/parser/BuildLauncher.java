@@ -82,7 +82,7 @@ public class BuildLauncher {
 		buildProperties.putAll(_getBuildOptions(args));
 
 		BuildData buildData = BuildDataFactory.newBuildData(
-			buildProperties.get("JOB_NAME"), buildProperties.get("RUN_ID"),
+			buildProperties.get("RUN_ID"), buildProperties.get("JOB_NAME"),
 			buildProperties.get("BUILD_URL"));
 
 		String jenkinsGitHubURL = buildProperties.get("JENKINS_GITHUB_URL");

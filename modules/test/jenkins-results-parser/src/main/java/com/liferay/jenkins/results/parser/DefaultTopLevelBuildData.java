@@ -19,16 +19,10 @@ package com.liferay.jenkins.results.parser;
  */
 public class DefaultTopLevelBuildData extends BaseTopLevelBuildData {
 
-	public DefaultTopLevelBuildData() {
-		this(null, null);
-	}
+	public DefaultTopLevelBuildData(
+		String runID, String jobName, String buildURL) {
 
-	public DefaultTopLevelBuildData(String runID) {
-		this(runID, null);
-	}
-
-	public DefaultTopLevelBuildData(String runID, String buildURL) {
-		super(runID, buildURL);
+		super(runID, jobName, buildURL);
 	}
 
 	@Override

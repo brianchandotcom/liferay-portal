@@ -2,6 +2,7 @@
 	<property name="portal.release" value="true" />
 	<property name="portal.suite.search.engine" value="elasticsearch6" />
 	<property name="portal.upstream" value="true" />
+	<property name="test.run.environment" value="EE" />
 	<property name="testray.main.component.name" value="Elasticsearch Impl" />
 
 	<set-up>

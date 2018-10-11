@@ -90,7 +90,7 @@ AssetListEntry assetListEntry = (AssetListEntry)row.getObject();
 	/>
 
 	<portlet:renderURL var="viewAssetListUsagesURL">
-		<portlet:param name="mvcPath" value="/view_usages.jsp" />
+		<portlet:param name="mvcPath" value="/view_asset_list_entry_usages.jsp" />
 		<portlet:param name="assetListEntryId" value="<%= String.valueOf(assetListEntry.getAssetListEntryId()) %>" />
 	</portlet:renderURL>
 

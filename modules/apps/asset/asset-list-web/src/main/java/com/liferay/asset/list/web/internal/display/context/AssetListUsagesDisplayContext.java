@@ -144,7 +144,7 @@ public class AssetListUsagesDisplayContext {
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/view_usages.jsp");
+		portletURL.setParameter("mvcPath", "/view_asset_list_entry_usages.jsp");
 		portletURL.setParameter("redirect", getRedirect());
 		portletURL.setParameter(
 			"assetListEntryId", String.valueOf(getAssetListEntryId()));

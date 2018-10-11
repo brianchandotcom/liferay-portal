@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Dictionary;
+import java.util.List;
 
 import org.apache.felix.utils.extender.Extension;
 import org.apache.felix.utils.log.Logger;
@@ -73,19 +75,27 @@ public class TopHeadExtender extends AbstractExtender {
 			return null;
 		}
 
+		List<String> jsResourcePaths;
+		List<String> authenticatedJsResourcePaths;
+
 		if (Validator.isNull(liferayJsResourcesTopHead)) {
-			liferayJsResourcesTopHead = StringPool.BLANK;
+			jsResourcePaths = Collections.emptyList();
+		}
+		else {
+			jsResourcePaths = Arrays.asList(
+				liferayJsResourcesTopHead.split(StringPool.COMMA));
 		}
 
 		if (Validator.isNull(liferayJsResourcesTopHeadAuthenticated)) {
-			liferayJsResourcesTopHeadAuthenticated = StringPool.BLANK;
+			authenticatedJsResourcePaths = Collections.emptyList();
+		}
+		else {
+			authenticatedJsResourcePaths = Arrays.asList(
+				liferayJsResourcesTopHeadAuthenticated.split(StringPool.COMMA));
 		}
 
 		TopHeadResourcesImpl topHeadResourcesImpl = new TopHeadResourcesImpl(
-			Arrays.asList(liferayJsResourcesTopHead.split(StringPool.COMMA)),
-			Arrays.asList(
-				liferayJsResourcesTopHeadAuthenticated.split(
-					StringPool.COMMA)));
+			jsResourcePaths, authenticatedJsResourcePaths);
 
 		int liferayTopHeadWeight = GetterUtil.getInteger(
 			headers.get("Liferay-Top-Head-Weight"));

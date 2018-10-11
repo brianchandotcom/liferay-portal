@@ -60,11 +60,11 @@ public class InternetAddressUtil {
 
 		InternetAddress[] internetAddresses = (InternetAddress[])addresses;
 
-		List<InternetAddress> list = new ArrayList<>();
-
 		if ((internetAddresses == null) || Validator.isNull(emailAddress)) {
 			return internetAddresses;
 		}
+
+		List<InternetAddress> list = new ArrayList<>();
 
 		for (InternetAddress internetAddress : internetAddresses) {
 			if (!emailAddress.equals(internetAddress.getAddress())) {

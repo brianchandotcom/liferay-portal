@@ -959,12 +959,12 @@ public class IMAPAccessor {
 	protected Part getPart(Part part, String contentPath)
 		throws IOException, MessagingException {
 
-		int index = GetterUtil.getInteger(
-			StringUtil.split(contentPath.substring(1), StringPool.PERIOD)[0]);
-
 		if (!(part.getContent() instanceof Multipart)) {
 			return part;
 		}
+
+		int index = GetterUtil.getInteger(
+			StringUtil.split(contentPath.substring(1), StringPool.PERIOD)[0]);
 
 		Multipart multipart = (Multipart)part.getContent();
 

@@ -352,8 +352,6 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 		Role organizationUserRole = roleLocalService.getRole(
 			companyId, RoleConstants.ORGANIZATION_USER);
-		Role siteMemberRole = roleLocalService.getRole(
-			companyId, RoleConstants.SITE_MEMBER);
 
 		Collection<Group> groups = userBag.getGroups();
 
@@ -373,6 +371,9 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 			return null;
 		}
+
+		Role siteMemberRole = roleLocalService.getRole(
+			companyId, RoleConstants.SITE_MEMBER);
 
 		for (Group group : groups) {
 			long[] roleIds = permissionChecker.getRoleIds(
@@ -522,7 +523,6 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				BooleanClauseOccur.SHOULD);
 		}
 
-		TermsFilter groupsTermsFilter = new TermsFilter(Field.GROUP_ID);
 		TermsFilter groupRolesTermsFilter =
 			searchPermissionContext._groupRolesTermsFilter;
 		TermsFilter rolesTermsFilter =
@@ -546,6 +546,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 			return null;
 		}
+
+		TermsFilter groupsTermsFilter = new TermsFilter(Field.GROUP_ID);
 
 		for (UsersGroupIdRoles usersGroupIdRoles : usersGroupIdsRoles) {
 			long groupId = usersGroupIdRoles._groupId;

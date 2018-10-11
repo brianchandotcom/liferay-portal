@@ -67,14 +67,14 @@ public class DeleteLayoutMVCActionCommand extends BaseMVCActionCommand {
 			ActionResponse actionResponse)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		Layout layout = _layoutLocalService.fetchLayout(selPlid);
 
 		if (layout == null) {
 			return;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		Group group = layout.getGroup();
 

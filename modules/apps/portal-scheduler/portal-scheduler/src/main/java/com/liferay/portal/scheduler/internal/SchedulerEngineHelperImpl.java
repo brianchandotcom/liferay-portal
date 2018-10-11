@@ -938,13 +938,13 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			SchedulerEntry schedulerEntry =
 				schedulerEventMessageListener.getSchedulerEntry();
 
-			StorageType storageType = StorageType.MEMORY_CLUSTERED;
-
 			if ((schedulerEntry == null) ||
 				(schedulerEntry.getTrigger() == null)) {
 
 				return null;
 			}
+
+			StorageType storageType = StorageType.MEMORY_CLUSTERED;
 
 			if (schedulerEntry instanceof StorageTypeAware) {
 				StorageTypeAware storageTypeAware =
@@ -1065,14 +1065,14 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 			bundleContext.ungetService(serviceReference);
 
-			StorageType storageType = StorageType.MEMORY_CLUSTERED;
-
 			SchedulerEntry schedulerEntry =
 				schedulerEntryMessageListener.getSchedulerEntry();
 
 			if (schedulerEntry == null) {
 				return;
 			}
+
+			StorageType storageType = StorageType.MEMORY_CLUSTERED;
 
 			if (schedulerEntry instanceof StorageTypeAware) {
 				StorageTypeAware storageTypeAware =

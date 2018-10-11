@@ -61,8 +61,6 @@ public class OpenIdConnectLoginRequestMVCRenderCommand
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(renderResponse);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -73,6 +71,9 @@ public class OpenIdConnectLoginRequestMVCRenderCommand
 
 			return "/login.jsp";
 		}
+
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(renderResponse);
 
 		Collection<String> openIdConnectProviderNames =
 			_openIdConnectProviderRegistry.getOpenIdConnectProviderNames();

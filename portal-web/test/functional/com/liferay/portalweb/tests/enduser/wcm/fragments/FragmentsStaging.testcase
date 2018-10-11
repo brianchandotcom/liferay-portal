@@ -50,8 +50,9 @@
 			<var name="category" value="Build" />
 		</execute>
 
-		<execute function="AssertElementVisible" locator1="ProductMenu#PORTLET">
+		<execute function="AssertVisible" locator1="ProductMenu#PORTLET">
 			<var name="key_portlet" value="Page Fragments" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoLiveSite">
 			<var name="site" value="Site Name" />
@@ -62,7 +63,7 @@
 		</execute>
 	</command>
 
-	<command name="AssertFragmentsAlwaysPublish" priority="5">
+	<command name="AssertFragmentsAlwaysPublished" priority="5">
 		<execute macro="JSONFragment#addFragmentCollection">
 			<var name="groupKey" value="Test Site Name-staging" />
 			<var name="name" value="Collection Name" />

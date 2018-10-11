@@ -1,6 +1,6 @@
 import {Config} from 'metal-state';
+import {convertToSearchParams, makeFetch} from '../../util/fetch.es';
 import {debounce} from 'metal-debounce';
-import {makeFetch} from '../../util/fetch.es';
 import {PagesVisitor} from '../../util/visitors.es';
 import autobind from 'autobind-decorator';
 import Component from 'metal-jsx';
@@ -123,15 +123,17 @@ const WithEvaluator = ChildComponent => {
 
 			makeFetch(
 				{
-					body: {
-						languageId: themeDisplay.getLanguageId(),
-						newField: '',
-						p_auth: Liferay.authToken,
-						portletNamespace: '',
-						serializedFormContext: JSON.stringify(formContext),
-						trigger: fieldName,
-						type: fieldType
-					},
+					body: convertToSearchParams(
+						{
+							languageId: themeDisplay.getLanguageId(),
+							newField: '',
+							p_auth: Liferay.authToken,
+							portletNamespace: '',
+							serializedFormContext: JSON.stringify(formContext),
+							trigger: fieldName,
+							type: fieldType
+						}
+					),
 					url
 				}
 			).then(

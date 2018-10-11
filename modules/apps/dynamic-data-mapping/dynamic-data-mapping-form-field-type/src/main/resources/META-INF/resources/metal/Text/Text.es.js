@@ -18,15 +18,6 @@ class Text extends Component {
 		displayStyle: Config.string().value('singleline'),
 
 		/**
-		 * @default false
-		 * @instance
-		 * @memberof Text
-		 * @type {?bool}
-		 */
-
-		readOnly: Config.bool().value(true),
-
-		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof Text
@@ -75,6 +66,15 @@ class Text extends Component {
 		 * @default false
 		 * @instance
 		 * @memberof Text
+		 * @type {?bool}
+		 */
+
+		readOnly: Config.bool().value(false),
+
+		/**
+		 * @default false
+		 * @instance
+		 * @memberof Text
 		 * @type {?(bool|undefined)}
 		 */
 
@@ -114,15 +114,6 @@ class Text extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		value: Config.string(),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Text
-		 * @type {?(string|undefined)}
-		 */
-
 		tip: Config.string(),
 
 		/**
@@ -132,7 +123,16 @@ class Text extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		tooltip: Config.string()
+		tooltip: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		value: Config.string()
 	};
 
 	_handleFieldChanged(event) {

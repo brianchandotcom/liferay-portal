@@ -1,6 +1,7 @@
 {namespace Select}
 
 {template .render}
+	{@param strings: [chooseAnOption: string]}
 	{@param? _handleClick: any}
 	{@param? _handleItemClicked: any}
 	{@param? fixedOptions: list<[
@@ -51,6 +52,7 @@
 				{param readOnly: $readOnly /}
 				{param selectedLabel: $selectedLabel /}
 				{param spritemap: $spritemap /}
+				{param strings: $strings /}
 				{param value: $value /}
 			{/call}
 		{/param}
@@ -66,6 +68,7 @@
 {/template}
 
 {template .content}
+	{@param strings: [chooseAnOption: string]}
 	{@param? _handleItemClicked: any}
 	{@param? _handleClick: any}
 	{@param? fixedOptions: list<[
@@ -129,10 +132,12 @@
 		{param open: $open /}
 		{param options: $options /}
 		{param placeholder: $placeholder /}
+		{param strings: $strings /}
 	{/call}
 {/template}
 
 {template .listItems}
+	{@param strings: [chooseAnOption: string]}
 	{@param? _handleItemClicked: any}
 	{@param? fixedOptions: list<[
 		checked: bool,
@@ -171,14 +176,17 @@
 	{if $options}
 		<div {$attributes}>
 			<ul class="list-unstyled">
-				<li class="dropdown-item" data-option-value="">{$placeholder}</li>
+				<li class="dropdown-item" data-option-value="">{$placeholder or $strings.chooseAnOption}</li>
+
 				{if length($options) > 0}
 					{foreach $option in $options}
 						<li class="dropdown-item" data-option-value="{$option.value}">{$option.label}</li>
 					{/foreach}
 				{/if}
+
 				{if $fixedOptions and length($fixedOptions) > 0}
 					<li class="dropdown-divider"></li>
+
 					{foreach $fixedOption in $fixedOptions}
 						<li class="dropdown-item"  data-option-value="{$fixedOption.value}">{$fixedOption.label}</li>
 					{/foreach}

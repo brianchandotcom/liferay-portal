@@ -86,6 +86,7 @@
 			"/__fixtures__/",
 			"/classes/"
 		],
+		"setupTestFrameworkScriptFile": "<rootDir>/test/metal/setup/setup_framework.es.js",
 		"snapshotSerializers": [
 			"metal-jest-serializer"
 		],

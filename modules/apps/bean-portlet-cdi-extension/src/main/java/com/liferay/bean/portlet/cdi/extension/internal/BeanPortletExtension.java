@@ -174,25 +174,19 @@ public class BeanPortletExtension implements Extension {
 			processAnnotatedType.setAnnotatedType(annotatedType);
 		}
 
-		Set<Class<? extends Annotation>> annotationClasses = new HashSet<>();
-
-		for (Annotation annotation : annotatedType.getAnnotations()) {
-			annotationClasses.add(annotation.annotationType());
-		}
-
-		if (annotationClasses.contains(RequestScoped.class)) {
+		if (annotatedType.isAnnotationPresent(RequestScoped.class)) {
 			annotatedType = new RequestScopedAnnotatedTypeImpl<>(annotatedType);
 
 			processAnnotatedType.setAnnotatedType(annotatedType);
 		}
 
-		if (annotationClasses.contains(SessionScoped.class)) {
+		if (annotatedType.isAnnotationPresent(SessionScoped.class)) {
 			annotatedType = new SessionScopedAnnotatedTypeImpl<>(annotatedType);
 
 			processAnnotatedType.setAnnotatedType(annotatedType);
 		}
 
-		if (annotationClasses.contains(RenderStateScoped.class) &&
+		if (annotatedType.isAnnotationPresent(RenderStateScoped.class) &&
 			!PortletSerializable.class.isAssignableFrom(annotatedClass)) {
 
 			if (_log.isWarnEnabled()) {
@@ -202,7 +196,7 @@ public class BeanPortletExtension implements Extension {
 			}
 		}
 
-		if (annotationClasses.contains(PortletSessionScoped.class)) {
+		if (annotatedType.isAnnotationPresent(PortletSessionScoped.class)) {
 			PortletSessionScoped portletSessionScoped =
 				annotatedClass.getAnnotation(PortletSessionScoped.class);
 
@@ -221,7 +215,7 @@ public class BeanPortletExtension implements Extension {
 		}
 
 		if (Portlet.class.isAssignableFrom(annotatedClass) &&
-			!annotationClasses.contains(ApplicationScoped.class)) {
+			!annotatedType.isAnnotationPresent(ApplicationScoped.class)) {
 
 			annotatedType = new ApplicationScopedAnnotatedTypeImpl<>(
 				annotatedType);
@@ -235,7 +229,7 @@ public class BeanPortletExtension implements Extension {
 			}
 		}
 
-		if (annotationClasses.contains(PortletApplication.class)) {
+		if (annotatedType.isAnnotationPresent(PortletApplication.class)) {
 			if (_portletApplicationClass == null) {
 				_portletApplicationClass = annotatedClass;
 			}
@@ -245,31 +239,37 @@ public class BeanPortletExtension implements Extension {
 			}
 		}
 
-		if (annotationClasses.contains(PortletConfigurations.class)) {
+		if (annotatedType.isAnnotationPresent(PortletConfigurations.class)) {
 			_portletConfigurationsClasses.add(annotatedClass);
 		}
 
-		if (annotationClasses.contains(PortletConfiguration.class)) {
+		if (annotatedType.isAnnotationPresent(PortletConfiguration.class)) {
 			_portletConfigurationClasses.add(annotatedClass);
 		}
 
-		if (annotationClasses.contains(PortletLifecycleFilter.class)) {
+		if (annotatedType.isAnnotationPresent(PortletLifecycleFilter.class)) {
 			_portletLifecycleFilterClasses.add(annotatedClass);
 		}
 
-		if (annotationClasses.contains(PortletListener.class)) {
+		if (annotatedType.isAnnotationPresent(PortletListener.class)) {
 			_portletListenerClasses.add(annotatedClass);
 		}
 
-		if (annotationClasses.contains(PortletPreferencesValidator.class)) {
+		if (annotatedType.isAnnotationPresent(
+				PortletPreferencesValidator.class)) {
+
 			_preferencesValidatorClasses.add(annotatedClass);
 		}
 
-		if (annotationClasses.contains(LiferayPortletConfigurations.class)) {
+		if (annotatedType.isAnnotationPresent(
+				LiferayPortletConfigurations.class)) {
+
 			_liferayPortletConfigurationsClasses.add(annotatedClass);
 		}
 
-		if (annotationClasses.contains(LiferayPortletConfiguration.class)) {
+		if (annotatedType.isAnnotationPresent(
+				LiferayPortletConfiguration.class)) {
+
 			_liferayPortletConfigurationClasses.add(annotatedClass);
 		}
 

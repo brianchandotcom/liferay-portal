@@ -556,13 +556,14 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 		for (Map.Entry<Object, Object> entry : expandoMappings.entrySet()) {
 			String fieldName = (String)entry.getKey();
-			String ldapAttributeName = (String)entry.getValue();
 
 			Serializable fieldValue = expandoAttributes.get(fieldName);
 
 			if (fieldValue == null) {
 				continue;
 			}
+
+			String ldapAttributeName = (String)entry.getValue();
 
 			try {
 				int type = expandoBridge.getAttributeType(fieldName);

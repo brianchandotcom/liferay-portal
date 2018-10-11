@@ -15,6 +15,8 @@
 package com.liferay.document.library.file.rank.internal.upgrade;
 
 import com.liferay.document.library.file.rank.internal.upgrade.v1_0_0.UpgradeClassNames;
+import com.liferay.document.library.file.rank.internal.upgrade.v2_0_0.util.DLFileRankTable;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -28,6 +30,12 @@ public class DLFileRankServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register("0.0.1", "1.0.0", new UpgradeClassNames());
+
+		Class<?>[] upgradeDatetimeTableClasses = {DLFileRankTable.class};
+
+		registry.register(
+			"1.0.0", "2.0.0",
+			new BaseUpgradeSQLServerDatetime(upgradeDatetimeTableClasses));
 	}
 
 }

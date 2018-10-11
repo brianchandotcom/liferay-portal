@@ -337,8 +337,6 @@ public class BlogsEntryStagedModelDataHandler
 			PortletDataContext portletDataContext, BlogsEntry entry)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(entry.getUserUuid());
-
 		BlogsEntry existingEntry = fetchStagedModelByUuidAndGroupId(
 			entry.getUuid(), portletDataContext.getScopeGroupId());
 
@@ -350,6 +348,8 @@ public class BlogsEntryStagedModelDataHandler
 			BlogsEntry.class.getName());
 
 		if (trashHandler.isRestorable(existingEntry.getEntryId())) {
+			long userId = portletDataContext.getUserId(entry.getUserUuid());
+
 			trashHandler.restoreTrashEntry(userId, existingEntry.getEntryId());
 		}
 	}

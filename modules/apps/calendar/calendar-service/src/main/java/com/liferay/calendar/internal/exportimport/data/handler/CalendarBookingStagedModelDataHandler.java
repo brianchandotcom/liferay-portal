@@ -321,9 +321,6 @@ public class CalendarBookingStagedModelDataHandler
 			CalendarBooking calendarBooking)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(
-			calendarBooking.getUserUuid());
-
 		CalendarBooking existingBooking = fetchStagedModelByUuidAndGroupId(
 			calendarBooking.getUuid(), portletDataContext.getScopeGroupId());
 
@@ -335,6 +332,9 @@ public class CalendarBookingStagedModelDataHandler
 			CalendarBooking.class.getName());
 
 		if (trashHandler.isRestorable(existingBooking.getCalendarBookingId())) {
+			long userId = portletDataContext.getUserId(
+				calendarBooking.getUserUuid());
+
 			trashHandler.restoreTrashEntry(
 				userId, existingBooking.getCalendarBookingId());
 		}

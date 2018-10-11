@@ -204,10 +204,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				unsubscribe(actionRequest);
 			}
 
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-			String portletId = _http.getParameter(redirect, "p_p_id", false);
-
 			boolean ajax = ParamUtil.getBoolean(actionRequest, "ajax");
 
 			if (ajax) {
@@ -226,6 +222,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				return;
 			}
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			int workflowAction = ParamUtil.getInteger(
 				actionRequest, "workflowAction",
@@ -260,6 +258,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 					if (Validator.isNotNull(redirect)) {
 						if (cmd.equals(Constants.ADD) && (entry != null)) {
+							String portletId = _http.getParameter(
+								redirect, "p_p_id", false);
+
 							String namespace = _portal.getPortletNamespace(
 								portletId);
 

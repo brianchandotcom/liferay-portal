@@ -80,11 +80,6 @@ public class AssetPublisherPortletToolbarContributor
 			PortletResponse portletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		AssetPublisherCustomizer assetPublisherCustomizer =
 			(AssetPublisherCustomizer)portletRequest.getAttribute(
 				AssetPublisherWebKeys.ASSET_PUBLISHER_CUSTOMIZER);
@@ -106,6 +101,9 @@ public class AssetPublisherPortletToolbarContributor
 		if (MapUtil.isEmpty(scopeAssetPublisherAddItemHolders)) {
 			return;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		if (scopeAssetPublisherAddItemHolders.size() == 1) {
 			Set<Map.Entry<Long, List<AssetPublisherAddItemHolder>>> entrySet =
@@ -138,6 +136,8 @@ public class AssetPublisherPortletToolbarContributor
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
 		Map<String, Object> data = new HashMap<>();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		data.put(
 			"id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");

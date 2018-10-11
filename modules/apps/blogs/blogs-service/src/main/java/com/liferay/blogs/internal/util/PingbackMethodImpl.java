@@ -357,11 +357,11 @@ public class PingbackMethodImpl implements Method {
 	}
 
 	protected Response validateSource() throws Exception {
-		Source source = null;
-
 		if (_isSourceURILocalNetwork()) {
 			return XmlRpcUtil.createFault(ACCESS_DENIED, "Access Denied");
 		}
+
+		Source source = null;
 
 		try {
 			String html = _http.URLtoString(_sourceURI);

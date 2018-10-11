@@ -603,9 +603,11 @@ public class PortletDescriptorParser {
 		}
 
 		Map<MethodType, List<BeanMethod>> beanMethodMap =
-			BeanMethodIndexUtil.indexBeanMethods(
-				beanMethods, supportedProcessingEvents,
-				supportedPublishingEvents);
+			BeanMethodIndexUtil.indexBeanMethods(beanMethods);
+
+		BeanMethodIndexUtil.scanSupportedEvents(
+			beanMethodMap, supportedProcessingEvents,
+			supportedPublishingEvents);
 
 		return new BeanPortletImpl(
 			portletName, beanMethodMap, displayNames, portletClassName,

@@ -1194,16 +1194,15 @@ public class BeanPortletExtension implements Extension {
 				continue;
 			}
 
+			Class<?> clazz = scannedMethod.getClazz();
+			Method method = scannedMethod.getMethod();
+			int ordinal = scannedMethod.getOrdinal();
+
+			BeanMethod beanMethod = new BeanMethod(
+				beanManager, beanManager.resolve(beanManager.getBeans(clazz)),
+				scannedMethod.getMethodType(), method, ordinal);
+
 			if ((portletNames.length > 0) && "*".equals(portletNames[0])) {
-				Class<?> clazz = scannedMethod.getClazz();
-				Method method = scannedMethod.getMethod();
-				int ordinal = scannedMethod.getOrdinal();
-
-				BeanMethod beanMethod = new BeanMethod(
-					beanManager,
-					beanManager.resolve(beanManager.getBeans(clazz)),
-					scannedMethod.getMethodType(), method, ordinal);
-
 				wildcardBeanMethods.add(beanMethod);
 			}
 		}
@@ -1219,10 +1218,6 @@ public class BeanPortletExtension implements Extension {
 				continue;
 			}
 
-			if ((portletNames.length > 0) && "*".equals(portletNames[0])) {
-				continue;
-			}
-
 			Class<?> clazz = scannedMethod.getClazz();
 			Method method = scannedMethod.getMethod();
 			int ordinal = scannedMethod.getOrdinal();
@@ -1231,17 +1226,21 @@ public class BeanPortletExtension implements Extension {
 				beanManager, beanManager.resolve(beanManager.getBeans(clazz)),
 				scannedMethod.getMethodType(), method, ordinal);
 
-			for (String portletName : portletNames) {
-				Set<BeanMethod> beanMethods = portletBeanMethods.get(
-					portletName);
+			if ((portletNames.length > 0) && "*".equals(portletNames[0])) {
+			}
+			else {
+				for (String portletName : portletNames) {
+					Set<BeanMethod> beanMethods = portletBeanMethods.get(
+						portletName);
 
-				if (beanMethods == null) {
-					beanMethods = new HashSet<>();
+					if (beanMethods == null) {
+						beanMethods = new HashSet<>();
 
-					portletBeanMethods.put(portletName, beanMethods);
+						portletBeanMethods.put(portletName, beanMethods);
+					}
+
+					beanMethods.add(beanMethod);
 				}
-
-				beanMethods.add(beanMethod);
 			}
 		}
 

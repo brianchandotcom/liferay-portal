@@ -52,8 +52,6 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 	public static final String JAR_COMPILE_INCLUDE_FRAGMENT_TASK_NAME =
 		"jarCompileIncludeFragment";
 
-	public static final String WATCH_TASK_NAME = "watch";
-
 	@Override
 	public void apply(Project project) {
 		ExecuteBndTask jarCompileIncludeFragmentTask =
@@ -218,7 +216,7 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 		ExecuteBndTask jarCompileIncludeFragmentTask) {
 
 		final WatchTask watchTask = GradleUtil.addTask(
-			buildBundleDirTask.getProject(), WATCH_TASK_NAME, WatchTask.class);
+			buildBundleDirTask.getProject(), WatchTask.NAME, WatchTask.class);
 
 		watchTask.dependsOn(buildBundleDirTask);
 

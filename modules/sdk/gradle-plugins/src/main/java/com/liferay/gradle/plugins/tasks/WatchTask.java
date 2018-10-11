@@ -22,14 +22,12 @@ import com.liferay.gradle.plugins.internal.util.GradleUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.net.URI;
-
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -61,7 +59,6 @@ import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.incremental.IncrementalTaskInputs;
 import org.gradle.api.tasks.incremental.InputFileDetails;
 import org.gradle.util.GUtil;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.dto.BundleDTO;
 
@@ -71,11 +68,14 @@ import org.osgi.framework.dto.BundleDTO;
  */
 public class WatchTask extends DefaultTask {
 
+	public static final String NAME = "watch";
+
 	public WatchTask() {
-		classLoaderFileExtensions(".class", ".jsp", ".jspf");
+		classLoaderFileExtensions(".class", ".jsp", ".jspf", ".properties");
 		ignoredManifestKeys(Constants.BND_LASTMODIFIED);
 	}
 
+	@SuppressWarnings("unchecked")
 	public WatchTask classLoaderFileExtensions(
 		Iterable<String> classLoaderFileExtensions) {
 
@@ -95,6 +95,11 @@ public class WatchTask extends DefaultTask {
 	@InputDirectory
 	public File getBundleDir() {
 		return GradleUtil.toFile(getProject(), _bundleDir);
+	}
+
+	@Input
+	public String getBundleSymbolicName() {
+		return GradleUtil.toString(_bundleSymbolicName);
 	}
 
 	@Input
@@ -120,6 +125,7 @@ public class WatchTask extends DefaultTask {
 		return new File(project.getBuildDir(), "installedBundleId");
 	}
 
+	@SuppressWarnings("unchecked")
 	public WatchTask ignoredManifestKeys(Iterable<String> ignoredManifestKeys) {
 		GUtil.addToCollection(_ignoredManifestKeys, ignoredManifestKeys);
 
@@ -132,6 +138,10 @@ public class WatchTask extends DefaultTask {
 
 	public void setBundleDir(Object bundleDir) {
 		_bundleDir = bundleDir;
+	}
+
+	public void setBundleSymbolicName(Object bundleSymbolicName) {
+		_bundleSymbolicName = bundleSymbolicName;
 	}
 
 	public void setClassLoaderFileExtensions(
@@ -180,63 +190,50 @@ public class WatchTask extends DefaultTask {
 
 		Logger logger = getLogger();
 
-		long bundleId = -1;
+		long installedBundleId = -1;
 
-		File outputFile = getOutputFile();
+		try (GogoShellClient gogoShellClient = new GogoShellClient()) {
+			installedBundleId = _getInstalledBundleId(gogoShellClient);
 
-		if (outputFile.exists()) {
-			try (GogoShellClient gogoShellClient = new GogoShellClient()) {
-				File manifestFile = new File(
-					getBundleDir(), "META-INF/MANIFEST.MF");
+			if ((installedBundleId < 1) ||
+				!incrementalTaskInputs.isIncremental()) {
 
-				String bundleSymbolicName = FileUtil.readManifestAttribute(
-					manifestFile, Constants.BUNDLE_SYMBOLICNAME);
+				_installOrUpdateBundle(installedBundleId, gogoShellClient);
 
-				long installedBundleId = _getBundleId(
-					bundleSymbolicName, gogoShellClient);
+				return;
+			}
 
-				String outputFileBundleIdString = new String(
-					Files.readAllBytes(outputFile.toPath()),
-					StandardCharsets.UTF_8);
+			List<File> modifiedFiles = _getModifiedFiles(incrementalTaskInputs);
 
-				long outputFileBundleId = Long.parseLong(
-					outputFileBundleIdString);
+			if (_isClassLoaderFileChanged(modifiedFiles) ||
+				_isManifestChanged(modifiedFiles)) {
 
-				if (installedBundleId == outputFileBundleId) {
-					bundleId = outputFileBundleId;
+				_refreshBundle(installedBundleId, gogoShellClient);
+
+				return;
+			}
+
+			if (logger.isQuietEnabled()) {
+				if (modifiedFiles.isEmpty()) {
+					logger.quiet("No files changed. Skipping bundle refresh.");
+				}
+				else {
+					logger.quiet(
+						"Only resources changed. Skipping bundle refresh.");
 				}
 			}
-			catch (Exception e) {
-				if (logger.isDebugEnabled()) {
-					logger.debug("Unable to get bundle ID", e);
-				}
-			}
 		}
+	}
 
-		if ((bundleId < 1) || !incrementalTaskInputs.isIncremental()) {
-			_installBundleFully();
+	private static Attributes _getAttributes(File bundleDir)
+		throws FileNotFoundException, IOException {
 
-			return;
-		}
+		File manifestFile = new File(bundleDir, "META-INF/MANIFEST.MF");
 
-		List<File> modifiedFiles = _getModifiedFiles(incrementalTaskInputs);
+		try (InputStream inputStream = new FileInputStream(manifestFile)) {
+			Manifest manifest = new Manifest(inputStream);
 
-		if (_isClassLoaderFileChanged(modifiedFiles) ||
-			_isManifestChanged(modifiedFiles)) {
-
-			_refreshBundle(bundleId);
-
-			return;
-		}
-
-		if (logger.isQuietEnabled()) {
-			if (modifiedFiles.isEmpty()) {
-				logger.quiet("No files changed. Skipping bundle refresh.");
-			}
-			else {
-				logger.quiet(
-					"Only resources changed. Skipping bundle refresh.");
-			}
+			return manifest.getMainAttributes();
 		}
 	}
 
@@ -260,7 +257,9 @@ public class WatchTask extends DefaultTask {
 
 				BundleDTO bundleDTO = _parseBundleDTO(gogoLine);
 
-				if (bundleDTO != null) {
+				if ((bundleDTO != null) &&
+					bundleSymbolicName.equals(bundleDTO.symbolicName)) {
+
 					return bundleDTO.id;
 				}
 			}
@@ -290,8 +289,24 @@ public class WatchTask extends DefaultTask {
 		return differences;
 	}
 
-	private static String _getReferenceInstallURL(File file) {
+	private static String _getReferenceInstallURL(
+			File file, String bundleSymbolicName)
+		throws IOException {
+
 		URI uri = file.toURI();
+
+		if (_isWar(file)) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("webbundledir:%s");
+			sb.append("?Bundle-SymbolicName=%s");
+			sb.append("&amp\\;");
+			sb.append("Web-ContextPath=/%s");
+
+			return String.format(
+				sb.toString(), uri.toASCIIString(), bundleSymbolicName,
+				bundleSymbolicName);
+		}
 
 		return "reference:" + uri.toASCIIString();
 	}
@@ -319,6 +334,16 @@ public class WatchTask extends DefaultTask {
 		}
 
 		return 0;
+	}
+
+	private static boolean _isWar(File file) {
+		if (!file.isDirectory()) {
+			return false;
+		}
+
+		File webInf = new File(file, "WEB-INF");
+
+		return webInf.exists();
 	}
 
 	private static final BundleDTO _newBundleDTO(
@@ -358,6 +383,35 @@ public class WatchTask extends DefaultTask {
 		}
 
 		return response;
+	}
+
+	private long _getInstalledBundleId(GogoShellClient gogoShellClient)
+		throws IOException {
+
+		File outputFile = getOutputFile();
+
+		if (outputFile.exists()) {
+			try {
+				String installedBundleID = new String(
+					Files.readAllBytes(outputFile.toPath()));
+
+				return Long.parseLong(installedBundleID);
+			}
+			catch (Exception e) {
+			}
+		}
+
+		String bundleSymbolicName = getBundleSymbolicName();
+
+		if (bundleSymbolicName == null) {
+			File manifestFile = new File(
+				getBundleDir(), "META-INF/MANIFEST.MF");
+
+			bundleSymbolicName = FileUtil.readManifestAttribute(
+				manifestFile, Constants.BUNDLE_SYMBOLICNAME);
+		}
+
+		return _getBundleId(bundleSymbolicName, gogoShellClient);
 	}
 
 	private List<File> _getModifiedFiles(
@@ -400,77 +454,77 @@ public class WatchTask extends DefaultTask {
 
 		long bundleId = -1;
 
-		String url = _getReferenceInstallURL(file);
+		String url = _getReferenceInstallURL(file, getBundleSymbolicName());
 
 		String response = _sendGogoShellCommand(
 			gogoShellClient, "install " + url);
 
+		Matcher matcher = _installResponsePattern.matcher(response);
+
+		Logger logger = getLogger();
+
+		if (matcher.matches()) {
+			if (logger.isQuietEnabled()) {
+				logger.quiet("Installed bundle at {}", file);
+			}
+
+			String bundleIdString = matcher.group(1);
+
+			bundleId = Long.parseLong(bundleIdString);
+		}
+
 		if (start) {
-			Logger logger = getLogger();
+			_startBundle(bundleId, gogoShellClient);
+		}
 
-			Matcher matcher = _installResponsePattern.matcher(response);
-
-			if (matcher.matches()) {
-				if (logger.isQuietEnabled()) {
-					logger.quiet("Installed bundle at {}", file);
-				}
-
-				String bundleIdString = matcher.group(1);
-
-				bundleId = Long.parseLong(bundleIdString);
-
-				_startBundle(bundleId, gogoShellClient);
-			}
-			else {
-				logger.error("Unable to install bundle: {}", response);
-			}
+		if (bundleId < 0) {
+			logger.error("Unable to install bundle: {}", response);
 		}
 
 		return bundleId;
 	}
 
-	private void _installBundleFully() throws IOException {
+	private void _installOrUpdateBundle(
+			long bundleId, GogoShellClient gogoShellClient)
+		throws IOException {
+
 		File bundleDir = getBundleDir();
 
-		File manifestFile = new File(bundleDir, "META-INF/MANIFEST.MF");
+		if (bundleId > 0) {
+			_updateBundle(bundleDir, bundleId, gogoShellClient);
+		}
+		else {
+			bundleId = _installBundle(bundleDir, gogoShellClient, true);
+		}
 
-		try (GogoShellClient gogoShellClient = new GogoShellClient();
-			InputStream inputStream = new FileInputStream(manifestFile)) {
+		_installedAttributes.put(bundleDir, _getAttributes(bundleDir));
 
-			Manifest manifest = new Manifest(inputStream);
+		FileCollection fileCollection = getFragments();
 
-			Attributes attributes = manifest.getMainAttributes();
+		boolean installedFragment = false;
 
-			String bundleSymbolicName = attributes.getValue(
-				"Bundle-SymbolicName");
-
-			long bundleId = _getBundleId(bundleSymbolicName, gogoShellClient);
-
-			if (bundleId > 0) {
-				_updateBundle(bundleDir, bundleId, gogoShellClient);
-			}
-			else {
-				bundleId = _installBundle(bundleDir, gogoShellClient, true);
-			}
-
-			File outputFile = getOutputFile();
-
-			String bundleIdString = String.valueOf(bundleId);
-
-			Files.write(
-				outputFile.toPath(),
-				bundleIdString.getBytes(StandardCharsets.UTF_8));
-
-			_installedAttributes.put(bundleDir, attributes);
-
-			FileCollection fileCollection = getFragments();
-
+		if (fileCollection != null) {
 			Set<File> files = fileCollection.getFiles();
 
 			for (File file : files) {
-				_installBundle(file, gogoShellClient, false);
-			}
+				long fragmentBundleId = _installBundle(
+					file, gogoShellClient, false);
 
+				if (fragmentBundleId > 0) {
+					installedFragment = true;
+				}
+			}
+		}
+
+		File outputFile = getOutputFile();
+
+		String bundleIdString = String.valueOf(bundleId);
+
+		Files.write(
+			outputFile.toPath(),
+			bundleIdString.getBytes(StandardCharsets.UTF_8));
+
+		if (installedFragment) {
 			_refreshBundle(bundleId, gogoShellClient);
 		}
 	}
@@ -544,12 +598,6 @@ public class WatchTask extends DefaultTask {
 		return true;
 	}
 
-	private void _refreshBundle(long bundleId) throws IOException {
-		try (GogoShellClient gogoShellClient = new GogoShellClient()) {
-			_refreshBundle(bundleId, gogoShellClient);
-		}
-	}
-
 	private void _refreshBundle(long bundleId, GogoShellClient gogoShellClient)
 		throws IOException {
 
@@ -572,7 +620,7 @@ public class WatchTask extends DefaultTask {
 		Logger logger = getLogger();
 
 		if (logger.isQuietEnabled()) {
-			logger.quiet("Bundle {} started: {}", bundleId, response);
+			logger.quiet("Bundle {} started. {}", bundleId, response);
 		}
 	}
 
@@ -586,7 +634,8 @@ public class WatchTask extends DefaultTask {
 			logger.quiet("Updating bundle {} from {}", bundleId, bundleDir);
 		}
 
-		String url = _getReferenceInstallURL(bundleDir);
+		String url = _getReferenceInstallURL(
+			bundleDir, getBundleSymbolicName());
 
 		String command = String.format("update %s %s", bundleId, url);
 
@@ -603,6 +652,7 @@ public class WatchTask extends DefaultTask {
 		".*Bundle ID: (.*$).*", Pattern.DOTALL | Pattern.MULTILINE);
 
 	private Object _bundleDir;
+	private Object _bundleSymbolicName;
 	private final Set<String> _classLoaderFileExtensions =
 		new LinkedHashSet<>();
 	private FileCollection _fragmentsFileCollection;

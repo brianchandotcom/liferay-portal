@@ -143,13 +143,13 @@ public class AdminHelperImpl implements AdminHelper {
 		OutputDocument outputDocument = new OutputDocument(source);
 
 		for (Element element : source.getAllElements()) {
-			StringBundler sb = new StringBundler(4);
-
 			Attributes attributes = element.getAttributes();
 
 			if (attributes == null) {
 				continue;
 			}
+
+			StringBundler sb = new StringBundler(4);
 
 			Attribute changeTypeAttribute = attributes.get("changeType");
 

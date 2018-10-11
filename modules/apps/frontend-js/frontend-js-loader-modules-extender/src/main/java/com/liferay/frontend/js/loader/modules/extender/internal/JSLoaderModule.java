@@ -120,14 +120,14 @@ public class JSLoaderModule {
 			return jsonObject.toString();
 		}
 
-		List<BundleWire> bundleWires = bundleWiring.getRequiredWires(
-			Details.OSGI_WEBRESOURCE);
-
 		JSONArray namesJSONArray = jsonObject.names();
 
 		if (namesJSONArray == null) {
 			return jsonObject.toString();
 		}
+
+		List<BundleWire> bundleWires = bundleWiring.getRequiredWires(
+			Details.OSGI_WEBRESOURCE);
 
 		for (int i = 0; i < namesJSONArray.length(); i++) {
 			String name = (String)namesJSONArray.get(i);

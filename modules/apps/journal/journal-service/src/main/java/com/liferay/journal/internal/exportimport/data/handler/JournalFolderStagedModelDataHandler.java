@@ -185,8 +185,6 @@ public class JournalFolderStagedModelDataHandler
 			PortletDataContext portletDataContext, JournalFolder folder)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(folder.getUserUuid());
-
 		JournalFolder existingFolder = fetchStagedModelByUuidAndGroupId(
 			folder.getUuid(), portletDataContext.getScopeGroupId());
 
@@ -197,6 +195,8 @@ public class JournalFolderStagedModelDataHandler
 		TrashHandler trashHandler = existingFolder.getTrashHandler();
 
 		if (trashHandler.isRestorable(existingFolder.getFolderId())) {
+			long userId = portletDataContext.getUserId(folder.getUserUuid());
+
 			trashHandler.restoreTrashEntry(
 				userId, existingFolder.getFolderId());
 		}

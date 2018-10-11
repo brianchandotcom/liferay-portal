@@ -139,14 +139,14 @@ public class FragmentEntryLinkLocalServiceImpl
 		deleteLayoutPageTemplateEntryFragmentEntryLinks(
 			long groupId, long classNameId, long classPK) {
 
-		List<FragmentEntryLink> deletedFragmentEntryLinks = new ArrayList<>();
-
 		List<FragmentEntryLink> fragmentEntryLinks = getFragmentEntryLinks(
 			groupId, classNameId, classPK);
 
 		if (ListUtil.isEmpty(fragmentEntryLinks)) {
 			return Collections.emptyList();
 		}
+
+		List<FragmentEntryLink> deletedFragmentEntryLinks = new ArrayList<>();
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			fragmentEntryLinkLocalService.deleteFragmentEntryLink(

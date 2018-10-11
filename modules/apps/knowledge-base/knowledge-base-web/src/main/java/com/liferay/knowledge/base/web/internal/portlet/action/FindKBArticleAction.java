@@ -280,13 +280,6 @@ public class FindKBArticleAction extends BaseStrutsAction {
 				if (rootPortletId.equals(
 						KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
 
-					PortletPreferences portletPreferences =
-						PortletPreferencesFactoryUtil.getPortletSetup(
-							layout, portlet.getPortletId(), StringPool.BLANK);
-
-					String[] kbArticlesSections = portletPreferences.getValues(
-						"kbArticlesSections", new String[0]);
-
 					KBArticle rootKBArticle =
 						_kbArticleLocalService.fetchLatestKBArticle(
 							kbArticle.getRootResourcePrimKey(),
@@ -295,6 +288,13 @@ public class FindKBArticleAction extends BaseStrutsAction {
 					if (rootKBArticle == null) {
 						continue;
 					}
+
+					PortletPreferences portletPreferences =
+						PortletPreferencesFactoryUtil.getPortletSetup(
+							layout, portlet.getPortletId(), StringPool.BLANK);
+
+					String[] kbArticlesSections = portletPreferences.getValues(
+						"kbArticlesSections", new String[0]);
 
 					String[] sections = _adminHelper.unescapeSections(
 						rootKBArticle.getSections());

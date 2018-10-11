@@ -46,9 +46,9 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 		invokeBatchJobs();
 
-		waitForInvokedJobs();
+		waitForDownstreamBuildsToComplete();
 
-		createJenkinsReport();
+		publishJenkinsReport();
 	}
 
 	protected TopLevelBuildRunner(T topLevelBuildData) {
@@ -65,7 +65,7 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		_topLevelBuild = (TopLevelBuild)build;
 	}
 
-	protected void createJenkinsReport() {
+	protected void publishJenkinsReport() {
 		Element jenkinsReportElement = _topLevelBuild.getJenkinsReportElement();
 
 		try {
@@ -161,7 +161,8 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		invocationParameters.put(
 			"DIST_NODES", StringUtils.join(buildData.getDistNodes(), ","));
 		invocationParameters.put("DIST_PATH", buildData.getDistPath());
-		invocationParameters.put("JENKINS_GITHUB_URL", _getJenkinsGitHubURL());
+		invocationParameters.put(
+			"JENKINS_GITHUB_URL", _getCachedJenkinsGitHubURL());
 		invocationParameters.put(
 			"RUN_ID",
 			"batch_" + JenkinsResultsParserUtil.getDistinctTimeStamp());
@@ -261,7 +262,7 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		if (_lastGeneratedReportTime == -1) {
 			_lastGeneratedReportTime = System.currentTimeMillis();
 
-			createJenkinsReport();
+			publishJenkinsReport();
 
 			return;
 		}
@@ -274,10 +275,10 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 		_lastGeneratedReportTime = System.currentTimeMillis();
 
-		createJenkinsReport();
+		publishJenkinsReport();
 	}
 
-	protected void waitForInvokedJobs() {
+	protected void waitForDownstreamBuildsToComplete() {
 		while (true) {
 			_topLevelBuild.update();
 
@@ -312,7 +313,7 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		return false;
 	}
 
-	private String _getJenkinsGitHubURL() {
+	private String _getCachedJenkinsGitHubURL() {
 		if (JenkinsResultsParserUtil.isCINode()) {
 			WorkspaceGitRepository jenkinsWorkspaceGitRepository =
 				workspace.getJenkinsWorkspaceGitRepository();

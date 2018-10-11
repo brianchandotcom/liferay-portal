@@ -260,6 +260,8 @@
 
 	<command name="AddWithStructure" priority="5">
 		<description message="Add a web content article with a custom DDM structure and template and display it in the web content display widget." />
+
+		<property name="environment.acceptance" value="true" />
 		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Web Content Display,Training" />
 

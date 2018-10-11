@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.lang.StringEscapeUtils;
@@ -42,9 +41,11 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 		setUpWorkspace();
 
-		propagateDistFilesToDistNodes();
+		prepareInvocationBuildDataList();
 
-		invokeBatchJobs();
+		propagateBuildDatabaseToDistNodes();
+
+		invokeDownstreamBuilds();
 
 		waitForDownstreamBuildsToComplete();
 
@@ -63,6 +64,40 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		}
 
 		_topLevelBuild = (TopLevelBuild)build;
+	}
+
+	protected void addInvocationBuildData(BuildData buildData) {
+		_invocationBuildDataList.add(buildData);
+	}
+
+	protected void invokeDownstreamBuilds() {
+		for (BuildData invocationBuildData : _invocationBuildDataList) {
+			_invokeDownstreamBuild(invocationBuildData);
+		}
+
+		_invocationBuildDataList.clear();
+	}
+
+	protected abstract void prepareInvocationBuildDataList();
+
+	protected void propagateBuildDatabaseToDistNodes() {
+		if (!JenkinsResultsParserUtil.isCINode()) {
+			return;
+		}
+
+		TopLevelBuildData topLevelBuildData = getBuildData();
+
+		File workspaceDir = topLevelBuildData.getWorkspaceDir();
+
+		FilePropagator filePropagator = new FilePropagator(
+			new String[] {BuildDatabase.BUILD_DATABASE_FILE_NAME},
+			JenkinsResultsParserUtil.combine(
+				topLevelBuildData.getHostname(), ":", workspaceDir.toString()),
+			topLevelBuildData.getDistPath(), topLevelBuildData.getDistNodes());
+
+		filePropagator.setCleanUpCommand(_FILE_PROPAGATOR_CLEAN_UP_COMMAND);
+
+		filePropagator.start(_FILE_PROPAGATOR_THREAD_COUNT);
 	}
 
 	protected void publishJenkinsReport() {
@@ -140,114 +175,6 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
-	}
-
-	protected Set<String> getBatchNames() {
-		Job job = getJob();
-
-		return job.getBatchNames();
-	}
-
-	protected String[] getDistFileNames() {
-		return new String[] {BuildDatabase.BUILD_DATABASE_FILE_NAME};
-	}
-
-	protected void invokeBatchJob(String batchName) {
-		BuildData buildData = getBuildData();
-
-		Map<String, String> invocationParameters = new HashMap<>();
-
-		invocationParameters.put("BATCH_NAME", batchName);
-		invocationParameters.put(
-			"DIST_NODES", StringUtils.join(buildData.getDistNodes(), ","));
-		invocationParameters.put("DIST_PATH", buildData.getDistPath());
-		invocationParameters.put(
-			"JENKINS_GITHUB_URL", _getCachedJenkinsGitHubURL());
-		invocationParameters.put(
-			"RUN_ID",
-			"batch_" + JenkinsResultsParserUtil.getDistinctTimeStamp());
-		invocationParameters.put("TOP_LEVEL_RUN_ID", buildData.getRunID());
-
-		invokeJob(
-			buildData.getCohortName(), buildData.getJobName() + "-batch",
-			invocationParameters);
-	}
-
-	protected void invokeBatchJobs() {
-		for (String batchName : getBatchNames()) {
-			invokeBatchJob(batchName);
-		}
-	}
-
-	protected void invokeJob(
-		String cohortName, String jobName,
-		Map<String, String> invocationParameters) {
-
-		Properties buildProperties;
-
-		try {
-			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-
-		List<JenkinsMaster> jenkinsMasters =
-			JenkinsResultsParserUtil.getJenkinsMasters(
-				buildProperties, cohortName);
-
-		String randomJenkinsURL =
-			JenkinsResultsParserUtil.getMostAvailableMasterURL(
-				"http://" + cohortName + ".liferay.com", jenkinsMasters.size());
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(randomJenkinsURL);
-		sb.append("/job/");
-		sb.append(jobName);
-		sb.append("/buildWithParameters?token=");
-		sb.append(buildProperties.getProperty("jenkins.authentication.token"));
-
-		for (Map.Entry<String, String> invocationParameter :
-				invocationParameters.entrySet()) {
-
-			sb.append("&");
-			sb.append(
-				JenkinsResultsParserUtil.fixURL(invocationParameter.getKey()));
-			sb.append("=");
-			sb.append(
-				JenkinsResultsParserUtil.fixURL(
-					invocationParameter.getValue()));
-		}
-
-		_topLevelBuild.addDownstreamBuilds(sb.toString());
-
-		try {
-			JenkinsResultsParserUtil.toString(sb.toString());
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-	}
-
-	protected void propagateDistFilesToDistNodes() {
-		if (!JenkinsResultsParserUtil.isCINode()) {
-			return;
-		}
-
-		BuildData buildData = getBuildData();
-
-		File workspaceDir = buildData.getWorkspaceDir();
-
-		FilePropagator filePropagator = new FilePropagator(
-			getDistFileNames(),
-			JenkinsResultsParserUtil.combine(
-				buildData.getHostname(), ":", workspaceDir.toString()),
-			buildData.getDistPath(), buildData.getDistNodes());
-
-		filePropagator.setCleanUpCommand(_FILE_PROPAGATOR_CLEAN_UP_COMMAND);
-
-		filePropagator.start(_FILE_PROPAGATOR_THREAD_COUNT);
 	}
 
 	protected void updateJenkinsReport() {
@@ -333,6 +260,77 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		return buildData.getJenkinsGitHubURL();
 	}
 
+	private void _invokeBuild(
+		String cohortName, String jobName,
+		Map<String, String> invocationParameters) {
+
+		Properties buildProperties;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+
+		List<JenkinsMaster> jenkinsMasters =
+			JenkinsResultsParserUtil.getJenkinsMasters(
+				buildProperties, cohortName);
+
+		String randomJenkinsURL =
+			JenkinsResultsParserUtil.getMostAvailableMasterURL(
+				"http://" + cohortName + ".liferay.com", jenkinsMasters.size());
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(randomJenkinsURL);
+		sb.append("/job/");
+		sb.append(jobName);
+		sb.append("/buildWithParameters?token=");
+		sb.append(buildProperties.getProperty("jenkins.authentication.token"));
+
+		for (Map.Entry<String, String> invocationParameter :
+				invocationParameters.entrySet()) {
+
+			sb.append("&");
+			sb.append(
+				JenkinsResultsParserUtil.fixURL(invocationParameter.getKey()));
+			sb.append("=");
+			sb.append(
+				JenkinsResultsParserUtil.fixURL(
+					invocationParameter.getValue()));
+		}
+
+		_topLevelBuild.addDownstreamBuilds(sb.toString());
+
+		try {
+			JenkinsResultsParserUtil.toString(sb.toString());
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
+	private void _invokeDownstreamBuild(BuildData buildData) {
+		TopLevelBuildData topLevelBuildData = getBuildData();
+
+		Map<String, String> invocationParameters = new HashMap<>();
+
+		invocationParameters.put(
+			"DIST_NODES",
+			StringUtils.join(topLevelBuildData.getDistNodes(), ","));
+		invocationParameters.put("DIST_PATH", topLevelBuildData.getDistPath());
+		invocationParameters.put(
+			"JENKINS_GITHUB_URL", _getCachedJenkinsGitHubURL());
+		invocationParameters.put("RUN_ID", buildData.getRunID());
+		invocationParameters.put(
+			"TOP_LEVEL_RUN_ID", topLevelBuildData.getRunID());
+
+		_invokeBuild(
+			topLevelBuildData.getCohortName(), buildData.getJobName(),
+			invocationParameters);
+	}
+
 	private static final String _FILE_PROPAGATOR_CLEAN_UP_COMMAND =
 		JenkinsResultsParserUtil.combine(
 			"find ", BuildData.DIST_ROOT_PATH,
@@ -348,6 +346,7 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 	private static final int _WAIT_FOR_INVOKED_JOB_DURATION = 30;
 
+	private final List<BuildData> _invocationBuildDataList = new ArrayList<>();
 	private long _lastGeneratedReportTime = -1;
 	private final TopLevelBuild _topLevelBuild;
 

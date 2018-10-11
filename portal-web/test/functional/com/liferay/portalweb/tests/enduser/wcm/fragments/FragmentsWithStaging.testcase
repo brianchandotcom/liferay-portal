@@ -42,6 +42,8 @@
 	</tear-down>
 
 	<command name="AssertFragmentsAreOnlyEditableInStagingView" priority="5">
+		<description message="Page Fragments administration is only be accessible in staging view." />
+
 		<execute macro="ProductMenuHelper#expandPanel">
 			<var name="panel" value="Site Administration" />
 		</execute>
@@ -64,6 +66,8 @@
 	</command>
 
 	<command name="AssertFragmentsAlwaysPublished" priority="5">
+		<description message="Fragments are published automatically on any publishing process." />
+
 		<execute macro="JSONFragment#addFragmentCollection">
 			<var name="groupKey" value="Test Site Name-staging" />
 			<var name="name" value="Collection Name" />

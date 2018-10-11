@@ -43,8 +43,6 @@ public class ResourceProperty extends StringProperty {
 			throw new IllegalStateException("No resource selected");
 		}
 
-		String resourceName = getValue();
-
 		if ((_possibleNamedThingValues == null) ||
 			_possibleNamedThingValues.isEmpty()) {
 
@@ -56,6 +54,8 @@ public class ResourceProperty extends StringProperty {
 
 			return _constructResourceURL();
 		}
+
+		String resourceName = getValue();
 
 		for (NamedThing namedThing : _possibleNamedThingValues) {
 			if (resourceName.equals(namedThing.getName())) {

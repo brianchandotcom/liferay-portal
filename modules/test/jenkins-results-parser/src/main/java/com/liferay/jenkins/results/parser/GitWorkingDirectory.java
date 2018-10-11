@@ -1091,8 +1091,6 @@ public class GitWorkingDirectory {
 		boolean checkUnstagedFiles, List<PathMatcher> excludesPathMatchers,
 		List<PathMatcher> includesPathMatchers) {
 
-		List<File> modifiedFiles = new ArrayList<>();
-
 		LocalGitBranch currentLocalGitBranch = getCurrentLocalGitBranch();
 
 		if (currentLocalGitBranch == null) {
@@ -1127,6 +1125,8 @@ public class GitWorkingDirectory {
 				"Unable to get current branch modified files\n" +
 					executionResult.getStandardError());
 		}
+
+		List<File> modifiedFiles = new ArrayList<>();
 
 		String gitDiffOutput = executionResult.getStandardOut();
 

@@ -151,9 +151,6 @@ public class MissingOverrideCheck extends BaseCheck {
 			return _javaProjectBuilder;
 		}
 
-		JavaProjectBuilder javaProjectBuilder = new JavaProjectBuilder(
-			new ThreadSafeSortedClassLibraryBuilder());
-
 		String absolutePath = SourceUtil.getAbsolutePath(fileName);
 
 		while (true) {
@@ -171,6 +168,9 @@ public class MissingOverrideCheck extends BaseCheck {
 				break;
 			}
 		}
+
+		JavaProjectBuilder javaProjectBuilder = new JavaProjectBuilder(
+			new ThreadSafeSortedClassLibraryBuilder());
 
 		Set<ExcludeSyntaxPattern> defaultExcludeSyntaxPatterns =
 			SetUtil.fromArray(SourceFormatter.DEFAULT_EXCLUDE_SYNTAX_PATTERNS);

@@ -113,8 +113,6 @@ public class DBSupportDefaultsPlugin
 					BaseDBSupportTask baseDBSupportTask =
 						(BaseDBSupportTask)task;
 
-					Logger logger = baseDBSupportTask.getLogger();
-
 					File propertiesFile = baseDBSupportTask.getPropertiesFile();
 					String url = baseDBSupportTask.getUrl();
 
@@ -137,6 +135,8 @@ public class DBSupportDefaultsPlugin
 							jarFile, "portal.properties");
 					}
 					catch (IOException ioe) {
+						Logger logger = baseDBSupportTask.getLogger();
+
 						if (logger.isWarnEnabled()) {
 							logger.warn(
 								"Unable to read portal.properties file from {}",

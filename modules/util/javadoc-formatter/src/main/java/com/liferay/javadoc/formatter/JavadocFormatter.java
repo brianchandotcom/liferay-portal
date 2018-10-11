@@ -1219,11 +1219,11 @@ public class JavadocFormatter {
 	}
 
 	private String _getCDATA(String cdata) {
-		StringBundler sb = new StringBundler();
-
 		if ((cdata == null) || cdata.isEmpty()) {
 			return StringPool.BLANK;
 		}
+
+		StringBundler sb = new StringBundler();
 
 		int cdataBeginIndex = 0;
 
@@ -2092,6 +2092,12 @@ public class JavadocFormatter {
 			String fileName, JavaClass javaClass, Document javaClassDocument)
 		throws Exception {
 
+		Tuple javadocsXmlTuple = _getJavadocsXmlTuple(fileName);
+
+		if (javadocsXmlTuple == null) {
+			return;
+		}
+
 		String javaClassFullyQualifiedName = javaClass.getFullyQualifiedName();
 
 		/*if (!javaClassFullyQualifiedName.contains(".service.") ||
@@ -2099,12 +2105,6 @@ public class JavadocFormatter {
 
 			return;
 		}*/
-
-		Tuple javadocsXmlTuple = _getJavadocsXmlTuple(fileName);
-
-		if (javadocsXmlTuple == null) {
-			return;
-		}
 
 		Document javadocsXmlDocument = (Document)javadocsXmlTuple.getObject(3);
 

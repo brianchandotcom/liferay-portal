@@ -48,16 +48,17 @@ public class PortalBatchBuildRunner
 			_getPrimaryPortalDirectory(), "build-test.xml",
 			"merge-test-results");
 
-		BuildData buildData = getBuildData();
-
 		File source = new File(
 			_getPrimaryPortalDirectory(), "test-results/TESTS-TestSuites.xml");
-		File target = new File(
-			buildData.getWorkspaceDir(), "test-results/TESTS-TestSuites.xml");
 
 		if (!source.exists()) {
 			return;
 		}
+
+		BuildData buildData = getBuildData();
+
+		File target = new File(
+			buildData.getWorkspaceDir(), "test-results/TESTS-TestSuites.xml");
 
 		try {
 			JenkinsResultsParserUtil.copy(source, target);

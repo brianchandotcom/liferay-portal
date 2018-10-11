@@ -17,31 +17,13 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public abstract class PortalTopLevelBuildRunner
-	extends TopLevelBuildRunner<PortalTopLevelBuildData> {
+public class DefaultPortalTopLevelBuildRunner
+	extends PortalTopLevelBuildRunner {
 
-	protected PortalTopLevelBuildRunner(
+	protected DefaultPortalTopLevelBuildRunner(
 		PortalTopLevelBuildData portalTopLevelBuildData) {
 
 		super(portalTopLevelBuildData);
-	}
-
-	@Override
-	protected void initWorkspace() {
-		PortalTopLevelBuildData portalTopLevelBuildData = getBuildData();
-
-		workspace = WorkspaceFactory.newTopLevelWorkspace(
-			portalTopLevelBuildData.getPortalGitHubURL(),
-			portalTopLevelBuildData.getPortalUpstreamBranchName());
-
-		if (!(workspace instanceof TopLevelPortalWorkspace)) {
-			throw new RuntimeException("Invalid workspace");
-		}
-
-		if (JenkinsResultsParserUtil.isCINode()) {
-			workspace.addJenkinsWorkspaceGitRepository(
-				portalTopLevelBuildData.getJenkinsGitHubURL());
-		}
 	}
 
 }

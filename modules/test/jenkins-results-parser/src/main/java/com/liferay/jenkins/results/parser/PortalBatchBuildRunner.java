@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * @author Michael Hashimoto
  */
-public class PortalBatchBuildRunner
+public abstract class PortalBatchBuildRunner
 	extends BatchBuildRunner<PortalBatchBuildData> {
 
 	@Override
@@ -34,7 +34,7 @@ public class PortalBatchBuildRunner
 
 		runTestBatch();
 
-		copyTestResults();
+		publishTestResults();
 	}
 
 	protected PortalBatchBuildRunner(
@@ -43,7 +43,24 @@ public class PortalBatchBuildRunner
 		super(portalBatchBuildData);
 	}
 
-	protected void copyTestResults() {
+	@Override
+	protected void initWorkspace() {
+		PortalBatchBuildData portalBatchBuildData = getBuildData();
+
+		workspace = WorkspaceFactory.newBatchWorkspace(
+			portalBatchBuildData.getPortalGitHubURL(),
+			portalBatchBuildData.getPortalUpstreamBranchName(),
+			portalBatchBuildData.getBatchName(),
+			portalBatchBuildData.getPortalBranchSHA());
+
+		if (!(workspace instanceof BatchPortalWorkspace)) {
+			throw new RuntimeException("Invalid workspace");
+		}
+
+		_batchPortalWorkspace = (BatchPortalWorkspace)workspace;
+	}
+
+	protected void publishTestResults() {
 		AntUtil.callTarget(
 			_getPrimaryPortalDirectory(), "build-test.xml",
 			"merge-test-results");
@@ -70,23 +87,6 @@ public class PortalBatchBuildRunner
 					" to ", target.getPath()),
 				ioe);
 		}
-	}
-
-	@Override
-	protected void initWorkspace() {
-		PortalBatchBuildData portalBatchBuildData = getBuildData();
-
-		workspace = WorkspaceFactory.newBatchWorkspace(
-			portalBatchBuildData.getPortalGitHubURL(),
-			portalBatchBuildData.getPortalUpstreamBranchName(),
-			portalBatchBuildData.getBatchName(),
-			portalBatchBuildData.getPortalBranchSHA());
-
-		if (!(workspace instanceof BatchPortalWorkspace)) {
-			throw new RuntimeException("Invalid workspace");
-		}
-
-		_batchPortalWorkspace = (BatchPortalWorkspace)workspace;
 	}
 
 	protected void runTestBatch() {

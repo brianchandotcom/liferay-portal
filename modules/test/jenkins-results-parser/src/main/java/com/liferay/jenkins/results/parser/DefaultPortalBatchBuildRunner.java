@@ -17,22 +17,12 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class BuildRunnerFactory {
+public class DefaultPortalBatchBuildRunner extends PortalBatchBuildRunner {
 
-	public static BuildRunner newBuildRunner(BuildData buildData) {
-		String jobName = buildData.getJobName();
+	protected DefaultPortalBatchBuildRunner(
+		PortalBatchBuildData portalBatchBuildData) {
 
-		if (jobName.contains("portal") && jobName.contains("-batch")) {
-			return new DefaultPortalBatchBuildRunner(
-				(PortalBatchBuildData)buildData);
-		}
-
-		if (jobName.contains("portal")) {
-			return new DefaultPortalTopLevelBuildRunner(
-				(PortalTopLevelBuildData)buildData);
-		}
-
-		throw new RuntimeException("Invalid build data " + buildData);
+		super(portalBatchBuildData);
 	}
 
 }

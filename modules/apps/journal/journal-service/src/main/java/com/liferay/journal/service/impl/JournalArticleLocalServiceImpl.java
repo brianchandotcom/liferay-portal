@@ -70,8 +70,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.comment.CommentManager;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -5211,50 +5209,38 @@ public class JournalArticleLocalServiceImpl
 			getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property folderIdProperty = PropertyFactoryUtil.forName(
+					"folderId");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property folderIdProperty = PropertyFactoryUtil.forName(
-						"folderId");
+				dynamicQuery.add(folderIdProperty.eq(folderId));
 
-					dynamicQuery.add(folderIdProperty.eq(folderId));
+				Property treePathProperty = PropertyFactoryUtil.forName(
+					"treePath");
 
-					Property treePathProperty = PropertyFactoryUtil.forName(
-						"treePath");
-
-					dynamicQuery.add(
-						RestrictionsFactoryUtil.or(
-							treePathProperty.isNull(),
-							treePathProperty.ne(treePath)));
-				}
-
+				dynamicQuery.add(
+					RestrictionsFactoryUtil.or(
+						treePathProperty.isNull(),
+						treePathProperty.ne(treePath)));
 			});
 
 		final Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(
 			JournalArticle.class.getName());
 
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<JournalArticle>() {
+			(JournalArticle article) -> {
+				article.setTreePath(treePath);
 
-				@Override
-				public void performAction(JournalArticle article)
-					throws PortalException {
+				updateJournalArticle(article);
 
-					article.setTreePath(treePath);
-
-					updateJournalArticle(article);
-
-					if (!reindex) {
-						return;
-					}
-
-					com.liferay.portal.kernel.search.Document document =
-						indexer.getDocument(article);
-
-					indexableActionableDynamicQuery.addDocuments(document);
+				if (!reindex) {
+					return;
 				}
 
+				com.liferay.portal.kernel.search.Document document =
+					indexer.getDocument(article);
+
+				indexableActionableDynamicQuery.addDocuments(document);
 			});
 
 		indexableActionableDynamicQuery.performActions();

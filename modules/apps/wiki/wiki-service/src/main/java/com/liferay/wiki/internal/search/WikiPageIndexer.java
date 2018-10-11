@@ -17,7 +17,6 @@ package com.liferay.wiki.internal.search;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -296,16 +295,8 @@ public class WikiPageIndexer
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<WikiNode>() {
-
-				@Override
-				public void performAction(WikiNode node)
-					throws PortalException {
-
-					reindexPages(
-						companyId, node.getGroupId(), node.getNodeId());
-				}
-
+			(WikiNode node) -> {
+				reindexPages(companyId, node.getGroupId(), node.getNodeId());
 			});
 
 		actionableDynamicQuery.performActions();
@@ -318,42 +309,31 @@ public class WikiPageIndexer
 			_wikiPageLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property nodeIdProperty = PropertyFactoryUtil.forName("nodeId");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property nodeIdProperty = PropertyFactoryUtil.forName(
-						"nodeId");
+				dynamicQuery.add(nodeIdProperty.eq(nodeId));
 
-					dynamicQuery.add(nodeIdProperty.eq(nodeId));
+				Property headProperty = PropertyFactoryUtil.forName("head");
 
-					Property headProperty = PropertyFactoryUtil.forName("head");
-
-					dynamicQuery.add(headProperty.eq(true));
-				}
-
+				dynamicQuery.add(headProperty.eq(true));
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setGroupId(groupId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<WikiPage>() {
+			(WikiPage page) -> {
+				try {
+					Document document = getDocument(page);
 
-				@Override
-				public void performAction(WikiPage page) {
-					try {
-						Document document = getDocument(page);
-
-						indexableActionableDynamicQuery.addDocuments(document);
-					}
-					catch (PortalException pe) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to index wiki page " + page.getPageId(),
-								pe);
-						}
+					indexableActionableDynamicQuery.addDocuments(document);
+				}
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index wiki page " + page.getPageId(),
+							pe);
 					}
 				}
-
 			});
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 

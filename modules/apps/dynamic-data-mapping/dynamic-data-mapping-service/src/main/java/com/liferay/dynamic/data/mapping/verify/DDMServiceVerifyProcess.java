@@ -202,17 +202,10 @@ public class DDMServiceVerifyProcess extends VerifyProcess {
 				_ddmContentLocalService.getActionableDynamicQuery();
 
 			actionableDynamicQuery.setPerformActionMethod(
-				new ActionableDynamicQuery.PerformActionMethod() {
+				(Object object) -> {
+					DDMContent ddmContent = (DDMContent)object;
 
-					@Override
-					public void performAction(Object object)
-						throws PortalException {
-
-						DDMContent ddmContent = (DDMContent)object;
-
-						verifyContent(ddmContent);
-					}
-
+					verifyContent(ddmContent);
 				});
 
 			actionableDynamicQuery.performActions();
@@ -254,18 +247,11 @@ public class DDMServiceVerifyProcess extends VerifyProcess {
 				_ddmStructureLinkLocalService.getActionableDynamicQuery();
 
 			actionableDynamicQuery.setPerformActionMethod(
-				new ActionableDynamicQuery.PerformActionMethod() {
+				(Object object) -> {
+					DDMStructureLink ddmStructureLink =
+						(DDMStructureLink)object;
 
-					@Override
-					public void performAction(Object object)
-						throws PortalException {
-
-						DDMStructureLink ddmStructureLink =
-							(DDMStructureLink)object;
-
-						verifyStructureLink(ddmStructureLink);
-					}
-
+					verifyStructureLink(ddmStructureLink);
 				});
 		}
 	}
@@ -276,28 +262,20 @@ public class DDMServiceVerifyProcess extends VerifyProcess {
 				_ddmStructureLocalService.getActionableDynamicQuery();
 
 			actionableDynamicQuery.setPerformActionMethod(
-				new ActionableDynamicQuery.PerformActionMethod() {
+				(Object object) -> {
+					DDMStructure ddmStructure = (DDMStructure)object;
 
-					@Override
-					public void performAction(Object object)
-						throws PortalException {
-
-						DDMStructure ddmStructure = (DDMStructure)object;
-
-						try {
-							verifyStructure(ddmStructure);
-						}
-						catch (PortalException pe) {
-							_log.error(
-								String.format(
-									"Invalid data for DDM structure %d " +
-										"causes: {%s}",
-									ddmStructure.getStructureId(),
-									pe.getMessage()),
-								pe);
-						}
+					try {
+						verifyStructure(ddmStructure);
 					}
-
+					catch (PortalException pe) {
+						_log.error(
+							String.format(
+								"Invalid data for DDM structure %d " +
+									"causes: {%s}",
+								ddmStructure.getStructureId(), pe.getMessage()),
+							pe);
+					}
 				});
 
 			actionableDynamicQuery.performActions();
@@ -322,18 +300,10 @@ public class DDMServiceVerifyProcess extends VerifyProcess {
 				_ddmTemplateLinkLocalService.getActionableDynamicQuery();
 
 			actionableDynamicQuery.setPerformActionMethod(
-				new ActionableDynamicQuery.PerformActionMethod() {
+				(Object object) -> {
+					DDMTemplateLink ddmTemplateLink = (DDMTemplateLink)object;
 
-					@Override
-					public void performAction(Object object)
-						throws PortalException {
-
-						DDMTemplateLink ddmTemplateLink =
-							(DDMTemplateLink)object;
-
-						verifyTemplateLink(ddmTemplateLink);
-					}
-
+					verifyTemplateLink(ddmTemplateLink);
 				});
 		}
 	}

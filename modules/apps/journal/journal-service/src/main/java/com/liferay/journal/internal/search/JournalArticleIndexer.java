@@ -319,56 +319,50 @@ public class JournalArticleIndexer
 				_journalArticleResourceLocalService.getActionableDynamicQuery();
 
 			actionableDynamicQuery.setAddCriteriaMethod(
-				new ActionableDynamicQuery.AddCriteriaMethod() {
+				dynamicQuery -> {
+					Class<?> clazz = getClass();
 
-					@Override
-					public void addCriteria(DynamicQuery dynamicQuery) {
-						Class<?> clazz = getClass();
+					DynamicQuery journalArticleDynamicQuery =
+						DynamicQueryFactoryUtil.forClass(
+							JournalArticle.class, "journalArticle",
+							clazz.getClassLoader());
 
-						DynamicQuery journalArticleDynamicQuery =
-							DynamicQueryFactoryUtil.forClass(
-								JournalArticle.class, "journalArticle",
-								clazz.getClassLoader());
+					journalArticleDynamicQuery.setProjection(
+						ProjectionFactoryUtil.property("resourcePrimKey"));
 
-						journalArticleDynamicQuery.setProjection(
-							ProjectionFactoryUtil.property("resourcePrimKey"));
+					journalArticleDynamicQuery.add(
+						RestrictionsFactoryUtil.eqProperty(
+							"journalArticle.resourcePrimKey",
+							"this.resourcePrimKey"));
+
+					journalArticleDynamicQuery.add(
+						RestrictionsFactoryUtil.eqProperty(
+							"journalArticle.groupId", "this.groupId"));
+
+					Property ddmStructureKey = PropertyFactoryUtil.forName(
+						"DDMStructureKey");
+
+					journalArticleDynamicQuery.add(
+						ddmStructureKey.in(ddmStructureKeys));
+
+					if (!isIndexAllArticleVersions()) {
+						Property statusProperty = PropertyFactoryUtil.forName(
+							"status");
+
+						Integer[] statuses = {
+							WorkflowConstants.STATUS_APPROVED,
+							WorkflowConstants.STATUS_IN_TRASH
+						};
 
 						journalArticleDynamicQuery.add(
-							RestrictionsFactoryUtil.eqProperty(
-								"journalArticle.resourcePrimKey",
-								"this.resourcePrimKey"));
-
-						journalArticleDynamicQuery.add(
-							RestrictionsFactoryUtil.eqProperty(
-								"journalArticle.groupId", "this.groupId"));
-
-						Property ddmStructureKey = PropertyFactoryUtil.forName(
-							"DDMStructureKey");
-
-						journalArticleDynamicQuery.add(
-							ddmStructureKey.in(ddmStructureKeys));
-
-						if (!isIndexAllArticleVersions()) {
-							Property statusProperty =
-								PropertyFactoryUtil.forName("status");
-
-							Integer[] statuses = {
-								WorkflowConstants.STATUS_APPROVED,
-								WorkflowConstants.STATUS_IN_TRASH
-							};
-
-							journalArticleDynamicQuery.add(
-								statusProperty.in(statuses));
-						}
-
-						Property resourcePrimKeyProperty =
-							PropertyFactoryUtil.forName("resourcePrimKey");
-
-						dynamicQuery.add(
-							resourcePrimKeyProperty.in(
-								journalArticleDynamicQuery));
+							statusProperty.in(statuses));
 					}
 
+					Property resourcePrimKeyProperty =
+						PropertyFactoryUtil.forName("resourcePrimKey");
+
+					dynamicQuery.add(
+						resourcePrimKeyProperty.in(journalArticleDynamicQuery));
 				});
 			actionableDynamicQuery.setPerformActionMethod(
 				new ActionableDynamicQuery.

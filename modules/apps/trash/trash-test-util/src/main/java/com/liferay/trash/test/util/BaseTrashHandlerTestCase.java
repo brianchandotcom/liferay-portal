@@ -16,7 +16,6 @@ package com.liferay.trash.test.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -3436,30 +3435,25 @@ public abstract class BaseTrashHandlerTestCase {
 			SystemEventLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property classNameIdProperty = PropertyFactoryUtil.forName(
+					"classNameId");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property classNameIdProperty = PropertyFactoryUtil.forName(
-						"classNameId");
+				dynamicQuery.add(
+					classNameIdProperty.eq(systemEventClassNameId));
 
-					dynamicQuery.add(
-						classNameIdProperty.eq(systemEventClassNameId));
-
-					if (systemEventSetKey > 0) {
-						Property systemEventSetKeyProperty =
-							PropertyFactoryUtil.forName("systemEventSetKey");
-
-						dynamicQuery.add(
-							systemEventSetKeyProperty.eq(systemEventSetKey));
-					}
-
-					Property typeProperty = PropertyFactoryUtil.forName("type");
+				if (systemEventSetKey > 0) {
+					Property systemEventSetKeyProperty =
+						PropertyFactoryUtil.forName("systemEventSetKey");
 
 					dynamicQuery.add(
-						typeProperty.eq(SystemEventConstants.TYPE_DELETE));
+						systemEventSetKeyProperty.eq(systemEventSetKey));
 				}
 
+				Property typeProperty = PropertyFactoryUtil.forName("type");
+
+				dynamicQuery.add(
+					typeProperty.eq(SystemEventConstants.TYPE_DELETE));
 			});
 		actionableDynamicQuery.setGroupId(group.getGroupId());
 

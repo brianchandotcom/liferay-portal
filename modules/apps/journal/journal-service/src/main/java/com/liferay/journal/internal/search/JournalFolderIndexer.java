@@ -17,7 +17,6 @@ package com.liferay.journal.internal.search;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -171,28 +170,22 @@ public class JournalFolderIndexer
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<JournalFolder>() {
+			(JournalFolder folder) -> {
+				try {
+					Document document = getDocument(folder);
 
-				@Override
-				public void performAction(JournalFolder folder) {
-					try {
-						Document document = getDocument(folder);
-
-						if (document != null) {
-							indexableActionableDynamicQuery.addDocuments(
-								document);
-						}
-					}
-					catch (PortalException pe) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to index journal folder " +
-									folder.getFolderId(),
-								pe);
-						}
+					if (document != null) {
+						indexableActionableDynamicQuery.addDocuments(document);
 					}
 				}
-
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index journal folder " +
+								folder.getFolderId(),
+							pe);
+					}
+				}
 			});
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 

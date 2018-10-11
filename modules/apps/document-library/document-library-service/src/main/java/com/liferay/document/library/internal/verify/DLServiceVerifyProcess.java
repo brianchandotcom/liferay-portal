@@ -30,7 +30,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Criterion;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -122,99 +121,88 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 			_dlFileVersionLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Criterion criterion = RestrictionsFactoryUtil.eq(
+					"mimeType", originalMimeTypes[0]);
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Criterion criterion = RestrictionsFactoryUtil.eq(
-						"mimeType", originalMimeTypes[0]);
-
-					for (int i = 1; i < originalMimeTypes.length; i++) {
-						criterion = RestrictionsFactoryUtil.or(
-							criterion,
-							RestrictionsFactoryUtil.eq(
-								"mimeType", originalMimeTypes[i]));
-					}
-
-					dynamicQuery.add(criterion);
+				for (int i = 1; i < originalMimeTypes.length; i++) {
+					criterion = RestrictionsFactoryUtil.or(
+						criterion,
+						RestrictionsFactoryUtil.eq(
+							"mimeType", originalMimeTypes[i]));
 				}
 
+				dynamicQuery.add(criterion);
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<DLFileVersion>() {
+			(DLFileVersion dlFileVersion) -> {
+				String title = DLUtil.getTitleWithExtension(
+					dlFileVersion.getTitle(), dlFileVersion.getExtension());
 
-				@Override
-				public void performAction(DLFileVersion dlFileVersion) {
-					String title = DLUtil.getTitleWithExtension(
-						dlFileVersion.getTitle(), dlFileVersion.getExtension());
+				try (InputStream inputStream =
+						_dlFileEntryLocalService.getFileAsStream(
+							dlFileVersion.getFileEntryId(),
+							dlFileVersion.getVersion(), false)) {
 
-					try (InputStream inputStream =
-							_dlFileEntryLocalService.getFileAsStream(
-								dlFileVersion.getFileEntryId(),
-								dlFileVersion.getVersion(), false)) {
+					String mimeType = MimeTypesUtil.getContentType(
+						inputStream, title);
 
-						String mimeType = MimeTypesUtil.getContentType(
-							inputStream, title);
+					if (mimeType.equals(dlFileVersion.getMimeType())) {
+						return;
+					}
 
-						if (mimeType.equals(dlFileVersion.getMimeType())) {
-							return;
-						}
+					dlFileVersion.setMimeType(mimeType);
 
-						dlFileVersion.setMimeType(mimeType);
+					_dlFileVersionLocalService.updateDLFileVersion(
+						dlFileVersion);
 
-						_dlFileVersionLocalService.updateDLFileVersion(
-							dlFileVersion);
+					try {
+						DLFileEntry dlFileEntry = dlFileVersion.getFileEntry();
 
-						try {
-							DLFileEntry dlFileEntry =
-								dlFileVersion.getFileEntry();
+						if (Objects.equals(
+								dlFileEntry.getVersion(),
+								dlFileVersion.getVersion())) {
 
-							if (Objects.equals(
-									dlFileEntry.getVersion(),
-									dlFileVersion.getVersion())) {
+							dlFileEntry.setMimeType(mimeType);
 
-								dlFileEntry.setMimeType(mimeType);
-
-								_dlFileEntryLocalService.updateDLFileEntry(
-									dlFileEntry);
-							}
-						}
-						catch (PortalException pe) {
-							if (_log.isWarnEnabled()) {
-								_log.warn(
-									"Unable to get file entry " +
-										dlFileVersion.getFileEntryId(),
-									pe);
-							}
+							_dlFileEntryLocalService.updateDLFileEntry(
+								dlFileEntry);
 						}
 					}
-					catch (Exception e) {
+					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {
-							DLFileEntry dlFileEntry =
-								_dlFileEntryLocalService.fetchDLFileEntry(
-									dlFileVersion.getFileEntryId());
-
-							if (dlFileEntry == null) {
-								_log.warn(
-									"Unable to find file entry associated " +
-										"with file version " +
-											dlFileVersion.getFileVersionId(),
-									e);
-							}
-							else {
-								StringBundler sb = new StringBundler(4);
-
-								sb.append("Unable to find file version ");
-								sb.append(dlFileVersion.getVersion());
-								sb.append(" for file entry ");
-								sb.append(dlFileEntry.getName());
-
-								_log.warn(sb.toString(), e);
-							}
+							_log.warn(
+								"Unable to get file entry " +
+									dlFileVersion.getFileEntryId(),
+								pe);
 						}
 					}
 				}
+				catch (Exception e) {
+					if (_log.isWarnEnabled()) {
+						DLFileEntry dlFileEntry =
+							_dlFileEntryLocalService.fetchDLFileEntry(
+								dlFileVersion.getFileEntryId());
 
+						if (dlFileEntry == null) {
+							_log.warn(
+								"Unable to find file entry associated " +
+									"with file version " +
+										dlFileVersion.getFileVersionId(),
+								e);
+						}
+						else {
+							StringBundler sb = new StringBundler(4);
+
+							sb.append("Unable to find file version ");
+							sb.append(dlFileVersion.getVersion());
+							sb.append(" for file entry ");
+							sb.append(dlFileEntry.getName());
+
+							_log.warn(sb.toString(), e);
+						}
+					}
+				}
 			});
 
 		if (_log.isDebugEnabled()) {

@@ -27,7 +27,6 @@ import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
@@ -320,68 +319,52 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 			ddlRecordLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property recordIdProperty = PropertyFactoryUtil.forName(
+					"recordId");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property recordIdProperty = PropertyFactoryUtil.forName(
-						"recordId");
+				DynamicQuery recordVersionDynamicQuery =
+					ddlRecordVersionLocalService.dynamicQuery();
 
-					DynamicQuery recordVersionDynamicQuery =
-						ddlRecordVersionLocalService.dynamicQuery();
+				recordVersionDynamicQuery.setProjection(
+					ProjectionFactoryUtil.property("recordId"));
 
-					recordVersionDynamicQuery.setProjection(
-						ProjectionFactoryUtil.property("recordId"));
+				dynamicQuery.add(
+					recordIdProperty.in(recordVersionDynamicQuery));
 
-					dynamicQuery.add(
-						recordIdProperty.in(recordVersionDynamicQuery));
+				Property recordSetProperty = PropertyFactoryUtil.forName(
+					"recordSetId");
 
-					Property recordSetProperty = PropertyFactoryUtil.forName(
-						"recordSetId");
+				DynamicQuery recordSetDynamicQuery =
+					ddlRecordSetLocalService.dynamicQuery();
 
-					DynamicQuery recordSetDynamicQuery =
-						ddlRecordSetLocalService.dynamicQuery();
+				recordSetDynamicQuery.setProjection(
+					ProjectionFactoryUtil.property("recordSetId"));
 
-					recordSetDynamicQuery.setProjection(
-						ProjectionFactoryUtil.property("recordSetId"));
+				Property scopeProperty = PropertyFactoryUtil.forName("scope");
 
-					Property scopeProperty = PropertyFactoryUtil.forName(
-						"scope");
+				recordSetDynamicQuery.add(scopeProperty.in(_REINDEX_SCOPES));
 
-					recordSetDynamicQuery.add(
-						scopeProperty.in(_REINDEX_SCOPES));
-
-					dynamicQuery.add(
-						recordSetProperty.in(recordSetDynamicQuery));
-				}
-
+				dynamicQuery.add(recordSetProperty.in(recordSetDynamicQuery));
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<DDLRecord>() {
+			(DDLRecord record) -> {
+				try {
+					Document document = getDocument(record);
 
-				@Override
-				public void performAction(DDLRecord record)
-					throws PortalException {
-
-					try {
-						Document document = getDocument(record);
-
-						if (document != null) {
-							indexableActionableDynamicQuery.addDocuments(
-								document);
-						}
-					}
-					catch (PortalException pe) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to index dynamic data lists record " +
-									record.getRecordId(),
-								pe);
-						}
+					if (document != null) {
+						indexableActionableDynamicQuery.addDocuments(document);
 					}
 				}
-
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index dynamic data lists record " +
+								record.getRecordId(),
+							pe);
+					}
+				}
 			});
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 

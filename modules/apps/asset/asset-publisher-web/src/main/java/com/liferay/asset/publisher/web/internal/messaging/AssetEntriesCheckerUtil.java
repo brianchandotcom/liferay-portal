@@ -25,7 +25,6 @@ import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -88,34 +87,18 @@ public class AssetEntriesCheckerUtil {
 			_portletPreferencesLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property property = PropertyFactoryUtil.forName("portletId");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property property = PropertyFactoryUtil.forName(
-						"portletId");
-
-					dynamicQuery.add(
-						property.like(
-							PortletIdCodec.encode(
-								AssetPublisherPortletKeys.ASSET_PUBLISHER,
-								StringPool.PERCENT)));
-				}
-
+				dynamicQuery.add(
+					property.like(
+						PortletIdCodec.encode(
+							AssetPublisherPortletKeys.ASSET_PUBLISHER,
+							StringPool.PERCENT)));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod
-				<com.liferay.portal.kernel.model.PortletPreferences>() {
-
-				@Override
-				public void performAction(
-						com.liferay.portal.kernel.model.PortletPreferences
-							portletPreferences)
-					throws PortalException {
-
-					_checkAssetEntries(portletPreferences);
-				}
-
+			(com.liferay.portal.kernel.model.PortletPreferences portletPreferences) -> {
+				_checkAssetEntries(portletPreferences);
 			});
 
 		actionableDynamicQuery.performActions();

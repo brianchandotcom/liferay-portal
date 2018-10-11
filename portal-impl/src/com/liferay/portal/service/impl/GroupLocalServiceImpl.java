@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -4781,27 +4780,20 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<User>() {
+			(User user) -> {
+				if (!user.isDefaultUser()) {
+					try {
+						Document document = indexer.getDocument(user);
 
-				@Override
-				public void performAction(User user) {
-					if (!user.isDefaultUser()) {
-						try {
-							Document document = indexer.getDocument(user);
-
-							indexableActionableDynamicQuery.addDocuments(
-								document);
-						}
-						catch (PortalException pe) {
-							if (_log.isWarnEnabled()) {
-								_log.warn(
-									"Unable to index user " + user.getUserId(),
-									pe);
-							}
+						indexableActionableDynamicQuery.addDocuments(document);
+					}
+					catch (PortalException pe) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to index user " + user.getUserId(), pe);
 						}
 					}
 				}
-
 			});
 		indexableActionableDynamicQuery.setSearchEngineId(
 			indexer.getSearchEngineId());

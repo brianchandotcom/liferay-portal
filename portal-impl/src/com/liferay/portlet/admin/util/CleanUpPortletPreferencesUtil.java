@@ -82,22 +82,16 @@ public class CleanUpPortletPreferencesUtil {
 			PortletPreferencesLocalServiceUtil.getActionableDynamicQuery();
 
 		portletPreferencesActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property plidProperty = PropertyFactoryUtil.forName("plid");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property plidProperty = PropertyFactoryUtil.forName("plid");
+				DynamicQuery layoutRevisionDynamicQuery =
+					LayoutRevisionLocalServiceUtil.dynamicQuery();
 
-					DynamicQuery layoutRevisionDynamicQuery =
-						LayoutRevisionLocalServiceUtil.dynamicQuery();
+				layoutRevisionDynamicQuery.setProjection(
+					ProjectionFactoryUtil.property("layoutRevisionId"));
 
-					layoutRevisionDynamicQuery.setProjection(
-						ProjectionFactoryUtil.property("layoutRevisionId"));
-
-					dynamicQuery.add(
-						plidProperty.in(layoutRevisionDynamicQuery));
-				}
-
+				dynamicQuery.add(plidProperty.in(layoutRevisionDynamicQuery));
 			});
 		portletPreferencesActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.

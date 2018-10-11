@@ -311,6 +311,15 @@
 			</then>
 		</if>
 
+		<if>
+			<isset var="webContentTextBox" />
+			<then>
+				<execute function="Type" locator1="DDMField#TEXT_BOX" value1="${webContentTextBox}">
+					<var name="key_fieldName" value="${textBoxFieldName}" />
+				</execute>
+			</then>
+		</if>
+
 		<execute function="Click" locator1="Button#PUBLISH" />
 
 		<execute function="SelectFrame" value1="relative=top" />

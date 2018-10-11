@@ -622,14 +622,9 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
+			<var name="templateFieldNames" value="Text" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
-
-		<execute macro="WebContentTemplates#addField">
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#openURL" />
 

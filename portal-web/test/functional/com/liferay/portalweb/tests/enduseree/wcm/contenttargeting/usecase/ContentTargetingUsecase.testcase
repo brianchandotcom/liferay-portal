@@ -944,7 +944,7 @@
 		<execute macro="CampaignDisplayPortlet#viewPG">
 			<var name="entryContentText" value="Web Content Content Otherwise" />
 			<var name="previewCampaignList" value="Campaign Name,default" />
-			<var name="viewUserSegmentSelected" value="default" />
+			<var name="viewCampaignSelected" value="Default" />
 		</execute>
 	</command>
 
@@ -1073,8 +1073,8 @@
 
 		<execute macro="CampaignDisplayPortlet#viewPG">
 			<var name="previewCampaignList" value="Campaign Name,default" />
+			<var name="viewCampaignSelected" value="Default" />
 			<var name="viewDontDisplay" value="true" />
-			<var name="viewUserSegmentSelected" value="default" />
 		</execute>
 	</command>
 

@@ -46,10 +46,7 @@ public abstract class BaseBuildData implements BuildData {
 
 	@Override
 	public String getBuildDescription() {
-		return JenkinsResultsParserUtil.combine(
-			"<a href=\"https://", getTopLevelMasterHostname(),
-			".liferay.com/userContent/", getUserContentRelativePath(),
-			"jenkins-report.html\">Jenkins Report</a>");
+		return getString("build_description");
 	}
 
 	@Override
@@ -110,6 +107,11 @@ public abstract class BaseBuildData implements BuildData {
 	}
 
 	@Override
+	public void setBuildDescription(String buildDescription) {
+		put("build_description", buildDescription);
+	}
+
+	@Override
 	public void setJenkinsGitHubURL(String jenkinsGitHubURL) {
 		put("jenkins_github_url", jenkinsGitHubURL);
 	}
@@ -158,6 +160,10 @@ public abstract class BaseBuildData implements BuildData {
 		}
 
 		_setBuildURL(buildURL);
+
+		if (!has("build_description")) {
+			setBuildDescription(_getDefaultBuildDescription());
+		}
 
 		setJenkinsGitHubURL(DEFAULT_JENKINS_GITHUB_URL);
 		setWorkspaceDir(DEFAULT_WORKSPACE_DIR);
@@ -230,6 +236,13 @@ public abstract class BaseBuildData implements BuildData {
 	protected static final BuildDatabase buildDatabase =
 		BuildDatabaseUtil.getBuildDatabase();
 
+	private String _getDefaultBuildDescription() {
+		return JenkinsResultsParserUtil.combine(
+			"<a href=\"https://", getTopLevelMasterHostname(),
+			".liferay.com/userContent/", getUserContentRelativePath(),
+			"jenkins-report.html\">Jenkins Report</a>");
+	}
+
 	private void _setBuildURL(String buildURL) {
 		Matcher matcher = _buildURLPattern.matcher(buildURL);
 
@@ -247,9 +260,9 @@ public abstract class BaseBuildData implements BuildData {
 	}
 
 	private static final String[] _REQUIRED_KEYS = {
-		"build_url", "build_number", "cohort_name", "hostname",
-		"jenkins_github_url", "job_name", "master_hostname", "run_id",
-		"workspace_dir"
+		"build_description", "build_number", "build_url", "cohort_name",
+		"hostname", "jenkins_github_url", "job_name", "master_hostname",
+		"run_id", "workspace_dir"
 	};
 
 	private static final Pattern _buildURLPattern = Pattern.compile(

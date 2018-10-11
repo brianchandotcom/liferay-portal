@@ -147,6 +147,26 @@ public class I18nServletTest {
 	}
 
 	@Test
+	public void testI18nLanguageTag() throws Exception {
+		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = false;
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
+		mockHttpServletRequest.setServletPath(
+			StringPool.SLASH + Locale.CANADA_FRENCH.toLanguageTag());
+
+		I18nServlet.I18nData actualI18nData = _i18nServlet.getI18nData(
+			mockHttpServletRequest);
+
+		I18nServlet.I18nData expectedI18nData = getI18nData(
+			Locale.CANADA_FRENCH);
+
+		Assert.assertEquals(expectedI18nData, actualI18nData);
+	}
+
+	@Test
 	public void testI18nNotUseDefaultExistentLocale() throws Exception {
 		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = false;
 

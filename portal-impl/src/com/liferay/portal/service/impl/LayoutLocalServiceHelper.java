@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
@@ -408,10 +409,16 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 				StringPool.SLASH +
 					PortalUtil.getI18nPathLanguageId(locale, languageId);
 
+			String underlineI18nPathLanguageId = StringUtil.replace(
+				i18nPathLanguageId, CharPool.DASH, CharPool.UNDERLINE);
+
 			if (friendlyURL.startsWith(i18nPathLanguageId + StringPool.SLASH) ||
+				friendlyURL.startsWith(
+					underlineI18nPathLanguageId + StringPool.SLASH) ||
 				friendlyURL.startsWith(
 					StringPool.SLASH + languageId + StringPool.SLASH) ||
 				friendlyURL.equals(i18nPathLanguageId) ||
+				friendlyURL.equals(underlineI18nPathLanguageId) ||
 				friendlyURL.equals(StringPool.SLASH + languageId)) {
 
 				LayoutFriendlyURLException lfurle =

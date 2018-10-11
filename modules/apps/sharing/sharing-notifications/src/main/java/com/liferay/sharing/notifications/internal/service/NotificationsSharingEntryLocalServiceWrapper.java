@@ -130,7 +130,7 @@ public class NotificationsSharingEntryLocalServiceWrapper
 
 			subscriptionSender.setSubject(message);
 
-			String entryURL = _sharingNotificationUtil.getEntryURL(
+			String entryURL = _sharingNotificationUtil.getNotificationURL(
 				sharingEntry, serviceContext.getLiferayPortletRequest());
 
 			subscriptionSender.setBody(

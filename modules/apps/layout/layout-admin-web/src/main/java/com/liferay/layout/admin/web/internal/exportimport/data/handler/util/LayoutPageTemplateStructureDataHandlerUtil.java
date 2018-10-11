@@ -84,32 +84,47 @@ public class LayoutPageTemplateStructureDataHandlerUtil {
 			return;
 		}
 
-		JSONArray newStructureJSONArray = JSONFactoryUtil.createJSONArray();
-
 		Map<Long, Long> fragmentEntryLinkIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				FragmentEntryLink.class);
 
 		for (int i = 0; i < structureJSONArray.length(); i++) {
-			long fragmentEntryLinkId = MapUtil.getLong(
-				fragmentEntryLinkIds, structureJSONArray.getLong(i),
-				structureJSONArray.getLong(i));
+			JSONObject rowJSONObject = structureJSONArray.getJSONObject(i);
 
-			if (fragmentEntryLinkId == 0) {
-				continue;
+			JSONArray columnsJSONArray = rowJSONObject.getJSONArray("columns");
+
+			for (int j = 0; j < columnsJSONArray.length(); j++) {
+				JSONObject columnJSONObject = columnsJSONArray.getJSONObject(j);
+
+				JSONArray fragmentEntryLinkIdsJSONArray =
+					columnJSONObject.getJSONArray("fragmentEntryLinkIds");
+
+				JSONArray newFragmentEntryLinkIdsJSONArray =
+					JSONFactoryUtil.createJSONArray();
+
+				for (int k = 0; k < fragmentEntryLinkIdsJSONArray.length();
+					 k++) {
+
+					long fragmentEntryLinkId = MapUtil.getLong(
+						fragmentEntryLinkIds,
+						fragmentEntryLinkIdsJSONArray.getLong(k),
+						fragmentEntryLinkIdsJSONArray.getLong(k));
+
+					if (fragmentEntryLinkId <= 0) {
+						continue;
+					}
+
+					newFragmentEntryLinkIdsJSONArray.put(fragmentEntryLinkId);
+				}
+
+				columnJSONObject.put(
+					"fragmentEntryLinkIds", newFragmentEntryLinkIdsJSONArray);
 			}
-
-			newStructureJSONArray.put(fragmentEntryLinkId);
 		}
-
-		JSONObject newDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		newDataJSONObject.put("structure", newStructureJSONArray);
 
 		existingLayoutPageTemplateStructure.setClassNameId(classNameId);
 		existingLayoutPageTemplateStructure.setClassPK(classPK);
-		existingLayoutPageTemplateStructure.setData(
-			newDataJSONObject.toString());
+		existingLayoutPageTemplateStructure.setData(dataJSONObject.toString());
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructure(

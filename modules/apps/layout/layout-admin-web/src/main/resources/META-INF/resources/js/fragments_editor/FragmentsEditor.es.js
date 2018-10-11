@@ -45,19 +45,6 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
-	 * Gets a fragmentEntryLink index for the given fragmentEntryLinkId
-	 * @param {!string} fragmentEntryLinkId
-	 * @private
-	 * @return {number} fragmentEntryLink index or -1 if it's not found
-	 */
-
-	_getFragmentEntryLinkIndex(fragmentEntryLinkId) {
-		const structure = this.layoutData.structure || [];
-
-		return structure.indexOf(fragmentEntryLinkId);
-	}
-
-	/**
 	 * Callback executed when a mappeable field has been selected for the
 	 * given editable.
 	 * @param {!{

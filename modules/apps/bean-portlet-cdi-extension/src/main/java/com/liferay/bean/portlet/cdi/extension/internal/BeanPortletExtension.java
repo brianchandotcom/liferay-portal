@@ -164,8 +164,6 @@ public class BeanPortletExtension implements Extension {
 		AnnotatedType<T> annotatedType =
 			processAnnotatedType.getAnnotatedType();
 
-		Class<T> annotatedClass = annotatedType.getJavaClass();
-
 		Set<Type> typeClosures = annotatedType.getTypeClosure();
 
 		if (typeClosures.contains(PortletConfig.class)) {
@@ -185,6 +183,8 @@ public class BeanPortletExtension implements Extension {
 
 			processAnnotatedType.setAnnotatedType(annotatedType);
 		}
+
+		Class<T> annotatedClass = annotatedType.getJavaClass();
 
 		if (annotatedType.isAnnotationPresent(RenderStateScoped.class) &&
 			!PortletSerializable.class.isAssignableFrom(annotatedClass)) {

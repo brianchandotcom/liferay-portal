@@ -24,12 +24,12 @@ import javax.ws.rs.BadRequestException;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts a {@link Path} to a {@link ReusableWorkflowTaskIdentifier},
- * and vice versa.
+ * Converts a {@link Path} to a {@link ReusableWorkflowTaskIdentifier}, and vice
+ * versa.
  *
  * <p>
- * The {@code ReusableWorkflowTaskIdentifier} can then be used as the
- * identifier of a resource.
+ * The {@code ReusableWorkflowTaskIdentifier} can then be used as the identifier
+ * of a resource.
  * </p>
  *
  * @author Victor Galan

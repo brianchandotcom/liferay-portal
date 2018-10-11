@@ -56,8 +56,8 @@ public interface ReusableWorkflowTaskIdentifier {
 		static {
 			Map<String, WorkflowTaskType> map = new ConcurrentHashMap<>();
 
-			for (WorkflowTaskType instance : values()) {
-				map.put(instance.getName(), instance);
+			for (WorkflowTaskType workflowTaskType : values()) {
+				map.put(workflowTaskType.getName(), workflowTaskType);
 			}
 
 			_enumMap = Collections.unmodifiableMap(map);

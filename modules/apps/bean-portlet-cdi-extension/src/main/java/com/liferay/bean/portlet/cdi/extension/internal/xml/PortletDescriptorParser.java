@@ -128,12 +128,27 @@ public class PortletDescriptorParser {
 		}
 
 		for (Element filterElement : rootElement.elements("filter")) {
-			BeanFilter beanFilter = _readBeanFilter(
-				bundle, filterElement, filterMappings);
+			String filterClassName = filterElement.elementText("filter-class");
 
-			if (beanFilter != null) {
-				beanFilters.put(beanFilter.getFilterName(), beanFilter);
+			Class<?> filterClass = null;
+
+			try {
+				filterClass = bundle.loadClass(filterClassName);
 			}
+			catch (ClassNotFoundException cnfe) {
+				_log.error("Unable to load filter-class " + filterClassName);
+
+				continue;
+			}
+
+			String filterName = filterElement.elementText("filter-name");
+
+			Set<String> portletNames = filterMappings.get(filterName);
+
+			beanFilters.put(
+				filterName,
+				_readBeanFilter(
+					filterElement, filterName, filterClass, portletNames));
 		}
 	}
 
@@ -298,22 +313,8 @@ public class PortletDescriptorParser {
 	}
 
 	private static BeanFilter _readBeanFilter(
-		Bundle bundle, Element filterElement,
-		Map<String, Set<String>> filterMappings) {
-
-		String filterName = filterElement.elementText("filter-name");
-		String filterClassName = filterElement.elementText("filter-class");
-
-		Class<?> filterClass = null;
-
-		try {
-			filterClass = bundle.loadClass(filterClassName);
-		}
-		catch (ClassNotFoundException cnfe) {
-			_log.error("Unable to load filter-class " + filterClassName);
-
-			return null;
-		}
+		Element filterElement, String filterName, Class<?> filterClass,
+		Set<String> portletNames) {
 
 		int ordinal = GetterUtil.getInteger(
 			filterElement.elementText("ordinal"));
@@ -333,8 +334,8 @@ public class PortletDescriptorParser {
 		}
 
 		return new BeanFilterImpl(
-			filterName, filterClass, ordinal, filterMappings.get(filterName),
-			lifecycles, initParams);
+			filterName, filterClass, ordinal, portletNames, lifecycles,
+			initParams);
 	}
 
 	private static BeanPortlet _readBeanPortlet(

@@ -130,13 +130,13 @@ public class AuthPipeline {
 			Map<String, String[]> parameterMap)
 		throws AuthException {
 
-		boolean skipLiferayCheck = false;
-
 		List<Authenticator> authenticators = _authenticators.getService(key);
 
 		if (ListUtil.isEmpty(authenticators)) {
 			return Authenticator.SUCCESS;
 		}
+
+		boolean skipLiferayCheck = false;
 
 		for (Authenticator authenticator : authenticators) {
 			try {

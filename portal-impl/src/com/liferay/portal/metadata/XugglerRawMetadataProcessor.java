@@ -107,40 +107,36 @@ public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 	protected Metadata extractMetadata(
 		String extension, String mimeType, File file) {
 
-		Metadata metadata = null;
-
 		if (!isSupported(mimeType)) {
-			return metadata;
+			return null;
 		}
 
 		try {
-			metadata = extractMetadata(file);
+			return extractMetadata(file);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
 
-		return metadata;
+		return null;
 	}
 
 	@Override
 	protected Metadata extractMetadata(
 		String extension, String mimeType, InputStream inputStream) {
 
-		Metadata metadata = null;
+		if (!isSupported(mimeType)) {
+			return null;
+		}
 
 		File file = null;
-
-		if (!isSupported(mimeType)) {
-			return metadata;
-		}
 
 		try {
 			file = FileUtil.createTempFile(extension);
 
 			FileUtil.write(file, inputStream);
 
-			metadata = extractMetadata(file);
+			return extractMetadata(file);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -149,7 +145,7 @@ public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 			FileUtil.delete(file);
 		}
 
-		return metadata;
+		return null;
 	}
 
 	protected boolean isSupported(String mimeType) {

@@ -57,9 +57,6 @@ public class SharedSessionAttributeListener
 			return;
 		}
 
-		SharedSessionAttributeCache sharedSessionAttributeCache =
-			SharedSessionAttributeCache.getInstance(session);
-
 		String name = event.getName();
 
 		if (ArrayUtil.contains(
@@ -67,6 +64,9 @@ public class SharedSessionAttributeListener
 
 			return;
 		}
+
+		SharedSessionAttributeCache sharedSessionAttributeCache =
+			SharedSessionAttributeCache.getInstance(session);
 
 		for (String sharedName : PropsValues.SESSION_SHARED_ATTRIBUTES) {
 			if (!name.startsWith(sharedName)) {

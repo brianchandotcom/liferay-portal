@@ -106,8 +106,6 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 			return null;
 		}
 
-		ServletContext servletContext = objectValuePair.getKey();
-
 		URL resourceURL = objectValuePair.getValue();
 
 		String cacheCommonFileName = getCacheFileName(request);
@@ -129,6 +127,8 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 
 			return cacheDataFile;
 		}
+
+		ServletContext servletContext = objectValuePair.getKey();
 
 		String dynamicContent = null;
 

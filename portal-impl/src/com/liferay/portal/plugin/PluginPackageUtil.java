@@ -693,8 +693,6 @@ public class PluginPackageUtil {
 			String xml, String repositoryURL)
 		throws DocumentException, PortalException {
 
-		List<String> supportedPluginTypes = Arrays.asList(getSupportedTypes());
-
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
@@ -707,6 +705,8 @@ public class PluginPackageUtil {
 		if (xml == null) {
 			return pluginPackageRepository;
 		}
+
+		List<String> supportedPluginTypes = Arrays.asList(getSupportedTypes());
 
 		Document document = SAXReaderUtil.read(xml);
 

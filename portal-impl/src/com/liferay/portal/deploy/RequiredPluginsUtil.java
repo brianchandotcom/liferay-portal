@@ -105,15 +105,6 @@ public class RequiredPluginsUtil {
 							levelRequiredDeploymentWARFileName);
 				}
 
-				ClassLoader classLoader =
-					PortalClassLoaderUtil.getClassLoader();
-
-				InputStream inputStream = classLoader.getResourceAsStream(
-					StringBundler.concat(
-						"com/liferay/portal/deploy/dependencies/plugins",
-						String.valueOf(i + 1), "/",
-						levelRequiredDeploymentWARFileNames[j]));
-
 				AutoDeployDir autoDeployDir = AutoDeployUtil.getDir(
 					AutoDeployDir.DEFAULT_NAME);
 
@@ -129,6 +120,15 @@ public class RequiredPluginsUtil {
 
 					continue;
 				}
+
+				ClassLoader classLoader =
+					PortalClassLoaderUtil.getClassLoader();
+
+				InputStream inputStream = classLoader.getResourceAsStream(
+					StringBundler.concat(
+						"com/liferay/portal/deploy/dependencies/plugins",
+						String.valueOf(i + 1), "/",
+						levelRequiredDeploymentWARFileNames[j]));
 
 				try {
 					StreamUtil.transfer(

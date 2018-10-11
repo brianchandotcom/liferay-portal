@@ -14,12 +14,8 @@
 
 package com.liferay.wiki.internal.upgrade;
 
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.wiki.internal.upgrade.v1_0_0.UpgradeCompanyId;
 import com.liferay.wiki.internal.upgrade.v1_0_0.UpgradeKernelPackage;
@@ -60,19 +56,12 @@ public class WikiServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register("1.0.0", "1.1.0", new UpgradeWikiNode());
 
-		DB db = DBManagerUtil.getDB();
+		Class<?>[] upgradeDatetimeTableClasses =
+			{WikiNodeTable.class, WikiPageTable.class};
 
-		if (db.getDBType() == DBType.SQLSERVER) {
-			Class<?>[] upgradeDatetimeTableClasses =
-				{WikiNodeTable.class, WikiPageTable.class};
-
-			registry.register(
-				"1.1.0", "2.0.0",
-				new BaseUpgradeSQLServerDatetime(upgradeDatetimeTableClasses));
-		}
-		else {
-			registry.register("1.1.0", "2.0.0", new DummyUpgradeStep());
-		}
+		registry.register(
+			"1.1.0", "2.0.0",
+			new BaseUpgradeSQLServerDatetime(upgradeDatetimeTableClasses));
 	}
 
 	@Reference(unbind = "-")

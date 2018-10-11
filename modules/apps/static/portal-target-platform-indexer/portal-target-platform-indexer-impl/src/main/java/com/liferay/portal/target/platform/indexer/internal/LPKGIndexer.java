@@ -14,9 +14,9 @@
 
 package com.liferay.portal.target.platform.indexer.internal;
 
-import com.liferay.portal.target.platform.indexer.Indexer;
-
 import aQute.bnd.osgi.repository.SimpleIndexer;
+
+import com.liferay.portal.target.platform.indexer.Indexer;
 
 import java.io.File;
 import java.io.IOException;

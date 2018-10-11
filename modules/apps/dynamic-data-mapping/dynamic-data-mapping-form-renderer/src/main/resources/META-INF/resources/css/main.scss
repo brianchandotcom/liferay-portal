@@ -510,9 +510,9 @@ body .ddm-user-view-content {
 }
 
 div.ddm-tooltip-container {
+	opacity: 1;
 	position: absolute;
 	visibility: visible;
-	opacity: 1;
 	width: 230px;
 
 	&.clay-tooltip-bottom {

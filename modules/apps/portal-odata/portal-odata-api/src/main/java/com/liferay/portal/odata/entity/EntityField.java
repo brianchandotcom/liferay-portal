@@ -46,9 +46,8 @@ public class EntityField {
 	}
 
 	/**
-	 * Creates a new {@code EntityField} with separate functions for converting
-	 * the entity field's name to a sortable and filterable field name for a
-	 * locale.
+	 * Creates a new {@code EntityField} with a {@code Function} to convert the
+	 * entity field's name to a filterable/sortable field name for a locale.
 	 *
 	 * @param  name the entity field's name
 	 * @param  type the type
@@ -62,6 +61,32 @@ public class EntityField {
 		String name, Type type,
 		Function<Locale, String> sortableFieldNameFunction,
 		Function<Locale, String> filterableFieldNameFunction) {
+
+		this(
+			name, type, sortableFieldNameFunction, filterableFieldNameFunction,
+			fieldValue -> String.valueOf(fieldValue));
+	}
+
+	/**
+	 * Creates a new {@code EntityField} with separate functions for converting
+	 * the entity field's name to a sortable and filterable field name for a
+	 * locale.
+	 *
+	 * @param  name the entity field's name
+	 * @param  type the type
+	 * @param  sortableFieldNameFunction the sortable field name {@code
+	 *         Function}
+	 * @param  filterableFieldNameFunction the filterable field name {@code
+	 *         Function}
+	 * @param  filterableFieldValueFunction the filterable field value {@code
+	 *         Function}
+	 * @review
+	 */
+	public EntityField(
+		String name, Type type,
+		Function<Locale, String> sortableFieldNameFunction,
+		Function<Locale, String> filterableFieldNameFunction,
+		Function<Object, String> filterableFieldValueFunction) {
 
 		if (Validator.isNull(name)) {
 			throw new IllegalArgumentException("Name is null");
@@ -81,10 +106,16 @@ public class EntityField {
 				"Filterable field name function is null");
 		}
 
+		if (filterableFieldValueFunction == null) {
+			throw new IllegalArgumentException(
+				"Filterable field value function is null");
+		}
+
 		_name = name;
 		_type = type;
 		_sortableNameFunction = sortableFieldNameFunction;
 		_filterableFieldNameFunction = filterableFieldNameFunction;
+		_filterableFieldValueFunction = filterableFieldValueFunction;
 	}
 
 	/**
@@ -96,6 +127,17 @@ public class EntityField {
 	 */
 	public String getFilterableName(Locale locale) {
 		return _filterableFieldNameFunction.apply(locale);
+	}
+
+	/**
+	 * Returns the entity field's filterable value.
+	 *
+	 * @param  fieldValue the field value
+	 * @return the filterable field value
+	 * @review
+	 */
+	public String getFilterableValue(Object fieldValue) {
+		return _filterableFieldValueFunction.apply(fieldValue);
 	}
 
 	/**
@@ -131,11 +173,12 @@ public class EntityField {
 
 	public enum Type {
 
-		DATE, STRING
+		DATE, ID, STRING
 
 	}
 
 	private final Function<Locale, String> _filterableFieldNameFunction;
+	private final Function<Object, String> _filterableFieldValueFunction;
 	private final String _name;
 	private final Function<Locale, String> _sortableNameFunction;
 	private final Type _type;

@@ -46,10 +46,16 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#viewNoPortlet">
-			<var name="category" value="Build" />
+		<execute macro="ProductMenuHelper#expandPanel">
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Page Fragments" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Build" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="ProductMenu#PORTLET">
+			<var name="key_portlet" value="Page Fragments" />
 		</execute>
 	</command>
 

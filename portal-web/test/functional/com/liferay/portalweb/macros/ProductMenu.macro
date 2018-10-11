@@ -208,20 +208,6 @@
 		</execute>
 	</command>
 
-	<command name="viewNoPortlet" summary="View ${portlet} is not available in the product menu.">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="${panel}" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="${category}" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="ProductMenu#PORTLET">
-			<var name="key_portlet" value="${portlet}" />
-		</execute>
-	</command>
-
 	<command name="viewNoSite" summary="View ${site} is not available in the product menu.">
 		<execute macro="ProductMenuHelper#expandPanel">
 			<var name="panel" value="Site Administration" />

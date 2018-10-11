@@ -373,8 +373,7 @@ public class PortletDescriptorParser {
 
 			Set<String> mimeTypePortletModes = new HashSet<>();
 
-			mimeTypePortletModes.add(
-				StringUtil.toLowerCase(PortletMode.VIEW.toString()));
+			mimeTypePortletModes.add(PortletMode.VIEW.toString());
 
 			for (Element portletModeElement :
 					supportsElement.elements("portlet-mode")) {
@@ -395,23 +394,17 @@ public class PortletDescriptorParser {
 
 			Set<String> mimeTypeWindowStates = new HashSet<>();
 
-			mimeTypeWindowStates.add(
-				StringUtil.toLowerCase(WindowState.NORMAL.toString()));
+			mimeTypeWindowStates.add(WindowState.NORMAL.toString());
 
 			List<Element> windowStateElements = supportsElement.elements(
 				"window-state");
 
 			if (windowStateElements.isEmpty()) {
+				mimeTypeWindowStates.add(WindowState.MAXIMIZED.toString());
+				mimeTypeWindowStates.add(WindowState.MINIMIZED.toString());
 				mimeTypeWindowStates.add(
-					StringUtil.toLowerCase(WindowState.MAXIMIZED.toString()));
-				mimeTypeWindowStates.add(
-					StringUtil.toLowerCase(WindowState.MINIMIZED.toString()));
-				mimeTypeWindowStates.add(
-					StringUtil.toLowerCase(
-						LiferayWindowState.EXCLUSIVE.toString()));
-				mimeTypeWindowStates.add(
-					StringUtil.toLowerCase(
-						LiferayWindowState.POP_UP.toString()));
+					LiferayWindowState.EXCLUSIVE.toString());
+				mimeTypeWindowStates.add(LiferayWindowState.POP_UP.toString());
 			}
 
 			for (Element windowStateElement : windowStateElements) {

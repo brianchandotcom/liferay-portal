@@ -371,6 +371,10 @@
 	<command name="ValidateSchedulerOnSeparateNodes" priority="4">
 		<property name="test.name.skip.portal.instance" value="ClusteringEE#ValidateSchedulerOnSeparateNodes" />
 
+		<execute macro="TestCase#getSiteName">
+			<return name="siteName" />
+		</execute>
+
 		<execute macro="Clustering#viewClusterStatusInConsoleEE" />
 
 		<var name="pageName" value="Home" />
@@ -388,7 +392,7 @@
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Liferay DXP" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -462,7 +466,7 @@
 		</execute>
 
 		<execute macro="Staging#deactivateStagingCP">
-			<var name="siteName" value="Liferay DXP" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="User#logoutPG">

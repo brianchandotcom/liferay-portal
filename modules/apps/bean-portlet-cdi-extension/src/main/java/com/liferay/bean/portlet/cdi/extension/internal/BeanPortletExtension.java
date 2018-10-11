@@ -492,12 +492,12 @@ public class BeanPortletExtension implements Extension {
 			BeanPortlet beanPortlet = _beanPortlets.get(portletName);
 
 			if (beanPortlet == null) {
-				Set<QName> supportedProcessingEvents = new HashSet<>();
-				Set<QName> supportedPublishingEvents = new HashSet<>();
-
 				Map<MethodType, List<BeanMethod>> beanMethodMap =
 					BeanMethodIndexUtil.indexBeanMethods(
 						portletBeanMethodsFunction.apply(portletName));
+
+				Set<QName> supportedProcessingEvents = new HashSet<>();
+				Set<QName> supportedPublishingEvents = new HashSet<>();
 
 				BeanMethodIndexUtil.scanSupportedEvents(
 					beanMethodMap, supportedProcessingEvents,
@@ -587,7 +587,8 @@ public class BeanPortletExtension implements Extension {
 	}
 
 	private void _addBeanPortlet(
-		Class<?> beanPortletClass, Set<BeanMethod> beanMethods,
+		Class<?> beanPortletClass,
+		Map<MethodType, List<BeanMethod>> beanMethodMap,
 		PortletConfiguration portletConfiguration,
 		Function<String, String> preferencesValidatorFunction,
 		Map<String, String> descriptorDisplayCategories,
@@ -872,6 +873,10 @@ public class BeanPortletExtension implements Extension {
 		Set<QName> supportedProcessingEvents = new HashSet<>();
 		Set<QName> supportedPublishingEvents = new HashSet<>();
 
+		BeanMethodIndexUtil.scanSupportedEvents(
+			beanMethodMap, supportedProcessingEvents,
+			supportedPublishingEvents);
+
 		Set<String> supportedPublicRenderParameters = new LinkedHashSet<>(
 			Arrays.asList(portletConfiguration.publicParams()));
 
@@ -883,12 +888,6 @@ public class BeanPortletExtension implements Extension {
 			containerRuntimeOptions.put(
 				runtimeOption.name(), Arrays.asList(runtimeOption.values()));
 		}
-
-		Map<MethodType, List<BeanMethod>> beanMethodMap =
-			BeanMethodIndexUtil.indexBeanMethods(beanMethods);
-
-		BeanMethodIndexUtil.scanSupportedEvents(
-			beanMethodMap, supportedProcessingEvents, supportedPublishingEvents);
 
 		BeanPortlet annotatedBeanPortlet = new BeanPortletImpl(
 			portletConfiguration.portletName(), beanMethodMap, displayNames,
@@ -911,6 +910,14 @@ public class BeanPortletExtension implements Extension {
 
 			if (Validator.isNull(portletName)) {
 				portletName = portletConfiguration.portletName();
+			}
+
+			Set<BeanMethod> beanMethods = new HashSet<>();
+
+			for (Map.Entry<MethodType, List<BeanMethod>>
+					entry: beanMethodMap.entrySet()) {
+
+				beanMethods.addAll(entry.getValue());
 			}
 
 			Map<MethodType, List<BeanMethod>> descriptorBeanMethodMap =
@@ -1099,8 +1106,11 @@ public class BeanPortletExtension implements Extension {
 				PortletScannerUtil.scanNonannotatedBeanMethods(
 					beanManager, annotatedClass, beanMethods);
 
+				Map<MethodType, List<BeanMethod>> beanMethodMap =
+					BeanMethodIndexUtil.indexBeanMethods(beanMethods);
+
 				_addBeanPortlet(
-					annotatedClass, beanMethods, portletConfiguration,
+					annotatedClass, beanMethodMap, portletConfiguration,
 					preferencesValidatorFunction, descriptorDisplayCategories,
 					descriptorLiferayConfigurations);
 			}
@@ -1121,8 +1131,11 @@ public class BeanPortletExtension implements Extension {
 			PortletScannerUtil.scanNonannotatedBeanMethods(
 				beanManager, annotatedClass, beanMethods);
 
+			Map<MethodType, List<BeanMethod>> beanMethodMap =
+				BeanMethodIndexUtil.indexBeanMethods(beanMethods);
+
 			_addBeanPortlet(
-				annotatedClass, beanMethods, portletConfiguration,
+				annotatedClass, beanMethodMap, portletConfiguration,
 				preferencesValidatorFunction, descriptorDisplayCategories,
 				descriptorLiferayConfigurations);
 		}

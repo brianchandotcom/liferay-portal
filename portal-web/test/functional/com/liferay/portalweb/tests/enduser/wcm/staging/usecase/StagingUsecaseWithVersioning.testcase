@@ -728,7 +728,6 @@
 
 		<execute macro="Staging#configurePublishToLive">
 			<var name="contentDateRange" value="All" />
-			<var name="uncheckContentNameList" value="Navigation Menus" />
 		</execute>
 
 		<execute macro="Staging#publishToLive" />

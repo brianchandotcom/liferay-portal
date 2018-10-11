@@ -7,6 +7,8 @@ Provide-Capability:\
 		type="layout-admin-web";\
 		version:Version="${Bundle-Version}"
 Require-Capability:\
+	liferay.resource.bundle;\
+		filter:="(bundle.symbolic.name=com.liferay.frontend.editor.lang)",\
 	osgi.extender;\
 		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))",\
 	soy;\

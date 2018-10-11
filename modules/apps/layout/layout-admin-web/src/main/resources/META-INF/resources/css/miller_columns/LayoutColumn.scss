@@ -44,7 +44,7 @@
 }
 
 .layout-column-item-drag-bottom {
-	border-bottom: 2px solid #80ACFF;
+	border-bottom: 2px solid #0B5FFF;
 	margin-bottom: 0;
 }
 
@@ -53,12 +53,12 @@
 }
 
 .layout-column-item-drag-inside {
-	box-shadow: inset 0 0 0 2px #80ACFF;
+	box-shadow: inset 0 0 0 2px #0B5FFF;
 }
 
 .layout-column-item-drag-top,
 .layout-column .list-group-item.layout-column-item-drag-top:first-child {
-	border-top: 2px solid #80ACFF;
+	border-top: 2px solid #0B5FFF;
 }
 
 .layout-drag-handler {

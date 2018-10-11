@@ -108,7 +108,8 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		EntityField entityField, Object fieldValue, Locale locale) {
 
 		return new TermFilter(
-			entityField.getFilterableName(locale), String.valueOf(fieldValue));
+			entityField.getFilterableName(locale),
+			entityField.getFilterableValue(fieldValue));
 	}
 
 	private Optional<Filter> _getFilterOptional(

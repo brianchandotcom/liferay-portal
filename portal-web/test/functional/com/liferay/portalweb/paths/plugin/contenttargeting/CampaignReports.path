@@ -10,8 +10,13 @@
 <tbody>
 <!--CONTENT_GRAPH-->
 <tr>
-	<td>CONTENT_GRAPH_CONTENT_TITLE</td>
-	<td>//div[contains(@id,'Chart')]//span[contains(.,'${key_reportTitle}')]</td>
+	<td>CONTENT_GRAPH_DM_DOCUMENT_TITLE</td>
+	<td>portal/screenshots/campaignreports/content_graph_dm_document_title.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_GRAPH_CONTENT_MERIC_NAME</td>
+	<td>portal/screenshots/campaignreports/content_graph_content_metric_name.png</td>
 	<td></td>
 </tr>
 <tr>

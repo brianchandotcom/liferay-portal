@@ -100,7 +100,8 @@
 				{let $expiratonDateMsg kind="text"}
 					{msg desc=""}set-expiration-date{/msg}
 				{/let}
-				{let $tooltipMessage: $expiratonDateMsg/}
+				{let $tooltipMessage:
+					$user.sharingEntryExpirationDate ? $user.sharingEntryExpirationDate : $expiratonDateMsg /}
 
 				<span class="lfr-portal-tooltip" title="{$tooltipMessage}">
 					{call ClayIcon.render}
@@ -139,7 +140,14 @@
 			<div class="autofit-col autofit-col-expand">
 				<span>{msg desc=""}has-permission-until{/msg}</span>
 
-				<input name="{$user.sharingEntryId}" type="date" data-onchange="{$_handleChangeExpirationDate}" />
+				<input
+					data-onchange="{$_handleChangeExpirationDate}"
+					name="{$user.sharingEntryId}"
+					type="date"
+					{if $user.sharingEntryExpirationDate}
+					value="{$user.sharingEntryExpirationDate}"
+					{/if}
+				/>
 
 				<button class="btn btn-link text-muted">
 					{msg desc=""}cancel{/msg}

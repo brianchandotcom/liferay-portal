@@ -143,6 +143,9 @@ public class ManageCollaboratorsViewMVCRenderCommand
 				collaboratorJSONObject.put(
 					"sharingEntryId", sharingEntry.getSharingEntryId());
 				collaboratorJSONObject.put(
+					"sharingEntryExpirationDate",
+					sharingEntry.getExpirationDate());
+				collaboratorJSONObject.put(
 					"sharingEntryPermissionDisplaySelectOptions",
 					_getSharingEntryPermissionDisplaySelectOptions(
 						sharingEntry, renderRequest));

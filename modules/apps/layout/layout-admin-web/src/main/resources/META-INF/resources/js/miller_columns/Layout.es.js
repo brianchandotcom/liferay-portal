@@ -695,6 +695,12 @@ class Layout extends Component {
 						);
 					}
 
+					requestAnimationFrame(
+						() => {
+							this._initializeLayoutDragDrop();
+						}
+					);
+
 					this.layoutColumns = nextLayoutColumns;
 				}
 			);

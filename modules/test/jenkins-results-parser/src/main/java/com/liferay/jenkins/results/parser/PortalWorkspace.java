@@ -35,6 +35,13 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 	protected PortalWorkspace(
 		String portalGitHubURL, String portalUpstreamBranchName) {
 
+		this(portalGitHubURL, portalUpstreamBranchName, null);
+	}
+
+	protected PortalWorkspace(
+		String portalGitHubURL, String portalUpstreamBranchName,
+		String portalBranchSHA) {
+
 		WorkspaceGitRepository workspaceGitRepository =
 			WorkspaceUtil.getWorkspaceGitRepository(
 				"portal", portalGitHubURL, portalUpstreamBranchName);
@@ -47,6 +54,10 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 
 		_primaryPortalWorkspaceGitRepository =
 			(PortalWorkspaceGitRepository)workspaceGitRepository;
+
+		if (portalBranchSHA != null) {
+			_primaryPortalWorkspaceGitRepository.setBranchSHA(portalBranchSHA);
+		}
 
 		_primaryPortalWorkspaceGitRepository.setUp();
 

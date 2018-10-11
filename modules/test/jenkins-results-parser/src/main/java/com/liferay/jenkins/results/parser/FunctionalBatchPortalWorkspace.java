@@ -22,9 +22,10 @@ import java.util.Properties;
 public class FunctionalBatchPortalWorkspace extends BatchPortalWorkspace {
 
 	protected FunctionalBatchPortalWorkspace(
-		String portalGitHubURL, String portalUpstreamBranchName) {
+		String portalGitHubURL, String portalUpstreamBranchName,
+		String portalBranchSHA) {
 
-		super(portalGitHubURL, portalUpstreamBranchName);
+		super(portalGitHubURL, portalUpstreamBranchName, portalBranchSHA);
 
 		_setPortalBuildProperties();
 	}

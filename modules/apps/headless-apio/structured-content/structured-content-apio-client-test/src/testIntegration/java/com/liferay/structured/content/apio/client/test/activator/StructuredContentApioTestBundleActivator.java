@@ -77,6 +77,18 @@ public class StructuredContentApioTestBundleActivator
 		StructuredContentApioTestBundleActivator.class.getSimpleName() +
 			"YesGuestYesGroupTitle";
 
+	public static final String TITLE1_LOCALE_ES =
+		StructuredContentApioTestBundleActivator.class.getSimpleName() +
+			"Title1_es";
+
+	public static final String TITLE2_LOCALE_DEFAULT =
+		StructuredContentApioTestBundleActivator.class.getSimpleName() +
+			"Title2_DefaultLocale";
+
+	public static final String TITLE2_LOCALE_ES =
+		StructuredContentApioTestBundleActivator.class.getSimpleName() +
+			"Title2_es";
+
 	@Override
 	public void start(BundleContext bundleContext) {
 		_autoCloseables = new ArrayList<>();
@@ -175,6 +187,31 @@ public class StructuredContentApioTestBundleActivator
 		}
 	}
 
+	private void _prepareDataForLocalizationTests(User user, Group group)
+		throws Exception {
+
+		Map<Locale, String> titleMap1 = new HashMap<Locale, String>() {
+			{
+				put(LocaleUtil.SPAIN, TITLE1_LOCALE_ES);
+			}
+		};
+
+		_addJournalArticle(
+			titleMap1, user.getUserId(), group.getGroupId(), LocaleUtil.SPAIN,
+			true, true);
+
+		Map<Locale, String> titleMap2 = new HashMap<Locale, String>() {
+			{
+				put(LocaleUtil.getDefault(), TITLE2_LOCALE_DEFAULT);
+				put(LocaleUtil.SPAIN, TITLE2_LOCALE_ES);
+			}
+		};
+
+		_addJournalArticle(
+			titleMap2, user.getUserId(), group.getGroupId(),
+			LocaleUtil.getDefault(), true, true);
+	}
+
 	private void _prepareTest() throws Exception {
 		User user = UserTestUtil.getAdminUser(TestPropsValues.getCompanyId());
 		Map<Locale, String> nameMap = Collections.singletonMap(
@@ -209,6 +246,8 @@ public class StructuredContentApioTestBundleActivator
 		_addJournalArticle(
 			TITLE_YES_GUEST_YES_GROUP, user.getUserId(), group.getGroupId(),
 			true, true);
+
+		_prepareDataForLocalizationTests(user, group);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

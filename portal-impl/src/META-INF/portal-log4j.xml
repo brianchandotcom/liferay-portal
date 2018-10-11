@@ -1124,6 +1124,14 @@
 		<priority value="WARN" />
 	</category>
 
+	<category name="osgi.logging.org_apache_aries_jmx_core">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="osgi.logging.org_apache_felix_configadmin">
+		<priority value="ERROR" />
+	</category>
+
 	<category name="osgi.logging.org_eclipse_osgi">
 		<priority value="WARN" />
 	</category>

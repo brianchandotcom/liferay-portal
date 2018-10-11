@@ -1182,8 +1182,18 @@ public class BeanPortletExtension implements Extension {
 
 		Set<BeanMethod> wildcardBeanMethods = new HashSet<>();
 
+		Map<String, Set<BeanMethod>> portletBeanMethods = new HashMap<>();
+
 		for (ScannedMethod scannedMethod : _scannedMethods) {
 			String[] portletNames = scannedMethod.getPortletNames();
+
+			if (portletNames == null) {
+				_log.error(
+					"Portlet names cannot be null for annotated method " +
+						scannedMethod.getMethod());
+
+				continue;
+			}
 
 			if ((portletNames.length > 0) && "*".equals(portletNames[0])) {
 				Class<?> clazz = scannedMethod.getClazz();
@@ -1198,8 +1208,6 @@ public class BeanPortletExtension implements Extension {
 				wildcardBeanMethods.add(beanMethod);
 			}
 		}
-
-		Map<String, Set<BeanMethod>> portletBeanMethods = new HashMap<>();
 
 		for (ScannedMethod scannedMethod : _scannedMethods) {
 			String[] portletNames = scannedMethod.getPortletNames();

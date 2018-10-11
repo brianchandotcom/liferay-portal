@@ -14,6 +14,7 @@
 
 package com.liferay.sharing.renderer;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.sharing.model.SharingEntry;
 
 import java.io.IOException;
@@ -29,6 +30,6 @@ public interface SharingEntryViewRenderer {
 	public void render(
 			SharingEntry sharingEntry, HttpServletRequest request,
 			HttpServletResponse response)
-		throws IOException;
+		throws IOException, PortalException;
 
 }

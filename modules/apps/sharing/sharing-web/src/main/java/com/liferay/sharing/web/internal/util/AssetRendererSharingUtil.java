@@ -17,6 +17,7 @@ package com.liferay.sharing.web.internal.util;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.sharing.model.SharingEntry;
 
 /**
@@ -24,7 +25,9 @@ import com.liferay.sharing.model.SharingEntry;
  */
 public class AssetRendererSharingUtil {
 
-	public static AssetRenderer getAssetRenderer(SharingEntry sharingEntry) {
+	public static AssetRenderer getAssetRenderer(SharingEntry sharingEntry)
+		throws PortalException {
+
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				sharingEntry.getClassName());
@@ -35,12 +38,8 @@ public class AssetRendererSharingUtil {
 
 		AssetRenderer<?> assetRenderer = null;
 
-		try {
-			assetRenderer = assetRendererFactory.getAssetRenderer(
-				sharingEntry.getClassPK());
-		}
-		catch (Exception e) {
-		}
+		assetRenderer = assetRendererFactory.getAssetRenderer(
+			sharingEntry.getClassPK());
 
 		return assetRenderer;
 	}

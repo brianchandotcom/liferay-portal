@@ -72,7 +72,9 @@ public class SharedWithMeViewDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public String getAssetTypeTitle(SharingEntry sharingEntry) {
+	public String getAssetTypeTitle(SharingEntry sharingEntry)
+		throws PortalException {
+
 		SharingEntryInterpreter sharingEntryInterpreter =
 			_sharingEntryInterpreterFunction.apply(sharingEntry);
 

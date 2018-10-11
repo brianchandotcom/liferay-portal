@@ -65,6 +65,15 @@ public class AssetListEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.asset.list.model.AssetListEntry addAssetListEntry(
+		long userId, long groupId, String title, int type, String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetListEntryLocalService.addAssetListEntry(userId, groupId,
+			title, type, typeSettings, serviceContext);
+	}
+
+	@Override
 	public com.liferay.asset.list.model.AssetListEntry addDynamicAssetListEntry(
 		long userId, long groupId, String title, String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -264,6 +273,12 @@ public class AssetListEntryLocalServiceWrapper
 	public java.util.List<com.liferay.asset.list.model.AssetListEntry> getAssetListEntries(
 		int start, int end) {
 		return _assetListEntryLocalService.getAssetListEntries(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.asset.list.model.AssetListEntry> getAssetListEntries(
+		long groupId) {
+		return _assetListEntryLocalService.getAssetListEntries(groupId);
 	}
 
 	/**

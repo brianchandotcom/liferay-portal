@@ -83,6 +83,10 @@ public interface AssetListEntryLocalService extends BaseLocalService,
 		String title, int type, ServiceContext serviceContext)
 		throws PortalException;
 
+	public AssetListEntry addAssetListEntry(long userId, long groupId,
+		String title, int type, String typeSettings,
+		ServiceContext serviceContext) throws PortalException;
+
 	public AssetListEntry addDynamicAssetListEntry(long userId, long groupId,
 		String title, String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
@@ -222,6 +226,9 @@ public interface AssetListEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetListEntry> getAssetListEntries(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetListEntry> getAssetListEntries(long groupId);
 
 	/**
 	* Returns all the asset list entries matching the UUID and company.

@@ -114,11 +114,11 @@ public class HtmlImpl implements Html {
 		for (int i = 0; i < text.length(); i++) {
 			char c = text.charAt(i);
 
-			String replacement = null;
-
 			if ((c < 256) && ((c >= 128) || _VALID_CHARS[c])) {
 				continue;
 			}
+
+			String replacement = null;
 
 			if (c == '<') {
 				replacement = "&lt;";

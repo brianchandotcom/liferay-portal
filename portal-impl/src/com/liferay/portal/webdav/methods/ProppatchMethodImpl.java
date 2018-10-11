@@ -123,8 +123,6 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 
 			HttpServletRequest request = webDAVRequest.getHttpServletRequest();
 
-			WebDAVProps webDAVProps = getStoredProperties(webDAVRequest);
-
 			String xml = new String(
 				FileUtil.getBytes(request.getInputStream()));
 
@@ -137,6 +135,8 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 					"Request XML: \n" +
 						Dom4jUtil.toString(xml, StringPool.FOUR_SPACES));
 			}
+
+			WebDAVProps webDAVProps = getStoredProperties(webDAVRequest);
 
 			Document document = SAXReaderUtil.read(xml);
 

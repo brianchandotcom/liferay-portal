@@ -229,8 +229,6 @@ public class SocialActivityCounterLocalServiceImpl
 			return;
 		}
 
-		User user = userPersistence.findByPrimaryKey(activity.getUserId());
-
 		SocialActivityDefinition activityDefinition =
 			socialActivitySettingLocalService.getActivityDefinition(
 				activity.getGroupId(), activity.getClassName(),
@@ -248,6 +246,8 @@ public class SocialActivityCounterLocalServiceImpl
 		if (activityProcessor != null) {
 			activityProcessor.processActivity(activity);
 		}
+
+		User user = userPersistence.findByPrimaryKey(activity.getUserId());
 
 		AssetEntry assetEntry = activity.getAssetEntry();
 

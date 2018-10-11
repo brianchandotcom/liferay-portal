@@ -76,13 +76,13 @@ public class ZipReaderImpl implements ZipReader {
 
 	@Override
 	public List<String> getEntries() {
-		List<String> folderEntries = new ArrayList<>();
-
 		File[] files = (File[])_zipFile.listFiles();
 
 		if (files == null) {
 			return null;
 		}
+
+		List<String> folderEntries = new ArrayList<>();
 
 		for (File file : files) {
 			if (!file.isDirectory()) {

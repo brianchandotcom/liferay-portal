@@ -129,9 +129,6 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 			int ownerType, String preferences)
 		throws Exception {
 
-		PortalPreferencesImpl portalPreferencesImpl =
-			portalPreferencesWrapper.getPortalPreferencesImpl();
-
 		int x = preferences.indexOf(_PREFIX);
 		int y = -1;
 
@@ -142,6 +139,9 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 		else {
 			return;
 		}
+
+		PortalPreferencesImpl portalPreferencesImpl =
+			portalPreferencesWrapper.getPortalPreferencesImpl();
 
 		while (x != -1) {
 

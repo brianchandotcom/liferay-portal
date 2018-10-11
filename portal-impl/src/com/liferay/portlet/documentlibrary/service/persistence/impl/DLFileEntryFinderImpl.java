@@ -376,11 +376,11 @@ public class DLFileEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_DDM_STRUCTURE_IDS);
-
 			if ((ddmStructureIds == null) || (ddmStructureIds.length <= 0)) {
 				return Collections.emptyList();
 			}
+
+			String sql = CustomSQLUtil.get(FIND_BY_DDM_STRUCTURE_IDS);
 
 			if (groupId <= 0) {
 				sql = StringUtil.replace(

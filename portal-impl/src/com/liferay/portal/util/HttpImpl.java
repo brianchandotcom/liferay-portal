@@ -1279,8 +1279,6 @@ public class HttpImpl implements Http {
 	 */
 	@Override
 	public String URLtoString(URL url) throws IOException {
-		String xml = null;
-
 		if (url == null) {
 			return null;
 		}
@@ -1300,6 +1298,8 @@ public class HttpImpl implements Http {
 
 			return null;
 		}
+
+		String xml = null;
 
 		try (InputStream inputStream = urlConnection.getInputStream();
 			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =

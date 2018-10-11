@@ -1233,8 +1233,26 @@ public class BeanPortletExtension implements Extension {
 	}
 
 	private Function<String, String> _collectPreferencesValidators() {
-		String wildcardPreferencesValidator =
-			_collectWildcardPreferencesValidator();
+		String wildcardPreferencesValidator = null;
+
+		for (Class<?> annotatedClass : _annotatedClasses) {
+			PortletPreferencesValidator portletPreferencesValidator =
+				annotatedClass.getAnnotation(PortletPreferencesValidator.class);
+
+			if (portletPreferencesValidator == null) {
+				continue;
+			}
+
+			String[] portletNames = portletPreferencesValidator.portletNames();
+
+			for (String portletName : portletNames) {
+				if (Objects.equals(portletName, "*")) {
+					if (wildcardPreferencesValidator == null) {
+						wildcardPreferencesValidator = annotatedClass.getName();
+					}
+				}
+			}
+		}
 
 		Map<String, String> preferencesValidators = new HashMap<>();
 
@@ -1267,31 +1285,12 @@ public class BeanPortletExtension implements Extension {
 			}
 		}
 
+		String defaultPreferencesValidator = wildcardPreferencesValidator;
+
 		return portletName -> {
 			return preferencesValidators.getOrDefault(
-				portletName, wildcardPreferencesValidator);
+				portletName, defaultPreferencesValidator);
 		};
-	}
-
-	private String _collectWildcardPreferencesValidator() {
-		for (Class<?> annotatedClass : _annotatedClasses) {
-			PortletPreferencesValidator portletPreferencesValidator =
-				annotatedClass.getAnnotation(PortletPreferencesValidator.class);
-
-			if (portletPreferencesValidator == null) {
-				continue;
-			}
-
-			String[] portletNames = portletPreferencesValidator.portletNames();
-
-			for (String portletName : portletNames) {
-				if (Objects.equals(portletName, "*")) {
-					return annotatedClass.getName();
-				}
-			}
-		}
-
-		return null;
 	}
 
 	private LiferayPortletConfiguration _getAnnotatedLiferayConfiguration(

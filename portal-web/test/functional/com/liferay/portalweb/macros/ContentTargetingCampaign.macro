@@ -446,7 +446,18 @@
 	<command name="viewContentReportCP">
 		<var name="key_reportTitle" value="${reportTitle}" />
 
-		<execute function="AssertTextEquals" locator1="CampaignReports#CONTENT_GRAPH_CONTENT_TITLE" value1="${reportTitle}" />
+		<if>
+			<equals arg1="${reportTitle}" arg2="DM Document Title" />
+			<then>
+				<execute function="SikuliAssertElementPresent" locator1="CampaignReports#CONTENT_GRAPH_DM_DOCUMENT_TITLE" />
+			</then>
+			<elseif>
+				<equals arg1="${reportTitle}" arg2="Content Metric Name" />
+				<then>
+					<execute function="SikuliAssertElementPresent" locator1="CampaignReports#CONTENT_GRAPH_CONTENT_MERIC_NAME" />
+				</then>
+			</elseif>
+		</if>
 
 		<for list="${reportsContentTableList}" param="contentReports">
 			<var name="key_contentReports" value="${contentReports}" />

@@ -17,6 +17,7 @@ package com.liferay.portal.target.platform.indexer.internal;
 import aQute.bnd.build.model.EE;
 import aQute.bnd.build.model.OSGI_CORE;
 import aQute.bnd.osgi.repository.XMLResourceParser;
+import aQute.bnd.osgi.resource.CapReqBuilder;
 import aQute.bnd.osgi.resource.ResourceBuilder;
 
 import biz.aQute.resolve.ResolverValidator;
@@ -38,6 +39,10 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
+import org.osgi.framework.Constants;
+import org.osgi.framework.namespace.BundleNamespace;
+import org.osgi.framework.namespace.HostNamespace;
+import org.osgi.framework.namespace.IdentityNamespace;
 import org.osgi.resource.Resource;
 
 /**
@@ -69,6 +74,8 @@ public class DefaultIndexValidator implements IndexValidator {
 
 			resourceBuilder.addEE(EE.JavaSE_1_7);
 			resourceBuilder.addManifest(OSGI_CORE.R6_0_0.getManifest());
+
+			_includeSystemBundleAlias(resourceBuilder);
 
 			_includeTargetPlatform(resourceBuilder, identities);
 
@@ -137,6 +144,35 @@ public class DefaultIndexValidator implements IndexValidator {
 		finally {
 			xmlStreamReader.close();
 		}
+	}
+
+	private void _includeSystemBundleAlias(ResourceBuilder resourceBuilder)
+		throws Exception {
+
+		CapReqBuilder capability = new CapReqBuilder(
+			BundleNamespace.BUNDLE_NAMESPACE);
+
+		capability.addAttribute(
+			capability.getNamespace(), Constants.SYSTEM_BUNDLE_SYMBOLICNAME);
+
+		resourceBuilder.addCapability(capability);
+
+		capability = new CapReqBuilder(HostNamespace.HOST_NAMESPACE);
+
+		capability.addAttribute(
+			capability.getNamespace(), Constants.SYSTEM_BUNDLE_SYMBOLICNAME);
+
+		resourceBuilder.addCapability(capability);
+
+		capability = new CapReqBuilder(IdentityNamespace.IDENTITY_NAMESPACE);
+
+		capability.addAttribute(
+			capability.getNamespace(), Constants.SYSTEM_BUNDLE_SYMBOLICNAME);
+		capability.addAttribute(
+			IdentityNamespace.CAPABILITY_TYPE_ATTRIBUTE,
+			IdentityNamespace.TYPE_BUNDLE);
+
+		resourceBuilder.addCapability(capability);
 	}
 
 	private void _includeTargetPlatform(

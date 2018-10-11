@@ -1,21 +1,21 @@
 diff --git a/org/apache/felix/fileinstall/internal/DirectoryWatcher.java b/org/apache/felix/fileinstall/internal/DirectoryWatcher.java
-index e7c411a..80150ea 100644
+index 629e48dca6ea..ebe7251ed084 100644
 --- a/org/apache/felix/fileinstall/internal/DirectoryWatcher.java
 +++ b/org/apache/felix/fileinstall/internal/DirectoryWatcher.java
-@@ -1034,6 +1034,11 @@ public class DirectoryWatcher extends Thread implements BundleListener
-         Util.log(context, Logger.LOG_INFO, "Installing bundle " + sn
-                 + " / " + v, null);
-         Bundle b = context.installBundle(bundleLocation, is);
+@@ -1035,6 +1035,11 @@ public class DirectoryWatcher extends Thread implements BundleListener
+             Util.log(context, Logger.LOG_INFO, "Installing bundle " + sn
+                     + " / " + v, null);
+             Bundle b = context.installBundle(bundleLocation, is);
 +
-+               if (b.getState() == Bundle.UNINSTALLED) {
-+                       return b;
-+               }
++            if (b.getState() == Bundle.UNINSTALLED) {
++                return b;
++            }
 +
-         Util.storeChecksum(b, checksum, context);
-         modified.set(true);
-
-@@ -1489,3 +1494,4 @@ public class DirectoryWatcher extends Thread implements BundleListener
+             Util.storeChecksum(b, checksum, context);
+             modified.set(true);
+ 
+@@ -1496,3 +1501,4 @@ public class DirectoryWatcher extends Thread implements BundleListener
      }
-
+ 
  }
 +/* @generated */

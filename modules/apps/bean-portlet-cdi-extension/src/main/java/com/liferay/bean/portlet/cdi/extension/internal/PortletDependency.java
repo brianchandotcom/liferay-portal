@@ -43,26 +43,14 @@ public class PortletDependency {
 
 		PortletDependency portletDependency = (PortletDependency)obj;
 
-		if (Objects.equals(_name, portletDependency.getName()) &&
-			Objects.equals(_scope, portletDependency.getScope()) &&
-			Objects.equals(_version, portletDependency.getVersion())) {
+		if (Objects.equals(_name, portletDependency._name) &&
+			Objects.equals(_scope, portletDependency._scope) &&
+			Objects.equals(_version, portletDependency._version)) {
 
 			return true;
 		}
 
 		return false;
-	}
-
-	public String getName() {
-		return _name;
-	}
-
-	public String getScope() {
-		return _scope;
-	}
-
-	public String getVersion() {
-		return _version;
 	}
 
 	@Override

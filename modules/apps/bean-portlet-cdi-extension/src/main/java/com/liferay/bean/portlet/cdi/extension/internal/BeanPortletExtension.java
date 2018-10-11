@@ -238,39 +238,7 @@ public class BeanPortletExtension implements Extension {
 			}
 		}
 
-		if (annotatedType.isAnnotationPresent(PortletConfigurations.class)) {
-			_portletConfigurationsClasses.add(annotatedClass);
-		}
-
-		if (annotatedType.isAnnotationPresent(PortletConfiguration.class)) {
-			_portletConfigurationClasses.add(annotatedClass);
-		}
-
-		if (annotatedType.isAnnotationPresent(PortletLifecycleFilter.class)) {
-			_portletLifecycleFilterClasses.add(annotatedClass);
-		}
-
-		if (annotatedType.isAnnotationPresent(PortletListener.class)) {
-			_portletListenerClasses.add(annotatedClass);
-		}
-
-		if (annotatedType.isAnnotationPresent(
-				PortletPreferencesValidator.class)) {
-
-			_preferencesValidatorClasses.add(annotatedClass);
-		}
-
-		if (annotatedType.isAnnotationPresent(
-				LiferayPortletConfigurations.class)) {
-
-			_liferayPortletConfigurationsClasses.add(annotatedClass);
-		}
-
-		if (annotatedType.isAnnotationPresent(
-				LiferayPortletConfiguration.class)) {
-
-			_liferayPortletConfigurationClasses.add(annotatedClass);
-		}
+		_annotatedClasses.add(annotatedClass);
 
 		_scanMethods(_scannedMethods, annotatedClass);
 	}
@@ -557,9 +525,13 @@ public class BeanPortletExtension implements Extension {
 	}
 
 	private void _addBeanFiltersFromAnnotatedClasses() {
-		for (Class<?> annotatedClass : _portletLifecycleFilterClasses) {
+		for (Class<?> annotatedClass : _annotatedClasses) {
 			PortletLifecycleFilter portletLifecycleFilter =
 				annotatedClass.getAnnotation(PortletLifecycleFilter.class);
+
+			if (portletLifecycleFilter == null) {
+				continue;
+			}
 
 			Map<String, String> initParams = new HashMap<>();
 
@@ -734,13 +706,17 @@ public class BeanPortletExtension implements Extension {
 
 		List<Map.Entry<Integer, String>> portletListeners = new ArrayList<>();
 
-		for (Class<?> portletListenerClass : _portletListenerClasses) {
-			PortletListener portletListener =
-				portletListenerClass.getAnnotation(PortletListener.class);
+		for (Class<?> annotatedClass : _annotatedClasses) {
+			PortletListener portletListener = annotatedClass.getAnnotation(
+				PortletListener.class);
+
+			if (portletListener == null) {
+				continue;
+			}
 
 			portletListeners.add(
 				new AbstractMap.SimpleImmutableEntry<>(
-					portletListener.ordinal(), portletListenerClass.getName()));
+					portletListener.ordinal(), annotatedClass.getName()));
 		}
 
 		portletListeners.addAll(_beanApp.getPortletListeners());
@@ -1167,9 +1143,13 @@ public class BeanPortletExtension implements Extension {
 		Map<String, String> descriptorDisplayCategories,
 		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations) {
 
-		for (Class<?> clazz : _portletConfigurationsClasses) {
-			PortletConfigurations portletConfigurations = clazz.getAnnotation(
-				PortletConfigurations.class);
+		for (Class<?> annotatedClass : _annotatedClasses) {
+			PortletConfigurations portletConfigurations =
+				annotatedClass.getAnnotation(PortletConfigurations.class);
+
+			if (portletConfigurations == null) {
+				continue;
+			}
 
 			for (PortletConfiguration portletConfiguration :
 					portletConfigurations.value()) {
@@ -1179,31 +1159,35 @@ public class BeanPortletExtension implements Extension {
 						portletConfiguration.portletName()));
 
 				PortletScannerUtil.scanNonannotatedBeanMethods(
-					beanManager, clazz, beanMethods);
+					beanManager, annotatedClass, beanMethods);
 
 				_addBeanPortlet(
-					clazz, beanMethods, portletConfiguration,
+					annotatedClass, beanMethods, portletConfiguration,
 					preferencesValidators, wildcardPreferencesValidators,
 					descriptorDisplayCategories,
 					descriptorLiferayConfigurations);
 			}
 		}
 
-		for (Class<?> clazz : _portletConfigurationClasses) {
-			PortletConfiguration portletConfiguration = clazz.getAnnotation(
-				PortletConfiguration.class);
+		for (Class<?> annotatedClass : _annotatedClasses) {
+			PortletConfiguration portletConfiguration =
+				annotatedClass.getAnnotation(PortletConfiguration.class);
+
+			if (portletConfiguration == null) {
+				continue;
+			}
 
 			Set<BeanMethod> beanMethods = new HashSet<>(
 				portletBeanMethodsFunction.apply(
 					portletConfiguration.portletName()));
 
 			PortletScannerUtil.scanNonannotatedBeanMethods(
-				beanManager, clazz, beanMethods);
+				beanManager, annotatedClass, beanMethods);
 
 			_addBeanPortlet(
-				clazz, beanMethods, portletConfiguration, preferencesValidators,
-				wildcardPreferencesValidators, descriptorDisplayCategories,
-				descriptorLiferayConfigurations);
+				annotatedClass, beanMethods, portletConfiguration,
+				preferencesValidators, wildcardPreferencesValidators,
+				descriptorDisplayCategories, descriptorLiferayConfigurations);
 		}
 	}
 
@@ -1298,12 +1282,13 @@ public class BeanPortletExtension implements Extension {
 	private Map<String, String> _collectPreferencesValidators() {
 		Map<String, String> preferencesValidators = new HashMap<>();
 
-		for (Class<?> preferencesValidatorClass :
-				_preferencesValidatorClasses) {
-
+		for (Class<?> annotatedClass : _annotatedClasses) {
 			PortletPreferencesValidator portletPreferencesValidator =
-				preferencesValidatorClass.getAnnotation(
-					PortletPreferencesValidator.class);
+				annotatedClass.getAnnotation(PortletPreferencesValidator.class);
+
+			if (portletPreferencesValidator == null) {
+				continue;
+			}
 
 			String[] portletNames = portletPreferencesValidator.portletNames();
 
@@ -1321,7 +1306,7 @@ public class BeanPortletExtension implements Extension {
 				}
 				else {
 					preferencesValidators.put(
-						portletName, preferencesValidatorClass.getName());
+						portletName, annotatedClass.getName());
 				}
 			}
 		}
@@ -1357,19 +1342,19 @@ public class BeanPortletExtension implements Extension {
 	private Set<String> _collectWildcardPreferencesValidators() {
 		Set<String> wildcardPreferencesValidators = new HashSet<>();
 
-		for (Class<?> preferencesValidatorClass :
-				_preferencesValidatorClasses) {
-
+		for (Class<?> annotatedClass : _annotatedClasses) {
 			PortletPreferencesValidator portletPreferencesValidator =
-				preferencesValidatorClass.getAnnotation(
-					PortletPreferencesValidator.class);
+				annotatedClass.getAnnotation(PortletPreferencesValidator.class);
+
+			if (portletPreferencesValidator == null) {
+				continue;
+			}
 
 			String[] portletNames = portletPreferencesValidator.portletNames();
 
 			for (String portletName : portletNames) {
 				if (Objects.equals(portletName, "*")) {
-					wildcardPreferencesValidators.add(
-						preferencesValidatorClass.getName());
+					wildcardPreferencesValidators.add(annotatedClass.getName());
 				}
 			}
 		}
@@ -1380,18 +1365,27 @@ public class BeanPortletExtension implements Extension {
 	private LiferayPortletConfiguration _getAnnotatedLiferayConfiguration(
 		String portletName) {
 
-		for (Class<?> clazz : _liferayPortletConfigurationClasses) {
+		for (Class<?> annotatedClass : _annotatedClasses) {
 			LiferayPortletConfiguration liferayPortletConfiguration =
-				clazz.getAnnotation(LiferayPortletConfiguration.class);
+				annotatedClass.getAnnotation(LiferayPortletConfiguration.class);
+
+			if (liferayPortletConfiguration == null) {
+				continue;
+			}
 
 			if (portletName.equals(liferayPortletConfiguration.portletName())) {
 				return liferayPortletConfiguration;
 			}
 		}
 
-		for (Class<?> clazz : _liferayPortletConfigurationsClasses) {
+		for (Class<?> annotatedClass : _annotatedClasses) {
 			LiferayPortletConfigurations liferayPortletConfigurations =
-				clazz.getAnnotation(LiferayPortletConfigurations.class);
+				annotatedClass.getAnnotation(
+					LiferayPortletConfigurations.class);
+
+			if (liferayPortletConfigurations == null) {
+				continue;
+			}
 
 			for (LiferayPortletConfiguration liferayPortletConfiguration :
 					liferayPortletConfigurations.value()) {
@@ -1486,6 +1480,7 @@ public class BeanPortletExtension implements Extension {
 
 		};
 
+	private final List<Class<?>> _annotatedClasses = new ArrayList<>();
 	private BeanApp _beanApp = new BeanAppImpl(
 		"3.0", null, Collections.emptyList(), Collections.emptyMap(),
 		Collections.emptyMap(), Collections.emptySet(),
@@ -1494,21 +1489,8 @@ public class BeanPortletExtension implements Extension {
 	private final Map<String, BeanPortlet> _beanPortlets = new HashMap<>();
 	private final List<ServiceRegistration<PortletFilter>>
 		_filterRegistrations = new ArrayList<>();
-	private final List<Class<?>> _liferayPortletConfigurationClasses =
-		new ArrayList<>();
-	private final List<Class<?>> _liferayPortletConfigurationsClasses =
-		new ArrayList<>();
 	private Class<?> _portletApplicationClass;
-	private final List<Class<?>> _portletConfigurationClasses =
-		new ArrayList<>();
-	private final List<Class<?>> _portletConfigurationsClasses =
-		new ArrayList<>();
-	private final List<Class<?>> _portletLifecycleFilterClasses =
-		new ArrayList<>();
-	private final List<Class<?>> _portletListenerClasses = new ArrayList<>();
 	private final List<ServiceRegistration<Portlet>> _portletRegistrations =
-		new ArrayList<>();
-	private final List<Class<?>> _preferencesValidatorClasses =
 		new ArrayList<>();
 	private final List<ServiceRegistration<ResourceBundleLoader>>
 		_resourceBundleLoaderRegistrations = new ArrayList<>();

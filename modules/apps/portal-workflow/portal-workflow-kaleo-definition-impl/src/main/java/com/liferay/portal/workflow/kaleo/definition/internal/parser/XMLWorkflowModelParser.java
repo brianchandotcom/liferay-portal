@@ -809,13 +809,13 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 	protected void parseTransition(Definition definition, Element nodeElement) {
 		String sourceName = nodeElement.elementTextTrim("name");
 
-		Node sourceNode = definition.getNode(sourceName);
-
 		Element transitionsElement = nodeElement.element("transitions");
 
 		if (transitionsElement == null) {
 			return;
 		}
+
+		Node sourceNode = definition.getNode(sourceName);
 
 		List<Element> transitionElements = transitionsElement.elements(
 			"transition");

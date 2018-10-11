@@ -84,11 +84,6 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	@Override
 	public DDMTemplate fetchDDMTemplate(long groupId, String displayStyle) {
 		try {
-			Group group = _groupLocalService.getGroup(groupId);
-
-			Group companyGroup = _groupLocalService.getCompanyGroup(
-				group.getCompanyId());
-
 			String uuid = getDDMTemplateKey(displayStyle);
 
 			if (Validator.isNull(uuid)) {
@@ -107,6 +102,11 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 					_log.debug(pe, pe);
 				}
 			}
+
+			Group group = _groupLocalService.getGroup(groupId);
+
+			Group companyGroup = _groupLocalService.getCompanyGroup(
+				group.getCompanyId());
 
 			try {
 				return _ddmTemplateLocalService.getDDMTemplateByUuidAndGroupId(

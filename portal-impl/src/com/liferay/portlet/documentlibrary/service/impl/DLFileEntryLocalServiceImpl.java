@@ -119,6 +119,9 @@ import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.awt.image.RenderedImage;
 
@@ -278,6 +281,12 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		return dlFileEntry;
+	}
+
+	public void afterPropertiesSet() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(VersioningStrategy.class);
 	}
 
 	@Override
@@ -1018,6 +1027,10 @@ public class DLFileEntryLocalServiceImpl
 			});
 
 		intervalActionProcessor.performIntervalActions();
+	}
+
+	public void destroy() {
+		_serviceTracker.close();
 	}
 
 	@Override
@@ -2861,14 +2874,17 @@ public class DLFileEntryLocalServiceImpl
 			return DLVersionNumberIncrease.MINOR;
 		}
 
-		if (_versioningStrategy.isOverridable() &&
+		VersioningStrategy versioningStrategy = _serviceTracker.getService();
+
+		if (((versioningStrategy == null) ||
+			 versioningStrategy.isOverridable()) &&
 			(dlVersionNumberIncrease != null) &&
 			(dlVersionNumberIncrease != DLVersionNumberIncrease.AUTOMATIC)) {
 
 			return dlVersionNumberIncrease;
 		}
 
-		return _versioningStrategy.computeDLVersionNumberIncrease(
+		return versioningStrategy.computeDLVersionNumberIncrease(
 			previousDLFileVersion, nextDLFileVersion);
 	}
 
@@ -2972,7 +2988,7 @@ public class DLFileEntryLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryLocalServiceImpl.class);
 
-	@BeanReference(type = VersioningStrategy.class)
-	private VersioningStrategy _versioningStrategy;
+	private ServiceTracker<VersioningStrategy, VersioningStrategy>
+		_serviceTracker;
 
 }

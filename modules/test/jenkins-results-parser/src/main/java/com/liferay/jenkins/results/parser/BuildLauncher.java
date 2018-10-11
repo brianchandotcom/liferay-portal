@@ -15,15 +15,11 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -147,40 +143,7 @@ public class BuildLauncher {
 			return jenkinsBuildParameters;
 		}
 
-		String buildParametersURL = JenkinsResultsParserUtil.getLocalURL(
-			buildURL + "api/json?tree=actions[parameters[name,value]]");
-
-		try {
-			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				buildParametersURL);
-
-			JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
-
-			for (int i = 0; i < actionsJSONArray.length(); i++) {
-				JSONObject actionJSONObject = actionsJSONArray.getJSONObject(i);
-
-				if (!actionJSONObject.has("parameters")) {
-					continue;
-				}
-
-				JSONArray parametersJSONArray = actionJSONObject.getJSONArray(
-					"parameters");
-
-				for (int j = 0; j < parametersJSONArray.length(); j++) {
-					JSONObject parameterJSONObject =
-						parametersJSONArray.getJSONObject(j);
-
-					jenkinsBuildParameters.put(
-						parameterJSONObject.getString("name"),
-						parameterJSONObject.getString("value"));
-				}
-			}
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException();
-		}
-
-		return jenkinsBuildParameters;
+		return JenkinsResultsParserUtil.getBuildParameters(buildURL);
 	}
 
 	private static final String _RUN_COMMAND = "run";

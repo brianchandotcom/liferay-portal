@@ -239,18 +239,8 @@ public class BeanPortletImpl implements BeanPortlet {
 	}
 
 	@Override
-	public Set<QName> getSupportedProcessingEvents() {
-		return _supportedProcessingEvents;
-	}
-
-	@Override
 	public Set<String> getSupportedPublicRenderParameters() {
 		return _supportedPublicRenderParameters;
-	}
-
-	@Override
-	public Set<QName> getSupportedPublishingEvents() {
-		return _supportedPublishingEvents;
 	}
 
 	@Override
@@ -631,7 +621,7 @@ public class BeanPortletImpl implements BeanPortlet {
 
 		Set<String> supportedProcessingEvents = new HashSet<>();
 
-		for (QName qName : getSupportedProcessingEvents()) {
+		for (QName qName : _supportedProcessingEvents) {
 			supportedProcessingEvents.add(
 				_toNameValuePair(
 					qName.getLocalPart(), qName.getNamespaceURI()));
@@ -645,7 +635,7 @@ public class BeanPortletImpl implements BeanPortlet {
 
 		Set<String> supportedPublishingEvents = new HashSet<>();
 
-		for (QName qName : getSupportedPublishingEvents()) {
+		for (QName qName : _supportedPublishingEvents) {
 			supportedPublishingEvents.add(
 				_toNameValuePair(
 					qName.getLocalPart(), qName.getNamespaceURI()));

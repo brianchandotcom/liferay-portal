@@ -19,8 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.xml.namespace.QName;
-
 /**
  * @author Neil Griffin
  */
@@ -72,11 +70,7 @@ public interface BeanPortlet {
 
 	public Map<String, Set<String>> getSupportedPortletModes();
 
-	public Set<QName> getSupportedProcessingEvents();
-
 	public Set<String> getSupportedPublicRenderParameters();
-
-	public Set<QName> getSupportedPublishingEvents();
 
 	public Map<String, Set<String>> getSupportedWindowStates();
 

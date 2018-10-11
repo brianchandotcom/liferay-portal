@@ -398,24 +398,14 @@ public class BeanPortletExtension implements Extension {
 			}
 		}
 
-		if (displayDescriptorURL != null) {
-			try {
-				Map<String, String> categoryMap = DisplayDescriptorParser.parse(
-					displayDescriptorURL);
-
-				for (String portletName : categoryMap.keySet()) {
-					if (_beanPortlets.containsKey(portletName)) {
-						continue;
-					}
-
-					_log.error(
-						"Unknown portlet ID " + portletName +
-							" found in liferay-display.xml");
-				}
+		for (String portletName : descriptorDisplayCategories.keySet()) {
+			if (_beanPortlets.containsKey(portletName)) {
+				continue;
 			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+
+			_log.error(
+				"Unknown portlet ID " + portletName +
+					" found in liferay-display.xml");
 		}
 
 		if (_log.isInfoEnabled()) {

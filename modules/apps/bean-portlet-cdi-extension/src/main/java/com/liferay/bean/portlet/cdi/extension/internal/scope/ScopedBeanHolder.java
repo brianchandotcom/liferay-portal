@@ -137,8 +137,12 @@ public class ScopedBeanHolder {
 
 			T beanInstance = bean.create(creationalContext);
 
+			scopedBean = new ScopedBean<>(
+				name, bean, beanInstance, creationalContext,
+				RenderStateScoped.class.getSimpleName());
+
 			PortletSerializable portletSerializable = (PortletSerializable)
-				beanInstance;
+				scopedBean.getBeanInstance();
 
 			String parameterName = _getParameterName(portletSerializable);
 
@@ -153,10 +157,6 @@ public class ScopedBeanHolder {
 			}
 
 			portletSerializable.deserialize(parameterValues);
-
-			scopedBean = new ScopedBean<>(
-				name, bean, beanInstance, creationalContext,
-				RenderStateScoped.class.getSimpleName());
 
 			_portletRequest.setAttribute(name, scopedBean);
 		}

@@ -154,10 +154,23 @@ public class PortletDescriptorParser {
 		Map<String, Map<String, Set<String>>> liferayConfigurations) {
 
 		for (Element portletElement : rootElement.elements("portlet")) {
+			String portletName = portletElement.elementText("portlet-name");
+
+			Set<BeanMethod> beanMethods = new HashSet<>(
+				portletBeanMethodsFunction.apply(portletName));
+
+			String preferencesValidator = preferencesValidatorFunction.apply(
+				portletName);
+
+			String categoryName = displayDescriptorCategories.get(portletName);
+
+			Map<String, Set<String>> liferayConfiguration =
+				liferayConfigurations.get(portletName);
+
 			BeanPortlet beanPortlet = _readBeanPortlet(
-				bundle, portletElement, beanApp, beanManager,
-				portletBeanMethodsFunction, preferencesValidatorFunction,
-				displayDescriptorCategories, liferayConfigurations);
+				bundle, portletElement, portletName, beanApp, beanManager,
+				beanMethods, preferencesValidator, categoryName,
+				liferayConfiguration);
 
 			if (beanPortlet != null) {
 				beanPortlets.put(beanPortlet.getPortletName(), beanPortlet);
@@ -315,14 +328,10 @@ public class PortletDescriptorParser {
 	}
 
 	private static BeanPortlet _readBeanPortlet(
-		Bundle bundle, Element portletElement, BeanApp beanApp,
-		BeanManager beanManager,
-		Function<String, Set<BeanMethod>> portletBeanMethodsFunction,
-		Function<String, String> preferencesValidatorFunction,
-		Map<String, String> displayDescriptorCategories,
-		Map<String, Map<String, Set<String>>> liferayConfigurations) {
-
-		String portletName = portletElement.elementText("portlet-name");
+		Bundle bundle, Element portletElement, String portletName,
+		BeanApp beanApp, BeanManager beanManager, Set<BeanMethod> beanMethods,
+		String preferencesValidator, String categoryName,
+		Map<String, Set<String>> liferayConfiguration) {
 
 		Map<String, String> displayNames = new HashMap<>();
 
@@ -469,8 +478,6 @@ public class PortletDescriptorParser {
 		Element portletPreferencesElement = portletElement.element(
 			"portlet-preferences");
 
-		String preferencesValidator = null;
-
 		if (portletPreferencesElement != null) {
 			for (Element preferenceElement :
 					portletPreferencesElement.elements("preference")) {
@@ -496,13 +503,12 @@ public class PortletDescriptorParser {
 							preferenceElement.elementText("read-only"))));
 			}
 
-			preferencesValidator = portletPreferencesElement.elementText(
-				"preferences-validator");
-		}
+			String xmlPreferencesValidator =
+				portletPreferencesElement.elementText("preferences-validator");
 
-		if (preferencesValidator == null) {
-			preferencesValidator = preferencesValidatorFunction.apply(
-				portletName);
+			if (xmlPreferencesValidator != null) {
+				preferencesValidator = xmlPreferencesValidator;
+			}
 		}
 
 		Map<String, String> securityRoleRefs = new HashMap<>();
@@ -632,9 +638,6 @@ public class PortletDescriptorParser {
 				multiPartMaxRequestSize);
 		}
 
-		Set<BeanMethod> beanMethods = new HashSet<>(
-			portletBeanMethodsFunction.apply(portletName));
-
 		Class<?> portletClass = null;
 
 		try {
@@ -663,9 +666,8 @@ public class PortletDescriptorParser {
 			supportedPublishingEvents, supportedPublicRenderParameters,
 			containerRuntimeOptions, portletDependencies, asyncSupported,
 			multiPartSupported, multiPartFileSizeThreshold, multiPartLocation,
-			multiPartMaxFileSize, multiPartMaxRequestSize,
-			displayDescriptorCategories.get(portletName),
-			liferayConfigurations.get(portletName));
+			multiPartMaxFileSize, multiPartMaxRequestSize, categoryName,
+			liferayConfiguration);
 	}
 
 	private static final String _ENGLISH_EN = Locale.ENGLISH.getLanguage();

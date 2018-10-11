@@ -91,7 +91,7 @@ public interface ParagraphDDMFormFieldTypeSettings
 		dataType = "string", label = "%body-text",
 		properties = "placeholder=%enter-body-text", type = "editor"
 	)
-	public String text();
+	public LocalizedValue text();
 
 	@DDMFormField(dataType = "string", type = "validation")
 	@Override

@@ -405,7 +405,11 @@
 			<var name="pageName" value="New Page Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Navigator#gotoStagedView" />
+
+		<execute macro="Navigator#_gotoPage">
 			<var name="pageName" value="New Page Name" />
 		</execute>
 

@@ -55,9 +55,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
@@ -626,6 +628,54 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return new File(buildProperties.getProperty("base.repository.dir"));
+	}
+
+	public static String getBuildParameter(String buildURL, String key) {
+		Map<String, String> buildParameters = getBuildParameters(buildURL);
+
+		if (buildParameters.containsKey(key)) {
+			return buildParameters.get(key);
+		}
+
+		throw new RuntimeException("Could not find build parameter " + key);
+	}
+
+	public static Map<String, String> getBuildParameters(String buildURL) {
+		Map<String, String> buildParameters = new HashMap<>();
+
+		String buildParametersURL = getLocalURL(
+			combine(buildURL, "api/json?tree=actions[parameters[name,value]]"));
+
+		try {
+			JSONObject jsonObject = toJSONObject(buildParametersURL);
+
+			JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
+
+			for (int i = 0; i < actionsJSONArray.length(); i++) {
+				JSONObject actionJSONObject = actionsJSONArray.getJSONObject(i);
+
+				if (!actionJSONObject.has("parameters")) {
+					continue;
+				}
+
+				JSONArray parametersJSONArray = actionJSONObject.getJSONArray(
+					"parameters");
+
+				for (int j = 0; j < parametersJSONArray.length(); j++) {
+					JSONObject parameterJSONObject =
+						parametersJSONArray.getJSONObject(j);
+
+					buildParameters.put(
+						parameterJSONObject.getString("name"),
+						parameterJSONObject.getString("value"));
+				}
+			}
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException();
+		}
+
+		return buildParameters;
 	}
 
 	public static Properties getBuildProperties() throws IOException {
@@ -1336,6 +1386,10 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return false;
+	}
+
+	public static String join(String delimiter, List<String> list) {
+		return join(delimiter, list.toArray(new String[list.size()]));
 	}
 
 	public static String join(String delimiter, String... strings) {

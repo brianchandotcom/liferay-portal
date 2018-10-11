@@ -35,8 +35,6 @@ public class VersionNumberComparator implements Comparator<String> {
 
 	@Override
 	public int compare(String version1, String version2) {
-		int value = 0;
-
 		if (version1.equals(
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
 
@@ -48,6 +46,8 @@ public class VersionNumberComparator implements Comparator<String> {
 
 			return 1;
 		}
+
+		int value = 0;
 
 		int[] versionParts1 = StringUtil.split(version1, StringPool.PERIOD, 0);
 		int[] versionParts2 = StringUtil.split(version2, StringPool.PERIOD, 0);

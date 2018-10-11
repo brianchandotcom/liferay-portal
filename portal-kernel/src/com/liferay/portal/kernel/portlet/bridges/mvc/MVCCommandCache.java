@@ -99,8 +99,6 @@ public class MVCCommandCache<T extends MVCCommand> {
 	}
 
 	public T getMVCCommand(String mvcCommandName) {
-		String className = null;
-
 		ServiceTrackerMap<String, T> serviceTrackerMap =
 			_getServiceTrackerMap();
 
@@ -109,6 +107,8 @@ public class MVCCommandCache<T extends MVCCommand> {
 		if (mvcCommand != null) {
 			return mvcCommand;
 		}
+
+		String className = null;
 
 		try {
 			mvcCommand = _mvcCommandCache.get(mvcCommandName);

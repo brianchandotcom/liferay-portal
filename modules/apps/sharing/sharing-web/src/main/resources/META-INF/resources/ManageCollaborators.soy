@@ -7,6 +7,7 @@
 	{@param id: string}
 	{@param collaborators: ?}
 	{@param spritemap: string}
+	{@param? _handleChangeExpirationDate: any}
 	{@param? _handleChangePermission: any}
 	{@param? _handleDeleteCollaborator: any}
 	{@param? _handleHoverCollaborator: any}
@@ -20,6 +21,7 @@
 				{foreach $user in $collaborators}
 					<li class="list-group-item list-group-item-flex" data-onmouseout="{$_handleHoverCollaborator}" data-onmouseover="{$_handleHoverCollaborator}" id="collaborator{$user.id}">
 						{call .collaborator}
+							{param _handleChangeExpirationDate: $_handleChangeExpirationDate /}
 							{param _handleChangePermission: $_handleChangePermission /}
 							{param _handleDeleteCollaborator: $_handleDeleteCollaborator /}
 							{param _loadingResponse: $_loadingResponse /}
@@ -72,61 +74,77 @@
 {/template}
 
 {template .collaborator}
+	{@param? _handleChangeExpirationDate: any}
 	{@param? _handleChangePermission: any}
 	{@param? _handleDeleteCollaborator: any}
 	{@param? _loadingResponse: bool}
 	{@param spritemap: string}
 	{@param user: ?}
-	<div class="autofit-row autofit-row-center">
 
-		<div class="autofit-col">
-			{call ClaySticker.render}
-				{param size: 'xl' /}
-				{param imageSrc: $user.imageSrc /}
-				{param shape: 'circle' /}
-			{/call}
-		</div>
+	<div class="autofit-col">
+		{call ClaySticker.render}
+			{param size: 'xl' /}
+			{param imageSrc: $user.imageSrc /}
+			{param shape: 'circle' /}
+		{/call}
+	</div>
 
-		<div class="autofit-col autofit-col-expand">
-			<h4>{$user.name}</h4>
-		</div>
+	<div class="autofit-col autofit-col-expand">
 
-		<div class="autofit-col expiration-icon">
-			{let $expiratonDateMsg kind="text"}
-				{msg desc=""}set-expiration-date{/msg}
-			{/let}
-			{let $tooltipMessage: $expiratonDateMsg/}
+		<div class="autofit-row autofit-row-center">
+			<div class="autofit-col autofit-col-expand">
+				<h4>{$user.name}</h4>
+			</div>
 
-			<span class="lfr-portal-tooltip" title="{$tooltipMessage}">
-				{call ClayIcon.render}
-					{param spritemap: $spritemap /}
-					{param symbol: 'time' /}
+			<div class="autofit-col expiration-icon">
+				{let $expiratonDateMsg kind="text"}
+					{msg desc=""}set-expiration-date{/msg}
+				{/let}
+				{let $tooltipMessage: $expiratonDateMsg/}
+
+				<span class="lfr-portal-tooltip" title="{$tooltipMessage}">
+					{call ClayIcon.render}
+						{param spritemap: $spritemap /}
+						{param symbol: 'time' /}
+					{/call}
+				</span>
+			</div>
+
+			<div class="autofit-col">
+				{call ClaySelect.render}
+					{param name: $user.sharingEntryId /}
+					{param options: $user.sharingEntryPermissionDisplaySelectOptions /}
+					{param events: [
+						'change': $_handleChangePermission
+					] /}
 				{/call}
-			</span>
+			</div>
+
+			<div class="autofit-col">
+				<button
+					class="btn btn-link btn-monospaced btn-remove text-muted"
+					data-collaborator-id="{$user.id}"
+					data-sharingentry-id="{$user.sharingEntryId}"
+					data-onclick="{$_handleDeleteCollaborator}"
+					{if $_loadingResponse}disabled{/if}
+				>
+					<svg class="lexicon-icon">
+						<use xlink:href="{$spritemap}#times-circle"></use>
+					</svg>
+				</button>
+			</div>
 		</div>
 
-		<div class="autofit-col">
-			{call ClaySelect.render}
-				{param name: $user.sharingEntryId /}
-				{param options: $user.sharingEntryPermissionDisplaySelectOptions /}
-				{param events: [
-					'change': $_handleChangePermission
-				] /}
-			{/call}
-		</div>
+		<div class="autofit-float autofit-row autofit-row-center">
+			<div class="autofit-col autofit-col-expand">
+				<span>{msg desc=""}has-permission-until{/msg}</span>
 
-		<div class="autofit-col">
-			<button
-				class="btn btn-link btn-monospaced btn-remove text-muted"
-				data-collaborator-id="{$user.id}"
-				data-sharingentry-id="{$user.sharingEntryId}"
-				data-onclick="{$_handleDeleteCollaborator}"
-				{if $_loadingResponse}disabled{/if}
-			>
-				<svg class="lexicon-icon">
-					<use xlink:href="{$spritemap}#times-circle"></use>
-				</svg>
-			</button>
+				<input name="{$user.sharingEntryId}" type="date" data-onchange="{$_handleChangeExpirationDate}" />
+
+				<button class="btn btn-link text-muted">
+					{msg desc=""}cancel{/msg}
+				</button>
+			</div>
 		</div>
 	</div>
 {/template}

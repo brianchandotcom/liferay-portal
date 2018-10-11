@@ -1257,6 +1257,7 @@ public class BeanPortletExtension implements Extension {
 				_log.error(
 					"Portlet names cannot be null for annotated method " +
 						scannedMethod.getMethod());
+
 				continue;
 			}
 

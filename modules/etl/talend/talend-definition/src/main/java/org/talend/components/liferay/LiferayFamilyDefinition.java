@@ -28,15 +28,14 @@ import org.talend.components.api.ComponentInstaller;
 import org.talend.components.api.Constants;
 
 /**
- * Install all of the definitions provided for the tLiferayInput family of
- * components.
+ * Install all of the definitions provided for the Liferay component family
  *
  * @author Zoltán Takács
  */
 @AutoService(ComponentInstaller.class)
 @Component(
 	name = Constants.COMPONENT_INSTALLER_PREFIX + LiferayFamilyDefinition.NAME,
-	provide = ComponentInstaller.class, service = ComponentInstaller.class
+	provide = ComponentInstaller.class
 )
 public class LiferayFamilyDefinition
 	extends AbstractComponentFamilyDefinition implements ComponentInstaller {

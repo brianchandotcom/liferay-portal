@@ -47,7 +47,9 @@ public class AssetRendererSharingEntryInterpreter
 	implements SharingEntryInterpreter {
 
 	@Override
-	public String getAssetTypeTitle(SharingEntry sharingEntry, Locale locale) {
+	public String getAssetTypeTitle(SharingEntry sharingEntry, Locale locale)
+		throws PortalException {
+
 		AssetRenderer assetRenderer = AssetRendererSharingUtil.getAssetRenderer(
 			sharingEntry);
 

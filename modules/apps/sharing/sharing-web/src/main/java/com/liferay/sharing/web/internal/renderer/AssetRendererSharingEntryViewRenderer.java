@@ -15,6 +15,7 @@
 package com.liferay.sharing.web.internal.renderer;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.sharing.model.SharingEntry;
@@ -44,7 +45,7 @@ public class AssetRendererSharingEntryViewRenderer
 	public void render(
 			SharingEntry sharingEntry, HttpServletRequest request,
 			HttpServletResponse response)
-		throws IOException {
+		throws IOException, PortalException {
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(_JSP_PATH);

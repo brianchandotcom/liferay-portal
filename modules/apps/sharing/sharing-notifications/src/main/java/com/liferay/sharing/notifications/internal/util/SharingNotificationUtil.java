@@ -14,7 +14,6 @@
 
 package com.liferay.sharing.notifications.internal.util;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -43,7 +42,20 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = SharingNotificationUtil.class)
 public class SharingNotificationUtil {
 
-	public String getEntryURL(
+	public String getNotificationMessage(
+		SharingEntry sharingEntry, Locale locale) {
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale);
+
+		return ResourceBundleUtil.getString(
+			resourceBundle, "x-has-shared-x-with-you-for-x",
+			_getUserName(sharingEntry, resourceBundle),
+			getSharingEntryObjectTitle(sharingEntry, locale),
+			_getActionName(sharingEntry, resourceBundle));
+	}
+
+	public String getNotificationURL(
 			SharingEntry sharingEntry,
 			LiferayPortletRequest liferayPortletRequest)
 		throws Exception {
@@ -61,20 +73,6 @@ public class SharingNotificationUtil {
 		}
 
 		return null;
-	}
-
-	public String getNotificationMessage(
-			SharingEntry sharingEntry, Locale locale)
-		throws PortalException {
-
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
-
-		return ResourceBundleUtil.getString(
-			resourceBundle, "x-has-shared-x-with-you-for-x",
-			_getUserName(sharingEntry, resourceBundle),
-			getSharingEntryObjectTitle(sharingEntry, locale),
-			_getActionName(sharingEntry, resourceBundle));
 	}
 
 	public String getSharingEntryObjectTitle(

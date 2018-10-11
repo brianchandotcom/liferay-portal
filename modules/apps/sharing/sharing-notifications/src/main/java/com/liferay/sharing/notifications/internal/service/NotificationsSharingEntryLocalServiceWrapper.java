@@ -101,8 +101,7 @@ public class NotificationsSharingEntryLocalServiceWrapper
 	}
 
 	private String _getMessageBody(
-			SharingEntry sharingEntry, User user, String entryURL)
-		throws PortalException {
+		SharingEntry sharingEntry, User user, String entryURL) {
 
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(user.getLocale());
@@ -130,7 +129,7 @@ public class NotificationsSharingEntryLocalServiceWrapper
 
 			subscriptionSender.setSubject(message);
 
-			String entryURL = _sharingNotificationUtil.getEntryURL(
+			String entryURL = _sharingNotificationUtil.getNotificationURL(
 				sharingEntry, serviceContext.getLiferayPortletRequest());
 
 			subscriptionSender.setBody(

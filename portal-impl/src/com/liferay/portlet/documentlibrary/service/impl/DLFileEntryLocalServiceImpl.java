@@ -38,6 +38,7 @@ import com.liferay.document.library.kernel.util.DLFileVersionPolicy;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelModifiedDateComparator;
+import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
@@ -341,16 +342,18 @@ public class DLFileEntryLocalServiceImpl
 			dlFileEntryPersistence.update(dlFileEntry);
 		}
 
+		DLFileVersion lastDLFileVersion =
+			dlFileVersionLocalService.getFileVersion(
+				dlFileEntry.getFileEntryId(), dlFileEntry.getVersion());
 		DLFileVersion latestDLFileVersion =
 			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
-		if ((dlVersionNumberIncrease == DLVersionNumberIncrease.AUTOMATIC) ||
-			(dlVersionNumberIncrease == DLVersionNumberIncrease.NONE)) {
+		DLVersionNumberIncrease computedDLVersionNumberIncrease =
+			_computeDLVersionNumberIncrease(
+				dlVersionNumberIncrease, lastDLFileVersion,
+				latestDLFileVersion);
 
-			DLFileVersion lastDLFileVersion =
-				dlFileVersionLocalService.getFileVersion(
-					dlFileEntry.getFileEntryId(), dlFileEntry.getVersion());
-
+		if (computedDLVersionNumberIncrease == DLVersionNumberIncrease.NONE) {
 			_overwritePreviousFileVersion(
 				user, dlFileEntry, latestDLFileVersion, lastDLFileVersion,
 				serviceContext);
@@ -363,7 +366,7 @@ public class DLFileEntryLocalServiceImpl
 		// File version
 
 		String version = getNextVersion(
-			dlFileEntry, dlVersionNumberIncrease,
+			dlFileEntry, computedDLVersionNumberIncrease,
 			serviceContext.getWorkflowAction());
 
 		latestDLFileVersion.setVersion(version);
@@ -2854,6 +2857,21 @@ public class DLFileEntryLocalServiceImpl
 	@BeanReference(type = DLFileVersionPolicy.class)
 	protected DLFileVersionPolicy dlFileVersionPolicy;
 
+	private DLVersionNumberIncrease _computeDLVersionNumberIncrease(
+		DLVersionNumberIncrease dlVersionNumberIncrease,
+		DLFileVersion previousDLFileVersion, DLFileVersion nextDLFileVersion) {
+
+		if (_versioningStrategy.isOverridable() &&
+			(dlVersionNumberIncrease != null) &&
+			(dlVersionNumberIncrease != DLVersionNumberIncrease.AUTOMATIC)) {
+
+			return dlVersionNumberIncrease;
+		}
+
+		return _versioningStrategy.computeDLVersionNumberIncrease(
+			previousDLFileVersion, nextDLFileVersion);
+	}
+
 	private void _overwritePreviousFileVersion(
 			User user, DLFileEntry dlFileEntry,
 			DLFileVersion latestDLFileVersion, DLFileVersion lastDLFileVersion,
@@ -2953,5 +2971,8 @@ public class DLFileEntryLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryLocalServiceImpl.class);
+
+	@BeanReference(type = VersioningStrategy.class)
+	private VersioningStrategy _versioningStrategy;
 
 }

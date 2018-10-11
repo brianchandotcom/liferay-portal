@@ -300,7 +300,7 @@
 
 		<execute macro="WebContentTemplates#addCP">
 			<var name="structureName" value="WC Structure Name" />
-			<var name="templateFile" value="webcontent-acceptance.txt" />
+			<var name="templateFile" value="wc_template.ftl" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 

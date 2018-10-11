@@ -67,7 +67,7 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute macro="WebContentTemplates#inputTemplate">
+		<execute macro="WebContentTemplates#inputTemplateAddScreenFields">
 			<var name="templateDescription" value="WC Template Description" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>

@@ -1660,7 +1660,7 @@
 		</execute>
 
 		<for list="Date,Image" param="templateFieldName">
-			<execute macro="WebContentTemplates#inputField">
+			<execute macro="WebContentTemplates#addFields">
 				<var name="templateFieldNames" value="${templateFieldName}" />
 			</execute>
 		</for>

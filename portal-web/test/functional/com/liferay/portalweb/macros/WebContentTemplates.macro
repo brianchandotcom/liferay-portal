@@ -2,7 +2,7 @@
 	<command name="addCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute macro="WebContentTemplates#inputTemplate">
+		<execute macro="WebContentTemplates#inputTemplateAddScreenFields">
 			<var name="fieldNameLabel" value="${fieldNameLabel}" />
 			<var name="structureName" value="${structureName}" />
 			<var name="templateDescription" value="${templateDescription}" />
@@ -91,7 +91,7 @@
 		</if>
 	</command>
 
-	<command name="inputField">
+	<command name="addFields">
 		<if>
 			<isset var="templateFieldNames" />
 			<then>
@@ -139,7 +139,7 @@
 		</if>
 	</command>
 
-	<command name="inputTemplate">
+	<command name="inputTemplateAddScreenFields">
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${templateName}" />
 		</execute>
@@ -156,7 +156,7 @@
 			<var name="templateLanguage" value="${templateLanguage}" />
 		</execute>
 
-		<execute macro="WebContentTemplates#inputField">
+		<execute macro="WebContentTemplates#addFields">
 			<var name="templateFieldNames" value="${templateFieldNames}" />
 		</execute>
 

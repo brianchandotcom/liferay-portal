@@ -668,7 +668,7 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute macro="WebContentTemplates#inputTemplate">
+		<execute macro="WebContentTemplates#inputTemplateAddScreenFields">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
 			<var name="templateName" value="WC Template Name" />
@@ -770,7 +770,7 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute macro="WebContentTemplates#inputTemplate">
+		<execute macro="WebContentTemplates#inputTemplateAddScreenFields">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
 			<var name="templateLanguage" value="vm" />
@@ -3384,7 +3384,7 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute macro="WebContentTemplates#inputTemplate">
+		<execute macro="WebContentTemplates#inputTemplateAddScreenFields">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
 			<var name="templateFieldNames" value="Text" />

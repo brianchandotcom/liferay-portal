@@ -373,9 +373,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			throw new IllegalArgumentException("classPKField is null");
 		}
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
 		long companyId = 0;
 
 		if (groupIds.length == 1) {
@@ -435,6 +432,9 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				}
 			}
 		}
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
 		if (companyId == 0) {
 			companyId = permissionChecker.getCompanyId();

@@ -30,10 +30,7 @@ import javax.portlet.annotations.PortletSessionScoped;
  */
 public class SessionScopedAnnotatedTypeImpl<X> extends AnnotatedTypeWrapper<X> {
 
-	public SessionScopedAnnotatedTypeImpl(
-		AnnotatedType<X> annotatedType,
-		Set<Class<? extends Annotation>> annotationClasses) {
-
+	public SessionScopedAnnotatedTypeImpl(AnnotatedType<X> annotatedType) {
 		super(annotatedType);
 
 		for (Annotation annotation : annotatedType.getAnnotations()) {
@@ -45,7 +42,7 @@ public class SessionScopedAnnotatedTypeImpl<X> extends AnnotatedTypeWrapper<X> {
 			}
 		}
 
-		if (!annotationClasses.contains(PortletSessionScoped.class)) {
+		if (!annotatedType.isAnnotationPresent(PortletSessionScoped.class)) {
 			_annotations.add(_portletSessionScoped);
 		}
 	}

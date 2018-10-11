@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.role.apio.identifier.RoleIdentifier;
-import com.liferay.workflow.apio.architect.identifier.WorkflowTaskIdentifier;
 
 import java.util.Arrays;
 import java.util.List;
@@ -85,8 +84,6 @@ public class RoleCollectionResource
 			"creator", PersonIdentifier.class, Role::getUserId
 		).addLocalizedStringByLocale(
 			"description", Role::getDescription
-		).addRelatedCollection(
-			"tasks", WorkflowTaskIdentifier.class
 		).addString(
 			"name", Role::getName
 		).addString(

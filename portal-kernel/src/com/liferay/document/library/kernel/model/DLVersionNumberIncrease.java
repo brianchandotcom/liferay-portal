@@ -19,7 +19,7 @@ package com.liferay.document.library.kernel.model;
  */
 public enum DLVersionNumberIncrease {
 
-	MAJOR, MINOR, NONE;
+	AUTOMATIC, MAJOR, MINOR, NONE;
 
 	public static DLVersionNumberIncrease fromMajorVersion(
 		boolean majorVersion) {
@@ -29,6 +29,22 @@ public enum DLVersionNumberIncrease {
 		}
 
 		return MINOR;
+	}
+
+	public static DLVersionNumberIncrease valueOf(
+		String name, DLVersionNumberIncrease defaultValue) {
+
+		if (name == null) {
+			return defaultValue;
+		}
+
+		for (DLVersionNumberIncrease dlVersionNumberIncrease : values()) {
+			if (name.equals(dlVersionNumberIncrease.name())) {
+				return dlVersionNumberIncrease;
+			}
+		}
+
+		return defaultValue;
 	}
 
 }

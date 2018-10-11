@@ -77,7 +77,7 @@ if (fileEntryTypeId >= 0) {
 	dlFileEntryType = DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);
 }
 
-DLVersionNumberIncrease dlVersionNumberIncrease = DLVersionNumberIncrease.valueOf(ParamUtil.getString(request, "versionIncrease", DLVersionNumberIncrease.NONE.toString()));
+DLVersionNumberIncrease dlVersionNumberIncrease = DLVersionNumberIncrease.valueOf(ParamUtil.getString(request, "versionIncrease"), DLVersionNumberIncrease.AUTOMATIC);
 boolean updateVersionDetails = ParamUtil.getBoolean(request, "updateVersionDetails");
 
 long assetClassPK = 0;
@@ -436,7 +436,7 @@ if (portletTitleBasedNavigation) {
 
 							<aui:input checked="<%= dlVersionNumberIncrease == DLVersionNumberIncrease.MINOR %>" label="minor-version" name="versionIncrease" type="radio" value="<%= DLVersionNumberIncrease.MINOR %>" />
 
-							<aui:input checked="<%= dlVersionNumberIncrease == DLVersionNumberIncrease.NONE %>" label="keep-current-version-number" name="versionIncrease" type="radio" value="<%= DLVersionNumberIncrease.NONE %>" />
+							<aui:input checked="<%= (dlVersionNumberIncrease == DLVersionNumberIncrease.NONE) || (dlVersionNumberIncrease == DLVersionNumberIncrease.AUTOMATIC) %>" label="keep-current-version-number" name="versionIncrease" type="radio" value="<%= DLVersionNumberIncrease.NONE %>" />
 
 							<aui:model-context />
 

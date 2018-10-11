@@ -6,6 +6,7 @@
 	<property name="dummy.socket.proxy.disabled" value="true" />
 	<property name="osgi.app.includes" value="saml" />
 	<property name="plugins.deployment.type" value="osgi" />
+	<property name="test.run.environment" value="EE" />
 	<property name="testray.main.component.name" value="SAML" />
 
 	<!-- All test cases are currently configured to run Liferay SAML as the IdP and Liferay SAML as the SP. This will change as more SAML implmentations are added to this test suite (ie Shibboleth) -->

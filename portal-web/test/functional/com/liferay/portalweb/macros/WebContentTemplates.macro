@@ -16,6 +16,20 @@
 		<execute macro="DDLDataDefinition#save" />
 	</command>
 
+	<command name="addFields">
+		<if>
+			<isset var="templateFieldNames" />
+			<then>
+				<for list="${templateFieldNames}" param="fieldName">
+					<var name="key_fieldName" value="${fieldName}" />
+					<var method="StringUtil#lowerCase('${fieldNameLabel}')" name="templateFieldNameLabel" />
+
+					<execute function="AssertClick" locator1="DDMEditTemplate#SCRIPT_FIELD" value1="${fieldName}" />
+				</for>
+			</then>
+		</if>
+	</command>
+
 	<command name="addNullCP">
 		<execute macro="Navigator#gotoNavItem">
 			<var name="navItem" value="Templates" />
@@ -87,20 +101,6 @@
 				<execute macro="PortletEntry#inputDescription">
 					<var name="description" value="${templateDescription}" />
 				</execute>
-			</then>
-		</if>
-	</command>
-
-	<command name="addFields">
-		<if>
-			<isset var="templateFieldNames" />
-			<then>
-				<for list="${templateFieldNames}" param="fieldName">
-					<var name="key_fieldName" value="${fieldName}" />
-					<var method="StringUtil#lowerCase('${fieldNameLabel}')" name="templateFieldNameLabel" />
-
-					<execute function="AssertClick" locator1="DDMEditTemplate#SCRIPT_FIELD" value1="${fieldName}" />
-				</for>
 			</then>
 		</if>
 	</command>

@@ -16,11 +16,8 @@ package com.liferay.document.library.internal.repository.capabilities;
 
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.sync.service.DLSyncEventLocalService;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
-import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.capabilities.CommentCapability;
 import com.liferay.portal.kernel.repository.capabilities.ConfigurationCapability;
 import com.liferay.portal.kernel.repository.capabilities.DynamicCapability;
@@ -49,12 +46,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Adolfo Pérez
@@ -93,7 +88,7 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 		DocumentRepository documentRepository) {
 
 		LiferayDynamicCapability liferayDynamicCapability =
-			new LiferayDynamicCapability();
+			new LiferayDynamicCapability(_bundleContext);
 
 		_liferayDynamicCapabilities.add(liferayDynamicCapability);
 
@@ -193,60 +188,18 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_capabilities = ServiceTrackerListFactory.open(
-			bundleContext, Capability.class, null,
-			new ServiceTrackerCustomizer<Capability, Capability>() {
-
-				@Override
-				public Capability addingService(
-					ServiceReference<Capability> serviceReference) {
-
-					Capability capability = bundleContext.getService(
-						serviceReference);
-
-					for (LiferayDynamicCapability liferayDynamicCapability :
-							_liferayDynamicCapabilities) {
-
-						liferayDynamicCapability.addCapability(capability);
-					}
-
-					return capability;
-				}
-
-				@Override
-				public void modifiedService(
-					ServiceReference<Capability> serviceReference,
-					Capability capability) {
-
-					removedService(serviceReference, capability);
-
-					addingService(serviceReference);
-				}
-
-				@Override
-				public void removedService(
-					ServiceReference<Capability> serviceReference,
-					Capability capability) {
-
-					for (LiferayDynamicCapability liferayDynamicCapability :
-							_liferayDynamicCapabilities) {
-
-						liferayDynamicCapability.removeCapability(capability);
-					}
-				}
-
-			});
+		_bundleContext = bundleContext;
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_capabilities.close();
+		_liferayDynamicCapabilities.forEach(LiferayDynamicCapability::clear);
 	}
 
 	private final ProcessorCapability _alwaysGeneratingProcessorCapability =
 		new LiferayProcessorCapability(
 			ProcessorCapability.ResourceGenerationStrategy.ALWAYS_GENERATE);
-	private ServiceTrackerList<Capability, Capability> _capabilities;
+	private BundleContext _bundleContext;
 	private final CommentCapability _commentCapability =
 		new LiferayCommentCapability();
 

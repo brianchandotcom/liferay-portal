@@ -40,12 +40,10 @@ import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
@@ -125,11 +123,13 @@ public class TargetPlatformIndexer implements Indexer {
 			ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream();
 
-			new SimpleIndexer().files(jarFiles)
-				.base(tempPath.toUri())
-				.compress(false)
-				.name("Liferay Target Platform")
-				.index(byteArrayOutputStream);
+			SimpleIndexer simpleIndexer = new SimpleIndexer();
+
+			simpleIndexer.files(jarFiles);
+			simpleIndexer.base(tempPath.toUri());
+			simpleIndexer.compress(false);
+			simpleIndexer.name("Liferay Target Platform");
+			simpleIndexer.index(byteArrayOutputStream);
 
 			outputStream.write(
 				_fixSystemBundleOSGiContent(

@@ -87,13 +87,11 @@ public class JSR362BeanProducer {
 	public ActionRequest getActionRequest() {
 		PortletRequest portletRequest = getPortletRequest();
 
-		if ((portletRequest == null) ||
-			!(portletRequest instanceof ActionRequest)) {
-
-			return null;
+		if (portletRequest instanceof ActionRequest) {
+			return (ActionRequest)portletRequest;
 		}
 
-		return (ActionRequest)portletRequest;
+		return null;
 	}
 
 	@Named("actionResponse")
@@ -103,13 +101,11 @@ public class JSR362BeanProducer {
 	public ActionResponse getActionResponse() {
 		PortletResponse portletResponse = getPortletResponse();
 
-		if ((portletResponse == null) ||
-			!(portletResponse instanceof ActionResponse)) {
-
-			return null;
+		if (portletResponse instanceof ActionResponse) {
+			return (ActionResponse)portletResponse;
 		}
 
-		return (ActionResponse)portletResponse;
+		return null;
 	}
 
 	@Named("clientDataRequest")
@@ -119,13 +115,11 @@ public class JSR362BeanProducer {
 	public ClientDataRequest getClientDataRequest() {
 		PortletRequest portletRequest = getPortletRequest();
 
-		if ((portletRequest == null) ||
-			!(portletRequest instanceof ClientDataRequest)) {
-
-			return null;
+		if (portletRequest instanceof ClientDataRequest) {
+			return (ClientDataRequest)portletRequest;
 		}
 
-		return (ClientDataRequest)portletRequest;
+		return null;
 	}
 
 	@ContextPath
@@ -172,13 +166,11 @@ public class JSR362BeanProducer {
 	public EventRequest getEventRequest() {
 		PortletRequest portletRequest = getPortletRequest();
 
-		if ((portletRequest == null) ||
-			!(portletRequest instanceof EventRequest)) {
-
-			return null;
+		if (portletRequest instanceof EventRequest) {
+			return (EventRequest)portletRequest;
 		}
 
-		return (EventRequest)portletRequest;
+		return null;
 	}
 
 	@Named("eventResponse")
@@ -188,13 +180,11 @@ public class JSR362BeanProducer {
 	public EventResponse getEventResponse() {
 		PortletResponse portletResponse = getPortletResponse();
 
-		if ((portletResponse == null) ||
-			!(portletResponse instanceof EventResponse)) {
-
-			return null;
+		if (portletResponse instanceof EventResponse) {
+			return (EventResponse)portletResponse;
 		}
 
-		return (EventResponse)portletResponse;
+		return null;
 	}
 
 	@Named("headerRequest")
@@ -204,13 +194,11 @@ public class JSR362BeanProducer {
 	public HeaderRequest getHeaderRequest() {
 		PortletRequest portletRequest = getPortletRequest();
 
-		if ((portletRequest == null) ||
-			!(portletRequest instanceof HeaderRequest)) {
-
-			return null;
+		if (portletRequest instanceof HeaderRequest) {
+			return (HeaderRequest)portletRequest;
 		}
 
-		return (HeaderRequest)portletRequest;
+		return null;
 	}
 
 	@Named("headerResponse")
@@ -220,13 +208,11 @@ public class JSR362BeanProducer {
 	public HeaderResponse getHeaderResponse() {
 		PortletResponse portletResponse = getPortletResponse();
 
-		if ((portletResponse == null) ||
-			!(portletResponse instanceof HeaderResponse)) {
-
-			return null;
+		if (portletResponse instanceof HeaderResponse) {
+			return (HeaderResponse)portletResponse;
 		}
 
-		return (HeaderResponse)portletResponse;
+		return null;
 	}
 
 	@Named("locales")
@@ -249,13 +235,11 @@ public class JSR362BeanProducer {
 	public MimeResponse getMimeResponse() {
 		PortletResponse portletResponse = getPortletResponse();
 
-		if ((portletResponse == null) ||
-			!(portletResponse instanceof MimeResponse)) {
-
-			return null;
+		if (portletResponse instanceof MimeResponse) {
+			return (MimeResponse)portletResponse;
 		}
 
-		return (MimeResponse)portletResponse;
+		return null;
 	}
 
 	@Named("mutableRenderParams")
@@ -423,14 +407,13 @@ public class JSR362BeanProducer {
 	public RenderRequest getRenderRequest() {
 		PortletRequest portletRequest = getPortletRequest();
 
-		if ((portletRequest == null) ||
-			!(portletRequest instanceof RenderRequest) ||
-			(portletRequest instanceof HeaderRequest)) {
+		if ((portletRequest instanceof RenderRequest) &&
+			!(portletRequest instanceof HeaderRequest)) {
 
-			return null;
+			return (RenderRequest)portletRequest;
 		}
 
-		return (RenderRequest)portletRequest;
+		return null;
 	}
 
 	@Named("renderResponse")
@@ -440,14 +423,13 @@ public class JSR362BeanProducer {
 	public RenderResponse getRenderResponse() {
 		PortletResponse portletResponse = getPortletResponse();
 
-		if ((portletResponse == null) ||
-			!(portletResponse instanceof RenderResponse) ||
-			(portletResponse instanceof HeaderResponse)) {
+		if ((portletResponse instanceof RenderResponse) &&
+			!(portletResponse instanceof HeaderResponse)) {
 
-			return null;
+			return (RenderResponse)portletResponse;
 		}
 
-		return (RenderResponse)portletResponse;
+		return null;
 	}
 
 	@Named("resourceParams")
@@ -471,13 +453,11 @@ public class JSR362BeanProducer {
 	public ResourceRequest getResourceRequest() {
 		PortletRequest portletRequest = getPortletRequest();
 
-		if ((portletRequest == null) ||
-			!(portletRequest instanceof ResourceRequest)) {
-
-			return null;
+		if (portletRequest instanceof ResourceRequest) {
+			return (ResourceRequest)portletRequest;
 		}
 
-		return (ResourceRequest)portletRequest;
+		return null;
 	}
 
 	@Named("resourceResponse")
@@ -487,13 +467,11 @@ public class JSR362BeanProducer {
 	public ResourceResponse getResourceResponse() {
 		PortletResponse portletResponse = getPortletResponse();
 
-		if ((portletResponse == null) ||
-			!(portletResponse instanceof ResourceResponse)) {
-
-			return null;
+		if (portletResponse instanceof ResourceResponse) {
+			return (ResourceResponse)portletResponse;
 		}
 
-		return (ResourceResponse)portletResponse;
+		return null;
 	}
 
 	@Named("stateAwareResponse")
@@ -503,13 +481,11 @@ public class JSR362BeanProducer {
 	public StateAwareResponse getStateAwareResponse() {
 		PortletResponse portletResponse = getPortletResponse();
 
-		if ((portletResponse == null) ||
-			!(portletResponse instanceof StateAwareResponse)) {
-
-			return null;
+		if (portletResponse instanceof StateAwareResponse) {
+			return (StateAwareResponse)portletResponse;
 		}
 
-		return (StateAwareResponse)portletResponse;
+		return null;
 	}
 
 	@Dependent

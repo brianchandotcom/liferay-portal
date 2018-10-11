@@ -497,8 +497,11 @@ public class BeanPortletExtension implements Extension {
 
 				Map<MethodType, List<BeanMethod>> beanMethodMap =
 					BeanMethodIndexUtil.indexBeanMethods(
-						portletBeanMethodsFunction.apply(portletName),
-						supportedProcessingEvents, supportedPublishingEvents);
+						portletBeanMethodsFunction.apply(portletName));
+
+				BeanMethodIndexUtil.scanSupportedEvents(
+					beanMethodMap, supportedProcessingEvents,
+					supportedPublishingEvents);
 
 				beanPortlet = new BeanPortletImpl(
 					portletName, beanMethodMap, supportedProcessingEvents,
@@ -882,9 +885,10 @@ public class BeanPortletExtension implements Extension {
 		}
 
 		Map<MethodType, List<BeanMethod>> beanMethodMap =
-			BeanMethodIndexUtil.indexBeanMethods(
-				beanMethods, supportedProcessingEvents,
-				supportedPublishingEvents);
+			BeanMethodIndexUtil.indexBeanMethods(beanMethods);
+
+		BeanMethodIndexUtil.scanSupportedEvents(
+			beanMethodMap, supportedProcessingEvents, supportedPublishingEvents);
 
 		BeanPortlet annotatedBeanPortlet = new BeanPortletImpl(
 			portletConfiguration.portletName(), beanMethodMap, displayNames,
@@ -918,8 +922,10 @@ public class BeanPortletExtension implements Extension {
 				beanMethods.addAll(entry.getValue());
 			}
 
-			beanMethodMap = BeanMethodIndexUtil.indexBeanMethods(
-				beanMethods, supportedProcessingEvents,
+			beanMethodMap = BeanMethodIndexUtil.indexBeanMethods(beanMethods);
+
+			BeanMethodIndexUtil.scanSupportedEvents(
+				beanMethodMap, supportedProcessingEvents,
 				supportedPublishingEvents);
 
 			displayNames.putAll(descriptorBeanPortlet.getDisplayNames());
@@ -1140,8 +1146,11 @@ public class BeanPortletExtension implements Extension {
 
 				Map<MethodType, List<BeanMethod>> beanMethodMap =
 					BeanMethodIndexUtil.indexBeanMethods(
-						portletBeanMethodsFunction.apply(portletName),
-						supportedProcessingEvents, supportedPublishingEvents);
+						portletBeanMethodsFunction.apply(portletName));
+
+				BeanMethodIndexUtil.scanSupportedEvents(
+					beanMethodMap, supportedProcessingEvents,
+					supportedPublishingEvents);
 
 				beanPortlet = new BeanPortletImpl(
 					portletName, beanMethodMap, supportedProcessingEvents,

@@ -38,8 +38,7 @@ import javax.xml.namespace.QName;
 public class BeanMethodIndexUtil {
 
 	public static Map<MethodType, List<BeanMethod>> indexBeanMethods(
-		Set<BeanMethod> beanMethods, Set<QName> supportedProcessingEvents,
-		Set<QName> supportedPublishingEvents) {
+		Set<BeanMethod> beanMethods) {
 
 		EnumMap<MethodType, List<BeanMethod>> beanMethodMap = new EnumMap<>(
 			MethodType.class);
@@ -72,6 +71,14 @@ public class BeanMethodIndexUtil {
 					return valueBeanMethods;
 				});
 		}
+
+		return beanMethodMap;
+	}
+
+	public static void scanSupportedEvents(
+		Map<MethodType, List<BeanMethod>> beanMethodMap,
+		Set<QName> supportedProcessingEvents,
+		Set<QName> supportedPublishingEvents) {
 
 		List<BeanMethod> eventBeanMethods = beanMethodMap.get(MethodType.EVENT);
 
@@ -129,8 +136,6 @@ public class BeanMethodIndexUtil {
 				}
 			}
 		}
-
-		return beanMethodMap;
 	}
 
 }

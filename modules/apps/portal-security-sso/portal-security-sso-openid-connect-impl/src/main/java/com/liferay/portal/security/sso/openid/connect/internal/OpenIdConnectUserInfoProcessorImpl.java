@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
-import com.liferay.portal.security.sso.openid.connect.OpenIdConnectUserInfoProcessor;
 
 import com.nimbusds.openid.connect.sdk.claims.UserInfo;
 

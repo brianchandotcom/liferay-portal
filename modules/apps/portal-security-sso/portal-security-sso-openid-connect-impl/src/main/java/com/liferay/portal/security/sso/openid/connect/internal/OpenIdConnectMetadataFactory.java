@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.connect;
+package com.liferay.portal.security.sso.openid.connect.internal;
 
 import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
 import com.nimbusds.openid.connect.sdk.rp.OIDCClientMetadata;

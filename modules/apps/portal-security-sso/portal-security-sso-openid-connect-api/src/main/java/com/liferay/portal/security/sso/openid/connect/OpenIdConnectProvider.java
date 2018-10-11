@@ -16,61 +16,23 @@ package com.liferay.portal.security.sso.openid.connect;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
-import com.nimbusds.openid.connect.sdk.rp.OIDCClientMetadata;
-
 /**
- * @author Thuong Dinh
- * @author Edward C. Han
+ * @author Michael C. Han
  */
 @ProviderType
-public class OpenIdConnectProvider {
+public interface OpenIdConnectProvider<S, T> {
 
-	public OpenIdConnectProvider(
-		String name, String clientId, String clientSecret, String scopes,
-		OpenIdConnectMetadataFactory openIdConnectMetadataFactory) {
+	public String getClientId();
 
-		_name = name;
-		_clientId = clientId;
-		_clientSecret = clientSecret;
-		_scopes = scopes;
-		_openIdConnectMetadataFactory = openIdConnectMetadataFactory;
-	}
+	public String getClientSecret();
 
-	public String getClientId() {
-		return _clientId;
-	}
+	public String getName();
 
-	public String getClientSecret() {
-		return _clientSecret;
-	}
+	public S getOIDCClientMetadata();
 
-	public String getName() {
-		return _name;
-	}
+	public T getOIDCProviderMetadata()
+		throws OpenIdConnectServiceException.ProviderException;
 
-	public OIDCClientMetadata getOIDCClientMetadata() {
-		return _openIdConnectMetadataFactory.getOIDCClientMetadata();
-	}
-
-	public OIDCProviderMetadata getOIDCProviderMetadata()
-		throws OpenIdConnectServiceException.ProviderException {
-
-		return _openIdConnectMetadataFactory.getOIDCProviderMetadata();
-	}
-
-	public OpenIdConnectMetadataFactory getOpenIdConnectMetadataFactory() {
-		return _openIdConnectMetadataFactory;
-	}
-
-	public String getScopes() {
-		return _scopes;
-	}
-
-	private final String _clientId;
-	private final String _clientSecret;
-	private final String _name;
-	private final OpenIdConnectMetadataFactory _openIdConnectMetadataFactory;
-	private final String _scopes;
+	public String getScopes();
 
 }

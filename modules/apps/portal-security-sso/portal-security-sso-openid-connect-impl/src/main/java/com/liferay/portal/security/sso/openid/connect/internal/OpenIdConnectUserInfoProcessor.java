@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.connect;
+package com.liferay.portal.security.sso.openid.connect.internal;
 
 import aQute.bnd.annotation.ProviderType;
 

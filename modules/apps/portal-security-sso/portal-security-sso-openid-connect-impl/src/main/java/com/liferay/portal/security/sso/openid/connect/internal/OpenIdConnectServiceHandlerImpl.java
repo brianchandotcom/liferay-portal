@@ -28,7 +28,6 @@ import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProvider;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProviderRegistry;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceHandler;
-import com.liferay.portal.security.sso.openid.connect.OpenIdConnectUserInfoProcessor;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectConstants;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
 
@@ -73,6 +72,7 @@ import com.nimbusds.openid.connect.sdk.claims.IDTokenClaimsSet;
 import com.nimbusds.openid.connect.sdk.claims.UserInfo;
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
 import com.nimbusds.openid.connect.sdk.rp.OIDCClientInformation;
+import com.nimbusds.openid.connect.sdk.rp.OIDCClientMetadata;
 import com.nimbusds.openid.connect.sdk.token.OIDCTokens;
 import com.nimbusds.openid.connect.sdk.validators.IDTokenValidator;
 
@@ -147,9 +147,10 @@ public class OpenIdConnectServiceHandlerImpl
 			openIdConnectSessionImpl.getState(),
 			authenticationSuccessResponse.getState());
 
-		OpenIdConnectProvider openIdConnectProvider =
-			_openIdConnectProviderRegistry.findOpenIdConnectProvider(
-				openIdConnectSessionImpl.getOpenIdProviderName());
+		OpenIdConnectProvider<OIDCClientMetadata, OIDCProviderMetadata>
+			openIdConnectProvider =
+				_openIdConnectProviderRegistry.findOpenIdConnectProvider(
+					openIdConnectSessionImpl.getOpenIdProviderName());
 
 		OIDCProviderMetadata oidcProviderMetadata =
 			openIdConnectProvider.getOIDCProviderMetadata();
@@ -183,9 +184,10 @@ public class OpenIdConnectServiceHandlerImpl
 			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
-		OpenIdConnectProvider openIdConnectProvider =
-			_openIdConnectProviderRegistry.findOpenIdConnectProvider(
-				openIdConnectProviderName);
+		OpenIdConnectProvider<OIDCClientMetadata, OIDCProviderMetadata>
+			openIdConnectProvider =
+				_openIdConnectProviderRegistry.findOpenIdConnectProvider(
+					openIdConnectProviderName);
 
 		HttpSession httpSession = httpServletRequest.getSession();
 
@@ -231,7 +233,9 @@ public class OpenIdConnectServiceHandlerImpl
 	}
 
 	protected URI getAuthenticationRequestURI(
-			URI loginRedirectURI, OpenIdConnectProvider openIdConnectProvider,
+			URI loginRedirectURI,
+			OpenIdConnectProvider<OIDCClientMetadata, OIDCProviderMetadata>
+				openIdConnectProvider,
 			Nonce nonce, State state, Scope scope)
 		throws OpenIdConnectServiceException.ProviderException {
 
@@ -304,7 +308,8 @@ public class OpenIdConnectServiceHandlerImpl
 	}
 
 	protected OIDCClientInformation getOIDCClientInformation(
-		OpenIdConnectProvider openIdConnectProvider) {
+		OpenIdConnectProvider<OIDCClientMetadata, OIDCProviderMetadata>
+			openIdConnectProvider) {
 
 		ClientID clientID = new ClientID(openIdConnectProvider.getClientId());
 
@@ -419,9 +424,10 @@ public class OpenIdConnectServiceHandlerImpl
 		String openIdConnectProviderName =
 			openIdConnectSessionImpl.getOpenIdProviderName();
 
-		OpenIdConnectProvider openIdConnectProvider =
-			_openIdConnectProviderRegistry.findOpenIdConnectProvider(
-				openIdConnectProviderName);
+		OpenIdConnectProvider<OIDCClientMetadata, OIDCProviderMetadata>
+			openIdConnectProvider =
+				_openIdConnectProviderRegistry.findOpenIdConnectProvider(
+					openIdConnectProviderName);
 
 		OIDCProviderMetadata oidcProviderMetadata =
 			openIdConnectProvider.getOIDCProviderMetadata();
@@ -612,7 +618,9 @@ public class OpenIdConnectServiceHandlerImpl
 		OpenIdConnectServiceHandlerImpl.class);
 
 	@Reference
-	private OpenIdConnectProviderRegistry _openIdConnectProviderRegistry;
+	private OpenIdConnectProviderRegistry
+		<OIDCClientMetadata, OIDCProviderMetadata>
+			_openIdConnectProviderRegistry;
 
 	@Reference
 	private OpenIdConnectUserInfoProcessor _openIdConnectUserInfoProcessor;

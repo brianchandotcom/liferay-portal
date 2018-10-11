@@ -77,10 +77,8 @@ public class ScopedBeanHolder {
 				return null;
 			}
 
-			T beanInstance = bean.create(creationalContext);
-
 			scopedBean = new ScopedBean<>(
-				name, bean, beanInstance, creationalContext,
+				name, bean, creationalContext,
 				PortletRequestScoped.class.getSimpleName());
 
 			_portletRequest.setAttribute(name, scopedBean);
@@ -109,10 +107,8 @@ public class ScopedBeanHolder {
 				return null;
 			}
 
-			T beanInstance = bean.create(creationalContext);
-
 			scopedBean = new ScopedBean<>(
-				name, bean, beanInstance, creationalContext,
+				name, bean, creationalContext,
 				PortletSessionScoped.class.getSimpleName());
 
 			portletSession.setAttribute(name, scopedBean, subscope);
@@ -135,10 +131,8 @@ public class ScopedBeanHolder {
 				return null;
 			}
 
-			T beanInstance = bean.create(creationalContext);
-
 			scopedBean = new ScopedBean<>(
-				name, bean, beanInstance, creationalContext,
+				name, bean, creationalContext,
 				RenderStateScoped.class.getSimpleName());
 
 			PortletSerializable portletSerializable = (PortletSerializable)

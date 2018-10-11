@@ -1253,22 +1253,6 @@ public class BeanPortletExtension implements Extension {
 						wildcardPreferencesValidator = annotatedClass.getName();
 					}
 				}
-			}
-		}
-
-		for (Class<?> annotatedClass : _annotatedClasses) {
-			PortletPreferencesValidator portletPreferencesValidator =
-				annotatedClass.getAnnotation(PortletPreferencesValidator.class);
-
-			if (portletPreferencesValidator == null) {
-				continue;
-			}
-
-			String[] portletNames = portletPreferencesValidator.portletNames();
-
-			for (String portletName : portletNames) {
-				if (Objects.equals(portletName, "*")) {
-				}
 				else {
 					if (preferencesValidators.containsKey(portletName)) {
 						_log.error(

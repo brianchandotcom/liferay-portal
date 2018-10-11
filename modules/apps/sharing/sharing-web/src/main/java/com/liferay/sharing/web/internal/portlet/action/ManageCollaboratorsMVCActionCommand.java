@@ -29,12 +29,15 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.service.SharingEntryService;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
@@ -42,6 +45,8 @@ import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayAct
 
 import java.io.IOException;
 
+import java.util.Arrays;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -146,6 +151,37 @@ public class ManageCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 				sharingEntryPermissionDisplayActionKey.getSharingEntryActions(),
 				sharingEntry.isShareable(), sharingEntry.getExpirationDate(),
 				serviceContext);
+		}
+
+		String[] sharingEntryIdExpirationDatePairs =
+			ParamUtil.getParameterValues(
+				actionRequest, "sharingEntryIdExpirationDatePairs",
+				new String[0], false);
+
+		for (String sharingEntryIdExpirationDatePair :
+			sharingEntryIdExpirationDatePairs) {
+
+			String[] parts = StringUtil.split(
+				sharingEntryIdExpirationDatePair);
+
+			long sharingEntryId = Long.valueOf(parts[0]);
+
+			Date expirationDate = GetterUtil.getDate(
+				parts[1], DateFormatFactoryUtil.getDate(
+					resourceBundle.getLocale()), null);
+
+			if (expirationDate != null) {
+				SharingEntry sharingEntry =
+					_sharingEntryLocalService.getSharingEntry(
+						sharingEntryId);
+
+				_sharingEntryService.updateSharingEntry(
+					sharingEntryId,
+					//TODO
+					Arrays.asList(SharingEntryAction.values()),
+					sharingEntry.isShareable(), expirationDate,
+					serviceContext);
+			}
 		}
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();

@@ -17,14 +17,8 @@
 			<var name="layoutName" value="Staging Test Page" />
 		</execute>
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
+		<execute macro="Staging#openStagingAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
@@ -79,14 +73,11 @@
 			<var name="groupName" value="Test Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Test Site Name" />
+		<execute macro="Staging#openStagingAdmin">
+			<var name="siteURLKey" value="test-site-name-staging" />
 		</execute>
 
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
+		<execute macro="Staging#publishCustomPublication" />
 
 		<execute macro="JSONFragment#assertFragmentInGroup">
 			<var name="collectionName" value="Collection Name" />

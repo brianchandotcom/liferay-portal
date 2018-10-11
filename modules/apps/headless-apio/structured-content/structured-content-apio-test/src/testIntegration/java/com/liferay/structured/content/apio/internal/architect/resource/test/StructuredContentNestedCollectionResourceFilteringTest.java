@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.util.ISO8601Utils;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.test.util.pagination.PaginationRequest;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolderConstants;
@@ -73,6 +74,54 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testGetPageItemsFilterByContentStructure() throws Exception {
+		Map<Locale, String> stringMap1 = new HashMap<>();
+
+		stringMap1.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap1, stringMap1,
+			stringMap1, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		Map<Locale, String> stringMap2 = new HashMap<>();
+
+		stringMap2.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap2, stringMap2,
+			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		DDMStructure ddmStructure = journalArticle1.getDDMStructure();
+
+		PageItems<JournalArticle> pageItems = getPageItems(
+			PaginationRequest.of(10, 1), _group.getGroupId(),
+			getThemeDisplay(_group, LocaleUtil.getDefault()),
+			new Filter(
+				_filterParser.parse(
+					"(contentStructure eq '/" + ddmStructure.getStructureId() +
+						"')")),
+			Sort.emptySort());
+
+		Assert.assertEquals(1, pageItems.getTotalCount());
+
+		List<JournalArticle> journalArticles =
+			(List<JournalArticle>)pageItems.getItems();
+
+		Assert.assertEquals(journalArticle1, journalArticles.get(0));
 	}
 
 	@Test

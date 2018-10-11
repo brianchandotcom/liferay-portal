@@ -1721,7 +1721,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		int start, int end) {
 
 		if (Validator.isNull(name)) {
-			name = "%";
+			return groupPersistence.findByC_P_S(
+				companyId, parentGroupId, site, start, end);
 		}
 
 		return groupPersistence.findByC_P_LikeN_S(
@@ -1822,7 +1823,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		long companyId, long parentGroupId, String name, boolean site) {
 
 		if (Validator.isNull(name)) {
-			name = "%";
+			return groupPersistence.countByC_P_S(
+				companyId, parentGroupId, site);
 		}
 
 		return groupPersistence.countByC_P_LikeN_S(

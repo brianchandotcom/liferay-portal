@@ -1539,22 +1539,19 @@
 				COUNT(*) AS COUNT_VALUE
 			FROM
 				(
-					(
-						SELECT
-							userId
-						FROM
-							Users_Orgs
-						WHERE
-							Users_Orgs.organizationId IN ([$ORGANIZATION_ID$])
-					) UNION
-					(
-						SELECT
-							userId
-						FROM
-							Users_UserGroups
-						WHERE
-							Users_UserGroups.userGroupId IN ([$USER_GROUP_ID$])
-					)
+					SELECT
+						userId
+					FROM
+						Users_Orgs
+					WHERE
+						Users_Orgs.organizationId IN ([$ORGANIZATION_ID$])
+					UNION
+					SELECT
+						userId
+					FROM
+						Users_UserGroups
+					WHERE
+						Users_UserGroups.userGroupId IN ([$USER_GROUP_ID$])
 				) USER_IDS
 		]]>
 	</sql>

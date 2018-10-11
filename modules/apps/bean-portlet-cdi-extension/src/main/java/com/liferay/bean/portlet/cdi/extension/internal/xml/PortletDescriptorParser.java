@@ -49,6 +49,7 @@ import java.net.URL;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -97,16 +98,6 @@ public class PortletDescriptorParser {
 			displayDescriptorCategories, liferayConfigurations);
 
 		return beanApp;
-	}
-
-	private static String _getLang(Element element) {
-		String lang = element.attributeValue("lang");
-
-		if (lang == null) {
-			return _ENGLISH_EN;
-		}
-
-		return lang;
 	}
 
 	private static boolean _isCustomPortletMode(String portletModeName) {
@@ -333,15 +324,8 @@ public class PortletDescriptorParser {
 		String preferencesValidator, String categoryName,
 		Map<String, Set<String>> liferayConfiguration) {
 
-		Map<String, String> displayNames = new HashMap<>();
-
-		for (Element displayNameElement :
-				portletElement.elements("display-name")) {
-
-			displayNames.put(
-				_getLang(displayNameElement),
-				GetterUtil.getString(displayNameElement.getText()));
-		}
+		Map<String, String> displayNames = _toLocaleMap(
+			portletElement.elements("display-name"));
 
 		String portletClassName = GetterUtil.getString(
 			portletElement.elementText("portlet-class"));
@@ -431,41 +415,18 @@ public class PortletDescriptorParser {
 
 		Element portletInfoElement = portletElement.element("portlet-info");
 
-		Map<String, String> titles = new HashMap<>();
-		Map<String, String> shortTitles = new HashMap<>();
-		Map<String, String> keywords = new HashMap<>();
-		Map<String, String> descriptions = new HashMap<>();
+		Map<String, String> titles = Collections.emptyMap();
+		Map<String, String> shortTitles = Collections.emptyMap();
+		Map<String, String> keywords = Collections.emptyMap();
+		Map<String, String> descriptions = Collections.emptyMap();
 
 		if (portletInfoElement != null) {
-			for (Element titleElement : portletInfoElement.elements("title")) {
-				titles.put(
-					_getLang(titleElement),
-					GetterUtil.getString(titleElement.getText()));
-			}
-
-			for (Element shortTitleElement :
-					portletInfoElement.elements("short-title")) {
-
-				shortTitles.put(
-					_getLang(shortTitleElement),
-					GetterUtil.getString(shortTitleElement.getText()));
-			}
-
-			for (Element keywordElement :
-					portletInfoElement.elements("keywords")) {
-
-				keywords.put(
-					_getLang(keywordElement),
-					GetterUtil.getString(keywordElement.getText()));
-			}
-
-			for (Element descriptionElement :
-					portletInfoElement.elements("description")) {
-
-				descriptions.put(
-					_getLang(descriptionElement),
-					GetterUtil.getString(descriptionElement.getText()));
-			}
+			titles = _toLocaleMap(portletInfoElement.elements("title"));
+			shortTitles = _toLocaleMap(
+				portletInfoElement.elements("short-title"));
+			keywords = _toLocaleMap(portletInfoElement.elements("keywords"));
+			descriptions = _toLocaleMap(
+				portletInfoElement.elements("description"));
 		}
 
 		Map<String, Preference> preferences = new HashMap<>();
@@ -663,6 +624,22 @@ public class PortletDescriptorParser {
 			multiPartSupported, multiPartFileSizeThreshold, multiPartLocation,
 			multiPartMaxFileSize, multiPartMaxRequestSize, categoryName,
 			liferayConfiguration);
+	}
+
+	private static Map<String, String> _toLocaleMap(List<Element> elements) {
+		Map<String, String> localeMap = new HashMap<>();
+
+		for (Element element : elements) {
+			String lang = element.attributeValue("lang");
+
+			if (lang == null) {
+				lang = _ENGLISH_EN;
+			}
+
+			localeMap.put(lang, GetterUtil.getString(element.getText()));
+		}
+
+		return localeMap;
 	}
 
 	private static final String _ENGLISH_EN = Locale.ENGLISH.getLanguage();

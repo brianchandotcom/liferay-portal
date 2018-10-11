@@ -57,6 +57,7 @@
 			Map<String, Object> context = new HashMap<>();
 
 			context.put("breadcrumbEntries", layoutsAdminDisplayContext.getBreadcrumbEntriesJSONArray());
+			context.put("getItemChildrenURL", layoutsAdminDisplayContext.getLayoutChildrenURL());
 			context.put("layoutColumns", layoutsAdminDisplayContext.getLayoutColumnsJSONArray());
 			context.put("moveLayoutColumnItemURL", layoutsAdminDisplayContext.getMoveLayoutColumnItemURL());
 			context.put("pathThemeImages", themeDisplay.getPathThemeImages());

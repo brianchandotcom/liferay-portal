@@ -423,9 +423,7 @@ public class JSR362BeanProducer {
 	public RenderResponse getRenderResponse() {
 		PortletResponse portletResponse = getPortletResponse();
 
-		if ((portletResponse instanceof RenderResponse) &&
-			!(portletResponse instanceof HeaderResponse)) {
-
+		if (portletResponse instanceof RenderResponse) {
 			return (RenderResponse)portletResponse;
 		}
 

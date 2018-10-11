@@ -104,14 +104,41 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 		UnicodeProperties properties = PropertiesParamUtil.getProperties(
 			actionRequest, "settings--");
 
-		String entityId = _localEntityManager.getLocalEntityId();
-
 		String certificateKeyPassword = properties.getProperty(
 			PortletPropsKeys.SAML_KEYSTORE_CREDENTIAL_PASSWORD);
 
 		if (Validator.isNull(certificateKeyPassword)) {
 			throw new CertificateKeyPasswordException();
 		}
+
+		int validityDays = ParamUtil.getInteger(
+			actionRequest, "certificateValidityDays");
+
+		if (validityDays == 0) {
+			SessionErrors.add(actionRequest, "certificateValidityDays");
+
+			return;
+		}
+
+		Calendar startDate = Calendar.getInstance();
+
+		Calendar endDate = (Calendar)startDate.clone();
+
+		endDate.add(Calendar.DAY_OF_YEAR, validityDays);
+
+		if (endDate.get(Calendar.YEAR) > 9999) {
+			SessionErrors.add(actionRequest, "certificateValidityDays");
+
+			return;
+		}
+
+		String keyAlgorithm = ParamUtil.getString(
+			actionRequest, "certificateKeyAlgorithm");
+		int keyLength = ParamUtil.getInteger(
+			actionRequest, "certificateKeyLength");
+
+		KeyPair keyPair = _certificateTool.generateKeyPair(
+			keyAlgorithm, keyLength);
 
 		String commonName = ParamUtil.getString(
 			actionRequest, "certificateCommonName");
@@ -124,35 +151,6 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 		String state = ParamUtil.getString(actionRequest, "certificateState");
 		String country = ParamUtil.getString(
 			actionRequest, "certificateCountry");
-
-		String keyAlgorithm = ParamUtil.getString(
-			actionRequest, "certificateKeyAlgorithm");
-		int keyLength = ParamUtil.getInteger(
-			actionRequest, "certificateKeyLength");
-
-		KeyPair keyPair = _certificateTool.generateKeyPair(
-			keyAlgorithm, keyLength);
-
-		Calendar startDate = Calendar.getInstance();
-
-		int validityDays = ParamUtil.getInteger(
-			actionRequest, "certificateValidityDays");
-
-		if (validityDays == 0) {
-			SessionErrors.add(actionRequest, "certificateValidityDays");
-
-			return;
-		}
-
-		Calendar endDate = (Calendar)startDate.clone();
-
-		endDate.add(Calendar.DAY_OF_YEAR, validityDays);
-
-		if (endDate.get(Calendar.YEAR) > 9999) {
-			SessionErrors.add(actionRequest, "certificateValidityDays");
-
-			return;
-		}
 
 		CertificateEntityId subjectCertificateEntityId =
 			new CertificateEntityId(
@@ -170,7 +168,7 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 		KeyStore keyStore = _keyStoreManager.getKeyStore();
 
 		keyStore.setEntry(
-			entityId, privateKeyEntry,
+			_localEntityManager.getLocalEntityId(), privateKeyEntry,
 			new KeyStore.PasswordProtection(
 				certificateKeyPassword.toCharArray()));
 

@@ -165,14 +165,8 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
 				long companyId = rs.getLong("companyId");
-				long userId = rs.getLong("userId");
-				Timestamp createDate = rs.getTimestamp("createDate");
-				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
 				String name = rs.getString("name");
-				String title = rs.getString("title");
-				String content = rs.getString("content");
 				int version = rs.getInt("version");
 				int draftVersion = rs.getInt("draftVersion");
 
@@ -181,6 +175,13 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 
 					continue;
 				}
+
+				long groupId = rs.getLong("groupId");
+				long userId = rs.getLong("userId");
+				Timestamp createDate = rs.getTimestamp("createDate");
+				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+				String title = rs.getString("title");
+				String content = rs.getString("content");
 
 				addKaleoDefinitionVersion(
 					groupId, companyId, userId, createDate, modifiedDate, name,

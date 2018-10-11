@@ -121,17 +121,17 @@ public class DirectoryTree {
 
 		List<Directory> directories = new ArrayList<>();
 
-		List<FilterConstraint> filterConstraints = toFilterConstraints(
-			exprNode);
-
-		boolean subtree = searchScope.equals(SearchScope.SUBTREE);
-
 		DirectoryBuilder searchBaseDirectoryBuilder =
 			searchBase.getDirectoryBuilder();
 
 		if (searchBaseDirectoryBuilder == null) {
 			return directories;
 		}
+
+		List<FilterConstraint> filterConstraints = toFilterConstraints(
+			exprNode);
+
+		boolean subtree = searchScope.equals(SearchScope.SUBTREE);
 
 		for (DirectoryBuilder directoryBuilder :
 				searchBaseDirectoryBuilder.getDirectoryBuilders()) {
@@ -152,9 +152,6 @@ public class DirectoryTree {
 		}
 
 		String top = LdapUtil.getRdnValue(dn, 0);
-		String companyWebId = LdapUtil.getRdnValue(dn, 1);
-		String type = LdapUtil.getRdnValue(dn, 2);
-		String typeValue = LdapUtil.getRdnValue(dn, 3);
 
 		if (Validator.isNull(top)) {
 			return new SearchBase(
@@ -169,6 +166,8 @@ public class DirectoryTree {
 		if (!StringUtil.equalsIgnoreCase(top, TopDirectory.NAME)) {
 			return null;
 		}
+
+		String companyWebId = LdapUtil.getRdnValue(dn, 1);
 
 		if (companyWebId == null) {
 			return new SearchBase(new TopDirectory(top), _topBuilder, top);
@@ -188,12 +187,15 @@ public class DirectoryTree {
 			return null;
 		}
 
+		String type = LdapUtil.getRdnValue(dn, 2);
+
 		if (type == null) {
 			return new SearchBase(
 				new CompanyDirectory(top, company), _companyBuilder, top,
 				company);
 		}
 
+		String typeValue = LdapUtil.getRdnValue(dn, 3);
 		List<Identifier> identifiers = getIdentifiers(dn);
 
 		if (StringUtil.equalsIgnoreCase(type, "Communities")) {

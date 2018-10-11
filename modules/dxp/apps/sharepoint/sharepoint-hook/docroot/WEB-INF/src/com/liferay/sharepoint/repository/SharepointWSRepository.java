@@ -615,9 +615,6 @@ public class SharepointWSRepository
 		ExtRepositoryObject extRepositoryObject) {
 
 		try {
-			SharepointConnection sharepointConnection =
-				getSharepointConnection();
-
 			SharepointWSObject sharepointWSObject =
 				(SharepointWSObject)extRepositoryObject;
 
@@ -629,6 +626,9 @@ public class SharepointWSRepository
 			if (parentFolderPath == null) {
 				return null;
 			}
+
+			SharepointConnection sharepointConnection =
+				getSharepointConnection();
 
 			SharepointObject parentFolderSharepointObject =
 				sharepointConnection.getSharepointObject(parentFolderPath);

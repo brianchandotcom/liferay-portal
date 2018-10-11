@@ -240,13 +240,13 @@ public class DefaultAttributeResolver implements AttributeResolver {
 			Map<String, Set<Role>> groupRoles = new HashMap<>();
 
 			for (UserGroupRole userGroupRole : userGroupRoles) {
-				Group group = userGroupRole.getGroup();
-
 				Role role = userGroupRole.getRole();
 
 				if (role.getType() != RoleConstants.TYPE_ORGANIZATION) {
 					continue;
 				}
+
+				Group group = userGroupRole.getGroup();
 
 				Set<Role> roles = groupRoles.computeIfAbsent(
 					group.getName(), k -> new HashSet<>());
@@ -462,8 +462,6 @@ public class DefaultAttributeResolver implements AttributeResolver {
 			Map<String, Set<Role>> groupRoles = new HashMap<>();
 
 			for (UserGroupRole userGroupRole : userGroupRoles) {
-				Group group = userGroupRole.getGroup();
-
 				Role role = userGroupRole.getRole();
 
 				if ((role.getType() == RoleConstants.TYPE_ORGANIZATION) &&
@@ -471,6 +469,8 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 					continue;
 				}
+
+				Group group = userGroupRole.getGroup();
 
 				Set<Role> roles = groupRoles.computeIfAbsent(
 					group.getName(), k -> new HashSet<>());

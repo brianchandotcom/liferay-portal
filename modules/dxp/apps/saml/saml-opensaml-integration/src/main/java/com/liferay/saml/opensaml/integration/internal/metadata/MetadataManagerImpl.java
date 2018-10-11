@@ -403,13 +403,13 @@ public class MetadataManagerImpl
 	@Override
 	public Credential getSigningCredential() throws SamlException {
 		try {
-			CriteriaSet criteriaSet = new CriteriaSet();
-
 			String entityId = getLocalEntityId();
 
 			if (Validator.isNull(entityId)) {
 				return null;
 			}
+
+			CriteriaSet criteriaSet = new CriteriaSet();
 
 			EntityIDCriteria entityIDCriteria = new EntityIDCriteria(entityId);
 

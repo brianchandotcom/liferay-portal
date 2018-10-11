@@ -61,10 +61,6 @@ public class OAuthSAPEntryActivator {
 	protected void addSAPEntry(long companyId) throws PortalException {
 		for (Object[] sapEntryObjectArray : SAP_ENTRY_OBJECT_ARRAYS) {
 			String name = String.valueOf(sapEntryObjectArray[0]);
-			String allowedServiceSignatures = String.valueOf(
-				sapEntryObjectArray[1]);
-			boolean defaultSAPEntry = GetterUtil.getBoolean(
-				sapEntryObjectArray[2]);
 
 			SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
 				companyId, name);
@@ -72,6 +68,11 @@ public class OAuthSAPEntryActivator {
 			if (sapEntry != null) {
 				continue;
 			}
+
+			String allowedServiceSignatures = String.valueOf(
+				sapEntryObjectArray[1]);
+			boolean defaultSAPEntry = GetterUtil.getBoolean(
+				sapEntryObjectArray[2]);
 
 			ResourceBundleLoader resourceBundleLoader =
 				new AggregateResourceBundleLoader(

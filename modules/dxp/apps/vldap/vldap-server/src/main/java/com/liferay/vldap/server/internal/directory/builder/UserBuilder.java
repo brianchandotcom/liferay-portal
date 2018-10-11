@@ -133,12 +133,12 @@ public class UserBuilder extends DirectoryBuilder {
 		}
 
 		for (FilterConstraint filterConstraint : filterConstraints) {
-			LinkedHashMap<String, Object> filterConstraintParams =
-				new LinkedHashMap<>(params);
-
 			if (!isValidFilterConstraint(filterConstraint)) {
 				continue;
 			}
+
+			LinkedHashMap<String, Object> filterConstraintParams =
+				new LinkedHashMap<>(params);
 
 			String member = filterConstraint.getValue("member");
 

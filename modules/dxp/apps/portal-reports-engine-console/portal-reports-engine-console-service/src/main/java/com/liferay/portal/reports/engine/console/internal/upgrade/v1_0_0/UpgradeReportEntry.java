@@ -87,9 +87,6 @@ public class UpgradeReportEntry extends UpgradeProcess {
 				ResultSet rs = ps1.executeQuery()) {
 
 				while (rs.next()) {
-					long companyId = rs.getLong("companyId");
-					long definitionId = rs.getLong("entryId");
-
 					String reportParameters = rs.getString("reportParameters");
 
 					String updatedReportParameters = updateEntryParameters(
@@ -102,8 +99,8 @@ public class UpgradeReportEntry extends UpgradeProcess {
 					}
 
 					ps2.setString(1, updatedReportParameters);
-					ps2.setLong(2, companyId);
-					ps2.setLong(3, definitionId);
+					ps2.setLong(2, rs.getLong("companyId"));
+					ps2.setLong(3, rs.getLong("entryId"));
 
 					ps2.addBatch();
 				}

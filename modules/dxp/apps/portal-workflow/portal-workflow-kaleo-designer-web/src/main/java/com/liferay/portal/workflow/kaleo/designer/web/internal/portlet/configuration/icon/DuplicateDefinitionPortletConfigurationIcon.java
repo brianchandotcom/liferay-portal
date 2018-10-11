@@ -78,15 +78,15 @@ public class DuplicateDefinitionPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			getKaleoDefinitionVersion(portletRequest);
 
 		if (kaleoDefinitionVersion == null) {
 			return false;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		return KaleoDefinitionVersionPermission.hasViewPermission(
 			themeDisplay.getPermissionChecker(), kaleoDefinitionVersion,

@@ -45,7 +45,6 @@ public class SamlIdpSsoSessionImpl extends SamlIdpSsoSessionBaseImpl {
 
 		long samlIdpSessionMaximumAge =
 			samlProviderConfiguration.sessionMaximumAge();
-		long samlIdpSessionTimeout = samlProviderConfiguration.sessionTimeout();
 
 		if (samlIdpSessionMaximumAge > 0) {
 			Date createDate = getCreateDate();
@@ -57,6 +56,8 @@ public class SamlIdpSsoSessionImpl extends SamlIdpSsoSessionBaseImpl {
 				return true;
 			}
 		}
+
+		long samlIdpSessionTimeout = samlProviderConfiguration.sessionTimeout();
 
 		if (samlIdpSessionTimeout <= 0) {
 			return false;

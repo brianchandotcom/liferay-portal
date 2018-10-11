@@ -344,7 +344,9 @@ public class DLFileEntryLocalServiceImpl
 		DLFileVersion latestDLFileVersion =
 			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
-		if (dlVersionNumberIncrease == DLVersionNumberIncrease.NONE) {
+		if ((dlVersionNumberIncrease == DLVersionNumberIncrease.AUTOMATIC) ||
+			(dlVersionNumberIncrease == DLVersionNumberIncrease.NONE)) {
+
 			DLFileVersion lastDLFileVersion =
 				dlFileVersionLocalService.getFileVersion(
 					dlFileEntry.getFileEntryId(), dlFileEntry.getVersion());

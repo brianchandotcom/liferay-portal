@@ -1179,8 +1179,24 @@ public class BeanPortletExtension implements Extension {
 	private Function<String, Set<BeanMethod>> _collectPortletBeanMethods(
 		BeanManager beanManager) {
 
-		Set<BeanMethod> wildcardBeanMethods = _collectWildcardBeanMethods(
-			beanManager);
+		Set<BeanMethod> wildcardBeanMethods = new HashSet<>();
+
+		for (ScannedMethod scannedMethod : _scannedMethods) {
+			String[] portletNames = scannedMethod.getPortletNames();
+
+			if ((portletNames.length > 0) && "*".equals(portletNames[0])) {
+				Class<?> clazz = scannedMethod.getClazz();
+				Method method = scannedMethod.getMethod();
+				int ordinal = scannedMethod.getOrdinal();
+
+				BeanMethod beanMethod = new BeanMethod(
+					beanManager,
+					beanManager.resolve(beanManager.getBeans(clazz)),
+					scannedMethod.getMethodType(), method, ordinal);
+
+				wildcardBeanMethods.add(beanMethod);
+			}
+		}
 
 		Map<String, Set<BeanMethod>> portletBeanMethods = new HashMap<>();
 
@@ -1271,31 +1287,6 @@ public class BeanPortletExtension implements Extension {
 			return preferencesValidators.getOrDefault(
 				portletName, wildcardPreferencesValidator);
 		};
-	}
-
-	private Set<BeanMethod> _collectWildcardBeanMethods(
-		BeanManager beanManager) {
-
-		Set<BeanMethod> wildcardBeanMethods = new HashSet<>();
-
-		for (ScannedMethod scannedMethod : _scannedMethods) {
-			String[] portletNames = scannedMethod.getPortletNames();
-
-			if ((portletNames.length > 0) && "*".equals(portletNames[0])) {
-				Class<?> clazz = scannedMethod.getClazz();
-				Method method = scannedMethod.getMethod();
-				int ordinal = scannedMethod.getOrdinal();
-
-				BeanMethod beanMethod = new BeanMethod(
-					beanManager,
-					beanManager.resolve(beanManager.getBeans(clazz)),
-					scannedMethod.getMethodType(), method, ordinal);
-
-				wildcardBeanMethods.add(beanMethod);
-			}
-		}
-
-		return wildcardBeanMethods;
 	}
 
 	private String _collectWildcardPreferencesValidator() {

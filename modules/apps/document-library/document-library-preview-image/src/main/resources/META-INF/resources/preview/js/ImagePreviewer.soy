@@ -6,6 +6,53 @@
 
 {template .render}
 	{@param imageURL: string}
+	{@param? id: string}
+	{@param? zoomActual: number}
+	{@param? imageHeight: number}
+	{@param? imageWidth: number}
 
-	<img src="{$imageURL}" />
+	<div id="{$id}" class="preview-file">
+		<div class="preview-file-container preview-file-max-height">
+			<img
+				class="preview-file-image"
+				ref="previewImage"
+				src="{$imageURL}"
+				style="
+					{if $imageWidth and $imageHeight}
+						{sp}max-width: {$imageWidth}px;
+						{sp}width: {$imageWidth}px;
+						{sp}max-height: {$imageHeight}px;
+						{sp}height: {$imageHeight}px;
+					{/if}
+				"
+			/>
+		</div>
+		{call .toolbar}
+			{param zoomActual: $zoomActual /}
+		{/call}
+	</div>
+{/template}
+
+{template .toolbar}
+	{@param? zoomActual: number}
+
+	<div class="preview-toolbar-container">
+		<div aria-label="Toolbar preview" class="btn-group" role="group">
+			<button type="button" class="btn btn-monospaced btn-dark">
+				<span class="inline-item">
+					<svg class="lexicon-icon lexicon-icon-hr" viewBox="0 0 512 512">
+						<path class="lexicon-icon-outline" d="M483.555 284.445h-455.111c-15.701 0-28.445-12.743-28.445-28.445s12.743-28.445 28.445-28.445h455.111c15.702 0 28.445 12.743 28.445 28.445s-12.743 28.445-28.445 28.445z"></path>
+					</svg>
+				</span>
+			</button>
+			<button type="button" class="btn btn-dark">{$zoomActual}%</button>
+			<button type="button" class="btn btn-monospaced btn-dark">
+				<span class="inline-item">
+					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus" viewBox="0 0 512 512">
+						<path class="lexicon-icon-outline" d="M479.82 224.002h-192.41v-191.91c0-17.6-14.4-32-32-32v0c-17.6 0-32 14.4-32 32v191.91h-191.41c-17.6 0-32 14.4-32 32v0c0 17.6 14.4 32 32 32h191.41v191.91c0 17.6 14.4 32 32 32v0c17.6 0 32-14.4 32-32v-191.909h192.41c17.6 0 32-14.4 32-32v0c0-17.6-14.4-32-32-32z"></path>
+					</svg>
+				</span>
+			</button>
+		</div>
+	</div>
 {/template}

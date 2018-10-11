@@ -21,13 +21,9 @@ import com.liferay.blogs.internal.upgrade.v1_1_2.UpgradeBlogsImages;
 import com.liferay.blogs.internal.upgrade.v2_0_0.util.BlogsEntryTable;
 import com.liferay.blogs.internal.upgrade.v2_0_0.util.BlogsStatsUserTable;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -53,19 +49,12 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 			"1.1.1", "1.1.2",
 			new UpgradeBlogsImages(_imageLocalService, _portletFileRepository));
 
-		DB db = DBManagerUtil.getDB();
+		Class<?>[] upgradeDatetimeTableClasses =
+			{BlogsEntryTable.class, BlogsStatsUserTable.class};
 
-		if (db.getDBType() == DBType.SQLSERVER) {
-			Class<?>[] upgradeDatetimeTableClasses =
-				{BlogsEntryTable.class, BlogsStatsUserTable.class};
-
-			registry.register(
-				"1.1.2", "2.0.0",
-				new BaseUpgradeSQLServerDatetime(upgradeDatetimeTableClasses));
-		}
-		else {
-			registry.register("1.1.2", "2.0.0", new DummyUpgradeStep());
-		}
+		registry.register(
+			"1.1.2", "2.0.0",
+			new BaseUpgradeSQLServerDatetime(upgradeDatetimeTableClasses));
 	}
 
 	@Reference

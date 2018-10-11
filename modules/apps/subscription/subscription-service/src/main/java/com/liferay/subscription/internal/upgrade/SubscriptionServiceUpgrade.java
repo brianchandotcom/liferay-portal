@@ -14,12 +14,8 @@
 
 package com.liferay.subscription.internal.upgrade;
 
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.subscription.internal.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.subscription.internal.upgrade.v2_0_0.util.SubscriptionTable;
@@ -37,18 +33,11 @@ public class SubscriptionServiceUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register("0.0.1", "1.0.0", new UpgradeClassNames());
 
-		DB db = DBManagerUtil.getDB();
+		Class<?>[] upgradeDatetimeTableClasses = {SubscriptionTable.class};
 
-		if (db.getDBType() == DBType.SQLSERVER) {
-			Class<?>[] upgradeDatetimeTableClasses = {SubscriptionTable.class};
-
-			registry.register(
-				"1.0.0", "2.0.0",
-				new BaseUpgradeSQLServerDatetime(upgradeDatetimeTableClasses));
-		}
-		else {
-			registry.register("1.0.0", "2.0.0", new DummyUpgradeStep());
-		}
+		registry.register(
+			"1.0.0", "2.0.0",
+			new BaseUpgradeSQLServerDatetime(upgradeDatetimeTableClasses));
 	}
 
 	@Reference(unbind = "-")

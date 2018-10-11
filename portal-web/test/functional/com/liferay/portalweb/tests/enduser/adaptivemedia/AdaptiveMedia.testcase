@@ -15,7 +15,7 @@
 	</tear-down>
 
 	<command name="AddAMIWithHighDensityResolution" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />

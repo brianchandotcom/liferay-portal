@@ -19,7 +19,6 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
 import java.io.Closeable;
 import java.io.IOException;
 
-import java.util.Collections;
 import java.util.Enumeration;
 
 import javax.enterprise.context.spi.CreationalContext;
@@ -255,8 +254,10 @@ public class ScopedBeanHolder {
 			}
 		}
 
-		for (String name :
-				Collections.list(_portletRequest.getAttributeNames())) {
+		Enumeration<String> enumeration = _portletRequest.getAttributeNames();
+
+		while (enumeration.hasMoreElements()) {
+			String name = enumeration.nextElement();
 
 			if (name.startsWith(_ATTRIBUTE_NAME_PREFIX)) {
 				Object value = _portletRequest.getAttribute(name);

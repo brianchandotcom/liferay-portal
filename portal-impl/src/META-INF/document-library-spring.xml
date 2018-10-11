@@ -20,4 +20,5 @@
 	<bean class="com.liferay.portlet.documentlibrary.util.DLFileEntryLockListener" id="com.liferay.portlet.documentlibrary.util.DLFileEntryLockListener" />
 	<bean class="com.liferay.portlet.documentlibrary.util.DLFileEntryMetadataIndexer" id="com.liferay.portlet.documentlibrary.util.DLFileEntryMetadataIndexer" />
 	<bean class="com.liferay.portlet.documentlibrary.util.DLOpenSearchImpl" id="com.liferay.portlet.documentlibrary.util.DLOpenSearchImpl" />
+	<bean class="com.liferay.portlet.documentlibrary.versioning.DefaultVersioningStrategy" id="com.liferay.portlet.documentlibrary.versioning.DefaultVersioningStrategy" />
 </beans>

@@ -41,7 +41,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AssertFragmentNotAccessibleinStagingLiveSite" priority="5">
+	<command name="AssertFragmentsAreOnlyEditableInStagingView" priority="5">
 		<execute macro="ProductMenu#gotoLiveSite">
 			<var name="site" value="Site Name" />
 		</execute>

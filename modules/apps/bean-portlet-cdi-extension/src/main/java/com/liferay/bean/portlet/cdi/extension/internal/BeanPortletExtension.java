@@ -16,7 +16,6 @@ package com.liferay.bean.portlet.cdi.extension.internal;
 
 import com.liferay.bean.portlet.LiferayPortletConfiguration;
 import com.liferay.bean.portlet.LiferayPortletConfigurations;
-import com.liferay.bean.portlet.cdi.extension.internal.annotated.BeanPortletAnnotationImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.annotated.type.ApplicationScopedAnnotatedTypeImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.annotated.type.PortletConfigAnnotatedTypeImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.annotated.type.RequestScopedAnnotatedTypeImpl;
@@ -934,18 +933,19 @@ public class BeanPortletExtension implements Extension {
 				runtimeOption.name(), Arrays.asList(runtimeOption.values()));
 		}
 
-		BeanPortlet annotatedBeanPortlet = new BeanPortletAnnotationImpl(
+		BeanPortlet annotatedBeanPortlet = new BeanPortletDescriptorImpl(
 			portletConfiguration.portletName(), beanMethods, displayNames,
 			beanPortletClass.getName(), initParams,
 			portletConfiguration.cacheExpirationTime(), supportedPortletModes,
 			supportedWindowStates, supportedLocales,
 			portletConfiguration.resourceBundle(), titles, shortTitles,
 			keywords, descriptions, preferences, preferencesValidator,
-			securityRoleRefs, supportedPublicRenderParameters,
-			containerRuntimeOptions, portletDependencies,
-			portletConfiguration.asyncSupported(), multiPartSupported,
-			multiPartFileSizeThreshold, multiPartLocation, multiPartMaxFileSize,
-			multiPartMaxRequestSize, displayCategory, liferayConfiguration);
+			securityRoleRefs, new HashSet<QName>(), new HashSet<QName>(),
+			supportedPublicRenderParameters, containerRuntimeOptions,
+			portletDependencies, portletConfiguration.asyncSupported(),
+			multiPartSupported, multiPartFileSizeThreshold, multiPartLocation,
+			multiPartMaxFileSize, multiPartMaxRequestSize, displayCategory,
+			liferayConfiguration);
 
 		if (descriptorBeanPortlet == null) {
 			_beanPortlets.put(configuredPortletName, annotatedBeanPortlet);

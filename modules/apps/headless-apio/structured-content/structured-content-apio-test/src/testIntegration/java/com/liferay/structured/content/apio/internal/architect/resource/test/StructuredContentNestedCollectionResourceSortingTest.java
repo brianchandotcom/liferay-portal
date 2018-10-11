@@ -593,7 +593,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject
+	@Inject(filter = "entity.model.name=StructuredContent")
 	private SortParser _sortParser;
 
 }

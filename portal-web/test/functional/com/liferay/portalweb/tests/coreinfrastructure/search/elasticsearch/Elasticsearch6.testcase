@@ -62,7 +62,7 @@
 	</command>
 
 	<command name="ElasticsearchRemoteClusterSmokeTest" priority="5">
-		<property name="environment.acceptance" value="true" />
+		<property name="environment.acceptance" value="false" />
 		<property name="portal.acceptance" value="true" />
 		<property name="remote.elasticsearch.cluster.size" value="2" />
 		<property name="remote.elasticsearch.enabled" value="true" />

@@ -30,7 +30,7 @@
 
 		<property name="apacheds.blank.user.password.enabled" value="true" />
 		<property name="apacheds.enabled" value="true" />
-		<property name="environment.acceptance" value="true" />
+		<property name="environment.acceptance" value="false" />
 		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="LDAP#ImportLDAPUserWithBlankPassword" />
 

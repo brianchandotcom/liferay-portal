@@ -207,6 +207,8 @@ class Layout extends Component {
 			targetItemPlid
 		);
 
+		clearTimeout(this._updatePathTimeout);
+
 		if (targetItem && targetColumn) {
 			const targetColumnIndex = this.layoutColumns.indexOf(targetColumn);
 			const targetInFirstColumn = (this.layoutColumns.indexOf(targetColumn) === 0);
@@ -238,7 +240,12 @@ class Layout extends Component {
 				this._draggingItemPosition === DRAG_POSITIONS.inside &&
 				this._currentPathItemPlid !== targetItemPlid
 			) {
-				this._updatePath(targetColumnIndex, targetItemPlid);
+				this._updatePathTimeout = setTimeout(
+					() => {
+						this._updatePath(targetColumnIndex, targetItemPlid);
+					},
+					1000
+				);
 			}
 		}
 	}
@@ -405,6 +412,8 @@ class Layout extends Component {
 				.then(
 					() => {
 						this.layoutColumns = layoutColumns;
+
+						clearTimeout(this._updatePathTimeout);
 
 						requestAnimationFrame(
 							() => {
@@ -863,7 +872,18 @@ Layout.STATE = {
 	 * @type {object|null}
 	 */
 
-	_layoutDragDrop: Config.internal().value(null)
+	_layoutDragDrop: Config.internal().value(null),
+
+	/**
+	 * Id of the timeout to update the path
+	 * @default undefined
+	 * @instance
+	 * @memberOf Layout
+	 * @review
+	 * @type {number}
+	 */
+
+	_updatePathTimeout: Config.number().internal()
 };
 
 Soy.register(Layout, templates);

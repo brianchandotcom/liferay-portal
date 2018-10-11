@@ -90,6 +90,8 @@
 			</else>
 		</if>
 
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${pageName}" />
 		</execute>

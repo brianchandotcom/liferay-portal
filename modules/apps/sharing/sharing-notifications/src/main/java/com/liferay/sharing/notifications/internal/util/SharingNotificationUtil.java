@@ -14,7 +14,6 @@
 
 package com.liferay.sharing.notifications.internal.util;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -44,8 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 public class SharingNotificationUtil {
 
 	public String getNotificationMessage(
-			SharingEntry sharingEntry, Locale locale)
-		throws PortalException {
+		SharingEntry sharingEntry, Locale locale) {
 
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(locale);

@@ -30,7 +30,6 @@ import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameter;
 import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameterImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.util.BeanMethodIndexUtil;
 import com.liferay.bean.portlet.cdi.extension.internal.util.PortletScannerUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -78,8 +77,7 @@ public class PortletDescriptorParser {
 			Map<String, BeanPortlet> beanPortlets, Bundle bundle,
 			URL portletDescriptorURL, BeanManager beanManager,
 			Function<String, Set<BeanMethod>> portletBeanMethodsFunction,
-			Map<String, String> preferencesValidators,
-			String wildcardPreferencesValidator,
+			Function<String, String> preferencesValidatorFunction,
 			Map<String, String> displayDescriptorCategories,
 			Map<String, Map<String, Set<String>>> liferayConfigurations)
 		throws DocumentException, IOException {
@@ -95,9 +93,8 @@ public class PortletDescriptorParser {
 
 		_populateBeanPortlets(
 			beanPortlets, bundle, rootElement, beanApp, beanManager,
-			portletBeanMethodsFunction, preferencesValidators,
-			wildcardPreferencesValidator, displayDescriptorCategories,
-			liferayConfigurations);
+			portletBeanMethodsFunction, preferencesValidatorFunction,
+			displayDescriptorCategories, liferayConfigurations);
 
 		return beanApp;
 	}
@@ -152,17 +149,15 @@ public class PortletDescriptorParser {
 		Map<String, BeanPortlet> beanPortlets, Bundle bundle,
 		Element rootElement, BeanApp beanApp, BeanManager beanManager,
 		Function<String, Set<BeanMethod>> portletBeanMethodsFunction,
-		Map<String, String> preferencesValidators,
-		String wildcardPreferencesValidator,
+		Function<String, String> preferencesValidatorFunction,
 		Map<String, String> displayDescriptorCategories,
 		Map<String, Map<String, Set<String>>> liferayConfigurations) {
 
 		for (Element portletElement : rootElement.elements("portlet")) {
 			BeanPortlet beanPortlet = _readBeanPortlet(
 				bundle, portletElement, beanApp, beanManager,
-				portletBeanMethodsFunction, preferencesValidators,
-				wildcardPreferencesValidator, displayDescriptorCategories,
-				liferayConfigurations);
+				portletBeanMethodsFunction, preferencesValidatorFunction,
+				displayDescriptorCategories, liferayConfigurations);
 
 			if (beanPortlet != null) {
 				beanPortlets.put(beanPortlet.getPortletName(), beanPortlet);
@@ -323,8 +318,7 @@ public class PortletDescriptorParser {
 		Bundle bundle, Element portletElement, BeanApp beanApp,
 		BeanManager beanManager,
 		Function<String, Set<BeanMethod>> portletBeanMethodsFunction,
-		Map<String, String> preferencesValidators,
-		String wildcardPreferencesValidator,
+		Function<String, String> preferencesValidatorFunction,
 		Map<String, String> displayDescriptorCategories,
 		Map<String, Map<String, Set<String>>> liferayConfigurations) {
 
@@ -507,19 +501,8 @@ public class PortletDescriptorParser {
 		}
 
 		if (preferencesValidator == null) {
-			preferencesValidator = preferencesValidators.get(portletName);
-
-			if (preferencesValidator == null) {
-				preferencesValidator = wildcardPreferencesValidator;
-			}
-			else {
-				_log.error(
-					StringBundler.concat(
-						"Unable to associate @PortletPreferencesValidator ",
-						wildcardPreferencesValidator, " to portletName \"",
-						portletName, "\" since is already associated with ",
-						preferencesValidator));
-			}
+			preferencesValidator = preferencesValidatorFunction.apply(
+				portletName);
 		}
 
 		Map<String, String> securityRoleRefs = new HashMap<>();

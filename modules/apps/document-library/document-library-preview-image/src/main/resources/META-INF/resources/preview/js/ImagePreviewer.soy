@@ -10,6 +10,7 @@
 	{@param? zoomActual: number}
 	{@param? imageHeight: number}
 	{@param? imageWidth: number}
+	{@param? _handleZoom: any}
 
 	<div id="{$id}" class="preview-file">
 		<div class="preview-file-container preview-file-max-height">
@@ -29,24 +30,28 @@
 		</div>
 		{call .toolbar}
 			{param zoomActual: $zoomActual /}
+			{param _handleZoom: $_handleZoom /}
 		{/call}
 	</div>
 {/template}
 
 {template .toolbar}
 	{@param? zoomActual: number}
+	{@param? _handleZoom: any}
+
+	{let $zoomLabel: round(($zoomActual ?: 0) * 100) /}
 
 	<div class="preview-toolbar-container">
 		<div aria-label="Toolbar preview" class="btn-group" role="group">
-			<button type="button" class="btn btn-monospaced btn-dark">
+			<button type="button" class="btn btn-monospaced btn-dark" value="out" data-onclick="{$_handleZoom}">
 				<span class="inline-item">
 					<svg class="lexicon-icon lexicon-icon-hr" viewBox="0 0 512 512">
 						<path class="lexicon-icon-outline" d="M483.555 284.445h-455.111c-15.701 0-28.445-12.743-28.445-28.445s12.743-28.445 28.445-28.445h455.111c15.702 0 28.445 12.743 28.445 28.445s-12.743 28.445-28.445 28.445z"></path>
 					</svg>
 				</span>
 			</button>
-			<button type="button" class="btn btn-dark">{$zoomActual}%</button>
-			<button type="button" class="btn btn-monospaced btn-dark">
+			<button type="button" class="btn btn-dark" value="1" data-onclick="{$_handleZoom}">{$zoomLabel}%</button>
+			<button type="button" class="btn btn-monospaced btn-dark" value="in" data-onclick="{$_handleZoom}">
 				<span class="inline-item">
 					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-plus" viewBox="0 0 512 512">
 						<path class="lexicon-icon-outline" d="M479.82 224.002h-192.41v-191.91c0-17.6-14.4-32-32-32v0c-17.6 0-32 14.4-32 32v191.91h-191.41c-17.6 0-32 14.4-32 32v0c0 17.6 14.4 32 32 32h191.41v191.91c0 17.6 14.4 32 32 32v0c17.6 0 32-14.4 32-32v-191.909h192.41c17.6 0 32-14.4 32-32v0c0-17.6-14.4-32-32-32z"></path>

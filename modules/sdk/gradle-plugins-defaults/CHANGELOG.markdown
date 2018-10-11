@@ -4774,6 +4774,12 @@ version 1.3.5.
 - [LPS-86308]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.160.
 
+## 5.5.79 - 2018-10-10
+
+### Fixed
+- [LPS-85987]: When running any NPM task on Jenkins, check for an invalid
+`.hotfix-xxx-xxx` qualifier before running the task.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

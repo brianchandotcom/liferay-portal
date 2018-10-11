@@ -78,7 +78,9 @@ public class PortalBatchBuildRunner
 
 		workspace = WorkspaceFactory.newBatchWorkspace(
 			portalBatchBuildData.getPortalGitHubURL(),
-			portalBatchBuildData.getPortalUpstreamBranchName(), getBatchName());
+			portalBatchBuildData.getPortalUpstreamBranchName(),
+			portalBatchBuildData.getBatchName(),
+			portalBatchBuildData.getPortalBranchSHA());
 
 		if (!(workspace instanceof BatchPortalWorkspace)) {
 			throw new RuntimeException("Invalid workspace");
@@ -90,11 +92,16 @@ public class PortalBatchBuildRunner
 	protected void runTestBatch() {
 		Map<String, String> parameters = new HashMap<>();
 
-		parameters.put("axis.variable", "PortalSmoke#Smoke");
+		PortalBatchBuildData portalBatchBuildData = getBuildData();
+
+		parameters.put(
+			"axis.variable",
+			JenkinsResultsParserUtil.join(
+				",", portalBatchBuildData.getTestList()));
 
 		AntUtil.callTarget(
 			_getPrimaryPortalDirectory(), "build-test-batch.xml",
-			getBatchName(), parameters);
+			portalBatchBuildData.getBatchName(), parameters);
 	}
 
 	private File _getPrimaryPortalDirectory() {

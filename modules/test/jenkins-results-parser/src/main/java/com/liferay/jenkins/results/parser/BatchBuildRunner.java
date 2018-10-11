@@ -24,10 +24,4 @@ public abstract class BatchBuildRunner<T extends BatchBuildData>
 		super(batchBuildData);
 	}
 
-	protected String getBatchName() {
-		BatchBuildData batchBuildData = getBuildData();
-
-		return batchBuildData.getBatchName();
-	}
-
 }

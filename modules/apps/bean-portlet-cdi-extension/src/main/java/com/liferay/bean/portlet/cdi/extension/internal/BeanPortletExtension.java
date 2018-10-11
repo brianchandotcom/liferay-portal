@@ -196,21 +196,20 @@ public class BeanPortletExtension implements Extension {
 			}
 		}
 
-		if (annotatedType.isAnnotationPresent(PortletSessionScoped.class)) {
+		if (_log.isWarnEnabled()) {
 			PortletSessionScoped portletSessionScoped =
 				annotatedType.getAnnotation(PortletSessionScoped.class);
 
-			if ((PortletSession.APPLICATION_SCOPE !=
+			if ((portletSessionScoped != null) &&
+				(PortletSession.APPLICATION_SCOPE !=
 					portletSessionScoped.value()) &&
 				(PortletSession.PORTLET_SCOPE !=
 					portletSessionScoped.value())) {
 
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"@PortletSessionScoped bean can only be " +
-							"PortletSession.APPLICATION_SCOPE or " +
-								"PortletSession.PORTLET_SCOPE");
-				}
+				_log.warn(
+					"@PortletSessionScoped bean can only be " +
+						"PortletSession.APPLICATION_SCOPE or " +
+							"PortletSession.PORTLET_SCOPE");
 			}
 		}
 

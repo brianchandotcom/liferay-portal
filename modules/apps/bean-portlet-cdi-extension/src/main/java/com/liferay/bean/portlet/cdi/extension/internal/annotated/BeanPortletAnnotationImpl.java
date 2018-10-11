@@ -14,30 +14,15 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal.annotated;
 
-import com.liferay.bean.portlet.LiferayPortletConfiguration;
 import com.liferay.bean.portlet.cdi.extension.internal.BaseBeanPortletImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.BeanMethod;
 import com.liferay.bean.portlet.cdi.extension.internal.PortletDependency;
 import com.liferay.bean.portlet.cdi.extension.internal.Preference;
-import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.portlet.annotations.Dependency;
-import javax.portlet.annotations.InitParameter;
-import javax.portlet.annotations.LocaleString;
-import javax.portlet.annotations.Multipart;
-import javax.portlet.annotations.PortletConfiguration;
-import javax.portlet.annotations.RuntimeOption;
-import javax.portlet.annotations.SecurityRoleRef;
-import javax.portlet.annotations.Supports;
 
 import javax.xml.namespace.QName;
 
@@ -48,184 +33,53 @@ import javax.xml.namespace.QName;
 public class BeanPortletAnnotationImpl extends BaseBeanPortletImpl {
 
 	public BeanPortletAnnotationImpl(
-		Set<BeanMethod> beanMethods, String portletClassName,
-		PortletConfiguration portletConfiguration, String preferencesValidator,
-		LiferayPortletConfiguration liferayPortletConfiguration,
-		Map<String, Set<String>> descriptorLiferayConfiguration,
-		String descriptorDisplayCategory) {
+		String portletName, Set<BeanMethod> beanMethods,
+		Map<String, String> displayNames, String portletClassName,
+		Map<String, String> initParams, int expirationCache,
+		Map<String, Set<String>> supportedPortletModes,
+		Map<String, Set<String>> supportedWindowStates,
+		Set<String> supportedLocales, String resourceBundle,
+		Map<String, String> titles, Map<String, String> shortTitles,
+		Map<String, String> keywords, Map<String, String> descriptions,
+		Map<String, Preference> preferences, String preferencesValidator,
+		Map<String, String> securityRoleRefs,
+		Set<String> supportedPublicRenderParameters,
+		Map<String, List<String>> containerRuntimeOptions,
+		Set<PortletDependency> portletDependencies, boolean asyncSupported,
+		boolean multiPartSupported, int multiPartFileSizeThreshold,
+		String multiPartLocation, long multiPartMaxFileSize,
+		long multiPartMaxRequestSize, String displayCategory,
+		Map<String, Set<String>> liferayConfiguration) {
 
 		super(beanMethods, new HashSet<QName>(), new HashSet<QName>());
 
+		_portletName = portletName;
+		_displayNames = displayNames;
 		_portletClassName = portletClassName;
+		_initParams = initParams;
+		_expirationCache = expirationCache;
+		_supportedPortletModes = supportedPortletModes;
+		_supportedWindowStates = supportedWindowStates;
+		_supportedLocales = supportedLocales;
+		_resourceBundle = resourceBundle;
+		_titles = titles;
+		_shortTitles = shortTitles;
+		_keywords = keywords;
+		_descriptions = descriptions;
+		_preferences = preferences;
 		_preferencesValidator = preferencesValidator;
-
-		_asyncSupported = portletConfiguration.asyncSupported();
-		_expirationCache = portletConfiguration.cacheExpirationTime();
-		_portletName = portletConfiguration.portletName();
-		_resourceBundle = portletConfiguration.resourceBundle();
-
-		String displayCategory = descriptorDisplayCategory;
-
-		String[] propertyNames = null;
-
-		if (liferayPortletConfiguration != null) {
-			propertyNames = liferayPortletConfiguration.properties();
-		}
-
-		_liferayConfiguration = new HashMap<>();
-
-		if ((propertyNames != null) && (propertyNames.length > 0)) {
-			for (String propertyName : propertyNames) {
-				String propertyValue = null;
-
-				int equalsPos = propertyName.indexOf(CharPool.EQUAL);
-
-				if (equalsPos > 0) {
-					propertyName = propertyName.substring(0, equalsPos);
-
-					propertyValue = propertyName.substring(equalsPos + 1);
-
-					if (Validator.isNull(displayCategory) &&
-						propertyName.equals(
-							"com.liferay.portlet.display-category")) {
-
-						displayCategory = propertyValue;
-
-						continue;
-					}
-				}
-
-				Set<String> values = _liferayConfiguration.get(propertyName);
-
-				if (values == null) {
-					values = new LinkedHashSet<>();
-
-					_liferayConfiguration.put(propertyName, values);
-				}
-
-				values.add(propertyValue);
-			}
-		}
-
-		if (descriptorLiferayConfiguration != null) {
-			_liferayConfiguration.putAll(descriptorLiferayConfiguration);
-		}
-
+		_securityRoleRefs = securityRoleRefs;
+		_supportedPublicRenderParameters = supportedPublicRenderParameters;
+		_containerRuntimeOptions = containerRuntimeOptions;
+		_portletDependencies = portletDependencies;
+		_asyncSupported = asyncSupported;
+		_multiPartSupported = multiPartSupported;
+		_multiPartFileSizeThreshold = multiPartFileSizeThreshold;
+		_multiPartLocation = multiPartLocation;
+		_multiPartMaxFileSize = multiPartMaxFileSize;
+		_multiPartMaxRequestSize = multiPartMaxRequestSize;
 		_displayCategory = displayCategory;
-
-		_containerRuntimeOptions = new HashMap<>();
-
-		for (RuntimeOption runtimeOption :
-				portletConfiguration.runtimeOptions()) {
-
-			_containerRuntimeOptions.put(
-				runtimeOption.name(), Arrays.asList(runtimeOption.values()));
-		}
-
-		_descriptions = new HashMap<>();
-
-		for (LocaleString localeString : portletConfiguration.description()) {
-			_descriptions.put(localeString.locale(), localeString.value());
-		}
-
-		_displayNames = new HashMap<>();
-
-		for (LocaleString localeString : portletConfiguration.displayName()) {
-			_displayNames.put(localeString.locale(), localeString.value());
-		}
-
-		_initParams = new HashMap<>();
-
-		for (InitParameter initParameter : portletConfiguration.initParams()) {
-			String value = initParameter.value();
-
-			if (value != null) {
-				_initParams.put(initParameter.name(), value);
-			}
-		}
-
-		_keywords = new HashMap<>();
-
-		for (LocaleString localeString : portletConfiguration.keywords()) {
-			_keywords.put(localeString.locale(), localeString.value());
-		}
-
-		_portletDependencies = new HashSet<>();
-
-		for (Dependency dependency : portletConfiguration.dependencies()) {
-			_portletDependencies.add(
-				new PortletDependency(
-					dependency.name(), dependency.scope(),
-					dependency.version()));
-		}
-
-		Multipart multipart = portletConfiguration.multipart();
-
-		if (multipart.supported()) {
-			_multiPartFileSizeThreshold = multipart.fileSizeThreshold();
-			_multiPartLocation = multipart.location();
-			_multiPartMaxFileSize = multipart.maxFileSize();
-			_multiPartMaxRequestSize = multipart.maxRequestSize();
-			_multiPartSupported = true;
-		}
-		else {
-			_multiPartFileSizeThreshold = 0;
-			_multiPartLocation = null;
-			_multiPartMaxFileSize = -1L;
-			_multiPartMaxRequestSize = -1L;
-			_multiPartSupported = false;
-		}
-
-		_preferences = new HashMap<>();
-
-		for (javax.portlet.annotations.Preference preference :
-				portletConfiguration.prefs()) {
-
-			_preferences.put(
-				preference.name(),
-				new Preference(
-					Arrays.asList(preference.values()),
-					preference.isReadOnly()));
-		}
-
-		_securityRoleRefs = new HashMap<>();
-
-		for (SecurityRoleRef securityRoleRef :
-				portletConfiguration.roleRefs()) {
-
-			_securityRoleRefs.put(
-				securityRoleRef.roleName(), securityRoleRef.roleLink());
-		}
-
-		_shortTitles = new HashMap<>();
-
-		for (LocaleString localeString : portletConfiguration.shortTitle()) {
-			_shortTitles.put(localeString.locale(), localeString.value());
-		}
-
-		_supportedLocales = new LinkedHashSet<>(
-			Arrays.asList(portletConfiguration.supportedLocales()));
-
-		_supportedPortletModes = new HashMap<>();
-		_supportedWindowStates = new HashMap<>();
-
-		for (Supports supports : portletConfiguration.supports()) {
-			_supportedPortletModes.put(
-				supports.mimeType(),
-				new LinkedHashSet<>(Arrays.asList(supports.portletModes())));
-			_supportedWindowStates.put(
-				supports.mimeType(),
-				new LinkedHashSet<>(Arrays.asList(supports.windowStates())));
-		}
-
-		_supportedPublicRenderParameters = new LinkedHashSet<>(
-			Arrays.asList(portletConfiguration.publicParams()));
-
-		_titles = new HashMap<>();
-
-		for (LocaleString localeString : portletConfiguration.title()) {
-			_titles.put(localeString.locale(), localeString.value());
-		}
+		_liferayConfiguration = liferayConfiguration;
 	}
 
 	@Override

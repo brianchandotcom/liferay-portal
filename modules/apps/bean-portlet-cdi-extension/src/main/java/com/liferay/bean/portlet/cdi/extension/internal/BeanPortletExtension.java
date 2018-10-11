@@ -31,6 +31,7 @@ import com.liferay.bean.portlet.cdi.extension.internal.xml.LiferayDescriptorPars
 import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletDescriptorParser;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletQNameUtil;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.PortletScannerUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -82,8 +83,11 @@ import javax.portlet.PortletSession;
 import javax.portlet.annotations.ContextPath;
 import javax.portlet.annotations.CustomPortletMode;
 import javax.portlet.annotations.CustomWindowState;
+import javax.portlet.annotations.Dependency;
 import javax.portlet.annotations.EventDefinition;
 import javax.portlet.annotations.InitParameter;
+import javax.portlet.annotations.LocaleString;
+import javax.portlet.annotations.Multipart;
 import javax.portlet.annotations.Namespace;
 import javax.portlet.annotations.PortletApplication;
 import javax.portlet.annotations.PortletConfiguration;
@@ -99,6 +103,8 @@ import javax.portlet.annotations.PortletSessionScoped;
 import javax.portlet.annotations.PublicRenderParameterDefinition;
 import javax.portlet.annotations.RenderStateScoped;
 import javax.portlet.annotations.RuntimeOption;
+import javax.portlet.annotations.SecurityRoleRef;
+import javax.portlet.annotations.Supports;
 import javax.portlet.annotations.UserAttribute;
 import javax.portlet.annotations.WindowId;
 import javax.portlet.filter.ActionFilter;
@@ -757,12 +763,183 @@ public class BeanPortletExtension implements Extension {
 			}
 		}
 
+		Map<String, String> displayNames = new HashMap<>();
+
+		for (LocaleString localeString : portletConfiguration.displayName()) {
+			displayNames.put(localeString.locale(), localeString.value());
+		}
+
+		Map<String, String> initParams = new HashMap<>();
+
+		for (InitParameter initParameter : portletConfiguration.initParams()) {
+			String value = initParameter.value();
+
+			if (value != null) {
+				initParams.put(initParameter.name(), value);
+			}
+		}
+
+		Map<String, Set<String>> supportedPortletModes = new HashMap<>();
+		Map<String, Set<String>> supportedWindowStates = new HashMap<>();
+
+		for (Supports supports : portletConfiguration.supports()) {
+			supportedPortletModes.put(
+				supports.mimeType(),
+				new LinkedHashSet<>(Arrays.asList(supports.portletModes())));
+			supportedWindowStates.put(
+				supports.mimeType(),
+				new LinkedHashSet<>(Arrays.asList(supports.windowStates())));
+		}
+
+		Map<String, String> titles = new HashMap<>();
+
+		for (LocaleString localeString : portletConfiguration.title()) {
+			titles.put(localeString.locale(), localeString.value());
+		}
+
+		Map<String, String> shortTitles = new HashMap<>();
+
+		for (LocaleString localeString : portletConfiguration.shortTitle()) {
+			shortTitles.put(localeString.locale(), localeString.value());
+		}
+
+		Map<String, String> keywords = new HashMap<>();
+
+		for (LocaleString localeString : portletConfiguration.keywords()) {
+			keywords.put(localeString.locale(), localeString.value());
+		}
+
+		Map<String, String> descriptions = new HashMap<>();
+
+		for (LocaleString localeString : portletConfiguration.description()) {
+			descriptions.put(localeString.locale(), localeString.value());
+		}
+
+		Map<String, Preference> preferences = new HashMap<>();
+
+		for (javax.portlet.annotations.Preference preference :
+				portletConfiguration.prefs()) {
+
+			preferences.put(
+				preference.name(),
+				new Preference(
+					Arrays.asList(preference.values()),
+					preference.isReadOnly()));
+		}
+
+		Map<String, String> securityRoleRefs = new HashMap<>();
+
+		for (SecurityRoleRef securityRoleRef :
+				portletConfiguration.roleRefs()) {
+
+			securityRoleRefs.put(
+				securityRoleRef.roleName(), securityRoleRef.roleLink());
+		}
+
+		Set<PortletDependency> portletDependencies = new HashSet<>();
+
+		for (Dependency dependency : portletConfiguration.dependencies()) {
+			portletDependencies.add(
+				new PortletDependency(
+					dependency.name(), dependency.scope(),
+					dependency.version()));
+		}
+
+		Multipart multipart = portletConfiguration.multipart();
+
+		boolean multiPartSupported = false;
+		int multiPartFileSizeThreshold = 0;
+		String multiPartLocation = null;
+		long multiPartMaxFileSize = -1L;
+		long multiPartMaxRequestSize = -1L;
+
+		if (multipart.supported()) {
+			multiPartFileSizeThreshold = multipart.fileSizeThreshold();
+			multiPartLocation = multipart.location();
+			multiPartMaxFileSize = multipart.maxFileSize();
+			multiPartMaxRequestSize = multipart.maxRequestSize();
+			multiPartSupported = true;
+		}
+
+		String displayCategory = descriptorDisplayCategories.get(
+			configuredPortletName);
+
+		LiferayPortletConfiguration liferayPortletConfiguration =
+			_getAnnotatedLiferayConfiguration(configuredPortletName);
+
+		String[] propertyNames = null;
+
+		if (liferayPortletConfiguration != null) {
+			propertyNames = liferayPortletConfiguration.properties();
+		}
+
+		Map<String, Set<String>> liferayConfiguration = new HashMap<>();
+
+		if ((propertyNames != null) && (propertyNames.length > 0)) {
+			for (String propertyName : propertyNames) {
+				String propertyValue = null;
+
+				int equalsPos = propertyName.indexOf(CharPool.EQUAL);
+
+				if (equalsPos > 0) {
+					propertyName = propertyName.substring(0, equalsPos);
+
+					propertyValue = propertyName.substring(equalsPos + 1);
+
+					if (Validator.isNull(displayCategory) &&
+						propertyName.equals(
+							"com.liferay.portlet.display-category")) {
+
+						displayCategory = propertyValue;
+
+						continue;
+					}
+				}
+
+				Set<String> values = liferayConfiguration.get(propertyName);
+
+				if (values == null) {
+					values = new LinkedHashSet<>();
+
+					liferayConfiguration.put(propertyName, values);
+				}
+
+				values.add(propertyValue);
+			}
+		}
+
+		Map<String, Set<String>> descriptorLiferayConfiguration =
+			descriptorLiferayConfigurations.get(configuredPortletName);
+
+		if (descriptorLiferayConfiguration != null) {
+			liferayConfiguration.putAll(descriptorLiferayConfiguration);
+		}
+
+		containerRuntimeOptions = new HashMap<>();
+
+		for (RuntimeOption runtimeOption :
+				portletConfiguration.runtimeOptions()) {
+
+			containerRuntimeOptions.put(
+				runtimeOption.name(), Arrays.asList(runtimeOption.values()));
+		}
+
 		BeanPortlet annotatedBeanPortlet = new BeanPortletAnnotationImpl(
-			beanMethods, beanPortletClass.getName(), portletConfiguration,
-			preferencesValidator,
-			_getAnnotatedLiferayConfiguration(configuredPortletName),
-			descriptorLiferayConfigurations.get(configuredPortletName),
-			descriptorDisplayCategories.get(configuredPortletName));
+			portletConfiguration.portletName(), beanMethods, displayNames,
+			beanPortletClass.getName(), initParams,
+			portletConfiguration.cacheExpirationTime(), supportedPortletModes,
+			supportedWindowStates,
+			new LinkedHashSet<>(
+				Arrays.asList(portletConfiguration.supportedLocales())),
+			portletConfiguration.resourceBundle(), titles, shortTitles,
+			keywords, descriptions, preferences, preferencesValidator,
+			securityRoleRefs,
+			new LinkedHashSet<>(
+				Arrays.asList(portletConfiguration.publicParams())),
+			containerRuntimeOptions, portletDependencies,
+			portletConfiguration.asyncSupported(), multiPartSupported,
+			multiPartFileSizeThreshold, multiPartLocation, multiPartMaxFileSize,
+			multiPartMaxRequestSize, displayCategory, liferayConfiguration);
 
 		BeanPortlet descriptorBeanPortlet = _beanPortlets.get(
 			configuredPortletName);

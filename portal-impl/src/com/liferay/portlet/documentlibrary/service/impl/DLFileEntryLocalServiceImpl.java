@@ -362,8 +362,8 @@ public class DLFileEntryLocalServiceImpl
 
 		DLVersionNumberIncrease computedDLVersionNumberIncrease =
 			_computeDLVersionNumberIncrease(
-				dlVersionNumberIncrease, lastDLFileVersion,
-				latestDLFileVersion);
+				dlVersionNumberIncrease, lastDLFileVersion, latestDLFileVersion,
+				serviceContext.getWorkflowAction());
 
 		if (computedDLVersionNumberIncrease == DLVersionNumberIncrease.NONE) {
 			_overwritePreviousFileVersion(
@@ -378,8 +378,7 @@ public class DLFileEntryLocalServiceImpl
 		// File version
 
 		String version = getNextVersion(
-			dlFileEntry, computedDLVersionNumberIncrease,
-			serviceContext.getWorkflowAction());
+			dlFileEntry, computedDLVersionNumberIncrease);
 
 		latestDLFileVersion.setVersion(version);
 
@@ -2473,7 +2472,7 @@ public class DLFileEntryLocalServiceImpl
 
 	protected String getNextVersion(
 		DLFileEntry dlFileEntry,
-		DLVersionNumberIncrease dlVersionNumberIncrease, int workflowAction) {
+		DLVersionNumberIncrease dlVersionNumberIncrease) {
 
 		String version = dlFileEntry.getVersion();
 
@@ -2483,10 +2482,6 @@ public class DLFileEntryLocalServiceImpl
 
 		if (dlFileVersion != null) {
 			version = dlFileVersion.getVersion();
-		}
-
-		if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
-			dlVersionNumberIncrease = DLVersionNumberIncrease.MINOR;
 		}
 
 		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
@@ -2878,7 +2873,12 @@ public class DLFileEntryLocalServiceImpl
 
 	private DLVersionNumberIncrease _computeDLVersionNumberIncrease(
 		DLVersionNumberIncrease dlVersionNumberIncrease,
-		DLFileVersion previousDLFileVersion, DLFileVersion nextDLFileVersion) {
+		DLFileVersion previousDLFileVersion, DLFileVersion nextDLFileVersion,
+		int workflowAction) {
+
+		if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
+			return DLVersionNumberIncrease.MINOR;
+		}
 
 		VersioningStrategy versioningStrategy = _serviceTracker.getService();
 

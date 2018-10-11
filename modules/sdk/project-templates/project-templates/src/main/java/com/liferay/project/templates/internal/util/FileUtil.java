@@ -14,41 +14,39 @@
 
 package com.liferay.project.templates.internal.util;
 
-import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
-
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
-import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.PosixFilePermission;
-
+import java.security.CodeSource;
+import java.security.ProtectionDomain;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Christopher Bryan Boyd
  * @author Gregory Amerson
  */
 public class FileUtil {
@@ -129,28 +127,127 @@ public class FileUtil {
 			});
 	}
 
+	private static Map<String, InputStream> getFilesAndDirectoriesFromClasspath(String directoryName) {
+		Map<String, InputStream> pathMap = new HashMap<>();
+
+		URI uri;
+		try {
+			URL url = FileUtil.class.getResource(directoryName);
+			
+			uri = url.toURI();
+			
+		} catch (Throwable th) {
+			String errorMessage = String.format("Can't convert %s to URI", directoryName);
+			throw new RuntimeException(errorMessage, th);
+		}
+
+		if (uri == null) {
+			String errorMessage = String.format("%s not found", directoryName);
+			throw new NoSuchElementException(errorMessage);
+		}
+
+		String uriScheme = uri.getScheme();
+		
+		if (uriScheme.contains("jar")) {
+			try {
+				
+				FileSystem fileSystem = _getJarFileSystem();
+				Path fileSystemPath = fileSystem.getPath(directoryName);
+				try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(fileSystemPath)) {
+					for (Path directoryStreamPath : directoryStream) {
+						String directoryStreamPathString = directoryStreamPath.toString();
+						if (Files.isDirectory(directoryStreamPath)) {
+							pathMap.put(directoryStreamPathString, null);
+							pathMap.putAll(getFilesAndDirectoriesFromClasspath(directoryStreamPathString));
+						} else {
+							InputStream is = FileUtil.class.getResourceAsStream(directoryStreamPathString);
+							pathMap.put(directoryStreamPathString, is);							
+						}
+					}
+				}
+			} catch (Throwable th) {
+				String errorMessage = String.format("getFolderPath threw %s with the path %s" , th.getMessage(), directoryName);
+				throw new RuntimeException(errorMessage, th);
+			}
+		} else {
+			Path path = Paths.get(uri);
+			try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path)) {
+				
+				for (Path directoryStreamPath : directoryStream) {
+					Path relativeDirectoryStreamPath = path.relativize(directoryStreamPath);
+					Path folderNamePath = Paths.get(directoryName);
+					Path pathToResolve = folderNamePath.resolve(relativeDirectoryStreamPath);
+					String pathToResolveString = pathToResolve.toString();
+					if (Files.isDirectory(directoryStreamPath)) {
+						pathMap.put(pathToResolveString + File.separator, null);
+						pathMap.putAll(getFilesAndDirectoriesFromClasspath(pathToResolveString));
+					} else {
+						InputStream inputStream = new FileInputStream(directoryStreamPath.toFile());
+						pathMap.put(pathToResolveString, inputStream);							
+					}
+				}
+			} catch (Throwable th) {
+				String errorMessage = String.format("getFolderPath threw %s with the path %s" , th.getMessage(), directoryName);
+				throw new RuntimeException(errorMessage, th);
+			}
+		}
+		return pathMap;
+	}
+
+	protected static FileSystem _getJarFileSystem() throws URISyntaxException, IOException {
+		ProtectionDomain protectionDomain = FileUtil.class.getProtectionDomain();
+		
+		CodeSource codeSource = protectionDomain.getCodeSource();
+		
+		URL jarUrl = codeSource.getLocation();
+		
+		URI jarUri = jarUrl.toURI();
+		
+		Path jarPath = Paths.get(jarUri.getPath());
+		
+		FileSystem fs = FileSystems.newFileSystem(jarPath, null);
+		
+		return fs;
+	}
+
+	private static void copyInputStreamToFile( InputStream in, File file ) {
+	    try {
+	    	Files.copy(in, file.toPath());
+	    }
+	    catch (Throwable th) {
+	    	throw new RuntimeException(th);
+	    }
+	}
+
+	
 	public static void extractDirectory(
 			String dirName, final Path destinationDirPath)
 		throws Exception {
 
-		Map<URL, String> resources = _getResources(dirName);
-
-		for (Map.Entry<URL, String> entry : resources.entrySet()) {
-			URL suburl = entry.getKey();
-
-			String substring = entry.getValue();
-
-			Path subpath = Paths.get(
-				substring.replaceFirst(dirName + File.separator, ""));
-
-			Path destination = destinationDirPath.resolve(subpath);
-
-			try (InputStream is = suburl.openStream()) {
-				Files.createDirectories(destination.getParent());
-				Files.copy(
-					is, destination, StandardCopyOption.REPLACE_EXISTING);
-			}
+		if (!dirName.startsWith("/")) {
+			dirName = "/" + dirName;
 		}
+		
+		Map<String, InputStream> filesAndDirectories = getFilesAndDirectoriesFromClasspath(dirName);
+		
+        for (Map.Entry<String,InputStream> entry : filesAndDirectories.entrySet()) {
+            String pathKey = entry.getKey();
+            Path pathKeyPath = Paths.get(pathKey);
+            pathKeyPath = pathKeyPath.subpath(1, pathKeyPath.getNameCount());
+           
+            try (InputStream inputStreamValue = entry.getValue()) {
+	            
+	        	Path targetPath = Paths.get(destinationDirPath.toString(), pathKeyPath.toString());
+	        	
+	        	if (inputStreamValue != null) {
+	        		Files.createDirectories(targetPath.getParent());
+	        		copyInputStreamToFile(inputStreamValue, targetPath.toFile());
+	        	} else {
+	        		Files.createDirectories(targetPath);
+	        	}
+            }
+    	} 
+	
 	}
 
 	public static Path getFile(Path dirPath, String glob) throws IOException {
@@ -245,102 +342,5 @@ public class FileUtil {
 		}
 	}
 
-	private static Map<URL, String> _getResources(final String path)
-		throws IOException {
-
-		Map<URL, String> urlListToReturn = new HashMap<>();
-
-		Thread currentThread = Thread.currentThread();
-
-		final ClassLoader loader = currentThread.getContextClassLoader();
-
-		try (final InputStream inputStream = loader.getResourceAsStream(path);
-			final InputStreamReader inputStreamReader = new InputStreamReader(
-				inputStream, StandardCharsets.UTF_8);
-			final BufferedReader bufferedReader =
-				new BufferedReader(inputStreamReader)) {
-
-			List<URL> urls;
-
-			try (Stream<String> lines = bufferedReader.lines()) {
-				urls = lines.map(
-					l -> path + "/" + l
-				).map(
-					r -> loader.getResource(r)
-				).collect(
-					Collectors.toList()
-				);
-			}
-
-			if ((urls != null) && !urls.isEmpty()) {
-				for (URL url : urls) {
-					if (url != null) {
-						String urlString = url.toString();
-
-						String[] urlSplit = urlString.split(File.separator);
-
-						String name =
-							path + File.separator + urlSplit[urlSplit.length -
-								1];
-
-						if (_isDirectory(url)) {
-							urlListToReturn.putAll(_getResources(name));
-						}
-						else {
-							urlListToReturn.put(url, name);
-						}
-					}
-				}
-			}
-		}
-		catch (Throwable e) {
-		}
-
-		return urlListToReturn;
-	}
-
-	private static boolean _isDirectory(URL url) throws IOException {
-		boolean directory = false;
-
-		String protocol = url.getProtocol();
-
-		String fileString = null;
-
-		if (protocol.equals("file")) {
-			fileString = url.getFile();
-
-			File file = new File(fileString);
-
-			return file.isDirectory();
-		}
-		else if (protocol.equals("jar")) {
-			fileString = url.getFile();
-
-			int exclamationIndex = fileString.indexOf('!');
-
-			String jarPathString = fileString.substring(exclamationIndex + 2);
-
-			URL fileUrl = new URL(fileString.substring(0, exclamationIndex));
-
-			fileString = fileUrl.getFile();
-
-			try (ZipFile zipFile = new ZipFile(fileString)) {
-				ZipEntry zipEntry = zipFile.getEntry(jarPathString);
-
-				directory = zipEntry.isDirectory();
-
-				if (!directory) {
-					try (InputStream input = zipFile.getInputStream(zipEntry)) {
-						directory = input == null;
-					}
-				}
-			}
-		}
-		else {
-			throw new RuntimeException("Unrecognized protocol: " + protocol);
-		}
-
-		return directory;
-	}
 
 }

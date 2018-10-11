@@ -123,11 +123,11 @@ Export-Package:\
 	\
 	javax.mail.*;version='1.4',\
 	\
-	javax.rmi;version='1.0.5.Final',\
-	\
 	javax.persistence.*;version='2.0',\
 	\
 	javax.portlet.*;version='2.0',\
+	\
+	javax.rmi;version='1.0.5.Final',\
 	\
 	javax.servlet.*;version='3.0',\
 	\

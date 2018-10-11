@@ -31,7 +31,10 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -89,8 +92,19 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			Layout layout)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		String layoutMode = ParamUtil.getString(
 			request, "p_l_mode", Constants.VIEW);
+
+		if (layoutMode.equals(Constants.EDIT) &&
+			!LayoutPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
+				ActionKeys.UPDATE)) {
+
+			layoutMode = Constants.VIEW;
+		}
 
 		if (layoutMode.equals(Constants.VIEW)) {
 			List<FragmentEntryLink> fragmentEntryLinks = _getFragmentEntryLinks(

@@ -40,8 +40,7 @@ public class SubscriptionServiceUpgrade implements UpgradeStepRegistrator {
 		DB db = DBManagerUtil.getDB();
 
 		if (db.getDBType() == DBType.SQLSERVER) {
-			Class<?>[] upgradeDatetimeTableClasses =
-				{SubscriptionTable.class};
+			Class<?>[] upgradeDatetimeTableClasses = {SubscriptionTable.class};
 
 			registry.register(
 				"1.0.0", "2.0.0",

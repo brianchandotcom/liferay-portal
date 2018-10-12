@@ -65,33 +65,8 @@ public class TOCTOUTest extends BaseClientTestCase {
 	@Test
 	public void testPreventTOCTOUWithNewScopes() {
 
-		// Test plan
-		// ------------
-
-		// [1] Get a token (implicitly for "everything.read") and check success
-		//     for pre-installed JAX-RS app 1
-
-		// [2] Install JAX-RS app 2
-
-		// [3] Fail to use the token from [1] on JAX-RS app 2
-		//     (admin & end-user TOCTOU protection when API grows)
-
-		// [4] Try again with a fresh narrowed down token for "everything.read".
-		//     Should still fail (admin TOCTOU protection when narrowing down)
-
-		// [5] Re-save the OAuth2 app scope assignment
-
-		// [6] Fail to use the token from [4] on JAX-RS app 2
-		//     (end-user TOCTOU protection when OAuth2 app scope assignment
-		//     grows)
-
-		// [7] Try again with a fresh token (implicitly for "everything.read").
-		//     Should succeed
-
-		// Test begins
-		// -----------
-
-		// [1]
+		// Get a token (implicitly for "everything.read") and check success
+		// for pre-installed JAX-RS app 1
 
 		WebTarget webTarget1 = getWebTarget("/annotated");
 
@@ -106,11 +81,12 @@ public class TOCTOUTest extends BaseClientTestCase {
 		Assert.assertEquals(
 			"everything.read", webTarget1InvocationBuilder.get(String.class));
 
-		// [2]
+		// Install JAX-RS app 2
 
 		webTarget1InvocationBuilder.post(null, String.class);
 
-		// [3]
+		// Fail to use the token from [1] on JAX-RS app 2
+		// (admin & end-user TOCTOU protection when API grows)
 
 		WebTarget webTarget2 = getWebTarget("/annotated2");
 
@@ -127,7 +103,8 @@ public class TOCTOUTest extends BaseClientTestCase {
 			Assert.assertEquals(403, cee.getResponse().getStatus());
 		}
 
-		// [4]
+		// Try again with a fresh narrowed down token for "everything.read".
+		// Should still fail (admin TOCTOU protection when narrowing down)
 
 		token = getToken(
 			"oauthTestApplicationCode", null,
@@ -147,11 +124,12 @@ public class TOCTOUTest extends BaseClientTestCase {
 			Assert.assertEquals(403, cee.getResponse().getStatus());
 		}
 
-		// [5]
+		// Re-save the OAuth2 app scope assignment
 
 		webTarget2InvocationBuilder.post(null, String.class);
 
-		// [6]
+		// Fail to use the token from [4] on JAX-RS app 2
+		// (end-user TOCTOU protection when OAuth2 app scope assignment grows)
 
 		try {
 			webTarget2InvocationBuilder.get(String.class);
@@ -163,7 +141,8 @@ public class TOCTOUTest extends BaseClientTestCase {
 			Assert.assertEquals(403, cee.getResponse().getStatus());
 		}
 
-		// [7]
+		// Try again with a fresh token (implicitly for "everything.read").
+		// Should succeed
 
 		token = getToken(
 			"oauthTestApplicationCode", null,

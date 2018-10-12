@@ -267,7 +267,7 @@
 			<var name="userSegmentRule" value="Site Member" />
 		</execute>
 
-		<execute function="AssertClick" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SELECT_BUTTON" value1="Select" />
+		<execute function="AssertClick" locator1="EditUserSegment#USER_SEGMENT_RULE_SELECT_BUTTON" value1="Select" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
@@ -283,7 +283,7 @@
 			<var name="userSegmentRule" value="Site Role" />
 		</execute>
 
-		<execute function="AssertClick" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SELECT_BUTTON" value1="Select" />
+		<execute function="AssertClick" locator1="EditUserSegment#USER_SEGMENT_RULE_SELECT_BUTTON" value1="Select" />
 
 		<execute function="SelectFrame" locator1="IFrame#SELECT_SITE_ROLE" />
 
@@ -310,7 +310,7 @@
 			<var name="userSegmentRule" value="User Group Member" />
 		</execute>
 
-		<execute function="AssertClick" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SELECT_BUTTON" value1="Select" />
+		<execute function="AssertClick" locator1="EditUserSegment#USER_SEGMENT_RULE_SELECT_BUTTON" value1="Select" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 

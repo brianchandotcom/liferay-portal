@@ -275,7 +275,9 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 		String invocationURL =
 			JenkinsResultsParserUtil.getMostAvailableMasterURL(
-				"http://" + cohortName + ".liferay.com", 1);
+				JenkinsResultsParserUtil.combine(
+					"http://", cohortName, ".liferay.com"),
+				1);
 
 		StringBuilder sb = new StringBuilder();
 

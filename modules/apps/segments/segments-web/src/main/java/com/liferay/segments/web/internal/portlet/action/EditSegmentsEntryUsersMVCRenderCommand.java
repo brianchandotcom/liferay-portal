@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.constants.SegmentsPortletKeys;
+import com.liferay.segments.odata.retriever.UserODataRetriever;
 import com.liferay.segments.service.SegmentsEntryRelService;
 import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
@@ -59,7 +60,8 @@ public class EditSegmentsEntryUsersMVCRenderCommand
 			new EditSegmentsEntryDisplayContext(
 				httpServletRequest, renderRequest, renderResponse,
 				_organizationLocalService, _segmentsEntryService,
-				_segmentsEntryRelService, _userLocalService);
+				_segmentsEntryRelService, _userLocalService,
+				_userODataRetriever);
 
 		renderRequest.setAttribute(
 			SegmentsWebKeys.EDIT_SEGMENTS_ENTRY_DISPLAY_CONTEXT,
@@ -82,5 +84,8 @@ public class EditSegmentsEntryUsersMVCRenderCommand
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private UserODataRetriever _userODataRetriever;
 
 }

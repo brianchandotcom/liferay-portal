@@ -280,6 +280,14 @@ public class SegmentsEntryRelLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.segments.model.SegmentsEntryRel> getSegmentsEntryRels(
+		long segmentsEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntryRel> orderByComparator) {
+		return _segmentsEntryRelLocalService.getSegmentsEntryRels(segmentsEntryId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.segments.model.SegmentsEntryRel> getSegmentsEntryRels(
 		long classNameId, long classPK) {
 		return _segmentsEntryRelLocalService.getSegmentsEntryRels(classNameId,
 			classPK);

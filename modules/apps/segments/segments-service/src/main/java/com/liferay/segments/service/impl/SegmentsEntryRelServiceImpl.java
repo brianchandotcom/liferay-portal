@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.segments.constants.SegmentsActionKeys;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.model.SegmentsEntry;
@@ -84,6 +85,19 @@ public class SegmentsEntryRelServiceImpl
 
 		return segmentsEntryRelLocalService.getSegmentsEntryRels(
 			segmentsEntryId);
+	}
+
+	@Override
+	public List<SegmentsEntryRel> getSegmentsEntryRels(
+			long segmentsEntryId, int start, int end,
+			OrderByComparator<SegmentsEntryRel> orderByComparator)
+		throws PortalException {
+
+		_segmentsEntryResourcePermission.check(
+			getPermissionChecker(), segmentsEntryId, ActionKeys.VIEW);
+
+		return segmentsEntryRelLocalService.getSegmentsEntryRels(
+			segmentsEntryId, start, end, orderByComparator);
 	}
 
 	@Override

@@ -262,6 +262,14 @@ public class SegmentsEntryRelLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.segments.model.SegmentsEntryRel> getSegmentsEntryRels(
+		long segmentsEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntryRel> orderByComparator) {
+		return getService()
+				   .getSegmentsEntryRels(segmentsEntryId, start, end,
+			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.segments.model.SegmentsEntryRel> getSegmentsEntryRels(
 		long classNameId, long classPK) {
 		return getService().getSegmentsEntryRels(classNameId, classPK);
 	}

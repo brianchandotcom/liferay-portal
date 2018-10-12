@@ -58,18 +58,37 @@ public class RegistrationUtil {
 				String portletId = _getPortletId(
 					curPortletName, servletContext.getServletContextName());
 
+				if (!allPortletNames.contains(curPortletName)) {
+					_log.error(
+						StringBundler.concat(
+							"Unable to register filter ",
+							beanFilter.getFilterName(),
+							" for non-existent portlet ", portletName));
+
+					continue;
+				}
+
 				_registerBeanFilter(
 					bundleContext, curPortletName, portletId, allPortletNames,
 					beanFilter, beanManager, registrations);
 			}
 		}
 		else {
-			String portletId = _getPortletId(
-				portletName, servletContext.getServletContextName());
+			if (!allPortletNames.contains(portletName)) {
+				_log.error(
+					StringBundler.concat(
+						"Unable to register filter ",
+						beanFilter.getFilterName(),
+						" for non-existent portlet ", portletName));
+			}
+			else {
+				String portletId = _getPortletId(
+					portletName, servletContext.getServletContextName());
 
-			_registerBeanFilter(
-				bundleContext, portletName, portletId, allPortletNames,
-				beanFilter, beanManager, registrations);
+				_registerBeanFilter(
+					bundleContext, portletName, portletId, allPortletNames,
+					beanFilter, beanManager, registrations);
+			}
 		}
 
 		@SuppressWarnings("unchecked")
@@ -165,15 +184,6 @@ public class RegistrationUtil {
 		Set<String> allPortletNames, BeanFilter beanFilter,
 		BeanManager beanManager,
 		List<ServiceRegistration<PortletFilter>> registrations) {
-
-		if (!allPortletNames.contains(portletName)) {
-			_log.error(
-				StringBundler.concat(
-					"Unable to register filter ", beanFilter.getFilterName(),
-					" for non-existent portlet ", portletName));
-
-			return;
-		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

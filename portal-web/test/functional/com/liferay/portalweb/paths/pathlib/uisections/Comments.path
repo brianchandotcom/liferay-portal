@@ -105,7 +105,7 @@
 </tr>
 <tr>
 	<td>USER_NAME</td>
-	<td>//header[@class='lfr-discussion-message-author']/a | //header[@class='lfr-discussion-message-author']//span[contains(.,'${key_userFullName}')] | //article[contains(@class,'lfr-discussion')]//a[contains(@class,'username')]</td>
+	<td>//div[contains(.,'${key_entryComment}')]//*[self::a or self::span][contains(@class,'username') and contains(.,'${key_userFullName}')]</td>
 	<td></td>
 </tr>
 <tr>

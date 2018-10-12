@@ -74,7 +74,7 @@ public class UserODataRetrieverTest {
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
-				"(dateModified eq %s) and (firstName eq \"%s\")", firstName,
+				"(dateModified eq %s) and (firstName eq '%s')", firstName,
 				ISO8601Utils.format(_user1.getModifiedDate())),
 			LocaleUtil.getDefault(), 0, 2);
 
@@ -96,7 +96,7 @@ public class UserODataRetrieverTest {
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
-				"(dateModified gt %s) and (firstName eq \"%s\")", firstName,
+				"(dateModified gt %s) and (firstName eq '%s')", firstName,
 				ISO8601Utils.format(_user1.getModifiedDate())),
 			LocaleUtil.getDefault(), 0, 2);
 
@@ -120,7 +120,7 @@ public class UserODataRetrieverTest {
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
-				"(dateModified ge %s) and (firstName eq \"%s\")", firstName,
+				"(dateModified ge %s) and (firstName eq '%s')", firstName,
 				ISO8601Utils.format(new Date())),
 			LocaleUtil.getDefault(), 0, 2);
 
@@ -142,7 +142,7 @@ public class UserODataRetrieverTest {
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
-				"(dateModified lt %s) and (firstName eq \"%s\")", firstName,
+				"(dateModified lt %s) and (firstName eq '%s')", firstName,
 				ISO8601Utils.format(_user2.getModifiedDate())),
 			LocaleUtil.getDefault(), 0, 2);
 
@@ -166,7 +166,7 @@ public class UserODataRetrieverTest {
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
-				"(dateModified le %s) and (firstName eq \"%s\")", firstName,
+				"(dateModified le %s) and (firstName eq '%s')", firstName,
 				ISO8601Utils.format(new Date())),
 			LocaleUtil.getDefault(), 0, 2);
 
@@ -181,7 +181,7 @@ public class UserODataRetrieverTest {
 
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
-			"(emailAddress eq \"" + _user1.getEmailAddress() + "\")",
+			"(emailAddress eq '" + _user1.getEmailAddress() + "')",
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());
@@ -197,7 +197,7 @@ public class UserODataRetrieverTest {
 
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
-			"(firstName eq \"" + _user1.getFirstName() + "\")",
+			"(firstName eq '" + _user1.getFirstName() + "')",
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());
@@ -213,8 +213,8 @@ public class UserODataRetrieverTest {
 
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
-			"(firstName eq \"" + _user1.getFirstName() +
-				"\") and (lastName eq " + "\"" + _user1.getLastName() + "\") ",
+			"(firstName eq '" + _user1.getFirstName() + "') and (lastName eq " +
+				"'" + _user1.getLastName() + "') ",
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());
@@ -234,8 +234,8 @@ public class UserODataRetrieverTest {
 
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
-			"(firstName eq \"" + _user1.getFirstName() +
-				"\") or (lastName eq \"" + _user2.getLastName() + "\") ",
+			"(firstName eq '" + _user1.getFirstName() + "') or (lastName eq '" +
+				_user2.getLastName() + "') ",
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 2, users.size());
@@ -252,8 +252,8 @@ public class UserODataRetrieverTest {
 
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
-			"(firstName eq \"" + _user1.getFirstName() +
-				"\") or (lastName eq \"nonexistentLastName\") ",
+			"(firstName eq '" + _user1.getFirstName() +
+				"') or (lastName eq 'nonexistentLastName') ",
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());
@@ -271,8 +271,8 @@ public class UserODataRetrieverTest {
 
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
-			"(firstName eq \"" + _user1.getFirstName() +
-				"\") or (lastName eq \"" + _user1.getLastName() + "\") ",
+			"(firstName eq '" + _user1.getFirstName() + "') or (lastName eq '" +
+				_user1.getLastName() + "') ",
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());
@@ -293,8 +293,8 @@ public class UserODataRetrieverTest {
 
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
-			"(firstName eq \"" + firstName + "\") and (groupId eq \"" +
-				_group2.getGroupId() + "\")",
+			"(firstName eq '" + firstName + "') and (groupId eq '" +
+				_group2.getGroupId() + "')",
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());
@@ -315,8 +315,8 @@ public class UserODataRetrieverTest {
 
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
-			"(firstName eq \"" + firstName + "\") and (groupIds eq \"" +
-				_group2.getGroupId() + "\")",
+			"(firstName eq '" + firstName + "') and (groupIds eq '" +
+				_group2.getGroupId() + "')",
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());
@@ -337,9 +337,9 @@ public class UserODataRetrieverTest {
 
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
-			"(firstName eq \"" + firstName + "\") and ((groupIds eq \"" +
-				_group2.getGroupId() + "\") or (groupIds eq \"" +
-					_group1.getGroupId() + "\"))",
+			"(firstName eq '" + firstName + "') and ((groupIds eq '" +
+				_group2.getGroupId() + "') or (groupIds eq '" +
+					_group1.getGroupId() + "'))",
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 2, users.size());
@@ -354,7 +354,7 @@ public class UserODataRetrieverTest {
 
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
-			"(lastName eq \"" + _user1.getLastName() + "\")",
+			"(lastName eq '" + _user1.getLastName() + "')",
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());
@@ -375,9 +375,9 @@ public class UserODataRetrieverTest {
 
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
-			"(firstName eq \"" + firstName + "\") and (groupIds eq \"" +
-				_group2.getGroupId() + "\") and (groupIds eq \"" +
-					_group1.getGroupId() + "\")",
+			"(firstName eq '" + firstName + "') and (groupIds eq '" +
+				_group2.getGroupId() + "') and (groupIds eq '" +
+					_group1.getGroupId() + "')",
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());
@@ -393,7 +393,7 @@ public class UserODataRetrieverTest {
 
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
-			"(screenName eq \"" + _user1.getScreenName() + "\")",
+			"(screenName eq '" + _user1.getScreenName() + "')",
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());

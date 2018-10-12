@@ -515,14 +515,15 @@ public class BeanPortletExtension implements Extension {
 			Set<String> portletNames = new HashSet<>(
 				Arrays.asList(portletLifecycleFilter.portletNames()));
 
-			BeanFilter descriptorBeanFilter = _beanFilters.get(
-				portletLifecycleFilter.filterName());
+			String filterName = portletLifecycleFilter.filterName();
+
+			BeanFilter descriptorBeanFilter = _beanFilters.get(filterName);
 
 			if (descriptorBeanFilter == null) {
 				_beanFilters.put(
-					portletLifecycleFilter.filterName(),
+					filterName,
 					new BeanFilterImpl(
-						portletLifecycleFilter.filterName(), annotatedClass,
+						filterName, annotatedClass,
 						portletLifecycleFilter.ordinal(), portletNames,
 						lifecycles, initParams));
 			}
@@ -534,7 +535,7 @@ public class BeanPortletExtension implements Extension {
 				initParams.putAll(descriptorBeanFilter.getInitParams());
 
 				_beanFilters.put(
-					portletLifecycleFilter.filterName(),
+					filterName,
 					new BeanFilterImpl(
 						descriptorBeanFilter.getFilterName(),
 						descriptorBeanFilter.getFilterClass(),

@@ -73,11 +73,11 @@ public class UserODataRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		Instant instant1 = _user1.getModifiedDate().toInstant();
+		Date modifiedDate = _user1.getModifiedDate();
 
-		Instant instant2 = instant1.plusSeconds(1);
+		Instant instant = modifiedDate.toInstant();
 
-		_user2.setModifiedDate(Date.from(instant2));
+		_user2.setModifiedDate(Date.from(instant.plusSeconds(1)));
 
 		_userLocalService.updateUser(_user2);
 
@@ -99,16 +99,15 @@ public class UserODataRetrieverTest {
 		_user1 = UserTestUtil.addUser(
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
-
 		_user2 = UserTestUtil.addUser(
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		Instant instant1 = _user1.getModifiedDate().toInstant();
+		Date modifiedDate = _user1.getModifiedDate();
 
-		Instant instant2 = instant1.plusSeconds(1);
+		Instant instant = modifiedDate.toInstant();
 
-		_user2.setModifiedDate(Date.from(instant2));
+		_user2.setModifiedDate(Date.from(instant.plusSeconds(1)));
 
 		_userLocalService.updateUser(_user2);
 
@@ -136,11 +135,11 @@ public class UserODataRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		Instant instant1 = _user1.getModifiedDate().toInstant();
+		Date modifiedDate = _user1.getModifiedDate();
 
-		Instant instant2 = instant1.plusSeconds(1);
+		Instant instant = modifiedDate.toInstant();
 
-		_user2.setModifiedDate(Date.from(instant2));
+		_user2.setModifiedDate(Date.from(instant.plusSeconds(1)));
 
 		_userLocalService.updateUser(_user2);
 
@@ -148,7 +147,7 @@ public class UserODataRetrieverTest {
 			_group1.getCompanyId(),
 			String.format(
 				"(dateModified ge %s) and (firstName eq '%s')",
-				ISO8601Utils.format(Date.from(instant2)), firstName),
+				ISO8601Utils.format(_user2.getModifiedDate()), firstName),
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());
@@ -166,11 +165,11 @@ public class UserODataRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		Instant instant1 = _user1.getModifiedDate().toInstant();
+		Date modifiedDate = _user1.getModifiedDate();
 
-		Instant instant2 = instant1.plusSeconds(1);
+		Instant instant = modifiedDate.toInstant();
 
-		_user2.setModifiedDate(Date.from(instant2));
+		_user2.setModifiedDate(Date.from(instant.plusSeconds(1)));
 
 		_userLocalService.updateUser(_user2);
 
@@ -198,11 +197,11 @@ public class UserODataRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		Instant instant1 = _user1.getModifiedDate().toInstant();
+		Date modifiedDate = _user1.getModifiedDate();
 
-		Instant instant2 = instant1.plusSeconds(1);
+		Instant instant = modifiedDate.toInstant();
 
-		_user2.setModifiedDate(Date.from(instant2));
+		_user2.setModifiedDate(Date.from(instant.plusSeconds(1)));
 
 		_userLocalService.updateUser(_user2);
 
@@ -210,7 +209,7 @@ public class UserODataRetrieverTest {
 			_group1.getCompanyId(),
 			String.format(
 				"(dateModified le %s) and (firstName eq '%s')",
-				ISO8601Utils.format(Date.from(instant1)), firstName),
+				ISO8601Utils.format(modifiedDate), firstName),
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());

@@ -15,7 +15,9 @@
 package com.liferay.adaptive.media.document.library.thumbnails.internal.upgrade;
 
 import com.liferay.adaptive.media.document.library.thumbnails.internal.upgrade.v1_0_0.UpgradeDocumentLibraryThumbnailsConfiguration;
+import com.liferay.adaptive.media.document.library.thumbnails.internal.upgrade.v1_0_1.UpgradeDocumentLibraryThumbnailsPreviewConfiguration;
 import com.liferay.adaptive.media.document.library.thumbnails.internal.util.AMCompanyThumbnailConfigurationInitializer;
+import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -36,11 +38,19 @@ public class AMDocumentLibraryThumbnailsUpgrade
 			new UpgradeDocumentLibraryThumbnailsConfiguration(
 				_amCompanyThumbnailConfigurationInitializer,
 				_companyLocalService));
+
+		registry.register(
+			"1.0.0", "1.0.1",
+			new UpgradeDocumentLibraryThumbnailsPreviewConfiguration(
+				_amImageConfigurationHelper, _companyLocalService));
 	}
 
 	@Reference(unbind = "-")
 	private AMCompanyThumbnailConfigurationInitializer
 		_amCompanyThumbnailConfigurationInitializer;
+
+	@Reference(unbind = "-")
+	private AMImageConfigurationHelper _amImageConfigurationHelper;
 
 	@Reference(unbind = "-")
 	private CompanyLocalService _companyLocalService;

@@ -7,6 +7,10 @@
 		<execute macro="TestCase#setUpPortalInstance" />
 
 		<execute macro="User#firstLoginPG" />
+
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Test Site Name" />
+		</execute>
 	</set-up>
 
 	<tear-down>
@@ -18,20 +22,9 @@
 				<execute macro="PortalInstances#tearDownCP" />
 			</then>
 			<else>
-				<execute macro="User#logoutAndLoginPG">
-					<var name="userLoginEmailAddress" value="test@liferay.com" />
-					<var name="userLoginFullName" value="Test Test" />
+				<execute macro="JSONGroup#deleteGroupByName">
+					<var name="groupName" value="Test Site Name" />
 				</execute>
-
-				<execute macro="Vocabulary#tearDownCP" />
-
-				<execute macro="DMDocument#tearDownCP" />
-
-				<execute macro="WebContent#tearDownCP" />
-
-				<execute macro="User#tearDownCP" />
-
-				<execute macro="Page#tearDownCP" />
 			</else>
 		</if>
 	</tear-down>
@@ -97,7 +90,9 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/site-name" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Members" />
@@ -207,10 +202,8 @@
 	<command name="AddCategorywithSiteRole" priority="4">
 		<property name="testray.component.names" value="Categories,Permissions,Roles" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
+		<execute macro="Site#openSitesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
@@ -463,7 +456,9 @@
 
 		<execute macro="PortletEntry#save" />
 
-		<execute macro="Navigator#openURL" />
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/site-name" />
+		</execute>
 
 		<execute macro="Page#viewSpecificPG">
 			<var name="pageNameList" value="Test Page Name" />
@@ -955,10 +950,8 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/site-name" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

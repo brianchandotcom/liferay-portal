@@ -5811,6 +5811,11 @@ version 2.4.14.
 ### Changed
 - [LPS-86308]: Update the [Liferay Alloy Taglib] dependency to version 1.1.13.
 
+## 3.12.161 - 2018-10-12
+
+### Changed
+- [LPS-86018]: Enable `watch` task for theme and WAR projects.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -6258,5 +6263,6 @@ version 2.4.14.
 [LPS-85609]: https://issues.liferay.com/browse/LPS-85609
 [LPS-85678]: https://issues.liferay.com/browse/LPS-85678
 [LPS-85959]: https://issues.liferay.com/browse/LPS-85959
+[LPS-86018]: https://issues.liferay.com/browse/LPS-86018
 [LPS-86308]: https://issues.liferay.com/browse/LPS-86308
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

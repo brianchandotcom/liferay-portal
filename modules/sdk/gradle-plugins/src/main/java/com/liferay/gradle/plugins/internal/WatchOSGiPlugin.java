@@ -24,8 +24,11 @@ import com.liferay.gradle.plugins.tasks.ExecuteBndTask;
 import com.liferay.gradle.plugins.tasks.WatchTask;
 
 import java.io.File;
+import java.io.FileInputStream;
 
 import java.util.concurrent.Callable;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -228,6 +231,33 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 				@Override
 				public File call() throws Exception {
 					return buildBundleDirTask.getDestinationDir();
+				}
+
+			});
+
+		watchTask.setBundleSymbolicName(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					File manifestFile = new File(
+						buildBundleDirTask.getDestinationDir(),
+						"META-INF/MANIFEST.MF");
+
+					if (manifestFile.exists()) {
+						try (FileInputStream fileInputStream =
+								new FileInputStream(manifestFile)) {
+
+							Manifest manifest = new Manifest(fileInputStream);
+
+							Attributes attributes =
+								manifest.getMainAttributes();
+
+							return attributes.getValue("Bundle-SymbolicName");
+						}
+					}
+
+					return null;
 				}
 
 			});

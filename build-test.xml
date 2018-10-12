@@ -8564,21 +8564,20 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 				<basename file="${test.build.bundle.zip.url}" property="bundle.file.name" />
 
 				<mirrors-get
-					dest="${bundle.file.name}"
+					dest="${java.io.tmpdir}/${bundle.file.name}"
 					src="${test.build.bundle.zip.url}"
 				/>
 
 				<decompress
-					dest="${project.dir}"
-					src="${bundle.file.name}"
+					dest="${java.io.tmpdir}/bundle"
+					src="${java.io.tmpdir}/${bundle.file.name}"
 				/>
 
 				<move
 					todir="${app.server.parent.dir}"
-					verbose="true"
 				>
 					<fileset
-						dir="${project.dir}"
+						dir="${java.io.tmpdir}/bundle"
 						includes="liferay-*/**"
 					/>
 					<mapper
@@ -8588,14 +8587,9 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					/>
 				</move>
 
-				<delete includeemptydirs="true">
-					<fileset
-						dir="${project.dir}"
-						includes="liferay-*/**"
-					/>
-				</delete>
+				<delete dir="${java.io.tmpdir}/bundle" />
 
-				<delete file="${bundle.file.name}" />
+				<delete file="${java.io.tmpdir}/${bundle.file.name}" />
 
 				<chmod
 					perm="a+x"
@@ -8731,21 +8725,20 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 				<basename file="${bundle.zip.url}" property="bundle.file.name" />
 
 				<mirrors-get
-					dest="${bundle.file.name}"
+					dest="${java.io.tmpdir}/${bundle.file.name}"
 					src="${bundle.zip.url}"
 				/>
 
 				<decompress
-					dest="${project.dir}"
-					src="${bundle.file.name}"
+					dest="${java.io.tmpdir}/bundle"
+					src="${java.io.tmpdir}/${bundle.file.name}"
 				/>
 
 				<move
 					todir="${project.dir}/sql"
-					verbose="true"
 				>
 					<fileset
-						dir="${project.dir}"
+						dir="${java.io.tmpdir}/bundle"
 						includes="liferay-*/data/hypersonic/*"
 					/>
 					<mapper
@@ -8755,14 +8748,9 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					/>
 				</move>
 
-				<delete includeemptydirs="true">
-					<fileset
-						dir="${project.dir}"
-						includes="liferay-*/**"
-					/>
-				</delete>
+				<delete dir="${java.io.tmpdir}/bundle" />
 
-				<delete file="${bundle.file.name}" />
+				<delete file="${java.io.tmpdir}/${bundle.file.name}" />
 			</then>
 		</if>
 

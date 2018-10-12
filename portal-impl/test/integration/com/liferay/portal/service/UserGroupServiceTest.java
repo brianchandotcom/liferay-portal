@@ -14,21 +14,31 @@
 
 package com.liferay.portal.service;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -85,53 +95,81 @@ public class UserGroupServiceTest {
 
 	@Test
 	public void testGetUserGroupsLikeName() throws Exception {
-		String name = RandomTestUtil.randomString(10);
+		UserGroup markerUserGroup = UserGroupTestUtil.addUserGroup();
 
-		List<UserGroup> expectedUserGroups = new ArrayList<>();
+		Company company = CompanyTestUtil.addCompany();
 
-		for (int i = 0; i < 10; i++) {
-			UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+		long companyId = company.getCompanyId();
 
-			userGroup.setName(name + i);
+		User user = UserTestUtil.getAdminUser(company.getCompanyId());
 
-			UserGroupLocalServiceUtil.updateUserGroup(userGroup);
+		Group group = GroupTestUtil.addGroup(
+			company.getCompanyId(), user.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-			expectedUserGroups.add(userGroup);
+		long groupId = group.getGroupId();
+
+		UnsafeSupplier<UserGroup, Exception> userGroupSupplier =
+			() -> UserGroupTestUtil.addUserGroup(groupId);
+
+		try {
+			String name = RandomTestUtil.randomString(10);
+
+			List<UserGroup> expectedUserGroups = new ArrayList<>();
+
+			for (int i = 0; i < 10; i++) {
+				UserGroup userGroup = userGroupSupplier.get();
+
+				userGroup.setName(name + i);
+
+				UserGroupLocalServiceUtil.updateUserGroup(userGroup);
+
+				expectedUserGroups.add(userGroup);
+			}
+
+			List<UserGroup> allUserGroups = new ArrayList<>();
+
+			allUserGroups.addAll(expectedUserGroups);
+			allUserGroups.add(userGroupSupplier.get());
+			allUserGroups.add(userGroupSupplier.get());
+			allUserGroups.add(userGroupSupplier.get());
+
+			BiConsumer<List<UserGroup>, String> assertor = _getAssertor(
+				companyId);
+
+			assertor.accept(expectedUserGroups, name + "%");
+			assertor.accept(
+				expectedUserGroups, StringUtil.toLowerCase(name) + "%");
+			assertor.accept(
+				expectedUserGroups, StringUtil.toUpperCase(name) + "%");
+			assertor.accept(allUserGroups, null);
+			assertor.accept(allUserGroups, "");
 		}
+		finally {
+			CompanyLocalServiceUtil.deleteCompany(company);
 
-		_userGroups.addAll(expectedUserGroups);
-		_userGroups.add(UserGroupTestUtil.addUserGroup());
-		_userGroups.add(UserGroupTestUtil.addUserGroup());
-		_userGroups.add(UserGroupTestUtil.addUserGroup());
-
-		assertExpectedUserGroups(expectedUserGroups, name + "%");
-		assertExpectedUserGroups(
-			expectedUserGroups, StringUtil.toLowerCase(name) + "%");
-		assertExpectedUserGroups(
-			expectedUserGroups, StringUtil.toUpperCase(name) + "%");
-		assertExpectedUserGroups(_userGroups, null);
-		assertExpectedUserGroups(_userGroups, "");
+			UserGroupLocalServiceUtil.deleteUserGroup(markerUserGroup);
+		}
 	}
 
-	protected void assertExpectedUserGroups(
-			List<UserGroup> expectedUserGroups, String nameSearch)
-		throws Exception {
+	private BiConsumer<List<UserGroup>, String> _getAssertor(long companyId) {
+		return (expectedUserGroups, nameSearch) -> {
+			List<UserGroup> actualUserGroups =
+				UserGroupServiceUtil.getUserGroups(
+					companyId, nameSearch, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
 
-		List<UserGroup> actualUserGroups = UserGroupServiceUtil.getUserGroups(
-			TestPropsValues.getCompanyId(), nameSearch, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			Assert.assertEquals(
+				actualUserGroups.toString(), expectedUserGroups.size(),
+				actualUserGroups.size());
+			Assert.assertTrue(
+				actualUserGroups.toString(),
+				actualUserGroups.containsAll(expectedUserGroups));
 
-		Assert.assertEquals(
-			actualUserGroups.toString(), expectedUserGroups.size(),
-			actualUserGroups.size());
-		Assert.assertTrue(
-			actualUserGroups.toString(),
-			actualUserGroups.containsAll(expectedUserGroups));
-
-		Assert.assertEquals(
-			expectedUserGroups.size(),
-			UserGroupServiceUtil.getUserGroupsCount(
-				TestPropsValues.getCompanyId(), nameSearch));
+			Assert.assertEquals(
+				expectedUserGroups.size(),
+				UserGroupServiceUtil.getUserGroupsCount(companyId, nameSearch));
+		};
 	}
 
 	@DeleteAfterTestRun

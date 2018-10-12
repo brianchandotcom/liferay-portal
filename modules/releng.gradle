@@ -431,21 +431,6 @@ portalArtifactsJar {
 					if (manifestMergeDetails.key == "Manifest-Version") {
 						manifestMergeDetails.value = "1.0"
 					}
-					else if (manifestMergeDetails.key == "Bundle-ManifestVersion") {
-						manifestMergeDetails.value = "2"
-					}
-					else if (manifestMergeDetails.key == "Bundle-Name") {
-						manifestMergeDetails.value = "Liferay Portal Artifacts"
-					}
-					else if (manifestMergeDetails.key == "Bundle-SymbolicName") {
-						manifestMergeDetails.value = "com.liferay.portal.artifacts"
-					}
-					else if (manifestMergeDetails.key == "Bundle-Vendor") {
-						manifestMergeDetails.value = "Liferay, Inc."
-					}
-					else if (manifestMergeDetails.key == "Bundle-Version") {
-						manifestMergeDetails.value = "1.0.0"
-					}
 					else if (manifestMergeDetails.key == "Export-Package") {
 						if (manifestMergeDetails.baseValue != null) {
 							manifestMergeDetails.value = manifestMergeDetails.baseValue + "," + manifestMergeDetails.mergeValue

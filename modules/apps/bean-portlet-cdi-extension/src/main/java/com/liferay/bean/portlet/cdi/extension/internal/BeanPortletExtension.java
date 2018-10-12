@@ -517,31 +517,28 @@ public class BeanPortletExtension implements Extension {
 
 			String filterName = portletLifecycleFilter.filterName();
 
-			BeanFilter descriptorBeanFilter = _beanFilters.get(filterName);
+			BeanFilter beanFilter = _beanFilters.get(filterName);
 
-			if (descriptorBeanFilter == null) {
-				_beanFilters.put(
-					filterName,
-					new BeanFilterImpl(
-						filterName, annotatedClass,
-						portletLifecycleFilter.ordinal(), portletNames,
-						lifecycles, initParams));
+			if (beanFilter == null) {
+				beanFilter = new BeanFilterImpl(
+					filterName, annotatedClass,
+					portletLifecycleFilter.ordinal(), portletNames, lifecycles,
+					initParams);
 			}
 			else {
-				portletNames.addAll(descriptorBeanFilter.getPortletNames());
+				portletNames.addAll(beanFilter.getPortletNames());
 
-				lifecycles.addAll(descriptorBeanFilter.getLifecycles());
+				lifecycles.addAll(beanFilter.getLifecycles());
 
-				initParams.putAll(descriptorBeanFilter.getInitParams());
+				initParams.putAll(beanFilter.getInitParams());
 
-				_beanFilters.put(
-					filterName,
-					new BeanFilterImpl(
-						descriptorBeanFilter.getFilterName(),
-						descriptorBeanFilter.getFilterClass(),
-						descriptorBeanFilter.getOrdinal(), portletNames,
-						lifecycles, initParams));
+				beanFilter = new BeanFilterImpl(
+					beanFilter.getFilterName(), beanFilter.getFilterClass(),
+					beanFilter.getOrdinal(), portletNames, lifecycles,
+					initParams);
 			}
+
+			_beanFilters.put(filterName, beanFilter);
 		}
 	}
 

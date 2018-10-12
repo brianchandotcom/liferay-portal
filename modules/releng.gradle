@@ -387,14 +387,6 @@ portalArtifactsJar {
 	configurations = [project.configurations.portalArtifacts]
 	version = _getReleaseInfoVersion()
 
-	FileTree languagePropertiesFileTree = fileTree(dir: projectDir.parentFile, include: "/portal-impl/src/content/Language*.properties")
-
-	languagePropertiesFileTree.each {
-		File languagePropertiesFile ->
-
-		append("content/" + languagePropertiesFile.name)
-	}
-
 	doFirst {
 		File portalArtifactsDir = new File(buildDir, "portalArtifacts")
 
@@ -412,38 +404,46 @@ portalArtifactsJar {
 				println "Copied " + jarFile.name
 			}
 		}
-	}
 
-	doLast {
-		println "Created jar " + archivePath
-	}
+		FileTree languagePropertiesFileTree = fileTree(dir: projectDir.parentFile, include: "/portal-impl/src/content/Language*.properties")
 
-	manifest {
-		FileTree portalArtifactsManifestFileTree = fileTree(new File(buildDir, "portalArtifacts")).matching {
-			include "**/META-INF/MANIFEST.MF"
+		languagePropertiesFileTree.each {
+			File languagePropertiesFile ->
+
+			append("content/" + languagePropertiesFile.name)
 		}
 
-		portalArtifactsManifestFileTree.files.each {
-			File portalArtifactsManifestFile ->
+		manifest {
+			FileTree portalArtifactsManifestFileTree = fileTree(portalArtifactsDir).matching {
+				include "**/META-INF/MANIFEST.MF"
+			}
 
-			from (portalArtifactsManifestFile) {
-				eachEntry {
-					ManifestMergeDetails manifestMergeDetails ->
+			portalArtifactsManifestFileTree.files.each {
+				File portalArtifactsManifestFile ->
 
-					if (manifestMergeDetails.key == "Manifest-Version") {
-						manifestMergeDetails.value = "1.0"
-					}
-					else if (manifestMergeDetails.key == "Export-Package") {
-						if (manifestMergeDetails.baseValue != null) {
-							manifestMergeDetails.value = manifestMergeDetails.baseValue + "," + manifestMergeDetails.mergeValue
+				from (portalArtifactsManifestFile) {
+					eachEntry {
+						ManifestMergeDetails manifestMergeDetails ->
+
+						if (manifestMergeDetails.key == "Manifest-Version") {
+							manifestMergeDetails.value = "1.0"
 						}
-					}
-					else {
-						manifestMergeDetails.exclude()
+						else if (manifestMergeDetails.key == "Export-Package") {
+							if (manifestMergeDetails.baseValue != null) {
+								manifestMergeDetails.value = manifestMergeDetails.baseValue + "," + manifestMergeDetails.mergeValue
+							}
+						}
+						else {
+							manifestMergeDetails.exclude()
+						}
 					}
 				}
 			}
 		}
+	}
+
+	doLast {
+		println "Created jar " + archivePath
 	}
 }
 

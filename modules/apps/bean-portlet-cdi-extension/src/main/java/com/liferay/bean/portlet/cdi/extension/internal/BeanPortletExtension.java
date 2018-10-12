@@ -259,7 +259,14 @@ public class BeanPortletExtension implements Extension {
 
 		_annotatedClasses.add(annotatedClass);
 
-		_scanMethods(_scannedMethods, annotatedClass);
+		for (Method method : annotatedClass.getMethods()) {
+			for (MethodType methodType : MethodType.values()) {
+				if (methodType.isMatch(method)) {
+					_scannedMethods.add(
+						new ScannedMethod(annotatedClass, methodType, method));
+				}
+			}
+		}
 	}
 
 	public void step3AfterBeanDiscovery(
@@ -1296,19 +1303,6 @@ public class BeanPortletExtension implements Extension {
 		}
 
 		return null;
-	}
-
-	private void _scanMethods(
-		List<ScannedMethod> scannedMethods, Class<?> javaClass) {
-
-		for (Method method : javaClass.getMethods()) {
-			for (MethodType methodType : MethodType.values()) {
-				if (methodType.isMatch(method)) {
-					scannedMethods.add(
-						new ScannedMethod(javaClass, methodType, method));
-				}
-			}
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

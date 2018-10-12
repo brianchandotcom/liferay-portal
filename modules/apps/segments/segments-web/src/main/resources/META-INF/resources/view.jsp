@@ -24,6 +24,7 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 	actionDropdownItems="<%= segmentsDisplayContext.getActionDropdownItems() %>"
 	componentId="segmentsEntriesManagementToolbar"
 	creationMenu="<%= segmentsDisplayContext.getCreationMenu() %>"
+	disabled="<%= segmentsDisplayContext.getTotalItems() == 0 %>"
 	itemsTotal="<%= segmentsDisplayContext.getTotalItems() %>"
 	searchContainerId="segmentsEntries"
 	selectable="<%= true %>"

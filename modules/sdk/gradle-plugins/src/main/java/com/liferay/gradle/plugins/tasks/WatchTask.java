@@ -22,7 +22,6 @@ import com.liferay.gradle.plugins.internal.util.GradleUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -223,18 +222,6 @@ public class WatchTask extends DefaultTask {
 		}
 	}
 
-	private static Attributes _getAttributes(File bundleDir)
-		throws FileNotFoundException, IOException {
-
-		File manifestFile = new File(bundleDir, "META-INF/MANIFEST.MF");
-
-		try (InputStream inputStream = new FileInputStream(manifestFile)) {
-			Manifest manifest = new Manifest(inputStream);
-
-			return manifest.getMainAttributes();
-		}
-	}
-
 	private static long _getBundleId(
 			String bundleSymbolicName, GogoShellClient gogoShellClient)
 		throws IOException {
@@ -287,28 +274,6 @@ public class WatchTask extends DefaultTask {
 		return differences;
 	}
 
-	private static String _getReferenceInstallURL(
-			File file, String bundleSymbolicName)
-		throws IOException {
-
-		URI uri = file.toURI();
-
-		if (_isWar(file)) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("webbundledir:%s");
-			sb.append("?Bundle-SymbolicName=%s");
-			sb.append("&amp\\;");
-			sb.append("Web-ContextPath=/%s");
-
-			return String.format(
-				sb.toString(), uri.toASCIIString(), bundleSymbolicName,
-				bundleSymbolicName);
-		}
-
-		return "reference:" + uri.toASCIIString();
-	}
-
 	private static final int _getState(String state) {
 		String bundleState = state.toUpperCase();
 
@@ -334,14 +299,14 @@ public class WatchTask extends DefaultTask {
 		return 0;
 	}
 
-	private static boolean _isWar(File file) {
+	private static boolean _isWarDir(File file) {
 		if (!file.isDirectory()) {
 			return false;
 		}
 
-		File webInf = new File(file, "WEB-INF");
+		File webInfDir = new File(file, "WEB-INF");
 
-		return webInf.exists();
+		return webInfDir.exists();
 	}
 
 	private static final BundleDTO _newBundleDTO(
@@ -446,13 +411,32 @@ public class WatchTask extends DefaultTask {
 		return modifiedFiles;
 	}
 
+	private String _getReferenceInstallURL(File file) {
+		URI uri = file.toURI();
+
+		if (_isWarDir(file)) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("webbundledir:%s");
+			sb.append("?Bundle-SymbolicName=%s");
+			sb.append("&amp\\;");
+			sb.append("Web-ContextPath=/%s");
+
+			return String.format(
+				sb.toString(), uri.toASCIIString(), getBundleSymbolicName(),
+				getBundleSymbolicName());
+		}
+
+		return "reference:" + uri.toASCIIString();
+	}
+
 	private long _installBundle(
 			File file, GogoShellClient gogoShellClient, boolean start)
 		throws IOException {
 
 		long bundleId = -1;
 
-		String url = _getReferenceInstallURL(file, getBundleSymbolicName());
+		String url = _getReferenceInstallURL(file);
 
 		String response = _sendGogoShellCommand(
 			gogoShellClient, "install " + url);
@@ -495,7 +479,15 @@ public class WatchTask extends DefaultTask {
 			bundleId = _installBundle(bundleDir, gogoShellClient, true);
 		}
 
-		_installedAttributes.put(bundleDir, _getAttributes(bundleDir));
+		File manifestFile = new File(bundleDir, "META-INF/MANIFEST.MF");
+
+		try (InputStream inputStream = new FileInputStream(manifestFile)) {
+			Manifest manifest = new Manifest(inputStream);
+
+			Attributes attributes = manifest.getMainAttributes();
+
+			_installedAttributes.put(bundleDir, attributes);
+		}
 
 		FileCollection fileCollection = getFragments();
 
@@ -514,9 +506,8 @@ public class WatchTask extends DefaultTask {
 			}
 		}
 
-		File outputFile = getOutputFile();
-
 		String bundleIdString = String.valueOf(bundleId);
+		File outputFile = getOutputFile();
 
 		Files.write(
 			outputFile.toPath(),
@@ -632,8 +623,7 @@ public class WatchTask extends DefaultTask {
 			logger.quiet("Updating bundle {} from {}", bundleId, bundleDir);
 		}
 
-		String url = _getReferenceInstallURL(
-			bundleDir, getBundleSymbolicName());
+		String url = _getReferenceInstallURL(bundleDir);
 
 		String command = String.format("update %s %s", bundleId, url);
 

@@ -134,10 +134,10 @@ public class ProjectTemplates {
 			}
 		}
 
-		Collection<String> projectTemplateJarNames =
+		Collection<String> archetypeJarNames =
 			ProjectTemplatesUtil.getArchetypeJarNames();
 
-		for (String projectTemplateJarName : projectTemplateJarNames) {
+		for (String projectTemplateJarName : archetypeJarNames) {
 			String templateName = ProjectTemplatesUtil.getTemplateName(
 				projectTemplateJarName);
 

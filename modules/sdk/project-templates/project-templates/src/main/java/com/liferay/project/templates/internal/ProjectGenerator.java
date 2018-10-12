@@ -194,9 +194,7 @@ public class ProjectGenerator {
 			ProjectTemplates.TEMPLATE_BUNDLE_PREFIX +
 				template.replace('-', '.');
 
-		File archetypesFile = ProjectTemplatesUtil.getArchetypeFile(artifactId);
-
-		return archetypesFile;
+		return ProjectTemplatesUtil.getArchetypeFile(artifactId);
 	}
 
 	private static boolean _isInVersionRange(

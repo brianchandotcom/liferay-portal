@@ -79,6 +79,15 @@ public class SegmentsEntryRelServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.segments.model.SegmentsEntryRel> getSegmentsEntryRels(
+		long segmentsEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntryRel> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getSegmentsEntryRels(segmentsEntryId, start, end,
+			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.segments.model.SegmentsEntryRel> getSegmentsEntryRels(
 		long groupId, long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSegmentsEntryRels(groupId, classNameId, classPK);

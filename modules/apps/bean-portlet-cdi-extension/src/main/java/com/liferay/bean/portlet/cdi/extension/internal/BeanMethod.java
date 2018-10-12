@@ -43,7 +43,7 @@ public class BeanMethod implements Comparable<BeanMethod> {
 
 		_beanManager = beanManager;
 		_bean = bean;
-		_type = type;
+		_methodType = type;
 		_method = method;
 
 		_ordinal = type.getOrdinal(method);
@@ -68,7 +68,7 @@ public class BeanMethod implements Comparable<BeanMethod> {
 
 		if ((_ordinal == beanMethod._ordinal) &&
 			Objects.equals(_method, beanMethod.getMethod()) &&
-			(_type == beanMethod.getType())) {
+			(_methodType == beanMethod.getMethodType())) {
 
 			return true;
 		}
@@ -101,6 +101,10 @@ public class BeanMethod implements Comparable<BeanMethod> {
 		return _method;
 	}
 
+	public MethodType getMethodType() {
+		return _methodType;
+	}
+
 	public PortletMode getPortletMode() {
 		RenderMethod renderMethod = _method.getAnnotation(RenderMethod.class);
 
@@ -121,17 +125,13 @@ public class BeanMethod implements Comparable<BeanMethod> {
 		return new PortletMode(renderMode.name());
 	}
 
-	public MethodType getType() {
-		return _type;
-	}
-
 	@Override
 	public int hashCode() {
 		int hashCode = HashUtil.hash(0, _method);
 
 		hashCode = HashUtil.hash(hashCode, _ordinal);
 
-		return HashUtil.hash(hashCode, _type);
+		return HashUtil.hash(hashCode, _methodType);
 	}
 
 	public Object invoke(Object... args) throws ReflectiveOperationException {
@@ -169,7 +169,7 @@ public class BeanMethod implements Comparable<BeanMethod> {
 	private final Bean<?> _bean;
 	private final BeanManager _beanManager;
 	private final Method _method;
+	private final MethodType _methodType;
 	private final int _ordinal;
-	private final MethodType _type;
 
 }

@@ -45,7 +45,7 @@ public class BeanMethodIndexUtil {
 
 		for (BeanMethod beanMethod : beanMethods) {
 			beanMethodMap.compute(
-				beanMethod.getType(),
+				beanMethod.getMethodType(),
 				(methodType, valueBeanMethods) -> {
 					if (valueBeanMethods == null) {
 						valueBeanMethods = new ArrayList<>();

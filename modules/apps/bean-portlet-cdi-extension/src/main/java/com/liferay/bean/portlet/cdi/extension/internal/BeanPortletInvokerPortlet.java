@@ -149,7 +149,7 @@ public class BeanPortletInvokerPortlet
 
 		Method method = beanMethod.getMethod();
 
-		MethodType methodType = beanMethod.getType();
+		MethodType methodType = beanMethod.getMethodType();
 
 		if (methodType == MethodType.ACTION) {
 			ActionRequest actionRequest = (ActionRequest)args[0];

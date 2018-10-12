@@ -267,9 +267,15 @@
 			<var name="userSegmentRule" value="Site Member" />
 		</execute>
 
-		<var name="key_selectSiteMemberSite" value="${selectSiteMemberSite}" />
+		<execute function="AssertClick" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SELECT_BUTTON" value1="Select" />
 
-		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_MEMBER_SELECT" value1="${selectSiteMemberSite}" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="Click" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK">
+			<var name="key_siteName" value="${selectSiteMemberSite}" />
+		</execute>
+
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addUserAttributesSiteRoleRuleCP">
@@ -304,7 +310,15 @@
 			<var name="userSegmentRule" value="User Group Member" />
 		</execute>
 
-		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER_SELECT" value1="${userGroupName}" />
+		<execute function="AssertClick" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SELECT_BUTTON" value1="Select" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="AssertClick" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER_USER_GROUP_CHOOSE_BUTTON" value1="Choose">
+			<var name="key_userGroupName" value="${userGroupName}" />
+		</execute>
+
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addUserAttributesUserSignedInRuleCP">
@@ -596,9 +610,9 @@
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="Site Member" />
 					<then>
-						<var name="key_selectSiteMemberSite" value="${selectSiteMemberSite}" />
-
-						<execute function="AssertSelectedLabel" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_MEMBER_SELECT" value1="${selectSiteMemberSite}" />
+						<execute function="AssertTextEquals" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_MEMBER_SELECT" value1="${selectSiteMemberSite}">
+							<var name="key_selectSiteMemberSite" value="${selectSiteMemberSite}" />
+						</execute>
 					</then>
 				</elseif>
 				<elseif>
@@ -640,7 +654,7 @@
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="UserGroup Member" />
 					<then>
-						<execute function="AssertSelectedLabel" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER_SELECT" value1="${userGroupName}" />
+						<execute function="AssertTextEquals" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER_SELECT" value1="${userGroupName}" />
 					</then>
 				</elseif>
 				<elseif>

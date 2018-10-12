@@ -52,6 +52,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		_checkMissingParentheses(fileName, content);
 		_checkMultiLineClause(fileName, content);
 		_checkScalability(fileName, absolutePath, content);
+		_checkUnionStatement(fileName, content);
 
 		content = _fixIncorrectAndOr(content);
 		content = _fixLowerCaseKeywords(content);
@@ -62,7 +63,6 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		content = _fixSinglePredicateClause(content);
 		content = _formatSingleLineClauseWithMultiplePredicates(
 			fileName, content);
-		content = _formatUnionStatement(fileName, content);
 
 		return content;
 	}
@@ -463,53 +463,36 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _formatUnionStatement(String fileName, String content) {
+	private void _checkUnionStatement(String fileName, String content) {
 		Matcher matcher = _unionPattern.matcher(content);
 
 		while (matcher.find()) {
 			String beforeUnionChar = matcher.group(1);
 
-			if (!beforeUnionChar.equals(StringPool.CLOSE_PARENTHESIS)) {
-				addMessage(
-					fileName, "Missing parentheses around SELECT statement",
-					getLineNumber(content, matcher.start()));
+			if (beforeUnionChar.equals(StringPool.CLOSE_PARENTHESIS)) {
+				int openParenthesisPos = _getOpenParenthesisPos(
+					content, matcher.start(1));
 
-				continue;
-			}
+				String s = StringUtil.trim(
+					content.substring(openParenthesisPos + 1, matcher.start()));
 
-			int openParenthesisPos = _getOpenParenthesisPos(
-				content, matcher.start(1));
+				if (s.startsWith("SELECT")) {
+					addMessage(
+						fileName, "Do not use parentheses before UNION",
+						getLineNumber(content, matcher.start()));
 
-			String s = StringUtil.trim(
-				content.substring(openParenthesisPos + 1, matcher.start()));
-
-			if (!s.startsWith("SELECT")) {
-				addMessage(
-					fileName, "Missing parentheses around SELECT statement",
-					getLineNumber(content, matcher.start()));
-
-				continue;
+					continue;
+				}
 			}
 
 			String afterUnionChar = matcher.group(4);
 
-			if (!afterUnionChar.equals(StringPool.OPEN_PARENTHESIS)) {
+			if (afterUnionChar.equals(StringPool.OPEN_PARENTHESIS)) {
 				addMessage(
-					fileName, "Missing parentheses around SELECT statement",
+					fileName, "Do not use parentheses after UNION",
 					getLineNumber(content, matcher.start(3)));
-
-				continue;
-			}
-
-			String whitespace = matcher.group(2);
-
-			if (whitespace.contains(StringPool.NEW_LINE)) {
-				return StringUtil.replaceFirst(
-					content, whitespace, StringPool.SPACE, matcher.start());
 			}
 		}
-
-		return content;
 	}
 
 	private int _getCloseParenthesisPos(String content, int startPos) {

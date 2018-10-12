@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import java.util.function.Function;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
@@ -47,21 +49,99 @@ public enum MethodType {
 
 	ACTION(
 		ActionMethod.class,
-		new Class<?>[] {ActionRequest.class, ActionResponse.class}, false),
-	DESTROY(DestroyMethod.class, new Class<?>[0], false),
+		new Class<?>[] {ActionRequest.class, ActionResponse.class}, false,
+		annotation -> {
+			ActionMethod actionMethod = ActionMethod.class.cast(annotation);
+
+			return new String[] {actionMethod.portletName()};
+		},
+		annotation -> 0),
+	DESTROY(
+		DestroyMethod.class, new Class<?>[0], false,
+		annotation -> {
+			DestroyMethod destroyMethod = DestroyMethod.class.cast(annotation);
+
+			return new String[] {destroyMethod.value()};
+		},
+		annotation -> 0),
 	EVENT(
 		EventMethod.class,
-		new Class<?>[] {EventRequest.class, EventResponse.class}, false),
+		new Class<?>[] {EventRequest.class, EventResponse.class}, false,
+		annotation -> {
+			EventMethod eventMethod = EventMethod.class.cast(annotation);
+
+			return new String[] {eventMethod.portletName()};
+		},
+		annotation -> 0),
 	HEADER(
 		HeaderMethod.class,
-		new Class<?>[] {HeaderRequest.class, HeaderResponse.class}, true),
-	INIT(InitMethod.class, new Class<?>[] {PortletConfig.class}, false),
+		new Class<?>[] {HeaderRequest.class, HeaderResponse.class}, true,
+		annotation -> {
+			HeaderMethod headerMethod = HeaderMethod.class.cast(annotation);
+
+			return headerMethod.portletNames();
+		},
+		annotation -> {
+			HeaderMethod headerMethod = HeaderMethod.class.cast(annotation);
+
+			return headerMethod.ordinal();
+		}),
+	INIT(
+		InitMethod.class, new Class<?>[] {PortletConfig.class}, false,
+		annotation -> {
+			InitMethod initMethod = InitMethod.class.cast(annotation);
+
+			return new String[] {initMethod.value()};
+		},
+		annotation -> 0),
 	RENDER(
 		RenderMethod.class,
-		new Class<?>[] {RenderRequest.class, RenderResponse.class}, true),
+		new Class<?>[] {RenderRequest.class, RenderResponse.class}, true,
+		annotation -> {
+			RenderMethod renderMethod = RenderMethod.class.cast(annotation);
+
+			return renderMethod.portletNames();
+		},
+		annotation -> {
+			RenderMethod renderMethod = RenderMethod.class.cast(annotation);
+
+			return renderMethod.ordinal();
+		}),
 	SERVE_RESOURCE(
 		ServeResourceMethod.class,
-		new Class<?>[] {ResourceRequest.class, ResourceResponse.class}, true);
+		new Class<?>[] {ResourceRequest.class, ResourceResponse.class}, true,
+		annotation -> {
+			ServeResourceMethod serveResourceMethod =
+				ServeResourceMethod.class.cast(annotation);
+
+			return serveResourceMethod.portletNames();
+		},
+		annotation -> {
+			ServeResourceMethod serveResourceMethod =
+				ServeResourceMethod.class.cast(annotation);
+
+			return serveResourceMethod.ordinal();
+		});
+
+	public int getOrdinal(Method method) {
+		Annotation annotation = method.getAnnotation(_annotation);
+
+		if (annotation == null) {
+			return 0;
+		}
+
+		return _ordinalFunction.apply(annotation);
+	}
+
+	public String[] getPortletNames(Method method) {
+		Annotation annotation = method.getAnnotation(_annotation);
+
+		if (annotation == null) {
+			return null;
+		}
+
+		return _portletNamesFunction.apply(annotation);
+	}
 
 	public boolean isMatch(Method method) {
 		if (!method.isAnnotationPresent(_annotation)) {
@@ -96,11 +176,14 @@ public enum MethodType {
 
 	private MethodType(
 		Class<? extends Annotation> annotation, Class<?>[] parameterTypes,
-		boolean variant) {
+		boolean variant, Function<Annotation, String[]> portletNamesFunction,
+		Function<Annotation, Integer> ordinalFunction) {
 
 		_annotation = annotation;
 		_parameterTypes = parameterTypes;
 		_variant = variant;
+		_portletNamesFunction = portletNamesFunction;
+		_ordinalFunction = ordinalFunction;
 	}
 
 	private boolean _isAssignableFrom(Class<?>[] parameterTypes) {
@@ -120,7 +203,9 @@ public enum MethodType {
 	private static final Log _log = LogFactoryUtil.getLog(MethodType.class);
 
 	private final Class<? extends Annotation> _annotation;
+	private final Function<Annotation, Integer> _ordinalFunction;
 	private final Class<?>[] _parameterTypes;
+	private final Function<Annotation, String[]> _portletNamesFunction;
 	private final boolean _variant;
 
 }

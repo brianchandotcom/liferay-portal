@@ -148,11 +148,10 @@ public class ProjectTemplatesUtil {
 		if (_archetypes == null) {
 			_archetypes = new Properties();
 
-			InputStream archetypesList =
-				ProjectTemplatesUtil.class.getResourceAsStream(
-					"/project-template-jar-versions.properties");
+			try (InputStream archetypesList =
+					ProjectTemplatesUtil.class.getResourceAsStream(
+						"/project-template-jar-versions.properties")) {
 
-			try {
 				_archetypes.load(archetypesList);
 			}
 			catch (IOException ioe) {

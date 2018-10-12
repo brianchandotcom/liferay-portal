@@ -20,14 +20,16 @@ import java.util.Dictionary;
 import java.util.Map;
 import java.util.Set;
 
+import javax.portlet.filter.PortletFilter;
+
 /**
  * @author Neil Griffin
  */
 public class BeanFilterImpl implements BeanFilter {
 
 	public BeanFilterImpl(
-		String filterName, Class<?> filterClass, int ordinal,
-		Set<String> portletNames, Set<String> lifecycles,
+		String filterName, Class<? extends PortletFilter> filterClass,
+		int ordinal, Set<String> portletNames, Set<String> lifecycles,
 		Map<String, String> initParams) {
 
 		_filterName = filterName;
@@ -39,7 +41,7 @@ public class BeanFilterImpl implements BeanFilter {
 	}
 
 	@Override
-	public Class<?> getFilterClass() {
+	public Class<? extends PortletFilter> getFilterClass() {
 		return _filterClass;
 	}
 
@@ -94,7 +96,7 @@ public class BeanFilterImpl implements BeanFilter {
 		return dictionary;
 	}
 
-	private final Class<?> _filterClass;
+	private final Class<? extends PortletFilter> _filterClass;
 	private final String _filterName;
 	private final Map<String, String> _initParams;
 	private final Set<String> _lifecycles;

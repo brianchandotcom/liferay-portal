@@ -31,6 +31,7 @@ import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameter;
 import com.liferay.bean.portlet.cdi.extension.internal.PublicRenderParameterImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.util.BeanMethodIndexUtil;
 import com.liferay.bean.portlet.cdi.extension.internal.util.PortletScannerUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -64,6 +65,7 @@ import javax.enterprise.inject.spi.BeanManager;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
+import javax.portlet.filter.PortletFilter;
 
 import javax.xml.namespace.QName;
 
@@ -134,6 +136,16 @@ public class PortletDescriptorParser {
 
 			try {
 				filterClass = bundle.loadClass(filterClassName);
+
+				if (!PortletFilter.class.isAssignableFrom(filterClass)) {
+					_log.error(
+						StringBundler.concat(
+							"Ignoring ", filterClass,
+							". Because it does not implement ",
+							PortletFilter.class));
+
+					continue;
+				}
 			}
 			catch (ClassNotFoundException cnfe) {
 				_log.error("Unable to load filter-class " + filterClassName);
@@ -148,7 +160,8 @@ public class PortletDescriptorParser {
 			beanFilters.put(
 				filterName,
 				_readBeanFilter(
-					filterElement, filterName, filterClass, portletNames));
+					filterElement, filterName,
+					filterClass.asSubclass(PortletFilter.class), portletNames));
 		}
 	}
 
@@ -313,8 +326,8 @@ public class PortletDescriptorParser {
 	}
 
 	private static BeanFilter _readBeanFilter(
-		Element filterElement, String filterName, Class<?> filterClass,
-		Set<String> portletNames) {
+		Element filterElement, String filterName,
+		Class<? extends PortletFilter> filterClass, Set<String> portletNames) {
 
 		int ordinal = GetterUtil.getInteger(
 			filterElement.elementText("ordinal"));

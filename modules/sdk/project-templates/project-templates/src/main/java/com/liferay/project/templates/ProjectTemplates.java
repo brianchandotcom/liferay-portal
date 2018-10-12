@@ -169,7 +169,14 @@ public class ProjectTemplates {
 		JCommander jCommander = new JCommander(projectTemplatesArgs);
 
 		try {
-			jCommander.setProgramName(ProjectTemplates.class.getName());
+			Path jarPath = FileUtil.getJarPath();
+
+			if (Files.isDirectory(jarPath)) {
+				jCommander.setProgramName(ProjectTemplates.class.getName());
+			}
+			else {
+				jCommander.setProgramName("java -jar " + jarPath.getFileName());
+			}
 
 			jCommander.parse(args);
 

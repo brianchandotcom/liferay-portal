@@ -206,6 +206,17 @@ public class FileUtil {
 		return null;
 	}
 
+	public static Path getJarPath() {
+		try {
+			URI jarUri = _getJarUri();
+
+			return Paths.get(jarUri.getPath());
+		}
+		catch (Throwable th) {
+			throw new RuntimeException(th);
+		}
+	}
+
 	public static String getManifestProperty(File file, String name)
 		throws IOException {
 
@@ -378,6 +389,16 @@ public class FileUtil {
 	private static FileSystem _getJarFileSystem()
 		throws IOException, URISyntaxException {
 
+		URI jarUri = _getJarUri();
+
+		Path jarPath = Paths.get(jarUri.getPath());
+
+		FileSystem fileSystem = FileSystems.newFileSystem(jarPath, null);
+
+		return fileSystem;
+	}
+
+	private static URI _getJarUri() throws URISyntaxException {
 		ProtectionDomain protectionDomain =
 			FileUtil.class.getProtectionDomain();
 
@@ -387,11 +408,7 @@ public class FileUtil {
 
 		URI jarUri = jarUrl.toURI();
 
-		Path jarPath = Paths.get(jarUri.getPath());
-
-		FileSystem fileSystem = FileSystems.newFileSystem(jarPath, null);
-
-		return fileSystem;
+		return jarUri;
 	}
 
 }

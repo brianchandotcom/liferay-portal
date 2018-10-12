@@ -36,7 +36,7 @@ public abstract class BaseContextAwareStringProperty extends StringProperty {
 	}
 
 	public void setHost(String host) {
-		host = StringUtils.removeQuotes(host);
+		_host = StringUtils.removeQuotes(host);
 	}
 
 	private String _host;

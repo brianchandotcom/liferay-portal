@@ -18,28 +18,17 @@ import com.liferay.osgi.felix.util.AbstractExtender;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBContext;
-import com.liferay.portal.kernel.dao.db.DBManager;
-import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.configuration.configurator.ServiceConfigurator;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
-import com.liferay.portal.kernel.upgrade.UpgradeStep;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -47,7 +36,6 @@ import java.io.Reader;
 import java.net.URL;
 
 import java.util.Dictionary;
-import java.util.Hashtable;
 
 import javax.sql.DataSource;
 
@@ -57,7 +45,6 @@ import org.apache.felix.utils.extender.Extension;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -156,34 +143,8 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 		@Override
 		public void destroy() throws Exception {
-			if (_upgradeStepServiceRegistration != null) {
-				_upgradeStepServiceRegistration.unregister();
-			}
-
 			if (_component != null) {
 				_dependencyManager.remove(_component);
-			}
-		}
-
-		public String getSQLTemplateString(String templateName)
-			throws UpgradeException {
-
-			URL resource = _bundle.getResource("/META-INF/sql/" + templateName);
-
-			if (resource == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to locate SQL template " + templateName);
-				}
-
-				return null;
-			}
-
-			try (InputStream inputStream = resource.openStream()) {
-				return StringUtil.read(inputStream);
-			}
-			catch (IOException ioe) {
-				throw new UpgradeException(
-					"Unable to read SQL template " + templateName, ioe);
 			}
 		}
 
@@ -233,9 +194,6 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 			}
 
 			_dependencyManager.add(_component);
-
-			_upgradeStepServiceRegistration = _processInitialUpgrade(
-				classLoader);
 		}
 
 		private void _generateReleaseInfo() {
@@ -252,120 +210,6 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 					_bundle.getVersion(), "))"));
 
 			_component.add(serviceDependency);
-		}
-
-		private ServiceRegistration<UpgradeStep> _processInitialUpgrade(
-			ClassLoader classLoader) {
-
-			Dictionary<String, String> headers = _bundle.getHeaders(
-				StringPool.BLANK);
-
-			String upgradeToSchemaVersion = GetterUtil.getString(
-				headers.get("Liferay-Require-SchemaVersion"),
-				headers.get("Bundle-Version"));
-
-			Dictionary<String, Object> properties = new Hashtable<>();
-
-			try {
-				Configuration configuration =
-					ConfigurationFactoryUtil.getConfiguration(
-						classLoader, "service");
-
-				String buildNumber = configuration.get("build.number");
-
-				if (buildNumber != null) {
-					properties.put("build.number", buildNumber);
-				}
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to read service.properties for bundle " +
-							_bundle.getSymbolicName());
-				}
-			}
-
-			properties.put("upgrade.initial.database.creation", "true");
-
-			properties.put(
-				"upgrade.bundle.symbolic.name", _bundle.getSymbolicName());
-			properties.put("upgrade.db.type", "any");
-			properties.put("upgrade.from.schema.version", "0.0.0");
-			properties.put("upgrade.to.schema.version", upgradeToSchemaVersion);
-
-			BundleContext bundleContext =
-				ModuleApplicationContextExtender.this.getBundleContext();
-
-			return bundleContext.registerService(
-				UpgradeStep.class,
-				new UpgradeStep() {
-
-					@Override
-					public String toString() {
-						return "Initial Database Creation";
-					}
-
-					@Override
-					public void upgrade(DBProcessContext dbProcessContext)
-						throws UpgradeException {
-
-						DBContext dbContext = dbProcessContext.getDBContext();
-
-						DBManager dbManager = dbContext.getDBManager();
-
-						DB db = dbManager.getDB();
-
-						String tablesSQL = getSQLTemplateString("tables.sql");
-						String sequencesSQL = getSQLTemplateString(
-							"sequences.sql");
-						String indexesSQL = getSQLTemplateString("indexes.sql");
-
-						if (tablesSQL != null) {
-							try {
-								db.runSQLTemplateString(tablesSQL, true, true);
-							}
-							catch (Exception e) {
-								throw new UpgradeException(
-									StringBundler.concat(
-										"Bundle ", _bundle,
-										" has invalid content in ",
-										"tables.sql:\n", tablesSQL),
-									e);
-							}
-						}
-
-						if (sequencesSQL != null) {
-							try {
-								db.runSQLTemplateString(
-									sequencesSQL, true, true);
-							}
-							catch (Exception e) {
-								throw new UpgradeException(
-									StringBundler.concat(
-										"Bundle ", _bundle,
-										" has invalid content in ",
-										"sequences.sql:\n", sequencesSQL),
-									e);
-							}
-						}
-
-						if (indexesSQL != null) {
-							try {
-								db.runSQLTemplateString(indexesSQL, true, true);
-							}
-							catch (Exception e) {
-								throw new UpgradeException(
-									StringBundler.concat(
-										"Bundle ", _bundle,
-										" has invalid content in ",
-										"indexes.sql:\n", indexesSQL),
-									e);
-							}
-						}
-					}
-
-				},
-				properties);
 		}
 
 		private void _processServiceReferences(ClassLoader classLoader)
@@ -416,8 +260,6 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 		private final Bundle _bundle;
 		private org.apache.felix.dm.Component _component;
 		private final DependencyManager _dependencyManager;
-		private ServiceRegistration<UpgradeStep>
-			_upgradeStepServiceRegistration;
 
 	}
 

@@ -19,15 +19,27 @@ import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBContext;
+import com.liferay.portal.kernel.dao.db.DBManager;
+import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.spring.bean.LiferayBeanFactory;
 import com.liferay.portal.spring.extender.internal.bean.ApplicationContextServicePublisherUtil;
 import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.lang.reflect.Method;
 
@@ -173,6 +185,99 @@ public class ParentModuleApplicationContextExtender extends AbstractExtender {
 		private static final Map<String, Document> _documents =
 			new ConcurrentReferenceValueHashMap<>(
 				FinalizeManager.SOFT_REFERENCE_FACTORY);
+
+	}
+
+	private static class InitialUpgradeStep implements UpgradeStep {
+
+		@Override
+		public String toString() {
+			return "Initial Database Creation";
+		}
+
+		@Override
+		public void upgrade(DBProcessContext dbProcessContext)
+			throws UpgradeException {
+
+			DBContext dbContext = dbProcessContext.getDBContext();
+
+			DBManager dbManager = dbContext.getDBManager();
+
+			DB db = dbManager.getDB();
+
+			String tablesSQL = _getSQLTemplateString("tables.sql");
+			String sequencesSQL = _getSQLTemplateString("sequences.sql");
+			String indexesSQL = _getSQLTemplateString("indexes.sql");
+
+			if (tablesSQL != null) {
+				try {
+					db.runSQLTemplateString(tablesSQL, true, true);
+				}
+				catch (Exception e) {
+					throw new UpgradeException(
+						StringBundler.concat(
+							"Bundle ", _bundle,
+							" has invalid content in tables.sql:\n", tablesSQL),
+						e);
+				}
+			}
+
+			if (sequencesSQL != null) {
+				try {
+					db.runSQLTemplateString(sequencesSQL, true, true);
+				}
+				catch (Exception e) {
+					throw new UpgradeException(
+						StringBundler.concat(
+							"Bundle ", _bundle,
+							" has invalid content in sequences.sql:\n",
+							sequencesSQL),
+						e);
+				}
+			}
+
+			if (indexesSQL != null) {
+				try {
+					db.runSQLTemplateString(indexesSQL, true, true);
+				}
+				catch (Exception e) {
+					throw new UpgradeException(
+						StringBundler.concat(
+							"Bundle ", _bundle,
+							" has invalid content in indexes.sql:\n",
+							indexesSQL),
+						e);
+				}
+			}
+		}
+
+		private InitialUpgradeStep(Bundle bundle) {
+			_bundle = bundle;
+		}
+
+		private String _getSQLTemplateString(String templateName)
+			throws UpgradeException {
+
+			URL resource = _bundle.getResource("/META-INF/sql/" + templateName);
+
+			if (resource == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to locate SQL template " + templateName);
+				}
+
+				return null;
+			}
+
+			try (InputStream inputStream = resource.openStream()) {
+				return StringUtil.read(inputStream);
+			}
+			catch (IOException ioe) {
+				throw new UpgradeException(
+					"Unable to read SQL template " + templateName, ioe);
+			}
+		}
+
+		private final Bundle _bundle;
 
 	}
 
@@ -459,10 +564,56 @@ public class ParentModuleApplicationContextExtender extends AbstractExtender {
 			_serviceRegistrations =
 				ApplicationContextServicePublisherUtil.registerContext(
 					moduleApplicationContext, _bundle.getBundleContext(), true);
+
+			_serviceRegistrations.add(
+				_processInitialUpgrade(extenderBundleContext));
 		}
 
 		private ParentModuleApplicationContextExtension(Bundle bundle) {
 			_bundle = bundle;
+		}
+
+		private ServiceRegistration<UpgradeStep> _processInitialUpgrade(
+			BundleContext bundleContext) {
+
+			Dictionary<String, String> headers = _bundle.getHeaders(
+				StringPool.BLANK);
+
+			String upgradeToSchemaVersion = GetterUtil.getString(
+				headers.get("Liferay-Require-SchemaVersion"),
+				headers.get("Bundle-Version"));
+
+			Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+			try {
+				Configuration configuration =
+					ConfigurationFactoryUtil.getConfiguration(
+						new BundleResolverClassLoader(_bundle), "service");
+
+				String buildNumber = configuration.get("build.number");
+
+				if (buildNumber != null) {
+					properties.put("build.number", buildNumber);
+				}
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to read service.properties for bundle " +
+							_bundle.getSymbolicName());
+				}
+			}
+
+			properties.put("upgrade.initial.database.creation", "true");
+
+			properties.put(
+				"upgrade.bundle.symbolic.name", _bundle.getSymbolicName());
+			properties.put("upgrade.db.type", "any");
+			properties.put("upgrade.from.schema.version", "0.0.0");
+			properties.put("upgrade.to.schema.version", upgradeToSchemaVersion);
+
+			return bundleContext.registerService(
+				UpgradeStep.class, new InitialUpgradeStep(_bundle), properties);
 		}
 
 		private final Bundle _bundle;

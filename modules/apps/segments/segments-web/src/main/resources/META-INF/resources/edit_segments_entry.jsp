@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+EditSegmentsEntryDisplayContext editSegmentsEntryDisplayContext = (EditSegmentsEntryDisplayContext)request.getAttribute(SegmentsWebKeys.EDIT_SEGMENTS_ENTRY_DISPLAY_CONTEXT);
+
+String redirect = ParamUtil.getString(request, "redirect", editSegmentsEntryDisplayContext.getRedirect());
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
-
-EditSegmentsEntryDisplayContext editSegmentsEntryDisplayContext = (EditSegmentsEntryDisplayContext)request.getAttribute(SegmentsWebKeys.EDIT_SEGMENTS_ENTRY_DISPLAY_CONTEXT);
 
 SegmentsEntry segmentsEntry = editSegmentsEntryDisplayContext.getSegmentsEntry();
 

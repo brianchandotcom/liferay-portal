@@ -210,6 +210,22 @@ public class EditSegmentsEntryDisplayContext {
 		return organizationSearchContainer.getTotal();
 	}
 
+	public String getRedirect() {
+		if (_redirect != null) {
+			return _redirect;
+		}
+
+		_redirect = ParamUtil.getString(_request, "redirect");
+
+		if (Validator.isNull(_redirect)) {
+			PortletURL portletURL = _renderResponse.createRenderURL();
+
+			_redirect = portletURL.toString();
+		}
+
+		return _redirect;
+	}
+
 	public SegmentsEntry getSegmentsEntry() throws PortalException {
 		if (_segmentsEntry != null) {
 			return _segmentsEntry;
@@ -314,7 +330,7 @@ public class EditSegmentsEntryDisplayContext {
 
 		portletURL.setParameter("mvcRenderCommandName", "editSegmentsEntry");
 		portletURL.setParameter("tabs1", "details");
-		portletURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+		portletURL.setParameter("redirect", getRedirect());
 		portletURL.setParameter(
 			"segmentsEntryId", String.valueOf(getSegmentsEntryId()));
 
@@ -327,7 +343,7 @@ public class EditSegmentsEntryDisplayContext {
 		portletURL.setParameter(
 			"mvcRenderCommandName", "editSegmentsEntryOrganizations");
 		portletURL.setParameter("tabs1", "organizations");
-		portletURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+		portletURL.setParameter("redirect", getRedirect());
 		portletURL.setParameter(
 			"segmentsEntryId", String.valueOf(getSegmentsEntryId()));
 
@@ -340,7 +356,7 @@ public class EditSegmentsEntryDisplayContext {
 		portletURL.setParameter(
 			"mvcRenderCommandName", "editSegmentsEntryUsers");
 		portletURL.setParameter("tabs1", "users");
-		portletURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+		portletURL.setParameter("redirect", getRedirect());
 		portletURL.setParameter(
 			"segmentsEntryId", String.valueOf(getSegmentsEntryId()));
 
@@ -350,6 +366,7 @@ public class EditSegmentsEntryDisplayContext {
 	private String _displayStyle;
 	private final OrganizationLocalService _organizationLocalService;
 	private SearchContainer _organizationSearchContainer;
+	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;

@@ -58,9 +58,9 @@ public class RegistrationUtil {
 				String portletId = _getPortletId(
 					curPortletName, servletContext.getServletContextName());
 
-				_registerBeanFilter(
-					bundleContext, curPortletName, portletId, allPortletNames,
-					beanFilter, beanManager, registrations);
+				registrations.add(
+					_registerBeanFilter(
+						bundleContext, portletId, beanFilter, beanManager));
 			}
 		}
 		else {
@@ -75,9 +75,9 @@ public class RegistrationUtil {
 				String portletId = _getPortletId(
 					portletName, servletContext.getServletContextName());
 
-				_registerBeanFilter(
-					bundleContext, portletName, portletId, allPortletNames,
-					beanFilter, beanManager, registrations);
+				registrations.add(
+					_registerBeanFilter(
+						bundleContext, portletId, beanFilter, beanManager));
 			}
 		}
 
@@ -169,11 +169,9 @@ public class RegistrationUtil {
 		return PortalUtil.getJsSafePortletId(portletName);
 	}
 
-	private static void _registerBeanFilter(
-		BundleContext bundleContext, String portletName, String portletId,
-		Set<String> allPortletNames, BeanFilter beanFilter,
-		BeanManager beanManager,
-		List<ServiceRegistration<PortletFilter>> registrations) {
+	private static ServiceRegistration<PortletFilter> _registerBeanFilter(
+		BundleContext bundleContext, String portletId, BeanFilter beanFilter,
+		BeanManager beanManager) {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -186,12 +184,11 @@ public class RegistrationUtil {
 
 		dictionary.put("javax.portlet.name", portletId);
 
-		registrations.add(
-			bundleContext.registerService(
-				PortletFilter.class,
-				new BeanFilterInvokerPortletFilter(
-					beanFilter.getFilterClass(), beanManager),
-				dictionary));
+		return bundleContext.registerService(
+			PortletFilter.class,
+			new BeanFilterInvokerPortletFilter(
+				beanFilter.getFilterClass(), beanManager),
+			dictionary);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

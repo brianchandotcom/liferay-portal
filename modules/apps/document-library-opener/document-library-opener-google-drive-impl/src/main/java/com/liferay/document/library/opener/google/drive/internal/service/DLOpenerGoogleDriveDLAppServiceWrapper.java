@@ -41,6 +41,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Provides a service wrapper responsible for uploading, updating, or deleting
+ * the Google Drive file linked to a Documents and Media file entry.
+ *
  * @author Adolfo Pérez
  */
 @Component(immediate = true, service = ServiceWrapper.class)

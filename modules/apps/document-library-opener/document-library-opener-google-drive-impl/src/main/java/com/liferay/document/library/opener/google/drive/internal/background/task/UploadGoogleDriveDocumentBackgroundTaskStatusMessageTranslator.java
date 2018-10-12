@@ -23,6 +23,23 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
+ * Translates message bus messages and updates the background task status
+ * accordingly. This class understands a payload with two fields:
+ *
+ * <ul>
+ * <li>
+ * {@code uploadState}: An instance of {@code
+ * MediaHttpUploader.UploadState} used to
+ * get the status of a pending upload. This is mapped to the {@code complete}
+ * attribute in the background task state.
+ * </li>
+ * <li>
+ * {@code status}: Detects error conditions. If different than {@code
+ * BackgroundTaskConstants.STATUS_FAILED},
+ * the upload is considered successful.
+ * </li>
+ * </ul>
+ *
  * @author Sergio González
  */
 public class UploadGoogleDriveDocumentBackgroundTaskStatusMessageTranslator

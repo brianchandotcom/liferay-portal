@@ -56,6 +56,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Uploads content to Google Drive in a background task.
+ *
  * @author Sergio González
  */
 @Component(
@@ -67,8 +69,8 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 	extends BaseBackgroundTaskExecutor {
 
 	public UploadGoogleDriveDocumentBackgroundTaskExecutor() {
-		setBackgroundTaskStatusMessageTranslator(
-			new UploadGoogleDriveDocumentBackgroundTaskStatusMessageTranslator());
+		setBackgroundTaskStatusMessageTranslator(new
+			UploadGoogleDriveDocumentBackgroundTaskStatusMessageTranslator());
 		setIsolationLevel(BackgroundTaskConstants.ISOLATION_LEVEL_TASK_NAME);
 	}
 

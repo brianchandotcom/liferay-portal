@@ -368,10 +368,12 @@
 		</execute>
 	</command>
 
-	<!-- LRQA-29556 -->
-
-	<!--<command name="ValidateSchedulerOnSeparateNodes" priority="4">
+	<command name="ValidateSchedulerOnSeparateNodes" priority="4">
 		<property name="test.name.skip.portal.instance" value="ClusteringEE#ValidateSchedulerOnSeparateNodes" />
+
+		<execute macro="TestCase#getSiteName">
+			<return name="siteName" />
+		</execute>
 
 		<execute macro="Clustering#viewClusterStatusInConsoleEE" />
 
@@ -390,7 +392,7 @@
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Liferay DXP" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -407,7 +409,11 @@
 			<var name="pageName" value="New Page Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Navigator#gotoStagedView" />
+
+		<execute macro="Navigator#_gotoPage">
 			<var name="pageName" value="New Page Name" />
 		</execute>
 
@@ -460,7 +466,7 @@
 		</execute>
 
 		<execute macro="Staging#deactivateStagingCP">
-			<var name="siteName" value="Liferay DXP" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="User#logoutPG">
@@ -473,5 +479,5 @@
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
-	</command>-->
+	</command>
 </definition>

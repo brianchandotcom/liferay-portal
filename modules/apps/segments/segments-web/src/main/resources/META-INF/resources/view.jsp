@@ -63,6 +63,7 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				property="type"
+				translate="<%= true %>"
 			/>
 
 			<liferay-ui:search-container-column-text

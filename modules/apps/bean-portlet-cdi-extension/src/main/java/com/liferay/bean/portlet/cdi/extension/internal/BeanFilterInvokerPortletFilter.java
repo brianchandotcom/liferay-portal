@@ -166,7 +166,13 @@ public class BeanFilterInvokerPortletFilter
 			method.invoke(beanInstance, args);
 		}
 		catch (InvocationTargetException ite) {
-			throw new PortletException(ite.getCause());
+			Throwable cause = ite.getCause();
+
+			if (cause instanceof PortletException) {
+				throw (PortletException)cause;
+			}
+
+			throw new PortletException(cause);
 		}
 		catch (IllegalAccessException iae) {
 			throw new PortletException(iae);

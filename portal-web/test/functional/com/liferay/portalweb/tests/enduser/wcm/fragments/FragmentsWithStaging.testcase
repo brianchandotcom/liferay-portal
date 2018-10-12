@@ -60,6 +60,14 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
+		<execute macro="ProductMenuHelper#expandPanel">
+			<var name="panel" value="Site Administration" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Build" />
+		</execute>
+
 		<execute function="AssertElementNotPresent" locator1="ProductMenu#PORTLET">
 			<var name="key_portlet" value="Page Fragments" />
 		</execute>

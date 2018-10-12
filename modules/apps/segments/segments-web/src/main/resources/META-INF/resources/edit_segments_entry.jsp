@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+EditSegmentsEntryDisplayContext editSegmentsEntryDisplayContext = (EditSegmentsEntryDisplayContext)request.getAttribute(SegmentsWebKeys.EDIT_SEGMENTS_ENTRY_DISPLAY_CONTEXT);
+
+String redirect = ParamUtil.getString(request, "redirect", editSegmentsEntryDisplayContext.getRedirect());
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
-
-EditSegmentsEntryDisplayContext editSegmentsEntryDisplayContext = (EditSegmentsEntryDisplayContext)request.getAttribute(SegmentsWebKeys.EDIT_SEGMENTS_ENTRY_DISPLAY_CONTEXT);
 
 SegmentsEntry segmentsEntry = editSegmentsEntryDisplayContext.getSegmentsEntry();
 
@@ -47,6 +47,7 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getSegmentsEntryName(loc
 	<div class="lfr-form-content">
 		<aui:model-context bean="<%= segmentsEntry %>" model="<%= SegmentsEntry.class %>" />
 
+		<liferay-ui:error exception="<%= SegmentsEntryCriteriaException.class %>" message="invalid-criteria" />
 		<liferay-ui:error exception="<%= SegmentsEntryKeyException.class %>" message="key-is-already-used" />
 
 		<aui:fieldset-group markupView="lexicon">
@@ -64,7 +65,11 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getSegmentsEntryName(loc
 					<aui:option label="users" value="<%= SegmentsConstants.TYPE_USERS %>" />
 				</aui:select>
 
-				<aui:input name="criteria" type="textarea" />
+				<aui:input checked="<%= (segmentsEntry != null) && Validator.isNotNull(segmentsEntry.getCriteria()) %>" disabled="<%= segmentsEntry != null %>" name="dynamic" type="toggle-switch" />
+
+				<div id="<portlet:namespace />criteriaWrapper">
+					<aui:input name="criteria" type="textarea" />
+				</div>
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</div>
@@ -77,6 +82,10 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getSegmentsEntryName(loc
 		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
+
+<aui:script>
+	Liferay.Util.toggleBoxes('<portlet:namespace />dynamic', '<portlet:namespace />criteriaWrapper');
+</aui:script>
 
 <aui:script>
 	function <portlet:namespace />saveSegmentsEntry() {

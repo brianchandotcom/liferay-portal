@@ -123,6 +123,24 @@ public class SegmentsEntryRelServiceSoap {
 	}
 
 	public static com.liferay.segments.model.SegmentsEntryRelSoap[] getSegmentsEntryRels(
+		long segmentsEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntryRel> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.segments.model.SegmentsEntryRel> returnValue =
+				SegmentsEntryRelServiceUtil.getSegmentsEntryRels(segmentsEntryId,
+					start, end, orderByComparator);
+
+			return com.liferay.segments.model.SegmentsEntryRelSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.segments.model.SegmentsEntryRelSoap[] getSegmentsEntryRels(
 		long groupId, long classNameId, long classPK) throws RemoteException {
 		try {
 			java.util.List<com.liferay.segments.model.SegmentsEntryRel> returnValue =

@@ -41,8 +41,8 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getSegmentsEntryName(loc
 	disabled="<%= editSegmentsEntryDisplayContext.getUserTotalItems() == 0 %>"
 	itemsTotal="<%= editSegmentsEntryDisplayContext.getUserTotalItems() %>"
 	searchContainerId="segmentsEntryUsers"
-	selectable="<%= true %>"
-	showCreationMenu="<%= true %>"
+	selectable="<%= editSegmentsEntryDisplayContext.isSelectable() %>"
+	showCreationMenu="<%= editSegmentsEntryDisplayContext.showCreationMenu() %>"
 	showSearch="<%= false %>"
 />
 

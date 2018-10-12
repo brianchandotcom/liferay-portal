@@ -17,6 +17,7 @@ package com.liferay.segments.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.segments.model.SegmentsEntryRel;
 import com.liferay.segments.service.base.SegmentsEntryRelLocalServiceBaseImpl;
 
@@ -82,6 +83,15 @@ public class SegmentsEntryRelLocalServiceImpl
 	public List<SegmentsEntryRel> getSegmentsEntryRels(long segmentsEntryId) {
 		return segmentsEntryRelPersistence.findBySegmentsEntryId(
 			segmentsEntryId);
+	}
+
+	@Override
+	public List<SegmentsEntryRel> getSegmentsEntryRels(
+		long segmentsEntryId, int start, int end,
+		OrderByComparator<SegmentsEntryRel> orderByComparator) {
+
+		return segmentsEntryRelPersistence.findBySegmentsEntryId(
+			segmentsEntryId, start, end, orderByComparator);
 	}
 
 	@Override

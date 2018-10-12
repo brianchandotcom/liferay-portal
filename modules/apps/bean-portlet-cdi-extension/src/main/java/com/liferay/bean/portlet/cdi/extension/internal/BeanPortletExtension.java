@@ -262,8 +262,9 @@ public class BeanPortletExtension implements Extension {
 		for (Method method : annotatedClass.getMethods()) {
 			for (MethodType methodType : MethodType.values()) {
 				if (methodType.isMatch(method)) {
-					_scannedMethods.add(
-						new ScannedMethod(annotatedClass, methodType, method));
+					_beanMethodFactories.add(
+						new BeanMethodFactory(
+							annotatedClass, methodType, method));
 				}
 			}
 		}
@@ -1136,8 +1137,9 @@ public class BeanPortletExtension implements Extension {
 
 		Set<String> portletNames = new HashSet<>();
 
-		for (ScannedMethod scannedMethod : _scannedMethods) {
-			Collections.addAll(portletNames, scannedMethod.getPortletNames());
+		for (BeanMethodFactory beanMethodFactory : _beanMethodFactories) {
+			Collections.addAll(
+				portletNames, beanMethodFactory.getPortletNames());
 		}
 
 		for (String portletName : portletNames) {
@@ -1177,18 +1179,19 @@ public class BeanPortletExtension implements Extension {
 
 		Map<String, Set<BeanMethod>> portletBeanMethods = new HashMap<>();
 
-		for (ScannedMethod scannedMethod : _scannedMethods) {
-			String[] portletNames = scannedMethod.getPortletNames();
+		for (BeanMethodFactory beanMethodFactory : _beanMethodFactories) {
+			String[] portletNames = beanMethodFactory.getPortletNames();
 
 			if (portletNames == null) {
 				_log.error(
 					"Portlet names cannot be null for annotated method " +
-						scannedMethod);
+						beanMethodFactory);
 
 				continue;
 			}
 
-			BeanMethod beanMethod = scannedMethod.createBeanMethod(beanManager);
+			BeanMethod beanMethod = beanMethodFactory.createBeanMethod(
+				beanManager);
 
 			if ((portletNames.length > 0) && "*".equals(portletNames[0])) {
 				wildcardBeanMethods.add(beanMethod);
@@ -1412,9 +1415,10 @@ public class BeanPortletExtension implements Extension {
 		Collections.emptyMap(), Collections.emptySet(),
 		Collections.emptyList());
 	private final Map<String, BeanFilter> _beanFilters = new HashMap<>();
+	private final List<BeanMethodFactory> _beanMethodFactories =
+		new ArrayList<>();
 	private final Map<String, BeanPortlet> _beanPortlets = new HashMap<>();
 	private Class<?> _portletApplicationClass;
-	private final List<ScannedMethod> _scannedMethods = new ArrayList<>();
 	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new ArrayList<>();
 

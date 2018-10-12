@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryRel;
+import com.liferay.segments.odata.retriever.UserODataRetriever;
 import com.liferay.segments.service.SegmentsEntryRelService;
 import com.liferay.segments.service.SegmentsEntryService;
 
@@ -60,7 +63,8 @@ public class EditSegmentsEntryDisplayContext {
 		OrganizationLocalService organizationLocalService,
 		SegmentsEntryService segmentsEntryService,
 		SegmentsEntryRelService segmentsEntryRelService,
-		UserLocalService userLocalService) {
+		UserLocalService userLocalService,
+		UserODataRetriever userODataRetriever) {
 
 		_request = request;
 		_renderRequest = renderRequest;
@@ -69,6 +73,7 @@ public class EditSegmentsEntryDisplayContext {
 		_segmentsEntryService = segmentsEntryService;
 		_segmentsEntryRelService = segmentsEntryRelService;
 		_userLocalService = userLocalService;
+		_userODataRetriever = userODataRetriever;
 
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -77,7 +82,9 @@ public class EditSegmentsEntryDisplayContext {
 	public List<DropdownItem> getActionDropdownItems() throws PortalException {
 		SegmentsEntry segmentsEntry = getSegmentsEntry();
 
-		if (segmentsEntry == null) {
+		if ((segmentsEntry == null) ||
+			Validator.isNotNull(segmentsEntry.getCriteria())) {
+
 			return new DropdownItemList();
 		}
 
@@ -274,30 +281,66 @@ public class EditSegmentsEntryDisplayContext {
 
 		SearchContainer userSearchContainer = new SearchContainer(
 			_renderRequest, getPortletURL(SegmentsConstants.TYPE_USERS), null,
-			"there-are-no-users-in-this-segment");
+			null);
 
 		userSearchContainer.setId("segmentsEntryUsers");
-		userSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
 
-		int total = _segmentsEntryRelService.getSegmentsEntryRelsCount(
-			getSegmentsEntryId());
+		SegmentsEntry segmentsEntry = getSegmentsEntry();
 
-		userSearchContainer.setTotal(total);
+		if (segmentsEntry == null) {
+			return userSearchContainer;
+		}
 
-		List<SegmentsEntryRel> segmentsEntryRels =
-			_segmentsEntryRelService.getSegmentsEntryRels(getSegmentsEntryId());
+		int total = 0;
+		List<User> users = null;
 
-		Stream<SegmentsEntryRel> stream = segmentsEntryRels.stream();
+		if (Validator.isNotNull(segmentsEntry.getCriteria())) {
+			userSearchContainer.setEmptyResultsMessage(
+				"no-users-were-found-that-matched-the-segment-criteria");
 
-		List<User> users = stream.map(
-			segmentsEntryRel -> _userLocalService.fetchUser(
-				segmentsEntryRel.getClassPK())
-		).collect(
-			Collectors.toList()
-		);
+			try {
+				users = _userODataRetriever.getUsers(
+					segmentsEntry.getCompanyId(), segmentsEntry.getCriteria(),
+					_themeDisplay.getLocale(), userSearchContainer.getStart(),
+					userSearchContainer.getEnd());
+
+				total = users.size();
+			}
+			catch (PortalException pe) {
+				_log.error(
+					"Unable to retrieve users with the criteria " +
+						segmentsEntry.getCriteria(),
+					pe);
+			}
+		}
+		else {
+			userSearchContainer.setEmptyResultsMessage(
+				"no-users-have-been-assigned-to-this-segment");
+
+			userSearchContainer.setRowChecker(
+				new EmptyOnClickRowChecker(_renderResponse));
+
+			List<SegmentsEntryRel> segmentsEntryRels =
+				_segmentsEntryRelService.getSegmentsEntryRels(
+					getSegmentsEntryId(), userSearchContainer.getStart(),
+					userSearchContainer.getEnd(),
+					userSearchContainer.getOrderByComparator());
+
+			Stream<SegmentsEntryRel> stream = segmentsEntryRels.stream();
+
+			users = stream.map(
+				segmentsEntryRel -> _userLocalService.fetchUser(
+					segmentsEntryRel.getClassPK())
+			).collect(
+				Collectors.toList()
+			);
+
+			total = _segmentsEntryRelService.getSegmentsEntryRelsCount(
+				getSegmentsEntryId());
+		}
 
 		userSearchContainer.setResults(users);
+		userSearchContainer.setTotal(total);
 
 		_userSearchContainer = userSearchContainer;
 
@@ -308,6 +351,30 @@ public class EditSegmentsEntryDisplayContext {
 		SearchContainer<?> userSearchContainer = getUserSearchContainer();
 
 		return userSearchContainer.getTotal();
+	}
+
+	public boolean isSelectable() throws PortalException {
+		SegmentsEntry segmentsEntry = getSegmentsEntry();
+
+		if ((segmentsEntry != null) &&
+			Validator.isNotNull(segmentsEntry.getCriteria())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean showCreationMenu() throws PortalException {
+		SegmentsEntry segmentsEntry = getSegmentsEntry();
+
+		if ((segmentsEntry != null) &&
+			Validator.isNotNull(segmentsEntry.getCriteria())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	protected PortletURL getPortletURL(String tabs1) {
@@ -363,6 +430,9 @@ public class EditSegmentsEntryDisplayContext {
 		return portletURL.toString();
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditSegmentsEntryDisplayContext.class);
+
 	private String _displayStyle;
 	private final OrganizationLocalService _organizationLocalService;
 	private SearchContainer _organizationSearchContainer;
@@ -377,6 +447,7 @@ public class EditSegmentsEntryDisplayContext {
 	private final SegmentsEntryService _segmentsEntryService;
 	private final ThemeDisplay _themeDisplay;
 	private final UserLocalService _userLocalService;
+	private final UserODataRetriever _userODataRetriever;
 	private SearchContainer _userSearchContainer;
 
 }

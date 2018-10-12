@@ -49,16 +49,16 @@ import javax.portlet.filter.ResourceFilter;
 /**
  * @author Neil Griffin
  */
-public class BeanFilterInvoker
+public class BeanFilterInvokerPortletFilter
 	implements ActionFilter, EventFilter, HeaderFilter, RenderFilter,
 			   ResourceFilter {
 
-	public BeanFilterInvoker(
-		Class<? extends PortletFilter> beanClass, BeanManager beanManager) {
+	public BeanFilterInvokerPortletFilter(
+		Class<? extends PortletFilter> filterClass, BeanManager beanManager) {
 
 		_beanManager = beanManager;
 
-		_bean = beanManager.resolve(beanManager.getBeans(beanClass));
+		_bean = beanManager.resolve(beanManager.getBeans(filterClass));
 	}
 
 	@Override
@@ -174,7 +174,7 @@ public class BeanFilterInvoker
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BeanFilterInvoker.class);
+		BeanFilterInvokerPortletFilter.class);
 
 	private static final Method _actionDoFilterMethod;
 	private static final Method _destroyMethod;

@@ -189,7 +189,8 @@ public class RegistrationUtil {
 		registrations.add(
 			bundleContext.registerService(
 				PortletFilter.class,
-				new BeanFilterInvoker(beanFilter.getFilterClass(), beanManager),
+				new BeanFilterInvokerPortletFilter(
+					beanFilter.getFilterClass(), beanManager),
 				dictionary));
 	}
 

@@ -72,10 +72,11 @@ public abstract class PortalBatchBuildRunner
 			return;
 		}
 
-		BuildData buildData = getBuildData();
+		PortalBatchBuildData portalBatchBuildData = getBuildData();
 
 		File target = new File(
-			buildData.getWorkspaceDir(), "test-results/TESTS-TestSuites.xml");
+			portalBatchBuildData.getWorkspaceDir(),
+			"test-results/TESTS-TestSuites.xml");
 
 		try {
 			JenkinsResultsParserUtil.copy(source, target);

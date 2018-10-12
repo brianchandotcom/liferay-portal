@@ -58,16 +58,6 @@ public class RegistrationUtil {
 				String portletId = _getPortletId(
 					curPortletName, servletContext.getServletContextName());
 
-				if (!allPortletNames.contains(curPortletName)) {
-					_log.error(
-						StringBundler.concat(
-							"Unable to register filter ",
-							beanFilter.getFilterName(),
-							" for non-existent portlet ", portletName));
-
-					continue;
-				}
-
 				_registerBeanFilter(
 					bundleContext, curPortletName, portletId, allPortletNames,
 					beanFilter, beanManager, registrations);

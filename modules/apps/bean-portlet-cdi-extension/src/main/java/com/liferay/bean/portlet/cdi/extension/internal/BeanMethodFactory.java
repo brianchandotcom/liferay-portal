@@ -23,9 +23,11 @@ import javax.enterprise.inject.spi.BeanManager;
 /**
  * @author Neil Griffin
  */
-public class ScannedMethod {
+public class BeanMethodFactory {
 
-	public ScannedMethod(Class<?> clazz, MethodType methodType, Method method) {
+	public BeanMethodFactory(
+		Class<?> clazz, MethodType methodType, Method method) {
+
 		_clazz = clazz;
 		_methodType = methodType;
 		_method = method;

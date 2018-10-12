@@ -413,20 +413,7 @@ public class BeanPortletExtension implements Extension {
 			bundleContext.registerService(
 				Servlet.class, new PortletServlet() {}, properties));
 
-		Set<String> portletNames = descriptorLiferayConfigurations.keySet();
-
-		portletNames.removeAll(_beanPortlets.keySet());
-
-		if (!portletNames.isEmpty() && _log.isWarnEnabled()) {
-			_log.warn(
-				StringBundler.concat(
-					"Portlet with the names ", portletNames,
-					" are described in liferay-portlet.xml but does not have ",
-					"a matching entry in portlet.xml or @PortletConfiguration ",
-					"annotation"));
-		}
-
-		portletNames = descriptorDisplayCategories.keySet();
+		Set<String> portletNames = descriptorDisplayCategories.keySet();
 
 		portletNames.removeAll(_beanPortlets.keySet());
 

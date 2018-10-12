@@ -38,8 +38,8 @@ import java.util.jar.JarFile;
 public class ProjectTemplatesUtil {
 
 	public static File getArchetypeFile(String artifactId) {
-		if (_archetypeMap.containsKey(artifactId)) {
-			return _archetypeMap.get(artifactId);
+		if (_archetypeFiles.containsKey(artifactId)) {
+			return _archetypeFiles.get(artifactId);
 		}
 
 		Properties archetypesListProperties = getArchetypes();
@@ -63,7 +63,7 @@ public class ProjectTemplatesUtil {
 
 				File archetypeFile = archetypePath.toFile();
 
-				_archetypeMap.put(artifactId, archetypeFile);
+				_archetypeFiles.put(artifactId, archetypeFile);
 
 				archetypeFile.deleteOnExit();
 
@@ -108,7 +108,7 @@ public class ProjectTemplatesUtil {
 
 					File archetypeFile = archetypePath.toFile();
 
-					_archetypeMap.put(artifactId, archetypeFile);
+					_archetypeFiles.put(artifactId, archetypeFile);
 
 					archetypeFile.deleteOnExit();
 
@@ -184,7 +184,7 @@ public class ProjectTemplatesUtil {
 		return templateName;
 	}
 
-	private static final Map<String, File> _archetypeMap = new HashMap<>();
+	private static final Map<String, File> _archetypeFiles = new HashMap<>();
 	private static Properties _archetypes;
 
 }

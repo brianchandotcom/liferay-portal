@@ -36,7 +36,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -74,8 +73,8 @@ public class UserODataRetrieverTest {
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
-				"(dateModified eq %s) and (firstName eq '%s')", firstName,
-				ISO8601Utils.format(_user1.getModifiedDate())),
+				"(dateModified eq %s) and (firstName eq '%s')",
+				ISO8601Utils.format(_user1.getModifiedDate()), firstName),
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());
@@ -96,8 +95,8 @@ public class UserODataRetrieverTest {
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
-				"(dateModified gt %s) and (firstName eq '%s')", firstName,
-				ISO8601Utils.format(_user1.getModifiedDate())),
+				"(dateModified gt %s) and (firstName eq '%s')",
+				ISO8601Utils.format(_user1.getModifiedDate()), firstName),
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());
@@ -120,8 +119,8 @@ public class UserODataRetrieverTest {
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
-				"(dateModified ge %s) and (firstName eq '%s')", firstName,
-				ISO8601Utils.format(new Date())),
+				"(dateModified ge %s) and (firstName eq '%s')",
+				ISO8601Utils.format(new Date()), firstName),
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());
@@ -142,8 +141,8 @@ public class UserODataRetrieverTest {
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
-				"(dateModified lt %s) and (firstName eq '%s')", firstName,
-				ISO8601Utils.format(_user2.getModifiedDate())),
+				"(dateModified lt %s) and (firstName eq '%s')",
+				ISO8601Utils.format(_user2.getModifiedDate()), firstName),
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());
@@ -166,8 +165,8 @@ public class UserODataRetrieverTest {
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
-				"(dateModified le %s) and (firstName eq '%s')", firstName,
-				ISO8601Utils.format(new Date())),
+				"(dateModified le %s) and (firstName eq '%s')",
+				ISO8601Utils.format(new Date()), firstName),
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());

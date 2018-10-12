@@ -273,13 +273,9 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 			throw new RuntimeException(ioe);
 		}
 
-		List<JenkinsMaster> jenkinsMasters =
-			JenkinsResultsParserUtil.getJenkinsMasters(
-				buildProperties, cohortName);
-
 		String randomJenkinsURL =
 			JenkinsResultsParserUtil.getMostAvailableMasterURL(
-				"http://" + cohortName + ".liferay.com", jenkinsMasters.size());
+				"http://" + cohortName + ".liferay.com", 1);
 
 		StringBuilder sb = new StringBuilder();
 

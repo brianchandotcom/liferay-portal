@@ -51,26 +51,16 @@ public class BeanMethodIndexUtil {
 						valueBeanMethods = new ArrayList<>();
 					}
 
-					if ((methodType == MethodType.HEADER) ||
-						(methodType == MethodType.RENDER) ||
-						(methodType == MethodType.SERVE_RESOURCE)) {
-
-						int index = Collections.binarySearch(
-							valueBeanMethods, beanMethod);
-
-						if (index < 0) {
-							index = -index - 1;
-						}
-
-						valueBeanMethods.add(index, beanMethod);
-					}
-					else {
-						valueBeanMethods.add(beanMethod);
-					}
+					valueBeanMethods.add(beanMethod);
 
 					return valueBeanMethods;
 				});
 		}
+
+		beanMethodMap.forEach(
+			(methodType, valueBeanMethods) -> {
+				Collections.sort(valueBeanMethods);
+			});
 
 		return beanMethodMap;
 	}

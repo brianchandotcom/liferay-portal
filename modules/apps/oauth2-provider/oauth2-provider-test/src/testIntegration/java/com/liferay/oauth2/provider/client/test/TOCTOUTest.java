@@ -19,7 +19,7 @@ import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService;
-import com.liferay.oauth2.provider.test.internal.TestAnnotatedApplicationRunnable;
+import com.liferay.oauth2.provider.test.internal.TestRunnablePostHandlingApplication;
 import com.liferay.oauth2.provider.test.internal.activator.BaseTestPreparatorBundleActivator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -230,17 +230,15 @@ public class TOCTOUTest extends BaseClientTestCase {
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE),
 				Collections.singletonList("everything.read"));
 
-			Application updateFunctionApplication =
-				new TestAnnotatedApplicationRunnable(
-					() -> {
-						try {
-							updateOAuth2ApplicationScopeAliases(
-								oAuth2Application);
-						}
-						catch (PortalException pe) {
-							throw new RuntimeException(pe);
-						}
-					});
+			Application application = new TestRunnablePostHandlingApplication(
+				() -> {
+					try {
+						updateOAuth2ApplicationScopeAliases(oAuth2Application);
+					}
+					catch (PortalException pe) {
+						throw new RuntimeException(pe);
+					}
+				});
 
 			Dictionary<String, Object> applicationProperties =
 				new HashMapDictionary<>();
@@ -249,11 +247,10 @@ public class TOCTOUTest extends BaseClientTestCase {
 				"oauth2.scopechecker.type", "annotations");
 
 			registerJaxRsApplication(
-				new TestAnnotatedApplicationRunnable(
+				new TestRunnablePostHandlingApplication(
 					() -> {
 						registerJaxRsApplication(
-							updateFunctionApplication, "annotated2",
-							applicationProperties);
+							application, "annotated2", applicationProperties);
 					}),
 				"annotated", applicationProperties);
 

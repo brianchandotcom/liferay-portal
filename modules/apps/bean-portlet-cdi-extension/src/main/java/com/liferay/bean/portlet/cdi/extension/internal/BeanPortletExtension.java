@@ -16,10 +16,7 @@ package com.liferay.bean.portlet.cdi.extension.internal;
 
 import com.liferay.bean.portlet.LiferayPortletConfiguration;
 import com.liferay.bean.portlet.LiferayPortletConfigurations;
-import com.liferay.bean.portlet.cdi.extension.internal.annotated.type.ApplicationScopedAnnotatedTypeImpl;
-import com.liferay.bean.portlet.cdi.extension.internal.annotated.type.PortletConfigAnnotatedTypeImpl;
-import com.liferay.bean.portlet.cdi.extension.internal.annotated.type.RequestScopedAnnotatedTypeImpl;
-import com.liferay.bean.portlet.cdi.extension.internal.annotated.type.SessionScopedAnnotatedTypeImpl;
+import com.liferay.bean.portlet.cdi.extension.internal.annotated.type.ModifiedAnnotatedType;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.JSR362BeanProducer;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletRequestBeanContext;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletSessionBeanContext;
@@ -64,6 +61,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.Destroyed;
 import javax.enterprise.context.Initialized;
 import javax.enterprise.context.RequestScoped;
@@ -163,26 +161,6 @@ public class BeanPortletExtension implements Extension {
 		AnnotatedType<T> annotatedType =
 			processAnnotatedType.getAnnotatedType();
 
-		Set<Type> typeClosures = annotatedType.getTypeClosure();
-
-		if (typeClosures.contains(PortletConfig.class)) {
-			annotatedType = new PortletConfigAnnotatedTypeImpl<>(annotatedType);
-
-			processAnnotatedType.setAnnotatedType(annotatedType);
-		}
-
-		if (annotatedType.isAnnotationPresent(RequestScoped.class)) {
-			annotatedType = new RequestScopedAnnotatedTypeImpl<>(annotatedType);
-
-			processAnnotatedType.setAnnotatedType(annotatedType);
-		}
-
-		if (annotatedType.isAnnotationPresent(SessionScoped.class)) {
-			annotatedType = new SessionScopedAnnotatedTypeImpl<>(annotatedType);
-
-			processAnnotatedType.setAnnotatedType(annotatedType);
-		}
-
 		Class<T> annotatedClass = annotatedType.getJavaClass();
 
 		if (annotatedType.isAnnotationPresent(RenderStateScoped.class) &&
@@ -212,19 +190,60 @@ public class BeanPortletExtension implements Extension {
 			}
 		}
 
+		Set<Annotation> annotations = new HashSet<>(
+			annotatedType.getAnnotations());
+
+		// If has RequestScoped, remove it, only then if not have
+		// PortletRequestScoped, add a default one.
+
+		if (annotations.remove(
+				annotatedType.getAnnotation(RequestScoped.class)) &&
+			!annotatedType.isAnnotationPresent(PortletRequestScoped.class)) {
+
+			annotations.add(_portletRequestScoped);
+		}
+
+		// If has SessionScoped, remove it, only then if not have
+		// PortletSessionScoped, add a default one.
+
+		if (annotations.remove(
+				annotatedType.getAnnotation(SessionScoped.class)) &&
+			!annotatedType.isAnnotationPresent(PortletSessionScoped.class)) {
+
+			annotations.add(_portletSessionScoped);
+		}
+
 		if (Portlet.class.isAssignableFrom(annotatedClass) &&
 			!annotatedType.isAnnotationPresent(ApplicationScoped.class)) {
 
-			annotatedType = new ApplicationScopedAnnotatedTypeImpl<>(
-				annotatedType);
+			annotations.remove(
+				annotatedType.getAnnotation(ConversationScoped.class));
+			annotations.remove(
+				annotatedType.getAnnotation(RequestScoped.class));
+			annotations.remove(
+				annotatedType.getAnnotation(PortletRequestScoped.class));
+			annotations.remove(
+				annotatedType.getAnnotation(PortletSessionScoped.class));
+			annotations.remove(
+				annotatedType.getAnnotation(SessionScoped.class));
 
-			processAnnotatedType.setAnnotatedType(annotatedType);
+			annotations.add(_applicationScoped);
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Automatically added @ApplicationScoped to " +
 						annotatedClass);
 			}
+		}
+
+		Set<Type> typeClosures = new HashSet<>(annotatedType.getTypeClosure());
+
+		if (typeClosures.remove(PortletConfig.class) ||
+			!annotations.equals(annotatedType.getAnnotations())) {
+
+			processAnnotatedType.setAnnotatedType(
+				new ModifiedAnnotatedType<>(
+					annotatedType, annotations, typeClosures));
 		}
 
 		if (annotatedType.isAnnotationPresent(PortletApplication.class)) {
@@ -1290,6 +1309,16 @@ public class BeanPortletExtension implements Extension {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BeanPortletExtension.class);
 
+	private static final Annotation _applicationScoped =
+		new ApplicationScoped() {
+
+			@Override
+			public Class<? extends Annotation> annotationType() {
+				return ApplicationScoped.class;
+			}
+
+		};
+
 	private static final PortletApplication _portletApplication =
 		new PortletApplication() {
 
@@ -1350,6 +1379,31 @@ public class BeanPortletExtension implements Extension {
 				_publicRenderParameterDefinitions = {};
 			private final RuntimeOption[] _runtimeOptions = {};
 			private final UserAttribute[] _userAttributes = {};
+
+		};
+
+	private static final Annotation _portletRequestScoped =
+		new PortletRequestScoped() {
+
+			@Override
+			public Class<? extends Annotation> annotationType() {
+				return PortletRequestScoped.class;
+			}
+
+		};
+
+	private static final Annotation _portletSessionScoped =
+		new PortletSessionScoped() {
+
+			@Override
+			public Class<? extends Annotation> annotationType() {
+				return PortletSessionScoped.class;
+			}
+
+			@Override
+			public int value() {
+				return PortletSession.PORTLET_SCOPE;
+			}
 
 		};
 

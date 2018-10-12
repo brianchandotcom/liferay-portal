@@ -25,22 +25,36 @@ import javax.enterprise.inject.spi.AnnotatedMethod;
 import javax.enterprise.inject.spi.AnnotatedType;
 
 /**
- * @author Neil Griffin
+ * @author Shuyang Zhou
  */
-public class AnnotatedTypeWrapper<X> implements AnnotatedType<X> {
+public class ModifiedAnnotatedType<X> implements AnnotatedType<X> {
 
-	public AnnotatedTypeWrapper(AnnotatedType<X> annotatedType) {
+	public ModifiedAnnotatedType(
+		AnnotatedType<X> annotatedType, Set<Annotation> annotations,
+		Set<Type> types) {
+
 		_annotatedType = annotatedType;
+		_annotations = annotations;
+		_types = types;
 	}
 
 	@Override
 	public <T extends Annotation> T getAnnotation(Class<T> annotationType) {
-		return _annotatedType.getAnnotation(annotationType);
+		for (Annotation annotation : _annotations) {
+			Class<? extends Annotation> curAnnotationType =
+				annotation.annotationType();
+
+			if (curAnnotationType.equals(annotationType)) {
+				return annotationType.cast(annotation);
+			}
+		}
+
+		return null;
 	}
 
 	@Override
 	public Set<Annotation> getAnnotations() {
-		return _annotatedType.getAnnotations();
+		return _annotations;
 	}
 
 	@Override
@@ -70,16 +84,27 @@ public class AnnotatedTypeWrapper<X> implements AnnotatedType<X> {
 
 	@Override
 	public Set<Type> getTypeClosure() {
-		return _annotatedType.getTypeClosure();
+		return _types;
 	}
 
 	@Override
 	public boolean isAnnotationPresent(
 		Class<? extends Annotation> annotationType) {
 
-		return _annotatedType.isAnnotationPresent(annotationType);
+		for (Annotation annotation : _annotations) {
+			Class<? extends Annotation> curAnnotationType =
+				annotation.annotationType();
+
+			if (curAnnotationType.equals(annotationType)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private final AnnotatedType<X> _annotatedType;
+	private final Set<Annotation> _annotations;
+	private final Set<Type> _types;
 
 }

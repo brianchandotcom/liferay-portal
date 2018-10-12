@@ -264,7 +264,7 @@ public class BeanPortletExtension implements Extension {
 				if (methodType.isMatch(method)) {
 					_beanMethodFactories.add(
 						new BeanMethodFactory(
-							annotatedClass, methodType, method));
+							annotatedClass, method, methodType));
 				}
 			}
 		}
@@ -1190,8 +1190,7 @@ public class BeanPortletExtension implements Extension {
 				continue;
 			}
 
-			BeanMethod beanMethod = beanMethodFactory.createBeanMethod(
-				beanManager);
+			BeanMethod beanMethod = beanMethodFactory.create(beanManager);
 
 			if ((portletNames.length > 0) && "*".equals(portletNames[0])) {
 				wildcardBeanMethods.add(beanMethod);

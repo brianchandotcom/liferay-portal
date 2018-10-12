@@ -26,14 +26,14 @@ import javax.enterprise.inject.spi.BeanManager;
 public class BeanMethodFactory {
 
 	public BeanMethodFactory(
-		Class<?> clazz, MethodType methodType, Method method) {
+		Class<?> clazz, Method method, MethodType methodType) {
 
 		_clazz = clazz;
-		_methodType = methodType;
 		_method = method;
+		_methodType = methodType;
 	}
 
-	public BeanMethod createBeanMethod(BeanManager beanManager) {
+	public BeanMethod create(BeanManager beanManager) {
 		return new BeanMethod(
 			beanManager, beanManager.resolve(beanManager.getBeans(_clazz)),
 			_methodType, _method);

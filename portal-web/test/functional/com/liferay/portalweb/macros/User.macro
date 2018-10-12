@@ -1659,6 +1659,12 @@
 		<execute macro="UserBar#signOut" />
 	</command>
 
+	<command name="openUsersAdmin">
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet" />
+		</execute>
+	</command>
+
 	<command name="resetPassword">
 		<if>
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#PASSWORD" />

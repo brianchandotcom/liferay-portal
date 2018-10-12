@@ -512,6 +512,12 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
+	<command name="openRolesAdmin">
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/control_panel/manage?p_p_id=com_liferay_roles_admin_web_portlet_RolesAdminPortlet" />
+		</execute>
+	</command>
+
 	<command name="removePermissionCP">
 		<execute macro="Role#editPermissionCmdCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />

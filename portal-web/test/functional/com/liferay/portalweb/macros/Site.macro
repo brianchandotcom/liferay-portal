@@ -877,6 +877,12 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
+	<command name="openSitesAdmin">
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/control_panel/manage/-/sites" />
+		</execute>
+	</command>
+
 	<command name="removeMemberCP">
 		<var name="key_cardText" value="${userScreenName}" />
 

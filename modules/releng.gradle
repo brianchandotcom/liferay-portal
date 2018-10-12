@@ -1279,6 +1279,8 @@ private List<String> _getPortalArtifactsDependencyNotations() {
 		type: FileType.DIRECTORIES
 	)
 
+	bundleSymbolicNames.add("com.liferay.osgi.service.tracker.collections")
+
 	List<String> dependencyNotations = new ArrayList<>()
 
 	for (String bundleSymbolicName : bundleSymbolicNames) {

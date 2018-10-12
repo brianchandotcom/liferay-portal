@@ -154,16 +154,16 @@
 			<var name="templateLanguage" value="${templateLanguage}" />
 		</execute>
 
+		<execute macro="WebContentTemplates#inputScript">
+			<var name="templateScript" value="${templateScript}" />
+		</execute>
+
 		<execute macro="WebContentTemplates#addFields">
 			<var name="templateFieldNames" value="${templateFieldNames}" />
 		</execute>
 
 		<execute macro="WebContentTemplates#inputTemplateFile">
 			<var name="templateFile" value="${templateFile}" />
-		</execute>
-
-		<execute macro="WebContentTemplates#inputScript">
-			<var name="templateScript" value="templateScript" />
 		</execute>
 	</command>
 

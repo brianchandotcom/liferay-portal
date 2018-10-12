@@ -364,6 +364,9 @@ public class BeanPortletExtension implements Extension {
 
 		if (beanPortletIds == null) {
 			beanPortletIds = new ArrayList<>();
+
+			servletContext.setAttribute(
+				WebKeys.BEAN_PORTLET_IDS, beanPortletIds);
 		}
 
 		for (BeanPortlet beanPortlet : _beanPortlets.values()) {
@@ -386,8 +389,6 @@ public class BeanPortletExtension implements Extension {
 					resourceBundleLoaderserviceRegistration);
 			}
 		}
-
-		servletContext.setAttribute(WebKeys.BEAN_PORTLET_IDS, beanPortletIds);
 
 		for (BeanFilter beanFilter : _beanFilters.values()) {
 			for (String portletName : beanFilter.getPortletNames()) {

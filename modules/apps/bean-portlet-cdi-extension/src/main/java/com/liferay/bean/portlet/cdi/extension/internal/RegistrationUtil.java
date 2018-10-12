@@ -88,11 +88,12 @@ public class RegistrationUtil {
 
 		if (beanFilterNames == null) {
 			beanFilterNames = new ArrayList<>();
+
+			servletContext.setAttribute(
+				WebKeys.BEAN_FILTER_NAMES, beanFilterNames);
 		}
 
 		beanFilterNames.add(beanFilter.getFilterName());
-
-		servletContext.setAttribute(WebKeys.BEAN_FILTER_NAMES, beanFilterNames);
 
 		return registrations;
 	}

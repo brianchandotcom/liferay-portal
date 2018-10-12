@@ -273,13 +273,13 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 			throw new RuntimeException(ioe);
 		}
 
-		String randomJenkinsURL =
+		String invocationURL =
 			JenkinsResultsParserUtil.getMostAvailableMasterURL(
 				"http://" + cohortName + ".liferay.com", 1);
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(randomJenkinsURL);
+		sb.append(invocationURL);
 		sb.append("/job/");
 		sb.append(jobName);
 		sb.append("/buildWithParameters?token=");

@@ -652,7 +652,7 @@
 					</then>
 				</elseif>
 				<elseif>
-					<equals arg1="${usersegmentRuleName}" arg2="UserGroup Member" />
+					<equals arg1="${usersegmentRuleName}" arg2="User Group Member" />
 					<then>
 						<execute function="AssertTextEquals" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER_SELECT" value1="${userGroupName}" />
 					</then>

@@ -27,12 +27,10 @@ import javax.ws.rs.core.Application;
 /**
  * @author Stian Sigvartsen
  */
-public class TestAnnotatedApplicationRunnable extends Application {
+public class TestRunnablePostHandlingApplication extends Application {
 
-	public TestAnnotatedApplicationRunnable(
-		Runnable delayedBundleActivatorRunnable) {
-
-		_delayedBundleActivatorRunnable = delayedBundleActivatorRunnable;
+	public TestRunnablePostHandlingApplication(Runnable runnable) {
+		_runnable = runnable;
 	}
 
 	@Override
@@ -49,9 +47,9 @@ public class TestAnnotatedApplicationRunnable extends Application {
 	@POST
 	@RequiresNoScope
 	public void run() {
-		_delayedBundleActivatorRunnable.run();
+		_runnable.run();
 	}
 
-	private final Runnable _delayedBundleActivatorRunnable;
+	private final Runnable _runnable;
 
 }

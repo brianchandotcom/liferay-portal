@@ -508,6 +508,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	protected void setTestClasses() {
 		File workingDirectory = portalGitWorkingDirectory.getWorkingDirectory();
 
+		if (testClassNamesIncludesPathMatchers.isEmpty()) {
+			return;
+		}
+
 		try {
 			Files.walkFileTree(
 				workingDirectory.toPath(),
@@ -664,11 +668,9 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		List<String> testClassNamesIncludesRelativeGlobs = new ArrayList<>();
 
-		File workingDirectory = portalGitWorkingDirectory.getWorkingDirectory();
-
-		testClassNamesIncludesPathMatchers.addAll(
-			getPathMatchers(
-				testClassNamesIncludesPropertyValue, workingDirectory));
+		Collections.addAll(
+			testClassNamesIncludesRelativeGlobs,
+			testClassNamesIncludesPropertyValue.split(","));
 
 		if (testReleaseBundle) {
 			testClassNamesIncludesRelativeGlobs =
@@ -691,6 +693,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				testClassNamesIncludesRelativeGlobs,
 				testBatchClassNamesIncludesRequiredPropertyValue.split(","));
 		}
+
+		File workingDirectory = portalGitWorkingDirectory.getWorkingDirectory();
 
 		testClassNamesIncludesPathMatchers.addAll(
 			JenkinsResultsParserUtil.toPathMatchers(

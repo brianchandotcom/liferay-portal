@@ -151,15 +151,20 @@ public class FileUtil {
 
 			pathKeyPath = pathKeyPath.subpath(1, pathKeyPath.getNameCount());
 
-			try (InputStream inputStreamValue = entry.getValue()) {
+			try (InputStream inputStream = entry.getValue()) {
 				Path destinationPath = Paths.get(
 					destinationDirectoryPath.toString(),
 					pathKeyPath.toString());
 
-				if (inputStreamValue != null) {
+				if (inputStream != null) {
 					Files.createDirectories(destinationPath.getParent());
-					_copyInputStreamToFile(
-						inputStreamValue, destinationPath.toFile());
+
+					try {
+						Files.copy(inputStream, destinationPath);
+					}
+					catch (Throwable th) {
+						throw new RuntimeException(th);
+					}
 				}
 				else {
 					Files.createDirectories(destinationPath);
@@ -206,15 +211,10 @@ public class FileUtil {
 		return null;
 	}
 
-	public static Path getJarPath() {
-		try {
-			URI jarUri = _getJarUri();
+	public static Path getJarPath() throws URISyntaxException {
+		URI jarUri = _getJarUri();
 
-			return Paths.get(jarUri.getPath());
-		}
-		catch (Throwable th) {
-			throw new RuntimeException(th);
-		}
+		return Paths.get(jarUri.getPath());
 	}
 
 	public static String getManifestProperty(File file, String name)
@@ -271,35 +271,15 @@ public class FileUtil {
 		}
 	}
 
-	private static void _copyInputStreamToFile(
-		InputStream inputStream, File file) {
-
-		try {
-			Files.copy(inputStream, file.toPath());
-		}
-		catch (Throwable th) {
-			throw new RuntimeException(th);
-		}
-	}
-
 	private static Map<String, InputStream> _getFilesFromClasspath(
-		String directoryName) {
+			String directoryName)
+		throws Exception {
 
 		Map<String, InputStream> pathMap = new HashMap<>();
 
-		URI uri;
+		URL url = FileUtil.class.getResource(directoryName);
 
-		try {
-			URL url = FileUtil.class.getResource(directoryName);
-
-			uri = url.toURI();
-		}
-		catch (Throwable th) {
-			String errorMessage = String.format(
-				"Cannot convert %s to URI", directoryName);
-
-			throw new RuntimeException(errorMessage, th);
-		}
+		URI uri = url.toURI();
 
 		if (uri == null) {
 			String errorMessage = String.format("%s not found", directoryName);
@@ -307,42 +287,30 @@ public class FileUtil {
 			throw new NoSuchElementException(errorMessage);
 		}
 
-		String uriScheme = uri.getScheme();
+		String scheme = uri.getScheme();
 
-		if (uriScheme.contains("jar")) {
-			try {
-				FileSystem fileSystem = _getJarFileSystem();
+		if (scheme.contains("jar")) {
+			FileSystem jarFileSystem = _getJarFileSystem();
 
-				Path fileSystemPath = fileSystem.getPath(directoryName);
+			Path fileSystemPath = jarFileSystem.getPath(directoryName);
 
-				try (DirectoryStream<Path> directoryStream =
-						Files.newDirectoryStream(fileSystemPath)) {
+			try (DirectoryStream<Path> directoryStream =
+					Files.newDirectoryStream(fileSystemPath)) {
 
-					for (Path directoryStreamPath : directoryStream) {
-						String directoryStreamPathString =
-							directoryStreamPath.toString();
+				for (Path dirPath : directoryStream) {
+					String pathString = dirPath.toString();
 
-						if (Files.isDirectory(directoryStreamPath)) {
-							pathMap.put(directoryStreamPathString, null);
-							pathMap.putAll(
-								_getFilesFromClasspath(
-									directoryStreamPathString));
-						}
-						else {
-							InputStream is = FileUtil.class.getResourceAsStream(
-								directoryStreamPathString);
+					if (Files.isDirectory(dirPath)) {
+						pathMap.put(pathString, null);
+						pathMap.putAll(_getFilesFromClasspath(pathString));
+					}
+					else {
+						InputStream is = FileUtil.class.getResourceAsStream(
+							pathString);
 
-							pathMap.put(directoryStreamPathString, is);
-						}
+						pathMap.put(pathString, is);
 					}
 				}
-			}
-			catch (Throwable th) {
-				String errorMessage = String.format(
-					"getFolderPath threw %s with the path %s", th.getMessage(),
-					directoryName);
-
-				throw new RuntimeException(errorMessage, th);
 			}
 		}
 		else {
@@ -351,35 +319,27 @@ public class FileUtil {
 			try (DirectoryStream<Path> directoryStream =
 					Files.newDirectoryStream(path)) {
 
-				for (Path directoryStreamPath : directoryStream) {
-					Path relativeDirectoryStreamPath = path.relativize(
-						directoryStreamPath);
+				for (Path dirPath : directoryStream) {
+					Path relativeDirPath = path.relativize(dirPath);
 					Path folderNamePath = Paths.get(directoryName);
 
 					Path pathToResolve = folderNamePath.resolve(
-						relativeDirectoryStreamPath);
+						relativeDirPath);
 
 					String pathToResolveString = pathToResolve.toString();
 
-					if (Files.isDirectory(directoryStreamPath)) {
+					if (Files.isDirectory(dirPath)) {
 						pathMap.put(pathToResolveString + File.separator, null);
 						pathMap.putAll(
 							_getFilesFromClasspath(pathToResolveString));
 					}
 					else {
 						InputStream inputStream = new FileInputStream(
-							directoryStreamPath.toFile());
+							dirPath.toFile());
 
 						pathMap.put(pathToResolveString, inputStream);
 					}
 				}
-			}
-			catch (Throwable th) {
-				String errorMessage = String.format(
-					"getFolderPath threw %s with the path %s", th.getMessage(),
-					directoryName);
-
-				throw new RuntimeException(errorMessage, th);
 			}
 		}
 

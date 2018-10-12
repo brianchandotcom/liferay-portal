@@ -37,16 +37,16 @@ import java.util.jar.JarFile;
  */
 public class ProjectTemplatesUtil {
 
-	public static File getArchetypeFile(String artifactId) {
+	public static File getArchetypeFile(String artifactId) throws IOException {
 		if (_archetypeFiles.containsKey(artifactId)) {
 			return _archetypeFiles.get(artifactId);
 		}
 
-		Properties archetypesListProperties = getArchetypes();
+		Properties projectTemplateJarVersions = getProjectTemplateJarVersions();
 
-		if (archetypesListProperties.containsKey(artifactId)) {
+		if (projectTemplateJarVersions.containsKey(artifactId)) {
 			String version = String.valueOf(
-				archetypesListProperties.get(artifactId));
+				projectTemplateJarVersions.get(artifactId));
 
 			try {
 				String jarName = getArchetypeJarName(artifactId, version);
@@ -128,13 +128,16 @@ public class ProjectTemplatesUtil {
 		return jarName;
 	}
 
-	public static Collection<String> getArchetypeJarNames() {
-		Properties archetypes = getArchetypes();
+	public static Collection<String> getArchetypeJarNames() throws IOException {
+		Properties projectTemplateJarVersions = getProjectTemplateJarVersions();
+
 		Collection<String> archetypeJarNames = new ArrayList<>();
-		Set<String> artifactIds = archetypes.stringPropertyNames();
+
+		Set<String> artifactIds =
+			projectTemplateJarVersions.stringPropertyNames();
 
 		for (String artifactId : artifactIds) {
-			String version = archetypes.getProperty(artifactId);
+			String version = projectTemplateJarVersions.getProperty(artifactId);
 
 			String jarName = getArchetypeJarName(artifactId, version);
 
@@ -144,28 +147,27 @@ public class ProjectTemplatesUtil {
 		return archetypeJarNames;
 	}
 
-	public static Properties getArchetypes() {
-		if (_archetypes == null) {
-			_archetypes = new Properties();
+	public static String getArchetypeVersion(String artifactId)
+		throws IOException {
 
-			try (InputStream archetypesList =
-					ProjectTemplatesUtil.class.getResourceAsStream(
-						"/project-template-jar-versions.properties")) {
+		Properties projectTemplateJarVersions = getProjectTemplateJarVersions();
 
-				_archetypes.load(archetypesList);
-			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
-			}
-		}
-
-		return _archetypes;
+		return projectTemplateJarVersions.getProperty(artifactId);
 	}
 
-	public static String getArchetypeVersion(String artifactId) {
-		Properties archetypesListProperties = getArchetypes();
+	public static Properties getProjectTemplateJarVersions()
+		throws IOException {
 
-		return archetypesListProperties.getProperty(artifactId);
+		Properties projectTemplateJarVersions = new Properties();
+
+		try (InputStream inputStream =
+				ProjectTemplatesUtil.class.getResourceAsStream(
+					"/project-template-jar-versions.properties")) {
+
+			projectTemplateJarVersions.load(inputStream);
+		}
+
+		return projectTemplateJarVersions;
 	}
 
 	public static String getTemplateName(String name) {
@@ -184,6 +186,5 @@ public class ProjectTemplatesUtil {
 	}
 
 	private static final Map<String, File> _archetypeFiles = new HashMap<>();
-	private static Properties _archetypes;
 
 }

@@ -18,6 +18,7 @@ import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -84,7 +85,12 @@ public class ArchetyperArchetypeArtifactManager
 		}
 
 		if (archetypeFile == null) {
-			archetypeFile = ProjectTemplatesUtil.getArchetypeFile(artifactId);
+			try {
+				archetypeFile = ProjectTemplatesUtil.getArchetypeFile(
+					artifactId);
+			}
+			catch (IOException ioe) {
+			}
 		}
 
 		if (archetypeFile == null) {

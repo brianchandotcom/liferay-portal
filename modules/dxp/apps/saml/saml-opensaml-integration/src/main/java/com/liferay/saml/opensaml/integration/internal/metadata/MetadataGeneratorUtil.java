@@ -86,7 +86,6 @@ public class MetadataGeneratorUtil {
 
 		idpSSODescriptor.addSupportedProtocol(SAMLConstants.SAML20P_NS);
 
-		idpSSODescriptor.setID(entityId);
 		idpSSODescriptor.setWantAuthnRequestsSigned(wantAuthnRequestSigned);
 
 		List<KeyDescriptor> keyDescriptors =
@@ -174,7 +173,6 @@ public class MetadataGeneratorUtil {
 		spSSODescriptor.addSupportedProtocol(SAMLConstants.SAML20P_NS);
 
 		spSSODescriptor.setAuthnRequestsSigned(signAuthnRequests);
-		spSSODescriptor.setID(entityId);
 		spSSODescriptor.setWantAssertionsSigned(wantAssertionsSigned);
 
 		List<AssertionConsumerService> assertionConsumerServices =

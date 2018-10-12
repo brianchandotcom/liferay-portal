@@ -16,11 +16,11 @@ package com.liferay.saml.opensaml.integration.internal.credential;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.saml.runtime.credential.KeyStoreManager;
 
 import java.io.File;

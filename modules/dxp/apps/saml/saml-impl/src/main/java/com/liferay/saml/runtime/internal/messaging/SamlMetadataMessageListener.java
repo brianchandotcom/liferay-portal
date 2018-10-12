@@ -14,6 +14,7 @@
 
 package com.liferay.saml.runtime.internal.messaging;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
@@ -112,8 +112,7 @@ public class SamlMetadataMessageListener extends SamlMessageListener {
 				catch (Exception e) {
 					String msg = StringBundler.concat(
 						"Unable to refresh metadata for company ",
-						String.valueOf(company.getCompanyId()), ": ",
-						e.getMessage());
+						company.getCompanyId(), ": ", e.getMessage());
 
 					if (_log.isDebugEnabled()) {
 						_log.debug(msg, e);

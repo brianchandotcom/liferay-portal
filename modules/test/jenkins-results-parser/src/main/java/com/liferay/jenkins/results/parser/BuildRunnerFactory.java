@@ -37,11 +37,6 @@ public class BuildRunnerFactory {
 				(PortalBatchBuildData)buildData);
 		}
 
-		if (jobName.contains("portal")) {
-			return new DefaultPortalTopLevelBuildRunner(
-				(PortalTopLevelBuildData)buildData);
-		}
-
 		throw new RuntimeException("Invalid build data " + buildData);
 	}
 

@@ -32,12 +32,12 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="com.npm.angular Portlet" />
+			<var name="portletName" value="NpmAngular" />
 		</execute>
 
 		<execute macro="Portlet#viewPG">
 			<var name="portletBody" value="Hello world!" />
-			<var name="portletName" value="com.npm.angular Portlet" />
+			<var name="portletName" value="NpmAngular" />
 		</execute>
 	</command>
 
@@ -50,13 +50,15 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="com.npm.billboardjs Portlet" />
+			<var name="portletName" value="NpmBillboardjs" />
 		</execute>
 
 		<execute macro="Portlet#viewPG">
 			<var name="portletBody" value="data1data2" />
-			<var name="portletName" value="com.npm.billboardjs Portlet" />
+			<var name="portletName" value="NpmBillboardjs" />
 		</execute>
+
+		<var name="key_portletName" value="npmbillboardjs" />
 
 		<execute function="AssertElementPresent" locator1="BladeNPMTemplates#BILLBOARDJS_BODY" />
 	</command>
@@ -70,12 +72,12 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="com.npm.isomorphic Portlet" />
+			<var name="portletName" value="NpmIsomorphic" />
 		</execute>
 
 		<execute macro="Portlet#viewPG">
 			<var name="portletBody" value="" />
-			<var name="portletName" value="com.npm.isomorphic Portlet" />
+			<var name="portletName" value="NpmIsomorphic" />
 		</execute>
 	</command>
 
@@ -88,12 +90,12 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="com.npm.jquery Portlet" />
+			<var name="portletName" value="NpmJquery" />
 		</execute>
 
 		<execute macro="Portlet#viewPG">
 			<var name="portletBody" value="Hello World!" />
-			<var name="portletName" value="com.npm.jquery Portlet" />
+			<var name="portletName" value="NpmJquery" />
 		</execute>
 	</command>
 
@@ -106,12 +108,12 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="com.npm.metaljs Portlet" />
+			<var name="portletName" value="NpmMetaljs" />
 		</execute>
 
 		<execute macro="Portlet#viewPG">
 			<var name="portletBody" value="Hello World!" />
-			<var name="portletName" value="com.npm.metaljs Portlet" />
+			<var name="portletName" value="NpmMetaljs" />
 		</execute>
 	</command>
 
@@ -124,12 +126,12 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="com.npm.react Portlet" />
+			<var name="portletName" value="NpmReact" />
 		</execute>
 
 		<execute macro="Portlet#viewPG">
 			<var name="portletBody" value="Hello World!" />
-			<var name="portletName" value="com.npm.react Portlet" />
+			<var name="portletName" value="NpmReact" />
 		</execute>
 	</command>
 
@@ -142,12 +144,12 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="com.npm.simple Portlet" />
+			<var name="portletName" value="NpmSimple" />
 		</execute>
 
 		<execute macro="Portlet#viewPG">
 			<var name="portletBody" value="Hello World!" />
-			<var name="portletName" value="com.npm.simple Portlet" />
+			<var name="portletName" value="NpmSimple" />
 		</execute>
 	</command>
 
@@ -160,12 +162,12 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="com.npm.vuejs Portlet" />
+			<var name="portletName" value="NpmVuejs" />
 		</execute>
 
 		<execute macro="Portlet#viewPG">
 			<var name="portletBody" value="Hello World!" />
-			<var name="portletName" value="com.npm.vuejs Portlet" />
+			<var name="portletName" value="NpmVuejs" />
 		</execute>
 	</command>
 </definition>

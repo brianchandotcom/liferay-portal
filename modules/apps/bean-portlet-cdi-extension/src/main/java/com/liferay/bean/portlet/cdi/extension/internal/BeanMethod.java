@@ -16,7 +16,6 @@ package com.liferay.bean.portlet.cdi.extension.internal;
 
 import com.liferay.petra.lang.HashUtil;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Objects;
@@ -172,19 +171,12 @@ public class BeanMethod implements Comparable<BeanMethod> {
 		return HashUtil.hash(hashCode, _type);
 	}
 
-	public Object invoke(Object... args)
-		throws IllegalAccessException, InvocationTargetException {
-
+	public Object invoke(Object... args) throws ReflectiveOperationException {
 		Object beanInstance = _beanManager.getReference(
 			_bean, _bean.getBeanClass(),
 			_beanManager.createCreationalContext(_bean));
 
-		try {
-			return _method.invoke(beanInstance, args);
-		}
-		catch (IllegalArgumentException iae) {
-			throw new InvocationTargetException(iae);
-		}
+		return _method.invoke(beanInstance, args);
 	}
 
 	public boolean isEventProcessor(QName qName) {

@@ -519,8 +519,7 @@ public class OpenSamlUtil {
 	}
 
 	public static AuthnRequest buildAuthnRequest(
-		SPSSODescriptor spSSODescriptor,
-		AssertionConsumerService assertionConsumerService,
+		String spEntityId, AssertionConsumerService assertionConsumerService,
 		SingleSignOnService singleSignOnService, NameIDPolicy nameIDPolicy) {
 
 		SAMLObjectBuilder<AuthnRequest> samlObjectBuilder =
@@ -535,7 +534,7 @@ public class OpenSamlUtil {
 		authnRequest.setIsPassive(false);
 		authnRequest.setIssueInstant(now);
 
-		Issuer issuer = buildIssuer(spSSODescriptor.getID());
+		Issuer issuer = buildIssuer(spEntityId);
 
 		authnRequest.setIssuer(issuer);
 

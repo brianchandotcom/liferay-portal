@@ -179,7 +179,7 @@ public abstract class BaseProfile {
 				SAMLConstants.SAML20P_NS);
 		}
 
-		samlMessageContext.setLocalEntityId(roleDescriptor.getID());
+		samlMessageContext.setLocalEntityId(entityDescriptor.getEntityID());
 
 		if (samlProviderConfigurationHelper.isRoleIdp()) {
 			samlMessageContext.setLocalEntityRole(

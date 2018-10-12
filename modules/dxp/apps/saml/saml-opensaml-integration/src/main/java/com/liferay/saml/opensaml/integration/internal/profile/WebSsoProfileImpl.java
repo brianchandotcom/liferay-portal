@@ -716,8 +716,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		nameIDPolicy.setFormat(metadataManager.getNameIdFormat(entityId));
 
 		AuthnRequest authnRequest = OpenSamlUtil.buildAuthnRequest(
-			spSSODescriptor, assertionConsumerService, singleSignOnService,
-			nameIDPolicy);
+			samlMessageContext.getLocalEntityId(), assertionConsumerService,
+			singleSignOnService, nameIDPolicy);
 
 		authnRequest.setID(generateIdentifier(20));
 

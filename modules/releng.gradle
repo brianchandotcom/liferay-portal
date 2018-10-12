@@ -68,6 +68,43 @@ task prepareMajorIncrement
 task syncGitRepoReleases
 task tagAppReleases
 
+afterEvaluate {
+	if (gradle.startParameter.taskNames.contains("portalArtifactsJar")) {
+		configurations {
+			portalArtifacts {
+				resolutionStrategy {
+					cacheChangingModulesFor(0, "seconds")
+					cacheDynamicVersionsFor(0, "seconds")
+
+					componentSelection {
+						all {
+							ComponentSelection componentSelection ->
+
+							if (componentSelection.candidate.version.endsWith("-SNAPSHOT")) {
+								componentSelection.reject("no snapshots are allowed")
+							}
+						}
+					}
+				}
+
+				setTransitive(false)
+			}
+		}
+
+		dependencies {
+			for (String portalArtifactsDependencyNotation : _getPortalArtifactsDependencyNotations()) {
+				portalArtifacts portalArtifactsDependencyNotation
+			}
+		}
+
+		repositories {
+			maven {
+				url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+			}
+		}
+	}
+}
+
 buildFixPackChangeLog {
 	changeLogHeader = {
 		File releaseInfoFile = file("../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
@@ -162,30 +199,7 @@ cleanVersionOverride {
 }
 
 configurations {
-	portalArtifacts {
-		resolutionStrategy {
-			cacheChangingModulesFor(0, "seconds")
-			cacheDynamicVersionsFor(0, "seconds")
-
-			componentSelection {
-				all {
-					ComponentSelection componentSelection ->
-
-					if (componentSelection.candidate.version.endsWith("-SNAPSHOT")) {
-						componentSelection.reject("no snapshots are allowed")
-					}
-				}
-			}
-		}
-
-		setTransitive(false)
-	}
-}
-
-dependencies {
-	for (String portalArtifactsDependencyNotation : _getPortalArtifactsDependencyNotations()) {
-		portalArtifacts portalArtifactsDependencyNotation
-	}
+	portalArtifacts
 }
 
 lockDependencyVersion {
@@ -724,12 +738,6 @@ prepareMajorIncrement {
 	}
 
 	group = "releng"
-}
-
-repositories {
-	maven {
-		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
-	}
 }
 
 syncGitRepoReleases {

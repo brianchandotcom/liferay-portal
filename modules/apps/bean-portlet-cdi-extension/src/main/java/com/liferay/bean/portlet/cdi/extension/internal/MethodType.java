@@ -55,7 +55,7 @@ public enum MethodType {
 
 			return new String[] {actionMethod.portletName()};
 		},
-		annotation -> 0),
+		annotation -> 0, annotation -> null),
 	DESTROY(
 		DestroyMethod.class, new Class<?>[0], false,
 		annotation -> {
@@ -63,7 +63,7 @@ public enum MethodType {
 
 			return new String[] {destroyMethod.value()};
 		},
-		annotation -> 0),
+		annotation -> 0, annotation -> null),
 	EVENT(
 		EventMethod.class,
 		new Class<?>[] {EventRequest.class, EventResponse.class}, false,
@@ -72,7 +72,7 @@ public enum MethodType {
 
 			return new String[] {eventMethod.portletName()};
 		},
-		annotation -> 0),
+		annotation -> 0, annotation -> null),
 	HEADER(
 		HeaderMethod.class,
 		new Class<?>[] {HeaderRequest.class, HeaderResponse.class}, true,
@@ -85,6 +85,11 @@ public enum MethodType {
 			HeaderMethod headerMethod = HeaderMethod.class.cast(annotation);
 
 			return headerMethod.ordinal();
+		},
+		annotation -> {
+			HeaderMethod headerMethod = HeaderMethod.class.cast(annotation);
+
+			return headerMethod.include();
 		}),
 	INIT(
 		InitMethod.class, new Class<?>[] {PortletConfig.class}, false,
@@ -93,7 +98,7 @@ public enum MethodType {
 
 			return new String[] {initMethod.value()};
 		},
-		annotation -> 0),
+		annotation -> 0, annotation -> null),
 	RENDER(
 		RenderMethod.class,
 		new Class<?>[] {RenderRequest.class, RenderResponse.class}, true,
@@ -106,6 +111,11 @@ public enum MethodType {
 			RenderMethod renderMethod = RenderMethod.class.cast(annotation);
 
 			return renderMethod.ordinal();
+		},
+		annotation -> {
+			RenderMethod renderMethod = RenderMethod.class.cast(annotation);
+
+			return renderMethod.include();
 		}),
 	SERVE_RESOURCE(
 		ServeResourceMethod.class,
@@ -121,7 +131,23 @@ public enum MethodType {
 				ServeResourceMethod.class.cast(annotation);
 
 			return serveResourceMethod.ordinal();
+		},
+		annotation -> {
+			ServeResourceMethod serveResourceMethod =
+				ServeResourceMethod.class.cast(annotation);
+
+			return serveResourceMethod.include();
 		});
+
+	public String getInclude(Method method) {
+		Annotation annotation = method.getAnnotation(_annotation);
+
+		if (annotation == null) {
+			return null;
+		}
+
+		return _includeFunction.apply(annotation);
+	}
 
 	public int getOrdinal(Method method) {
 		Annotation annotation = method.getAnnotation(_annotation);
@@ -177,13 +203,15 @@ public enum MethodType {
 	private MethodType(
 		Class<? extends Annotation> annotation, Class<?>[] parameterTypes,
 		boolean variant, Function<Annotation, String[]> portletNamesFunction,
-		Function<Annotation, Integer> ordinalFunction) {
+		Function<Annotation, Integer> ordinalFunction,
+		Function<Annotation, String> includeFunction) {
 
 		_annotation = annotation;
 		_parameterTypes = parameterTypes;
 		_variant = variant;
 		_portletNamesFunction = portletNamesFunction;
 		_ordinalFunction = ordinalFunction;
+		_includeFunction = includeFunction;
 	}
 
 	private boolean _isAssignableFrom(Class<?>[] parameterTypes) {
@@ -203,6 +231,7 @@ public enum MethodType {
 	private static final Log _log = LogFactoryUtil.getLog(MethodType.class);
 
 	private final Class<? extends Annotation> _annotation;
+	private final Function<Annotation, String> _includeFunction;
 	private final Function<Annotation, Integer> _ordinalFunction;
 	private final Class<?>[] _parameterTypes;
 	private final Function<Annotation, String[]> _portletNamesFunction;

@@ -28,10 +28,8 @@ import javax.portlet.ProcessAction;
 import javax.portlet.RenderMode;
 import javax.portlet.annotations.ActionMethod;
 import javax.portlet.annotations.EventMethod;
-import javax.portlet.annotations.HeaderMethod;
 import javax.portlet.annotations.PortletQName;
 import javax.portlet.annotations.RenderMethod;
-import javax.portlet.annotations.ServeResourceMethod;
 
 import javax.xml.namespace.QName;
 
@@ -103,35 +101,6 @@ public class BeanMethod implements Comparable<BeanMethod> {
 		}
 
 		return processAction.name();
-	}
-
-	public String getInclude() {
-		if (_type == MethodType.HEADER) {
-			HeaderMethod headerMethod = _method.getAnnotation(
-				HeaderMethod.class);
-
-			if (headerMethod != null) {
-				return headerMethod.include();
-			}
-		}
-		else if (_type == MethodType.RENDER) {
-			RenderMethod renderMethod = _method.getAnnotation(
-				RenderMethod.class);
-
-			if (renderMethod != null) {
-				return renderMethod.include();
-			}
-		}
-		else if (_type == MethodType.SERVE_RESOURCE) {
-			ServeResourceMethod serveResourceMethod = _method.getAnnotation(
-				ServeResourceMethod.class);
-
-			if (serveResourceMethod != null) {
-				return serveResourceMethod.include();
-			}
-		}
-
-		return null;
 	}
 
 	public Method getMethod() {

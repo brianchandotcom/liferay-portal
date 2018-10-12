@@ -143,8 +143,7 @@ public class BeanPortletInvoker
 	}
 
 	private void _invokeBeanMethod(BeanMethod beanMethod, Object... args)
-		throws IllegalAccessException, InvocationTargetException, IOException,
-			   PortletException {
+		throws IOException, PortletException, ReflectiveOperationException {
 
 		Method method = beanMethod.getMethod();
 
@@ -216,12 +215,12 @@ public class BeanPortletInvoker
 				portletContext.getRequestDispatcher(include);
 
 			if (portletRequestDispatcher != null) {
-				portletRequestDispatcher.include(
-					(PortletRequest)args[0], (PortletResponse)args[1]);
-			}
-			else {
 				_log.error(
 					"Unable to acquire dispatcher for include=" + include);
+			}
+			else {
+				portletRequestDispatcher.include(
+					(PortletRequest)args[0], (PortletResponse)args[1]);
 			}
 		}
 	}

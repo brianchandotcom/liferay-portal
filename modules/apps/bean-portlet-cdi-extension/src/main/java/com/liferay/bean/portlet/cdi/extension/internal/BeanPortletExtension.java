@@ -353,11 +353,9 @@ public class BeanPortletExtension implements Extension {
 			portletBeanMethodsFunction, descriptorDisplayCategories,
 			descriptorLiferayConfigurations);
 
-		if (!descriptorLiferayConfigurations.isEmpty()) {
-			_addBeanPortletsFromLiferayDescriptor(
-				portletBeanMethodsFunction, descriptorDisplayCategories,
-				descriptorLiferayConfigurations);
-		}
+		_addBeanPortletsFromLiferayDescriptor(
+			portletBeanMethodsFunction, descriptorDisplayCategories,
+			descriptorLiferayConfigurations);
 
 		List<String> beanPortletIds = (List<String>)servletContext.getAttribute(
 			WebKeys.BEAN_PORTLET_IDS);

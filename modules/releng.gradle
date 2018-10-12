@@ -408,6 +408,8 @@ portalArtifactsJar {
 			copy {
 				from zipTree(jarFile)
 				into new File(portalArtifactsDir, jarFile.name[0 .. -5])
+
+				println "Copied " + jarFile.name
 			}
 		}
 	}

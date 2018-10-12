@@ -57,10 +57,12 @@ import javax.portlet.ResourceServingPortlet;
 /**
  * @author Neil Griffin
  */
-public class BeanPortletInvoker
+public class BeanPortletInvokerPortlet
 	implements EventPortlet, HeaderPortlet, Portlet, ResourceServingPortlet {
 
-	public BeanPortletInvoker(Map<MethodType, List<BeanMethod>> beanMethods) {
+	public BeanPortletInvokerPortlet(
+		Map<MethodType, List<BeanMethod>> beanMethods) {
+
 		_beanMethods = beanMethods;
 	}
 
@@ -276,7 +278,7 @@ public class BeanPortletInvoker
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BeanPortletInvoker.class);
+		BeanPortletInvokerPortlet.class);
 
 	private final Map<MethodType, List<BeanMethod>> _beanMethods;
 	private PortletConfig _portletConfig;

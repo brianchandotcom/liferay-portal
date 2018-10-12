@@ -44,7 +44,6 @@ import org.junit.runner.RunWith;
 /**
  * @author David Arques
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class UserODataRetrieverTest {
 

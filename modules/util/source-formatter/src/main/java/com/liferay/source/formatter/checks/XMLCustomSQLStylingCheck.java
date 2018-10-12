@@ -249,6 +249,38 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		}
 	}
 
+	private void _checkUnionStatement(String fileName, String content) {
+		Matcher matcher = _unionPattern.matcher(content);
+
+		while (matcher.find()) {
+			String beforeUnionChar = matcher.group(1);
+
+			if (beforeUnionChar.equals(StringPool.CLOSE_PARENTHESIS)) {
+				int openParenthesisPos = _getOpenParenthesisPos(
+					content, matcher.start(1));
+
+				String s = StringUtil.trim(
+					content.substring(openParenthesisPos + 1, matcher.start()));
+
+				if (s.startsWith("SELECT")) {
+					addMessage(
+						fileName, "Do not use parentheses before UNION",
+						getLineNumber(content, matcher.start()));
+
+					continue;
+				}
+			}
+
+			String afterUnionChar = matcher.group(4);
+
+			if (afterUnionChar.equals(StringPool.OPEN_PARENTHESIS)) {
+				addMessage(
+					fileName, "Do not use parentheses after UNION",
+					getLineNumber(content, matcher.start(3)));
+			}
+		}
+	}
+
 	private String _fixIncorrectAndOr(String content) {
 		Matcher matcher = _incorrectAndOrpattern.matcher(content);
 
@@ -461,38 +493,6 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		}
 
 		return content;
-	}
-
-	private void _checkUnionStatement(String fileName, String content) {
-		Matcher matcher = _unionPattern.matcher(content);
-
-		while (matcher.find()) {
-			String beforeUnionChar = matcher.group(1);
-
-			if (beforeUnionChar.equals(StringPool.CLOSE_PARENTHESIS)) {
-				int openParenthesisPos = _getOpenParenthesisPos(
-					content, matcher.start(1));
-
-				String s = StringUtil.trim(
-					content.substring(openParenthesisPos + 1, matcher.start()));
-
-				if (s.startsWith("SELECT")) {
-					addMessage(
-						fileName, "Do not use parentheses before UNION",
-						getLineNumber(content, matcher.start()));
-
-					continue;
-				}
-			}
-
-			String afterUnionChar = matcher.group(4);
-
-			if (afterUnionChar.equals(StringPool.OPEN_PARENTHESIS)) {
-				addMessage(
-					fileName, "Do not use parentheses after UNION",
-					getLineNumber(content, matcher.start(3)));
-			}
-		}
 	}
 
 	private int _getCloseParenthesisPos(String content, int startPos) {

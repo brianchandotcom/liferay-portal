@@ -22,6 +22,16 @@ public class BuildRunnerFactory {
 	public static BuildRunner newBuildRunner(BuildData buildData) {
 		String jobName = buildData.getJobName();
 
+		if (jobName.equals("git-bisect-tool")) {
+			return new GitBisectToolTopLevelBuildRunner(
+				(PortalTopLevelBuildData)buildData);
+		}
+
+		if (jobName.equals("git-bisect-tool-batch")) {
+			return new DefaultPortalBatchBuildRunner(
+				(PortalBatchBuildData)buildData);
+		}
+
 		if (jobName.contains("portal") && jobName.contains("-batch")) {
 			return new DefaultPortalBatchBuildRunner(
 				(PortalBatchBuildData)buildData);

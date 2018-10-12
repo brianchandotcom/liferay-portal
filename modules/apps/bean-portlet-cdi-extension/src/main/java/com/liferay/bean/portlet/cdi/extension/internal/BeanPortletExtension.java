@@ -515,17 +515,16 @@ public class BeanPortletExtension implements Extension {
 			Set<String> portletNames = new HashSet<>(
 				Arrays.asList(portletLifecycleFilter.portletNames()));
 
-			BeanFilter annotatedBeanFilter = new BeanFilterImpl(
-				portletLifecycleFilter.filterName(), annotatedClass,
-				portletLifecycleFilter.ordinal(), portletNames, lifecycles,
-				initParams);
-
 			BeanFilter descriptorBeanFilter = _beanFilters.get(
 				portletLifecycleFilter.filterName());
 
 			if (descriptorBeanFilter == null) {
 				_beanFilters.put(
-					portletLifecycleFilter.filterName(), annotatedBeanFilter);
+					portletLifecycleFilter.filterName(),
+					new BeanFilterImpl(
+						portletLifecycleFilter.filterName(), annotatedClass,
+						portletLifecycleFilter.ordinal(), portletNames,
+						lifecycles, initParams));
 			}
 			else {
 				portletNames.addAll(descriptorBeanFilter.getPortletNames());

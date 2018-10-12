@@ -32,12 +32,9 @@
 	<command name="AddCategorywithLocalization" priority="4">
 		<property name="testray.component.names" value="Categories,Localization" />
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="JSONCategory#addVocabularyByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="Category#openCategoriesAdmin">
@@ -110,18 +107,13 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Category Page Name" />
 		</execute>
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Category Page Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Category Page Name" />
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name/category-page-name" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -163,8 +155,8 @@
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Category Page Name" />
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name/category-page-name" />
 		</execute>
 
 		<execute macro="SearchPortlets#searchEmbedded">
@@ -188,10 +180,9 @@
 			<var name="siteName" value="Test Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Test Page Name" />
 		</execute>
 
 		<execute macro="User#openUsersAdmin">
@@ -326,34 +317,14 @@
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Test Site Name" />
+		<execute macro="JSONCategory#addVocabularyByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name" />
+		<execute macro="JSONCategory#addCategoryByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -376,27 +347,15 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name" />
+		<execute macro="JSONCategory#addCategoryByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page Name" />
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Test Page Name" />
 		</execute>
 
 		<execute macro="AssetCategorization#addCategory">
@@ -475,35 +434,26 @@
 	<command name="AddSubcategoryProperty" priority="3">
 		<property name="testray.component.names" value="Categories" />
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="JSONCategory#addVocabularyByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Vocabulary#addCP">
+		<execute macro="JSONCategory#addCategoryByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Category#addCP">
+		<execute macro="JSONCategory#addSubcategoryByGroupName">
 			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Subcategory#addCP">
-			<var name="categoryName" value="Category Name" />
+			<var name="groupName" value="Test Site Name" />
 			<var name="subcategoryName" value="Subcategory Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Subcategory#addPropertyCP">
@@ -528,10 +478,8 @@
 	<command name="AddVocabularyWithAssetSubtype" priority="3">
 		<property name="testray.component.names" value="Categories,Web Content Administration" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoStructures" />
@@ -569,8 +517,9 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name" />
+		<execute macro="JSONCategory#addCategoryByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -634,16 +583,9 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name" />
+		<execute macro="JSONCategory#addCategoryByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -666,8 +608,9 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Page Name" />
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Page Name" />
 		</execute>
 
 		<execute macro="SitePages#gotoPageMenuItem">
@@ -694,16 +637,9 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name" />
+		<execute macro="JSONCategory#addCategoryByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -753,25 +689,14 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name" />
+		<execute macro="JSONCategory#addCategoryByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -810,28 +735,14 @@
 	<command name="DeletePartialCategory" priority="4">
 		<property name="testray.component.names" value="Categories,Permissions,Roles" />
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="JSONCategory#addVocabularyByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name" />
+		<execute macro="JSONCategory#addCategoryByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -846,10 +757,8 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
+		<execute macro="User#openUsersAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="User#editPasswordCP">
@@ -927,16 +836,9 @@
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name 2" />
+		<execute macro="JSONCategory#addCategoryByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -973,8 +875,8 @@
 
 		<for list="Category Name 1,Category Name 2" param="categoryName">
 			<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+				<var name="siteURLKey" value="test-site-name" />
+			</execute>
 
 			<execute macro="Category#addCP">
 				<var name="categoryName" value="${categoryName}" />
@@ -1060,15 +962,14 @@
 	<command name="DuplicateCategoriesViaWebContentCopy" priority="3">
 		<property name="testray.component.names" value="Categories,Web Content Administration" />
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="JSONCategory#addVocabularyByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Vocabulary#addCP">
+		<execute macro="JSONCategory#addCategoryByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -1126,52 +1027,23 @@
 	<command name="ExportImportWCWithCategoryViaAP" priority="5">
 		<property name="testray.component.names" value="Training" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Test Page Name" />
 		</execute>
 
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
+		<execute macro="JSONCategory#addVocabularyByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page Name" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name" />
+		<execute macro="JSONCategory#addCategoryByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -1197,18 +1069,9 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Subcategory#addCP">
+		<execute macro="JSONCategory#addSubcategoryByGroupName">
 			<var name="categoryName" value="Category Name" />
+			<var name="groupName" value="Test Site Name" />
 			<var name="subcategoryName" value="Subcategory Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
@@ -1381,22 +1244,15 @@
 	<command name="MoveSubcategory" priority="3">
 		<property name="testray.component.names" value="Categories" />
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyName" value="Vocabulary Name" />
+		<execute macro="JSONCategory#addVocabularyByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Vocabulary Name" />
 		</execute>
 
 		<for list="dog,cat" param="categoryName">
 			<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+				<var name="siteURLKey" value="test-site-name" />
+			</execute>
 
 			<execute macro="Category#addCP">
 				<var name="categoryName" value="${categoryName}" />
@@ -1406,8 +1262,8 @@
 
 		<for list="bone,milk" param="subcategoryName">
 			<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+				<var name="siteURLKey" value="test-site-name" />
+			</execute>
 
 			<execute macro="Subcategory#addCP">
 				<var name="categoryName" value="dog" />
@@ -1441,12 +1297,9 @@
 	<command name="SearchCategory" priority="4">
 		<property name="testray.component.names" value="Categories" />
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="JSONCategory#addVocabularyByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="Category#openCategoriesAdmin">
@@ -1471,8 +1324,8 @@
 
 		<for list="llama,panda" param="categoryName">
 			<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+				<var name="siteURLKey" value="test-site-name" />
+			</execute>
 
 			<execute macro="Category#searchCP">
 				<var name="categorySearchEntry" value="${categoryName}" />
@@ -1486,8 +1339,8 @@
 
 		<for list="brown,black" param="categoryDescription">
 			<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+				<var name="siteURLKey" value="test-site-name" />
+			</execute>
 
 			<execute macro="Category#searchCP">
 				<var name="categorySearchEntry" value="${categoryDescription}" />
@@ -1517,28 +1370,14 @@
 	<command name="SearchCategoryWithNullResult" priority="3">
 		<property name="testray.component.names" value="Categories" />
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="JSONCategory#addVocabularyByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name" />
+		<execute macro="JSONCategory#addCategoryByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -1568,14 +1407,9 @@
 			<var name="vocabularyName" value="Topic" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Search Page" />
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Search Page" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -1619,20 +1453,14 @@
 	<command name="SearchSubcategory" priority="4">
 		<property name="testray.component.names" value="Categories" />
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="JSONCategory#addVocabularyByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name" />
+		<execute macro="JSONCategory#addCategoryByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -1660,8 +1488,8 @@
 
 		<for list="beard,mustache" param="categoryName">
 			<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+				<var name="siteURLKey" value="test-site-name" />
+			</execute>
 
 			<execute macro="Subcategory#searchCP">
 				<var name="categoryName" value="Category Name" />
@@ -1676,8 +1504,8 @@
 
 		<for list="friendly chops,handlebar" param="categoryDescription">
 			<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+				<var name="siteURLKey" value="test-site-name" />
+			</execute>
 
 			<execute macro="Subcategory#searchCP">
 				<var name="categoryName" value="Category Name" />
@@ -1709,33 +1537,20 @@
 	<command name="SearchSubcategoryWithNullResult" priority="3">
 		<property name="testray.component.names" value="Categories" />
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="JSONCategory#addVocabularyByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Vocabulary#addCP">
+		<execute macro="JSONCategory#addCategoryByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Category#addCP">
+		<execute macro="JSONCategory#addSubcategoryByGroupName">
 			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Subcategory#addCP">
-			<var name="categoryName" value="Category Name" />
+			<var name="groupName" value="Test Site Name" />
 			<var name="subcategoryName" value="Subcategory Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
@@ -1778,8 +1593,8 @@
 
 		<for list="Food,Sport" param="vocabularyName">
 			<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+				<var name="siteURLKey" value="test-site-name" />
+			</execute>
 
 			<execute macro="Search#searchCP">
 				<var name="searchTerm" value="${vocabularyName}" />
@@ -1792,8 +1607,8 @@
 
 		<for list="Sushi,Futbol" param="vocabularyDescription">
 			<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+				<var name="siteURLKey" value="test-site-name" />
+			</execute>
 
 			<execute macro="Search#searchCP">
 				<var name="searchTerm" value="${vocabularyDescription}" />
@@ -1851,13 +1666,14 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="JSONCategory#addVocabularyByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Vocabulary#addCP">
+		<execute macro="JSONCategory#addCategoryByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -1903,51 +1719,26 @@
 	<command name="ViewCannotAddDuplicateSubCategory" priority="3">
 		<property name="testray.component.names" value="Categories" />
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="JSONCategory#addVocabularyByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Vocabulary#addCP">
+		<execute macro="JSONCategory#addCategoryByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Category#addCP">
+		<execute macro="JSONCategory#addSubcategoryByGroupName">
 			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Subcategory#addCP">
-			<var name="categoryName" value="Category Name" />
+			<var name="groupName" value="Test Site Name" />
 			<var name="subcategoryName" value="Subcategory Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Subcategory#addDuplicateCP">
@@ -2017,41 +1808,20 @@
 	<command name="ViewNavigation" priority="3">
 		<property name="testray.component.names" value="Categories" />
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="JSONCategory#addVocabularyByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Vocabulary#addCP">
+		<execute macro="JSONCategory#addCategoryByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Category#addCP">
+		<execute macro="JSONCategory#addSubcategoryByGroupName">
 			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Subcategory#addCP">
-			<var name="categoryName" value="Category Name" />
+			<var name="groupName" value="Test Site Name" />
 			<var name="subcategoryName" value="Subcategory Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>

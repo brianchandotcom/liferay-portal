@@ -188,7 +188,7 @@ public abstract class BaseBuildData implements BuildData {
 	protected List<String> getList(String key) {
 		JSONArray jsonArray = getJSONArray(key);
 
-		List<String> list = new ArrayList<>();
+		List<String> list = new ArrayList<>(jsonArray.length());
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			list.add(jsonArray.getString(i));

@@ -207,7 +207,7 @@
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_MEMBER-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_MEMBER_SELECT</td>
-	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//a[contains(@id,'openSitesLink') and contains(.,'${key_selectSiteMemberSite}')]</td>
+	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//div[contains(@id,'siteMemberNameContainer') and contains(.,'${key_selectSiteMemberSite}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -286,7 +286,12 @@
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER_SELECT</td>
-	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//a[contains(@id,'openUserGroupsLink')]</td>
+	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//div[contains(@id,'userGroupNameContainer')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER_USER_GROUP_CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[3]//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 <tr>

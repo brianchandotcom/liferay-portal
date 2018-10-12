@@ -36,6 +36,8 @@ public class LiferayWarPlugin implements Plugin<Project> {
 
 	public static final String BUILD_WAR_DIR_TASK_NAME = "buildWarDir";
 
+	public static final String WATCH_TASK_NAME = "watch";
+
 	@Override
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, WarPlugin.class);
@@ -82,7 +84,7 @@ public class LiferayWarPlugin implements Plugin<Project> {
 
 	private WatchTask _addTaskWatch(final Sync buildWarDirTask, final War war) {
 		WatchTask watchTask = GradleUtil.addTask(
-			buildWarDirTask.getProject(), WatchTask.NAME, WatchTask.class);
+			buildWarDirTask.getProject(), WATCH_TASK_NAME, WatchTask.class);
 
 		watchTask.dependsOn(buildWarDirTask);
 

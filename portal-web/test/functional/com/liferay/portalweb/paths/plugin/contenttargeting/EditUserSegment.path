@@ -40,6 +40,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_SEGMENT_RULE_SELECT_BUTTON</td>
+	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//a[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -253,11 +258,6 @@
 	<td></td>
 </tr>
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE-->
-<tr>
-	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SELECT_BUTTON</td>
-	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//a[contains(.,'Select')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_ROLE_CHOOSE_BUTTON</td>
 	<td>//tr[contains(.,'${key_siteRole}')]/td[2]//button[contains(.,'Choose')]</td>

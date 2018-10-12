@@ -149,7 +149,9 @@ public class BeanPortletInvokerPortlet
 
 		Method method = beanMethod.getMethod();
 
-		if (beanMethod.getType() == MethodType.ACTION) {
+		MethodType methodType = beanMethod.getType();
+
+		if (methodType == MethodType.ACTION) {
 			ActionRequest actionRequest = (ActionRequest)args[0];
 
 			ActionParameters actionParameters =
@@ -164,7 +166,7 @@ public class BeanPortletInvokerPortlet
 				beanMethod.invoke(args);
 			}
 		}
-		else if (beanMethod.getType() == MethodType.RENDER) {
+		else if (methodType == MethodType.RENDER) {
 			RenderRequest renderRequest = (RenderRequest)args[0];
 
 			PortletMode portletMode = renderRequest.getPortletMode();
@@ -191,7 +193,7 @@ public class BeanPortletInvokerPortlet
 				}
 			}
 		}
-		else if ((beanMethod.getType() == MethodType.SERVE_RESOURCE) &&
+		else if ((methodType == MethodType.SERVE_RESOURCE) &&
 				 (method.getParameterCount() == 0)) {
 
 			String markup = (String)beanMethod.invoke();
@@ -208,7 +210,7 @@ public class BeanPortletInvokerPortlet
 			beanMethod.invoke(args);
 		}
 
-		String include = beanMethod.getInclude();
+		String include = methodType.getInclude(method);
 
 		if (Validator.isNotNull(include)) {
 			PortletContext portletContext = _portletConfig.getPortletContext();

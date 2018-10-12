@@ -1268,7 +1268,7 @@ private List<String> _getPortalArtifactsDependencyNotations() {
 				bundleSymbolicName = it.name
 			}
 
-			if (!bundleSymbolicName || !it.name.endsWith("-api")) {
+			if (!bundleSymbolicName || (!it.name.endsWith("-api") && !it.name.startsWith("petra-"))) {
 				return FileVisitResult.CONTINUE
 			}
 

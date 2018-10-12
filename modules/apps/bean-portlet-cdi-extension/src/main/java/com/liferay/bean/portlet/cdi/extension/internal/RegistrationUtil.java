@@ -45,13 +45,10 @@ import org.osgi.framework.ServiceRegistration;
  */
 public class RegistrationUtil {
 
-	public static List<ServiceRegistration<PortletFilter>> registerBeanFilter(
-		BundleContext bundleContext, String portletName,
-		Set<String> allPortletNames, BeanFilter beanFilter,
+	public static void registerBeanFilter(
+		List<ServiceRegistration<?>> registrations, BundleContext bundleContext,
+		String portletName, Set<String> allPortletNames, BeanFilter beanFilter,
 		BeanManager beanManager, ServletContext servletContext) {
-
-		List<ServiceRegistration<PortletFilter>> registrations =
-			new ArrayList<>();
 
 		if ("*".equals(portletName)) {
 			for (String curPortletName : allPortletNames) {
@@ -94,8 +91,6 @@ public class RegistrationUtil {
 		}
 
 		beanFilterNames.add(beanFilter.getFilterName());
-
-		return registrations;
 	}
 
 	public static ServiceRegistration<Portlet> registerBeanPortlet(

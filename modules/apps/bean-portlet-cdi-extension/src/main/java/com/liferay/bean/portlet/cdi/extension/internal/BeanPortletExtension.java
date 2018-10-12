@@ -392,10 +392,10 @@ public class BeanPortletExtension implements Extension {
 
 		for (BeanFilter beanFilter : _beanFilters.values()) {
 			for (String portletName : beanFilter.getPortletNames()) {
-				_serviceRegistrations.addAll(
-					RegistrationUtil.registerBeanFilter(
-						bundleContext, portletName, _beanPortlets.keySet(),
-						beanFilter, beanManager, servletContext));
+				RegistrationUtil.registerBeanFilter(
+					_serviceRegistrations, bundleContext, portletName,
+					_beanPortlets.keySet(), beanFilter, beanManager,
+					servletContext);
 			}
 		}
 

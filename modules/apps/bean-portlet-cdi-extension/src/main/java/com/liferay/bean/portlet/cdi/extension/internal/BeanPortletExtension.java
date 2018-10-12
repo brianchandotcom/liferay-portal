@@ -110,7 +110,6 @@ import javax.portlet.annotations.WindowId;
 import javax.portlet.filter.ActionFilter;
 import javax.portlet.filter.EventFilter;
 import javax.portlet.filter.HeaderFilter;
-import javax.portlet.filter.PortletFilter;
 import javax.portlet.filter.RenderFilter;
 import javax.portlet.filter.ResourceFilter;
 
@@ -346,7 +345,7 @@ public class BeanPortletExtension implements Extension {
 					beanPortletIds);
 
 			if (portletServiceRegistration != null) {
-				_portletRegistrations.add(portletServiceRegistration);
+				_serviceRegistrations.add(portletServiceRegistration);
 			}
 
 			ServiceRegistration<ResourceBundleLoader>
@@ -355,7 +354,7 @@ public class BeanPortletExtension implements Extension {
 						bundleContext, beanPortlet, servletContext);
 
 			if (resourceBundleLoaderserviceRegistration != null) {
-				_resourceBundleLoaderRegistrations.add(
+				_serviceRegistrations.add(
 					resourceBundleLoaderserviceRegistration);
 			}
 		}
@@ -364,7 +363,7 @@ public class BeanPortletExtension implements Extension {
 
 		for (BeanFilter beanFilter : _beanFilters.values()) {
 			for (String portletName : beanFilter.getPortletNames()) {
-				_filterRegistrations.addAll(
+				_serviceRegistrations.addAll(
 					RegistrationUtil.registerBeanFilter(
 						bundleContext, portletName, _beanPortlets.keySet(),
 						beanFilter, beanManager, servletContext));
@@ -383,8 +382,9 @@ public class BeanPortletExtension implements Extension {
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
 			"/portlet-servlet/*");
 
-		_servletRegistration = bundleContext.registerService(
-			Servlet.class, new PortletServlet() {}, properties);
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				Servlet.class, new PortletServlet() {}, properties));
 
 		if (!descriptorLiferayConfigurations.isEmpty() &&
 			_log.isWarnEnabled()) {
@@ -447,40 +447,13 @@ public class BeanPortletExtension implements Extension {
 	public void step6ApplicationScopedBeforeDestroyed(
 		@Destroyed(ApplicationScoped.class) @Observes Object ignore) {
 
-		if (_servletRegistration != null) {
-			try {
-				_servletRegistration.unregister();
-			}
-			catch (IllegalStateException ise) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(ise, ise);
-				}
-			}
-		}
-
-		for (ServiceRegistration<PortletFilter> serviceRegistration :
-				_filterRegistrations) {
+		for (ServiceRegistration<?> serviceRegistration :
+				_serviceRegistrations) {
 
 			serviceRegistration.unregister();
 		}
 
-		_filterRegistrations.clear();
-
-		for (ServiceRegistration<Portlet> serviceRegistration :
-				_portletRegistrations) {
-
-			serviceRegistration.unregister();
-		}
-
-		_portletRegistrations.clear();
-
-		for (ServiceRegistration<ResourceBundleLoader> serviceRegistration :
-				_resourceBundleLoaderRegistrations) {
-
-			serviceRegistration.unregister();
-		}
-
-		_resourceBundleLoaderRegistrations.clear();
+		_serviceRegistrations.clear();
 	}
 
 	private void _addBeanFiltersFromAnnotatedClasses() {
@@ -1387,14 +1360,9 @@ public class BeanPortletExtension implements Extension {
 		Collections.emptyList());
 	private final Map<String, BeanFilter> _beanFilters = new HashMap<>();
 	private final Map<String, BeanPortlet> _beanPortlets = new HashMap<>();
-	private final List<ServiceRegistration<PortletFilter>>
-		_filterRegistrations = new ArrayList<>();
 	private Class<?> _portletApplicationClass;
-	private final List<ServiceRegistration<Portlet>> _portletRegistrations =
-		new ArrayList<>();
-	private final List<ServiceRegistration<ResourceBundleLoader>>
-		_resourceBundleLoaderRegistrations = new ArrayList<>();
 	private final List<ScannedMethod> _scannedMethods = new ArrayList<>();
-	private ServiceRegistration<Servlet> _servletRegistration;
+	private final List<ServiceRegistration<?>> _serviceRegistrations =
+		new ArrayList<>();
 
 }

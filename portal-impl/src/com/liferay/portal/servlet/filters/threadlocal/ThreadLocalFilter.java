@@ -43,6 +43,8 @@ public class ThreadLocalFilter
 	public Object doFilterTry(
 		HttpServletRequest request, HttpServletResponse response) {
 
+		ThreadLocalFilterThreadLocal.setFilterInvoked();
+
 		return null;
 	}
 

@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.util.ISO8601Utils;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -29,6 +30,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.segments.odata.retriever.UserODataRetriever;
+
+import java.time.Instant;
 
 import java.util.Date;
 import java.util.List;
@@ -70,6 +73,14 @@ public class UserODataRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
+		Instant instant1 = _user1.getModifiedDate().toInstant();
+
+		Instant instant2 = instant1.plusSeconds(1);
+
+		_user2.setModifiedDate(Date.from(instant2));
+
+		_userLocalService.updateUser(_user2);
+
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
@@ -88,9 +99,18 @@ public class UserODataRetrieverTest {
 		_user1 = UserTestUtil.addUser(
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
 		_user2 = UserTestUtil.addUser(
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		Instant instant1 = _user1.getModifiedDate().toInstant();
+
+		Instant instant2 = instant1.plusSeconds(1);
+
+		_user2.setModifiedDate(Date.from(instant2));
+
+		_userLocalService.updateUser(_user2);
 
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
@@ -116,11 +136,19 @@ public class UserODataRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
+		Instant instant1 = _user1.getModifiedDate().toInstant();
+
+		Instant instant2 = instant1.plusSeconds(1);
+
+		_user2.setModifiedDate(Date.from(instant2));
+
+		_userLocalService.updateUser(_user2);
+
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
 				"(dateModified ge %s) and (firstName eq '%s')",
-				ISO8601Utils.format(new Date()), firstName),
+				ISO8601Utils.format(Date.from(instant2)), firstName),
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());
@@ -137,6 +165,14 @@ public class UserODataRetrieverTest {
 		_user2 = UserTestUtil.addUser(
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		Instant instant1 = _user1.getModifiedDate().toInstant();
+
+		Instant instant2 = instant1.plusSeconds(1);
+
+		_user2.setModifiedDate(Date.from(instant2));
+
+		_userLocalService.updateUser(_user2);
 
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
@@ -162,11 +198,19 @@ public class UserODataRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
+		Instant instant1 = _user1.getModifiedDate().toInstant();
+
+		Instant instant2 = instant1.plusSeconds(1);
+
+		_user2.setModifiedDate(Date.from(instant2));
+
+		_userLocalService.updateUser(_user2);
+
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
 			String.format(
 				"(dateModified le %s) and (firstName eq '%s')",
-				ISO8601Utils.format(new Date()), firstName),
+				ISO8601Utils.format(Date.from(instant1)), firstName),
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());
@@ -410,6 +454,9 @@ public class UserODataRetrieverTest {
 
 	@DeleteAfterTestRun
 	private User _user2;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 	@Inject
 	private UserODataRetriever _userODataRetriever;

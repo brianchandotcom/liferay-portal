@@ -1,28 +1,8 @@
 <definition>
 	<command name="_addFragment">
-		<execute macro="JSONGroup#getGroupIdByName">
-			<return name="groupId" />
-			<var name="groupName" value="${groupName}" />
-		</execute>
-
 		<execute macro="JSONCompany#getPortalURL">
 			<return name="portalURL" />
 		</execute>
-
-		<execute macro="JSONFragment#getCollectionIdByName">
-			<return name="collectionId" />
-			<var name="collectionName" value="${collectionName}" />
-			<var name="groupId" value="${groupId}" />
-		</execute>
-
-		<if>
-			<not>
-				<isset var="collectionId" />
-			</not>
-			<then>
-				<fail message="Please set 'collectionId'." />
-			</then>
-		</if>
 
 		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/fragment.fragmententry/add-fragment-entry \
@@ -30,6 +10,9 @@
 			-d groupId=${groupId} \
 			-d fragmentCollectionId=${collectionId} \
 			-d name=${name} \
+			-d css= \
+			-d html=test \
+			-d js= \
 			-d status=${status}
 		]]></var>
 
@@ -42,20 +25,6 @@
 		<execute macro="JSONCompany#getPortalURL">
 			<return name="portalURL" />
 		</execute>
-
-		<execute macro="JSONGroup#getGroupIdByName">
-			<return name="groupId" />
-			<var name="groupName" value="${groupName}" />
-		</execute>
-
-		<if>
-			<not>
-				<isset var="groupId" />
-			</not>
-			<then>
-				<fail message="Please set 'groupId'." />
-			</then>
-		</if>
 
 		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/fragment.fragmentcollection/add-fragment-collection \
@@ -70,13 +39,53 @@
 		</execute>
 	</command>
 
+	<command name="_getFragmentName">
+		<execute macro="JSONCompany#getPortalURL">
+			<return name="portalURL" />
+		</execute>
+
+		<var name="curl"><![CDATA[
+			${portalURL}/api/jsonws/fragment.fragmententry/get-fragment-entries \
+			-u test@liferay.com:test \
+			-d groupId=${groupId} \
+			-d fragmentCollectionId=${fragmentCollectionId} \
+			-d <CURL_DATA[start=-1]CURL_DATA> \
+			-d <CURL_DATA[end=-1]CURL_DATA>
+		]]></var>
+
+		<var method="JSONCurlUtil#post('${curl}', '$..[?(@[\'name\'] == \'${fragmentName}\')]')" name="fragmentNameResult" />
+
+		<return value="${fragmentNameResult}" />
+	</command>
+
 	<command name="addFragment">
 		<if>
+			<isset var="groupName" />
+			<then>
+				<execute macro="JSONGroup#getGroupIdByName">
+					<return name="groupId" />
+					<var name="groupName" value="${groupName}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="groupKey" />
+			<then>
+				<execute macro="JSONGroup#getGroupIdByGroupKey">
+					<return name="groupId" />
+					<var name="groupKey" value="${groupKey}" />
+					<var name="site" value="${site}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
 			<not>
-				<isset var="name" />
+				<isset var="groupId" />
 			</not>
 			<then>
-				<fail message="Please set 'name'." />
+				<fail message="Please set 'groupKey or groupName to get groupId'." />
 			</then>
 		</if>
 
@@ -86,6 +95,22 @@
 			</not>
 			<then>
 				<fail message="Please set 'collectionName'." />
+			</then>
+			<else>
+				<execute macro="JSONFragment#getCollectionIdByName">
+					<return name="collectionId" />
+					<var name="collectionName" value="${collectionName}" />
+					<var name="groupId" value="${groupId}" />
+				</execute>
+			</else>
+		</if>
+
+		<if>
+			<not>
+				<isset var="name" />
+			</not>
+			<then>
+				<fail message="Please set 'name'." />
 			</then>
 		</if>
 
@@ -98,10 +123,31 @@
 			</then>
 		</if>
 
+		<if>
+			<not>
+				<isset var="collectionId" />
+			</not>
+			<then>
+				<fail message="Please set 'collectionId'." />
+			</then>
+		</if>
+
+		<echo message="## Adding a 'Fragment' with the following info using JSONWS:" />
+
+		<echo message="## * Collection Name: ${collectionName}" />
+
+		<echo message="## * Collection Id: ${collectionId}" />
+
+		<echo message="## * Fragment Name: ${name}" />
+
+		<echo message="## * Group Name: ${groupName}" />
+
+		<echo message="## * Group Id: ${groupId}" />
+
 		<execute macro="JSONFragment#_addFragment">
-			<var name="collectionName" value="${collectionName}" />
+			<var name="collectionId" value="${collectionId}" />
 			<var name="fragmentFile" value="${fragmentFile}" />
-			<var name="groupName" value="${groupName}" />
+			<var name="groupId" value="${groupId}" />
 			<var name="name" value="${name}" />
 			<var name="status" value="${status}" />
 		</execute>
@@ -109,11 +155,74 @@
 
 	<command name="addFragmentCollection">
 		<if>
+			<isset var="groupName" />
+			<then>
+				<execute macro="JSONGroup#getGroupIdByName">
+					<return name="groupId" />
+					<var name="groupName" value="${groupName}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="groupKey" />
+			<then>
+				<execute macro="JSONGroup#getGroupIdByGroupKey">
+					<return name="groupId" />
+					<var name="groupKey" value="${groupKey}" />
+					<var name="site" value="${site}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="groupId" />
+			</not>
+			<then>
+				<fail message="Please set 'groupKey or groupName to get groupId'." />
+			</then>
+		</if>
+
+		<if>
 			<not>
 				<isset var="name" />
 			</not>
 			<then>
 				<fail message="Please set 'name'." />
+			</then>
+		</if>
+
+		<echo message="## Adding a 'Fragment Collection' with the following info using JSONWS:" />
+
+		<echo message="## * Collection Name: ${name}" />
+
+		<echo message="## * Group Name: ${groupName}" />
+
+		<echo message="## * Group Id: ${groupId}" />
+
+		<execute macro="JSONFragment#_addFragmentCollection">
+			<var name="groupId" value="${groupId}" />
+			<var name="name" value="${name}" />
+		</execute>
+	</command>
+
+	<command name="assertFragmentInGroup">
+		<if>
+			<not>
+				<isset var="collectionName" />
+			</not>
+			<then>
+				<fail message="Please set 'collectionName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="fragmentName" />
+			</not>
+			<then>
+				<fail message="Please set 'fragmentName'." />
 			</then>
 		</if>
 
@@ -126,17 +235,109 @@
 			</then>
 		</if>
 
-		<execute macro="JSONFragment#_addFragmentCollection">
+		<execute macro="JSONGroup#getGroupIdByName">
+			<return name="groupId" />
 			<var name="groupName" value="${groupName}" />
-			<var name="name" value="${name}" />
 		</execute>
+
+		<execute macro="JSONFragment#getCollectionIdByName">
+			<return name="fragmentCollectionId" />
+			<var name="collectionName" value="${collectionName}" />
+			<var name="groupId" value="${groupId}" />
+		</execute>
+
+		<echo message="## Asserts a 'Fragment' exists in a group using JSONWS:" />
+
+		<echo message="## * Collection Name: ${collectionName}" />
+
+		<echo message="## * Fragment Name: ${fragmentName}" />
+
+		<echo message="## * Group Name: ${groupName}" />
+
+		<execute macro="JSONFragment#_getFragmentName">
+			<return name="fragmentNameResult" />
+			<var name="fragmentCollectionId" value="${fragmentCollectionId}" />
+			<var name="fragmentName" value="${fragmentName}" />
+			<var name="groupId" value="${groupId}" />
+		</execute>
+
+		<if>
+			<equals arg1="${fragmentNameResult}" arg2="[]" />
+			<then>
+				<fail message="The fragment ${fragmentName} was not found." />
+			</then>
+			<else>
+				<echo message="The fragment ${fragmentName} was found." />
+			</else>
+		</if>
+	</command>
+
+	<command name="assertFragmentNotInGroup">
+		<if>
+			<not>
+				<isset var="collectionName" />
+			</not>
+			<then>
+				<fail message="Please set 'collectionName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="fragmentName" />
+			</not>
+			<then>
+				<fail message="Please set 'fragmentName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="groupName" />
+			</not>
+			<then>
+				<fail message="Please set 'groupName'." />
+			</then>
+		</if>
+
+		<execute macro="JSONGroup#getGroupIdByName">
+			<return name="groupId" />
+			<var name="groupName" value="${groupName}" />
+		</execute>
+
+		<execute macro="JSONFragment#getCollectionIdByName">
+			<return name="fragmentCollectionId" />
+			<var name="collectionName" value="${collectionName}" />
+			<var name="groupId" value="${groupId}" />
+		</execute>
+
+		<echo message="## Asserts a 'Fragment' doesn't exist in a group using JSONWS:" />
+
+		<echo message="## * Collection Name: ${collectionName}" />
+
+		<echo message="## * Fragment Name: ${fragmentName}" />
+
+		<echo message="## * Group Name: ${groupName}" />
+
+		<execute macro="JSONFragment#_getFragmentName">
+			<return name="fragmentNameResult" />
+			<var name="fragmentCollectionId" value="${fragmentCollectionId}" />
+			<var name="fragmentName" value="${fragmentName}" />
+			<var name="groupId" value="${groupId}" />
+		</execute>
+
+		<if>
+			<equals arg1="${fragmentNameResult}" arg2="[]" />
+			<then>
+				<echo message="The fragment ${fragmentName} was not found." />
+			</then>
+			<else>
+				<fail message="The fragment ${fragmentName} was found." />
+			</else>
+		</if>
 	</command>
 
 	<command name="getCollectionIdByName">
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
-
 		<if>
 			<not>
 				<isset var="collectionName" />
@@ -154,6 +355,23 @@
 				<fail message="Please set 'groupId'." />
 			</then>
 		</if>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return name="portalURL" />
+		</execute>
+
+		<execute macro="JSONGroup#getGroupName">
+			<return name="groupName" />
+			<var name="groupId" value="${groupId}" />
+		</execute>
+
+		<echo message="## Searching for a 'Collection' with the following info using JSONWS:" />
+
+		<echo message="## * Collection Name: ${collectionName}" />
+
+		<echo message="## * Group Name: ${groupName}" />
+
+		<echo message="## * Group Id: ${groupId}" />
 
 		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/fragment.fragmentcollection/get-fragment-collections \

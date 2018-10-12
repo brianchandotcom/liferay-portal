@@ -162,7 +162,30 @@ cleanVersionOverride {
 }
 
 configurations {
-	portalArtifacts
+	portalArtifacts {
+		resolutionStrategy {
+			cacheChangingModulesFor(0, "seconds")
+			cacheDynamicVersionsFor(0, "seconds")
+
+			componentSelection {
+				all {
+					ComponentSelection componentSelection ->
+
+					if (componentSelection.candidate.version.endsWith("-SNAPSHOT")) {
+						componentSelection.reject("no snapshots are allowed")
+					}
+				}
+			}
+		}
+
+		setTransitive(false)
+	}
+}
+
+dependencies {
+	for (String portalArtifactsDependencyNotation : _getPortalArtifactsDependencyNotations()) {
+		portalArtifacts portalArtifactsDependencyNotation
+	}
 }
 
 lockDependencyVersion {
@@ -358,105 +381,14 @@ portalArtifactsJar {
 		append("content/" + languagePropertiesFile.name)
 	}
 
-	doLast {
-		println "Created jar " + archivePath
-	}
-
-	project.afterEvaluate {
+	doFirst {
 		File portalArtifactsDir = new File(buildDir, "portalArtifacts")
 
 		delete portalArtifactsDir
 
 		portalArtifactsDir.mkdirs()
 
-		Set<String> bundleSymbolicNames = new TreeSet<>()
-
-		projectDir.traverse(
-			preDir: {
-				if (it.name in [".gradle", ".github", "aspectj", "build", "classes", "node_modules", "project-templates", "sdk", "third-party"]) {
-					return FileVisitResult.SKIP_SUBTREE
-				}
-
-				File relengIgnoreMarkerFile = new File(it, ".lfrbuild-releng-ignore")
-
-				if (it.name.endsWith("-test") || it.name.endsWith("-test-api") || it.name.endsWith("-test-impl")|| it.name.endsWith("-test-service") || relengIgnoreMarkerFile.exists() || _isGitRepoReadOnly(it)) {
-					return FileVisitResult.SKIP_SUBTREE
-				}
-
-				String bundleSymbolicName = null
-
-				File bndBndFile = new File(it, "bnd.bnd")
-				File gulpfileJsFile = new File(it, "gulpfile.js")
-				File liferayPluginPackagePropertiesFile = new File(it, "docroot/WEB-INF/liferay-plugin-package.properties")
-
-				if (bndBndFile.exists()) {
-					Properties bndProperties = GUtil.loadProperties(bndBndFile)
-
-					String bundleVersion = bndProperties.getProperty("Bundle-Version")
-
-					if (!bundleVersion || bundleVersion.equals("1.0.0")) {
-						return FileVisitResult.CONTINUE
-					}
-
-					bundleSymbolicName = bndProperties.getProperty("Bundle-SymbolicName")
-				}
-				else if (gulpfileJsFile.exists() && gulpfileJsFile.text.contains("liferay-theme-tasks")) {
-					bundleSymbolicName = it.name
-				}
-				else if (liferayPluginPackagePropertiesFile.exists() && liferayPluginPackagePropertiesFile.text.contains("module-incremental-version")) {
-					bundleSymbolicName = it.name
-				}
-
-				if (!bundleSymbolicName || !it.name.endsWith("-api")) {
-					return FileVisitResult.CONTINUE
-				}
-
-				bundleSymbolicNames.add(bundleSymbolicName)
-
-				return FileVisitResult.SKIP_SUBTREE
-			},
-			type: FileType.DIRECTORIES
-		)
-
-		Closure<Void> downloadPortalArtifact = {
-			String groupId, String artifactId, XmlSlurper xmlSlurper ->
-
-			try {
-				def artifactResolutionNode = xmlSlurper.parse("https://repository.liferay.com/nexus/service/local/artifact/maven/resolve?g=${groupId}&a=${artifactId}&v=RELEASE&r=liferay-public-releases")
-
-				VersionNumber versionNumber = VersionNumber.parse(artifactResolutionNode.data.version.text())
-
-				String groupPath = groupId.replace('.' as char, '/' as char)
-
-				project.download {
-					dest portalArtifactsDir
-					src "https://repository-cdn.liferay.com/nexus/service/local/repositories/liferay-public-releases/content/${groupPath}/${artifactId}/${versionNumber}/${artifactId}-${versionNumber}.jar"
-				}
-			}
-			catch (FileNotFoundException fnfe) {
-				println "Not Found " + fnfe.message
-			}
-		}
-
-		XmlSlurper xmlSlurper = new XmlSlurper()
-
-		bundleSymbolicNames.each {
-			String bundleSymbolicName ->
-
-			downloadPortalArtifact("com.liferay", bundleSymbolicName, xmlSlurper)
-		}
-
-		List<String> portalBundleSymbolicNames = ["com.liferay.portal.impl", "com.liferay.portal.kernel", "com.liferay.util.bridges", "com.liferay.util.java", "com.liferay.util.taglib"]
-
-		portalBundleSymbolicNames.each {
-			String bundleSymbolicName ->
-
-			downloadPortalArtifact("com.liferay.portal", bundleSymbolicName, xmlSlurper)
-		}
-
-		FileTree jarFileTree = fileTree(dir: portalArtifactsDir, include: "*.jar")
-
-		jarFileTree.each {
+		project.configurations.portalArtifacts.each {
 			File jarFile ->
 
 			copy {
@@ -464,55 +396,49 @@ portalArtifactsJar {
 				into new File(portalArtifactsDir, jarFile.name[0 .. -5])
 			}
 		}
+	}
 
-		delete jarFileTree
+	doLast {
+		println "Created jar " + archivePath
+	}
 
-		portalArtifactsDir.listFiles().each {
-			File portalArtifactFile ->
-
-			if (portalArtifactFile.isDirectory()) {
-				dependencies.portalArtifacts files(portalArtifactFile)
-			}
+	manifest {
+		FileTree portalArtifactsManifestFileTree = fileTree(new File(buildDir, "portalArtifacts")).matching {
+			include "**/META-INF/MANIFEST.MF"
 		}
 
-		manifest {
-			FileTree portalArtifactsManifestFileTree = fileTree(portalArtifactsDir).matching {
-				include "**/META-INF/MANIFEST.MF"
-			}
+		portalArtifactsManifestFileTree.files.each {
+			File portalArtifactsManifestFile ->
 
-			portalArtifactsManifestFileTree.files.each {
-				File portalArtifactsManifestFile ->
+			from (portalArtifactsManifestFile) {
+				eachEntry {
+					ManifestMergeDetails manifestMergeDetails ->
 
-				from (portalArtifactsManifestFile) {
-					eachEntry {
-						ManifestMergeDetails manifestMergeDetails ->
-
-						if (manifestMergeDetails.key == "Manifest-Version") {
-							manifestMergeDetails.value = "1.0"
+					if (manifestMergeDetails.key == "Manifest-Version") {
+						manifestMergeDetails.value = "1.0"
+					}
+					else if (manifestMergeDetails.key == "Bundle-ManifestVersion") {
+						manifestMergeDetails.value = "2"
+					}
+					else if (manifestMergeDetails.key == "Bundle-Name") {
+						manifestMergeDetails.value = "Liferay Portal Artifacts"
+					}
+					else if (manifestMergeDetails.key == "Bundle-SymbolicName") {
+						manifestMergeDetails.value = "com.liferay.portal.artifacts"
+					}
+					else if (manifestMergeDetails.key == "Bundle-Vendor") {
+						manifestMergeDetails.value = "Liferay, Inc."
+					}
+					else if (manifestMergeDetails.key == "Bundle-Version") {
+						manifestMergeDetails.value = "1.0.0"
+					}
+					else if (manifestMergeDetails.key == "Export-Package") {
+						if (manifestMergeDetails.baseValue != null) {
+							manifestMergeDetails.value = manifestMergeDetails.baseValue + "," + manifestMergeDetails.mergeValue
 						}
-						else if (manifestMergeDetails.key == "Bundle-ManifestVersion") {
-							manifestMergeDetails.value = "2"
-						}
-						else if (manifestMergeDetails.key == "Bundle-Name") {
-							manifestMergeDetails.value = "Liferay Portal Artifacts"
-						}
-						else if (manifestMergeDetails.key == "Bundle-SymbolicName") {
-							manifestMergeDetails.value = "com.liferay.portal.artifacts"
-						}
-						else if (manifestMergeDetails.key == "Bundle-Vendor") {
-							manifestMergeDetails.value = "Liferay, Inc."
-						}
-						else if (manifestMergeDetails.key == "Bundle-Version") {
-							manifestMergeDetails.value = "1.0.0"
-						}
-						else if (manifestMergeDetails.key == "Export-Package") {
-							if (manifestMergeDetails.baseValue != null) {
-								manifestMergeDetails.value = manifestMergeDetails.baseValue + "," + manifestMergeDetails.mergeValue
-							}
-						}
-						else {
-							manifestMergeDetails.exclude()
-						}
+					}
+					else {
+						manifestMergeDetails.exclude()
 					}
 				}
 			}
@@ -798,6 +724,12 @@ prepareMajorIncrement {
 	}
 
 	group = "releng"
+}
+
+repositories {
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
 }
 
 syncGitRepoReleases {
@@ -1287,6 +1219,71 @@ private String _getModuleTaskPrefix(File moduleDir) {
 	String moduleTaskPrefix = relativePath(moduleDir)
 
 	":" + moduleTaskPrefix.replace(File.separatorChar, ':' as char) + ":"
+}
+
+private List<String> _getPortalArtifactsDependencyNotations() {
+	Set<String> bundleSymbolicNames = new TreeSet<>()
+
+	projectDir.traverse(
+		preDir: {
+			if (it.name in [".gradle", ".github", "aspectj", "build", "classes", "node_modules", "project-templates", "sdk", "third-party"]) {
+				return FileVisitResult.SKIP_SUBTREE
+			}
+
+			File relengIgnoreMarkerFile = new File(it, ".lfrbuild-releng-ignore")
+
+			if (it.name.endsWith("-test") || it.name.endsWith("-test-api") || it.name.endsWith("-test-impl")|| it.name.endsWith("-test-service") || relengIgnoreMarkerFile.exists() || _isGitRepoReadOnly(it)) {
+				return FileVisitResult.SKIP_SUBTREE
+			}
+
+			String bundleSymbolicName = null
+
+			File bndBndFile = new File(it, "bnd.bnd")
+			File gulpfileJsFile = new File(it, "gulpfile.js")
+			File liferayPluginPackagePropertiesFile = new File(it, "docroot/WEB-INF/liferay-plugin-package.properties")
+
+			if (bndBndFile.exists()) {
+				Properties bndProperties = GUtil.loadProperties(bndBndFile)
+
+				String bundleVersion = bndProperties.getProperty("Bundle-Version")
+
+				if (!bundleVersion || bundleVersion.equals("1.0.0")) {
+					return FileVisitResult.CONTINUE
+				}
+
+				bundleSymbolicName = bndProperties.getProperty("Bundle-SymbolicName")
+			}
+			else if (gulpfileJsFile.exists() && gulpfileJsFile.text.contains("liferay-theme-tasks")) {
+				bundleSymbolicName = it.name
+			}
+			else if (liferayPluginPackagePropertiesFile.exists() && liferayPluginPackagePropertiesFile.text.contains("module-incremental-version")) {
+				bundleSymbolicName = it.name
+			}
+
+			if (!bundleSymbolicName || !it.name.endsWith("-api")) {
+				return FileVisitResult.CONTINUE
+			}
+
+			bundleSymbolicNames.add(bundleSymbolicName)
+
+			return FileVisitResult.SKIP_SUBTREE
+		},
+		type: FileType.DIRECTORIES
+	)
+
+	List<String> dependencyNotations = new ArrayList<>()
+
+	for (String bundleSymbolicName : bundleSymbolicNames) {
+		dependencyNotations.add("com.liferay:" + bundleSymbolicName + ":+")
+	}
+
+	List<String> portalBundleSymbolicNames = ["com.liferay.portal.impl", "com.liferay.portal.kernel", "com.liferay.util.bridges", "com.liferay.util.java", "com.liferay.util.taglib"]
+
+	for (String portalBundleSymbolicName : portalBundleSymbolicNames) {
+		dependencyNotations.add("com.liferay.portal:" + portalBundleSymbolicName + ":+")
+	}
+
+	return dependencyNotations
 }
 
 private String _getReleaseInfoVersion() {

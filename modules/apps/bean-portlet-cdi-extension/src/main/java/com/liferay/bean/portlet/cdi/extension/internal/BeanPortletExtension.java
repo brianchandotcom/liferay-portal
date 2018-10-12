@@ -300,10 +300,20 @@ public class BeanPortletExtension implements Extension {
 		Function<String, String> preferencesValidatorFunction =
 			_collectPreferencesValidators();
 
-		_addBeanPortletsAndFiltersFromPortletDescriptor(
-			bundle, beanManager, portletBeanMethodsFunction,
-			preferencesValidatorFunction, descriptorDisplayCategories,
-			descriptorLiferayConfigurations);
+		URL portletDescriptorURL = bundle.getEntry("/WEB-INF/portlet.xml");
+
+		if (portletDescriptorURL != null) {
+			try {
+				_beanApp = PortletDescriptorParser.parse(
+					_beanFilters, _beanPortlets, bundle, portletDescriptorURL,
+					beanManager, portletBeanMethodsFunction,
+					preferencesValidatorFunction, descriptorDisplayCategories,
+					descriptorLiferayConfigurations);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
 
 		_addBeanFiltersFromAnnotatedClasses();
 
@@ -1011,29 +1021,6 @@ public class BeanPortletExtension implements Extension {
 				multiPartConfig, displayCategory, liferayConfiguration);
 
 			_beanPortlets.put(configuredPortletName, mergedBeanPortlet);
-		}
-	}
-
-	private void _addBeanPortletsAndFiltersFromPortletDescriptor(
-		Bundle bundle, BeanManager beanManager,
-		Function<String, Set<BeanMethod>> portletBeanMethodsFunction,
-		Function<String, String> preferencesValidatorFunction,
-		Map<String, String> descriptorDisplayCategories,
-		Map<String, Map<String, Set<String>>> descriptorLiferayConfigurations) {
-
-		URL portletDescriptorURL = bundle.getEntry("/WEB-INF/portlet.xml");
-
-		if (portletDescriptorURL != null) {
-			try {
-				_beanApp = PortletDescriptorParser.parse(
-					_beanFilters, _beanPortlets, bundle, portletDescriptorURL,
-					beanManager, portletBeanMethodsFunction,
-					preferencesValidatorFunction, descriptorDisplayCategories,
-					descriptorLiferayConfigurations);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
 		}
 	}
 

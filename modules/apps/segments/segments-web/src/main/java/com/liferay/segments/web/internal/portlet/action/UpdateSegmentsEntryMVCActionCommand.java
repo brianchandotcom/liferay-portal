@@ -27,8 +27,10 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.exception.NoSuchEntryException;
+import com.liferay.segments.exception.SegmentsEntryCriteriaException;
 import com.liferay.segments.exception.SegmentsEntryKeyException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryService;
@@ -74,6 +76,7 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active", true);
 		String criteria = ParamUtil.getString(actionRequest, "criteria");
+		boolean dynamic = ParamUtil.getBoolean(actionRequest, "dynamic", true);
 		String key = ParamUtil.getString(actionRequest, "key", name);
 		String type = ParamUtil.getString(actionRequest, "type");
 
@@ -82,6 +85,8 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			SegmentsEntry segmentsEntry = null;
+
+			validateCriteria(criteria, dynamic);
 
 			if (segmentsEntryId <= 0) {
 				segmentsEntry = _segmentsEntryService.addSegmentsEntry(
@@ -114,7 +119,9 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof SegmentsEntryKeyException) {
+			else if (e instanceof SegmentsEntryCriteriaException ||
+					 e instanceof SegmentsEntryKeyException) {
+
 				SessionErrors.add(actionRequest, e.getClass(), e);
 
 				actionResponse.setRenderParameter(
@@ -149,6 +156,14 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 		portletURL.setWindowState(actionRequest.getWindowState());
 
 		return portletURL.toString();
+	}
+
+	protected void validateCriteria(String criteria, boolean dynamic)
+		throws SegmentsEntryCriteriaException {
+
+		if (dynamic && Validator.isNull(criteria)) {
+			throw new SegmentsEntryCriteriaException();
+		}
 	}
 
 	@Reference

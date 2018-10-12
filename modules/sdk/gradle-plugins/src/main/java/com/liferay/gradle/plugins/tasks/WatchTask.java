@@ -68,8 +68,6 @@ import org.osgi.framework.dto.BundleDTO;
  */
 public class WatchTask extends DefaultTask {
 
-	public static final String NAME = "watch";
-
 	public WatchTask() {
 		classLoaderFileExtensions(".class", ".jsp", ".jspf", ".properties");
 		ignoredManifestKeys(Constants.BND_LASTMODIFIED);

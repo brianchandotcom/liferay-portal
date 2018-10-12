@@ -59,62 +59,12 @@ public class BeanFilterInvoker
 		_beanManager = beanManager;
 
 		_bean = beanManager.resolve(beanManager.getBeans(beanClass));
-
-		_destroyMethod = _getMethod("destroy", beanClass);
-		_initMethod = _getMethod("init", beanClass, FilterConfig.class);
-
-		if (ActionFilter.class.isAssignableFrom(beanClass)) {
-			_doFilterActionMethod = _getMethod(
-				"doFilter", beanClass, ActionRequest.class,
-				ActionResponse.class, FilterChain.class);
-		}
-		else {
-			_doFilterActionMethod = null;
-		}
-
-		if (EventFilter.class.isAssignableFrom(beanClass)) {
-			_doFilterEventMethod = _getMethod(
-				"doFilter", beanClass, EventRequest.class, EventResponse.class,
-				FilterChain.class);
-		}
-		else {
-			_doFilterEventMethod = null;
-		}
-
-		if (HeaderFilter.class.isAssignableFrom(beanClass)) {
-			_doFilterHeaderMethod = _getMethod(
-				"doFilter", beanClass, HeaderRequest.class,
-				HeaderResponse.class, FilterChain.class);
-		}
-		else {
-			_doFilterHeaderMethod = null;
-		}
-
-		if (RenderFilter.class.isAssignableFrom(beanClass)) {
-			_doFilterRenderMethod = _getMethod(
-				"doFilter", beanClass, RenderRequest.class,
-				RenderResponse.class, FilterChain.class);
-		}
-		else {
-			_doFilterRenderMethod = null;
-		}
-
-		if (ResourceFilter.class.isAssignableFrom(beanClass)) {
-			_doFilterResourceMethod = _getMethod(
-				"doFilter", beanClass, ResourceRequest.class,
-				ResourceResponse.class, FilterChain.class);
-		}
-		else {
-			_doFilterResourceMethod = null;
-		}
 	}
 
 	@Override
 	public void destroy() {
 		try {
-			if (_destroyMethod != null) {
-				_invokeMethod(_destroyMethod);
-			}
+			_invokeMethod(_destroyMethod);
 		}
 		catch (PortletException pe) {
 			_log.error(pe, pe);
@@ -127,13 +77,13 @@ public class BeanFilterInvoker
 			FilterChain filterChain)
 		throws IOException, PortletException {
 
-		if (_doFilterActionMethod == null) {
-			filterChain.doFilter(actionRequest, actionResponse);
+		if (ActionFilter.class.isAssignableFrom(_bean.getBeanClass())) {
+			_invokeMethod(
+				_actionDoFilterMethod, actionRequest, actionResponse,
+				filterChain);
 		}
 		else {
-			_invokeMethod(
-				_doFilterActionMethod, actionRequest, actionResponse,
-				filterChain);
+			filterChain.doFilter(actionRequest, actionResponse);
 		}
 	}
 
@@ -143,28 +93,28 @@ public class BeanFilterInvoker
 			FilterChain filterChain)
 		throws IOException, PortletException {
 
-		if (_doFilterEventMethod == null) {
-			filterChain.doFilter(eventRequest, eventResponse);
+		if (EventFilter.class.isAssignableFrom(_bean.getBeanClass())) {
+			_invokeMethod(
+				_eventDoFilteMethod, eventRequest, eventResponse, filterChain);
 		}
 		else {
-			_invokeMethod(
-				_doFilterEventMethod, eventRequest, eventResponse, filterChain);
+			filterChain.doFilter(eventRequest, eventResponse);
 		}
 	}
 
 	@Override
 	public void doFilter(
 			HeaderRequest headerRequest, HeaderResponse headerResponse,
-			HeaderFilterChain filterChain)
+			HeaderFilterChain headerFilterChain)
 		throws IOException, PortletException {
 
-		if (_doFilterHeaderMethod == null) {
-			filterChain.doFilter(headerRequest, headerResponse);
+		if (HeaderFilter.class.isAssignableFrom(_bean.getBeanClass())) {
+			_invokeMethod(
+				_headerDoFilterMethod, headerRequest, headerResponse,
+				headerFilterChain);
 		}
 		else {
-			_invokeMethod(
-				_doFilterHeaderMethod, headerRequest, headerResponse,
-				filterChain);
+			headerFilterChain.doFilter(headerRequest, headerResponse);
 		}
 	}
 
@@ -174,13 +124,13 @@ public class BeanFilterInvoker
 			FilterChain filterChain)
 		throws IOException, PortletException {
 
-		if (_doFilterRenderMethod == null) {
-			filterChain.doFilter(renderRequest, renderResponse);
+		if (RenderFilter.class.isAssignableFrom(_bean.getBeanClass())) {
+			_invokeMethod(
+				_renderDoFilterMethod, renderRequest, renderResponse,
+				filterChain);
 		}
 		else {
-			_invokeMethod(
-				_doFilterRenderMethod, renderRequest, renderResponse,
-				filterChain);
+			filterChain.doFilter(renderRequest, renderResponse);
 		}
 	}
 
@@ -190,34 +140,19 @@ public class BeanFilterInvoker
 			FilterChain filterChain)
 		throws IOException, PortletException {
 
-		if (_doFilterResourceMethod == null) {
-			filterChain.doFilter(resourceRequest, resourceResponse);
+		if (ResourceFilter.class.isAssignableFrom(_bean.getBeanClass())) {
+			_invokeMethod(
+				_resourceDoFilteMethod, resourceRequest, resourceResponse,
+				filterChain);
 		}
 		else {
-			_invokeMethod(
-				_doFilterResourceMethod, resourceRequest, resourceResponse,
-				filterChain);
+			filterChain.doFilter(resourceRequest, resourceResponse);
 		}
 	}
 
 	@Override
 	public void init(FilterConfig filterConfig) throws PortletException {
-		if (_initMethod != null) {
-			_invokeMethod(_initMethod, filterConfig);
-		}
-	}
-
-	private Method _getMethod(
-		String methodName, Class<?> beanClass, Class<?>... args) {
-
-		try {
-			return beanClass.getMethod(methodName, args);
-		}
-		catch (NoSuchMethodException nsme) {
-			_log.error(nsme, nsme);
-
-			return null;
-		}
+		_invokeMethod(_initMethod, filterConfig);
 	}
 
 	private void _invokeMethod(Method method, Object... args)
@@ -241,14 +176,41 @@ public class BeanFilterInvoker
 	private static final Log _log = LogFactoryUtil.getLog(
 		BeanFilterInvoker.class);
 
+	private static final Method _actionDoFilterMethod;
+	private static final Method _destroyMethod;
+	private static final Method _eventDoFilteMethod;
+	private static final Method _headerDoFilterMethod;
+	private static final Method _initMethod;
+	private static final Method _renderDoFilterMethod;
+	private static final Method _resourceDoFilteMethod;
+
+	static {
+		try {
+			_destroyMethod = PortletFilter.class.getMethod("destroy");
+			_actionDoFilterMethod = ActionFilter.class.getMethod(
+				"doFilter", ActionRequest.class, ActionResponse.class,
+				FilterChain.class);
+			_eventDoFilteMethod = EventFilter.class.getMethod(
+				"doFilter", EventRequest.class, EventResponse.class,
+				FilterChain.class);
+			_headerDoFilterMethod = HeaderFilter.class.getMethod(
+				"doFilter", HeaderRequest.class, HeaderResponse.class,
+				HeaderFilterChain.class);
+			_renderDoFilterMethod = RenderFilter.class.getMethod(
+				"doFilter", RenderRequest.class, RenderResponse.class,
+				FilterChain.class);
+			_resourceDoFilteMethod = ResourceFilter.class.getMethod(
+				"doFilter", ResourceRequest.class, ResourceResponse.class,
+				FilterChain.class);
+			_initMethod = PortletFilter.class.getMethod(
+				"init", FilterConfig.class);
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new ExceptionInInitializerError(nsme);
+		}
+	}
+
 	private final Bean<?> _bean;
 	private final BeanManager _beanManager;
-	private final Method _destroyMethod;
-	private final Method _doFilterActionMethod;
-	private final Method _doFilterEventMethod;
-	private final Method _doFilterHeaderMethod;
-	private final Method _doFilterRenderMethod;
-	private final Method _doFilterResourceMethod;
-	private final Method _initMethod;
 
 }

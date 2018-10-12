@@ -6,6 +6,10 @@ import {
 } from '../actions/actions.es';
 import {DRAG_POSITIONS} from './placeholders.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLink.es';
+import {
+	getFragmentRowIndex,
+	setIn
+} from '../utils/utils.es';
 
 /**
  * @param {!object} state
@@ -19,21 +23,12 @@ import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_li
 
 function addFragmentEntryLinkReducer(state, actionType, payload) {
 	return new Promise(
-		(resolve, reject) => {
-			let nextState = Object.assign({}, state);
+		resolve => {
+			let nextState = state;
 
 			if (actionType === ADD_FRAGMENT_ENTRY_LINK) {
 				let fragmentEntryLink;
-
-				const nextData = Object.assign(
-					{},
-					state.layoutData,
-					{
-						structure: [
-							...(state.layoutData.structure || [])
-						]
-					}
-				);
+				let nextData;
 
 				_addFragmentEntryLink(
 					state.addFragmentEntryLinkURL,
@@ -48,15 +43,15 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 							fragmentEntryLink = response;
 
 							const position = _getDropFragmentPosition(
-								nextData.structure,
+								state.layoutData.structure,
 								state.hoveredFragmentEntryLinkId,
 								state.hoveredFragmentEntryLinkBorder
 							);
 
-							nextData.structure.splice(
-								position,
-								0,
-								fragmentEntryLink.fragmentEntryLinkId
+							nextData = _addSingleFragmentRow(
+								state.layoutData,
+								fragmentEntryLink.fragmentEntryLinkId,
+								position
 							);
 
 							return _updateData(
@@ -81,13 +76,20 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 						response => {
 							fragmentEntryLink = response;
 
-							nextState.fragmentEntryLinks = Object.assign(
-								{},
-								nextState.fragmentEntryLinks,
-								{[fragmentEntryLink.fragmentEntryLinkId]: fragmentEntryLink}
+							nextState = setIn(
+								nextState,
+								[
+									'fragmentEntryLinks',
+									fragmentEntryLink.fragmentEntryLinkId
+								],
+								fragmentEntryLink
 							);
 
-							nextState.layoutData = nextData;
+							nextState = setIn(
+								nextState,
+								['layoutData'],
+								nextData
+							);
 
 							resolve(nextState);
 						}
@@ -108,47 +110,48 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
  * @param {!object} state
  * @param {!string} actionType
  * @param {!object} payload
- * @param {!string} payload.placeholderId
- * @param {!string} payload.placeholderId
- * @param {!string} payload.placeholderId
+ * @param {!string} payload.originFragmentEntryLinkId
+ * @param {!string} payload.originFragmentEntryLinkBorder
+ * @param {!string} payload.targetFragmentEntryLinkId
  * @return {object}
  * @review
  */
 
 function moveFragmentEntryLinkReducer(state, actionType, payload) {
 	return new Promise(
-		(resolve, reject) => {
-			if (actionType === MOVE_FRAGMENT_ENTRY_LINK) {
-				let nextState = Object.assign({}, state);
+		resolve => {
+			let nextState = state;
 
-				const nextData = Object.assign(
-					{},
+			if (actionType === MOVE_FRAGMENT_ENTRY_LINK) {
+				const border = payload.targetFragmentEntryLinkBorder;
+				const originId = payload.originFragmentEntryLinkId;
+				const targetId = payload.targetFragmentEntryLinkId;
+
+				const nextData = setIn(
 					state.layoutData,
-					{
-						structure: [
-							...(state.layoutData.structure || [])
-						]
-					}
+					['structure'],
+					[...state.layoutData.structure]
 				);
 
-				if (payload.targetId && (payload.placeholderId != payload.targetId)) {
-					const placeholderIndex = nextData.structure.indexOf(
-						payload.placeholderId
-					);
+				const originIndex = getFragmentRowIndex(
+					nextData.structure,
+					originId
+				);
 
-					nextData.structure.splice(placeholderIndex, 1);
+				const originContent = nextData.structure[originIndex];
 
-					const targetIndex = nextData.structure.indexOf(
-						payload.targetId
-					);
+				nextData.structure.splice(originIndex, 1);
 
-					if (payload.targetBorder === DRAG_POSITIONS.top) {
-						nextData.structure.splice(targetIndex, 0, payload.placeholderId);
-					}
-					else {
-						nextData.structure.splice(targetIndex + 1, 0, payload.placeholderId);
-					}
+				let targetIndex = getFragmentRowIndex(
+					nextData.structure,
+					targetId
+				);
+
+				if (border !== DRAG_POSITIONS.top) {
+					targetIndex++;
 				}
+
+				nextData.structure.splice(targetIndex, 0, originContent);
 
 				_moveFragmentEntryLink(
 					state.updateLayoutPageTemplateDataURL,
@@ -162,17 +165,22 @@ function moveFragmentEntryLinkReducer(state, actionType, payload) {
 							throw response.error;
 						}
 
-						nextState.layoutData = nextData;
+						nextState = setIn(
+							state,
+							['layoutData'],
+							nextData
+						);
+
 						resolve(nextState);
 					}
 				).catch(
 					() => {
-						resolve(state);
+						resolve(nextState);
 					}
 				);
 			}
 			else {
-				resolve(state);
+				resolve(nextState);
 			}
 		}
 	);
@@ -190,21 +198,19 @@ function moveFragmentEntryLinkReducer(state, actionType, payload) {
 function removeFragmentEntryLinkReducer(state, actionType, payload) {
 	return new Promise(
 		resolve => {
+			let nextState = state;
+
 			if (actionType === REMOVE_FRAGMENT_ENTRY_LINK) {
 				const fragmentEntryLinkId = payload.fragmentEntryLinkId;
-				const nextState = Object.assign({}, state);
 
-				const nextData = Object.assign(
-					{},
+				const nextData = setIn(
 					state.layoutData,
-					{
-						structure: [
-							...(state.layoutData.structure || [])
-						]
-					}
+					['structure'],
+					[...state.layoutData.structure]
 				);
 
-				const index = state.layoutData.structure.indexOf(
+				const index = getFragmentRowIndex(
+					nextData.structure,
 					fragmentEntryLinkId
 				);
 
@@ -218,10 +224,12 @@ function removeFragmentEntryLinkReducer(state, actionType, payload) {
 					fragmentEntryLinkId,
 					nextData
 				).then(
-					(response) => {
-						nextState.layoutData = nextData;
+					() => {
+						nextState = setIn(nextState, ['layoutData'], nextData);
 
-						delete nextState.fragmentEntryLinks[payload.fragmentEntryLinkId];
+						delete nextState.fragmentEntryLinks[
+							payload.fragmentEntryLinkId
+						];
 
 						resolve(nextState);
 					}
@@ -232,7 +240,7 @@ function removeFragmentEntryLinkReducer(state, actionType, payload) {
 				);
 			}
 			else {
-				resolve(state);
+				resolve(nextState);
 			}
 		}
 	);
@@ -261,7 +269,7 @@ function updateEditableValueReducer(state, actionType, payload) {
 				const editableValueId = payload.editableValueId;
 				const editableValues = state.fragmentEntryLinks[payload.fragmentEntryLinkId].editableValues;
 
-				const nextEditableValues = _setIn(
+				const nextEditableValues = setIn(
 					editableValues,
 					[
 						EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
@@ -292,7 +300,7 @@ function updateEditableValueReducer(state, actionType, payload) {
 					}
 				).then(
 					() => {
-						nextState = _setIn(
+						nextState = setIn(
 							nextState,
 							[
 								'fragmentEntryLinks',
@@ -362,7 +370,11 @@ function _getDropFragmentPosition(
 	targetBorder
 ) {
 	let position = structure.length;
-	const targetPosition = structure.indexOf(targetFragmentEntryLinkId);
+
+	const targetPosition = getFragmentRowIndex(
+		structure,
+		targetFragmentEntryLinkId
+	);
 
 	if (targetPosition > -1 && targetBorder) {
 		if (targetBorder === DRAG_POSITIONS.top) {
@@ -410,6 +422,44 @@ function _getFragmentEntryLinkContent(
 			);
 		}
 	);
+}
+
+/**
+ * Returns a new layoutData with the given fragmentEntryLinkId inserted
+ * into a single-column new row. The row will be created at the given position.
+ *
+ * @param {object} layoutData
+ * @param {string} fragmentEntryLinkId
+ * @param {number} position
+ * @return {object}
+ */
+
+function _addSingleFragmentRow(layoutData, fragmentEntryLinkId, position) {
+	const nextColumnId = layoutData.nextColumnId || 0;
+	const nextRowId = layoutData.nextRowId || 0;
+	const nextStructure = [...layoutData.structure];
+
+	nextStructure.splice(
+		position,
+		0,
+		{
+			columns: [
+				{
+					columnId: nextColumnId,
+					fragmentEntryLinkIds: [fragmentEntryLinkId],
+					size: 12
+				}
+			],
+			rowId: nextRowId
+		}
+	);
+
+	let nextData = setIn(layoutData, ['structure'], nextStructure);
+
+	nextData = setIn(nextData, ['nextColumnId'], nextColumnId + 1);
+	nextData = setIn(nextData, ['nextRowId'], nextRowId + 1);
+
+	return nextData;
 }
 
 function _moveFragmentEntryLink(
@@ -462,35 +512,6 @@ function _removeFragmentEntryLink(
 			method: 'POST'
 		}
 	);
-}
-
-/**
- * Recursively inserts a value inside an object creating
- * a copy of the original target.
- * @param {!object} Original object that will be copied
- * @param {!string[]} Array of strings used for reaching the deep property
- * @param {*} value Value to be inserted
- * @return {!object} Copy of the original object with the new value
- * @review
- */
-
-function _setIn(object, keyPath, value) {
-	const nextKey = keyPath[0];
-	const target = Object.assign({}, object);
-
-	let nextValue = value;
-
-	if (keyPath.length > 1) {
-		nextValue = _setIn(
-			object[nextKey] || {},
-			keyPath.slice(1),
-			value
-		);
-	}
-
-	target[nextKey] = nextValue;
-
-	return target;
 }
 
 /**

@@ -40,16 +40,8 @@
 			<var name="portlet" value="Categories" />
 		</execute>
 
-		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Category#addCategoryLocalizationCP">
@@ -59,10 +51,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
+		<execute macro="User#openUsersAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="User#addCP">
@@ -72,10 +62,8 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
+		<execute macro="User#openUsersAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="User#editPasswordCP">
@@ -84,10 +72,8 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
+		<execute macro="User#openUsersAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Navigator#openWithAppendToBaseURL">
@@ -106,10 +92,8 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
+		<execute macro="User#openUsersAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="User#assignSiteRoleCP">
@@ -117,10 +101,8 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
+		<execute macro="User#openUsersAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="User#editDisplaySettingsCP">
@@ -146,12 +128,8 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -172,8 +150,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Category Page Name" />
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name/category-page-name" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#selectWebContent">
@@ -216,14 +194,8 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
+		<execute macro="User#openUsersAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="User#addCP">
@@ -233,10 +205,8 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
+		<execute macro="User#openUsersAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="User#editPasswordCP">
@@ -245,10 +215,8 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
+		<execute macro="User#openUsersAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
@@ -267,10 +235,8 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
+		<execute macro="Role#openRolesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="RoleNavigator#gotoRoleType">
@@ -281,10 +247,8 @@
 			<var name="roleTitle" value="Category Role Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
+		<execute macro="Role#openRolesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Role#definePermissionCP">
@@ -296,10 +260,8 @@
 			<var name="roleType" value="Site" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
+		<execute macro="Role#openRolesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Role#definePermissionCP">
@@ -311,10 +273,8 @@
 			<var name="roleType" value="Site" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
+		<execute macro="Role#openRolesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Role#definePermissionCP">
@@ -326,10 +286,8 @@
 			<var name="roleType" value="Site" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
+		<execute macro="Role#openRolesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Role#definePermissionCP">
@@ -341,10 +299,8 @@
 			<var name="roleType" value="Site" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Roles" />
+		<execute macro="Role#openRolesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Role#definePermissionCP">
@@ -356,10 +312,8 @@
 			<var name="roleType" value="Site" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
+		<execute macro="User#openUsersAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="User#assignSiteRoleCP">
@@ -412,12 +366,8 @@
 	<command name="AddPageWithRequiredVocabulary" priority="4">
 		<property name="testray.component.names" value="Categories" />
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
@@ -484,12 +434,8 @@
 			<var name="displayStyle" value="Flattened Tree" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Category#addCP">
@@ -497,10 +443,8 @@
 			<var name="vocabularyName" value="Topic" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Subcategory#addCP">
@@ -509,10 +453,8 @@
 			<var name="vocabularyName" value="Topic" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntry">
@@ -570,12 +512,8 @@
 			<var name="subcategoryName" value="Subcategory Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Subcategory#viewCategoryPropertyCP">
@@ -621,12 +559,8 @@
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
@@ -640,10 +574,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -677,12 +609,8 @@
 	<command name="AddVocabularyWithMultipleAssetTypes" priority="4">
 		<property name="testray.component.names" value="Categories" />
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoAdd" />
@@ -719,12 +647,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -760,12 +684,8 @@
 	<command name="AddWCFailWithRequiredVocabularyAssetType" priority="3">
 		<property name="testray.component.names" value="Categories,Web Content Administration" />
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
@@ -787,12 +707,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -801,12 +717,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -832,12 +744,8 @@
 		<property name="portal.release" value="false" />
 		<property name="testray.component.names" value="Categories,Web Content Administration" />
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
@@ -884,7 +792,9 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/site-name" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
@@ -925,10 +835,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
+		<execute macro="User#openUsersAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="User#addCP">
@@ -953,8 +861,6 @@
 		<execute macro="Navigator#openWithAppendToBaseURL">
 			<var name="urlAppend" value="web/site-name" />
 		</execute>
-
-		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Members" />
@@ -1007,10 +913,8 @@
 			</execute>
 		</for>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
+		<execute macro="User#openUsersAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="User#assignSiteRoleCP">
@@ -1036,12 +940,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Category#deletePartialCategoryCP">
@@ -1049,12 +949,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Category#viewCP">
@@ -1066,12 +962,8 @@
 	<command name="DisableMultipleCategories" priority="4">
 		<property name="testray.component.names" value="Categories,Web Content Administration" />
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Vocabulary#addCP">
@@ -1080,13 +972,9 @@
 		</execute>
 
 		<for list="Category Name 1,Category Name 2" param="categoryName">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Categorization" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Categories" />
-			</execute>
+			<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
 
 			<execute macro="Category#addCP">
 				<var name="categoryName" value="${categoryName}" />
@@ -1094,12 +982,8 @@
 			</execute>
 		</for>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -1111,12 +995,8 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -1128,12 +1008,8 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -1145,12 +1021,8 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Vocabulary#editCP">
@@ -1158,12 +1030,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -1175,12 +1043,8 @@
 			<var name="webContentTitle" value="Web Content Title Multiple Categories" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -1208,25 +1072,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -1250,10 +1097,8 @@
 			<var name="categoryNameList" value="Category Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContent#copyCP">
@@ -1330,14 +1175,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -1374,14 +1213,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -1455,10 +1288,8 @@
 		<execute function="DownloadTempFile" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
+		<execute macro="Site#openSitesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
@@ -1503,10 +1334,8 @@
 			<var name="siteName" value="Import Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -1522,10 +1351,8 @@
 			<var name="siteName" value="Import Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -1541,10 +1368,8 @@
 	<command name="ImportLAR" priority="5">
 		<property name="testray.component.names" value="Training" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="LAR#importPortlet">
@@ -1569,13 +1394,9 @@
 		</execute>
 
 		<for list="dog,cat" param="categoryName">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Categorization" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Categories" />
-			</execute>
+			<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
 
 			<execute macro="Category#addCP">
 				<var name="categoryName" value="${categoryName}" />
@@ -1584,13 +1405,9 @@
 		</for>
 
 		<for list="bone,milk" param="subcategoryName">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Categorization" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Categories" />
-			</execute>
+			<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
 
 			<execute macro="Subcategory#addCP">
 				<var name="categoryName" value="dog" />
@@ -1599,12 +1416,8 @@
 			</execute>
 		</for>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Subcategory#moveCP">
@@ -1614,12 +1427,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Subcategory#viewCP">
@@ -1640,16 +1449,8 @@
 			<var name="portlet" value="Categories" />
 		</execute>
 
-		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Category#addCP">
@@ -1658,12 +1459,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Category#addCP">
@@ -1673,13 +1470,9 @@
 		</execute>
 
 		<for list="llama,panda" param="categoryName">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Categorization" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Categories" />
-			</execute>
+			<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
 
 			<execute macro="Category#searchCP">
 				<var name="categorySearchEntry" value="${categoryName}" />
@@ -1692,13 +1485,9 @@
 		</for>
 
 		<for list="brown,black" param="categoryDescription">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Categorization" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Categories" />
-			</execute>
+			<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
 
 			<execute macro="Category#searchCP">
 				<var name="categorySearchEntry" value="${categoryDescription}" />
@@ -1710,12 +1499,8 @@
 			</execute>
 		</for>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Category#searchCP">
@@ -1757,12 +1542,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Category#searchCP">
@@ -1778,10 +1559,8 @@
 	<command name="SearchEditedCategory" priority="4">
 		<property name="testray.component.names" value="Categories,Documents Management" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Category#addCP">
@@ -1813,10 +1592,8 @@
 			<var name="vocabularyName" value="Topic" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Category#editCP">
@@ -1825,8 +1602,8 @@
 			<var name="vocabularyName" value="Topic" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Search Page" />
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name/search-page" />
 		</execute>
 
 		<execute macro="SearchPortlets#searchEmbedded">
@@ -1859,12 +1636,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Subcategory#addCP">
@@ -1874,12 +1647,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Subcategory#addCP">
@@ -1890,13 +1659,9 @@
 		</execute>
 
 		<for list="beard,mustache" param="categoryName">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Categorization" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Categories" />
-			</execute>
+			<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
 
 			<execute macro="Subcategory#searchCP">
 				<var name="categoryName" value="Category Name" />
@@ -1910,13 +1675,9 @@
 		</for>
 
 		<for list="friendly chops,handlebar" param="categoryDescription">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Categorization" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Categories" />
-			</execute>
+			<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
 
 			<execute macro="Subcategory#searchCP">
 				<var name="categoryName" value="Category Name" />
@@ -1929,12 +1690,8 @@
 			</execute>
 		</for>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Subcategory#searchCP">
@@ -1983,12 +1740,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Subcategory#searchCP">
@@ -2005,12 +1758,8 @@
 	<command name="SearchVocabulary" priority="4">
 		<property name="testray.component.names" value="Categories" />
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Vocabulary#addCP">
@@ -2018,12 +1767,8 @@
 			<var name="vocabularyName" value="Food Vocab" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Vocabulary#addCP">
@@ -2032,13 +1777,9 @@
 		</execute>
 
 		<for list="Food,Sport" param="vocabularyName">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Categorization" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Categories" />
-			</execute>
+			<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
 
 			<execute macro="Search#searchCP">
 				<var name="searchTerm" value="${vocabularyName}" />
@@ -2050,13 +1791,9 @@
 		</for>
 
 		<for list="Sushi,Futbol" param="vocabularyDescription">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Categorization" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Categories" />
-			</execute>
+			<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
 
 			<execute macro="Search#searchCP">
 				<var name="searchTerm" value="${vocabularyDescription}" />
@@ -2067,12 +1804,8 @@
 			</execute>
 		</for>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Search#searchCP">
@@ -2088,12 +1821,8 @@
 	<command name="SearchVocabularyWithNullResult" priority="3">
 		<property name="testray.component.names" value="Categories" />
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Vocabulary#addCP">
@@ -2101,12 +1830,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Search#searchCP">
@@ -2136,21 +1861,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
+		<execute macro="Site#openSitesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
@@ -2158,10 +1870,8 @@
 			<var name="siteName" value="Child SiteName" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -2177,10 +1887,8 @@
 			<var name="site" value="Child SiteName" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -2268,12 +1976,8 @@
 			<var name="displayStyle" value="Flattened Tree" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Category#addCP">
@@ -2281,10 +1985,8 @@
 			<var name="vocabularyName" value="Topic" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Subcategory#addCP">
@@ -2293,10 +1995,8 @@
 			<var name="vocabularyName" value="Topic" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntry">
@@ -2356,12 +2056,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="Category#openCategoriesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="Category#viewNavigationCP">

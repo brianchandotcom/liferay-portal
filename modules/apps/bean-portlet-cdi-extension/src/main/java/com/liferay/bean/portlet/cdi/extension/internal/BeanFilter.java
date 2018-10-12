@@ -18,12 +18,14 @@ import java.util.Dictionary;
 import java.util.Map;
 import java.util.Set;
 
+import javax.portlet.filter.PortletFilter;
+
 /**
  * @author Neil Griffin
  */
 public interface BeanFilter {
 
-	public Class<?> getFilterClass();
+	public Class<? extends PortletFilter> getFilterClass();
 
 	public String getFilterName();
 

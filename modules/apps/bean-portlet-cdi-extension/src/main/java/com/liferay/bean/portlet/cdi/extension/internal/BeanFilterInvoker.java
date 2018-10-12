@@ -53,10 +53,15 @@ public class BeanFilterInvoker
 	implements ActionFilter, EventFilter, HeaderFilter, RenderFilter,
 			   ResourceFilter {
 
-	public BeanFilterInvoker(Class<?> beanClass, BeanManager beanManager) {
+	public BeanFilterInvoker(
+		Class<? extends PortletFilter> beanClass, BeanManager beanManager) {
+
 		_beanManager = beanManager;
 
 		_bean = beanManager.resolve(beanManager.getBeans(beanClass));
+
+		_destroyMethod = _getMethod("destroy", beanClass);
+		_initMethod = _getMethod("init", beanClass, FilterConfig.class);
 
 		if (ActionFilter.class.isAssignableFrom(beanClass)) {
 			_doFilterActionMethod = _getMethod(
@@ -83,15 +88,6 @@ public class BeanFilterInvoker
 		}
 		else {
 			_doFilterHeaderMethod = null;
-		}
-
-		if (PortletFilter.class.isAssignableFrom(beanClass)) {
-			_destroyMethod = _getMethod("destroy", beanClass);
-			_initMethod = _getMethod("init", beanClass, FilterConfig.class);
-		}
-		else {
-			_destroyMethod = null;
-			_initMethod = null;
 		}
 
 		if (RenderFilter.class.isAssignableFrom(beanClass)) {

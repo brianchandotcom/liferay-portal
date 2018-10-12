@@ -108,6 +108,7 @@ import javax.portlet.annotations.WindowId;
 import javax.portlet.filter.ActionFilter;
 import javax.portlet.filter.EventFilter;
 import javax.portlet.filter.HeaderFilter;
+import javax.portlet.filter.PortletFilter;
 import javax.portlet.filter.RenderFilter;
 import javax.portlet.filter.ResourceFilter;
 
@@ -484,6 +485,16 @@ public class BeanPortletExtension implements Extension {
 				continue;
 			}
 
+			if (!PortletFilter.class.isAssignableFrom(annotatedClass)) {
+				_log.error(
+					StringBundler.concat(
+						"Ignoring ", annotatedClass, ". It has ",
+						PortletLifecycleFilter.class,
+						" but does not implement ", PortletFilter.class));
+
+				continue;
+			}
+
 			Map<String, String> initParams = new HashMap<>();
 
 			for (InitParameter initParameter :
@@ -523,7 +534,7 @@ public class BeanPortletExtension implements Extension {
 
 			if (beanFilter == null) {
 				beanFilter = new BeanFilterImpl(
-					filterName, annotatedClass,
+					filterName, annotatedClass.asSubclass(PortletFilter.class),
 					portletLifecycleFilter.ordinal(), portletNames, lifecycles,
 					initParams);
 			}

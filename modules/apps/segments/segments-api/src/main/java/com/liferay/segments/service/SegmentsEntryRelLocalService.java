@@ -228,6 +228,11 @@ public interface SegmentsEntryRelLocalService extends BaseLocalService,
 	public List<SegmentsEntryRel> getSegmentsEntryRels(long segmentsEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsEntryRel> getSegmentsEntryRels(long segmentsEntryId,
+		int start, int end,
+		OrderByComparator<SegmentsEntryRel> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsEntryRel> getSegmentsEntryRels(long classNameId,
 		long classPK);
 

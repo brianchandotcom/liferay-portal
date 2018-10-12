@@ -14,15 +14,12 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.IOException;
+import java.io.File;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -36,15 +33,7 @@ public class BuildLauncher {
 		System.out.println("## " + buildCommand);
 		System.out.println("##");
 
-		Map<String, String> buildProperties = new HashMap<>();
-
-		buildProperties.putAll(_getEnvironmentVariables());
-
-		buildProperties.putAll(_getJenkinsBuildParameters(buildProperties));
-
-		buildProperties.putAll(_getBuildOptions(args));
-
-		BuildData buildData = BuildDataFactory.newBuildData(buildProperties);
+		BuildData buildData = _getBuildData(args);
 
 		BuildRunner buildRunner = BuildRunnerFactory.newBuildRunner(buildData);
 
@@ -83,6 +72,34 @@ public class BuildLauncher {
 		return buildCommand;
 	}
 
+	private static BuildData _getBuildData(String[] args) {
+		Map<String, String> buildProperties = new HashMap<>();
+
+		buildProperties.putAll(_getEnvironmentVariables());
+
+		buildProperties.putAll(_getJenkinsBuildParameters(buildProperties));
+
+		buildProperties.putAll(_getBuildOptions(args));
+
+		BuildData buildData = BuildDataFactory.newBuildData(
+			buildProperties.get("RUN_ID"), buildProperties.get("JOB_NAME"),
+			buildProperties.get("BUILD_URL"));
+
+		String jenkinsGitHubURL = buildProperties.get("JENKINS_GITHUB_URL");
+
+		if ((jenkinsGitHubURL != null) && !jenkinsGitHubURL.isEmpty()) {
+			buildData.setJenkinsGitHubURL(jenkinsGitHubURL);
+		}
+
+		String workspace = buildProperties.get("WORKSPACE");
+
+		if ((workspace != null) && !workspace.isEmpty()) {
+			buildData.setWorkspaceDir(new File(workspace));
+		}
+
+		return buildData;
+	}
+
 	private static Map<String, String> _getBuildOptions(String[] args) {
 		Map<String, String> buildOptions = new HashMap<>();
 
@@ -103,6 +120,8 @@ public class BuildLauncher {
 		Map<String, String> environmentVariables = new HashMap<>();
 
 		environmentVariables.put("BUILD_URL", System.getenv("BUILD_URL"));
+		environmentVariables.put("JOB_NAME", System.getenv("JOB_NAME"));
+		environmentVariables.put("RUN_ID", System.getenv("RUN_ID"));
 
 		String workspace = System.getenv("WORKSPACE");
 
@@ -124,40 +143,7 @@ public class BuildLauncher {
 			return jenkinsBuildParameters;
 		}
 
-		String buildParametersURL = JenkinsResultsParserUtil.getLocalURL(
-			buildURL + "api/json?tree=actions[parameters[name,value]]");
-
-		try {
-			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				buildParametersURL);
-
-			JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
-
-			for (int i = 0; i < actionsJSONArray.length(); i++) {
-				JSONObject actionJSONObject = actionsJSONArray.getJSONObject(i);
-
-				if (!actionJSONObject.has("parameters")) {
-					continue;
-				}
-
-				JSONArray parametersJSONArray = actionJSONObject.getJSONArray(
-					"parameters");
-
-				for (int j = 0; j < parametersJSONArray.length(); j++) {
-					JSONObject parameterJSONObject =
-						parametersJSONArray.getJSONObject(j);
-
-					jenkinsBuildParameters.put(
-						parameterJSONObject.getString("name"),
-						parameterJSONObject.getString("value"));
-				}
-			}
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException();
-		}
-
-		return jenkinsBuildParameters;
+		return JenkinsResultsParserUtil.getBuildParameters(buildURL);
 	}
 
 	private static final String _RUN_COMMAND = "run";

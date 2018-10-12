@@ -17,23 +17,19 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public interface PortalBuildData extends BuildData {
+public class DefaultBatchBuildData extends BaseBatchBuildData {
 
-	public String getPortalBranchSHA();
+	protected DefaultBatchBuildData(
+		String runID, String jobName, String buildURL) {
 
-	public String getPortalGitHubURL();
+		super(runID, jobName, buildURL);
+	}
 
-	public String getPortalUpstreamBranchName();
+	@Override
+	protected String getType() {
+		return _TYPE;
+	}
 
-	public void setPortalBranchSHA(String portalBranchSHA);
-
-	public void setPortalGitHubURL(String portalGitHubURL);
-
-	public void setPortalUpstreamBranchName(String portalUpstreamBranchName);
-
-	public final String DEFAULT_PORTAL_GITHUB_URL =
-		"https://github.com/liferay/liferay-portal/tree/master";
-
-	public final String DEFAULT_PORTAL_UPSTREAM_BRANCH_NAME = "master";
+	private static final String _TYPE = "batch";
 
 }

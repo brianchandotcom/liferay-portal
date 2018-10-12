@@ -31,16 +31,14 @@ import org.json.JSONObject;
 public abstract class BaseBuildDatabase implements BuildDatabase {
 
 	@Override
-	public BuildData getBuildData(String key) {
-		if (!hasBuildData(key)) {
-			throw new RuntimeException("Unable to find build data for " + key);
-		}
-
+	public JSONObject getBuildDataJSONObject(String key) {
 		JSONObject buildsJSONObject = _jsonObject.getJSONObject("builds");
 
-		JSONObject buildJSONObject = buildsJSONObject.getJSONObject(key);
+		if (!buildsJSONObject.has(key)) {
+			buildsJSONObject.put(key, new JSONObject());
+		}
 
-		return BuildDataFactory.newBuildData(buildJSONObject);
+		return buildsJSONObject.getJSONObject(key);
 	}
 
 	@Override

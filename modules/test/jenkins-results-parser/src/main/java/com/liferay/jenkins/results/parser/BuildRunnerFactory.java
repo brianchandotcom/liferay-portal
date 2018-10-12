@@ -20,12 +20,21 @@ package com.liferay.jenkins.results.parser;
 public class BuildRunnerFactory {
 
 	public static BuildRunner newBuildRunner(BuildData buildData) {
-		if (buildData instanceof PortalBatchBuildData) {
-			return new PortalBatchBuildRunner((PortalBatchBuildData)buildData);
-		}
-		else if (buildData instanceof PortalTopLevelBuildData) {
-			return new PortalTopLevelBuildRunner(
+		String jobName = buildData.getJobName();
+
+		if (jobName.equals("git-bisect-tool")) {
+			return new GitBisectToolTopLevelBuildRunner(
 				(PortalTopLevelBuildData)buildData);
+		}
+
+		if (jobName.equals("git-bisect-tool-batch")) {
+			return new DefaultPortalBatchBuildRunner(
+				(PortalBatchBuildData)buildData);
+		}
+
+		if (jobName.contains("portal") && jobName.contains("-batch")) {
+			return new DefaultPortalBatchBuildRunner(
+				(PortalBatchBuildData)buildData);
 		}
 
 		throw new RuntimeException("Invalid build data " + buildData);

@@ -20,7 +20,8 @@ package com.liferay.jenkins.results.parser;
 public abstract class WorkspaceFactory {
 
 	public static BatchWorkspace newBatchWorkspace(
-		String gitHubURL, String upstreamBranchName, String batchName) {
+		String gitHubURL, String upstreamBranchName, String batchName,
+		String branchSHA) {
 
 		if (gitHubURL == null) {
 			throw new RuntimeException("GitHub URL is null");
@@ -36,15 +37,17 @@ public abstract class WorkspaceFactory {
 
 		if (batchName.contains("functional")) {
 			return new FunctionalBatchPortalWorkspace(
-				gitHubURL, upstreamBranchName);
+				gitHubURL, upstreamBranchName, branchSHA);
 		}
 		else if (batchName.contains("integration") ||
 				 batchName.contains("unit")) {
 
-			return new JunitBatchPortalWorkspace(gitHubURL, upstreamBranchName);
+			return new JunitBatchPortalWorkspace(
+				gitHubURL, upstreamBranchName, branchSHA);
 		}
 
-		return new BatchPortalWorkspace(gitHubURL, upstreamBranchName);
+		return new BatchPortalWorkspace(
+			gitHubURL, upstreamBranchName, branchSHA);
 	}
 
 	public static TopLevelWorkspace newTopLevelWorkspace(

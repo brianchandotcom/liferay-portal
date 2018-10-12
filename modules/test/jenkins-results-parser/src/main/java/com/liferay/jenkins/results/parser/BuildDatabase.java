@@ -19,6 +19,8 @@ import java.io.File;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
+import org.json.JSONObject;
+
 /**
  * @author Leslie Wong
  * @author Michael Hashimoto
@@ -27,7 +29,7 @@ public interface BuildDatabase {
 
 	public static final String BUILD_DATABASE_FILE_NAME = "build-database.json";
 
-	public BuildData getBuildData(String key);
+	public JSONObject getBuildDataJSONObject(String key);
 
 	public Properties getProperties(String key);
 

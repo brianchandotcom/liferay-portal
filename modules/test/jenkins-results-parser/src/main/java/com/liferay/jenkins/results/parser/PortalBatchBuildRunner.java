@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * @author Michael Hashimoto
  */
-public class PortalBatchBuildRunner
+public abstract class PortalBatchBuildRunner
 	extends BatchBuildRunner<PortalBatchBuildData> {
 
 	@Override
@@ -34,7 +34,7 @@ public class PortalBatchBuildRunner
 
 		runTestBatch();
 
-		copyTestResults();
+		publishTestResults();
 	}
 
 	protected PortalBatchBuildRunner(
@@ -43,7 +43,24 @@ public class PortalBatchBuildRunner
 		super(portalBatchBuildData);
 	}
 
-	protected void copyTestResults() {
+	@Override
+	protected void initWorkspace() {
+		PortalBatchBuildData portalBatchBuildData = getBuildData();
+
+		workspace = WorkspaceFactory.newBatchWorkspace(
+			portalBatchBuildData.getPortalGitHubURL(),
+			portalBatchBuildData.getPortalUpstreamBranchName(),
+			portalBatchBuildData.getBatchName(),
+			portalBatchBuildData.getPortalBranchSHA());
+
+		if (!(workspace instanceof BatchPortalWorkspace)) {
+			throw new RuntimeException("Invalid workspace");
+		}
+
+		_batchPortalWorkspace = (BatchPortalWorkspace)workspace;
+	}
+
+	protected void publishTestResults() {
 		AntUtil.callTarget(
 			_getPrimaryPortalDirectory(), "build-test.xml",
 			"merge-test-results");
@@ -55,10 +72,11 @@ public class PortalBatchBuildRunner
 			return;
 		}
 
-		BuildData buildData = getBuildData();
+		PortalBatchBuildData portalBatchBuildData = getBuildData();
 
 		File target = new File(
-			buildData.getWorkspaceDir(), "test-results/TESTS-TestSuites.xml");
+			portalBatchBuildData.getWorkspaceDir(),
+			"test-results/TESTS-TestSuites.xml");
 
 		try {
 			JenkinsResultsParserUtil.copy(source, target);
@@ -72,29 +90,19 @@ public class PortalBatchBuildRunner
 		}
 	}
 
-	@Override
-	protected void initWorkspace() {
-		PortalBatchBuildData portalBatchBuildData = getBuildData();
-
-		workspace = WorkspaceFactory.newBatchWorkspace(
-			portalBatchBuildData.getPortalGitHubURL(),
-			portalBatchBuildData.getPortalUpstreamBranchName(), getBatchName());
-
-		if (!(workspace instanceof BatchPortalWorkspace)) {
-			throw new RuntimeException("Invalid workspace");
-		}
-
-		_batchPortalWorkspace = (BatchPortalWorkspace)workspace;
-	}
-
 	protected void runTestBatch() {
 		Map<String, String> parameters = new HashMap<>();
 
-		parameters.put("axis.variable", "PortalSmoke#Smoke");
+		PortalBatchBuildData portalBatchBuildData = getBuildData();
+
+		parameters.put(
+			"axis.variable",
+			JenkinsResultsParserUtil.join(
+				",", portalBatchBuildData.getTestList()));
 
 		AntUtil.callTarget(
 			_getPrimaryPortalDirectory(), "build-test-batch.xml",
-			getBatchName(), parameters);
+			portalBatchBuildData.getBatchName(), parameters);
 	}
 
 	private File _getPrimaryPortalDirectory() {

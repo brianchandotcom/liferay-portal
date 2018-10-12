@@ -21,9 +21,10 @@ public class BatchPortalWorkspace
 	extends PortalWorkspace implements BatchWorkspace {
 
 	protected BatchPortalWorkspace(
-		String portalGitHubURL, String portalUpstreamBranchName) {
+		String portalGitHubURL, String portalUpstreamBranchName,
+		String portalBranchSHA) {
 
-		super(portalGitHubURL, portalUpstreamBranchName);
+		super(portalGitHubURL, portalUpstreamBranchName, portalBranchSHA);
 	}
 
 }

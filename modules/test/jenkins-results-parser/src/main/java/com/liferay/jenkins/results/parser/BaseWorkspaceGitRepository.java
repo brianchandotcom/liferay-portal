@@ -18,7 +18,6 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -59,21 +58,6 @@ public abstract class BaseWorkspaceGitRepository
 			throw new RuntimeException("Branch SHA is invalid");
 		}
 
-		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
-
-		if (!branchSHA.equals(_getBranchHeadSHA()) &&
-			!branchSHA.equals(_getBranchSHA())) {
-
-			List<String> branchNamesContainingSHA =
-				gitWorkingDirectory.getBranchNamesContainingSHA(branchSHA);
-
-			if (!branchNamesContainingSHA.contains(_getBranchName())) {
-				throw new IllegalArgumentException(
-					JenkinsResultsParserUtil.combine(
-						branchSHA, " does not exist in ", _getBranchName()));
-			}
-		}
-
 		put("branch_sha", branchSHA);
 	}
 
@@ -88,16 +72,14 @@ public abstract class BaseWorkspaceGitRepository
 
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
-		String branchSHA = _getBranchSHA();
-
-		if (!gitWorkingDirectory.localSHAExists(branchSHA)) {
+		if (!gitWorkingDirectory.localSHAExists(_getBranchHeadSHA())) {
 			GitHubDevSyncUtil.fetchCachedBranchFromGitHubDev(
 				gitWorkingDirectory, getGitHubDevBranchName());
 		}
 
 		LocalGitBranch localGitBranch =
 			gitWorkingDirectory.createLocalGitBranch(
-				_getBranchName(), true, branchSHA);
+				_getBranchName(), true, _getBranchSHA());
 
 		gitWorkingDirectory.createLocalGitBranch(localGitBranch, true);
 

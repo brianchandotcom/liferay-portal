@@ -203,9 +203,9 @@ public class PluginAutoDeployListenerHelper {
 			return false;
 		}
 
-		File webInf = new File(file, "WEB-INF");
+		File webInfDir = new File(file, "WEB-INF");
 
-		return webInf.exists();
+		return webInfDir.exists();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

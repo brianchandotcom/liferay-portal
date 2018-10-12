@@ -93,7 +93,7 @@ public class LiferayWriter
 
 		String resourceURL =
 			_tLiferayOutputProperties.resource.resourceProperty.
-				getResourceURL();
+				getSingleResourceOperationURL();
 
 		UriBuilder uriBuilder = UriBuilder.fromPath(resourceURL);
 
@@ -122,7 +122,7 @@ public class LiferayWriter
 
 		String resourceURL =
 			_tLiferayOutputProperties.resource.resourceProperty.
-				getResourceURL();
+				getSingleResourceOperationURL();
 
 		UriBuilder uriBuilder = UriBuilder.fromPath(resourceURL);
 

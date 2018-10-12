@@ -34,7 +34,7 @@ public class ScannedMethod {
 	public BeanMethod createBeanMethod(BeanManager beanManager) {
 		return new BeanMethod(
 			beanManager, beanManager.resolve(beanManager.getBeans(_clazz)),
-			_methodType, _method, _methodType.getOrdinal(_method));
+			_methodType, _method);
 	}
 
 	public String[] getPortletNames() {

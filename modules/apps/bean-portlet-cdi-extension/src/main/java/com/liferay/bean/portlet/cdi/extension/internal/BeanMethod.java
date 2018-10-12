@@ -41,18 +41,12 @@ public class BeanMethod implements Comparable<BeanMethod> {
 	public BeanMethod(
 		BeanManager beanManager, Bean<?> bean, MethodType type, Method method) {
 
-		this(beanManager, bean, type, method, 0);
-	}
-
-	public BeanMethod(
-		BeanManager beanManager, Bean<?> bean, MethodType type, Method method,
-		int ordinal) {
-
 		_beanManager = beanManager;
 		_bean = bean;
 		_type = type;
 		_method = method;
-		_ordinal = ordinal;
+
+		_ordinal = type.getOrdinal(method);
 	}
 
 	@Override

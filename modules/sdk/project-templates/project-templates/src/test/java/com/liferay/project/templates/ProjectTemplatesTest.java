@@ -313,6 +313,24 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateContentTargetingReport71() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+				"content-targeting-report", "foo-bar", "--liferayVersion", "7.1");
+
+		_testExists(gradleProjectDir, "bnd.bnd");
+
+		_testContains(
+				gradleProjectDir, "build.gradle",
+				_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+				"content-targeting-report", "foo-bar", "com.test",
+				"-DclassName=FooBar", "-Dpackage=foo.bar", "-DliferayVersion=7.1");
+
+		_buildProjects(gradleProjectDir, mavenProjectDir);
+	}
+
+	@Test
 	public void testBuildTemplateContentTargetingReportInWorkspace()
 		throws Exception {
 
@@ -373,6 +391,22 @@ public class ProjectTemplatesTest {
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"content-targeting-rule", "foo-bar", "com.test",
 			"-DclassName=FooBar", "-Dpackage=foo.bar", "-DliferayVersion=7.0");
+
+		_buildProjects(gradleProjectDir, mavenProjectDir);
+	}
+
+	@Test
+	public void testBuildTemplateContentTargetingRule71() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+				"content-targeting-rule", "foo-bar", "--liferayVersion", "7.1");
+
+		_testContains(
+				gradleProjectDir, "build.gradle",
+				_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+				"content-targeting-rule", "foo-bar", "com.test",
+				"-DclassName=FooBar", "-Dpackage=foo.bar", "-DliferayVersion=7.1");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
@@ -444,6 +478,25 @@ public class ProjectTemplatesTest {
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"content-targeting-tracking-action", "foo-bar", "com.test",
 			"-DclassName=FooBar", "-Dpackage=foo.bar", "-DliferayVersion=7.0");
+
+		_buildProjects(gradleProjectDir, mavenProjectDir);
+	}
+
+	@Test
+	public void testBuildTemplateContentTargetingTrackingAction71()
+			throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+				"content-targeting-tracking-action", "foo-bar", "--liferayVersion",
+				"7.1");
+
+		_testContains(
+				gradleProjectDir, "build.gradle",
+				_DEPENDENCY_PORTAL_KERNEL + ", version: \"3.0.0");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+				"content-targeting-tracking-action", "foo-bar", "com.test",
+				"-DclassName=FooBar", "-Dpackage=foo.bar", "-DliferayVersion=7.1");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}

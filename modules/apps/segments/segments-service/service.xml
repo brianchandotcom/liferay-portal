@@ -96,6 +96,7 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>SegmentsEntryCriteria</exception>
 		<exception>SegmentsEntryKey</exception>
 	</exceptions>
 </service-builder>

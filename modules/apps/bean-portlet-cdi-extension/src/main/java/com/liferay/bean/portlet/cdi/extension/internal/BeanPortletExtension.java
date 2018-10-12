@@ -415,32 +415,26 @@ public class BeanPortletExtension implements Extension {
 			bundleContext.registerService(
 				Servlet.class, new PortletServlet() {}, properties));
 
-		if (!descriptorLiferayConfigurations.isEmpty() &&
-			_log.isWarnEnabled()) {
+		Set<String> portletNames = descriptorLiferayConfigurations.keySet();
 
-			for (String portletName :
-					descriptorLiferayConfigurations.keySet()) {
+		portletNames.removeAll(_beanPortlets.keySet());
 
-				if (_beanPortlets.containsKey(portletName)) {
-					continue;
-				}
-
-				_log.warn(
-					StringBundler.concat(
-						"Portlet with the name ", portletName,
-						" is described in liferay-portlet.xml but does not ",
-						"have a matching entry in portlet.xml or ",
-						"@PortletConfiguration annotation"));
-			}
+		if (!portletNames.isEmpty() && _log.isWarnEnabled()) {
+			_log.warn(
+				StringBundler.concat(
+					"Portlet with the names ", portletNames,
+					" are described in liferay-portlet.xml but does not have ",
+					"a matching entry in portlet.xml or @PortletConfiguration ",
+					"annotation"));
 		}
 
-		for (String portletName : descriptorDisplayCategories.keySet()) {
-			if (_beanPortlets.containsKey(portletName)) {
-				continue;
-			}
+		portletNames = descriptorDisplayCategories.keySet();
 
+		portletNames.removeAll(_beanPortlets.keySet());
+
+		if (!portletNames.isEmpty()) {
 			_log.error(
-				"Unknown portlet ID " + portletName +
+				"Unknown portlet IDs " + portletNames +
 					" found in liferay-display.xml");
 		}
 

@@ -97,6 +97,9 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 
 	public void checkEntries() throws PortalException;
 
+	public void checkEntries(Date startDate, Date endDate)
+		throws PortalException;
+
 	/**
 	* Creates a new announcements entry with the primary key. Does not add the announcements entry to the database.
 	*

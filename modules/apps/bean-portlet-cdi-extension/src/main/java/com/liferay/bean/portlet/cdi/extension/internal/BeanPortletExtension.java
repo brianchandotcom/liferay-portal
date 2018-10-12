@@ -1176,18 +1176,12 @@ public class BeanPortletExtension implements Extension {
 			if (portletNames == null) {
 				_log.error(
 					"Portlet names cannot be null for annotated method " +
-						scannedMethod.getMethod());
+						scannedMethod);
 
 				continue;
 			}
 
-			Class<?> clazz = scannedMethod.getClazz();
-			Method method = scannedMethod.getMethod();
-			int ordinal = scannedMethod.getOrdinal();
-
-			BeanMethod beanMethod = new BeanMethod(
-				beanManager, beanManager.resolve(beanManager.getBeans(clazz)),
-				scannedMethod.getMethodType(), method, ordinal);
+			BeanMethod beanMethod = scannedMethod.createBeanMethod(beanManager);
 
 			if ((portletNames.length > 0) && "*".equals(portletNames[0])) {
 				wildcardBeanMethods.add(beanMethod);

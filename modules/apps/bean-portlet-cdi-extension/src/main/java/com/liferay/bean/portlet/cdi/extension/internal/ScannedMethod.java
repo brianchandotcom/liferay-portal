@@ -14,7 +14,11 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
+import com.liferay.petra.string.StringBundler;
+
 import java.lang.reflect.Method;
+
+import javax.enterprise.inject.spi.BeanManager;
 
 /**
  * @author Neil Griffin
@@ -27,24 +31,29 @@ public class ScannedMethod {
 		_method = method;
 	}
 
-	public Class<?> getClazz() {
-		return _clazz;
-	}
-
-	public Method getMethod() {
-		return _method;
-	}
-
-	public MethodType getMethodType() {
-		return _methodType;
-	}
-
-	public int getOrdinal() {
-		return _methodType.getOrdinal(_method);
+	public BeanMethod createBeanMethod(BeanManager beanManager) {
+		return new BeanMethod(
+			beanManager, beanManager.resolve(beanManager.getBeans(_clazz)),
+			_methodType, _method, _methodType.getOrdinal(_method));
 	}
 
 	public String[] getPortletNames() {
 		return _methodType.getPortletNames(_method);
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("{clazz=");
+		sb.append(_clazz);
+		sb.append(", method=");
+		sb.append(_method);
+		sb.append(", methodType=");
+		sb.append(_methodType);
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private final Class<?> _clazz;

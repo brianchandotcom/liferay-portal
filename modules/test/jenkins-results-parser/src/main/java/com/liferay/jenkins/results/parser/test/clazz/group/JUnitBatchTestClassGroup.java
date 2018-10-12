@@ -508,6 +508,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	protected void setTestClasses() {
 		File workingDirectory = portalGitWorkingDirectory.getWorkingDirectory();
 
+		if (testClassNamesIncludesPathMatchers.isEmpty()) {
+			return;
+		}
+
 		try {
 			Files.walkFileTree(
 				workingDirectory.toPath(),

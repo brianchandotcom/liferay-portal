@@ -14,19 +14,11 @@
 
 package com.liferay.layout.type.controller.content.internal.controller;
 
-import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerConstants;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
@@ -37,17 +29,8 @@ import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -106,15 +89,7 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			layoutMode = Constants.VIEW;
 		}
 
-		if (layoutMode.equals(Constants.VIEW)) {
-			List<FragmentEntryLink> fragmentEntryLinks = _getFragmentEntryLinks(
-				layout);
-
-			request.setAttribute(
-				ContentLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS,
-				fragmentEntryLinks);
-		}
-		else {
+		if (layoutMode.equals(Constants.EDIT)) {
 			request.setAttribute(
 				ContentLayoutTypeControllerWebKeys.ITEM_SELECTOR,
 				_itemSelector);
@@ -222,58 +197,6 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		this.servletContext = servletContext;
 	}
 
-	private List<FragmentEntryLink> _getFragmentEntryLinks(Layout layout)
-		throws PortalException {
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					layout.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layout.getPlid(), true);
-
-		String data = layoutPageTemplateStructure.getData();
-
-		if (Validator.isNull(data)) {
-			return Collections.emptyList();
-		}
-
-		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(
-			layoutPageTemplateStructure.getData());
-
-		JSONArray structureJSONArray = dataJSONObject.getJSONArray("structure");
-
-		if (structureJSONArray == null) {
-			return Collections.emptyList();
-		}
-
-		List<FragmentEntryLink> filteredFragmentEntryLinks = new ArrayList<>();
-
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				layout.getGroupId(),
-				_portal.getClassNameId(Layout.class.getName()),
-				layout.getPlid());
-
-		Stream<FragmentEntryLink> stream = fragmentEntryLinks.stream();
-
-		Map<Long, FragmentEntryLink> fragmentEntryLinksMap = stream.collect(
-			Collectors.toMap(
-				FragmentEntryLink::getFragmentEntryLinkId,
-				fragmentEntryLink -> fragmentEntryLink));
-
-		for (int i = 0; i < structureJSONArray.length(); i++) {
-			FragmentEntryLink fragmentEntryLink = fragmentEntryLinksMap.get(
-				structureJSONArray.getLong(i));
-
-			if (fragmentEntryLink != null) {
-				filteredFragmentEntryLinks.add(fragmentEntryLink);
-			}
-		}
-
-		return filteredFragmentEntryLinks;
-	}
-
 	private static final String _EDIT_LAYOUT_PAGE =
 		"/layout/edit_layout/content.jsp";
 
@@ -284,16 +207,6 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	private static final String _VIEW_PAGE = "/layout/view/content.jsp";
 
 	@Reference
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
 	private ItemSelector _itemSelector;
-
-	@Reference
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

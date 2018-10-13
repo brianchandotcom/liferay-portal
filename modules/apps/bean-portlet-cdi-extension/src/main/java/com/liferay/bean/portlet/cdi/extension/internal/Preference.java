@@ -14,30 +14,27 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Neil Griffin
  */
-public class LiferayDescriptor {
+public class Preference {
 
-	public void addPortletConfiguration(
-		String portletName, Map<String, String> portletConfiguration) {
-
-		_liferayPortletConfigurations.put(portletName, portletConfiguration);
+	public Preference(List<String> values, boolean readOnly) {
+		_values = values;
+		_readOnly = readOnly;
 	}
 
-	public Map<String, String> getPortletConfiguration(String portletName) {
-		return _liferayPortletConfigurations.get(portletName);
+	public List<String> getValues() {
+		return _values;
 	}
 
-	public Set<String> getPortletNames() {
-		return _liferayPortletConfigurations.keySet();
+	public boolean isReadOnly() {
+		return _readOnly;
 	}
 
-	private final Map<String, Map<String, String>>
-		_liferayPortletConfigurations = new HashMap<>();
+	private final boolean _readOnly;
+	private final List<String> _values;
 
 }

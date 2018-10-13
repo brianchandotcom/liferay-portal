@@ -15,18 +15,27 @@
 package com.liferay.bean.portlet.cdi.extension.internal;
 
 import java.util.Dictionary;
-import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.portlet.filter.PortletFilter;
 
 /**
  * @author Neil Griffin
  */
 public interface BeanFilter {
 
-	public Class<?> getFilterClass();
+	public Class<? extends PortletFilter> getFilterClass();
 
 	public String getFilterName();
 
-	public List<String> getPortletNames();
+	public Map<String, String> getInitParams();
+
+	public Set<String> getLifecycles();
+
+	public int getOrdinal();
+
+	public Set<String> getPortletNames();
 
 	public Dictionary<String, Object> toDictionary();
 

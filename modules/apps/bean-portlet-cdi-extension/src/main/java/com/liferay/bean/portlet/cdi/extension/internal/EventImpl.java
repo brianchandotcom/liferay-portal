@@ -14,25 +14,38 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
-import java.io.IOException;
+import java.util.List;
 
-import java.net.URL;
-
-import javax.xml.stream.XMLStreamException;
-
-import org.xml.sax.SAXException;
+import javax.xml.namespace.QName;
 
 /**
  * @author Neil Griffin
  */
-public class LiferayDescriptorParser {
+public class EventImpl implements Event {
 
-	public static LiferayDescriptor parse(URL liferayDescriptorURL)
-		throws IOException, SAXException, XMLStreamException {
-
-		// TODO
-
-		return null;
+	public EventImpl(QName qName, String valueType, List<QName> aliasQNames) {
+		_qName = qName;
+		_valueType = valueType;
+		_aliasQNames = aliasQNames;
 	}
+
+	@Override
+	public List<QName> getAliasQNames() {
+		return _aliasQNames;
+	}
+
+	@Override
+	public QName getQName() {
+		return _qName;
+	}
+
+	@Override
+	public String getValueType() {
+		return _valueType;
+	}
+
+	private final List<QName> _aliasQNames;
+	private final QName _qName;
+	private final String _valueType;
 
 }

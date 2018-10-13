@@ -1,3 +1,19 @@
 Bundle-Name: Liferay Bean Portlet CDI Extension
 Bundle-SymbolicName: com.liferay.bean.portlet.cdi.extension
 Bundle-Version: 1.0.0
+Provide-Capability:\
+	osgi.cdi.extension;\
+		osgi.cdi.extension="${Bundle-SymbolicName}";\
+		uses:="javax.enterprise.context,javax.enterprise.event,javax.enterprise.inject.spi",\
+	osgi.serviceloader;\
+		osgi.cdi.extension="${Bundle-SymbolicName}";\
+		osgi.serviceloader="javax.enterprise.inject.spi.Extension";\
+		uses:="javax.enterprise.context,javax.enterprise.event,javax.enterprise.inject.spi"
+Require-Capability:\
+	osgi.extender;\
+		filter:="(osgi.extender=osgi.serviceloader.registrar)";\
+		osgi.extender=osgi.serviceloader.registrar,\
+	osgi.implementation;\
+		filter:="(osgi.implementation=osgi.cdi)";\
+		osgi.implementation=osgi.cdi
+-contract: *

@@ -19,7 +19,6 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
 import java.io.Closeable;
 import java.io.IOException;
 
-import java.util.Collections;
 import java.util.Enumeration;
 
 import javax.enterprise.context.spi.CreationalContext;
@@ -77,10 +76,8 @@ public class ScopedBeanHolder {
 				return null;
 			}
 
-			T beanInstance = bean.create(creationalContext);
-
 			scopedBean = new ScopedBean<>(
-				name, bean, beanInstance, creationalContext,
+				name, bean, creationalContext,
 				PortletRequestScoped.class.getSimpleName());
 
 			_portletRequest.setAttribute(name, scopedBean);
@@ -109,10 +106,8 @@ public class ScopedBeanHolder {
 				return null;
 			}
 
-			T beanInstance = bean.create(creationalContext);
-
 			scopedBean = new ScopedBean<>(
-				name, bean, beanInstance, creationalContext,
+				name, bean, creationalContext,
 				PortletSessionScoped.class.getSimpleName());
 
 			portletSession.setAttribute(name, scopedBean, subscope);
@@ -135,10 +130,12 @@ public class ScopedBeanHolder {
 				return null;
 			}
 
-			T beanInstance = bean.create(creationalContext);
+			scopedBean = new ScopedBean<>(
+				name, bean, creationalContext,
+				RenderStateScoped.class.getSimpleName());
 
 			PortletSerializable portletSerializable = (PortletSerializable)
-				beanInstance;
+				scopedBean.getBeanInstance();
 
 			String parameterName = _getParameterName(portletSerializable);
 
@@ -153,10 +150,6 @@ public class ScopedBeanHolder {
 			}
 
 			portletSerializable.deserialize(parameterValues);
-
-			scopedBean = new ScopedBean<>(
-				name, bean, beanInstance, creationalContext,
-				RenderStateScoped.class.getSimpleName());
 
 			_portletRequest.setAttribute(name, scopedBean);
 		}
@@ -261,8 +254,10 @@ public class ScopedBeanHolder {
 			}
 		}
 
-		for (String name :
-				Collections.list(_portletRequest.getAttributeNames())) {
+		Enumeration<String> enumeration = _portletRequest.getAttributeNames();
+
+		while (enumeration.hasMoreElements()) {
+			String name = enumeration.nextElement();
 
 			if (name.startsWith(_ATTRIBUTE_NAME_PREFIX)) {
 				Object value = _portletRequest.getAttribute(name);

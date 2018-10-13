@@ -916,6 +916,15 @@ public class BeanPortletExtension implements Extension {
 			liferayConfiguration.putAll(descriptorLiferayConfiguration);
 		}
 
+		BeanPortlet descriptorBeanPortlet = _beanPortlets.get(
+			configuredPortletName);
+
+		Set<String> supportedLocales = new LinkedHashSet<>(
+			Arrays.asList(portletConfiguration.supportedLocales()));
+
+		Set<String> supportedPublicRenderParameters = new LinkedHashSet<>(
+			Arrays.asList(portletConfiguration.publicParams()));
+
 		containerRuntimeOptions = new HashMap<>();
 
 		for (RuntimeOption runtimeOption :
@@ -929,28 +938,191 @@ public class BeanPortletExtension implements Extension {
 			portletConfiguration.portletName(), beanMethods, displayNames,
 			beanPortletClass.getName(), initParams,
 			portletConfiguration.cacheExpirationTime(), supportedPortletModes,
-			supportedWindowStates,
-			new LinkedHashSet<>(
-				Arrays.asList(portletConfiguration.supportedLocales())),
+			supportedWindowStates, supportedLocales,
 			portletConfiguration.resourceBundle(), titles, shortTitles,
 			keywords, descriptions, preferences, preferencesValidator,
-			securityRoleRefs,
-			new LinkedHashSet<>(
-				Arrays.asList(portletConfiguration.publicParams())),
+			securityRoleRefs, supportedPublicRenderParameters,
 			containerRuntimeOptions, portletDependencies,
 			portletConfiguration.asyncSupported(), multiPartSupported,
 			multiPartFileSizeThreshold, multiPartLocation, multiPartMaxFileSize,
 			multiPartMaxRequestSize, displayCategory, liferayConfiguration);
 
-		BeanPortlet descriptorBeanPortlet = _beanPortlets.get(
-			configuredPortletName);
-
 		if (descriptorBeanPortlet == null) {
 			_beanPortlets.put(configuredPortletName, annotatedBeanPortlet);
 		}
 		else {
-			BeanPortlet mergedBeanPortlet = new BeanPortletMergedImpl(
-				annotatedBeanPortlet, descriptorBeanPortlet);
+			String portletName = descriptorBeanPortlet.getPortletName();
+
+			if (Validator.isNull(portletName)) {
+				portletName = portletConfiguration.portletName();
+			}
+
+			Map<MethodType, List<BeanMethod>> beanMethodMap =
+				descriptorBeanPortlet.getBeanMethods();
+
+			for (Map.Entry<MethodType, List<BeanMethod>>
+					entry: beanMethodMap.entrySet()) {
+
+				beanMethods.addAll(entry.getValue());
+			}
+
+			displayNames.putAll(descriptorBeanPortlet.getDisplayNames());
+
+			String portletClassName =
+				descriptorBeanPortlet.getPortletClassName();
+
+			if (Validator.isNull(portletClassName)) {
+				portletClassName = beanPortletClass.getName();
+			}
+
+			initParams.putAll(descriptorBeanPortlet.getInitParams());
+
+			int expirationCache = descriptorBeanPortlet.getExpirationCache();
+
+			if (expirationCache <= 0) {
+				expirationCache = portletConfiguration.cacheExpirationTime();
+			}
+
+			supportedPortletModes.putAll(
+				descriptorBeanPortlet.getSupportedPortletModes());
+
+			supportedWindowStates.putAll(
+				descriptorBeanPortlet.getSupportedWindowStates());
+
+			supportedLocales.addAll(
+				descriptorBeanPortlet.getSupportedLocales());
+
+			String resourceBundle = descriptorBeanPortlet.getResourceBundle();
+
+			if (Validator.isNull(resourceBundle)) {
+				resourceBundle = portletConfiguration.resourceBundle();
+			}
+
+			titles.putAll(descriptorBeanPortlet.getTitles());
+
+			shortTitles.putAll(descriptorBeanPortlet.getShortTitles());
+
+			keywords.putAll(descriptorBeanPortlet.getKeywords());
+
+			descriptions.putAll(descriptorBeanPortlet.getDescriptions());
+
+			preferences.putAll(descriptorBeanPortlet.getPreferences());
+
+			if (Validator.isNotNull(
+					descriptorBeanPortlet.getPreferencesValidator())) {
+
+				preferencesValidator =
+					descriptorBeanPortlet.getPreferencesValidator();
+			}
+
+			securityRoleRefs.putAll(
+				descriptorBeanPortlet.getSecurityRoleRefs());
+
+			Set<QName> supportedProcessingEvents = new LinkedHashSet<>(
+				annotatedBeanPortlet.getSupportedProcessingEvents());
+
+			supportedProcessingEvents.addAll(
+				descriptorBeanPortlet.getSupportedProcessingEvents());
+
+			Set<QName> supportedPublishingEvents = new LinkedHashSet<>(
+				annotatedBeanPortlet.getSupportedPublishingEvents());
+
+			supportedPublishingEvents.addAll(
+				descriptorBeanPortlet.getSupportedPublishingEvents());
+
+			supportedPublicRenderParameters.addAll(
+				descriptorBeanPortlet.getSupportedPublicRenderParameters());
+
+			Map<String, List<String>> descriptorContainerRuntimeOptions =
+				descriptorBeanPortlet.getContainerRuntimeOptions();
+
+			for (Map.Entry<String, List<String>> entry :
+					descriptorContainerRuntimeOptions.entrySet()) {
+
+				if (entry.getValue() != null) {
+					String optionName = entry.getKey();
+
+					List<String> existingOptionValues =
+						containerRuntimeOptions.get(optionName);
+
+					if (existingOptionValues == null) {
+						containerRuntimeOptions.put(
+							optionName, entry.getValue());
+					}
+					else {
+						List<String> mergedOptions = new ArrayList<>(
+							existingOptionValues);
+
+						mergedOptions.addAll(entry.getValue());
+
+						containerRuntimeOptions.put(optionName, mergedOptions);
+					}
+				}
+			}
+
+			portletDependencies.addAll(
+				descriptorBeanPortlet.getPortletDependencies());
+
+			boolean asyncSupport = false;
+
+			if (portletConfiguration.asyncSupported() ||
+				descriptorBeanPortlet.isAsyncSupported()) {
+
+				asyncSupport = true;
+			}
+
+			if (multiPartSupported ||
+				descriptorBeanPortlet.isMultiPartSupported()) {
+
+				multiPartSupported = true;
+
+				if (descriptorBeanPortlet.getMultiPartFileSizeThreshold() > 0) {
+					multiPartFileSizeThreshold =
+						descriptorBeanPortlet.getMultiPartFileSizeThreshold();
+				}
+
+				if (Validator.isNotNull(
+						descriptorBeanPortlet.getMultiPartLocation())) {
+
+					multiPartLocation =
+						descriptorBeanPortlet.getMultiPartLocation();
+				}
+
+				if (descriptorBeanPortlet.getMultiPartMaxFileSize() > 0) {
+					multiPartMaxFileSize =
+						descriptorBeanPortlet.getMultiPartMaxFileSize();
+				}
+
+				if (descriptorBeanPortlet.getMultiPartMaxRequestSize() > 0) {
+					multiPartMaxRequestSize =
+						descriptorBeanPortlet.getMultiPartMaxRequestSize();
+				}
+			}
+
+			if (descriptorBeanPortlet.getDisplayCategory() != null) {
+				displayCategory = descriptorBeanPortlet.getDisplayCategory();
+			}
+
+			descriptorLiferayConfiguration =
+				descriptorBeanPortlet.getLiferayConfiguration();
+
+			if (descriptorLiferayConfiguration != null) {
+				liferayConfiguration.putAll(descriptorLiferayConfiguration);
+			}
+
+			BeanPortlet mergedBeanPortlet = new BeanPortletDescriptorImpl(
+				portletConfiguration.portletName(), beanMethods, displayNames,
+				beanPortletClass.getName(), initParams,
+				portletConfiguration.cacheExpirationTime(),
+				supportedPortletModes, supportedWindowStates, supportedLocales,
+				portletConfiguration.resourceBundle(), titles, shortTitles,
+				keywords, descriptions, preferences, preferencesValidator,
+				securityRoleRefs, supportedProcessingEvents,
+				supportedPublishingEvents, supportedPublicRenderParameters,
+				containerRuntimeOptions, portletDependencies, asyncSupport,
+				multiPartSupported, multiPartFileSizeThreshold,
+				multiPartLocation, multiPartMaxFileSize,
+				multiPartMaxRequestSize, displayCategory, liferayConfiguration);
 
 			_beanPortlets.put(configuredPortletName, mergedBeanPortlet);
 		}

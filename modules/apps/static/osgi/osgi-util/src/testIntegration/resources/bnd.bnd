@@ -16,4 +16,5 @@ Import-Package:\
 	../../../classes,\
 	bundle-util=../../../src/testIntegration/resources/bundle-util,\
 	com/liferay/osgi/util/test=../../../test-classes/integration/com/liferay/osgi/util/test,\
-	fileInRoot.properties=../../../src/testIntegration/resources/fileInRoot.properties
+	fileInRoot.properties=../../../src/testIntegration/resources/fileInRoot.properties,\
+	@../../../test-lib/com.liferay.petra.reflect.jar

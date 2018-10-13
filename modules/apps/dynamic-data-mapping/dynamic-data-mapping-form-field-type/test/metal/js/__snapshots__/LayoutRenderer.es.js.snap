@@ -64,13 +64,13 @@ exports[`Layout Render should render fields 1`] = `
     </div>
     <div class="dropdown-menu">
       <ul class="list-unstyled">
-        <li class="dropdown-item" data-option-value=""></li>
+        <li class="dropdown-item" data-option-value="">choose-an-option</li>
       </ul>
     </div>
   </div>
   <div class="form-group">
     <label></label>
-    <input class="form-control" name="textField" type="text" disabled="disabled" value="">
+    <input class="form-control" name="textField" type="text" value="">
   </div>
   <div class="form-group">
     <label></label>

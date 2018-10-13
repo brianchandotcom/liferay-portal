@@ -406,7 +406,7 @@
 
 									if (instance._isEmptySelection(editor)) {
 										if (AUI.Env.UA.ie >= 9) {
-											editor.insertHtml('<img src="' + imageSrc + '">' + ' <br> ');
+											editor.insertHtml('<img src="' + imageSrc + '">' + ' <br /> ');
 										}
 										else {
 											editor.execCommand('enter');

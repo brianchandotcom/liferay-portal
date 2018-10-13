@@ -3,14 +3,13 @@
 		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute macro="WebContentTemplates#inputTemplateAddScreenFields">
-			<var name="fieldNameLabel" value="${fieldNameLabel}" />
 			<var name="structureName" value="${structureName}" />
 			<var name="templateDescription" value="${templateDescription}" />
 			<var name="templateFieldNames" value="${templateFieldNames}" />
 			<var name="templateFile" value="${templateFile}" />
 			<var name="templateLanguage" value="${templateLanguage}" />
 			<var name="templateName" value="${templateName}" />
-			<var name="templateScript" value="templateScript" />
+			<var name="templateScript" value="${templateScript}" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#save" />
@@ -22,7 +21,6 @@
 			<then>
 				<for list="${templateFieldNames}" param="fieldName">
 					<var name="key_fieldName" value="${fieldName}" />
-					<var method="StringUtil#lowerCase('${fieldNameLabel}')" name="templateFieldNameLabel" />
 
 					<execute function="AssertClick" locator1="DDMEditTemplate#SCRIPT_FIELD" value1="${fieldName}" />
 				</for>
@@ -156,16 +154,16 @@
 			<var name="templateLanguage" value="${templateLanguage}" />
 		</execute>
 
+		<execute macro="WebContentTemplates#inputScript">
+			<var name="templateScript" value="${templateScript}" />
+		</execute>
+
 		<execute macro="WebContentTemplates#addFields">
 			<var name="templateFieldNames" value="${templateFieldNames}" />
 		</execute>
 
 		<execute macro="WebContentTemplates#inputTemplateFile">
 			<var name="templateFile" value="${templateFile}" />
-		</execute>
-
-		<execute macro="WebContentTemplates#inputScript">
-			<var name="templateScript" value="templateScript" />
 		</execute>
 	</command>
 

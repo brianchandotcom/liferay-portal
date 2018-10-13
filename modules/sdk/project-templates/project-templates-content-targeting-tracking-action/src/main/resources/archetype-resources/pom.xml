@@ -32,6 +32,12 @@
 			<version>4.0.0</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.liferay.portal</groupId>
+			<artifactId>com.liferay.portal.kernel</artifactId>
+			<version>2.3.0</version>
+			<scope>provided</scope>
+		</dependency>
 #elseif (${liferayVersion.startsWith("7.1")})
 		<dependency>
 			<groupId>com.liferay.content-targeting</groupId>
@@ -51,15 +57,6 @@
 			<version>5.0.0</version>
 			<scope>provided</scope>
 		</dependency>
-#end
-#if (${liferayVersion.startsWith("7.0")})
-		<dependency>
-			<groupId>com.liferay.portal</groupId>
-			<artifactId>com.liferay.portal.kernel</artifactId>
-			<version>2.3.0</version>
-			<scope>provided</scope>
-		</dependency>
-#elseif (${liferayVersion.startsWith("7.1")})
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
 			<artifactId>com.liferay.portal.kernel</artifactId>

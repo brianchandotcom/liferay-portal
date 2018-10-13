@@ -953,6 +953,16 @@ public class GitHubDevSyncUtil {
 		LocalGitBranch currentLocalGitBranch =
 			gitWorkingDirectory.getCurrentLocalGitBranch();
 
+		if (currentLocalGitBranch == null) {
+			LocalGitBranch localUpstreamGitBranch =
+				gitWorkingDirectory.getLocalGitBranch(
+					gitWorkingDirectory.getUpstreamBranchName());
+
+			gitWorkingDirectory.checkoutLocalGitBranch(localUpstreamGitBranch);
+
+			currentLocalGitBranch = localUpstreamGitBranch;
+		}
+
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
 				"Starting synchronization with local-git. Current repository ",

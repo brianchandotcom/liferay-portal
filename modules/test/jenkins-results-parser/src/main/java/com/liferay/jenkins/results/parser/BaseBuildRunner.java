@@ -90,16 +90,11 @@ public abstract class BaseBuildRunner<T extends BuildData>
 			try {
 				retries++;
 
-				String filePath = file.getCanonicalPath();
-
-				if (file.isDirectory()) {
-					filePath += "/";
-				}
-
 				String command = JenkinsResultsParserUtil.combine(
-					"time rsync -Ipqrs --chmod=go=rx --timeout=1200 ", filePath,
-					" ", _buildData.getTopLevelMasterHostname(),
-					"::usercontent/", userContentRelativePath);
+					"time rsync -Ipqrs --chmod=go=rx --timeout=1200 ",
+					file.getCanonicalPath(), " ",
+					_buildData.getTopLevelMasterHostname(), "::usercontent/",
+					userContentRelativePath);
 
 				JenkinsResultsParserUtil.executeBashCommands(command);
 

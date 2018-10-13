@@ -27,12 +27,11 @@ import org.slf4j.LoggerFactory;
 
 import org.talend.daikon.NamedThing;
 import org.talend.daikon.properties.property.Property;
-import org.talend.daikon.properties.property.StringProperty;
 
 /**
  * @author Zoltán Takács
  */
-public class ResourceProperty extends StringProperty {
+public class ResourceProperty extends BaseContextAwareStringProperty {
 
 	public ResourceProperty(String name) {
 		super(name);
@@ -52,7 +51,7 @@ public class ResourceProperty extends StringProperty {
 						"resource URL manually.");
 			}
 
-			return _constructResourceURL();
+			return _constructResourceURL(getUriPrefix());
 		}
 
 		String resourceName = getValue();
@@ -69,10 +68,29 @@ public class ResourceProperty extends StringProperty {
 					"values. Constructing the URL manually.");
 		}
 
-		return _constructResourceURL();
+		return _constructResourceURL(getUriPrefix());
+	}
+
+	public String getSingleResourceOperationURL() {
+		String host = getHost();
+		String uriPrefix = getUriPrefix();
+
+		if (uriPrefix.equals(host)) {
+			return getResourceURL();
+		}
+
+		if (getValue() == null) {
+			throw new IllegalStateException("No resource selected");
+		}
+
+		return _constructResourceURL(getHost());
 	}
 
 	public String getUriPrefix() {
+		if (_uriPrefix == null) {
+			throw new IllegalArgumentException("URI prefix is not set");
+		}
+
 		return _uriPrefix;
 	}
 
@@ -100,15 +118,11 @@ public class ResourceProperty extends StringProperty {
 		_uriPrefix = StringUtils.removeQuotes(uriPrefix);
 	}
 
-	private String _constructResourceURL() {
-		if (_uriPrefix == null) {
-			throw new IllegalArgumentException("URI prefix is not set");
-		}
-
-		UriBuilder uriBuilder = UriBuilder.fromPath(_uriPrefix);
+	private String _constructResourceURL(String uriPrefix) {
+		UriBuilder uriBuilder = UriBuilder.fromPath(uriPrefix);
 
 		URI resourceURI = uriBuilder.path(
-			_uriPrefix.contains("/p/") ? "" : "p"
+			uriPrefix.contains("/p/") ? "" : "p"
 		).path(
 			"{resource}"
 		).build(

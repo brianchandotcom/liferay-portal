@@ -238,6 +238,9 @@ public class LiferayResourceProperties
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveLiferayConnectionProperties();
 
+		resourceProperty.setHost(
+			liferayConnectionProperties.endpoint.getValue());
+
 		if (liferayConnectionProperties.siteFilter.getValue()) {
 			resourceProperty.setUriPrefix(
 				liferayConnectionProperties.webSiteProperty.getWebSiteURL());

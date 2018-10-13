@@ -15,10 +15,13 @@
 package com.liferay.osgi.util.bundle;
 
 import com.liferay.petra.concurrent.DefaultNoticeableFuture;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
+import java.util.Map;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -55,6 +58,52 @@ public class BundleStartLevelUtil {
 			bundleStartLevel.setStartLevel(startLevel);
 
 			_startBundle(bundle, bundleContext);
+		}
+	}
+
+	public static void setStartLevelAndStart(
+			Map<Bundle, Integer> installedBundles, BundleContext bundleContext)
+		throws Exception {
+
+		_refreshBundles(installedBundles.keySet(), bundleContext);
+
+		for (Map.Entry<Bundle, Integer> entry : installedBundles.entrySet()) {
+			setStartLevelAndStart(
+				entry.getKey(), entry.getValue(), bundleContext);
+		}
+	}
+
+	private static void _refreshBundles(
+		Collection<Bundle> refreshBundles, BundleContext bundleContext) {
+
+		Bundle systemBundle = bundleContext.getBundle(0);
+
+		FrameworkWiring frameworkWiring = systemBundle.adapt(
+			FrameworkWiring.class);
+
+		final DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<>();
+
+		frameworkWiring.refreshBundles(
+			refreshBundles,
+			new FrameworkListener() {
+
+				@Override
+				public void frameworkEvent(FrameworkEvent frameworkEvent) {
+					defaultNoticeableFuture.set(frameworkEvent);
+				}
+
+			});
+
+		try {
+			FrameworkEvent frameworkEvent = defaultNoticeableFuture.get();
+
+			if (frameworkEvent.getType() != FrameworkEvent.PACKAGES_REFRESHED) {
+				throw frameworkEvent.getThrowable();
+			}
+		}
+		catch (Throwable t) {
+			ReflectionUtil.throwException(t);
 		}
 	}
 

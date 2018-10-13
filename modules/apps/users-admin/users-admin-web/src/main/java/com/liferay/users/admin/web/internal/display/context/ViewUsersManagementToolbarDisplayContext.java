@@ -198,7 +198,7 @@ public class ViewUsersManagementToolbarDisplayContext {
 			"view.jsp-portletURL");
 
 		UserSearch userSearch = new UserSearch(
-			_renderRequest, _getCurParam(), portletURL);
+			_renderRequest, "cur2", portletURL);
 
 		RowChecker rowChecker = new EmptyOnClickRowChecker(_renderResponse);
 
@@ -291,18 +291,6 @@ public class ViewUsersManagementToolbarDisplayContext {
 
 		return PortalPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), ActionKeys.ADD_USER);
-	}
-
-	private int _getCur() {
-		return _userSearch.getCur();
-	}
-
-	private String _getCurParam() {
-		return "cur2";
-	}
-
-	private int _getDelta() {
-		return _userSearch.getDelta();
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {

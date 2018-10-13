@@ -289,14 +289,6 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 			themeDisplay.getPermissionChecker(), ActionKeys.ADD_ORGANIZATION);
 	}
 
-	private int _getCur() {
-		return _organizationSearch.getCur();
-	}
-
-	private int _getDelta() {
-		return _organizationSearch.getDelta();
-	}
-
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
 		return new DropdownItemList() {
 			{

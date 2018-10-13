@@ -14,7 +14,9 @@
 
 package com.liferay.portal.search.web.internal.folder.facet.portlet;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -94,7 +96,8 @@ public class FolderFacetPortlet extends MVCPortlet {
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
 
-		Facet facet = portletSharedSearchResponse.getFacet(getFieldName());
+		Facet facet = portletSharedSearchResponse.getFacet(
+			getAggregationName(getPortletId(renderRequest)));
 
 		FolderTitleLookup folderTitleLookup = new FolderTitleLookupImpl(
 			portal.getHttpServletRequest(renderRequest));
@@ -131,10 +134,18 @@ public class FolderFacetPortlet extends MVCPortlet {
 		return folderSearchFacetDisplayBuilder.build();
 	}
 
+	protected String getAggregationName(String portletId) {
+		return Field.ASSET_CATEGORY_IDS + StringPool.PERIOD + portletId;
+	}
+
 	protected String getFieldName() {
 		Facet facet = folderFacetFactory.newInstance(null);
 
 		return facet.getFieldName();
+	}
+
+	protected String getPortletId(RenderRequest renderRequest) {
+		return portal.getPortletId(renderRequest);
 	}
 
 	@Reference

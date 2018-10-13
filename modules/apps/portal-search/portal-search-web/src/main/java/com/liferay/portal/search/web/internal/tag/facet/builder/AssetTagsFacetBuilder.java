@@ -33,11 +33,17 @@ public class AssetTagsFacetBuilder {
 	public Facet build() {
 		Facet facet = _assetTagNamesFacetFactory.newInstance(_searchContext);
 
+		facet.setAggregationName(_aggregationName);
+
 		facet.setFacetConfiguration(buildFacetConfiguration(facet));
 
 		facet.select(_selectedTagNames);
 
 		return facet;
+	}
+
+	public void setAggregationName(String aggregationName) {
+		_aggregationName = aggregationName;
 	}
 
 	public void setFrequencyThreshold(int frequencyThreshold) {
@@ -74,6 +80,7 @@ public class AssetTagsFacetBuilder {
 		return facetConfiguration;
 	}
 
+	private String _aggregationName;
 	private final AssetTagNamesFacetFactory _assetTagNamesFacetFactory;
 	private int _frequencyThreshold;
 	private int _maxTerms;

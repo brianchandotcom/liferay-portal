@@ -31,11 +31,17 @@ public class UserFacetBuilder {
 	public Facet build() {
 		Facet facet = _userFacetFactory.newInstance(_searchContext);
 
+		facet.setAggregationName(_aggregationName);
+
 		facet.setFacetConfiguration(buildFacetConfiguration(facet));
 
 		facet.select(_selectedUserNames);
 
 		return facet;
+	}
+
+	public void setAggregationName(String aggregationName) {
+		_aggregationName = aggregationName;
 	}
 
 	public void setFrequencyThreshold(int frequencyThreshold) {
@@ -72,6 +78,7 @@ public class UserFacetBuilder {
 		return facetConfiguration;
 	}
 
+	private String _aggregationName;
 	private int _frequencyThreshold;
 	private int _maxTerms;
 	private SearchContext _searchContext;

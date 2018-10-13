@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.web.internal.site.facet.portlet.shared.search;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.search.facet.site.SiteFacetFactory;
 import com.liferay.portal.search.web.internal.site.facet.constants.SiteFacetPortletKeys;
@@ -59,6 +61,8 @@ public class SiteFacetPortletSharedSearchContributor
 		ScopeFacetBuilder scopeFacetBuilder = new ScopeFacetBuilder(
 			siteFacetFactory);
 
+		scopeFacetBuilder.setAggregationName(
+			getAggregationName(portletSharedSearchSettings.getPortletId()));
 		scopeFacetBuilder.setFrequencyThreshold(
 			siteFacetPortletPreferences.getFrequencyThreshold());
 		scopeFacetBuilder.setMaxTerms(
@@ -72,6 +76,10 @@ public class SiteFacetPortletSharedSearchContributor
 			scopeFacetBuilder::setSelectedGroupIds);
 
 		return scopeFacetBuilder.build();
+	}
+
+	protected String getAggregationName(String portletId) {
+		return Field.ASSET_CATEGORY_IDS + StringPool.PERIOD + portletId;
 	}
 
 	@Reference

@@ -33,11 +33,17 @@ public class AssetEntriesFacetBuilder {
 	public Facet build() {
 		Facet facet = _assetEntriesFacetFactory.newInstance(_searchContext);
 
+		facet.setAggregationName(_aggregationName);
+
 		facet.setFacetConfiguration(buildFacetConfiguration(facet));
 
 		facet.select(_selectedEntryClassNames);
 
 		return facet;
+	}
+
+	public void setAggregationName(String aggregationName) {
+		_aggregationName = aggregationName;
 	}
 
 	public void setFrequencyThreshold(int frequencyThreshold) {
@@ -70,6 +76,7 @@ public class AssetEntriesFacetBuilder {
 		return facetConfiguration;
 	}
 
+	private String _aggregationName;
 	private final AssetEntriesFacetFactory _assetEntriesFacetFactory;
 	private int _frequencyThreshold;
 	private SearchContext _searchContext;

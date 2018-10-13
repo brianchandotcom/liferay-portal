@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.web.internal.user.facet.portlet.shared.search;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.search.facet.user.UserFacetFactory;
 import com.liferay.portal.search.web.internal.user.facet.constants.UserFacetPortletKeys;
@@ -59,6 +61,8 @@ public class UserFacetPortletSharedSearchContributor
 		UserFacetBuilder userFacetBuilder = new UserFacetBuilder(
 			userFacetFactory);
 
+		userFacetBuilder.setAggregationName(
+			getAggregationName(portletSharedSearchSettings.getPortletId()));
 		userFacetBuilder.setFrequencyThreshold(
 			userFacetPortletPreferences.getFrequencyThreshold());
 		userFacetBuilder.setMaxTerms(userFacetPortletPreferences.getMaxTerms());
@@ -71,6 +75,10 @@ public class UserFacetPortletSharedSearchContributor
 			userFacetBuilder::setSelectedUserNames);
 
 		return userFacetBuilder.build();
+	}
+
+	protected String getAggregationName(String portletId) {
+		return Field.ASSET_CATEGORY_IDS + StringPool.PERIOD + portletId;
 	}
 
 	@Reference

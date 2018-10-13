@@ -32,6 +32,8 @@ public class FolderFacetBuilder {
 	public Facet build() {
 		Facet facet = _folderFacetFactory.newInstance(_searchContext);
 
+		facet.setAggregationName(_aggregationName);
+
 		facet.setFacetConfiguration(buildFacetConfiguration(facet));
 
 		if (_selectedFolderIds != null) {
@@ -39,6 +41,10 @@ public class FolderFacetBuilder {
 		}
 
 		return facet;
+	}
+
+	public void setAggregationName(String aggregationName) {
+		_aggregationName = aggregationName;
 	}
 
 	public void setFrequencyThreshold(int frequencyThreshold) {
@@ -75,6 +81,7 @@ public class FolderFacetBuilder {
 		return facetConfiguration;
 	}
 
+	private String _aggregationName;
 	private final FolderFacetFactory _folderFacetFactory;
 	private int _frequencyThreshold;
 	private int _maxTerms;

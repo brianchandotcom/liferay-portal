@@ -26,14 +26,15 @@ import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
@@ -66,6 +67,9 @@ public class ViewUsersManagementToolbarDisplayContext {
 		_displayStyle = displayStyle;
 		_navigation = navigation;
 		_status = status;
+
+		_currentURL = PortletURLUtil.getCurrent(
+			_renderRequest, _renderResponse);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
@@ -167,24 +171,16 @@ public class ViewUsersManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter(_getCurParam(), String.valueOf(_getCur()));
-		portletURL.setParameter("delta", String.valueOf(_getDelta()));
-		portletURL.setParameter("displayStyle", _displayStyle);
-
-		String[] keywords = ParamUtil.getStringValues(_request, "keywords");
-
-		if (ArrayUtil.isNotEmpty(keywords)) {
-			portletURL.setParameter("keywords", keywords[keywords.length - 1]);
+		try {
+			return PortletURLUtil.clone(_currentURL, _renderResponse);
 		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 
-		portletURL.setParameter("navigation", _navigation);
-		portletURL.setParameter("orderByCol", getOrderByCol());
-		portletURL.setParameter("orderByType", getOrderByType());
-		portletURL.setParameter("status", String.valueOf(_status));
-
-		return portletURL;
+			return _renderResponse.createRenderURL();
+		}
 	}
 
 	public String getSearchActionURL() {
@@ -362,6 +358,10 @@ public class ViewUsersManagementToolbarDisplayContext {
 		};
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewUsersManagementToolbarDisplayContext.class);
+
+	private final PortletURL _currentURL;
 	private final String _displayStyle;
 	private final String _navigation;
 	private final RenderRequest _renderRequest;

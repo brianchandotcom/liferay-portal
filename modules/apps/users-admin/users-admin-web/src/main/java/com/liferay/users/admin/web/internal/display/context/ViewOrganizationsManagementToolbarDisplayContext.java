@@ -25,8 +25,11 @@ import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -36,7 +39,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -68,6 +70,9 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_displayStyle = displayStyle;
+
+		_currentURL = PortletURLUtil.getCurrent(
+			_renderRequest, _renderResponse);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
@@ -148,32 +153,16 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("cur", String.valueOf(_getCur()));
-		portletURL.setParameter("delta", String.valueOf(_getDelta()));
-		portletURL.setParameter("displayStyle", _displayStyle);
-
-		String[] keywords = ParamUtil.getStringValues(_request, "keywords");
-
-		if (ArrayUtil.isNotEmpty(keywords)) {
-			portletURL.setParameter("keywords", keywords[keywords.length - 1]);
+		try {
+			return PortletURLUtil.clone(_currentURL, _renderResponse);
 		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 
-		portletURL.setParameter("orderByCol", getOrderByCol());
-		portletURL.setParameter("orderByType", getOrderByType());
-
-		String toolbarItem = ParamUtil.getString(
-			_request, "toolbarItem", "view-all-organizations");
-
-		portletURL.setParameter("toolbarItem", toolbarItem);
-
-		String usersListView = (String)_request.getAttribute(
-			"view.jsp-usersListView");
-
-		portletURL.setParameter("usersListView", usersListView);
-
-		return portletURL;
+			return _renderResponse.createRenderURL();
+		}
 	}
 
 	public String getSearchActionURL() {
@@ -362,6 +351,10 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 		return viewUsersURL.toString();
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewOrganizationsManagementToolbarDisplayContext.class);
+
+	private final PortletURL _currentURL;
 	private final String _displayStyle;
 	private OrganizationSearch _organizationSearch;
 	private final RenderRequest _renderRequest;

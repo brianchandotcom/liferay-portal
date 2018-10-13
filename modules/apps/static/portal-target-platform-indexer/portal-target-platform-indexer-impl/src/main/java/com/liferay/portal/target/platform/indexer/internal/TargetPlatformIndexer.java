@@ -18,6 +18,7 @@ import aQute.bnd.header.Attrs;
 import aQute.bnd.header.Parameters;
 import aQute.bnd.osgi.Constants;
 import aQute.bnd.osgi.Jar;
+import aQute.bnd.osgi.repository.SimpleIndexer;
 import aQute.bnd.osgi.resource.CapabilityBuilder;
 
 import com.liferay.portal.target.platform.indexer.Indexer;
@@ -39,12 +40,10 @@ import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
@@ -61,8 +60,6 @@ import org.osgi.framework.namespace.NativeNamespace;
 import org.osgi.framework.namespace.PackageNamespace;
 import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.resource.Capability;
-import org.osgi.service.indexer.ResourceIndexer;
-import org.osgi.service.indexer.impl.RepoIndex;
 import org.osgi.service.repository.ContentNamespace;
 
 /**
@@ -77,13 +74,6 @@ public class TargetPlatformIndexer implements Indexer {
 		_systemBundle = systemBundle;
 		_additionalJarFiles = additionalJarFiles;
 		_dirNames = dirNames;
-
-		_config.put("compressed", "false");
-		_config.put(
-			"license.url", "https://www.liferay.com/downloads/ce-license");
-		_config.put("pretty", "true");
-		_config.put("repository.name", "Liferay Target Platform");
-		_config.put("stylesheet", "http://www.osgi.org/www/obr2html.xsl");
 	}
 
 	@Override
@@ -91,8 +81,6 @@ public class TargetPlatformIndexer implements Indexer {
 		Path tempPath = Files.createTempDirectory(null);
 
 		File tempDir = tempPath.toFile();
-
-		_config.put("root.url", tempDir.getPath());
 
 		Set<File> jarFiles = new LinkedHashSet<>();
 
@@ -132,12 +120,16 @@ public class TargetPlatformIndexer implements Indexer {
 				jarFiles.add(tempJarPath.toFile());
 			}
 
-			ResourceIndexer resourceIndexer = new RepoIndex();
-
 			ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream();
 
-			resourceIndexer.index(jarFiles, byteArrayOutputStream, _config);
+			SimpleIndexer simpleIndexer = new SimpleIndexer();
+
+			simpleIndexer.files(jarFiles);
+			simpleIndexer.base(tempPath.toUri());
+			simpleIndexer.compress(false);
+			simpleIndexer.name("Liferay Target Platform");
+			simpleIndexer.index(byteArrayOutputStream);
 
 			outputStream.write(
 				_fixSystemBundleOSGiContent(
@@ -198,7 +190,7 @@ public class TargetPlatformIndexer implements Indexer {
 					"\nMissing system bundle URL: " + url);
 		}
 
-		int start = content.lastIndexOf(_ATTRIBUTE_PREFIX_OSGI_CONTENT, index);
+		int start = content.indexOf(_ATTRIBUTE_PREFIX_OSGI_CONTENT, index);
 
 		if (start == -1) {
 			throw new IllegalStateException(
@@ -209,7 +201,7 @@ public class TargetPlatformIndexer implements Indexer {
 
 		start += _ATTRIBUTE_PREFIX_OSGI_CONTENT.length();
 
-		int end = content.lastIndexOf("\"/>", index);
+		int end = content.indexOf("\"/>", start);
 
 		String prefix = content.substring(0, start);
 
@@ -219,9 +211,7 @@ public class TargetPlatformIndexer implements Indexer {
 
 		index = newContent.indexOf(url);
 
-		index += url.length() + 3;
-
-		start = newContent.indexOf(_ATTRIBUTE_PREFIX_SIZE, index);
+		start = newContent.lastIndexOf(_ATTRIBUTE_PREFIX_SIZE, index);
 
 		if (start == -1) {
 			throw new IllegalStateException(
@@ -231,7 +221,7 @@ public class TargetPlatformIndexer implements Indexer {
 
 		start += _ATTRIBUTE_PREFIX_SIZE.length();
 
-		end = newContent.indexOf("\"/>", index);
+		end = newContent.indexOf("\" t", start);
 
 		prefix = newContent.substring(0, start);
 		postfix = newContent.substring(end);
@@ -388,7 +378,7 @@ public class TargetPlatformIndexer implements Indexer {
 		"<attribute name=\"osgi.content\" value=\"";
 
 	private static final String _ATTRIBUTE_PREFIX_SIZE =
-		"<attribute name=\"size\" type=\"Long\" value=\"";
+		"<attribute name=\"size\" value=\"";
 
 	private static final String _MAX_SUPPORTED_JAVA_SE_VERSION = "1.8.0";
 
@@ -405,7 +395,6 @@ public class TargetPlatformIndexer implements Indexer {
 			PackageNamespace.PACKAGE_NAMESPACE));
 
 	private final List<File> _additionalJarFiles;
-	private final Map<String, String> _config = new HashMap<>();
 	private final String[] _dirNames;
 	private final Parameters _packagesParamters = new Parameters();
 	private final List<Parameters> _parametersList = new ArrayList<>();

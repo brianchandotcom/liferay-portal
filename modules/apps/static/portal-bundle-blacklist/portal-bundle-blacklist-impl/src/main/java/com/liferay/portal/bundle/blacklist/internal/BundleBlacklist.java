@@ -14,6 +14,7 @@
 
 package com.liferay.portal.bundle.blacklist.internal;
 
+import com.liferay.osgi.util.bundle.BundleStartLevelUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,6 +29,7 @@ import java.io.OutputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -110,6 +112,8 @@ public class BundleBlacklist {
 		Iterator<Map.Entry<String, UninstalledBundleData>> iterator =
 			entrySet.iterator();
 
+		Map<Bundle, Integer> installedBundles = new HashMap<>();
+
 		while (iterator.hasNext()) {
 			Map.Entry<String, UninstalledBundleData> entry = iterator.next();
 
@@ -120,15 +124,25 @@ public class BundleBlacklist {
 					_log.info("Reinstalling bundle " + symbolicName);
 				}
 
-				BundleUtil.reinstallBundle(
-					frameworkWiring, entry.getValue(), bundleContext,
+				UninstalledBundleData uninstalledBundleData = entry.getValue();
+
+				Bundle installedBundle = BundleUtil.reinstallBundle(
+					frameworkWiring, uninstalledBundleData, bundleContext,
 					_lpkgDeployer);
+
+				if (installedBundle != null) {
+					installedBundles.put(
+						installedBundle, uninstalledBundleData.getStartLevel());
+				}
 
 				iterator.remove();
 
 				_removeFromBlacklistFile(symbolicName);
 			}
 		}
+
+		BundleStartLevelUtil.setStartLevelAndStart(
+			installedBundles, bundleContext);
 	}
 
 	private void _addToBlacklistFile(

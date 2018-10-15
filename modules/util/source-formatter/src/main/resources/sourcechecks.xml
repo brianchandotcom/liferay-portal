@@ -89,6 +89,7 @@
 		<check name="GradleExportedPackageDependenciesCheck" />
 		<check name="GradleImportsCheck" />
 		<check name="GradleIndentationCheck" />
+		<check name="GradleJavaVersionCheck" />
 		<check name="GradlePropertiesCheck" />
 		<check name="GradleProvidedDependenciesCheck" />
 		<check name="GradleTaskCreationCheck" />

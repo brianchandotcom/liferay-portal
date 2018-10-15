@@ -141,16 +141,6 @@ public class LiferayDynamicCapability
 
 	}
 
-	private DynamicCapabilitiesRepositoryEventRegistryWrapper
-		_getRepositoryEventRegistry(Capability capability) {
-
-		return _dynamicCapabilitiesRepositoryEventRegistryWrapperMap.
-			computeIfAbsent(
-				capability,
-				key -> new DynamicCapabilitiesRepositoryEventRegistryWrapper(
-					capability));
-	}
-
 	private void _registerRepositoryEventListeners() {
 		for (Capability capability : _dynamicCapabilities) {
 			if (capability instanceof RepositoryEventAware) {
@@ -158,7 +148,8 @@ public class LiferayDynamicCapability
 					(RepositoryEventAware)capability;
 
 				repositoryEventAware.registerRepositoryEventListeners(
-					_getRepositoryEventRegistry(capability));
+					new DynamicCapabilitiesRepositoryEventRegistryWrapper(
+						capability));
 			}
 		}
 	}
@@ -235,10 +226,6 @@ public class LiferayDynamicCapability
 
 	private final ServiceTrackerList<Capability, Capability> _capabilities;
 	private final Set<Capability> _dynamicCapabilities = new HashSet<>();
-	private final Map
-		<Capability, DynamicCapabilitiesRepositoryEventRegistryWrapper>
-			_dynamicCapabilitiesRepositoryEventRegistryWrapperMap =
-				new HashMap<>();
 	private final Map<LocalRepositoryWrapper, LocalRepository>
 		_localRepositoriesMap = new HashMap<>();
 	private final Map<RepositoryWrapper, Repository> _repositoriesMap =

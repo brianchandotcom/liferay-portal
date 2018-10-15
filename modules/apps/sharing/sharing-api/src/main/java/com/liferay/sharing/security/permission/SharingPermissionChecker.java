@@ -20,41 +20,38 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import java.util.Collection;
 
 /**
- * Provides an interface that defines whether the user has permission to share
- * a resource to another user with sharing entry actions.
+ * Defines whether the user has permission to share a resource with another user
+ * via {@link SharingEntryAction}s.
  *
  * <p>
- * Tipically, implementations of this interface will map the sharing entry
- * actions with the resource actions and delegate the permission check to the
- * corresponding {@link ModelResourcePermission}.
+ * Implementations of this interface typically map the sharing entry actions
+ * with the resource actions, and delegate the permission check to the
+ * corresponding {@code
+ * com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission}.
  * </p>
  *
  * <p>
  * Implementations of this interface must be registered as OSGi components using
- * the service {@link SharingPermissionChecker}. The
- * <code>model.class.name</code> property defines the class name that the
- * permission checker can handle.
+ * the service {@code SharingPermissionChecker}. The {@code model.class.name}
+ * property defines the class name that the permission checker can handle.
  * </p>
  *
  * @author Sergio González
- * @review
  */
 public interface SharingPermissionChecker {
 
 	/**
-	 * Returns <code>true</code> if the user has permission to share a resource
-	 * to another user with sharing entry actions.
+	 * Returns {@code true} if the user has permission to share the resource
+	 * with another user via sharing entry actions.
 	 *
 	 * @param  permissionChecker the permission checker of the user sharing the
 	 *         resource
-	 * @param  classPK the primary key of the shared resource
-	 * @param  groupId the primary key of the group containing the shared
-	 *         resource
-	 * @param  sharingEntryActions a collection of sharing entry actions to
-	 *         be checked for permission
-	 * @return <code>true</code> if the user has permission to share the
-	 *         resource with sharing entry actions; <code>false</code>
-	 *         otherwise
+	 * @param  classPK the class primary key of the shared resource
+	 * @param  groupId the primary key of the shared resource's group
+	 * @param  sharingEntryActions the collection of sharing entry actions to
+	 *         check for permission
+	 * @return {@code true} if the user has permission to share the resource via
+	 *         sharing entry actions; {@code false} otherwise
 	 */
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, long classPK, long groupId,

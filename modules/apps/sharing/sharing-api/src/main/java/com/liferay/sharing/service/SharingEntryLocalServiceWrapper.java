@@ -34,25 +34,23 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Adds a sharing entry in the database if it does not exist or it updates
-	* it if it exists.
+	* Adds a new sharing entry in the database or updates an existing one.
 	*
-	* @param fromUserId the user id sharing the resource
-	* @param toUserId the user id whose resource was shared
-	* @param classNameId the class name ID of the resource being shared
-	* @param classPK the primary key of the resource being shared
-	* @param groupId the primary key of the group containing the resource
-	being shared
-	* @param shareable whether the to user id can share the resource as well
+	* @param fromUserId the ID of the user sharing the resource
+	* @param toUserId the ID of the user the resource is shared with
+	* @param classNameId the resource's class name ID
+	* @param classPK the class primary key of the resource
+	* @param groupId the primary key of the resource's group
+	* @param shareable whether the user specified by {@code toUserId} can
+	share the resource
 	* @param sharingEntryActions the sharing entry actions
 	* @param expirationDate the date when the sharing entry expires
+	* @param serviceContext the service context
 	* @return the sharing entry
-	* @param serviceContext the service context to be applied
-	* @throws PortalException if sharing entry actions are invalid (it is
-	empty, it doesn't contain {@link SharingEntryAction#VIEW,} or
-	it contains a <code>null</code> value) or from user id and to
-	user id are the same or the expiration date is a value in the
-	past.
+	* @throws PortalException if the sharing entry actions are invalid (e.g.,
+	empty, don't contain {@code SharingEntryAction#VIEW}, or contain
+	a {@code null} value), if the to/from user IDs are the same, or
+	if the expiration date is a past value
 	*/
 	@Override
 	public com.liferay.sharing.model.SharingEntry addOrUpdateSharingEntry(
@@ -68,25 +66,24 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Adds a sharing entry in the database.
+	* Adds a new sharing entry in the database.
 	*
-	* @param fromUserId the user id sharing the resource
-	* @param toUserId the user id whose resource was shared
-	* @param classNameId the class name ID of the resource being shared
-	* @param classPK the primary key of the resource being shared
-	* @param groupId the primary key of the group containing the resource
-	being shared
-	* @param shareable whether the to user id can share the resource as well
+	* @param fromUserId the ID of the user sharing the resource
+	* @param toUserId the ID of the user the resource is shared with
+	* @param classNameId the resource's class name ID
+	* @param classPK the class primary key of the resource
+	* @param groupId the primary key of the resource's group
+	* @param shareable whether the user specified by {@code toUserId} can
+	share the resource
 	* @param sharingEntryActions the sharing entry actions
 	* @param expirationDate the date when the sharing entry expires
+	* @param serviceContext the service context
 	* @return the sharing entry
-	* @param serviceContext the service context to be applied
-	* @throws PortalException if there is already a sharing entry for the same
-	from user id, to user id and resource or the sharing entry
-	actions are invalid (it is empty, it doesn't contain
-	{@link SharingEntryAction#VIEW,} or it contains a
-	<code>null</code> value) or from user id and to user id are the
-	same or the expiration date is a value in the past.
+	* @throws PortalException if a sharing entry already exists for the to/from
+	user IDs, if the sharing entry actions are invalid (e.g., empty,
+	don't contain {@code SharingEntryAction#VIEW}, or contain a
+	{@code null} value), if the to/from user IDs are the same, or if
+	the expiration date is a past value
 	*/
 	@Override
 	public com.liferay.sharing.model.SharingEntry addSharingEntry(
@@ -126,7 +123,7 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Deletes all sharing entries whose expiration date is before the current
+	* Deletes the sharing entries whose expiration date is before the current
 	* date.
 	*/
 	@Override
@@ -135,7 +132,9 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Deletes all sharing entries that belong to a group.
+	* Deletes the group's sharing entries.
+	*
+	* @param groupId the group's ID
 	*/
 	@Override
 	public void deleteGroupSharingEntries(long groupId) {
@@ -153,10 +152,11 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Deletes all sharing entries of a resource.
+	* Deletes the resource's sharing entries. The class name ID and class
+	* primary key identify the resource's type and instance, respectively.
 	*
-	* @param classNameId the class name ID of the resource
-	* @param classPK the primary key of the resource
+	* @param classNameId the resource's class name ID
+	* @param classPK the class primary key of the resource
 	*/
 	@Override
 	public void deleteSharingEntries(long classNameId, long classPK) {
@@ -178,10 +178,14 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Deletes the sharing entry of a user to another user for a resource.
+	* Deletes the sharing entry for the resource and users. The class name ID
+	* and class primary key identify the resource's type and instance,
+	* respectively.
 	*
-	* @param classNameId the class name ID of the resource
-	* @param classPK the primary key of the resource
+	* @param fromUserId the ID of the user sharing the resource
+	* @param toUserId the ID of the user the resource is shared with
+	* @param classNameId the resource's class name ID
+	* @param classPK the class primary key of the resource
 	* @return the deleted sharing entry
 	*/
 	@Override
@@ -205,9 +209,9 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Deletes all sharing entries shared to a user.
+	* Deletes the sharing entries for resources shared with the user.
 	*
-	* @param toUserId the user id who was shared the resource
+	* @param toUserId the user's ID
 	*/
 	@Override
 	public void deleteToUserSharingEntries(long toUserId) {
@@ -331,9 +335,9 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Returns a list of all the sharing entries that has been shared by a user.
+	* Returns the list of sharing entries for resources shared by the user.
 	*
-	* @param fromUserId the user id sharing the resource
+	* @param fromUserId the user's ID
 	* @return the list of sharing entries
 	*/
 	@Override
@@ -343,11 +347,12 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Returns a list of all the sharing entries of a resource that has been
-	* shared by a user
+	* Returns the list of sharing entries for the resource shared by the user.
+	* The class name ID and class primary key identify the resource's type and
+	* instance, respectively.
 	*
-	* @param fromUserId the user id sharing the resource
-	* @param classNameId the class name ID of the resource
+	* @param fromUserId the user's ID
+	* @param classNameId the resource's class name ID
 	* @param classPK the primary key of the resource
 	* @return the list of sharing entries
 	*/
@@ -359,14 +364,15 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Returns a range of all the sharing entries of a resource that has been
-	* shared by a user
+	* Returns the range of sharing entries for the resource shared by the user.
+	* The class name ID and class primary key identify the resource's type and
+	* instance, respectively.
 	*
-	* @param fromUserId the user id sharing the resource
-	* @param classNameId the class name ID of the resource
+	* @param fromUserId the user's ID
+	* @param classNameId the resource's class name ID
 	* @param classPK the primary key of the resource
-	* @param start the lower bound of the range of results
-	* @param end the upper bound of the range of results (not inclusive)
+	* @param start the range's lower bound
+	* @param end the range's upper bound (not inclusive)
 	* @return the range of sharing entries
 	*/
 	@Override
@@ -377,9 +383,9 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Returns the number of sharing entries that have been shared by a user.
+	* Returns the number of sharing entries for resources shared by the user.
 	*
-	* @param fromUserId the user id sharing the resource
+	* @param fromUserId the user's ID
 	* @return the number of sharing entries
 	*/
 	@Override
@@ -388,12 +394,13 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Returns the number of sharing entries of a resource that have been shared
-	* by a user.
+	* Returns the number of sharing entries for the resource shared by the
+	* user. The class name ID and class primary key identify the resource's
+	* type and instance, respectively.
 	*
-	* @param fromUserId the user id sharing the resource
-	* @param classNameId the class name ID of the resource
-	* @param classPK the primary key of the resource
+	* @param fromUserId the user's ID
+	* @param classNameId the resource's class name ID
+	* @param classPK the class primary key of the resource
 	* @return the number of sharing entries
 	*/
 	@Override
@@ -404,10 +411,10 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Returns a list of all the sharing entries of a group.
+	* Returns the the group's sharing entries.
 	*
 	* @param groupId the primary key of the group
-	* @return the list of sharing entries
+	* @return the sharing entries
 	*/
 	@Override
 	public java.util.List<com.liferay.sharing.model.SharingEntry> getGroupSharingEntries(
@@ -455,11 +462,12 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Returns a list of all the sharing entries of a resource.
+	* Returns the resource's sharing entries. The class name ID and class
+	* primary key identify the resource's type and instance, respectively.
 	*
-	* @param classNameId the class name ID of the resource
-	* @param classPK the primary key of the resource
-	* @return the list of sharing entries
+	* @param classNameId the resource's class name ID
+	* @param classPK the class primary key of the resource
+	* @return the sharing entries
 	*/
 	@Override
 	public java.util.List<com.liferay.sharing.model.SharingEntry> getSharingEntries(
@@ -468,13 +476,14 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Returns a list of all the sharing entries of a resource that has been
-	* shared to a user.
+	* Returns the sharing entries for the resource shared with the user. The
+	* class name ID and class primary key identify the resource's type and
+	* instance, respectively.
 	*
-	* @param toUserId the user id that has been shared the resource
-	* @param classNameId the class name ID of the resource
-	* @param classPK the primary key of the resource
-	* @return the list of sharing entries
+	* @param toUserId the user's ID
+	* @param classNameId the resource's class name ID
+	* @param classPK the class primary key of the resource
+	* @return the sharing entries
 	*/
 	@Override
 	public java.util.List<com.liferay.sharing.model.SharingEntry> getSharingEntries(
@@ -556,13 +565,14 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Returns a list of sharing entries of a specific class name id and class
-	* pk that has been shared to a user.
+	* Returns the sharing entries for the resource shared with the user. The
+	* class name ID and class primary key identify the resource's type and
+	* instance, respectively.
 	*
-	* @param toUserId the user id that has been shared the resource
-	* @param classNameId the class name ID of the shared resource
-	* @param classPK the class pk of the shared resource
-	* @return the list of sharing entries
+	* @param toUserId the user's ID
+	* @param classNameId the resource's class name ID
+	* @param classPK the class primary key of the resource
+	* @return the sharing entries
 	*/
 	@Override
 	public java.util.List<com.liferay.sharing.model.SharingEntry> getToUserClassPKSharingEntries(
@@ -572,10 +582,10 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Returns a list of all the sharing entries that has been shared to a user.
+	* Returns the list of sharing entries for resources shared with the user.
 	*
-	* @param toUserId the user id that has been shared the resource
-	* @return the range of sharing entries
+	* @param toUserId the user's ID
+	* @return the list of sharing entries
 	*/
 	@Override
 	public java.util.List<com.liferay.sharing.model.SharingEntry> getToUserSharingEntries(
@@ -584,10 +594,11 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Returns a range of all the sharing entries that has been shared to a
-	* user.
+	* Returns the range of sharing entries for resources shared with the user.
 	*
-	* @param toUserId the user id that has been shared the resource
+	* @param toUserId the user's ID
+	* @param start the range's lower bound
+	* @param end the range's upper bound (not inclusive)
 	* @return the range of sharing entries
 	*/
 	@Override
@@ -598,11 +609,11 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Returns a list of sharing entries of a specific class name id that has
-	* been shared to a user.
+	* Returns the list of sharing entries for the type of resource shared with
+	* the user. The class name ID identifies the resource type.
 	*
-	* @param toUserId the user id that has been shared the resource
-	* @param classNameId the class name ID of the shared resource
+	* @param toUserId the user's ID
+	* @param classNameId the class name ID of the resources
 	* @return the list of sharing entries
 	*/
 	@Override
@@ -613,9 +624,9 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Returns the number of sharing entries that have been shared to a user.
+	* Returns the number of sharing entries for resources shared with the user.
 	*
-	* @param toUserId the user id who was shared the resource
+	* @param toUserId the user's ID
 	* @return the number of sharing entries
 	*/
 	@Override
@@ -624,13 +635,17 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Returns a list of all the sharing entries of a resource that has been
-	* shared to a user returning at most one per shared model
+	* Returns the ordered range of sharing entries for the type of resource
+	* shared with the user. Because it's possible for several users to share
+	* the same resource with the user, this method returns only one sharing
+	* entry per resource. The class name ID identifies the resource type.
 	*
-	* @param toUserId the user id
-	* @param classNameId the classNameId to filter by
-	* @param orderByComparator the comparator to order the sharing entries
-	* @return the list of sharing entries
+	* @param toUserId the user's ID
+	* @param classNameId the class name ID of the resources
+	* @param start the ordered range's lower bound
+	* @param end the ordered range's upper bound (not inclusive)
+	* @param orderByComparator the comparator that orders the sharing entries
+	* @return the ordered range of sharing entries
 	*/
 	@Override
 	public java.util.List<com.liferay.sharing.model.SharingEntry> getUniqueToUserSharingEntries(
@@ -641,11 +656,13 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Returns the number of sharing entries of a resource that have been shared
-	* by to user returning at most one per shared model.
+	* Returns the number of sharing entries for the type of resource shared
+	* with the user. Because it's possible for several users to share the same
+	* resource with the user, this method counts only one sharing entry per
+	* resource. The class name ID identifies the resource type.
 	*
-	* @param toUserId the user id
-	* @param classNameId the classNameId to filter by
+	* @param toUserId the user's ID
+	* @param classNameId the class name ID of the resources
 	* @return the number of sharing entries
 	*/
 	@Override
@@ -656,17 +673,18 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Returns <code>true</code> if the to user id has been shared a resource
-	* with a sharing entry action and, in addition, he can share the resource
-	* as well.
+	* Returns {@code true} if the resource with the sharing entry action has
+	* been shared with a user who can also share that resource. The class name
+	* ID and class primary key identify the resource's type and instance,
+	* respectively.
 	*
-	* @param toUserId the user id that has been shared the resource
-	* @param classNameId the class name ID of the shared resource
-	* @param classPK the primary key of the shared resource
+	* @param toUserId the user's ID
+	* @param classNameId the resource's class name ID
+	* @param classPK the class primary key of the shared resource
 	* @param sharingEntryAction the sharing entry action
-	* @return <code>true</code> if the user has been shared a resource with a
-	sharing entry action and he can, in additino, share the resource
-	as well; <code>false</code> otherwise
+	* @return {@code true} if the resource with the sharing entry action has
+	been shared with a user who can also share that resource; {@code
+	false} otherwise
 	*/
 	@Override
 	public boolean hasShareableSharingPermission(long toUserId,
@@ -677,15 +695,16 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Returns <code>true</code> if the to user id has been shared a resource
-	* with a sharing entry action
+	* Returns {@code true} if the resource with the sharing entry action has
+	* been shared with the user. The class name ID and class primary key
+	* identify the resource's type and instance, respectively.
 	*
-	* @param toUserId the user id that has been shared the resource
-	* @param classNameId the class name ID of the shared resource
-	* @param classPK the primary key of the shared resource
+	* @param toUserId the user's ID
+	* @param classNameId the resource's class name ID
+	* @param classPK the class primary key of the shared resource
 	* @param sharingEntryAction the sharing entry action
-	* @return <code>true</code> if the user has been shared a resource with a
-	sharing entry action; <code>false</code> otherwise
+	* @return {@code true} if the resource with the sharing entry action has
+	been shared with the user; {@code false} otherwise
 	*/
 	@Override
 	public boolean hasSharingPermission(long toUserId, long classNameId,
@@ -696,13 +715,12 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Returns <code>true</code> if the sharing entry has certain sharing entry
-	* action
+	* Returns {@code true} if the sharing entry has the sharing entry action.
 	*
 	* @param sharingEntry the sharing entry
 	* @param sharingEntryAction the sharing entry action
-	* @return <code>true</code> if the sharing entry has the sharing entry
-	action; <code>false</code> otherwise
+	* @return {@code true} if the sharing entry has the sharing entry action;
+	{@code false} otherwise
 	*/
 	@Override
 	public boolean hasSharingPermission(
@@ -713,19 +731,19 @@ public class SharingEntryLocalServiceWrapper implements SharingEntryLocalService
 	}
 
 	/**
-	* Updates a sharing entry in the database.
+	* Updates the sharing entry in the database.
 	*
 	* @param sharingEntryId the primary key of the sharing entry
 	* @param sharingEntryActions the sharing entry actions
-	* @param shareable whether the to user id can share the resource as well
+	* @param shareable whether the user the resource is shared with can also
+	share it
 	* @param expirationDate the date when the sharing entry expires
+	* @param serviceContext the service context
 	* @return the sharing entry
-	* @param serviceContext the service context to be applied
-	* @throws PortalException if the sharing entry does not exist or sharing
-	entry actions are invalid (it is empty, it doesn't contain
-	{@link SharingEntryAction#VIEW,} or it contains a
-	<code>null</code> value) or the expiration date is a value in the
-	past.
+	* @throws PortalException if the sharing entry does not exist, if the
+	sharing entry actions are invalid (e.g., empty, don't contain
+	{@code SharingEntryAction#VIEW}, or contain a {@code null}
+	value), or if the expiration date is a past value
 	*/
 	@Override
 	public com.liferay.sharing.model.SharingEntry updateSharingEntry(

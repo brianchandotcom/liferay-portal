@@ -17,26 +17,23 @@ package com.liferay.sharing.security.permission;
 import java.util.Objects;
 
 /**
- * Provides the actions that a user can perform on a resource that has been
- * shared with him.
- *
- * Each sharing entry action is composed of an actionId that is used to identify
- * the sharing entry action and a bitwiseValue that is used to perform
- * permission checks.
+ * Provides the actions that users can perform on resources shared with them.
+ * Each sharing entry action is composed of an ID and a bitwise value used to
+ * check permissions.
  *
  * @author Sergio González
- * @review
  */
 public enum SharingEntryAction {
 
 	ADD_DISCUSSION("ADD_DISCUSSION", 4), UPDATE("UPDATE", 2), VIEW("VIEW", 1);
 
 	/**
-	 * Returns <code>true</code> if the action id matches a valid sharing entry
-	 * action.
+	 * Returns {@code true} if the sharing entry action's ID matches a valid
+	 * sharing entry action.
 	 *
-	 * @param  actionId the action id of the sharing entry action to be checked
-	 * @return <code>true</code> if the action id matches a valid sharing entry action
+	 * @param  actionId the sharing entry action's ID
+	 * @return {@code true} if the sharing entry action's ID matches a valid
+	 *         sharing entry action; {@code false} otherwise
 	 */
 	public static boolean isSupportedActionId(String actionId) {
 		for (SharingEntryAction sharingEntryAction :
@@ -51,10 +48,10 @@ public enum SharingEntryAction {
 	}
 
 	/**
-	 * Returns a sharing entry action parsed from the action id.
+	 * Returns the sharing entry action parsed from a sharing entry action's ID.
 	 *
-	 * @param  actionId the action id of the sharing entry action to be parsed
-	 * @return a {@link SharingEntryAction} with the action id
+	 * @param  actionId the sharing entry action's ID
+	 * @return the sharing entry action
 	 */
 	public static SharingEntryAction parseFromActionId(String actionId) {
 		if (Objects.equals(ADD_DISCUSSION.getActionId(), actionId)) {
@@ -71,10 +68,10 @@ public enum SharingEntryAction {
 	}
 
 	/**
-	 * Returns a sharing entry action parsed from the bitwise value.
+	 * Returns the sharing entry action parsed from the bitwise value.
 	 *
-	 * @param  bitwiseValue the bitwise value of the sharing entry action to be parsed
-	 * @return a {@link SharingEntryAction} with the bitwise value
+	 * @param  bitwiseValue the bitwise value
+	 * @return the sharing entry action
 	 */
 	public static SharingEntryAction parseFromBitwiseValue(long bitwiseValue) {
 		if (Objects.equals(ADD_DISCUSSION.getBitwiseValue(), bitwiseValue)) {
@@ -92,18 +89,18 @@ public enum SharingEntryAction {
 	}
 
 	/**
-	 * Returns the action id of the sharing entry action.
+	 * Returns the sharing entry action's ID.
 	 *
-	 * @return the action id of the sharing entry action
+	 * @return the sharing entry action's ID
 	 */
 	public String getActionId() {
 		return _actionId;
 	}
 
 	/**
-	 * Returns the bitwise value of the sharing entry action.
+	 * Returns the sharing entry action's bitwise value.
 	 *
-	 * @return the bitwise value of the sharing entry action
+	 * @return the bitwise value
 	 */
 	public long getBitwiseValue() {
 		return _bitwiseValue;

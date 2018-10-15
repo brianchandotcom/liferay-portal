@@ -24,12 +24,11 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Extends inline permission sql query to also consider sharing entries when
- * returning results for
- * {@link com.liferay.document.library.kernel.model.DLFileEntry}.
+ * Extends inline permission SQL queries to also consider sharing entries when
+ * returning results for {@code
+ * com.liferay.document.library.kernel.model.DLFileEntry}.
  *
  * @author Sergio González
- * @review
  */
 @Component(
 	immediate = true,

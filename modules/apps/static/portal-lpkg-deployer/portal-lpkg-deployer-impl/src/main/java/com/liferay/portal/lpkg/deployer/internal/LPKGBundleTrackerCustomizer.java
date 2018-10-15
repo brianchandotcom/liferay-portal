@@ -50,6 +50,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -160,7 +161,7 @@ public class LPKGBundleTrackerCustomizer
 		File file = new File(bundle.getLocation());
 
 		try (ZipFile zipFile = new ZipFile(file)) {
-			List<Bundle> installedBundles = new ArrayList<>();
+			Map<Bundle, Integer> installedBundles = new HashMap<>();
 
 			Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
 
@@ -277,15 +278,13 @@ public class LPKGBundleTrackerCustomizer
 
 				bundles.add(newBundle);
 
-				installedBundles.add(newBundle);
+				installedBundles.put(
+					newBundle,
+					PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL);
 			}
 
-			for (Bundle installedBundle : installedBundles) {
-				BundleStartLevelUtil.setStartLevelAndStart(
-					installedBundle,
-					PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL,
-					_bundleContext);
-			}
+			BundleStartLevelUtil.setStartLevelAndStart(
+				installedBundles, _bundleContext);
 		}
 		catch (Throwable t) {
 			_log.error("Rollback bundle installation for " + bundles, t);

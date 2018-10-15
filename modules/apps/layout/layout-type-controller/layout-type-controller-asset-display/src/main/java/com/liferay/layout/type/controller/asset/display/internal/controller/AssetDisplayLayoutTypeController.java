@@ -14,7 +14,6 @@
 
 package com.liferay.layout.type.controller.asset.display.internal.controller;
 
-import com.liferay.asset.display.contributor.constants.AssetDisplayWebKeys;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
@@ -38,6 +37,7 @@ import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.ArrayList;
@@ -83,7 +83,7 @@ public class AssetDisplayLayoutTypeController
 		throws Exception {
 
 		AssetEntry assetEntry = (AssetEntry)request.getAttribute(
-			AssetDisplayWebKeys.ASSET_ENTRY);
+			WebKeys.LAYOUT_ASSET_ENTRY);
 
 		if (assetEntry != null) {
 			long layoutPageTemplateEntryId = _getLayoutPageTemplateEntryId(

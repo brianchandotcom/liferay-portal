@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Locale;
@@ -78,7 +79,7 @@ public class AssetDisplayPageFriendlyURLResolver
 		request.setAttribute(
 			AssetDisplayWebKeys.ASSET_DISPLAY_CONTRIBUTOR,
 			assetDisplayContributor);
-		request.setAttribute(AssetDisplayWebKeys.ASSET_ENTRY, assetEntry);
+		request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 
 		Locale locale = _portal.getLocale(request);
 

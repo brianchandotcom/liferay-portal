@@ -133,12 +133,13 @@ public class ViewJournalSourcePortletConfigurationIcon
 		long classNameId = ParamUtil.getLong(request, "classNameId");
 		long classPK = ParamUtil.getLong(request, "classPK");
 		String articleId = ParamUtil.getString(request, "articleId");
-		int status = ParamUtil.getInteger(
-			request, "status", WorkflowConstants.STATUS_ANY);
 
 		JournalArticle article = null;
 
 		if (Validator.isNotNull(articleId)) {
+			int status = ParamUtil.getInteger(
+				request, "status", WorkflowConstants.STATUS_ANY);
+
 			article = _journalArticleLocalService.fetchLatestArticle(
 				groupId, articleId, status);
 		}

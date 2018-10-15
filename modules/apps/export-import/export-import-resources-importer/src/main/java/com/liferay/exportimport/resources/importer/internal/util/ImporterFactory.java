@@ -107,19 +107,17 @@ public class ImporterFactory {
 		if ((privateLARURL != null) || (publicLARURL != null)) {
 			LARImporter larImporter = getLARImporter();
 
-			URLConnection privateLARURLConnection = null;
-
 			if (privateLARURL != null) {
-				privateLARURLConnection = privateLARURL.openConnection();
+				URLConnection privateLARURLConnection =
+					privateLARURL.openConnection();
 
 				larImporter.setPrivateLARInputStream(
 					privateLARURLConnection.getInputStream());
 			}
 
-			URLConnection publicLARURLConnection = null;
-
 			if (publicLARURL != null) {
-				publicLARURLConnection = publicLARURL.openConnection();
+				URLConnection publicLARURLConnection =
+					publicLARURL.openConnection();
 
 				larImporter.setPublicLARInputStream(
 					publicLARURLConnection.getInputStream());

@@ -47,7 +47,7 @@ public class AssetDisplayLayoutTypeControllerDisplayContext {
 				AssetDisplayWebKeys.ASSET_DISPLAY_CONTRIBUTOR);
 
 		AssetEntry assetEntry = (AssetEntry)_request.getAttribute(
-			AssetDisplayWebKeys.ASSET_ENTRY);
+			WebKeys.LAYOUT_ASSET_ENTRY);
 
 		return assetDisplayContributor.getAssetDisplayFieldsValues(
 			assetEntry, themeDisplay.getLocale());

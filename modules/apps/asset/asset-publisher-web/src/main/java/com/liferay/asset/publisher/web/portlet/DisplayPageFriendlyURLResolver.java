@@ -413,7 +413,7 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 		request.setAttribute(
 			AssetDisplayWebKeys.ASSET_DISPLAY_CONTRIBUTOR,
 			assetDisplayContributor);
-		request.setAttribute(AssetDisplayWebKeys.ASSET_ENTRY, assetEntry);
+		request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 
 		Locale locale = _portal.getLocale(request);
 

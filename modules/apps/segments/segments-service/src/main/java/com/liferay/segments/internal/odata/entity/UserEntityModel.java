@@ -75,7 +75,9 @@ public class UserEntityModel implements EntityModel {
 		new EntityField(
 			"screenName", EntityField.Type.STRING,
 			locale -> Field.getSortableFieldName("screenName"),
-			locale -> "screenName")
+			locale -> "screenName"),
+		new EntityField(
+			"userName", EntityField.Type.STRING, locale -> "userName")
 	).collect(
 		Collectors.toMap(EntityField::getName, Function.identity())
 	);

@@ -19,7 +19,10 @@ import java.lang.reflect.Method;
 /**
  * @author Brian Wing Shun Chan
  * @author Wesley Gong
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+ *             com.liferay.portal.kernel.transaction.TransactionInvoker}
  */
+@Deprecated
 public interface ServiceBeanMethodInvocationFactory {
 
 	public Object proceed(

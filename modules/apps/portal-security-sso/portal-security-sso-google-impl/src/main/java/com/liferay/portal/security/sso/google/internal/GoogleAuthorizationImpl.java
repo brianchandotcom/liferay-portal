@@ -36,9 +36,11 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ServiceBeanMethodInvocationFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -47,8 +49,6 @@ import com.liferay.portal.security.sso.google.GoogleAuthorization;
 import com.liferay.portal.security.sso.google.configuration.GoogleAuthorizationConfiguration;
 import com.liferay.portal.security.sso.google.constants.GoogleConstants;
 import com.liferay.portal.security.sso.google.internal.constants.GoogleWebKeys;
-
-import java.lang.reflect.Method;
 
 import java.util.Calendar;
 import java.util.List;
@@ -70,19 +70,6 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, service = GoogleAuthorization.class
 )
 public class GoogleAuthorizationImpl implements GoogleAuthorization {
-
-	public GoogleAuthorizationImpl() {
-		try {
-			Class<?> clazz = getClass();
-
-			_doAddOrUpdateUser = clazz.getDeclaredMethod(
-				"doAddOrUpdateUser", HttpSession.class, long.class,
-				Userinfoplus.class);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-	}
 
 	@Override
 	public User addOrUpdateUser(
@@ -112,12 +99,14 @@ public class GoogleAuthorizationImpl implements GoogleAuthorization {
 			return null;
 		}
 
-		ServiceBeanMethodInvocationFactoryUtil.proceed(
-			this, GoogleAuthorizationImpl.class, _doAddOrUpdateUser,
-			new Object[] {session, companyId, userinfoplus},
-			new String[] {"transactionAdvice"});
-
-		return doAddOrUpdateUser(session, companyId, userinfoplus);
+		try {
+			return TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> doAddOrUpdateUser(session, companyId, userinfoplus));
+		}
+		catch (Throwable t) {
+			throw new Exception(t);
+		}
 	}
 
 	@Override
@@ -386,10 +375,12 @@ public class GoogleAuthorizationImpl implements GoogleAuthorization {
 
 	private static final String _ONLINE_ACCESS_TYPE = "online";
 
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	private final Method _doAddOrUpdateUser;
 
 	@Reference
 	private UserLocalService _userLocalService;

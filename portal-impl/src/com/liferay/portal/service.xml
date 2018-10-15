@@ -499,7 +499,7 @@
 			<finder-column name="liveGroupId" />
 			<finder-column name="groupKey" />
 		</finder>
-		<finder name="C_P_LikeN_S" return-type="Collection">
+		<finder db-index="false" name="C_P_LikeN_S" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="parentGroupId" />
 			<finder-column case-sensitive="false" comparator="LIKE" name="name" />

@@ -1,8 +1,5 @@
 apply plugin: "com.liferay.lang.merger"
 
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 dependencies {
 	compileInclude group: "com.joyent.manta", name: "java-manta-client", version: "2.7.1"
 	compileInclude group: "com.squareup.jnagmp", name: "bouncycastle-rsa", version: "1.1.0"

@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
+import com.liferay.portal.kernel.repository.event.RepositoryEventAware;
+import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -39,6 +41,9 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
 import java.io.File;
+
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -61,6 +66,33 @@ public class LiferayDynamicCapabilityTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testCallsCapabilityLocalRepositoryEventListeners()
+		throws Exception {
+
+		CountDownLatch addEventFiredLatch = new CountDownLatch(1);
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceRegistration<Capability> capabilityServiceRegistration =
+			registry.registerService(
+				Capability.class,
+				(TestRepositoryEventAwareCapability)repositoryEventRegistry ->
+					repositoryEventRegistry.registerRepositoryEventListener(
+						RepositoryEventType.Add.class, FileEntry.class,
+						fileEntry -> addEventFiredLatch.countDown()));
+
+		try {
+			_addRandomFileEntry(
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+			Assert.assertTrue(addEventFiredLatch.await(5, TimeUnit.SECONDS));
+		}
+		finally {
+			capabilityServiceRegistration.unregister();
+		}
 	}
 
 	@Test
@@ -132,6 +164,10 @@ public class LiferayDynamicCapabilityTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private interface TestRepositoryEventAwareCapability
+		extends Capability, RepositoryEventAware {
+	}
 
 	private interface TestRepositoryWrapperAwareCapability
 		extends Capability, RepositoryWrapperAware {

@@ -503,11 +503,10 @@ public class UserODataRetrieverTest {
 		_user1 = UserTestUtil.addUser(_group1.getGroupId());
 		_user2 = UserTestUtil.addUser(_group1.getGroupId());
 
-		String fullName = _user1.getContact().getFullName();
-
 		List<User> users = _userODataRetriever.getUsers(
 			_group1.getCompanyId(),
-			"(userName eq '" + StringUtil.toLowerCase(fullName) + "')",
+			"(userName eq '" + StringUtil.toLowerCase(_user1.getFullName()) +
+				"')",
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());

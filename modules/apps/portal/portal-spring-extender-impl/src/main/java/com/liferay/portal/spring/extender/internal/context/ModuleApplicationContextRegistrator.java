@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.service.configuration.configurator.ServiceConfigurator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.internal.bean.ApplicationContextServicePublisherUtil;
-import com.liferay.portal.spring.extender.internal.bundle.CompositeResourceLoaderBundle;
 import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
 import com.liferay.portal.spring.extender.internal.loader.ModuleResourceLoader;
 
@@ -58,10 +57,6 @@ public class ModuleApplicationContextRegistrator {
 
 	protected void start() throws Exception {
 		try {
-			Bundle compositeResourceLoaderBundle =
-				new CompositeResourceLoaderBundle(
-					_extendeeBundle, _extenderBundle);
-
 			ClassLoader classLoader = new BundleResolverClassLoader(
 				_extendeeBundle, _extenderBundle);
 
@@ -69,7 +64,7 @@ public class ModuleApplicationContextRegistrator {
 				StringPool.BLANK);
 
 			_configurableApplicationContext = new ModuleApplicationContext(
-				compositeResourceLoaderBundle, classLoader,
+				_extendeeBundle, classLoader,
 				StringUtil.split(
 					headers.get("Liferay-Spring-Context"), CharPool.COMMA));
 

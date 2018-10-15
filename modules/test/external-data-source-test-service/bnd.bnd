@@ -1,5 +1,11 @@
 Bundle-Name: Liferay External Data Source Test Service
 Bundle-SymbolicName: com.liferay.external.data.source.test.service
 Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.portal.dao.jdbc.spring,\
+	\
+	org.springframework.jdbc.datasource,\
+	\
+	*
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true

@@ -51,8 +51,6 @@ public class EditLayoutPageTemplateEntryMVCActionCommand
 		long layoutPageTemplateEntryId = ParamUtil.getLong(
 			actionRequest, "layoutPageTemplateEntryId");
 
-		long layoutPageTemplateCollectionId = ParamUtil.getLong(
-			actionRequest, "layoutPageTemplateCollectionId");
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -61,6 +59,9 @@ public class EditLayoutPageTemplateEntryMVCActionCommand
 		if (layoutPageTemplateEntryId <= 0) {
 
 			// Add layout page template entry
+
+			long layoutPageTemplateCollectionId = ParamUtil.getLong(
+				actionRequest, "layoutPageTemplateCollectionId");
 
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 				serviceContext.getScopeGroupId(),

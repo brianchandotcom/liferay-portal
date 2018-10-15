@@ -93,18 +93,18 @@ public class UpgradeKBAttachments extends UpgradeProcess {
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
-				long kbArticleId = rs.getLong("kbArticleId");
-				long resourcePrimKey = rs.getLong("resourcePrimKey");
 				long groupId = rs.getLong("groupId");
 				long companyId = rs.getLong("companyId");
-				long userId = rs.getLong("userId");
+
+				long classPK = rs.getLong("resourcePrimKey");
+
 				int status = rs.getInt("status");
 
-				long classPK = resourcePrimKey;
-
 				if (status != WorkflowConstants.STATUS_APPROVED) {
-					classPK = kbArticleId;
+					classPK = rs.getLong("kbArticleId");
 				}
+
+				long userId = rs.getLong("userId");
 
 				updateAttachments(companyId, groupId, classPK, userId);
 			}

@@ -234,18 +234,19 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			actionRequest, "resourceClassNameId");
 		long resourcePrimKey = ParamUtil.getLong(
 			actionRequest, "resourcePrimKey");
-		long parentResourceClassNameId = ParamUtil.getLong(
-			actionRequest, "parentResourceClassNameId",
-			portal.getClassNameId(KBFolderConstants.getClassName()));
 		long parentResourcePrimKey = ParamUtil.getLong(
 			actionRequest, "parentResourcePrimKey",
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-		double priority = ParamUtil.getDouble(actionRequest, "priority");
 
 		long kbArticleClassNameId = portal.getClassNameId(
 			KBArticleConstants.getClassName());
 
 		if (resourceClassNameId == kbArticleClassNameId) {
+			long parentResourceClassNameId = ParamUtil.getLong(
+				actionRequest, "parentResourceClassNameId",
+				portal.getClassNameId(KBFolderConstants.getClassName()));
+			double priority = ParamUtil.getDouble(actionRequest, "priority");
+
 			kbArticleService.moveKBArticle(
 				resourcePrimKey, parentResourceClassNameId,
 				parentResourcePrimKey, priority);
@@ -403,29 +404,18 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String portletId = portal.getPortletId(actionRequest);
-
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		long resourcePrimKey = ParamUtil.getLong(
 			actionRequest, "resourcePrimKey");
-		long parentResourceClassNameId = ParamUtil.getLong(
-			actionRequest, "parentResourceClassNameId",
-			portal.getClassNameId(KBFolderConstants.getClassName()));
-		long parentResourcePrimKey = ParamUtil.getLong(
-			actionRequest, "parentResourcePrimKey",
-			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		String title = ParamUtil.getString(actionRequest, "title");
-		String urlTitle = ParamUtil.getString(actionRequest, "urlTitle");
 		String content = ParamUtil.getString(actionRequest, "content");
 		String description = ParamUtil.getString(actionRequest, "description");
 		String sourceURL = ParamUtil.getString(actionRequest, "sourceURL");
 		String[] sections = actionRequest.getParameterValues("sections");
 		String[] selectedFileNames = ParamUtil.getParameterValues(
 			actionRequest, "selectedFileName");
-		long[] removeFileEntryIds = ParamUtil.getLongValues(
-			actionRequest, "removeFileEntryIds");
 
 		KBArticle kbArticle = null;
 
@@ -433,6 +423,15 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			KBArticle.class.getName(), actionRequest);
 
 		if (cmd.equals(Constants.ADD)) {
+			String portletId = portal.getPortletId(actionRequest);
+			long parentResourceClassNameId = ParamUtil.getLong(
+				actionRequest, "parentResourceClassNameId",
+				portal.getClassNameId(KBFolderConstants.getClassName()));
+			long parentResourcePrimKey = ParamUtil.getLong(
+				actionRequest, "parentResourcePrimKey",
+				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			String urlTitle = ParamUtil.getString(actionRequest, "urlTitle");
+
 			kbArticle = kbArticleService.addKBArticle(
 				portletId, parentResourceClassNameId, parentResourcePrimKey,
 				title, urlTitle, content, description, sourceURL, sections,
@@ -446,6 +445,9 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 				resourcePrimKey, version, serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
+			long[] removeFileEntryIds = ParamUtil.getLongValues(
+				actionRequest, "removeFileEntryIds");
+
 			kbArticle = kbArticleService.updateKBArticle(
 				resourcePrimKey, title, content, description, sourceURL,
 				sections, selectedFileNames, removeFileEntryIds,
@@ -494,13 +496,9 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		long kbCommentId = ParamUtil.getLong(actionRequest, "kbCommentId");
-
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		String content = ParamUtil.getString(actionRequest, "content");
-		int status = ParamUtil.getInteger(
-			actionRequest, "status", KBCommentConstants.STATUS_ANY);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			KBComment.class.getName(), actionRequest);
@@ -511,6 +509,11 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 				serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
+			long kbCommentId = ParamUtil.getLong(actionRequest, "kbCommentId");
+
+			int status = ParamUtil.getInteger(
+				actionRequest, "status", KBCommentConstants.STATUS_ANY);
+
 			if (status == KBCommentConstants.STATUS_ANY) {
 				KBComment kbComment = kbCommentService.getKBComment(
 					kbCommentId);

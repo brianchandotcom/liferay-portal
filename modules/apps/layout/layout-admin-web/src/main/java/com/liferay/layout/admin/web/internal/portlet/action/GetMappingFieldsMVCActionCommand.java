@@ -55,11 +55,7 @@ public class GetMappingFieldsMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
-		long classTypeId = ParamUtil.getLong(actionRequest, "classTypeId");
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -68,6 +64,10 @@ public class GetMappingFieldsMVCActionCommand extends BaseMVCActionCommand {
 				_portal.getClassName(classNameId));
 
 		if (assetDisplayContributor != null) {
+			long classTypeId = ParamUtil.getLong(actionRequest, "classTypeId");
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
 			Set<AssetDisplayField> assetEntryFields =
 				assetDisplayContributor.getAssetDisplayFields(
 					classTypeId, themeDisplay.getLocale());

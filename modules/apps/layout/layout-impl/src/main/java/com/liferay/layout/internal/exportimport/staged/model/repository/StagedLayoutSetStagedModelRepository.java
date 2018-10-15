@@ -220,9 +220,6 @@ public class StagedLayoutSetStagedModelRepository
 
 		// Layout set prototype settings
 
-		boolean layoutSetPrototypeLinkEnabled = MapUtil.getBoolean(
-			portletDataContext.getParameterMap(),
-			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED);
 		boolean layoutSetPrototypeSettings = MapUtil.getBoolean(
 			portletDataContext.getParameterMap(),
 			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS);
@@ -232,6 +229,11 @@ public class StagedLayoutSetStagedModelRepository
 
 			existingLayoutSet.setLayoutSetPrototypeUuid(
 				stagedLayoutSet.getLayoutSetPrototypeUuid());
+
+			boolean layoutSetPrototypeLinkEnabled = MapUtil.getBoolean(
+				portletDataContext.getParameterMap(),
+				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED);
+
 			existingLayoutSet.setLayoutSetPrototypeLinkEnabled(
 				layoutSetPrototypeLinkEnabled);
 

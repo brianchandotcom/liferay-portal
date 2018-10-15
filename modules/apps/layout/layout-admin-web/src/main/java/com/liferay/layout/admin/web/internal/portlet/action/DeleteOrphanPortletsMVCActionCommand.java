@@ -47,11 +47,6 @@ public class DeleteOrphanPortletsMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long selPlid = ParamUtil.getLong(actionRequest, "selPlid");
-
 		String[] portletIds = null;
 
 		String portletId = ParamUtil.getString(actionRequest, "portletId");
@@ -64,6 +59,10 @@ public class DeleteOrphanPortletsMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		if (portletIds.length > 0) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+			long selPlid = ParamUtil.getLong(actionRequest, "selPlid");
+
 			_portletLocalService.deletePortlets(
 				themeDisplay.getCompanyId(), portletIds, selPlid);
 		}

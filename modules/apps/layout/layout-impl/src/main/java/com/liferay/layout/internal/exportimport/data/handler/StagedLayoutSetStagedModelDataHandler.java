@@ -725,9 +725,6 @@ public class StagedLayoutSetStagedModelDataHandler
 			portletDataContext.getGroupId(),
 			portletDataContext.isPrivateLayout());
 
-		UnicodeProperties importedSettingsProperties =
-			importedLayoutSet.getSettingsProperties();
-
 		UnicodeProperties settingsProperties =
 			layoutSet.getSettingsProperties();
 
@@ -735,6 +732,9 @@ public class StagedLayoutSetStagedModelDataHandler
 			Sites.MERGE_FAIL_FRIENDLY_URL_LAYOUTS);
 
 		if (Validator.isNull(mergeFailFriendlyURLLayouts)) {
+			UnicodeProperties importedSettingsProperties =
+				importedLayoutSet.getSettingsProperties();
+
 			boolean showSearchHeader = GetterUtil.getBoolean(
 				importedSettingsProperties.getProperty(
 					"lfr-theme:regular:show-header-search"),
@@ -759,9 +759,6 @@ public class StagedLayoutSetStagedModelDataHandler
 			portletDataContext.getGroupId(),
 			portletDataContext.isPrivateLayout());
 
-		UnicodeProperties importedSettingsProperties =
-			importedLayoutSet.getSettingsProperties();
-
 		UnicodeProperties settingsProperties =
 			layoutSet.getSettingsProperties();
 
@@ -769,6 +766,9 @@ public class StagedLayoutSetStagedModelDataHandler
 			Sites.MERGE_FAIL_FRIENDLY_URL_LAYOUTS);
 
 		if (Validator.isNull(mergeFailFriendlyURLLayouts)) {
+			UnicodeProperties importedSettingsProperties =
+				importedLayoutSet.getSettingsProperties();
+
 			boolean showSiteName = GetterUtil.getBoolean(
 				importedSettingsProperties.getProperty(
 					Sites.SHOW_SITE_NAME, Boolean.TRUE.toString()));

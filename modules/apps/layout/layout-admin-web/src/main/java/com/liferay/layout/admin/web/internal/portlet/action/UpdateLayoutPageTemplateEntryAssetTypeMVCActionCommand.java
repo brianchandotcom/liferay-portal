@@ -51,10 +51,10 @@ public class UpdateLayoutPageTemplateEntryAssetTypeMVCActionCommand
 		long layoutPageTemplateEntryId = ParamUtil.getLong(
 			actionRequest, "classPK");
 
-		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
-		long classTypeId = ParamUtil.getLong(actionRequest, "classTypeId");
-
 		if (layoutPageTemplateEntryId > 0) {
+			long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
+			long classTypeId = ParamUtil.getLong(actionRequest, "classTypeId");
+
 			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntryId, classNameId, classTypeId);
 		}

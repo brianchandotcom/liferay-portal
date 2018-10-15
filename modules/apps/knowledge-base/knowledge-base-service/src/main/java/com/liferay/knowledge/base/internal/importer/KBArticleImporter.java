@@ -213,10 +213,11 @@ public class KBArticleImporter {
 			Map<String, String> metadata = new HashMap<>(properties.size());
 
 			for (Map.Entry<Object, Object> entry : properties.entrySet()) {
-				Object key = entry.getKey();
 				Object value = entry.getValue();
 
 				if (value != null) {
+					Object key = entry.getKey();
+
 					metadata.put(key.toString(), value.toString());
 				}
 			}

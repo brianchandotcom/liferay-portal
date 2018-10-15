@@ -18,6 +18,9 @@ import com.liferay.portal.search.solr.internal.SolrIndexingFixture;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.mappings.BaseAssetTagNamesFieldQueryBuilderTestCase;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Test;
 
 /**
@@ -67,6 +70,80 @@ public class AssetTagNamesFieldQueryBuilderTest
 		assertSearchNoHits("\"zz tabs*\"");
 		assertSearchNoHits("\"zz tag*\"");
 		assertSearchNoHits("\"zz tags*\"");
+	}
+
+	@Override
+	@Test
+	public void testMultiwordPrefixes() throws Exception {
+		addDocument("Name Tags");
+		addDocument("Names Tab");
+		addDocument("Tabs Names Tags");
+		addDocument("Tag Names");
+
+		List<String> results1 = Arrays.asList(
+			"Name Tags", "Names Tab", "Tabs Names Tags", "Tag Names");
+
+		assertSearch("name ta", results1);
+		assertSearch("names ta", results1);
+
+		List<String> results2 = Arrays.asList(
+			"Names Tab", "Tabs Names Tags", "Name Tags", "Tag Names");
+
+		assertSearch("name tab", results2);
+		assertSearch("name tabs", results2);
+		assertSearch("names tab", results2);
+		assertSearch("names tabs", results2);
+
+		List<String> results3 = Arrays.asList(
+			"Name Tags", "Tabs Names Tags", "Tag Names", "Names Tab");
+
+		assertSearch("name tag", results3);
+		assertSearch("name tags", results3);
+		assertSearch("names tag", results3);
+		assertSearch("names tags", results3);
+
+		List<String> results4 = Arrays.asList("Tabs Names Tags", "Names Tab");
+
+		assertSearch("tab na", results4);
+
+		List<String> results5 = Arrays.asList(
+			"Tabs Names Tags", "Names Tab", "Name Tags", "Tag Names");
+
+		assertSearch("tab names", results5);
+		assertSearch("tabs names", results5);
+		assertSearch("tabs names tags", results5);
+		assertSearch("tags names tabs", results5);
+
+		List<String> results6 = Arrays.asList("Names Tab", "Tabs Names Tags");
+
+		assertSearch("tabs na ta", results6);
+
+		List<String> results7 = Arrays.asList(
+			"Tag Names", "Name Tags", "Tabs Names Tags");
+
+		assertSearch("tag na", results7);
+
+		List<String> results8 = Arrays.asList(
+			"Tag Names", "Name Tags", "Tabs Names Tags", "Names Tab");
+
+		assertSearch("tag name", results8);
+		assertSearch("tag names", results8);
+		assertSearch("tags names", results8);
+
+		List<String> results9 = Arrays.asList(
+			"Name Tags", "Tag Names", "Tabs Names Tags");
+
+		assertSearch("tags na ta", results9);
+
+		assertSearch("zz name", 4);
+		assertSearch("zz names", 4);
+		assertSearch("zz tab", 2);
+		assertSearch("zz tabs", 2);
+		assertSearch("zz tag", 3);
+		assertSearch("zz tags", 3);
+
+		assertSearchNoHits("zz na");
+		assertSearchNoHits("zz ta");
 	}
 
 	@Override

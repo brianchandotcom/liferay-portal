@@ -34,10 +34,27 @@ class MapGoogleMaps extends MapBase {
 			zoom: this.zoom,
 		};
 
-		return new google.maps.Map(
+		const map = new google.maps.Map(
 			toElement(this.boundingBox),
 			Object.assign(mapConfig, controlsConfig)
 		);
+
+		if (this.data && this.data.features) {
+			const bounds = new google.maps.LatLngBounds();
+
+			this.data.features.forEach(
+				feature => bounds.extend(
+					new google.maps.LatLng(
+						feature.geometry.coordinates[1],
+						feature.geometry.coordinates[0]
+					)
+				)
+			);
+
+			map.fitBounds(bounds);
+		}
+
+		return map;
 	}
 
 	/**

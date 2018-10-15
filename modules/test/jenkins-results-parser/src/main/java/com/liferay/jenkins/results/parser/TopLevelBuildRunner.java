@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
@@ -115,62 +114,7 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 			JenkinsResultsParserUtil.write(
 				jenkinsReportFile, jenkinsReportString);
 
-			if (!JenkinsResultsParserUtil.isCINode()) {
-				return;
-			}
-
-			String userContentRelativePath =
-				topLevelBuildData.getUserContentRelativePath();
-
-			userContentRelativePath = userContentRelativePath.replace(
-				")", "\\)");
-			userContentRelativePath = userContentRelativePath.replace(
-				"(", "\\(");
-
-			try {
-				String command = JenkinsResultsParserUtil.combine(
-					"ssh -o NumberOfPasswordPrompts=0 ",
-					topLevelBuildData.getMasterHostname(),
-					" 'mkdir -p /opt/java/jenkins/userContent/",
-					userContentRelativePath, "'");
-
-				JenkinsResultsParserUtil.executeBashCommands(command);
-			}
-			catch (IOException | TimeoutException e) {
-				throw new RuntimeException(e);
-			}
-
-			int maxRetries = 3;
-			int retries = 0;
-
-			while (retries < maxRetries) {
-				try {
-					retries++;
-
-					String command = JenkinsResultsParserUtil.combine(
-						"time rsync -Iqs --chmod=go=rx --timeout=1200 ",
-						jenkinsReportFile.getCanonicalPath(), " ",
-						topLevelBuildData.getMasterHostname(), "::usercontent/",
-						userContentRelativePath);
-
-					JenkinsResultsParserUtil.executeBashCommands(command);
-
-					break;
-				}
-				catch (IOException | TimeoutException e) {
-					if (retries == maxRetries) {
-						throw new RuntimeException(
-							"Unable to send the jenkins-report.html", e);
-					}
-
-					System.out.println(
-						"Unable to execute bash commands, retrying... ");
-
-					e.printStackTrace();
-
-					JenkinsResultsParserUtil.sleep(3000);
-				}
-			}
+			publishToUserContentDir(jenkinsReportFile);
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);

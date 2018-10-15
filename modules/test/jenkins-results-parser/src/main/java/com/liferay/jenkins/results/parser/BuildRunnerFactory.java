@@ -28,7 +28,7 @@ public class BuildRunnerFactory {
 		}
 
 		if (jobName.equals("git-bisect-tool-batch")) {
-			return new DefaultPortalBatchBuildRunner(
+			return new GitBisectToolBatchBuildRunner(
 				(PortalBatchBuildData)buildData);
 		}
 

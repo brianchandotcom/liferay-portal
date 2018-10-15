@@ -74,13 +74,21 @@ public class GitBisectToolTopLevelBuildRunner
 		sb.append(" - ");
 		sb.append(_getBatchName());
 		sb.append(" - ");
-		sb.append(JenkinsResultsParserUtil.join(",", _getTestList()));
-		sb.append(" - ");
 		sb.append("<a href=\"https://");
 		sb.append(portalTopLevelBuildData.getTopLevelMasterHostname());
 		sb.append(".liferay.com/userContent/");
 		sb.append(portalTopLevelBuildData.getUserContentRelativePath());
 		sb.append("jenkins-report.html\">Jenkins Report</a>");
+
+		sb.append("<ul>");
+
+		for (String test : _getTestList()) {
+			sb.append("<li>");
+			sb.append(test);
+			sb.append("</li>");
+		}
+
+		sb.append("</ul>");
 
 		return sb.toString();
 	}

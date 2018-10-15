@@ -14,6 +14,11 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
+import java.io.IOException;
+
+import java.util.concurrent.TimeoutException;
+
 /**
  * @author Michael Hashimoto
  */
@@ -53,6 +58,63 @@ public abstract class BaseBuildRunner<T extends BuildData>
 	}
 
 	protected abstract void initWorkspace();
+
+	protected void publishToUserContentDir(File file) {
+		if (!JenkinsResultsParserUtil.isCINode()) {
+			return;
+		}
+
+		String userContentRelativePath =
+			_buildData.getUserContentRelativePath();
+
+		userContentRelativePath = userContentRelativePath.replace(")", "\\)");
+		userContentRelativePath = userContentRelativePath.replace("(", "\\(");
+
+		RemoteExecutor remoteExecutor = new RemoteExecutor();
+
+		int returnCode = remoteExecutor.execute(
+			1, new String[] {_buildData.getMasterHostname()},
+			new String[] {
+				"mkdir -p /opt/java/jenkins/userContent" +
+					userContentRelativePath
+			});
+
+		if (returnCode != 0) {
+			throw new RuntimeException("Unable to create target directory");
+		}
+
+		int maxRetries = 3;
+		int retries = 0;
+
+		while (retries < maxRetries) {
+			try {
+				retries++;
+
+				String command = JenkinsResultsParserUtil.combine(
+					"time rsync -Ipqrs --chmod=go=rx --timeout=1200 ",
+					file.getCanonicalPath(), " ",
+					_buildData.getTopLevelMasterHostname(), "::usercontent/",
+					userContentRelativePath);
+
+				JenkinsResultsParserUtil.executeBashCommands(command);
+
+				break;
+			}
+			catch (IOException | TimeoutException e) {
+				if (retries == maxRetries) {
+					throw new RuntimeException(
+						"Unable to send the jenkins-report.html", e);
+				}
+
+				System.out.println(
+					"Unable to execute bash commands, retrying... ");
+
+				e.printStackTrace();
+
+				JenkinsResultsParserUtil.sleep(3000);
+			}
+		}
+	}
 
 	protected void setUpWorkspace() {
 		if (workspace == null) {

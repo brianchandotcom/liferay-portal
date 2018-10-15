@@ -17,11 +17,13 @@ Export-Package:\
 	org.apache.cxf.attachment;version="3.2.5",\
 	org.apache.cxf.binding;version="3.2.5",\
 	org.apache.cxf.binding.soap;version="3.2.5",\
+	org.apache.cxf.binding.soap.blueprint;version="3.2.5",\
 	org.apache.cxf.binding.soap.interceptor;version="3.2.5",\
 	org.apache.cxf.binding.soap.jms;version="3.2.5",\
 	org.apache.cxf.binding.soap.jms.interceptor;version="3.2.5",\
 	org.apache.cxf.binding.soap.model;version="3.2.5",\
 	org.apache.cxf.binding.soap.saaj;version="3.2.5",\
+	org.apache.cxf.binding.soap.spring;version="3.2.5",\
 	org.apache.cxf.binding.soap.wsdl;version="3.2.5",\
 	org.apache.cxf.binding.soap.wsdl.extensions;version="3.2.5",\
 	org.apache.cxf.binding.soap.wsdl11;version="3.2.5",\
@@ -72,7 +74,11 @@ Export-Package:\
 	org.apache.cxf.interceptor.transform;version="3.2.5",\
 	org.apache.cxf.internal;version="3.2.5",\
 	org.apache.cxf.io;version="3.2.5",\
+	org.apache.cxf.jaxb;version="3.2.5",\
+	org.apache.cxf.jaxb.attachment;version="3.2.5",\
+	org.apache.cxf.jaxb.io;version="3.2.5",\
 	org.apache.cxf.jaxrs;version="3.2.5",\
+	org.apache.cxf.jaxrs.client;version="3.2.5",\
 	org.apache.cxf.jaxrs.client.spec;version="3.2.5",\
 	org.apache.cxf.jaxrs.ext;version="3.2.5",\
 	org.apache.cxf.jaxrs.ext.multipart;version="3.2.5",\

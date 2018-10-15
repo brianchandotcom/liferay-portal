@@ -440,6 +440,20 @@ class Form extends Component {
 		}
 	}
 
+	_updateShareFormIcon(published) {
+		const {saved, strings} = this.props;
+		const shareFormIcon = document.querySelector('.share-form-icon');
+
+		if (saved && published) {
+			shareFormIcon.classList.remove('ddm-btn-disabled');
+			shareFormIcon.setAttribute('title', Liferay.Language.get('copy-url'));
+		}
+		else {
+			shareFormIcon.classList.add('ddm-btn-disabled');
+			shareFormIcon.setAttribute('title', strings['publish-the-form-to-get-its-shareable-link']);
+		}
+	}
+
 	/**
 	 * @inheritDoc
 	 */
@@ -596,6 +610,20 @@ class Form extends Component {
 				paginationMode: newVal
 			}
 		);
+	}
+
+	@autobind
+	_handlePublishedChanged({newVal}) {
+		const {saved} = this.props;
+		const shareFormIcon = document.querySelector('.share-form-icon');
+
+		this.props.published = newVal;
+		if (newVal && !saved) {
+			shareFormIcon.classList.remove('hide');
+		}
+		else if (!newVal && !saved) {
+			shareFormIcon.classList.add('hide');
+		}
 	}
 
 	_handleFormNavClicked(event) {

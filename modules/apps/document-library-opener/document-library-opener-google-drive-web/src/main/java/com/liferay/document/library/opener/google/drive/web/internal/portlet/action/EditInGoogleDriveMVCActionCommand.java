@@ -225,7 +225,7 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 		throws PortalException {
 
 		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
-			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+			portletRequest, _portal.getPortletId(portletRequest),
 			_portal.getControlPanelPlid(portletRequest),
 			PortletRequest.RENDER_PHASE);
 

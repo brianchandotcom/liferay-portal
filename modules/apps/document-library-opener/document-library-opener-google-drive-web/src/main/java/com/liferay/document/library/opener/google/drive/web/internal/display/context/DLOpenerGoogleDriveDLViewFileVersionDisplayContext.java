@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.opener.google.drive.web.internal.display.context;
 
-import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplayContext;
 import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
@@ -122,7 +121,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 
 	private String _getActionURL(String cmd) {
 		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
-			request, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+			request, _portal.getPortletId(request),
 			PortletRequest.ACTION_PHASE);
 
 		liferayPortletURL.setParameter(

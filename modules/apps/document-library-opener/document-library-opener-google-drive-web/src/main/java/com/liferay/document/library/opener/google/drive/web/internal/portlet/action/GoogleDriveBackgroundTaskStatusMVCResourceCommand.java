@@ -111,7 +111,7 @@ public class GoogleDriveBackgroundTaskStatusMVCResourceCommand
 				_portal.getLiferayPortletResponse(resourceResponse);
 
 			PortletURL portletURL = liferayPortletResponse.createRenderURL(
-				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
+				_portal.getPortletId(resourceRequest));
 
 			portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 

@@ -21,6 +21,7 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.blog.apio.architect.identifier.BlogPostingIdentifier;
 import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
+import com.liferay.portal.apio.user.CurrentUser;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -30,6 +31,8 @@ import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.workflow.apio.architect.identifier.WorkflowLogIdentifier;
 import com.liferay.workflow.apio.architect.identifier.WorkflowTaskIdentifier;
+import com.liferay.workflow.apio.internal.architect.form.AssignToMeForm;
+import com.liferay.workflow.apio.internal.architect.route.AssignToMeRoute;
 
 import java.io.Serializable;
 
@@ -61,6 +64,10 @@ public class WorkflowTaskItemResource
 
 		return builder.addGetter(
 			this::_getWorkflowTask, Company.class
+		).addCustomRoute(
+			new AssignToMeRoute(), this::_assignToMe, CurrentUser.class,
+			WorkflowTaskIdentifier.class, (credentials, id) -> true,
+			AssignToMeForm::buildForm
 		).build();
 	}
 
@@ -97,6 +104,23 @@ public class WorkflowTaskItemResource
 		).addStringList(
 			"transitions", this::_getTaskTransitionsNames
 		).build();
+	}
+
+	private WorkflowTask _assignToMe(
+		Long workflowTaskId, AssignToMeForm assignToMeForm,
+		CurrentUser currentUser) {
+
+		return Try.fromFallible(
+			() -> _workflowTaskManager.getWorkflowTask(
+				currentUser.getCompanyId(), workflowTaskId)
+		).map(
+			workflowTask -> _workflowTaskManager.assignWorkflowTaskToUser(
+				currentUser.getCompanyId(), currentUser.getUserId(),
+				workflowTask.getWorkflowTaskId(), currentUser.getUserId(), "",
+				null, null)
+		).orElse(
+			null
+		);
 	}
 
 	private Serializable _getEntryClassPK(WorkflowTask workflowTask) {

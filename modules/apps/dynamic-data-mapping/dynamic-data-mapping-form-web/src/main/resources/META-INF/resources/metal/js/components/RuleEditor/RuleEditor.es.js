@@ -510,7 +510,7 @@ class RuleEditor extends Component {
 		makeFetch(
 			{
 				method: 'GET',
-				rolesURL
+				url: rolesURL
 			}
 		).then(
 			responseData => {

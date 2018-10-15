@@ -14,9 +14,11 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal.service.filter;
 
+import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnect;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectFlowState;
@@ -25,6 +27,7 @@ import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceHandle
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectSession;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectConstants;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
+import com.liferay.portal.security.sso.openid.connect.internal.StrangersNotAllowedException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -107,6 +110,14 @@ public class OpenIdConnectFilter extends BaseFilter {
 					httpServletRequest, httpServletResponse);
 			}
 		}
+		catch (UserEmailAddressException.MustNotUseCompanyMx |
+			   StrangersNotAllowedException e) {
+
+			Class<?> clazz = e.getClass();
+
+			sendError(
+				clazz.getSimpleName(), httpServletRequest, httpServletResponse);
+		}
 		catch (Exception e) {
 			_log.error("Unable to process the OpenID login", e);
 
@@ -127,8 +138,33 @@ public class OpenIdConnectFilter extends BaseFilter {
 			filterChain);
 	}
 
+	protected void sendError(
+			String error, HttpServletRequest request,
+			HttpServletResponse response)
+		throws Exception {
+
+		HttpSession session = request.getSession(false);
+
+		if (session == null) {
+			return;
+		}
+
+		String renderURL = (String)session.getAttribute(
+			"OPEN_ID_CONNECT_RENDER_URL");
+
+		String portletId = _http.getParameter(renderURL, "p_p_id", false);
+
+		renderURL = _http.addParameter(
+			renderURL, _portal.getPortletNamespace(portletId) + "error", error);
+
+		response.sendRedirect(renderURL);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenIdConnectFilter.class);
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private OpenIdConnect _openIdConnect;

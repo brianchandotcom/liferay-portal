@@ -15,8 +15,8 @@
 package com.liferay.portal.increment;
 
 import com.liferay.portal.internal.increment.BufferedIncreasableEntry;
-import com.liferay.portal.internal.increment.BufferedIncrementConfiguration;
 import com.liferay.portal.internal.increment.BufferedIncrementProcessor;
+import com.liferay.portal.internal.increment.BufferedIncrementProcessorUtil;
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
@@ -31,12 +31,8 @@ import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 import java.io.Serializable;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 
-import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -58,37 +54,12 @@ public class BufferedIncrementAdvice
 
 		String configuration = bufferedIncrement.configuration();
 
-		BufferedIncrementConfiguration bufferedIncrementConfiguration =
-			_bufferedIncrementConfigurations.get(configuration);
-
-		if (bufferedIncrementConfiguration == null) {
-			bufferedIncrementConfiguration = new BufferedIncrementConfiguration(
+		BufferedIncrementProcessor bufferedIncrementProcessor =
+			BufferedIncrementProcessorUtil.getBufferedIncrementProcessor(
 				configuration);
 
-			_bufferedIncrementConfigurations.put(
-				configuration, bufferedIncrementConfiguration);
-		}
-
-		if (!bufferedIncrementConfiguration.isEnabled()) {
-			return nullResult;
-		}
-
-		Method method = methodInvocation.getMethod();
-
-		BufferedIncrementProcessor bufferedIncrementProcessor =
-			_bufferedIncrementProcessors.get(method);
-
 		if (bufferedIncrementProcessor == null) {
-			bufferedIncrementProcessor = new BufferedIncrementProcessor(
-				bufferedIncrementConfiguration, method);
-
-			BufferedIncrementProcessor previousBufferedIncrementProcessor =
-				_bufferedIncrementProcessors.putIfAbsent(
-					method, bufferedIncrementProcessor);
-
-			if (previousBufferedIncrementProcessor != null) {
-				bufferedIncrementProcessor = previousBufferedIncrementProcessor;
-			}
+			return nullResult;
 		}
 
 		Object[] arguments = methodInvocation.getArguments();
@@ -109,10 +80,7 @@ public class BufferedIncrementAdvice
 			Increment<?> increment = IncrementFactory.createIncrement(
 				bufferedIncrement.incrementClass(), value);
 
-			final BufferedIncrementProcessor
-				callbackBufferedIncrementProcessor = bufferedIncrementProcessor;
-
-			final BufferedIncreasableEntry bufferedIncreasableEntry =
+			BufferedIncreasableEntry bufferedIncreasableEntry =
 				new BufferedIncreasableEntry(
 					methodInvocation, batchKey, increment);
 
@@ -121,7 +89,7 @@ public class BufferedIncrementAdvice
 
 					@Override
 					public Void call() throws Exception {
-						callbackBufferedIncrementProcessor.process(
+						bufferedIncrementProcessor.process(
 							bufferedIncreasableEntry);
 
 						return null;
@@ -139,11 +107,6 @@ public class BufferedIncrementAdvice
 	}
 
 	public void destroy() {
-		for (BufferedIncrementProcessor bufferedIncrementProcessor :
-				_bufferedIncrementProcessors.values()) {
-
-			bufferedIncrementProcessor.destroy();
-		}
 	}
 
 	@Override
@@ -173,10 +136,5 @@ public class BufferedIncrementAdvice
 			}
 
 		};
-
-	private final Map<String, BufferedIncrementConfiguration>
-		_bufferedIncrementConfigurations = new ConcurrentHashMap<>();
-	private final ConcurrentMap<Method, BufferedIncrementProcessor>
-		_bufferedIncrementProcessors = new ConcurrentHashMap<>();
 
 }

@@ -391,6 +391,21 @@
 		<execute macro="PortletEntry#publish" />
 	</command>
 
+	<command name="addWithFriendlyURL">
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panel" value="Friendly URL" />
+		</execute>
+
+		<execute function="Type" locator1="TextInput#FRIENDLY_URL" value1="${friendlyUrl}" />
+
+		<execute macro="PortletEntry#publish" />
+	</command>
+
 	<command name="addWithGlobalStructurePGViaWCD">
 		<execute macro="WebContentNavigator#gotoAddPGViaWCD">
 			<var name="structureName" value="${selectStructureName}" />
@@ -930,7 +945,7 @@
 		<execute function="SelectFrame" locator1="WCSelectDisplayPage#DISPLAY_PAGE_CONFIGURATION_IFRAME" />
 
 		<if>
-			<contains string="${pageType}" substring="{pageType}" />
+			<equals arg1="${pageType}" arg2="Public Pages" />
 			<then>
 				<execute macro="Navigator#gotoNavItem">
 					<var name="navItem" value="Public Pages" />

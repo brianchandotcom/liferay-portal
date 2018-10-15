@@ -393,7 +393,7 @@ class Layout extends Component {
 	 */
 
 	_handleMoveLayoutColumnItem(eventData) {
-		if (this._draggingItemPosition) {
+		if (this._draggingItemPosition && eventData.targetItemPlid) {
 			let layoutColumns = this.layoutColumns.map(
 				layoutColumn => [...layoutColumn]
 			);

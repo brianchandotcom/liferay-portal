@@ -131,18 +131,17 @@ class LayoutDragDrop extends State {
 	_handleDrop(data, event) {
 		event.preventDefault();
 
-		if (data.target) {
-			const sourceItemPlid = data.source.dataset.layoutColumnItemPlid;
-			const targetItemPlid = data.target.dataset.layoutColumnItemPlid;
+		const sourceItemPlid = data.source.dataset.layoutColumnItemPlid;
+		const targetItemPlid = data.target ?
+			data.target.dataset.layoutColumnItemPlid : null;
 
-			this.emit(
-				'moveLayoutColumnItem',
-				{
-					sourceItemPlid,
-					targetItemPlid
-				}
-			);
-		}
+		this.emit(
+			'moveLayoutColumnItem',
+			{
+				sourceItemPlid,
+				targetItemPlid
+			}
+		);
 	}
 
 	/**

@@ -42,8 +42,7 @@ import com.liferay.registry.ServiceRegistration;
 
 import java.io.File;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -72,7 +71,7 @@ public class LiferayDynamicCapabilityTest {
 	public void testCallsCapabilityLocalRepositoryEventListeners()
 		throws Exception {
 
-		CountDownLatch addEventFiredLatch = new CountDownLatch(1);
+		AtomicInteger atomicInteger = new AtomicInteger(0);
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -82,13 +81,13 @@ public class LiferayDynamicCapabilityTest {
 				(TestRepositoryEventAwareCapability)repositoryEventRegistry ->
 					repositoryEventRegistry.registerRepositoryEventListener(
 						RepositoryEventType.Add.class, FileEntry.class,
-						fileEntry -> addEventFiredLatch.countDown()));
+						fileEntry -> atomicInteger.incrementAndGet()));
 
 		try {
 			_addRandomFileEntry(
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-			Assert.assertTrue(addEventFiredLatch.await(5, TimeUnit.SECONDS));
+			Assert.assertEquals(1, atomicInteger.get());
 		}
 		finally {
 			capabilityServiceRegistration.unregister();
@@ -154,7 +153,7 @@ public class LiferayDynamicCapabilityTest {
 	public void testDoesNotCallCapabilityLocalRepositoryEventListenersWhenTheCapabilityIsGone()
 		throws Exception {
 
-		CountDownLatch addEventFiredLatch = new CountDownLatch(1);
+		AtomicInteger atomicInteger = new AtomicInteger(0);
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -164,14 +163,14 @@ public class LiferayDynamicCapabilityTest {
 				(TestRepositoryEventAwareCapability)repositoryEventRegistry ->
 					repositoryEventRegistry.registerRepositoryEventListener(
 						RepositoryEventType.Add.class, FileEntry.class,
-						fileEntry -> addEventFiredLatch.countDown()));
+						fileEntry -> atomicInteger.incrementAndGet()));
 
 		capabilityServiceRegistration.unregister();
 
 		_addRandomFileEntry(
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		Assert.assertFalse(addEventFiredLatch.await(5, TimeUnit.SECONDS));
+		Assert.assertEquals(0, atomicInteger.get());
 	}
 
 	private FileEntry _addRandomFileEntry(ServiceContext serviceContext)

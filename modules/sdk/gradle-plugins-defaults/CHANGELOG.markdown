@@ -4780,6 +4780,12 @@ version 1.3.5.
 - [LPS-85987]: When running any NPM task on Jenkins, check for an invalid
 `.hotfix-xxx-xxx` qualifier before running the task.
 
+## 5.5.80 - 2018-10-12
+
+### Changed
+- [LPS-86371]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.161.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -5264,6 +5270,7 @@ version 1.3.5.
 [LPS-85959]: https://issues.liferay.com/browse/LPS-85959
 [LPS-85987]: https://issues.liferay.com/browse/LPS-85987
 [LPS-86308]: https://issues.liferay.com/browse/LPS-86308
+[LPS-86371]: https://issues.liferay.com/browse/LPS-86371
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

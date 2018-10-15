@@ -1087,13 +1087,9 @@ public class DDMDisplayContext {
 		long[] groupIds = ddmDisplay.getTemplateGroupIds(
 			themeDisplay, showAncestorScopes());
 
-		long[] classPKs = ddmDisplay.getTemplateClassPKs(
-			_ddmWebRequestHelper.getCompanyId(), getStructureClassNameId(),
-			getClassPK());
-
 		List<DDMTemplate> results = _ddmTemplateService.search(
 			_ddmWebRequestHelper.getCompanyId(), groupIds,
-			getTemplateClassNameIds(), classPKs, getResourceClassNameId(),
+			getTemplateClassNameIds(), null, getResourceClassNameId(),
 			searchTerms.getKeywords(), searchTerms.getType(), getTemplateMode(),
 			searchTerms.getStatus(), templateSearch.getStart(),
 			templateSearch.getEnd(), templateSearch.getOrderByComparator());
@@ -1115,13 +1111,9 @@ public class DDMDisplayContext {
 		long[] groupIds = ddmDisplay.getTemplateGroupIds(
 			themeDisplay, showAncestorScopes());
 
-		long[] classPKs = ddmDisplay.getTemplateClassPKs(
-			_ddmWebRequestHelper.getCompanyId(), getStructureClassNameId(),
-			getClassPK());
-
 		int total = _ddmTemplateService.searchCount(
 			_ddmWebRequestHelper.getCompanyId(), groupIds,
-			getTemplateClassNameIds(), classPKs, getResourceClassNameId(),
+			getTemplateClassNameIds(), null, getResourceClassNameId(),
 			searchTerms.getKeywords(), searchTerms.getType(), getTemplateMode(),
 			searchTerms.getStatus());
 

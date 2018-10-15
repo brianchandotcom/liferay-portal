@@ -1,7 +1,7 @@
 task deployConfigs(type: Copy)
 
 dependencies {
-	compileOnly group: "com.liferay", name: "org.apache.aries.jax.rs.jaxb.json", version: "0.0.1-20180608.092312-9-LIFERAY-CACHED"
+	compileOnly group: "org.apache.aries.jax.rs", name: "org.apache.aries.jax.rs.jaxb.json", version: "1.0.0"
 }
 
 deployDependencies {

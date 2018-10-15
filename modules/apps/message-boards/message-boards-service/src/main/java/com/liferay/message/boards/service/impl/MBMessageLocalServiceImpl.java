@@ -2799,12 +2799,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			}
 		}
 		else if (serviceContext.isCommandAdd()) {
-			String className = (String)serviceContext.getAttribute("className");
-			long classPK = ParamUtil.getLong(serviceContext, "classPK");
 			long parentMessageId = message.getParentMessageId();
 
 			if (parentMessageId !=
 					MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
+
+				String className = (String)serviceContext.getAttribute(
+					"className");
+				long classPK = ParamUtil.getLong(serviceContext, "classPK");
 
 				AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
 					className, classPK);

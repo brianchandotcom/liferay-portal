@@ -252,15 +252,13 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 		boolean mailingListActive = ParamUtil.getBoolean(
 			actionRequest, "mailingListActive");
 
-		boolean mergeWithParentCategory = ParamUtil.getBoolean(
-			actionRequest, "mergeWithParentCategory");
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			MBCategory.class.getName(), actionRequest);
 
-		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
-
 		if (categoryId <= 0) {
+			CaptchaConfiguration captchaConfiguration =
+				getCaptchaConfiguration();
+
 			if (captchaConfiguration.messageBoardsEditMessageCaptchaEnabled()) {
 				CaptchaUtil.check(actionRequest);
 			}
@@ -277,6 +275,9 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 		else {
 
 			// Update category
+
+			boolean mergeWithParentCategory = ParamUtil.getBoolean(
+				actionRequest, "mergeWithParentCategory");
 
 			_mbCategoryService.updateCategory(
 				categoryId, parentCategoryId, name, description, displayStyle,

@@ -128,12 +128,12 @@ public class MBUserRankUtil {
 			String entityValue)
 		throws Exception {
 
-		long groupId = statsUser.getGroupId();
 		long userId = statsUser.getUserId();
 
 		if (entityType.equals("organization-role") ||
 			entityType.equals("site-role")) {
 
+			long groupId = statsUser.getGroupId();
 			Role role = RoleLocalServiceUtil.getRole(companyId, entityValue);
 
 			if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(

@@ -45,23 +45,26 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 			long userId, long banUserId, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(userId);
 		long groupId = serviceContext.getScopeGroupId();
-
-		long banId = counterLocalService.increment();
 
 		MBBan ban = mbBanPersistence.fetchByG_B(groupId, banUserId);
 
 		if (ban == null) {
 			Date now = new Date();
 
+			long banId = counterLocalService.increment();
+
 			ban = mbBanPersistence.create(banId);
 
 			ban.setUuid(serviceContext.getUuid());
 			ban.setGroupId(groupId);
+
+			User user = _userLocalService.getUser(userId);
+
 			ban.setCompanyId(user.getCompanyId());
 			ban.setUserId(user.getUserId());
 			ban.setUserName(user.getFullName());
+
 			ban.setCreateDate(serviceContext.getCreateDate(now));
 			ban.setModifiedDate(serviceContext.getModifiedDate(now));
 			ban.setBanUserId(banUserId);

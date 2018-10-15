@@ -59,11 +59,10 @@ public class UserNotificationDeliveryUADAnonymizerTest
 		throws Exception {
 
 		UserNotificationDelivery userNotificationDelivery =
-			_userNotificationDeliveryLocalService.
-				addUserNotificationDelivery(
-					userId, RandomTestUtil.randomString(), 0,
-					UserNotificationDeliveryConstants.TYPE_WEBSITE,
-					UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
+			_userNotificationDeliveryLocalService.addUserNotificationDelivery(
+				userId, RandomTestUtil.randomString(), 0,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
 
 		if (deleteAfterTestRun) {
 			_userNotificationDeliveries.add(userNotificationDelivery);

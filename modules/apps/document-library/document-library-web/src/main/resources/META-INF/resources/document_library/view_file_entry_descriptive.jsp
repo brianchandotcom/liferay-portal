@@ -57,6 +57,8 @@ if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentRe
 	latestFileVersion = fileEntry.getLatestFileVersion();
 }
 
+latestFileVersion = latestFileVersion.toEscapedModel();
+
 Date modifiedDate = latestFileVersion.getModifiedDate();
 
 String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
@@ -66,7 +68,6 @@ PortletURL rowURL = liferayPortletResponse.createRenderURL();
 rowURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry");
 rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
 rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
-latestFileVersion = latestFileVersion.toEscapedModel();
 %>
 
 <h5 class="text-default">

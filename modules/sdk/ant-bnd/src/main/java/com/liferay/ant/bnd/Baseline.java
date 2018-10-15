@@ -191,26 +191,26 @@ public abstract class Baseline {
 					if (newerVersion.compareTo(suggestedVersion) > 0) {
 						match = false;
 
-						warnings = "EXCESSIVE VERSION INCREASE";
+						warnings = _WARNING_EXCESSIVE_VERSION_INCREASE;
 					}
 					else if (newerVersion.compareTo(suggestedVersion) < 0) {
-						warnings = "VERSION INCREASE REQUIRED";
+						warnings = _WARNING_VERSION_INCREASE_REQUIRED;
 					}
 				}
 
 				if (delta == Delta.REMOVED) {
-					warnings = "PACKAGE REMOVED";
+					warnings = _WARNING_PACKAGE_REMOVED;
 				}
 				else if (delta == Delta.UNCHANGED) {
 					boolean newVersionSuggested = false;
 
 					if (suggestedVersion.compareTo(newerVersion) > 0) {
-						warnings = "VERSION INCREASE SUGGESTED";
+						warnings = _WARNING_VERSION_INCREASE_SUGGESTED;
 
 						newVersionSuggested = true;
 					}
 					else if (suggestedVersion.compareTo(newerVersion) < 0) {
-						warnings = "EXCESSIVE VERSION INCREASE";
+						warnings = _WARNING_EXCESSIVE_VERSION_INCREASE;
 
 						newVersionSuggested = true;
 					}
@@ -233,10 +233,11 @@ public abstract class Baseline {
 
 				if (!correctPackageInfo) {
 					if (delta == Delta.ADDED) {
-						warnings = "PACKAGE ADDED, MISSING PACKAGEINFO";
+						warnings = _WARNING_PACKAGE_ADDED_MISSING_PACKAGEINFO;
 					}
 					else if (delta == Delta.REMOVED) {
-						warnings = "PACKAGE REMOVED, UNNECESSARY PACKAGEINFO";
+						warnings =
+							_WARNING_PACKAGE_REMOVED_UNNECESSARY_PACKAGEINFO;
 					}
 				}
 
@@ -682,6 +683,24 @@ public abstract class Baseline {
 
 		IO.store(content, _bndFile);
 	}
+
+	private static final String _WARNING_EXCESSIVE_VERSION_INCREASE =
+		"EXCESSIVE VERSION INCREASE";
+
+	private static final String _WARNING_PACKAGE_ADDED_MISSING_PACKAGEINFO =
+		"PACKAGE ADDED, MISSING PACKAGEINFO";
+
+	private static final String _WARNING_PACKAGE_REMOVED = "PACKAGE REMOVED";
+
+	private static final String
+		_WARNING_PACKAGE_REMOVED_UNNECESSARY_PACKAGEINFO =
+			"PACKAGE REMOVED, UNNECESSARY PACKAGEINFO";
+
+	private static final String _WARNING_VERSION_INCREASE_REQUIRED =
+		"VERSION INCREASE REQUIRED";
+
+	private static final String _WARNING_VERSION_INCREASE_SUGGESTED =
+		"VERSION INCREASE SUGGESTED";
 
 	private File _bndFile;
 	private boolean _forceCalculatedVersion;

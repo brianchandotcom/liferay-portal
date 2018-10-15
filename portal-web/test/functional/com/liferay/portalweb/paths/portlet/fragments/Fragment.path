@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_HEADER_POSITION</td>
-	<td>xpath=(//div[contains(@class,'fragment-entry-link-list')]/div[${key_position}])//li[contains(.,'${key_fragmentName}')]</td>
+	<td>//div[contains(@class,'fragment-entry-link')]/section[${key_position}]//li[contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>

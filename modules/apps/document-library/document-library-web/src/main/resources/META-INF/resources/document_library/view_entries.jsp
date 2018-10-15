@@ -125,8 +125,9 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 						latestFileVersion = fileEntry.getLatestFileVersion();
 					}
 
-					String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, latestFileVersion, themeDisplay);
 					latestFileVersion = latestFileVersion.toEscapedModel();
+
+					String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, latestFileVersion, themeDisplay);
 					%>
 
 					<c:choose>

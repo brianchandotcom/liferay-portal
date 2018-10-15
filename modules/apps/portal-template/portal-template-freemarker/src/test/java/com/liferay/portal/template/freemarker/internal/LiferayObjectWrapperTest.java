@@ -206,10 +206,7 @@ public class LiferayObjectWrapperTest {
 
 			Assert.assertEquals(logRecords.toString(), 0, logRecords.size());
 		}
-	}
 
-	@Test
-	public void testConstructorException() {
 		Field cacheClassNamesField = ReflectionTestUtil.getAndSetFieldValue(
 			LiferayObjectWrapper.class, "_cacheClassNamesField", null);
 

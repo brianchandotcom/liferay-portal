@@ -34,6 +34,9 @@ public interface PortalCapabilityLocator {
 	public ConfigurationCapability getConfigurationCapability(
 		DocumentRepository documentRepository);
 
+	public DynamicCapability getDynamicCapability(
+		DocumentRepository documentRepository);
+
 	public ProcessorCapability getProcessorCapability(
 		DocumentRepository documentRepository,
 		ProcessorCapability.ResourceGenerationStrategy
@@ -47,9 +50,6 @@ public interface PortalCapabilityLocator {
 		RepositoryEventTrigger repositoryEventTrigger);
 
 	public SyncCapability getSyncCapability(
-		DocumentRepository documentRepository);
-
-	public DynamicCapability getDynamicCapability(
 		DocumentRepository documentRepository);
 
 	public TemporaryFileEntriesCapability getTemporaryFileEntriesCapability(

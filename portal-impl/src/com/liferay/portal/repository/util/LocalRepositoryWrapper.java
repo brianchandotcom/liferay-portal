@@ -17,7 +17,6 @@ package com.liferay.portal.repository.util;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
-import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
@@ -38,10 +37,6 @@ import java.util.List;
 public class LocalRepositoryWrapper implements LocalRepository {
 
 	public LocalRepositoryWrapper(LocalRepository localRepository) {
-		_localRepository = localRepository;
-	}
-
-	public void setLocalRepository(LocalRepository localRepository) {
 		_localRepository = localRepository;
 	}
 
@@ -382,6 +377,10 @@ public class LocalRepositoryWrapper implements LocalRepository {
 
 		_localRepository.revertFileEntry(
 			userId, fileEntryId, version, serviceContext);
+	}
+
+	public void setLocalRepository(LocalRepository localRepository) {
+		_localRepository = localRepository;
 	}
 
 	/**

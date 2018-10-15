@@ -46,10 +46,6 @@ public class RepositoryWrapper implements Repository {
 		setRepository(repository);
 	}
 
-	public void setRepository(Repository repository) {
-		_repository = repository;
-	}
-
 	@Override
 	public FileEntry addFileEntry(
 			long userId, long folderId, String sourceFileName, String mimeType,
@@ -783,6 +779,10 @@ public class RepositoryWrapper implements Repository {
 		throws SearchException {
 
 		return _repository.search(searchContext, query);
+	}
+
+	public void setRepository(Repository repository) {
+		_repository = repository;
 	}
 
 	@Override

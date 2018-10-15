@@ -118,30 +118,29 @@ public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 	protected void updateRepository(ActionRequest actionRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		long repositoryId = ParamUtil.getLong(actionRequest, "repositoryId");
 
-		String className = ParamUtil.getString(actionRequest, "className");
-
-		long classNameId = _portal.getClassNameId(className);
-
-		long folderId = ParamUtil.getLong(actionRequest, "folderId");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
-
-		UnicodeProperties typeSettingsProperties =
-			PropertiesParamUtil.getProperties(actionRequest, "settings--");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DLFolder.class.getName(), actionRequest);
 
 		if (repositoryId <= 0) {
 
 			// Add repository
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			String className = ParamUtil.getString(actionRequest, "className");
+
+			long classNameId = _portal.getClassNameId(className);
+
+			long folderId = ParamUtil.getLong(actionRequest, "folderId");
+
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+			UnicodeProperties typeSettingsProperties =
+				PropertiesParamUtil.getProperties(actionRequest, "settings--");
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				DLFolder.class.getName(), actionRequest);
 
 			_repositoryService.addRepository(
 				themeDisplay.getScopeGroupId(), classNameId, folderId, name,

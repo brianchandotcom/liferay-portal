@@ -53,10 +53,11 @@ public class FolderConverter extends BaseXStreamConverter {
 			Class<?> clazz = BeanPropertiesUtil.getObjectType(
 				dlFolder, nodeName);
 
-			Object convertedValue = xStreamUnmarshallingContext.convertAnother(
-				xStreamHierarchicalStreamReader.getValue(), clazz);
-
 			if (fields.contains(nodeName)) {
+				Object convertedValue =
+					xStreamUnmarshallingContext.convertAnother(
+						xStreamHierarchicalStreamReader.getValue(), clazz);
+
 				if (nodeName.equals(FieldConstants.ESCAPED_MODEL)) {
 					escapedModel = (Boolean)convertedValue;
 				}

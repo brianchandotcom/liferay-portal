@@ -139,14 +139,14 @@ public class DLBreadcrumbUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		long rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 		boolean ignoreRootFolder = ParamUtil.getBoolean(
 			request, "ignoreRootFolder");
 
 		if (!ignoreRootFolder) {
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 			DLPortletInstanceSettings dlPortletInstanceSettings =
 				DLPortletInstanceSettings.getInstance(
 					themeDisplay.getLayout(), portletDisplay.getId());
@@ -221,15 +221,15 @@ public class DLBreadcrumbUtil {
 		String mvcRenderCommandName = ParamUtil.getString(
 			request, "mvcRenderCommandName");
 
-		long groupId = ParamUtil.getLong(request, "groupId");
-		boolean ignoreRootFolder = ParamUtil.getBoolean(
-			request, "ignoreRootFolder");
-
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		if (mvcRenderCommandName.equals(
 				"/document_library/select_file_entry") ||
 			mvcRenderCommandName.equals("/document_library/select_folder")) {
+
+			long groupId = ParamUtil.getLong(request, "groupId");
+			boolean ignoreRootFolder = ParamUtil.getBoolean(
+				request, "ignoreRootFolder");
 
 			_addPortletBreadcrumbEntry(
 				request, "mvcRenderCommandName", mvcRenderCommandName, groupId,

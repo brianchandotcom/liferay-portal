@@ -144,7 +144,6 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 		long fileShortcutId = ParamUtil.getLong(
 			actionRequest, "fileShortcutId");
 
-		long repositoryId = ParamUtil.getLong(actionRequest, "repositoryId");
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
 		long toFileEntryId = ParamUtil.getLong(actionRequest, "toFileEntryId");
 
@@ -154,6 +153,9 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 		if (fileShortcutId <= 0) {
 
 			// Add file shortcut
+
+			long repositoryId = ParamUtil.getLong(
+				actionRequest, "repositoryId");
 
 			_dlAppService.addFileShortcut(
 				repositoryId, folderId, toFileEntryId, serviceContext);

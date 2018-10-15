@@ -5811,6 +5811,12 @@ version 2.4.14.
 ### Changed
 - [LPS-86308]: Update the [Liferay Alloy Taglib] dependency to version 1.1.13.
 
+## 3.12.161 - 2018-10-12
+
+### Changed
+- [LPS-86371]: Set the `npmInstall` task's up-to-date check to `false` if the
+`node_modules` directory does not exist.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -6259,4 +6265,5 @@ version 2.4.14.
 [LPS-85678]: https://issues.liferay.com/browse/LPS-85678
 [LPS-85959]: https://issues.liferay.com/browse/LPS-85959
 [LPS-86308]: https://issues.liferay.com/browse/LPS-86308
+[LPS-86371]: https://issues.liferay.com/browse/LPS-86371
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

@@ -64,12 +64,22 @@ public class UserEntityModel implements EntityModel {
 		new EntityField(
 			"groupIds", EntityField.Type.STRING, locale -> "groupIds"),
 		new EntityField(
+			"jobTitle", EntityField.Type.STRING,
+			locale -> Field.getSortableFieldName("jobTitle")),
+		new EntityField(
 			"lastName", EntityField.Type.STRING,
 			locale -> Field.getSortableFieldName("lastName")),
 		new EntityField(
+			"organizationIds", EntityField.Type.STRING,
+			locale -> "organizationIds"),
+		new EntityField(
+			"roleIds", EntityField.Type.STRING, locale -> "roleIds"),
+		new EntityField(
 			"screenName", EntityField.Type.STRING,
 			locale -> Field.getSortableFieldName("screenName"),
-			locale -> "screenName")
+			locale -> "screenName"),
+		new EntityField(
+			"userName", EntityField.Type.STRING, locale -> "userName")
 	).collect(
 		Collectors.toMap(EntityField::getName, Function.identity())
 	);

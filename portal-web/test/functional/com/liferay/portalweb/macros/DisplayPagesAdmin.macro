@@ -9,6 +9,17 @@
 		<execute macro="Button#clickSave" />
 	</command>
 
+	<command name="markDisplayPageAsDefault">
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Mark As Default" />
+			<var name="rowEntry" value="${rowEntry}" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Card#STICKER">
+			<var name="key_cardText" value="${rowEntry}" />
+		</execute>
+	</command>
+
 	<command name="openDisplayPagesAdmin">
 		<execute macro="Navigator#openWithAppendToBaseURL">
 			<var name="urlAppend" value="group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&amp;_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=display-pages" />

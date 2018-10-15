@@ -80,9 +80,10 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 
 	protected void addEntry(PollerRequest pollerRequest) throws Exception {
 		long toUserId = getLong(pollerRequest, "toUserId");
-		String content = getString(pollerRequest, "content");
 
 		if (toUserId > 0) {
+			String content = getString(pollerRequest, "content");
+
 			EntryLocalServiceUtil.addEntry(
 				pollerRequest.getTimestamp(), pollerRequest.getUserId(),
 				toUserId, content);
@@ -299,7 +300,6 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 	}
 
 	protected void updateStatus(PollerRequest pollerRequest) throws Exception {
-		long timestamp = -1;
 		int online = getInteger(pollerRequest, "online");
 		int awake = getInteger(pollerRequest, "awake");
 		String activePanelIds = getString(pollerRequest, "activePanelIds");
@@ -310,8 +310,8 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 			(statusMessage != null) || (playSound != -1)) {
 
 			StatusLocalServiceUtil.updateStatus(
-				pollerRequest.getUserId(), timestamp, online, awake,
-				activePanelIds, statusMessage, playSound);
+				pollerRequest.getUserId(), -1, online, awake, activePanelIds,
+				statusMessage, playSound);
 		}
 	}
 

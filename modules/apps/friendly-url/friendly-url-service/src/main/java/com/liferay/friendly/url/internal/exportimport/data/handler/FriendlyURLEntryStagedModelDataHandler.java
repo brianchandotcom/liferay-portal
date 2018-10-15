@@ -98,17 +98,11 @@ public class FriendlyURLEntryStagedModelDataHandler
 
 		String className = friendlyURLEntryElement.attributeValue(
 			"resource-class-name");
-		boolean mainEntry = GetterUtil.getBoolean(
-			friendlyURLEntryElement.attributeValue("mainEntry"));
 
 		long classNameId = _classNameLocalService.getClassNameId(className);
 
 		Map<Long, Long> newPrimaryKeysMap =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(className);
-
-		long classPK = MapUtil.getLong(
-			newPrimaryKeysMap, friendlyURLEntry.getClassPK(),
-			friendlyURLEntry.getClassPK());
 
 		FriendlyURLEntry existingFriendlyURLEntry =
 			fetchStagedModelByUuidAndGroupId(
@@ -126,6 +120,11 @@ public class FriendlyURLEntryStagedModelDataHandler
 			importedFriendlyURLEntry.setCompanyId(
 				portletDataContext.getCompanyId());
 			importedFriendlyURLEntry.setClassNameId(classNameId);
+
+			long classPK = MapUtil.getLong(
+				newPrimaryKeysMap, friendlyURLEntry.getClassPK(),
+				friendlyURLEntry.getClassPK());
+
 			importedFriendlyURLEntry.setClassPK(classPK);
 
 			_stagedModelRepository.addStagedModel(
@@ -134,6 +133,9 @@ public class FriendlyURLEntryStagedModelDataHandler
 		else {
 			_stagedModelRepository.updateStagedModel(
 				portletDataContext, existingFriendlyURLEntry);
+
+			boolean mainEntry = GetterUtil.getBoolean(
+				friendlyURLEntryElement.attributeValue("mainEntry"));
 
 			if (mainEntry) {
 				_friendlyURLEntryLocalService.setMainFriendlyURLEntry(

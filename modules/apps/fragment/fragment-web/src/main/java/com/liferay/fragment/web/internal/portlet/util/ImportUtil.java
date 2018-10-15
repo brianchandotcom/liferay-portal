@@ -165,14 +165,14 @@ public class ImportUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.fetchFragmentCollection(
 				themeDisplay.getScopeGroupId(), fragmentCollectionKey);
 
 		if (fragmentCollection == null) {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				actionRequest);
+
 			fragmentCollection =
 				_fragmentCollectionService.addFragmentCollection(
 					themeDisplay.getScopeGroupId(), fragmentCollectionKey, name,

@@ -116,8 +116,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				continue;
 			}
 
-			Locale locale = LocaleUtil.getMostRelevantLocale();
-
 			JSONObject editableValueJSONObject =
 				editableValuesJSONObject.getJSONObject(id);
 
@@ -131,7 +129,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			}
 
 			if (Validator.isNull(value)) {
-				value = _getEditableValue(editableValueJSONObject, locale);
+				value = _getEditableValue(
+					editableValueJSONObject,
+					LocaleUtil.getMostRelevantLocale());
 			}
 
 			editableElementParser.replace(element, value);

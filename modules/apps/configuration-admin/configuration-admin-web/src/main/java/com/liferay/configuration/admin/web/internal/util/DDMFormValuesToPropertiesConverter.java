@@ -140,9 +140,10 @@ public class DDMFormValuesToPropertiesConverter {
 			}
 		}
 
-		String dataType = getDDMFormFieldDataType(ddmFormFieldValue.getName());
-
 		if (valueString.equals(StringPool.BLANK)) {
+			String dataType = getDDMFormFieldDataType(
+				ddmFormFieldValue.getName());
+
 			valueString = getDataTypeDefaultValue(dataType);
 		}
 

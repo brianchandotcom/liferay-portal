@@ -654,10 +654,10 @@ public class EditAssetListDisplayContext {
 				PropertiesParamUtil.getString(
 					_properties, _request, "groupIds")));
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		if (ArrayUtil.isEmpty(groupIds)) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 			return Collections.singletonList(themeDisplay.getScopeGroup());
 		}
 

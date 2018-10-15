@@ -699,10 +699,10 @@ public class AssetPublisherConfigurationAction
 			LayoutRevision layoutRevision =
 				layoutRevisionLocalService.getLayoutRevision(layoutRevisionId);
 
-			PortletPreferencesImpl portletPreferences =
-				(PortletPreferencesImpl)actionRequest.getPreferences();
-
 			if (layoutRevision != null) {
+				PortletPreferencesImpl portletPreferences =
+					(PortletPreferencesImpl)actionRequest.getPreferences();
+
 				portletPreferences.setPlid(
 					layoutRevision.getLayoutRevisionId());
 			}

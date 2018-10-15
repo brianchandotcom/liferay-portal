@@ -107,7 +107,6 @@ public class SitesThatIAdministerItemSelectorViewDisplayContext
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
-		User user = themeDisplay.getUser();
 
 		boolean filterManageableGroups = true;
 
@@ -120,6 +119,8 @@ public class SitesThatIAdministerItemSelectorViewDisplayContext
 		_groupParams.put("active", Boolean.TRUE);
 
 		if (filterManageableGroups) {
+			User user = themeDisplay.getUser();
+
 			_groupParams.put("usersGroups", user.getUserId());
 		}
 

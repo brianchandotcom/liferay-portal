@@ -98,11 +98,11 @@ public class AssetPublisherHelper {
 
 		viewFullContentURL.setParameter("type", assetRendererFactory.getType());
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)liferayPortletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			if (assetRenderer.getGroupId() != themeDisplay.getScopeGroupId()) {
 				viewFullContentURL.setParameter(
 					"groupId", String.valueOf(assetRenderer.getGroupId()));

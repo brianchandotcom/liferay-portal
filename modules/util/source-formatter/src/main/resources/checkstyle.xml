@@ -305,6 +305,7 @@
 			<message key="method.reserved" value="Method ''{0}'' should only be used for type ''Long'', ''Serializable'' or ''String''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.VariableDeclarationAsUsedCheck">
+			<property name="enabled" value="false" />
 			<message key="variable.declare.as.used" value="For better performance, the variable declaration for ''{0}'' should come after the ''{1}'' statement on line ''{2}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.VariableNameCheck">

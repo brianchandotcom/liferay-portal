@@ -18,11 +18,13 @@ import com.fasterxml.jackson.databind.util.ISO8601Utils;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -448,6 +450,33 @@ public class UserODataRetrieverTest {
 	}
 
 	@Test
+	public void testGetUsersFilterByOrganizationIds() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+		_user2 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		_organization = OrganizationTestUtil.addOrganization();
+
+		_userLocalService.addOrganizationUsers(
+			_organization.getOrganizationId(), new long[] {_user1.getUserId()});
+
+		List<User> users = _userODataRetriever.getUsers(
+			_group1.getCompanyId(),
+			String.format(
+				"(firstName eq '%s') and (organizationIds eq '%s')", firstName,
+				_organization.getOrganizationId()),
+			LocaleUtil.getDefault(), 0, 2);
+
+		Assert.assertEquals(users.toString(), 1, users.size());
+		Assert.assertEquals(_user1, users.get(0));
+	}
+
+	@Test
 	public void testGetUsersFilterByScreenName() throws Exception {
 		_user1 = UserTestUtil.addUser(
 			_group1.getGroupId(), LocaleUtil.getDefault());
@@ -468,6 +497,9 @@ public class UserODataRetrieverTest {
 
 	@DeleteAfterTestRun
 	private Group _group2;
+
+	@DeleteAfterTestRun
+	private Organization _organization;
 
 	@DeleteAfterTestRun
 	private User _user1;

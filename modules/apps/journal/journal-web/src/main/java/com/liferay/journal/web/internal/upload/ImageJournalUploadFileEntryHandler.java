@@ -71,17 +71,16 @@ public class ImageJournalUploadFileEntryHandler
 		long resourcePrimKey = ParamUtil.getLong(
 			uploadPortletRequest, "resourcePrimKey");
 
-		long journalFolderId = ParamUtil.getLong(
-			uploadPortletRequest, "journalFolderId");
+		long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
 
 		if (resourcePrimKey != 0) {
 			_journalArticleModelResourcePermission.check(
 				themeDisplay.getPermissionChecker(), resourcePrimKey,
 				ActionKeys.UPDATE);
 		}
-		else if (journalFolderId != 0) {
+		else if (folderId != 0) {
 			_journalFolderModelResourcePermission.check(
-				themeDisplay.getPermissionChecker(), journalFolderId,
+				themeDisplay.getPermissionChecker(), folderId,
 				ActionKeys.ADD_ARTICLE);
 		}
 		else {

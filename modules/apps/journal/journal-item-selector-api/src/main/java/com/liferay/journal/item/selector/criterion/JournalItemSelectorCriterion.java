@@ -29,30 +29,28 @@ public class JournalItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_resourcePrimKey = resourcePrimKey;
 	}
 
-	public JournalItemSelectorCriterion(
-		long resourcePrimKey, long journalFolderId) {
-
+	public JournalItemSelectorCriterion(long resourcePrimKey, long folderId) {
 		_resourcePrimKey = resourcePrimKey;
-		_journalFolderId = journalFolderId;
+		_folderId = folderId;
 	}
 
-	public long getJournalFolderId() {
-		return _journalFolderId;
+	public long getFolderId() {
+		return _folderId;
 	}
 
 	public long getResourcePrimKey() {
 		return _resourcePrimKey;
 	}
 
-	public void setJournalFolderId(long journalFolderId) {
-		_journalFolderId = journalFolderId;
+	public void setFolderId(long folderId) {
+		_folderId = folderId;
 	}
 
 	public void setResourcePrimKey(long resourcePrimKey) {
 		_resourcePrimKey = resourcePrimKey;
 	}
 
-	private long _journalFolderId;
+	private long _folderId;
 	private long _resourcePrimKey;
 
 }

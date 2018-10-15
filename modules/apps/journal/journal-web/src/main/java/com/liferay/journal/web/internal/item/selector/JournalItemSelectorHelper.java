@@ -94,12 +94,10 @@ public class JournalItemSelectorHelper {
 			journalItemSelectorCriterion.setResourcePrimKey(
 				_article.getResourcePrimKey());
 
-			journalItemSelectorCriterion.setJournalFolderId(
-				_article.getFolderId());
+			journalItemSelectorCriterion.setFolderId(_article.getFolderId());
 		}
 		else if (_folder != null) {
-			journalItemSelectorCriterion.setJournalFolderId(
-				_folder.getFolderId());
+			journalItemSelectorCriterion.setFolderId(_folder.getFolderId());
 		}
 
 		ItemSelectorCriterion fileItemSelectorCriterion =

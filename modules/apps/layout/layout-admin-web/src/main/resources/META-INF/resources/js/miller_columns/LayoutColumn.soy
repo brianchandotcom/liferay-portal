@@ -16,6 +16,7 @@
 		title: string,
 		url: string
 	]>}
+	{@param layoutColumnIndex: number}
 	{@param handleLayoutColumnItemCheck: any}
 	{@param handleLayoutColumnItemCheckboxClick: any}
 	{@param handleLayoutColumnItemClick: any}
@@ -48,7 +49,11 @@
 		{/if}
 	{/let}
 
-	<ul class="{$layoutColumnClasses}" ref="layoutItemsWrapper">
+	<ul 
+		class="{$layoutColumnClasses}"
+		data-layout-column-index="{$layoutColumnIndex}"
+		ref="layoutItemsWrapper"
+	>
 		{foreach $layoutColumnItem in $layoutColumn}
 			{let $styleModifier kind="text"}
 				{if $hoveredLayoutColumnItemPlid == $layoutColumnItem.plid}

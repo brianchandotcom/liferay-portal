@@ -25,10 +25,4 @@ public interface PublicRenderParameter {
 
 	public QName getQName();
 
-	public void setIdentifier(String identifier);
-
-	public void setName(String name);
-
-	public void setQName(QName qName);
-
 }

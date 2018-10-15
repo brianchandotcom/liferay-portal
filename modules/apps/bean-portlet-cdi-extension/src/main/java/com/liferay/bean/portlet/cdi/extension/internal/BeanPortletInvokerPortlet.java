@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,10 +57,12 @@ import javax.portlet.ResourceServingPortlet;
 /**
  * @author Neil Griffin
  */
-public class BeanPortletInvoker
+public class BeanPortletInvokerPortlet
 	implements EventPortlet, HeaderPortlet, Portlet, ResourceServingPortlet {
 
-	public BeanPortletInvoker(Map<MethodType, List<BeanMethod>> beanMethods) {
+	public BeanPortletInvokerPortlet(
+		Map<MethodType, List<BeanMethod>> beanMethods) {
+
 		_beanMethods = beanMethods;
 	}
 
@@ -96,7 +99,7 @@ public class BeanPortletInvoker
 
 		List<BeanMethod> beanMethods = _beanMethods.get(MethodType.EVENT);
 
-		if (beanMethods == null) {
+		if ((beanMethods == null) || beanMethods.isEmpty()) {
 			return;
 		}
 
@@ -110,9 +113,7 @@ public class BeanPortletInvoker
 			}
 		}
 
-		if (!eventMethods.isEmpty()) {
-			_invokeBeanMethods(eventRequest, eventResponse, eventMethods);
-		}
+		_invokeBeanMethods(eventRequest, eventResponse, eventMethods);
 	}
 
 	@Override
@@ -144,10 +145,13 @@ public class BeanPortletInvoker
 	}
 
 	private void _invokeBeanMethod(BeanMethod beanMethod, Object... args)
-		throws IllegalAccessException, InvocationTargetException, IOException,
-			   PortletException {
+		throws IOException, PortletException, ReflectiveOperationException {
 
-		if (beanMethod.getType() == MethodType.ACTION) {
+		Method method = beanMethod.getMethod();
+
+		MethodType methodType = beanMethod.getMethodType();
+
+		if (methodType == MethodType.ACTION) {
 			ActionRequest actionRequest = (ActionRequest)args[0];
 
 			ActionParameters actionParameters =
@@ -162,7 +166,7 @@ public class BeanPortletInvoker
 				beanMethod.invoke(args);
 			}
 		}
-		else if (beanMethod.getType() == MethodType.RENDER) {
+		else if (methodType == MethodType.RENDER) {
 			RenderRequest renderRequest = (RenderRequest)args[0];
 
 			PortletMode portletMode = renderRequest.getPortletMode();
@@ -172,7 +176,7 @@ public class BeanPortletInvoker
 			if ((beanMethodPortletMode == null) ||
 				portletMode.equals(beanMethodPortletMode)) {
 
-				if (beanMethod.getParameterCount() == 0) {
+				if (method.getParameterCount() == 0) {
 					String markup = (String)beanMethod.invoke();
 
 					if (markup != null) {
@@ -189,8 +193,8 @@ public class BeanPortletInvoker
 				}
 			}
 		}
-		else if ((beanMethod.getType() == MethodType.SERVE_RESOURCE) &&
-				 (beanMethod.getParameterCount() == 0)) {
+		else if ((methodType == MethodType.SERVE_RESOURCE) &&
+				 (method.getParameterCount() == 0)) {
 
 			String markup = (String)beanMethod.invoke();
 
@@ -206,7 +210,7 @@ public class BeanPortletInvoker
 			beanMethod.invoke(args);
 		}
 
-		String include = beanMethod.getInclude();
+		String include = methodType.getInclude(method);
 
 		if (Validator.isNotNull(include)) {
 			PortletContext portletContext = _portletConfig.getPortletContext();
@@ -215,12 +219,12 @@ public class BeanPortletInvoker
 				portletContext.getRequestDispatcher(include);
 
 			if (portletRequestDispatcher != null) {
-				portletRequestDispatcher.include(
-					(PortletRequest)args[0], (PortletResponse)args[1]);
-			}
-			else {
 				_log.error(
 					"Unable to acquire dispatcher for include=" + include);
+			}
+			else {
+				portletRequestDispatcher.include(
+					(PortletRequest)args[0], (PortletResponse)args[1]);
 			}
 		}
 	}
@@ -229,7 +233,7 @@ public class BeanPortletInvoker
 			List<BeanMethod> beanMethods, Object... args)
 		throws PortletException {
 
-		if (beanMethods == null) {
+		if ((beanMethods == null) || beanMethods.isEmpty()) {
 			return;
 		}
 
@@ -260,7 +264,7 @@ public class BeanPortletInvoker
 			List<BeanMethod> beanMethods)
 		throws PortletException {
 
-		if (beanMethods == null) {
+		if ((beanMethods == null) || beanMethods.isEmpty()) {
 			return;
 		}
 
@@ -276,7 +280,7 @@ public class BeanPortletInvoker
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BeanPortletInvoker.class);
+		BeanPortletInvokerPortlet.class);
 
 	private final Map<MethodType, List<BeanMethod>> _beanMethods;
 	private PortletConfig _portletConfig;

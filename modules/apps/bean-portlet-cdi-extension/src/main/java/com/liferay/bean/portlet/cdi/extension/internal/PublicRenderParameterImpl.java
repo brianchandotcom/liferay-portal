@@ -19,18 +19,24 @@ import javax.xml.namespace.QName;
 /**
  * @author Neil Griffin
  */
-public abstract class BaseEventImpl implements Event {
+public class PublicRenderParameterImpl implements PublicRenderParameter {
+
+	public PublicRenderParameterImpl(String identifier, QName qName) {
+		_identifer = identifier;
+		_qName = qName;
+	}
+
+	@Override
+	public String getIdentifier() {
+		return _identifer;
+	}
 
 	@Override
 	public QName getQName() {
 		return _qName;
 	}
 
-	@Override
-	public void setQName(QName qName) {
-		_qName = qName;
-	}
-
-	private QName _qName;
+	private final String _identifer;
+	private final QName _qName;
 
 }

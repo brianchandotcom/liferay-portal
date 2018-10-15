@@ -14,17 +14,16 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+
+import java.util.Objects;
 
 /**
  * @author Neil Griffin
  */
 public class PortletDependency {
-
-	public PortletDependency() {
-		this(null, null, null);
-	}
 
 	public PortletDependency(String name, String scope, String version) {
 		_name = name;
@@ -32,28 +31,35 @@ public class PortletDependency {
 		_version = version;
 	}
 
-	public String getName() {
-		return _name;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if ((obj == null) || !(obj instanceof PortletDependency)) {
+			return false;
+		}
+
+		PortletDependency portletDependency = (PortletDependency)obj;
+
+		if (Objects.equals(_name, portletDependency._name) &&
+			Objects.equals(_scope, portletDependency._scope) &&
+			Objects.equals(_version, portletDependency._version)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
-	public String getScope() {
-		return _scope;
-	}
+	@Override
+	public int hashCode() {
+		int hashCode = HashUtil.hash(0, _name);
 
-	public String getVersion() {
-		return _version;
-	}
+		hashCode = HashUtil.hash(hashCode, _scope);
 
-	public void setName(String name) {
-		_name = name;
-	}
-
-	public void setScope(String scope) {
-		_scope = scope;
-	}
-
-	public void setVersion(String version) {
-		_version = version;
+		return HashUtil.hash(hashCode, _version);
 	}
 
 	@Override
@@ -79,8 +85,8 @@ public class PortletDependency {
 		return sb.toString();
 	}
 
-	private String _name;
-	private String _scope;
-	private String _version;
+	private final String _name;
+	private final String _scope;
+	private final String _version;
 
 }

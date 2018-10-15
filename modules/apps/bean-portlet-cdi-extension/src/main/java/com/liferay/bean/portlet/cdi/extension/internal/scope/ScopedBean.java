@@ -29,14 +29,15 @@ import javax.enterprise.context.spi.CreationalContext;
 public class ScopedBean<T> implements Serializable {
 
 	public ScopedBean(
-		String name, Contextual<T> bean, T beanInstance,
-		CreationalContext<T> creationalContext, String scopeName) {
+		String name, Contextual<T> bean, CreationalContext<T> creationalContext,
+		String scopeName) {
 
 		_name = name;
 		_bean = bean;
-		_beanInstance = beanInstance;
 		_creationalContext = creationalContext;
 		_scopeName = scopeName;
+
+		_beanInstance = bean.create(creationalContext);
 	}
 
 	public void destroy() {

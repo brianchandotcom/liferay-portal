@@ -36,7 +36,6 @@ import javax.portlet.Portlet;
 import javax.portlet.filter.PortletFilter;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletRegistration;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -46,67 +45,57 @@ import org.osgi.framework.ServiceRegistration;
  */
 public class RegistrationUtil {
 
-	public static List<ServiceRegistration<PortletFilter>> registerBeanFilter(
-		BundleContext bundleContext, String portletName,
-		Set<String> allPortletNames, BeanFilter beanFilter,
+	public static void registerBeanFilter(
+		List<ServiceRegistration<?>> registrations, BundleContext bundleContext,
+		String portletName, Set<String> allPortletNames, BeanFilter beanFilter,
 		BeanManager beanManager, ServletContext servletContext) {
-
-		List<ServiceRegistration<PortletFilter>> registrations =
-			new ArrayList<>();
-
-		String portletId = _getPortletId(
-			portletName, servletContext.getServletContextName());
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Registering bean filter: ", beanFilter.getFilterName(),
-					" for portletId: ", portletId));
-		}
-
-		Dictionary<String, Object> dictionary = beanFilter.toDictionary();
 
 		if ("*".equals(portletName)) {
 			for (String curPortletName : allPortletNames) {
-				dictionary.put("javax.portlet.name", curPortletName);
+				String portletId = _getPortletId(
+					curPortletName, servletContext.getServletContextName());
 
 				registrations.add(
-					bundleContext.registerService(
-						PortletFilter.class,
-						new BeanFilterInvoker(
-							beanFilter.getFilterClass(), beanManager),
-						dictionary));
+					_registerBeanFilter(
+						bundleContext, portletId, beanFilter, beanManager));
 			}
 		}
 		else {
-			dictionary.put("javax.portlet.name", portletName);
+			if (!allPortletNames.contains(portletName)) {
+				_log.error(
+					StringBundler.concat(
+						"Unable to register filter ",
+						beanFilter.getFilterName(),
+						" for non-existent portlet ", portletName));
+			}
+			else {
+				String portletId = _getPortletId(
+					portletName, servletContext.getServletContextName());
 
-			registrations.add(
-				bundleContext.registerService(
-					PortletFilter.class,
-					new BeanFilterInvoker(
-						beanFilter.getFilterClass(), beanManager),
-					dictionary));
+				registrations.add(
+					_registerBeanFilter(
+						bundleContext, portletId, beanFilter, beanManager));
+			}
 		}
 
+		@SuppressWarnings("unchecked")
 		List<String> beanFilterNames =
 			(List<String>)servletContext.getAttribute(
 				WebKeys.BEAN_FILTER_NAMES);
 
 		if (beanFilterNames == null) {
 			beanFilterNames = new ArrayList<>();
+
+			servletContext.setAttribute(
+				WebKeys.BEAN_FILTER_NAMES, beanFilterNames);
 		}
 
 		beanFilterNames.add(beanFilter.getFilterName());
-
-		servletContext.setAttribute(WebKeys.BEAN_FILTER_NAMES, beanFilterNames);
-
-		return registrations;
 	}
 
 	public static ServiceRegistration<Portlet> registerBeanPortlet(
-		BundleContext bundleContext, BeanPortlet beanPortlet,
-		ServletContext servletContext) {
+		BundleContext bundleContext, BeanApp beanApp, BeanPortlet beanPortlet,
+		ServletContext servletContext, List<String> beanPortletIds) {
 
 		try {
 			String portletId = _getPortletId(
@@ -117,35 +106,18 @@ public class RegistrationUtil {
 				_log.debug("Registering bean portlet: " + portletId);
 			}
 
-			Dictionary<String, Object> dictionary = beanPortlet.toDictionary();
+			Dictionary<String, Object> dictionary = beanPortlet.toDictionary(
+				beanApp);
 
 			dictionary.put("javax.portlet.name", portletId);
 
 			ServiceRegistration<Portlet> portletServiceRegistration =
 				bundleContext.registerService(
 					Portlet.class,
-					new BeanPortletInvoker(beanPortlet.getBeanMethods()),
+					new BeanPortletInvokerPortlet(beanPortlet.getBeanMethods()),
 					dictionary);
 
-			ServletRegistration.Dynamic servletRegistration =
-				servletContext.addServlet(
-					portletId + " Servlet",
-					"com.liferay.portal.kernel.servlet.PortletServlet");
-
-			servletRegistration.addMapping("/portlet-servlet/*");
-
-			List<String> beanPortletIds =
-				(List<String>)servletContext.getAttribute(
-					WebKeys.BEAN_PORTLET_IDS);
-
-			if (beanPortletIds == null) {
-				beanPortletIds = new ArrayList<>();
-			}
-
 			beanPortletIds.add(portletId);
-
-			servletContext.setAttribute(
-				WebKeys.BEAN_PORTLET_IDS, beanPortletIds);
 
 			return portletServiceRegistration;
 		}
@@ -191,6 +163,28 @@ public class RegistrationUtil {
 		}
 
 		return PortalUtil.getJsSafePortletId(portletName);
+	}
+
+	private static ServiceRegistration<PortletFilter> _registerBeanFilter(
+		BundleContext bundleContext, String portletId, BeanFilter beanFilter,
+		BeanManager beanManager) {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Registering bean filter: ", beanFilter.getFilterName(),
+					" for portletId: ", portletId));
+		}
+
+		Dictionary<String, Object> dictionary = beanFilter.toDictionary();
+
+		dictionary.put("javax.portlet.name", portletId);
+
+		return bundleContext.registerService(
+			PortletFilter.class,
+			new BeanFilterInvokerPortletFilter(
+				beanFilter.getFilterClass(), beanManager),
+			dictionary);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

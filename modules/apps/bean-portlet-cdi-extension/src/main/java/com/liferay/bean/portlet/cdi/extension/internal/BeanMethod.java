@@ -14,10 +14,11 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
-import java.lang.reflect.InvocationTargetException;
+import com.liferay.petra.lang.HashUtil;
+
 import java.lang.reflect.Method;
 
-import java.util.Set;
+import java.util.Objects;
 
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
@@ -27,31 +28,52 @@ import javax.portlet.ProcessAction;
 import javax.portlet.RenderMode;
 import javax.portlet.annotations.ActionMethod;
 import javax.portlet.annotations.EventMethod;
-import javax.portlet.annotations.HeaderMethod;
 import javax.portlet.annotations.PortletQName;
 import javax.portlet.annotations.RenderMethod;
-import javax.portlet.annotations.ServeResourceMethod;
 
 import javax.xml.namespace.QName;
 
 /**
  * @author Neil Griffin
  */
-public class BeanMethod {
+public class BeanMethod implements Comparable<BeanMethod> {
 
 	public BeanMethod(
-		BeanManager beanManager, MethodType type, Class<?> beanClass,
-		Method method, int ordinal) {
+		BeanManager beanManager, Bean<?> bean, MethodType type, Method method) {
 
 		_beanManager = beanManager;
-		_type = type;
-		_beanClass = beanClass;
+		_bean = bean;
+		_methodType = type;
 		_method = method;
-		_ordinal = ordinal;
 
-		Set<Bean<?>> beans = beanManager.getBeans(beanClass);
+		_ordinal = type.getOrdinal(method);
+	}
 
-		_bean = beanManager.resolve(beans);
+	@Override
+	public int compareTo(BeanMethod beanMethod) {
+		return Integer.compare(_ordinal, beanMethod._ordinal);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof BeanMethod)) {
+			return false;
+		}
+
+		BeanMethod beanMethod = (BeanMethod)obj;
+
+		if ((_ordinal == beanMethod._ordinal) &&
+			Objects.equals(_method, beanMethod.getMethod()) &&
+			(_methodType == beanMethod.getMethodType())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public String getActionName() {
@@ -75,49 +97,12 @@ public class BeanMethod {
 		return processAction.name();
 	}
 
-	public Class<?> getBeanClass() {
-		return _beanClass;
-	}
-
-	public String getInclude() {
-		if (_type == MethodType.HEADER) {
-			HeaderMethod headerMethod = _method.getAnnotation(
-				HeaderMethod.class);
-
-			if (headerMethod != null) {
-				return headerMethod.include();
-			}
-		}
-		else if (_type == MethodType.RENDER) {
-			RenderMethod renderMethod = _method.getAnnotation(
-				RenderMethod.class);
-
-			if (renderMethod != null) {
-				return renderMethod.include();
-			}
-		}
-		else if (_type == MethodType.SERVE_RESOURCE) {
-			ServeResourceMethod serveResourceMethod = _method.getAnnotation(
-				ServeResourceMethod.class);
-
-			if (serveResourceMethod != null) {
-				return serveResourceMethod.include();
-			}
-		}
-
-		return null;
-	}
-
 	public Method getMethod() {
 		return _method;
 	}
 
-	public int getOrdinal() {
-		return _ordinal;
-	}
-
-	public int getParameterCount() {
-		return _method.getParameterCount();
+	public MethodType getMethodType() {
+		return _methodType;
 	}
 
 	public PortletMode getPortletMode() {
@@ -140,23 +125,21 @@ public class BeanMethod {
 		return new PortletMode(renderMode.name());
 	}
 
-	public MethodType getType() {
-		return _type;
+	@Override
+	public int hashCode() {
+		int hashCode = HashUtil.hash(0, _method);
+
+		hashCode = HashUtil.hash(hashCode, _ordinal);
+
+		return HashUtil.hash(hashCode, _methodType);
 	}
 
-	public Object invoke(Object... args)
-		throws IllegalAccessException, InvocationTargetException {
-
+	public Object invoke(Object... args) throws ReflectiveOperationException {
 		Object beanInstance = _beanManager.getReference(
 			_bean, _bean.getBeanClass(),
 			_beanManager.createCreationalContext(_bean));
 
-		try {
-			return _method.invoke(beanInstance, args);
-		}
-		catch (IllegalArgumentException iae) {
-			throw new InvocationTargetException(iae);
-		}
+		return _method.invoke(beanInstance, args);
 	}
 
 	public boolean isEventProcessor(QName qName) {
@@ -184,10 +167,9 @@ public class BeanMethod {
 	}
 
 	private final Bean<?> _bean;
-	private final Class<?> _beanClass;
 	private final BeanManager _beanManager;
 	private final Method _method;
+	private final MethodType _methodType;
 	private final int _ordinal;
-	private final MethodType _type;
 
 }

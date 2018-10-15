@@ -80,11 +80,15 @@ class LayoutDragDrop extends State {
 				this._draggingItemPosition = DRAG_POSITIONS.bottom;
 			}
 
+			let targetColumnIndex = targetItem.dataset.layoutColumnIndex;
+			targetColumnIndex = targetColumnIndex === '0' ? null : targetColumnIndex;
+
 			this.emit(
 				'dragLayoutColumnItem',
 				{
 					position: this._draggingItemPosition,
 					sourceItemPlid,
+					targetColumnIndex,
 					targetItemPlid
 				}
 			);
@@ -132,13 +136,21 @@ class LayoutDragDrop extends State {
 		event.preventDefault();
 
 		const sourceItemPlid = data.source.dataset.layoutColumnItemPlid;
-		const targetItemPlid = data.target ?
-			data.target.dataset.layoutColumnItemPlid : null;
+		let targetColumnIndex = null;
+		let targetItemPlid = null;
+
+		if (data.target) {
+			targetColumnIndex = data.target.dataset.layoutColumnIndex;
+			targetColumnIndex = targetColumnIndex === '0' ?
+				null : targetColumnIndex;
+			targetItemPlid = data.target.dataset.layoutColumnItemPlid;
+		}
 
 		this.emit(
 			'moveLayoutColumnItem',
 			{
 				sourceItemPlid,
+				targetColumnIndex,
 				targetItemPlid
 			}
 		);

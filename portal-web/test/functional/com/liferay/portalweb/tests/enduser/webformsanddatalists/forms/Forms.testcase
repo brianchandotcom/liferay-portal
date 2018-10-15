@@ -2533,6 +2533,7 @@
 	</command>
 
 	<command name="PreviewAndPublishForm" priority="5">
+		<property name="environment.acceptance" value="true" />
 		<description message="This is a use case for LPS-61740" />
 
 		<execute macro="Navigator#openURL" />

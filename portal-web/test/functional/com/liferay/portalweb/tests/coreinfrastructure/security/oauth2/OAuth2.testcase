@@ -23,6 +23,8 @@
 	</tear-down>
 
 	<command name="addAndEditApplication">
+		<property name="environment.acceptance" value="true" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
@@ -184,6 +186,8 @@
 	</command>
 
 	<command name="viewAndRevokeGrantedAuthorizations">
+		<property name="environment.acceptance" value="true" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />

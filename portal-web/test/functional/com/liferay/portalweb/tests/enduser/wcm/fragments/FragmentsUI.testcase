@@ -68,6 +68,7 @@
 
 	<command name="AddFragmentToContentPage" priority="5">
 		<description message="Add a fragment in the UI and then assert that it displays properly when added to a content page." />
+		<property name="environment.acceptance" value="true" />
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="PortletEntry#publish" />

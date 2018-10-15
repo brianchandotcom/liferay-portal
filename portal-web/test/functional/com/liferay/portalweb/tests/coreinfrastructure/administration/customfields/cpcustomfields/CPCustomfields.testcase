@@ -252,6 +252,7 @@
 	</command>
 
 	<command name="EditCustomFieldUserBoolean" priority="5">
+		<property name="environment.acceptance" value="true" />
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoPortlet">

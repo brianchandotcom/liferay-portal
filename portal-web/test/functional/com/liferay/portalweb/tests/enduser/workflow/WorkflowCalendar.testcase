@@ -97,6 +97,7 @@
 	</tear-down>
 
 	<command name="ApproveEventWithInvitedUser" priority="5">
+		<property name="environment.acceptance" value="true" />
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="TestCase#getSiteName">

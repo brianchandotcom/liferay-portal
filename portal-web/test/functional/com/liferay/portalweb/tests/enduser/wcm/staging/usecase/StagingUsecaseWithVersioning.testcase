@@ -830,6 +830,8 @@
 	</command>
 
 	<command name="StagingPublishLast" priority="4">
+		<property name="environment.acceptance" value="true" />
+
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />
 		</execute>

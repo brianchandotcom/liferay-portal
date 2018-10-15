@@ -76,6 +76,8 @@
 	</command>
 
 	<command name="AddMBThread" priority="5">
+		<property name="environment.acceptance" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">

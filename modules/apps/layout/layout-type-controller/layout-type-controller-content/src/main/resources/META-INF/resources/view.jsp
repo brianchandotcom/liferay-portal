@@ -39,7 +39,7 @@ FragmentsEditorDisplayContext fragmentsEditorDisplayContext = new FragmentsEdito
 JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 %>
 
-<aui:script require="layout-admin-web/js/fragments_editor/reducers/changes.es as ChangesReducerModule, layout-admin-web/js/fragments_editor/reducers/fragments.es as FragmentsReducerModule, layout-admin-web/js/fragments_editor/reducers/placeholders.es as PlaceholdersReducerModule, layout-admin-web/js/fragments_editor/reducers/translations.es as TranslationsReducerModule, layout-admin-web/js/fragments_editor/reducers/sidebar.es as SidebarReducerModule, layout-admin-web/js/fragments_editor/store/store.es as StoreModule, layout-admin-web/js/fragments_editor/reducers/dialogs.es as DialogsReducerModule">
+<aui:script require="layout-admin-web/js/fragments_editor/components/edit_mode/DisabledAreaPopover.es as DisabledAreaPopoverModule, layout-admin-web/js/fragments_editor/reducers/changes.es as ChangesReducerModule, layout-admin-web/js/fragments_editor/reducers/fragments.es as FragmentsReducerModule, layout-admin-web/js/fragments_editor/reducers/placeholders.es as PlaceholdersReducerModule, layout-admin-web/js/fragments_editor/reducers/translations.es as TranslationsReducerModule, layout-admin-web/js/fragments_editor/reducers/sidebar.es as SidebarReducerModule, layout-admin-web/js/fragments_editor/store/store.es as StoreModule, layout-admin-web/js/fragments_editor/reducers/dialogs.es as DialogsReducerModule">
 	StoreModule.createStore(
 		<%= jsonSerializer.serializeDeep(fragmentsEditorDisplayContext.getEditorContext()) %>,
 		[
@@ -65,5 +65,11 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 			'<portlet:namespace />sidebar',
 			'<portlet:namespace />toolbar'
 		]
+	);
+
+	new DisabledAreaPopoverModule.DisabledAreaPopover(
+		{
+			selector: '#banner, #footer'
+		}
 	);
 </aui:script>

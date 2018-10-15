@@ -65,6 +65,43 @@ public class LiferayDynamicCapabilityTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_addRandomFileEntry(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
+	@Test
+	public void testCallCapabilityLocalRepositoryEventListenersOnlyOnce()
+		throws Exception {
+
+		AtomicInteger atomicInteger = new AtomicInteger(0);
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		TestRepositoryEventAwareCapability testRepositoryEventAwareCapability =
+			repositoryEventRegistry ->
+				repositoryEventRegistry.registerRepositoryEventListener(
+					RepositoryEventType.Add.class, FileEntry.class,
+					fileEntry -> atomicInteger.incrementAndGet());
+
+		ServiceRegistration<Capability> capabilityServiceRegistration =
+			registry.registerService(
+				Capability.class, testRepositoryEventAwareCapability);
+
+		capabilityServiceRegistration.unregister();
+
+		capabilityServiceRegistration = registry.registerService(
+			Capability.class, testRepositoryEventAwareCapability);
+
+		try {
+			_addRandomFileEntry(
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+			Assert.assertEquals(1, atomicInteger.get());
+		}
+		finally {
+			capabilityServiceRegistration.unregister();
+		}
 	}
 
 	@Test

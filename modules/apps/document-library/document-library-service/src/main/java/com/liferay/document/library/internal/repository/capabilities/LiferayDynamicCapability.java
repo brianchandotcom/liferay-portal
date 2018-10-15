@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.capabilities.DynamicCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventAware;
+import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
+import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.repository.util.LocalRepositoryWrapper;
 import com.liferay.portal.repository.util.RepositoryWrapper;
@@ -55,7 +57,7 @@ public class LiferayDynamicCapability
 
 					_dynamicCapabilities.add(capability);
 
-					_updateRepositoryWrappers();
+					_updateDynamicCapabilities();
 
 					return capability;
 				}
@@ -77,7 +79,7 @@ public class LiferayDynamicCapability
 
 					_dynamicCapabilities.remove(capability);
 
-					_updateRepositoryWrappers();
+					_updateDynamicCapabilities();
 				}
 
 			});
@@ -90,6 +92,10 @@ public class LiferayDynamicCapability
 	@Override
 	public void registerRepositoryEventListeners(
 		RepositoryEventRegistry repositoryEventRegistry) {
+
+		_repositoryEventRegistry = repositoryEventRegistry;
+
+		_registerRepositoryEventListeners();
 	}
 
 	@Override
@@ -133,6 +139,36 @@ public class LiferayDynamicCapability
 			super(repository);
 		}
 
+	}
+
+	private DynamicCapabilitiesRepositoryEventRegistryWrapper
+		_getRepositoryEventRegistry(Capability capability) {
+
+		return _dynamicCapabilitiesRepositoryEventRegistryWrapperMap.
+			computeIfAbsent(
+				capability,
+				key -> new DynamicCapabilitiesRepositoryEventRegistryWrapper(
+					capability));
+	}
+
+	private void _registerRepositoryEventListeners() {
+		for (Capability capability : _dynamicCapabilities) {
+			if (capability instanceof RepositoryEventAware) {
+				RepositoryEventAware repositoryEventAware =
+					(RepositoryEventAware)capability;
+
+				repositoryEventAware.registerRepositoryEventListeners(
+					_getRepositoryEventRegistry(capability));
+			}
+		}
+	}
+
+	private void _updateDynamicCapabilities() {
+		_updateRepositoryWrappers();
+
+		if (_repositoryEventRegistry != null) {
+			_registerRepositoryEventListeners();
+		}
 	}
 
 	private void _updateRepositoryWrappers() {
@@ -199,9 +235,42 @@ public class LiferayDynamicCapability
 
 	private final ServiceTrackerList<Capability, Capability> _capabilities;
 	private final Set<Capability> _dynamicCapabilities = new HashSet<>();
+	private final Map
+		<Capability, DynamicCapabilitiesRepositoryEventRegistryWrapper>
+			_dynamicCapabilitiesRepositoryEventRegistryWrapperMap =
+				new HashMap<>();
 	private final Map<LocalRepositoryWrapper, LocalRepository>
 		_localRepositoriesMap = new HashMap<>();
 	private final Map<RepositoryWrapper, Repository> _repositoriesMap =
 		new HashMap<>();
+	private RepositoryEventRegistry _repositoryEventRegistry;
+
+	private class DynamicCapabilitiesRepositoryEventRegistryWrapper
+		implements RepositoryEventRegistry {
+
+		public DynamicCapabilitiesRepositoryEventRegistryWrapper(
+			Capability capability) {
+
+			_capability = capability;
+		}
+
+		@Override
+		public <S extends RepositoryEventType, T> void
+			registerRepositoryEventListener(
+				Class<S> repositoryEventTypeClass, Class<T> modelClass,
+				RepositoryEventListener<S, T> repositoryEventListeners) {
+
+			_repositoryEventRegistry.registerRepositoryEventListener(
+				repositoryEventTypeClass, modelClass,
+				model -> {
+					if (_dynamicCapabilities.contains(_capability)) {
+						repositoryEventListeners.execute(model);
+					}
+				});
+		}
+
+		private final Capability _capability;
+
+	}
 
 }

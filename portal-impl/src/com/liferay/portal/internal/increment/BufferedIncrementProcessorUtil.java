@@ -48,14 +48,7 @@ public class BufferedIncrementProcessorUtil {
 						bufferedIncrementProcessor);
 				});
 
-		BufferedIncrementConfiguration bufferedIncrementConfiguration =
-			entry.getKey();
-
-		if (bufferedIncrementConfiguration.isEnabled()) {
-			return entry.getValue();
-		}
-
-		return null;
+		return entry.getValue();
 	}
 
 	public void destroy() {

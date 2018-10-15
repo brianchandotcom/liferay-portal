@@ -623,6 +623,10 @@ public class ConfigurationPersistenceManager
 	protected Dictionary<?, ?> toDictionary(String dictionaryString)
 		throws IOException {
 
+		if (dictionaryString == null) {
+			return new Hashtable<>();
+		}
+
 		Dictionary<Object, Object> dictionary = ConfigurationHandler.read(
 			new UnsyncByteArrayInputStream(
 				dictionaryString.getBytes(StringPool.UTF8)));

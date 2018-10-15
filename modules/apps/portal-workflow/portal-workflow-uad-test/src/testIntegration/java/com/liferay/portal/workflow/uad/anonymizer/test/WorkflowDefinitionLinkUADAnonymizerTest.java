@@ -20,16 +20,16 @@ import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.workflow.uad.test.WorkflowDefinitionLinkUADTestHelper;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -46,12 +46,6 @@ public class WorkflowDefinitionLinkUADAnonymizerTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_workflowDefinitionLinkUADTestHelper.cleanUpDependencies(
-			_workflowDefinitionLinks);
-	}
-
 	@Override
 	protected WorkflowDefinitionLink addBaseModel(long userId)
 		throws Exception {
@@ -65,21 +59,16 @@ public class WorkflowDefinitionLinkUADAnonymizerTest
 		throws Exception {
 
 		WorkflowDefinitionLink workflowDefinitionLink =
-			_workflowDefinitionLinkUADTestHelper.addWorkflowDefinitionLink(
-				userId);
+			_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
+				userId, TestPropsValues.getCompanyId(),
+				TestPropsValues.getGroupId(), null, 0, 0,
+				RandomTestUtil.randomString(), 0);
 
 		if (deleteAfterTestRun) {
 			_workflowDefinitionLinks.add(workflowDefinitionLink);
 		}
 
 		return workflowDefinitionLink;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<WorkflowDefinitionLink> baseModels)
-		throws Exception {
-
-		_workflowDefinitionLinkUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -127,9 +116,5 @@ public class WorkflowDefinitionLinkUADAnonymizerTest
 	@DeleteAfterTestRun
 	private final List<WorkflowDefinitionLink> _workflowDefinitionLinks =
 		new ArrayList<>();
-
-	@Inject
-	private WorkflowDefinitionLinkUADTestHelper
-		_workflowDefinitionLinkUADTestHelper;
 
 }

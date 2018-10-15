@@ -15,42 +15,36 @@
 package com.liferay.portal.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.PortletItemLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.uad.test.PortletItemUADTestHelper;
-
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
-
-import org.junit.After;
-import org.junit.ClassRule;
-import org.junit.Rule;
-
-import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.runner.RunWith;
+
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
 @RunWith(Arquillian.class)
-public class PortletItemUADAnonymizerTest extends BaseUADAnonymizerTestCase<PortletItem> {
+public class PortletItemUADAnonymizerTest
+	extends BaseUADAnonymizerTestCase<PortletItem> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
-
-	@After
-	public void tearDown() throws Exception {
-		_portletItemUADTestHelper.cleanUpDependencies(_portletItems);
-	}
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Override
 	protected PortletItem addBaseModel(long userId) throws Exception {
@@ -60,19 +54,16 @@ public class PortletItemUADAnonymizerTest extends BaseUADAnonymizerTestCase<Port
 	@Override
 	protected PortletItem addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
-		PortletItem portletItem = _portletItemUADTestHelper.addPortletItem(userId);
+
+		PortletItem portletItem = _portletItemLocalService.addPortletItem(
+			userId, TestPropsValues.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		if (deleteAfterTestRun) {
 			_portletItems.add(portletItem);
 		}
 
 		return portletItem;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<PortletItem> baseModels)
-		throws Exception {
-		_portletItemUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -83,12 +74,15 @@ public class PortletItemUADAnonymizerTest extends BaseUADAnonymizerTestCase<Port
 	@Override
 	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
-		PortletItem portletItem = _portletItemLocalService.getPortletItem(baseModelPK);
+
+		PortletItem portletItem = _portletItemLocalService.getPortletItem(
+			baseModelPK);
 
 		String userName = portletItem.getUserName();
 
 		if ((portletItem.getUserId() != user.getUserId()) &&
-				!userName.equals(user.getFullName())) {
+			!userName.equals(user.getFullName())) {
+
 			return true;
 		}
 
@@ -104,12 +98,13 @@ public class PortletItemUADAnonymizerTest extends BaseUADAnonymizerTestCase<Port
 		return false;
 	}
 
-	@DeleteAfterTestRun
-	private final List<PortletItem> _portletItems = new ArrayList<PortletItem>();
 	@Inject
 	private PortletItemLocalService _portletItemLocalService;
-	@Inject
-	private PortletItemUADTestHelper _portletItemUADTestHelper;
+
+	@DeleteAfterTestRun
+	private final List<PortletItem> _portletItems = new ArrayList<>();
+
 	@Inject(filter = "component.name=*.PortletItemUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
+
 }

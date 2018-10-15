@@ -17,7 +17,7 @@ package com.liferay.message.boards.uad.anonymizer.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalService;
-import com.liferay.message.boards.uad.test.MBCategoryUADTestHelper;
+import com.liferay.message.boards.uad.test.MBCategoryUADTestUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -30,7 +30,6 @@ import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -54,17 +53,12 @@ public class MBCategoryUADAnonymizerTest
 		throws Exception {
 
 		MBCategory mbCategory =
-			_mbCategoryUADTestHelper.addMBCategoryWithStatusByUserId(
-				userId, statusByUserId);
+			MBCategoryUADTestUtil.addMBCategoryWithStatusByUserId(
+				_mbCategoryLocalService, userId, statusByUserId);
 
 		_mbCategories.add(mbCategory);
 
 		return mbCategory;
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_mbCategoryUADTestHelper.cleanUpDependencies(_mbCategories);
 	}
 
 	@Override
@@ -76,20 +70,14 @@ public class MBCategoryUADAnonymizerTest
 	protected MBCategory addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		MBCategory mbCategory = _mbCategoryUADTestHelper.addMBCategory(userId);
+		MBCategory mbCategory = MBCategoryUADTestUtil.addMBCategory(
+			_mbCategoryLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_mbCategories.add(mbCategory);
 		}
 
 		return mbCategory;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<MBCategory> baseModels)
-		throws Exception {
-
-		_mbCategoryUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -132,9 +120,6 @@ public class MBCategoryUADAnonymizerTest
 
 	@Inject
 	private MBCategoryLocalService _mbCategoryLocalService;
-
-	@Inject
-	private MBCategoryUADTestHelper _mbCategoryUADTestHelper;
 
 	@Inject(filter = "component.name=*.MBCategoryUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

@@ -15,12 +15,14 @@
 package com.liferay.notifications.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.notifications.uad.test.UserNotificationEventUADTestHelper;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
@@ -29,7 +31,6 @@ import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -46,12 +47,6 @@ public class UserNotificationEventUADAnonymizerTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_userNotificationEventUADTestHelper.cleanUpDependencies(
-			_userNotificationEvents);
-	}
-
 	@Override
 	protected UserNotificationEvent addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
@@ -63,21 +58,17 @@ public class UserNotificationEventUADAnonymizerTest
 		throws Exception {
 
 		UserNotificationEvent userNotificationEvent =
-			_userNotificationEventUADTestHelper.addUserNotificationEvent(
-				userId);
+			_userNotificationEventLocalService.addUserNotificationEvent(
+				userId, RandomTestUtil.randomString(), 0,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE, 0,
+				RandomTestUtil.randomString(), false,
+				ServiceContextTestUtil.getServiceContext());
 
 		if (deleteAfterTestRun) {
 			_userNotificationEvents.add(userNotificationEvent);
 		}
 
 		return userNotificationEvent;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<UserNotificationEvent> baseModels)
-		throws Exception {
-
-		_userNotificationEventUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -113,9 +104,5 @@ public class UserNotificationEventUADAnonymizerTest
 	@DeleteAfterTestRun
 	private final List<UserNotificationEvent> _userNotificationEvents =
 		new ArrayList<>();
-
-	@Inject
-	private UserNotificationEventUADTestHelper
-		_userNotificationEventUADTestHelper;
 
 }

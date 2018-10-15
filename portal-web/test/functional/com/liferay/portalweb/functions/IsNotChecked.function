@@ -2,6 +2,10 @@
 	<command name="isNotChecked">
 		<execute function="WaitForSPARefresh" />
 
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="waitForVisible" />
+
 		<execute selenium="isNotChecked" />
 	</command>
 </definition>

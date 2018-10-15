@@ -321,14 +321,6 @@ public class StructuredContentApioTest {
 		Assert.assertTrue(href.startsWith(hrefs.get(0)));
 	}
 
-	private Map<String, String> _getHeaders() {
-		return new HashMap<String, String>() {
-			{
-				put("Accept", "application/hal+json");
-			}
-		};
-	}
-
 	private JSONWebServiceClient _getGuestJSONWebServiceClient() {
 		JSONWebServiceClient jsonWebServiceClient =
 			new JSONWebServiceClientImpl();
@@ -338,6 +330,14 @@ public class StructuredContentApioTest {
 		jsonWebServiceClient.setProtocol(_rootEndpointURL.getProtocol());
 
 		return jsonWebServiceClient;
+	}
+
+	private Map<String, String> _getHeaders() {
+		return new HashMap<String, String>() {
+			{
+				put("Accept", "application/hal+json");
+			}
+		};
 	}
 
 	private JSONWebServiceClient _getJSONWebServiceClient(
@@ -372,8 +372,7 @@ public class StructuredContentApioTest {
 			Map<String, String> headers)
 		throws Exception {
 
-		return jsonWebServiceClient.doGet(
-			url, Collections.emptyMap(), headers);
+		return jsonWebServiceClient.doGet(url, Collections.emptyMap(), headers);
 	}
 
 	private String _toStringAsAdmin(String url) throws Exception {

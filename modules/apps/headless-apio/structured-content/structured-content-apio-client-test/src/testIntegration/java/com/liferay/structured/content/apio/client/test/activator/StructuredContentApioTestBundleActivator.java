@@ -65,18 +65,6 @@ public class StructuredContentApioTestBundleActivator
 	public static final String SITE_NAME =
 		StructuredContentApioTestBundleActivator.class.getSimpleName() + "Site";
 
-	public static final String TITLE_NO_GUEST_NO_GROUP =
-		StructuredContentApioTestBundleActivator.class.getSimpleName() +
-			"NoGuestNoGroupTitle";
-
-	public static final String TITLE_NO_GUEST_YES_GROUP =
-		StructuredContentApioTestBundleActivator.class.getSimpleName() +
-			"NoGuestYesGroupTitle";
-
-	public static final String TITLE_YES_GUEST_YES_GROUP =
-		StructuredContentApioTestBundleActivator.class.getSimpleName() +
-			"YesGuestYesGroupTitle";
-
 	public static final String TITLE_1_LOCALE_ES =
 		StructuredContentApioTestBundleActivator.class.getSimpleName() +
 			"Title1_es";
@@ -88,6 +76,18 @@ public class StructuredContentApioTestBundleActivator
 	public static final String TITLE_2_LOCALE_ES =
 		StructuredContentApioTestBundleActivator.class.getSimpleName() +
 			"Title2_es";
+
+	public static final String TITLE_NO_GUEST_NO_GROUP =
+		StructuredContentApioTestBundleActivator.class.getSimpleName() +
+			"NoGuestNoGroupTitle";
+
+	public static final String TITLE_NO_GUEST_YES_GROUP =
+		StructuredContentApioTestBundleActivator.class.getSimpleName() +
+			"NoGuestYesGroupTitle";
+
+	public static final String TITLE_YES_GUEST_YES_GROUP =
+		StructuredContentApioTestBundleActivator.class.getSimpleName() +
+			"YesGuestYesGroupTitle";
 
 	@Override
 	public void start(BundleContext bundleContext) {

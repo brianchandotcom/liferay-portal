@@ -18,6 +18,7 @@
 
 <%
 JournalArticle article = journalDisplayContext.getArticle();
+JournalFolder folder = journalDisplayContext.getFolder();
 
 long groupId = BeanParamUtil.getLong(article, request, "groupId", scopeGroupId);
 
@@ -130,13 +131,19 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 		/>
 	</div>
 
+	<%
+	JournalItemSelectorHelper journalItemSelectorHelper = new JournalItemSelectorHelper(article, folder, renderRequest, renderResponse);
+	%>
+
 	<div class="article-content-content" style="border-top: solid 1px #ccc; margin-top: 24px; padding-top: 8px;">
 		<liferay-ddm:html
 			checkRequired="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>"
 			classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
 			classPK="<%= ddmStructure.getStructureId() %>"
 			ddmFormValues="<%= journalDisplayContext.getDDMFormValues(ddmStructure) %>"
+			documentLibrarySelectorURL="<%= String.valueOf(journalItemSelectorHelper.getDocumentLibrarySelectorURL()) %>"
 			ignoreRequestValue="<%= changeStructure %>"
+			imageSelectorURL="<%= String.valueOf(journalItemSelectorHelper.getImageSelectorURL()) %>"
 			requestedLocale="<%= locale %>"
 		/>
 	</div>

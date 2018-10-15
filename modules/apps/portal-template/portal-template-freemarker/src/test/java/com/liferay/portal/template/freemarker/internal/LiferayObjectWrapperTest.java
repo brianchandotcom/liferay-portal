@@ -141,71 +141,71 @@ public class LiferayObjectWrapperTest {
 
 	@Test
 	public void testConstructor() {
-		Assert.assertEquals(
-			Collections.emptyList(),
-			ReflectionTestUtil.getFieldValue(
-				new LiferayObjectWrapper(null, null), "_allowedClassNames"));
-		Assert.assertEquals(
-			Collections.emptyList(),
-			ReflectionTestUtil.getFieldValue(
-				new LiferayObjectWrapper(null, null), "_restrictedClasses"));
-		Assert.assertEquals(
-			Collections.emptyList(),
-			ReflectionTestUtil.getFieldValue(
-				new LiferayObjectWrapper(null, null),
-				"_restrictedPackageNames"));
-		Assert.assertFalse(
-			"_allowAllClasses should be false if \"*\" is not in " +
-				"_allowedClassNames",
-			ReflectionTestUtil.getFieldValue(
-				new LiferayObjectWrapper(null, null), "_allowAllClasses"));
+		_assertLiferayObjectWrapper(
+			new LiferayObjectWrapper(null, null), Collections.emptyList(),
+			Collections.emptyList(), Collections.emptyList(), false);
 
-		Assert.assertEquals(
-			Collections.singletonList(StringPool.STAR),
-			ReflectionTestUtil.getFieldValue(
-				new LiferayObjectWrapper(new String[] {StringPool.STAR}, null),
-				"_allowedClassNames"));
-		Assert.assertTrue(
-			"_allowAllClasses should be true if \"*\" is in _allowedClassNames",
-			ReflectionTestUtil.getFieldValue(
-				new LiferayObjectWrapper(new String[] {StringPool.STAR}, null),
-				"_allowAllClasses"));
+		_assertLiferayObjectWrapper(
+			new LiferayObjectWrapper(new String[] {StringPool.STAR}, null),
+			Collections.singletonList(StringPool.STAR), Collections.emptyList(),
+			Collections.emptyList(), true);
 
-		Assert.assertEquals(
-			Collections.emptyList(),
-			ReflectionTestUtil.getFieldValue(
-				new LiferayObjectWrapper(new String[] {StringPool.BLANK}, null),
-				"_allowedClassNames"));
+		_assertLiferayObjectWrapper(
+			new LiferayObjectWrapper(
+				new String[] {StringPool.BLANK},
+				new String[] {StringPool.BLANK}),
+			Collections.emptyList(), Collections.emptyList(),
+			Collections.emptyList(), false);
 
-		Assert.assertEquals(
+		_assertLiferayObjectWrapper(
+			new LiferayObjectWrapper(
+				new String[] {"com.liferay.allowed.Class"}, null),
 			Collections.singletonList("com.liferay.allowed.Class"),
-			ReflectionTestUtil.getFieldValue(
-				new LiferayObjectWrapper(
-					new String[] {"com.liferay.allowed.Class"}, null),
-				"_allowedClassNames"));
+			Collections.emptyList(), Collections.emptyList(), false);
 
-		Assert.assertEquals(
+		_assertLiferayObjectWrapper(
+			new LiferayObjectWrapper(
+				null, new String[] {LiferayObjectWrapper.class.getName()}),
 			Collections.emptyList(),
-			ReflectionTestUtil.getFieldValue(
-				new LiferayObjectWrapper(null, new String[] {StringPool.BLANK}),
-				"_restrictedClasses"));
-
-		Assert.assertEquals(
 			Collections.singletonList(LiferayObjectWrapper.class),
-			ReflectionTestUtil.getFieldValue(
+			Collections.emptyList(), false);
+
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LiferayObjectWrapper.class.getName(), Level.INFO)) {
+
+			_assertLiferayObjectWrapper(
 				new LiferayObjectWrapper(
-					null, new String[] {LiferayObjectWrapper.class.getName()}),
-				"_restrictedClasses"));
+					null, new String[] {"com.liferay.package.name"}),
+				Collections.emptyList(), Collections.emptyList(),
+				Collections.singletonList("com.liferay.package.name"), false);
 
-		_testContstructorRestrictedPackageNames(
-			Collections.emptyList(),
-			Collections.singletonList("com.liferay.package.name"), 0,
-			new String[] {"com.liferay.package.name"}, Level.OFF);
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		_testContstructorRestrictedPackageNames(
-			Collections.emptyList(),
-			Collections.singletonList("com.liferay.package.name"), 1,
-			new String[] {"com.liferay.package.name"}, Level.INFO);
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Unable to find restricted class com.liferay.package.name. " +
+					"Registering as a package.",
+				logRecord.getMessage());
+		}
+
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LiferayObjectWrapper.class.getName(), Level.OFF)) {
+
+			_assertLiferayObjectWrapper(
+				new LiferayObjectWrapper(
+					null, new String[] {"com.liferay.package.name"}),
+				Collections.emptyList(), Collections.emptyList(),
+				Collections.singletonList("com.liferay.package.name"), false);
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(logRecords.toString(), 0, logRecords.size());
+		}
 	}
 
 	@Test
@@ -475,42 +475,39 @@ public class LiferayObjectWrapperTest {
 			modelFactories.get(clazz));
 	}
 
-	private void _testContstructorRestrictedPackageNames(
+	private void _assertLiferayObjectWrapper(
+		LiferayObjectWrapper liferayObjectWrapper,
+		List<String> expectedAllowedClassNames,
 		List<Class<?>> expectedRestrictedClasses,
-		List<String> expectedRestrictedPackageNames, int expectedLogSize,
-		String[] restrictedClassNames, Level level) {
+		List<String> expectedRestrictedPackageNames,
+		boolean expectedAllowAllClasses) {
 
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					LiferayObjectWrapper.class.getName(), level)) {
+		Assert.assertEquals(
+			expectedAllowedClassNames,
+			ReflectionTestUtil.getFieldValue(
+				liferayObjectWrapper, "_allowedClassNames"));
+		Assert.assertEquals(
+			expectedRestrictedClasses,
+			ReflectionTestUtil.getFieldValue(
+				liferayObjectWrapper, "_restrictedClasses"));
+		Assert.assertEquals(
+			expectedRestrictedPackageNames,
+			ReflectionTestUtil.getFieldValue(
+				liferayObjectWrapper, "_restrictedPackageNames"));
 
-			LiferayObjectWrapper liferayObjectWrapper =
-				new LiferayObjectWrapper(null, restrictedClassNames);
-
-			Assert.assertEquals(
-				expectedRestrictedClasses,
+		if (expectedAllowAllClasses) {
+			Assert.assertTrue(
+				"_allowAllClasses should be true since \"*\" is in " +
+					"_allowedClassNames",
 				ReflectionTestUtil.getFieldValue(
-					liferayObjectWrapper, "_restrictedClasses"));
-
-			Assert.assertEquals(
-				expectedRestrictedPackageNames,
+					liferayObjectWrapper, "_allowAllClasses"));
+		}
+		else {
+			Assert.assertFalse(
+				"_allowAllClasses should be false since \"*\" is not in " +
+					"_allowedClassNames",
 				ReflectionTestUtil.getFieldValue(
-					liferayObjectWrapper, "_restrictedPackageNames"));
-
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
-
-			Assert.assertEquals(
-				logRecords.toString(), expectedLogSize, logRecords.size());
-
-			if (Level.INFO.equals(level)) {
-				LogRecord logRecord = logRecords.get(0);
-
-				Assert.assertEquals(
-					StringBundler.concat(
-						"Unable to find restricted class ",
-						restrictedClassNames[0], ". Registering as a package."),
-					logRecord.getMessage());
-			}
+					liferayObjectWrapper, "_allowAllClasses"));
 		}
 	}
 

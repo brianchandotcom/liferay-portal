@@ -41,7 +41,7 @@ public class InviteMembersServiceUpgrade implements UpgradeStepRegistrator {
 		Class<?>[] upgradeDatetimeTableClasses = {MemberRequestTable.class};
 
 		registry.register(
-			"1.0.0", "2.0.0",
+			"1.0.1", "2.0.0",
 			new BaseUpgradeSQLServerDatetime(upgradeDatetimeTableClasses));
 	}
 

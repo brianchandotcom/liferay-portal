@@ -94,7 +94,7 @@ class PublishButton extends Component {
 				);
 			}
 		).catch(
-			() => {
+			err => {
 				Notifications.showError(strings['your-request-failed-to-complete']);
 			}
 		);

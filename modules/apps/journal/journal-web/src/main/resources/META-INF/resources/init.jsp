@@ -130,6 +130,7 @@ page import="com.liferay.journal.web.internal.display.context.JournalSelectDDMSt
 page import="com.liferay.journal.web.internal.display.context.JournalSelectDDMTemplateDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalViewMoreMenuItemsDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.util.JournalWebRequestHelper" %><%@
+page import="com.liferay.journal.web.internal.item.selector.JournalItemSelectorHelper" %><%@
 page import="com.liferay.journal.web.internal.portlet.JournalPortlet" %><%@
 page import="com.liferay.journal.web.internal.portlet.action.ActionUtil" %><%@
 page import="com.liferay.journal.web.internal.security.permission.resource.DDMStructurePermission" %><%@

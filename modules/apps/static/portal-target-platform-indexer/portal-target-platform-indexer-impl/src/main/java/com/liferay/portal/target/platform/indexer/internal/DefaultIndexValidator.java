@@ -95,7 +95,7 @@ public class DefaultIndexValidator implements IndexValidator {
 
 			List<ResolverValidator.Resolution> resolutions;
 
-			try (OSGiRepository repository = new OSGiRepository();
+			try (OSGiRepository oSGiRepository = new OSGiRepository();
 				HttpClient httpClient = new HttpClient()) {
 
 				Map<String, String> map = new HashMap<>();
@@ -103,21 +103,21 @@ public class DefaultIndexValidator implements IndexValidator {
 				map.put("locations", Strings.join(indexURIs));
 				map.put("poll.time", "0");
 
-				repository.setProperties(map);
+				oSGiRepository.setProperties(map);
 
-				Processor registry = new Processor();
+				Processor processor = new Processor();
 
-				registry.addBasicPlugin(httpClient);
+				processor.addBasicPlugin(httpClient);
 
-				repository.setRegistry(registry);
+				oSGiRepository.setRegistry(processor);
 
-				repository.setReporter(resolverValidator);
+				oSGiRepository.setReporter(resolverValidator);
 
 				Set<Resource> resources = ResolverValidator.getAllResources(
-					repository);
+					oSGiRepository);
 
 				resolutions = resolverValidator.validateResources(
-					repository, resources);
+					oSGiRepository, resources);
 			}
 
 			for (ResolverValidator.Resolution resolution : resolutions) {

@@ -335,7 +335,10 @@ class Layout extends Component {
 	 */
 
 	_handleLayoutColumnItemCheck(event) {
-		this._setLayoutColumnItemChecked(event.delegateTarget.value);
+		this._setLayoutColumnItemChecked(
+			event.delegateTarget.value,
+			event.delegateTarget.checked
+		);
 	}
 
 	/**
@@ -651,13 +654,14 @@ class Layout extends Component {
 	}
 
 	/** Set an item active property to true
-	 * @param {string} plid
+	 * @param {!string} plid
+	 * @param {!boolean} checked
 	 * @private
 	 * @return {object|null}
 	 * @review
 	 */
 
-	_setLayoutColumnItemChecked(plid) {
+	_setLayoutColumnItemChecked(plid, checked) {
 		const column = this._getParentColumnByPlid(this.layoutColumns, plid);
 		const columnIndex = this.layoutColumns.indexOf(column);
 		const item = this._getLayoutColumnItemByPlid(this.layoutColumns, plid);
@@ -669,7 +673,7 @@ class Layout extends Component {
 				column.indexOf(item),
 				'checked'
 			],
-			true
+			checked
 		);
 	}
 

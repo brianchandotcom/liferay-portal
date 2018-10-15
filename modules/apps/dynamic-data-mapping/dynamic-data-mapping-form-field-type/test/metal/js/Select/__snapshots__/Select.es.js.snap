@@ -2,7 +2,6 @@
 
 exports[`Select should be closed by default 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
       <div class="option-selected option-selected-placeholder"></div>
@@ -24,7 +23,6 @@ exports[`Select should be closed by default 1`] = `
 
 exports[`Select should be not edidable 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
       <div class="option-selected option-selected-placeholder"></div>
@@ -46,7 +44,6 @@ exports[`Select should be not edidable 1`] = `
 
 exports[`Select should have a helptext 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
       <div class="option-selected option-selected-placeholder"></div>
@@ -69,7 +66,6 @@ exports[`Select should have a helptext 1`] = `
 
 exports[`Select should have a key 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
       <div class="option-selected option-selected-placeholder"></div>
@@ -113,7 +109,6 @@ exports[`Select should have a label 1`] = `
 
 exports[`Select should have a placeholder 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
       <div class="option-selected option-selected-placeholder">Placeholder</div>
@@ -135,7 +130,6 @@ exports[`Select should have a placeholder 1`] = `
 
 exports[`Select should have a predefinedValue 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
       <div class="option-selected option-selected-placeholder"></div>
@@ -157,7 +151,6 @@ exports[`Select should have a predefinedValue 1`] = `
 
 exports[`Select should have a spritemap 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
       <div class="option-selected option-selected-placeholder"></div>
@@ -179,7 +172,6 @@ exports[`Select should have a spritemap 1`] = `
 
 exports[`Select should have a value 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
       <div class="option-selected option-selected-placeholder"></div>
@@ -201,7 +193,6 @@ exports[`Select should have a value 1`] = `
 
 exports[`Select should have an id 1`] = `
 <div class="form-group">
-  <label for="ID"></label>
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger" id="ID">
       <div class="option-selected option-selected-placeholder"></div>
@@ -223,7 +214,6 @@ exports[`Select should have an id 1`] = `
 
 exports[`Select should have class dropdown-opened when it's opened 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
       <div class="option-selected option-selected-placeholder"></div>
@@ -245,7 +235,6 @@ exports[`Select should have class dropdown-opened when it's opened 1`] = `
 
 exports[`Select should not be required 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
       <div class="option-selected option-selected-placeholder"></div>
@@ -289,7 +278,6 @@ exports[`Select should render Label if showLabel is true 1`] = `
 
 exports[`Select should render no options when options come empty 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
       <div class="option-selected option-selected-placeholder"></div>
@@ -311,7 +299,6 @@ exports[`Select should render no options when options come empty 1`] = `
 
 exports[`Select should render options 1`] = `
 <div class="form-group">
-  <label></label>
   <div class="form-builder-select-field input-group-container">
     <div class="form-control select-field-trigger">
       <div class="option-selected option-selected-placeholder"></div>

@@ -5,11 +5,7 @@ import {PagesVisitor} from 'source/util/visitors.es';
 
 let component;
 
-const spritemap = 'icons.svg';
-
-const pages = [...mockPages];
-
-const url = '/o/dynamic-data-mapping-form-builder-roles/';
+const dataProviderInstancesURL = '/o/dynamic-data-mapping-form-builder-data-provider-instances/';
 
 const functionsMetadata = {
 	radio: [
@@ -32,6 +28,21 @@ const functionsMetadata = {
 		{name: 'belongs-to', parameterTypes: ['text'], returnType: 'boolean', value: 'Belongs to'}
 	]
 };
+
+const pages = [...mockPages];
+
+const spritemap = 'icons.svg';
+
+const rolesURL = '/o/dynamic-data-mapping-form-builder-roles/';
+
+const getBaseConfig = () => ({
+	conditions: [],
+	dataProviderInstancesURL,
+	functionsMetadata,
+	pages,
+	rolesURL,
+	spritemap
+});
 
 describe(
 	'Rule Editor',
@@ -63,6 +74,7 @@ describe(
 						);
 					}
 				);
+
 				describe(
 					'When a condition is added and there\'s more than one condition, there must be an option the delete the condition',
 					() => {
@@ -71,11 +83,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -107,11 +115,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -134,7 +138,7 @@ describe(
 
 								jest.runAllTimers();
 
-								component.refs.confirmationModal.element.querySelector('.btn-primary').click();
+								component.refs.confirmationModalCondition.element.querySelector('.btn-primary').click();
 
 								jest.runAllTimers();
 
@@ -152,11 +156,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -176,11 +176,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -209,11 +205,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -230,11 +222,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -251,11 +239,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -272,11 +256,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -308,11 +288,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -344,11 +320,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -380,11 +352,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -415,11 +383,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -441,11 +405,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -462,10 +422,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap
+										...getBaseConfig()
 									}
 								);
 
@@ -478,15 +435,41 @@ describe(
 						);
 
 						it(
+							'should fetch roles when rendered',
+							() => {
+								const spy = jest.spyOn(window, 'fetch');
+
+								component = new RuleEditor(
+									{
+										...getBaseConfig()
+									}
+								);
+
+								expect(spy).toHaveBeenCalledWith(component.rolesURL, expect.anything());
+							}
+						);
+
+						it(
+							'should fetch data providers when rendered',
+							() => {
+								const spy = jest.spyOn(window, 'fetch');
+
+								component = new RuleEditor(
+									{
+										...getBaseConfig()
+									}
+								);
+
+								expect(spy).toHaveBeenCalledWith(component.dataProviderInstancesURL, expect.anything());
+							}
+						);
+
+						it(
 							'should keep operator values the same when first operand changes to another value of the same type',
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -509,11 +492,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -534,11 +513,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -559,11 +534,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -603,11 +574,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -661,11 +628,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -689,11 +652,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -727,11 +686,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -777,11 +732,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -816,11 +767,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -846,11 +793,7 @@ describe(
 							() => {
 								component = new RuleEditor(
 									{
-										conditions: [],
-										functionsMetadata,
-										pages,
-										spritemap,
-										url
+										...getBaseConfig()
 									}
 								);
 
@@ -870,6 +813,127 @@ describe(
 								jest.runAllTimers();
 
 								expect(component).toMatchSnapshot();
+							}
+						);
+					}
+				);
+
+				describe(
+					'When the user choose any of the options of the action a select target should be displayed',
+					() => {
+						it(
+							'should display the action target according to action type (Show, Enable or Required)',
+							() => {
+								component = new RuleEditor(
+									{
+										...getBaseConfig()
+									}
+								);
+
+								component.refs.action0.emitFieldEdited(['show']);
+
+								jest.runAllTimers();
+
+								expect(component.refs.actionTarget0).toBeTruthy();
+							}
+						);
+						it(
+							'should refresh the target when the user changes any of the options of the first action select between (Show, Enable or Required)',
+							() => {
+								component = new RuleEditor(
+									{
+										...getBaseConfig()
+									}
+								);
+
+								component.refs.action0.emitFieldEdited(['show']);
+
+								jest.runAllTimers();
+
+								component.refs.actionTarget0.emitFieldEdited(['date']);
+
+								jest.runAllTimers();
+								component.refs.action0.emitFieldEdited(['enable']);
+
+								jest.runAllTimers();
+
+								expect(component.refs.actionTarget0.value).toEqual(['']);
+							}
+						);
+
+						it(
+							'should refresh the target when the user changes de Action from autofill to Show, Enable or Required',
+							() => {
+								component = new RuleEditor(
+									{
+										...getBaseConfig()
+									}
+								);
+
+								component.refs.action0.emitFieldEdited(['autofill']);
+
+								jest.runAllTimers();
+
+								component.refs.actionTarget0.emitFieldEdited(['38701']);
+
+								jest.runAllTimers();
+
+								component.refs.action0.emitFieldEdited(['enable']);
+
+								jest.runAllTimers();
+
+								expect(component.refs.actionTarget0.value).toEqual(['']);
+							}
+						);
+
+						it(
+							'should display the action target according to action type (Autofill)',
+							() => {
+								component = new RuleEditor(
+									{
+										...getBaseConfig()
+									}
+								);
+
+								component.refs.action0.emitFieldEdited(['autofill']);
+
+								jest.runAllTimers();
+
+								expect(component.refs.actionTarget0).toBeTruthy();
+							}
+						);
+
+						it(
+							'should duplicate an action when duplicate field is clicked',
+							() => {
+								component = new RuleEditor(
+									{
+										...getBaseConfig()
+									}
+								);
+
+								component.refs.action0.emitFieldEdited(['show']);
+
+								jest.runAllTimers();
+
+								component.refs.addActionButton.emit('click');
+
+								jest.runAllTimers();
+
+								component.refs.trashButtonAction0.emit(
+									'click',
+									{
+										currentTarget: component.refs.trashButtonAction0.element
+									}
+								);
+
+								jest.runAllTimers();
+
+								component.refs.confirmationModalAction.element.querySelector('.btn-primary').click();
+
+								jest.runAllTimers();
+
+								expect(component.actions.length).toBe(1);
 							}
 						);
 					}
@@ -915,11 +979,7 @@ describe(
 					() => {
 						component = new RuleEditor(
 							{
-								conditions: [],
-								functionsMetadata,
-								pages,
-								spritemap,
-								url
+								...getBaseConfig()
 							}
 						);
 

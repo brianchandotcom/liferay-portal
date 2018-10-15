@@ -17,6 +17,7 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
+String dataProviderInstancesURL = ddmFormAdminDisplayContext.getDataProviderInstancesURL();
 String functionsMetadata = ddmFormAdminDisplayContext.getFunctionsMetadata();
 String mainRequire = ddmFormAdminDisplayContext.getMainRequire();
 String rolesURL = ddmFormAdminDisplayContext.getRolesURL();

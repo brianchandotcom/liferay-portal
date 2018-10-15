@@ -43,6 +43,15 @@ class Form extends Component {
 		).required().setter('_setContext'),
 
 		/**
+		 * The rules of a form.
+		 * @default undefined
+		 * @instance
+		 * @memberof Form
+		 * @type {!array}
+		 */
+		dataProviderInstancesURL: Config.string().required(),
+
+		/**
 		 * The default language id of the form.
 		 * @default undefined
 		 * @instance
@@ -465,11 +474,12 @@ class Form extends Component {
 			<div class={'ddm-form-builder'}>
 				<LayoutProvider {...layoutProviderProps}>
 					<RuleBuilder
+						dataProviderInstancesURL={this.props.dataProviderInstancesURL}
 						functionsMetadata={this.props.functionsMetadata}
 						pages={context.pages}
+						rolesURL={this.props.rolesURL}
 						rules={this.props.rules}
 						spritemap={spritemap}
-						url={this.props.rolesURL}
 						visible={showRuleBuilder}
 					/>
 					<Builder

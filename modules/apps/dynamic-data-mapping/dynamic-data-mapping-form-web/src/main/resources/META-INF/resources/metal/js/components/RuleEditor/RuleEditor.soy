@@ -4,6 +4,18 @@
  * Prints the DDM rule settings.
  */
 {template .render}
+	{@param actions: list<[
+			action: string,
+			expression: string,
+			label: string,
+			target: string
+		]>
+	}
+	{@param actionTypes: list<[
+			value: string,
+			name: string
+		]>
+	}
 	{@param conditions: list<[
 			binaryOperator: bool,
 			firstOperandOptions: list<[
@@ -24,6 +36,12 @@
 			]>
 		]>
 	}
+	{@param? dataProvider: list<[
+			id: string,
+			name: string
+		]>
+	}
+	{@param deleteActionModalVisible: bool}
 	{@param deleteConditionModalVisible: bool}
 	{@param fieldOptions : list<[
 			label: string,
@@ -49,13 +67,17 @@
 	{@param logicalOperator: string}
 	{@param readOnly: bool}
 	{@param strings: ?}
+	{@param? _handleActionSelection: any}
+	{@param? _handleActionAdded: any}
 	{@param? _handleConditionAdded: any}
+	{@param? _handleDeleteAction: any}
 	{@param? _handleDeleteCondition: any}
 	{@param? _handleFirstOperandFieldEdited: any}
 	{@param? _handleLogicalOperationChange: any}
 	{@param? _handleOperatorEdited: any}
 	{@param? _handleSecondOperandFieldEdited: any}
 	{@param? _handleSecondOperandTypeEdited: any}
+	{@param? _handleTargetSelection: any}
 	{@param? _handleModalButtonClicked: any}
 	{@param? roles: list<[
 			label: string,
@@ -70,9 +92,9 @@
 		<ul class="liferay-ddm-form-builder-rule-condition-list liferay-ddm-form-rule-builder-timeline timeline {length($conditions) > 1 ? 'can-remove-item' : ''}">
 			{let $enableLogicalOperator: (length($conditions) > 1) ? true : false /}
 
-			{call .header}
+			{call .renderHeader}
 				{param extraContent kind="html"}
-					{call .logicalOperatorDropDown}
+					{call .renderConditionLogicalOperatorDropdown}
 						{param _handleLogicalOperationChange: $_handleLogicalOperationChange /}
 						{param enableLogicalOperator: $enableLogicalOperator /}
 						{param logicalOperator: $strings[$logicalOperator] /}
@@ -84,7 +106,7 @@
 			{/call}
 
 			{foreach $condition in $conditions}
-				{call .condition}
+				{call .renderCondition}
 					{param _handleDeleteCondition: $_handleDeleteCondition /}
 					{param _handleFirstOperandFieldEdited: $_handleFirstOperandFieldEdited /}
 					{param _handleOperatorEdited: $_handleOperatorEdited /}
@@ -111,42 +133,230 @@
 			{/foreach}
 		</ul>
 
-		{call .addCondition}
-			{param _handleConditionAdded: $_handleConditionAdded /}
+		{call .renderAddItemButton}
+			{param _handleItemAdded: $_handleConditionAdded /}
 			{param spritemap: $spritemap /}
+			{param type: 'addConditionButton' /}
 		{/call}
 
-		{call ClayModal.render}
-			{param body kind="html"}
-				<h4>{$strings.deleteConditionQuestion}</h4>
-			{/param}
-			{param events: [
-				'clickButton': $_handleModalButtonClicked
-			]/}
-			{param footerButtons: [
-				[
-					'alignment': 'right',
-					'label':'dismiss',
-					'style': 'primary',
-					'type': 'close'
-				],
-				[
-					'alignment': 'right',
-					'label': 'delete',
-					'style': 'primary',
-					'type': 'button'
-				]
-			] /}
-			{param ref: 'confirmationModal' /}
-			{param size: 'sm' /}
+		<ul class="action-list liferay-ddm-form-builder-rule-action-list liferay-ddm-form-rule-builder-timeline timeline {length($actions) > 1 ? 'can-remove-item' : ''}">
+			{call .renderHeader}
+				{param title: $strings.actions /}
+			{/call}
+
+			{foreach $action in $actions}
+				{call .renderAction}
+					{param _handleActionSelection: $_handleActionSelection /}
+					{param _handleDeleteAction: $_handleDeleteAction /}
+					{param _handleTargetSelection: $_handleTargetSelection /}
+					{param actionTypes: $actionTypes /}
+					{param actionSelected: $action.action /}
+					{param strings: $strings /}
+					{param dataProvider: $dataProvider /}
+					{param fieldOptions: $fieldOptions /}
+					{param index: index($action) /}
+					{param spritemap: $spritemap /}
+					{param targetSelected: $action.target /}
+				{/call}
+			{/foreach}
+		</ul>
+
+		{call .renderAddItemButton}
+			{param _handleItemAdded: $_handleActionAdded /}
+			{param spritemap: $spritemap /}
+			{param type: 'addActionButton' /}
+		{/call}
+
+		{call .renderModal}
+			{param _handleModalButtonClicked: $_handleModalButtonClicked /}
+			{param modalVisibility: $deleteConditionModalVisible /}
+			{param question: $strings.deleteConditionQuestion /}
 			{param spritemap: $spritemap /}
 			{param title: $strings.deleteCondition /}
-			{param visible: $deleteConditionModalVisible /}
+			{param type: 'Condition' /}
+		{/call}
+
+		{call .renderModal}
+			{param _handleModalButtonClicked: $_handleModalButtonClicked /}
+			{param modalVisibility: $deleteActionModalVisible /}
+			{param question: $strings.deleteActionQuestion /}
+			{param spritemap: $spritemap /}
+			{param title: $strings.deleteAction /}
+			{param type: 'Action' /}
 		{/call}
 	</div>
 {/template}
+{template .renderModal}
+	{@param question: string}
+	{@param modalVisibility: bool}
+	{@param title: string}
+	{@param type: string}
+	{@param? _handleModalButtonClicked: any}
+	{@param? spritemap: string}
 
-{template .condition}
+	{call ClayModal.render}
+		{param body kind="html"}
+			<h4>{$question}</h4>
+		{/param}
+		{param events: [
+			'clickButton': $_handleModalButtonClicked
+		]/}
+		{param footerButtons: [
+			[
+				'alignment': 'right',
+				'label':'dismiss',
+				'style': 'primary',
+				'type': 'close'
+			],
+			[
+				'alignment': 'right',
+				'label': 'delete',
+				'style': 'primary',
+				'type': 'button'
+			]
+		] /}
+		{param ref: 'confirmationModal' + $type /}
+		{param size: 'sm' /}
+		{param spritemap: $spritemap /}
+		{param title: $title /}
+		{param visible: $modalVisibility /}
+	{/call}
+
+{/template}
+
+{template .renderAction}
+	{@param? _handleActionSelection: any}
+	{@param? _handleDeleteAction: any}
+	{@param? _handleTargetSelection: any}
+
+	{@param actionTypes: list<[
+			value: string,
+			name: string
+		]>
+	}
+	{@param? dataProvider: list<[
+			id: string,
+			name: string
+		]>
+	}
+	{@param fieldOptions : list<[
+			label: string,
+			name: string,
+			options: list<[
+				label: string,
+				value: string
+			]>,
+			type: string,
+			value: string
+		]>
+	}
+	{@param? actionSelected: string}
+	{@param? targetSelected: string}
+	{@param index: int}
+	{@param strings: [
+		chooseAnOption: string,
+		do: string,
+		fromDataProvider: string
+	]}
+	{@param? spritemap: string}
+
+	<li class="form-builder-rule-action-container-{$index} timeline-item">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="form-group-autofit">
+					<div class="form-group-item form-group-item-label form-group-item-shrink">
+						<h4>
+							<span class="text-truncate-inline">
+								<span class="text-truncate">{$strings.do}</span>
+							</span>
+						</h4>
+					</div>
+
+					<div action-type-index="{$index}" class="action-type form-group-item">
+						{delcall PageRenderer.RegisterFieldType variant="'select'"}
+							{param events: [
+								'fieldEdited': $_handleActionSelection
+							] /}
+							{param options: $actionTypes /}
+							{param placeholder: $strings.chooseAnOption /}
+							{param ref: 'action' + $index /}
+							{param spritemap: $spritemap /}
+							{param value: [$actionSelected] /}
+						{/delcall}
+					</div>
+
+					{let $showTargetDefault: $actionSelected and (($actionSelected == 'show') or ($actionSelected == 'enable') or ($actionSelected == 'require')) /}
+					{let $showTargetAutofill: $actionSelected and ($actionSelected == 'autofill') /}
+
+					<div class="form-group-item form-group-item-label form-group-item-shrink {if not $showTargetAutofill}hide{/if} target-message-{$index}">
+						<h4>
+							<span class="text-truncate-inline">
+								<span class="text-truncate">{$strings.fromDataProvider}</span>
+							</span>
+						</h4>
+					</div>
+					{if $showTargetDefault or $showTargetAutofill}
+						{let $options: ($showTargetAutofill) ? $dataProvider : ($showTargetDefault ? $fieldOptions : []) /}
+
+						{call .renderActionTarget}
+							{param _handleTargetSelection: $_handleTargetSelection /}
+							{param index: $index /}
+							{param options: $options /}
+							{param placeholder: $strings.chooseAnOption /}
+							{param ref: 'actionTarget' + $index/}
+							{param spritemap: $spritemap /}
+							{param value: $targetSelected /}
+						{/call}
+					{/if}
+				</div>
+
+				<div class="timeline-increment">
+					<span class="timeline-icon"></span>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-trash">
+			{call ClayButton.render}
+				{param events: [
+					'click': $_handleDeleteAction
+				] /}
+				{param data: ['index': $index] /}
+				{param icon: 'trash' /}
+				{param monospaced: true /}
+				{param ref: 'trashButtonAction' + $index /}
+				{param size: 'sm' /}
+				{param spritemap: $spritemap /}
+				{param style: 'secondary' /}
+			{/call}
+		</div>
+	</li>
+{/template}
+
+{template .renderActionTarget}
+	{@param? _handleTargetSelection: any}
+	{@param index: int}
+	{@param options: any}
+	{@param? placeholder: string}
+	{@param ref: string}
+	{@param? spritemap: string}
+	{@param? value: string}
+
+	<div class="form-group-item target-action" target-action-index="{$index}">
+		{delcall PageRenderer.RegisterFieldType variant="'select'"}
+			{param events: [
+				'fieldEdited': $_handleTargetSelection
+			] /}
+			{param options: $options /}
+			{param placeholder: $placeholder /}
+			{param ref: $ref /}
+			{param spritemap: $spritemap /}
+			{param value: [$value] /}
+		{/delcall}
+	</div>
+{/template}
+
+{template .renderCondition}
 	{@param binaryOperator: bool}
 	{@param fieldOptions : list<[
 		label: string,
@@ -171,12 +381,12 @@
 	{@param? _handleOperatorEdited: any}
 	{@param? _handleSecondOperandFieldEdited: any}
 	{@param? _handleSecondOperandTypeEdited: any}
+	{@param? firstOperandType: string}
+	{@param? firstOperandValueSelected: string}
 	{@param? firstOperandOptions: list<[
 		label: string,
 		value: string
 	]>}
-	{@param? firstOperandType: string}
-	{@param? firstOperandValueSelected: string}
 	{@param? fixedOptions: any}
 	{@param? logicalOperator: string}
 	{@param? operators:  list<[
@@ -189,8 +399,9 @@
 		label: string,
 		value: string
 	]>}
-	{@param? secondOperandType: string}
+
 	{@param? secondOperandFieldName: string}
+	{@param? secondOperandType: string}
 	{@param? secondOperandValue: any}
 	{@param? selectedOperator: string}
 	{@param? spritemap: string}
@@ -221,7 +432,7 @@
 						{/delcall}
 					</div>
 
-					{call .operators}
+					{call .renderConditionOperators}
 						{param _handleOperatorEdited: $_handleOperatorEdited /}
 						{param firstOperandType: $firstOperandType /}
 						{param index: $index /}
@@ -234,7 +445,7 @@
 					{if $firstOperandType and $selectedOperator}
 						{if $firstOperandType != 'user'}
 							{if $binaryOperator}
-								{call .secondOperandTypeSelector}
+								{call .renderConditionSecondOperandTypeSelector}
 									{param _handleSecondOperandTypeEdited: $_handleSecondOperandTypeEdited /}
 									{param index: $index /}
 									{param secondOperandType: $secondOperandType /}
@@ -292,7 +503,7 @@
 							{/if}
 						{else}
 							<div class="condition-type-value form-group-item" condition-type-value-index="{$index}">
-								{call .userRolesSelector}
+								{call .renderConditionUserRolesSelector}
 									{param _handleSecondOperandFieldEdited: $_handleSecondOperandFieldEdited /}
 									{param index: $index /}
 									{param selectedOperator: $selectedOperator /}
@@ -333,7 +544,7 @@
 	</li>
 {/template}
 
-{template .operators}
+{template .renderConditionOperators}
 	{@param index: int}
 	{@param strings: [
 		chooseAnOption: string
@@ -367,7 +578,7 @@
 	</div>
 {/template}
 
-{template .secondOperandTypeSelector}
+{template .renderConditionSecondOperandTypeSelector}
 	{@param index: int}
 	{@param strings: [
 		chooseAnOption: string,
@@ -411,7 +622,7 @@
 	{/if}
 {/template}
 
-{template .userRolesSelector}
+{template .renderConditionUserRolesSelector}
 	{@param index: int}
 	{@param strings: [
 		chooseAnOption: string
@@ -444,7 +655,7 @@
 /**
  * Prints Logical Operator Dropdown
  */
-{template .logicalOperatorDropDown}
+{template .renderConditionLogicalOperatorDropdown}
 	{@param strings: ?}
 	{@param _handleLogicalOperationChange: any}
 	{@param? enableLogicalOperator: bool}
@@ -477,7 +688,7 @@
 /**
  * Prints header.
  */
-{template .header}
+{template .renderHeader}
 	{@param title: string}
 	{@param? extraContent: html}
 
@@ -501,20 +712,21 @@
 /**
  * Prints the add condition button.
  */
-{template .addCondition}
-	{@param? _handleConditionAdded: any}
+{template .renderAddItemButton}
+	{@param? _handleItemAdded: any}
 	{@param? spritemap: string}
+	{@param? type: string}
 
 	<div class="addbutton-timeline-item">
-		<div class="add-condition timeline-increment-icon">
+		<div class="add-item timeline-increment-icon">
 			{call ClayButton.render}
 				{param events: [
-					'click': $_handleConditionAdded
+					'click': $_handleItemAdded
 				] /}
 				{param elementClasses: 'rounded-circle' /}
 				{param icon: 'plus' /}
 				{param monospaced: true /}
-				{param ref: 'addConditionButton' /}
+				{param ref: $type /}
 				{param size: 'sm' /}
 				{param spritemap: $spritemap /}
 			{/call}

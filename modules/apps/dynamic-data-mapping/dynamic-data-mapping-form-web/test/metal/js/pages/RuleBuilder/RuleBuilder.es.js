@@ -5,7 +5,8 @@ import RuleBuilder from 'source/pages/RuleBuilder/RuleBuilder.es';
 const spritemap = 'icons.svg';
 let component;
 
-const configView = {
+const baseConfig = {
+	dataProviderInstancesURL: '/o/data-provider/',
 	mode: 'view',
 	pages: [
 		{
@@ -70,7 +71,7 @@ describe(
 			() => {
 				dom.enterDocument('<button id="addFieldButton" class="hide"></button>');
 
-				component = new RuleBuilder(configView);
+				component = new RuleBuilder(baseConfig);
 
 				jest.useFakeTimers();
 			}

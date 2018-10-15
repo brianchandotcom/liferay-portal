@@ -28,27 +28,30 @@
 			{/if}
 		{/let}
 
-		<label {$attributesLabel}>
-			{if $label and $showLabel}
-				{$label}{sp}
-			{/if}
-			{if $required and $spritemap}
-				<span class="reference-mark">
-					{call ClayIcon.render}
-						{param spritemap: $spritemap /}
-						{param symbol: 'asterisk' /}
-					{/call}
-				</span>
-			{/if}
+		{if $label and $showLabel or $required or $tooltip}
+			<label {$attributesLabel}>
+				{if $label and $showLabel}
+					{$label}{sp}
+				{/if}
 
-			{if $tooltip}
-				{call Tooltip.render}
-					{param icon: 'question-circle-full' /}
-					{param spritemap: $spritemap /}
-					{param text: $tooltip /}
-				{/call}
-			{/if}
-		</label>
+				{if $required and $spritemap}
+					<span class="reference-mark">
+						{call ClayIcon.render}
+							{param spritemap: $spritemap /}
+							{param symbol: 'asterisk' /}
+						{/call}
+					</span>
+				{/if}
+
+				{if $tooltip}
+					{call Tooltip.render}
+						{param icon: 'question-circle-full' /}
+						{param spritemap: $spritemap /}
+						{param text: $tooltip /}
+					{/call}
+				{/if}
+			</label>
+		{/if}
 
 		{$contentRenderer}
 

@@ -1430,9 +1430,6 @@ public class JournalDisplayContext {
 			return true;
 		}
 
-		Map<Long, LayoutPageTemplateEntry> defaultLayoutPageTemplateEntriesMap =
-			_getDefaultLayoutPageTemplateEntriesMap();
-
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
 			_themeDisplay.getSiteGroupId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
@@ -1441,6 +1438,9 @@ public class JournalDisplayContext {
 		if (ddmStructure == null) {
 			return false;
 		}
+
+		Map<Long, LayoutPageTemplateEntry> defaultLayoutPageTemplateEntriesMap =
+			_getDefaultLayoutPageTemplateEntriesMap();
 
 		layoutPageTemplateEntry = defaultLayoutPageTemplateEntriesMap.get(
 			ddmStructure.getStructureId());

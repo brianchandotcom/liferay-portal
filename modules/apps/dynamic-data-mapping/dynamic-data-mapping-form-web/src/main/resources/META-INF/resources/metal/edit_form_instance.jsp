@@ -146,6 +146,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
 		strings: {
 			'any-unsaved-changes-will-be-lost-are-you-sure-you-want-to-leave': '<liferay-ui:message key="any-unsaved-changes-will-be-lost-are-you-sure-you-want-to-leave" />',
+			'copied-to-clipboard': '<liferay-ui:message key="copied-to-clipboard" />',
 			'draft-x': '<liferay-ui:message key="draft-x" />',
 			'error': '<liferay-ui:message key="error" />',
 			'leave': '<liferay-ui:message key="leave" />',
@@ -153,6 +154,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 			'please-add-at-least-one-field': '<liferay-ui:message key="please-add-at-least-one-field" />',
 			'preview-form': '<liferay-ui:message key="preview-form" />',
 			'publish-form': '<liferay-ui:message key="publish-form" />',
+			'publish-the-form-to-get-its-shareable-link': '<liferay-ui:message key="publish-the-form-to-get-its-shareable-link" />',
 			'save-form': '<liferay-ui:message key="save-form" />',
 			'saved-x': '<liferay-ui:message key="saved-x" />',
 			'saving': '<liferay-ui:message key="saving" />',

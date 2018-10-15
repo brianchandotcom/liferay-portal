@@ -150,6 +150,30 @@ public class LiferayDynamicCapabilityTest {
 		}
 	}
 
+	@Test
+	public void testDoesNotCallCapabilityLocalRepositoryEventListenersWhenTheCapabilityIsGone()
+		throws Exception {
+
+		CountDownLatch addEventFiredLatch = new CountDownLatch(1);
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceRegistration<Capability> capabilityServiceRegistration =
+			registry.registerService(
+				Capability.class,
+				(TestRepositoryEventAwareCapability)repositoryEventRegistry ->
+					repositoryEventRegistry.registerRepositoryEventListener(
+						RepositoryEventType.Add.class, FileEntry.class,
+						fileEntry -> addEventFiredLatch.countDown()));
+
+		capabilityServiceRegistration.unregister();
+
+		_addRandomFileEntry(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertFalse(addEventFiredLatch.await(5, TimeUnit.SECONDS));
+	}
+
 	private FileEntry _addRandomFileEntry(ServiceContext serviceContext)
 		throws PortalException {
 

@@ -388,6 +388,27 @@ public class UserODataRetrieverTest {
 	}
 
 	@Test
+	public void testGetUsersFilterByJobTitle() throws Exception {
+		_user1 = UserTestUtil.addUser(
+			_group1.getGroupId(), LocaleUtil.getDefault());
+
+		_user1.setJobTitle(RandomTestUtil.randomString());
+
+		_userLocalService.updateUser(_user1);
+
+		_user2 = UserTestUtil.addUser(
+			_group1.getGroupId(), LocaleUtil.getDefault());
+
+		List<User> users = _userODataRetriever.getUsers(
+			_group1.getCompanyId(),
+			"(jobTitle eq '" + _user1.getJobTitle() + "')",
+			LocaleUtil.getDefault(), 0, 2);
+
+		Assert.assertEquals(users.toString(), 1, users.size());
+		Assert.assertEquals(_user1, users.get(0));
+	}
+
+	@Test
 	public void testGetUsersFilterByLastName() throws Exception {
 		_user1 = UserTestUtil.addUser(
 			_group1.getGroupId(), LocaleUtil.getDefault());

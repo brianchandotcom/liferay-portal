@@ -1219,43 +1219,40 @@
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.RoleFinder.findByTeamsUser">
 		<![CDATA[
-			(
-				SELECT
-					{Role_.*}
-				FROM
-					Role_
-				INNER JOIN
-					Team ON
-						(Team.companyId = Role_.companyId) AND
-						(Team.teamId = Role_.classPK)
-				INNER JOIN
-					Users_Teams ON
-						Users_Teams.teamId = Team.teamId
-				WHERE
-					(Role_.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.TEAM$]) AND
-					(Team.groupId = ?) AND
-					(Users_Teams.userId = ?)
-			) UNION
-			(
-				SELECT
-					{Role_.*}
-				FROM
-					Role_
-				INNER JOIN
-					Team ON
-						(Team.companyId = Role_.companyId) AND
-						(Team.teamId = Role_.classPK)
-				INNER JOIN
-					UserGroups_Teams ON
-						UserGroups_Teams.teamId = Team.teamId
-				INNER JOIN
-					Users_UserGroups ON
-						Users_UserGroups.userGroupId = UserGroups_Teams.userGroupId
-				WHERE
-					(Role_.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.TEAM$]) AND
-					(Team.groupId = ?) AND
-					(Users_UserGroups.userId = ?)
-			)
+			SELECT
+				{Role_.*}
+			FROM
+				Role_
+			INNER JOIN
+				Team ON
+					(Team.companyId = Role_.companyId) AND
+					(Team.teamId = Role_.classPK)
+			INNER JOIN
+				Users_Teams ON
+					Users_Teams.teamId = Team.teamId
+			WHERE
+				(Role_.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.TEAM$]) AND
+				(Team.groupId = ?) AND
+				(Users_Teams.userId = ?)
+			UNION
+			SELECT
+				{Role_.*}
+			FROM
+				Role_
+			INNER JOIN
+				Team ON
+					(Team.companyId = Role_.companyId) AND
+					(Team.teamId = Role_.classPK)
+			INNER JOIN
+				UserGroups_Teams ON
+					UserGroups_Teams.teamId = Team.teamId
+			INNER JOIN
+				Users_UserGroups ON
+					Users_UserGroups.userGroupId = UserGroups_Teams.userGroupId
+			WHERE
+				(Role_.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.TEAM$]) AND
+				(Team.groupId = ?) AND
+				(Users_UserGroups.userId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.RoleFinder.findByUserGroupGroupRole">
@@ -1306,28 +1303,25 @@
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.RoleFinder.findByU_G">
 		<![CDATA[
-			(
-				SELECT
-					{Role_.*}
-				FROM
-					Role_
-				INNER JOIN
-					Users_Roles ON
-						Users_Roles.roleId = Role_.roleId
-				WHERE
-					Users_Roles.userId = ?
-			) UNION
-			(
-				SELECT
-					{Role_.*}
-				FROM
-					Role_
-				INNER JOIN
-					Groups_Roles ON
-						Groups_Roles.roleId = Role_.roleId
-				WHERE
-					[$GROUP_ID$]
-			)
+			SELECT
+				{Role_.*}
+			FROM
+				Role_
+			INNER JOIN
+				Users_Roles ON
+					Users_Roles.roleId = Role_.roleId
+			WHERE
+				Users_Roles.userId = ?
+			UNION
+			SELECT
+				{Role_.*}
+			FROM
+				Role_
+			INNER JOIN
+				Groups_Roles ON
+					Groups_Roles.roleId = Role_.roleId
+			WHERE
+				[$GROUP_ID$]
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.RoleFinder.findByR_N_A">

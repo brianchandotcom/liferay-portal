@@ -1,0 +1,27 @@
+{namespace com.liferay.layout.admin.web.DisabledAreaPopover}
+
+/**
+ * DisabledAreaPopover
+ */
+{template .render}
+	{@param? _position: string}
+
+	{let $popoverClasses kind="text"}
+		disabled-area-popover
+
+		{if $_position}
+			{sp}disabled-area-popover--visible
+		{/if}
+	{/let}
+
+	<div class="{$popoverClasses}">
+		<div class="clay-popover-{$_position ?: 'bottom'} popover" ref="popover">
+			<div class="arrow"></div>
+			<div class="inline-scroller">
+				<div class="popover-body">
+					<p>{msg desc=""}this-area-is-defined-by-the-theme-to-change-theme-settings-go-to-page-configuration{/msg}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+{/template}

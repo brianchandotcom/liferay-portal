@@ -49,6 +49,9 @@ class ImagePreviewer extends Component {
 				break;
 		}
 
+		this.zoomInDisabled = ZOOM_LEVELS_REVERSED[0] === zoomValue;
+		this.zoomOutDisabled = ZOOM_LEVELS[0] === zoomValue;
+
 		this._setZoom(zoomValue);
 	}
 
@@ -78,6 +81,8 @@ ImagePreviewer.STATE = {
 	imageURL: Config.string().required(),
 	imageWidth: Config.number(),
 	zoomActual: Config.number(),
+	zoomInDisabled: Config.bool(),
+	zoomOutDisabled: Config.bool(),
 };
 
 Soy.register(ImagePreviewer, templates);

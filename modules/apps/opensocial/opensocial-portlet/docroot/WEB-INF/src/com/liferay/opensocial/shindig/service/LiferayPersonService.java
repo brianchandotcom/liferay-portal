@@ -121,15 +121,14 @@ public class LiferayPersonService implements PersonService {
 		for (UserId userId : userIds) {
 			Person person = null;
 
-			String userIdString = userId.getUserId(securityToken);
-
 			GroupId.Type groupIdType = groupId.getType();
 
 			if (groupIdType.equals(GroupId.Type.all) ||
 				groupIdType.equals(GroupId.Type.friends) ||
 				groupIdType.equals(GroupId.Type.groupId)) {
 
-				long userIdLong = GetterUtil.getLong(userIdString);
+				long userIdLong = GetterUtil.getLong(
+					userId.getUserId(securityToken));
 
 				User user = UserLocalServiceUtil.getUserById(userIdLong);
 

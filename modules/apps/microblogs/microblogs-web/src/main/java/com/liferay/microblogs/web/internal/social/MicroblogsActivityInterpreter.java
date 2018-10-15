@@ -82,10 +82,10 @@ public class MicroblogsActivityInterpreter
 			_microblogsEntryLocalService.getMicroblogsEntry(
 				activity.getClassPK());
 
-		String receiverUserName = getUserName(
-			activity.getReceiverUserId(), serviceContext);
-
 		if (activity.getReceiverUserId() > 0) {
+			String receiverUserName = getUserName(
+				activity.getReceiverUserId(), serviceContext);
+
 			if (microblogsEntry.getType() ==
 					MicroblogsEntryConstants.TYPE_REPLY) {
 

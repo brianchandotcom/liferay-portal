@@ -41,10 +41,10 @@ public class AssignToMeForm {
 				"This form can be used to assign a task to an user"
 		).constructor(
 			AssignToMeForm::new
-		).addOptionalString(
-			"comment", AssignToMeForm::setComment
 		).addOptionalDate(
 			"dueDate", AssignToMeForm::setDueDate
+		).addOptionalString(
+			"comment", AssignToMeForm::setComment
 		).build();
 	}
 

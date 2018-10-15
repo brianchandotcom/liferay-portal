@@ -47,6 +47,9 @@ class ImagePreviewer extends Component {
 				zoomValue = ZOOM_LEVELS_REVERSED
 					.find((zoom) => zoom < this.zoomActual);
 				break;
+			case '1':
+				zoomValue = 1;
+				break;
 		}
 
 		this.zoomInDisabled = ZOOM_LEVELS_REVERSED[0] === zoomValue;

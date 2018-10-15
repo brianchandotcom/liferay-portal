@@ -20,6 +20,11 @@ class ManageCollaborators extends PortletBase {
 		this._deleteSharingEntryIds = [];
 		this._sharingEntryIdsAndPermissions = new Map();
 		this._sharingEntryIdsAndExpirationDate = new Map();
+
+		let tomorrow = new Date();
+		tomorrow = tomorrow.setDate(tomorrow.getDate() + 1);
+
+		this._tomorrowDate = new Date(tomorrow).toISOString().split('T')[0];
 	}
 
 	/**

@@ -149,16 +149,26 @@ public class ManageCollaboratorsViewMVCRenderCommand
 					"sharingEntryId", sharingEntry.getSharingEntryId());
 
 				String sExpirationDate = null;
+				String sExpirationDateTooltip = null;
 
 				Date expirationDate = sharingEntry.getExpirationDate();
 
 				if (expirationDate != null) {
 					sExpirationDate = _getDateFormat(
+						"yyyy-MM-dd",
+						themeDisplay.getLocale()).format(expirationDate);
+
+					sExpirationDateTooltip = _getDateFormat(
+						"dd/MM/yyyy",
 						themeDisplay.getLocale()).format(expirationDate);
 				}
 
 				collaboratorJSONObject.put(
 					"sharingEntryExpirationDate", sExpirationDate);
+
+				collaboratorJSONObject.put(
+					"sharingEntryExpirationDateTooltip",
+					sExpirationDateTooltip);
 
 				collaboratorJSONObject.put(
 					"sharingEntryPermissionDisplaySelectOptions",
@@ -175,8 +185,8 @@ public class ManageCollaboratorsViewMVCRenderCommand
 		}
 	}
 
-	private DateFormat _getDateFormat(Locale locale) {
-		return DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd", locale);
+	private DateFormat _getDateFormat(String format, Locale locale) {
+		return DateFormatFactoryUtil.getSimpleDateFormat(format, locale);
 	}
 
 	private String _getManageCollaboratorsActionURL(

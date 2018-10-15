@@ -67,15 +67,15 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 
 		menuItems.add(
 			_createURLMenuItem(
-				portletRequest, folder, "google-docs-document",
+				portletRequest, folder, "google-docs",
 				DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_DOCX));
 		menuItems.add(
 			_createURLMenuItem(
-				portletRequest, folder, "google-docs-presentation",
+				portletRequest, folder, "google-slides",
 				DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_PPTX));
 		menuItems.add(
 			_createURLMenuItem(
-				portletRequest, folder, "google-docs-spreadsheet",
+				portletRequest, folder, "google-sheets",
 				DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_XSLX));
 	}
 

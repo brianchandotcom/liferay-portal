@@ -112,8 +112,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 	private MenuItem _createEditInGoogleDocsMenuItem(String cmd) {
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		urlMenuItem.setLabel(
-			LanguageUtil.get(_resourceBundle, "edit-in-google-docs"));
+		urlMenuItem.setLabel(LanguageUtil.get(_resourceBundle, _getLabelKey()));
 		urlMenuItem.setMethod(HttpMethods.POST);
 		urlMenuItem.setURL(_getActionURL(cmd));
 
@@ -134,6 +133,22 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 			"googleDocsRedirect", _portal.getCurrentCompleteURL(request));
 
 		return liferayPortletURL.toString();
+	}
+
+	private String _getLabelKey() {
+		if (DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_PPTX.equals(
+				fileVersion.getMimeType())) {
+
+			return "edit-in-google-slides";
+		}
+
+		if (DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_XSLX.equals(
+				fileVersion.getMimeType())) {
+
+			return "edit-in-google-sheets";
+		}
+
+		return "edit-in-google-docs";
 	}
 
 	private LiferayPortletResponse _getLiferayPortletResponse() {

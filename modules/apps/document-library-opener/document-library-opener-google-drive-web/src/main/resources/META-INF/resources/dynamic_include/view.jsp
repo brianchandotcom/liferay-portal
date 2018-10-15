@@ -94,11 +94,21 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 					});
 			}
 
+			<%
+			String messageKey = "you-are-being-redirected-to-an-external-editor-to-edit-this-document";
+
+			String cmd = ParamUtil.getString(request, Constants.CMD);
+
+			if (cmd.equals(DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_ADD)) {
+				messageKey = "you-are-being-redirected-to-an-external-editor-to-create-this-document";
+			}
+			%>
+
 			Liferay.Util.openWindow(
 				{
 					id: dialogId,
 					dialog: {
-						bodyContent: '<p><liferay-ui:message key="you-are-being-redirected-to-an-external-editor-to-edit-this-document" /></p><div aria-hidden="true" class="loading-animation"></div>',
+						bodyContent: '<p><liferay-ui:message key="<%= messageKey %>" /></p><div aria-hidden="true" class="loading-animation"></div>',
 						cssClass: 'google-docs-redirect-modal',
 						height: 172,
 						modal: true,

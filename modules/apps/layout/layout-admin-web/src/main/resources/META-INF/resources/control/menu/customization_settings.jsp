@@ -148,6 +148,8 @@ data.put("qa-id", "customizations");
 					toggleCustomizedViewMessage = "the-defaults-for-the-current-page-have-been-updated-click-here-to-see-them";
 				}
 
+				toggleCustomizedViewMessage = LanguageUtil.get(resourceBundle, toggleCustomizedViewMessage);
+
 				PortletURL resetCustomizationViewURL = PortletURLFactoryUtil.create(request, LayoutAdminPortletKeys.GROUP_PAGES, PortletRequest.ACTION_PHASE);
 
 				resetCustomizationViewURL.setParameter(ActionRequest.ACTION_NAME, "/layout/reset_customization_view");

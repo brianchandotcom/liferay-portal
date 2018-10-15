@@ -179,14 +179,14 @@ public class JournalEditDDMStructuresDisplayContext {
 			return _parentDDMStructureName;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		DDMStructure parentDDMStructure =
 			DDMStructureLocalServiceUtil.fetchStructure(
 				getParentDDMStructureId());
 
 		if (parentDDMStructure != null) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 			_parentDDMStructureName = parentDDMStructure.getName(
 				themeDisplay.getLocale());
 		}
@@ -195,9 +195,9 @@ public class JournalEditDDMStructuresDisplayContext {
 	}
 
 	public String getScript() throws PortalException {
-		DDMStructure ddmStructure = getDDMStructure();
-
 		if (_script != null) {
+			DDMStructure ddmStructure = getDDMStructure();
+
 			_script = BeanParamUtil.getString(
 				ddmStructure.getLatestStructureVersion(), _request,
 				"definition");

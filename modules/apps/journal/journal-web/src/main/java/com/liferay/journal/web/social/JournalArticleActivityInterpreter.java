@@ -64,14 +64,6 @@ public class JournalArticleActivityInterpreter
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
-		AssetRendererFactory journalArticleAssetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
-				JournalArticle.class);
-
-		AssetRenderer journalArticleAssetRenderer =
-			journalArticleAssetRendererFactory.getAssetRenderer(
-				activity.getClassPK());
-
 		LiferayPortletRequest liferayPortletRequest =
 			serviceContext.getLiferayPortletRequest();
 
@@ -80,6 +72,14 @@ public class JournalArticleActivityInterpreter
 
 		if ((liferayPortletRequest != null) &&
 			(liferayPortletResponse != null)) {
+
+			AssetRendererFactory journalArticleAssetRendererFactory =
+				AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+					JournalArticle.class);
+
+			AssetRenderer journalArticleAssetRenderer =
+				journalArticleAssetRendererFactory.getAssetRenderer(
+					activity.getClassPK());
 
 			return journalArticleAssetRenderer.getURLViewInContext(
 				serviceContext.getLiferayPortletRequest(),

@@ -55,30 +55,30 @@ public class CopyDDMStructureMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		boolean copyTemplates = ParamUtil.getBoolean(
+			actionRequest, "copyTemplates");
+
+		if (!copyTemplates) {
+			return;
+		}
+
 		long ddmStructureId = ParamUtil.getLong(
 			actionRequest, "ddmStructureId");
-
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-
-		boolean copyTemplates = ParamUtil.getBoolean(
-			actionRequest, "copyTemplates");
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMStructure.class.getName(), actionRequest);
 
 		DDMStructure ddmStructure = _ddmStructureService.copyStructure(
 			ddmStructureId, nameMap, descriptionMap, serviceContext);
 
-		if (copyTemplates) {
-			_ddmTemplateService.copyTemplates(
-				_portal.getClassNameId(DDMStructure.class), ddmStructureId,
-				_portal.getClassNameId(JournalArticle.class),
-				ddmStructure.getStructureId(),
-				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, serviceContext);
-		}
+		_ddmTemplateService.copyTemplates(
+			_portal.getClassNameId(DDMStructure.class), ddmStructureId,
+			_portal.getClassNameId(JournalArticle.class),
+			ddmStructure.getStructureId(),
+			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, serviceContext);
 	}
 
 	@Reference

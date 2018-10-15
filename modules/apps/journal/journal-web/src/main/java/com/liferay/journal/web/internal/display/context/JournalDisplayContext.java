@@ -681,10 +681,8 @@ public class JournalDisplayContext {
 
 		portletURL.setParameter("folderId", String.valueOf(getFolderId()));
 
-		String ddmStructureKey = getDDMStructureKey();
-
 		if (isNavigationStructure()) {
-			portletURL.setParameter("ddmStructureKey", ddmStructureKey);
+			portletURL.setParameter("ddmStructureKey", getDDMStructureKey());
 		}
 
 		String status = ParamUtil.getString(_request, "status");
@@ -924,14 +922,13 @@ public class JournalDisplayContext {
 				Document[] documents = hits.getDocs();
 
 				for (Document document : documents) {
-					JournalArticle article = null;
-					JournalFolder folder = null;
-
 					String className = document.get(Field.ENTRY_CLASS_NAME);
 					long classPK = GetterUtil.getLong(
 						document.get(Field.ENTRY_CLASS_PK));
 
 					if (className.equals(JournalArticle.class.getName())) {
+						JournalArticle article = null;
+
 						if (!showVersions) {
 							article =
 								JournalArticleLocalServiceUtil.
@@ -954,8 +951,8 @@ public class JournalDisplayContext {
 						results.add(article);
 					}
 					else if (className.equals(JournalFolder.class.getName())) {
-						folder = JournalFolderLocalServiceUtil.getFolder(
-							classPK);
+						JournalFolder folder =
+							JournalFolderLocalServiceUtil.getFolder(classPK);
 
 						results.add(folder);
 					}

@@ -110,8 +110,6 @@ public class JournalContentPortlet extends MVCPortlet {
 
 		String articleId = PrefsParamUtil.getString(
 			portletPreferences, renderRequest, "articleId");
-		String ddmTemplateKey = PrefsParamUtil.getString(
-			portletPreferences, renderRequest, "ddmTemplateKey");
 
 		JournalArticle article = null;
 		JournalArticleDisplay articleDisplay = null;
@@ -138,6 +136,9 @@ public class JournalContentPortlet extends MVCPortlet {
 						articleGroupId, articleId,
 						WorkflowConstants.STATUS_ANY);
 				}
+
+				String ddmTemplateKey = PrefsParamUtil.getString(
+					portletPreferences, renderRequest, "ddmTemplateKey");
 
 				if (Validator.isNull(ddmTemplateKey)) {
 					ddmTemplateKey = article.getDDMTemplateKey();

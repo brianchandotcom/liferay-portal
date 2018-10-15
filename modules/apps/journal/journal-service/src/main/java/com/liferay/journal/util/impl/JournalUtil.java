@@ -586,10 +586,12 @@ public class JournalUtil {
 
 		curTypeAttribute.setValue(newTypeAttribute.getValue());
 
-		Attribute curIndexTypeAttribute = curElement.attribute("index-type");
 		Attribute newIndexTypeAttribute = newElement.attribute("index-type");
 
 		if (newIndexTypeAttribute != null) {
+			Attribute curIndexTypeAttribute = curElement.attribute(
+				"index-type");
+
 			if (curIndexTypeAttribute == null) {
 				curElement.addAttribute(
 					"index-type", newIndexTypeAttribute.getValue());

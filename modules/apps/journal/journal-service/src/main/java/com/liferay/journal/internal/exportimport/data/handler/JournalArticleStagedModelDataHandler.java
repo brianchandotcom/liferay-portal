@@ -676,13 +676,13 @@ public class JournalArticleStagedModelDataHandler
 			ddmStructureKeys, article.getDDMStructureKey(),
 			article.getDDMStructureKey());
 
-		Map<String, Long> ddmStructureIds =
-			(Map<String, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DDMStructure.class);
-
 		long ddmStructureId = 0;
 
 		if (article.getClassNameId() != 0) {
+			Map<String, Long> ddmStructureIds =
+				(Map<String, Long>)portletDataContext.getNewPrimaryKeysMap(
+					DDMStructure.class);
+
 			ddmStructureId = ddmStructureIds.get(article.getClassPK());
 		}
 
@@ -817,17 +817,19 @@ public class JournalArticleStagedModelDataHandler
 
 			JournalArticle importedArticle = null;
 
-			String articleResourceUuid = articleElement.attributeValue(
-				"article-resource-uuid");
-
 			// Used when importing LARs with journal schemas under 1.1.0
 
 			_setLegacyValues(article);
 
 			if (portletDataContext.isDataStrategyMirror()) {
 				serviceContext.setUuid(article.getUuid());
+
+				String articleResourceUuid = articleElement.attributeValue(
+					"article-resource-uuid");
+
 				serviceContext.setAttribute(
 					"articleResourceUuid", articleResourceUuid);
+
 				serviceContext.setAttribute("urlTitle", article.getUrlTitle());
 
 				boolean preloaded = GetterUtil.getBoolean(

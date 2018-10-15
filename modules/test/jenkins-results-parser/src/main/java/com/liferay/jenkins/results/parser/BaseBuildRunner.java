@@ -70,17 +70,17 @@ public abstract class BaseBuildRunner<T extends BuildData>
 		userContentRelativePath = userContentRelativePath.replace(")", "\\)");
 		userContentRelativePath = userContentRelativePath.replace("(", "\\(");
 
-		try {
-			String command = JenkinsResultsParserUtil.combine(
-				"ssh -o NumberOfPasswordPrompts=0 ",
-				_buildData.getMasterHostname(),
-				" 'mkdir -p /opt/java/jenkins/userContent/",
-				userContentRelativePath, "'");
+		RemoteExecutor remoteExecutor = new RemoteExecutor();
 
-			JenkinsResultsParserUtil.executeBashCommands(command);
-		}
-		catch (IOException | TimeoutException e) {
-			throw new RuntimeException(e);
+		int returnCode = remoteExecutor.execute(
+			1, new String[] {_buildData.getMasterHostname()},
+			new String[] {
+				"mkdir -p /opt/java/jenkins/userContent" +
+					userContentRelativePath
+			});
+
+		if (returnCode != 0) {
+			throw new RuntimeException("Unable to create target directory");
 		}
 
 		int maxRetries = 3;

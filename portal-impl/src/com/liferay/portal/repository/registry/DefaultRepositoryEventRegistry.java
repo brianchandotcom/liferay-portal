@@ -87,6 +87,26 @@ public class DefaultRepositoryEventRegistry
 		}
 	}
 
+	@Override
+	public <S extends RepositoryEventType, T> void
+		unregisterRepositoryEventListener(
+			Class<S> repositoryEventTypeClass, Class<T> modelClass,
+			RepositoryEventListener<S, T> repositoryEventListener) {
+
+		if (repositoryEventListener == null) {
+			throw new NullPointerException("Repository event listener is null");
+		}
+
+		Tuple key = new Tuple(repositoryEventTypeClass, modelClass);
+
+		Collection<RepositoryEventListener<?, ?>> repositoryEventListeners =
+			_repositoryEventListeners.get(key);
+
+		if (repositoryEventListeners != null) {
+			repositoryEventListeners.remove(repositoryEventListener);
+		}
+	}
+
 	private final RepositoryEventTrigger _parentRepositoryEventTrigger;
 	private final Map<Tuple, Collection<RepositoryEventListener<?, ?>>>
 		_repositoryEventListeners = new HashMap<>();

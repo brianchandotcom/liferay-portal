@@ -94,10 +94,11 @@ public class LPKGIndexer implements Indexer {
 
 			SimpleIndexer simpleIndexer = new SimpleIndexer();
 
-			simpleIndexer.files(files);
 			simpleIndexer.base(tempDir.toURI());
 			simpleIndexer.compress(false);
+			simpleIndexer.files(files);
 			simpleIndexer.name(_getRepositoryName(_lpkgFile));
+
 			simpleIndexer.index(outputStream);
 		}
 		finally {

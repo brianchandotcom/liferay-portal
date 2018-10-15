@@ -471,6 +471,12 @@ public abstract class Baseline {
 			"==========", "==========");
 	}
 
+	protected String encodeWarnings(String warnings) {
+		String encodedWarnings = warnings.replace(",", "");
+
+		return encodedWarnings.replace(' ', '-');
+	}
+
 	protected boolean generatePackageInfo(Jar jar, Info info, Delta delta)
 		throws Exception {
 
@@ -541,60 +547,6 @@ public abstract class Baseline {
 		return correct;
 	}
 
-	protected String encodeWarnings(String warnings) {
-		String encodedWarnings = warnings.replace(",", "");
-
-		return encodedWarnings.replace(' ', '-');
-	}
-
-	protected boolean isIgnoredWarnings(
-			Jar jar, Info info, Delta delta, String warnings)
-		throws Exception {
-
-		Resource resource = jar.getResource(
-			info.packageName.replace('.', '/') + "/.lfrbuild-packageinfo");
-
-		if (resource == null) {
-			return false;
-		}
-
-		Set<String> lines = new HashSet<>();
-
-		String content = IO.collect(resource.openInputStream());
-
-		try (BufferedReader bufferedReader = new BufferedReader(
-				new StringReader(content.trim()))) {
-
-			String line = null;
-
-			while ((line = bufferedReader.readLine()) != null) {
-				lines.add(line.trim());
-			}
-		}
-
-		if (lines.contains(encodeWarnings(warnings))) {
-			return true;
-		}
-
-		if (delta == Delta.ADDED) {
-			String s = _WARNING_PACKAGE_ADDED_MISSING_PACKAGEINFO;
-
-			if (lines.contains(encodeWarnings(s))) {
-				return true;
-			}
-		}
-
-		if (delta == Delta.REMOVED) {
-			String s = _WARNING_PACKAGE_REMOVED_UNNECESSARY_PACKAGEINFO;
-
-			if (lines.contains(encodeWarnings(s))) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	protected Set<String> getMovedPackages() throws IOException {
 		File movedPackagesFile = new File(
 			_bndFile.getParentFile(), "moved-packages.txt");
@@ -652,6 +604,54 @@ public abstract class Baseline {
 			if ((info.packageDiff.getDelta() == Delta.REMOVED) &&
 				!movedPackages.contains(info.packageName)) {
 
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected boolean isIgnoredWarnings(
+			Jar jar, Info info, Delta delta, String warnings)
+		throws Exception {
+
+		Resource resource = jar.getResource(
+			info.packageName.replace('.', '/') + "/.lfrbuild-packageinfo");
+
+		if (resource == null) {
+			return false;
+		}
+
+		Set<String> lines = new HashSet<>();
+
+		String content = IO.collect(resource.openInputStream());
+
+		try (BufferedReader bufferedReader = new BufferedReader(
+				new StringReader(content.trim()))) {
+
+			String line = null;
+
+			while ((line = bufferedReader.readLine()) != null) {
+				lines.add(line.trim());
+			}
+		}
+
+		if (lines.contains(encodeWarnings(warnings))) {
+			return true;
+		}
+
+		if (delta == Delta.ADDED) {
+			String s = _WARNING_PACKAGE_ADDED_MISSING_PACKAGEINFO;
+
+			if (lines.contains(encodeWarnings(s))) {
+				return true;
+			}
+		}
+
+		if (delta == Delta.REMOVED) {
+			String s = _WARNING_PACKAGE_REMOVED_UNNECESSARY_PACKAGEINFO;
+
+			if (lines.contains(encodeWarnings(s))) {
 				return true;
 			}
 		}

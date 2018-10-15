@@ -4651,8 +4651,8 @@ version 1.3.4.
 ## 5.5.61 - 2018-09-27
 
 ### Fixed
-- [LPS-85771]: Set `test.outputs.upToDateWhen` to `false` to always run `test`
-and `testIntegration` for OSGi modules.
+- [LPS-85771]: Always set the `test` and `testIntegration` task's up-to-date
+check to `false` for OSGi modules.
 
 ## 5.5.62 - 2018-09-30
 

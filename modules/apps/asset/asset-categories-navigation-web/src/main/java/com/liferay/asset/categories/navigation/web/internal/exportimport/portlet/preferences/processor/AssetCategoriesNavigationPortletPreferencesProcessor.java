@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Element;
 
 import java.util.Enumeration;
 import java.util.List;
@@ -111,8 +110,6 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 		String uuid = null;
 		long groupId = 0;
 
-		Element rootElement = portletDataContext.getExportDataRootElement();
-
 		if (className.equals(AssetVocabulary.class.getName())) {
 			AssetVocabulary assetVocabulary =
 				_assetVocabularyLocalService.fetchAssetVocabulary(
@@ -123,7 +120,8 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 				groupId = assetVocabulary.getGroupId();
 
 				portletDataContext.addReferenceElement(
-					portlet, rootElement, assetVocabulary,
+					portlet, portletDataContext.getExportDataRootElement(),
+					assetVocabulary,
 					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 			}
 		}

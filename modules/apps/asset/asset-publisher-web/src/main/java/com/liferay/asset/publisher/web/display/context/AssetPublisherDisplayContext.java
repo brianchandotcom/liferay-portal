@@ -247,12 +247,12 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public List<AssetEntry> getAssetEntries() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		AssetListEntry assetListEntry = fetchAssetListEntry();
 
 		if (isSelectionStyleManual()) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 			return AssetPublisherUtil.getAssetEntries(
 				_portletRequest, _portletPreferences,
 				themeDisplay.getPermissionChecker(), getGroupIds(),
@@ -353,10 +353,11 @@ public class AssetPublisherDisplayContext {
 		Map<String, String[]> parameters = _request.getParameterMap();
 
 		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
-			String name = entry.getKey();
 			String[] values = entry.getValue();
 
 			if (ArrayUtil.isNotEmpty(values)) {
+				String name = entry.getKey();
+
 				if (values.length == 1) {
 					_attributes.put(name, values[0]);
 				}

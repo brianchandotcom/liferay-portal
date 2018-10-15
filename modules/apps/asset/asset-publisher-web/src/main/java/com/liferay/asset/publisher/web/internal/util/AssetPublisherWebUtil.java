@@ -249,10 +249,6 @@ public class AssetPublisherWebUtil {
 	public Map<Locale, String> getEmailAssetEntryAddedBodyMap(
 		PortletPreferences portletPreferences) {
 
-		LocalizedValuesMap emailAssetEntryAddedLocalizedBodyMap =
-			_assetPublisherPortletInstanceConfiguration.
-				emailAssetEntryAddedBody();
-
 		Map<Locale, String> emailAssetEntryAddedBodyMap =
 			LocalizationUtil.getLocalizationMap(
 				portletPreferences, "emailAssetEntryAddedBody",
@@ -262,6 +258,10 @@ public class AssetPublisherWebUtil {
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		if (Validator.isNull(emailAssetEntryAddedBodyMap.get(defaultLocale))) {
+			LocalizedValuesMap emailAssetEntryAddedLocalizedBodyMap =
+				_assetPublisherPortletInstanceConfiguration.
+					emailAssetEntryAddedBody();
+
 			emailAssetEntryAddedBodyMap.put(
 				defaultLocale,
 				emailAssetEntryAddedLocalizedBodyMap.getDefaultValue());
@@ -287,10 +287,6 @@ public class AssetPublisherWebUtil {
 	public Map<Locale, String> getEmailAssetEntryAddedSubjectMap(
 		PortletPreferences portletPreferences) {
 
-		LocalizedValuesMap emailAssetEntryAddedLocalizedSubjectMap =
-			_assetPublisherPortletInstanceConfiguration.
-				emailAssetEntryAddedSubject();
-
 		Map<Locale, String> emailAssetEntryAddedSubjectMap =
 			LocalizationUtil.getLocalizationMap(
 				portletPreferences, "emailAssetEntryAddedSubject",
@@ -301,6 +297,10 @@ public class AssetPublisherWebUtil {
 
 		if (Validator.isNull(
 				emailAssetEntryAddedSubjectMap.get(defaultLocale))) {
+
+			LocalizedValuesMap emailAssetEntryAddedLocalizedSubjectMap =
+				_assetPublisherPortletInstanceConfiguration.
+					emailAssetEntryAddedSubject();
 
 			emailAssetEntryAddedSubjectMap.put(
 				defaultLocale,

@@ -69,9 +69,6 @@ public class AssetListEntryUsagesDisplayContext {
 	public String getAssetListEntryUsageName(
 		AssetListEntryUsage assetListEntryUsage) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long classNameId = assetListEntryUsage.getClassNameId();
 
 		if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
@@ -81,6 +78,10 @@ public class AssetListEntryUsagesDisplayContext {
 			if (layout == null) {
 				return StringPool.BLANK;
 			}
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_renderRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			return layout.getName(themeDisplay.getLocale());
 		}

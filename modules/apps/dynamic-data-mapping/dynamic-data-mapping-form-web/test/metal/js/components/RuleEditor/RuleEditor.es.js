@@ -33,14 +33,14 @@ const pages = [...mockPages];
 
 const spritemap = 'icons.svg';
 
-const rolesUrl = '/o/dynamic-data-mapping-form-builder-roles/';
+const rolesURL = '/o/dynamic-data-mapping-form-builder-roles/';
 
 const getBaseConfig = () => ({
 	conditions: [],
 	dataProviderInstancesURL,
 	functionsMetadata,
 	pages,
-	rolesUrl,
+	rolesURL,
 	spritemap
 });
 
@@ -74,6 +74,7 @@ describe(
 						);
 					}
 				);
+
 				describe(
 					'When a condition is added and there\'s more than one condition, there must be an option the delete the condition',
 					() => {
@@ -430,6 +431,36 @@ describe(
 								jest.runAllTimers();
 
 								expect(component.refs.conditionOperator0.options).toMatchSnapshot();
+							}
+						);
+
+						it(
+							'should fetch roles when rendered',
+							() => {
+								const spy = jest.spyOn(window, 'fetch');
+
+								component = new RuleEditor(
+									{
+										...getBaseConfig()
+									}
+								);
+
+								expect(spy).toHaveBeenCalledWith(component.rolesURL, expect.anything());
+							}
+						);
+
+						it(
+							'should fetch data providers when rendered',
+							() => {
+								const spy = jest.spyOn(window, 'fetch');
+
+								component = new RuleEditor(
+									{
+										...getBaseConfig()
+									}
+								);
+
+								expect(spy).toHaveBeenCalledWith(component.dataProviderInstancesURL, expect.anything());
 							}
 						);
 

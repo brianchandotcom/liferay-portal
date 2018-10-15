@@ -75,7 +75,16 @@
 	width: 24px;
 }
 
+.layout-has-child-col {
+	min-width: 32px;
+}
+
+.layout-has-child-col .component-action {
+	cursor: inherit;
+}
+
 .list-group-item.drag-layout-column-item {
+	cursor: pointer;
 	height: 68px;
 	max-height: 68px;
 }
@@ -90,6 +99,7 @@
 
 	.flex-col {
 		.btn-link,
+		.component-action,
 		.custom-checkbox,
 		.dropdown,
 		.list-group-subtitle,

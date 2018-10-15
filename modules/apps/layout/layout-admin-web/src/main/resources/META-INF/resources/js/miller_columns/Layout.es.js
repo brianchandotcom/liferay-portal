@@ -342,6 +342,40 @@ class Layout extends Component {
 	}
 
 	/**
+	 * Handle click event on layout column item checkbox
+	 * @param {!object} event
+	 * @private
+	 * @review
+	 */
+
+	_handleLayoutColumnItemCheckboxClick(event) {
+		event.stopPropagation();
+	}
+
+	/**
+	 * Handle layout column item click event
+	 * @param {!object} event
+	 * @param {string} event.delegateTarget.dataset.layoutColumnItemPlid
+	 * @param {object} event.target.classList
+	 * @param {string} event.target.type
+	 * @private
+	 * @review
+	 */
+
+	_handleLayoutColumnItemClick(event) {
+		const targetIsA = event.target.tagName === 'A';
+		const targetIsButton = event.target.tagName === 'BUTTON';
+
+		if (!targetIsA && !targetIsButton) {
+			const itemPlid = event.delegateTarget.dataset.layoutColumnItemPlid;
+
+			const item = this._getLayoutColumnItemByPlid(this.layoutColumns, itemPlid);
+
+			window.location.href = item.url;
+		}
+	}
+
+	/**
 	 * @private
 	 * @review
 	 */

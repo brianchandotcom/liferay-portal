@@ -17,6 +17,8 @@
 		url: string
 	]>}
 	{@param handleLayoutColumnItemCheck: any}
+	{@param handleLayoutColumnItemCheckboxClick: any}
+	{@param handleLayoutColumnItemClick: any}
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
 	{@param? draggingItemPosition: string}
@@ -46,6 +48,8 @@
 				{param key: $layoutColumnItem.plid /}
 				{param layoutColumnItem: $layoutColumnItem /}
 				{param handleLayoutColumnItemCheck: $handleLayoutColumnItemCheck /}
+				{param handleLayoutColumnItemCheckboxClick: $handleLayoutColumnItemCheckboxClick /}
+				{param handleLayoutColumnItemClick: $handleLayoutColumnItemClick /}
 				{param pathThemeImages: $pathThemeImages /}
 				{param portletNamespace: $portletNamespace /}
 				{param styleModifier: $styleModifier /}
@@ -83,6 +87,8 @@
 		url: string
 	]}
 	{@param handleLayoutColumnItemCheck: any}
+	{@param handleLayoutColumnItemCheckboxClick: any}
+	{@param handleLayoutColumnItemClick: any}
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
 	{@param? styleModifier: string}
@@ -106,6 +112,7 @@
 	{let $listGroupItemAttributes kind="attributes"}
 		class="{$listGroupItemClasses}"
 		data-layout-column-item-plid="{$layoutColumnItem.plid}"
+		data-onclick="{$handleLayoutColumnItemClick}"
 
 		{if $layoutColumnItem.active}
 			ref="active"
@@ -137,7 +144,10 @@
 				{/let}
 
 				<div class="autofit-col flex-col">
-					<div class="custom-checkbox custom-control">
+					<div
+						class="custom-checkbox custom-control"
+						data-onclick="{$handleLayoutColumnItemCheckboxClick}"
+					>
 						<label>
 							<input {$layoutColumnItemAttributes} />
 
@@ -173,9 +183,9 @@
 					{if $layoutColumnItem.actionURLs['configureURL']}
 						<div class="flex-col">
 							<div class="quick-action-menu">
-								<a 
-									class="component-action" 
-									href="{$layoutColumnItem.actionURLs['configureURL']}" 
+								<a
+									class="component-action"
+									href="{$layoutColumnItem.actionURLs['configureURL']}"
 									title="{msg desc=""}configure{/msg}"
 								>
 									{call .lexiconIcon}
@@ -190,7 +200,7 @@
 					{if $layoutColumnItem.actionURLs['addURL']}
 						<div class="flex-col">
 							<div class="quick-action-menu">
-								<a 
+								<a
 									class="component-action"
 									href="{$layoutColumnItem.actionURLs['addURL']}"
 									title="{msg desc=""}add-page{/msg}"
@@ -308,16 +318,16 @@
 					</div>
 				{/if}
 
-				{if $layoutColumnItem.hasChild}
-					<div class="flex-col">
-						<a class="component-action" href="{$layoutColumnItem.url}" title="{msg desc=""}show-pages{/msg}">
+				<div class="flex-col layout-has-child-col">
+					{if $layoutColumnItem.hasChild}
+						<div class="component-action disabled">
 							{call .lexiconIcon}
-								{param name: 'angle-right' /}
+								{param name: 'caret-right' /}
 								{param pathThemeImages: $pathThemeImages /}
 							{/call}
-						</a>
-					</div>
-				{/if}
+						</div>
+					{/if}
+				</div>
 			{/if}
 		</div>
 	</li>

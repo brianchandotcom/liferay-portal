@@ -1,6 +1,3 @@
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 buildService {
 	apiDir = "../asset-entry-rel-api/src/main/java"
 	testDir = "../asset-entry-rel-test/src/testIntegration/java"

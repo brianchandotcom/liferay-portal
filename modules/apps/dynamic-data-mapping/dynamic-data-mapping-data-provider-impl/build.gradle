@@ -1,8 +1,5 @@
 apply plugin: "com.liferay.lang.merger"
 
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 dependencies {
 	compileInclude group: "com.jayway.jsonpath", name: "json-path", version: "2.2.0"
 	compileInclude group: "com.netflix.archaius", name: "archaius-core", version: "0.4.1"

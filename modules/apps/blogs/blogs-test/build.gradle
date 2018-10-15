@@ -1,6 +1,3 @@
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 dependencies {
 	testCompile group: "easyconf", name: "easyconf", version: "0.9.5"
 	testCompile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"

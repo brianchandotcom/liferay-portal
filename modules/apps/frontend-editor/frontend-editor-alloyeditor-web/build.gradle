@@ -3,9 +3,6 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 task buildAlloyEditor(type: Copy)
 
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 File editorDestinationDir = file("tmp/META-INF/resources")
 
 buildAlloyEditor {

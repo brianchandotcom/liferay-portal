@@ -1,6 +1,3 @@
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 buildService {
 	apiDir = "../asset-auto-tagger-api/src/main/java"
 	testDir = "../asset-auto-tagger-test/src/testIntegration/java"

@@ -1,6 +1,3 @@
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 buildService {
 	apiDir = "../portal-tools-service-builder-test-api/src/main/java"
 	testDir = "../portal-tools-service-builder-test-test/src/testIntegration/java"

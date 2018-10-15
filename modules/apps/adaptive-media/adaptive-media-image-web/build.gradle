@@ -6,9 +6,6 @@ configurations {
 
 task buildPictureFill(type: Copy)
 
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 String pictureFillVersion = "3.0.2"
 
 buildPictureFill {

@@ -1,6 +1,3 @@
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 buildService {
 	apiDir = "../adaptive-media-image-api/src/main/java"
 	testDir = "../adaptive-media-image-test/src/testIntegration/java"

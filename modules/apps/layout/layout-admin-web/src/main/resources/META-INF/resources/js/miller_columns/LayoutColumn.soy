@@ -21,6 +21,18 @@
 	{@param handleLayoutColumnItemClick: any}
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
+	{@param? draggingItem: [
+		actionURLs: map<string, string>,
+		active: bool,
+		checked: bool,
+		description: string,
+		hasChild: bool,
+		homePage: bool,
+		homePageTitle: string,
+		plid: string,
+		title: string,
+		url: string
+	]}
 	{@param? draggingItemPosition: string}
 	{@param? hoveredLayoutColumnItemPlid: string}
 
@@ -41,6 +53,10 @@
 			{let $styleModifier kind="text"}
 				{if $hoveredLayoutColumnItemPlid == $layoutColumnItem.plid}
 					{$draggingItemPosition}
+				{/if}
+
+				{if $draggingItem and $draggingItem.plid == $layoutColumnItem.plid}
+					{sp}layout-column-item-dragged
 				{/if}
 			{/let}
 

@@ -149,6 +149,8 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 						() -> _addGoogleDriveFileEntry(
 							repositoryId, folderId, contentType,
 							serviceContext)));
+
+				hideDefaultSuccessMessage(actionRequest);
 			}
 			catch (PortalException pe) {
 				throw pe;
@@ -194,6 +196,8 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 						_transactionConfig,
 						() -> _checkOutGoogleDriveFileEntry(
 							fileEntryId, serviceContext)));
+
+				hideDefaultSuccessMessage(actionRequest);
 			}
 			catch (PortalException pe) {
 				throw pe;

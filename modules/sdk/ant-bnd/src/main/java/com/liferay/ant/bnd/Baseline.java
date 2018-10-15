@@ -220,9 +220,7 @@ public abstract class Baseline {
 					}
 				}
 
-				Set<String> ignoredWarnings = getIgnoredWarnings(newJar, info);
-
-				if (ignoredWarnings.contains(warnings)) {
+				if (isIgnoredWarnings(newJar, info, warnings)) {
 					match = true;
 
 					continue;
@@ -543,14 +541,14 @@ public abstract class Baseline {
 		return correct;
 	}
 
-	protected Set<String> getIgnoredWarnings(Jar jar, Info info)
+	protected boolean isIgnoredWarnings(Jar jar, Info info, String warnings)
 		throws Exception {
 
 		Resource resource = jar.getResource(
 			info.packageName.replace('.', '/') + "/.lfrbuild-packageinfo");
 
 		if (resource == null) {
-			return Collections.emptySet();
+			return false;
 		}
 
 		Set<String> ignoredWarnings = new HashSet<>();
@@ -569,7 +567,11 @@ public abstract class Baseline {
 			}
 		}
 
-		return ignoredWarnings;
+		if (!ignoredWarnings.contains(warnings)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected Set<String> getMovedPackages() throws IOException {

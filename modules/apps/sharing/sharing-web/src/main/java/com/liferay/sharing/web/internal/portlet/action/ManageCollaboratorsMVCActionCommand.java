@@ -45,8 +45,11 @@ import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayAct
 
 import java.io.IOException;
 
+import java.text.DateFormat;
+
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -114,6 +117,10 @@ public class ManageCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private DateFormat _getDateFormat(Locale locale) {
+		return DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd", locale);
+	}
+
 	private void _manageCollaborators(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			ResourceBundle resourceBundle)
@@ -159,28 +166,23 @@ public class ManageCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 				new String[0], false);
 
 		for (String sharingEntryIdExpirationDatePair :
-			sharingEntryIdExpirationDatePairs) {
+				sharingEntryIdExpirationDatePairs) {
 
-			String[] parts = StringUtil.split(
-				sharingEntryIdExpirationDatePair);
+			String[] parts = StringUtil.split(sharingEntryIdExpirationDatePair);
 
 			long sharingEntryId = Long.valueOf(parts[0]);
 
 			Date expirationDate = GetterUtil.getDate(
-				parts[1], DateFormatFactoryUtil.getDate(
-					resourceBundle.getLocale()), null);
+				parts[1], _getDateFormat(resourceBundle.getLocale()));
 
 			if (expirationDate != null) {
 				SharingEntry sharingEntry =
-					_sharingEntryLocalService.getSharingEntry(
-						sharingEntryId);
+					_sharingEntryLocalService.getSharingEntry(sharingEntryId);
 
 				_sharingEntryService.updateSharingEntry(
-					sharingEntryId,
-					//TODO
+					sharingEntryId, //TODO
 					Arrays.asList(SharingEntryAction.values()),
-					sharingEntry.isShareable(), expirationDate,
-					serviceContext);
+					sharingEntry.isShareable(), expirationDate, serviceContext);
 			}
 		}
 

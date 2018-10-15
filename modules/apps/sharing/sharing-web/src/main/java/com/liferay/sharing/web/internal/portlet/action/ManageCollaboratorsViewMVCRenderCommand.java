@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -35,8 +36,12 @@ import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplay;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayAction;
 import com.liferay.sharing.web.internal.util.SharingUtil;
 
+import java.text.DateFormat;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
@@ -142,9 +147,19 @@ public class ManageCollaboratorsViewMVCRenderCommand
 					"name", sharingEntryToUser.getFullName());
 				collaboratorJSONObject.put(
 					"sharingEntryId", sharingEntry.getSharingEntryId());
+
+				String sExpirationDate = null;
+
+				Date expirationDate = sharingEntry.getExpirationDate();
+
+				if (expirationDate != null) {
+					sExpirationDate = _getDateFormat(
+						themeDisplay.getLocale()).format(expirationDate);
+				}
+
 				collaboratorJSONObject.put(
-					"sharingEntryExpirationDate",
-					sharingEntry.getExpirationDate());
+					"sharingEntryExpirationDate", sExpirationDate);
+
 				collaboratorJSONObject.put(
 					"sharingEntryPermissionDisplaySelectOptions",
 					_getSharingEntryPermissionDisplaySelectOptions(
@@ -158,6 +173,10 @@ public class ManageCollaboratorsViewMVCRenderCommand
 		catch (PortalException pe) {
 			throw new PortletException(pe);
 		}
+	}
+
+	private DateFormat _getDateFormat(Locale locale) {
+		return DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd", locale);
 	}
 
 	private String _getManageCollaboratorsActionURL(

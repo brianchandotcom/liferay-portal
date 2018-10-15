@@ -19,6 +19,7 @@ class ManageCollaborators extends PortletBase {
 	attached() {
 		this._deleteSharingEntryIds = [];
 		this._sharingEntryIdsAndPermissions = new Map();
+		this._sharingEntryIdsAndExpirationDate = new Map();
 	}
 
 	/**
@@ -55,6 +56,13 @@ class ManageCollaborators extends PortletBase {
 		this._sharingEntryIdsAndPermissions.set(sharingEntryId, sharingEntryPermissionKey);
 	}
 
+	_handleChangeExpirationDate(event) {
+		let sharingEntryExpirationDate = event.target.value;
+		let sharingEntryId = event.target.getAttribute('name');
+
+		this._sharingEntryIdsAndExpirationDate.set(sharingEntryId, sharingEntryExpirationDate);
+	}
+
 	/**
 	 * Deletes the collaborator.
 	 *
@@ -83,13 +91,15 @@ class ManageCollaborators extends PortletBase {
 	 * @protected
 	 */
 	_handleSaveButtonClick() {
+		let expirationDates = Array.from(this._sharingEntryIdsAndExpirationDate, (id, date) => id + ',' + date);
 		let permissions = Array.from(this._sharingEntryIdsAndPermissions, (id, key) => id + ',' + key);
 
 		this.fetch(
 			this.actionUrl,
 			{
 				deleteSharingEntryIds: this._deleteSharingEntryIds,
-				sharingEntryIdActionIdPairs: permissions
+				sharingEntryIdActionIdPairs: permissions,
+				sharingEntryIdExpirationDatePairs: expirationDates
 			}
 		)
 			.then(

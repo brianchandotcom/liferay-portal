@@ -153,9 +153,9 @@ public class DDMFormEvaluatorHelper {
 	}
 
 	protected void evaluateDDMFormRule(DDMFormRule ddmFormRule) {
-		List<String> actions = ddmFormRule.getActions();
-
 		if (evaluateDDMFormRuleCondition(ddmFormRule.getCondition())) {
+			List<String> actions = ddmFormRule.getActions();
+
 			Stream<String> stream = actions.stream();
 
 			evaluateDDMFormRuleAction(

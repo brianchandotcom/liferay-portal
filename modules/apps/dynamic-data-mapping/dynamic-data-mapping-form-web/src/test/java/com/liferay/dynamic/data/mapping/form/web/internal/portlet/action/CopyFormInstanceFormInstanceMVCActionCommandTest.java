@@ -99,10 +99,10 @@ public class CopyFormInstanceFormInstanceMVCActionCommandTest
 
 			DDMFormFieldValue ddmFormFieldValue =
 				formInstanceSettingsDDMFormFieldValues.get(i);
+
 			DDMFormFieldValue ddmFormFieldValueCopy =
 				formInstanceSettingsDDMFormFieldValuesCopy.get(i);
 
-			Value value = ddmFormFieldValue.getValue();
 			Value valueCopy = ddmFormFieldValueCopy.getValue();
 
 			DDMFormField ddmFormField = ddmFormFieldValueCopy.getDDMFormField();
@@ -112,6 +112,8 @@ public class CopyFormInstanceFormInstanceMVCActionCommandTest
 					"false", valueCopy.getString(LocaleUtil.US));
 			}
 			else {
+				Value value = ddmFormFieldValue.getValue();
+
 				Assert.assertEquals(
 					value.getString(LocaleUtil.US),
 					valueCopy.getString(LocaleUtil.US));

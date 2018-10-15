@@ -255,12 +255,10 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 
 		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
 
-		Locale defaultLocale = ddmForm.getDefaultLocale();
-
 		Locale structureLocale = locale;
 
 		if (!availableLocales.contains(locale)) {
-			structureLocale = defaultLocale;
+			structureLocale = ddmForm.getDefaultLocale();
 		}
 
 		fieldContext = new HashMap<>();

@@ -160,14 +160,14 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 		ddmForm.addAvailableLocale(themeDisplay.getLocale());
 		ddmForm.setDefaultLocale(themeDisplay.getLocale());
 
-		Map<String, DDMFormField> ddmFormFieldsMap =
-			ddmForm.getDDMFormFieldsMap(false);
-
 		// Storage type
 
-		DDMFormField ddmFormField = ddmFormFieldsMap.get("storageType");
-
 		if (formInstanceId > 0) {
+			Map<String, DDMFormField> ddmFormFieldsMap =
+				ddmForm.getDDMFormFieldsMap(false);
+
+			DDMFormField ddmFormField = ddmFormFieldsMap.get("storageType");
+
 			ddmFormField.setReadOnly(true);
 		}
 

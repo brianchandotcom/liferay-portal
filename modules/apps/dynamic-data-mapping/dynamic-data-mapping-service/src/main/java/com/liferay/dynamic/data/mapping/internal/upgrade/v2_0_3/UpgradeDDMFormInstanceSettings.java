@@ -88,8 +88,6 @@ public class UpgradeDDMFormInstanceSettings extends UpgradeProcess {
 						"formInstanceId = ?")) {
 
 			while (rs.next()) {
-				long formInstanceId = rs.getLong("formInstanceId");
-
 				String settings = rs.getString("settings_");
 
 				if (Validator.isNotNull(settings)) {
@@ -105,7 +103,7 @@ public class UpgradeDDMFormInstanceSettings extends UpgradeProcess {
 
 					ps2.setString(1, settingsJSONObject.toJSONString());
 
-					ps2.setLong(2, formInstanceId);
+					ps2.setLong(2, rs.getLong("formInstanceId"));
 
 					ps2.addBatch();
 				}

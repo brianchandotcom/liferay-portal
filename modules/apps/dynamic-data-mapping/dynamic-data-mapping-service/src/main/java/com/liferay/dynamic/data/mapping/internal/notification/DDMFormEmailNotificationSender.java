@@ -265,9 +265,9 @@ public class DDMFormEmailNotificationSender {
 		for (int i = 0; i < ddmFormFieldValues.size(); i++) {
 			DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(i);
 
-			DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
-
 			if (labelString == null) {
+				DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
+
 				LocalizedValue label = ddmFormField.getLabel();
 
 				labelString = label.getString(locale);

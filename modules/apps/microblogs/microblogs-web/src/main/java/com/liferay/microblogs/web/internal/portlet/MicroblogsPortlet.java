@@ -79,16 +79,10 @@ public class MicroblogsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long microblogsEntryId = ParamUtil.getLong(
 			actionRequest, "microblogsEntryId");
 
 		String content = ParamUtil.getString(actionRequest, "content");
-		int type = ParamUtil.getInteger(actionRequest, "type");
-		long parentMicroblogsEntryId = ParamUtil.getLong(
-			actionRequest, "parentMicroblogsEntryId");
 		int socialRelationType = ParamUtil.getInteger(
 			actionRequest, "socialRelationType");
 
@@ -104,6 +98,12 @@ public class MicroblogsPortlet extends MVCPortlet {
 				microblogsEntryId, content, socialRelationType, serviceContext);
 		}
 		else {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+			int type = ParamUtil.getInteger(actionRequest, "type");
+			long parentMicroblogsEntryId = ParamUtil.getLong(
+				actionRequest, "parentMicroblogsEntryId");
+
 			microblogsEntryService.addMicroblogsEntry(
 				themeDisplay.getUserId(), content, type,
 				parentMicroblogsEntryId, socialRelationType, serviceContext);

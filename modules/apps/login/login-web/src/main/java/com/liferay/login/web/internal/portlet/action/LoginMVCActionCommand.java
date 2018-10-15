@@ -185,14 +185,16 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 
 		HttpServletRequest request = _portal.getOriginalServletRequest(
 			_portal.getHttpServletRequest(actionRequest));
-		HttpServletResponse response = _portal.getHttpServletResponse(
-			actionResponse);
-
-		String login = ParamUtil.getString(actionRequest, "login");
-		String password = actionRequest.getParameter("password");
-		boolean rememberMe = ParamUtil.getBoolean(actionRequest, "rememberMe");
 
 		if (!themeDisplay.isSignedIn()) {
+			HttpServletResponse response = _portal.getHttpServletResponse(
+				actionResponse);
+
+			String login = ParamUtil.getString(actionRequest, "login");
+			String password = actionRequest.getParameter("password");
+			boolean rememberMe = ParamUtil.getBoolean(
+				actionRequest, "rememberMe");
+
 			String portletId = _portal.getPortletId(actionRequest);
 
 			PortletPreferences portletPreferences =

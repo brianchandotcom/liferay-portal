@@ -95,8 +95,8 @@ public class DefaultIndexValidator implements IndexValidator {
 
 			List<ResolverValidator.Resolution> resolutions;
 
-			try (OSGiRepository oSGiRepository = new OSGiRepository();
-				HttpClient httpClient = new HttpClient()) {
+			try (HttpClient httpClient = new HttpClient();
+				OSGiRepository oSGiRepository = new OSGiRepository();) {
 
 				Map<String, String> map = new HashMap<>();
 

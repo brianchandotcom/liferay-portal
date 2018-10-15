@@ -1,6 +1,3 @@
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 buildService {
 	apiDir = "../blogs-api/src/main/java"
 	testDir = "../blogs-test/src/testIntegration/java"

@@ -1,8 +1,5 @@
 apply plugin: "com.liferay.alloy.taglib"
 
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 buildTaglibs {
 	componentsXmlFiles "liferay-form.xml"
 	javaPackage = "com.liferay.dynamic.data.mapping.form.taglib.servlet"

@@ -3,9 +3,6 @@ apply plugin: "org.ysb33r.gradletest"
 
 task copyGradleTestDependencies(type: Copy)
 
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 copyGradleTestDependencies {
 	from configurations.compile
 	into jar.destinationDir

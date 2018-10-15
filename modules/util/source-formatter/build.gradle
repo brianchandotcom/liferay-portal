@@ -1,8 +1,5 @@
 apply plugin: "com.liferay.maven.plugin.builder"
 
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 buildPluginDescriptor {
 	ext {
 		autoClean = false

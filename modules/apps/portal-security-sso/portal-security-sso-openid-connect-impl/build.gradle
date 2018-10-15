@@ -1,6 +1,3 @@
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 dependencies {
 	compileInclude group: "com.github.stephenc.jcip", name: "jcip-annotations", version: "1.0-1"
 	compileInclude group: "com.nimbusds", name: "lang-tag", version: "1.4.3"

@@ -1,6 +1,3 @@
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 buildService {
 	apiDir = "../sync-api/src/main/java"
 	testDir = "../sync-test/src/testIntegration/java"

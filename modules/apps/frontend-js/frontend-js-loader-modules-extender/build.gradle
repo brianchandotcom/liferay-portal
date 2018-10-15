@@ -1,6 +1,3 @@
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 dependencies {
 	compileInclude group: "com.github.yuchi", name: "npm-semver", version: "1.0.0"
 	compileInclude group: "org.json", name: "json", version: "20140107"

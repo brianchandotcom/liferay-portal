@@ -4,9 +4,6 @@ import org.apache.tools.ant.filters.FixCrLfFilter
 
 apply plugin: 'antlr'
 
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 String parserDirName = "com/liferay/dynamic/data/mapping/expression/internal/parser"
 
 cleanGenerateGrammarSource {

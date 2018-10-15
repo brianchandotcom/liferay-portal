@@ -5,9 +5,6 @@ apply plugin: "com.liferay.maven.plugin.builder"
 task copyPortalCommonCSSJar(type: Copy)
 task unzipPortalCommonCSS(type: Copy)
 
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 buildPluginDescriptor {
 	configurationScopeMapping "mavenCompile", Conf2ScopeMappingContainer.COMPILE
 

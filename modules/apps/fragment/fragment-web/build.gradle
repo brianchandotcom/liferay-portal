@@ -3,9 +3,6 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 task buildHtml2Canvas(type: Copy)
 
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
 File jsDestinationDir = file("classes/META-INF/resources/js")
 
 buildHtml2Canvas {

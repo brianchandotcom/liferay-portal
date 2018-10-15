@@ -325,10 +325,19 @@ public class DefaultDLViewFileVersionDisplayContext
 		return null;
 	}
 
+	@Override
+	public boolean isActionsVisible() {
+		if (_dlPortletInstanceSettingsHelper.isShowActions()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private List<MenuItem> _getMenuItems() throws PortalException {
 		List<MenuItem> menuItems = new ArrayList<>();
 
-		if (_dlPortletInstanceSettingsHelper.isShowActions()) {
+		if (isActionsVisible()) {
 			_uiItemsBuilder.addDownloadMenuItem(menuItems);
 
 			_uiItemsBuilder.addOpenInMsOfficeMenuItem(menuItems);

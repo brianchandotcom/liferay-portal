@@ -1,7 +1,7 @@
 @import "./variables";
 
 .contextual-sidebar-content > .fragment-entry-link-list {
-	margin-top: calc(#{$managementBarHeight} + 2px);
+	margin-top: $managementBarHeight + $fragmentEntryLinkListPadding;
 }
 
 .fragment-entry-link-list {

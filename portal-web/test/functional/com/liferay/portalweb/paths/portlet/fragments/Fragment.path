@@ -81,6 +81,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TEMPLATE_FRAGMENT</td>
+	<td>//div[contains(@class,'fragment-entry-link-wrapper')][contains(.,'${key_fragmentName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD</td>
 	<td>//div[contains(@class,'fragment-entry-link')]/div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${key_id}')]</td>
 	<td></td>

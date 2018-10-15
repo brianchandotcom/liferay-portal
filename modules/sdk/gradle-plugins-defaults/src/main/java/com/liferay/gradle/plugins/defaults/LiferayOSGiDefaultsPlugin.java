@@ -4276,7 +4276,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final String _GROUP_PORTAL = "com.liferay.portal";
 
-	private static final JavaVersion _JAVA_VERSION = JavaVersion.VERSION_1_7;
+	private static final JavaVersion _JAVA_VERSION = JavaVersion.VERSION_1_8;
 
 	private static final String _PMD_PORTAL_TOOL_NAME = "com.liferay.pmd";
 

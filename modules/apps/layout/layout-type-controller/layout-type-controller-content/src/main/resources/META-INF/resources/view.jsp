@@ -67,9 +67,17 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 		]
 	);
 
-	new DisabledAreaPopoverModule.DisabledAreaPopover(
+	const disabledAreaPopover = new DisabledAreaPopoverModule.DisabledAreaPopover(
 		{
 			selector: '#banner, #footer'
 		}
 	);
+
+	function handleDestroyPortlet () {
+		disabledAreaPopover.dispose();
+
+		Liferay.detach('destroyPortlet', handleDestroyPortlet);
+	}
+
+	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </aui:script>

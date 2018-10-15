@@ -220,7 +220,7 @@ public abstract class Baseline {
 					}
 				}
 
-				if (isIgnoredWarnings(newJar, info, warnings)) {
+				if (isIgnoredWarnings(newJar, info, delta, warnings)) {
 					match = true;
 
 					continue;
@@ -541,7 +541,14 @@ public abstract class Baseline {
 		return correct;
 	}
 
-	protected boolean isIgnoredWarnings(Jar jar, Info info, String warnings)
+	protected String encodeWarnings(String warnings) {
+		String encodedWarnings = warnings.replace(",", "");
+
+		return encodedWarnings.replace(' ', '-');
+	}
+
+	protected boolean isIgnoredWarnings(
+			Jar jar, Info info, Delta delta, String warnings)
 		throws Exception {
 
 		Resource resource = jar.getResource(
@@ -551,7 +558,7 @@ public abstract class Baseline {
 			return false;
 		}
 
-		Set<String> ignoredWarnings = new HashSet<>();
+		Set<String> lines = new HashSet<>();
 
 		String content = IO.collect(resource.openInputStream());
 
@@ -561,17 +568,31 @@ public abstract class Baseline {
 			String line = null;
 
 			while ((line = bufferedReader.readLine()) != null) {
-				String s = line.trim();
-
-				ignoredWarnings.add(s.replace('-', ' '));
+				lines.add(line.trim());
 			}
 		}
 
-		if (!ignoredWarnings.contains(warnings)) {
-			return false;
+		if (lines.contains(encodeWarnings(warnings))) {
+			return true;
 		}
 
-		return true;
+		if (delta == Delta.ADDED) {
+			String s = _WARNING_PACKAGE_ADDED_MISSING_PACKAGEINFO;
+
+			if (lines.contains(encodeWarnings(s))) {
+				return true;
+			}
+		}
+
+		if (delta == Delta.REMOVED) {
+			String s = _WARNING_PACKAGE_REMOVED_UNNECESSARY_PACKAGEINFO;
+
+			if (lines.contains(encodeWarnings(s))) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected Set<String> getMovedPackages() throws IOException {

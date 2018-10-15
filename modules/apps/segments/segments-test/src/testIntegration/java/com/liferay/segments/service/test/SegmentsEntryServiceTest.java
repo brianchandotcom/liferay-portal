@@ -417,8 +417,13 @@ public class SegmentsEntryServiceTest {
 	@DeleteAfterTestRun
 	private Company _company;
 
+	@DeleteAfterTestRun
 	private User _companyAdminUser;
+
+	@DeleteAfterTestRun
 	private Group _group;
+
+	@DeleteAfterTestRun
 	private User _groupUser;
 
 	@Inject

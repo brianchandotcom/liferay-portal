@@ -91,7 +91,7 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		contact.setTwitterSn(twitterSn);
 		contact.setJobTitle(jobTitle);
 
-		contactPersistence.update(contact);
+		contact = contactPersistence.update(contact);
 
 		return contact;
 	}
@@ -102,7 +102,7 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 
 		// Contact
 
-		contactPersistence.remove(contact);
+		contact = contactPersistence.remove(contact);
 
 		// Addresses
 
@@ -137,7 +137,7 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		Contact contact = contactPersistence.fetchByPrimaryKey(contactId);
 
 		if (contact != null) {
-			deleteContact(contact);
+			contact = deleteContact(contact);
 		}
 
 		return contact;
@@ -215,7 +215,7 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		contact.setTwitterSn(twitterSn);
 		contact.setJobTitle(jobTitle);
 
-		contactPersistence.update(contact);
+		contact = contactPersistence.update(contact);
 
 		return contact;
 	}

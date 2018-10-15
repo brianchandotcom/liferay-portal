@@ -177,7 +177,7 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 			relayState = sb.toString();
 		}
 		else if (Validator.isNull(relayState)) {
-			relayState = _portal.getPathMain();
+			relayState = _portal.getHomeURL(request);
 		}
 
 		_webSsoProfile.sendAuthnRequest(request, response, relayState);

@@ -29,13 +29,13 @@ public class ManagementBarFiltersTag extends IncludeTag implements BodyTag {
 
 	@Override
 	public int doEndTag() {
-		ManagementBarTag managementBarTag =
-			(ManagementBarTag)findAncestorWithClass(
-				this, ManagementBarTag.class);
-
 		BodyContent bodyContent = getBodyContent();
 
 		if (bodyContent != null) {
+			ManagementBarTag managementBarTag =
+				(ManagementBarTag)findAncestorWithClass(
+					this, ManagementBarTag.class);
+
 			managementBarTag.setFilters(bodyContent.getString());
 		}
 

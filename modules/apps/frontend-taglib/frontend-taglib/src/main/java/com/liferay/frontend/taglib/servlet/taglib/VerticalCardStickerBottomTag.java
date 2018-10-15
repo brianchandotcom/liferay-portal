@@ -30,12 +30,13 @@ public class VerticalCardStickerBottomTag
 
 	@Override
 	public int doEndTag() {
-		VerticalCardTag verticalCardTag =
-			(VerticalCardTag)findAncestorWithClass(this, VerticalCardTag.class);
-
 		BodyContent bodyContent = getBodyContent();
 
 		if (bodyContent != null) {
+			VerticalCardTag verticalCardTag =
+				(VerticalCardTag)findAncestorWithClass(
+					this, VerticalCardTag.class);
+
 			verticalCardTag.setStickerBottom(bodyContent.getString());
 		}
 

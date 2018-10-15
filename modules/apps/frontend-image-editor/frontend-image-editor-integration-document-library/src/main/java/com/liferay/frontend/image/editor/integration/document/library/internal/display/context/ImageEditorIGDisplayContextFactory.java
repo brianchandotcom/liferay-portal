@@ -54,10 +54,10 @@ public class ImageEditorIGDisplayContextFactory
 
 		Object model = fileVersion.getModel();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		if (model instanceof DLFileVersion) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 			return new ImageEditorIGViewFileVersionDisplayContext(
 				parentIGViewFileVersionDisplayContext, request, response,
 				fileVersion,

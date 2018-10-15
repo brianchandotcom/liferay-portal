@@ -463,10 +463,16 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		com.liferay.petra.string.StringBundler petraSB =
 			new com.liferay.petra.string.StringBundler(sb.getStrings());
 
-		petraSB.setIndex(sb.index());
+		int index = sb.index();
+
+		petraSB.setIndex(index);
 
 		appendOrderByComparator(
 			petraSB, entityAlias, orderByComparator, sqlQuery);
+
+		for (int i = index; i < petraSB.index(); i++) {
+			sb.append(petraSB.stringAt(index));
+		}
 	}
 
 	protected ClassLoader getClassLoader() {

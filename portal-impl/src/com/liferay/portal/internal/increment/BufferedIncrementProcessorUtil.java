@@ -14,7 +14,7 @@
 
 package com.liferay.portal.internal.increment;
 
-import java.util.HashMap;
+import java.util.AbstractMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -43,7 +43,7 @@ public class BufferedIncrementProcessorUtil {
 								bufferedIncrementConfiguration, key);
 					}
 
-					return new HashMap.SimpleEntry<>(
+					return new AbstractMap.SimpleImmutableEntry<>(
 						bufferedIncrementConfiguration,
 						bufferedIncrementProcessor);
 				});
@@ -66,8 +66,7 @@ public class BufferedIncrementProcessorUtil {
 
 	private static final Map
 		<String,
-		 Map.Entry
-			<BufferedIncrementConfiguration, BufferedIncrementProcessor>>
-				_bufferedIncrementProcessors = new ConcurrentHashMap<>();
+		 Map.Entry<BufferedIncrementConfiguration, BufferedIncrementProcessor>>
+			_bufferedIncrementProcessors = new ConcurrentHashMap<>();
 
 }

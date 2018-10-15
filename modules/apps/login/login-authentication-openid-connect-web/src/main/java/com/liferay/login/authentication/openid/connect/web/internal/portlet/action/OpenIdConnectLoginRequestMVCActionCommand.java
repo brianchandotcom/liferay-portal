@@ -30,9 +30,12 @@ import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWeb
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.MimeResponse;
+import javax.portlet.RenderURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -72,6 +75,22 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 			HttpServletResponse httpServletResponse =
 				_portal.getHttpServletResponse(actionResponse);
 
+			HttpSession session = httpServletRequest.getSession(false);
+
+			if (session != null) {
+				RenderURL renderURL = actionResponse.createRedirectURL(
+					MimeResponse.Copy.PUBLIC);
+
+				renderURL.setParameter(
+					"mvcRenderCommandName",
+					OpenIdConnectWebKeys.OPEN_ID_CONNECT_REQUEST_ACTION_NAME);
+
+				renderURL.setParameter("saveLastPath", "false");
+
+				session.setAttribute(
+					"OPEN_ID_CONNECT_RENDER_URL", renderURL.toString());
+			}
+
 			_openIdConnectServiceHandler.requestAuthentication(
 				openIdConnectProviderName, httpServletRequest,
 				httpServletResponse);
@@ -92,7 +111,7 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
-				_log.error("Unable to process the OpenID login", e);
+				_log.error("Unable to process the OpenID Connect login", e);
 
 				_portal.sendError(e, actionRequest, actionResponse);
 			}

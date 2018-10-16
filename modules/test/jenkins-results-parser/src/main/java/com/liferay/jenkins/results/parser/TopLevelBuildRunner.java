@@ -256,6 +256,8 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 	private void _invokeDownstreamBuild(BuildData buildData) {
 		TopLevelBuildData topLevelBuildData = getBuildData();
 
+		topLevelBuildData.addDownstreamBuildData(buildData);
+
 		Map<String, String> invocationParameters = new HashMap<>();
 
 		invocationParameters.put(

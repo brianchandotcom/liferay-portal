@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLAppServiceWrapper;
+import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceConstants;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveFileReference;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
@@ -26,7 +27,6 @@ import com.liferay.document.library.opener.google.drive.upload.UniqueFileEntryTi
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,13 +34,9 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
-
-import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -152,30 +148,6 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 		return GetterUtil.getLong(PrincipalThreadLocal.getName());
 	}
 
-	private String _sanitizeFileName(String fileName) {
-		String dlCharBlacklist = StringUtil.merge(
-			PropsValues.DL_CHAR_BLACKLIST, StringPool.BLANK);
-
-		String sanitizedFileName = fileName.replaceAll(
-			"[" + Pattern.quote(dlCharBlacklist) + "]", StringPool.DASH);
-
-		if (ArrayUtil.contains(
-				PropsValues.DL_CHAR_LAST_BLACKLIST,
-				sanitizedFileName.charAt(sanitizedFileName.length() - 1))) {
-
-			sanitizedFileName = sanitizedFileName.substring(
-				0, sanitizedFileName.length() - 1) + StringPool.DASH;
-		}
-
-		while (ArrayUtil.contains(
-					PropsValues.DL_NAME_BLACKLIST, sanitizedFileName)) {
-
-			sanitizedFileName += StringPool.DASH;
-		}
-
-		return sanitizedFileName;
-	}
-
 	private void _updateFileEntryFromGoogleDrive(
 			FileEntry fileEntry, ServiceContext serviceContext)
 		throws PortalException {
@@ -191,7 +163,8 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 		if (!title.equals(dlOpenerGoogleDriveFileReference.getTitle())) {
 			title = _uniqueFileEntryTitleProvider.provide(
 				fileEntry.getGroupId(), fileEntry.getFolderId(),
-				_sanitizeFileName(dlOpenerGoogleDriveFileReference.getTitle()));
+				_dlValidator.fixName(
+					dlOpenerGoogleDriveFileReference.getTitle()));
 		}
 
 		try {
@@ -228,6 +201,9 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 
 	@Reference
 	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
+
+	@Reference
+	private DLValidator _dlValidator;
 
 	@Reference
 	private UniqueFileEntryTitleProvider _uniqueFileEntryTitleProvider;

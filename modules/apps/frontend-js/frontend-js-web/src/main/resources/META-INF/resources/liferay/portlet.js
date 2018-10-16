@@ -785,12 +785,13 @@
 						uri: uri
 					},
 					function(dialog) {
-						dialog.once(
+						/*dialog.once(
 							'drag:init',
 							function() {
 								dialog.dd.addInvalid('.portlet-configuration-subtitle-text');
 							}
 						);
+						*/
 					}
 				);
 			}

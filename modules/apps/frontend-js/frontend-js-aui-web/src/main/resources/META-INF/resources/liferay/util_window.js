@@ -103,7 +103,7 @@ AUI.add(
 
 					var modal = instance._getWindow(config);
 
-					instance._bindDOMWinResizeIfNeeded();
+					/*instance._bindDOMWinResizeIfNeeded();
 
 					modal.render();
 
@@ -112,6 +112,7 @@ AUI.add(
 					modal.align();
 
 					return modal;
+					*/
 				},
 
 				hideByChild: function(child) {
@@ -303,6 +304,21 @@ AUI.add(
 
 					var dialogIframeConfig = instance._getDialogIframeConfig(config);
 
+					Liferay.Loader.require(
+						'clay-modal/src/ClayModal',
+						Modal => {
+							new Modal.default(
+								{
+									size: config.size || 'lg',
+									spritemap: `${themeDisplay.getPathThemeImages()}/lexicon/icons.svg`,
+									title: config.title || '',
+									url: config.uri
+								}
+							).show();
+						}
+					);
+
+					/*
 					var modal = instance.getById(id);
 
 					if (!modal) {
@@ -372,6 +388,7 @@ AUI.add(
 					modal.fillHeight(modal.bodyNode);
 
 					return modal;
+					*/
 				},
 
 				_getWindowConfig: function(config) {

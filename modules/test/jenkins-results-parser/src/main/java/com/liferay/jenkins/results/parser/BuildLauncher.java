@@ -97,6 +97,26 @@ public class BuildLauncher {
 			buildData.setWorkspaceDir(new File(workspace));
 		}
 
+		if (buildData instanceof PortalBuildData) {
+			PortalBuildData portalBuildData = (PortalBuildData)buildData;
+
+			String portalGitHubURL = buildProperties.get("PORTAL_GITHUB_URL");
+
+			if ((portalGitHubURL != null) && !portalGitHubURL.isEmpty()) {
+				portalBuildData.setPortalGitHubURL(portalGitHubURL);
+			}
+
+			String portalUpstreamBranchName = buildProperties.get(
+				"PORTAL_UPSTREAM_BRANCH_NAME");
+
+			if ((portalUpstreamBranchName != null) &&
+				!portalUpstreamBranchName.isEmpty()) {
+
+				portalBuildData.setPortalUpstreamBranchName(
+					portalUpstreamBranchName);
+			}
+		}
+
 		return buildData;
 	}
 
@@ -121,6 +141,11 @@ public class BuildLauncher {
 
 		environmentVariables.put("BUILD_URL", System.getenv("BUILD_URL"));
 		environmentVariables.put("JOB_NAME", System.getenv("JOB_NAME"));
+		environmentVariables.put(
+			"PORTAL_GITHUB_URL", System.getenv("PORTAL_GITHUB_URL"));
+		environmentVariables.put(
+			"PORTAL_UPSTREAM_BRANCH_NAME",
+			System.getenv("PORTAL_UPSTREAM_BRANCH_NAME"));
 		environmentVariables.put("RUN_ID", System.getenv("RUN_ID"));
 
 		String workspace = System.getenv("WORKSPACE");

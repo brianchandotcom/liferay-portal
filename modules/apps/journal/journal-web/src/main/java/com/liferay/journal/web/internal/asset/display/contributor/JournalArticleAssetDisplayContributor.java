@@ -62,7 +62,16 @@ public class JournalArticleAssetDisplayContributor
 
 	@Override
 	protected String[] getAssetEntryModelFields() {
-		return new String[] {"last-editor"};
+		return null;
+	}
+
+	@Override
+	protected Map<String, String> getAssetEntryModelFieldsMap() {
+		Map<String, String> assetEntryModelFields = new HashMap<>();
+
+		assetEntryModelFields.put("lastEditor", "last-editor");
+
+		return assetEntryModelFields;
 	}
 
 	@Override
@@ -118,7 +127,7 @@ public class JournalArticleAssetDisplayContributor
 	protected Object getFieldValue(
 		JournalArticle article, String field, Locale locale) {
 
-		if (Objects.equals(field, "last-editor")) {
+		if (Objects.equals(field, "lastEditor")) {
 			return _getLastEditor(article);
 		}
 

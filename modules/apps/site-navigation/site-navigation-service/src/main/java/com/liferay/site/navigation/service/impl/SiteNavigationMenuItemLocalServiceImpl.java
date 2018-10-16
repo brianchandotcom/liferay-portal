@@ -108,15 +108,15 @@ public class SiteNavigationMenuItemLocalServiceImpl
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			getSiteNavigationMenuItem(siteNavigationMenuItemId);
 
-		long parentSiteNavigationMenuItemId =
-			siteNavigationMenuItem.getParentSiteNavigationMenuItemId();
-
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
 			getSiteNavigationMenuItems(
 				siteNavigationMenuItem.getSiteNavigationMenuId(),
 				siteNavigationMenuItemId);
 
 		if (!siteNavigationMenuItems.isEmpty()) {
+			long parentSiteNavigationMenuItemId =
+				siteNavigationMenuItem.getParentSiteNavigationMenuItemId();
+
 			List<SiteNavigationMenuItem> siblingsSiteNavigationMenuItems =
 				getSiteNavigationMenuItems(
 					siteNavigationMenuItem.getSiteNavigationMenuId(),

@@ -120,8 +120,6 @@ public class TeamStagedModelDataHandler
 			PortletDataContext portletDataContext, Team team)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(team.getUserUuid());
-
 		Team existingTeam = fetchExistingTeam(
 			team.getUuid(), portletDataContext.getScopeGroupId(),
 			team.getName());
@@ -129,6 +127,8 @@ public class TeamStagedModelDataHandler
 		Team importedTeam = null;
 
 		if (existingTeam == null) {
+			long userId = portletDataContext.getUserId(team.getUserUuid());
+
 			ServiceContext serviceContext =
 				portletDataContext.createServiceContext(team);
 

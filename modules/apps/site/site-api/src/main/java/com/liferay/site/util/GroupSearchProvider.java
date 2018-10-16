@@ -155,17 +155,9 @@ public class GroupSearchProvider {
 			long parentGroupId)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
 		groupParams.put("site", Boolean.TRUE);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		User user = themeDisplay.getUser();
 
 		if (searchTerms.hasSearchTerms()) {
 			if (isFilterManageableGroups(portletRequest)) {
@@ -181,9 +173,18 @@ public class GroupSearchProvider {
 				groupParams.put("groupsTree", groupsTree);
 			}
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			PermissionChecker permissionChecker =
+				themeDisplay.getPermissionChecker();
+
 			if (!permissionChecker.isCompanyAdmin() &&
 				!GroupPermissionUtil.contains(
 					permissionChecker, ActionKeys.VIEW)) {
+
+				User user = themeDisplay.getUser();
 
 				groupParams.put("usersGroups", Long.valueOf(user.getUserId()));
 			}

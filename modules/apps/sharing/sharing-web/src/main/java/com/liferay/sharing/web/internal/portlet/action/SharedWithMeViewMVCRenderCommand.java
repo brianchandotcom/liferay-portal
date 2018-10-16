@@ -74,12 +74,12 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		if (Objects.equals(
 				renderRequest.getParameter("mvcRenderCommandName"),
 				"/shared_with_me/view_sharing_entry")) {
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			long sharingEntryId = ParamUtil.getLong(
 				renderRequest, "sharingEntryId");

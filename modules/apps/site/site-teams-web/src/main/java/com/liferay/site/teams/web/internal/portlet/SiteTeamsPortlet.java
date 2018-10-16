@@ -178,9 +178,6 @@ public class SiteTeamsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long teamId = ParamUtil.getLong(actionRequest, "teamId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
@@ -190,6 +187,8 @@ public class SiteTeamsPortlet extends MVCPortlet {
 
 			// Add team
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Team.class.getName(), actionRequest);
 

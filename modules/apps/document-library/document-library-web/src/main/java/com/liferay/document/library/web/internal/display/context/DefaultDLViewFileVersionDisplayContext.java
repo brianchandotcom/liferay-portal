@@ -236,6 +236,15 @@ public class DefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
+	public boolean isActionsVisible() {
+		if (_dlPortletInstanceSettingsHelper.isShowActions()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isDownloadLinkVisible() throws PortalException {
 		return _fileEntryDisplayContextHelper.isDownloadActionAvailable();
 	}
@@ -323,15 +332,6 @@ public class DefaultDLViewFileVersionDisplayContext
 		}
 
 		return null;
-	}
-
-	@Override
-	public boolean isActionsVisible() {
-		if (_dlPortletInstanceSettingsHelper.isShowActions()) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private List<MenuItem> _getMenuItems() throws PortalException {

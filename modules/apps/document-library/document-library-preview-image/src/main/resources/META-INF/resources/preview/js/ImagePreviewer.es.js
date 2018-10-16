@@ -26,11 +26,16 @@ const ZOOM_LEVELS_REVERSED = ZOOM_LEVELS.slice().reverse();
 
 class ImagePreviewer extends Component {
 	attached() {
-		const previewImage = this.refs.previewImage;
-		this.previewImageNaturalWidth = previewImage.naturalWidth;
-		this.previewImageNaturalHeight = previewImage.naturalHeight;
+		this.previewImageNaturalWidth = this.refs.previewImage.naturalWidth;
+		this.previewImageNaturalHeight = this.refs.previewImage.naturalHeight;
 
-		this._setZoomNumber(previewImage.width);
+		this._setDimensions();
+	}
+
+	_setDimensions() {
+		this.previewImageContainerWidth = this.refs.previewImageContainer.offsetWidth;
+		this.previewImageContainerHeight = this.refs.previewImageContainer.offsetHeight;
+		this._setZoomNumber(this.refs.previewImage.width);
 	}
 
 	_handleZoom(event) {
@@ -61,8 +66,13 @@ class ImagePreviewer extends Component {
 	_setZoom(zoomNumber) {
 		if (typeof zoomNumber == 'undefined') return;
 
-		this.imageWidth = this.previewImageNaturalWidth * zoomNumber;
 		this.imageHeight = this.previewImageNaturalHeight * zoomNumber;
+		this.imageWidth = this.previewImageNaturalWidth * zoomNumber;
+		this.imageMargin = `${
+			this.imageHeight > this.previewImageContainerHeight ? 0 : 'auto'
+		} ${
+			this.imageWidth > this.previewImageContainerWidth ? 0 : 'auto'
+		}`;
 
 		this._setZoomNumber(this.imageWidth);
 	}
@@ -80,6 +90,7 @@ class ImagePreviewer extends Component {
  */
 
 ImagePreviewer.STATE = {
+	imageMargin: Config.string(),
 	imageHeight: Config.number(),
 	imageURL: Config.string().required(),
 	imageWidth: Config.number(),

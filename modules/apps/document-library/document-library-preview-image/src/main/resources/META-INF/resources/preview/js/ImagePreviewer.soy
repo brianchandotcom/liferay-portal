@@ -8,6 +8,7 @@
 	{@param imageURL: string}
 	{@param? _handleZoom: any}
 	{@param? id: string}
+	{@param? imageMargin: string}
 	{@param? imageHeight: number}
 	{@param? imageWidth: number}
 	{@param? zoomActual: number}
@@ -15,7 +16,7 @@
 	{@param? zoomOutDisabled: bool}
 
 	<div id="{$id}" class="preview-file">
-		<div class="preview-file-container preview-file-max-height">
+		<div class="preview-file-container preview-file-max-height" ref="previewImageContainer">
 			<img
 				class="preview-file-image"
 				ref="previewImage"
@@ -26,6 +27,9 @@
 						{sp}width: {$imageWidth}px;
 						{sp}max-height: {$imageHeight}px;
 						{sp}height: {$imageHeight}px;
+					{/if}
+					{if $imageMargin}
+						{sp}margin: {$imageMargin};
 					{/if}
 				"
 			/>

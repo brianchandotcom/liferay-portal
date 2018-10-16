@@ -53,6 +53,7 @@ class LiferayApp extends App {
 		this.on('startNavigate', this.onStartNavigate);
 
 		Liferay.on('beforeScreenFlip', Utils.resetAllPortlets);
+		Liferay.on('beforeScreenFlip', Liferay.destroyUnfulfilledPromises);
 		Liferay.on('io:complete', this.onLiferayIOComplete, this);
 
 		const body = document.body;

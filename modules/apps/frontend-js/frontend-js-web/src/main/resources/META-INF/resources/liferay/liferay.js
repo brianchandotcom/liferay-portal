@@ -449,6 +449,10 @@ Liferay = window.Liferay || {};
 		componentIds.forEach(Liferay.destroyComponent);
 	};
 
+	Liferay.destroyUnfulfilledPromises = function() {
+		componentPromiseWrappers = [];
+	};
+
 	Liferay._components = components;
 	Liferay._componentsFn = components;
 

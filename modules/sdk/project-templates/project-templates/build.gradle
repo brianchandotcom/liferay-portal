@@ -127,6 +127,25 @@ processTestResources {
 	from configurations.projectTemplatesTests
 }
 
+projectTemplateJarVersions {
+	File projectTemplateVersionsFile = new File(buildDir, "project-template-jar-versions.properties")
+
+	outputs.file(projectTemplateVersionsFile)
+
+	Properties properties = new Properties()
+
+	doFirst {
+		configurations.projectTemplates.dependencies.each {
+			properties.setProperty(it.name, it.version)
+		}
+
+	}
+
+	doLast {
+		properties.store(projectTemplateVersionsFile.newWriter(), null)
+	}
+}
+
 test {
 	dependsOn projectTemplateProjects.collect {
 		"${it.path}:install"
@@ -170,26 +189,6 @@ test {
 uploadProjectTemplateArchives {
 	dependsOn projectTemplateProjects.collect {
 		"${it.path}:uploadArchives"
-	}
-}
-
-projectTemplateJarVersions {
-	File projectTemplateVersionsFile = new File(buildDir, "project-template-jar-versions.properties")
-
-	Properties properties = new Properties()
-
-	outputs.file(projectTemplateVersionsFile)
-
-	doFirst {
-
-		configurations.projectTemplates.dependencies.each {
-			properties.setProperty(it.name, it.version)
-		}
-
-	}
-
-	doLast {
-		properties.store(projectTemplateVersionsFile.newWriter(), null)
 	}
 }
 

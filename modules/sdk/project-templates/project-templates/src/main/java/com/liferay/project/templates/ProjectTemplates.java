@@ -135,7 +135,7 @@ public class ProjectTemplates {
 		}
 
 		Collection<String> archetypeJarNames =
-			ProjectTemplatesUtil.getArchetypeJarNames();
+			ProjectTemplatesUtil.getArchetypeJarNamesList();
 
 		for (String projectTemplateJarName : archetypeJarNames) {
 			String templateName = ProjectTemplatesUtil.getTemplateName(

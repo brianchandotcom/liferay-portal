@@ -132,15 +132,11 @@ public class FileUtil {
 	}
 
 	public static void extractDirectory(
-			String dirName, final Path destinationDirectoryPath)
+			String dirName, final Path destinationDirPath)
 		throws Exception {
 
-		if (!dirName.startsWith("/")) {
-			dirName = "/" + dirName;
-		}
-
 		Map<String, InputStream> filesAndDirectories = _getFilesFromClasspath(
-			dirName);
+			"/" + dirName);
 
 		for (Map.Entry<String, InputStream> entry :
 				filesAndDirectories.entrySet()) {
@@ -153,8 +149,7 @@ public class FileUtil {
 
 			try (InputStream inputStream = entry.getValue()) {
 				Path destinationPath = Paths.get(
-					destinationDirectoryPath.toString(),
-					pathKeyPath.toString());
+					destinationDirPath.toString(), pathKeyPath.toString());
 
 				if (inputStream != null) {
 					Files.createDirectories(destinationPath.getParent());
@@ -272,17 +267,17 @@ public class FileUtil {
 	}
 
 	private static Map<String, InputStream> _getFilesFromClasspath(
-			String directoryName)
+			String dirPathString)
 		throws Exception {
 
 		Map<String, InputStream> pathMap = new HashMap<>();
 
-		URL url = FileUtil.class.getResource(directoryName);
+		URL url = FileUtil.class.getResource(dirPathString);
 
 		URI uri = url.toURI();
 
 		if (uri == null) {
-			String errorMessage = String.format("%s not found", directoryName);
+			String errorMessage = String.format("%s not found", dirPathString);
 
 			throw new NoSuchElementException(errorMessage);
 		}
@@ -292,7 +287,7 @@ public class FileUtil {
 		if (scheme.contains("jar")) {
 			FileSystem jarFileSystem = _getJarFileSystem();
 
-			Path fileSystemPath = jarFileSystem.getPath(directoryName);
+			Path fileSystemPath = jarFileSystem.getPath(dirPathString);
 
 			try (DirectoryStream<Path> directoryStream =
 					Files.newDirectoryStream(fileSystemPath)) {
@@ -320,8 +315,8 @@ public class FileUtil {
 					Files.newDirectoryStream(path)) {
 
 				for (Path dirPath : directoryStream) {
+					Path folderNamePath = Paths.get(dirPathString);
 					Path relativeDirPath = path.relativize(dirPath);
-					Path folderNamePath = Paths.get(directoryName);
 
 					Path pathToResolve = folderNamePath.resolve(
 						relativeDirPath);

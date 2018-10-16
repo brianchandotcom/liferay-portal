@@ -23,9 +23,9 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -42,11 +42,12 @@ public class ProjectTemplatesUtil {
 			return _archetypeFiles.get(artifactId);
 		}
 
-		Properties projectTemplateJarVersions = getProjectTemplateJarVersions();
+		Properties projectTemplateJarVersionsProperties =
+			getProjectTemplateJarVersions();
 
-		if (projectTemplateJarVersions.containsKey(artifactId)) {
+		if (projectTemplateJarVersionsProperties.containsKey(artifactId)) {
 			String version = String.valueOf(
-				projectTemplateJarVersions.get(artifactId));
+				projectTemplateJarVersionsProperties.get(artifactId));
 
 			try {
 				String jarName = getArchetypeJarName(artifactId, version);
@@ -80,9 +81,9 @@ public class ProjectTemplatesUtil {
 	public static File getArchetypeFile(String artifactId, File file)
 		throws IOException {
 
-		File returnValue = getArchetypeFile(artifactId);
+		File archetypeFile = getArchetypeFile(artifactId);
 
-		if (returnValue == null) {
+		if (archetypeFile == null) {
 			try (JarFile jarFile = new JarFile(file)) {
 				Enumeration<JarEntry> enumeration = jarFile.entries();
 
@@ -106,32 +107,28 @@ public class ProjectTemplatesUtil {
 						jarFile.getInputStream(jarEntry), archetypePath,
 						StandardCopyOption.REPLACE_EXISTING);
 
-					File archetypeFile = archetypePath.toFile();
+					archetypeFile = archetypePath.toFile();
 
 					_archetypeFiles.put(artifactId, archetypeFile);
 
 					archetypeFile.deleteOnExit();
-
-					returnValue = archetypeFile;
 				}
 			}
 		}
 
-		return returnValue;
+		return archetypeFile;
 	}
 
 	public static String getArchetypeJarName(
 		String artifactId, String version) {
 
-		String jarName = "/" + artifactId + "-" + version + ".jar";
-
-		return jarName;
+		return "/" + artifactId + "-" + version + ".jar";
 	}
 
-	public static Collection<String> getArchetypeJarNames() throws IOException {
+	public static List<String> getArchetypeJarNamesList() throws IOException {
 		Properties projectTemplateJarVersions = getProjectTemplateJarVersions();
 
-		Collection<String> archetypeJarNames = new ArrayList<>();
+		List<String> archetypeJarNames = new ArrayList<>();
 
 		Set<String> artifactIds =
 			projectTemplateJarVersions.stringPropertyNames();

@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.servlet.TryFinallyFilter;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
-import java.io.IOException;
-
 import javax.servlet.AsyncContext;
 import javax.servlet.AsyncEvent;
 import javax.servlet.AsyncListener;
@@ -43,36 +41,8 @@ public class UnsyncPrintWriterPoolFilter
 		else {
 			AsyncContext asyncContext = request.getAsyncContext();
 
-			AsyncListener unsyncPrintWriterPoolCleanUpAsyncListener =
-				new AsyncListener() {
-
-					@Override
-					public void onComplete(AsyncEvent asyncEvent)
-						throws IOException {
-
-						UnsyncPrintWriterPool.cleanUp();
-					}
-
-					@Override
-					public void onError(AsyncEvent asyncEvent)
-						throws IOException {
-					}
-
-					@Override
-					public void onStartAsync(AsyncEvent asyncEvent)
-						throws IOException {
-
-						asyncContext.addListener(this);
-					}
-
-					@Override
-					public void onTimeout(AsyncEvent asyncEvent)
-						throws IOException {
-					}
-
-				};
-
-			asyncContext.addListener(unsyncPrintWriterPoolCleanUpAsyncListener);
+			asyncContext.addListener(
+				new UnsyncPrintWriterPoolFilterAsyncListener(asyncContext));
 		}
 	}
 
@@ -83,6 +53,37 @@ public class UnsyncPrintWriterPoolFilter
 		UnsyncPrintWriterPool.setEnabled(true);
 
 		return null;
+	}
+
+	private static class UnsyncPrintWriterPoolFilterAsyncListener
+		implements AsyncListener {
+
+		@Override
+		public void onComplete(AsyncEvent asyncEvent) {
+			UnsyncPrintWriterPool.cleanUp();
+		}
+
+		@Override
+		public void onError(AsyncEvent asyncEvent) {
+		}
+
+		@Override
+		public void onStartAsync(AsyncEvent asyncEvent) {
+			_asyncContext.addListener(this);
+		}
+
+		@Override
+		public void onTimeout(AsyncEvent asyncEvent) {
+		}
+
+		private UnsyncPrintWriterPoolFilterAsyncListener(
+			AsyncContext asyncContext) {
+
+			_asyncContext = asyncContext;
+		}
+
+		private final AsyncContext _asyncContext;
+
 	}
 
 }

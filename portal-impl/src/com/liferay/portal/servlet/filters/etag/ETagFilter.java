@@ -96,36 +96,10 @@ public class ETagFilter extends BasePortalFilter {
 		else {
 			AsyncContext asyncContext = request.getAsyncContext();
 
-			AsyncListener postProcessETagAsyncListener = new AsyncListener() {
-
-				@Override
-				public void onComplete(AsyncEvent asyncEvent)
-					throws IOException {
-
-					_postProcessETag(
-						request, response,
-						restrictedByteBufferCacheServletResponse);
-				}
-
-				@Override
-				public void onError(AsyncEvent asyncEvent) throws IOException {
-				}
-
-				@Override
-				public void onStartAsync(AsyncEvent asyncEvent)
-					throws IOException {
-
-					asyncContext.addListener(this);
-				}
-
-				@Override
-				public void onTimeout(AsyncEvent asyncEvent)
-					throws IOException {
-				}
-
-			};
-
-			asyncContext.addListener(postProcessETagAsyncListener);
+			asyncContext.addListener(
+				new ETagFilterAsyncListener(
+					asyncContext, request, response,
+					restrictedByteBufferCacheServletResponse));
 		}
 	}
 
@@ -149,5 +123,48 @@ public class ETagFilter extends BasePortalFilter {
 	}
 
 	private static final String _ETAG = "etag";
+
+	private class ETagFilterAsyncListener implements AsyncListener {
+
+		@Override
+		public void onComplete(AsyncEvent event) throws IOException {
+			_postProcessETag(
+				_httpServletRequest, _httpServletResponse,
+				_restrictedByteBufferCacheServletResponse);
+		}
+
+		@Override
+		public void onError(AsyncEvent event) {
+		}
+
+		@Override
+		public void onStartAsync(AsyncEvent event) {
+			_asyncContext.addListener(this);
+		}
+
+		@Override
+		public void onTimeout(AsyncEvent event) {
+		}
+
+		private ETagFilterAsyncListener(
+			AsyncContext asyncContext, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
+			RestrictedByteBufferCacheServletResponse
+				restrictedByteBufferCacheServletResponse) {
+
+			_asyncContext = asyncContext;
+			_httpServletRequest = httpServletRequest;
+			_httpServletResponse = httpServletResponse;
+			_restrictedByteBufferCacheServletResponse =
+				restrictedByteBufferCacheServletResponse;
+		}
+
+		private final AsyncContext _asyncContext;
+		private final HttpServletRequest _httpServletRequest;
+		private final HttpServletResponse _httpServletResponse;
+		private final RestrictedByteBufferCacheServletResponse
+			_restrictedByteBufferCacheServletResponse;
+
+	}
 
 }

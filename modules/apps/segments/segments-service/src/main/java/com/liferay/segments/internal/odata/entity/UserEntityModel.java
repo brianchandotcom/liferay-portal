@@ -85,6 +85,8 @@ public class UserEntityModel implements EntityModel {
 			"screenName", EntityField.Type.STRING,
 			locale -> Field.getSortableFieldName("screenName"),
 			locale -> "screenName"),
+		new EntityField(
+			"teamIds", EntityField.Type.STRING, locale -> "teamIds"),
 		new EntityField("userId", EntityField.Type.STRING, locale -> "userId"),
 		new EntityField(
 			"userName", EntityField.Type.STRING, locale -> "userName")

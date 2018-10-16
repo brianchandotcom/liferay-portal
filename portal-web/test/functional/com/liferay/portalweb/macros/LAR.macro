@@ -241,10 +241,6 @@
 		<if>
 			<equals arg1="${contentDeletion}" arg2="true" />
 			<then>
-				<execute macro="Panel#expandPanel">
-					<var name="panel" value="Deletions" />
-				</execute>
-
 				<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#DELETE_PORTLET_DATA" />
 			</then>
 		</if>

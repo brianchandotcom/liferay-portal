@@ -187,8 +187,6 @@ public class RolesAdminPortlet extends MVCPortlet {
 			actionRequest, "title");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-		int type = ParamUtil.getInteger(
-			actionRequest, "type", RoleConstants.TYPE_REGULAR);
 		String subtype = ParamUtil.getString(actionRequest, "subtype");
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Role.class.getName(), actionRequest);
@@ -196,6 +194,9 @@ public class RolesAdminPortlet extends MVCPortlet {
 		if (roleId <= 0) {
 
 			// Add role
+
+			int type = ParamUtil.getInteger(
+				actionRequest, "type", RoleConstants.TYPE_REGULAR);
 
 			Role role = _roleService.addRole(
 				null, 0, name, titleMap, descriptionMap, type, subtype,

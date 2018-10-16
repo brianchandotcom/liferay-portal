@@ -45,9 +45,6 @@ public class AdminPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long powwowServerId = ParamUtil.getLong(
 			actionRequest, "powwowServerId");
 
@@ -62,6 +59,9 @@ public class AdminPortlet extends MVCPortlet {
 			PowwowServer.class.getName(), actionRequest);
 
 		if (powwowServerId <= 0) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
 			PowwowServerLocalServiceUtil.addPowwowServer(
 				themeDisplay.getUserId(), name, providerType, url, apiKey,
 				secret, serviceContext);

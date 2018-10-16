@@ -45,8 +45,6 @@ public class ReadingTimeTag extends AttributesTagSupport implements BodyTag {
 	@Override
 	public int doEndTag() throws JspException {
 		try {
-			JspWriter jspWriter = pageContext.getOut();
-
 			Optional<Duration> readingTimeDurationOptional =
 				_getReadingTimeDurationOptional();
 
@@ -54,6 +52,8 @@ public class ReadingTimeTag extends AttributesTagSupport implements BodyTag {
 				this::_buildTag);
 
 			if (tagOptional.isPresent()) {
+				JspWriter jspWriter = pageContext.getOut();
+
 				jspWriter.write(tagOptional.get());
 			}
 

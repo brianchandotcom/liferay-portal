@@ -152,9 +152,6 @@ public class MonitoringFilter
 			FilterChain filterChain)
 		throws IOException, ServletException {
 
-		long companyId = _portal.getCompanyId(request);
-		long groupId = getGroupId(request);
-
 		PortalRequestDataSample portalRequestDataSample = null;
 
 		incrementProcessFilterCount();
@@ -163,7 +160,7 @@ public class MonitoringFilter
 			portalRequestDataSample =
 				(PortalRequestDataSample)
 					_dataSampleFactory.createPortalRequestDataSample(
-						companyId, groupId,
+						_portal.getCompanyId(request), getGroupId(request),
 						request.getHeader(HttpHeaders.REFERER),
 						request.getRemoteAddr(), request.getRemoteUser(),
 						request.getRequestURI(),

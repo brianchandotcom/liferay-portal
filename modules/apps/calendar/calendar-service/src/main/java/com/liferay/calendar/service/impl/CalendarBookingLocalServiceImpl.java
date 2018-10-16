@@ -1802,12 +1802,11 @@ public class CalendarBookingLocalServiceImpl
 
 			serviceContext.setAttribute("sendNotification", Boolean.TRUE);
 
-			int workflowAction = GetterUtil.getInteger(
-				serviceContext.getAttribute("workflowAction"));
-
 			if (childCalendarBookingMap.containsKey(calendarId)) {
 				CalendarBooking oldChildCalendarBooking =
 					childCalendarBookingMap.get(calendarId);
+				int workflowAction = GetterUtil.getInteger(
+					serviceContext.getAttribute("workflowAction"));
 
 				if ((calendarBooking.getStartTime() ==
 						oldChildCalendarBooking.getStartTime()) &&

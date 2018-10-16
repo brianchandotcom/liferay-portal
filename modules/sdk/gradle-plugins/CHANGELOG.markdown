@@ -5817,6 +5817,13 @@ version 2.4.14.
 - [LPS-86371]: Set the `npmInstall` task's up-to-date check to `false` if the
 `node_modules` directory does not exist.
 
+## 3.12.162 - 2018-10-15
+
+### Changed
+- [LPS-85954]: Set the `compileJSP` task's `destinationDir` to the
+`Liferay Home` module Jasper work directory so it contains the generated Java
+files.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -6263,6 +6270,7 @@ version 2.4.14.
 [LPS-85556]: https://issues.liferay.com/browse/LPS-85556
 [LPS-85609]: https://issues.liferay.com/browse/LPS-85609
 [LPS-85678]: https://issues.liferay.com/browse/LPS-85678
+[LPS-85954]: https://issues.liferay.com/browse/LPS-85954
 [LPS-85959]: https://issues.liferay.com/browse/LPS-85959
 [LPS-86308]: https://issues.liferay.com/browse/LPS-86308
 [LPS-86371]: https://issues.liferay.com/browse/LPS-86371

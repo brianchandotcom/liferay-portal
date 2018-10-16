@@ -436,10 +436,6 @@ public class LayoutImportController implements ImportController {
 				PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
 				new String[] {Boolean.FALSE.toString()});
 
-			LayoutPrototype layoutPrototype =
-				_layoutPrototypeLocalService.getLayoutPrototype(
-					group.getClassPK());
-
 			String layoutPrototypeUuid = GetterUtil.getString(
 				headerElement.attributeValue("type-uuid"));
 
@@ -463,6 +459,10 @@ public class LayoutImportController implements ImportController {
 			}
 
 			if (existingLayoutPrototype == null) {
+				LayoutPrototype layoutPrototype =
+					_layoutPrototypeLocalService.getLayoutPrototype(
+						group.getClassPK());
+
 				List<Layout> layouts =
 					_layoutLocalService.getLayoutsByLayoutPrototypeUuid(
 						layoutPrototype.getUuid());
@@ -485,10 +485,6 @@ public class LayoutImportController implements ImportController {
 			parameterMap.put(
 				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS,
 				new String[] {Boolean.TRUE.toString()});
-
-			LayoutSetPrototype layoutSetPrototype =
-				_layoutSetPrototypeLocalService.getLayoutSetPrototype(
-					group.getClassPK());
 
 			String importedLayoutSetPrototypeUuid = GetterUtil.getString(
 				headerElement.attributeValue("type-uuid"));
@@ -513,6 +509,10 @@ public class LayoutImportController implements ImportController {
 			}
 
 			if (existingLayoutSetPrototype == null) {
+				LayoutSetPrototype layoutSetPrototype =
+					_layoutSetPrototypeLocalService.getLayoutSetPrototype(
+						group.getClassPK());
+
 				List<LayoutSet> layoutSets =
 					_layoutSetLocalService.
 						getLayoutSetsByLayoutSetPrototypeUuid(

@@ -645,6 +645,7 @@ class Form extends Component {
 
 		this.props.published = newVal;
 		if (newVal && !saved) {
+			this.props.saved = true;
 			shareFormIcon.classList.remove('hide');
 		}
 		else if (!newVal && !saved) {

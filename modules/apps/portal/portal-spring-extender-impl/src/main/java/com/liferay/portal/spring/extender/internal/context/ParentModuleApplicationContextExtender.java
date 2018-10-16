@@ -20,7 +20,6 @@ import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBContext;
 import com.liferay.portal.kernel.dao.db.DBManager;
@@ -37,6 +36,7 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.spring.bean.LiferayBeanFactory;
 import com.liferay.portal.spring.extender.internal.bean.ApplicationContextServicePublisherUtil;
 import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
+import com.liferay.portal.spring.extender.internal.configuration.ConfigurationUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,6 +58,7 @@ import org.apache.felix.utils.extender.Extension;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -585,22 +586,18 @@ public class ParentModuleApplicationContextExtender extends AbstractExtender {
 
 			Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-			try {
-				Configuration configuration =
-					ConfigurationFactoryUtil.getConfiguration(
-						new BundleResolverClassLoader(_bundle), "service");
+			BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 
+			ClassLoader classLoader = bundleWiring.getClassLoader();
+
+			Configuration configuration = ConfigurationUtil.getConfiguration(
+				classLoader, "service");
+
+			if (configuration != null) {
 				String buildNumber = configuration.get("build.number");
 
 				if (buildNumber != null) {
 					properties.put("build.number", buildNumber);
-				}
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to read service.properties for bundle " +
-							_bundle.getSymbolicName());
 				}
 			}
 

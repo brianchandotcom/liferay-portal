@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
 import com.liferay.portal.spring.extender.internal.configuration.ConfigurationUtil;
 
 import java.io.InputStream;
@@ -153,8 +152,9 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 			_component.setImplementation(
 				new ModuleApplicationContextRegistrator(_bundle, bundle));
 
-			ClassLoader classLoader = new BundleResolverClassLoader(
-				_bundle, bundle);
+			BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
+
+			ClassLoader classLoader = bundleWiring.getClassLoader();
 
 			_processServiceReferences(classLoader);
 
@@ -177,12 +177,8 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 				_component.add(serviceDependency);
 
-				BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
-
-				ClassLoader bundleClassLoader = bundleWiring.getClassLoader();
-
-				_generateConfigurationDependency(bundleClassLoader, "portlet");
-				_generateConfigurationDependency(bundleClassLoader, "service");
+				_generateConfigurationDependency(classLoader, "portlet");
+				_generateConfigurationDependency(classLoader, "service");
 			}
 
 			String requireSchemaVersion = headers.get(

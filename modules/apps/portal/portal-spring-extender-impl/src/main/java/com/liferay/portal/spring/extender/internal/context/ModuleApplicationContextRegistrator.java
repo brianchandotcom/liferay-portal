@@ -75,10 +75,13 @@ public class ModuleApplicationContextRegistrator {
 
 			_configurableApplicationContext.refresh();
 
+			BundleWiring bundleWiring = _extendeeBundle.adapt(
+				BundleWiring.class);
+
 			PortletBeanLocatorUtil.setBeanLocator(
 				_extendeeBundle.getSymbolicName(),
 				new BeanLocatorImpl(
-					new BundleResolverClassLoader(_extendeeBundle),
+					bundleWiring.getClassLoader(),
 					_configurableApplicationContext));
 
 			_serviceRegistrations =

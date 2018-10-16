@@ -147,11 +147,10 @@ public class BBCodeParser {
 		List<BBCodeItem> bbCodeItems, Stack<String> tags,
 		BBCodeToken bbCodeToken) {
 
-		String endTag = null;
 		int size = 0;
 
 		if (bbCodeToken != null) {
-			endTag = bbCodeToken.getEndTag();
+			String endTag = bbCodeToken.getEndTag();
 
 			for (size = tags.size() - 1; size >= 0; size--) {
 				if (endTag.equals(tags.elementAt(size))) {

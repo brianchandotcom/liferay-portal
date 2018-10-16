@@ -122,12 +122,12 @@ public class MBMessageStagedModelDataHandler
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		MBDiscussion discussion = _mbDiscussionLocalService.getThreadDiscussion(
-			threadId);
-
 		MBMessage importedMessage = null;
 
 		if (!message.isRoot()) {
+			MBDiscussion discussion =
+				_mbDiscussionLocalService.getThreadDiscussion(threadId);
+
 			importedMessage = _mbMessageLocalService.addDiscussionMessage(
 				userId, message.getUserName(),
 				portletDataContext.getScopeGroupId(), discussion.getClassName(),

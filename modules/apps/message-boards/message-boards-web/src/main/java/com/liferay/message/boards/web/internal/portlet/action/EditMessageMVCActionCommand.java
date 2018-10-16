@@ -410,8 +410,6 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 
-			boolean anonymous = ParamUtil.getBoolean(
-				actionRequest, "anonymous");
 			double priority = ParamUtil.getDouble(actionRequest, "priority");
 			boolean allowPingbacks = ParamUtil.getBoolean(
 				actionRequest, "allowPingbacks");
@@ -425,15 +423,18 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 			MBMessage message = null;
 
-			CaptchaConfiguration captchaConfiguration =
-				getCaptchaConfiguration();
-
 			if (messageId <= 0) {
+				CaptchaConfiguration captchaConfiguration =
+					getCaptchaConfiguration();
+
 				if (captchaConfiguration.
 						messageBoardsEditMessageCaptchaEnabled()) {
 
 					CaptchaUtil.check(actionRequest);
 				}
+
+				boolean anonymous = ParamUtil.getBoolean(
+					actionRequest, "anonymous");
 
 				if (threadId <= 0) {
 

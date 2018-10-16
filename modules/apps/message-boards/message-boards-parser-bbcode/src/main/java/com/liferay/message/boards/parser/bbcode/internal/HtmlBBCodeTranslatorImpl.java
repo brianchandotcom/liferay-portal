@@ -467,12 +467,12 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 				bbCodeItem.getAttribute());
 
 			while (matcher.find()) {
-				String listStyle = null;
-
 				String attributeName = matcher.group(1);
 				String attributeValue = matcher.group(2);
 
 				if (Objects.equals(attributeName, "type")) {
+					String listStyle = null;
+
 					if (_orderedListStyles.get(attributeValue) != null) {
 						listStyle = _orderedListStyles.get(attributeValue);
 
@@ -514,9 +514,9 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		List<BBCodeItem> bbCodeItems, Stack<String> tags, IntegerWrapper marker,
 		String data) {
 
-		BBCodeItem bbCodeItem = null;
-
 		if ((marker.getValue() + 1) < bbCodeItems.size()) {
+			BBCodeItem bbCodeItem = null;
+
 			if (data.matches("\\A\r?\n\\z")) {
 				bbCodeItem = bbCodeItems.get(marker.getValue() + 1);
 

@@ -116,8 +116,6 @@ public class MBDiscussionStagedModelDataHandler
 			PortletDataContext portletDataContext, MBDiscussion discussion)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(discussion.getUserUuid());
-
 		String className = discussion.getClassName();
 
 		Map<Long, Long> relatedClassPKs =
@@ -131,6 +129,9 @@ public class MBDiscussionStagedModelDataHandler
 				discussion.getClassName(), newClassPK);
 
 		if (existingDiscussion == null) {
+			long userId = portletDataContext.getUserId(
+				discussion.getUserUuid());
+
 			MBMessage rootMessage = _mbMessageLocalService.addDiscussionMessage(
 				userId, discussion.getUserName(),
 				portletDataContext.getScopeGroupId(), className, newClassPK,

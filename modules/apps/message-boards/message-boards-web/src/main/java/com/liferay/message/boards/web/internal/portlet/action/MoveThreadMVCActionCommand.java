@@ -90,9 +90,6 @@ public class MoveThreadMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long categoryId = ParamUtil.getLong(actionRequest, "mbCategoryId");
 
 		long threadId = ParamUtil.getLong(actionRequest, "threadId");
@@ -107,6 +104,9 @@ public class MoveThreadMVCActionCommand extends BaseMVCActionCommand {
 		if (addExplanationPost) {
 			String subject = ParamUtil.getString(actionRequest, "subject");
 			String body = ParamUtil.getString(actionRequest, "body");
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			MBGroupServiceSettings mbGroupServiceSettings =
 				MBGroupServiceSettings.getInstance(

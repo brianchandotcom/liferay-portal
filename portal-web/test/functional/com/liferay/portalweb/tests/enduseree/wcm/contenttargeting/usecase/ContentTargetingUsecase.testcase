@@ -1768,7 +1768,7 @@
 
 		<execute function="AssertTextEquals" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
+		<execute macro="LexiconEntry#changeExportDisplayStyle">
 			<var name="displayStyle" value="table" />
 		</execute>
 
@@ -1844,7 +1844,7 @@
 
 		<execute function="AssertTextEquals" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
+		<execute macro="LexiconEntry#changeExportDisplayStyle">
 			<var name="displayStyle" value="table" />
 		</execute>
 
@@ -1856,7 +1856,7 @@
 
 		<echo message="lar file name ${larFileName}" />
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
+		<execute macro="LexiconEntry#changeExportDisplayStyle">
 			<var name="displayStyle" value="list" />
 		</execute>
 

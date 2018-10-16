@@ -88,13 +88,6 @@ public class EditPluginActionCommand extends BaseMVCActionCommand {
 		String pluginId = ParamUtil.getString(actionRequest, "pluginId");
 		String pluginType = ParamUtil.getString(actionRequest, "pluginType");
 
-		String[] rolesArray = StringUtil.split(
-			ParamUtil.getString(actionRequest, "roles"), '\n');
-
-		Arrays.sort(rolesArray);
-
-		String roles = StringUtil.merge(rolesArray);
-
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 
 		if (pluginType.equals(Plugin.TYPE_PORTLET)) {
@@ -104,6 +97,13 @@ public class EditPluginActionCommand extends BaseMVCActionCommand {
 				companyId, portletId, StringPool.BLANK, active);
 		}
 		else {
+			String[] rolesArray = StringUtil.split(
+				ParamUtil.getString(actionRequest, "roles"), '\n');
+
+			Arrays.sort(rolesArray);
+
+			String roles = StringUtil.merge(rolesArray);
+
 			_pluginSettingService.updatePluginSetting(
 				companyId, pluginId, pluginType, roles, active);
 		}

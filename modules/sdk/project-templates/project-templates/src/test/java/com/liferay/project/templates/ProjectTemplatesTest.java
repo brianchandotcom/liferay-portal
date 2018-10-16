@@ -1379,53 +1379,6 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNpmIsomorphicPortlet70() throws Exception {
-		_testBuildTemplateNpm70(
-			"npm-isomorphic-portlet", "foo", "foo", "Foo",
-			"bootstrapRequire.default(");
-	}
-
-	@Test
-	public void testBuildTemplateNpmIsomorphicPortlet71() throws Exception {
-		_testBuildTemplateNpm71(
-			"npm-isomorphic-portlet", "foo", "foo", "Foo",
-			"bootstrapRequire.default(");
-	}
-
-	@Test
-	public void testBuildTemplateNpmIsomorphicPortletWithBOM()
-		throws Exception {
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"npm-isomorphic-portlet", "isomorphic-dependency-management",
-			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
-	}
-
-	@Test
-	public void testBuildTemplateNpmIsomorphicPortletWithDashes70()
-		throws Exception {
-
-		_testBuildTemplateNpm70(
-			"npm-isomorphic-portlet", "foo-bar", "foo.bar", "FooBar",
-			"bootstrapRequire.default(");
-	}
-
-	@Test
-	public void testBuildTemplateNpmIsomorphicPortletWithDashes71()
-		throws Exception {
-
-		_testBuildTemplateNpm71(
-			"npm-isomorphic-portlet", "foo-bar", "foo.bar", "FooBar",
-			"bootstrapRequire.default(");
-	}
-
-	@Test
 	public void testBuildTemplateNpmJQueryPortlet70() throws Exception {
 		_testBuildTemplateNpm70(
 			"npm-jquery-portlet", "foo", "foo", "Foo",

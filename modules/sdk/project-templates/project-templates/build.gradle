@@ -80,7 +80,6 @@ dependencies {
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.mvc.portlet", version: "1.0.20"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.npm.angular.portlet", version: "1.0.17"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.npm.billboardjs.portlet", version: "1.0.17"
-	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.npm.isomorphic.portlet", version: "1.0.17"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.npm.jquery.portlet", version: "1.0.17"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.npm.metaljs.portlet", version: "1.0.17"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.npm.portlet", version: "1.0.17"

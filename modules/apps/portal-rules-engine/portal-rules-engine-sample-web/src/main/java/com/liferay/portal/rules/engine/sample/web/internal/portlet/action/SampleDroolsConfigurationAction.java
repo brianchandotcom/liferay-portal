@@ -101,8 +101,6 @@ public class SampleDroolsConfigurationAction
 
 		String domainName = ParamUtil.getString(actionRequest, "domainName");
 		String rules = ParamUtil.getString(actionRequest, "rules");
-		String userCustomAttributeNames = ParamUtil.getString(
-			actionRequest, "userCustomAttributeNames");
 		long[] classNameIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "classNameIds"), 0L);
 
@@ -134,8 +132,13 @@ public class SampleDroolsConfigurationAction
 		if (SessionErrors.isEmpty(actionRequest)) {
 			preferences.setValue("rules", rules);
 			preferences.setValue("domain-name", domainName);
+
+			String userCustomAttributeNames = ParamUtil.getString(
+				actionRequest, "userCustomAttributeNames");
+
 			preferences.setValue(
 				"user-custom-attribute-names", userCustomAttributeNames);
+
 			preferences.setValues(
 				"class-name-ids", ArrayUtil.toStringArray(classNameIds));
 		}

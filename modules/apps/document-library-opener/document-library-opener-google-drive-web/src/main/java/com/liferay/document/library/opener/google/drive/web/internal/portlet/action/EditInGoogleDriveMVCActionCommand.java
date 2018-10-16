@@ -127,9 +127,6 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 	private void _executeCommand(ActionRequest actionRequest, long fileEntryId)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (cmd.equals(DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_ADD)) {
@@ -210,6 +207,9 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else if (cmd.equals(
 					DLOpenerGoogleDriveWebConstants.GOOGLE_DRIVE_EDIT)) {
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			_saveDLOpenerGoogleDriveFileReference(
 				actionRequest,

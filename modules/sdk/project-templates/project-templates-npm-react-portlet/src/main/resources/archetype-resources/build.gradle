@@ -15,9 +15,7 @@ apply plugin: "com.liferay.plugin"
 #end
 dependencies {
 #if (${dependencyManagementEnabled} == "true")
-#if (${liferayVersion.startsWith("7.1")})
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.js.loader.modules.extender.api"
-#end
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib"
 	compileOnly group: "javax.portlet", name: "portlet-api"
@@ -26,11 +24,11 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.cmpn"
 #else
 #if (${liferayVersion.startsWith("7.0")})
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.frontend.js.loader.modules.extender.api", version: "1.0.2"
 #elseif (${liferayVersion.startsWith("7.1")})
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.js.loader.modules.extender.api", version: "2.0.2"
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0"
 #end
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"
 #if (${liferayVersion.startsWith("7.0")})
 	compileOnly group: "javax.portlet", name: "portlet-api", version: "2.0"

@@ -6,16 +6,11 @@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
-#if (${liferayVersion.startsWith("7.1")})
-
-<%@ page import="${package}.constants.${className}WebKeys" %>
-#end
 
 <liferay-theme:defineObjects />
 
-<portlet:defineObjects />#if (${liferayVersion.startsWith("7.1")})
+<portlet:defineObjects />
 
 <%
-String bootstrapRequire = (String)renderRequest.getAttribute(${className}WebKeys.BOOTSTRAP_REQUIRE);
+String mainRequire = (String)renderRequest.getAttribute("mainRequire");
 %>
-#end

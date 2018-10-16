@@ -4159,6 +4159,7 @@ public class ServiceBuilder {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private void _createUADTestHelper(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 

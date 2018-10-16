@@ -103,6 +103,10 @@
 	</command>
 
 	<command name="moveFragment">
+		<execute function="MouseOver" locator1="Fragment#FRAGMENT_BODY">
+			<var name="key_fragmentName" value="${fragmentName}" />
+		</execute>
+
 		<if>
 			<equals arg1="${direction}" arg2="up" />
 			<then>

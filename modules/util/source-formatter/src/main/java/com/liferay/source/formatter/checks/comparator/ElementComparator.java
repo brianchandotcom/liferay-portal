@@ -63,6 +63,20 @@ public class ElementComparator extends NaturalOrderStringComparator {
 		return _nameAttribute;
 	}
 
+	protected String getTagValue(Element element) {
+		return getTagValue(element, getNameAttribute());
+	}
+
+	protected String getTagValue(Element element, String tagName) {
+		Element nameElement = element.element(tagName);
+
+		if (nameElement == null) {
+			return null;
+		}
+
+		return nameElement.getText();
+	}
+
 	private static final String _NAME_ATTRIBUTE_DEFAULT = "name";
 
 	private final boolean _importPackage;

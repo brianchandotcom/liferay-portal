@@ -57,6 +57,8 @@ if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentRe
 	latestFileVersion = fileEntry.getLatestFileVersion();
 }
 
+latestFileVersion = latestFileVersion.toEscapedModel();
+
 Date modifiedDate = latestFileVersion.getModifiedDate();
 
 String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);

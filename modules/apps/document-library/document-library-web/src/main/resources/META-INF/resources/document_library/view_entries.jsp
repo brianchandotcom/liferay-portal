@@ -125,6 +125,8 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 						latestFileVersion = fileEntry.getLatestFileVersion();
 					}
 
+					latestFileVersion = latestFileVersion.toEscapedModel();
+
 					String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, latestFileVersion, themeDisplay);
 					%>
 
@@ -440,7 +442,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 									cssClass="table-cell-expand table-cell-minw-200 table-title"
 									href="<%= rowURL %>"
 									name="title"
-									value="<%= curFolder.getName() %>"
+									value="<%= HtmlUtil.escape(curFolder.getName()) %>"
 								/>
 							</c:if>
 

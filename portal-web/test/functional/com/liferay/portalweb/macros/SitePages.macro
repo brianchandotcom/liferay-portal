@@ -11,9 +11,7 @@
 			<var name="name" value="${pageName}" />
 		</execute>
 
-		<execute macro="Button#click">
-			<var name="button" value="Save" />
-		</execute>
+		<execute macro="PortletEntry#save" />
 
 		<execute function="SelectFrame#selectFrameTop" />
 
@@ -26,9 +24,7 @@
 			</then>
 		</if>
 
-		<execute macro="Button#click">
-			<var name="button" value="Save" />
-		</execute>
+		<execute macro="PortletEntry#save" />
 
 		<execute function="WaitForSPARefresh" />
 	</command>

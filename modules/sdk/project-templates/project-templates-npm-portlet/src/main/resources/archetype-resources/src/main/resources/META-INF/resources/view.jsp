@@ -1,13 +1,14 @@
 #parse ("definitions.vm")
 <%@ include file="/init.jsp" %>
 
-<div id="<portlet:namespace />"></div>
+<pre id="<portlet:namespace />-output">
+</pre>
 
-#if (${liferayVersion.startsWith("7.1")})
-<aui:script require="<%= bootstrapRequire %>">
-	bootstrapRequire.default('<portlet:namespace />');
-#else
-<aui:script require="${artifactId}@${packageJsonVersion}">
-	${auiScriptRequireVarName}.default('<portlet:namespace />');
-#end
+<aui:script require="<%= mainRequire %>">
+	window.out = document.getElementById('<portlet:namespace />-output');
+
+	out.innerHTML += 'Portlet main module loaded.\n';
+	out.innerHTML += "Invoking portlet's main module default export.\n";
+
+	main.default();
 </aui:script>

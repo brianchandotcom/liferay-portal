@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.osgi.web.wab.generator.WabGenerator;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import java.net.URI;
@@ -41,6 +42,7 @@ import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -84,6 +86,10 @@ public class WabDirURLStreamHandlerService
 				bundleSymbolicName = _getNameFromXMLFile(warDir);
 			}
 
+			if (bundleSymbolicName.equals(StringPool.BLANK)) {
+				bundleSymbolicName = _getNameFromProperties(warDir);
+			}
+
 			parameters.put(
 				Constants.BUNDLE_SYMBOLICNAME,
 				new String[] {bundleSymbolicName});
@@ -97,6 +103,10 @@ public class WabDirURLStreamHandlerService
 
 			if (contextName.equals(StringPool.BLANK)) {
 				contextName = _getNameFromXMLFile(warDir);
+			}
+
+			if (contextName.equals(StringPool.BLANK)) {
+				contextName = _getNameFromProperties(warDir);
 			}
 
 			if (contextName.equals(StringPool.BLANK)) {
@@ -157,9 +167,32 @@ public class WabDirURLStreamHandlerService
 		return StringPool.BLANK;
 	}
 
+	private String _getNameFromProperties(File warDir) throws IOException {
+		File liferayPluginPackagePropertiesFile = new File(
+			warDir, "WEB-INF/liferay-plugin-package.properties");
+
+		if (!liferayPluginPackagePropertiesFile.exists()) {
+			return StringPool.BLANK;
+		}
+
+		try (FileInputStream fileInputStream =
+				new FileInputStream(liferayPluginPackagePropertiesFile)) {
+
+			Properties properties = new Properties();
+
+			properties.load(fileInputStream);
+
+			return properties.getProperty("name");
+		}
+	}
+
 	private String _getNameFromXMLFile(File warDir) throws IOException {
 		File lookAndFeelXmlFile = new File(
 			warDir, "WEB-INF/liferay-look-and-feel.xml");
+
+		if (!lookAndFeelXmlFile.exists()) {
+			return StringPool.BLANK;
+		}
 
 		Document document = _readDocument(lookAndFeelXmlFile);
 

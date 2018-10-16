@@ -101,6 +101,10 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		Element jenkinsReportElement = _topLevelBuild.getJenkinsReportElement();
 
 		try {
+			BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+			publishToUserContentDir(buildDatabase.getBuildDatabaseJSFile());
+
 			TopLevelBuildData topLevelBuildData = getBuildData();
 
 			String jenkinsReportString = StringEscapeUtils.unescapeXml(

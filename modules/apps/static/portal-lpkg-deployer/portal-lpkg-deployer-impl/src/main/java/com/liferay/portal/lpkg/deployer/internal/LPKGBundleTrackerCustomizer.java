@@ -283,6 +283,13 @@ public class LPKGBundleTrackerCustomizer
 					PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL);
 			}
 
+			Bundle systemBundle = _bundleContext.getBundle(0);
+
+			FrameworkWiring frameworkWiring = systemBundle.adapt(
+				FrameworkWiring.class);
+
+			frameworkWiring.resolveBundles(installedBundles.keySet());
+
 			BundleStartLevelUtil.setStartLevelAndStart(
 				installedBundles, _bundleContext);
 		}

@@ -76,10 +76,11 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
-
 			if (_dlOpenerGoogleDriveManager.hasValidCredential(
 					themeDisplay.getUserId())) {
+
+				long fileEntryId = ParamUtil.getLong(
+					actionRequest, "fileEntryId");
 
 				_executeCommand(actionRequest, fileEntryId);
 			}

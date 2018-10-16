@@ -149,9 +149,6 @@ public class FileEntryStagedModelRepository
 					fileVersionStatusProperty.in(
 						stagedModelDataHandler.getExportableStatuses()));
 
-				Criterion fileVersionModifiedDateCriterion =
-					portletDataContext.getDateRangeCriteria(
-						"dlFileVersion.modifiedDate");
 				Criterion fileVersionStatusDateCriterion =
 					portletDataContext.getDateRangeCriteria(
 						"dlFileVersion.statusDate");
@@ -165,7 +162,12 @@ public class FileEntryStagedModelRepository
 					Disjunction disjunction =
 						RestrictionsFactoryUtil.disjunction();
 
+					Criterion fileVersionModifiedDateCriterion =
+						portletDataContext.getDateRangeCriteria(
+							"dlFileVersion.modifiedDate");
+
 					disjunction.add(fileVersionModifiedDateCriterion);
+
 					disjunction.add(fileVersionStatusDateCriterion);
 					disjunction.add(modifiedDateCriterion);
 

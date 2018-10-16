@@ -65,13 +65,14 @@ public class CMISRepositoryDetector {
 			productVersion, StringPool.PERIOD);
 
 		int major = GetterUtil.getInteger(versionParts[0]);
-		int minor = GetterUtil.getInteger(versionParts[1]);
 
 		if (major > 5) {
 			_nuxeo5_8OrHigher = true;
 			_nuxeo5_5OrHigher = true;
 		}
 		else if (major == 5) {
+			int minor = GetterUtil.getInteger(versionParts[1]);
+
 			if (minor >= 8) {
 				_nuxeo5_8OrHigher = true;
 			}

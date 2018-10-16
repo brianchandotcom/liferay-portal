@@ -182,9 +182,6 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long fileEntryTypeId = ParamUtil.getLong(
 			actionRequest, "fileEntryTypeId");
 
@@ -207,6 +204,9 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 		if (fileEntryTypeId <= 0) {
 
 			// Add file entry type
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			long groupId = themeDisplay.getScopeGroupId();
 

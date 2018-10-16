@@ -221,9 +221,6 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 	protected void updateFolder(ActionRequest actionRequest) throws Exception {
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
 
-		long repositoryId = ParamUtil.getLong(actionRequest, "repositoryId");
-		long parentFolderId = ParamUtil.getLong(
-			actionRequest, "parentFolderId");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 
@@ -233,6 +230,11 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 		if (folderId <= 0) {
 
 			// Add folder
+
+			long repositoryId = ParamUtil.getLong(
+				actionRequest, "repositoryId");
+			long parentFolderId = ParamUtil.getLong(
+				actionRequest, "parentFolderId");
 
 			_dlAppService.addFolder(
 				repositoryId, parentFolderId, name, description,

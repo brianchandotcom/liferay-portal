@@ -231,7 +231,9 @@
 
 		<!-- Portal checks -->
 
-		<check name="JavaAnonymousInnerClassCheck" />
+		<check name="JavaAnonymousInnerClassCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JavaAPISignatureCheck">
 			<property name="enabled" value="false" />
 			<property name="illegalAPIParameterTypes" value="HttpServletRequest" />

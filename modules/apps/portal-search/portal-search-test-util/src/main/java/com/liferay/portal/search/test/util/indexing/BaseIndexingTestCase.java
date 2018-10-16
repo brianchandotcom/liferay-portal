@@ -35,6 +35,9 @@ import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.SearchMapUtil;
 
+import java.io.Serializable;
+
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -44,6 +47,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 
@@ -160,6 +164,10 @@ public abstract class BaseIndexingTestCase {
 		return booleanQueryImpl;
 	}
 
+	protected String getEntryClassName() {
+		return _entryClassName;
+	}
+
 	protected IndexSearcher getIndexSearcher() {
 		return _indexSearcher;
 	}
@@ -187,16 +195,6 @@ public abstract class BaseIndexingTestCase {
 		}
 	}
 
-	protected Hits search(
-		SearchContext searchContext, QueryContributor queryContributor) {
-
-		Query query = getDefaultQuery();
-
-		queryContributor.contribute(query);
-
-		return search(searchContext, query);
-	}
-
 	protected void setPreBooleanFilter(Filter filter, Query query) {
 		BooleanFilter booleanFilter = new BooleanFilter();
 
@@ -215,6 +213,13 @@ public abstract class BaseIndexingTestCase {
 			_searchContext = createSearchContext();
 		}
 
+		public void assertResultCount(int expected) {
+			Document[] documents = _hits.getDocs();
+
+			Assert.assertEquals(
+				Arrays.toString(documents), expected, documents.length);
+		}
+
 		public void assertValues(
 			String fieldName, List<String> expectedValues) {
 
@@ -231,6 +236,10 @@ public abstract class BaseIndexingTestCase {
 			return (String)_searchContext.getAttribute("queryString");
 		}
 
+		public SearchContext getSearchContext() {
+			return _searchContext;
+		}
+
 		public void search() {
 			Query query = _query;
 
@@ -238,8 +247,16 @@ public abstract class BaseIndexingTestCase {
 				query = getDefaultQuery();
 			}
 
+			if (_queryContributor != null) {
+				_queryContributor.contribute(query);
+			}
+
 			if (_filter != null) {
 				setPreBooleanFilter(_filter, query);
+			}
+
+			if (_postFilter != null) {
+				query.setPostFilter(_postFilter);
 			}
 
 			_hits = BaseIndexingTestCase.this.search(_searchContext, query);
@@ -249,8 +266,20 @@ public abstract class BaseIndexingTestCase {
 			_filter = filter;
 		}
 
+		public void setPostFilter(Filter postFilter) {
+			_postFilter = postFilter;
+		}
+
 		public void setQuery(Query query) {
 			_query = query;
+		}
+
+		public void setQueryContributor(QueryContributor queryContributor) {
+			_queryContributor = queryContributor;
+		}
+
+		public void setSearchContextAttribute(String name, Serializable value) {
+			_searchContext.setAttribute(name, value);
 		}
 
 		public void verify(Consumer<Hits> consumer) {
@@ -259,7 +288,9 @@ public abstract class BaseIndexingTestCase {
 
 		private Filter _filter;
 		private Hits _hits;
+		private Filter _postFilter;
 		private Query _query;
+		private QueryContributor _queryContributor;
 		private final SearchContext _searchContext;
 
 	}

@@ -151,7 +151,7 @@ public abstract class BaseStringQueryTestCase extends BaseIndexingTestCase {
 			indexingTestHelper -> {
 				indexingTestHelper.setFilter(
 					new TermFilter(
-						Field.COMPANY_ID, String.valueOf(COMPANY_ID)));
+						Field.ENTRY_CLASS_NAME, getEntryClassName()));
 				indexingTestHelper.setQuery(new StringQuery(queryString));
 
 				indexingTestHelper.search();

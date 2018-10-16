@@ -68,7 +68,7 @@ if(!isFormPublished && isFormSaved) {
 
 			<ul class="navbar-nav toolbar-group-field">
 				<li class="nav-item">
-					<button class="btn btn-secondary nav-btn nav-btn-monospaced share-form-icon <%= disableCopyBtnClass %> <%= (!isFormPublished && !isFormSaved) ? "hide" : "" %>" data-original-title="<liferay-ui:message key="copy-url" />" id="<portlet:namespace />publishIcon" title="<%= disableCopyBtnClass == "" ? LanguageUtil.get(request, "copy-url") : LanguageUtil.get(request, "publish-the-form-to-get-its-shareable-link") %>" type="button">
+					<button class="btn btn-secondary lfr-ddm-share-url-button nav-btn nav-btn-monospaced share-form-icon <%= disableCopyBtnClass %> <%= (!isFormPublished && !isFormSaved) ? "hide" : "" %>" data-original-title="<liferay-ui:message key="copy-url" />" id="<portlet:namespace />publishIcon" title="<%= disableCopyBtnClass == "" ? LanguageUtil.get(request, "copy-url") : LanguageUtil.get(request, "publish-the-form-to-get-its-shareable-link") %>" type="button">
 						<svg class="lexicon-icon">
 							<use xlink:href="<%= ddmFormAdminDisplayContext.getLexiconIconsPath() %>link" />
 						</svg>

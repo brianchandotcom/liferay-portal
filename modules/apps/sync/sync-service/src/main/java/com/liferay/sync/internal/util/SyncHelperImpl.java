@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.Digester;
@@ -512,7 +514,17 @@ public class SyncHelperImpl implements SyncHelper {
 				syncSiteMemberFilePermissions);
 		}
 
-		serviceContext.setGroupPermissions(resourceActions);
+		ModelPermissions modelPermissions =
+			serviceContext.getModelPermissions();
+
+		if (modelPermissions == null) {
+			modelPermissions = new ModelPermissions();
+		}
+
+		modelPermissions.addRolePermissions(
+			RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE, resourceActions);
+
+		serviceContext.setModelPermissions(modelPermissions);
 	}
 
 	@Override

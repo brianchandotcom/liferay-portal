@@ -71,6 +71,19 @@ public class PollsQuestionLocalServiceWrapper
 
 	@Override
 	public void addQuestionResources(long questionId,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_pollsQuestionLocalService.addQuestionResources(questionId,
+			modelPermissions);
+	}
+
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addQuestionResources(long, ModelPermissions)}
+	*/
+	@Deprecated
+	@Override
+	public void addQuestionResources(long questionId,
 		String[] groupPermissions, String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_pollsQuestionLocalService.addQuestionResources(questionId,
@@ -86,6 +99,20 @@ public class PollsQuestionLocalServiceWrapper
 			addGroupPermissions, addGuestPermissions);
 	}
 
+	@Override
+	public void addQuestionResources(
+		com.liferay.polls.model.PollsQuestion question,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_pollsQuestionLocalService.addQuestionResources(question,
+			modelPermissions);
+	}
+
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addQuestionResources(PollsQuestion, ModelPermissions)}
+	*/
+	@Deprecated
 	@Override
 	public void addQuestionResources(
 		com.liferay.polls.model.PollsQuestion question,

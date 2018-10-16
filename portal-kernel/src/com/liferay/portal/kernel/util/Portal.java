@@ -737,23 +737,55 @@ public interface Portal {
 
 	public int[] getGroupFriendlyURLIndex(String requestURI);
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public String[] getGroupPermissions(HttpServletRequest request);
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public String[] getGroupPermissions(
 		HttpServletRequest request, String className);
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public String[] getGroupPermissions(PortletRequest portletRequest);
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public String[] getGroupPermissions(
 		PortletRequest portletRequest, String className);
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public String[] getGuestPermissions(HttpServletRequest request);
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public String[] getGuestPermissions(
 		HttpServletRequest request, String className);
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public String[] getGuestPermissions(PortletRequest portletRequest);
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public String[] getGuestPermissions(
 		PortletRequest portletRequest, String className);
 

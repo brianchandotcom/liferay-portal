@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -104,6 +105,14 @@ public interface DDMFormInstanceLocalService extends BaseLocalService,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
+	public void addFormInstanceResources(DDMFormInstance ddmFormInstance,
+		ModelPermissions modelPermissions) throws PortalException;
+
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addFormInstanceResources(DDMFormInstance, ModelPermissions)}
+	*/
+	@Deprecated
 	public void addFormInstanceResources(DDMFormInstance ddmFormInstance,
 		String[] groupPermissions, String[] guestPermissions)
 		throws PortalException;

@@ -346,9 +346,27 @@ public class JournalArticleLocalServiceWrapper
 	* Adds the model resources with the permissions to the web content article.
 	*
 	* @param article the web content article to add resources to
+	* @param modelPermissions the model permissions
+	*/
+	@Override
+	public void addArticleResources(
+		com.liferay.journal.model.JournalArticle article,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_journalArticleLocalService.addArticleResources(article,
+			modelPermissions);
+	}
+
+	/**
+	* Adds the model resources with the permissions to the web content article.
+	*
+	* @param article the web content article to add resources to
 	* @param groupPermissions the group permissions to be added
 	* @param guestPermissions the guest permissions to be added
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addArticleResources(JournalArticle, ModelPermissions)}
 	*/
+	@Deprecated
 	@Override
 	public void addArticleResources(
 		com.liferay.journal.model.JournalArticle article,
@@ -382,7 +400,10 @@ public class JournalArticleLocalServiceWrapper
 	* @param articleId the primary key of the web content article
 	* @param groupPermissions the group permissions to be added
 	* @param guestPermissions the guest permissions to be added
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addArticleResources(JournalArticle, ModelPermissions)}
 	*/
+	@Deprecated
 	@Override
 	public void addArticleResources(long groupId, String articleId,
 		String[] groupPermissions, String[] guestPermissions)

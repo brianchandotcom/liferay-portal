@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -77,12 +78,25 @@ public interface WikiNodeLocalService extends BaseLocalService,
 	public void addNodeResources(long nodeId, boolean addGroupPermissions,
 		boolean addGuestPermissions) throws PortalException;
 
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addNodeResources(WikiNode, ModelPermissions)}
+	*/
+	@Deprecated
 	public void addNodeResources(long nodeId, String[] groupPermissions,
 		String[] guestPermissions) throws PortalException;
 
 	public void addNodeResources(WikiNode node, boolean addGroupPermissions,
 		boolean addGuestPermissions) throws PortalException;
 
+	public void addNodeResources(WikiNode node,
+		ModelPermissions modelPermissions) throws PortalException;
+
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addNodeResources(WikiNode, ModelPermissions)}
+	*/
+	@Deprecated
 	public void addNodeResources(WikiNode node, String[] groupPermissions,
 		String[] guestPermissions) throws PortalException;
 

@@ -40,7 +40,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +55,97 @@ import javax.servlet.http.HttpServletRequest;
 public class ServiceContextFactory {
 
 	public static ServiceContext getInstance(HttpServletRequest request)
+		throws PortalException {
+
+		ServiceContext serviceContext = _getInstance(request);
+
+		_ensureValidModelPermissions(serviceContext);
+
+		return serviceContext;
+	}
+
+	public static ServiceContext getInstance(PortletRequest portletRequest)
+		throws PortalException {
+
+		ServiceContext serviceContext = _getInstance(portletRequest);
+
+		_ensureValidModelPermissions(serviceContext);
+
+		return serviceContext;
+	}
+
+	public static ServiceContext getInstance(
+			String className, HttpServletRequest request)
+		throws PortalException {
+
+		ServiceContext serviceContext = _getInstance(request);
+
+		// Permissions
+
+		if (serviceContext.getModelPermissions() == null) {
+			serviceContext.setModelPermissions(
+				ModelPermissionsFactory.create(request, className));
+		}
+
+		_ensureValidModelPermissions(serviceContext);
+
+		// Expando
+
+		Map<String, Serializable> expandoBridgeAttributes =
+			PortalUtil.getExpandoBridgeAttributes(
+				ExpandoBridgeFactoryUtil.getExpandoBridge(
+					serviceContext.getCompanyId(), className),
+				request);
+
+		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+
+		return serviceContext;
+	}
+
+	public static ServiceContext getInstance(
+			String className, PortletRequest portletRequest)
+		throws PortalException {
+
+		ServiceContext serviceContext = _getInstance(portletRequest);
+
+		// Permissions
+
+		if (serviceContext.getModelPermissions() == null) {
+			serviceContext.setModelPermissions(
+				ModelPermissionsFactory.create(portletRequest, className));
+		}
+
+		_ensureValidModelPermissions(serviceContext);
+
+		// Expando
+
+		Map<String, Serializable> expandoBridgeAttributes =
+			PortalUtil.getExpandoBridgeAttributes(
+				ExpandoBridgeFactoryUtil.getExpandoBridge(
+					serviceContext.getCompanyId(), className),
+				portletRequest);
+
+		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+
+		return serviceContext;
+	}
+
+	public static ServiceContext getInstance(
+			String className, UploadPortletRequest uploadPortletRequest)
+		throws PortalException {
+
+		return getInstance(className, (HttpServletRequest)uploadPortletRequest);
+	}
+
+	private static void _ensureValidModelPermissions(
+		ServiceContext serviceContext) {
+
+		if (serviceContext.getModelPermissions() == null) {
+			serviceContext.setModelPermissions(new ModelPermissions());
+		}
+	}
+
+	private static ServiceContext _getInstance(HttpServletRequest request)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -172,22 +262,8 @@ public class ServiceContextFactory {
 
 		// Permissions
 
-		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-			request);
-
-		if (!modelPermissions.isEmpty()) {
-			serviceContext.setModelPermissions(modelPermissions);
-		}
-		else {
-			serviceContext.setAddGroupPermissions(
-				ParamUtil.getBoolean(request, "addGroupPermissions"));
-			serviceContext.setAddGuestPermissions(
-				ParamUtil.getBoolean(request, "addGuestPermissions"));
-			serviceContext.setGroupPermissions(
-				PortalUtil.getGroupPermissions(request));
-			serviceContext.setGuestPermissions(
-				PortalUtil.getGuestPermissions(request));
-		}
+		serviceContext.setModelPermissions(
+			ModelPermissionsFactory.create(request));
 
 		// Portlet preferences ids
 
@@ -263,7 +339,7 @@ public class ServiceContextFactory {
 		return serviceContext;
 	}
 
-	public static ServiceContext getInstance(PortletRequest portletRequest)
+	private static ServiceContext _getInstance(PortletRequest portletRequest)
 		throws PortalException {
 
 		// Theme display
@@ -306,19 +382,18 @@ public class ServiceContextFactory {
 
 		Map<String, Serializable> attributes = new HashMap<>();
 
-		Enumeration<String> enu = portletRequest.getParameterNames();
+		Map<String, String[]> parameters = portletRequest.getParameterMap();
 
-		while (enu.hasMoreElements()) {
-			String param = enu.nextElement();
-
-			String[] values = portletRequest.getParameterValues(param);
+		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
+			String name = entry.getKey();
+			String[] values = entry.getValue();
 
 			if (ArrayUtil.isNotEmpty(values)) {
 				if (values.length == 1) {
-					attributes.put(param, values[0]);
+					attributes.put(name, values[0]);
 				}
 				else {
-					attributes.put(param, values);
+					attributes.put(name, values);
 				}
 			}
 		}
@@ -327,56 +402,36 @@ public class ServiceContextFactory {
 
 		// Command
 
-		String cmd = ParamUtil.getString(portletRequest, Constants.CMD);
-
-		serviceContext.setCommand(cmd);
+		serviceContext.setCommand(
+			ParamUtil.getString(portletRequest, Constants.CMD));
 
 		// Current URL
 
-		String currentURL = PortalUtil.getCurrentURL(portletRequest);
-
-		serviceContext.setCurrentURL(currentURL);
+		serviceContext.setCurrentURL(PortalUtil.getCurrentURL(portletRequest));
 
 		// Form date
 
 		long formDateLong = ParamUtil.getLong(portletRequest, "formDate");
 
 		if (formDateLong > 0) {
-			Date formDate = new Date(formDateLong);
-
-			serviceContext.setFormDate(formDate);
+			serviceContext.setFormDate(new Date(formDateLong));
 		}
 
 		// Permissions
 
-		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-			portletRequest);
-
-		if (!modelPermissions.isEmpty()) {
-			serviceContext.setModelPermissions(modelPermissions);
-		}
-		else {
-			boolean addGroupPermissions = ParamUtil.getBoolean(
-				portletRequest, "addGroupPermissions");
-			boolean addGuestPermissions = ParamUtil.getBoolean(
-				portletRequest, "addGuestPermissions");
-			String[] groupPermissions = PortalUtil.getGroupPermissions(
-				portletRequest);
-			String[] guestPermissions = PortalUtil.getGuestPermissions(
-				portletRequest);
-
-			serviceContext.setAddGroupPermissions(addGroupPermissions);
-			serviceContext.setAddGuestPermissions(addGuestPermissions);
-			serviceContext.setGroupPermissions(groupPermissions);
-			serviceContext.setGuestPermissions(guestPermissions);
-		}
+		serviceContext.setModelPermissions(
+			ModelPermissionsFactory.create(portletRequest));
 
 		// Portlet preferences ids
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		serviceContext.setPortletId(PortalUtil.getPortletId(portletRequest));
+		String portletId = PortalUtil.getPortletId(portletRequest);
+
+		if (Validator.isNotNull(portletId)) {
+			serviceContext.setPortletId(portletId);
+		}
 
 		// Request
 
@@ -408,148 +463,39 @@ public class ServiceContextFactory {
 		}
 
 		if (updateAssetCategoryIds) {
-			long[] assetCategoryIds = ArrayUtil.toArray(
-				assetCategoryIdsList.toArray(
-					new Long[assetCategoryIdsList.size()]));
-
-			serviceContext.setAssetCategoryIds(assetCategoryIds);
+			serviceContext.setAssetCategoryIds(
+				ArrayUtil.toArray(
+					assetCategoryIdsList.toArray(
+						new Long[assetCategoryIdsList.size()])));
 		}
 
-		boolean assetEntryVisible = ParamUtil.getBoolean(
-			portletRequest, "assetEntryVisible", true);
-
-		serviceContext.setAssetEntryVisible(assetEntryVisible);
+		serviceContext.setAssetEntryVisible(
+			ParamUtil.getBoolean(portletRequest, "assetEntryVisible", true));
 
 		String assetLinkEntryIdsString = request.getParameter(
 			"assetLinksSearchContainerPrimaryKeys");
 
 		if (assetLinkEntryIdsString != null) {
-			long[] assetLinkEntryIds = StringUtil.split(
-				assetLinkEntryIdsString, 0L);
-
-			serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
+			serviceContext.setAssetLinkEntryIds(
+				StringUtil.split(assetLinkEntryIdsString, 0L));
 		}
 
-		Double assetPriority = ParamUtil.getDouble(request, "assetPriority");
-
-		serviceContext.setAssetPriority(assetPriority);
+		serviceContext.setAssetPriority(
+			ParamUtil.getDouble(request, "assetPriority"));
 
 		String assetTagNamesString = request.getParameter("assetTagNames");
 
 		if (assetTagNamesString != null) {
-			String[] assetTagNames = StringUtil.split(assetTagNamesString);
-
-			serviceContext.setAssetTagNames(assetTagNames);
+			serviceContext.setAssetTagNames(
+				StringUtil.split(assetTagNamesString));
 		}
 
 		// Workflow
 
-		int workflowAction = ParamUtil.getInteger(
-			portletRequest, "workflowAction", WorkflowConstants.ACTION_PUBLISH);
-
-		serviceContext.setWorkflowAction(workflowAction);
-
-		return serviceContext;
-	}
-
-	public static ServiceContext getInstance(
-			String className, HttpServletRequest request)
-		throws PortalException {
-
-		ServiceContext serviceContext = getInstance(request);
-
-		// Permissions
-
-		String[] groupPermissions = PortalUtil.getGroupPermissions(
-			request, className);
-		String[] guestPermissions = PortalUtil.getGuestPermissions(
-			request, className);
-
-		if (groupPermissions != null) {
-			serviceContext.setGroupPermissions(groupPermissions);
-		}
-
-		if (guestPermissions != null) {
-			serviceContext.setGuestPermissions(guestPermissions);
-		}
-
-		// Expando
-
-		Map<String, Serializable> expandoBridgeAttributes =
-			PortalUtil.getExpandoBridgeAttributes(
-				ExpandoBridgeFactoryUtil.getExpandoBridge(
-					serviceContext.getCompanyId(), className),
-				request);
-
-		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
-
-		return serviceContext;
-	}
-
-	public static ServiceContext getInstance(
-			String className, PortletRequest portletRequest)
-		throws PortalException {
-
-		ServiceContext serviceContext = getInstance(portletRequest);
-
-		// Permissions
-
-		String[] groupPermissions = PortalUtil.getGroupPermissions(
-			portletRequest, className);
-		String[] guestPermissions = PortalUtil.getGuestPermissions(
-			portletRequest, className);
-
-		if (groupPermissions != null) {
-			serviceContext.setGroupPermissions(groupPermissions);
-		}
-
-		if (guestPermissions != null) {
-			serviceContext.setGuestPermissions(guestPermissions);
-		}
-
-		// Expando
-
-		Map<String, Serializable> expandoBridgeAttributes =
-			PortalUtil.getExpandoBridgeAttributes(
-				ExpandoBridgeFactoryUtil.getExpandoBridge(
-					serviceContext.getCompanyId(), className),
-				portletRequest);
-
-		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
-
-		return serviceContext;
-	}
-
-	public static ServiceContext getInstance(
-			String className, UploadPortletRequest uploadPortletRequest)
-		throws PortalException {
-
-		ServiceContext serviceContext = getInstance(uploadPortletRequest);
-
-		// Permissions
-
-		String[] groupPermissions = PortalUtil.getGroupPermissions(
-			uploadPortletRequest, className);
-		String[] guestPermissions = PortalUtil.getGuestPermissions(
-			uploadPortletRequest, className);
-
-		if (groupPermissions != null) {
-			serviceContext.setGroupPermissions(groupPermissions);
-		}
-
-		if (guestPermissions != null) {
-			serviceContext.setGuestPermissions(guestPermissions);
-		}
-
-		// Expando
-
-		Map<String, Serializable> expandoBridgeAttributes =
-			PortalUtil.getExpandoBridgeAttributes(
-				ExpandoBridgeFactoryUtil.getExpandoBridge(
-					serviceContext.getCompanyId(), className),
-				uploadPortletRequest);
-
-		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+		serviceContext.setWorkflowAction(
+			ParamUtil.getInteger(
+				portletRequest, "workflowAction",
+				WorkflowConstants.ACTION_PUBLISH));
 
 		return serviceContext;
 	}

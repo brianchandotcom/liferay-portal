@@ -111,10 +111,27 @@ public class DDLRecordSetLocalServiceUtil {
 	* Adds the model resources with the permissions to the record set.
 	*
 	* @param recordSet the record set
+	* @param modelPermissions the model permissions
+	* @throws PortalException if a portal exception occurred
+	*/
+	public static void addRecordSetResources(
+		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addRecordSetResources(recordSet, modelPermissions);
+	}
+
+	/**
+	* Adds the model resources with the permissions to the record set.
+	*
+	* @param recordSet the record set
 	* @param groupPermissions whether to add group permissions
 	* @param guestPermissions whether to add guest permissions
 	* @throws PortalException if a portal exception occurred
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addRecordSetResources(DDLRecordSet, ModelPermissions)}
 	*/
+	@Deprecated
 	public static void addRecordSetResources(
 		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet,
 		String[] groupPermissions, String[] guestPermissions)

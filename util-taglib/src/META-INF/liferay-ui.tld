@@ -1525,7 +1525,7 @@
 		</attribute>
 		<attribute>
 			<name>modelName</name>
-			<required>false</required>
+			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

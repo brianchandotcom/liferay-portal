@@ -86,6 +86,18 @@ public class KBArticleLocalServiceUtil {
 
 	public static void addKBArticleResources(
 		com.liferay.knowledge.base.model.KBArticle kbArticle,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addKBArticleResources(kbArticle, modelPermissions);
+	}
+
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addKBArticleResources(KBArticle, ModelPermissions)}
+	*/
+	@Deprecated
+	public static void addKBArticleResources(
+		com.liferay.knowledge.base.model.KBArticle kbArticle,
 		String[] groupPermissions, String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
@@ -100,6 +112,11 @@ public class KBArticleLocalServiceUtil {
 			addGuestPermissions);
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addKBArticleResources(KBArticle, ModelPermissions)}
+	*/
+	@Deprecated
 	public static void addKBArticleResources(long kbArticleId,
 		String[] groupPermissions, String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {

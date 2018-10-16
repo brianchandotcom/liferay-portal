@@ -97,6 +97,11 @@ public class WikiPageLocalServiceUtil {
 			addGuestPermissions);
 	}
 
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addPageResources(WikiPage, ModelPermissions)}
+	*/
+	@Deprecated
 	public static void addPageResources(long nodeId, String title,
 		String[] groupPermissions, String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -111,6 +116,17 @@ public class WikiPageLocalServiceUtil {
 			.addPageResources(page, addGroupPermissions, addGuestPermissions);
 	}
 
+	public static void addPageResources(com.liferay.wiki.model.WikiPage page,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addPageResources(page, modelPermissions);
+	}
+
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addPageResources(WikiPage, ModelPermissions)}
+	*/
+	@Deprecated
 	public static void addPageResources(com.liferay.wiki.model.WikiPage page,
 		String[] groupPermissions, String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -254,6 +254,7 @@ com.liferay.portal.kernel.security.permission.ResourceActionsUtil#getActionsName
 com.liferay.portal.kernel.security.permission.ResourceActionsUtil#getActionsNames(HttpServletRequest,String,long)
 com.liferay.portal.kernel.security.permission.ResourceActionsUtil#getModelResource(HttpServletRequest,String)
 com.liferay.portal.kernel.service.permission.ModelPermissionsFactory#create(HttpServletRequest)
+com.liferay.portal.kernel.service.permission.ModelPermissionsFactory#create(HttpServletRequest,String)
 com.liferay.portal.kernel.service.ServiceContext#setRequest(HttpServletRequest)
 com.liferay.portal.kernel.service.ServiceContextFactory#getInstance(HttpServletRequest)
 com.liferay.portal.kernel.service.ServiceContextFactory#getInstance(String,HttpServletRequest)

@@ -103,6 +103,18 @@ public class DDMFormInstanceLocalServiceUtil {
 
 	public static void addFormInstanceResources(
 		com.liferay.dynamic.data.mapping.model.DDMFormInstance ddmFormInstance,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addFormInstanceResources(ddmFormInstance, modelPermissions);
+	}
+
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addFormInstanceResources(DDMFormInstance, ModelPermissions)}
+	*/
+	@Deprecated
+	public static void addFormInstanceResources(
+		com.liferay.dynamic.data.mapping.model.DDMFormInstance ddmFormInstance,
 		String[] groupPermissions, String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()

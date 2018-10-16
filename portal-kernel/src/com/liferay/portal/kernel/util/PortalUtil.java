@@ -1035,40 +1035,72 @@ public class PortalUtil {
 		return getPortal().getGroupFriendlyURLIndex(requestURI);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static String[] getGroupPermissions(HttpServletRequest request) {
 		return getPortal().getGroupPermissions(request);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static String[] getGroupPermissions(
 		HttpServletRequest request, String className) {
 
 		return getPortal().getGroupPermissions(request, className);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static String[] getGroupPermissions(PortletRequest portletRequest) {
 		return getPortal().getGroupPermissions(portletRequest);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static String[] getGroupPermissions(
 		PortletRequest portletRequest, String className) {
 
 		return getPortal().getGroupPermissions(portletRequest, className);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static String[] getGuestPermissions(HttpServletRequest request) {
 		return getPortal().getGuestPermissions(request);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static String[] getGuestPermissions(
 		HttpServletRequest request, String className) {
 
 		return getPortal().getGuestPermissions(request, className);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static String[] getGuestPermissions(PortletRequest portletRequest) {
 		return getPortal().getGuestPermissions(portletRequest);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static String[] getGuestPermissions(
 		PortletRequest portletRequest, String className) {
 

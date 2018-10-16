@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedResourcedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -100,6 +101,11 @@ public interface WikiPageLocalService extends BaseLocalService,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addPageResources(WikiPage, ModelPermissions)}
+	*/
+	@Deprecated
 	public void addPageResources(long nodeId, String title,
 		String[] groupPermissions, String[] guestPermissions)
 		throws PortalException;
@@ -107,6 +113,14 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public void addPageResources(WikiPage page, boolean addGroupPermissions,
 		boolean addGuestPermissions) throws PortalException;
 
+	public void addPageResources(WikiPage page,
+		ModelPermissions modelPermissions) throws PortalException;
+
+	/**
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addPageResources(WikiPage, ModelPermissions)}
+	*/
+	@Deprecated
 	public void addPageResources(WikiPage page, String[] groupPermissions,
 		String[] guestPermissions) throws PortalException;
 

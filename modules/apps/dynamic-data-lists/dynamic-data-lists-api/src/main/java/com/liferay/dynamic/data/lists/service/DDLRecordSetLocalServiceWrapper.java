@@ -103,10 +103,29 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	* Adds the model resources with the permissions to the record set.
 	*
 	* @param recordSet the record set
+	* @param modelPermissions the model permissions
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Override
+	public void addRecordSetResources(
+		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_ddlRecordSetLocalService.addRecordSetResources(recordSet,
+			modelPermissions);
+	}
+
+	/**
+	* Adds the model resources with the permissions to the record set.
+	*
+	* @param recordSet the record set
 	* @param groupPermissions whether to add group permissions
 	* @param guestPermissions whether to add guest permissions
 	* @throws PortalException if a portal exception occurred
+	* @deprecated As of Judson (7.1.x), replaced by {@link
+	#addRecordSetResources(DDLRecordSet, ModelPermissions)}
 	*/
+	@Deprecated
 	@Override
 	public void addRecordSetResources(
 		com.liferay.dynamic.data.lists.model.DDLRecordSet recordSet,

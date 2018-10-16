@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
+import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.PortletPreferences;
@@ -45,17 +46,20 @@ public class ServiceContextUtil {
 
 		// Permissions
 
-		String[] groupPermissions = StringUtil.split(
-			jsonObject.getString("groupPermissions"));
-		String[] guestPermissions = StringUtil.split(
-			jsonObject.getString("guestPermissions"));
-
 		serviceContext.setAddGroupPermissions(
 			jsonObject.getBoolean("addGroupPermissions"));
 		serviceContext.setAddGuestPermissions(
 			jsonObject.getBoolean("addGuestPermissions"));
-		serviceContext.setGroupPermissions(groupPermissions);
-		serviceContext.setGuestPermissions(guestPermissions);
+
+		String groupPermissions = jsonObject.getString("groupPermissions");
+		String guestPermissions = jsonObject.getString("guestPermissions");
+
+		if ((groupPermissions != null) || (guestPermissions != null)) {
+			serviceContext.setModelPermissions(
+				ModelPermissionsFactory.create(
+					StringUtil.split(groupPermissions),
+					StringUtil.split(guestPermissions)));
+		}
 
 		// Asset
 

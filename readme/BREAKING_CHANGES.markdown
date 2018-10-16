@@ -1020,3 +1020,31 @@ should escape it using the proper escape sequence using `HtmlUtil.escape`.
 This change corrects a best practice violation regarding content escaping.
 
 ---------------------------------------
+
+### Mandatory modelName attribute in liferay-ui:input-permissions taglib
+- **Date:** 2018-Oct-4
+- **JIRA Ticket:** LPS-85998
+
+#### What changed?
+
+Previously the talib `liferay-ui:input-permissions` could be used
+without providing the attribute `modelName`. Now the attribute
+`modelName` is mandatory.
+
+#### Who is affected?
+
+This affects any developer who was using the taglib
+`liferay-ui:input-permissions` in their own portlets and was not setting
+the `modelName` attribute of the taglib.
+
+#### How should I update my code?
+
+You should invoke the taglib providing the model name you are assigning
+the permissions to.
+
+#### Why was this change made?
+
+This change was done to remove some old logic that is not used anywhere
+in Liferay.
+
+---------------------------------------

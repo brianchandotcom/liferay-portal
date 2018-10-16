@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -122,10 +124,18 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 			checkFolder(folderId);
 
-			if (!group.isUser() &&
-				ArrayUtil.isEmpty(serviceContext.getGroupPermissions())) {
+			if (!group.isUser()) {
+				ModelPermissions modelPermissions =
+					serviceContext.getModelPermissions();
 
-				_syncHelper.setFilePermissions(group, false, serviceContext);
+				if ((modelPermissions == null) ||
+					ArrayUtil.isEmpty(
+						modelPermissions.getActionIds(
+							RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE))) {
+
+					_syncHelper.setFilePermissions(
+						group, false, serviceContext);
+				}
 			}
 
 			serviceContext.setCommand(Constants.ADD);
@@ -170,10 +180,17 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 			checkFolder(parentFolderId);
 
-			if (!group.isUser() &&
-				ArrayUtil.isEmpty(serviceContext.getGroupPermissions())) {
+			if (!group.isUser()) {
+				ModelPermissions modelPermissions =
+					serviceContext.getModelPermissions();
 
-				_syncHelper.setFilePermissions(group, true, serviceContext);
+				if ((modelPermissions == null) ||
+					ArrayUtil.isEmpty(
+						modelPermissions.getActionIds(
+							RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE))) {
+
+					_syncHelper.setFilePermissions(group, true, serviceContext);
+				}
 			}
 
 			Folder folder = dlAppService.addFolder(
@@ -326,10 +343,18 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 			FileVersion fileVersion = sourceFileEntry.getLatestFileVersion();
 
-			if (!group.isUser() &&
-				ArrayUtil.isEmpty(serviceContext.getGroupPermissions())) {
+			if (!group.isUser()) {
+				ModelPermissions modelPermissions =
+					serviceContext.getModelPermissions();
 
-				_syncHelper.setFilePermissions(group, false, serviceContext);
+				if ((modelPermissions == null) ||
+					ArrayUtil.isEmpty(
+						modelPermissions.getActionIds(
+							RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE))) {
+
+					_syncHelper.setFilePermissions(
+						group, false, serviceContext);
+				}
 			}
 
 			serviceContext.setCommand(Constants.ADD);

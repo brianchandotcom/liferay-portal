@@ -23,7 +23,9 @@
 		</if>
 	</tear-down>
 
-	<command name="SearchByAssetAndModifiedRangeFacets" priority="4">
+	<command ignore="true" name="SearchByAssetAndModifiedRangeFacets" priority="4">
+		<!-- LRQA-44149 -->
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />

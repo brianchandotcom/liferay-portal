@@ -115,11 +115,9 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		long companyId = ParamUtil.getLong(actionRequest, "companyId");
 
-		String webId = ParamUtil.getString(actionRequest, "webId");
 		String virtualHostname = ParamUtil.getString(
 			actionRequest, "virtualHostname");
 		String mx = ParamUtil.getString(actionRequest, "mx");
-		boolean system = false;
 		int maxUsers = ParamUtil.getInteger(actionRequest, "maxUsers", 0);
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 
@@ -127,8 +125,10 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 			// Add instance
 
+			String webId = ParamUtil.getString(actionRequest, "webId");
+
 			Company company = _companyService.addCompany(
-				webId, virtualHostname, mx, system, maxUsers, active);
+				webId, virtualHostname, mx, false, maxUsers, active);
 
 			ServletContext servletContext =
 				(ServletContext)actionRequest.getAttribute(WebKeys.CTX);

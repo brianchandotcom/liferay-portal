@@ -73,9 +73,6 @@ public class ImportUtil {
 			boolean overwrite)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		_invalidFragmentEntriesNames = new ArrayList<>();
 
 		ZipFile zipFile = new ZipFile(file);
@@ -122,6 +119,10 @@ public class ImportUtil {
 
 		if (MapUtil.isNotEmpty(orphanFragmentEntries)) {
 			if (fragmentCollectionId <= 0) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
 				FragmentCollection fragmentCollection =
 					_fragmentCollectionLocalService.fetchFragmentCollection(
 						themeDisplay.getScopeGroupId(),
@@ -201,9 +202,6 @@ public class ImportUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.fetchFragmentEntry(
 				themeDisplay.getScopeGroupId(), fragmentEntryKey);
@@ -228,6 +226,9 @@ public class ImportUtil {
 		}
 
 		if (fragmentEntry == null) {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				actionRequest);
+
 			_fragmentEntryService.addFragmentEntry(
 				themeDisplay.getScopeGroupId(), fragmentCollectionId,
 				fragmentEntryKey, name, css, html, js, status, serviceContext);

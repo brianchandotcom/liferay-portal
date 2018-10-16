@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.GitWorkingDirectory;
+
 import java.io.File;
 
 import java.util.ArrayList;
@@ -75,6 +77,34 @@ public abstract class BaseTestClassGroup {
 
 		private final File _file;
 		private final List<BaseTestMethod> _testMethods = new ArrayList<>();
+
+	}
+
+	public static class BaseTestFile extends File {
+
+		public BaseTestFile(String pathname) {
+			super(pathname);
+
+			_relativePath = pathname;
+		}
+
+		public BaseTestFile(
+			String pathname, String absolutePath,
+			GitWorkingDirectory gitWorkingDirectory) {
+
+			super(pathname);
+
+			File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
+
+			_relativePath = absolutePath.replace(
+				workingDirectory.getAbsolutePath(), "");
+		}
+
+		public String getRelativePath() {
+			return _relativePath;
+		}
+
+		private final String _relativePath;
 
 	}
 

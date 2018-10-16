@@ -190,6 +190,15 @@ public class SegmentsEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByType() throws Exception {
+		_persistence.countByType("");
+
+		_persistence.countByType("null");
+
+		_persistence.countByType((String)null);
+	}
+
+	@Test
 	public void testCountByG_A() throws Exception {
 		_persistence.countByG_A(RandomTestUtil.nextLong(),
 			RandomTestUtil.randomBoolean());
@@ -204,6 +213,15 @@ public class SegmentsEntryPersistenceTest {
 		_persistence.countByG_K(0L, "null");
 
 		_persistence.countByG_K(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByG_T() throws Exception {
+		_persistence.countByG_T(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_T(0L, "null");
+
+		_persistence.countByG_T(0L, (String)null);
 	}
 
 	@Test

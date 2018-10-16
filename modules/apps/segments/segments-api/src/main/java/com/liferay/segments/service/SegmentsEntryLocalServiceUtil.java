@@ -249,6 +249,21 @@ public class SegmentsEntryLocalServiceUtil {
 				   .getSegmentsEntries(groupId, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntries(
+		long groupId, String type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntry> orderByComparator) {
+		return getService()
+				   .getSegmentsEntries(groupId, type, start, end,
+			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntries(
+		String type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntry> orderByComparator) {
+		return getService()
+				   .getSegmentsEntries(type, start, end, orderByComparator);
+	}
+
 	/**
 	* Returns the number of segments entries.
 	*

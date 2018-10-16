@@ -130,7 +130,8 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 	public static final long KEY_COLUMN_BITMASK = 4L;
-	public static final long MODIFIEDDATE_COLUMN_BITMASK = 8L;
+	public static final long TYPE_COLUMN_BITMASK = 8L;
+	public static final long MODIFIEDDATE_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -727,7 +728,17 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 
 	@Override
 	public void setType(String type) {
+		_columnBitmask |= TYPE_COLUMN_BITMASK;
+
+		if (_originalType == null) {
+			_originalType = _type;
+		}
+
 		_type = type;
+	}
+
+	public String getOriginalType() {
+		return GetterUtil.getString(_originalType);
 	}
 
 	public long getColumnBitmask() {
@@ -930,6 +941,8 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 		segmentsEntryModelImpl._setOriginalActive = false;
 
 		segmentsEntryModelImpl._originalKey = segmentsEntryModelImpl._key;
+
+		segmentsEntryModelImpl._originalType = segmentsEntryModelImpl._type;
 
 		segmentsEntryModelImpl._columnBitmask = 0;
 	}
@@ -1143,6 +1156,7 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 	private String _key;
 	private String _originalKey;
 	private String _type;
+	private String _originalType;
 	private long _columnBitmask;
 	private SegmentsEntry _escapedModel;
 }

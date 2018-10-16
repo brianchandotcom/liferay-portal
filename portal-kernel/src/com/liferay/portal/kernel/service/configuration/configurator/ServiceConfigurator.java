@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.service.configuration.ServiceComponentConfigura
 
 /**
  * @author Miguel Pastor
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 public interface ServiceConfigurator {
 
 	public void destroyServices(

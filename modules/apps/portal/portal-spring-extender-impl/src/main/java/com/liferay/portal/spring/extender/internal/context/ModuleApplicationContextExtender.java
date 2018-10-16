@@ -18,16 +18,17 @@ import com.liferay.osgi.felix.util.AbstractExtender;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.service.configuration.configurator.ServiceConfigurator;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
+import com.liferay.portal.spring.extender.internal.configuration.ConfigurationUtil;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -45,6 +46,7 @@ import org.apache.felix.utils.extender.Extension;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -113,13 +115,6 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 	protected void setSaxReaderUtil(SAXReaderUtil saxReaderUtil) {
 	}
 
-	@Reference(target = "(original.bean=true)", unbind = "-")
-	protected void setServiceConfigurator(
-		ServiceConfigurator serviceConfigurator) {
-
-		_serviceConfigurator = serviceConfigurator;
-	}
-
 	@Override
 	protected void warn(Bundle bundle, String s, Throwable throwable) {
 		if (_log.isWarnEnabled()) {
@@ -129,8 +124,6 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ModuleApplicationContextExtender.class);
-
-	private ServiceConfigurator _serviceConfigurator;
 
 	private class ModuleApplicationContextExtension implements Extension {
 
@@ -158,8 +151,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 			Bundle bundle = bundleContext.getBundle();
 
 			_component.setImplementation(
-				new ModuleApplicationContextRegistrator(
-					_bundle, bundle, _serviceConfigurator));
+				new ModuleApplicationContextRegistrator(_bundle, bundle));
 
 			ClassLoader classLoader = new BundleResolverClassLoader(
 				_bundle, bundle);
@@ -184,19 +176,45 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 						_bundle.getSymbolicName(), ")"));
 
 				_component.add(serviceDependency);
+
+				BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
+
+				ClassLoader bundleClassLoader = bundleWiring.getClassLoader();
+
+				_generateConfigurationDependency(bundleClassLoader, "portlet");
+				_generateConfigurationDependency(bundleClassLoader, "service");
 			}
 
 			String requireSchemaVersion = headers.get(
 				"Liferay-Require-SchemaVersion");
 
 			if (Validator.isNull(requireSchemaVersion)) {
-				_generateReleaseInfo();
+				_generateReleaseDependency();
 			}
 
 			_dependencyManager.add(_component);
 		}
 
-		private void _generateReleaseInfo() {
+		private void _generateConfigurationDependency(
+			ClassLoader classLoader, String name) {
+
+			if (ConfigurationUtil.hasConfiguration(classLoader, name)) {
+				ServiceDependency serviceDependency =
+					_dependencyManager.createServiceDependency();
+
+				serviceDependency.setRequired(true);
+
+				serviceDependency.setService(
+					Configuration.class,
+					StringBundler.concat(
+						"(&(configuration.bundle.symbolic.name=",
+						_bundle.getSymbolicName(), ")(name=", name, "))"));
+
+				_component.add(serviceDependency);
+			}
+		}
+
+		private void _generateReleaseDependency() {
 			ServiceDependency serviceDependency =
 				_dependencyManager.createServiceDependency();
 

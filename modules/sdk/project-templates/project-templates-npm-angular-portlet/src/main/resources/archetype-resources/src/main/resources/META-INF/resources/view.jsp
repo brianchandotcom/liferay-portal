@@ -3,11 +3,8 @@
 
 <div id="<portlet:namespace />"></div>
 
-#if (${liferayVersion.startsWith("7.1")})
-<aui:script require="<%= bootstrapRequire %>">
-	bootstrapRequire.default('#<portlet:namespace />');
-#else
-<aui:script require="${artifactId}@${packageJsonVersion}">
-	${auiScriptRequireVarName}.default('#<portlet:namespace />');
-#end
+<aui:script require="<%= mainRequire %>">
+	// Pass the portlet's namespace to the Javascript bootstrap method so that
+	// it can attach the boostrap Angular component to the above div tag.
+	main.default('#<portlet:namespace />');
 </aui:script>

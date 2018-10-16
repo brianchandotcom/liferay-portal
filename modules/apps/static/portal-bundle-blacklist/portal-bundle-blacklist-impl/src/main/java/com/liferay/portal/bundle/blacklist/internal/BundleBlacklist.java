@@ -149,11 +149,13 @@ public class BundleBlacklist {
 		CompletableFuture.supplyAsync(
 			() -> {
 				try {
-					BundleStartLevelUtil.setStartLevelAndStart(
+					frameworkWiring.resolveBundles(installedBundles.keySet());
+
+					BundleStartLevelUtil.safeSetStartLevelAndStart(
 						installedBundles, bundleContext);
 				}
 				catch (Exception e) {
-					ReflectionUtil.throwException(e);
+					return ReflectionUtil.throwException(e);
 				}
 
 				return null;

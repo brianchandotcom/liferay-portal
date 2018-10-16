@@ -560,7 +560,6 @@ public class WabProcessor {
 			Map.Entry<String, Resource> entry = iterator.next();
 
 			String path = entry.getKey();
-			Resource resource = entry.getValue();
 
 			if (path.equals("WEB-INF/service.xml")) {
 				processServicePackageName(entry.getValue());
@@ -578,6 +577,8 @@ public class WabProcessor {
 
 					continue;
 				}
+
+				Resource resource = entry.getValue();
 
 				if (resource instanceof FileResource) {
 					try (FileResource fileResource = (FileResource)resource) {

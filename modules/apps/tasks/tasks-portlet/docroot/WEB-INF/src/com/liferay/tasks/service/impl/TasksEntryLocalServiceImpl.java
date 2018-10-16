@@ -297,13 +297,13 @@ public class TasksEntryLocalServiceImpl extends TasksEntryLocalServiceBaseImpl {
 		TasksEntry tasksEntry = tasksEntryPersistence.findByPrimaryKey(
 			tasksEntryId);
 
-		User user = userLocalService.getUserById(tasksEntry.getUserId());
-
 		validate(title);
 
 		Date dueDate = null;
 
 		if (addDueDate) {
+			User user = userLocalService.getUserById(tasksEntry.getUserId());
+
 			dueDate = PortalUtil.getDate(
 				dueDateMonth, dueDateDay, dueDateYear, dueDateHour,
 				dueDateMinute, user.getTimeZone(),

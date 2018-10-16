@@ -111,9 +111,6 @@ public class StagingBarPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		HttpServletRequest request = _portal.getHttpServletRequest(
-			actionRequest);
-
 		long layoutRevisionId = ParamUtil.getLong(
 			actionRequest, "layoutRevisionId");
 
@@ -128,6 +125,9 @@ public class StagingBarPortlet extends MVCPortlet {
 			actionRequest, "updateRecentLayoutRevisionId");
 
 		if (updateRecentLayoutRevisionId) {
+			HttpServletRequest request = _portal.getHttpServletRequest(
+				actionRequest);
+
 			_staging.setRecentLayoutRevisionId(
 				request, layoutRevision.getLayoutSetBranchId(),
 				layoutRevision.getPlid(),
@@ -201,7 +201,6 @@ public class StagingBarPortlet extends MVCPortlet {
 		Group liveGroup = _staging.getLiveGroup(group.getGroupId());
 		String liveURL = null;
 		Group stagingGroup = _staging.getStagingGroup(group.getGroupId());
-		Layout stagingLayout = null;
 		String remoteSiteURL = StringPool.BLANK;
 		String remoteURL = null;
 		String stagingURL = null;
@@ -232,9 +231,10 @@ public class StagingBarPortlet extends MVCPortlet {
 			}
 
 			if (stagingGroup != null) {
-				stagingLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-					layout.getUuid(), stagingGroup.getGroupId(),
-					layout.isPrivateLayout());
+				Layout stagingLayout =
+					_layoutLocalService.fetchLayoutByUuidAndGroupId(
+						layout.getUuid(), stagingGroup.getGroupId(),
+						layout.isPrivateLayout());
 
 				if (stagingLayout != null) {
 					try {
@@ -582,14 +582,12 @@ public class StagingBarPortlet extends MVCPortlet {
 			return;
 		}
 
-		long layoutIconImageId = BeanPropertiesUtil.getLong(
-			layout, "iconImageId");
-
 		long layoutRevisionIconImageId = BeanPropertiesUtil.getLong(
 			layoutRevision, "iconImageId");
 
 		if (layoutRevisionIconImageId == GetterUtil.DEFAULT_LONG) {
-			layoutRevisionIconImageId = layoutIconImageId;
+			layoutRevisionIconImageId = BeanPropertiesUtil.getLong(
+				layout, "iconImageId");
 		}
 
 		DynamicQuery layoutRevisionDynamicQuery =

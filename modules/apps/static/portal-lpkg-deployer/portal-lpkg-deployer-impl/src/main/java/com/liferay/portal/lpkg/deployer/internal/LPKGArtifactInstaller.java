@@ -130,14 +130,15 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 
 	@Override
 	public void update(File file) throws Exception {
-		Properties properties = _readMarketplaceProperties(file);
-
 		String canonicalPath = file.getCanonicalPath();
 
 		Bundle bundle = _bundleContext.getBundle(canonicalPath);
 
 		if (bundle != null) {
 			Version currentVersion = bundle.getVersion();
+
+			Properties properties = _readMarketplaceProperties(file);
+
 			Version newVersion = new Version(properties.getProperty("version"));
 
 			if (newVersion.compareTo(currentVersion) > 0) {

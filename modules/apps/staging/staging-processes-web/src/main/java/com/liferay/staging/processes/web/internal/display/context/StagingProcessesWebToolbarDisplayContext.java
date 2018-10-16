@@ -93,12 +93,12 @@ public class StagingProcessesWebToolbarDisplayContext {
 							TYPE_PUBLISH_LAYOUT_LOCAL;
 				}
 
-				List<ExportImportConfiguration> exportImportConfigurations =
-					ExportImportConfigurationLocalServiceUtil.
-						getExportImportConfigurations(
-							stagingGroupId, configurationType);
-
 				if (hasPermission) {
+					List<ExportImportConfiguration> exportImportConfigurations =
+						ExportImportConfigurationLocalServiceUtil.
+							getExportImportConfigurations(
+								stagingGroupId, configurationType);
+
 					for (ExportImportConfiguration exportImportConfiguration :
 							exportImportConfigurations) {
 

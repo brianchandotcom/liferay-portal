@@ -40,7 +40,7 @@ import com.liferay.portal.odata.filter.Filter;
 import com.liferay.portal.odata.filter.FilterParser;
 import com.liferay.portal.odata.filter.InvalidFilterException;
 import com.liferay.segments.internal.odata.entity.UserEntityModel;
-import com.liferay.segments.odata.retriever.UserODataRetriever;
+import com.liferay.segments.odata.retriever.ODataRetriever;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,11 +52,15 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author David Arques
  */
-@Component(immediate = true, service = UserODataRetriever.class)
-public class UserODataRetrieverImpl implements UserODataRetriever {
+@Component(
+	immediate = true,
+	property = "model.class.name=com.liferay.portal.kernel.model.User",
+	service = ODataRetriever.class
+)
+public class UserODataRetriever implements ODataRetriever<User> {
 
 	@Override
-	public List<User> getUsers(
+	public List<User> getResults(
 			long companyId, String filterString, Locale locale, int start,
 			int end)
 		throws PortalException {

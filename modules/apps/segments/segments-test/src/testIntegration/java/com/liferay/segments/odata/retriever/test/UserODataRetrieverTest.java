@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
-import com.liferay.segments.odata.retriever.UserODataRetriever;
+import com.liferay.segments.odata.retriever.ODataRetriever;
 
 import java.time.Instant;
 
@@ -102,7 +102,7 @@ public class UserODataRetrieverTest {
 		_userLocalService.addOrganizationUser(
 			childOrganization.getOrganizationId(), _user1);
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			String.format(
 				"(firstName eq '%s') and (ancestorOrganizationIds eq '%s')",
@@ -121,7 +121,7 @@ public class UserODataRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			String.format(
 				"(firstName eq '%s') and (companyId eq '%s')", firstName,
@@ -151,7 +151,7 @@ public class UserODataRetrieverTest {
 
 		_userLocalService.updateUser(_user2);
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			String.format(
 				"(dateModified eq %s) and (firstName eq '%s')",
@@ -181,7 +181,7 @@ public class UserODataRetrieverTest {
 
 		_userLocalService.updateUser(_user2);
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			String.format(
 				"(dateModified gt %s) and (firstName eq '%s')",
@@ -213,7 +213,7 @@ public class UserODataRetrieverTest {
 
 		_userLocalService.updateUser(_user2);
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			String.format(
 				"(dateModified ge %s) and (firstName eq '%s')",
@@ -243,7 +243,7 @@ public class UserODataRetrieverTest {
 
 		_userLocalService.updateUser(_user2);
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			String.format(
 				"(dateModified lt %s) and (firstName eq '%s')",
@@ -275,7 +275,7 @@ public class UserODataRetrieverTest {
 
 		_userLocalService.updateUser(_user2);
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			String.format(
 				"(dateModified le %s) and (firstName eq '%s')",
@@ -290,7 +290,7 @@ public class UserODataRetrieverTest {
 	public void testGetUsersFilterByEmailAddress() throws Exception {
 		_user1 = UserTestUtil.addUser(_group1.getGroupId());
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			"(emailAddress eq '" + _user1.getEmailAddress() + "')",
 			LocaleUtil.getDefault(), 0, 2);
@@ -303,7 +303,7 @@ public class UserODataRetrieverTest {
 	public void testGetUsersFilterByFirstName() throws Exception {
 		_user1 = UserTestUtil.addUser(_group1.getGroupId());
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			"(firstName eq '" + _user1.getFirstName() + "')",
 			LocaleUtil.getDefault(), 0, 2);
@@ -316,7 +316,7 @@ public class UserODataRetrieverTest {
 	public void testGetUsersFilterByFirstNameAndLastName() throws Exception {
 		_user1 = UserTestUtil.addUser(_group1.getGroupId());
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			"(firstName eq '" + _user1.getFirstName() + "') and (lastName eq " +
 				"'" + _user1.getLastName() + "') ",
@@ -331,7 +331,7 @@ public class UserODataRetrieverTest {
 		_user1 = UserTestUtil.addUser(_group1.getGroupId());
 		_user2 = UserTestUtil.addUser(_group1.getGroupId());
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			"(firstName eq '" + _user1.getFirstName() + "') or (lastName eq '" +
 				_user2.getLastName() + "') ",
@@ -346,7 +346,7 @@ public class UserODataRetrieverTest {
 
 		_user1 = UserTestUtil.addUser(_group1.getGroupId());
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			"(firstName eq '" + _user1.getFirstName() +
 				"') or (lastName eq 'nonexistentLastName') ",
@@ -362,7 +362,7 @@ public class UserODataRetrieverTest {
 
 		_user1 = UserTestUtil.addUser(_group1.getGroupId());
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			"(firstName eq '" + _user1.getFirstName() + "') or (lastName eq '" +
 				_user1.getLastName() + "') ",
@@ -384,7 +384,7 @@ public class UserODataRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			"(firstName eq '" + firstName + "') and (groupId eq '" +
 				_group2.getGroupId() + "')",
@@ -406,7 +406,7 @@ public class UserODataRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			"(firstName eq '" + firstName + "') and (groupIds eq '" +
 				_group2.getGroupId() + "')",
@@ -428,7 +428,7 @@ public class UserODataRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			"(firstName eq '" + firstName + "') and ((groupIds eq '" +
 				_group2.getGroupId() + "') or (groupIds eq '" +
@@ -450,7 +450,7 @@ public class UserODataRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			String.format(
 				"(firstName eq '%s') and (groupId eq '%s') and (groupId eq '" +
@@ -473,7 +473,7 @@ public class UserODataRetrieverTest {
 		_user2 = UserTestUtil.addUser(
 			_group1.getGroupId(), LocaleUtil.getDefault());
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			"(jobTitle eq '" + _user1.getJobTitle() + "')",
 			LocaleUtil.getDefault(), 0, 2);
@@ -487,7 +487,7 @@ public class UserODataRetrieverTest {
 		_user1 = UserTestUtil.addUser(_group1.getGroupId());
 		_user2 = UserTestUtil.addUser(_group1.getGroupId());
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			"(lastName eq '" + _user1.getLastName() + "')",
 			LocaleUtil.getDefault(), 0, 2);
@@ -508,7 +508,7 @@ public class UserODataRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			"(firstName eq '" + firstName + "') and (groupIds eq '" +
 				_group2.getGroupId() + "') and (groupIds eq '" +
@@ -545,7 +545,7 @@ public class UserODataRetrieverTest {
 		_userLocalService.addOrganizationUser(
 			organization2.getOrganizationId(), _user1);
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			String.format(
 				"(firstName eq '%s') and (organizationCount eq '%s')",
@@ -574,7 +574,7 @@ public class UserODataRetrieverTest {
 		_userLocalService.addOrganizationUsers(
 			organization.getOrganizationId(), new long[] {_user1.getUserId()});
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			String.format(
 				"(firstName eq '%s') and (organizationIds eq '%s')", firstName,
@@ -600,7 +600,7 @@ public class UserODataRetrieverTest {
 
 		_userLocalService.addRoleUser(_role.getRoleId(), _user1);
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			String.format(
 				"(firstName eq '%s') and (roleIds eq '%s')", firstName,
@@ -623,7 +623,7 @@ public class UserODataRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			"(firstName eq '" + firstName + "') and (scopeGroupId eq '" +
 				_group2.getGroupId() + "')",
@@ -638,7 +638,7 @@ public class UserODataRetrieverTest {
 		_user1 = UserTestUtil.addUser(_group1.getGroupId());
 		_user2 = UserTestUtil.addUser(_group1.getGroupId());
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			"(screenName eq '" + _user1.getScreenName() + "')",
 			LocaleUtil.getDefault(), 0, 2);
@@ -662,7 +662,7 @@ public class UserODataRetrieverTest {
 
 		_userLocalService.addTeamUser(_team.getTeamId(), _user1);
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			String.format(
 				"(firstName eq '%s') and (teamIds eq '%s')", firstName,
@@ -688,7 +688,7 @@ public class UserODataRetrieverTest {
 
 		_userLocalService.addUserGroupUser(_userGroup.getUserGroupId(), _user1);
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			String.format(
 				"(firstName eq '%s') and (userGroupIds eq '%s')", firstName,
@@ -703,7 +703,7 @@ public class UserODataRetrieverTest {
 	public void testGetUsersFilterByUserId() throws Exception {
 		_user1 = UserTestUtil.addUser(_group1.getGroupId());
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(), "(userId eq '" + _user1.getUserId() + "')",
 			LocaleUtil.getDefault(), 0, 2);
 
@@ -716,7 +716,7 @@ public class UserODataRetrieverTest {
 		_user1 = UserTestUtil.addUser(_group1.getGroupId());
 		_user2 = UserTestUtil.addUser(_group1.getGroupId());
 
-		List<User> users = _userODataRetriever.getUsers(
+		List<User> users = _userODataRetriever.getResults(
 			_group1.getCompanyId(),
 			"(userName eq '" + StringUtil.toLowerCase(_user1.getFullName()) +
 				"')",
@@ -763,7 +763,7 @@ public class UserODataRetrieverTest {
 	@Inject
 	private UserLocalService _userLocalService;
 
-	@Inject
-	private UserODataRetriever _userODataRetriever;
+	@Inject(filter = "model.class.name=com.liferay.portal.kernel.model.User")
+	private ODataRetriever<User> _userODataRetriever;
 
 }

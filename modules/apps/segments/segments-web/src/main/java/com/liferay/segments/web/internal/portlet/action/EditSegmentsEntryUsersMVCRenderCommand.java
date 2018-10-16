@@ -14,12 +14,13 @@
 
 package com.liferay.segments.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.constants.SegmentsPortletKeys;
-import com.liferay.segments.odata.retriever.UserODataRetriever;
+import com.liferay.segments.odata.retriever.ODataRetriever;
 import com.liferay.segments.service.SegmentsEntryRelService;
 import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
@@ -85,7 +86,9 @@ public class EditSegmentsEntryUsersMVCRenderCommand
 	@Reference
 	private UserLocalService _userLocalService;
 
-	@Reference
-	private UserODataRetriever _userODataRetriever;
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
+	)
+	private ODataRetriever<User> _userODataRetriever;
 
 }

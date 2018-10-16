@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryRel;
-import com.liferay.segments.odata.retriever.UserODataRetriever;
+import com.liferay.segments.odata.retriever.ODataRetriever;
 import com.liferay.segments.service.SegmentsEntryRelService;
 import com.liferay.segments.service.SegmentsEntryService;
 
@@ -63,7 +63,7 @@ public class EditSegmentsEntryDisplayContext {
 		SegmentsEntryService segmentsEntryService,
 		SegmentsEntryRelService segmentsEntryRelService,
 		UserLocalService userLocalService,
-		UserODataRetriever userODataRetriever) {
+		ODataRetriever<User> userODataRetriever) {
 
 		_request = request;
 		_renderRequest = renderRequest;
@@ -295,7 +295,7 @@ public class EditSegmentsEntryDisplayContext {
 				"no-users-were-found-that-matched-the-segment-criteria");
 
 			try {
-				users = _userODataRetriever.getUsers(
+				users = _userODataRetriever.getResults(
 					segmentsEntry.getCompanyId(), segmentsEntry.getCriteria(),
 					_themeDisplay.getLocale(), userSearchContainer.getStart(),
 					userSearchContainer.getEnd());
@@ -443,7 +443,7 @@ public class EditSegmentsEntryDisplayContext {
 	private final SegmentsEntryService _segmentsEntryService;
 	private final ThemeDisplay _themeDisplay;
 	private final UserLocalService _userLocalService;
-	private final UserODataRetriever _userODataRetriever;
+	private final ODataRetriever<User> _userODataRetriever;
 	private SearchContainer _userSearchContainer;
 
 }

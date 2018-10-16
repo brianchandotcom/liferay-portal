@@ -160,6 +160,24 @@ public class SegmentsEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<SegmentsEntry> getSegmentsEntries(
+		long groupId, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return segmentsEntryPersistence.findByG_T(
+			groupId, type, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<SegmentsEntry> getSegmentsEntries(
+		String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return segmentsEntryPersistence.findByType(
+			type, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getSegmentsEntriesCount(long groupId) {
 		return segmentsEntryPersistence.countByGroupId(groupId);
 	}

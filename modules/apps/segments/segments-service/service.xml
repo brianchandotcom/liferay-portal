@@ -42,6 +42,9 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+		<finder name="Type" return-type="Collection">
+			<finder-column name="type" />
+		</finder>
 		<finder name="G_A" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="active" />
@@ -49,6 +52,10 @@
 		<finder name="G_K" return-type="SegmentsEntry" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="key" />
+		</finder>
+		<finder name="G_T" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="type" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="SegmentsEntryRel" remote-service="true">

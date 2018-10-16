@@ -1,30 +1,19 @@
 package ${package}.portlet;
 
 import ${package}.constants.${className}PortletKeys;
-#if (${liferayVersion.startsWith("7.1")})
-import ${package}.constants.${className}WebKeys;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-#end
-
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-#if (${liferayVersion.startsWith("7.1")})
 
 import java.io.IOException;
-#end
 
 import javax.portlet.Portlet;
-#if (${liferayVersion.startsWith("7.1")})
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-#end
 
 import org.osgi.service.component.annotations.Component;
-#if (${liferayVersion.startsWith("7.1")})
 import org.osgi.service.component.annotations.Reference;
-#end
 
 /**
  * @author ${author}
@@ -43,26 +32,22 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class ${className}Portlet extends MVCPortlet {
-#if (${liferayVersion.startsWith("7.1")})
 
 	@Override
 	public void doView(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		JSPackage jsPackage = _npmResolver.getJSPackage();
+		renderRequest.setAttribute(
+			"billboardCss",
+			"/o/${artifactId}/node_modules/" +
+				_npmResolver.resolveModuleName(
+					"${artifactId}$billboard.js/dist/billboard.css"));
 
 		renderRequest.setAttribute(
-			${className}WebKeys.BOOTSTRAP_REQUIRE,
-			jsPackage.getResolvedId() + " as bootstrapRequire");
-
-		String contextPath = renderRequest.getContextPath();
-
-		renderRequest.setAttribute(
-			"stylesheetURL",
-			contextPath + "/node_modules/" +
-				_npmResolver.resolveModuleName("billboard.js") +
-					"/dist/billboard.css");
+			"mainRequire",
+			_npmResolver.resolveModuleName("${artifactId}") +
+				" as main");
 
 		super.doView(renderRequest, renderResponse);
 	}
@@ -70,5 +55,4 @@ public class ${className}Portlet extends MVCPortlet {
 	@Reference
 	private NPMResolver _npmResolver;
 
-#end
 }

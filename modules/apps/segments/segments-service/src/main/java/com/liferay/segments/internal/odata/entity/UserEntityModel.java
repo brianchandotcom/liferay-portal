@@ -72,6 +72,9 @@ public class UserEntityModel implements EntityModel {
 			"lastName", EntityField.Type.STRING,
 			locale -> Field.getSortableFieldName("lastName")),
 		new EntityField(
+			"organizationCount", EntityField.Type.STRING,
+			locale -> "organizationCount"),
+		new EntityField(
 			"organizationIds", EntityField.Type.STRING,
 			locale -> "organizationIds"),
 		new EntityField(

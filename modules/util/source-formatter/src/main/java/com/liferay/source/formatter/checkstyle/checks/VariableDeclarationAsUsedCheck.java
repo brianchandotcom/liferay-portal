@@ -57,7 +57,7 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 				variableDefAST, TokenTypes.FOR_INIT) ||
 			_containsMethodName(
 				variableDefAST, "currentTimeMillis",
-				"(add|create|delete|post|register|update)([A-Z].*)?",
+				"(add|create|delete|post|put|register|update)([A-Z].*)?",
 				"toString")) {
 
 			return;

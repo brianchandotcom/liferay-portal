@@ -68,14 +68,14 @@
 	<command name="expandContentPageFragmentSidebar">
 		<if>
 			<not>
-				<condition function="IsElementPresent" locator1="Fragment#CONTENT_PAGE_FRAGMENT_SIDEBAR" />
+				<condition function="IsElementPresent" locator1="PageEditor#CONTENT_PAGE_FRAGMENT_SIDEBAR" />
 			</not>
 			<then>
 				<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
 			</then>
 		</if>
 
-		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT_SIDEBAR" />
+		<execute function="AssertVisible" locator1="PageEditor#CONTENT_PAGE_FRAGMENT_SIDEBAR" />
 	</command>
 
 	<command name="expandFragmentCollection">

@@ -59,6 +59,17 @@
 	<td>//ul[contains(@class,'nav')]//li[contains(@class,'nav-item')]//a[contains(.,'${key_tabName}')][contains(@class,'active')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONTENT_PAGE-->
+<tr>
+	<td>CONTENT_PAGE_FRAGMENT_SIDEBAR</td>
+	<td>//div[contains(@class,'open-admin-panel') and not(contains(@class,'transition'))]//div[contains(@id,'ContentPageEditorPortlet_sidebar')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

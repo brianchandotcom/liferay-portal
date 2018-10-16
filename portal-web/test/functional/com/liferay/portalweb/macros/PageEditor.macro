@@ -13,17 +13,17 @@
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
+		<execute function="AssertElementPresent" locator1="Fragment#HEADER">
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
 	</command>
 
 	<command name="editFragmentImage">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#HEADER">
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
 
-		<execute function="Click" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD">
+		<execute function="Click" locator1="Fragment#EDITABLE_FIELD">
 			<var name="key_fragmentName" value="${fragmentName}" />
 			<var name="key_id" value="${id}" />
 		</execute>
@@ -42,12 +42,12 @@
 	</command>
 
 	<command name="editFragmentText">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#EDITABLE_FIELD">
 			<var name="key_fragmentName" value="${fragmentName}" />
 			<var name="key_id" value="${id}" />
 		</execute>
 
-		<execute function="Click" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD">
+		<execute function="Click" locator1="Fragment#EDITABLE_FIELD">
 			<var name="key_fragmentName" value="${fragmentName}" />
 			<var name="key_id" value="${id}" />
 		</execute>
@@ -59,7 +59,7 @@
 			</then>
 		</if>
 
-		<execute function="Type" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD_CK_EDITOR" value1="${text}">
+		<execute function="Type" locator1="Fragment#EDITABLE_FIELD_CK_EDITOR" value1="${text}">
 			<var name="key_fragmentName" value="${fragmentName}" />
 			<var name="key_id" value="${id}" />
 		</execute>
@@ -106,14 +106,14 @@
 		<if>
 			<equals arg1="${direction}" arg2="up" />
 			<then>
-				<execute function="Click#clickNoWaitForVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_UP_ARROW_BUTTON">
+				<execute function="Click#clickNoWaitForVisible" locator1="Fragment#UP_ARROW_BUTTON">
 					<var name="key_fragmentName" value="${fragmentName}" />
 				</execute>
 			</then>
 			<elseif>
 				<equals arg1="${direction}" arg2="down" />
 				<then>
-					<execute function="Click#clickNoWaitForVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_DOWN_ARROW_BUTTON">
+					<execute function="Click#clickNoWaitForVisible" locator1="Fragment#DOWN_ARROW_BUTTON">
 						<var name="key_fragmentName" value="${fragmentName}" />
 					</execute>
 				</then>
@@ -122,11 +122,11 @@
 	</command>
 
 	<command name="removeFragment">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#HEADER">
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
 
-		<execute function="Click" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_DELETE_BUTTON">
+		<execute function="Click" locator1="Fragment#DELETE_BUTTON">
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
 	</command>
@@ -146,20 +146,20 @@
 	</command>
 
 	<command name="viewFragment">
-		<execute function="AssertElementPresent" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
+		<execute function="AssertElementPresent" locator1="Fragment#HEADER">
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
 	</command>
 
 	<command name="viewFragmentEditableText">
-		<execute function="AssertTextEquals" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD" value1="${editableText}">
+		<execute function="AssertTextEquals" locator1="Fragment#EDITABLE_FIELD" value1="${editableText}">
 			<var name="key_fragmentName" value="${fragmentName}" />
 			<var name="key_id" value="${id}" />
 		</execute>
 	</command>
 
 	<command name="viewFragmentOrder">
-		<execute function="AssertElementPresent" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER_POSITION">
+		<execute function="AssertElementPresent" locator1="Fragment#HEADER_POSITION">
 			<var name="key_fragmentName" value="${fragmentName}" />
 			<var name="key_position" value="${position}" />
 		</execute>

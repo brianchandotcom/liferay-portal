@@ -8,39 +8,38 @@
 <tr><td rowspan="1" colspan="3">Fragment</td></tr>
 </thead>
 <tbody>
-<!--PAGE_TEMPLATE-->
 <tr>
-	<td>PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD</td>
+	<td>EDITABLE_FIELD</td>
 	<td>//div[contains(@class,'fragment-entry-link')]/div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${key_id}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD_CK_EDITOR</td>
+	<td>EDITABLE_FIELD_CK_EDITOR</td>
 	<td>//div[contains(@class,'fragment-entry-link')]/div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${key_id}')]//div[contains(@class,'cke_editable_inline')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TEMPLATE_FRAGMENT_HEADER</td>
+	<td>HEADER</td>
 	<td>//div[contains(@class,'fragment-entry-link-wrapper')]//li[contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TEMPLATE_FRAGMENT_HEADER_POSITION</td>
+	<td>HEADER_POSITION</td>
 	<td>xpath=(//div[contains(@class,'fragment-entry-link-list')]/div[${key_position}])//li[contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TEMPLATE_FRAGMENT_UP_ARROW_BUTTON</td>
+	<td>UP_ARROW_BUTTON</td>
 	<td>//div[contains(@class,'fragment-entry-link-wrapper')]//ul[contains(.,'${key_fragmentName}')]//li[contains(@class,'tbar-item')][2]/button</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TEMPLATE_FRAGMENT_DOWN_ARROW_BUTTON</td>
+	<td>DOWN_ARROW_BUTTON</td>
 	<td>//div[contains(@class,'fragment-entry-link-wrapper')]//ul[contains(.,'${key_fragmentName}')]//li[contains(@class,'tbar-item')][3]/button</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TEMPLATE_FRAGMENT_DELETE_BUTTON</td>
+	<td>DELETE_BUTTON</td>
 	<td>//div[contains(@class,'fragment-entry-link-wrapper')]//ul[contains(.,'${key_fragmentName}')]//li[contains(@class,'tbar-item')][4]/button</td>
 	<td></td>
 </tr>

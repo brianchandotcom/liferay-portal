@@ -149,13 +149,32 @@ const INITIAL_STATE = {
 	 * @default {structure: []}
 	 * @instance
 	 * @review
-	 * @type {{structure: Array<string>}}
+	 * @type {{structure: Array}}
 	 */
 
 	layoutData: Config
 		.shapeOf(
 			{
-				structure: Config.arrayOf(Config.string())
+				nextColumnId: Config.number(),
+				nextRowId: Config.number(),
+				structure: Config.arrayOf(
+					Config.shapeOf(
+						{
+							columns: Config.arrayOf(
+								Config.shapeOf(
+									{
+										columnId: Config.number(),
+										fragmentEntryLinkIds: Config.arrayOf(
+											Config.string()
+										),
+										size: Config.number()
+									}
+								)
+							),
+							rowId: Config.number()
+						}
+					)
+				)
 			}
 		)
 		.value(

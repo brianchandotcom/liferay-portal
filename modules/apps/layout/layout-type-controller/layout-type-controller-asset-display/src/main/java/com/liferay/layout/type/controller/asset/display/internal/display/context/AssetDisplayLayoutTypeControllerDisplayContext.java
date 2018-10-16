@@ -16,14 +16,26 @@ package com.liferay.layout.type.controller.asset.display.internal.display.contex
 
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.constants.AssetDisplayWebKeys;
+import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
+import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.page.template.util.LayoutPageTemplateStructureRenderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Jürgen Kappler
@@ -31,12 +43,40 @@ import javax.servlet.http.HttpServletRequest;
 public class AssetDisplayLayoutTypeControllerDisplayContext {
 
 	public AssetDisplayLayoutTypeControllerDisplayContext(
-		HttpServletRequest request) {
+		HttpServletRequest request, HttpServletResponse response) {
 
 		_request = request;
+		_response = response;
+
+		_assetEntry = (AssetEntry)request.getAttribute(
+			AssetDisplayWebKeys.ASSET_ENTRY);
 	}
 
-	public Map<String, Object> getAssetDisplayFieldsValues()
+	public AssetEntry getAssetEntry() {
+		return _assetEntry;
+	}
+
+	public String getRenderedContent() throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(),
+					PortalUtil.getClassNameId(
+						LayoutPageTemplateEntry.class.getName()),
+					_getLayoutPageTemplateEntryId(layout.getGroupId()), true);
+
+		return LayoutPageTemplateStructureRenderUtil.renderLayoutContent(
+			_request, _response, layoutPageTemplateStructure,
+			FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE,
+			_getAssetDisplayFieldsValues());
+	}
+
+	private Map<String, Object> _getAssetDisplayFieldsValues()
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
@@ -46,13 +86,45 @@ public class AssetDisplayLayoutTypeControllerDisplayContext {
 			(AssetDisplayContributor)_request.getAttribute(
 				AssetDisplayWebKeys.ASSET_DISPLAY_CONTRIBUTOR);
 
-		AssetEntry assetEntry = (AssetEntry)_request.getAttribute(
-			WebKeys.LAYOUT_ASSET_ENTRY);
-
 		return assetDisplayContributor.getAssetDisplayFieldsValues(
-			assetEntry, themeDisplay.getLocale());
+			_assetEntry, themeDisplay.getLocale());
 	}
 
+	private long _getLayoutPageTemplateEntryId(long groupId) {
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			AssetDisplayPageEntryLocalServiceUtil.fetchAssetDisplayPageEntry(
+				_assetEntry.getGroupId(), _assetEntry.getClassNameId(),
+				_assetEntry.getClassPK());
+
+		if ((assetDisplayPageEntry == null) ||
+			(assetDisplayPageEntry.getType() ==
+				AssetDisplayPageConstants.TYPE_NONE)) {
+
+			return 0;
+		}
+
+		if (assetDisplayPageEntry.getType() ==
+				AssetDisplayPageConstants.TYPE_SPECIFIC) {
+
+			return assetDisplayPageEntry.getLayoutPageTemplateEntryId();
+		}
+
+		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
+			LayoutPageTemplateEntryServiceUtil.
+				fetchDefaultLayoutPageTemplateEntry(
+					groupId, _assetEntry.getClassNameId(),
+					_assetEntry.getClassTypeId());
+
+		if (defaultLayoutPageTemplateEntry != null) {
+			return defaultLayoutPageTemplateEntry.
+				getLayoutPageTemplateEntryId();
+		}
+
+		return 0;
+	}
+
+	private final AssetEntry _assetEntry;
 	private final HttpServletRequest _request;
+	private final HttpServletResponse _response;
 
 }

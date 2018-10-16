@@ -81,6 +81,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TEMPLATE_FRAGMENT</td>
+	<td>//div[contains(@class,'fragment-entry-link-wrapper')][contains(.,'${key_fragmentName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD</td>
 	<td>//div[contains(@class,'fragment-entry-link')]/div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${key_id}')]</td>
 	<td></td>
@@ -97,7 +102,7 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_FRAGMENT_HEADER_POSITION</td>
-	<td>xpath=(//div[contains(@class,'fragment-entry-link-list')]/div[${key_position}])//li[contains(.,'${key_fragmentName}')]</td>
+	<td>//div[contains(@class,'fragment-entry-link')]/section[${key_position}]//li[contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -148,7 +153,7 @@
 </tr>
 <tr>
 	<td>CONTENT_PAGE_FRAGMENT</td>
-	<td>//div[contains(@id,'fragment')][${key_position}]/*[contains(@class,'fragment-${key_fragmentClass}') and contains(.,'${key_content}')]</td>
+	<td>//div[@class='row'][${key_position}]//*[contains(@class,'fragment-${key_fragmentClass}') and contains(.,'${key_content}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -80,6 +80,11 @@ setting the property `testIntegrationTomcat.hostName`. The default value is
 - [LPS-83790]: Update the `setUpTestableTomcat.zipUrl` property to
 `http://archive.apache.org/dist/tomcat/tomcat-9/v9.0.10/bin/apache-tomcat-9.0.10.zip`.
 
+## 2.4.0 - 2018-10-16
+
+### Added
+- [LPS-86447]: Added ability to set environment vars for launching Tomcat.
+
 [Liferay Portal Test]: https://github.com/liferay/liferay-portal/tree/master/portal-test
 [Liferay Portal Test Integration]: https://github.com/liferay/liferay-portal/tree/master/portal-test-integration
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -92,3 +97,4 @@ setting the property `testIntegrationTomcat.hostName`. The default value is
 [LPS-78750]: https://issues.liferay.com/browse/LPS-78750
 [LPS-83520]: https://issues.liferay.com/browse/LPS-83520
 [LPS-83790]: https://issues.liferay.com/browse/LPS-83790
+[LPS-86447]: https://issues.liferay.com/browse/LPS-86447

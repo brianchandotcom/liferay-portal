@@ -72,13 +72,13 @@ public class OpenIdConnectFilter extends BaseFilter {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
+		HttpSession httpSession = httpServletRequest.getSession(false);
+
+		if (httpSession == null) {
+			return;
+		}
+
 		try {
-			HttpSession httpSession = httpServletRequest.getSession(false);
-
-			if (httpSession == null) {
-				return;
-			}
-
 			OpenIdConnectSession openIdConnectSession =
 				(OpenIdConnectSession)httpSession.getAttribute(
 					OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION);
@@ -115,11 +115,17 @@ public class OpenIdConnectFilter extends BaseFilter {
 
 			Class<?> clazz = e.getClass();
 
+			httpSession.removeAttribute(
+				OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION);
+
 			sendError(
 				clazz.getSimpleName(), httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
 			_log.error("Unable to process the OpenID login", e);
+
+			httpSession.removeAttribute(
+				OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION);
 
 			_portal.sendError(e, httpServletRequest, httpServletResponse);
 		}

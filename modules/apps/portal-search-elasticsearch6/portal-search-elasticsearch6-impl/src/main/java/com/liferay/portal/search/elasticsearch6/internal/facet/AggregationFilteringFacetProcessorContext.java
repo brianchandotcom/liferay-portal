@@ -125,9 +125,10 @@ public class AggregationFilteringFacetProcessorContext
 				_selectionFiltersMap.entrySet()) {
 
 			String filterAggregationName = entry.getKey();
-			List<QueryBuilder> queryBuilders = entry.getValue();
 
 			if (!filterAggregationName.equals(aggregationName)) {
+				List<QueryBuilder> queryBuilders = entry.getValue();
+
 				for (QueryBuilder queryBuilder : queryBuilders) {
 					boolQueryBuilder.must(queryBuilder);
 				}

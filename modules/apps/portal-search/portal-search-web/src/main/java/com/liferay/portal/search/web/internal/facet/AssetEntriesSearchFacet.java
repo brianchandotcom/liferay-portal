@@ -164,9 +164,6 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public JSONObject getJSONData(ActionRequest actionRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		int frequencyThreshold = ParamUtil.getInteger(
@@ -180,6 +177,9 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		if (ArrayUtil.isEmpty(assetTypes)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
 			assetTypes = getAssetTypes(themeDisplay.getCompanyId());
 		}
 

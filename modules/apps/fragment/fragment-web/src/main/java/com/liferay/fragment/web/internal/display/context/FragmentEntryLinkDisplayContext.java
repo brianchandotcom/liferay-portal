@@ -142,12 +142,13 @@ public class FragmentEntryLinkDisplayContext {
 	public String getFragmentEntryLinkName(FragmentEntryLink fragmentEntryLink)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long classNameId = fragmentEntryLink.getClassNameId();
 
 		if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_renderRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			Layout layout = LayoutLocalServiceUtil.getLayout(
 				fragmentEntryLink.getClassPK());
 

@@ -359,8 +359,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Group group = _groupLocalService.getGroup(groupId);
 
-		long defaultPlid = _portal.getControlPanelPlid(group.getCompanyId());
-
 		String portletId = PortletIdCodec.encode(
 			PortletIdCodec.decodePortletName(portletName),
 			PortletIdCodec.decodeUserId(portletName), instanceId);
@@ -378,8 +376,9 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			jxPortletPreferences =
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 					group.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, defaultPlid, portletId,
-					defaultPreferences);
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+					_portal.getControlPanelPlid(group.getCompanyId()),
+					portletId, defaultPreferences);
 
 			_updateLayoutPortletSetup(
 				portletPreferencesList, jxPortletPreferences);

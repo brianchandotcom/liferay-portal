@@ -114,13 +114,6 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 		Configuration configuration =
 			_configurationModelRetriever.getConfiguration(pid);
 
-		ResourceBundleLoader resourceBundleLoader =
-			_resourceBundleLoaderProvider.getResourceBundleLoader(
-				configurationModel.getBundleSymbolicName());
-
-		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
-			themeDisplay.getLocale());
-
 		Dictionary<String, Object> properties = null;
 
 		Map<String, Object> requestParameters = getRequestParameters(
@@ -130,6 +123,14 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 			properties = toDictionary(requestParameters);
 		}
 		else {
+			ResourceBundleLoader resourceBundleLoader =
+				_resourceBundleLoaderProvider.getResourceBundleLoader(
+					configurationModel.getBundleSymbolicName());
+
+			ResourceBundle resourceBundle =
+				resourceBundleLoader.loadResourceBundle(
+					themeDisplay.getLocale());
+
 			properties = getDDMRequestParameters(
 				actionRequest, configurationModel, resourceBundle);
 		}

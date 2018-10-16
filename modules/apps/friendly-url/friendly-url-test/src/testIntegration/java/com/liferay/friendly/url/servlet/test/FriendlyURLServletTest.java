@@ -233,10 +233,8 @@ public class FriendlyURLServletTest {
 
 		Locale locale = LocaleUtil.fromLanguageId(i18nLanguageId, true, false);
 
-		String i18nLanguageCode = i18nLanguageId;
-
 		if ((locale == null) || Validator.isNull(locale.getCountry())) {
-			locale = LanguageUtil.getLocale(i18nLanguageCode);
+			locale = LanguageUtil.getLocale(i18nLanguageId);
 		}
 
 		if (locale != null) {

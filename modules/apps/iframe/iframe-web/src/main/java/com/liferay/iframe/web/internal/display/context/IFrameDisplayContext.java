@@ -137,12 +137,10 @@ public class IFrameDisplayContext {
 
 		_iFrameBaseSrc = getIframeSrc();
 
-		int index = 0;
-
 		if (_iFrameBaseSrc.length() > 6) {
 			String s = _iFrameBaseSrc.substring(7);
 
-			index = s.lastIndexOf(StringPool.SLASH);
+			int index = s.lastIndexOf(StringPool.SLASH);
 
 			if (index != -1) {
 				_iFrameBaseSrc = _iFrameBaseSrc.substring(0, index + 8);

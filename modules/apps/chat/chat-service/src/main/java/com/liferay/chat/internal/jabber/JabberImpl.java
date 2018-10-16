@@ -131,19 +131,22 @@ public class JabberImpl implements Jabber {
 
 			if (_chatGroupServiceConfiguration.jabberImportUserEnabled()) {
 				for (Object[] buddy : buddies) {
-					String firstName = (String)buddy[1];
-					String lastName = (String)buddy[3];
-					String middleName = (String)buddy[5];
 					String screenName = (String)buddy[7];
+
+					String jabberId = getFullJabberId(screenName);
+
+					if (roster.contains(jabberId)) {
+						continue;
+					}
+
+					String firstName = (String)buddy[1];
+					String middleName = (String)buddy[5];
+					String lastName = (String)buddy[3];
 
 					String fullName = ContactConstants.getFullName(
 						firstName, middleName, lastName);
 
-					String jabberId = getFullJabberId(screenName);
-
-					if (!roster.contains(jabberId)) {
-						roster.createEntry(jabberId, fullName, null);
-					}
+					roster.createEntry(jabberId, fullName, null);
 				}
 			}
 

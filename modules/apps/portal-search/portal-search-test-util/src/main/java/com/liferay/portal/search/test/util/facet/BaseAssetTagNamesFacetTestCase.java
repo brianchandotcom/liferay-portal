@@ -16,13 +16,14 @@ package com.liferay.portal.search.test.util.facet;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.tag.AssetTagNamesFacetFactory;
 import com.liferay.portal.search.internal.facet.tag.AssetTagNamesFacetFactoryImpl;
 import com.liferay.portal.search.test.util.indexing.QueryContributors;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -44,7 +45,10 @@ public abstract class BaseAssetTagNamesFacetTestCase extends BaseFacetTestCase {
 			helper -> {
 				Facet facet = helper.addFacet(this::createFacet);
 
-				helper.search(QueryContributors.mustMatch(getField(), "tag"));
+				helper.setQueryContributor(
+					QueryContributors.mustMatch(getField(), "tag"));
+
+				helper.search();
 
 				helper.assertFrequencies(
 					facet, Arrays.asList("TAG=1", "tAg=1", "tag=1"));
@@ -69,8 +73,61 @@ public abstract class BaseAssetTagNamesFacetTestCase extends BaseFacetTestCase {
 			});
 	}
 
+	@Test
+	public void testSelectionWithSpaces() throws Exception {
+		addDocument("spaceless");
+		addDocument("with spaces");
+
+		List<String> frequencies = Arrays.asList(
+			"spaceless=1", "with spaces=1");
+
+		assertSearchFacet(
+			helper -> {
+				Facet facet = helper.addFacet(this::createFacet);
+
+				facet.select("spaceless", "with spaces");
+
+				helper.search();
+
+				helper.assertFrequencies(facet, frequencies);
+
+				helper.assertValues(
+					getField(), Arrays.asList("spaceless", "with spaces"));
+			});
+
+		assertSearchFacet(
+			helper -> {
+				Facet facet = helper.addFacet(this::createFacet);
+
+				facet.select("spaceless");
+
+				helper.search();
+
+				helper.assertFrequencies(facet, frequencies);
+
+				helper.assertValues(getField(), Arrays.asList("spaceless"));
+			});
+
+		assertSearchFacet(
+			helper -> {
+				Facet facet = helper.addFacet(this::createFacet);
+
+				facet.select("with spaces");
+
+				helper.search();
+
+				helper.assertFrequencies(facet, frequencies);
+
+				helper.assertValues(getField(), Arrays.asList("with spaces"));
+			});
+	}
+
 	protected Facet createFacet(SearchContext searchContext) {
-		return initFacet(assetTagNamesFacetFactory.newInstance(searchContext));
+		Facet facet = assetTagNamesFacetFactory.newInstance(searchContext);
+
+		initFacet(facet);
+
+		return facet;
 	}
 
 	@Override

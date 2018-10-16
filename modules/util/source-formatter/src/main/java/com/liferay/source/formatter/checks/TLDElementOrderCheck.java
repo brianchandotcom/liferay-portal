@@ -63,9 +63,7 @@ public class TLDElementOrderCheck extends BaseFileCheck {
 
 		@Override
 		public String getElementName(Element element) {
-			Element nameElement = element.element(getNameAttribute());
-
-			return nameElement.getText();
+			return getTagValue(element);
 		}
 
 	}

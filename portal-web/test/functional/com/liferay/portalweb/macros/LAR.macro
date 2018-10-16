@@ -232,17 +232,9 @@
 		<if>
 			<isset var="checkContentNameList" />
 			<then>
-				<execute macro="Panel#expandPanel">
-					<var name="panel" value="Content" />
+				<execute macro="ContentConfiguration#checkContentNameList">
+					<var name="checkContentNameList" value="${checkContentNameList}" />
 				</execute>
-
-				<execute function="Select" locator1="Select#EXPORT_IMPORT_CONTENT" value1="Choose Content" />
-
-				<for list="${checkContentNameList}" param="contentName">
-					<var name="key_contentName" value="${contentName}" />
-
-					<execute function="Click" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
-				</for>
 			</then>
 		</if>
 

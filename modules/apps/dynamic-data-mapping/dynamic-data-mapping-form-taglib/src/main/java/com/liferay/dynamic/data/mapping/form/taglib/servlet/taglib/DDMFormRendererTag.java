@@ -95,7 +95,7 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
-		DDMFormInstance ddmFormInstance = getFormInstance();
+		DDMFormInstance ddmFormInstance = getDDMFormInstance();
 
 		ddmFormRenderingContext.setContainerId(StringUtil.randomString());
 
@@ -136,21 +136,21 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 		DDMForm ddmForm = null;
 
 		try {
-			DDMFormInstance ddmFormInstance = getFormInstance();
+			DDMFormInstance ddmFormInstance = getDDMFormInstance();
 
 			if (ddmFormInstance == null) {
 				return ddmForm;
 			}
 
-			DDMFormInstanceVersion latestFormInstanceVersion =
-				DDMFormTaglibUtil.getLatestFormInstanceVersion(
+			DDMFormInstanceVersion latestDDMFormInstanceVersion =
+				DDMFormTaglibUtil.getLatestDDMFormInstanceVersion(
 					ddmFormInstance.getFormInstanceId(),
 					WorkflowConstants.STATUS_APPROVED);
 
-			DDMStructureVersion structureVersion =
-				latestFormInstanceVersion.getStructureVersion();
+			DDMStructureVersion ddmStructureVersion =
+				latestDDMFormInstanceVersion.getStructureVersion();
 
-			ddmForm = structureVersion.getDDMForm();
+			ddmForm = ddmStructureVersion.getDDMForm();
 
 			if (isCaptchaRequired(ddmFormInstance)) {
 				ddmForm.addDDMFormField(createCaptchaField());
@@ -188,25 +188,57 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 		return ddmFormHTML;
 	}
 
+	protected DDMFormInstance getDDMFormInstance() {
+		long ddmFormInstanceId = 0;
+
+		if (getDDMFormInstanceRecordVersionId() != null) {
+			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
+				DDMFormTaglibUtil.getDDMFormInstanceRecordVersion(
+					getDDMFormInstanceRecordVersionId());
+
+			ddmFormInstanceId =
+				ddmFormInstanceRecordVersion.getFormInstanceId();
+		}
+		else if (getDDMFormInstanceRecordId() != null) {
+			DDMFormInstanceRecord ddmFormInstanceRecord =
+				DDMFormTaglibUtil.getDDMFormInstanceRecord(
+					getDDMFormInstanceRecordId());
+
+			ddmFormInstanceId = ddmFormInstanceRecord.getFormInstanceId();
+		}
+		else if (getDDMFormInstanceVersionId() != null) {
+			DDMFormInstanceVersion ddmFormInstanceVersion =
+				DDMFormTaglibUtil.getDDMFormInstanceVersion(
+					getDDMFormInstanceVersionId());
+
+			ddmFormInstanceId = ddmFormInstanceVersion.getFormInstanceId();
+		}
+		else if (getDDMFormInstanceId() != null) {
+			ddmFormInstanceId = getDDMFormInstanceId();
+		}
+
+		return DDMFormTaglibUtil.getDDMFormInstance(ddmFormInstanceId);
+	}
+
 	protected DDMFormLayout getDDMFormLayout() {
 		DDMFormLayout ddmFormLayout = null;
 
 		try {
-			DDMFormInstance ddmFormInstance = getFormInstance();
+			DDMFormInstance ddmFormInstance = getDDMFormInstance();
 
 			if (ddmFormInstance == null) {
 				return ddmFormLayout;
 			}
 
-			DDMFormInstanceVersion latestFormInstanceVersion =
-				DDMFormTaglibUtil.getLatestFormInstanceVersion(
+			DDMFormInstanceVersion latestDDMFormInstanceVersion =
+				DDMFormTaglibUtil.getLatestDDMFormInstanceVersion(
 					ddmFormInstance.getFormInstanceId(),
 					WorkflowConstants.STATUS_APPROVED);
 
-			DDMStructureVersion structureVersion =
-				latestFormInstanceVersion.getStructureVersion();
+			DDMStructureVersion ddmStructureVersion =
+				latestDDMFormInstanceVersion.getStructureVersion();
 
-			ddmFormLayout = structureVersion.getDDMFormLayout();
+			ddmFormLayout = ddmStructureVersion.getDDMFormLayout();
 
 			if (isCaptchaRequired(ddmFormInstance)) {
 				DDMFormLayoutPage lastDDMFormLayoutPage =
@@ -226,37 +258,6 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 		}
 
 		return ddmFormLayout;
-	}
-
-	protected DDMFormInstance getFormInstance() {
-		long formInstanceId = 0;
-
-		if (getFormInstanceRecordVersionId() != null) {
-			DDMFormInstanceRecordVersion formInstanceRecordVersion =
-				DDMFormTaglibUtil.getFormInstanceRecordVersion(
-					getFormInstanceRecordVersionId());
-
-			formInstanceId = formInstanceRecordVersion.getFormInstanceId();
-		}
-		else if (getFormInstanceRecordId() != null) {
-			DDMFormInstanceRecord formInstanceRecord =
-				DDMFormTaglibUtil.getFormInstanceRecord(
-					getFormInstanceRecordId());
-
-			formInstanceId = formInstanceRecord.getFormInstanceId();
-		}
-		else if (getFormInstanceVersionId() != null) {
-			DDMFormInstanceVersion formInstanceVersion =
-				DDMFormTaglibUtil.getFormInstanceVersion(
-					getFormInstanceVersionId());
-
-			formInstanceId = formInstanceVersion.getFormInstanceId();
-		}
-		else if (getFormInstanceId() != null) {
-			formInstanceId = getFormInstanceId();
-		}
-
-		return DDMFormTaglibUtil.getFormInstance(formInstanceId);
 	}
 
 	protected DDMFormLayoutPage getLastDDMFormLayoutPage(
@@ -287,7 +288,7 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 	}
 
 	protected String getRedirectURL() {
-		DDMFormInstance ddmFormInstance = getFormInstance();
+		DDMFormInstance ddmFormInstance = getDDMFormInstance();
 
 		if (ddmFormInstance == null) {
 			return StringPool.BLANK;
@@ -354,7 +355,7 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 	protected boolean hasAddFormInstanceRecordPermission() {
 		boolean hasAddFormInstanceRecordPermission = true;
 
-		DDMFormInstance ddmFormInstance = getFormInstance();
+		DDMFormInstance ddmFormInstance = getDDMFormInstance();
 
 		if (ddmFormInstance != null) {
 			ThemeDisplay themeDisplay = getThemeDisplay();
@@ -378,7 +379,7 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 	protected boolean hasViewFormInstancePermission() {
 		boolean hasViewFormInstancePermission = true;
 
-		DDMFormInstance ddmFormInstance = getFormInstance();
+		DDMFormInstance ddmFormInstance = getDDMFormInstance();
 
 		if (ddmFormInstance != null) {
 			ThemeDisplay themeDisplay = getThemeDisplay();
@@ -427,10 +428,11 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 	}
 
 	protected boolean isFormAvailable() {
-		DDMFormInstance formInstance = getFormInstance();
+		DDMFormInstance ddmFormInstance = getDDMFormInstance();
 
-		if (formInstance != null) {
-			Group group = DDMFormTaglibUtil.getGroup(formInstance.getGroupId());
+		if (ddmFormInstance != null) {
+			Group group = DDMFormTaglibUtil.getGroup(
+				ddmFormInstance.getGroupId());
 
 			if ((group != null) && group.isStagingGroup()) {
 				return false;
@@ -451,7 +453,7 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 		super.setAttributes(request);
 
 		setNamespacedAttribute(request, "ddmFormHTML", getDDMFormHTML());
-		setNamespacedAttribute(request, "formInstance", getFormInstance());
+		setNamespacedAttribute(request, "formInstance", getDDMFormInstance());
 		setNamespacedAttribute(
 			request, "hasAddFormInstanceRecordPermission",
 			hasAddFormInstanceRecordPermission());
@@ -475,10 +477,10 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 			request, ddmForm);
 
 		try {
-			if (getFormInstanceRecordVersionId() != null) {
+			if (getDDMFormInstanceRecordVersionId() != null) {
 				DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
-					DDMFormTaglibUtil.getFormInstanceRecordVersion(
-						getFormInstanceRecordVersionId());
+					DDMFormTaglibUtil.getDDMFormInstanceRecordVersion(
+						getDDMFormInstanceRecordVersionId());
 
 				if (ddmFormInstanceRecordVersion != null) {
 					ddmFormValues = DDMFormTaglibUtil.mergeDDMFormValues(
@@ -486,10 +488,10 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 						ddmFormValues);
 				}
 			}
-			else if (getFormInstanceRecordId() != null) {
+			else if (getDDMFormInstanceRecordId() != null) {
 				DDMFormInstanceRecord ddmFormInstanceRecord =
-					DDMFormTaglibUtil.getFormInstanceRecord(
-						getFormInstanceRecordId());
+					DDMFormTaglibUtil.getDDMFormInstanceRecord(
+						getDDMFormInstanceRecordId());
 
 				if (ddmFormInstanceRecord != null) {
 					ddmFormValues = DDMFormTaglibUtil.mergeDDMFormValues(

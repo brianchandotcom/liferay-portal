@@ -151,7 +151,8 @@ public class DDMFormRendererTagTest extends PowerMockito {
 	public void testGetFormInstanceWhenFormInstanceRecordIdHasHigherPriority() {
 		setDDMFormRendererTagInputs(1L, 2L, null, 4L);
 
-		DDMFormInstance ddmFormInstance = _ddmFormRendererTag.getFormInstance();
+		DDMFormInstance ddmFormInstance =
+			_ddmFormRendererTag.getDDMFormInstance();
 
 		Assert.assertEquals(2L, ddmFormInstance.getFormInstanceId());
 	}
@@ -160,7 +161,8 @@ public class DDMFormRendererTagTest extends PowerMockito {
 	public void testGetFormInstanceWhenFormInstanceRecordVersionIdHasHigherPriority() {
 		setDDMFormRendererTagInputs(1L, 2L, 3L, 4L);
 
-		DDMFormInstance ddmFormInstance = _ddmFormRendererTag.getFormInstance();
+		DDMFormInstance ddmFormInstance =
+			_ddmFormRendererTag.getDDMFormInstance();
 
 		Assert.assertEquals(3L, ddmFormInstance.getFormInstanceId());
 	}
@@ -169,7 +171,8 @@ public class DDMFormRendererTagTest extends PowerMockito {
 	public void testGetFormInstanceWhenFormInstanceVersionIdHasHigherPriority() {
 		setDDMFormRendererTagInputs(1L, null, null, 4L);
 
-		DDMFormInstance ddmFormInstance = _ddmFormRendererTag.getFormInstance();
+		DDMFormInstance ddmFormInstance =
+			_ddmFormRendererTag.getDDMFormInstance();
 
 		Assert.assertEquals(4L, ddmFormInstance.getFormInstanceId());
 	}
@@ -178,7 +181,8 @@ public class DDMFormRendererTagTest extends PowerMockito {
 	public void testGetFormInstanceWithFormInstanceId() {
 		setDDMFormRendererTagInputs(1L, null, null, null);
 
-		DDMFormInstance ddmFormInstance = _ddmFormRendererTag.getFormInstance();
+		DDMFormInstance ddmFormInstance =
+			_ddmFormRendererTag.getDDMFormInstance();
 
 		Assert.assertEquals(1L, ddmFormInstance.getFormInstanceId());
 	}
@@ -187,7 +191,8 @@ public class DDMFormRendererTagTest extends PowerMockito {
 	public void testGetFormInstanceWithFormInstanceRecordId() {
 		setDDMFormRendererTagInputs(null, 2L, null, null);
 
-		DDMFormInstance ddmFormInstance = _ddmFormRendererTag.getFormInstance();
+		DDMFormInstance ddmFormInstance =
+			_ddmFormRendererTag.getDDMFormInstance();
 
 		Assert.assertEquals(2L, ddmFormInstance.getFormInstanceId());
 	}
@@ -196,7 +201,8 @@ public class DDMFormRendererTagTest extends PowerMockito {
 	public void testGetFormInstanceWithFormInstanceRecordVersionId() {
 		setDDMFormRendererTagInputs(null, null, 3L, null);
 
-		DDMFormInstance ddmFormInstance = _ddmFormRendererTag.getFormInstance();
+		DDMFormInstance ddmFormInstance =
+			_ddmFormRendererTag.getDDMFormInstance();
 
 		Assert.assertEquals(3L, ddmFormInstance.getFormInstanceId());
 	}
@@ -205,7 +211,8 @@ public class DDMFormRendererTagTest extends PowerMockito {
 	public void testGetFormInstanceWithFormInstanceVersionId() {
 		setDDMFormRendererTagInputs(null, null, null, 4L);
 
-		DDMFormInstance ddmFormInstance = _ddmFormRendererTag.getFormInstance();
+		DDMFormInstance ddmFormInstance =
+			_ddmFormRendererTag.getDDMFormInstance();
 
 		Assert.assertEquals(4L, ddmFormInstance.getFormInstanceId());
 	}
@@ -266,11 +273,11 @@ public class DDMFormRendererTagTest extends PowerMockito {
 		Long formInstanceId, Long formInstanceRecordId,
 		Long formInstanceRecordVersionId, Long formInstanceVersionId) {
 
-		_ddmFormRendererTag.setFormInstanceId(formInstanceId);
-		_ddmFormRendererTag.setFormInstanceRecordId(formInstanceRecordId);
-		_ddmFormRendererTag.setFormInstanceRecordVersionId(
+		_ddmFormRendererTag.setDDMFormInstanceId(formInstanceId);
+		_ddmFormRendererTag.setDDMFormInstanceRecordId(formInstanceRecordId);
+		_ddmFormRendererTag.setDDMFormInstanceRecordVersionId(
 			formInstanceRecordVersionId);
-		_ddmFormRendererTag.setFormInstanceVersionId(formInstanceVersionId);
+		_ddmFormRendererTag.setDDMFormInstanceVersionId(formInstanceVersionId);
 	}
 
 	protected void setUpDDMFormInstanceLocalService() throws Exception {

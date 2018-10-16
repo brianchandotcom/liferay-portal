@@ -106,6 +106,32 @@ public class DDMFormTaglibUtil {
 			ddmFormBuilderSettingsRequest);
 	}
 
+	public static DDMFormInstance getDDMFormInstance(long ddmFormInstanceId) {
+		return _ddmFormInstanceLocalService.fetchFormInstance(
+			ddmFormInstanceId);
+	}
+
+	public static DDMFormInstanceRecord getDDMFormInstanceRecord(
+		long ddmFormInstanceRecordId) {
+
+		return _ddmFormInstanceRecordLocalService.fetchDDMFormInstanceRecord(
+			ddmFormInstanceRecordId);
+	}
+
+	public static DDMFormInstanceRecordVersion getDDMFormInstanceRecordVersion(
+		long ddmFormInstanceRecordVersionId) {
+
+		return _ddmFormInstanceRecordVersionLocalService.
+			fetchDDMFormInstanceRecordVersion(ddmFormInstanceRecordVersionId);
+	}
+
+	public static DDMFormInstanceVersion getDDMFormInstanceVersion(
+		long ddmFormInstanceVersionId) {
+
+		return _ddmFormInstanceVersionLocalService.fetchDDMFormInstanceVersion(
+			ddmFormInstanceVersionId);
+	}
+
 	public static String getFormBuilderContext(
 		long ddmStructureId, long ddmStructureVersionId,
 		HttpServletRequest request) {
@@ -145,55 +171,30 @@ public class DDMFormTaglibUtil {
 		ddmFormBuilderContextRequest.addProperty(
 			"ddmStructureVersion", ddmStructureVersion);
 
-		DDMFormBuilderContextResponse formBuilderContextResponse =
+		DDMFormBuilderContextResponse ddmFormBuilderContextResponse =
 			_ddmFormBuilderContextFactory.create(ddmFormBuilderContextRequest);
 
 		return jsonSerializer.serializeDeep(
-			formBuilderContextResponse.getContext());
-	}
-
-	public static DDMFormInstance getFormInstance(long formInstanceId) {
-		return _ddmFormInstanceLocalService.fetchFormInstance(formInstanceId);
-	}
-
-	public static DDMFormInstanceRecord getFormInstanceRecord(
-		long formInstanceRecordId) {
-
-		return _ddmFormInstanceRecordLocalService.fetchDDMFormInstanceRecord(
-			formInstanceRecordId);
-	}
-
-	public static DDMFormInstanceRecordVersion getFormInstanceRecordVersion(
-		long formInstanceRecordVersionId) {
-
-		return _ddmFormInstanceRecordVersionLocalService.
-			fetchDDMFormInstanceRecordVersion(formInstanceRecordVersionId);
-	}
-
-	public static DDMFormInstanceVersion getFormInstanceVersion(
-		long formInstanceVersionId) {
-
-		return _ddmFormInstanceVersionLocalService.fetchDDMFormInstanceVersion(
-			formInstanceVersionId);
+			ddmFormBuilderContextResponse.getContext());
 	}
 
 	public static Group getGroup(long groupId) {
 		return _groupLocalService.fetchGroup(groupId);
 	}
 
-	public static DDMFormInstanceVersion getLatestFormInstanceVersion(
-			long formInstanceId, int status)
+	public static DDMFormInstanceVersion getLatestDDMFormInstanceVersion(
+			long ddmFormInstanceId, int status)
 		throws PortalException {
 
 		return _ddmFormInstanceVersionLocalService.getLatestFormInstanceVersion(
-			formInstanceId, status);
+			ddmFormInstanceId, status);
 	}
 
 	public static boolean hasWorkflowDefinitionLink(
-		long companyId, long groupId, String name, long formInstanceId) {
+		long companyId, long groupId, String name, long ddmFormInstanceId) {
 
 		return _workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
-			companyId, groupId, name, formInstanceId);
+			companyId, groupId, name, ddmFormInstanceId);
 	}
 
 	public static DDMFormValues mergeDDMFormValues(

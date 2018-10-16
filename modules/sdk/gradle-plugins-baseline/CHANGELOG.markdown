@@ -126,6 +126,18 @@ specified baseline warnings:
 	- `VERSION-INCREASE-REQUIRED`
 	- `VERSION-INCREASE-SUGGESTED`
 
+## 1.3.6 - 2018-10-16
+
+### Changed
+[LPS-85678]: Update the `baseline` task to ignore the specified baseline
+warnings recursively:
+	- `EXCESSIVE-VERSION-INCREASE-RECURSIVE`
+	- `PACKAGE ADDED-MISSING-PACKAGEINFO-RECURSIVE`
+	- `PACKAGE-REMOVED-RECURSIVE`
+	- `PACKAGE-REMOVED-UNNECESSARY-PACKAGEINFO-RECURSIVE`
+	- `VERSION-INCREASE-REQUIRED-RECURSIVE`
+	- `VERSION-INCREASE-SUGGESTED-RECURSIVE`
+
 [Bnd Builder Gradle Plugin]: https://github.com/bndtools/bnd/tree/master/biz.aQute.bnd.gradle
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [LPS-69470]: https://issues.liferay.com/browse/LPS-69470

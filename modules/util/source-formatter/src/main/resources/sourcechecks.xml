@@ -426,6 +426,7 @@
 		<check name="XMLLookAndFeelCompatibilityVersionCheck" />
 		<check name="XMLLookAndFeelFileCheck" />
 		<check name="XMLModelHintsFileCheck" />
+		<check name="XMLPomFileCheck" />
 		<check name="XMLPortletFileCheck" />
 		<check name="XMLPortletPreferencesFileCheck" />
 		<check name="XMLPoshiFileCheck" />

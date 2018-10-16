@@ -79,17 +79,20 @@ public class AdminConfigurationAction
 
 		boolean emailEnabled = GetterUtil.getBoolean(
 			getParameter(actionRequest, emailParam + "Enabled"));
+
+		if (!emailEnabled) {
+			return;
+		}
+
 		String emailSubject = getParameter(
 			actionRequest, emailParam + "Subject");
 		String emailBody = getParameter(actionRequest, emailParam + "Body");
 
-		if (emailEnabled) {
-			if (Validator.isNull(emailSubject)) {
-				SessionErrors.add(actionRequest, emailParam + "Subject");
-			}
-			else if (Validator.isNull(emailBody)) {
-				SessionErrors.add(actionRequest, emailParam + "Body");
-			}
+		if (Validator.isNull(emailSubject)) {
+			SessionErrors.add(actionRequest, emailParam + "Subject");
+		}
+		else if (Validator.isNull(emailBody)) {
+			SessionErrors.add(actionRequest, emailParam + "Body");
 		}
 	}
 

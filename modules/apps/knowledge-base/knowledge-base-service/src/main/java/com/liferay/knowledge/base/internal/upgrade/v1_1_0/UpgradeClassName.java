@@ -66,9 +66,10 @@ public class UpgradeClassName extends UpgradeProcess {
 		throws Exception {
 
 		long oldClassNameId = getClassNameId(oldClassName);
-		long newClassNameId = getClassNameId(newClassName);
 
 		if (oldClassNameId != 0) {
+			long newClassNameId = getClassNameId(newClassName);
+
 			runSQL(
 				"delete from ClassName_ where classNameId = " + newClassNameId);
 

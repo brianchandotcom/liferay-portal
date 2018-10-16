@@ -344,12 +344,7 @@ public class AdminPortlet extends BaseKBPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			KBWebKeys.THEME_DISPLAY);
-
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		long kbFolderId = ParamUtil.getLong(actionRequest, "kbFolderId");
 
 		long parentResourceClassNameId = ParamUtil.getLong(
 			actionRequest, "parentResourceClassNameId");
@@ -362,11 +357,17 @@ public class AdminPortlet extends BaseKBPortlet {
 			KBFolder.class.getName(), actionRequest);
 
 		if (cmd.equals(Constants.ADD)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(
+					KBWebKeys.THEME_DISPLAY);
+
 			kbFolderService.addKBFolder(
 				themeDisplay.getScopeGroupId(), parentResourceClassNameId,
 				parentResourcePrimKey, name, description, serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
+			long kbFolderId = ParamUtil.getLong(actionRequest, "kbFolderId");
+
 			kbFolderService.updateKBFolder(
 				parentResourceClassNameId, parentResourcePrimKey, kbFolderId,
 				name, description, serviceContext);
@@ -377,11 +378,7 @@ public class AdminPortlet extends BaseKBPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String portletId = _portal.getPortletId(actionRequest);
-
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		long kbTemplateId = ParamUtil.getLong(actionRequest, "kbTemplateId");
 
 		String title = ParamUtil.getString(actionRequest, "title");
 		String content = ParamUtil.getString(actionRequest, "content");
@@ -390,10 +387,15 @@ public class AdminPortlet extends BaseKBPortlet {
 			KBTemplate.class.getName(), actionRequest);
 
 		if (cmd.equals(Constants.ADD)) {
+			String portletId = _portal.getPortletId(actionRequest);
+
 			kbTemplateService.addKBTemplate(
 				portletId, title, content, serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
+			long kbTemplateId = ParamUtil.getLong(
+				actionRequest, "kbTemplateId");
+
 			kbTemplateService.updateKBTemplate(
 				kbTemplateId, title, content, serviceContext);
 		}

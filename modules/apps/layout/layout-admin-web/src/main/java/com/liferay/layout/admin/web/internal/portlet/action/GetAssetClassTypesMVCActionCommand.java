@@ -55,9 +55,6 @@ public class GetAssetClassTypesMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -67,6 +64,9 @@ public class GetAssetClassTypesMVCActionCommand extends BaseMVCActionCommand {
 				_portal.getClassName(classNameId));
 
 		if (assetDisplayContributor != null) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
 			List<ClassType> classTypes = assetDisplayContributor.getClassTypes(
 				themeDisplay.getScopeGroupId(), themeDisplay.getLocale());
 

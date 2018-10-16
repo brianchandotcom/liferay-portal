@@ -15,7 +15,7 @@
 package com.liferay.segments.odata.retriever;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.BaseModel;
 
 import java.util.List;
 import java.util.Locale;
@@ -23,9 +23,9 @@ import java.util.Locale;
 /**
  * @author David Arques
  */
-public interface UserODataRetriever {
+public interface ODataRetriever<T extends BaseModel<?>> {
 
-	public List<User> getUsers(
+	public List<T> getResults(
 			long companyId, String filterString, Locale locale, int start,
 			int end)
 		throws PortalException;

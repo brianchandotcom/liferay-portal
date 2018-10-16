@@ -33,21 +33,21 @@
 			<var name="fileName" value="fragment_button.html" />
 		</execute>
 
-		<execute function="Type#typeAceEditorNoError" locator1="Fragment#HTML_EDITOR" value1="${htmlSnippet}" />
+		<execute function="Type#typeAceEditorNoError" locator1="FragmentEditor#HTML_EDITOR" value1="${htmlSnippet}" />
 
 		<execute macro="TestCase#getFileContent">
 			<return name="cssSnippet" />
 			<var name="fileName" value="fragment_button.css" />
 		</execute>
 
-		<execute function="Type#typeAceEditorNoError" locator1="Fragment#CSS_EDITOR" value1="${cssSnippet}" />
+		<execute function="Type#typeAceEditorNoError" locator1="FragmentEditor#CSS_EDITOR" value1="${cssSnippet}" />
 
 		<execute macro="TestCase#getFileContent">
 			<return name="javascriptSnippet" />
 			<var name="fileName" value="fragment_button.js" />
 		</execute>
 
-		<execute function="Type#typeAceEditorNoError" locator1="Fragment#JAVASCRIPT_EDITOR" value1="${javascriptSnippet}" />
+		<execute function="Type#typeAceEditorNoError" locator1="FragmentEditor#JAVASCRIPT_EDITOR" value1="${javascriptSnippet}" />
 	</set-up>
 
 	<tear-down>
@@ -128,18 +128,18 @@
 			<var name="fileName" value="fragment_title.html" />
 		</execute>
 
-		<execute function="Type#typeAceEditorNoError" locator1="Fragment#HTML_EDITOR" value1="${htmlSnippet}" />
+		<execute function="Type#typeAceEditorNoError" locator1="FragmentEditor#HTML_EDITOR" value1="${htmlSnippet}" />
 
 		<execute macro="TestCase#getFileContent">
 			<return name="cssSnippet" />
 			<var name="fileName" value="fragment_title.css" />
 		</execute>
 
-		<execute function="Type#typeAceEditorNoError" locator1="Fragment#CSS_EDITOR" value1="${cssSnippet}" />
+		<execute function="Type#typeAceEditorNoError" locator1="FragmentEditor#CSS_EDITOR" value1="${cssSnippet}" />
 
-		<execute function="Type#typeAceEditorNoError" locator1="Fragment#JAVASCRIPT_EDITOR" value1="" />
+		<execute function="Type#typeAceEditorNoError" locator1="FragmentEditor#JAVASCRIPT_EDITOR" value1="" />
 
-		<execute function="SelectFrame" locator1="Fragment#PREVIEW_IFRAME" />
+		<execute function="SelectFrame" locator1="FragmentEditor#PREVIEW_IFRAME" />
 
 		<execute function="AssertTextEquals" locator1="//div[@class='fragment-header']/h1[@class='title']" value1="LOREM IPSUM DOLOR SIT AMET." />
 
@@ -152,7 +152,7 @@
 			<var name="rowEntry" value="Fragment Name" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="Fragment#PREVIEW_IFRAME" />
+		<execute function="SelectFrame" locator1="FragmentEditor#PREVIEW_IFRAME" />
 
 		<execute function="AssertTextEquals" locator1="//div[@class='fragment-header']/h1[@class='title']" value1="LOREM IPSUM DOLOR SIT AMET." />
 
@@ -163,7 +163,7 @@
 		<description message="Fragment editor should show an accurate preview of the fragment." />
 		<property name="portal.acceptance" value="true" />
 
-		<execute function="SelectFrame" locator1="Fragment#PREVIEW_IFRAME" />
+		<execute function="SelectFrame" locator1="FragmentEditor#PREVIEW_IFRAME" />
 
 		<execute function="AssertElementPresent" locator1="Button#SUBMIT" />
 		<execute function="AssertElementPresent" locator1="Button#CANCEL" />

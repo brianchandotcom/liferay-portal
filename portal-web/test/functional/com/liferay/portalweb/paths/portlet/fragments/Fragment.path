@@ -8,31 +8,6 @@
 <tr><td rowspan="1" colspan="3">Fragment</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>HTML_EDITOR</td>
-	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][1]//textarea</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CSS_EDITOR</td>
-	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][2]//textarea</td>
-	<td></td>
-</tr>
-<tr>
-	<td>JAVASCRIPT_EDITOR</td>
-	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][3]//textarea</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_IFRAME</td>
-	<td>//iframe[@class='fragment-preview__content']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PAGE_TEMPLATE-->
 <tr>
 	<td>PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD</td>

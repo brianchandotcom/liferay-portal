@@ -35,14 +35,14 @@ public class UnsyncPrintWriterPoolFilter
 		HttpServletRequest request, HttpServletResponse response,
 		Object object) {
 
-		if (!request.isAsyncSupported() || !request.isAsyncStarted()) {
-			UnsyncPrintWriterPool.cleanUp();
-		}
-		else {
+		if (request.isAsyncSupported() && request.isAsyncStarted()) {
 			AsyncContext asyncContext = request.getAsyncContext();
 
 			asyncContext.addListener(
 				new UnsyncPrintWriterPoolFilterAsyncListener(asyncContext));
+		}
+		else {
+			UnsyncPrintWriterPool.cleanUp();
 		}
 	}
 

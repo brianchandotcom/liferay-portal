@@ -89,17 +89,17 @@ public class ETagFilter extends BasePortalFilter {
 			ETagFilter.class.getName(), request,
 			restrictedByteBufferCacheServletResponse, filterChain);
 
-		if (!request.isAsyncSupported() || !request.isAsyncStarted()) {
-			_postProcessETag(
-				request, response, restrictedByteBufferCacheServletResponse);
-		}
-		else {
+		if (request.isAsyncSupported() && request.isAsyncStarted()) {
 			AsyncContext asyncContext = request.getAsyncContext();
 
 			asyncContext.addListener(
 				new ETagFilterAsyncListener(
 					asyncContext, request, response,
 					restrictedByteBufferCacheServletResponse));
+		}
+		else {
+			_postProcessETag(
+				request, response, restrictedByteBufferCacheServletResponse);
 		}
 	}
 

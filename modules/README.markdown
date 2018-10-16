@@ -77,7 +77,7 @@ module with `ant all` and the other marker files choose the deploy directory.
 
 File Name | Description
 --------- | -----------
-`.lfrbuild-packageinfo` | Ignores specified baseline warnings: `EXCESSIVE-VERSION-INCREASE`, `PACKAGE-ADDED-MISSING-PACKAGEINFO`, `PACKAGE-REMOVED`, `PACKAGE-REMOVED-UNNECESSARY-PACKAGEINFO`, `VERSION-INCREASE-REQUIRED`, `VERSION-INCREASE-SUGGESTED`.
+`.lfrbuild-packageinfo` | Ignores specified baseline warnings: `EXCESSIVE-VERSION-INCREASE`, `PACKAGE-ADDED-MISSING-PACKAGEINFO`, `PACKAGE-REMOVED`, `PACKAGE-REMOVED-UNNECESSARY-PACKAGEINFO`, `VERSION-INCREASE-REQUIRED`, `VERSION-INCREASE-SUGGESTED`. Adding the suffix `-RECURSIVE` (i.e., `EXCESSIVE-VERSION-INCREASE-RECURSIVE`) will apply the ignored warning to the current directory and all child directories.
 
 ### Build
 

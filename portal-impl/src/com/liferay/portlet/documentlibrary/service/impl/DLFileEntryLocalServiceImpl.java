@@ -38,6 +38,7 @@ import com.liferay.document.library.kernel.util.DLFileVersionPolicy;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelModifiedDateComparator;
+import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
@@ -118,6 +119,9 @@ import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.awt.image.RenderedImage;
 
@@ -279,6 +283,12 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileEntry;
 	}
 
+	public void afterPropertiesSet() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(VersioningStrategy.class);
+	}
+
 	@Override
 	public DLFileVersion cancelCheckOut(long userId, long fileEntryId)
 		throws PortalException {
@@ -341,14 +351,18 @@ public class DLFileEntryLocalServiceImpl
 			dlFileEntryPersistence.update(dlFileEntry);
 		}
 
+		DLFileVersion lastDLFileVersion =
+			dlFileVersionLocalService.getFileVersion(
+				dlFileEntry.getFileEntryId(), dlFileEntry.getVersion());
 		DLFileVersion latestDLFileVersion =
 			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
-		if (dlVersionNumberIncrease == DLVersionNumberIncrease.NONE) {
-			DLFileVersion lastDLFileVersion =
-				dlFileVersionLocalService.getFileVersion(
-					dlFileEntry.getFileEntryId(), dlFileEntry.getVersion());
+		DLVersionNumberIncrease computedDLVersionNumberIncrease =
+			_computeDLVersionNumberIncrease(
+				dlVersionNumberIncrease, lastDLFileVersion, latestDLFileVersion,
+				serviceContext.getWorkflowAction());
 
+		if (computedDLVersionNumberIncrease == DLVersionNumberIncrease.NONE) {
 			_overwritePreviousFileVersion(
 				user, dlFileEntry, latestDLFileVersion, lastDLFileVersion,
 				serviceContext);
@@ -361,8 +375,7 @@ public class DLFileEntryLocalServiceImpl
 		// File version
 
 		String version = getNextVersion(
-			dlFileEntry, dlVersionNumberIncrease,
-			serviceContext.getWorkflowAction());
+			dlFileEntry, computedDLVersionNumberIncrease);
 
 		latestDLFileVersion.setVersion(version);
 
@@ -1014,6 +1027,10 @@ public class DLFileEntryLocalServiceImpl
 			});
 
 		intervalActionProcessor.performIntervalActions();
+	}
+
+	public void destroy() {
+		_serviceTracker.close();
 	}
 
 	@Override
@@ -2449,7 +2466,7 @@ public class DLFileEntryLocalServiceImpl
 
 	protected String getNextVersion(
 		DLFileEntry dlFileEntry,
-		DLVersionNumberIncrease dlVersionNumberIncrease, int workflowAction) {
+		DLVersionNumberIncrease dlVersionNumberIncrease) {
 
 		String version = dlFileEntry.getVersion();
 
@@ -2459,10 +2476,6 @@ public class DLFileEntryLocalServiceImpl
 
 		if (dlFileVersion != null) {
 			version = dlFileVersion.getVersion();
-		}
-
-		if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
-			dlVersionNumberIncrease = DLVersionNumberIncrease.MINOR;
 		}
 
 		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
@@ -2852,6 +2865,29 @@ public class DLFileEntryLocalServiceImpl
 	@BeanReference(type = DLFileVersionPolicy.class)
 	protected DLFileVersionPolicy dlFileVersionPolicy;
 
+	private DLVersionNumberIncrease _computeDLVersionNumberIncrease(
+		DLVersionNumberIncrease dlVersionNumberIncrease,
+		DLFileVersion previousDLFileVersion, DLFileVersion nextDLFileVersion,
+		int workflowAction) {
+
+		if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
+			return DLVersionNumberIncrease.MINOR;
+		}
+
+		VersioningStrategy versioningStrategy = _serviceTracker.getService();
+
+		if (((versioningStrategy == null) ||
+			 versioningStrategy.isOverridable()) &&
+			(dlVersionNumberIncrease != null) &&
+			(dlVersionNumberIncrease != DLVersionNumberIncrease.AUTOMATIC)) {
+
+			return dlVersionNumberIncrease;
+		}
+
+		return versioningStrategy.computeDLVersionNumberIncrease(
+			previousDLFileVersion, nextDLFileVersion);
+	}
+
 	private void _overwritePreviousFileVersion(
 			User user, DLFileEntry dlFileEntry,
 			DLFileVersion latestDLFileVersion, DLFileVersion lastDLFileVersion,
@@ -2951,5 +2987,8 @@ public class DLFileEntryLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryLocalServiceImpl.class);
+
+	private ServiceTracker<VersioningStrategy, VersioningStrategy>
+		_serviceTracker;
 
 }

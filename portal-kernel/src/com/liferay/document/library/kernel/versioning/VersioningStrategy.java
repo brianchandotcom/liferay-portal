@@ -12,39 +12,19 @@
  * details.
  */
 
-package com.liferay.document.library.kernel.model;
+package com.liferay.document.library.kernel.versioning;
+
+import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 
 /**
  * @author Adolfo Pérez
  */
-public enum DLVersionNumberIncrease {
+public interface VersioningStrategy {
 
-	AUTOMATIC, MAJOR, MINOR, NONE;
+	public DLVersionNumberIncrease computeDLVersionNumberIncrease(
+		DLFileVersion previousDLFileVersion, DLFileVersion nextDLFileVersion);
 
-	public static DLVersionNumberIncrease fromMajorVersion(
-		boolean majorVersion) {
-
-		if (majorVersion) {
-			return MAJOR;
-		}
-
-		return MINOR;
-	}
-
-	public static DLVersionNumberIncrease valueOf(
-		String name, DLVersionNumberIncrease defaultValue) {
-
-		if (name == null) {
-			return defaultValue;
-		}
-
-		for (DLVersionNumberIncrease dlVersionNumberIncrease : values()) {
-			if (name.equals(dlVersionNumberIncrease.name())) {
-				return dlVersionNumberIncrease;
-			}
-		}
-
-		return defaultValue;
-	}
+	public boolean isOverridable();
 
 }

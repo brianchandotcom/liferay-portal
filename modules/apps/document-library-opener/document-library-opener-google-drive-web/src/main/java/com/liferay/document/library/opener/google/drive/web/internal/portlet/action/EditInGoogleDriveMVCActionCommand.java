@@ -168,9 +168,8 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 
 			DLVersionNumberIncrease dlVersionNumberIncrease =
 				DLVersionNumberIncrease.valueOf(
-					ParamUtil.getString(
-						actionRequest, "versionIncrease",
-						DLVersionNumberIncrease.NONE.toString()));
+					ParamUtil.getString(actionRequest, "versionIncrease"),
+					DLVersionNumberIncrease.AUTOMATIC);
 
 			String changeLog = ParamUtil.getString(actionRequest, "changeLog");
 

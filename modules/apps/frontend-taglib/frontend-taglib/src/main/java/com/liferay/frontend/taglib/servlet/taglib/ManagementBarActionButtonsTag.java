@@ -30,13 +30,13 @@ public class ManagementBarActionButtonsTag
 
 	@Override
 	public int doEndTag() {
-		ManagementBarTag managementBarTag =
-			(ManagementBarTag)findAncestorWithClass(
-				this, ManagementBarTag.class);
-
 		BodyContent bodyContent = getBodyContent();
 
 		if (bodyContent != null) {
+			ManagementBarTag managementBarTag =
+				(ManagementBarTag)findAncestorWithClass(
+					this, ManagementBarTag.class);
+
 			managementBarTag.setActionButtons(bodyContent.getString());
 		}
 

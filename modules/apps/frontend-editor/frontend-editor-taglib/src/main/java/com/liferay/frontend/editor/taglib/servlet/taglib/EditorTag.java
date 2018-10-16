@@ -252,10 +252,10 @@ public class EditorTag extends BaseValidatorTagSupport {
 		setNamespacedAttribute(request, "onFocusMethod", _onFocusMethod);
 		setNamespacedAttribute(request, "onInitMethod", _onInitMethod);
 
-		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
-			pageContext);
-
 		if (Validator.isNull(_placeholder)) {
+			ResourceBundle resourceBundle =
+				TagResourceBundleUtil.getResourceBundle(pageContext);
+
 			_placeholder = LanguageUtil.get(
 				resourceBundle, "write-your-content-here");
 		}

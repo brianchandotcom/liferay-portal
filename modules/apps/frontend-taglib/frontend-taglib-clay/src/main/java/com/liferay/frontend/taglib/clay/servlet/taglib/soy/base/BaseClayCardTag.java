@@ -32,9 +32,9 @@ public class BaseClayCardTag extends BaseClayTag {
 		setHydrate(true);
 		setModuleBaseName("card");
 
-		Map<String, Object> context = getContext();
-
 		if (_rowChecker != null) {
+			Map<String, Object> context = getContext();
+
 			if (Validator.isNull(context.get("inputName"))) {
 				setInputName(_rowChecker.getRowIds());
 			}

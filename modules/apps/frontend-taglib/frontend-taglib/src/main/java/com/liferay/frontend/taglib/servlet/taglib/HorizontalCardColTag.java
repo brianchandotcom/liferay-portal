@@ -29,13 +29,13 @@ public class HorizontalCardColTag extends IncludeTag implements BodyTag {
 
 	@Override
 	public int doEndTag() {
-		HorizontalCardTag horizontalCardTag =
-			(HorizontalCardTag)findAncestorWithClass(
-				this, HorizontalCardTag.class);
-
 		BodyContent bodyContent = getBodyContent();
 
 		if (bodyContent != null) {
+			HorizontalCardTag horizontalCardTag =
+				(HorizontalCardTag)findAncestorWithClass(
+					this, HorizontalCardTag.class);
+
 			horizontalCardTag.setColHTML(bodyContent.getString());
 		}
 

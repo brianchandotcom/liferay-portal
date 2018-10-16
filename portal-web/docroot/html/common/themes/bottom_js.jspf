@@ -99,6 +99,13 @@
 				zIndex: Liferay.zIndex.TOOLTIP
 			}
 		);
+
+		 Liferay.on(
+			'beforeNavigate',
+			function(event) {
+				Liferay.Data.LFR_PORTAL_TOOLTIP.getTooltip().hide();
+			}
+		);
 	}
 </aui:script>
 

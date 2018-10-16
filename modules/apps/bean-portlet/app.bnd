@@ -1,0 +1,15 @@
+Liferay-Releng-App-Description: Bean portlets are a feature of the Portlet 3.0 Specification as defined by JSR 362. Rather than using XML configuration to register portlets, developers can use annotations like @PortletConfiguration. In addition, developers can use @Inject to obtain dependencies via Contexts and Dependency Injection (CDI).
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Bean Portlet
+Liferay-Releng-Bundle: true
+Liferay-Releng-Category: Utility
+Liferay-Releng-Demo-Url:
+Liferay-Releng-Deprecated: false
+Liferay-Releng-Fix-Delivery-Method:
+Liferay-Releng-Labs: false
+Liferay-Releng-Marketplace: true
+Liferay-Releng-Portal-Required: false
+Liferay-Releng-Public: ${liferay.releng.public}
+Liferay-Releng-Restart-Required: true
+Liferay-Releng-Suite:
+Liferay-Releng-Support-Url: http://www.liferay.com
+Liferay-Releng-Supported: ${liferay.releng.supported}

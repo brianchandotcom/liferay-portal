@@ -16,8 +16,6 @@ package com.liferay.blogs.internal.search;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -159,48 +157,37 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 			blogsEntryLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property displayDateProperty = PropertyFactoryUtil.forName(
+					"displayDate");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property displayDateProperty = PropertyFactoryUtil.forName(
-						"displayDate");
+				dynamicQuery.add(displayDateProperty.lt(new Date()));
 
-					dynamicQuery.add(displayDateProperty.lt(new Date()));
+				Property statusProperty = PropertyFactoryUtil.forName("status");
 
-					Property statusProperty = PropertyFactoryUtil.forName(
-						"status");
+				Integer[] statuses = {
+					WorkflowConstants.STATUS_APPROVED,
+					WorkflowConstants.STATUS_IN_TRASH
+				};
 
-					Integer[] statuses = {
-						WorkflowConstants.STATUS_APPROVED,
-						WorkflowConstants.STATUS_IN_TRASH
-					};
-
-					dynamicQuery.add(statusProperty.in(statuses));
-				}
-
+				dynamicQuery.add(statusProperty.in(statuses));
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<BlogsEntry>() {
+			(BlogsEntry entry) -> {
+				try {
+					Document document = getDocument(entry);
 
-				@Override
-				public void performAction(BlogsEntry entry) {
-					try {
-						Document document = getDocument(entry);
-
-						indexableActionableDynamicQuery.addDocuments(document);
-					}
-					catch (PortalException pe) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to index blogs entry " +
-									entry.getEntryId(),
-								pe);
-						}
+					indexableActionableDynamicQuery.addDocuments(document);
+				}
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index blogs entry " +
+								entry.getEntryId(),
+							pe);
 					}
 				}
-
 			});
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 

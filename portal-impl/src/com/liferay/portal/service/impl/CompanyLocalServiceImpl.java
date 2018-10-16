@@ -19,7 +19,6 @@ import com.liferay.petra.encryptor.EncryptorException;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -1013,68 +1012,55 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			groupLocalService.getActionableDynamicQuery();
 
 		groupActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property activeProperty = PropertyFactoryUtil.forName("active");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property activeProperty = PropertyFactoryUtil.forName(
-						"active");
+				dynamicQuery.add(activeProperty.eq(Boolean.TRUE));
 
-					dynamicQuery.add(activeProperty.eq(Boolean.TRUE));
+				Property nameProperty = PropertyFactoryUtil.forName("name");
 
-					Property nameProperty = PropertyFactoryUtil.forName("name");
+				dynamicQuery.add(nameProperty.isNotNull());
 
-					dynamicQuery.add(nameProperty.isNotNull());
+				Property typeProperty = PropertyFactoryUtil.forName("type");
 
-					Property typeProperty = PropertyFactoryUtil.forName("type");
-
-					dynamicQuery.add(
-						typeProperty.ne(GroupConstants.TYPE_SITE_SYSTEM));
-				}
-
+				dynamicQuery.add(
+					typeProperty.ne(GroupConstants.TYPE_SITE_SYSTEM));
 			});
 		groupActionableDynamicQuery.setCompanyId(user.getCompanyId());
 		groupActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<Group>() {
+			(Group group) -> {
+				Map<Locale, String> nameMap = group.getNameMap();
 
-				@Override
-				public void performAction(Group group) {
-					Map<Locale, String> nameMap = group.getNameMap();
-
-					if (MapUtil.isEmpty(nameMap)) {
-						return;
-					}
-
-					Locale locale = user.getLocale();
-
-					String groupDefaultName = nameMap.get(locale);
-
-					if (Validator.isNotNull(groupDefaultName)) {
-						return;
-					}
-
-					String oldGroupDefaultName = nameMap.get(
-						LocaleUtil.getDefault());
-
-					if (_log.isWarnEnabled()) {
-						StringBundler sb = new StringBundler(5);
-
-						sb.append("No name was found for locale ");
-						sb.append(locale);
-						sb.append(". Using \"");
-						sb.append(oldGroupDefaultName);
-						sb.append("\" as the name instead.");
-
-						_log.warn(sb.toString());
-					}
-
-					nameMap.put(locale, oldGroupDefaultName);
-
-					group.setNameMap(nameMap);
-
-					groupLocalService.updateGroup(group);
+				if (MapUtil.isEmpty(nameMap)) {
+					return;
 				}
 
+				String groupDefaultName = nameMap.get(locale);
+
+				if (Validator.isNotNull(groupDefaultName)) {
+					return;
+				}
+
+				String oldGroupDefaultName = nameMap.get(
+					LocaleUtil.getDefault());
+
+				if (_log.isWarnEnabled()) {
+					StringBundler sb = new StringBundler(5);
+
+					sb.append("No name was found for locale ");
+					sb.append(locale);
+					sb.append(". Using \"");
+					sb.append(oldGroupDefaultName);
+					sb.append("\" as the name instead.");
+
+					_log.warn(sb.toString());
+				}
+
+				nameMap.put(locale, oldGroupDefaultName);
+
+				group.setNameMap(nameMap);
+
+				groupLocalService.updateGroup(group);
 			});
 
 		groupActionableDynamicQuery.performActions();
@@ -1373,16 +1359,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		layoutPrototypeActionableDynamicQuery.setCompanyId(companyId);
 		layoutPrototypeActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<LayoutPrototype>() {
-
-				@Override
-				public void performAction(LayoutPrototype layoutPrototype)
-					throws PortalException {
-
-					layoutPrototypeLocalService.deleteLayoutPrototype(
-						layoutPrototype);
-				}
-
+			(LayoutPrototype layoutPrototype) -> {
+				layoutPrototypeLocalService.deleteLayoutPrototype(
+					layoutPrototype);
 			});
 
 		layoutPrototypeActionableDynamicQuery.performActions();
@@ -1426,13 +1405,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		roleActionableDynamicQuery.setCompanyId(companyId);
 		roleActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<Role>() {
-
-				@Override
-				public void performAction(Role role) throws PortalException {
-					roleLocalService.deleteRole(role);
-				}
-
+			(Role role) -> {
+				roleLocalService.deleteRole(role);
 			});
 
 		roleActionableDynamicQuery.performActions();
@@ -1484,15 +1458,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		userActionableDynamicQuery.setCompanyId(companyId);
 		userActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<User>() {
-
-				@Override
-				public void performAction(User user) throws PortalException {
-					if (!user.isDefaultUser()) {
-						userLocalService.deleteUser(user.getUserId());
-					}
+			(User user) -> {
+				if (!user.isDefaultUser()) {
+					userLocalService.deleteUser(user.getUserId());
 				}
-
 			});
 
 		userActionableDynamicQuery.performActions();
@@ -1707,37 +1676,23 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				groupLocalService.getActionableDynamicQuery();
 
 			_actionableDynamicQuery.setAddCriteriaMethod(
-				new ActionableDynamicQuery.AddCriteriaMethod() {
+				dynamicQuery -> {
+					Property parentGroupIdProperty =
+						PropertyFactoryUtil.forName("parentGroupId");
 
-					@Override
-					public void addCriteria(DynamicQuery dynamicQuery) {
-						Property parentGroupIdProperty =
-							PropertyFactoryUtil.forName("parentGroupId");
+					dynamicQuery.add(parentGroupIdProperty.eq(_parentGroupId));
 
-						dynamicQuery.add(
-							parentGroupIdProperty.eq(_parentGroupId));
+					Property siteProperty = PropertyFactoryUtil.forName("site");
 
-						Property siteProperty = PropertyFactoryUtil.forName(
-							"site");
-
-						dynamicQuery.add(siteProperty.eq(Boolean.TRUE));
-					}
-
+					dynamicQuery.add(siteProperty.eq(Boolean.TRUE));
 				});
 			_actionableDynamicQuery.setPerformActionMethod(
-				new ActionableDynamicQuery.PerformActionMethod<Group>() {
+				(Group group) -> {
+					if (!PortalUtil.isSystemGroup(group.getGroupKey()) &&
+						!group.isCompany() && !group.isStagingGroup()) {
 
-					@Override
-					public void performAction(Group group)
-						throws PortalException {
-
-						if (!PortalUtil.isSystemGroup(group.getGroupKey()) &&
-							!group.isCompany() && !group.isStagingGroup()) {
-
-							deleteGroup(group);
-						}
+						deleteGroup(group);
 					}
-
 				});
 		}
 
@@ -1786,27 +1741,15 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				organizationLocalService.getActionableDynamicQuery();
 
 			_actionableDynamicQuery.setAddCriteriaMethod(
-				new ActionableDynamicQuery.AddCriteriaMethod() {
+				dynamicQuery -> {
+					Property property = PropertyFactoryUtil.forName(
+						"parentOrganizationId");
 
-					@Override
-					public void addCriteria(DynamicQuery dynamicQuery) {
-						Property property = PropertyFactoryUtil.forName(
-							"parentOrganizationId");
-
-						dynamicQuery.add(property.eq(_parentOrganizationId));
-					}
-
+					dynamicQuery.add(property.eq(_parentOrganizationId));
 				});
 			_actionableDynamicQuery.setPerformActionMethod(
-				new ActionableDynamicQuery.PerformActionMethod<Organization>() {
-
-					@Override
-					public void performAction(Organization organization)
-						throws PortalException {
-
-						deleteOrganization(organization);
-					}
-
+				(Organization organization) -> {
+					deleteOrganization(organization);
 				});
 		}
 
@@ -1849,15 +1792,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			_actionableDynamicQuery.setCompanyId(companyId);
 			_actionableDynamicQuery.setPerformActionMethod(
-				new ActionableDynamicQuery.PerformActionMethod<UserGroup>() {
-
-					@Override
-					public void performAction(UserGroup userGroup)
-						throws PortalException {
-
-						userGroupLocalService.deleteUserGroup(userGroup);
-					}
-
+				(UserGroup userGroup) -> {
+					userGroupLocalService.deleteUserGroup(userGroup);
 				});
 		}
 

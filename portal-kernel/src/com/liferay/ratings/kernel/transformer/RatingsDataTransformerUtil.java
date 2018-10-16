@@ -16,7 +16,6 @@ package com.liferay.ratings.kernel.transformer;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -182,20 +181,15 @@ public class RatingsDataTransformerUtil {
 			RatingsEntryLocalServiceUtil.getActionableDynamicQuery();
 
 		ratingsEntryActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property property = PropertyFactoryUtil.forName(
+					classPKFieldName);
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property property = PropertyFactoryUtil.forName(
-						classPKFieldName);
+				dynamicQuery.add(property.eq(classPKFieldValue));
 
-					dynamicQuery.add(property.eq(classPKFieldValue));
+				property = PropertyFactoryUtil.forName("className");
 
-					property = PropertyFactoryUtil.forName("className");
-
-					dynamicQuery.add(property.eq(className));
-				}
-
+				dynamicQuery.add(property.eq(className));
 			});
 
 		ratingsEntryActionableDynamicQuery.setPerformActionMethod(

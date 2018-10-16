@@ -22,8 +22,6 @@ import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -249,38 +247,28 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 			kbArticleLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property property = PropertyFactoryUtil.forName("status");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property property = PropertyFactoryUtil.forName("status");
-
-					dynamicQuery.add(
-						property.eq(WorkflowConstants.STATUS_APPROVED));
-				}
-
+				dynamicQuery.add(
+					property.eq(WorkflowConstants.STATUS_APPROVED));
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<KBArticle>() {
+			(KBArticle kbArticle) -> {
+				try {
+					Document document = getDocument(kbArticle);
 
-				@Override
-				public void performAction(KBArticle kbArticle) {
-					try {
-						Document document = getDocument(kbArticle);
-
-						indexableActionableDynamicQuery.addDocuments(document);
-					}
-					catch (PortalException pe) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to index knowledge base article " +
-									kbArticle.getKbArticleId(),
-								pe);
-						}
+					indexableActionableDynamicQuery.addDocuments(document);
+				}
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index knowledge base article " +
+								kbArticle.getKbArticleId(),
+							pe);
 					}
 				}
-
 			});
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 

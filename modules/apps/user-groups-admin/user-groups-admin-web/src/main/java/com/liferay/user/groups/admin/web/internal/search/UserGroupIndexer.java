@@ -14,7 +14,6 @@
 
 package com.liferay.user.groups.admin.web.internal.search;
 
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -161,25 +160,20 @@ public class UserGroupIndexer extends BaseIndexer<UserGroup> {
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<UserGroup>() {
+			(UserGroup userGroup) -> {
+				try {
+					Document document = getDocument(userGroup);
 
-				@Override
-				public void performAction(UserGroup userGroup) {
-					try {
-						Document document = getDocument(userGroup);
-
-						indexableActionableDynamicQuery.addDocuments(document);
-					}
-					catch (PortalException pe) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to index user group " +
-									userGroup.getUserGroupId(),
-								pe);
-						}
+					indexableActionableDynamicQuery.addDocuments(document);
+				}
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index user group " +
+								userGroup.getUserGroupId(),
+							pe);
 					}
 				}
-
 			});
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 

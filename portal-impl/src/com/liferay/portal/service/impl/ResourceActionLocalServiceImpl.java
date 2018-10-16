@@ -16,7 +16,6 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
@@ -247,15 +246,10 @@ public class ResourceActionLocalServiceImpl
 		final long bitwiseValue = resourceAction.getBitwiseValue();
 
 		ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property nameProperty = PropertyFactoryUtil.forName("name");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property nameProperty = PropertyFactoryUtil.forName("name");
-
-					dynamicQuery.add(nameProperty.eq(name));
-				}
-
+				dynamicQuery.add(nameProperty.eq(name));
 			};
 
 		for (Company company : companyLocalService.getCompanies()) {

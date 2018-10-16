@@ -17,7 +17,6 @@ package com.liferay.bookmarks.internal.search;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -168,25 +167,20 @@ public class BookmarksFolderIndexer
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<BookmarksFolder>() {
+			(BookmarksFolder folder) -> {
+				try {
+					Document document = getDocument(folder);
 
-				@Override
-				public void performAction(BookmarksFolder folder) {
-					try {
-						Document document = getDocument(folder);
-
-						indexableActionableDynamicQuery.addDocuments(document);
-					}
-					catch (PortalException pe) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to index bookmarks folder " +
-									folder.getFolderId(),
-								pe);
-						}
+					indexableActionableDynamicQuery.addDocuments(document);
+				}
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index bookmarks folder " +
+								folder.getFolderId(),
+							pe);
 					}
 				}
-
 			});
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 

@@ -36,7 +36,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -638,43 +637,33 @@ public class DLFileEntryIndexer
 			DLFileEntryLocalServiceUtil.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property property = PropertyFactoryUtil.forName("folderId");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property property = PropertyFactoryUtil.forName("folderId");
+				long folderId = DLFolderConstants.getFolderId(
+					groupId, dataRepositoryId);
 
-					long folderId = DLFolderConstants.getFolderId(
-						groupId, dataRepositoryId);
-
-					dynamicQuery.add(property.eq(folderId));
-				}
-
+				dynamicQuery.add(property.eq(folderId));
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setGroupId(groupId);
 		indexableActionableDynamicQuery.setInterval(
 			PropsValues.DL_FILE_INDEXING_INTERVAL);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<DLFileEntry>() {
+			(DLFileEntry dlFileEntry) -> {
+				try {
+					Document document = getDocument(dlFileEntry);
 
-				@Override
-				public void performAction(DLFileEntry dlFileEntry) {
-					try {
-						Document document = getDocument(dlFileEntry);
-
-						indexableActionableDynamicQuery.addDocuments(document);
-					}
-					catch (PortalException pe) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to index document library file entry " +
-									dlFileEntry.getFileEntryId(),
-								pe);
-						}
+					indexableActionableDynamicQuery.addDocuments(document);
+				}
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index document library file entry " +
+								dlFileEntry.getFileEntryId(),
+							pe);
 					}
 				}
-
 			});
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
@@ -687,23 +676,16 @@ public class DLFileEntryIndexer
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<DLFolder>() {
+			(DLFolder dlFolder) -> {
+				long groupId = dlFolder.getGroupId();
+				long folderId = dlFolder.getFolderId();
 
-				@Override
-				public void performAction(DLFolder dlFolder)
-					throws PortalException {
+				String[] newIds = {
+					String.valueOf(companyId), String.valueOf(groupId),
+					String.valueOf(folderId)
+				};
 
-					long groupId = dlFolder.getGroupId();
-					long folderId = dlFolder.getFolderId();
-
-					String[] newIds = {
-						String.valueOf(companyId), String.valueOf(groupId),
-						String.valueOf(folderId)
-					};
-
-					reindex(newIds);
-				}
-
+				reindex(newIds);
 			});
 
 		actionableDynamicQuery.performActions();
@@ -715,22 +697,17 @@ public class DLFileEntryIndexer
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<Group>() {
+			(Group group) -> {
+				long groupId = group.getGroupId();
 
-				@Override
-				public void performAction(Group group) throws PortalException {
-					long groupId = group.getGroupId();
+				long folderId = groupId;
 
-					long folderId = groupId;
+				String[] newIds = {
+					String.valueOf(companyId), String.valueOf(groupId),
+					String.valueOf(folderId)
+				};
 
-					String[] newIds = {
-						String.valueOf(companyId), String.valueOf(groupId),
-						String.valueOf(folderId)
-					};
-
-					reindex(newIds);
-				}
-
+				reindex(newIds);
 			});
 
 		actionableDynamicQuery.performActions();

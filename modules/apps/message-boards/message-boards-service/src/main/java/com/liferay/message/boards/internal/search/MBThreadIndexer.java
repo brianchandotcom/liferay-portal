@@ -191,17 +191,9 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<MBCategory>() {
-
-				@Override
-				public void performAction(MBCategory category)
-					throws PortalException {
-
-					reindexThreads(
-						companyId, category.getGroupId(),
-						category.getCategoryId());
-				}
-
+			(MBCategory category) -> {
+				reindexThreads(
+					companyId, category.getGroupId(), category.getCategoryId());
 			});
 
 		actionableDynamicQuery.performActions();
@@ -284,45 +276,34 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 			mbThreadLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property categoryIdProperty = PropertyFactoryUtil.forName(
+					"categoryId");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property categoryIdProperty = PropertyFactoryUtil.forName(
-						"categoryId");
+				dynamicQuery.add(categoryIdProperty.eq(categoryId));
 
-					dynamicQuery.add(categoryIdProperty.eq(categoryId));
+				Property statusProperty = PropertyFactoryUtil.forName("status");
 
-					Property statusProperty = PropertyFactoryUtil.forName(
-						"status");
-
-					dynamicQuery.add(
-						statusProperty.eq(WorkflowConstants.STATUS_APPROVED));
-				}
-
+				dynamicQuery.add(
+					statusProperty.eq(WorkflowConstants.STATUS_APPROVED));
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setGroupId(groupId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<MBThread>() {
+			(MBThread thread) -> {
+				try {
+					Document document = getDocument(thread);
 
-				@Override
-				public void performAction(MBThread thread) {
-					try {
-						Document document = getDocument(thread);
-
-						indexableActionableDynamicQuery.addDocuments(document);
-					}
-					catch (PortalException pe) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to index message boards thread " +
-									thread.getThreadId(),
-								pe);
-						}
+					indexableActionableDynamicQuery.addDocuments(document);
+				}
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index message boards thread " +
+								thread.getThreadId(),
+							pe);
 					}
 				}
-
 			});
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 

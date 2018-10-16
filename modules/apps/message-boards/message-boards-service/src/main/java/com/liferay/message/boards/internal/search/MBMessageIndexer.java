@@ -446,17 +446,9 @@ public class MBMessageIndexer
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<MBCategory>() {
-
-				@Override
-				public void performAction(MBCategory category)
-					throws PortalException {
-
-					reindexMessages(
-						companyId, category.getGroupId(),
-						category.getCategoryId());
-				}
-
+			(MBCategory category) -> {
+				reindexMessages(
+					companyId, category.getGroupId(), category.getCategoryId());
 			});
 
 		actionableDynamicQuery.performActions();
@@ -509,53 +501,42 @@ public class MBMessageIndexer
 			mbMessageLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property categoryIdProperty = PropertyFactoryUtil.forName(
+					"categoryId");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property categoryIdProperty = PropertyFactoryUtil.forName(
-						"categoryId");
+				dynamicQuery.add(categoryIdProperty.eq(categoryId));
 
-					dynamicQuery.add(categoryIdProperty.eq(categoryId));
+				Property statusProperty = PropertyFactoryUtil.forName("status");
 
-					Property statusProperty = PropertyFactoryUtil.forName(
-						"status");
+				Integer[] statuses = {
+					WorkflowConstants.STATUS_APPROVED,
+					WorkflowConstants.STATUS_IN_TRASH
+				};
 
-					Integer[] statuses = {
-						WorkflowConstants.STATUS_APPROVED,
-						WorkflowConstants.STATUS_IN_TRASH
-					};
-
-					dynamicQuery.add(statusProperty.in(statuses));
-				}
-
+				dynamicQuery.add(statusProperty.in(statuses));
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setGroupId(groupId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<MBMessage>() {
-
-				@Override
-				public void performAction(MBMessage message) {
-					if (message.isDiscussion() && message.isRoot()) {
-						return;
-					}
-
-					try {
-						Document document = getDocument(message);
-
-						indexableActionableDynamicQuery.addDocuments(document);
-					}
-					catch (PortalException pe) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to index message boards message " +
-									message.getMessageId(),
-								pe);
-						}
-					}
+			(MBMessage message) -> {
+				if (message.isDiscussion() && message.isRoot()) {
+					return;
 				}
 
+				try {
+					Document document = getDocument(message);
+
+					indexableActionableDynamicQuery.addDocuments(document);
+				}
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index message boards message " +
+								message.getMessageId(),
+							pe);
+					}
+				}
 			});
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 

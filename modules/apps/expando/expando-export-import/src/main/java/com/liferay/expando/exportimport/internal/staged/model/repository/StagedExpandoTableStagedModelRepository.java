@@ -25,7 +25,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -185,21 +184,12 @@ public class StagedExpandoTableStagedModelRepository
 			portletDataContext.getCompanyId());
 		exportActionableDynamicQuery.setModelClass(ExpandoTable.class);
 		exportActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<ExpandoTable>() {
+			(ExpandoTable expandoTable) -> {
+				StagedExpandoTable stagedExpandoTable = ModelAdapterUtil.adapt(
+					expandoTable, ExpandoTable.class, StagedExpandoTable.class);
 
-				@Override
-				public void performAction(ExpandoTable expandoTable)
-					throws PortalException {
-
-					StagedExpandoTable stagedExpandoTable =
-						ModelAdapterUtil.adapt(
-							expandoTable, ExpandoTable.class,
-							StagedExpandoTable.class);
-
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, stagedExpandoTable);
-				}
-
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, stagedExpandoTable);
 			});
 		exportActionableDynamicQuery.setPrimaryKeyPropertyName("tableId");
 		exportActionableDynamicQuery.setStagedModelType(

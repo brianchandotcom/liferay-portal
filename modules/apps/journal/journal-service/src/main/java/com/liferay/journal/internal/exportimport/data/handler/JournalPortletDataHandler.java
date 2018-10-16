@@ -470,54 +470,49 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			exportActionableDynamicQuery.getAddCriteriaMethod();
 
 		exportActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				addCriteriaMethod.addCriteria(dynamicQuery);
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					addCriteriaMethod.addCriteria(dynamicQuery);
+				if (portletDataContext.getBooleanParameter(
+						NAMESPACE, "version-history")) {
 
-					if (portletDataContext.getBooleanParameter(
-							NAMESPACE, "version-history")) {
-
-						return;
-					}
-
-					Class<?> clazz = getClass();
-
-					DynamicQuery versionArticleDynamicQuery =
-						DynamicQueryFactoryUtil.forClass(
-							JournalArticle.class, "versionArticle",
-							clazz.getClassLoader());
-
-					versionArticleDynamicQuery.setProjection(
-						ProjectionFactoryUtil.alias(
-							ProjectionFactoryUtil.max("versionArticle.version"),
-							"versionArticle.version"));
-
-					// We need to use the "this" default alias to make sure the
-					// database engine handles this subquery as a correlated
-					// subquery
-
-					versionArticleDynamicQuery.add(
-						RestrictionsFactoryUtil.eqProperty(
-							"this.resourcePrimKey",
-							"versionArticle.resourcePrimKey"));
-
-					Property workflowStatusProperty =
-						PropertyFactoryUtil.forName("status");
-
-					versionArticleDynamicQuery.add(
-						workflowStatusProperty.in(
-							_journalArticleStagedModelDataHandler.
-								getExportableStatuses()));
-
-					Property versionProperty = PropertyFactoryUtil.forName(
-						"version");
-
-					dynamicQuery.add(
-						versionProperty.eq(versionArticleDynamicQuery));
+					return;
 				}
 
+				Class<?> clazz = getClass();
+
+				DynamicQuery versionArticleDynamicQuery =
+					DynamicQueryFactoryUtil.forClass(
+						JournalArticle.class, "versionArticle",
+						clazz.getClassLoader());
+
+				versionArticleDynamicQuery.setProjection(
+					ProjectionFactoryUtil.alias(
+						ProjectionFactoryUtil.max("versionArticle.version"),
+						"versionArticle.version"));
+
+				// We need to use the "this" default alias to make sure the
+				// database engine handles this subquery as a correlated
+				// subquery
+
+				versionArticleDynamicQuery.add(
+					RestrictionsFactoryUtil.eqProperty(
+						"this.resourcePrimKey",
+						"versionArticle.resourcePrimKey"));
+
+				Property workflowStatusProperty = PropertyFactoryUtil.forName(
+					"status");
+
+				versionArticleDynamicQuery.add(
+					workflowStatusProperty.in(
+						_journalArticleStagedModelDataHandler.
+							getExportableStatuses()));
+
+				Property versionProperty = PropertyFactoryUtil.forName(
+					"version");
+
+				dynamicQuery.add(
+					versionProperty.eq(versionArticleDynamicQuery));
 			});
 
 		exportActionableDynamicQuery.setStagedModelType(
@@ -537,21 +532,15 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			exportActionableDynamicQuery.getAddCriteriaMethod();
 
 		exportActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				addCriteriaMethod.addCriteria(dynamicQuery);
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					addCriteriaMethod.addCriteria(dynamicQuery);
+				Property classNameIdProperty = PropertyFactoryUtil.forName(
+					"classNameId");
 
-					Property classNameIdProperty = PropertyFactoryUtil.forName(
-						"classNameId");
+				long classNameId = _portal.getClassNameId(JournalArticle.class);
 
-					long classNameId = _portal.getClassNameId(
-						JournalArticle.class);
-
-					dynamicQuery.add(classNameIdProperty.eq(classNameId));
-				}
-
+				dynamicQuery.add(classNameIdProperty.eq(classNameId));
 			});
 
 		exportActionableDynamicQuery.setStagedModelType(
@@ -587,47 +576,40 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			exportActionableDynamicQuery.getAddCriteriaMethod();
 
 		exportActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				addCriteriaMethod.addCriteria(dynamicQuery);
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					addCriteriaMethod.addCriteria(dynamicQuery);
+				Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
 
-					Disjunction disjunction =
-						RestrictionsFactoryUtil.disjunction();
+				Property classPKProperty = PropertyFactoryUtil.forName(
+					"classPK");
 
-					Property classPKProperty = PropertyFactoryUtil.forName(
-						"classPK");
+				disjunction.add(classPKProperty.eq(0L));
 
-					disjunction.add(classPKProperty.eq(0L));
+				DynamicQuery ddmStructureDynamicQuery =
+					_ddmStructureLocalService.dynamicQuery();
 
-					DynamicQuery ddmStructureDynamicQuery =
-						_ddmStructureLocalService.dynamicQuery();
+				Property classNameIdProperty = PropertyFactoryUtil.forName(
+					"classNameId");
 
-					Property classNameIdProperty = PropertyFactoryUtil.forName(
-						"classNameId");
+				long ddmStructureClassNameId = _portal.getClassNameId(
+					DDMStructure.class);
 
-					long ddmStructureClassNameId = _portal.getClassNameId(
-						DDMStructure.class);
+				dynamicQuery.add(
+					classNameIdProperty.eq(ddmStructureClassNameId));
 
-					dynamicQuery.add(
-						classNameIdProperty.eq(ddmStructureClassNameId));
+				long articleClassNameId = _portal.getClassNameId(
+					JournalArticle.class);
 
-					long articleClassNameId = _portal.getClassNameId(
-						JournalArticle.class);
+				ddmStructureDynamicQuery.add(
+					classNameIdProperty.eq(articleClassNameId));
 
-					ddmStructureDynamicQuery.add(
-						classNameIdProperty.eq(articleClassNameId));
+				ddmStructureDynamicQuery.setProjection(
+					ProjectionFactoryUtil.property("structureId"));
 
-					ddmStructureDynamicQuery.setProjection(
-						ProjectionFactoryUtil.property("structureId"));
+				disjunction.add(classPKProperty.in(ddmStructureDynamicQuery));
 
-					disjunction.add(
-						classPKProperty.in(ddmStructureDynamicQuery));
-
-					dynamicQuery.add(disjunction);
-				}
-
+				dynamicQuery.add(disjunction);
 			});
 
 		exportActionableDynamicQuery.setStagedModelType(

@@ -16,7 +16,6 @@ package com.liferay.asset.categories.internal.search;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -237,28 +236,22 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<AssetCategory>() {
+			(AssetCategory category) -> {
+				try {
+					Document document = getDocument(category);
 
-				@Override
-				public void performAction(AssetCategory category) {
-					try {
-						Document document = getDocument(category);
-
-						if (document != null) {
-							indexableActionableDynamicQuery.addDocuments(
-								document);
-						}
-					}
-					catch (PortalException pe) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to index asset category " +
-									category.getCategoryId(),
-								pe);
-						}
+					if (document != null) {
+						indexableActionableDynamicQuery.addDocuments(document);
 					}
 				}
-
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index asset category " +
+								category.getCategoryId(),
+							pe);
+					}
+				}
 			});
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 

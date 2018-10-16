@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -59,45 +58,31 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 			_ddlRecordSetLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property ddmStructureIdProperty = PropertyFactoryUtil.forName(
+					"DDMStructureId");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property ddmStructureIdProperty =
-						PropertyFactoryUtil.forName("DDMStructureId");
-
-					dynamicQuery.add(
-						ddmStructureIdProperty.eq(
-							ddmStructure.getStructureId()));
-				}
-
+				dynamicQuery.add(
+					ddmStructureIdProperty.eq(ddmStructure.getStructureId()));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<DDLRecordSet>() {
+			(DDLRecordSet recordSet) -> {
+				ServiceContext serviceContext = new ServiceContext();
 
-				@Override
-				public void performAction(DDLRecordSet recordSet)
-					throws PortalException {
+				serviceContext.setAddGuestPermissions(true);
+				serviceContext.setAddGroupPermissions(true);
 
-					ServiceContext serviceContext = new ServiceContext();
+				serviceContext.setScopeGroupId(recordSet.getGroupId());
 
-					serviceContext.setAddGuestPermissions(true);
-					serviceContext.setAddGroupPermissions(true);
+				long defaultUserId = _userLocalService.getDefaultUserId(
+					recordSet.getCompanyId());
 
-					serviceContext.setScopeGroupId(recordSet.getGroupId());
+				serviceContext.setUserId(defaultUserId);
 
-					long defaultUserId = _userLocalService.getDefaultUserId(
-						recordSet.getCompanyId());
-
-					serviceContext.setUserId(defaultUserId);
-
-					_ddlRecordSetLocalService.updateRecordSet(
-						recordSet.getRecordSetId(),
-						ddmStructure.getStructureId(), recordSet.getNameMap(),
-						recordSet.getDescriptionMap(),
-						recordSet.getMinDisplayRows(), serviceContext);
-				}
-
+				_ddlRecordSetLocalService.updateRecordSet(
+					recordSet.getRecordSetId(), ddmStructure.getStructureId(),
+					recordSet.getNameMap(), recordSet.getDescriptionMap(),
+					recordSet.getMinDisplayRows(), serviceContext);
 			});
 
 		return actionableDynamicQuery;

@@ -16,7 +16,6 @@ package com.liferay.asset.categories.internal.search;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -178,25 +177,20 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<AssetVocabulary>() {
+			(AssetVocabulary assetVocabulary) -> {
+				try {
+					Document document = getDocument(assetVocabulary);
 
-				@Override
-				public void performAction(AssetVocabulary assetVocabulary) {
-					try {
-						Document document = getDocument(assetVocabulary);
-
-						indexableActionableDynamicQuery.addDocuments(document);
-					}
-					catch (PortalException pe) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to index asset vocabulary " +
-									assetVocabulary.getVocabularyId(),
-								pe);
-						}
+					indexableActionableDynamicQuery.addDocuments(document);
+				}
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index asset vocabulary " +
+								assetVocabulary.getVocabularyId(),
+							pe);
 					}
 				}
-
 			});
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -639,6 +641,32 @@ public class UserODataRetrieverTest {
 	}
 
 	@Test
+	public void testGetUsersFilterByUserGroupIds() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+		_user2 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		_userGroup = UserGroupTestUtil.addUserGroup();
+
+		_userLocalService.addUserGroupUser(_userGroup.getUserGroupId(), _user1);
+
+		List<User> users = _userODataRetriever.getUsers(
+			_group1.getCompanyId(),
+			String.format(
+				"(firstName eq '%s') and (userGroupIds eq '%s')", firstName,
+				_userGroup.getUserGroupId()),
+			LocaleUtil.getDefault(), 0, 2);
+
+		Assert.assertEquals(users.toString(), 1, users.size());
+		Assert.assertEquals(_user1, users.get(0));
+	}
+
+	@Test
 	public void testGetUsersFilterByUserId() throws Exception {
 		_user1 = UserTestUtil.addUser(_group1.getGroupId());
 
@@ -695,6 +723,9 @@ public class UserODataRetrieverTest {
 
 	@DeleteAfterTestRun
 	private User _user2;
+
+	@DeleteAfterTestRun
+	private UserGroup _userGroup;
 
 	@Inject
 	private UserLocalService _userLocalService;

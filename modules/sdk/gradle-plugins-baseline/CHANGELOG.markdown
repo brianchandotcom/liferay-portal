@@ -114,6 +114,18 @@ versioning is incorrect.
 [LPS-85678]: Check the content of the `.lfrbuild-packageinfo` file to ignore
 specified baseline warnings.
 
+## 1.3.5 - 2018-10-15
+
+### Changed
+[LPS-85678]: Check the content of the `.lfrbuild-packageinfo` file to ignore
+specified baseline warnings:
+	- `EXCESSIVE-VERSION-INCREASE`
+	- `PACKAGE ADDED-MISSING-PACKAGEINFO`
+	- `PACKAGE-REMOVED`
+	- `PACKAGE-REMOVED-UNNECESSARY-PACKAGEINFO`
+	- `VERSION-INCREASE-REQUIRED`
+	- `VERSION-INCREASE-SUGGESTED`
+
 [Bnd Builder Gradle Plugin]: https://github.com/bndtools/bnd/tree/master/biz.aQute.bnd.gradle
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [LPS-69470]: https://issues.liferay.com/browse/LPS-69470

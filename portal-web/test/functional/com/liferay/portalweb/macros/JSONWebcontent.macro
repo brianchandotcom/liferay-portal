@@ -1,0 +1,114 @@
+<definition>
+	<command name="_addWebContent">
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return name="portalURL" />
+		</execute>
+
+		<var name="titleMap"><![CDATA[{"en_US":"${title}"}]]></var>
+
+		<if>
+			<not>
+				<isset var="folderId" />
+			</not>
+			<then>
+				<var name="folderId" value="0" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="description" />
+			<then>
+				<var name="descriptionMap"><![CDATA[{"en_US":"${description}"}]]></var>
+			</then>
+			<else>
+				<var name="descriptionMap" value="{}" />
+			</else>
+		</if>
+
+		<execute macro="JSONWebcontent#_convertToXML">
+			<var name="content" value="${content}" />
+			<return name="contentXML" />
+		</execute>
+
+		<var name="curl"><![CDATA[
+			${portalURL}/api/jsonws/journal.journalarticle/add-article \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d folderId=${folderId} \
+				-d titleMap=${titleMap} \
+				-d descriptionMap=${descriptionMap} \
+				-d content=${contentXML} \
+				-d ddmStructureKey=BASIC-WEB-CONTENT \
+				-d ddmTemplateKey=BASIC-WEB-CONTENT
+		]]></var>
+
+		<execute macro="JSONGroup#getGroupName">
+			<return name="groupName" />
+			<var name="groupId" value="${groupId}" />
+		</execute>
+
+		<echo message="## Create a 'Web Content' with the following info using JSONWS:" />
+
+		<echo message="## * Group Name: ${groupName}" />
+
+		<echo message="## * Folder Id: ${folderId}" />
+
+		<echo message="## * Title: ${title}" />
+
+		<echo message="## * Description: ${description}" />
+
+		<echo message="## * Content: ${content}" />
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
+			<arg value="${curl}" />
+		</execute>
+	</command>
+
+	<command name="_convertToXML">
+		<var name="contentXML"><![CDATA[<root available-locales="en_US" default-locale="en_US"> <dynamic-element name="content" type="text_area" index-type="text"> <dynamic-content language-id="en_US">${content}</dynamic-content> </dynamic-element> </root> ]]></var>
+
+		<return value="${contentXML}" />
+	</command>
+
+	<command name="addWebContent">
+		<if>
+			<isset var="groupName" />
+			<then>
+				<execute macro="JSONGroup#getGroupIdByName">
+					<return name="groupId" />
+					<var name="groupName" value="${groupName}" />
+				</execute>
+			</then>
+			<else>
+				<fail message="Please set 'groupName' to get groupId" />
+			</else>
+		</if>
+
+		<if>
+			<not>
+				<isset var="title" />
+			</not>
+			<then>
+				<fail message="Please set 'title.'" />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="content" />
+			</not>
+			<then>
+				<fail message="Please set 'content.'" />
+			</then>
+		</if>
+
+		<execute macro="JSONWebcontent#_addWebContent">
+			<var name="content" value="${content}" />
+			<var name="description" value="${description}" />
+			<var name="folderId" value="${folderId}" />
+			<var name="groupId" value="${groupId}" />
+			<var name="title" value="${title}" />
+		</execute>
+	</command>
+</definition>

@@ -132,7 +132,7 @@ class ShareFormPopover extends Component {
 				<div class={formClasses}>
 					<div class="input-group">
 						<div class="input-group-item input-group-prepend">
-							<input class="form-control" ref="shareFieldURL" type="text" value={url} />
+							<input class="form-control" readonly={true} ref="shareFieldURL" type="text" value={url} />
 							{success && (
 								<div class="form-feedback-group">
 									<div class="form-feedback-item">{strings['copied-to-clipboard']}</div>

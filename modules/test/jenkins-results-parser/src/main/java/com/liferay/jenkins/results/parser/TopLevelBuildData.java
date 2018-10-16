@@ -21,6 +21,8 @@ import java.util.List;
  */
 public interface TopLevelBuildData extends BuildData {
 
+	public void addDownstreamBuildData(BuildData buildData);
+
 	public List<String> getDistNodes();
 
 	public String getDistPath();

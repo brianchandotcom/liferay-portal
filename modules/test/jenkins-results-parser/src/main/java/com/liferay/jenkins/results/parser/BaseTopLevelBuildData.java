@@ -16,7 +16,9 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -27,6 +29,25 @@ import org.apache.commons.lang.StringUtils;
  */
 public abstract class BaseTopLevelBuildData
 	extends BaseBuildData implements TopLevelBuildData {
+
+	@Override
+	public void addDownstreamBuildData(BuildData buildData) {
+		String downstreamRunIDs = optString("downstream_run_ids");
+
+		if (downstreamRunIDs == null) {
+			downstreamRunIDs = "";
+		}
+
+		List<String> downstreamRunIDList = new ArrayList<>();
+
+		Collections.addAll(downstreamRunIDList, downstreamRunIDs.split(","));
+
+		Collections.addAll(downstreamRunIDList, buildData.getRunID());
+
+		put(
+			"downstream_run_ids",
+			JenkinsResultsParserUtil.join(",", downstreamRunIDList));
+	}
 
 	@Override
 	public List<String> getDistNodes() {

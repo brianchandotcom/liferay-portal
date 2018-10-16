@@ -115,14 +115,7 @@ public class XMLResourceActionsFileCheck extends BaseFileCheck {
 
 		@Override
 		public String getElementName(Element portletResourceElement) {
-			Element portletNameElement = portletResourceElement.element(
-				getNameAttribute());
-
-			if (portletNameElement == null) {
-				return null;
-			}
-
-			return portletNameElement.getText();
+			return getTagValue(portletResourceElement);
 		}
 
 	}

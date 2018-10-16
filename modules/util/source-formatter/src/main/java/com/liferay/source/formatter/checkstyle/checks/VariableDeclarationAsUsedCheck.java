@@ -54,10 +54,11 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 		List<DetailAST> identASTList) {
 
 		if (DetailASTUtil.hasParentWithTokenType(
-				variableDefAST, TokenTypes.FOR_INIT) ||
+				variableDefAST, TokenTypes.FOR_EACH_CLAUSE,
+				TokenTypes.FOR_INIT) ||
 			_containsMethodName(
 				variableDefAST, "currentTimeMillis",
-				"(add|create|delete|post|register|update)([A-Z].*)?",
+				"(add|create|delete|post|put|register|update)([A-Z].*)?",
 				"toString")) {
 
 			return;

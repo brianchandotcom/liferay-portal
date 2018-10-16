@@ -50,6 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"mvc.command.name=/document_library/google_drive_background_task_status"
 	},
@@ -110,7 +111,7 @@ public class GoogleDriveBackgroundTaskStatusMVCResourceCommand
 				_portal.getLiferayPortletResponse(resourceResponse);
 
 			PortletURL portletURL = liferayPortletResponse.createRenderURL(
-				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
+				_portal.getPortletId(resourceRequest));
 
 			portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 

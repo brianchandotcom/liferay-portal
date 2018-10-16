@@ -59,6 +59,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"mvc.command.name=/document_library/edit_in_google_docs"
 	},
@@ -149,6 +150,8 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 						() -> _addGoogleDriveFileEntry(
 							repositoryId, folderId, contentType,
 							serviceContext)));
+
+				hideDefaultSuccessMessage(actionRequest);
 			}
 			catch (PortalException pe) {
 				throw pe;
@@ -194,6 +197,8 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 						_transactionConfig,
 						() -> _checkOutGoogleDriveFileEntry(
 							fileEntryId, serviceContext)));
+
+				hideDefaultSuccessMessage(actionRequest);
 			}
 			catch (PortalException pe) {
 				throw pe;
@@ -220,7 +225,7 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 		throws PortalException {
 
 		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
-			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+			portletRequest, _portal.getPortletId(portletRequest),
 			_portal.getControlPanelPlid(portletRequest),
 			PortletRequest.RENDER_PHASE);
 

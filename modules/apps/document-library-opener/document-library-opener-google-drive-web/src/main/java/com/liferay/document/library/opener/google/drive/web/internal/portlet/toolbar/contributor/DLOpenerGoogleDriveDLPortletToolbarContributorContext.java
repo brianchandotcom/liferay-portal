@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.opener.google.drive.web.internal.portlet.toolbar.contributor;
 
-import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
 import com.liferay.document.library.opener.google.drive.constants.DLOpenerGoogleDriveMimeTypes;
@@ -67,15 +66,15 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 
 		menuItems.add(
 			_createURLMenuItem(
-				portletRequest, folder, "google-docs-document",
+				portletRequest, folder, "google-docs",
 				DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_DOCX));
 		menuItems.add(
 			_createURLMenuItem(
-				portletRequest, folder, "google-docs-presentation",
+				portletRequest, folder, "google-slides",
 				DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_PPTX));
 		menuItems.add(
 			_createURLMenuItem(
-				portletRequest, folder, "google-docs-spreadsheet",
+				portletRequest, folder, "google-sheets",
 				DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_XSLX));
 	}
 
@@ -97,7 +96,7 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 
 		try {
 			LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
-				portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+				portletRequest, _portal.getPortletId(portletRequest),
 				PortletRequest.ACTION_PHASE);
 
 			liferayPortletURL.setParameter(

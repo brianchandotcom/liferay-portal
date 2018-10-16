@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLAppServiceWrapper;
+import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceConstants;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveFileReference;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
@@ -162,15 +163,18 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 		if (!title.equals(dlOpenerGoogleDriveFileReference.getTitle())) {
 			title = _uniqueFileEntryTitleProvider.provide(
 				fileEntry.getGroupId(), fileEntry.getFolderId(),
-				dlOpenerGoogleDriveFileReference.getTitle());
+				_dlValidator.fixName(
+					dlOpenerGoogleDriveFileReference.getTitle()));
 		}
 
 		try {
-			updateFileEntry(
-				fileEntry.getFileEntryId(),
-				dlOpenerGoogleDriveFileReference.getTitle() +
+			String sourceFileName =
+				title +
 					DLOpenerGoogleDriveMimeTypes.getMimeTypeExtension(
-						fileEntry.getMimeType()),
+						fileEntry.getMimeType());
+
+			updateFileEntry(
+				fileEntry.getFileEntryId(), sourceFileName,
 				fileEntry.getMimeType(), title, fileEntry.getDescription(),
 				StringPool.BLANK, DLVersionNumberIncrease.NONE, file,
 				serviceContext);
@@ -197,6 +201,9 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 
 	@Reference
 	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
+
+	@Reference
+	private DLValidator _dlValidator;
 
 	@Reference
 	private UniqueFileEntryTitleProvider _uniqueFileEntryTitleProvider;

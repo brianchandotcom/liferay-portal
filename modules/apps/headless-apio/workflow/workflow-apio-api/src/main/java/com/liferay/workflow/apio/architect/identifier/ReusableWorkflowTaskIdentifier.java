@@ -37,7 +37,7 @@ public interface ReusableWorkflowTaskIdentifier {
 
 	public enum WorkflowTaskType {
 
-		TO_ME("assigned-to-me"), TO_MY_ROLE("assigned-to-my-role");
+		TO_ME("assigned-to-me"), TO_MY_ROLES("assigned-to-my-roles");
 
 		public static WorkflowTaskType get(String name) {
 			return _workflowTaskTypes.get(name);

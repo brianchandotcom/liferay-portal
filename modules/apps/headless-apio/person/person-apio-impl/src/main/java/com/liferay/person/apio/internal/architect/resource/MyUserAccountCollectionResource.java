@@ -93,7 +93,7 @@ public class MyUserAccountCollectionResource
 		userWrapperFirstStep.addRelatedCollection(
 			"tasksAssignedToMyRoles", WorkflowTaskIdentifier.class,
 			__ -> ReusableWorkflowTaskIdentifier.create(
-				ReusableWorkflowTaskIdentifier.WorkflowTaskType.TO_MY_ROLE));
+				ReusableWorkflowTaskIdentifier.WorkflowTaskType.TO_MY_ROLES));
 
 		return userWrapperFirstStep.build();
 	}

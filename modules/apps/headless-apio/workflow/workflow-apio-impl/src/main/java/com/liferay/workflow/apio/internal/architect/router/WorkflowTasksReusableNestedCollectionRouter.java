@@ -86,7 +86,7 @@ public class WorkflowTasksReusableNestedCollectionRouter
 		}
 		else if (workflowTaskType.equals(
 					ReusableWorkflowTaskIdentifier.
-						WorkflowTaskType.TO_MY_ROLE)) {
+						WorkflowTaskType.TO_MY_ROLES)) {
 
 			workflowTasks = workflowTaskManager.getWorkflowTasksByUserRoles(
 				company.getCompanyId(), currentUser.getUserId(), null,

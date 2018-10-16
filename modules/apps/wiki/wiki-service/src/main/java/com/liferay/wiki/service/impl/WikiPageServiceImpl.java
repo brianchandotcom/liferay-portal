@@ -881,14 +881,15 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			else {
 				String value = null;
 
-				WikiGroupServiceOverriddenConfiguration
-					wikiGroupServiceOverriddenConfiguration =
-						configurationProvider.getConfiguration(
-							WikiGroupServiceOverriddenConfiguration.class,
-							new GroupServiceSettingsLocator(
-								page.getGroupId(), WikiConstants.SERVICE_NAME));
-
 				if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
+					WikiGroupServiceOverriddenConfiguration
+						wikiGroupServiceOverriddenConfiguration =
+							configurationProvider.getConfiguration(
+								WikiGroupServiceOverriddenConfiguration.class,
+								new GroupServiceSettingsLocator(
+									page.getGroupId(),
+									WikiConstants.SERVICE_NAME));
+
 					value = StringUtil.shorten(
 						HtmlUtil.extractText(page.getContent()),
 						wikiGroupServiceOverriddenConfiguration.

@@ -31,8 +31,6 @@ import com.liferay.wiki.service.WikiPageService;
 import com.liferay.wiki.web.internal.display.context.util.WikiRequestHelper;
 import com.liferay.wiki.web.internal.util.WikiUtil;
 
-import java.util.Locale;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -49,7 +47,14 @@ public class RSSAction extends BaseRSSStrutsAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String rss = StringPool.BLANK;
+
 		long nodeId = ParamUtil.getLong(request, "nodeId");
+
+		if (nodeId <= 0) {
+			return rss.getBytes(StringPool.UTF8);
+		}
+
 		String title = ParamUtil.getString(request, "title");
 		int max = ParamUtil.getInteger(
 			request, "max", SearchContainer.DEFAULT_DELTA);
@@ -74,25 +79,18 @@ public class RSSAction extends BaseRSSStrutsAction {
 
 		String entryURL = feedURL + StringPool.SLASH + title;
 
-		Locale locale = themeDisplay.getLocale();
+		String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
+			themeDisplay.getPathMain(), themeDisplay.getPlid(), nodeId, title);
 
-		String rss = StringPool.BLANK;
-
-		if (nodeId > 0) {
-			String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
-				themeDisplay.getPathMain(), themeDisplay.getPlid(), nodeId,
-				title);
-
-			if (Validator.isNotNull(title)) {
-				rss = _wikiPageService.getPagesRSS(
-					nodeId, title, max, type, version, displayStyle, feedURL,
-					entryURL, attachmentURLPrefix, locale);
-			}
-			else {
-				rss = _wikiPageService.getNodePagesRSS(
-					nodeId, max, type, version, displayStyle, feedURL, entryURL,
-					attachmentURLPrefix);
-			}
+		if (Validator.isNotNull(title)) {
+			rss = _wikiPageService.getPagesRSS(
+				nodeId, title, max, type, version, displayStyle, feedURL,
+				entryURL, attachmentURLPrefix, themeDisplay.getLocale());
+		}
+		else {
+			rss = _wikiPageService.getNodePagesRSS(
+				nodeId, max, type, version, displayStyle, feedURL, entryURL,
+				attachmentURLPrefix);
 		}
 
 		return rss.getBytes(StringPool.UTF8);

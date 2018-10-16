@@ -106,10 +106,9 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 
 			String oldName = wikiNode.getName();
 
-			WikiNode trashWikiNode = null;
-
 			if (moveToTrash) {
-				trashWikiNode = _wikiNodeService.moveNodeToTrash(deleteNodeId);
+				WikiNode trashWikiNode = _wikiNodeService.moveNodeToTrash(
+					deleteNodeId);
 
 				trashedModels.add(trashWikiNode);
 			}
@@ -287,10 +286,10 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 			modifiableSettings.setValues("hiddenNodes", hiddenNodes);
 		}
 
-		String[] visibleNodes = modifiableSettings.getValues(
-			"visibleNodes", null);
-
 		if (hiddenNodes != null) {
+			String[] visibleNodes = modifiableSettings.getValues(
+				"visibleNodes", null);
+
 			if (newName.isEmpty()) {
 				ArrayUtil.remove(visibleNodes, oldName);
 			}

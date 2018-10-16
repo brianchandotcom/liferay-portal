@@ -89,9 +89,6 @@ public class WebFormConfigurationAction extends DefaultConfigurationAction {
 		boolean updateFields = ParamUtil.getBoolean(
 			actionRequest, "updateFields");
 
-		String portletResource = ParamUtil.getString(
-			actionRequest, "portletResource");
-
 		PortletPreferences preferences = actionRequest.getPreferences();
 
 		LocalizationUtil.setLocalizedPreferencesValues(
@@ -112,6 +109,9 @@ public class WebFormConfigurationAction extends DefaultConfigurationAction {
 
 		if (updateFields) {
 			int i = 1;
+
+			String portletResource = ParamUtil.getString(
+				actionRequest, "portletResource");
 
 			String databaseTableName = WebFormUtil.getNewDatabaseTableName(
 				portletResource);

@@ -127,13 +127,14 @@ public class UserGroupsAdminPortlet extends MVCPortlet {
 			actionRequest, "publicLayoutSetPrototypeId");
 		long privateLayoutSetPrototypeId = ParamUtil.getLong(
 			actionRequest, "privateLayoutSetPrototypeId");
-		boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-			actionRequest, "publicLayoutSetPrototypeLinkEnabled");
-		boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-			actionRequest, "privateLayoutSetPrototypeLinkEnabled");
 
 		if ((privateLayoutSetPrototypeId > 0) ||
 			(publicLayoutSetPrototypeId > 0)) {
+
+			boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+				actionRequest, "publicLayoutSetPrototypeLinkEnabled");
+			boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+				actionRequest, "privateLayoutSetPrototypeLinkEnabled");
 
 			SitesUtil.updateLayoutSetPrototypesLinks(
 				userGroup.getGroup(), publicLayoutSetPrototypeId,

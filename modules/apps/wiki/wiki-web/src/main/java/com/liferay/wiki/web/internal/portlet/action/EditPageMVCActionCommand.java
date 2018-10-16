@@ -182,11 +182,11 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
 
-				int workflowAction = ParamUtil.getInteger(
-					actionRequest, "workflowAction",
-					WorkflowConstants.ACTION_PUBLISH);
-
 				if (page != null) {
+					int workflowAction = ParamUtil.getInteger(
+						actionRequest, "workflowAction",
+						WorkflowConstants.ACTION_PUBLISH);
+
 					if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
 						redirect = getSaveAndContinueRedirect(
 							actionRequest, actionResponse, page, redirect);
@@ -369,7 +369,6 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 		String title = ParamUtil.getString(actionRequest, "title");
-		double version = ParamUtil.getDouble(actionRequest, "version");
 
 		String content = ParamUtil.getString(actionRequest, "content");
 		String summary = ParamUtil.getString(actionRequest, "summary");
@@ -377,8 +376,6 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 		String format = ParamUtil.getString(actionRequest, "format");
 		String parentTitle = ParamUtil.getString(actionRequest, "parentTitle");
 		String redirectTitle = null;
-		boolean copyPageAttachments = ParamUtil.getBoolean(
-			actionRequest, "copyPageAttachments");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			WikiPage.class.getName(), actionRequest);
@@ -386,6 +383,8 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 		WikiPage page = null;
 
 		if (cmd.equals(Constants.UPDATE)) {
+			double version = ParamUtil.getDouble(actionRequest, "version");
+
 			page = _wikiPageService.updatePage(
 				nodeId, title, version, content, summary, minorEdit, format,
 				parentTitle, redirectTitle, serviceContext);
@@ -394,6 +393,9 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 			page = _wikiPageService.addPage(
 				nodeId, title, content, summary, minorEdit, format, parentTitle,
 				redirectTitle, serviceContext);
+
+			boolean copyPageAttachments = ParamUtil.getBoolean(
+				actionRequest, "copyPageAttachments");
 
 			if (copyPageAttachments) {
 				long templateNodeId = ParamUtil.getLong(

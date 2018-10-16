@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 
@@ -57,7 +58,13 @@ public abstract class BaseFileCheck
 			Node curNode = (Node)iterator.next();
 
 			if (curNode instanceof Text) {
-				continue;
+				Text text = (Text)curNode;
+
+				if (!StringUtil.startsWith(
+						StringUtil.trim(text.asXML()), CharPool.POUND)) {
+
+					continue;
+				}
 			}
 
 			if (previousNode == null) {

@@ -53,7 +53,8 @@ public class GitBisectToolBatchBuildRunner extends PortalBatchBuildRunner {
 			workspaceGitRepository.getDirectory(), "portal-web/test-results");
 
 		File poshiBaseDir = new File(
-			portalBatchBuildData.getWorkspaceDir(), "poshi");
+			portalBatchBuildData.getWorkspaceDir(),
+			portalBatchBuildData.getRunID());
 
 		File[] poshiResultsDirs = portalWebTestResultsDir.listFiles();
 
@@ -68,11 +69,7 @@ public class GitBisectToolBatchBuildRunner extends PortalBatchBuildRunner {
 				try {
 					JenkinsResultsParserUtil.copy(
 						poshiResultsDir,
-						new File(
-							poshiBaseDir,
-							JenkinsResultsParserUtil.combine(
-								portalBatchBuildData.getRunID(), "/",
-								poshiResultsDirName)));
+						new File(poshiBaseDir, poshiResultsDirName));
 				}
 				catch (IOException ioe) {
 					throw new RuntimeException(ioe);
@@ -105,7 +102,7 @@ public class GitBisectToolBatchBuildRunner extends PortalBatchBuildRunner {
 				"https://", portalBatchBuildData.getTopLevelMasterHostname(),
 				".liferay.com/userContent/",
 				portalBatchBuildData.getUserContentRelativePath(),
-				portalBatchBuildData.getRunID(), "/poshi/LocalFile.",
+				portalBatchBuildData.getRunID(), "/LocalFile.",
 				test.replace("#", "_"));
 
 			sb.append("<li>");

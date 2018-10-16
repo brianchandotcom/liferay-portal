@@ -15,7 +15,6 @@
 package com.liferay.portal.bundle.blacklist.internal;
 
 import com.liferay.osgi.util.bundle.BundleStartLevelUtil;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -37,7 +36,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -143,21 +141,10 @@ public class BundleBlacklist {
 			}
 		}
 
-		// We need to perform this asynchronously because we might already
-		// be in the refresher thread
+		frameworkWiring.resolveBundles(installedBundles.keySet());
 
-		CompletableFuture.supplyAsync(
-			() -> {
-				try {
-					BundleStartLevelUtil.setStartLevelAndStart(
-						installedBundles, bundleContext);
-				}
-				catch (Exception e) {
-					ReflectionUtil.throwException(e);
-				}
-
-				return null;
-			});
+		BundleStartLevelUtil.setStartLevelAndStart(
+			installedBundles, bundleContext);
 	}
 
 	private void _addToBlacklistFile(

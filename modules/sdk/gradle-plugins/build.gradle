@@ -10,10 +10,10 @@ task copyBundle(type: Copy)
 task copyGradleTestDependencies(type: Copy)
 task downloadBundle(type: Download)
 
-String bundleUrl = "https://releases-cdn.liferay.com/portal/7.0.5-ga6/liferay-ce-portal-tomcat-7.0-ga6-20180320170724974.zip"
+String bundleUrl = "https://releases-cdn.liferay.com/portal/snapshot-7.1.x/201810131240/liferay-portal-tomcat-7.1.x.7z"
 
 if (System.properties["http.proxyHost"] == "squid.lax.liferay.com") {
-	bundleUrl = "http://mirrors.liferay.com/releases.liferay.com/portal/7.0.5-ga6/liferay-ce-portal-tomcat-7.0-ga6-20180320170724974.zip"
+	bundleUrl = "http://mirrors.liferay.com/releases.liferay.com/portal/snapshot-7.1.x/201810131240/liferay-portal-tomcat-7.1.x.7z"
 }
 
 copyBundle {
@@ -66,7 +66,7 @@ dependencies {
 }
 
 downloadBundle {
-	dest new File(buildDir, "bundle.zip")
+	dest new File(buildDir, "bundle.7z")
 	onlyIfModified true
 	src bundleUrl
 }

@@ -80,6 +80,8 @@ public class UserEntityModel implements EntityModel {
 		new EntityField(
 			"roleIds", EntityField.Type.STRING, locale -> "roleIds"),
 		new EntityField(
+			"scopeGroupId", EntityField.Type.STRING, locale -> "scopeGroupId"),
+		new EntityField(
 			"screenName", EntityField.Type.STRING,
 			locale -> Field.getSortableFieldName("screenName"),
 			locale -> "screenName"),

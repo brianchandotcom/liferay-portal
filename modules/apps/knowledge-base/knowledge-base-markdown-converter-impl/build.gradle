@@ -1,3 +1,6 @@
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
 dependencies {
 	compileInclude group: "org.ow2.asm", name: "asm", version: "4.1"
 	compileInclude group: "org.ow2.asm", name: "asm-analysis", version: "4.1"

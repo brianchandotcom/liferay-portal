@@ -39,18 +39,13 @@ public class SystemEventVerifyProcess extends VerifyProcess {
 			_groupLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<Group>() {
+			(Group group) -> {
+				if (!_systemEventLocalService.validateGroup(
+						group.getGroupId())) {
 
-				@Override
-				public void performAction(Group group) throws PortalException {
-					if (!_systemEventLocalService.validateGroup(
-							group.getGroupId())) {
-
-						_systemEventLocalService.deleteSystemEvents(
-							group.getGroupId());
-					}
+					_systemEventLocalService.deleteSystemEvents(
+						group.getGroupId());
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();

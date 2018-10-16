@@ -156,15 +156,10 @@ public class DraftExportImportConfigurationMessageListener
 		final Property createDate = PropertyFactoryUtil.forName("createDate");
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				addCommonCriterions(dynamicQuery);
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					addCommonCriterions(dynamicQuery);
-
-					dynamicQuery.add(createDate.lt(lastCreateDate));
-				}
-
+				dynamicQuery.add(createDate.lt(lastCreateDate));
 			});
 
 		actionableDynamicQuery.setPerformActionMethod(

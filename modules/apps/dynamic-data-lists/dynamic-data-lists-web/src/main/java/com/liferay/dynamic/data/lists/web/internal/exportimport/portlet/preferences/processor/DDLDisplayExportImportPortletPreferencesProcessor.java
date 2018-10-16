@@ -28,7 +28,6 @@ import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -203,32 +202,19 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 			recordActionableDynamicQuery.getAddCriteriaMethod();
 
 		recordActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				addCriteriaMethod.addCriteria(dynamicQuery);
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					addCriteriaMethod.addCriteria(dynamicQuery);
+				Property property = PropertyFactoryUtil.forName("recordSetId");
 
-					Property property = PropertyFactoryUtil.forName(
-						"recordSetId");
-
-					dynamicQuery.add(property.eq(recordSet.getRecordSetId()));
-				}
-
+				dynamicQuery.add(property.eq(recordSet.getRecordSetId()));
 			});
 
 		recordActionableDynamicQuery.setGroupId(recordSet.getGroupId());
 		recordActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<DDLRecord>() {
-
-				@Override
-				public void performAction(DDLRecord record)
-					throws PortalException {
-
-					StagedModelDataHandlerUtil.exportReferenceStagedModel(
-						portletDataContext, portletId, record);
-				}
-
+			(DDLRecord record) -> {
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, portletId, record);
 			});
 
 		return recordActionableDynamicQuery;

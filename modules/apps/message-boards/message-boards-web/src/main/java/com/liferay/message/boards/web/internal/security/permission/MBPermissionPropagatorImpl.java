@@ -21,7 +21,6 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -138,17 +137,12 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 						_mbMessageLocalService.getActionableDynamicQuery();
 
 					actionableDynamicQuery.setAddCriteriaMethod(
-						new ActionableDynamicQuery.AddCriteriaMethod() {
+						dynamicQuery -> {
+							Property categoryIdProperty =
+								PropertyFactoryUtil.forName("categoryId");
 
-							@Override
-							public void addCriteria(DynamicQuery dynamicQuery) {
-								Property categoryIdProperty =
-									PropertyFactoryUtil.forName("categoryId");
-
-								dynamicQuery.add(
-									categoryIdProperty.eq(addCategoryId));
-							}
-
+							dynamicQuery.add(
+								categoryIdProperty.eq(addCategoryId));
 						});
 					actionableDynamicQuery.setGroupId(category.getGroupId());
 					actionableDynamicQuery.setPerformActionMethod(
@@ -193,17 +187,10 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 
 		actionableDynamicQuery.setGroupId(groupId);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<MBMessage>() {
-
-				@Override
-				public void performAction(MBMessage message)
-					throws PortalException {
-
-					propagateMessageRolePermissions(
-						actionRequest, className, groupId,
-						message.getMessageId(), roleIds);
-				}
-
+			(MBMessage message) -> {
+				propagateMessageRolePermissions(
+					actionRequest, className, groupId, message.getMessageId(),
+					roleIds);
 			});
 
 		actionableDynamicQuery.performActions();

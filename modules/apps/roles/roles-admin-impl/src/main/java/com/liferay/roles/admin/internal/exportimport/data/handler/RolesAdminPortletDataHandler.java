@@ -24,7 +24,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -173,37 +172,31 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 				portletDataContext);
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				portletDataContext.addDateRangeCriteria(
+					dynamicQuery, "modifiedDate");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					portletDataContext.addDateRangeCriteria(
-						dynamicQuery, "modifiedDate");
+				long classNameId = _portal.getClassNameId(Team.class);
 
-					long classNameId = _portal.getClassNameId(Team.class);
+				Property classNameIdProperty = PropertyFactoryUtil.forName(
+					"classNameId");
 
-					Property classNameIdProperty = PropertyFactoryUtil.forName(
-						"classNameId");
+				dynamicQuery.add(classNameIdProperty.ne(classNameId));
 
-					dynamicQuery.add(classNameIdProperty.ne(classNameId));
+				if (!portletDataContext.getBooleanParameter(
+						NAMESPACE, "system-roles")) {
 
-					if (!portletDataContext.getBooleanParameter(
-							NAMESPACE, "system-roles")) {
+					Conjunction conjunction =
+						RestrictionsFactoryUtil.conjunction();
 
-						Conjunction conjunction =
-							RestrictionsFactoryUtil.conjunction();
+					Property nameProperty = PropertyFactoryUtil.forName("name");
 
-						Property nameProperty = PropertyFactoryUtil.forName(
-							"name");
-
-						for (String roleName : _allSystemRoleNames) {
-							conjunction.add(nameProperty.ne(roleName));
-						}
-
-						dynamicQuery.add(conjunction);
+					for (String roleName : _allSystemRoleNames) {
+						conjunction.add(nameProperty.ne(roleName));
 					}
-				}
 
+					dynamicQuery.add(conjunction);
+				}
 			});
 
 		@SuppressWarnings("unchecked")

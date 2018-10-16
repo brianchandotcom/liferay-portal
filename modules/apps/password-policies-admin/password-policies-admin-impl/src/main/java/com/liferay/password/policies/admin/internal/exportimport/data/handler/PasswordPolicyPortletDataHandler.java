@@ -23,7 +23,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
@@ -153,20 +152,13 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 				portletDataContext);
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<PasswordPolicy>() {
-
-				@Override
-				public void performAction(PasswordPolicy passwordPolicy)
-					throws PortalException {
-
-					if (!export) {
-						return;
-					}
-
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, passwordPolicy);
+			(PasswordPolicy passwordPolicy) -> {
+				if (!export) {
+					return;
 				}
 
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, passwordPolicy);
 			});
 
 		return actionableDynamicQuery;

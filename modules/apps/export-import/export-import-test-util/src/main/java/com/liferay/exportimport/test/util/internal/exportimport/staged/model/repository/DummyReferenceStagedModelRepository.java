@@ -25,7 +25,6 @@ import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.test.util.model.DummyReference;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.hibernate.DynamicQueryImpl;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
@@ -207,96 +206,90 @@ public class DummyReferenceStagedModelRepository
 		exportActionableDynamicQuery.setPrimaryKeyPropertyName("id");
 
 		exportActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Criterion modifiedDateCriterion =
+					portletDataContext.getDateRangeCriteria("modifiedDate");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Criterion modifiedDateCriterion =
-						portletDataContext.getDateRangeCriteria("modifiedDate");
+				if (modifiedDateCriterion != null) {
+					Conjunction conjunction =
+						RestrictionsFactoryUtil.conjunction();
 
-					if (modifiedDateCriterion != null) {
-						Conjunction conjunction =
-							RestrictionsFactoryUtil.conjunction();
+					conjunction.add(modifiedDateCriterion);
 
-						conjunction.add(modifiedDateCriterion);
+					Disjunction disjunction =
+						RestrictionsFactoryUtil.disjunction();
 
-						Disjunction disjunction =
-							RestrictionsFactoryUtil.disjunction();
+					disjunction.add(
+						RestrictionsFactoryUtil.gtProperty(
+							"modifiedDate", "lastPublishDate"));
 
-						disjunction.add(
-							RestrictionsFactoryUtil.gtProperty(
-								"modifiedDate", "lastPublishDate"));
+					Property lastPublishDateProperty =
+						PropertyFactoryUtil.forName("lastPublishDate");
 
-						Property lastPublishDateProperty =
-							PropertyFactoryUtil.forName("lastPublishDate");
+					disjunction.add(lastPublishDateProperty.isNull());
 
-						disjunction.add(lastPublishDateProperty.isNull());
+					conjunction.add(disjunction);
 
-						conjunction.add(disjunction);
-
-						modifiedDateCriterion = conjunction;
-					}
-
-					Criterion statusDateCriterion =
-						portletDataContext.getDateRangeCriteria("statusDate");
-
-					if ((modifiedDateCriterion != null) &&
-						(statusDateCriterion != null)) {
-
-						Disjunction disjunction =
-							RestrictionsFactoryUtil.disjunction();
-
-						disjunction.add(modifiedDateCriterion);
-						disjunction.add(statusDateCriterion);
-
-						dynamicQuery.add(disjunction);
-					}
-
-					StagedModelType stagedModelType =
-						exportActionableDynamicQuery.getStagedModelType();
-
-					long referrerClassNameId =
-						stagedModelType.getReferrerClassNameId();
-
-					Property classNameIdProperty = PropertyFactoryUtil.forName(
-						"classNameId");
-
-					if ((referrerClassNameId !=
-							StagedModelType.REFERRER_CLASS_NAME_ID_ALL) &&
-						(referrerClassNameId !=
-							StagedModelType.REFERRER_CLASS_NAME_ID_ANY)) {
-
-						dynamicQuery.add(
-							classNameIdProperty.eq(
-								stagedModelType.getReferrerClassNameId()));
-					}
-					else if (referrerClassNameId ==
-								StagedModelType.REFERRER_CLASS_NAME_ID_ANY) {
-
-						dynamicQuery.add(classNameIdProperty.isNotNull());
-					}
-
-					Property workflowStatusProperty =
-						PropertyFactoryUtil.forName("status");
-
-					if (portletDataContext.isInitialPublication()) {
-						dynamicQuery.add(
-							workflowStatusProperty.ne(
-								WorkflowConstants.STATUS_IN_TRASH));
-					}
-					else {
-						StagedModelDataHandler<?> stagedModelDataHandler =
-							StagedModelDataHandlerRegistryUtil.
-								getStagedModelDataHandler(
-									DummyReference.class.getName());
-
-						dynamicQuery.add(
-							workflowStatusProperty.in(
-								stagedModelDataHandler.
-									getExportableStatuses()));
-					}
+					modifiedDateCriterion = conjunction;
 				}
 
+				Criterion statusDateCriterion =
+					portletDataContext.getDateRangeCriteria("statusDate");
+
+				if ((modifiedDateCriterion != null) &&
+					(statusDateCriterion != null)) {
+
+					Disjunction disjunction =
+						RestrictionsFactoryUtil.disjunction();
+
+					disjunction.add(modifiedDateCriterion);
+					disjunction.add(statusDateCriterion);
+
+					dynamicQuery.add(disjunction);
+				}
+
+				StagedModelType stagedModelType =
+					exportActionableDynamicQuery.getStagedModelType();
+
+				long referrerClassNameId =
+					stagedModelType.getReferrerClassNameId();
+
+				Property classNameIdProperty = PropertyFactoryUtil.forName(
+					"classNameId");
+
+				if ((referrerClassNameId !=
+						StagedModelType.REFERRER_CLASS_NAME_ID_ALL) &&
+					(referrerClassNameId !=
+						StagedModelType.REFERRER_CLASS_NAME_ID_ANY)) {
+
+					dynamicQuery.add(
+						classNameIdProperty.eq(
+							stagedModelType.getReferrerClassNameId()));
+				}
+				else if (referrerClassNameId ==
+							StagedModelType.REFERRER_CLASS_NAME_ID_ANY) {
+
+					dynamicQuery.add(classNameIdProperty.isNotNull());
+				}
+
+				Property workflowStatusProperty = PropertyFactoryUtil.forName(
+					"status");
+
+				if (portletDataContext.isInitialPublication()) {
+					dynamicQuery.add(
+						workflowStatusProperty.ne(
+							WorkflowConstants.STATUS_IN_TRASH));
+				}
+				else {
+					StagedModelDataHandler<?> stagedModelDataHandler =
+						StagedModelDataHandlerRegistryUtil.
+							getStagedModelDataHandler(
+								DummyReference.class.getName());
+
+					dynamicQuery.add(
+						workflowStatusProperty.in(
+							stagedModelDataHandler.getExportableStatuses()));
+				}
 			});
 
 		exportActionableDynamicQuery.setCompanyId(
@@ -306,16 +299,9 @@ public class DummyReferenceStagedModelRepository
 			portletDataContext.getScopeGroupId());
 
 		exportActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<DummyReference>() {
-
-				@Override
-				public void performAction(DummyReference dummyReference)
-					throws PortalException {
-
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, dummyReference);
-				}
-
+			(DummyReference dummyReference) -> {
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, dummyReference);
 			});
 
 		exportActionableDynamicQuery.setStagedModelType(

@@ -176,22 +176,15 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 				portletDataContext);
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<RatingsEntry>() {
+			(RatingsEntry ratingsEntry) -> {
+				long groupId = getGroupId(ratingsEntry);
 
-				@Override
-				public void performAction(RatingsEntry ratingsEntry)
-					throws PortalException {
-
-					long groupId = getGroupId(ratingsEntry);
-
-					if (groupId != portletDataContext.getScopeGroupId()) {
-						return;
-					}
-
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, ratingsEntry);
+				if (groupId != portletDataContext.getScopeGroupId()) {
+					return;
 				}
 
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, ratingsEntry);
 			});
 
 		return actionableDynamicQuery;
@@ -206,28 +199,20 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 				portletDataContext);
 
 		exportActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<RatingsEntry>() {
+			(RatingsEntry ratingsEntry) -> {
+				long groupId = getGroupId(ratingsEntry);
 
-				@Override
-				public void performAction(RatingsEntry ratingsEntry)
-					throws PortalException {
-
-					long groupId = getGroupId(ratingsEntry);
-
-					if (groupId != portletDataContext.getScopeGroupId()) {
-						return;
-					}
-
-					ManifestSummary manifestSummary =
-						portletDataContext.getManifestSummary();
-
-					StagedModelType stagedModelType =
-						exportActionableDynamicQuery.getStagedModelType();
-
-					manifestSummary.incrementModelAdditionCount(
-						stagedModelType);
+				if (groupId != portletDataContext.getScopeGroupId()) {
+					return;
 				}
 
+				ManifestSummary manifestSummary =
+					portletDataContext.getManifestSummary();
+
+				StagedModelType stagedModelType =
+					exportActionableDynamicQuery.getStagedModelType();
+
+				manifestSummary.incrementModelAdditionCount(stagedModelType);
 			});
 		exportActionableDynamicQuery.setPerformCountMethod(
 			new ActionableDynamicQuery.PerformCountMethod() {

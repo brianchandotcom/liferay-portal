@@ -27,7 +27,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -181,29 +180,24 @@ public class PortletDisplayTemplatePortletDataHandler
 			exportActionableDynamicQuery.getAddCriteriaMethod();
 
 		exportActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				addCriteriaMethod.addCriteria(dynamicQuery);
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					addCriteriaMethod.addCriteria(dynamicQuery);
+				Property classNameIdProperty = PropertyFactoryUtil.forName(
+					"classNameId");
 
-					Property classNameIdProperty = PropertyFactoryUtil.forName(
-						"classNameId");
+				dynamicQuery.add(classNameIdProperty.in(classNameIds));
 
-					dynamicQuery.add(classNameIdProperty.in(classNameIds));
+				Property classPKProperty = PropertyFactoryUtil.forName(
+					"classPK");
 
-					Property classPKProperty = PropertyFactoryUtil.forName(
-						"classPK");
+				dynamicQuery.add(classPKProperty.eq(0L));
 
-					dynamicQuery.add(classPKProperty.eq(0L));
+				Property typeProperty = PropertyFactoryUtil.forName("type");
 
-					Property typeProperty = PropertyFactoryUtil.forName("type");
-
-					dynamicQuery.add(
-						typeProperty.eq(
-							DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY));
-				}
-
+				dynamicQuery.add(
+					typeProperty.eq(
+						DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY));
 			});
 
 		exportActionableDynamicQuery.setStagedModelType(stagedModelType);

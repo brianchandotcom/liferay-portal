@@ -1045,8 +1045,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 						return;
 					}
 
-					Locale locale = user.getLocale();
-
 					String groupDefaultName = nameMap.get(locale);
 
 					if (Validator.isNotNull(groupDefaultName)) {

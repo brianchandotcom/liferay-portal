@@ -64,6 +64,19 @@ public abstract class BaseTitleFieldQueryBuilderTestCase
 	}
 
 	@Test
+	public void testDot() throws Exception {
+		addDocument("1.0");
+		addDocument("1.1");
+
+		assertSearch("1.0", Arrays.asList("1.0"));
+		assertSearch("1.1", Arrays.asList("1.1"));
+
+		assertSearch("1", Arrays.asList("1.0", "1.1"));
+
+		assertSearchNoHits("0");
+	}
+
+	@Test
 	public void testExactMatchBoost() throws Exception {
 		addDocument("one two three four five six seven eight");
 		addDocument("one two three four five six");

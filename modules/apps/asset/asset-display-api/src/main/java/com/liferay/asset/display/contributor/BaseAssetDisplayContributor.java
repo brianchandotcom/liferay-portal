@@ -18,9 +18,12 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -34,6 +37,7 @@ import java.util.Set;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -165,11 +169,27 @@ public abstract class BaseAssetDisplayContributor<T>
 
 	protected ResourceBundleLoader resourceBundleLoader;
 
+	@Reference
+	protected UserLocalService userLocalService;
+
+	private String _getAuthor(AssetEntry assetEntry) {
+		long userId = assetEntry.getUserId();
+
+		User user = userLocalService.fetchUser(userId);
+
+		if (user != null) {
+			return user.getFullName();
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private Map<String, Object> _getDefaultParameterMap(
 		AssetEntry assetEntry, Locale locale) {
 
 		Map<String, Object> parameterMap = new HashMap<>();
 
+		parameterMap.put("author", _getAuthor(assetEntry));
 		parameterMap.put("categoryIds", assetEntry.getCategoryIds());
 		parameterMap.put("description", assetEntry.getDescription(locale));
 		parameterMap.put("publishDate", assetEntry.getPublishDate());
@@ -183,6 +203,7 @@ public abstract class BaseAssetDisplayContributor<T>
 	private static final Map<String, String> _assetEntryModelFieldsMap =
 		new HashMap<String, String>() {
 			{
+				put("author", "author");
 				put("categoryIds", "categories");
 				put("description", "description");
 				put("publishDate", "publish-date");

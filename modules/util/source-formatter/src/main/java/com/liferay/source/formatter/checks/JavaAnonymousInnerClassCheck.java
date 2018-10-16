@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
@@ -25,7 +26,10 @@ import com.liferay.source.formatter.parser.JavaParameter;
 import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -49,10 +53,10 @@ public class JavaAnonymousInnerClassCheck extends BaseJavaTermCheck {
 
 		for (JavaClass anonymousClass : anonymousClasses) {
 			content = _convertToLambda(
-				content, anonymousClass,
+				fileName, content, anonymousClass, javaTerm,
 				"ActionableDynamicQuery.AddCriteriaMethod", false);
 			content = _convertToLambda(
-				content, anonymousClass,
+				fileName, content, anonymousClass, javaTerm,
 				"ActionableDynamicQuery.PerformActionMethod", true);
 		}
 
@@ -65,8 +69,8 @@ public class JavaAnonymousInnerClassCheck extends BaseJavaTermCheck {
 	}
 
 	private String _convertToLambda(
-			String content, JavaClass anonymousClass, String className,
-			boolean useParameterType)
+			String fileName, String content, JavaClass anonymousClass,
+			JavaTerm javaTerm, String className, boolean useParameterType)
 		throws Exception {
 
 		String anonymousClassContent = anonymousClass.getContent();
@@ -84,15 +88,23 @@ public class JavaAnonymousInnerClassCheck extends BaseJavaTermCheck {
 			return content;
 		}
 
-		JavaTerm javaTerm = javaTerms.get(0);
+		JavaTerm anonymousClassJavaTerm = javaTerms.get(0);
 
-		if (!javaTerm.hasAnnotation("Override") ||
-			!(javaTerm instanceof JavaMethod)) {
+		if (!anonymousClassJavaTerm.hasAnnotation("Override") ||
+			!(anonymousClassJavaTerm instanceof JavaMethod)) {
 
 			return content;
 		}
 
-		JavaMethod javaMethod = (JavaMethod)javaTerm;
+		JavaMethod anonymousClassJavaMethod =
+			(JavaMethod)anonymousClassJavaTerm;
+
+		if (_hasDuplicateParameterOrVariableName(
+				fileName, anonymousClassContent, anonymousClassJavaMethod,
+				javaTerm)) {
+
+			return content;
+		}
 
 		int x = anonymousClassContent.indexOf("{\n");
 
@@ -100,13 +112,14 @@ public class JavaAnonymousInnerClassCheck extends BaseJavaTermCheck {
 
 		String expectedContent = StringBundler.concat(
 			anonymousClassContent.substring(0, x + 2), "\n",
-			javaMethod.getContent(), "\n", indent, "}");
+			anonymousClassJavaMethod.getContent(), "\n", indent, "}");
 
 		if (!expectedContent.equals(anonymousClassContent)) {
 			return content;
 		}
 
-		String methodBody = _getMethodBody(javaMethod.getContent());
+		String methodBody = _getMethodBody(
+			anonymousClassJavaMethod.getContent());
 
 		if (methodBody == null) {
 			return content;
@@ -116,7 +129,8 @@ public class JavaAnonymousInnerClassCheck extends BaseJavaTermCheck {
 
 		sb.append(indent);
 		sb.append(
-			_getLambdaSignature(javaMethod.getSignature(), useParameterType));
+			_getLambdaSignature(
+				anonymousClassJavaMethod.getSignature(), useParameterType));
 		sb.append(" -> {\n");
 		sb.append(methodBody);
 		sb.append("\n");
@@ -180,5 +194,156 @@ public class JavaAnonymousInnerClassCheck extends BaseJavaTermCheck {
 
 		return body.substring(1);
 	}
+
+	private List<String> _getParameterNames(JavaMethod javaMethod) {
+		List<String> parameterNames = new ArrayList<>();
+
+		JavaSignature signature = javaMethod.getSignature();
+
+		if (signature == null) {
+			return parameterNames;
+		}
+
+		List<JavaParameter> parameters = signature.getParameters();
+
+		for (JavaParameter parameter : parameters) {
+			parameterNames.add(parameter.getParameterName());
+		}
+
+		return parameterNames;
+	}
+
+	private List<String> _getVariableNames(String content) {
+		List<String> variableNames = new ArrayList<>();
+
+		int x = content.indexOf("{\n");
+
+		Matcher matcher = _variableDeclarationPattern.matcher(content);
+
+		while (matcher.find()) {
+			if (matcher.start() < x) {
+				continue;
+			}
+
+			String s = StringUtil.trim(matcher.group(1));
+
+			if (!s.equals("break") && !s.equals("continue") &&
+				!s.equals("return") && !s.equals("throw")) {
+
+				variableNames.add(matcher.group(3));
+			}
+		}
+
+		return variableNames;
+	}
+
+	private boolean _hasDuplicateParameterOrVariableName(
+		String fileName, String anonymousClassContent,
+		JavaMethod anonymousClassJavaMethod, JavaTerm javaTerm) {
+
+		List<String> parameterNames = _getParameterNames(
+			anonymousClassJavaMethod);
+		List<String> variableNames = _getVariableNames(anonymousClassContent);
+
+		if (parameterNames.isEmpty() && variableNames.isEmpty()) {
+			return false;
+		}
+
+		String javaTermContent = javaTerm.getContent();
+
+		int x = javaTermContent.indexOf(anonymousClassContent);
+
+		for (String variableName : variableNames) {
+			if (!_isDuplicateName(javaTerm, variableName, x)) {
+				continue;
+			}
+
+			addMessage(
+				fileName,
+				StringBundler.concat(
+					"Variable '", variableName,
+					"' in the Anonymous Inner Class is already used in the ",
+					"main method"),
+				javaTerm.getLineNumber());
+
+			return true;
+		}
+
+		for (String parameterName : parameterNames) {
+			if (!_isDuplicateName(javaTerm, parameterName, x)) {
+				continue;
+			}
+
+			addMessage(
+				fileName,
+				StringBundler.concat(
+					"Parameter '", parameterName,
+					"' in the Anonymous Inner Class is already used in the ",
+					"main method"),
+				javaTerm.getLineNumber());
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isDuplicateName(
+		JavaTerm javaTerm, String variableName, int end) {
+
+		JavaSignature signature = javaTerm.getSignature();
+
+		List<JavaParameter> parameters = signature.getParameters();
+
+		for (JavaParameter parameter : parameters) {
+			if (variableName.equals(parameter.getParameterName())) {
+				return true;
+			}
+		}
+
+		Pattern pattern = Pattern.compile(
+			"((\t\\w|\\()[\\w<>,\\s]+?)\\s" + variableName + "( =\\s|;)");
+
+		String javaTermContent = javaTerm.getContent();
+
+		Matcher matcher = pattern.matcher(javaTermContent);
+
+		while (matcher.find()) {
+			int x = matcher.start();
+
+			if (x > end) {
+				return false;
+			}
+
+			int y = x;
+
+			while (true) {
+				y = javaTermContent.indexOf("}", y + 1);
+
+				if (y == -1) {
+					return false;
+				}
+
+				if (ToolsUtil.isInsideQuotes(javaTermContent, y)) {
+					continue;
+				}
+
+				if (getLevel(javaTermContent.substring(x, y + 1), "{", "}") <
+						0) {
+
+					break;
+				}
+			}
+
+			if (y > end) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static final Pattern _variableDeclarationPattern = Pattern.compile(
+		"((\t\\w|\\()[\\w<>,\\s]+?)\\s(\\w+)( =\\s|;)");
 
 }

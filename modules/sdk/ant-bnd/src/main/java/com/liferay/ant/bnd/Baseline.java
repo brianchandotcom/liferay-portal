@@ -615,24 +615,49 @@ public abstract class Baseline {
 			Jar jar, Info info, Delta delta, String warnings)
 		throws Exception {
 
-		Resource resource = jar.getResource(
-			info.packageName.replace('.', '/') + "/.lfrbuild-packageinfo");
-
-		if (resource == null) {
-			return false;
-		}
-
+		boolean allWarnings = true;
+		String dir = info.packageName.replace('.', '/');
 		Set<String> lines = new HashSet<>();
 
-		String content = IO.collect(resource.openInputStream());
+		while (true) {
+			Resource resource = jar.getResource(dir + "/.lfrbuild-packageinfo");
 
-		try (BufferedReader bufferedReader = new BufferedReader(
-				new StringReader(content.trim()))) {
+			if (resource != null) {
+				String content = IO.collect(resource.openInputStream());
 
-			String line = null;
+				try (BufferedReader bufferedReader = new BufferedReader(
+						new StringReader(content.trim()))) {
 
-			while ((line = bufferedReader.readLine()) != null) {
-				lines.add(line.trim());
+					String line = null;
+
+					while ((line = bufferedReader.readLine()) != null) {
+						String s = line.trim();
+
+						if (s.endsWith("-RECURSIVE")) {
+							int endIndex = s.length() - 10;
+
+							lines.add(s.substring(0, endIndex));
+						}
+						else if (allWarnings) {
+							lines.add(s);
+						}
+					}
+				}
+			}
+
+			allWarnings = false;
+
+			int index = dir.lastIndexOf('/');
+
+			if ((index == -1) && dir.isEmpty()) {
+				break;
+			}
+
+			if (index == -1) {
+				dir = "";
+			}
+			else {
+				dir = dir.substring(0, index);
 			}
 		}
 

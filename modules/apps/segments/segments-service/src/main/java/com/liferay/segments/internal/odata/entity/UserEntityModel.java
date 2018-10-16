@@ -51,6 +51,8 @@ public class UserEntityModel implements EntityModel {
 
 	private static final Map<String, EntityField> _entityFieldsMap = Stream.of(
 		new EntityField(
+			"companyId", EntityField.Type.STRING, locale -> "companyId"),
+		new EntityField(
 			"dateModified", EntityField.Type.DATE,
 			locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 			locale -> Field.MODIFIED_DATE),

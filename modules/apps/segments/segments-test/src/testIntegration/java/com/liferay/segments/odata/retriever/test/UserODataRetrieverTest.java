@@ -69,6 +69,25 @@ public class UserODataRetrieverTest {
 	}
 
 	@Test
+	public void testGetUsersFilterByCompanyId() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		List<User> users = _userODataRetriever.getUsers(
+			_group1.getCompanyId(),
+			String.format(
+				"(firstName eq '%s') and (companyId eq '%s')", firstName,
+				_group1.getCompanyId()),
+			LocaleUtil.getDefault(), 0, 2);
+
+		Assert.assertEquals(users.toString(), 1, users.size());
+		Assert.assertEquals(_user1, users.get(0));
+	}
+
+	@Test
 	public void testGetUsersFilterByDateModifiedEquals() throws Exception {
 		String firstName = RandomTestUtil.randomString();
 

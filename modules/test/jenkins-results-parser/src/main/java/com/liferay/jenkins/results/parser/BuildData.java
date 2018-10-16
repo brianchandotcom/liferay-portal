@@ -64,6 +64,8 @@ public interface BuildData {
 
 	public void setBuildDescription(String buildDescription);
 
+	public void setBuildURL(String buildURL);
+
 	public void setJenkinsGitHubURL(String jenkinsGitHubURL);
 
 	public void setWorkspaceDir(File workspaceDir);

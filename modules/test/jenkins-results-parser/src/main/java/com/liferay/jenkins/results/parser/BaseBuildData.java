@@ -112,6 +112,22 @@ public abstract class BaseBuildData implements BuildData {
 	}
 
 	@Override
+	public void setBuildURL(String buildURL) {
+		Matcher matcher = _buildURLPattern.matcher(buildURL);
+
+		if (!matcher.find()) {
+			throw new RuntimeException("Invalid build url " + buildURL);
+		}
+
+		put("build_number", Integer.valueOf(matcher.group("buildNumber")));
+		put("build_url", buildURL);
+		put("cohort_name", matcher.group("cohortName"));
+		put("hostname", _getHostname());
+		put("master_hostname", matcher.group("masterHostname"));
+		put("type", getType());
+	}
+
+	@Override
 	public void setJenkinsGitHubURL(String jenkinsGitHubURL) {
 		put("jenkins_github_url", jenkinsGitHubURL);
 	}
@@ -161,7 +177,7 @@ public abstract class BaseBuildData implements BuildData {
 			return;
 		}
 
-		_setBuildURL(buildURL);
+		setBuildURL(buildURL);
 
 		if (!has("build_description")) {
 			setBuildDescription(_getDefaultBuildDescription());
@@ -243,21 +259,6 @@ public abstract class BaseBuildData implements BuildData {
 			"<a href=\"https://", getTopLevelMasterHostname(),
 			".liferay.com/userContent/", getUserContentRelativePath(),
 			"jenkins-report.html\">Jenkins Report</a>");
-	}
-
-	private void _setBuildURL(String buildURL) {
-		Matcher matcher = _buildURLPattern.matcher(buildURL);
-
-		if (!matcher.find()) {
-			throw new RuntimeException("Invalid build url " + buildURL);
-		}
-
-		put("build_number", Integer.valueOf(matcher.group("buildNumber")));
-		put("build_url", buildURL);
-		put("cohort_name", matcher.group("cohortName"));
-		put("hostname", JenkinsResultsParserUtil.getHostName("default"));
-		put("master_hostname", matcher.group("masterHostname"));
-		put("type", getType());
 	}
 
 	private static final String[] _REQUIRED_KEYS = {

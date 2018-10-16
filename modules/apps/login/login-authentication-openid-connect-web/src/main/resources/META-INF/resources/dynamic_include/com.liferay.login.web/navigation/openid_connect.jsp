@@ -22,6 +22,6 @@
 
 <liferay-ui:icon
 	message="openid-connect"
-	src='<%= themeDisplay.getPathThemeImages() + "/common/openid_connect.gif" %>'
+	src='<%= themeDisplay.getPathThemeImages() + "/common/openid.gif" %>'
 	url="<%= openIdConnectURL %>"
 />

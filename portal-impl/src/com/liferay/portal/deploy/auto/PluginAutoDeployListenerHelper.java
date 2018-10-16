@@ -184,6 +184,7 @@ public class PluginAutoDeployListenerHelper {
 		Matcher matcher = _webPluginPattern.matcher(_file.getName());
 
 		if ((matcher.find() || _isWarDir(_file)) && !isPortletPlugin() &&
+			!isThemePlugin() &&
 			isMatchingFile(
 				"WEB-INF/liferay-plugin-package.properties", false)) {
 

@@ -61,8 +61,8 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getSegmentsEntryName(loc
 				<aui:input checked="<%= (segmentsEntry == null) ? false : segmentsEntry.isActive() %>" name="active" type="toggle-switch" />
 
 				<aui:select disabled="<%= segmentsEntry != null %>" name="type">
-					<aui:option label="organizations" value="<%= SegmentsConstants.TYPE_ORGANIZATIONS %>" />
-					<aui:option label="users" value="<%= SegmentsConstants.TYPE_USERS %>" />
+					<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, Organization.class.getName()) %>" value="<%= Organization.class.getName() %>" />
+					<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, User.class.getName()) %>" value="<%= User.class.getName() %>" />
 				</aui:select>
 
 				<aui:input checked="<%= (segmentsEntry != null) && Validator.isNotNull(segmentsEntry.getCriteria()) %>" disabled="<%= segmentsEntry != null %>" name="dynamic" type="toggle-switch" />

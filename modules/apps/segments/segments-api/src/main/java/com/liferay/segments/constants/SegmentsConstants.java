@@ -21,8 +21,4 @@ public class SegmentsConstants {
 
 	public static final String RESOURCE_NAME = "com.liferay.segments";
 
-	public static final String TYPE_ORGANIZATIONS = "organizations";
-
-	public static final String TYPE_USERS = "users";
-
 }

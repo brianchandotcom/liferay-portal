@@ -62,8 +62,8 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
-				property="type"
-				translate="<%= true %>"
+				name="type"
+				value="<%= ResourceActionsUtil.getModelResource(locale, segmentsEntry.getType()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

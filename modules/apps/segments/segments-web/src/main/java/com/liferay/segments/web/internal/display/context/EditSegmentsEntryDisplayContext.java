@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryRel;
 import com.liferay.segments.odata.retriever.UserODataRetriever;
@@ -93,9 +92,9 @@ public class EditSegmentsEntryDisplayContext {
 				add(
 					SafeConsumer.ignore(
 						dropdownItem -> {
-							if (SegmentsConstants.TYPE_ORGANIZATIONS.equals(
-									segmentsEntry.getType())) {
+							String type = segmentsEntry.getType();
 
+							if (type.equals(Organization.class.getName())) {
 								dropdownItem.putData(
 									"action",
 									"deleteSegmentsEntryOrganizations");
@@ -152,9 +151,7 @@ public class EditSegmentsEntryDisplayContext {
 
 							navigationItem.setActive(activeTab.equals(type));
 
-							if (type.equals(
-									SegmentsConstants.TYPE_ORGANIZATIONS)) {
-
+							if (type.equals(Organization.class.getName())) {
 								navigationItem.setHref(_getOrganizationsURL());
 								navigationItem.setLabel(
 									LanguageUtil.get(
@@ -179,8 +176,8 @@ public class EditSegmentsEntryDisplayContext {
 		}
 
 		SearchContainer organizationSearchContainer = new SearchContainer(
-			_renderRequest, getPortletURL(SegmentsConstants.TYPE_ORGANIZATIONS),
-			null, "there-are-no-organizations-in-this-segment");
+			_renderRequest, getPortletURL("organizations"), null,
+			"there-are-no-organizations-in-this-segment");
 
 		organizationSearchContainer.setId("segmentsEntryOrganizations");
 		organizationSearchContainer.setRowChecker(
@@ -280,8 +277,7 @@ public class EditSegmentsEntryDisplayContext {
 		}
 
 		SearchContainer userSearchContainer = new SearchContainer(
-			_renderRequest, getPortletURL(SegmentsConstants.TYPE_USERS), null,
-			null);
+			_renderRequest, getPortletURL("users"), null, null);
 
 		userSearchContainer.setId("segmentsEntryUsers");
 

@@ -7,3 +7,4 @@ LPS-82331 https://github.com/rotty3000/rt.equinox.bundles/pull/24
 LPS-81657 https://github.com/rotty3000/rt.equinox.bundles/pull/25
 LPS-83747 https://github.com/rotty3000/rt.equinox.bundles/pull/26
 LPS-84543 https://github.com/rotty3000/rt.equinox.bundles/pull/27
+LPS-81670 https://github.com/rotty3000/rt.equinox.bundles/pull/28

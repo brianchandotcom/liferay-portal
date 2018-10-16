@@ -1,0 +1,112 @@
+diff --git a/org/apache/felix/cm/impl/persistence/PersistenceManagerTracker.java b/org/apache/felix/cm/impl/persistence/PersistenceManagerTracker.java
+index 4b63419..bb4e6ed 100644
+--- a/org/apache/felix/cm/impl/persistence/PersistenceManagerTracker.java
++++ b/org/apache/felix/cm/impl/persistence/PersistenceManagerTracker.java
+@@ -54,8 +54,6 @@ public class PersistenceManagerTracker
+ 
+     private final List<Holder> holders = new ArrayList<>();
+ 
+-    private final WorkerQueue workerQueue;
+-
+     private final BundleContext bundleContext;
+ 
+     private volatile ConfigurationManager configurationManager;
+@@ -72,7 +70,6 @@ public class PersistenceManagerTracker
+         if ( pmName != null )
+         {
+             Log.logger.log(LogService.LOG_DEBUG, "Using persistence manager {0}", new Object[] {pmName});
+-            this.workerQueue = new WorkerQueue();
+             this.persistenceManagerTracker = new ServiceTracker<>( bundleContext,
+                     bundleContext.createFilter("(&(" + Constants.OBJECTCLASS + "=" + PersistenceManager.class.getName() + ")(name=" + pmName + "))"),
+                      this );
+@@ -81,7 +78,6 @@ public class PersistenceManagerTracker
+         else
+         {
+             Log.logger.log(LogService.LOG_DEBUG, "Using default persistence manager", (Object[])null);
+-            this.workerQueue = null;
+             this.persistenceManagerTracker = null;
+             this.activate(this.createPersistenceManagerProxy(defaultPM));
+         }
+@@ -94,7 +90,6 @@ public class PersistenceManagerTracker
+     {
+         if ( this.persistenceManagerTracker != null )
+         {
+-            this.workerQueue.stop();
+             this.deactivate();
+             this.persistenceManagerTracker.close();
+         }
+@@ -165,19 +160,11 @@ public class PersistenceManagerTracker
+                 Collections.sort(holders);
+                 if ( holders.get(0) == holder )
+                 {
+-                    this.workerQueue.enqueue(new Runnable()
+-                    {
+-
+-                        @Override
+-                        public void run()
+-                        {
+-                            if ( oldHolder != null )
+-                            {
+-                                deactivate();
+-                            }
+-                            activate(holder.getPersistenceManager());
+-                        }
+-                    });
++					if ( oldHolder != null )
++					{
++						deactivate();
++					}
++					activate(holder.getPersistenceManager());
+                 }
+             }
+             return holder;
+@@ -199,16 +186,8 @@ public class PersistenceManagerTracker
+             Collections.sort(this.holders);
+             if ( holders.get(0) == holder && oldHolder.compareTo(holder) != 0 )
+             {
+-                this.workerQueue.enqueue(new Runnable()
+-                {
+-
+-                    @Override
+-                    public void run()
+-                    {
+-                        deactivate();
+-                        activate(holder.getPersistenceManager());
+-                    }
+-                });
++				deactivate();
++				activate(holder.getPersistenceManager());
+             }
+         }
+ 
+@@ -225,19 +204,11 @@ public class PersistenceManagerTracker
+             this.holders.remove(holder);
+             if ( deactivate )
+             {
+-                this.workerQueue.enqueue(new Runnable()
+-                {
+-
+-                    @Override
+-                    public void run()
+-                    {
+-                        deactivate();
+-                        if ( !holders.isEmpty() )
+-                        {
+-                            activate(holders.get(0).getPersistenceManager());
+-                        }
+-                    }
+-                });
++				deactivate();
++				if ( !holders.isEmpty() )
++				{
++					activate(holders.get(0).getPersistenceManager());
++				}
+             }
+         }
+     }
+@@ -351,3 +322,4 @@ public class PersistenceManagerTracker
+     }
+ }
+ 
++/* @generated */
+\ No newline at end of file

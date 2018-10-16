@@ -521,7 +521,9 @@ AUI.add(
 
 							var selectedItem = descendants.item(event.newVal);
 
-							bodyNode.one('ul').setAttribute('aria-activedescendant', selectedItem.guid());
+							if (selectedItem) {
+								bodyNode.one('ul').setAttribute('aria-activedescendant', selectedItem.guid());
+							}
 						}
 					);
 

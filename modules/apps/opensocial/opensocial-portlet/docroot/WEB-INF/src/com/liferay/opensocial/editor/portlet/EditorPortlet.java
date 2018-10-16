@@ -306,9 +306,6 @@ public class EditorPortlet extends AdminPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long repositoryId = ParamUtil.getLong(resourceRequest, "repositoryId");
 		long folderId = ParamUtil.getLong(resourceRequest, "folderId");
 
@@ -334,6 +331,10 @@ public class EditorPortlet extends AdminPortlet {
 			resourceRequest, "getFileEntries");
 
 		if (getFileEntries) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)resourceRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			PermissionChecker permissionChecker =
 				themeDisplay.getPermissionChecker();
 

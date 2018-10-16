@@ -66,10 +66,10 @@ public class BaseHttpHandlerImpl implements HttpHandler {
 					SimulatorConstants.HTTP_PARAMETER_RETURN_PARMS_IN_JSON));
 		}
 
-		String requestMethod = httpExchange.getRequestMethod();
-
 		if ((responseHTTPStatus == 204) || (responseHTTPStatus == 401) ||
 			(responseHTTPStatus == 405)) {
+
+			String requestMethod = httpExchange.getRequestMethod();
 
 			if (returnParamsInJSON && requestMethod.equals("GET")) {
 				httpExchange.sendResponseHeaders(400, -1);

@@ -156,7 +156,6 @@ public class EditRuleGroupMVCActionCommand extends BaseMVCActionCommand {
 
 		long ruleGroupId = ParamUtil.getLong(actionRequest, "ruleGroupId");
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
@@ -168,6 +167,8 @@ public class EditRuleGroupMVCActionCommand extends BaseMVCActionCommand {
 		MDRRuleGroup ruleGroup = null;
 
 		if (ruleGroupId <= 0) {
+			long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
 			ruleGroup = _mdrRuleGroupService.addRuleGroup(
 				groupId, nameMap, descriptionMap, serviceContext);
 		}

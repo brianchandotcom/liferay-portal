@@ -72,14 +72,15 @@ public class NestedPortletsConfigurationAction
 			ActionResponse actionResponse)
 		throws Exception {
 
-		String portletResource = ParamUtil.getString(
-			actionRequest, "portletResource");
 		String layoutTemplateId = getParameter(
 			actionRequest, "layoutTemplateId");
 		String oldLayoutTemplateId = ParamUtil.getString(
 			actionRequest, "oldLayoutTemplateId");
 
 		if (!oldLayoutTemplateId.equals(layoutTemplateId)) {
+			String portletResource = ParamUtil.getString(
+				actionRequest, "portletResource");
+
 			reorganizeNestedColumns(
 				actionRequest, portletResource, layoutTemplateId,
 				oldLayoutTemplateId);

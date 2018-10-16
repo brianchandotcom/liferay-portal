@@ -47,12 +47,6 @@ public class LayoutTemplateModificationActionHandler implements ActionHandler {
 		MDRAction mdrAction, HttpServletRequest request,
 		HttpServletResponse response) {
 
-		UnicodeProperties mdrActionTypeSettingsProperties =
-			mdrAction.getTypeSettingsProperties();
-
-		String layoutTemplateId = GetterUtil.getString(
-			mdrActionTypeSettingsProperties.getProperty("layoutTemplateId"));
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -61,6 +55,13 @@ public class LayoutTemplateModificationActionHandler implements ActionHandler {
 		if (layout.isTypePortlet()) {
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)layout.getLayoutType();
+
+			UnicodeProperties mdrActionTypeSettingsProperties =
+				mdrAction.getTypeSettingsProperties();
+
+			String layoutTemplateId = GetterUtil.getString(
+				mdrActionTypeSettingsProperties.getProperty(
+					"layoutTemplateId"));
 
 			layoutTypePortlet.setLayoutTemplateId(0, layoutTemplateId, false);
 		}

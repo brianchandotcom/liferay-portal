@@ -82,10 +82,8 @@ public class RequiresScopeAnnotationFinder {
 		}
 
 		if (_isSubresourceLocator(method)) {
-			Class<?> returnType = method.getReturnType();
-
 			if (recurse) {
-				_find(visited, scopes, false, returnType);
+				_find(visited, scopes, false, method.getReturnType());
 			}
 		}
 	}

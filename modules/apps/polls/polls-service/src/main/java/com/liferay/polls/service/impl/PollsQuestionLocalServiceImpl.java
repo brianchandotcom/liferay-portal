@@ -369,11 +369,11 @@ public class PollsQuestionLocalServiceImpl
 
 		// Question
 
-		User user = userLocalService.getUser(userId);
-
 		Date expirationDate = null;
 
 		if (!neverExpire) {
+			User user = userLocalService.getUser(userId);
+
 			expirationDate = PortalUtil.getDate(
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, user.getTimeZone(),

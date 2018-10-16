@@ -100,7 +100,6 @@ public class EditRuleMVCActionCommand extends BaseMVCActionCommand {
 	protected void updateRule(ActionRequest actionRequest) throws Exception {
 		long ruleId = ParamUtil.getLong(actionRequest, "ruleId");
 
-		long ruleGroupId = ParamUtil.getLong(actionRequest, "ruleGroupId");
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
@@ -122,6 +121,8 @@ public class EditRuleMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest);
 
 		if (ruleId <= 0) {
+			long ruleGroupId = ParamUtil.getLong(actionRequest, "ruleGroupId");
+
 			_mdrRuleService.addRule(
 				ruleGroupId, nameMap, descriptionMap, type,
 				typeSettingsProperties, serviceContext);

@@ -51,9 +51,6 @@ public class AMEmbeddedReferenceSetFactory {
 				portletDataContext.getReferenceDataElement(
 					stagedModel, DLFileEntry.class, classPK);
 
-			long groupId = GetterUtil.getLong(
-				referenceElement.attributeValue("group-id"));
-
 			String path = null;
 
 			if (referenceDataElement != null) {
@@ -61,6 +58,8 @@ public class AMEmbeddedReferenceSetFactory {
 			}
 
 			if (Validator.isNull(path)) {
+				long groupId = GetterUtil.getLong(
+					referenceElement.attributeValue("group-id"));
 				String className = referenceElement.attributeValue(
 					"class-name");
 

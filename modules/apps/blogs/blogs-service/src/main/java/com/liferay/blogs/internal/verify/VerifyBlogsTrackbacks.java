@@ -113,8 +113,6 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 	private void _verifyPost(BlogsEntry entry, MBMessage mbMessage)
 		throws PortalException {
 
-		String entryURL =
-			Portal.FRIENDLY_URL_SEPARATOR + "blogs/" + entry.getUrlTitle();
 		String body = mbMessage.getBody();
 		String url = null;
 
@@ -135,6 +133,10 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 				mbMessage.getCompanyId());
 
 			if (mbMessage.getUserId() == defaultUserId) {
+				String entryURL =
+					Portal.FRIENDLY_URL_SEPARATOR + "blogs/" +
+						entry.getUrlTitle();
+
 				_linkbackConsumer.verifyTrackback(
 					mbMessage.getMessageId(), url, entryURL);
 			}

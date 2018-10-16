@@ -184,9 +184,10 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getTimeZone(), EntryExpirationDateException.class);
 
 		int priority = ParamUtil.getInteger(actionRequest, "priority");
-		boolean alert = ParamUtil.getBoolean(actionRequest, "alert");
 
 		if (entryId <= 0) {
+			boolean alert = ParamUtil.getBoolean(actionRequest, "alert");
+
 			_announcementsEntryService.addEntry(
 				classNameId, classPK, title, content, url, type, displayDate,
 				expirationDate, priority, alert);

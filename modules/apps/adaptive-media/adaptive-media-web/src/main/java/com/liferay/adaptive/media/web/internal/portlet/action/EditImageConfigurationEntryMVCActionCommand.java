@@ -142,14 +142,12 @@ public class EditImageConfigurationEntryMVCActionCommand
 				boolean addHighResolution = ParamUtil.getBoolean(
 					actionRequest, "addHighResolution");
 
-				AMImageConfigurationEntry
-					highResolutionAMImageConfigurationEntry = null;
-
 				if (addHighResolution) {
-					highResolutionAMImageConfigurationEntry =
-						_addHighResolutionConfigurationEntry(
-							themeDisplay.getCompanyId(),
-							amImageConfigurationEntry);
+					AMImageConfigurationEntry
+						highResolutionAMImageConfigurationEntry =
+							_addHighResolutionConfigurationEntry(
+								themeDisplay.getCompanyId(),
+								amImageConfigurationEntry);
 
 					SessionMessages.add(
 						actionRequest, "highResolutionConfigurationEntryAdded",

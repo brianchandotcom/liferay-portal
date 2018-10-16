@@ -187,9 +187,6 @@ public class AssetPublisherConfigurationAction
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		String portletResource = ParamUtil.getString(
-			actionRequest, "portletResource");
-
 		PortletPreferences preferences = actionRequest.getPreferences();
 
 		if (cmd.equals(Constants.TRANSLATE)) {
@@ -280,6 +277,9 @@ public class AssetPublisherConfigurationAction
 
 			if (SessionErrors.isEmpty(actionRequest)) {
 				preferences.store();
+
+				String portletResource = ParamUtil.getString(
+					actionRequest, "portletResource");
 
 				SessionMessages.add(
 					actionRequest,

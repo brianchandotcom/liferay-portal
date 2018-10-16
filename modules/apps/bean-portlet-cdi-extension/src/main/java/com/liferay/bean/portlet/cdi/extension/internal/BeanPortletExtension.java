@@ -840,160 +840,8 @@ public class BeanPortletExtension implements Extension {
 				runtimeOption.name(), Arrays.asList(runtimeOption.values()));
 		}
 
-		BeanPortlet annotatedBeanPortlet = new BeanPortletImpl(
-			portletConfiguration.portletName(), beanMethodMap, displayNames,
-			beanPortletClass.getName(), initParams,
-			portletConfiguration.cacheExpirationTime(), supportedPortletModes,
-			supportedWindowStates, supportedLocales,
-			portletConfiguration.resourceBundle(), titles, shortTitles,
-			keywords, descriptions, preferences, preferencesValidator,
-			securityRoleRefs, supportedProcessingEvents,
-			supportedPublishingEvents, supportedPublicRenderParameters,
-			containerRuntimeOptions, portletDependencies,
-			portletConfiguration.asyncSupported(), multipartConfig,
-			displayCategory, liferayConfiguration);
-
 		if (descriptorBeanPortlet == null) {
-			_beanPortlets.put(configuredPortletName, annotatedBeanPortlet);
-		}
-		else {
-			String portletName = descriptorBeanPortlet.getPortletName();
-
-			if (Validator.isNull(portletName)) {
-				portletName = portletConfiguration.portletName();
-			}
-
-			Set<BeanMethod> beanMethods = new HashSet<>();
-
-			for (Map.Entry<MethodType, List<BeanMethod>>
-					entry: beanMethodMap.entrySet()) {
-
-				beanMethods.addAll(entry.getValue());
-			}
-
-			Map<MethodType, List<BeanMethod>> descriptorBeanMethodMap =
-				descriptorBeanPortlet.getBeanMethods();
-
-			for (Map.Entry<MethodType, List<BeanMethod>>
-					entry: descriptorBeanMethodMap.entrySet()) {
-
-				beanMethods.addAll(entry.getValue());
-			}
-
-			beanMethodMap = BeanMethodIndexUtil.indexBeanMethods(beanMethods);
-
-			BeanMethodIndexUtil.scanSupportedEvents(
-				beanMethodMap, supportedProcessingEvents,
-				supportedPublishingEvents);
-
-			displayNames.putAll(descriptorBeanPortlet.getDisplayNames());
-
-			String portletClassName =
-				descriptorBeanPortlet.getPortletClassName();
-
-			if (Validator.isNull(portletClassName)) {
-				portletClassName = beanPortletClass.getName();
-			}
-
-			initParams.putAll(descriptorBeanPortlet.getInitParams());
-
-			int expirationCache = descriptorBeanPortlet.getExpirationCache();
-
-			if (expirationCache <= 0) {
-				expirationCache = portletConfiguration.cacheExpirationTime();
-			}
-
-			supportedPortletModes.putAll(
-				descriptorBeanPortlet.getSupportedPortletModes());
-
-			supportedWindowStates.putAll(
-				descriptorBeanPortlet.getSupportedWindowStates());
-
-			supportedLocales.addAll(
-				descriptorBeanPortlet.getSupportedLocales());
-
-			String resourceBundle = descriptorBeanPortlet.getResourceBundle();
-
-			if (Validator.isNull(resourceBundle)) {
-				resourceBundle = portletConfiguration.resourceBundle();
-			}
-
-			titles.putAll(descriptorBeanPortlet.getTitles());
-
-			shortTitles.putAll(descriptorBeanPortlet.getShortTitles());
-
-			keywords.putAll(descriptorBeanPortlet.getKeywords());
-
-			descriptions.putAll(descriptorBeanPortlet.getDescriptions());
-
-			preferences.putAll(descriptorBeanPortlet.getPreferences());
-
-			if (Validator.isNotNull(
-					descriptorBeanPortlet.getPreferencesValidator())) {
-
-				preferencesValidator =
-					descriptorBeanPortlet.getPreferencesValidator();
-			}
-
-			securityRoleRefs.putAll(
-				descriptorBeanPortlet.getSecurityRoleRefs());
-
-			supportedPublicRenderParameters.addAll(
-				descriptorBeanPortlet.getSupportedPublicRenderParameters());
-
-			Map<String, List<String>> descriptorContainerRuntimeOptions =
-				descriptorBeanPortlet.getContainerRuntimeOptions();
-
-			for (Map.Entry<String, List<String>> entry :
-					descriptorContainerRuntimeOptions.entrySet()) {
-
-				if (entry.getValue() != null) {
-					String optionName = entry.getKey();
-
-					List<String> existingOptionValues =
-						containerRuntimeOptions.get(optionName);
-
-					if (existingOptionValues == null) {
-						containerRuntimeOptions.put(
-							optionName, entry.getValue());
-					}
-					else {
-						List<String> mergedOptions = new ArrayList<>(
-							existingOptionValues);
-
-						mergedOptions.addAll(entry.getValue());
-
-						containerRuntimeOptions.put(optionName, mergedOptions);
-					}
-				}
-			}
-
-			portletDependencies.addAll(
-				descriptorBeanPortlet.getPortletDependencies());
-
-			boolean asyncSupport = false;
-
-			if (portletConfiguration.asyncSupported() ||
-				descriptorBeanPortlet.isAsyncSupported()) {
-
-				asyncSupport = true;
-			}
-
-			multipartConfig = multipartConfig.merge(
-				descriptorBeanPortlet.getMultipartConfig());
-
-			if (descriptorBeanPortlet.getDisplayCategory() != null) {
-				displayCategory = descriptorBeanPortlet.getDisplayCategory();
-			}
-
-			descriptorLiferayConfiguration =
-				descriptorBeanPortlet.getLiferayConfiguration();
-
-			if (descriptorLiferayConfiguration != null) {
-				liferayConfiguration.putAll(descriptorLiferayConfiguration);
-			}
-
-			BeanPortlet mergedBeanPortlet = new BeanPortletImpl(
+			BeanPortlet annotatedBeanPortlet = new BeanPortletImpl(
 				portletConfiguration.portletName(), beanMethodMap, displayNames,
 				beanPortletClass.getName(), initParams,
 				portletConfiguration.cacheExpirationTime(),
@@ -1002,11 +850,160 @@ public class BeanPortletExtension implements Extension {
 				keywords, descriptions, preferences, preferencesValidator,
 				securityRoleRefs, supportedProcessingEvents,
 				supportedPublishingEvents, supportedPublicRenderParameters,
-				containerRuntimeOptions, portletDependencies, asyncSupport,
-				multipartConfig, displayCategory, liferayConfiguration);
+				containerRuntimeOptions, portletDependencies,
+				portletConfiguration.asyncSupported(), multipartConfig,
+				displayCategory, liferayConfiguration);
 
-			_beanPortlets.put(configuredPortletName, mergedBeanPortlet);
+			_beanPortlets.put(configuredPortletName, annotatedBeanPortlet);
+
+			return;
 		}
+
+		String portletName = descriptorBeanPortlet.getPortletName();
+
+		if (Validator.isNull(portletName)) {
+			portletName = portletConfiguration.portletName();
+		}
+
+		Set<BeanMethod> beanMethods = new HashSet<>();
+
+		for (Map.Entry<MethodType, List<BeanMethod>>
+				entry: beanMethodMap.entrySet()) {
+
+			beanMethods.addAll(entry.getValue());
+		}
+
+		Map<MethodType, List<BeanMethod>> descriptorBeanMethodMap =
+			descriptorBeanPortlet.getBeanMethods();
+
+		for (Map.Entry<MethodType, List<BeanMethod>>
+				entry: descriptorBeanMethodMap.entrySet()) {
+
+			beanMethods.addAll(entry.getValue());
+		}
+
+		beanMethodMap = BeanMethodIndexUtil.indexBeanMethods(beanMethods);
+
+		BeanMethodIndexUtil.scanSupportedEvents(
+			beanMethodMap, supportedProcessingEvents,
+			supportedPublishingEvents);
+
+		displayNames.putAll(descriptorBeanPortlet.getDisplayNames());
+
+		String portletClassName = descriptorBeanPortlet.getPortletClassName();
+
+		if (Validator.isNull(portletClassName)) {
+			portletClassName = beanPortletClass.getName();
+		}
+
+		initParams.putAll(descriptorBeanPortlet.getInitParams());
+
+		int expirationCache = descriptorBeanPortlet.getExpirationCache();
+
+		if (expirationCache <= 0) {
+			expirationCache = portletConfiguration.cacheExpirationTime();
+		}
+
+		supportedPortletModes.putAll(
+			descriptorBeanPortlet.getSupportedPortletModes());
+
+		supportedWindowStates.putAll(
+			descriptorBeanPortlet.getSupportedWindowStates());
+
+		supportedLocales.addAll(descriptorBeanPortlet.getSupportedLocales());
+
+		String resourceBundle = descriptorBeanPortlet.getResourceBundle();
+
+		if (Validator.isNull(resourceBundle)) {
+			resourceBundle = portletConfiguration.resourceBundle();
+		}
+
+		titles.putAll(descriptorBeanPortlet.getTitles());
+
+		shortTitles.putAll(descriptorBeanPortlet.getShortTitles());
+
+		keywords.putAll(descriptorBeanPortlet.getKeywords());
+
+		descriptions.putAll(descriptorBeanPortlet.getDescriptions());
+
+		preferences.putAll(descriptorBeanPortlet.getPreferences());
+
+		if (Validator.isNotNull(
+				descriptorBeanPortlet.getPreferencesValidator())) {
+
+			preferencesValidator =
+				descriptorBeanPortlet.getPreferencesValidator();
+		}
+
+		securityRoleRefs.putAll(descriptorBeanPortlet.getSecurityRoleRefs());
+
+		supportedPublicRenderParameters.addAll(
+			descriptorBeanPortlet.getSupportedPublicRenderParameters());
+
+		Map<String, List<String>> descriptorContainerRuntimeOptions =
+			descriptorBeanPortlet.getContainerRuntimeOptions();
+
+		for (Map.Entry<String, List<String>> entry :
+				descriptorContainerRuntimeOptions.entrySet()) {
+
+			if (entry.getValue() != null) {
+				String optionName = entry.getKey();
+
+				List<String> existingOptionValues = containerRuntimeOptions.get(
+					optionName);
+
+				if (existingOptionValues == null) {
+					containerRuntimeOptions.put(optionName, entry.getValue());
+				}
+				else {
+					List<String> mergedOptions = new ArrayList<>(
+						existingOptionValues);
+
+					mergedOptions.addAll(entry.getValue());
+
+					containerRuntimeOptions.put(optionName, mergedOptions);
+				}
+			}
+		}
+
+		portletDependencies.addAll(
+			descriptorBeanPortlet.getPortletDependencies());
+
+		boolean asyncSupport = false;
+
+		if (portletConfiguration.asyncSupported() ||
+			descriptorBeanPortlet.isAsyncSupported()) {
+
+			asyncSupport = true;
+		}
+
+		multipartConfig = multipartConfig.merge(
+			descriptorBeanPortlet.getMultipartConfig());
+
+		if (descriptorBeanPortlet.getDisplayCategory() != null) {
+			displayCategory = descriptorBeanPortlet.getDisplayCategory();
+		}
+
+		descriptorLiferayConfiguration =
+			descriptorBeanPortlet.getLiferayConfiguration();
+
+		if (descriptorLiferayConfiguration != null) {
+			liferayConfiguration.putAll(descriptorLiferayConfiguration);
+		}
+
+		BeanPortlet mergedBeanPortlet = new BeanPortletImpl(
+			portletConfiguration.portletName(), beanMethodMap, displayNames,
+			beanPortletClass.getName(), initParams,
+			portletConfiguration.cacheExpirationTime(), supportedPortletModes,
+			supportedWindowStates, supportedLocales,
+			portletConfiguration.resourceBundle(), titles, shortTitles,
+			keywords, descriptions, preferences, preferencesValidator,
+			securityRoleRefs, supportedProcessingEvents,
+			supportedPublishingEvents, supportedPublicRenderParameters,
+			containerRuntimeOptions, portletDependencies, asyncSupport,
+			multipartConfig, displayCategory, liferayConfiguration);
+
+		_beanPortlets.put(configuredPortletName, mergedBeanPortlet);
 	}
 
 	private void _addBeanPortletsFromAnnotatedClasses(

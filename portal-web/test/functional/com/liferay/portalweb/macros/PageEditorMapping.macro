@@ -26,7 +26,7 @@
 
 		<execute macro="Button#clickMap" />
 
-		<execute function="AssertClick" locator1="Fragment#LIST_GROUP_ITEM" value1="${itemName}">
+		<execute function="AssertClick" locator1="PageEditor#LIST_GROUP_ITEM" value1="${itemName}">
 			<var name="key_itemName" value="${itemName}" />
 		</execute>
 	</command>

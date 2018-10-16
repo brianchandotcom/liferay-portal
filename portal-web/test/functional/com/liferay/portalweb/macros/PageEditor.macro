@@ -8,7 +8,7 @@
 			<var name="collectionName" value="${collectionName}" />
 		</execute>
 
-		<execute function="Click" locator1="Fragment#FRAGMENT_SIDEBAR_FRAGMENT">
+		<execute function="Click" locator1="PageEditor#FRAGMENT_SIDEBAR_FRAGMENT">
 			<var name="key_collectionName" value="${collectionName}" />
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
@@ -80,24 +80,24 @@
 
 	<command name="expandFragmentCollection">
 		<if>
-			<condition function="IsElementPresent" locator1="Fragment#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED">
+			<condition function="IsElementPresent" locator1="PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED">
 				<var name="key_collectionName" value="${collectionName}" />
 			</condition>
 
 			<then>
-				<execute function="AssertClick" locator1="Fragment#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED" value1="${collectionName}">
+				<execute function="AssertClick" locator1="PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED" value1="${collectionName}">
 					<var name="key_collectionName" value="${collectionName}" />
 				</execute>
 			</then>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="Fragment#FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED">
+		<execute function="AssertElementPresent" locator1="PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED">
 			<var name="key_collectionName" value="${collectionName}" />
 		</execute>
 	</command>
 
 	<command name="gotoTab">
-		<execute function="AssertClick" locator1="Fragment#FRAGMENT_SIDEBAR_TAB" value1="${tabName}">
+		<execute function="AssertClick" locator1="PageEditor#FRAGMENT_SIDEBAR_TAB" value1="${tabName}">
 			<var name="key_tabName" value="${tabName}" />
 		</execute>
 	</command>
@@ -132,17 +132,17 @@
 	</command>
 
 	<command name="viewAutoSaveMessage">
-		<execute function="AssertTextEquals#assertPartialText" locator1="Fragment#PAGE_TEMPLATE_AUTOSAVE_MESSAGE" value1="Changes saved at" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PageEditor#AUTOSAVE_MESSAGE" value1="Changes saved at" />
 	</command>
 
 	<command name="viewCollectionNotPresent">
-		<execute function="AssertElementNotPresent" locator1="Fragment#FRAGMENT_SIDEBAR_COLLECTION_PANEL">
+		<execute function="AssertElementNotPresent" locator1="PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL">
 			<var name="key_collectionName" value="${collectionName}" />
 		</execute>
 	</command>
 
 	<command name="viewEditorEmpty">
-		<execute function="AssertElementPresent" locator1="Fragment#PAGE_TEMPLATE_EMPTY_MESSAGE" />
+		<execute function="AssertElementPresent" locator1="PageEditor#EMPTY_MESSAGE" />
 	</command>
 
 	<command name="viewFragment">

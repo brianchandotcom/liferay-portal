@@ -33,53 +33,7 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--FRAGMENT_SIDEBAR-->
-<tr>
-	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL</td>
-	<td>//div[contains(@class,'sidebar-body')]//a[contains(@href,'fragment-collection')][normalize-space()='${key_collectionName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED</td>
-	<td>//div[contains(@class,'sidebar-body')]//a[contains(@href,'fragment-collection')][contains(@class,'collapsed')][normalize-space()='${key_collectionName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED</td>
-	<td>//div[contains(@class,'sidebar-body')]//a[contains(@href,'fragment-collection')][@aria-expanded='true'][normalize-space()='${key_collectionName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_SIDEBAR_FRAGMENT</td>
-	<td>//ul[contains(@class,'nav')]//li[contains(.,'${key_collectionName}')]//button[@data-item-name='${key_fragmentName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_SIDEBAR_TAB</td>
-	<td>//ul[contains(@class,'nav')]//li[contains(@class,'nav-item')]//a[contains(.,'${key_tabName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_SIDEBAR_TAB_ACTIVE</td>
-	<td>//ul[contains(@class,'nav')]//li[contains(@class,'nav-item')]//a[contains(.,'${key_tabName}')][contains(@class,'active')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PAGE_TEMPLATE-->
-<tr>
-	<td>PAGE_TEMPLATE_AUTOSAVE_MESSAGE</td>
-	<td>//div[contains(@class,'management-bar')]//span[@class='navbar-text']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TEMPLATE_EMPTY_MESSAGE</td>
-	<td>//div[contains(@class,'empty-result-message')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD</td>
 	<td>//div[contains(@class,'fragment-entry-link')]/div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${key_id}')]</td>
@@ -128,11 +82,6 @@
 <tr>
 	<td>PAGE_TEMPLATE_PORTLET_CONFIGURE</td>
 	<td>//div[contains(@class,'fragment-entry-link')][contains(.,'${key_fragmentName}')]//div[contains(@class,'portlet')]//button[contains(.,'Configure')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LIST_GROUP_ITEM</td>
-	<td>//div[contains(@class,'list-group')]//a[contains(.,'${key_itemName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -673,22 +673,36 @@ class Form extends Component {
 	}
 
 	syncActiveFormMode(activeFormMode) {
+		const {published, saved} = this.props;
 		const formBasicInfo = document.querySelector('.ddm-form-basic-info');
 		const formBuilderButtons = document.querySelector('.ddm-form-builder-buttons');
 		const publishIcon = document.querySelector('.publish-icon');
+		const ShareURLButton = document.querySelector('.lfr-ddm-share-url-button');
 		const translationManager = document.querySelector('.ddm-translation-manager');
 
 		if (parseInt(activeFormMode, 10)) {
 			formBasicInfo.classList.add('hide');
 			formBuilderButtons.classList.add('hide');
-			publishIcon.classList.add('hide');
-			translationManager.classList.add('hide');
+			ShareURLButton.classList.add('hide');
 		}
 		else {
 			formBasicInfo.classList.remove('hide');
 			formBuilderButtons.classList.remove('hide');
-			publishIcon.classList.remove('hide');
-			translationManager.classList.remove('hide');
+
+			if (saved || published) {
+				ShareURLButton.classList.remove('hide');
+			}
+		}
+
+		if (publishIcon && translationManager) {
+			if (parseInt(activeFormMode, 10)) {
+				publishIcon.classList.add('hide');
+				translationManager.classList.add('hide');
+			}
+			else {
+				publishIcon.classList.remove('hide');
+				translationManager.classList.remove('hide');
+			}
 		}
 	}
 

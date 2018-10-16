@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.internal.search;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -114,30 +113,22 @@ public class DDMFormInstanceIndexer extends BaseIndexer<DDMFormInstance> {
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<DDMFormInstance>() {
+			(DDMFormInstance ddmFormInstance) -> {
+				try {
+					Document document = getDocument(ddmFormInstance);
 
-				@Override
-				public void performAction(DDMFormInstance ddmFormInstance)
-					throws PortalException {
-
-					try {
-						Document document = getDocument(ddmFormInstance);
-
-						if (document != null) {
-							indexableActionableDynamicQuery.addDocuments(
-								document);
-						}
-					}
-					catch (PortalException pe) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to index form instance record " +
-									ddmFormInstance.getFormInstanceId(),
-								pe);
-						}
+					if (document != null) {
+						indexableActionableDynamicQuery.addDocuments(document);
 					}
 				}
-
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index form instance record " +
+								ddmFormInstance.getFormInstanceId(),
+							pe);
+					}
+				}
 			});
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 

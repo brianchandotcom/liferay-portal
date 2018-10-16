@@ -59,13 +59,8 @@ public abstract class BaseRoleMembershipPolicy implements RoleMembershipPolicy {
 			RoleLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<Role>() {
-
-				@Override
-				public void performAction(Role role) throws PortalException {
-					verifyPolicy(role);
-				}
-
+			(Role role) -> {
+				verifyPolicy(role);
 			});
 
 		actionableDynamicQuery.performActions();

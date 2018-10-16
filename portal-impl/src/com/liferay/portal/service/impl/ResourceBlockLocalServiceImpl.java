@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -1161,16 +1160,11 @@ public class ResourceBlockLocalServiceImpl
 				persistedModelLocalService);
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property property = PropertyFactoryUtil.forName(
+					"resourceBlockId");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property property = PropertyFactoryUtil.forName(
-						"resourceBlockId");
-
-					dynamicQuery.add(property.eq(oldResourceBlockId));
-				}
-
+				dynamicQuery.add(property.eq(oldResourceBlockId));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.

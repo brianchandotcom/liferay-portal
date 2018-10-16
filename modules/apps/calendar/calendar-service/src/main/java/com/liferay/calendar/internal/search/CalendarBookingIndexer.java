@@ -20,8 +20,6 @@ import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -305,44 +303,33 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 			_calendarBookingLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property statusProperty = PropertyFactoryUtil.forName("status");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property statusProperty = PropertyFactoryUtil.forName(
-						"status");
+				int[] statuses = {
+					WorkflowConstants.STATUS_APPROVED,
+					CalendarBookingWorkflowConstants.STATUS_MAYBE,
+					WorkflowConstants.STATUS_IN_TRASH
+				};
 
-					int[] statuses = {
-						WorkflowConstants.STATUS_APPROVED,
-						CalendarBookingWorkflowConstants.STATUS_MAYBE,
-						WorkflowConstants.STATUS_IN_TRASH
-					};
-
-					dynamicQuery.add(statusProperty.in(statuses));
-				}
-
+				dynamicQuery.add(statusProperty.in(statuses));
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<CalendarBooking>() {
+			(CalendarBooking calendarBooking) -> {
+				try {
+					Document document = getDocument(calendarBooking);
 
-				@Override
-				public void performAction(CalendarBooking calendarBooking) {
-					try {
-						Document document = getDocument(calendarBooking);
-
-						indexableActionableDynamicQuery.addDocuments(document);
-					}
-					catch (PortalException pe) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to index calendar booking " +
-									calendarBooking.getCalendarBookingId(),
-								pe);
-						}
+					indexableActionableDynamicQuery.addDocuments(document);
+				}
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index calendar booking " +
+								calendarBooking.getCalendarBookingId(),
+							pe);
 					}
 				}
-
 			});
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 

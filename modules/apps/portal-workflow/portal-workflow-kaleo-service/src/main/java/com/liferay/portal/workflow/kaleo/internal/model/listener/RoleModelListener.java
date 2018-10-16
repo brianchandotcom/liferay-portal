@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.internal.model.listener;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -59,22 +58,17 @@ public class RoleModelListener extends BaseModelListener<Role> {
 			_kaleoTaskAssignmentLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property assigneeClassNameProperty =
+					PropertyFactoryUtil.forName("assigneeClassName");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property assigneeClassNameProperty =
-						PropertyFactoryUtil.forName("assigneeClassName");
+				dynamicQuery.add(
+					assigneeClassNameProperty.like(Role.class.getName()));
 
-					dynamicQuery.add(
-						assigneeClassNameProperty.like(Role.class.getName()));
+				Property assigneeClassPKProperty = PropertyFactoryUtil.forName(
+					"assigneeClassPK");
 
-					Property assigneeClassPKProperty =
-						PropertyFactoryUtil.forName("assigneeClassPK");
-
-					dynamicQuery.add(assigneeClassPKProperty.eq(roleId));
-				}
-
+				dynamicQuery.add(assigneeClassPKProperty.eq(roleId));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.

@@ -343,37 +343,31 @@ public class DDMFormInstanceRecordIndexer
 				getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property ddmFormInstanceRecordIdProperty =
+					PropertyFactoryUtil.forName("formInstanceRecordId");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property ddmFormInstanceRecordIdProperty =
-						PropertyFactoryUtil.forName("formInstanceRecordId");
+				DynamicQuery ddmFormInstanceRecordVersionDynamicQuery =
+					ddmFormInstanceRecordVersionLocalService.dynamicQuery();
 
-					DynamicQuery ddmFormInstanceRecordVersionDynamicQuery =
-						ddmFormInstanceRecordVersionLocalService.dynamicQuery();
+				ddmFormInstanceRecordVersionDynamicQuery.setProjection(
+					ProjectionFactoryUtil.property("formInstanceRecordId"));
 
-					ddmFormInstanceRecordVersionDynamicQuery.setProjection(
-						ProjectionFactoryUtil.property("formInstanceRecordId"));
+				dynamicQuery.add(
+					ddmFormInstanceRecordIdProperty.in(
+						ddmFormInstanceRecordVersionDynamicQuery));
 
-					dynamicQuery.add(
-						ddmFormInstanceRecordIdProperty.in(
-							ddmFormInstanceRecordVersionDynamicQuery));
+				Property ddmFormInstanceProperty = PropertyFactoryUtil.forName(
+					"formInstanceId");
 
-					Property ddmFormInstanceProperty =
-						PropertyFactoryUtil.forName("formInstanceId");
+				DynamicQuery ddmFormInstanceDynamicQuery =
+					ddmFormInstanceLocalService.dynamicQuery();
 
-					DynamicQuery ddmFormInstanceDynamicQuery =
-						ddmFormInstanceLocalService.dynamicQuery();
+				ddmFormInstanceDynamicQuery.setProjection(
+					ProjectionFactoryUtil.property("formInstanceId"));
 
-					ddmFormInstanceDynamicQuery.setProjection(
-						ProjectionFactoryUtil.property("formInstanceId"));
-
-					dynamicQuery.add(
-						ddmFormInstanceProperty.in(
-							ddmFormInstanceDynamicQuery));
-				}
-
+				dynamicQuery.add(
+					ddmFormInstanceProperty.in(ddmFormInstanceDynamicQuery));
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(

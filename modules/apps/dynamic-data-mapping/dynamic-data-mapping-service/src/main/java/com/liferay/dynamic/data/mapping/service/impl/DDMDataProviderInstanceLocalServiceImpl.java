@@ -26,7 +26,6 @@ import com.liferay.dynamic.data.mapping.service.base.DDMDataProviderInstanceLoca
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -146,16 +145,11 @@ public class DDMDataProviderInstanceLocalServiceImpl
 			ddmDataProviderInstanceLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property groupIdProperty = PropertyFactoryUtil.forName(
+					"groupId");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property groupIdProperty = PropertyFactoryUtil.forName(
-						"groupId");
-
-					dynamicQuery.add(groupIdProperty.eq(groupId));
-				}
-
+				dynamicQuery.add(groupIdProperty.eq(groupId));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.

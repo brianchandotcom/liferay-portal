@@ -127,13 +127,8 @@ public class TempFileEntriesMessageListener extends BaseMessageListener {
 			_repositoryLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<Repository>() {
-
-				@Override
-				public void performAction(Repository repository) {
-					deleteExpiredTemporaryFileEntries(repository);
-				}
-
+			(Repository repository) -> {
+				deleteExpiredTemporaryFileEntries(repository);
 			});
 
 		actionableDynamicQuery.performActions();

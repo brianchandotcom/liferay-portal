@@ -154,42 +154,35 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 			trashEntryLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<TrashEntry>() {
+			(TrashEntry trashEntry) -> {
+				Group group = groupLocalService.fetchGroup(
+					trashEntry.getGroupId());
 
-				@Override
-				public void performAction(TrashEntry trashEntry)
-					throws PortalException {
+				if (group == null) {
+					return;
+				}
 
-					Group group = groupLocalService.fetchGroup(
-						trashEntry.getGroupId());
+				Date createDate = trashEntry.getCreateDate();
 
-					if (group == null) {
-						return;
-					}
+				Date date = getMaxAge(group);
 
-					Date createDate = trashEntry.getCreateDate();
+				if (createDate.before(date) ||
+					!TrashUtil.isTrashEnabled(group)) {
 
-					Date date = getMaxAge(group);
+					TrashHandler trashHandler =
+						TrashHandlerRegistryUtil.getTrashHandler(
+							trashEntry.getClassName());
 
-					if (createDate.before(date) ||
-						!TrashUtil.isTrashEnabled(group)) {
-
-						TrashHandler trashHandler =
-							TrashHandlerRegistryUtil.getTrashHandler(
-								trashEntry.getClassName());
-
-						if (trashHandler != null) {
-							try {
-								trashHandler.deleteTrashEntry(
-									trashEntry.getClassPK());
-							}
-							catch (Exception e) {
-								_log.error(e, e);
-							}
+					if (trashHandler != null) {
+						try {
+							trashHandler.deleteTrashEntry(
+								trashEntry.getClassPK());
+						}
+						catch (Exception e) {
+							_log.error(e, e);
 						}
 					}
 				}
-
 			});
 		actionableDynamicQuery.setTransactionConfig(
 			DefaultActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_CONFIG);

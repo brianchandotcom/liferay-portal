@@ -164,26 +164,16 @@ public class DeletionSystemEventExporter {
 			SystemEventLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					doAddCriteria(
-						portletDataContext, deletionSystemEventStagedModelTypes,
-						dynamicQuery);
-				}
-
+			dynamicQuery -> {
+				doAddCriteria(
+					portletDataContext, deletionSystemEventStagedModelTypes,
+					dynamicQuery);
 			});
 		actionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<SystemEvent>() {
-
-				@Override
-				public void performAction(SystemEvent systemEvent) {
-					exportDeletionSystemEvent(
-						portletDataContext, systemEvent, rootElement);
-				}
-
+			(SystemEvent systemEvent) -> {
+				exportDeletionSystemEvent(
+					portletDataContext, systemEvent, rootElement);
 			});
 
 		actionableDynamicQuery.performActions();

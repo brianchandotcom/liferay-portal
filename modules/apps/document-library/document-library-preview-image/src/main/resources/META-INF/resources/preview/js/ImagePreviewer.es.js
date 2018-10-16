@@ -33,8 +33,8 @@ class ImagePreviewer extends Component {
 	}
 
 	_setDimensions() {
-		this.previewImageContainerWidth = this.refs.previewImageContainer.offsetWidth;
-		this.previewImageContainerHeight = this.refs.previewImageContainer.offsetHeight;
+		this.previewImageContainerWidth = this.refs.previewImageContainer.clientWidth;
+		this.previewImageContainerHeight = this.refs.previewImageContainer.clientHeight;
 		this._setZoomNumber(this.refs.previewImage.width);
 	}
 

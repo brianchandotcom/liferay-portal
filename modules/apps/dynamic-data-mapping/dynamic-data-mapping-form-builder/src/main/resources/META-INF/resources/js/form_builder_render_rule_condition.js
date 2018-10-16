@@ -314,6 +314,10 @@ AUI.add(
 					return (field && field[property]) || [];
 				}
 
+				if (property === 'type' && fieldValue === 'user') {
+					return fieldValue;
+				}
+
 				return field && field[property];
 			},
 
@@ -701,7 +705,13 @@ AUI.add(
 				if (condition) {
 					var operand = condition.operands[0];
 
-					instance._updateOperatorList(index, instance._getFieldProperty(operand.value, 'dataType'), operand.repeatable);
+					var dataType = 'dataType';
+
+					if (operand.type === 'user') {
+						dataType = 'type';
+					}
+
+					instance._updateOperatorList(index, instance._getFieldProperty(operand.value, dataType), operand.repeatable);
 				}
 			},
 

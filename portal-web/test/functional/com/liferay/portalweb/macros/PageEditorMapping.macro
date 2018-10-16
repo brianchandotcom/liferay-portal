@@ -14,19 +14,19 @@
 			<var name="tabName" value="Mapping" />
 		</execute>
 
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#EDITABLE_FIELD">
 			<var name="key_fragmentName" value="${fragmentName}" />
 			<var name="key_id" value="${id}" />
 		</execute>
 
-		<execute function="Click" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD">
+		<execute function="Click" locator1="Fragment#EDITABLE_FIELD">
 			<var name="key_fragmentName" value="${fragmentName}" />
 			<var name="key_id" value="${id}" />
 		</execute>
 
 		<execute macro="Button#clickMap" />
 
-		<execute function="AssertClick" locator1="Fragment#LIST_GROUP_ITEM" value1="${itemName}">
+		<execute function="AssertClick" locator1="PageEditor#LIST_GROUP_ITEM" value1="${itemName}">
 			<var name="key_itemName" value="${itemName}" />
 		</execute>
 	</command>

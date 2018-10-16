@@ -8,22 +8,22 @@
 			<var name="collectionName" value="${collectionName}" />
 		</execute>
 
-		<execute function="Click" locator1="Fragment#FRAGMENT_SIDEBAR_FRAGMENT">
+		<execute function="Click" locator1="PageEditor#FRAGMENT_SIDEBAR_FRAGMENT">
 			<var name="key_collectionName" value="${collectionName}" />
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
+		<execute function="AssertElementPresent" locator1="Fragment#FRAGMENT_HEADER">
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
 	</command>
 
 	<command name="editFragmentImage">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#FRAGMENT_HEADER">
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
 
-		<execute function="Click" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD">
+		<execute function="Click" locator1="Fragment#EDITABLE_FIELD">
 			<var name="key_fragmentName" value="${fragmentName}" />
 			<var name="key_id" value="${id}" />
 		</execute>
@@ -42,12 +42,12 @@
 	</command>
 
 	<command name="editFragmentText">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#EDITABLE_FIELD">
 			<var name="key_fragmentName" value="${fragmentName}" />
 			<var name="key_id" value="${id}" />
 		</execute>
 
-		<execute function="Click" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD">
+		<execute function="Click" locator1="Fragment#EDITABLE_FIELD">
 			<var name="key_fragmentName" value="${fragmentName}" />
 			<var name="key_id" value="${id}" />
 		</execute>
@@ -59,7 +59,7 @@
 			</then>
 		</if>
 
-		<execute function="Type" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD_CK_EDITOR" value1="${text}">
+		<execute function="Type" locator1="Fragment#EDITABLE_FIELD_CK_EDITOR" value1="${text}">
 			<var name="key_fragmentName" value="${fragmentName}" />
 			<var name="key_id" value="${id}" />
 		</execute>
@@ -68,52 +68,56 @@
 	<command name="expandContentPageFragmentSidebar">
 		<if>
 			<not>
-				<condition function="IsElementPresent" locator1="Fragment#CONTENT_PAGE_FRAGMENT_SIDEBAR" />
+				<condition function="IsElementPresent" locator1="PageEditor#CONTENT_PAGE_FRAGMENT_SIDEBAR" />
 			</not>
 			<then>
 				<execute function="Click#clickAt" locator1="ControlMenu#ADD" />
 			</then>
 		</if>
 
-		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT_SIDEBAR" />
+		<execute function="AssertVisible" locator1="PageEditor#CONTENT_PAGE_FRAGMENT_SIDEBAR" />
 	</command>
 
 	<command name="expandFragmentCollection">
 		<if>
-			<condition function="IsElementPresent" locator1="Fragment#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED">
+			<condition function="IsElementPresent" locator1="PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED">
 				<var name="key_collectionName" value="${collectionName}" />
 			</condition>
 
 			<then>
-				<execute function="AssertClick" locator1="Fragment#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED" value1="${collectionName}">
+				<execute function="AssertClick" locator1="PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED" value1="${collectionName}">
 					<var name="key_collectionName" value="${collectionName}" />
 				</execute>
 			</then>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="Fragment#FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED">
+		<execute function="AssertElementPresent" locator1="PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED">
 			<var name="key_collectionName" value="${collectionName}" />
 		</execute>
 	</command>
 
 	<command name="gotoTab">
-		<execute function="AssertClick" locator1="Fragment#FRAGMENT_SIDEBAR_TAB" value1="${tabName}">
+		<execute function="AssertClick" locator1="PageEditor#FRAGMENT_SIDEBAR_TAB" value1="${tabName}">
 			<var name="key_tabName" value="${tabName}" />
 		</execute>
 	</command>
 
 	<command name="moveFragment">
+		<execute function="MouseOver" locator1="Fragment#FRAGMENT_BODY">
+			<var name="key_fragmentName" value="${fragmentName}" />
+		</execute>
+
 		<if>
 			<equals arg1="${direction}" arg2="up" />
 			<then>
-				<execute function="Click#clickNoWaitForVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_UP_ARROW_BUTTON">
+				<execute function="Click#clickNoWaitForVisible" locator1="Fragment#FRAGMENT_HEADER_UP_ARROW_BUTTON">
 					<var name="key_fragmentName" value="${fragmentName}" />
 				</execute>
 			</then>
 			<elseif>
 				<equals arg1="${direction}" arg2="down" />
 				<then>
-					<execute function="Click#clickNoWaitForVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_DOWN_ARROW_BUTTON">
+					<execute function="Click#clickNoWaitForVisible" locator1="Fragment#FRAGMENT_HEADER_DOWN_ARROW_BUTTON">
 						<var name="key_fragmentName" value="${fragmentName}" />
 					</execute>
 				</then>
@@ -122,44 +126,44 @@
 	</command>
 
 	<command name="removeFragment">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#FRAGMENT_HEADER">
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
 
-		<execute function="Click" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_DELETE_BUTTON">
+		<execute function="Click" locator1="Fragment#FRAGMENT_HEADER_DELETE_BUTTON">
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
 	</command>
 
 	<command name="viewAutoSaveMessage">
-		<execute function="AssertTextEquals#assertPartialText" locator1="Fragment#PAGE_TEMPLATE_AUTOSAVE_MESSAGE" value1="Changes saved at" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PageEditor#AUTOSAVE_MESSAGE" value1="Changes saved at" />
 	</command>
 
 	<command name="viewCollectionNotPresent">
-		<execute function="AssertElementNotPresent" locator1="Fragment#FRAGMENT_SIDEBAR_COLLECTION_PANEL">
+		<execute function="AssertElementNotPresent" locator1="PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL">
 			<var name="key_collectionName" value="${collectionName}" />
 		</execute>
 	</command>
 
 	<command name="viewEditorEmpty">
-		<execute function="AssertElementPresent" locator1="Fragment#PAGE_TEMPLATE_EMPTY_MESSAGE" />
+		<execute function="AssertElementPresent" locator1="PageEditor#EMPTY_MESSAGE" />
 	</command>
 
 	<command name="viewFragment">
-		<execute function="AssertElementPresent" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
+		<execute function="AssertElementPresent" locator1="Fragment#FRAGMENT_HEADER">
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
 	</command>
 
 	<command name="viewFragmentEditableText">
-		<execute function="AssertTextEquals" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD" value1="${editableText}">
+		<execute function="AssertTextEquals" locator1="Fragment#EDITABLE_FIELD" value1="${editableText}">
 			<var name="key_fragmentName" value="${fragmentName}" />
 			<var name="key_id" value="${id}" />
 		</execute>
 	</command>
 
 	<command name="viewFragmentOrder">
-		<execute function="AssertElementPresent" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER_POSITION">
+		<execute function="AssertElementPresent" locator1="Fragment#FRAGMENT_HEADER_POSITION">
 			<var name="key_fragmentName" value="${fragmentName}" />
 			<var name="key_position" value="${position}" />
 		</execute>

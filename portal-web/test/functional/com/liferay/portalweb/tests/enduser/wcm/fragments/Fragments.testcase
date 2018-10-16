@@ -193,7 +193,7 @@
 </div>${line.separator}
 </html>]]></var>
 
-		<execute function="Type#typeAceEditorNoError" locator1="Fragment#HTML_EDITOR" value1="${htmlSnippet}" />
+		<execute function="Type#typeAceEditorNoError" locator1="FragmentEditor#HTML_EDITOR" value1="${htmlSnippet}" />
 
 		<execute macro="PortletEntry#publish" />
 

@@ -9,151 +9,59 @@
 </thead>
 <tbody>
 <tr>
-	<td>HTML_EDITOR</td>
-	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][1]//textarea</td>
+	<td>FRAGMENT</td>
+	<td>//div[contains(@id,'fragment')][${key_position}]/*[contains(@class,'fragment-${key_fragmentClass}') and contains(.,'${key_content}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CSS_EDITOR</td>
-	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][2]//textarea</td>
+	<td>FRAGMENT_BODY</td>
+	<td>//div[contains(@class,'fragment-entry-link-wrapper')][contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>JAVASCRIPT_EDITOR</td>
-	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][3]//textarea</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_IFRAME</td>
-	<td>//iframe[@class='fragment-preview__content']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--FRAGMENT_SIDEBAR-->
-<tr>
-	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL</td>
-	<td>//div[contains(@class,'sidebar-body')]//a[contains(@href,'fragment-collection')][normalize-space()='${key_collectionName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED</td>
-	<td>//div[contains(@class,'sidebar-body')]//a[contains(@href,'fragment-collection')][contains(@class,'collapsed')][normalize-space()='${key_collectionName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED</td>
-	<td>//div[contains(@class,'sidebar-body')]//a[contains(@href,'fragment-collection')][@aria-expanded='true'][normalize-space()='${key_collectionName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_SIDEBAR_FRAGMENT</td>
-	<td>//ul[contains(@class,'nav')]//li[contains(.,'${key_collectionName}')]//button[@data-item-name='${key_fragmentName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_SIDEBAR_TAB</td>
-	<td>//ul[contains(@class,'nav')]//li[contains(@class,'nav-item')]//a[contains(.,'${key_tabName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_SIDEBAR_TAB_ACTIVE</td>
-	<td>//ul[contains(@class,'nav')]//li[contains(@class,'nav-item')]//a[contains(.,'${key_tabName}')][contains(@class,'active')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--PAGE_TEMPLATE-->
-<tr>
-	<td>PAGE_TEMPLATE_AUTOSAVE_MESSAGE</td>
-	<td>//div[contains(@class,'management-bar')]//span[@class='navbar-text']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TEMPLATE_EMPTY_MESSAGE</td>
-	<td>//div[contains(@class,'empty-result-message')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD</td>
+	<td>EDITABLE_FIELD</td>
 	<td>//div[contains(@class,'fragment-entry-link')]/div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${key_id}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TEMPLATE_FRAGMENT_EDITABLE_FIELD_CK_EDITOR</td>
+	<td>EDITABLE_FIELD_CK_EDITOR</td>
 	<td>//div[contains(@class,'fragment-entry-link')]/div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${key_id}')]//div[contains(@class,'cke_editable_inline')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TEMPLATE_FRAGMENT_HEADER</td>
-	<td>//div[contains(@class,'fragment-entry-link-wrapper')]//li[contains(.,'${key_fragmentName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TEMPLATE_FRAGMENT_HEADER_POSITION</td>
-	<td>xpath=(//div[contains(@class,'fragment-entry-link-list')]/div[${key_position}])//li[contains(.,'${key_fragmentName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TEMPLATE_FRAGMENT_UP_ARROW_BUTTON</td>
-	<td>//div[contains(@class,'fragment-entry-link-wrapper')]//ul[contains(.,'${key_fragmentName}')]//li[contains(@class,'tbar-item')][2]/button</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TEMPLATE_FRAGMENT_DOWN_ARROW_BUTTON</td>
-	<td>//div[contains(@class,'fragment-entry-link-wrapper')]//ul[contains(.,'${key_fragmentName}')]//li[contains(@class,'tbar-item')][3]/button</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TEMPLATE_FRAGMENT_DELETE_BUTTON</td>
-	<td>//div[contains(@class,'fragment-entry-link-wrapper')]//ul[contains(.,'${key_fragmentName}')]//li[contains(@class,'tbar-item')][4]/button</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TEMPLATE_NAVIGATION_PORTLET</td>
-	<td>//div[contains(@class,'fragment-entry-link')][contains(.,'${key_fragmentName}')]//div[contains(@class,'portlet')][contains(.,'Navigation Menu')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TEMPLATE_NAVIGATION_PORTLET_DISPLAY_CLASS</td>
-	<td>//div[contains(@class,'fragment-entry-link')][contains(.,'${key_fragmentName}')]//div[contains(@class,'portlet')][contains(.,'Navigation Menu')]//ul[contains(@class,'${key_displayTemplateClass}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TEMPLATE_PORTLET_CONFIGURE</td>
-	<td>//div[contains(@class,'fragment-entry-link')][contains(.,'${key_fragmentName}')]//div[contains(@class,'portlet')]//button[contains(.,'Configure')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LIST_GROUP_ITEM</td>
-	<td>//div[contains(@class,'list-group')]//a[contains(.,'${key_itemName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--CONTENT PAGES-->
-<tr>
-	<td>CONTENT_PAGE_FRAGMENT_SIDEBAR</td>
-	<td>//div[contains(@class,'open-admin-panel') and not(contains(@class,'transition'))]//div[contains(@id,'ContentPageEditorPortlet_sidebar')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_PAGE_FRAGMENT</td>
-	<td>//div[contains(@id,'fragment')][${key_position}]/*[contains(@class,'fragment-${key_fragmentClass}') and contains(.,'${key_content}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EDITABLE_FIELD_CONTENT</td>
 	<td>//div[contains(.,'${key_text}') and contains(@id,'fragment-')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FRAGMENT_HEADER-->
+<tr>
+	<td>FRAGMENT_HEADER</td>
+	<td>//div[contains(@class,'fragment-entry-link-wrapper')]//li[contains(.,'${key_fragmentName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_HEADER_POSITION</td>
+	<td>xpath=(//div[contains(@class,'fragment-entry-link-list')]/div[${key_position}])//li[contains(.,'${key_fragmentName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_HEADER_UP_ARROW_BUTTON</td>
+	<td>//div[contains(@class,'fragment-entry-link-wrapper')]//ul[contains(.,'${key_fragmentName}')]//li[contains(@class,'tbar-item')][2]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_HEADER_DOWN_ARROW_BUTTON</td>
+	<td>//div[contains(@class,'fragment-entry-link-wrapper')]//ul[contains(.,'${key_fragmentName}')]//li[contains(@class,'tbar-item')][3]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_HEADER_DELETE_BUTTON</td>
+	<td>//div[contains(@class,'fragment-entry-link-wrapper')]//ul[contains(.,'${key_fragmentName}')]//li[contains(@class,'tbar-item')][4]/button</td>
 	<td></td>
 </tr>
 </tbody>

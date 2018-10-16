@@ -90,21 +90,21 @@
 			<var name="fileName" value="fragment_button.html" />
 		</execute>
 
-		<execute function="Type#typeAceEditorNoError" locator1="Fragment#HTML_EDITOR" value1="${htmlSnippet}" />
+		<execute function="Type#typeAceEditorNoError" locator1="FragmentEditor#HTML_EDITOR" value1="${htmlSnippet}" />
 
 		<execute macro="TestCase#getFileContent">
 			<return name="cssSnippet" />
 			<var name="fileName" value="fragment_button.css" />
 		</execute>
 
-		<execute function="Type#typeAceEditorNoError" locator1="Fragment#CSS_EDITOR" value1="${cssSnippet}" />
+		<execute function="Type#typeAceEditorNoError" locator1="FragmentEditor#CSS_EDITOR" value1="${cssSnippet}" />
 
 		<execute macro="TestCase#getFileContent">
 			<return name="javascriptSnippet" />
 			<var name="fileName" value="fragment_button.js" />
 		</execute>
 
-		<execute function="Type#typeAceEditorNoError" locator1="Fragment#JAVASCRIPT_EDITOR" value1="${javascriptSnippet}" />
+		<execute function="Type#typeAceEditorNoError" locator1="FragmentEditor#JAVASCRIPT_EDITOR" value1="${javascriptSnippet}" />
 
 		<execute macro="PortletEntry#publish" />
 
@@ -131,7 +131,7 @@
 			<var name="rowEntry" value="Fragment Name" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="Fragment#PREVIEW_IFRAME" />
+		<execute function="SelectFrame" locator1="FragmentEditor#PREVIEW_IFRAME" />
 
 		<for list="Submit,Cancel" param="button">
 			<execute macro="Button#viewPresent">

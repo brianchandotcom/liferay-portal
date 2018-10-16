@@ -70,25 +70,25 @@
 			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
 		</execute>
 
-		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT">
+		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
 			<var name="key_content" value="Lorem ipsum dolor sit amet" />
 			<var name="key_fragmentClass" value="header" />
 			<var name="key_position" value="1" />
 		</execute>
 
-		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT">
+		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
 			<var name="key_content" value="Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
 			<var name="key_fragmentClass" value="rich-text" />
 			<var name="key_position" value="2" />
 		</execute>
 
-		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT">
+		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
 			<var name="key_content" value="Submit" />
 			<var name="key_fragmentClass" value="footer" />
 			<var name="key_position" value="3" />
 		</execute>
 
-		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT">
+		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
 			<var name="key_content" value="Cancel" />
 			<var name="key_fragmentClass" value="footer" />
 			<var name="key_position" value="3" />
@@ -180,7 +180,7 @@
 			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
 		</execute>
 
-		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT">
+		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
 			<var name="key_content" value="New editable fragment text" />
 			<var name="key_fragmentClass" value="body" />
 			<var name="key_position" value="1" />
@@ -236,19 +236,19 @@
 			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
 		</execute>
 
-		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT">
+		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
 			<var name="key_content" value="New editable fragment text" />
 			<var name="key_fragmentClass" value="rich-text" />
 			<var name="key_position" value="1" />
 		</execute>
 
-		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT">
+		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
 			<var name="key_content" value="Lorem ipsum dolor sit amet" />
 			<var name="key_fragmentClass" value="header" />
 			<var name="key_position" value="2" />
 		</execute>
 
-		<execute function="AssertVisible" locator1="Fragment#CONTENT_PAGE_FRAGMENT">
+		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
 			<var name="key_content" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin." />
 			<var name="key_fragmentClass" value="body" />
 			<var name="key_position" value="3" />

@@ -958,9 +958,9 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		DDLRecordSet recordSet = record.getRecordSet();
 
-		DDLRecordVersion recordVersion = record.getLatestRecordVersion();
-
 		if (mergeFields) {
+			DDLRecordVersion recordVersion = record.getLatestRecordVersion();
+
 			DDMFormValues existingDDMFormValues =
 				storageEngine.getDDMFormValues(recordVersion.getDDMStorageId());
 

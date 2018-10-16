@@ -1415,14 +1415,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					continue;
 				}
 
-				long groupId = rs.getLong("groupId");
-				long companyId = rs.getLong("companyId");
-				long userId = rs.getLong("userId");
-				String userName = rs.getString("userName");
-				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
 				String version = rs.getString("version");
-				String name = rs.getString("name");
-				String description = rs.getString("description");
 				String language = rs.getString("language");
 				String script = rs.getString("script");
 
@@ -1461,9 +1454,13 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				// Template version
 
 				if (!hasTemplateVersion(templateId, version)) {
+					long userId = rs.getLong("userId");
+					String userName = rs.getString("userName");
+					Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+
 					ps4.setLong(1, increment());
-					ps4.setLong(2, groupId);
-					ps4.setLong(3, companyId);
+					ps4.setLong(2, rs.getLong("groupId"));
+					ps4.setLong(3, rs.getLong("companyId"));
 					ps4.setLong(4, userId);
 					ps4.setString(5, userName);
 					ps4.setTimestamp(6, modifiedDate);
@@ -1471,8 +1468,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					ps4.setLong(8, classPK);
 					ps4.setLong(9, templateId);
 					ps4.setString(10, DDMStructureConstants.VERSION_DEFAULT);
-					ps4.setString(11, name);
-					ps4.setString(12, description);
+					ps4.setString(11, rs.getString("name"));
+					ps4.setString(12, rs.getString("description"));
 					ps4.setString(13, language);
 					ps4.setString(14, updatedScript);
 					ps4.setInt(15, WorkflowConstants.STATUS_APPROVED);

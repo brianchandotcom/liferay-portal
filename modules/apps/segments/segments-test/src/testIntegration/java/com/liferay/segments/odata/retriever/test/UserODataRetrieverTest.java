@@ -78,6 +78,42 @@ public class UserODataRetrieverTest {
 	}
 
 	@Test
+	public void testGetUsersFilterByAncestorOrganizationIds() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+		_user2 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		Organization parentOrganization =
+			OrganizationTestUtil.addOrganization();
+
+		Organization childOrganization = OrganizationTestUtil.addOrganization(
+			parentOrganization.getOrganizationId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomBoolean());
+
+		_organizations.add(childOrganization);
+
+		_organizations.add(parentOrganization);
+
+		_userLocalService.addOrganizationUser(
+			childOrganization.getOrganizationId(), _user1);
+
+		List<User> users = _userODataRetriever.getUsers(
+			_group1.getCompanyId(),
+			String.format(
+				"(firstName eq '%s') and (ancestorOrganizationIds eq '%s')",
+				firstName, parentOrganization.getOrganizationId()),
+			LocaleUtil.getDefault(), 0, 2);
+
+		Assert.assertEquals(users.toString(), 1, users.size());
+		Assert.assertEquals(_user1, users.get(0));
+	}
+
+	@Test
 	public void testGetUsersFilterByCompanyId() throws Exception {
 		String firstName = RandomTestUtil.randomString();
 
@@ -410,7 +446,6 @@ public class UserODataRetrieverTest {
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(),
 			new long[] {_group1.getGroupId(), _group2.getGroupId()});
-
 		_user2 = UserTestUtil.addUser(
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
 			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});

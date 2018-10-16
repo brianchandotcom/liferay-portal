@@ -254,11 +254,37 @@ public abstract class BaseBuildData implements BuildData {
 	protected static final BuildDatabase buildDatabase =
 		BuildDatabaseUtil.getBuildDatabase();
 
+	private JSONObject _getBuildURLJSONObject() {
+		String buildURL = getBuildURL();
+
+		if (buildURL == null) {
+			return null;
+		}
+
+		try {
+			return JenkinsResultsParserUtil.toJSONObject(
+				JenkinsResultsParserUtil.getLocalURL(buildURL + "/api/json"));
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
 	private String _getDefaultBuildDescription() {
 		return JenkinsResultsParserUtil.combine(
 			"<a href=\"https://", getTopLevelMasterHostname(),
 			".liferay.com/userContent/", getUserContentRelativePath(),
 			"jenkins-report.html\">Jenkins Report</a>");
+	}
+
+	private String _getHostname() {
+		JSONObject buildURLJSONObject = _getBuildURLJSONObject();
+
+		if (buildURLJSONObject == null) {
+			throw new RuntimeException("Please set the build url");
+		}
+
+		return buildURLJSONObject.getString("builtOn");
 	}
 
 	private static final String[] _REQUIRED_KEYS = {

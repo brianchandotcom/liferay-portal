@@ -45,21 +45,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TEMPLATE_NAVIGATION_PORTLET</td>
-	<td>//div[contains(@class,'fragment-entry-link')][contains(.,'${key_fragmentName}')]//div[contains(@class,'portlet')][contains(.,'Navigation Menu')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TEMPLATE_NAVIGATION_PORTLET_DISPLAY_CLASS</td>
-	<td>//div[contains(@class,'fragment-entry-link')][contains(.,'${key_fragmentName}')]//div[contains(@class,'portlet')][contains(.,'Navigation Menu')]//ul[contains(@class,'${key_displayTemplateClass}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TEMPLATE_PORTLET_CONFIGURE</td>
-	<td>//div[contains(@class,'fragment-entry-link')][contains(.,'${key_fragmentName}')]//div[contains(@class,'portlet')]//button[contains(.,'Configure')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

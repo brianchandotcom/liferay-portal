@@ -127,7 +127,7 @@
 
 	<command name="selectAll">
 		<if>
-			<condition function="IsNotChecked" locator1="Checkbox#LEXICON_SELECT_ALL_INPUT" />
+			<condition function="IsNotChecked#isNotCheckedNotVisible" locator1="Checkbox#LEXICON_SELECT_ALL_INPUT" />
 			<then>
 				<execute function="Click" locator1="Checkbox#LEXICON_SELECT_ALL_CONTAINER" />
 			</then>

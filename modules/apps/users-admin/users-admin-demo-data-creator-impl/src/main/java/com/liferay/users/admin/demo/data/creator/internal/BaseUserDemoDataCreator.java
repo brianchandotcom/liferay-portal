@@ -267,6 +267,10 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 			String normalizedEmail = FriendlyURLNormalizerUtil.normalize(
 				emailComponents[0]);
 
+			if (StringUtil.endsWith(normalizedEmail, CharPool.DASH)) {
+				normalizedEmail = StringUtil.randomString();
+			}
+
 			emailAddress = String.format(
 				"%s@%s", normalizedEmail, emailComponents[1]);
 		}

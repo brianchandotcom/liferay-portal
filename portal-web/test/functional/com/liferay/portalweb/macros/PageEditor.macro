@@ -13,13 +13,13 @@
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="Fragment#HEADER">
+		<execute function="AssertElementPresent" locator1="Fragment#FRAGMENT_HEADER">
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
 	</command>
 
 	<command name="editFragmentImage">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#HEADER">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#FRAGMENT_HEADER">
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
 
@@ -106,14 +106,14 @@
 		<if>
 			<equals arg1="${direction}" arg2="up" />
 			<then>
-				<execute function="Click#clickNoWaitForVisible" locator1="Fragment#UP_ARROW_BUTTON">
+				<execute function="Click#clickNoWaitForVisible" locator1="Fragment#FRAGMENT_HEADER_UP_ARROW_BUTTON">
 					<var name="key_fragmentName" value="${fragmentName}" />
 				</execute>
 			</then>
 			<elseif>
 				<equals arg1="${direction}" arg2="down" />
 				<then>
-					<execute function="Click#clickNoWaitForVisible" locator1="Fragment#DOWN_ARROW_BUTTON">
+					<execute function="Click#clickNoWaitForVisible" locator1="Fragment#FRAGMENT_HEADER_DOWN_ARROW_BUTTON">
 						<var name="key_fragmentName" value="${fragmentName}" />
 					</execute>
 				</then>
@@ -122,11 +122,11 @@
 	</command>
 
 	<command name="removeFragment">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#HEADER">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#FRAGMENT_HEADER">
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
 
-		<execute function="Click" locator1="Fragment#DELETE_BUTTON">
+		<execute function="Click" locator1="Fragment#FRAGMENT_HEADER_DELETE_BUTTON">
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
 	</command>
@@ -146,7 +146,7 @@
 	</command>
 
 	<command name="viewFragment">
-		<execute function="AssertElementPresent" locator1="Fragment#HEADER">
+		<execute function="AssertElementPresent" locator1="Fragment#FRAGMENT_HEADER">
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
 	</command>
@@ -159,7 +159,7 @@
 	</command>
 
 	<command name="viewFragmentOrder">
-		<execute function="AssertElementPresent" locator1="Fragment#HEADER_POSITION">
+		<execute function="AssertElementPresent" locator1="Fragment#FRAGMENT_HEADER_POSITION">
 			<var name="key_fragmentName" value="${fragmentName}" />
 			<var name="key_position" value="${position}" />
 		</execute>

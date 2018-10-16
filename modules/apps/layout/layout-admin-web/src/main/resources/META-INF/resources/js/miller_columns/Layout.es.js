@@ -361,7 +361,6 @@ class Layout extends Component {
 				layoutColumn => [...layoutColumn]
 			);
 
-			const sourceItemPlid = eventData.sourceItemPlid;
 			const targetItemPlid = eventData.targetItemPlid;
 
 			const targetItem = this._getLayoutColumnItemByPlid(
@@ -378,7 +377,9 @@ class Layout extends Component {
 
 			const targetColumnIndex = layoutColumns.indexOf(targetColumn);
 
-			sourceColumn.splice(sourceColumn.indexOf(this._draggingItem), 1);
+			if (!this._currentPathItemPlid) {
+				sourceColumn.splice(sourceColumn.indexOf(this._draggingItem), 1);
+			}
 
 			let parentPlid = null;
 			let priority = null;
@@ -391,6 +392,12 @@ class Layout extends Component {
 				);
 
 				parentPlid = targetItemPlid;
+
+				if (this._currentPathItemPlid) {
+					const nextColumn = layoutColumns[targetColumnIndex + 1];
+
+					priority = nextColumn.indexOf(this._draggingItem);
+				}
 			}
 			else {
 				priority = targetColumn.indexOf(targetItem);
@@ -431,7 +438,7 @@ class Layout extends Component {
 
 			this._moveLayoutColumnItemOnServer(
 				parentPlid,
-				sourceItemPlid,
+				this._draggingItem.plid,
 				priority
 			)
 				.then(

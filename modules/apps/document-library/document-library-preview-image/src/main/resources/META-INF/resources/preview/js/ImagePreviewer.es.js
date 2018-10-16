@@ -26,16 +26,17 @@ const ZOOM_LEVELS_REVERSED = ZOOM_LEVELS.slice().reverse();
 
 class ImagePreviewer extends Component {
 	attached() {
-		this.previewImageNaturalWidth = this.refs.previewImage.naturalWidth;
-		this.previewImageNaturalHeight = this.refs.previewImage.naturalHeight;
+		this.imageNaturalWidth = this.refs.image.naturalWidth;
+		this.imageNaturalHeight = this.refs.image.naturalHeight;
 
 		this._setDimensions();
 	}
 
 	_setDimensions() {
-		this.previewImageContainerWidth = this.refs.previewImageContainer.clientWidth;
-		this.previewImageContainerHeight = this.refs.previewImageContainer.clientHeight;
-		this._setZoomNumber(this.refs.previewImage.width);
+		this.imageContainerWidth = this.refs.imageContainer.clientWidth;
+		this.imageContainerHeight = this.refs.imageContainer.clientHeight;
+
+		this._setZoomNumber(this.refs.image.width);
 	}
 
 	_handleZoom(event) {
@@ -66,19 +67,19 @@ class ImagePreviewer extends Component {
 	_setZoom(zoomNumber) {
 		if (typeof zoomNumber == 'undefined') return;
 
-		this.imageHeight = this.previewImageNaturalHeight * zoomNumber;
-		this.imageWidth = this.previewImageNaturalWidth * zoomNumber;
+		this.imageHeight = this.imageNaturalHeight * zoomNumber;
+		this.imageWidth = this.imageNaturalWidth * zoomNumber;
 		this.imageMargin = `${
-			this.imageHeight > this.previewImageContainerHeight ? 0 : 'auto'
+			this.imageHeight > this.imageContainerHeight ? 0 : 'auto'
 		} ${
-			this.imageWidth > this.previewImageContainerWidth ? 0 : 'auto'
+			this.imageWidth > this.imageContainerWidth ? 0 : 'auto'
 		}`;
 
 		this._setZoomNumber(this.imageWidth);
 	}
 
 	_setZoomNumber(width) {
-		this.zoomActual = width / this.previewImageNaturalWidth;
+		this.zoomActual = width / this.imageNaturalWidth;
 	}
 }
 

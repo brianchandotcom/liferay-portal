@@ -4893,6 +4893,39 @@ go]]></replacevalue>
 							dest="${todir}"
 							src="${test.jdbc.drivers.url}/db2/${database.version}/@{jdbc.driver}"
 						/>
+
+						<tstamp>
+							<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
+						</tstamp>
+
+						<mkdir dir="${tstamp.value}" />
+
+						<unzip
+							dest="${tstamp.value}"
+							src="${todir}/@{jdbc.driver}"
+						/>
+
+						<if>
+							<available file="${tstamp.value}/META-INF/MANIFEST.MF" />
+							<then>
+								<replaceregexp
+									file="${tstamp.value}/META-INF/MANIFEST.MF"
+									match="Class-Path: pdq.jar\s+"
+									replace=""
+								/>
+
+								<print-file file.name="${tstamp.value}/META-INF/MANIFEST.MF" />
+							</then>
+						</if>
+
+						<delete file="${todir}/@{jdbc.driver}" />
+
+						<zip
+							basedir="${tstamp.value}"
+							destfile="${todir}/@{jdbc.driver}"
+						/>
+
+						<delete dir="${tstamp.value}" />
 					</sequential>
 				</for>
 			</then>

@@ -40,6 +40,16 @@ class LayoutDragDrop extends State {
 	}
 
 	/**
+	 * Adds a target to the list
+	 * @param {!HTMLElement} target
+	 * @review
+	 */
+
+	addTarget(target) {
+		this._dragDrop.addTarget(target);
+	}
+
+	/**
 	 * Callback that is executed when an item is being dragged.
 	 * @param {!object} data
 	 * @param {!MouseEvent} data.originalEvent

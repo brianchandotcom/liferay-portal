@@ -69,12 +69,37 @@ class Layout extends Component {
 		requestAnimationFrame(
 			() => {
 				this.refs.layoutColumns.scrollLeft = this.refs.layoutColumns.scrollWidth;
+
+				if (this._newPathItems) {
+					this._addLayoutDragDropTargets(this._newPathItems);
+					this._newPathItems = null;
+				}
 			}
 		);
 
 		if (firstRendered) {
 			this._initializeLayoutDragDrop();
 		}
+	}
+
+	/**
+	 * Receives an array of items and add them as drag drop targets
+	 * @param {!Array} items
+	 * @private
+	 * @review
+	 */
+
+	_addLayoutDragDropTargets(items) {
+		let element = null;
+		let query = null;
+
+		items.forEach(
+			item => {
+				query = `[data-layout-column-item-plid="${item.plid}"]`;
+				element = document.querySelector(query);
+				this._layoutDragDrop.addTarget(element);
+			}
+		);
 	}
 
 	/**
@@ -704,11 +729,7 @@ class Layout extends Component {
 						);
 					}
 
-					requestAnimationFrame(
-						() => {
-							this._initializeLayoutDragDrop();
-						}
-					);
+					this._newPathItems = children;
 
 					this.layoutColumns = nextLayoutColumns;
 				}
@@ -873,6 +894,17 @@ Layout.STATE = {
 	 */
 
 	_layoutDragDrop: Config.internal().value(null),
+
+	/**
+	 * Stores new items that are shown when path is updated
+	 * @default null
+	 * @instance
+	 * @memberOf Layout
+	 * @review
+	 * @type {Array}
+	 */
+
+	_newPathItems: Config.internal().value(null),
 
 	/**
 	 * Id of the timeout to update the path

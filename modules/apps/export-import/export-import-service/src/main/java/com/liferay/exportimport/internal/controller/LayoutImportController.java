@@ -713,9 +713,6 @@ public class LayoutImportController implements ImportController {
 		// Layouts
 
 		Set<Layout> modifiedLayouts = new HashSet<>();
-		List<Layout> previousLayouts = _layoutLocalService.getLayouts(
-			portletDataContext.getGroupId(),
-			portletDataContext.isPrivateLayout());
 
 		// Remove layouts that were deleted from the layout set prototype
 
@@ -745,6 +742,10 @@ public class LayoutImportController implements ImportController {
 					getLayoutSetPrototypeByUuidAndCompanyId(
 						layoutSetPrototypeUuid,
 						portletDataContext.getCompanyId());
+
+			List<Layout> previousLayouts = _layoutLocalService.getLayouts(
+				portletDataContext.getGroupId(),
+				portletDataContext.isPrivateLayout());
 
 			for (Layout layout : previousLayouts) {
 				if (Validator.isNull(layout.getSourcePrototypeLayoutUuid())) {

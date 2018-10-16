@@ -129,10 +129,11 @@ public class LinksToLayoutsExportImportContentProcessor
 						"Unable to get layout with ID ", layoutId, " in group ",
 						portletDataContext.getScopeGroupId());
 
-					ExportImportContentProcessorException eicpe =
-						new ExportImportContentProcessorException(message, e);
-
 					if (_log.isDebugEnabled()) {
+						ExportImportContentProcessorException eicpe =
+							new ExportImportContentProcessorException(
+								message, e);
+
 						_log.debug(message, eicpe);
 					}
 					else {

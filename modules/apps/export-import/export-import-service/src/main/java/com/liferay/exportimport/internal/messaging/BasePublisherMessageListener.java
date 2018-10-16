@@ -102,16 +102,19 @@ public abstract class BasePublisherMessageListener
 		Map<String, Serializable> attributes = new HashMap<>();
 
 		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
-			String param = entry.getKey();
 			String[] values = entry.getValue();
 
-			if (ArrayUtil.isNotEmpty(values)) {
-				if (values.length == 1) {
-					attributes.put(param, values[0]);
-				}
-				else {
-					attributes.put(param, values);
-				}
+			if (ArrayUtil.isEmpty(values)) {
+				continue;
+			}
+
+			String param = entry.getKey();
+
+			if (values.length == 1) {
+				attributes.put(param, values[0]);
+			}
+			else {
+				attributes.put(param, values);
 			}
 		}
 

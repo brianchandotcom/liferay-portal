@@ -191,11 +191,11 @@ public class ExportImportChangesetMVCActionCommandImpl
 			portletId = portletDisplay.getId();
 		}
 
-		Portlet portlet = _portletLocalService.getPortletById(portletId);
-
 		long backgroundTaskId = 0;
 
 		if (cmd.equals(Constants.EXPORT)) {
+			Portlet portlet = _portletLocalService.getPortletById(portletId);
+
 			Map<String, Serializable> settingsMap =
 				_exportImportConfigurationSettingsMapFactory.
 					buildExportPortletSettingsMap(

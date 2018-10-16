@@ -811,12 +811,13 @@ public class PortletImportControllerImpl implements PortletImportController {
 
 		for (Element assetElement : assetElements) {
 			String path = assetElement.attributeValue("path");
-			String className = assetElement.attributeValue("class-name");
-			String key = assetElement.attributeValue("key");
 
 			Lock lock = (Lock)portletDataContext.getZipEntryAsObject(path);
 
 			if (lock != null) {
+				String className = assetElement.attributeValue("class-name");
+				String key = assetElement.attributeValue("key");
+
 				portletDataContext.addLocks(className, key, lock);
 			}
 		}

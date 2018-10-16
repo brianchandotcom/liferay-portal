@@ -425,10 +425,9 @@ public class DLReferencesExportImportContentProcessor
 				path = referenceDataElement.attributeValue("path");
 			}
 
-			long groupId = GetterUtil.getLong(
-				referenceElement.attributeValue("group-id"));
-
 			if (Validator.isNull(path)) {
+				long groupId = GetterUtil.getLong(
+					referenceElement.attributeValue("group-id"));
 				String className = referenceElement.attributeValue(
 					"class-name");
 

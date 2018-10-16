@@ -526,11 +526,11 @@ public class FileSystemImporter extends BaseImporter {
 		setServiceContext(fileName);
 
 		try {
-			JournalServiceConfiguration journalServiceConfiguration =
-				ConfigurationProviderUtil.getCompanyConfiguration(
-					JournalServiceConfiguration.class, companyId);
-
 			if (!updateModeEnabled || (ddmStructure == null)) {
+				JournalServiceConfiguration journalServiceConfiguration =
+					ConfigurationProviderUtil.getCompanyConfiguration(
+						JournalServiceConfiguration.class, companyId);
+
 				ddmStructure = ddmStructureLocalService.addStructure(
 					userId, groupId, parentDDMStructureKey,
 					portal.getClassNameId(JournalArticle.class),
@@ -1132,13 +1132,13 @@ public class FileSystemImporter extends BaseImporter {
 					colorSchemeId, layoutCss);
 			}
 
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
 			String layoutTemplateId = layoutJSONObject.getString(
 				"layoutTemplateId", _defaultLayoutTemplateId);
 
 			if (Validator.isNotNull(layoutTemplateId)) {
+				LayoutTypePortlet layoutTypePortlet =
+					(LayoutTypePortlet)layout.getLayoutType();
+
 				layoutTypePortlet.setLayoutTemplateId(
 					userId, layoutTemplateId, false);
 			}

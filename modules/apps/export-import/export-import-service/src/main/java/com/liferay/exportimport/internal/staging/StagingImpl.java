@@ -2644,12 +2644,6 @@ public class StagingImpl implements Staging {
 
 		User user = themeDisplay.getUser();
 
-		Group sourceGroup = targetGroup.getStagingGroup();
-
-		long sourceGroupId = sourceGroup.getGroupId();
-
-		long targetGroupId = targetGroup.getGroupId();
-
 		Map<String, Serializable> publishLayoutLocalSettingsMap = null;
 
 		long exportImportConfigurationId = ParamUtil.getLong(
@@ -2681,7 +2675,13 @@ public class StagingImpl implements Staging {
 		}
 
 		if (publishLayoutLocalSettingsMap == null) {
+			Group sourceGroup = targetGroup.getStagingGroup();
+
+			long sourceGroupId = sourceGroup.getGroupId();
+
+			long targetGroupId = targetGroup.getGroupId();
 			boolean privateLayout = getPrivateLayout(portletRequest);
+
 			long[] layoutIds = _exportImportHelper.getLayoutIds(
 				portletRequest, targetGroupId);
 
@@ -3929,8 +3929,6 @@ public class StagingImpl implements Staging {
 			Map<String, String[]> parameterMap, boolean copyFromLive)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(userId);
-
 		Layout sourceLayout = _layoutLocalService.getLayout(plid);
 
 		Group scopeGroup = sourceLayout.getScopeGroup();
@@ -3946,6 +3944,8 @@ public class StagingImpl implements Staging {
 
 			if (stagingGroup.isStagedRemotely()) {
 				targetGroupId = stagingGroup.getRemoteLiveGroupId();
+
+				User user = _userLocalService.getUser(userId);
 
 				HttpPrincipal httpPrincipal = new HttpPrincipal(
 					_stagingURLHelper.buildRemoteURL(

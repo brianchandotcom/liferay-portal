@@ -5824,6 +5824,14 @@ version 2.4.14.
 `Liferay Home` module Jasper work directory so it contains the generated Java
 files.
 
+## 3.12.163 - 2018-10-15
+
+### Changed
+- [LPS-86362]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.276.
+- [LPS-86362]: Update the [Liferay Source Formatter] dependency to version
+1.0.750.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -6273,5 +6281,6 @@ files.
 [LPS-85954]: https://issues.liferay.com/browse/LPS-85954
 [LPS-85959]: https://issues.liferay.com/browse/LPS-85959
 [LPS-86308]: https://issues.liferay.com/browse/LPS-86308
+[LPS-86362]: https://issues.liferay.com/browse/LPS-86362
 [LPS-86371]: https://issues.liferay.com/browse/LPS-86371
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

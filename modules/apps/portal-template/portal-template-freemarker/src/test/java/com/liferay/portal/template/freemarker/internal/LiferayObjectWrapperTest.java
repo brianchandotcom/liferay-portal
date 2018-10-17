@@ -165,7 +165,7 @@ public class LiferayObjectWrapperTest {
 			Assert.fail("NullPointerException was not thrown");
 		}
 		catch (Exception e) {
-			Assert.assertEquals(NullPointerException.class, e.getClass());
+			Assert.assertSame(NullPointerException.class, e.getClass());
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(

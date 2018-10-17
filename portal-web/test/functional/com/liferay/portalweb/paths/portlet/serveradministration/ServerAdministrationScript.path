@@ -23,6 +23,11 @@
 	<td>//button[@data-cmd="runScript"]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>OUTPUT_FIELD</td>
+	<td>//form[contains(@id,'ServerAdminPortlet')]//pre</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

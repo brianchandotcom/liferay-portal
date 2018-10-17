@@ -22,8 +22,10 @@ import com.liferay.phone.apio.architect.identifier.PhoneIdentifier;
 import com.liferay.portal.apio.identifier.ClassNameClassPK;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.PhoneService;
 import com.liferay.portal.kernel.service.UserService;
 
@@ -34,9 +36,8 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose the <a
- * href="http://schema.org/telephone">Telephone</a> resources of a <a
- * href="http://schema.org/Person">Person</a> through a web API. The resources
- * are mapped from the internal model {@code Phone}.
+ * href="http://schema.org/telephone">Telephone</a> resources through a web API.
+ * The resources are mapped from the internal model {@code Phone}.
  *
  * @author Javier Gamarra
  */
@@ -56,20 +57,11 @@ public class PhoneReusableNestedCollectionRouter
 		).build();
 	}
 
-	@Reference
-	protected PhoneService phoneService;
-
-	@Reference
-	protected UserService userService;
-
 	private PageItems<Phone> _getPageItems(
 			Pagination pagination, ClassNameClassPK classNameClassPK)
 		throws PortalException {
 
-		User user = userService.getUserById(classNameClassPK.getClassPK());
-
-		List<Phone> phones = phoneService.getPhones(
-			Contact.class.getName(), user.getContactId());
+		List<Phone> phones = _getPhones(classNameClassPK);
 
 		int count = phones.size();
 
@@ -78,5 +70,37 @@ public class PhoneReusableNestedCollectionRouter
 		return new PageItems<>(
 			phones.subList(pagination.getStartPosition(), endPosition), count);
 	}
+
+	private List<Phone> _getPhones(ClassNameClassPK classNameClassPK)
+		throws PortalException {
+
+		String className = classNameClassPK.getClassName();
+
+		long classPK = classNameClassPK.getClassPK();
+
+		if (className.equals(Organization.class.getName())) {
+			Organization organization = _organizationService.getOrganization(
+				classPK);
+
+			return _phoneService.getPhones(
+				organization.getModelClassName(),
+				organization.getOrganizationId());
+		}
+		else {
+			User user = _userService.getUserById(classPK);
+
+			return _phoneService.getPhones(
+				Contact.class.getName(), user.getContactId());
+		}
+	}
+
+	@Reference
+	private OrganizationService _organizationService;
+
+	@Reference
+	private PhoneService _phoneService;
+
+	@Reference
+	private UserService _userService;
 
 }

@@ -256,28 +256,29 @@ public class DDMFormRendererTagTest extends PowerMockito {
 		return availableLocales;
 	}
 
-	protected void mockDDMFormInstance(long formInstanceId) {
+	protected void mockDDMFormInstance(long ddmFormInstanceId) {
 		DDMFormInstanceImpl ddmFormInstance = new DDMFormInstanceImpl();
 
-		ddmFormInstance.setFormInstanceId(formInstanceId);
+		ddmFormInstance.setFormInstanceId(ddmFormInstanceId);
 
 		Mockito.when(
 			_ddmFormInstanceLocalService.fetchFormInstance(
-				Matchers.eq(formInstanceId))
+				Matchers.eq(ddmFormInstanceId))
 		).thenReturn(
 			ddmFormInstance
 		);
 	}
 
 	protected void setDDMFormRendererTagInputs(
-		Long formInstanceId, Long formInstanceRecordId,
-		Long formInstanceRecordVersionId, Long formInstanceVersionId) {
+		Long ddmFormInstanceId, Long ddmFormInstanceRecordId,
+		Long ddmFormInstanceRecordVersionId, Long ddmFormInstanceVersionId) {
 
-		_ddmFormRendererTag.setDDMFormInstanceId(formInstanceId);
-		_ddmFormRendererTag.setDDMFormInstanceRecordId(formInstanceRecordId);
-		_ddmFormRendererTag.setDDMFormInstanceRecordVersionId(
-			formInstanceRecordVersionId);
-		_ddmFormRendererTag.setDDMFormInstanceVersionId(formInstanceVersionId);
+		_ddmFormRendererTag.setDdmFormInstanceId(ddmFormInstanceId);
+		_ddmFormRendererTag.setDdmFormInstanceRecordId(ddmFormInstanceRecordId);
+		_ddmFormRendererTag.setDdmFormInstanceRecordVersionId(
+			ddmFormInstanceRecordVersionId);
+		_ddmFormRendererTag.setDdmFormInstanceVersionId(
+			ddmFormInstanceVersionId);
 	}
 
 	protected void setUpDDMFormInstanceLocalService() throws Exception {

@@ -81,6 +81,10 @@ public class DDMFormRenderingContext {
 		return MapUtil.getBoolean(_properties, "returnFullContext");
 	}
 
+	public boolean isSharedURL() {
+		return MapUtil.getBoolean(_properties, "sharedURL");
+	}
+
 	public boolean isShowRequiredFieldsWarning() {
 		return _showRequiredFieldsWarning;
 	}
@@ -129,6 +133,10 @@ public class DDMFormRenderingContext {
 
 	public void setReturnFullContext(boolean fullContext) {
 		_properties.put("returnFullContext", fullContext);
+	}
+
+	public void setSharedURL(boolean sharedURL) {
+		_properties.put("sharedURL", sharedURL);
 	}
 
 	public void setShowRequiredFieldsWarning(

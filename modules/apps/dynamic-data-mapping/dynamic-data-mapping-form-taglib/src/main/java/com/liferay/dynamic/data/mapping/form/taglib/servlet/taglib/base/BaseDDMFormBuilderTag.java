@@ -21,6 +21,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
+ * @author Pedro Queiroz
  * @author Rafael Praxedes
  * @generated
  */
@@ -121,13 +122,13 @@ public abstract class BaseDDMFormBuilderTag extends com.liferay.taglib.util.Incl
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-form:ddm-form-builder:ddmStructureId", _ddmStructureId);
-		request.setAttribute("liferay-form:ddm-form-builder:ddmStructureVersionId", _ddmStructureVersionId);
-		request.setAttribute("liferay-form:ddm-form-builder:defaultLanguageId", _defaultLanguageId);
-		request.setAttribute("liferay-form:ddm-form-builder:editingLanguageId", _editingLanguageId);
-		request.setAttribute("liferay-form:ddm-form-builder:fieldSetClassNameId", String.valueOf(_fieldSetClassNameId));
-		request.setAttribute("liferay-form:ddm-form-builder:refererPortletNamespace", _refererPortletNamespace);
-		request.setAttribute("liferay-form:ddm-form-builder:showPagination", String.valueOf(_showPagination));
+		setNamespacedAttribute(request, "ddmStructureId", _ddmStructureId);
+		setNamespacedAttribute(request, "ddmStructureVersionId", _ddmStructureVersionId);
+		setNamespacedAttribute(request, "defaultLanguageId", _defaultLanguageId);
+		setNamespacedAttribute(request, "editingLanguageId", _editingLanguageId);
+		setNamespacedAttribute(request, "fieldSetClassNameId", _fieldSetClassNameId);
+		setNamespacedAttribute(request, "refererPortletNamespace", _refererPortletNamespace);
+		setNamespacedAttribute(request, "showPagination", _showPagination);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "liferay-form:ddm-form-builder:";

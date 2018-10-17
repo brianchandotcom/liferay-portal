@@ -105,8 +105,10 @@ the newer version do not match.
 ## 1.3.3 - 2018-09-24
 
 ### Changed
-[LPS-85677]: Display the file location for the jars in the log when semantic
+- [LPS-85677]: Display the file location for the jars in the log when semantic
 versioning is incorrect.
+- [LPS-85677]: Update the [Liferay Ant BND] dependency to version 2.0.55.
+- [LPS-85677]: Update the [Liferay Gradle Util] dependency to version 1.0.31.
 
 ## 1.3.4 - 2018-09-24
 
@@ -140,6 +142,7 @@ warnings recursively:
 
 [Bnd Builder Gradle Plugin]: https://github.com/bndtools/bnd/tree/master/biz.aQute.bnd.gradle
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
+[Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
 [LPS-69470]: https://issues.liferay.com/browse/LPS-69470
 [LPS-69899]: https://issues.liferay.com/browse/LPS-69899
 [LPS-70379]: https://issues.liferay.com/browse/LPS-70379

@@ -142,7 +142,7 @@ public class DefaultViewMVCRenderCommand implements MVCRenderCommand {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							"Unable to get local entity certificate because " +
-								"of KeyStore loading issue",
+								"of keystore loading issue",
 							cause);
 					}
 

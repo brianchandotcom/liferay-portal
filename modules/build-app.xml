@@ -702,6 +702,15 @@
 			/>
 		</path>
 
+		<if>
+			<equals arg1="${jvm.debug}" arg2="true" />
+			<then>
+				<var name="junit.debug.jpda" value="-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=y" />
+			</then>
+		</if>
+
+		<property name="junit.debug.jpda" value="" />
+
 		<java
 			classname="com.liferay.portal.tools.target.platform.indexer.client.TargetPlatformIndexerClient"
 			classpathref="target.platform.indexer.classpath"
@@ -711,6 +720,7 @@
 		>
 			<jvmarg value="-Dliferay.home=${liferay.home}" />
 			<jvmarg value="-Dportal.lib.dir=${portal.lib.dir}" />
+			<jvmarg line="${junit.debug.jpda}" />
 		</java>
 	</target>
 

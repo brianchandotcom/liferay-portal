@@ -74,10 +74,11 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 			File testFile = junitBatchTestClass.getFile();
 
-			String testFileAbsolutePath = testFile.getAbsolutePath();
+			String testFilePath = testFile.getAbsolutePath();
 
-			testFileAbsolutePath = testFileAbsolutePath.replace(
-				".class", ".java");
+			if (testFile instanceof BaseTestFile) {
+				testFilePath = ((BaseTestFile)testFile).getRelativePath();
+			}
 
 			String className = testFile.getName();
 
@@ -99,7 +100,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 					csvReportRow.add("");
 				}
 
-				csvReportRow.add(testFileAbsolutePath);
+				csvReportRow.add(testFilePath);
 
 				csvReport.addRow(csvReportRow);
 			}

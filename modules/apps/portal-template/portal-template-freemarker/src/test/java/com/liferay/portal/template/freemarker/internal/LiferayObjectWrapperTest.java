@@ -45,7 +45,6 @@ import freemarker.template.Version;
 import java.lang.reflect.Field;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -204,30 +203,22 @@ public class LiferayObjectWrapperTest {
 	}
 
 	@Test
-	public void testHandleUnknownTypeEnumeration()throws Exception {
+	public void testHandleUnknownType() throws Exception {
 		LiferayObjectWrapper liferayObjectWrapper = new LiferayObjectWrapper(
 			null, null);
 
 		// 1. handle Enumeration
 
 		Enumeration<String> enumeration = Collections.enumeration(
-			Arrays.asList("testElement"));
+			Collections.singletonList("testElement"));
 
-		TemplateModel templateModel1 = liferayObjectWrapper.handleUnknownType(
-			enumeration);
-
-		Assert.assertTrue(
-			"Enumeration should be handled as EnumerationModel",
-			templateModel1 instanceof EnumerationModel);
+		_assertTemplateModel(
+			liferayObjectWrapper.handleUnknownType(enumeration),
+			EnumerationModel.class, "testElement",
+			enumerationModel -> enumerationModel.next());
 
 		_assertModelFactoryCache(
 			"_ENUMERATION_MODEL_FACTORY", enumeration.getClass());
-
-		EnumerationModel enumerationModel = (EnumerationModel)templateModel1;
-
-		TemplateModel nextTemplateModel = enumerationModel.next();
-
-		Assert.assertEquals("testElement", nextTemplateModel.toString());
 
 		// 2. handle Node
 
@@ -244,19 +235,19 @@ public class LiferayObjectWrapperTest {
 				return null;
 			});
 
-		TemplateModel templateModel2 = liferayObjectWrapper.handleUnknownType(
+		TemplateModel templateModel = liferayObjectWrapper.handleUnknownType(
 			node);
 
 		Assert.assertTrue(
 			"org.w3c.dom.Node should be handled as NodeModel",
-			templateModel2 instanceof NodeModel);
+			templateModel instanceof NodeModel);
 
-		_assertModelFactoryCache("_NODE_MODEL_FACTORY", node.getClass());
-
-		NodeModel nodeModel = (NodeModel)templateModel2;
+		NodeModel nodeModel = (NodeModel)templateModel;
 
 		Assert.assertSame(node, nodeModel.getNode());
 		Assert.assertEquals("element", nodeModel.getNodeType());
+
+		_assertModelFactoryCache("_NODE_MODEL_FACTORY", node.getClass());
 
 		// 3. handle ResourceBundle
 
@@ -269,43 +260,27 @@ public class LiferayObjectWrapperTest {
 
 			@Override
 			protected Object handleGetObject(String key) {
-				return null;
+				return key;
 			}
 
 		};
 
-		TemplateModel templateModel3 = liferayObjectWrapper.handleUnknownType(
-			resourceBundle);
-
-		Assert.assertTrue(
-			"ResourceBundle should be handled as ResourceBundleModel",
-			templateModel3 instanceof ResourceBundleModel);
+		_assertTemplateModel(
+			liferayObjectWrapper.handleUnknownType(resourceBundle),
+			ResourceBundleModel.class, resourceBundle.toString(),
+			resourceBundleModel -> resourceBundleModel.getBundle());
 
 		_assertModelFactoryCache(
 			"_RESOURCE_BUNDLE_MODEL_FACTORY", resourceBundle.getClass());
 
-		ResourceBundleModel resourceBundleModel =
-			(ResourceBundleModel)templateModel3;
-
-		ResourceBundle handledResourceBundle = resourceBundleModel.getBundle();
-
-		Assert.assertNull(handledResourceBundle.getKeys());
-
 		// 4. handle Version
 
-		TemplateModel templateModel4 = liferayObjectWrapper.handleUnknownType(
-			new Version("1.0"));
-
-		Assert.assertTrue(
-			"Unknown type (freemarker.template.Version) should be handled as " +
-				"StringModel",
-			templateModel4 instanceof StringModel);
+		_assertTemplateModel(
+			liferayObjectWrapper.handleUnknownType(
+				liferayObjectWrapper.handleUnknownType(new Version("1.0"))),
+			StringModel.class, "1.0", stringModel -> stringModel.getAsString());
 
 		_assertModelFactoryCache("_STRING_MODEL_FACTORY", Version.class);
-
-		StringModel stringModel = (StringModel)templateModel4;
-
-		Assert.assertEquals("1.0", stringModel.getAsString());
 	}
 
 	@AdviseWith(adviceClasses = ReflectionUtilAdvice.class)

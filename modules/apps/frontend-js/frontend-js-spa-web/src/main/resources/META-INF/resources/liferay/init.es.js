@@ -1,14 +1,15 @@
 'use strict';
 
-import ActionURLScreen from './screen/ActionURLScreen.es';
-import App from './app/App.es';
-import version from 'senna/lib/app/version';
+import Uri from 'metal-uri/lib/Uri';
 import async from 'metal/lib/async/async';
 import globals from 'senna/lib/globals/globals';
-import RenderURLScreen from './screen/RenderURLScreen.es';
-import Uri from 'metal-uri/lib/Uri';
 import utils from 'senna/lib/utils/utils';
+import version from 'senna/lib/app/version';
 import {match} from 'metal-dom';
+
+import ActionURLScreen from './screen/ActionURLScreen.es';
+import App from './app/App.es';
+import RenderURLScreen from './screen/RenderURLScreen.es';
 
 /**
  * Initializes a Senna App with routes that match both ActionURLs and RenderURLs.
@@ -96,7 +97,6 @@ let initSPA = function() {
 	};
 
 	Liferay.SPA.app = app;
-
 	Liferay.SPA.version = version;
 
 	Liferay.fire('SPAReady');

@@ -13,6 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
+#if (${liferayVersion.startsWith("7.0")})
 		<dependency>
 			<groupId>com.liferay.content-targeting</groupId>
 			<artifactId>com.liferay.content.targeting.analytics.api</artifactId>
@@ -31,7 +32,6 @@
 			<version>4.0.0</version>
 			<scope>provided</scope>
 		</dependency>
-#if (${liferayVersion.startsWith("7.0")})
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
 			<artifactId>com.liferay.portal.kernel</artifactId>
@@ -39,6 +39,24 @@
 			<scope>provided</scope>
 		</dependency>
 #elseif (${liferayVersion.startsWith("7.1")})
+		<dependency>
+			<groupId>com.liferay.content-targeting</groupId>
+			<artifactId>com.liferay.content.targeting.analytics.api</artifactId>
+			<version>5.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.liferay.content-targeting</groupId>
+			<artifactId>com.liferay.content.targeting.anonymous.users.api</artifactId>
+			<version>3.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.liferay.content-targeting</groupId>
+			<artifactId>com.liferay.content.targeting.api</artifactId>
+			<version>5.0.0</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
 			<artifactId>com.liferay.portal.kernel</artifactId>

@@ -27,6 +27,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,35 +44,21 @@ public class JavaClassParser {
 		Matcher matcher = _anonymousClassPattern.matcher(content);
 
 		while (matcher.find()) {
-			String s = content.substring(matcher.start(2), matcher.end());
+			String anonymousClassContent = _getAnonymousClassContent(
+				content, matcher.start() + 1,
+				StringUtil.equals(matcher.group(1), "<"));
 
-			if (JavaSourceUtil.getLevel(s) != 0) {
+			if (anonymousClassContent == null) {
 				continue;
 			}
 
-			int x = matcher.start() + 1;
-			int y = matcher.end();
+			int lineNumber = SourceUtil.getLineNumber(content, matcher.start());
 
-			while (true) {
-				String classContent = content.substring(x, y);
-
-				if (JavaSourceUtil.getLevel(classContent, "{", "}") != 0) {
-					y++;
-
-					continue;
-				}
-
-				int lineNumber = SourceUtil.getLineNumber(
-					content, matcher.start(2));
-
-				anonymousClasses.add(
-					_parseJavaClass(
-						StringPool.BLANK, classContent, lineNumber,
-						JavaTerm.ACCESS_MODIFIER_PRIVATE, false, false, false,
-						false, true));
-
-				break;
-			}
+			anonymousClasses.add(
+				_parseJavaClass(
+					StringPool.BLANK, anonymousClassContent, lineNumber,
+					JavaTerm.ACCESS_MODIFIER_PRIVATE, false, false, false,
+					false, true));
 		}
 
 		return anonymousClasses;
@@ -153,6 +140,66 @@ public class JavaClassParser {
 
 		return _parseExtendsImplements(
 			javaClass, StringUtil.trim(matcher.group(5)));
+	}
+
+	private static String _getAnonymousClassContent(
+		String content, int start, boolean isGenericClass) {
+
+		int x = start;
+
+		if (isGenericClass) {
+			while (true) {
+				x = content.indexOf('>', x + 1);
+
+				if (x == -1) {
+					return null;
+				}
+
+				if (SourceUtil.getLevel(
+						content.substring(start, x + 1), "<", ">") == 0) {
+
+					break;
+				}
+			}
+
+			if (!Objects.equals(content.charAt(x + 1), '(')) {
+				return null;
+			}
+		}
+
+		while (true) {
+			x = content.indexOf(')', x + 1);
+
+			if (x == -1) {
+				return null;
+			}
+
+			if (SourceUtil.getLevel(
+					content.substring(start, x + 1), "(", ")") == 0) {
+
+				break;
+			}
+		}
+
+		String s = StringUtil.trim(content.substring(x + 1));
+
+		if (!s.startsWith("{\n\n")) {
+			return null;
+		}
+
+		while (true) {
+			x = content.indexOf('}', x + 1);
+
+			if (x == -1) {
+				return null;
+			}
+
+			String anonymousClassContent = content.substring(start, x + 1);
+
+			if (SourceUtil.getLevel(anonymousClassContent, "{", "}") == 0) {
+				return anonymousClassContent;
+			}
+		}
 	}
 
 	private static String _getClassName(String line) {
@@ -520,7 +567,7 @@ public class JavaClassParser {
 	}
 
 	private static final Pattern _anonymousClassPattern = Pattern.compile(
-		"\n\t+(\\S.* )?new ((.|\\(\n|\\w\n)*\\)) \\{\n\n");
+		"\\snew [\\w\\.\t\n]+(\\(|\\<)");
 	private static final Pattern _implementsPattern = Pattern.compile(
 		"(\\A|\\s)implements\\s");
 	private static final Pattern _javaTermEndPattern = Pattern.compile(

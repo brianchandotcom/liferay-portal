@@ -86,15 +86,13 @@ public class AnalyticsOAuth2PortalInstanceLifecycleListener
 				Arrays.asList("everything.read", "preferences.write"),
 				new ServiceContext());
 
-		if (false) {
-			Class<?> clazz = getClass();
+		Class<?> clazz = getClass();
 
-			InputStream inputStream = clazz.getResourceAsStream(
-				"dependencies/logo.png");
+		InputStream inputStream = clazz.getResourceAsStream(
+			"dependencies/logo.png");
 
-			_oAuth2ApplicationLocalService.updateIcon(
-				oAuth2Application.getOAuth2ApplicationId(), inputStream);
-		}
+		_oAuth2ApplicationLocalService.updateIcon(
+			oAuth2Application.getOAuth2ApplicationId(), inputStream);
 	}
 
 	private static String _generateRandomId() {

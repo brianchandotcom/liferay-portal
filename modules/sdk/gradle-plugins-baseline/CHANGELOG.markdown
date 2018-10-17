@@ -113,8 +113,9 @@ versioning is incorrect.
 ## 1.3.4 - 2018-09-24
 
 ### Changed
-[LPS-85678]: Check the content of the `.lfrbuild-packageinfo` file to ignore
+- [LPS-85678]: Check the content of the `.lfrbuild-packageinfo` file to ignore
 specified baseline warnings.
+- [LPS-85678]: Update the [Liferay Ant BND] dependency to version 2.0.56.
 
 ## 1.3.5 - 2018-10-15
 

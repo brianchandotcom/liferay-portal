@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root available-locales="en_US,es_ES" default-locale="en_US">
+	<request/>
+	<dynamic-element index-type="keyword" name="TextFieldName" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[TextFieldValue_us]]></dynamic-content>
+		<dynamic-content language-id="es_ES"><![CDATA[TextFieldValue_es]]></dynamic-content>
+		<dynamic-element index-type="keyword" name="NestedTextFieldName" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[NestedTextFieldValue_us]]></dynamic-content>
+			<dynamic-content language-id="es_ES"><![CDATA[NestedTextFieldValue_es]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+</root>

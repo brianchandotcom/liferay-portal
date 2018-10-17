@@ -1,0 +1,57 @@
+{
+	"availableLanguageIds": [
+		"es_ES",
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "TextFieldNameLabel_us",
+				"es_ES": "TextFieldNameLabel_es"
+			},
+			"localizable": true,
+			"name": "TextFieldName",
+			"nestedFields": [
+				{
+					"dataType": "string",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "NestedTextFieldNameLabel_us",
+						"es_ES": "NestedTextFieldNameLabel_es"
+					},
+					"localizable": true,
+					"name": "NestedTextFieldName",
+					"predefinedValue": {
+						"en_US": "",
+						"es_ES": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": "",
+						"es_ES": ""
+					},
+					"type": "text"
+				}
+			],
+			"predefinedValue": {
+				"en_US": "",
+				"es_ES": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": "",
+				"es_ES": ""
+			},
+			"type": "text"
+		}
+	]
+}

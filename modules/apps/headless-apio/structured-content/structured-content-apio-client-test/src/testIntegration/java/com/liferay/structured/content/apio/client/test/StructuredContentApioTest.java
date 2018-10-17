@@ -19,10 +19,15 @@ import com.jayway.jsonpath.JsonPath;
 import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.internal.JSONWebServiceClientImpl;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.structured.content.apio.client.test.activator.StructuredContentApioTestBundleActivator;
+
+import java.io.UnsupportedEncodingException;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -85,6 +90,37 @@ public class StructuredContentApioTest {
 			titles.contains(
 				StructuredContentApioTestBundleActivator.
 					TITLE_YES_GUEST_YES_GROUP));
+	}
+
+	@Test
+	public void testDefaultStructuredFieldValueIsDisplayedWhenAcceptLanguageIsSpecifiedAndDoesNotMatch()
+		throws Exception {
+
+		List<String> hrefs = JsonPath.read(
+			_toStringAsAdmin(
+				JsonPath.read(
+					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
+					"$._links.content-space.href")),
+			"$._embedded.ContentSpace[?(@.name == '" +
+				StructuredContentApioTestBundleActivator.SITE_NAME +
+					"')]._links.structuredContents.href");
+
+		Map<String, String> headers = _getHeaders();
+
+		headers.put("Accept-Language", "de-DE");
+
+		List<String> values = JsonPath.read(
+			_toStringAsGuest(
+				_getURLWithFilterByTitle(
+					hrefs.get(0),
+					StructuredContentApioTestBundleActivator.
+						TITLE_2_LOCALE_DEFAULT),
+				headers),
+			"$._embedded.StructuredContent[*]._embedded.values._embedded[*]." +
+				"value");
+
+		Assert.assertTrue(values.contains("TextFieldValue_us"));
+		Assert.assertTrue(values.contains("NestedTextFieldValue_us"));
 	}
 
 	@Test
@@ -166,6 +202,36 @@ public class StructuredContentApioTest {
 			titles.contains(
 				StructuredContentApioTestBundleActivator.
 					TITLE_YES_GUEST_YES_GROUP));
+	}
+
+	@Test
+	public void testLocalizedStructuredFieldValueIsDisplayedWhenAcceptLanguageIsSpecifiedAndMatches()
+		throws Exception {
+
+		List<String> hrefs = JsonPath.read(
+			_toStringAsAdmin(
+				JsonPath.read(
+					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
+					"$._links.content-space.href")),
+			"$._embedded.ContentSpace[?(@.name == '" +
+				StructuredContentApioTestBundleActivator.SITE_NAME +
+					"')]._links.structuredContents.href");
+
+		Map<String, String> headers = _getHeaders();
+
+		headers.put("Accept-Language", "es-ES");
+
+		List<String> values = JsonPath.read(
+			_toStringAsGuest(
+				_getURLWithFilterByTitle(
+					hrefs.get(0),
+					StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_ES),
+				headers),
+			"$._embedded.StructuredContent[*]._embedded.values._embedded[*]." +
+				"value");
+
+		Assert.assertTrue(values.contains("TextFieldValue_es"));
+		Assert.assertTrue(values.contains("NestedTextFieldValue_es"));
 	}
 
 	@Test
@@ -356,6 +422,14 @@ public class StructuredContentApioTest {
 		}
 
 		return jsonWebServiceClient;
+	}
+
+	private String _getURLWithFilterByTitle(String url, String title)
+		throws UnsupportedEncodingException {
+
+		return StringBundler.concat(
+			url, "?filter=(",
+			URLEncoder.encode("title eq '" + title, StringPool.UTF8), "')");
 	}
 
 	private String _toString(

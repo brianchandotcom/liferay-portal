@@ -8,6 +8,8 @@ dependencies {
 	testIntegrationCompile group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.6"
 	testIntegrationCompile group: "org.apache.httpcomponents", name: "httpcore-nio", version: "4.4.6"
 	testIntegrationCompile group: "org.jboss.arquillian.junit", name: "arquillian-junit-container", version: "1.1.10.Final"
+	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:journal:journal-api")
 	testIntegrationCompile project(":apps:journal:journal-test-util")
 	testIntegrationCompile project(":apps:oauth2-provider:oauth2-provider-test-util")

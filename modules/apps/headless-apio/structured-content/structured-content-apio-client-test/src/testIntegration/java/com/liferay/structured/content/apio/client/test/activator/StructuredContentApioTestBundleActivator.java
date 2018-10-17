@@ -14,6 +14,17 @@
 
 package com.liferay.structured.content.apio.client.test.activator;
 
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
+import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolderConstants;
@@ -29,6 +40,7 @@ import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -37,6 +49,8 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -93,6 +107,10 @@ public class StructuredContentApioTestBundleActivator
 	public void start(BundleContext bundleContext) {
 		_autoCloseables = new ArrayList<>();
 
+		_ddmFormDeserializerTracker = bundleContext.getService(
+			bundleContext.getServiceReference(
+				DDMFormDeserializerTracker.class));
+
 		try {
 			_prepareTest();
 		}
@@ -106,6 +124,20 @@ public class StructuredContentApioTestBundleActivator
 	@Override
 	public void stop(BundleContext bundleContext) {
 		_cleanUp();
+	}
+
+	protected DDMForm deserialize(String content) {
+		DDMFormDeserializer ddmFormDeserializer =
+			_ddmFormDeserializerTracker.getDDMFormDeserializer("json");
+
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				ddmFormDeserializer.deserialize(builder.build());
+
+		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
 
 	private JournalArticle _addJournalArticle(
@@ -127,6 +159,32 @@ public class StructuredContentApioTestBundleActivator
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, StringUtil.randomId(),
 			false, stringMap, stringMap, stringMap, null, defaultLocale, null,
 			true, true, serviceContext);
+
+		_autoCloseables.add(
+			() -> JournalArticleLocalServiceUtil.deleteArticle(journalArticle));
+
+		return journalArticle;
+	}
+
+	private JournalArticle _addJournalArticle(
+			Map<Locale, String> stringMap, long userId, long groupId,
+			String content, DDMStructure ddmStructure, DDMTemplate ddmTemplate)
+		throws Exception {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setCompanyId(PortalUtil.getDefaultCompanyId());
+		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setUserId(userId);
+
+		JournalArticle journalArticle =
+			JournalArticleLocalServiceUtil.addArticle(
+				userId, groupId,
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, stringMap,
+				null, content, ddmStructure.getStructureKey(),
+				ddmTemplate.getTemplateKey(), serviceContext);
 
 		_autoCloseables.add(
 			() -> JournalArticleLocalServiceUtil.deleteArticle(journalArticle));
@@ -187,6 +245,20 @@ public class StructuredContentApioTestBundleActivator
 		}
 	}
 
+	private DDMStructure _getDDMStructureWithNestedField(Group group)
+		throws Exception {
+
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(JournalArticle.class), group);
+
+		return ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class), null,
+			StructuredContentApioTestBundleActivator.SITE_NAME,
+			deserialize(_read("test-journal-structured-nested-fields.json")),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+	}
+
 	private void _prepareDataForLocalizationTests(User user, Group group)
 		throws Exception {
 
@@ -200,6 +272,14 @@ public class StructuredContentApioTestBundleActivator
 			titleMap1, user.getUserId(), group.getGroupId(), LocaleUtil.SPAIN,
 			true, true);
 
+		DDMStructure ddmStructure = _getDDMStructureWithNestedField(group);
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM,
+			_read("test-journal-template-nested-fields.xsl"), LocaleUtil.US);
+
 		Map<Locale, String> titleMap2 = new HashMap<Locale, String>() {
 			{
 				put(LocaleUtil.getDefault(), TITLE_2_LOCALE_DEFAULT);
@@ -209,7 +289,8 @@ public class StructuredContentApioTestBundleActivator
 
 		_addJournalArticle(
 			titleMap2, user.getUserId(), group.getGroupId(),
-			LocaleUtil.getDefault(), true, true);
+			_read("test-journal-content-nested-fields.xml"), ddmStructure,
+			ddmTemplate);
 	}
 
 	private void _prepareTest() throws Exception {
@@ -250,9 +331,22 @@ public class StructuredContentApioTestBundleActivator
 		_prepareDataForLocalizationTests(user, group);
 	}
 
+	private String _read(String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"/com/liferay/structured/content/apio/client/test/activator/" +
+				fileName);
+
+		return StringUtil.read(inputStream);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		StructuredContentApioTestBundleActivator.class);
 
 	private List<AutoCloseable> _autoCloseables;
+	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
 
 }

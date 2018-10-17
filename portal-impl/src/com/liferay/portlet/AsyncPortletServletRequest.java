@@ -37,17 +37,17 @@ import javax.servlet.http.HttpServletRequestWrapper;
 public class AsyncPortletServletRequest extends HttpServletRequestWrapper {
 
 	public static AsyncPortletServletRequest getAsyncPortletServletRequest(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest request) {
 
-		while (httpServletRequest instanceof HttpServletRequestWrapper) {
-			if (httpServletRequest instanceof AsyncPortletServletRequest) {
-				return (AsyncPortletServletRequest)httpServletRequest;
+		while (request instanceof HttpServletRequestWrapper) {
+			if (request instanceof AsyncPortletServletRequest) {
+				return (AsyncPortletServletRequest)request;
 			}
 
 			HttpServletRequestWrapper httpServletRequestWrapper =
-				(HttpServletRequestWrapper)httpServletRequest;
+				(HttpServletRequestWrapper)request;
 
-			httpServletRequest =
+			request =
 				(HttpServletRequest)httpServletRequestWrapper.getRequest();
 		}
 

@@ -27,9 +27,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Dante Wang
  */
-public class AsyncAttributeAdapter implements Servlet {
+public class AsyncAttributeAdapterServlet implements Servlet {
 
-	public AsyncAttributeAdapter(Servlet servlet) {
+	public AsyncAttributeAdapterServlet(Servlet servlet) {
 		_servlet = servlet;
 	}
 

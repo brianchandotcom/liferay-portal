@@ -124,7 +124,7 @@ public class AsyncPortletServletRequest extends HttpServletRequestWrapper {
 		String servletPath = null;
 
 		if (path != null) {
-			if ((contextPath.length() > 0) && path.startsWith(contextPath)) {
+			if (!contextPath.isEmpty() && path.startsWith(contextPath)) {
 				path = path.substring(contextPath.length());
 			}
 

@@ -205,16 +205,15 @@ public class LiferayObjectWrapperTest {
 
 	@Test
 	public void testHandleUnknownTypeEnumeration()throws Exception {
+		LiferayObjectWrapper liferayObjectWrapper = new LiferayObjectWrapper(
+			null, null);
 
 		// 1. handle Enumeration
-
-		LiferayObjectWrapper liferayObjectWrapper1 = new LiferayObjectWrapper(
-			null, null);
 
 		Enumeration<String> enumeration = Collections.enumeration(
 			Arrays.asList("testElement"));
 
-		TemplateModel templateModel1 = liferayObjectWrapper1.handleUnknownType(
+		TemplateModel templateModel1 = liferayObjectWrapper.handleUnknownType(
 			enumeration);
 
 		Assert.assertTrue(
@@ -245,10 +244,7 @@ public class LiferayObjectWrapperTest {
 				return null;
 			});
 
-		LiferayObjectWrapper liferayObjectWrapper2 = new LiferayObjectWrapper(
-			null, null);
-
-		TemplateModel templateModel2 = liferayObjectWrapper2.handleUnknownType(
+		TemplateModel templateModel2 = liferayObjectWrapper.handleUnknownType(
 			node);
 
 		Assert.assertTrue(
@@ -278,10 +274,7 @@ public class LiferayObjectWrapperTest {
 
 		};
 
-		LiferayObjectWrapper liferayObjectWrapper3 = new LiferayObjectWrapper(
-			null, null);
-
-		TemplateModel templateModel3 = liferayObjectWrapper3.handleUnknownType(
+		TemplateModel templateModel3 = liferayObjectWrapper.handleUnknownType(
 			resourceBundle);
 
 		Assert.assertTrue(
@@ -300,10 +293,7 @@ public class LiferayObjectWrapperTest {
 
 		// 4. handle Version
 
-		LiferayObjectWrapper liferayObjectWrapper4 = new LiferayObjectWrapper(
-			null, null);
-
-		TemplateModel templateModel4 = liferayObjectWrapper4.handleUnknownType(
+		TemplateModel templateModel4 = liferayObjectWrapper.handleUnknownType(
 			new Version("1.0"));
 
 		Assert.assertTrue(

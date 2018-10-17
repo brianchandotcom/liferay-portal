@@ -16,6 +16,7 @@ package com.liferay.document.library.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryTypeException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolder;
@@ -107,6 +108,9 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void clearDLFolderDLFileEntryTypes(long folderId);
+
+	public DLFileEntryType createBasicDocumentDLFileEntryType()
+		throws NoSuchFileEntryTypeException;
 
 	/**
 	* Creates a new document library file entry type with the primary key. Does not add the document library file entry type to the database.
@@ -254,6 +258,10 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileEntryType getBasicDocumentDLFileEntryType()
+		throws NoSuchFileEntryTypeException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getDefaultFileEntryTypeId(long folderId)

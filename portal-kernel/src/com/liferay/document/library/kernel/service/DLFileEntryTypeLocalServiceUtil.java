@@ -108,6 +108,11 @@ public class DLFileEntryTypeLocalServiceUtil {
 		getService().clearDLFolderDLFileEntryTypes(folderId);
 	}
 
+	public static com.liferay.document.library.kernel.model.DLFileEntryType createBasicDocumentDLFileEntryType()
+		throws com.liferay.document.library.kernel.exception.NoSuchFileEntryTypeException {
+		return getService().createBasicDocumentDLFileEntryType();
+	}
+
 	/**
 	* Creates a new document library file entry type with the primary key. Does not add the document library file entry type to the database.
 	*
@@ -295,6 +300,11 @@ public class DLFileEntryTypeLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.document.library.kernel.model.DLFileEntryType getBasicDocumentDLFileEntryType()
+		throws com.liferay.document.library.kernel.exception.NoSuchFileEntryTypeException {
+		return getService().getBasicDocumentDLFileEntryType();
 	}
 
 	public static long getDefaultFileEntryTypeId(long folderId)

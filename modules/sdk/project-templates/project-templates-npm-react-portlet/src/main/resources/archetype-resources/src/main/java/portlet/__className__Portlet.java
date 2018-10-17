@@ -42,7 +42,7 @@ public class ${className}Portlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			"mainRequire",
 			_npmResolver.resolveModuleName("${artifactId}") + " as main");
-		
+
 		super.doView(renderRequest, renderResponse);
 	}
 

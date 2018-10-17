@@ -37,9 +37,9 @@ public class ${className}Portlet extends MVCPortlet {
 	public void doView(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
-		
+
 		renderRequest.setAttribute(
-			"mainRequire", 
+			"mainRequire",
 			_npmResolver.resolveModuleName(
 				"${artifactId}") + " as main");
 

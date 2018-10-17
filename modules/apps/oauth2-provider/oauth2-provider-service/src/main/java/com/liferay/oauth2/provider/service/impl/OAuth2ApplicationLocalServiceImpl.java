@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -54,6 +55,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.awt.image.RenderedImage;
 
@@ -584,5 +586,11 @@ public class OAuth2ApplicationLocalServiceImpl
 			"xmlrpc.beep", "xmlrpc.beeps", "xmpp", "xri", "ymsgr", "z39.50",
 			"z39.50r", "z39.50s"
 		});
+
+	@ServiceReference(
+		filterString = "(class.name=com.liferay.portal.repository.portletrepository.PortletRepository)",
+		type = RepositoryFactory.class
+	)
+	private RepositoryFactory _repositoryFactory;
 
 }

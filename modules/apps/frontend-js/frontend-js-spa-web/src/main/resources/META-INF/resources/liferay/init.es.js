@@ -2,6 +2,7 @@
 
 import ActionURLScreen from './screen/ActionURLScreen.es';
 import App from './app/App.es';
+import version from 'senna/lib/app/version';
 import async from 'metal/lib/async/async';
 import globals from 'senna/lib/globals/globals';
 import RenderURLScreen from './screen/RenderURLScreen.es';
@@ -95,6 +96,8 @@ let initSPA = function() {
 	};
 
 	Liferay.SPA.app = app;
+
+	Liferay.SPA.version = version;
 
 	Liferay.fire('SPAReady');
 

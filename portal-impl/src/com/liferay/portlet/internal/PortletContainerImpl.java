@@ -1002,18 +1002,18 @@ public class PortletContainerImpl implements PortletContainer {
 
 		LiferayResourceResponse liferayResourceResponse = null;
 
-		if (liferayResourceRequest != null) {
-			liferayResourceResponse =
-				(LiferayResourceResponse)request.getAttribute(
-					JavaConstants.JAVAX_PORTLET_RESPONSE);
-		}
-		else {
+		if (liferayResourceRequest == null) {
 			liferayResourceRequest = ResourceRequestFactory.create(
 				request, portlet, invokerPortlet, portletContext, windowState,
 				portletMode, portletPreferences, layout.getPlid());
 
 			liferayResourceResponse = ResourceResponseFactory.create(
 				liferayResourceRequest, response);
+		}
+		else {
+			liferayResourceResponse =
+				(LiferayResourceResponse)request.getAttribute(
+					JavaConstants.JAVAX_PORTLET_RESPONSE);
 		}
 
 		liferayResourceRequest.defineObjects(

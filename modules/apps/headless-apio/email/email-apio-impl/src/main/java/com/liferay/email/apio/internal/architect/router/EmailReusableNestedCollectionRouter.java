@@ -16,15 +16,18 @@ package com.liferay.email.apio.internal.architect.router;
 
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
-import com.liferay.apio.architect.router.NestedCollectionRouter;
+import com.liferay.apio.architect.router.ReusableNestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.email.apio.architect.identifier.EmailIdentifier;
-import com.liferay.organization.apio.architect.identifier.OrganizationIdentifier;
+import com.liferay.portal.apio.identifier.ClassNameClassPK;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.EmailAddressService;
 import com.liferay.portal.kernel.service.OrganizationService;
+import com.liferay.portal.kernel.service.UserService;
 
 import java.util.List;
 
@@ -33,39 +36,65 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose the <a
- * href="http://schema.org/email">Email</a> resources of an <a
- * href="http://schema.org/Organization">Organization</a> through a web API. The
+ * href="http://schema.org/email">Email</a> resources through a web API. The
  * resources are mapped from the internal model {@code EmailAddress}.
  *
  * @author Javier Gamarra
+ * @review
  */
-@Component(immediate = true, service = NestedCollectionRouter.class)
-public class OrganizationEmailsNestedCollectionRouter
-	implements NestedCollectionRouter
-		<EmailAddress, Long, EmailIdentifier, Long, OrganizationIdentifier> {
+@Component(immediate = true, service = ReusableNestedCollectionRouter.class)
+public class EmailReusableNestedCollectionRouter
+	implements ReusableNestedCollectionRouter
+		<EmailAddress, Long, EmailIdentifier, ClassNameClassPK> {
 
 	@Override
-	public NestedCollectionRoutes<EmailAddress, Long, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<EmailAddress, Long, Long> builder) {
+	public NestedCollectionRoutes
+		<EmailAddress, Long, ClassNameClassPK> collectionRoutes(
+			NestedCollectionRoutes.Builder
+				<EmailAddress, Long, ClassNameClassPK> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
 		).build();
 	}
 
-	private PageItems<EmailAddress> _getPageItems(
-			Pagination pagination, long organizationId)
+	private List<EmailAddress> _getEmailAdresses(
+			ClassNameClassPK classNameClassPK)
 		throws PortalException {
 
-		Organization organization = _organizationService.getOrganization(
-			organizationId);
+		String className = classNameClassPK.getClassName();
 
-		List<EmailAddress> emailAddresses =
-			_emailAddressService.getEmailAddresses(
+		long classPK = classNameClassPK.getClassPK();
+
+		if (className.equals(Organization.class.getName())) {
+			Organization organization = _organizationService.getOrganization(
+				classPK);
+
+			return _emailAddressService.getEmailAddresses(
 				organization.getModelClassName(),
 				organization.getOrganizationId());
+		}
+		else {
+			User user = _userService.getUserById(classPK);
 
-		return new PageItems<>(emailAddresses, emailAddresses.size());
+			return _emailAddressService.getEmailAddresses(
+				Contact.class.getName(), user.getContactId());
+		}
+	}
+
+	private PageItems<EmailAddress> _getPageItems(
+			Pagination pagination, ClassNameClassPK classNameClassPK)
+		throws PortalException {
+
+		List<EmailAddress> emailAddresses = _getEmailAdresses(classNameClassPK);
+
+		int count = emailAddresses.size();
+
+		int endPosition = Math.min(count, pagination.getEndPosition());
+
+		return new PageItems<>(
+			emailAddresses.subList(pagination.getStartPosition(), endPosition),
+			count);
 	}
 
 	@Reference
@@ -73,5 +102,8 @@ public class OrganizationEmailsNestedCollectionRouter
 
 	@Reference
 	private OrganizationService _organizationService;
+
+	@Reference
+	private UserService _userService;
 
 }

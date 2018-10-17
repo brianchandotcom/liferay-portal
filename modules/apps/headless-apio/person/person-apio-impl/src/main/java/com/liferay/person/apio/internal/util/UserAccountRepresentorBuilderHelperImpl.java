@@ -20,8 +20,10 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.email.apio.architect.identifier.EmailIdentifier;
 import com.liferay.person.apio.internal.model.UserWrapper;
 import com.liferay.phone.apio.architect.identifier.PhoneIdentifier;
+import com.liferay.portal.apio.identifier.ClassNameClassPK;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.ContactModel;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ListTypeService;
@@ -60,30 +62,43 @@ public class UserAccountRepresentorBuilderHelperImpl
 		).addLocalizedStringByLocale(
 			"honorificSuffix", _getContactField(Contact::getSuffixId)
 		).addNested(
-			"contactInformation", this::_getContact,
+			"contactInformation", Function.identity(),
 			contactBuilder -> contactBuilder.types(
 				"ContactInformation"
+			).addRelatedCollection(
+				"address", AddressIdentifier.class,
+				this::_createClassNameAndClassPK
+			).addRelatedCollection(
+				"email", EmailIdentifier.class, this::_createClassNameAndClassPK
+			).addRelatedCollection(
+				"telephone", PhoneIdentifier.class,
+				this::_createClassNameAndClassPK
+			).addRelatedCollection(
+				"webUrl", WebUrlIdentifier.class,
+				this::_createClassNameAndClassPK
 			).addString(
-				"facebook", Contact::getFacebookSn
+				"facebook",
+				userWrapper -> _getContactInfo(
+					userWrapper, ContactModel::getFacebookSn)
 			).addString(
-				"jabber", Contact::getJabberSn
+				"jabber",
+				userWrapper -> _getContactInfo(
+					userWrapper, ContactModel::getJabberSn)
 			).addString(
-				"skype", Contact::getSkypeSn
+				"skype",
+				userWrapper -> _getContactInfo(
+					userWrapper, ContactModel::getSkypeSn)
 			).addString(
-				"sms", Contact::getSmsSn
+				"sms",
+				userWrapper -> _getContactInfo(
+					userWrapper, ContactModel::getSmsSn)
 			).addString(
-				"twitter", Contact::getTwitterSn
+				"twitter",
+				userWrapper -> _getContactInfo(
+					userWrapper, ContactModel::getTwitterSn)
 			).build()
 		).addRelatedCollection(
 			"roles", RoleIdentifier.class
-		).addRelatedCollection(
-			"address", AddressIdentifier.class
-		).addRelatedCollection(
-			"emails", EmailIdentifier.class
-		).addRelatedCollection(
-			"telephone", PhoneIdentifier.class
-		).addRelatedCollection(
-			"webUrl", WebUrlIdentifier.class
 		).addRelativeURL(
 			"image", UserWrapper::getPortraitURL
 		).addString(
@@ -127,12 +142,11 @@ public class UserAccountRepresentorBuilderHelperImpl
 		);
 	}
 
-	private Contact _getContact(UserWrapper userWrapper) {
-		return Try.fromFallible(
-			userWrapper::getContact
-		).orElse(
-			null
-		);
+	private ClassNameClassPK _createClassNameAndClassPK(
+		UserWrapper userWrapper) {
+
+		return ClassNameClassPK.create(
+			User.class.getName(), userWrapper.getUserId());
 	}
 
 	private BiFunction<UserWrapper, Locale, String> _getContactField(
@@ -148,6 +162,16 @@ public class UserAccountRepresentorBuilderHelperImpl
 			ListType::getName
 		).map(
 			name -> LanguageUtil.get(locale, name)
+		).orElse(
+			null
+		);
+	}
+
+	private String _getContactInfo(
+		UserWrapper userWrapper, Function<Contact, String> function) {
+
+		return Try.fromFallible(
+			() -> function.apply(userWrapper.getContact())
 		).orElse(
 			null
 		);

@@ -69,13 +69,13 @@ public class UserAccountRepresentorBuilderHelperImpl
 			contactBuilder -> contactBuilder.types(
 				"ContactInformation"
 			).addRelatedCollection(
-				"emails", EmailIdentifier.class,
-				userWrapper -> ClassNameClassPK.create(
-					User.class.getName(), userWrapper.getUserId())
-			).addRelatedCollection(
 				"address", AddressIdentifier.class,
 				userWrapper -> ClassNameClassPK.create(
 					Address.class.getName(), userWrapper.getUserId())
+			).addRelatedCollection(
+				"email", EmailIdentifier.class,
+				userWrapper -> ClassNameClassPK.create(
+					User.class.getName(), userWrapper.getUserId())
 			).addRelatedCollection(
 				"telephone", PhoneIdentifier.class,
 				userWrapper -> ClassNameClassPK.create(

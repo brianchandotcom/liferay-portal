@@ -32,6 +32,13 @@ public class WorkspaceUtil {
 			new WorkspaceGitRepositoryData(
 				repositoryType, workspaceGitRepository);
 
+		String upstreamBranchName =
+			workspaceGitRepositoryData.getUpstreamBranchName();
+
+		if (upstreamBranchName == null) {
+			return null;
+		}
+
 		String gitHubURL = workspaceGitRepositoryData.getRepositoryGitHubURL();
 
 		WorkspaceGitRepository dependencyWorkspaceGitRepository = null;
@@ -48,7 +55,7 @@ public class WorkspaceUtil {
 			dependencyWorkspaceGitRepository =
 				GitRepositoryFactory.getDependencyWorkspaceGitRepository(
 					repositoryType, workspaceGitRepository, pullRequest,
-					workspaceGitRepositoryData.getUpstreamBranchName());
+					upstreamBranchName);
 		}
 		else if (GitUtil.isValidGitHubRefURL(gitHubURL)) {
 			RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(gitHubURL);
@@ -56,7 +63,7 @@ public class WorkspaceUtil {
 			dependencyWorkspaceGitRepository =
 				GitRepositoryFactory.getDependencyWorkspaceGitRepository(
 					repositoryType, workspaceGitRepository, remoteGitRef,
-					workspaceGitRepositoryData.getUpstreamBranchName());
+					upstreamBranchName);
 		}
 
 		if (dependencyWorkspaceGitRepository == null) {

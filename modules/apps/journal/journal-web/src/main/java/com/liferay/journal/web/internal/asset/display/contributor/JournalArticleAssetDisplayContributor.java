@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -62,6 +63,15 @@ public class JournalArticleAssetDisplayContributor
 	@Override
 	protected String[] getAssetEntryModelFields() {
 		return null;
+	}
+
+	@Override
+	protected Map<String, String> getAssetEntryModelFieldsMap() {
+		Map<String, String> assetEntryModelFields = new HashMap<>();
+
+		assetEntryModelFields.put("lastEditor", "last-editor");
+
+		return assetEntryModelFields;
 	}
 
 	@Override
@@ -117,12 +127,28 @@ public class JournalArticleAssetDisplayContributor
 	protected Object getFieldValue(
 		JournalArticle article, String field, Locale locale) {
 
+		if (Objects.equals(field, "lastEditor")) {
+			return _getLastEditor(article);
+		}
+
 		return StringPool.BLANK;
 	}
 
 	@Override
 	protected ResourceBundle getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(locale, "com.liferay.journal.lang");
+	}
+
+	private String _getLastEditor(JournalArticle article) {
+		long userId = article.getUserId();
+
+		User user = userLocalService.fetchUser(userId);
+
+		if (user != null) {
+			return user.getFullName();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private String _transformFileEntryURL(String data) {

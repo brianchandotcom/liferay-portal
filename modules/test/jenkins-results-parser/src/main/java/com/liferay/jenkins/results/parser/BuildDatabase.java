@@ -16,6 +16,8 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.net.URL;
+
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -32,6 +34,8 @@ public interface BuildDatabase {
 	public File getBuildDatabaseJSFile();
 
 	public JSONObject getBuildDataJSONObject(String key);
+
+	public JSONObject getBuildDataJSONObject(URL buildURL);
 
 	public Properties getProperties(String key);
 

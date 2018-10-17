@@ -17,6 +17,9 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -167,7 +170,19 @@ public abstract class BaseBuildData implements BuildData {
 	}
 
 	protected BaseBuildData(String runID, String jobName, String buildURL) {
-		_jsonObject = buildDatabase.getBuildDataJSONObject(runID);
+		JSONObject jsonObject = buildDatabase.getBuildDataJSONObject(runID);
+
+		if ((jsonObject == null) && (buildURL != null)) {
+			try {
+				jsonObject = buildDatabase.getBuildDataJSONObject(
+					new URL(buildURL));
+			}
+			catch (MalformedURLException murle) {
+				throw new RuntimeException(murle);
+			}
+		}
+
+		_jsonObject = jsonObject;
 
 		put("run_id", runID);
 

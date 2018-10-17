@@ -17,6 +17,8 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.net.URL;
+
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -53,10 +55,30 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 		JSONObject buildsJSONObject = _jsonObject.getJSONObject("builds");
 
 		if (!buildsJSONObject.has(key)) {
-			buildsJSONObject.put(key, new JSONObject());
+			return new JSONObject();
 		}
 
 		return buildsJSONObject.getJSONObject(key);
+	}
+
+	@Override
+	public JSONObject getBuildDataJSONObject(URL buildURL) {
+		JSONObject buildsJSONObject = _jsonObject.getJSONObject("builds");
+
+		for (Object key : buildsJSONObject.keySet()) {
+			JSONObject buildJSONObject = buildsJSONObject.getJSONObject(
+				key.toString());
+
+			if (!buildJSONObject.has("build_url")) {
+				continue;
+			}
+
+			if (buildURL.equals(buildJSONObject.getString("build_url"))) {
+				return buildJSONObject;
+			}
+		}
+
+		return null;
 	}
 
 	@Override

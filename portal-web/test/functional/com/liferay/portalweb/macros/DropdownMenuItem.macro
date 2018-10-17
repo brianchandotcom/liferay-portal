@@ -1,0 +1,7 @@
+<definition>
+	<command name="click">
+		<execute function="Click" locator1="MenuItem#DROPDOWN_MENU_ITEM">
+			<var name="key_menuItem" value="${menuItem}" />
+		</execute>
+	</command>
+</definition>

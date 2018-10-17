@@ -117,6 +117,11 @@ versioning is incorrect.
 specified baseline warnings.
 - [LPS-85678]: Update the [Liferay Ant BND] dependency to version 2.0.56.
 
+## 1.3.5 - 2018-10-05
+
+### Changed
+- [LPS-80388]: Update the [Liferay Ant BND] dependency to version 2.0.57.
+
 ## 1.3.5 - 2018-10-15
 
 ### Changed
@@ -155,6 +160,7 @@ warnings recursively:
 [LPS-76224]: https://issues.liferay.com/browse/LPS-76224
 [LPS-77350]: https://issues.liferay.com/browse/LPS-77350
 [LPS-77441]: https://issues.liferay.com/browse/LPS-77441
+[LPS-80388]: https://issues.liferay.com/browse/LPS-80388
 [LPS-83067]: https://issues.liferay.com/browse/LPS-83067
 [LPS-85677]: https://issues.liferay.com/browse/LPS-85677
 [LPS-85678]: https://issues.liferay.com/browse/LPS-85678

@@ -16,6 +16,7 @@ package com.liferay.portal.osgi.web.wab.extender.internal.adapter;
 
 import java.io.IOException;
 
+import javax.servlet.AsyncContext;
 import javax.servlet.DispatcherType;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
@@ -66,19 +67,18 @@ public class AsyncAttributeAdapterServlet implements Servlet {
 				(HttpServletRequest)servletRequest;
 
 			httpServletRequest.setAttribute(
-				"javax.servlet.async.context_path",
+				AsyncContext.ASYNC_CONTEXT_PATH,
 				httpServletRequest.getContextPath());
 			httpServletRequest.setAttribute(
-				"javax.servlet.async.path_info",
-				httpServletRequest.getPathInfo());
+				AsyncContext.ASYNC_PATH_INFO, httpServletRequest.getPathInfo());
 			httpServletRequest.setAttribute(
-				"javax.servlet.async.query_string",
+				AsyncContext.ASYNC_QUERY_STRING,
 				httpServletRequest.getQueryString());
 			httpServletRequest.setAttribute(
-				"javax.servlet.async.request_uri",
+				AsyncContext.ASYNC_REQUEST_URI,
 				httpServletRequest.getRequestURI());
 			httpServletRequest.setAttribute(
-				"javax.servlet.async.servlet_path",
+				AsyncContext.ASYNC_SERVLET_PATH,
 				httpServletRequest.getServletPath());
 		}
 

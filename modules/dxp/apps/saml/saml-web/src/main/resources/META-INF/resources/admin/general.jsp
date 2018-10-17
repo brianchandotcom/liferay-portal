@@ -25,9 +25,9 @@ CertificateTool certificateTool = (CertificateTool)request.getAttribute(SamlWebK
 
 X509Certificate x509Certificate = (X509Certificate)request.getAttribute(SamlWebKeys.SAML_X509_CERTIFICATE);
 
-boolean keystoreIncorrectPassword = GetterUtil.getBoolean(request.getAttribute(SamlWebKeys.SAML_KEYSTORE_PASSWORD_INCORRECT));
-boolean keystoreException = GetterUtil.getBoolean(request.getAttribute(SamlWebKeys.SAML_KEYSTORE_EXCEPTION));
 boolean certificateAuthNeeded = GetterUtil.getBoolean(request.getAttribute(SamlWebKeys.SAML_X509_CERTIFICATE_AUTH_NEEDED));
+boolean keystoreException = GetterUtil.getBoolean(request.getAttribute(SamlWebKeys.SAML_KEYSTORE_EXCEPTION));
+boolean keystoreIncorrectPassword = GetterUtil.getBoolean(request.getAttribute(SamlWebKeys.SAML_KEYSTORE_PASSWORD_INCORRECT));
 %>
 
 <portlet:actionURL name="/admin/updateGeneral" var="updateGeneralURL">
@@ -139,16 +139,6 @@ boolean certificateAuthNeeded = GetterUtil.getBoolean(request.getAttribute(SamlW
 					<liferay-ui:message key="entity-id-must-be-set-before-private-key-and-certificate-can-be-generated" />
 				</div>
 			</c:when>
-			<c:when test="<%= keystoreIncorrectPassword %>">
-				<div class="portlet-msg-error">
-					<liferay-ui:message key="keystore-password-incorrect" />
-				</div>
-			</c:when>
-			<c:when test="<%= keystoreException %>">
-				<div class="portlet-msg-error">
-					<liferay-ui:message key="keystore-exception" />
-				</div>
-			</c:when>
 			<c:when test="<%= certificateAuthNeeded %>">
 				<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="authCertificateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="mvcRenderCommandName" value="/admin/updateCertificate" />
@@ -164,6 +154,16 @@ boolean certificateAuthNeeded = GetterUtil.getBoolean(request.getAttribute(SamlW
 					<aui:button onClick='<%= renderResponse.getNamespace() + "showCertificateDialog('" + authCertificateURL + "');" %>' value="auth-certificate" />
 					<aui:button onClick='<%= renderResponse.getNamespace() + "showCertificateDialog('" + replaceCertificateURL + "');" %>' value="replace-certificate" />
 				</aui:button-row>
+			</c:when>
+			<c:when test="<%= keystoreException %>">
+				<div class="portlet-msg-error">
+					<liferay-ui:message key="keystore-exception" />
+				</div>
+			</c:when>
+			<c:when test="<%= keystoreIncorrectPassword %>">
+				<div class="portlet-msg-error">
+					<liferay-ui:message key="keystore-password-incorrect" />
+				</div>
 			</c:when>
 			<c:otherwise>
 				<div class="portlet-msg-info">

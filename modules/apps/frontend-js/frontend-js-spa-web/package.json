@@ -14,7 +14,7 @@
 		"metal": "^2.4.7",
 		"metal-dom": "^2.4.7",
 		"metal-uri": "^2.0.2",
-		"senna": "2.6.2"
+		"senna": "2.7.0"
 	},
 	"devDependencies": {
 		"babel-cli": "6.26.0",

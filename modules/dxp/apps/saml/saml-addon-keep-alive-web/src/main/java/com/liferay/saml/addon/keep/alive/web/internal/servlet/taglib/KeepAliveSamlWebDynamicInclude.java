@@ -140,7 +140,7 @@ public class KeepAliveSamlWebDynamicInclude extends BaseDynamicInclude {
 			}
 			catch (NoSuchSpIdpConnectionException nssice) {
 				String message = StringBundler.concat(
-					"No SPIDP connection for default entity ", defaultEntityId,
+					"No SP IdP connection for default entity ", defaultEntityId,
 					" configured: ", nssice.getMessage());
 
 				if (_log.isDebugEnabled()) {

@@ -57,11 +57,11 @@ public class AsyncPortletServletRequest extends HttpServletRequestWrapper {
 	public AsyncPortletServletRequest(HttpServletRequest request) {
 		super(request);
 
-		_contextPath = super.getContextPath();
-		_queryString = super.getQueryString();
-		_requestURI = super.getRequestURI();
-		_servletPath = super.getServletPath();
-		_pathInfo = super.getPathInfo();
+		_contextPath = request.getContextPath();
+		_queryString = request.getQueryString();
+		_requestURI = request.getRequestURI();
+		_servletPath = request.getServletPath();
+		_pathInfo = request.getPathInfo();
 
 		if (_portalServletURLPatterns == null) {
 			ServletContext servletContext = ServletContextPool.get(

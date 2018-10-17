@@ -18,7 +18,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.JavaMethod;
@@ -81,7 +80,7 @@ public class JavaAnonymousInnerClassCheck extends BaseJavaTermCheck {
 		String anonymousClassContent = anonymousClass.getContent();
 
 		if (!StringUtil.startsWith(
-				StringUtil.trimLeading(anonymousClassContent),
+				StringUtil.removeChars(anonymousClassContent, '\n', '\t'),
 				"new " + className)) {
 
 			return content;
@@ -113,11 +112,12 @@ public class JavaAnonymousInnerClassCheck extends BaseJavaTermCheck {
 
 		int x = anonymousClassContent.indexOf("{\n");
 
-		String indent = SourceUtil.getIndent(anonymousClassContent);
+		String lastLine = anonymousClassContent.substring(
+			anonymousClassContent.lastIndexOf("\n") + 1);
 
 		String expectedContent = StringBundler.concat(
 			anonymousClassContent.substring(0, x + 2), "\n",
-			anonymousClassJavaMethod.getContent(), "\n", indent, "}");
+			anonymousClassJavaMethod.getContent(), "\n", lastLine);
 
 		if (!expectedContent.equals(anonymousClassContent)) {
 			return content;
@@ -130,17 +130,15 @@ public class JavaAnonymousInnerClassCheck extends BaseJavaTermCheck {
 			return content;
 		}
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(5);
 
-		sb.append(indent);
 		sb.append(
 			_getLambdaSignature(
 				anonymousClassJavaMethod.getSignature(), useParameterType));
 		sb.append(" -> {\n");
 		sb.append(methodBody);
 		sb.append("\n");
-		sb.append(indent);
-		sb.append("}");
+		sb.append(lastLine);
 
 		return StringUtil.replace(
 			content, anonymousClassContent, sb.toString());

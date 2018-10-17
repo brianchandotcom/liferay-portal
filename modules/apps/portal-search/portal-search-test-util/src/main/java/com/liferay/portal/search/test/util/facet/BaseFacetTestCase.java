@@ -16,26 +16,20 @@ package com.liferay.portal.search.test.util.facet;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.search.test.util.FacetsAssert;
-import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 import com.liferay.portal.search.test.util.indexing.QueryContributor;
 
 import java.io.Serializable;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
-
-import org.junit.Assert;
 
 /**
  * @author Bryan Engler
@@ -56,31 +50,10 @@ public abstract class BaseFacetTestCase extends BaseIndexingTestCase {
 	protected void assertSearchFacet(Consumer<FacetTestHelper> consumer)
 		throws Exception {
 
-		IdempotentRetryAssert.retryAssert(
-			5, TimeUnit.SECONDS,
-			() -> {
-				consumer.accept(new FacetTestHelper());
-
-				return null;
+		assertSearch(
+			indexingTestHelper -> {
+				consumer.accept(new FacetTestHelper(indexingTestHelper));
 			});
-	}
-
-	protected Hits doSearch(SearchContext searchContext) {
-		return search(searchContext);
-	}
-
-	protected Hits doSearch(
-		SearchContext searchContext, QueryContributor queryContributor) {
-
-		try {
-			return search(searchContext, queryContributor);
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	protected abstract String getField();
@@ -97,46 +70,62 @@ public abstract class BaseFacetTestCase extends BaseIndexingTestCase {
 
 	protected class FacetTestHelper {
 
-		public FacetTestHelper() {
-			_searchContext = createSearchContext();
+		public FacetTestHelper(IndexingTestHelper indexingTestHelper) {
+			_indexingTestHelper = indexingTestHelper;
 		}
 
 		public <T extends Facet> T addFacet(
 			Function<SearchContext, ? extends T> function) {
 
-			T facet = function.apply(_searchContext);
+			SearchContext searchContext = getSearchContext();
 
-			_searchContext.addFacet(facet);
+			T facet = function.apply(searchContext);
+
+			searchContext.addFacet(facet);
 
 			return facet;
 		}
 
 		public void assertFrequencies(Facet facet, List<String> expected) {
 			FacetsAssert.assertFrequencies(
-				facet.getFieldName(), _searchContext, expected);
+				facet.getFieldName(), getSearchContext(), expected);
 		}
 
 		public void assertResultCount(int expected) {
-			Document[] documents = _hits.getDocs();
+			_indexingTestHelper.assertResultCount(expected);
+		}
 
-			Assert.assertEquals(
-				Arrays.toString(documents), expected, documents.length);
+		public void assertValues(
+			String fieldName, List<String> expectedValues) {
+
+			_indexingTestHelper.assertValues(fieldName, expectedValues);
+		}
+
+		public String getQueryString() {
+			return _indexingTestHelper.getQueryString();
+		}
+
+		public SearchContext getSearchContext() {
+			return _indexingTestHelper.getSearchContext();
 		}
 
 		public void search() {
-			_hits = doSearch(_searchContext);
+			_indexingTestHelper.search();
 		}
 
-		public void search(QueryContributor queryContributor) {
-			_hits = doSearch(_searchContext, queryContributor);
+		public void setPostFilter(Filter postFilter) {
+			_indexingTestHelper.setPostFilter(postFilter);
+		}
+
+		public void setQueryContributor(QueryContributor queryContributor) {
+			_indexingTestHelper.setQueryContributor(queryContributor);
 		}
 
 		public void setSearchContextAttribute(String name, Serializable value) {
-			_searchContext.setAttribute(name, value);
+			_indexingTestHelper.setSearchContextAttribute(name, value);
 		}
 
-		private Hits _hits;
-		private final SearchContext _searchContext;
+		private final IndexingTestHelper _indexingTestHelper;
 
 	}
 

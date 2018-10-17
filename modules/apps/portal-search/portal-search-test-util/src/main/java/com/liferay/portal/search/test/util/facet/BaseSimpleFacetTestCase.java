@@ -171,9 +171,11 @@ public abstract class BaseSimpleFacetTestCase extends BaseFacetTestCase {
 			helper -> {
 				Facet facet = helper.addFacet(this::createFacet);
 
-				helper.search(
+				helper.setQueryContributor(
 					QueryContributors.mustNotTerm(
 						getField(), presentButUnmatched));
+
+				helper.search();
 
 				helper.assertFrequencies(facet, Arrays.asList("One=1"));
 			});

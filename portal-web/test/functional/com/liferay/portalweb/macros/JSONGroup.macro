@@ -24,6 +24,19 @@
 			</else>
 		</if>
 
+		<if>
+			<isset var="parentGroupName" />
+			<then>
+				<execute macro="JSONGroup#getSiteIdByGroupName">
+					<return name="parentGroupId" />
+					<var name="groupName" value="${parentGroupName}" />
+				</execute>
+			</then>
+			<else>
+				<var name="parentGroupId" value="0" /> 
+			</else>
+		</if>
+
 		<execute macro="JSONCompany#getPortalURL">
 			<return name="portalURL" />
 		</execute>
@@ -31,7 +44,7 @@
 		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/group/add-group \
 				-u test@liferay.com:test \
-				-d parentGroupId=0 \
+				-d parentGroupId=${parentGroupId} \
 				-d liveGroupId=0 \
 				-d nameMap=${groupNameMap} \
 				-d descriptionMap=${groupDescriptionMap} \
@@ -203,6 +216,32 @@
 		]]></var>
 
 		<var method="JSONCurlUtil#post('${curl}', '$')" name="temp" />
+	</command>
+
+	<command name="addChildGroup">
+		<if>
+			<not>
+				<isset var="groupName" />
+			</not>
+			<then>
+				<fail message="Please set 'groupName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="parentGroupName" />
+			</not>
+			<then>
+				<fail message="Please set 'parentGroupKey'." />
+			</then>
+		</if>
+
+		<execute macro="JSONGroup#_addGroup">
+			<var name="groupDescription" value="${groupDescription}" />
+			<var name="groupName" value="${groupName}" />
+			<var name="parentGroupName" value="${parentGroupName}" />
+		</execute>
 	</command>
 
 	<command name="addGroup">
@@ -427,5 +466,45 @@
 		<var method="JSONCurlUtil#get('${curl}', '$[\'nameCurrentValue\']')" name="groupName" />
 
 		<return value="${groupName}" />
+	</command>
+
+	<command name="getSiteIdByGroupName">
+		<if>
+			<not>
+				<isset var="groupName" />
+			</not>
+			<then>
+				<fail message="Please set 'groupName'." />
+			</then>
+		</if>
+
+		<execute macro="JSONCompany#getCompanyId">
+			<return name="companyId" />
+		</execute>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return name="portalURL" />
+		</execute>
+
+		<var name="curl"><![CDATA[
+			${portalURL}/api/jsonws/group/get-group \
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d groupKey=${groupName}
+		]]></var>
+
+		<echo message="## Searching for a 'Group Id' with the following info using JSONWS:" />
+
+		<echo message="## * Group Key: ${groupKey}" />
+
+		<var method="JSONCurlUtil#post('${curl}', '$.[?(@[\'groupKey\'] == \'${groupName}\')][\'groupId\']')" name="groupId" />
+
+		<var method="StringUtil#replace('${groupId}', '[&quot;', '')" name="groupId" />
+
+		<var method="StringUtil#replace('${groupId}', '&quot;]', '')" name="groupId" />
+
+		<echo message="## * Returning: ${groupId}" />
+
+		<return value="${groupId}" />
 	</command>
 </definition>

@@ -134,10 +134,10 @@ specified baseline warnings:
 	- `VERSION-INCREASE-REQUIRED`
 	- `VERSION-INCREASE-SUGGESTED`
 
-## 1.3.6 - 2018-10-16
+## 1.3.7 - 2018-10-16
 
 ### Changed
-[LPS-85678]: Update the `baseline` task to ignore the specified baseline
+- [LPS-85678]: Update the `baseline` task to ignore the specified baseline
 warnings recursively:
 	- `EXCESSIVE-VERSION-INCREASE-RECURSIVE`
 	- `PACKAGE ADDED-MISSING-PACKAGEINFO-RECURSIVE`

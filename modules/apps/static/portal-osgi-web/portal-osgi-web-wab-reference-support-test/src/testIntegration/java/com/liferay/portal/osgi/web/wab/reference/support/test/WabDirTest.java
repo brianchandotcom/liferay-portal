@@ -68,7 +68,37 @@ public class WabDirTest {
 	}
 
 	@Test
-	public void testWebBundlerDirInstall() throws Exception {
+	public void testWebBundlerDirPortletInstall() throws Exception {
+		File portletZipFile = _getFile("exploded-test-portlet.zip");
+
+		Assert.assertTrue(portletZipFile.exists());
+
+		File portletTempDir = tempFolder.newFolder("exploded-test-portlet");
+
+		FileUtil.unzip(portletZipFile, portletTempDir);
+
+		URI portletTempDirURI = portletTempDir.toURI();
+
+		Bundle portletBundle = _bundleContext.installBundle(
+			"webbundledir:" + portletTempDirURI.toASCIIString());
+
+		Assert.assertNotNull(portletBundle);
+
+		portletBundle.start();
+
+		Assert.assertEquals(Bundle.ACTIVE, portletBundle.getState());
+
+		portletBundle.stop();
+
+		Assert.assertEquals(Bundle.RESOLVED, portletBundle.getState());
+
+		portletBundle.uninstall();
+
+		Assert.assertEquals(Bundle.UNINSTALLED, portletBundle.getState());
+	}
+
+	@Test
+	public void testWebBundlerDirThemeInstall() throws Exception {
 		File themeZipFile = _getFile("exploded-test-theme.zip");
 
 		Assert.assertTrue(themeZipFile.exists());

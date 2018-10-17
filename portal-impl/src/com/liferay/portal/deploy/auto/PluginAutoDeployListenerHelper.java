@@ -17,6 +17,7 @@ package com.liferay.portal.deploy.auto;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
@@ -44,7 +45,7 @@ public class PluginAutoDeployListenerHelper {
 	public boolean isHookPlugin() throws AutoDeployException {
 		Matcher matcher = _hookPluginPattern.matcher(_file.getName());
 
-		if (matcher.find() &&
+		if ((matcher.find() || _isWarDir(_file)) &&
 			isMatchingFile("WEB-INF/liferay-hook.xml", false) &&
 			!isMatchingFile("WEB-INF/liferay-portlet.xml", false)) {
 
@@ -55,7 +56,7 @@ public class PluginAutoDeployListenerHelper {
 	}
 
 	public boolean isLayoutTemplatePlugin() throws AutoDeployException {
-		if (isMatchingFile("WEB-INF/liferay-layout-templates.xml") &&
+		if (isMatchingFile("WEB-INF/liferay-layout-templates.xml", false) &&
 			!isThemePlugin()) {
 
 			return true;
@@ -147,6 +148,17 @@ public class PluginAutoDeployListenerHelper {
 		return false;
 	}
 
+	public boolean isPortletPlugin() throws AutoDeployException {
+		if (isMatchingFile(
+				"WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD, false) ||
+			isMatchingFile("WEB-INF/beans.xml", false)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isThemePlugin() throws AutoDeployException {
 		if (isMatchingFile("WEB-INF/liferay-look-and-feel.xml", false)) {
 			return true;
@@ -171,7 +183,8 @@ public class PluginAutoDeployListenerHelper {
 	public boolean isWebPlugin() throws AutoDeployException {
 		Matcher matcher = _webPluginPattern.matcher(_file.getName());
 
-		if (matcher.find() &&
+		if ((matcher.find() || _isWarDir(_file)) && !isPortletPlugin() &&
+			!isThemePlugin() &&
 			isMatchingFile(
 				"WEB-INF/liferay-plugin-package.properties", false)) {
 
@@ -183,6 +196,16 @@ public class PluginAutoDeployListenerHelper {
 
 	protected boolean isJarFile() {
 		return isMatchingFileExtension(".jar");
+	}
+
+	private boolean _isWarDir(File file) {
+		if (!file.isDirectory()) {
+			return false;
+		}
+
+		File webInfDir = new File(file, "WEB-INF");
+
+		return webInfDir.exists();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

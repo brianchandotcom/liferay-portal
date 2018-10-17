@@ -74,9 +74,9 @@ public class CASAutoLogin extends BaseAutoLogin {
 	protected String[] doHandleException(
 		HttpServletRequest request, HttpServletResponse response, Exception e) {
 
-		HttpSession session = request.getSession();
-
 		if (e instanceof NoSuchUserException) {
+			HttpSession session = request.getSession();
+
 			session.removeAttribute(CASWebKeys.CAS_LOGIN);
 
 			session.setAttribute(

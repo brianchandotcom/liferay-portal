@@ -159,14 +159,15 @@ public class LDAPAuth implements Authenticator {
 
 		String authMethod = ldapAuthConfiguration.method();
 
-		SystemLDAPConfiguration systemLDAPConfiguration =
-			_systemLDAPConfigurationProvider.getConfiguration(companyId);
-
 		if (authMethod.equals(LDAPConstants.AUTH_METHOD_BIND)) {
 			Hashtable<String, Object> env =
 				(Hashtable<String, Object>)ctx.getEnvironment();
 
+			SystemLDAPConfiguration systemLDAPConfiguration =
+				_systemLDAPConfigurationProvider.getConfiguration(companyId);
+
 			env.put(Context.REFERRAL, systemLDAPConfiguration.referral());
+
 			env.put(Context.SECURITY_CREDENTIALS, password);
 			env.put(Context.SECURITY_PRINCIPAL, userDN);
 

@@ -92,10 +92,8 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 
 			Company company = _portal.getCompany(request);
 
-			KeyValuePair kvp = null;
-
 			if (company.isAutoLogin()) {
-				kvp = _userLocalService.decryptUserId(
+				KeyValuePair kvp = _userLocalService.decryptUserId(
 					company.getCompanyId(), autoUserId, autoPassword);
 
 				credentials = new String[3];

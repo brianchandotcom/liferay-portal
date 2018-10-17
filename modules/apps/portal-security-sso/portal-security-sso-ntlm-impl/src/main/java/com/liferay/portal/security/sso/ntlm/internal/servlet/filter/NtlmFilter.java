@@ -238,12 +238,12 @@ public class NtlmFilter extends BaseFilter {
 
 		HttpSession session = request.getSession(false);
 
-		long companyId = _portalInstancesLocalService.getCompanyId(request);
-
 		String authorization = GetterUtil.getString(
 			request.getHeader(HttpHeaders.AUTHORIZATION));
 
 		if (authorization.startsWith("NTLM")) {
+			long companyId = _portalInstancesLocalService.getCompanyId(request);
+
 			NtlmManager ntlmManager = getNtlmManager(companyId);
 
 			String portalCacheKey = getPortalCacheKey(request);

@@ -433,10 +433,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			}
 		}
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
 		if (companyId == 0) {
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
 			companyId = permissionChecker.getCompanyId();
 		}
 

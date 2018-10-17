@@ -305,9 +305,10 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 
 		for (String versionLabelFragment : versionLabels) {
 			int x = versionLabelFragment.lastIndexOf(CharPool.UNDERLINE);
-			int y = versionLabelFragment.lastIndexOf(CharPool.PERIOD);
 
 			if (x > -1) {
+				int y = versionLabelFragment.lastIndexOf(CharPool.PERIOD);
+
 				versionLabelFragment = versionLabelFragment.substring(x + 1, y);
 			}
 

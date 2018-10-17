@@ -63,12 +63,10 @@ public class SSLSocketFactoryBuilderImpl implements SSLSocketFactoryBuilder {
 			return SSLConnectionSocketFactory.getSystemSocketFactory();
 		}
 
-		KeyStore trustKeyStore = null;
-
 		TrustStrategy trustStrategy = null;
 
 		if (_verifyServerCertificate) {
-			trustKeyStore = _keyStoreLoader.load(
+			KeyStore trustKeyStore = _keyStoreLoader.load(
 				_trustStoreType, _trustStorePath, _trustStorePassword);
 
 			if (trustKeyStore == null) {

@@ -412,14 +412,12 @@ public class JCRStore extends BaseStore {
 
 			Version version = versionHistory.getVersionByLabel(versionLabel);
 
-			Version linearPredecessorVersion = version.getLinearPredecessor();
-
 			if (version.getLinearSuccessor() == null) {
-				Version restoreVersion = linearPredecessorVersion;
+				Version restoreVersion = version.getLinearPredecessor();
 
 				if (Objects.equals(
 						JCRConstants.JCR_ROOT_VERSION,
-						linearPredecessorVersion.getName())) {
+						restoreVersion.getName())) {
 
 					versionManager.checkout(contentNode.getPath());
 
@@ -954,10 +952,6 @@ public class JCRStore extends BaseStore {
 		Node contentNode = null;
 
 		try {
-			Workspace workspace = session.getWorkspace();
-
-			VersionManager versionManager = workspace.getVersionManager();
-
 			Node rootNode = getRootNode(session, companyId);
 
 			Node repositoryNode = getFolderNode(rootNode, repositoryId);
@@ -967,6 +961,10 @@ public class JCRStore extends BaseStore {
 			contentNode = fileNode.getNode(JCRConstants.JCR_CONTENT);
 
 			if (Validator.isNotNull(versionLabel)) {
+				Workspace workspace = session.getWorkspace();
+
+				VersionManager versionManager = workspace.getVersionManager();
+
 				VersionHistory versionHistory =
 					versionManager.getVersionHistory(contentNode.getPath());
 

@@ -46,14 +46,14 @@ public class RedirectLogoutProcessor implements LogoutProcessor {
 			return;
 		}
 
-		String redirectURL = parameters[0];
-
 		String pathInfo = request.getPathInfo();
 
 		if (pathInfo.contains("/portal/logout")) {
 			HttpSession session = request.getSession();
 
 			session.invalidate();
+
+			String redirectURL = parameters[0];
 
 			if (Validator.isNotNull(redirectURL)) {
 				response.sendRedirect(redirectURL);

@@ -1189,11 +1189,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			Attribute usersLdapAttribute)
 		throws Exception {
 
-		StopWatch stopWatch = new StopWatch();
-
 		if (_log.isDebugEnabled()) {
-			stopWatch.start();
-
 			int size = usersLdapAttribute.size();
 
 			_log.debug(

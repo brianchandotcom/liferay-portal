@@ -15,6 +15,7 @@
 package com.liferay.oauth2.provider.rest.internal.endpoint.authorize;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -22,8 +23,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
+import java.net.URI;
+
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
@@ -104,9 +109,27 @@ public class OAuthAuthorizationDataMessageBodyWriter
 		authorizeScreenURL = setParameter(
 			authorizeScreenURL, OAuthConstants.STATE,
 			oAuthAuthorizationData.getState());
+
+		String replyTo = null;
+
+		if (portal.isForwardedSecure(messageContext.getHttpServletRequest())) {
+			UriInfo uriInfo = messageContext.getUriInfo();
+
+			UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
+
+			uriBuilder.path("decision");
+			uriBuilder.scheme(Http.HTTPS);
+
+			URI uri = uriBuilder.build();
+
+			replyTo = uri.toString();
+		}
+		else {
+			replyTo = oAuthAuthorizationData.getReplyTo();
+		}
+
 		authorizeScreenURL = setParameter(
-			authorizeScreenURL, "reply_to",
-			oAuthAuthorizationData.getReplyTo());
+			authorizeScreenURL, "reply_to", replyTo);
 
 		if (authorizeScreenURL.length() > _invokerFilterURIMaxLength) {
 			authorizeScreenURL = removeParameter(

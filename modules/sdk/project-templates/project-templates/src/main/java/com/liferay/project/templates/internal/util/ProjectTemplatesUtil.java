@@ -125,7 +125,7 @@ public class ProjectTemplatesUtil {
 		return "/" + artifactId + "-" + version + ".jar";
 	}
 
-	public static List<String> getArchetypeJarNamesList() throws IOException {
+	public static List<String> getArchetypeJarNames() throws IOException {
 		Properties projectTemplateJarVersionsProperties = getProjectTemplateJarVersionsProperties();
 
 		List<String> archetypeJarNames = new ArrayList<>();

@@ -36,6 +36,7 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -134,8 +135,8 @@ public class ProjectTemplates {
 			}
 		}
 
-		Collection<String> archetypeJarNames =
-			ProjectTemplatesUtil.getArchetypeJarNamesList();
+		List<String> archetypeJarNames =
+			ProjectTemplatesUtil.getArchetypeJarNames();
 
 		for (String projectTemplateJarName : archetypeJarNames) {
 			String templateName = ProjectTemplatesUtil.getTemplateName(

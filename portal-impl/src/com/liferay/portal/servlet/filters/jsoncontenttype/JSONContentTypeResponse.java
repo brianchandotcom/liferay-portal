@@ -35,7 +35,7 @@ public class JSONContentTypeResponse extends HttpServletResponseWrapper {
 		if (StringUtil.equalsIgnoreCase(
 				contentType, ContentTypes.APPLICATION_JSON)) {
 
-			contentType = ContentTypes.TEXT_JAVASCRIPT;
+			contentType = ContentTypes.TEXT_PLAIN;
 		}
 
 		super.setContentType(contentType);

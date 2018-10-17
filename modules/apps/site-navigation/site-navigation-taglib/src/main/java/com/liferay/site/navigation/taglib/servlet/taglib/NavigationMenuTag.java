@@ -312,8 +312,6 @@ public class NavigationMenuTag extends IncludeTag {
 	private List<NavItem> _getMenuNavItems(List<NavItem> branchNavItems)
 		throws Exception {
 
-		long parentSiteNavigationMenuItemId = GetterUtil.getLong(_rootItemId);
-
 		if (_rootItemType.equals("relative") && (_rootItemLevel >= 0) &&
 			(_rootItemLevel < branchNavItems.size())) {
 
@@ -334,7 +332,8 @@ public class NavigationMenuTag extends IncludeTag {
 		}
 		else if (_rootItemType.equals("select")) {
 			return NavItemUtil.getChildNavItems(
-				request, _siteNavigationMenuId, parentSiteNavigationMenuItemId);
+				request, _siteNavigationMenuId,
+				GetterUtil.getLong(_rootItemId));
 		}
 
 		return new ArrayList<>();

@@ -183,18 +183,15 @@ public class SiteNavigationSiteMapDisplayContext {
 			ThemeDisplay themeDisplay, StringBundler sb)
 		throws Exception {
 
-		String layoutURL = PortalUtil.getLayoutURL(layout, themeDisplay);
-		String target = PortalUtil.getLayoutTarget(layout);
-
 		sb.append("<a");
 
 		LayoutType layoutType = layout.getLayoutType();
 
 		if (layoutType.isBrowsable()) {
 			sb.append(" href=\"");
-			sb.append(layoutURL);
+			sb.append(PortalUtil.getLayoutURL(layout, themeDisplay));
 			sb.append("\" ");
-			sb.append(target);
+			sb.append(PortalUtil.getLayoutTarget(layout));
 		}
 
 		if (Validator.isNotNull(cssClass)) {

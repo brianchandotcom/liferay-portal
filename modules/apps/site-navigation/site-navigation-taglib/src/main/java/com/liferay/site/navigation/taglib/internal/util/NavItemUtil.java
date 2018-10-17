@@ -114,9 +114,9 @@ public class NavItemUtil {
 			}
 		}
 		else if (rootLayoutType.equals("select")) {
-			Layout layout = themeDisplay.getLayout();
-
 			if (Validator.isNotNull(rootLayoutUuid)) {
+				Layout layout = themeDisplay.getLayout();
+
 				Layout rootLayout =
 					_layoutLocalService.getLayoutByUuidAndGroupId(
 						rootLayoutUuid, layout.getGroupId(),

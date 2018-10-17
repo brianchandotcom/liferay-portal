@@ -76,7 +76,6 @@ public class MySitesPortlet extends MVCPortlet {
 		throws Exception {
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		String comments = ParamUtil.getString(actionRequest, "comments");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
@@ -91,6 +90,8 @@ public class MySitesPortlet extends MVCPortlet {
 			hideDefaultErrorMessage(actionRequest);
 		}
 		else {
+			String comments = ParamUtil.getString(actionRequest, "comments");
+
 			_membershipRequestLocalService.addMembershipRequest(
 				userId, groupId, comments, serviceContext);
 

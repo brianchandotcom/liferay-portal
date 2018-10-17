@@ -366,9 +366,9 @@ public class SiteBrowserDisplayContext {
 
 		_type = ParamUtil.getString(_request, "type");
 
-		String[] types = _getTypes();
-
 		if (Validator.isNull(_type)) {
+			String[] types = _getTypes();
+
 			_type = types[0];
 		}
 
@@ -506,7 +506,6 @@ public class SiteBrowserDisplayContext {
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
-		User user = themeDisplay.getUser();
 
 		boolean filterManageableGroups = ParamUtil.getBoolean(
 			_request, "filterManageableGroups", true);
@@ -533,6 +532,8 @@ public class SiteBrowserDisplayContext {
 			_groupParams.put("groupsTree", parentGroups);
 		}
 		else if (filterManageableGroups) {
+			User user = themeDisplay.getUser();
+
 			_groupParams.put("usersGroups", user.getUserId());
 		}
 

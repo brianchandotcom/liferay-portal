@@ -374,8 +374,6 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		Group group = _getGroup(actionRequest, actionResponse);
-
 		long membershipRequestId = ParamUtil.getLong(
 			actionRequest, "membershipRequestId");
 
@@ -390,6 +388,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			membershipRequestId, replyComments, statusId, serviceContext);
 
 		if (statusId == MembershipRequestConstants.STATUS_APPROVED) {
+			Group group = _getGroup(actionRequest, actionResponse);
 			MembershipRequest membershipRequest =
 				_membershipRequestService.getMembershipRequest(
 					membershipRequestId);

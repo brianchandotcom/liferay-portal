@@ -67,8 +67,6 @@ public class ViewChartMVCResourceCommand extends BaseMVCResourceCommand {
 			WebKeys.THEME_DISPLAY);
 
 		String type = ParamUtil.getString(resourceRequest, "type", "max");
-		long maxMemory = ParamUtil.getLong(resourceRequest, "maxMemory");
-		long totalMemory = ParamUtil.getLong(resourceRequest, "totalMemory");
 		long usedMemory = ParamUtil.getLong(resourceRequest, "usedMemory");
 
 		ValueDataset valueDataset = null;
@@ -85,6 +83,9 @@ public class ViewChartMVCResourceCommand extends BaseMVCResourceCommand {
 		sb.append(StringPool.SPACE);
 
 		if (type.equals("total")) {
+			long totalMemory = ParamUtil.getLong(
+				resourceRequest, "totalMemory");
+
 			valueDataset = new DefaultValueDataset(
 				(usedMemory * 100) / totalMemory);
 
@@ -92,6 +93,8 @@ public class ViewChartMVCResourceCommand extends BaseMVCResourceCommand {
 				ResourceBundleUtil.getString(resourceBundle, "total-memory"));
 		}
 		else {
+			long maxMemory = ParamUtil.getLong(resourceRequest, "maxMemory");
+
 			valueDataset = new DefaultValueDataset(
 				(usedMemory * 100) / maxMemory);
 

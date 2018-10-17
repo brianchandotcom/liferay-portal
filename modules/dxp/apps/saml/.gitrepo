@@ -4,8 +4,8 @@
 [subrepo]
 	autopull = false
 	cmdver = liferay
-	commit = f7f1347025ced79d15ec0f179c8182e2fd7345f1
+	commit = 4893fee13091dfdf2ad523cb249e4c89985202a5
 	mergebuttonmergecommits = false
 	mode = push
-	parent = 46461b4ffe2bc9cacaf5cd73624411eb7deaa70e
+	parent = 714332347c036b60087537cd1f551ea8fd99ef1b
 	remote = git@github.com:liferay/com-liferay-saml-private.git

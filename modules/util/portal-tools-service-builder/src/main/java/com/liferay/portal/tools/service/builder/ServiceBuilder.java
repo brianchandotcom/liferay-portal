@@ -502,6 +502,8 @@ public class ServiceBuilder {
 			String testDirName, String uadDirName, boolean build)
 		throws Exception {
 
+		System.out.println("asdf2");
+
 		_tplBadAliasNames = _getTplProperty(
 			"bad_alias_names", _tplBadAliasNames);
 		_tplBadColumnNames = _getTplProperty(
@@ -3255,25 +3257,23 @@ public class ServiceBuilder {
 	private void _createServiceImpl(Entity entity, int sessionType)
 		throws Exception {
 
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-		context.put("sessionTypeName", _getSessionTypeName(sessionType));
-
-		// Content
-
-		String content = _processTemplate(_tplServiceImpl, context);
-
-		// Write file
-
 		File file = new File(
 			StringBundler.concat(
 				_outputPath, "/service/impl/", entity.getName(),
 				_getSessionTypeName(sessionType), "ServiceImpl.java"));
 
-		if (!file.exists()) {
-			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		if (file.exists()) {
+			return;
 		}
+
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+		context.put("sessionTypeName", _getSessionTypeName(sessionType));
+
+		String content = _processTemplate(_tplServiceImpl, context);
+
+		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
 	private void _createServicePropsUtil() throws Exception {
@@ -3945,6 +3945,15 @@ public class ServiceBuilder {
 	}
 
 	private void _createUADAnonymizer(Entity entity) throws Exception {
+		File file = new File(
+			StringBundler.concat(
+				entity.getUADOutputPath(), "/uad/anonymizer/", entity.getName(),
+				"UADAnonymizer.java"));
+
+		if (file.exists()) {
+			return;
+		}
+
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
@@ -3953,55 +3962,33 @@ public class ServiceBuilder {
 
 		String content = _processTemplate(_tplUADAnonymizer, context);
 
-		// Write file
-
-		File file = new File(
-			StringBundler.concat(
-				entity.getUADOutputPath(), "/uad/anonymizer/", entity.getName(),
-				"UADAnonymizer.java"));
-
-		if (!file.exists()) {
-			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
-		}
+		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
 	private void _createUADAnonymizerTest(Entity entity) throws Exception {
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-
-		// Content
-
-		String content = _processTemplate(_tplUADAnonymizerTest, context);
-
-		// Write file
-
 		File file = new File(
 			StringBundler.concat(
 				entity.getUADTestIntegrationOutputPath(),
 				"/uad/anonymizer/test/", entity.getName(),
 				"UADAnonymizerTest.java"));
 
-		if (!file.exists()) {
-			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		if (file.exists()) {
+			return;
 		}
+
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		String content = _processTemplate(_tplUADAnonymizerTest, context);
+
+		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
 	private void _createUADBnd(String uadApplicationName) throws Exception {
-		Map<String, Object> context = _getContext();
-
 		List<Entity> entities = _uadApplicationEntities.get(uadApplicationName);
 
 		Entity entity = entities.get(0);
-
-		context.put("uadBundleName", _getUADBundleName(uadApplicationName));
-		context.put("uadPackagePath", entity.getUADPackagePath());
-
-		// Content
-
-		String content = _processTemplate(_tplUADBnd, context);
-
-		// Write file
 
 		String uadOutputPath = entity.getUADOutputPath();
 
@@ -4011,9 +3998,18 @@ public class ServiceBuilder {
 
 		File file = new File(uadDirName + "/bnd.bnd");
 
-		if (!file.exists()) {
-			ToolsUtil.writeFileRaw(file, content, _modifiedFileNames);
+		if (file.exists()) {
+			return;
 		}
+
+		Map<String, Object> context = _getContext();
+
+		context.put("uadBundleName", _getUADBundleName(uadApplicationName));
+		context.put("uadPackagePath", entity.getUADPackagePath());
+
+		String content = _processTemplate(_tplUADBnd, context);
+
+		ToolsUtil.writeFileRaw(file, content, _modifiedFileNames);
 	}
 
 	private void _createUADConstants(String uadApplicationName)
@@ -4045,104 +4041,85 @@ public class ServiceBuilder {
 	}
 
 	private void _createUADDisplay(Entity entity) throws Exception {
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-
-		// Content
-
-		String content = _processTemplate(_tplUADDisplay, context);
-
-		// Write file
-
 		File file = new File(
 			StringBundler.concat(
 				entity.getUADOutputPath(), "/uad/display/", entity.getName(),
 				"UADDisplay.java"));
 
-		if (!file.exists()) {
-			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		if (file.exists()) {
+			return;
 		}
-	}
 
-	private void _createUADDisplayTest(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
 
-		// Content
+		String content = _processTemplate(_tplUADDisplay, context);
 
-		String content = _processTemplate(_tplUADDisplayTest, context);
+		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+	}
 
-		// Write file
-
+	private void _createUADDisplayTest(Entity entity) throws Exception {
 		File file = new File(
 			StringBundler.concat(
 				entity.getUADTestIntegrationOutputPath(), "/uad/display/test/",
 				entity.getName(), "UADDisplayTest.java"));
 
-		if (!file.exists()) {
-			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		if (file.exists()) {
+			return;
 		}
-	}
 
-	private void _createUADExporter(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
 
-		// Content
+		String content = _processTemplate(_tplUADDisplayTest, context);
 
-		String content = _processTemplate(_tplUADExporter, context);
+		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+	}
 
-		// Write file
-
+	private void _createUADExporter(Entity entity) throws Exception {
 		File file = new File(
 			StringBundler.concat(
 				entity.getUADOutputPath(), "/uad/exporter/", entity.getName(),
 				"UADExporter.java"));
 
-		if (!file.exists()) {
-			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		if (file.exists()) {
+			return;
 		}
-	}
 
-	private void _createUADExporterTest(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
 
-		// Content
+		String content = _processTemplate(_tplUADExporter, context);
 
-		String content = _processTemplate(_tplUADExporterTest, context);
+		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+	}
 
-		// Write file
-
+	private void _createUADExporterTest(Entity entity) throws Exception {
 		File file = new File(
 			StringBundler.concat(
 				entity.getUADTestIntegrationOutputPath(), "/uad/exporter/test/",
 				entity.getName(), "UADExporterTest.java"));
 
-		if (!file.exists()) {
-			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		if (file.exists()) {
+			return;
 		}
+
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		String content = _processTemplate(_tplUADExporterTest, context);
+
+		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
 	private void _createUADTestBnd(String uadApplicationName) throws Exception {
-		Map<String, Object> context = _getContext();
-
 		List<Entity> entities = _uadApplicationEntities.get(uadApplicationName);
 
 		Entity entity = entities.get(0);
-
-		context.put("uadBundleName", _getUADBundleName(uadApplicationName));
-		context.put("uadPackagePath", entity.getUADPackagePath());
-
-		// Content
-
-		String content = _processTemplate(_tplUADTestBnd, context);
-
-		// Write file
 
 		String uadTestIntegrationOutputPath =
 			entity.getUADTestIntegrationOutputPath();
@@ -4154,31 +4131,38 @@ public class ServiceBuilder {
 
 		File file = new File(uadTestIntegrationDirName + "/bnd.bnd");
 
-		if (!file.exists()) {
-			ToolsUtil.writeFileRaw(file, content, _modifiedFileNames);
+		if (file.exists()) {
+			return;
 		}
+
+		Map<String, Object> context = _getContext();
+
+		context.put("uadBundleName", _getUADBundleName(uadApplicationName));
+		context.put("uadPackagePath", entity.getUADPackagePath());
+
+		String content = _processTemplate(_tplUADTestBnd, context);
+
+		ToolsUtil.writeFileRaw(file, content, _modifiedFileNames);
 	}
 
 	@SuppressWarnings("unused")
 	private void _createUADTestHelper(Entity entity) throws Exception {
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-
-		// Content
-
-		String content = _processTemplate(_tplUADTestHelper, context);
-
-		// Write file
-
 		File file = new File(
 			StringBundler.concat(
 				entity.getUADTestIntegrationOutputPath(), "/uad/test/",
 				entity.getName(), "UADTestHelper.java"));
 
-		if (!file.exists()) {
-			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		if (file.exists()) {
+			return;
 		}
+
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		String content = _processTemplate(_tplUADTestHelper, context);
+
+		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
 	private void _deleteFile(String fileName) {

@@ -116,6 +116,6 @@ public class Utilities {
 	}
 
 	private static final Pattern _incrementPattern = Pattern.compile(
-		"<repository( increment=\"\\d*\")");
+		"<repository.*( increment=\"\\d*\")");
 
 }

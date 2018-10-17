@@ -426,7 +426,7 @@ public class LPKGIndexValidator {
 		LPKGIndexValidator.class);
 
 	private static final Pattern _incrementPattern = Pattern.compile(
-		"<repository( increment=\"\\d*\")");
+		"<repository.*( increment=\"\\d*\")");
 
 	@Reference
 	private BytesURLProtocolSupport _bytesURLProtocolSupport;

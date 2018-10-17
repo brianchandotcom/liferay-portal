@@ -1,4 +1,5 @@
 apply plugin: "com.liferay.alloy.taglib"
+apply plugin: "com.liferay.lang.merger"
 
 buildTaglibs {
 	componentsXmlFiles "liferay-form.xml"
@@ -15,6 +16,10 @@ dependencies {
 	compileOnly group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.1"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
+	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
+	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-string")
 
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")

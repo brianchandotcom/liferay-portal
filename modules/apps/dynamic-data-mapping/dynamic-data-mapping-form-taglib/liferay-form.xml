@@ -2,6 +2,7 @@
 
 <taglibs osgi-module="true" short-name="liferay-form" tlib-version="1.0" uri="http://liferay.com/tld/form">
 	<authors>
+		<author>Pedro Queiroz</author>
 		<author>Rafael Praxedes</author>
 	</authors>
 	<component bodyContent="true" name="DDMFormBuilder" writeJSP="true">
@@ -48,6 +49,52 @@
 				<outputType>boolean</outputType>
 				<defaultValue>true</defaultValue>
 				<required>false</required>
+			</attribute>
+		</attributes>
+	</component>
+	<component bodyContent="true" name="DDMFormRenderer" writeJSP="true">
+		<attributes>
+			<attribute>
+				<name>ddmFormInstanceId</name>
+				<inputType>java.lang.Long</inputType>
+				<outputType>java.lang.Long</outputType>
+				<required>true</required>
+			</attribute>
+			<attribute>
+				<name>ddmFormInstanceRecordId</name>
+				<inputType>java.lang.Long</inputType>
+				<outputType>java.lang.Long</outputType>
+				<required>false</required>
+			</attribute>
+			<attribute>
+				<name>ddmFormInstanceRecordVersionId</name>
+				<inputType>java.lang.Long</inputType>
+				<outputType>java.lang.Long</outputType>
+				<required>false</required>
+			</attribute>
+			<attribute>
+				<name>ddmFormInstanceVersionId</name>
+				<inputType>java.lang.Long</inputType>
+				<outputType>java.lang.Long</outputType>
+				<required>false</required>
+			</attribute>
+			<attribute>
+				<name>namespace</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<required>false</required>
+			</attribute>
+			<attribute>
+				<name>showFormBasicInfo</name>
+				<required>false</required>
+				<rtexprvalue>true</rtexprvalue>
+				<type>boolean</type>
+			</attribute>
+			<attribute>
+				<name>showSubmitButton</name>
+				<required>false</required>
+				<rtexprvalue>true</rtexprvalue>
+				<type>boolean</type>
 			</attribute>
 		</attributes>
 	</component>

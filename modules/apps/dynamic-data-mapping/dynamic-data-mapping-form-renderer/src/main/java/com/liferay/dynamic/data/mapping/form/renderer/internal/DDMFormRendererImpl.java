@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.template.soy.utils.SoyRawData;
 
 import java.io.Writer;
@@ -42,7 +43,9 @@ import java.io.Writer;
 import java.net.URL;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.osgi.service.component.annotations.Activate;
@@ -144,6 +147,23 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		return html.concat(javaScript);
 	}
 
+	protected String getDefaultLanguageId(
+		DDMForm ddmForm, DDMFormRenderingContext ddmFormRenderingContext) {
+
+		if (!ddmFormRenderingContext.isSharedURL()) {
+			Set<Locale> availableLocales = ddmForm.getAvailableLocales();
+
+			Locale displayLocale = _portal.getLocale(
+				ddmFormRenderingContext.getHttpServletRequest());
+
+			if (availableLocales.contains(displayLocale)) {
+				return LocaleUtil.toLanguageId(displayLocale);
+			}
+		}
+
+		return LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
+	}
+
 	protected TemplateResource getFormTemplateResource(String templatePath) {
 		Class<?> clazz = getClass();
 
@@ -210,7 +230,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 
 		template.put(
 			"defaultLanguageId",
-			LocaleUtil.toLanguageId(ddmForm.getDefaultLocale()));
+			getDefaultLanguageId(ddmForm, ddmFormRenderingContext));
 	}
 
 	protected void removeDDMFormFieldRenderer(
@@ -245,6 +265,9 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Portal _portal;
 
 	private final List<TemplateResource> _templateResources =
 		new CopyOnWriteArrayList<>();

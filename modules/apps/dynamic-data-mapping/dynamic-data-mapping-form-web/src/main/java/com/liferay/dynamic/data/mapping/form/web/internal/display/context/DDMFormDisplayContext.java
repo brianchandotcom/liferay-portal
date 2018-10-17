@@ -429,6 +429,7 @@ public class DDMFormDisplayContext {
 		ddmFormRenderingContext.setLocale(getLocale(request, ddmForm));
 		ddmFormRenderingContext.setPortletNamespace(
 			_renderResponse.getNamespace());
+		ddmFormRenderingContext.setSharedURL(isSharedURL());
 		ddmFormRenderingContext.setViewMode(true);
 
 		return ddmFormRenderingContext;

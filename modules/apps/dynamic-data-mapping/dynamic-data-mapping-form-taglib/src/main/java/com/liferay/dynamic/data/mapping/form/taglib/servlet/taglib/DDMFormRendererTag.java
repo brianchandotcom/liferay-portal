@@ -191,30 +191,30 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 	protected DDMFormInstance getDDMFormInstance() {
 		long ddmFormInstanceId = 0;
 
-		if (getDDMFormInstanceRecordVersionId() != null) {
+		if (getDdmFormInstanceRecordVersionId() != null) {
 			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
 				DDMFormTaglibUtil.getDDMFormInstanceRecordVersion(
-					getDDMFormInstanceRecordVersionId());
+					getDdmFormInstanceRecordVersionId());
 
 			ddmFormInstanceId =
 				ddmFormInstanceRecordVersion.getFormInstanceId();
 		}
-		else if (getDDMFormInstanceRecordId() != null) {
+		else if (getDdmFormInstanceRecordId() != null) {
 			DDMFormInstanceRecord ddmFormInstanceRecord =
 				DDMFormTaglibUtil.getDDMFormInstanceRecord(
-					getDDMFormInstanceRecordId());
+					getDdmFormInstanceRecordId());
 
 			ddmFormInstanceId = ddmFormInstanceRecord.getFormInstanceId();
 		}
-		else if (getDDMFormInstanceVersionId() != null) {
+		else if (getDdmFormInstanceVersionId() != null) {
 			DDMFormInstanceVersion ddmFormInstanceVersion =
 				DDMFormTaglibUtil.getDDMFormInstanceVersion(
-					getDDMFormInstanceVersionId());
+					getDdmFormInstanceVersionId());
 
 			ddmFormInstanceId = ddmFormInstanceVersion.getFormInstanceId();
 		}
-		else if (getDDMFormInstanceId() != null) {
-			ddmFormInstanceId = getDDMFormInstanceId();
+		else if (getDdmFormInstanceId() != null) {
+			ddmFormInstanceId = getDdmFormInstanceId();
 		}
 
 		return DDMFormTaglibUtil.getDDMFormInstance(ddmFormInstanceId);
@@ -453,7 +453,8 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 		super.setAttributes(request);
 
 		setNamespacedAttribute(request, "ddmFormHTML", getDDMFormHTML());
-		setNamespacedAttribute(request, "formInstance", getDDMFormInstance());
+		setNamespacedAttribute(
+			request, "ddmFormInstance", getDDMFormInstance());
 		setNamespacedAttribute(
 			request, "hasAddFormInstanceRecordPermission",
 			hasAddFormInstanceRecordPermission());
@@ -477,10 +478,10 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 			request, ddmForm);
 
 		try {
-			if (getDDMFormInstanceRecordVersionId() != null) {
+			if (getDdmFormInstanceRecordVersionId() != null) {
 				DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
 					DDMFormTaglibUtil.getDDMFormInstanceRecordVersion(
-						getDDMFormInstanceRecordVersionId());
+						getDdmFormInstanceRecordVersionId());
 
 				if (ddmFormInstanceRecordVersion != null) {
 					ddmFormValues = DDMFormTaglibUtil.mergeDDMFormValues(
@@ -488,10 +489,10 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 						ddmFormValues);
 				}
 			}
-			else if (getDDMFormInstanceRecordId() != null) {
+			else if (getDdmFormInstanceRecordId() != null) {
 				DDMFormInstanceRecord ddmFormInstanceRecord =
 					DDMFormTaglibUtil.getDDMFormInstanceRecord(
-						getDDMFormInstanceRecordId());
+						getDdmFormInstanceRecordId());
 
 				if (ddmFormInstanceRecord != null) {
 					ddmFormValues = DDMFormTaglibUtil.mergeDDMFormValues(

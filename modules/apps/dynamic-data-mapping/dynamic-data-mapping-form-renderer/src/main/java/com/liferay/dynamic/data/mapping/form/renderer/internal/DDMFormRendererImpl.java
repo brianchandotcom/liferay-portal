@@ -150,9 +150,6 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	protected String getDefaultLanguageId(
 		DDMForm ddmForm, DDMFormRenderingContext ddmFormRenderingContext) {
 
-		String defaultLanguageId = LocaleUtil.toLanguageId(
-			ddmForm.getDefaultLocale());
-
 		if (!ddmFormRenderingContext.isSharedURL()) {
 			Set<Locale> availableLocales = ddmForm.getAvailableLocales();
 
@@ -164,7 +161,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 			}
 		}
 
-		return defaultLanguageId;
+		return LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
 	}
 
 	protected TemplateResource getFormTemplateResource(String templatePath) {

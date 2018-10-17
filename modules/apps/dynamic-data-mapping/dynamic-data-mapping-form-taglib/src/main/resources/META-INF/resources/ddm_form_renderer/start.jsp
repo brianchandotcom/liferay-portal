@@ -17,13 +17,13 @@
 <%@ include file="/ddm_form_renderer/init.jsp" %>
 
 <%
-if (formInstance != null) {
-	formInstanceId = formInstance.getFormInstanceId();
+if (ddmFormInstance != null) {
+	ddmFormInstanceId = ddmFormInstance.getFormInstanceId();
 }
 %>
 
 <c:choose>
-	<c:when test="<%= formInstanceId == 0 %>">
+	<c:when test="<%= ddmFormInstanceId == 0 %>">
 		<clay:alert
 			message='<%= LanguageUtil.get(resourceBundle, "select-an-existing-form-or-add-a-form-to-be-displayed-in-this-application") %>'
 			style="info"
@@ -43,8 +43,8 @@ if (formInstance != null) {
 						<aui:input name="redirect" type="hidden" value='<%= ParamUtil.getString(request, "redirect", PortalUtil.getCurrentURL(request)) %>' />
 					</c:if>
 
-					<aui:input name="groupId" type="hidden" value="<%= formInstance.getGroupId() %>" />
-					<aui:input name="formInstanceId" type="hidden" value="<%= formInstance.getFormInstanceId() %>" />
+					<aui:input name="groupId" type="hidden" value="<%= ddmFormInstance.getGroupId() %>" />
+					<aui:input name="formInstanceId" type="hidden" value="<%= ddmFormInstance.getFormInstanceId() %>" />
 					<aui:input name="languageId" type="hidden" value="<%= languageId %>" />
 					<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
@@ -87,10 +87,10 @@ if (formInstance != null) {
 					<c:if test="<%= showFormBasicInfo %>">
 						<div class="ddm-form-basic-info">
 							<div class="container-fluid-1280">
-								<h1 class="ddm-form-name"><%= HtmlUtil.escape(formInstance.getName(displayLocale)) %></h1>
+								<h1 class="ddm-form-name"><%= HtmlUtil.escape(ddmFormInstance.getName(displayLocale)) %></h1>
 
 								<%
-								String description = HtmlUtil.escape(formInstance.getDescription(displayLocale));
+								String description = HtmlUtil.escape(ddmFormInstance.getDescription(displayLocale));
 								%>
 
 								<c:if test="<%= Validator.isNotNull(description) %>">
@@ -100,7 +100,7 @@ if (formInstance != null) {
 						</div>
 					</c:if>
 
-					<div class="container-fluid-1280 ddm-form-builder-app">
+					<div class="container-fluid-1280 ddm-form-builder-app">s
 						<%= ddmFormHTML %>
 
 						<aui:input name="empty" type="hidden" value="" />

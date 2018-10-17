@@ -40,7 +40,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%
 	String ddmFormHTML = (String)request.getAttribute("liferay-form:ddm-form-renderer:ddmFormHTML");
-	DDMFormInstance formInstance = (DDMFormInstance)request.getAttribute("liferay-form:ddm-form-renderer:formInstance");
+	DDMFormInstance ddmFormInstance = (DDMFormInstance)request.getAttribute("liferay-form:ddm-form-renderer:ddmFormInstance");
 	boolean hasAddFormInstanceRecordPermission = GetterUtil.getBoolean(request.getAttribute("liferay-form:ddm-form-renderer:hasAddFormInstanceRecordPermission"));
 	boolean hasViewFormInstancePermission = GetterUtil.getBoolean(request.getAttribute("liferay-form:ddm-form-renderer:hasViewFormInstancePermission"));
 	boolean isFormAvailable = GetterUtil.getBoolean(request.getAttribute("liferay-form:ddm-form-renderer:isFormAvailable"));

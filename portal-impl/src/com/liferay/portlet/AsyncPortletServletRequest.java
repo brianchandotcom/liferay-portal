@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -78,8 +77,7 @@ public class AsyncPortletServletRequest extends HttpServletRequestWrapper {
 				servletURLPatterns.addAll(servletRegistration.getMappings());
 			}
 
-			_portalServletURLPatterns = Collections.unmodifiableSet(
-				servletURLPatterns);
+			_portalServletURLPatterns = servletURLPatterns;
 		}
 	}
 

@@ -40,9 +40,6 @@ public class BuildLauncher {
 		if (buildCommand.equals(_RUN_COMMAND)) {
 			buildRunner.run();
 		}
-		else if (buildCommand.equals(_SETUP_COMMAND)) {
-			buildRunner.setUp();
-		}
 		else if (buildCommand.equals(_TEARDOWN_COMMAND)) {
 			buildRunner.tearDown();
 		}
@@ -52,9 +49,7 @@ public class BuildLauncher {
 		String buildCommand = null;
 
 		for (String arg : args) {
-			if (!arg.equals(_RUN_COMMAND) && !arg.equals(_SETUP_COMMAND) &&
-				!arg.equals(_TEARDOWN_COMMAND)) {
-
+			if (!arg.equals(_RUN_COMMAND) && !arg.equals(_TEARDOWN_COMMAND)) {
 				continue;
 			}
 
@@ -170,8 +165,6 @@ public class BuildLauncher {
 	}
 
 	private static final String _RUN_COMMAND = "run";
-
-	private static final String _SETUP_COMMAND = "setup";
 
 	private static final String _TEARDOWN_COMMAND = "teardown";
 

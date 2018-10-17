@@ -377,7 +377,6 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 					(StartTestableTomcatTask)task;
 
 				File binDir = startTestableTomcatTask.getBinDir();
-				Logger logger = startTestableTomcatTask.getLogger();
 
 				boolean started = false;
 
@@ -396,6 +395,8 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 				}
 
 				if (started) {
+					Logger logger = startTestableTomcatTask.getLogger();
+
 					if (logger.isDebugEnabled()) {
 						logger.debug(
 							"Application server {} is already started", binDir);

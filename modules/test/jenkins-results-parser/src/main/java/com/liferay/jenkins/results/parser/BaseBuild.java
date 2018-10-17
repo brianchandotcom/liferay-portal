@@ -1935,10 +1935,11 @@ public abstract class BaseBuild implements Build {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			if (jsonObject.opt("value") instanceof String) {
-				String name = jsonObject.getString("name");
 				String value = jsonObject.getString("value");
 
 				if (!value.isEmpty()) {
+					String name = jsonObject.getString("name");
+
 					parameters.put(name, value);
 				}
 			}

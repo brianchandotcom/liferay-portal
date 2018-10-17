@@ -68,14 +68,12 @@ public class TLiferayInputProperties
 	public void refreshLayout(Form form) {
 		super.refreshLayout(form);
 
-		boolean hideDevWidgets = true;
-
 		String formName = form.getName();
 
 		if (formName.equals(Form.MAIN) ||
 			formName.equals(LiferayConnectionProperties.FORM_WIZARD)) {
 
-			PropertiesUtils.setHidden(form, guessSchema, hideDevWidgets);
+			PropertiesUtils.setHidden(form, guessSchema, true);
 		}
 	}
 

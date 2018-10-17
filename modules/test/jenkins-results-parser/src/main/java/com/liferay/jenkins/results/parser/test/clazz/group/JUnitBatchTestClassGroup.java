@@ -322,9 +322,9 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 					methodIgnored = true;
 				}
 
-				String methodName = methodHeaderMatcher.group("methodName");
-
 				if (annotations.contains("@Test")) {
+					String methodName = methodHeaderMatcher.group("methodName");
+
 					addTestMethod(methodIgnored, methodName);
 				}
 			}

@@ -98,11 +98,11 @@ public class BufferedProcess extends Process {
 				_index = 0;
 
 				while (bytesRead != -1) {
-					int spaceAvailable = _buffer.length - _index;
-
 					bytesRead = _inputStream.read(bytes);
 
 					if (bytesRead > 0) {
+						int spaceAvailable = _buffer.length - _index;
+
 						if (bytesRead > spaceAvailable) {
 							int spaceNeeded = bytesRead - spaceAvailable;
 

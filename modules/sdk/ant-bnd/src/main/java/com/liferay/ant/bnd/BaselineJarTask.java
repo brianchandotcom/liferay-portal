@@ -54,10 +54,6 @@ public class BaselineJarTask extends BaseBndTask {
 	protected void doBeforeExecute() throws BuildException {
 		super.doBeforeExecute();
 
-		File bndRootFile = getBndRootFile();
-
-		File rootDir = bndRootFile.getParentFile();
-
 		if ((_bndFile == null) || !_bndFile.exists() ||
 			_bndFile.isDirectory()) {
 
@@ -100,6 +96,10 @@ public class BaselineJarTask extends BaseBndTask {
 
 		if (_reportLevelIsPersist) {
 			_reportLevelIsDiff = true;
+
+			File bndRootFile = getBndRootFile();
+
+			File rootDir = bndRootFile.getParentFile();
 
 			File baselineReportsDir = new File(
 				rootDir, getBaselineReportsDirName());

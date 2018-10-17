@@ -213,12 +213,10 @@ public class BaseTestResult implements TestResult {
 	}
 
 	protected String getAxisNumber() {
-		AxisBuild axisBuild = null;
-
 		Build build = getBuild();
 
 		if (build instanceof AxisBuild) {
-			axisBuild = (AxisBuild)build;
+			AxisBuild axisBuild = (AxisBuild)build;
 
 			return axisBuild.getAxisNumber();
 		}

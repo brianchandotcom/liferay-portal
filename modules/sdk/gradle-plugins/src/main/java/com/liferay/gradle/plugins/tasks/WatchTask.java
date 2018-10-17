@@ -398,8 +398,6 @@ public class WatchTask extends DefaultTask {
 			File file, GogoShellClient gogoShellClient, boolean start)
 		throws IOException {
 
-		Logger logger = getLogger();
-
 		long bundleId = -1;
 
 		String url = _getReferenceInstallURL(file);
@@ -408,6 +406,8 @@ public class WatchTask extends DefaultTask {
 			gogoShellClient, "install " + url);
 
 		if (start) {
+			Logger logger = getLogger();
+
 			Matcher matcher = _installResponsePattern.matcher(response);
 
 			if (matcher.matches()) {

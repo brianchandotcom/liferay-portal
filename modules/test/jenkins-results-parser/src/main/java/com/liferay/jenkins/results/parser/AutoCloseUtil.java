@@ -42,8 +42,13 @@ public class AutoCloseUtil {
 		String gitHubReceiverUsername = pullRequest.getOwnerUsername();
 		String gitHubSenderUsername = pullRequest.getSenderUsername();
 
+		List<String> autoCloseReceiverUsernames =
+			JenkinsResultsParserUtil.getBuildPropertyAsList(
+				"auto.close.receiver.usernames");
+
 		if ((gitHubReceiverUsername == null) ||
 			(gitHubSenderUsername == null) ||
+			!autoCloseReceiverUsernames.contains(gitHubReceiverUsername) ||
 			gitHubReceiverUsername.equals(gitHubSenderUsername)) {
 
 			return false;
@@ -176,8 +181,13 @@ public class AutoCloseUtil {
 		String gitHubReceiverUsername = pullRequest.getOwnerUsername();
 		String gitHubSenderUsername = pullRequest.getSenderUsername();
 
+		List<String> autoCloseReceiverUsernames =
+			JenkinsResultsParserUtil.getBuildPropertyAsList(
+				"auto.close.receiver.usernames");
+
 		if ((gitHubReceiverUsername == null) ||
 			(gitHubSenderUsername == null) ||
+			!autoCloseReceiverUsernames.contains(gitHubReceiverUsername) ||
 			gitHubReceiverUsername.equals(gitHubSenderUsername)) {
 
 			return false;

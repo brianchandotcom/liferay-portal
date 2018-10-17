@@ -56,6 +56,14 @@
 		<execute function="Click" locator1="Button#PLUS" />
 	</command>
 
+	<command name="gotoAddDropdownMenuItem">
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute macro="DropdownMenuItem#click">
+			<var name="menuItem" value="${menuItem}" />
+		</execute>
+	</command>
+
 	<command name="gotoAddMenuItem">
 		<execute macro="LexiconEntry#gotoAdd" />
 

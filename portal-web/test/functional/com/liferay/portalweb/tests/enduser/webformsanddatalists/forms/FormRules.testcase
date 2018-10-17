@@ -422,7 +422,7 @@
 	</command>
 
 	<command name="ConfigureShowRuleUsingAndCondition" priority="5">
-		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="Forms#ConfigureShowRuleUsingAndCondition" />
 
 		<var method="PropsUtil#get('portal.url')" name="portalURL" />

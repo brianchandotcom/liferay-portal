@@ -131,19 +131,9 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<var name="menuItem" value="Assign Users" />
-
-		<if>
-			<condition function="IsElementPresent" locator1="MenuItem#ANY_MENU_ITEM" />
-			<then>
-				<execute macro="MenuItem#click">
-					<var name="menuItem" value="Assign Users" />
-				</execute>
-			</then>
-			<else>
-				<execute function="Click" locator1="xpath=(//div | //li)[contains(@class,'open') or contains(@class,'show')]//*[normalize-space(text())='Assign Users']" />
-			</else>
-		</if>
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Assign Users" />
+		</execute>
 
 		<execute function="AssertElementPresent#assertVisible" locator1="Button#DONE" />
 

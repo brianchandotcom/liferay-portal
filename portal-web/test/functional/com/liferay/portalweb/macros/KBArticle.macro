@@ -846,7 +846,7 @@
 	</command>
 
 	<command name="importCP">
-		<execute macro="LexiconEntry#gotoAddMenuItem">
+		<execute macro="LexiconEntry#gotoAddDropdownMenuItem">
 			<var name="menuItem" value="Import" />
 		</execute>
 

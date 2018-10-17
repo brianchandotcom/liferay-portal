@@ -1176,9 +1176,21 @@
 			<var name="pageName" value="Document" />
 		</execute>
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
+		<var name="key_menuItem" value="List" />
+
+		<execute function="Click" locator1="Icon#CURRENT_DISPLAY_STYLE" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="MenuItem#ANY_MENU_ITEM" />
+			<then>
+				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
+			</then>
+			<else>
+				<execute function="Click" locator1="Icon#CURRENT_DISPLAY_STYLE" />
+
+				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
+			</else>
+		</if>
 
 		<execute macro="DMDocument#viewPG">
 			<var name="dmDocumentTitle" value="Document1" />

@@ -1,7 +1,7 @@
 task deployTool(type: Copy)
 
 dependencies {
-	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "4.0.0"
+	compileOnly group: "com.liferay", name: "biz.aQute.bnd", version: "4.0.0.LIFERAY-PATCHED-1"
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	compileOnly project(":apps:static:portal-target-platform-indexer:portal-target-platform-indexer-api")
 }

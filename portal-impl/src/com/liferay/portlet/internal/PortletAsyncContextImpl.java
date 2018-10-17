@@ -14,18 +14,17 @@
 
 package com.liferay.portlet.internal;
 
-import com.liferay.portal.kernel.portlet.LiferayPortletAsyncContext;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portlet.AsyncPortletServletRequest;
 import com.liferay.portlet.PortletAsyncListenerAdapter;
 
+import javax.portlet.PortletAsyncContext;
 import javax.portlet.PortletAsyncListener;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import javax.servlet.AsyncContext;
-import javax.servlet.AsyncListener;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestWrapper;
@@ -36,15 +35,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Dante Wang
  * @author Leon Chi
  */
-public class PortletAsyncContextImpl implements LiferayPortletAsyncContext {
-
-	@Override
-	public void addListener(AsyncListener asyncListener) {
-
-		// TODO
-
-		throw new UnsupportedOperationException();
-	}
+public class PortletAsyncContextImpl implements PortletAsyncContext {
 
 	@Override
 	public void addListener(PortletAsyncListener portletAsyncListener)
@@ -134,14 +125,6 @@ public class PortletAsyncContextImpl implements LiferayPortletAsyncContext {
 	}
 
 	@Override
-	public void doStart() {
-
-		// TODO
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public ResourceRequest getResourceRequest() throws IllegalStateException {
 		if (_calledComplete ||
 			(_calledDispatch && !_resourceRequest.isAsyncStarted())) {
@@ -173,21 +156,8 @@ public class PortletAsyncContextImpl implements LiferayPortletAsyncContext {
 		return _hasOriginalRequestAndResponse;
 	}
 
-	@Override
 	public boolean isCalledDispatch() {
 		return _calledDispatch;
-	}
-
-	@Override
-	public void removeListener(AsyncListener asyncListener) {
-
-		// TODO
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void reset(AsyncContext asyncContext) {
 	}
 
 	public void setReturnedToContainer() {

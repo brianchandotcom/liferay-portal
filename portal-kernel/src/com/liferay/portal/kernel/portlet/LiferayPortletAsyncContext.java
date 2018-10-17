@@ -21,7 +21,9 @@ import javax.servlet.AsyncListener;
 
 /**
  * @author Dante Wang
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 public interface LiferayPortletAsyncContext extends PortletAsyncContext {
 
 	public void addListener(AsyncListener asyncListener);

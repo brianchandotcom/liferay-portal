@@ -55,25 +55,25 @@
 	<component bodyContent="true" name="DDMFormRenderer" writeJSP="true">
 		<attributes>
 			<attribute>
-				<name>formInstanceId</name>
+				<name>ddmFormInstanceId</name>
 				<inputType>java.lang.Long</inputType>
 				<outputType>java.lang.Long</outputType>
 				<required>true</required>
 			</attribute>
 			<attribute>
-				<name>formInstanceRecordId</name>
+				<name>ddmFormInstanceRecordId</name>
 				<inputType>java.lang.Long</inputType>
 				<outputType>java.lang.Long</outputType>
 				<required>false</required>
 			</attribute>
 			<attribute>
-				<name>formInstanceRecordVersionId</name>
+				<name>ddmFormInstanceRecordVersionId</name>
 				<inputType>java.lang.Long</inputType>
 				<outputType>java.lang.Long</outputType>
 				<required>false</required>
 			</attribute>
 			<attribute>
-				<name>formInstanceVersionId</name>
+				<name>ddmFormInstanceVersionId</name>
 				<inputType>java.lang.Long</inputType>
 				<outputType>java.lang.Long</outputType>
 				<required>false</required>

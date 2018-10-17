@@ -122,10 +122,10 @@ specified baseline warnings.
 ### Changed
 - [LPS-80388]: Update the [Liferay Ant BND] dependency to version 2.0.57.
 
-## 1.3.5 - 2018-10-15
+## 1.3.6 - 2018-10-16
 
 ### Changed
-[LPS-85678]: Check the content of the `.lfrbuild-packageinfo` file to ignore
+- [LPS-85678]: Check the content of the `.lfrbuild-packageinfo` file to ignore
 specified baseline warnings:
 	- `EXCESSIVE-VERSION-INCREASE`
 	- `PACKAGE ADDED-MISSING-PACKAGEINFO`

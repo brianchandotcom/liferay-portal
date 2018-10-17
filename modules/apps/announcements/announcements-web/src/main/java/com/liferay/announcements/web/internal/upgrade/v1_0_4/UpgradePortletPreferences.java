@@ -64,16 +64,13 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 
 				try (ResultSet rs2 = ps2.executeQuery()) {
 					while (rs2.next()) {
-						long portletPreferencesId = rs2.getLong(
-							"portletPreferencesId");
-
 						String preferences2 = rs2.getString("preferences");
 
 						if (preferences2.equals(
 								PortletConstants.DEFAULT_PREFERENCES)) {
 
 							ps3.setString(1, preferences);
-							ps3.setLong(2, portletPreferencesId);
+							ps3.setLong(2, rs2.getLong("portletPreferencesId"));
 
 							ps3.addBatch();
 						}

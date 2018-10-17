@@ -236,8 +236,6 @@ public class PingbackMethodImpl implements Method {
 
 		long plid = _portal.getPlidFromFriendlyURL(companyId, friendlyURL);
 
-		long groupId = _portal.getScopeGroupId(plid);
-
 		Map<String, String[]> params = new HashMap<>();
 
 		FriendlyURLMapperThreadLocal.setPRPIdentifiers(
@@ -272,6 +270,7 @@ public class PingbackMethodImpl implements Method {
 			entry = _blogsEntryLocalService.getEntry(entryId);
 		}
 		else {
+			long groupId = _portal.getScopeGroupId(plid);
 			String urlTitle = getParam(params, "urlTitle");
 
 			entry = _blogsEntryLocalService.getEntry(groupId, urlTitle);

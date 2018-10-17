@@ -397,7 +397,7 @@
 		</execute>
 
 		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="HR_WebContent.lar" />
+			<var name="larFileName" value="HR_WebContent_master.lar" />
 			<var name="uploadFrom" value="dependencies" />
 		</execute>
 

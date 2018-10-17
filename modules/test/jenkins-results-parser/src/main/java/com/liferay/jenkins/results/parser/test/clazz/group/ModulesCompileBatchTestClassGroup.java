@@ -42,11 +42,12 @@ public class ModulesCompileBatchTestClassGroup
 		protected static ModulesCompileBatchTestClass getInstance(
 			File moduleBaseDir, File modulesDir) {
 
-			return new ModulesCompileBatchTestClass(moduleBaseDir, modulesDir);
+			return new ModulesCompileBatchTestClass(
+				new TestClassFile(moduleBaseDir.getAbsolutePath()), modulesDir);
 		}
 
 		protected ModulesCompileBatchTestClass(
-			File moduleBaseDir, File modulesDir) {
+			TestClassFile moduleBaseDir, File modulesDir) {
 
 			super(moduleBaseDir);
 
@@ -127,7 +128,7 @@ public class ModulesCompileBatchTestClassGroup
 					ioe);
 			}
 
-			initTestMethods(modulesProjectDirs, modulesDir, "assemble");
+			initTestClassMethods(modulesProjectDirs, modulesDir, "assemble");
 		}
 
 	}
@@ -170,7 +171,8 @@ public class ModulesCompileBatchTestClassGroup
 		for (File moduleDir : moduleDirsList) {
 			testClasses.add(
 				ModulesCompileBatchTestClass.getInstance(
-					moduleDir, portalModulesBaseDir));
+					new TestClass.TestClassFile(moduleDir.getAbsolutePath()),
+					portalModulesBaseDir));
 		}
 	}
 

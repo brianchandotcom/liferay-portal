@@ -30,11 +30,11 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 
 	public static class ModulesBatchTestClass extends BaseTestClass {
 
-		protected ModulesBatchTestClass(File moduleBaseDir) {
+		protected ModulesBatchTestClass(TestClassFile moduleBaseDir) {
 			super(moduleBaseDir);
 		}
 
-		protected void initTestMethods(
+		protected void initTestClassMethods(
 			List<File> modulesProjectDirs, File modulesDir, String taskName) {
 
 			for (File modulesProjectDir : modulesProjectDirs) {
@@ -44,7 +44,7 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 				String moduleTaskCall = JenkinsResultsParserUtil.combine(
 					":", path.replaceAll("/", ":"), ":", taskName);
 
-				addTestMethod(moduleTaskCall);
+				addTestClassMethod(moduleTaskCall);
 			}
 		}
 

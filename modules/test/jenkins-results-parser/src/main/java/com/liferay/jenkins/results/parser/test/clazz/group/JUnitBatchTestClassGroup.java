@@ -72,28 +72,27 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		for (JUnitBatchTestClassGroup.JunitBatchTestClass junitBatchTestClass :
 				junitTestClasses.values()) {
 
-			File testFile = junitBatchTestClass.getFile();
+			TestClass.TestClassFile testClassFile =
+				junitBatchTestClass.getTestClassFile();
 
-			String testFilePath = testFile.getAbsolutePath();
+			String testFilePath = testClassFile.getRelativePath();
 
-			if (testFile instanceof BaseTestFile) {
-				testFilePath = ((BaseTestFile)testFile).getRelativePath();
-			}
-
-			String className = testFile.getName();
+			String className = testClassFile.getName();
 
 			className = className.replace(".class", "");
 
-			List<BaseTestClassGroup.BaseTestMethod> testMethods =
-				junitBatchTestClass.getTestMethods();
+			List<TestClassGroup.TestClass.TestClassMethod> testClassMethods =
+				junitBatchTestClass.getTestClassMethods();
 
-			for (BaseTestClassGroup.BaseTestMethod testMethod : testMethods) {
+			for (TestClassGroup.TestClass.TestClassMethod testClassMethod :
+					testClassMethods) {
+
 				CSVReport.Row csvReportRow = new CSVReport.Row();
 
 				csvReportRow.add(className);
-				csvReportRow.add(testMethod.getName());
+				csvReportRow.add(testClassMethod.getName());
 
-				if (testMethod.isIgnored()) {
+				if (testClassMethod.isIgnored()) {
 					csvReportRow.add("TRUE");
 				}
 				else {
@@ -130,7 +129,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			}
 
 			JunitBatchTestClass junitTestClass = new JunitBatchTestClass(
-				file, gitWorkingDirectory, srcFile);
+				new TestClassFile(file.getAbsolutePath()), gitWorkingDirectory,
+				srcFile);
 
 			_junitTestClasses.put(file, junitTestClass);
 
@@ -161,14 +161,16 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			String packagePath = JenkinsResultsParserUtil.combine(
 				filePath, "/", simpleClassName, ".class");
 
-			File baseTestFile = new BaseTestFile(
-				packagePath, javaFile.getAbsolutePath(), gitWorkingDirectory);
+			TestClassGroup.TestClass.TestClassFile testClassFile =
+				new TestClass.TestClassFile(
+					packagePath, javaFile.getAbsolutePath(),
+					gitWorkingDirectory);
 
-			if (_junitTestClasses.containsKey(baseTestFile)) {
-				return _junitTestClasses.get(baseTestFile);
+			if (_junitTestClasses.containsKey(testClassFile)) {
+				return _junitTestClasses.get(testClassFile);
 			}
 
-			return getInstance(baseTestFile, gitWorkingDirectory, javaFile);
+			return getInstance(testClassFile, gitWorkingDirectory, javaFile);
 		}
 
 		protected static Map<File, JunitBatchTestClass> getJunitTestClasses() {
@@ -176,9 +178,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		protected JunitBatchTestClass(
-			File file, GitWorkingDirectory gitWorkingDirectory, File srcFile) {
+			TestClassFile testClassFile,
+			GitWorkingDirectory gitWorkingDirectory, File srcFile) {
 
-			super(file);
+			super(testClassFile);
 
 			String srcFileName = srcFile.getName();
 
@@ -197,7 +200,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			try {
 				_srcFileContent = JenkinsResultsParserUtil.read(_srcFile);
 
-				_initTestMethods();
+				_initTestClassMethods();
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(ioe);
@@ -301,7 +304,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			return _packageName;
 		}
 
-		private void _initTestMethods() throws IOException {
+		private void _initTestClassMethods() throws IOException {
 			Matcher classHeaderMatcher = _classHeaderPattern.matcher(
 				_srcFileContent);
 
@@ -330,7 +333,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				if (annotations.contains("@Test")) {
 					String methodName = methodHeaderMatcher.group("methodName");
 
-					addTestMethod(methodIgnored, methodName);
+					addTestClassMethod(methodIgnored, methodName);
 				}
 			}
 
@@ -347,10 +350,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				return;
 			}
 
-			for (BaseTestMethod testMethod :
-					parentJunitBatchTestClass.getTestMethods()) {
+			for (TestClassGroup.TestClass.TestClassMethod testClassMethod :
+					parentJunitBatchTestClass.getTestClassMethods()) {
 
-				addTestMethod(testMethod);
+				addTestClassMethod(testClassMethod);
 			}
 		}
 
@@ -474,13 +477,13 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 			int id = 0;
 
-			for (List<BaseTestClass> axisTestClasses :
+			for (List<TestClassGroup.TestClass> axisTestClasses :
 					Lists.partition(testClasses, axisSize)) {
 
 				AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
 					this, id);
 
-				for (BaseTestClass axisTestClass : axisTestClasses) {
+				for (TestClassGroup.TestClass axisTestClass : axisTestClasses) {
 					axisTestClassGroup.addTestClass(axisTestClass);
 				}
 
@@ -504,8 +507,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 				axisTestClassGroup.addTestClass(
 					JunitBatchTestClass.getInstance(
-						new File(filePath), portalGitWorkingDirectory,
-						autoBalanceTestFile));
+						new TestClass.TestClassFile(filePath),
+						portalGitWorkingDirectory, autoBalanceTestFile));
 			}
 		}
 	}
@@ -565,14 +568,14 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 								".java", ".class");
 
 							return JunitBatchTestClass.getInstance(
-								new BaseTestFile(
+								new TestClass.TestClassFile(
 									packagePath, filePath,
 									portalGitWorkingDirectory),
 								portalGitWorkingDirectory, path.toFile());
 						}
 
 						return JunitBatchTestClass.getInstance(
-							new BaseTestFile(
+							new TestClass.TestClassFile(
 								filePath.replace(".java", ".class")),
 							portalGitWorkingDirectory, path.toFile());
 					}

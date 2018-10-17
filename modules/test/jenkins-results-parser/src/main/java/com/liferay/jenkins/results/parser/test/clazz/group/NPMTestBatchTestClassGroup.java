@@ -69,17 +69,18 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 		for (NPMTestBatchTestClassGroup.NPMTestBatchTestClass
 				npmTestBatchTestClass : npmTestBatchTestClasses.values()) {
 
-			File moduleFile = npmTestBatchTestClass.getFile();
+			TestClass.TestClassFile moduleTestClassFile =
+				npmTestBatchTestClass.getTestClassFile();
 
-			String moduleName = moduleFile.getName();
+			String moduleName = moduleTestClassFile.getName();
 
-			List<BaseTestClassGroup.BaseTestMethod> jsTestMethods =
-				npmTestBatchTestClass.getJSTestMethods();
+			List<TestClassGroup.TestClass.TestClassMethod> jsTestClassMethods =
+				npmTestBatchTestClass.getJSTestClassMethods();
 
-			for (BaseTestClassGroup.BaseTestMethod jsTestMethod :
-					jsTestMethods) {
+			for (TestClassGroup.TestClass.TestClassMethod jsTestClassMethod :
+					jsTestClassMethods) {
 
-				String classMethodName = jsTestMethod.getName();
+				String classMethodName = jsTestClassMethod.getName();
 
 				int colonIndex = classMethodName.indexOf(
 					_CLASS_METHOD_SEPARATOR_TOKEN);
@@ -98,7 +99,7 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 				csvReportRow.add(className);
 				csvReportRow.add(StringEscapeUtils.escapeCsv(methodName));
 
-				if (jsTestMethod.isIgnored()) {
+				if (jsTestClassMethod.isIgnored()) {
 					csvReportRow.add("TRUE");
 				}
 				else {
@@ -127,8 +128,10 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 
 	public static class NPMTestBatchTestClass extends BaseTestClass {
 
-		public List<BaseTestMethod> getJSTestMethods() {
-			return _jsTestMethods;
+		public List<TestClassGroup.TestClass.TestClassMethod>
+			getJSTestClassMethods() {
+
+			return _jsTestClassMethods;
 		}
 
 		protected static NPMTestBatchTestClass getInstance(
@@ -142,7 +145,8 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 			_npmTestBatchTestClasses.put(
 				moduleDir,
 				new NPMTestBatchTestClass(
-					batchName, gitWorkingDirectory, moduleDir));
+					batchName, gitWorkingDirectory,
+					new TestClassFile(moduleDir.getAbsolutePath())));
 
 			return _npmTestBatchTestClasses.get(moduleDir);
 		}
@@ -155,20 +159,20 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 
 		protected NPMTestBatchTestClass(
 			String batchName, GitWorkingDirectory gitWorkingDirectory,
-			File file) {
+			TestClassFile testClassFile) {
 
-			super(file);
+			super(testClassFile);
 
-			addTestMethod(batchName);
+			addTestClassMethod(batchName);
 
 			_gitWorkingDirectory = gitWorkingDirectory;
 
-			_moduleFile = file;
+			_moduleFile = testClassFile;
 
-			initJSTestMethods();
+			initJSTestClassMethods();
 		}
 
-		protected void initJSTestMethods() {
+		protected void initJSTestClassMethods() {
 			List<File> jsFiles = JenkinsResultsParserUtil.findFiles(
 				_moduleFile, ".*\\.js");
 
@@ -199,8 +203,8 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 							methodIgnored = true;
 						}
 
-						_jsTestMethods.add(
-							new BaseTestMethod(
+						_jsTestClassMethods.add(
+							new TestClassMethod(
 								methodIgnored,
 								jsFileRelativePath +
 									_CLASS_METHOD_SEPARATOR_TOKEN + methodName,
@@ -219,7 +223,8 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 			_npmTestBatchTestClasses = new HashMap<>();
 
 		private final GitWorkingDirectory _gitWorkingDirectory;
-		private final List<BaseTestMethod> _jsTestMethods = new ArrayList<>();
+		private final List<TestClassMethod> _jsTestClassMethods =
+			new ArrayList<>();
 		private final File _moduleFile;
 
 	}
@@ -255,7 +260,8 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 		for (File moduleDir : moduleDirs) {
 			NPMTestBatchTestClass npmTestBatchTestClass =
 				NPMTestBatchTestClass.getInstance(
-					batchName, portalGitWorkingDirectory, moduleDir);
+					batchName, portalGitWorkingDirectory,
+					new TestClass.TestClassFile(moduleDir.getAbsolutePath()));
 
 			testClasses.add(npmTestBatchTestClass);
 

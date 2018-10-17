@@ -41,13 +41,16 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 		protected static PluginsBatchTestClass getInstance(
 			String batchName, File pluginDir) {
 
-			return new PluginsBatchTestClass(batchName, pluginDir);
+			return new PluginsBatchTestClass(
+				batchName, new TestClassFile(pluginDir.getAbsolutePath()));
 		}
 
-		protected PluginsBatchTestClass(String batchName, File file) {
-			super(file);
+		protected PluginsBatchTestClass(
+			String batchName, TestClassFile testClassFile) {
 
-			addTestMethod(batchName);
+			super(testClassFile);
+
+			addTestClassMethod(batchName);
 		}
 
 	}

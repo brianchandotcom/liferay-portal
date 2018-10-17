@@ -65,16 +65,18 @@ public class ServiceBuilderBatchTestClassGroup
 			List<File> modulesProjectDirs) {
 
 			return new ServiceBuilderBatchTestClass(
-				moduleBaseDir, modulesDir, modulesProjectDirs);
+				new TestClassFile(moduleBaseDir.getAbsolutePath()), modulesDir,
+				modulesProjectDirs);
 		}
 
 		protected ServiceBuilderBatchTestClass(
-			File moduleBaseDir, File modulesDir,
+			TestClassFile testClassFile, File modulesDir,
 			List<File> modulesProjectDirs) {
 
-			super(moduleBaseDir);
+			super(testClassFile);
 
-			initTestMethods(modulesProjectDirs, modulesDir, "buildService");
+			initTestClassMethods(
+				modulesProjectDirs, modulesDir, "buildService");
 		}
 
 	}

@@ -14,132 +14,86 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
-import com.liferay.jenkins.results.parser.GitWorkingDirectory;
-
-import java.io.File;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Peter Yoo
  */
-public abstract class BaseTestClassGroup {
+public abstract class BaseTestClassGroup implements TestClassGroup {
 
-	public List<BaseTestClass> getTestClasses() {
+	@Override
+	public List<TestClassGroup.TestClass> getTestClasses() {
 		return testClasses;
 	}
 
-	public List<File> getTestClassFiles() {
-		List<File> testClassFiles = new ArrayList<>();
+	@Override
+	public List<TestClass.TestClassFile> getTestClassFiles() {
+		List<TestClass.TestClassFile> testClassFiles = new ArrayList<>();
 
-		for (BaseTestClass testClass : testClasses) {
-			testClassFiles.add(testClass.getFile());
+		for (TestClassGroup.TestClass testClass : testClasses) {
+			testClassFiles.add(testClass.getTestClassFile());
 		}
 
 		return testClassFiles;
 	}
 
-	public static class BaseTestClass implements Comparable<BaseTestClass> {
+	public abstract static class BaseTestClass
+		implements TestClassGroup.TestClass {
 
 		@Override
-		public int compareTo(BaseTestClass testClass) {
+		public int compareTo(TestClassGroup.TestClass testClass) {
 			if (testClass == null) {
 				throw new NullPointerException("Test class is null");
 			}
 
-			return _file.compareTo(testClass.getFile());
+			return _testClassFile.compareTo(testClass.getTestClassFile());
 		}
 
-		public File getFile() {
-			return _file;
+		@Override
+		public TestClassFile getTestClassFile() {
+			return _testClassFile;
 		}
 
-		public List<BaseTestMethod> getTestMethods() {
-			return _testMethods;
+		@Override
+		public List<TestClassGroup.TestClass.TestClassMethod>
+			getTestClassMethods() {
+
+			return _testClassMethods;
 		}
 
-		protected BaseTestClass(File file) {
-			_file = file;
+		protected BaseTestClass(TestClassFile testClassFile) {
+			_testClassFile = testClassFile;
 		}
 
-		protected void addTestMethod(BaseTestMethod testMethod) {
-			_testMethods.add(testMethod);
+		protected void addTestClassMethod(
+			boolean methodIgnored, String methodName) {
+
+			addTestClassMethod(
+				new TestClassMethod(methodIgnored, methodName, this));
 		}
 
-		protected void addTestMethod(boolean methodIgnored, String methodName) {
-			addTestMethod(new BaseTestMethod(methodIgnored, methodName, this));
+		protected void addTestClassMethod(String methodName) {
+			addTestClassMethod(false, methodName);
 		}
 
-		protected void addTestMethod(String methodName) {
-			addTestMethod(false, methodName);
+		protected void addTestClassMethod(
+			TestClassGroup.TestClass.TestClassMethod testClassMethod) {
+
+			_testClassMethods.add(testClassMethod);
 		}
 
-		private final File _file;
-		private final List<BaseTestMethod> _testMethods = new ArrayList<>();
+		private final TestClassFile _testClassFile;
+		private final List<TestClassMethod> _testClassMethods =
+			new ArrayList<>();
 
 	}
 
-	public static class BaseTestFile extends File {
-
-		public BaseTestFile(String pathname) {
-			super(pathname);
-
-			_relativePath = pathname;
-		}
-
-		public BaseTestFile(
-			String pathname, String absolutePath,
-			GitWorkingDirectory gitWorkingDirectory) {
-
-			super(pathname);
-
-			File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
-
-			_relativePath = absolutePath.replace(
-				workingDirectory.getAbsolutePath(), "");
-		}
-
-		public String getRelativePath() {
-			return _relativePath;
-		}
-
-		private final String _relativePath;
-
-	}
-
-	public static class BaseTestMethod {
-
-		public String getName() {
-			return _name;
-		}
-
-		public boolean isIgnored() {
-			return _ignored;
-		}
-
-		protected BaseTestMethod(
-			boolean ignored, String name, BaseTestClass testClass) {
-
-			_ignored = ignored;
-			_name = name;
-			_testClass = testClass;
-		}
-
-		protected BaseTestClass getTestClass() {
-			return _testClass;
-		}
-
-		private final boolean _ignored;
-		private final String _name;
-		private final BaseTestClass _testClass;
-
-	}
-
-	protected void addTestClass(BaseTestClass testClass) {
+	protected void addTestClass(TestClassGroup.TestClass testClass) {
 		testClasses.add(testClass);
 	}
 
-	protected final List<BaseTestClass> testClasses = new ArrayList<>();
+	protected final List<TestClassGroup.TestClass> testClasses =
+		new ArrayList<>();
 
 }

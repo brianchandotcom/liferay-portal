@@ -38,13 +38,16 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 		protected static TCKBatchTestClass getInstance(
 			String batchName, File warFile) {
 
-			return new TCKBatchTestClass(batchName, warFile);
+			return new TCKBatchTestClass(
+				batchName, new TestClassFile(warFile.getAbsolutePath()));
 		}
 
-		protected TCKBatchTestClass(String batchName, File file) {
-			super(file);
+		protected TCKBatchTestClass(
+			String batchName, TestClassFile testClassFile) {
 
-			addTestMethod(batchName);
+			super(testClassFile);
+
+			addTestClassMethod(batchName);
 		}
 
 	}

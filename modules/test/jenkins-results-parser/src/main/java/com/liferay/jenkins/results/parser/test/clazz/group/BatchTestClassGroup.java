@@ -83,17 +83,19 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			String batchName,
 			PortalGitWorkingDirectory portalGitWorkingDirectory) {
 
-			File file = new File(
+			TestClassFile testClassFile = new TestClassFile(
 				portalGitWorkingDirectory.getWorkingDirectory(),
 				"build-test-batch.xml");
 
-			return new BatchTestClass(batchName, file);
+			return new BatchTestClass(batchName, testClassFile);
 		}
 
-		protected BatchTestClass(String batchName, File file) {
-			super(file);
+		protected BatchTestClass(
+			String batchName, TestClassFile testClassFile) {
 
-			addTestMethod(batchName);
+			super(testClassFile);
+
+			addTestClassMethod(batchName);
 		}
 
 	}
@@ -254,13 +256,13 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		int id = 0;
 
-		for (List<BaseTestClass> axisTestClasses :
+		for (List<TestClass> axisTestClasses :
 				Lists.partition(testClasses, axisSize)) {
 
 			AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
 				this, id);
 
-			for (BaseTestClass axisTestClass : axisTestClasses) {
+			for (TestClass axisTestClass : axisTestClasses) {
 				axisTestClassGroup.addTestClass(axisTestClass);
 			}
 

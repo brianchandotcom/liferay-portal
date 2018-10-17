@@ -44,16 +44,17 @@ public class ModulesSemVerBatchTestClassGroup
 			List<File> modulesProjectDirs) {
 
 			return new ModulesSemVerBatchTestClass(
-				moduleBaseDir, modulesDir, modulesProjectDirs);
+				new TestClassFile(moduleBaseDir.getAbsolutePath()), modulesDir,
+				modulesProjectDirs);
 		}
 
 		protected ModulesSemVerBatchTestClass(
-			File moduleBaseDir, File modulesDir,
+			TestClassFile moduleBaseDir, File modulesDir,
 			List<File> modulesProjectDirs) {
 
 			super(moduleBaseDir);
 
-			initTestMethods(modulesProjectDirs, modulesDir, "baseline");
+			initTestClassMethods(modulesProjectDirs, modulesDir, "baseline");
 		}
 
 	}
@@ -156,7 +157,9 @@ public class ModulesSemVerBatchTestClassGroup
 			if (!modulesProjectsDirs.isEmpty()) {
 				testClasses.add(
 					ModulesSemVerBatchTestClass.getInstance(
-						moduleDir, portalModulesBaseDir, modulesProjectsDirs));
+						new TestClass.TestClassFile(
+							moduleDir.getAbsolutePath()),
+						portalModulesBaseDir, modulesProjectsDirs));
 			}
 		}
 	}

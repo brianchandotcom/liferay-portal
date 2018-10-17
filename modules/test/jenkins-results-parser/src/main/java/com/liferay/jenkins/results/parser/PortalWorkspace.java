@@ -83,6 +83,10 @@ public abstract class PortalWorkspace extends BaseWorkspace {
 		return _otherPortalWorkspaceGitRepository;
 	}
 
+	protected WorkspaceGitRepository getPluginsWorkspaceGitRepository() {
+		return _pluginsWorkspaceGitRepository;
+	}
+
 	protected PortalWorkspaceGitRepository
 		getPrimaryPortalWorkspaceGitRepository() {
 

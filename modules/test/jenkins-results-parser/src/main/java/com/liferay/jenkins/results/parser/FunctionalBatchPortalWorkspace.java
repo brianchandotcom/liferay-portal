@@ -28,6 +28,7 @@ public class FunctionalBatchPortalWorkspace extends BatchPortalWorkspace {
 		super(portalGitHubURL, portalUpstreamBranchName, portalBranchSHA);
 
 		_setPortalBuildProperties();
+		_setPortalReleaseProperties();
 	}
 
 	private void _setPortalBuildProperties() {
@@ -40,6 +41,27 @@ public class FunctionalBatchPortalWorkspace extends BatchPortalWorkspace {
 			getPrimaryPortalWorkspaceGitRepository();
 
 		primaryPortalWorkspaceGitRepository.setPortalBuildProperties(
+			properties);
+	}
+
+	private void _setPortalReleaseProperties() {
+		WorkspaceGitRepository pluginsWorkspaceGitRepository =
+			getPluginsWorkspaceGitRepository();
+
+		if (pluginsWorkspaceGitRepository == null) {
+			return;
+		}
+
+		Properties properties = new Properties();
+
+		properties.put(
+			"lp.plugins.dir",
+			String.valueOf(pluginsWorkspaceGitRepository.getDirectory()));
+
+		PortalWorkspaceGitRepository primaryPortalWorkspaceGitRepository =
+			getPrimaryPortalWorkspaceGitRepository();
+
+		primaryPortalWorkspaceGitRepository.setPortalReleaseProperties(
 			properties);
 	}
 

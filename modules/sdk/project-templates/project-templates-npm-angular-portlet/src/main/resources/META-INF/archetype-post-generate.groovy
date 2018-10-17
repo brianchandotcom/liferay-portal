@@ -21,26 +21,3 @@ Path projectPath = Paths.get(request.outputDirectory, request.artifactId)
 Path buildGradlePath = projectPath.resolve("build.gradle")
 
 Files.deleteIfExists buildGradlePath
-
-Properties properties = request.properties
-
-String liferayVersion = properties.get("liferayVersion")
-
-if (!liferayVersion.startsWith("7.1")) {
-	String className = properties.get("className")
-	String packageName = properties.get("package")
-
-	String[] segments = packageName.split("\\.")
-
-	List<String> paths = ["src", "main", "java"]
-
-	paths.addAll segments
-	paths.add "constants"
-	paths.add "${className}WebKeys.java"
-
-	Path resourcePath = Paths.get("", paths as String[])
-
-	Path resourceFullPath = projectPath.resolve(resourcePath)
-
-	Files.deleteIfExists resourceFullPath
-}

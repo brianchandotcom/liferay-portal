@@ -19,8 +19,6 @@ import com.liferay.project.templates.ProjectTemplatesArgs;
 
 import java.io.File;
 
-import java.nio.file.Path;
-
 import java.util.Properties;
 
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
@@ -37,20 +35,6 @@ public class NpmAngularPortletProjectTemplateCustomizer
 			ProjectTemplatesArgs projectTemplatesArgs, File destinationDir,
 			ArchetypeGenerationResult archetypeGenerationResult)
 		throws Exception {
-
-		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
-
-		if (!liferayVersion.startsWith("7.1")) {
-			String className = projectTemplatesArgs.getClassName();
-
-			Path destinationDirPath = destinationDir.toPath();
-
-			Path projectDirPath = destinationDirPath.resolve(
-				projectTemplatesArgs.getName());
-
-			ProjectTemplateCustomizer.deleteFileInPath(
-				className + "WebKeys.java", projectDirPath);
-		}
 	}
 
 	@Override

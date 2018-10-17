@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.aspects.ReflectionUtilAdvice;
 import com.liferay.portal.test.rule.AdviseWith;
@@ -417,11 +416,10 @@ public class LiferayObjectWrapperTest {
 
 		// 2. wrap TemplateModel
 
-		TemplateModel templateModel = ProxyFactory.newDummyInstance(
-			TemplateModel.class);
+		TemplateModel dummyTemplateModel = new TemplateModel() {};
 
 		Assert.assertSame(
-			templateModel, liferayObjectWrapper.wrap(templateModel));
+			dummyTemplateModel, liferayObjectWrapper.wrap(dummyTemplateModel));
 
 		// 3. wrap TemplateNode
 
@@ -453,23 +451,17 @@ public class LiferayObjectWrapperTest {
 			StringModel.class, "TestLiferayObject",
 			stringModel -> stringModel.getAsString());
 
-		// 7. wrap unknown type
-
-		_assertTemplateModel(
-			liferayObjectWrapper.wrap(new Version("1.0")), StringModel.class,
-			"1.0", stringModel -> stringModel.getAsString());
-
-		_assertModelFactoryCache("_STRING_MODEL_FACTORY", Version.class);
-
-		// 8. make sure unknown type is using cache
+		// 7. wrap non-liferay object when module factory is avaiable
 
 		Map<Class<?>, ModelFactory> modelFactories =
 			ReflectionTestUtil.getFieldValue(
 				LiferayObjectWrapper.class, "_modelFactories");
 
-		modelFactories.put(Version.class, (object, wrapper) -> null);
+		modelFactories.put(
+			String.class, (object, wrapper) -> dummyTemplateModel);
 
-		Assert.assertNull(liferayObjectWrapper.wrap(new Version("2.0")));
+		Assert.assertSame(
+			dummyTemplateModel, liferayObjectWrapper.wrap(StringPool.BLANK));
 
 		modelFactories.clear();
 	}

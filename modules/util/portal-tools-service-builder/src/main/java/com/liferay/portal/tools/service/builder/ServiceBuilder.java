@@ -668,7 +668,6 @@ public class ServiceBuilder {
 			}
 
 			Element portletElement = rootElement.element("portlet");
-			Element namespaceElement = rootElement.element("namespace");
 
 			if (portletElement != null) {
 				_portletShortName = portletElement.attributeValue("short-name");
@@ -683,6 +682,8 @@ public class ServiceBuilder {
 				_testOutputPath += "/" + portletPackageName;
 			}
 			else {
+				Element namespaceElement = rootElement.element("namespace");
+
 				_portletShortName = namespaceElement.getText();
 			}
 
@@ -1681,11 +1682,10 @@ public class ServiceBuilder {
 		JavaType javaType = null;
 
 		List<JavaType> parameterTypes = method.getParameterTypes(true);
-		JavaType returnType = method.getReturnType(true);
 
 		if (methodName.startsWith("get")) {
 			if (ListUtil.isEmpty(parameterTypes)) {
-				javaType = returnType;
+				javaType = method.getReturnType(true);
 			}
 		}
 		else if (methodName.startsWith("set")) {
@@ -2094,11 +2094,7 @@ public class ServiceBuilder {
 
 		context.put("entity", entity);
 
-		// Content
-
 		String content = _processTemplate(_tplBaseUADAnonymizer, context);
-
-		// Write file
 
 		File file = new File(
 			StringBundler.concat(
@@ -2113,11 +2109,7 @@ public class ServiceBuilder {
 
 		context.put("entity", entity);
 
-		// Content
-
 		String content = _processTemplate(_tplBaseUADDisplay, context);
-
-		// Write file
 
 		File file = new File(
 			StringBundler.concat(
@@ -2132,11 +2124,7 @@ public class ServiceBuilder {
 
 		context.put("entity", entity);
 
-		// Content
-
 		String content = _processTemplate(_tplBaseUADExporter, context);
-
-		// Write file
 
 		File file = new File(
 			StringBundler.concat(
@@ -2160,11 +2148,7 @@ public class ServiceBuilder {
 		for (EntityColumn blobEntityColumn : blobEntityColumns) {
 			context.put("column", blobEntityColumn);
 
-			// Content
-
 			String content = _processTemplate(_tplBlobModel, context);
-
-			// Write file
 
 			File blobModelFile = new File(
 				StringBundler.concat(
@@ -2188,11 +2172,7 @@ public class ServiceBuilder {
 
 		context.put("entity", entity);
 
-		// Content
-
 		String content = _processTemplate(_tplEjbPK, context);
-
-		// Write file
 
 		File file = new File(
 			StringBundler.concat(
@@ -2358,11 +2338,7 @@ public class ServiceBuilder {
 
 		context = _putDeprecatedKeys(context, modelJavaClass);
 
-		// Content
-
 		String content = _processTemplate(_tplExtendedModel, context);
-
-		// Write file
 
 		File modelFile = new File(
 			StringBundler.concat(
@@ -2383,11 +2359,7 @@ public class ServiceBuilder {
 
 		context = _putDeprecatedKeys(context, modelImplJavaClass);
 
-		// Content
-
 		String content = _processTemplate(_tplExtendedModelBaseImpl, context);
-
-		// Write file
 
 		File modelFile = new File(
 			StringBundler.concat(
@@ -2403,11 +2375,7 @@ public class ServiceBuilder {
 
 		context.put("entity", entity);
 
-		// Content
-
 		String content = _processTemplate(_tplExtendedModelImpl, context);
-
-		// Write file
 
 		File modelFile = new File(
 			StringBundler.concat(
@@ -2450,11 +2418,7 @@ public class ServiceBuilder {
 
 		context = _putDeprecatedKeys(context, javaClass);
 
-		// Content
-
 		String content = _processTemplate(_tplFinder, context);
-
-		// Write file
 
 		File file = new File(
 			StringBundler.concat(
@@ -2502,11 +2466,7 @@ public class ServiceBuilder {
 
 		context = _putDeprecatedKeys(context, javaClass);
 
-		// Content
-
 		String content = _processTemplate(_tplFinderBaseImpl, context);
-
-		// Write file
 
 		File file = new File(
 			StringBundler.concat(
@@ -2535,11 +2495,7 @@ public class ServiceBuilder {
 
 		context = _putDeprecatedKeys(context, javaClass);
 
-		// Content
-
 		String content = _processTemplate(_tplFinderUtil, context);
-
-		// Write file
 
 		File file = new File(
 			StringBundler.concat(
@@ -2604,8 +2560,6 @@ public class ServiceBuilder {
 		Map<String, Object> context = _getContext();
 
 		context.put("entities", entities);
-
-		// Content
 
 		String content = _processTemplate(_tplHbmXml, context);
 
@@ -2707,11 +2661,7 @@ public class ServiceBuilder {
 
 		context = _putDeprecatedKeys(context, modelImplJavaClass);
 
-		// Content
-
 		String content = _processTemplate(_tplModel, context);
-
-		// Write file
 
 		File modelFile = new File(
 			StringBundler.concat(
@@ -2734,11 +2684,7 @@ public class ServiceBuilder {
 
 		context = _putDeprecatedKeys(context, modelImplJavaClass);
 
-		// Content
-
 		String content = _processTemplate(_tplModelCache, context);
-
-		// Write file
 
 		File modelFile = new File(
 			StringBundler.concat(
@@ -2753,8 +2699,6 @@ public class ServiceBuilder {
 		Map<String, Object> context = _getContext();
 
 		context.put("entities", _entities);
-
-		// Content
 
 		String content = _processTemplate(_tplModelHintsXml, context);
 
@@ -2826,11 +2770,7 @@ public class ServiceBuilder {
 
 		context = _putDeprecatedKeys(context, modelImplJavaClass);
 
-		// Content
-
 		String content = _processTemplate(_tplModelImpl, context);
-
-		// Write file
 
 		File modelFile = new File(
 			StringBundler.concat(
@@ -2856,11 +2796,7 @@ public class ServiceBuilder {
 
 		context = _putDeprecatedKeys(context, modelImplJavaClass);
 
-		// Content
-
 		String content = _processTemplate(_tplModelSoap, context);
-
-		// Write file
 
 		_write(
 			modelFile, content, _author, _jalopySettings, _modifiedFileNames);
@@ -2895,11 +2831,7 @@ public class ServiceBuilder {
 
 		context = _putDeprecatedKeys(context, modelJavaClass);
 
-		// Content
-
 		String content = _processTemplate(_tplModelWrapper, context);
-
-		// Write file
 
 		File modelFile = new File(
 			StringBundler.concat(
@@ -2923,11 +2855,7 @@ public class ServiceBuilder {
 
 		context = _putDeprecatedKeys(context, javaClass);
 
-		// Content
-
 		String content = _processTemplate(_tplPersistence, context);
-
-		// Write file
 
 		File file = new File(
 			StringBundler.concat(
@@ -2949,11 +2877,7 @@ public class ServiceBuilder {
 
 		context = _putDeprecatedKeys(context, modelImplJavaClass);
 
-		// Content
-
 		String content = _processTemplate(_tplPersistenceImpl, context);
-
-		// Write file
 
 		File file = new File(
 			StringBundler.concat(
@@ -3025,11 +2949,7 @@ public class ServiceBuilder {
 
 		context = _putDeprecatedKeys(context, javaClass);
 
-		// Content
-
 		String content = _processTemplate(_tplPersistenceUtil, context);
-
-		// Write file
 
 		File file = new File(
 			StringBundler.concat(
@@ -3056,8 +2976,6 @@ public class ServiceBuilder {
 		if (Validator.isNull(_pluginName) && !_osgiModule) {
 			return;
 		}
-
-		// Content
 
 		File propsFile = null;
 
@@ -3100,8 +3018,6 @@ public class ServiceBuilder {
 		context.put("currentTimeMillis", buildDate);
 
 		String content = _processTemplate(_tplProps, context);
-
-		// Write file
 
 		ToolsUtil.writeFileRaw(propsFile, content, _modifiedFileNames);
 	}
@@ -3152,11 +3068,7 @@ public class ServiceBuilder {
 
 		context = _putDeprecatedKeys(context, javaClass);
 
-		// Content
-
 		String content = _processTemplate(_tplService, context);
-
-		// Write file
 
 		File file = new File(
 			StringBundler.concat(
@@ -3186,11 +3098,7 @@ public class ServiceBuilder {
 
 		context = _putDeprecatedKeys(context, javaClass);
 
-		// Content
-
 		String content = _processTemplate(_tplServiceBaseImpl, context);
-
-		// Write file
 
 		File file = new File(
 			StringBundler.concat(
@@ -3238,11 +3146,7 @@ public class ServiceBuilder {
 
 		context = _putDeprecatedKeys(context, javaClass);
 
-		// Content
-
 		String content = _processTemplate(_tplServiceHttp, context);
-
-		// Write file
 
 		File file = new File(
 			StringBundler.concat(
@@ -3255,25 +3159,23 @@ public class ServiceBuilder {
 	private void _createServiceImpl(Entity entity, int sessionType)
 		throws Exception {
 
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-		context.put("sessionTypeName", _getSessionTypeName(sessionType));
-
-		// Content
-
-		String content = _processTemplate(_tplServiceImpl, context);
-
-		// Write file
-
 		File file = new File(
 			StringBundler.concat(
 				_outputPath, "/service/impl/", entity.getName(),
 				_getSessionTypeName(sessionType), "ServiceImpl.java"));
 
-		if (!file.exists()) {
-			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		if (file.exists()) {
+			return;
 		}
+
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+		context.put("sessionTypeName", _getSessionTypeName(sessionType));
+
+		String content = _processTemplate(_tplServiceImpl, context);
+
+		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
 	private void _createServicePropsUtil() throws Exception {
@@ -3313,11 +3215,7 @@ public class ServiceBuilder {
 
 		context = _putDeprecatedKeys(context, javaClass);
 
-		// Content
-
 		String content = _processTemplate(_tplServiceSoap, context);
-
-		// Write file
 
 		File file = new File(
 			StringBundler.concat(
@@ -3343,11 +3241,7 @@ public class ServiceBuilder {
 
 		context = _putDeprecatedKeys(context, javaClass);
 
-		// Content
-
 		String content = _processTemplate(_tplServiceUtil, context);
-
-		// Write file
 
 		File file = new File(
 			StringBundler.concat(
@@ -3373,11 +3267,7 @@ public class ServiceBuilder {
 
 		context = _putDeprecatedKeys(context, javaClass);
 
-		// Content
-
 		String content = _processTemplate(_tplServiceWrapper, context);
-
-		// Write file
 
 		File file = new File(
 			StringBundler.concat(
@@ -3394,11 +3284,7 @@ public class ServiceBuilder {
 
 		Map<String, Object> context = _getContext();
 
-		// Content
-
 		String content = _processTemplate(_tplServletContextUtil, context);
-
-		// Write file
 
 		File file = new File(
 			_serviceOutputPath + "/service/ServletContextUtil.java");
@@ -3414,8 +3300,6 @@ public class ServiceBuilder {
 		Map<String, Object> context = _getContext();
 
 		context.put("entities", _entities);
-
-		// Content
 
 		String content = _processTemplate(_tplSpringXml, context);
 
@@ -3945,63 +3829,48 @@ public class ServiceBuilder {
 	}
 
 	private void _createUADAnonymizer(Entity entity) throws Exception {
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-
-		// Content
-
-		String content = _processTemplate(_tplUADAnonymizer, context);
-
-		// Write file
-
 		File file = new File(
 			StringBundler.concat(
 				entity.getUADOutputPath(), "/uad/anonymizer/", entity.getName(),
 				"UADAnonymizer.java"));
 
-		if (!file.exists()) {
-			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		if (file.exists()) {
+			return;
 		}
-	}
 
-	private void _createUADAnonymizerTest(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
 
-		// Content
+		String content = _processTemplate(_tplUADAnonymizer, context);
 
-		String content = _processTemplate(_tplUADAnonymizerTest, context);
+		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+	}
 
-		// Write file
-
+	private void _createUADAnonymizerTest(Entity entity) throws Exception {
 		File file = new File(
 			StringBundler.concat(
 				entity.getUADTestIntegrationOutputPath(),
 				"/uad/anonymizer/test/", entity.getName(),
 				"UADAnonymizerTest.java"));
 
-		if (!file.exists()) {
-			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		if (file.exists()) {
+			return;
 		}
+
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		String content = _processTemplate(_tplUADAnonymizerTest, context);
+
+		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
 	private void _createUADBnd(String uadApplicationName) throws Exception {
-		Map<String, Object> context = _getContext();
-
 		List<Entity> entities = _uadApplicationEntities.get(uadApplicationName);
 
 		Entity entity = entities.get(0);
-
-		context.put("uadBundleName", _getUADBundleName(uadApplicationName));
-		context.put("uadPackagePath", entity.getUADPackagePath());
-
-		// Content
-
-		String content = _processTemplate(_tplUADBnd, context);
-
-		// Write file
 
 		String uadOutputPath = entity.getUADOutputPath();
 
@@ -4011,9 +3880,18 @@ public class ServiceBuilder {
 
 		File file = new File(uadDirName + "/bnd.bnd");
 
-		if (!file.exists()) {
-			ToolsUtil.writeFileRaw(file, content, _modifiedFileNames);
+		if (file.exists()) {
+			return;
 		}
+
+		Map<String, Object> context = _getContext();
+
+		context.put("uadBundleName", _getUADBundleName(uadApplicationName));
+		context.put("uadPackagePath", entity.getUADPackagePath());
+
+		String content = _processTemplate(_tplUADBnd, context);
+
+		ToolsUtil.writeFileRaw(file, content, _modifiedFileNames);
 	}
 
 	private void _createUADConstants(String uadApplicationName)
@@ -4030,11 +3908,7 @@ public class ServiceBuilder {
 		context.put("uadApplicationName", uadApplicationName);
 		context.put("uadPackagePath", entity.getUADPackagePath());
 
-		// Content
-
 		String content = _processTemplate(_tplUADConstants, context);
-
-		// Write file
 
 		File file = new File(
 			StringBundler.concat(
@@ -4045,104 +3919,85 @@ public class ServiceBuilder {
 	}
 
 	private void _createUADDisplay(Entity entity) throws Exception {
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-
-		// Content
-
-		String content = _processTemplate(_tplUADDisplay, context);
-
-		// Write file
-
 		File file = new File(
 			StringBundler.concat(
 				entity.getUADOutputPath(), "/uad/display/", entity.getName(),
 				"UADDisplay.java"));
 
-		if (!file.exists()) {
-			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		if (file.exists()) {
+			return;
 		}
-	}
 
-	private void _createUADDisplayTest(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
 
-		// Content
+		String content = _processTemplate(_tplUADDisplay, context);
 
-		String content = _processTemplate(_tplUADDisplayTest, context);
+		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+	}
 
-		// Write file
-
+	private void _createUADDisplayTest(Entity entity) throws Exception {
 		File file = new File(
 			StringBundler.concat(
 				entity.getUADTestIntegrationOutputPath(), "/uad/display/test/",
 				entity.getName(), "UADDisplayTest.java"));
 
-		if (!file.exists()) {
-			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		if (file.exists()) {
+			return;
 		}
-	}
 
-	private void _createUADExporter(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
 
-		// Content
+		String content = _processTemplate(_tplUADDisplayTest, context);
 
-		String content = _processTemplate(_tplUADExporter, context);
+		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+	}
 
-		// Write file
-
+	private void _createUADExporter(Entity entity) throws Exception {
 		File file = new File(
 			StringBundler.concat(
 				entity.getUADOutputPath(), "/uad/exporter/", entity.getName(),
 				"UADExporter.java"));
 
-		if (!file.exists()) {
-			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		if (file.exists()) {
+			return;
 		}
-	}
 
-	private void _createUADExporterTest(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
 
-		// Content
+		String content = _processTemplate(_tplUADExporter, context);
 
-		String content = _processTemplate(_tplUADExporterTest, context);
+		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+	}
 
-		// Write file
-
+	private void _createUADExporterTest(Entity entity) throws Exception {
 		File file = new File(
 			StringBundler.concat(
 				entity.getUADTestIntegrationOutputPath(), "/uad/exporter/test/",
 				entity.getName(), "UADExporterTest.java"));
 
-		if (!file.exists()) {
-			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		if (file.exists()) {
+			return;
 		}
+
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		String content = _processTemplate(_tplUADExporterTest, context);
+
+		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
 	private void _createUADTestBnd(String uadApplicationName) throws Exception {
-		Map<String, Object> context = _getContext();
-
 		List<Entity> entities = _uadApplicationEntities.get(uadApplicationName);
 
 		Entity entity = entities.get(0);
-
-		context.put("uadBundleName", _getUADBundleName(uadApplicationName));
-		context.put("uadPackagePath", entity.getUADPackagePath());
-
-		// Content
-
-		String content = _processTemplate(_tplUADTestBnd, context);
-
-		// Write file
 
 		String uadTestIntegrationOutputPath =
 			entity.getUADTestIntegrationOutputPath();
@@ -4154,31 +4009,38 @@ public class ServiceBuilder {
 
 		File file = new File(uadTestIntegrationDirName + "/bnd.bnd");
 
-		if (!file.exists()) {
-			ToolsUtil.writeFileRaw(file, content, _modifiedFileNames);
+		if (file.exists()) {
+			return;
 		}
+
+		Map<String, Object> context = _getContext();
+
+		context.put("uadBundleName", _getUADBundleName(uadApplicationName));
+		context.put("uadPackagePath", entity.getUADPackagePath());
+
+		String content = _processTemplate(_tplUADTestBnd, context);
+
+		ToolsUtil.writeFileRaw(file, content, _modifiedFileNames);
 	}
 
 	@SuppressWarnings("unused")
 	private void _createUADTestHelper(Entity entity) throws Exception {
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-
-		// Content
-
-		String content = _processTemplate(_tplUADTestHelper, context);
-
-		// Write file
-
 		File file = new File(
 			StringBundler.concat(
 				entity.getUADTestIntegrationOutputPath(), "/uad/test/",
 				entity.getName(), "UADTestHelper.java"));
 
-		if (!file.exists()) {
-			_write(file, content, _author, _jalopySettings, _modifiedFileNames);
+		if (file.exists()) {
+			return;
 		}
+
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		String content = _processTemplate(_tplUADTestHelper, context);
+
+		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
 	private void _deleteFile(String fileName) {

@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.email.apio.internal.architect.router.base;
+package com.liferay.email.apio.internal.architect.router;
 
-import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
-import com.liferay.apio.architect.router.NestedCollectionRouter;
+import com.liferay.apio.architect.router.ReusableNestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.email.apio.architect.identifier.EmailIdentifier;
+import com.liferay.portal.apio.identifier.ClassNameClassPK;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.EmailAddress;
@@ -29,38 +29,42 @@ import com.liferay.portal.kernel.service.UserService;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eduardo Perez
+ * Provides the information necessary to expose the <a
+ * href="http://schema.org/email">Email</a> resources of a <a
+ * href="http://schema.org/Person">Person</a> through a web API. The resources
+ * are mapped from the internal model {@code EmailAddress}.
+ *
+ * @author Javier Gamarra
+ * @review
  */
-public abstract class BaseUserAccountEmailsNestedCollectionRouter
-	<T extends Identifier<Long>> implements
-		NestedCollectionRouter<EmailAddress, Long, EmailIdentifier, Long, T> {
+@Component(immediate = true, service = ReusableNestedCollectionRouter.class)
+public class EmailReusableNestedCollectionRouter
+	implements ReusableNestedCollectionRouter
+		<EmailAddress, Long, EmailIdentifier, ClassNameClassPK> {
 
 	@Override
-	public NestedCollectionRoutes<EmailAddress, Long, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<EmailAddress, Long, Long> builder) {
+	public NestedCollectionRoutes
+		<EmailAddress, Long, ClassNameClassPK> collectionRoutes(
+			NestedCollectionRoutes.Builder
+				<EmailAddress, Long, ClassNameClassPK> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
 		).build();
 	}
 
-	@Reference
-	protected EmailAddressService emailAddressService;
-
-	@Reference
-	protected UserService userService;
-
 	private PageItems<EmailAddress> _getPageItems(
-			Pagination pagination, long personId)
+			Pagination pagination, ClassNameClassPK classNameClassPK)
 		throws PortalException {
 
-		User user = userService.getUserById(personId);
+		User user = _userService.getUserById(classNameClassPK.getClassPK());
 
 		List<EmailAddress> emailAddresses =
-			emailAddressService.getEmailAddresses(
+			_emailAddressService.getEmailAddresses(
 				Contact.class.getName(), user.getContactId());
 
 		int count = emailAddresses.size();
@@ -71,5 +75,11 @@ public abstract class BaseUserAccountEmailsNestedCollectionRouter
 			emailAddresses.subList(pagination.getStartPosition(), endPosition),
 			count);
 	}
+
+	@Reference
+	private EmailAddressService _emailAddressService;
+
+	@Reference
+	private UserService _userService;
 
 }

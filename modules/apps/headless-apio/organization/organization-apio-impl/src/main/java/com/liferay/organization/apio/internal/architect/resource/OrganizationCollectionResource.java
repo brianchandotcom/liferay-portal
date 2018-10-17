@@ -29,6 +29,7 @@ import com.liferay.organization.apio.internal.model.OpeningHours;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.phone.apio.architect.identifier.PhoneIdentifier;
+import com.liferay.portal.apio.identifier.ClassNameClassPK;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ListType;
@@ -48,6 +49,7 @@ import com.liferay.web.url.apio.architect.identifier.WebUrlIdentifier;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -102,6 +104,21 @@ public class OrganizationCollectionResource
 		).addLinkedModel(
 			"website", WebSiteIdentifier.class, this::_getSiteId
 		).addNested(
+			"contactInformation", Function.identity(),
+			organizationBuilder -> organizationBuilder.types(
+				"ContactInformation"
+			).addRelatedCollection(
+				"address", AddressIdentifier.class,
+				this::_createClassNameClassPK
+			).addRelatedCollection(
+				"email", EmailIdentifier.class, this::_createClassNameClassPK
+			).addRelatedCollection(
+				"telephone", PhoneIdentifier.class,
+				this::_createClassNameClassPK
+			).addRelatedCollection(
+				"webUrl", WebUrlIdentifier.class, this::_createClassNameClassPK
+			).build()
+		).addNested(
 			"location", organization -> organization,
 			nestedBuilder -> nestedBuilder.types(
 				"PostalAddress"
@@ -114,15 +131,7 @@ public class OrganizationCollectionResource
 			"services", this::_getOrgLabors,
 			this::_getServiceNestedRepresentorFunction
 		).addRelatedCollection(
-			"address", AddressIdentifier.class
-		).addRelatedCollection(
-			"email", EmailIdentifier.class
-		).addRelatedCollection(
 			"members", PersonIdentifier.class
-		).addRelatedCollection(
-			"telephone", PhoneIdentifier.class
-		).addRelatedCollection(
-			"webUrl", WebUrlIdentifier.class
 		).addRelativeURL(
 			"logo", this::_getLogoURL
 		).addString(
@@ -140,6 +149,13 @@ public class OrganizationCollectionResource
 		}
 
 		return parentOrganizationId;
+	}
+
+	private ClassNameClassPK _createClassNameClassPK(
+		Organization organization) {
+
+		return ClassNameClassPK.create(
+			Organization.class.getName(), organization.getOrganizationId());
 	}
 
 	private String _getCountry(Organization organization, Locale locale) {

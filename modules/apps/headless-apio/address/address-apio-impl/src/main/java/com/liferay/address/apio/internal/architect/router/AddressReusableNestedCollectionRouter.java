@@ -46,13 +46,14 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = ReusableNestedCollectionRouter.class)
 public class AddressReusableNestedCollectionRouter
-	implements
-	ReusableNestedCollectionRouter<Address, Long, AddressIdentifier, ClassNameClassPK> {
+	implements ReusableNestedCollectionRouter
+		<Address, Long, AddressIdentifier, ClassNameClassPK> {
 
 	@Override
-	public NestedCollectionRoutes<Address, Long, ClassNameClassPK> collectionRoutes(
-		NestedCollectionRoutes.Builder<Address, Long, ClassNameClassPK>
-			builder) {
+	public NestedCollectionRoutes
+		<Address, Long, ClassNameClassPK> collectionRoutes(
+			NestedCollectionRoutes.Builder<Address, Long, ClassNameClassPK>
+				builder) {
 
 		return builder.addGetter(
 			this::_getPageItems, Credentials.class

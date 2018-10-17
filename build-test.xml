@@ -5165,13 +5165,9 @@ go]]></replacevalue>
 		<if>
 			<equals arg1="${blade.templates}" arg2="simple" />
 			<then>
-				<execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet">
-					../../../../gradlew generateSampleProject
-				</execute>
+				<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet" task="generateSampleProject" />
 
-				<execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/build/npm-simple-portlet">
-					../../../../../../gradlew assemble
-				</execute>
+				<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/build/npm-simple-portlet" task="assemble" />
 
 				<copy
 					file="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/build/npm-simple-portlet/build/libs/npm.simple.portlet-1.0.0.jar"
@@ -5179,13 +5175,9 @@ go]]></replacevalue>
 				/>
 			</then>
 			<else>
-				<execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet">
-					../../../../gradlew generateSampleProject
-				</execute>
+				<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet" task="generateSampleProject" />
 
-				<execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet/build/npm-${blade.templates}-portlet">
-					../../../../../../gradlew assemble
-				</execute>
+				<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet/build/npm-${blade.templates}-portlet" task="assemble" />
 
 				<copy
 					file="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet/build/npm-${blade.templates}-portlet/build/libs/npm.${blade.templates}.portlet-1.0.0.jar"

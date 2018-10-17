@@ -24,9 +24,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.net.URI;
+
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -58,6 +61,7 @@ import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.incremental.IncrementalTaskInputs;
 import org.gradle.api.tasks.incremental.InputFileDetails;
 import org.gradle.util.GUtil;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.dto.BundleDTO;
 

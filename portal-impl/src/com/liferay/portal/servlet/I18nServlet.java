@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.AsyncPortletServletRequest;
 
 import java.io.IOException;
 
@@ -309,6 +310,17 @@ public class I18nServlet extends HttpServlet {
 
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(i18nData.getPath());
+
+		if (request.isAsyncSupported()) {
+			AsyncPortletServletRequest asyncPortletServletRequest =
+				AsyncPortletServletRequest.getAsyncPortletServletRequest(
+					request);
+
+			if (asyncPortletServletRequest != null) {
+				asyncPortletServletRequest.update(
+					servletContext.getContextPath(), i18nData.getPath());
+			}
+		}
 
 		requestDispatcher.forward(request, response);
 	}

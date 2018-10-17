@@ -26,6 +26,7 @@ import com.liferay.portal.osgi.web.servlet.context.helper.definition.FilterDefin
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.ListenerDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.ServletDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
+import com.liferay.portal.osgi.web.wab.extender.internal.adapter.AsyncAttributeAdapterServlet;
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.FilterExceptionAdapter;
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.ModifiableServletContext;
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.ModifiableServletContextAdapter;
@@ -683,7 +684,9 @@ public class WabBundleProcessor {
 
 			ServletExceptionAdapter servletExceptionAdaptor =
 				new ServletExceptionAdapter(
-					servletDefinition.getServlet(), modifiableServletContext);
+					new AsyncAttributeAdapterServlet(
+						servletDefinition.getServlet()),
+					modifiableServletContext);
 
 			ServiceRegistration<Servlet> serviceRegistration =
 				_bundleContext.registerService(

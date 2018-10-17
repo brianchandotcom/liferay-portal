@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.AsyncPortletServletRequest;
 import com.liferay.site.model.SiteFriendlyURL;
 import com.liferay.site.service.SiteFriendlyURLLocalService;
 
@@ -350,6 +351,17 @@ public class FriendlyURLServlet extends HttpServlet {
 
 			RequestDispatcher requestDispatcher =
 				servletContext.getRequestDispatcher(redirect.getPath());
+
+			if (request.isAsyncSupported()) {
+				AsyncPortletServletRequest asyncPortletServletRequest =
+					AsyncPortletServletRequest.getAsyncPortletServletRequest(
+						request);
+
+				if (asyncPortletServletRequest != null) {
+					asyncPortletServletRequest.update(
+						servletContext.getContextPath(), redirect.getPath());
+				}
+			}
 
 			if (requestDispatcher != null) {
 				requestDispatcher.forward(request, response);

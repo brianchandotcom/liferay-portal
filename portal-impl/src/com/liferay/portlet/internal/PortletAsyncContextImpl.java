@@ -14,31 +14,28 @@
 
 package com.liferay.portlet.internal;
 
-import com.liferay.portal.kernel.portlet.LiferayPortletAsyncContext;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portlet.AsyncPortletServletRequest;
 import com.liferay.portlet.PortletAsyncListenerAdapter;
 
+import javax.portlet.PortletAsyncContext;
 import javax.portlet.PortletAsyncListener;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import javax.servlet.AsyncContext;
-import javax.servlet.AsyncListener;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletRequestWrapper;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Neil Griffin
  * @author Dante Wang
  * @author Leon Chi
  */
-public class PortletAsyncContextImpl implements LiferayPortletAsyncContext {
-
-	@Override
-	public void addListener(AsyncListener asyncListener) {
-
-		// TODO
-
-		throw new UnsupportedOperationException();
-	}
+public class PortletAsyncContextImpl implements PortletAsyncContext {
 
 	@Override
 	public void addListener(PortletAsyncListener portletAsyncListener)
@@ -80,24 +77,51 @@ public class PortletAsyncContextImpl implements LiferayPortletAsyncContext {
 
 	@Override
 	public void dispatch() throws IllegalStateException {
-		_asyncContext.dispatch();
+		if (!_resourceRequest.isAsyncStarted() || _calledComplete ||
+			_calledDispatch) {
+
+			throw new IllegalStateException();
+		}
+
+		HttpServletRequest originalRequest =
+			(HttpServletRequest)_getOriginalRequest();
+
+		String path = StringBundler.concat(
+			originalRequest.getRequestURI(), "?",
+			originalRequest.getQueryString());
+
+		ServletContext servletContext = originalRequest.getServletContext();
+
+		_asyncPortletServletRequest.update(
+			servletContext.getContextPath(), path);
+
+		_asyncContext.dispatch(servletContext, path);
 
 		_calledDispatch = true;
 	}
 
 	@Override
 	public void dispatch(String path) throws IllegalStateException {
-		_asyncContext.dispatch(path);
+		if (!_resourceRequest.isAsyncStarted() || _calledComplete ||
+			_calledDispatch) {
+
+			throw new IllegalStateException();
+		}
+
+		ServletRequest originalRequest = _getOriginalRequest();
+
+		ServletContext servletContext = originalRequest.getServletContext();
+
+		String contextPath = _resourceRequest.getContextPath();
+
+		path = contextPath.concat(path);
+
+		_asyncPortletServletRequest.update(
+			servletContext.getContextPath(), path);
+
+		_asyncContext.dispatch(servletContext, path);
 
 		_calledDispatch = true;
-	}
-
-	@Override
-	public void doStart() {
-
-		// TODO
-
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -132,21 +156,8 @@ public class PortletAsyncContextImpl implements LiferayPortletAsyncContext {
 		return _hasOriginalRequestAndResponse;
 	}
 
-	@Override
 	public boolean isCalledDispatch() {
 		return _calledDispatch;
-	}
-
-	@Override
-	public void removeListener(AsyncListener asyncListener) {
-
-		// TODO
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void reset(AsyncContext asyncContext) {
 	}
 
 	public void setReturnedToContainer() {
@@ -182,9 +193,28 @@ public class PortletAsyncContextImpl implements LiferayPortletAsyncContext {
 
 			_asyncContext.addListener(_portletAsyncListenerAdapter);
 		}
+
+		if (_asyncPortletServletRequest == null) {
+			_asyncPortletServletRequest =
+				(AsyncPortletServletRequest)_asyncContext.getRequest();
+		}
+	}
+
+	private ServletRequest _getOriginalRequest() {
+		ServletRequest originalRequest = _asyncPortletServletRequest;
+
+		while (originalRequest instanceof ServletRequestWrapper) {
+			ServletRequestWrapper servletRequestWrapper =
+				(ServletRequestWrapper)originalRequest;
+
+			originalRequest = servletRequestWrapper.getRequest();
+		}
+
+		return originalRequest;
 	}
 
 	private AsyncContext _asyncContext;
+	private AsyncPortletServletRequest _asyncPortletServletRequest;
 	private boolean _calledComplete;
 	private boolean _calledDispatch;
 	private boolean _hasOriginalRequestAndResponse;

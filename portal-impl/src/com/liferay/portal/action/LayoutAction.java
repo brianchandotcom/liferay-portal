@@ -57,6 +57,7 @@ import java.util.Map;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.ResourceRequest;
 import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
@@ -426,7 +427,17 @@ public class LayoutAction extends Action {
 						LiferayPortletUtil.getLiferayPortletRequest(
 							portletRequest);
 
-					liferayPortletRequest.cleanUp();
+					if (liferayPortletRequest instanceof ResourceRequest) {
+						ResourceRequest resourceRequest =
+							(ResourceRequest)liferayPortletRequest;
+
+						if (!resourceRequest.isAsyncStarted()) {
+							liferayPortletRequest.cleanUp();
+						}
+					}
+					else {
+						liferayPortletRequest.cleanUp();
+					}
 				}
 			}
 		}

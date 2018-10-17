@@ -42,7 +42,6 @@ import freemarker.template.TemplateModelException;
 import freemarker.template.Version;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -76,67 +75,45 @@ public class LiferayObjectWrapperTest {
 
 	@Test
 	public void testCheckClassIsRestricted() throws Exception {
-		_testWrapLiferayObject(new LiferayObjectWrapper(null, null));
+		_testCheckClassIsRestricted(
+			new LiferayObjectWrapper(null, null), TestLiferayObject.class,
+			null);
 
-		_testWrapLiferayObject(
-			new LiferayObjectWrapper(
-				new String[] {StringPool.STAR},
-				new String[] {TestLiferayObject.class.getName()}));
-
-		_testWrapLiferayObject(
+		_testCheckClassIsRestricted(
 			new LiferayObjectWrapper(
 				new String[] {TestLiferayObject.class.getName()},
-				new String[] {TestLiferayObject.class.getName()}));
+				new String[] {TestLiferayObject.class.getName()}),
+			TestLiferayObject.class, null);
 
-		_testWrapLiferayObject(
-			new LiferayObjectWrapper(null, new String[] {"java.lang.String"}));
+		_testCheckClassIsRestricted(
+			new LiferayObjectWrapper(null, new String[] {"java.lang.String"}),
+			TestLiferayObject.class, null);
 
-		_testWrapLiferayObject(
+		_testCheckClassIsRestricted(
 			new LiferayObjectWrapper(
-				null, new String[] {"com.liferay.portal.cache"}));
+				null, new String[] {"com.liferay.portal.cache"}),
+			TestLiferayObject.class, null);
 
-		try {
-			_testWrapLiferayObject(
-				new LiferayObjectWrapper(
-					null, new String[] {TestLiferayObject.class.getName()}));
+		_testCheckClassIsRestricted(
+			new LiferayObjectWrapper(
+				null, new String[] {TestLiferayObject.class.getName()}),
+			TestLiferayObject.class,
+			StringBundler.concat(
+				"Denied resolving class ", TestLiferayObject.class.getName(),
+				" by ", TestLiferayObject.class.getName()));
 
-			Assert.fail("TemplateModelException was not thrown");
-		}
-		catch (TemplateModelException tme) {
-			Assert.assertEquals(
-				StringBundler.concat(
-					"Denied resolving class ",
-					TestLiferayObject.class.getName(), " by ",
-					TestLiferayObject.class.getName()),
-				tme.getMessage());
-		}
-
-		try {
-			_testWrapLiferayObject(
-				new LiferayObjectWrapper(
-					null,
-					new String[] {"com.liferay.portal.template.freemarker"}));
-
-			Assert.fail("TemplateModelException was not thrown");
-		}
-		catch (TemplateModelException tme) {
-			Assert.assertEquals(
-				StringBundler.concat(
-					"Denied resolving class ",
-					TestLiferayObject.class.getName(), " by ",
-					"com.liferay.portal.template.freemarker"),
-				tme.getMessage());
-		}
-
-		// Coverage: a class without package is considered allowed
-
-		Method checkClassIsRestricted = ReflectionTestUtil.getMethod(
-			LiferayObjectWrapper.class, "_checkClassIsRestricted", Class.class);
-
-		checkClassIsRestricted.invoke(
+		_testCheckClassIsRestricted(
 			new LiferayObjectWrapper(
 				null, new String[] {"com.liferay.portal.template.freemarker"}),
-			byte.class);
+			TestLiferayObject.class,
+			StringBundler.concat(
+				"Denied resolving class ", TestLiferayObject.class.getName(),
+				" by com.liferay.portal.template.freemarker"));
+
+		_testCheckClassIsRestricted(
+			new LiferayObjectWrapper(
+				null, new String[] {"com.liferay.portal.template.freemarker"}),
+			byte.class, null);
 	}
 
 	@Test
@@ -508,23 +485,29 @@ public class LiferayObjectWrapperTest {
 		}
 	}
 
-	private void _testWrapLiferayObject(
-			LiferayObjectWrapper liferayObjectWrapper)
+	private void _testCheckClassIsRestricted(
+			LiferayObjectWrapper liferayObjectWrapper, Class<?> targetClass,
+			String exceptionMessage)
 		throws Exception {
 
-		TestLiferayObject testLiferayObject = new TestLiferayObject();
+		try {
+			ReflectionTestUtil.invoke(
+				liferayObjectWrapper, "_checkClassIsRestricted",
+				new Class<?>[] {Class.class}, targetClass);
 
-		TemplateModel templateModel = liferayObjectWrapper.wrap(
-			testLiferayObject);
+			if (exceptionMessage != null) {
+				Assert.fail("Should throw TemplateModelException");
+			}
+		}
+		catch (Exception e) {
+			Assert.assertSame(TemplateModelException.class, e.getClass());
 
-		Assert.assertTrue(
-			"Liferay classes should be wrapped as StringModel",
-			templateModel instanceof StringModel);
+			TemplateModelException templateModelException =
+				(TemplateModelException)e;
 
-		StringModel stringModel = (StringModel)templateModel;
-
-		Assert.assertEquals(
-			testLiferayObject.toString(), stringModel.getAsString());
+			Assert.assertEquals(
+				exceptionMessage, templateModelException.getMessage());
+		}
 	}
 
 	private class TestLiferayCollection extends ArrayList<String> {

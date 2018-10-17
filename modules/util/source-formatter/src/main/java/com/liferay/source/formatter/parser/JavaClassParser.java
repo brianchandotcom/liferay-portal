@@ -143,11 +143,11 @@ public class JavaClassParser {
 	}
 
 	private static String _getAnonymousClassContent(
-		String content, int start, boolean isGenericClass) {
+		String content, int start, boolean genericClass) {
 
 		int x = start;
 
-		if (isGenericClass) {
+		if (genericClass) {
 			while (true) {
 				x = content.indexOf('>', x + 1);
 

@@ -32,10 +32,12 @@ import com.liferay.portal.kernel.repository.model.FileContentReference;
 import com.liferay.portal.kernel.repository.model.ModelValidator;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
+import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.kernel.repository.util.ModelValidatorUtil;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.util.PropsValues;
+
+import java.util.function.BiFunction;
 
 /**
  * @author Adolfo Pérez
@@ -43,6 +45,22 @@ import com.liferay.portal.util.PropsValues;
 public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 
 	public static final String CLASS_NAME = LiferayRepository.class.getName();
+
+	public static BiFunction
+		<PortalCapabilityLocator, RepositoryFactory, RepositoryDefiner>
+			getFactoryFunction() {
+
+		return LiferayRepositoryDefiner::new;
+	}
+
+	public LiferayRepositoryDefiner(
+		PortalCapabilityLocator portalCapabilityLocator,
+		RepositoryFactory repositoryFactory) {
+
+		_portalCapabilityLocator = portalCapabilityLocator;
+		_repositoryFactory = new LiferayRepositoryFactoryWrapper(
+			repositoryFactory);
+	}
 
 	@Override
 	public String getClassName() {
@@ -104,22 +122,7 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 		repositoryFactoryRegistry.setRepositoryFactory(_repositoryFactory);
 	}
 
-	public void setRepositoryFactory(RepositoryFactory repositoryFactory) {
-		_repositoryFactory = new LiferayRepositoryFactoryWrapper(
-			repositoryFactory);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected PortalCapabilityLocator portalCapabilityLocator;
-
-	private static volatile PortalCapabilityLocator _portalCapabilityLocator =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			PortalCapabilityLocator.class, LiferayRepositoryDefiner.class,
-			"_portalCapabilityLocator", false, true);
-
+	private final PortalCapabilityLocator _portalCapabilityLocator;
 	private RepositoryFactory _repositoryFactory;
 
 	private static class LiferayRepositoryFactoryWrapper

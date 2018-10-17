@@ -25,8 +25,10 @@ import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCap
 import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
+import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+
+import java.util.function.BiFunction;
 
 /**
  * @author Iván Zaera
@@ -35,6 +37,21 @@ public class TemporaryFileEntryRepositoryDefiner extends BaseRepositoryDefiner {
 
 	public static final String CLASS_NAME =
 		TemporaryFileEntryRepository.class.getName();
+
+	public static BiFunction
+		<PortalCapabilityLocator, RepositoryFactory, RepositoryDefiner>
+			getFactoryFunction() {
+
+		return TemporaryFileEntryRepositoryDefiner::new;
+	}
+
+	public TemporaryFileEntryRepositoryDefiner(
+		PortalCapabilityLocator portalCapabilityLocator,
+		RepositoryFactory repositoryFactory) {
+
+		_portalCapabilityLocator = portalCapabilityLocator;
+		_repositoryFactory = repositoryFactory;
+	}
 
 	@Override
 	public String getClassName() {
@@ -83,22 +100,7 @@ public class TemporaryFileEntryRepositoryDefiner extends BaseRepositoryDefiner {
 		repositoryFactoryRegistry.setRepositoryFactory(_repositoryFactory);
 	}
 
-	public void setRepositoryFactory(RepositoryFactory repositoryFactory) {
-		_repositoryFactory = repositoryFactory;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected PortalCapabilityLocator portalCapabilityLocator;
-
-	private static volatile PortalCapabilityLocator _portalCapabilityLocator =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			PortalCapabilityLocator.class,
-			TemporaryFileEntryRepositoryDefiner.class,
-			"_portalCapabilityLocator", false, true);
-
-	private RepositoryFactory _repositoryFactory;
+	private final PortalCapabilityLocator _portalCapabilityLocator;
+	private final RepositoryFactory _repositoryFactory;
 
 }

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -29,7 +30,7 @@ public class AMLiferayRepositoryDefiner
 
 	@Activate
 	protected void activate() {
-		initializeOverridenRepositoryDefiner(_CLASS_NAME);
+		initializeOverridenRepositoryDefiner(_repositoryDefiner);
 	}
 
 	@Deactivate
@@ -39,5 +40,8 @@ public class AMLiferayRepositoryDefiner
 
 	private static final String _CLASS_NAME =
 		"com.liferay.portal.repository.liferayrepository.LiferayRepository";
+
+	@Reference(target = "(class.name=" + _CLASS_NAME + ")")
+	private RepositoryDefiner _repositoryDefiner;
 
 }

@@ -22,27 +22,32 @@
 		<property name="legacyExternalRepositoryFactory">
 			<bean class="com.liferay.portal.repository.external.LegacyExternalRepositoryFactory" />
 		</property>
-		<property name="repositoryDefiners">
-			<list>
-				<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryDefiner">
-					<property name="repositoryFactory">
-						<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryFactory" />
-					</property>
-				</bean>
-				<bean class="com.liferay.portal.repository.portletrepository.PortletRepositoryDefiner">
-					<property name="repositoryFactory">
-						<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryFactory" />
-					</property>
-				</bean>
-				<bean class="com.liferay.portal.repository.temporaryrepository.TemporaryFileEntryRepositoryDefiner">
-					<property name="repositoryFactory">
-						<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryFactory" />
-					</property>
-				</bean>
-			</list>
-		</property>
 	</bean>
 	<bean class="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil" id="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil">
 		<property name="repositoryClassDefinitionCatalog" ref="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalog" />
+	</bean>
+	<bean class="com.liferay.portal.repository.registry.RepositoryDefinerRegister">
+		<property name="repositoryDefinerFactoryFunction">
+			<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryDefiner" factory-method="getFactoryFunction" />
+		</property>
+		<property name="repositoryFactory">
+			<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryFactory" />
+		</property>
+	</bean>
+	<bean class="com.liferay.portal.repository.registry.RepositoryDefinerRegister">
+		<property name="repositoryDefinerFactoryFunction">
+			<bean class="com.liferay.portal.repository.portletrepository.PortletRepositoryDefiner" factory-method="getFactoryFunction" />
+		</property>
+		<property name="repositoryFactory">
+			<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryFactory" />
+		</property>
+	</bean>
+	<bean class="com.liferay.portal.repository.registry.RepositoryDefinerRegister">
+		<property name="repositoryDefinerFactoryFunction">
+			<bean class="com.liferay.portal.repository.temporaryrepository.TemporaryFileEntryRepositoryDefiner" factory-method="getFactoryFunction" />
+		</property>
+		<property name="repositoryFactory">
+			<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryFactory" />
+		</property>
 	</bean>
 </beans>

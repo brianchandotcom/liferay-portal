@@ -35,7 +35,6 @@ import com.liferay.registry.collections.StringServiceRegistrationMap;
 import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -89,10 +88,6 @@ public class RepositoryClassDefinitionCatalogImpl
 
 		_serviceTracker.open();
 
-		for (RepositoryDefiner repositoryDefiner : _repositoryDefiners) {
-			registerRepositoryDefiner(repositoryDefiner);
-		}
-
 		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
 		for (String className : PropsValues.DL_REPOSITORY_IMPL) {
@@ -130,12 +125,6 @@ public class RepositoryClassDefinitionCatalogImpl
 		_legacyExternalRepositoryFactory = legacyExternalRepositoryFactory;
 	}
 
-	public void setRepositoryDefiners(
-		List<RepositoryDefiner> repositoryDefiners) {
-
-		_repositoryDefiners = repositoryDefiners;
-	}
-
 	@Override
 	public void unregisterLegacyExternalRepositoryFactory(String className) {
 		ExternalRepositoryFactoryUtil.unregisterExternalRepositoryFactory(
@@ -169,7 +158,6 @@ public class RepositoryClassDefinitionCatalogImpl
 	private RepositoryFactory _legacyExternalRepositoryFactory;
 	private final Map<String, RepositoryClassDefinition>
 		_repositoryClassDefinitions = new ConcurrentHashMap<>();
-	private List<RepositoryDefiner> _repositoryDefiners;
 	private final StringServiceRegistrationMap<RepositoryDefiner>
 		_serviceRegistrations = new StringServiceRegistrationMapImpl<>();
 	private ServiceTracker<RepositoryDefiner, RepositoryDefiner>

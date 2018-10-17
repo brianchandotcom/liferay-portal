@@ -41,8 +41,6 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -111,22 +109,10 @@ public abstract class BaseOverridingRepositoryDefiner
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	protected void initializeOverridenRepositoryDefiner(String className) {
-		List<RepositoryDefiner> repositoryDefiners = _getFieldValue(
-			"_repositoryDefiners");
+	protected void initializeOverridenRepositoryDefiner(
+		RepositoryDefiner repositoryDefiner) {
 
-		Stream<RepositoryDefiner> repositoryDefinerStream =
-			repositoryDefiners.stream();
-
-		Optional<RepositoryDefiner> repositoryDefinerOptional =
-			repositoryDefinerStream.filter(
-				repositoryDefiner ->
-					className.equals(repositoryDefiner.getClassName())
-			).findFirst();
-
-		_overridenRepositoryDefiner = repositoryDefinerOptional.orElseThrow(
-			() -> new RepositoryException(
-				"No repository found with class name " + className));
+		_overridenRepositoryDefiner = repositoryDefiner;
 	}
 
 	protected void restoreOverridenRepositoryDefiner(String className) {

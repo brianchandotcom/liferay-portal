@@ -263,12 +263,14 @@ public class DefaultViewMVCRenderCommand implements MVCRenderCommand {
 			return null;
 		}
 
-		Throwable cause;
+		Throwable cause = e.getCause();
 
-		for (cause = e.getCause(); cause != null; cause = cause.getCause()) {
+		while (cause != null) {
 			if (exceptionType.isInstance(cause)) {
 				return cause;
 			}
+
+			cause = cause.getCause();
 		}
 
 		return null;

@@ -949,6 +949,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/portal/activation.jar</file-name>
+				<version>1.2.0</version>
+				<project-name>JavaBeans Activation Framework API</project-name>
+				<project-url>https://www.oracle.com/technetwork/articles/java/index-135046.html</project-url>
+				<licenses>
+					<license>
+						<license-name>CDDL 1.1</license-name>
+						<license-url>https://oss.oracle.com/licenses/CDDL-1.1</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/portal/ant.jar</file-name>
 				<version>1.8.2</version>
 				<project-name>Ant</project-name>
@@ -1861,6 +1873,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/portal/jaxb-api.jar</file-name>
+				<version>2.3.0</version>
+				<project-name>JAXB-API</project-name>
+				<project-url>http://jaxb.java.net</project-url>
+				<licenses>
+					<license>
+						<license-name>CDDL 1.1</license-name>
+						<license-url>https://oss.oracle.com/licenses/CDDL-1.1</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/portal/jaxen.jar</file-name>
 				<version>1.1.1</version>
 				<project-name>Jaxen</project-name>
@@ -1897,6 +1921,30 @@
 					</license>
 				</licenses>
 			</library>
+			<library>
+				<file-name>lib/portal/jaxrs-api.jar</file-name>
+				<version>2.1</version>
+				<project-name>Java API for RESTful Web Services</project-name>
+				<project-url>http://jax-rs-spec.java.net</project-url>
+				<licenses>
+					<license>
+						<license-name>CDDL 1.1</license-name>
+						<license-url>https://oss.oracle.com/licenses/CDDL-1.1</license-url>
+					</license>
+				</licenses>
+			</library>
+			<lirbary>
+				<file-name>lib/portal/jaxws-api.jar</file-name>
+				<version>2.3.0</version>
+				<project-name>JAX-WS (JSR 224) API</project-name>
+				<project-url>https://github.com/javaee/jax-ws-spec</project-url>
+				<licenses>
+					<license>
+						<license-name>CDDL 1.1</license-name>
+						<license-url>https://oss.oracle.com/licenses/CDDL-1.1</license-url>
+					</license>
+				</licenses>
+			</lirbary>
 			<library>
 				<file-name>lib/portal/jaxws-rt.jar</file-name>
 				<version>2.1.7</version>
@@ -2006,6 +2054,18 @@
 					<license>
 						<license-name>LGPL 2.1</license-name>
 						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/jersey-common.jar</file-name>
+				<version>2.26</version>
+				<project-name>Jersey core common packages</project-name>
+				<project-url>https://jersey.github.io/</project-url>
+				<licenses>
+					<license>
+						<license-name>CDDL 1.1</license-name>
+						<license-url>https://oss.oracle.com/licenses/CDDL+GPL-1.1</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2284,6 +2344,18 @@
 					<license>
 						<license-name>LGPL 2.1</license-name>
 						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/jws-api.jar</file-name>
+				<version>1.1</version>
+				<project-name>Java EE Web Services Metadata API</project-name>
+				<project-url>http://glassfish.java.net</project-url>
+				<licenses>
+					<license>
+						<license-name>CDDL 1.1</license-name>
+						<license-url>https://oss.oracle.com/licenses/CDDL-1.1</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2577,6 +2649,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/portal/rmi-api.jar</file-name>
+				<version>1.0.5.Final</version>
+				<project-name>The javax.rmi and javax.rmi.CORBA classes</project-name>
+				<project-url>https://github.com/jboss/jboss-rmi-api_spec</project-url>
+				<licenses>
+					<license>
+						<license-name>LGPL 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/portal/rome.jar</file-name>
 				<version>1.0</version>
 				<project-name>ROME</project-name>
@@ -2718,6 +2802,16 @@
 						<license-url>http://www.apache.org/licenses/LICENSE-1.1</license-url>
 						<copyright-notice>Copyright (c) 1999 The Apache Software Foundation. All rights reserved.</copyright-notice>
 					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/soap-api.jar</file-name>
+				<version>1.4.0</version>
+				<project-name>SAAJ API</project-name>
+				<project-url>https://javaee.github.io/javaee-spec/</project-url>
+				<licenses>
+					<license>CDDL 1.1</license>
+					<license-url>https://oss.oracle.com/licenses/CDDL-1.1</license-url>
 				</licenses>
 			</library>
 			<library>
@@ -3063,6 +3157,16 @@
 						<license-name>Apache License 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/transaction.jar</file-name>
+				<version>1.3</version>
+				<project-name>Project GlassFish Java Transaction API</project-name>
+				<project-url>http://jta-spec.java.net</project-url>
+				<licenses>
+					<license>CDDL 1.1</license>
+					<license-url>https://oss.oracle.com/licenses/CDDL-1.1</license-url>
 				</licenses>
 			</library>
 			<library>

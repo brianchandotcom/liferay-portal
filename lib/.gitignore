@@ -80,6 +80,7 @@
 /development/xmlresolver.jar
 /global/portlet.jar
 /portal/abdera.jar
+/portal/activation.jar
 /portal/ant.jar
 /portal/antlr2.jar
 /portal/antlr3-runtime.jar
@@ -154,9 +155,12 @@
 /portal/java-diff.jar
 /portal/java-libpst.jar
 /portal/javassist.jar
+/portal/jaxb-api.jar
 /portal/jaxb-impl.jar
 /portal/jaxen.jar
 /portal/jaxrpc.jar
+/portal/jaxrs-api.jar
+/portal/jaxws-api.jar
 /portal/jaxws-rt.jar
 /portal/jazzy.jar
 /portal/jcifs.jar
@@ -166,6 +170,7 @@
 /portal/jempbox.jar
 /portal/jena.jar
 /portal/jericho-html.jar
+/portal/jersey-common.jar
 /portal/jfreechart.jar
 /portal/jhighlight.jar
 /portal/jhlabs-filters.jar
@@ -188,6 +193,7 @@
 /portal/juh.jar
 /portal/juniversalchardet.jar
 /portal/jurt.jar
+/portal/jws-api.jar
 /portal/kxml2.jar
 /portal/liferay-icu4j.jar
 /portal/log4j.jar
@@ -211,6 +217,7 @@
 /portal/poi.jar
 /portal/rdffilter.jar
 /portal/rhino.jar
+/portal/rmi-api.jar
 /portal/rome.jar
 /portal/rometools.jar
 /portal/saaj-api.jar
@@ -221,6 +228,7 @@
 /portal/simplecaptcha.jar
 /portal/slf4j-api.jar
 /portal/soap.jar
+/portal/soap-api.jar
 /portal/spring-aop.jar
 /portal/spring-aspects.jar
 /portal/spring-beans.jar
@@ -246,6 +254,7 @@
 /portal/tika-parsers.jar
 /portal/tomcat-jdbc.jar
 /portal/tomcat-juli.jar
+/portal/transaction.jar
 /portal/truezip.jar
 /portal/unoil.jar
 /portal/urlrewritefilter.jar

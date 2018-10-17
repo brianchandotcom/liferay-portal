@@ -400,8 +400,19 @@ public class CaseInsensitiveDictionaryMap<K, V> extends Dictionary<K, V> impleme
 				return h;
 			}
 			h = 1;
-			for (char c : key.toCharArray()) {
-				h = 31 * h + Character.toLowerCase(Character.toUpperCase(c));
+			for (int i = 0; i < key.length(); i++) {
+				char c = key.charAt(i);
+
+				if (c > 127) {
+					h = 31 * h + Character.toLowerCase(Character.toUpperCase(c));
+				}
+				else {
+					h = 31 * h + c;
+
+					if ((c >= 'A') && (c <= 'Z')) {
+						h += 32;
+					}
+				}
 			}
 			return hashCode = h;
 		}

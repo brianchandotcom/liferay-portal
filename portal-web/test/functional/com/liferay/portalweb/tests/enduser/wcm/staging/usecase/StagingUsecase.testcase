@@ -493,7 +493,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="WCD#WEB_CONTENT_CONTENT_CARD" value1="Faculty Meet-and-Greet Brunch" />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
+			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Web Content" />
 		</execute>

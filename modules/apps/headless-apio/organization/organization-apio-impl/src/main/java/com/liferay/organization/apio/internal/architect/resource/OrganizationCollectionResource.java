@@ -250,7 +250,7 @@ public class OrganizationCollectionResource
 		NestedRepresentor.Builder<OrgLabor> orgLaborBuilder) {
 
 		return orgLaborBuilder.types(
-			"OrgLabor", "OpeningHoursSpecification"
+			"Service"
 		).addString(
 			"serviceType", this::_getOrgLaborType
 		).addNestedList(

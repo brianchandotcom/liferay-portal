@@ -29,6 +29,20 @@ public abstract class BaseTopLevelBuildData
 	extends BaseBuildData implements TopLevelBuildData {
 
 	@Override
+	public void addDownstreamBuildData(BuildData buildData) {
+		String downstreamRunIDs = optString("downstream_run_ids");
+
+		if (downstreamRunIDs == null) {
+			downstreamRunIDs = buildData.getRunID();
+		}
+		else {
+			downstreamRunIDs += "," + buildData.getRunID();
+		}
+
+		put("downstream_run_ids", downstreamRunIDs);
+	}
+
+	@Override
 	public List<String> getDistNodes() {
 		String distNodes = optString("dist_nodes");
 

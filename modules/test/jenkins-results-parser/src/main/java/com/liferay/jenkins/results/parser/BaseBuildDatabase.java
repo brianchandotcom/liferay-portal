@@ -31,6 +31,24 @@ import org.json.JSONObject;
 public abstract class BaseBuildDatabase implements BuildDatabase {
 
 	@Override
+	public File getBuildDatabaseJSFile() {
+		File buildDatabaseJSFile = new File(
+			_jsonObjectFile.getParent(), "build-database.js");
+
+		try {
+			JenkinsResultsParserUtil.write(
+				buildDatabaseJSFile,
+				JenkinsResultsParserUtil.combine(
+					"build_database=", _jsonObject.toString()));
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+
+		return buildDatabaseJSFile;
+	}
+
+	@Override
 	public JSONObject getBuildDataJSONObject(String key) {
 		JSONObject buildsJSONObject = _jsonObject.getJSONObject("builds");
 

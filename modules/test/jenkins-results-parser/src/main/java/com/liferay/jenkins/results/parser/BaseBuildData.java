@@ -112,6 +112,26 @@ public abstract class BaseBuildData implements BuildData {
 	}
 
 	@Override
+	public void setBuildURL(String buildURL) {
+		if (getBuildNumber() != null) {
+			throw new IllegalStateException("Build URL is already set");
+		}
+
+		Matcher matcher = _buildURLPattern.matcher(buildURL);
+
+		if (!matcher.find()) {
+			throw new RuntimeException("Invalid build url " + buildURL);
+		}
+
+		put("build_number", Integer.valueOf(matcher.group("buildNumber")));
+		put("build_url", buildURL);
+		put("cohort_name", matcher.group("cohortName"));
+		put("hostname", _getHostname());
+		put("master_hostname", matcher.group("masterHostname"));
+		put("type", getType());
+	}
+
+	@Override
 	public void setJenkinsGitHubURL(String jenkinsGitHubURL) {
 		put("jenkins_github_url", jenkinsGitHubURL);
 	}
@@ -161,7 +181,7 @@ public abstract class BaseBuildData implements BuildData {
 			return;
 		}
 
-		_setBuildURL(buildURL);
+		setBuildURL(buildURL);
 
 		if (!has("build_description")) {
 			setBuildDescription(_getDefaultBuildDescription());
@@ -238,6 +258,22 @@ public abstract class BaseBuildData implements BuildData {
 	protected static final BuildDatabase buildDatabase =
 		BuildDatabaseUtil.getBuildDatabase();
 
+	private JSONObject _getBuildURLJSONObject() {
+		String buildURL = getBuildURL();
+
+		if (buildURL == null) {
+			return null;
+		}
+
+		try {
+			return JenkinsResultsParserUtil.toJSONObject(
+				JenkinsResultsParserUtil.getLocalURL(buildURL + "/api/json"));
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
 	private String _getDefaultBuildDescription() {
 		return JenkinsResultsParserUtil.combine(
 			"<a href=\"https://", getTopLevelMasterHostname(),
@@ -245,19 +281,14 @@ public abstract class BaseBuildData implements BuildData {
 			"jenkins-report.html\">Jenkins Report</a>");
 	}
 
-	private void _setBuildURL(String buildURL) {
-		Matcher matcher = _buildURLPattern.matcher(buildURL);
+	private String _getHostname() {
+		JSONObject buildURLJSONObject = _getBuildURLJSONObject();
 
-		if (!matcher.find()) {
-			throw new RuntimeException("Invalid build url " + buildURL);
+		if (buildURLJSONObject == null) {
+			throw new RuntimeException("Please set the build url");
 		}
 
-		put("build_number", Integer.valueOf(matcher.group("buildNumber")));
-		put("build_url", buildURL);
-		put("cohort_name", matcher.group("cohortName"));
-		put("hostname", JenkinsResultsParserUtil.getHostName("default"));
-		put("master_hostname", matcher.group("masterHostname"));
-		put("type", getType());
+		return buildURLJSONObject.getString("builtOn");
 	}
 
 	private static final String[] _REQUIRED_KEYS = {

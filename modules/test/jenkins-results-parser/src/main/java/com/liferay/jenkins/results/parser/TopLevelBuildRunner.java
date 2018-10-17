@@ -73,8 +73,6 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		for (BuildData invocationBuildData : _invocationBuildDataList) {
 			_invokeDownstreamBuild(invocationBuildData);
 		}
-
-		_invocationBuildDataList.clear();
 	}
 
 	protected abstract void prepareInvocationBuildDataList();
@@ -103,6 +101,10 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		Element jenkinsReportElement = _topLevelBuild.getJenkinsReportElement();
 
 		try {
+			BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+			publishToUserContentDir(buildDatabase.getBuildDatabaseJSFile());
+
 			TopLevelBuildData topLevelBuildData = getBuildData();
 
 			String jenkinsReportString = StringEscapeUtils.unescapeXml(
@@ -152,6 +154,8 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 	protected void waitForDownstreamBuildsToComplete() {
 		while (true) {
 			_topLevelBuild.update();
+
+			_updateDownstreamBuildURLs();
 
 			updateJenkinsReport();
 
@@ -256,6 +260,8 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 	private void _invokeDownstreamBuild(BuildData buildData) {
 		TopLevelBuildData topLevelBuildData = getBuildData();
 
+		topLevelBuildData.addDownstreamBuildData(buildData);
+
 		Map<String, String> invocationParameters = new HashMap<>();
 
 		invocationParameters.put(
@@ -271,6 +277,40 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		_invokeBuild(
 			topLevelBuildData.getCohortName(), buildData.getJobName(),
 			invocationParameters);
+	}
+
+	private void _updateDownstreamBuildURLs() {
+		if (_invocationBuildDataList.isEmpty()) {
+			return;
+		}
+
+		List<Build> downstreamBuilds = _topLevelBuild.getDownstreamBuilds(null);
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			String buildURL = downstreamBuild.getBuildURL();
+
+			if (buildURL == null) {
+				continue;
+			}
+
+			String runID = downstreamBuild.getParameterValue("RUN_ID");
+
+			BuildData invocationBuildDataToRemove = null;
+
+			for (BuildData invocationBuildData : _invocationBuildDataList) {
+				if (runID.equals(invocationBuildData.getRunID())) {
+					invocationBuildData.setBuildURL(buildURL);
+
+					invocationBuildDataToRemove = invocationBuildData;
+
+					break;
+				}
+			}
+
+			if (invocationBuildDataToRemove != null) {
+				_invocationBuildDataList.remove(invocationBuildDataToRemove);
+			}
+		}
 	}
 
 	private static final String _FILE_PROPAGATOR_CLEAN_UP_COMMAND =

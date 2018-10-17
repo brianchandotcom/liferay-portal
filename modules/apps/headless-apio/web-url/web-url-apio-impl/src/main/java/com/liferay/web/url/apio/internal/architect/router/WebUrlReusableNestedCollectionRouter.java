@@ -21,8 +21,10 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.portal.apio.identifier.ClassNameClassPK;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.Website;
+import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.WebsiteService;
 import com.liferay.web.url.apio.architect.identifier.WebUrlIdentifier;
@@ -34,9 +36,8 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose the <a
- * href="http://schema.org/WebSite">WebSite</a> resources of a <a
- * href="http://schema.org/Person">Person</a> through a web API. The resources
- * are mapped from the internal model {@code Website}.
+ * href="http://schema.org/WebSite">WebSite</a> resources through a web API. The
+ * resources are mapped from the internal model {@code Website}.
  *
  * @author Javier Gamarra
  */
@@ -56,20 +57,11 @@ public class WebUrlReusableNestedCollectionRouter
 		).build();
 	}
 
-	@Reference
-	protected UserService userService;
-
-	@Reference
-	protected WebsiteService websiteService;
-
 	private PageItems<Website> _getPageItems(
 			Pagination pagination, ClassNameClassPK classNameClassPK)
 		throws PortalException {
 
-		User user = userService.getUserById(classNameClassPK.getClassPK());
-
-		List<Website> websites = websiteService.getWebsites(
-			Contact.class.getName(), user.getContactId());
+		List<Website> websites = _getWebsites(classNameClassPK);
 
 		int endPosition = Math.min(
 			websites.size(), pagination.getEndPosition());
@@ -78,5 +70,37 @@ public class WebUrlReusableNestedCollectionRouter
 			websites.subList(pagination.getStartPosition(), endPosition),
 			websites.size());
 	}
+
+	private List<Website> _getWebsites(ClassNameClassPK classNameClassPK)
+		throws PortalException {
+
+		String className = classNameClassPK.getClassName();
+
+		long classPK = classNameClassPK.getClassPK();
+
+		if (className.equals(Organization.class.getName())) {
+			Organization organization = _organizationService.getOrganization(
+				classPK);
+
+			return _websiteService.getWebsites(
+				organization.getModelClassName(),
+				organization.getOrganizationId());
+		}
+		else {
+			User user = _userService.getUserById(classNameClassPK.getClassPK());
+
+			return _websiteService.getWebsites(
+				Contact.class.getName(), user.getContactId());
+		}
+	}
+
+	@Reference
+	private OrganizationService _organizationService;
+
+	@Reference
+	private UserService _userService;
+
+	@Reference
+	private WebsiteService _websiteService;
 
 }

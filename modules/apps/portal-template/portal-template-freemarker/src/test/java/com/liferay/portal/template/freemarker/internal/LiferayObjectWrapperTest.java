@@ -117,44 +117,16 @@ public class LiferayObjectWrapperTest {
 
 	@Test
 	public void testConstructor() {
-		_assertLiferayObjectWrapper(
-			new LiferayObjectWrapper(null, null), Collections.emptyList(),
-			Collections.emptyList(), Collections.emptyList(), false);
-
-		_assertLiferayObjectWrapper(
-			new LiferayObjectWrapper(new String[] {StringPool.STAR}, null),
-			Collections.singletonList(StringPool.STAR), Collections.emptyList(),
-			Collections.emptyList(), true);
-
-		_assertLiferayObjectWrapper(
-			new LiferayObjectWrapper(
-				new String[] {StringPool.BLANK},
-				new String[] {StringPool.BLANK}),
-			Collections.emptyList(), Collections.emptyList(),
-			Collections.emptyList(), false);
-
-		_assertLiferayObjectWrapper(
-			new LiferayObjectWrapper(
-				new String[] {"com.liferay.allowed.Class"}, null),
-			Collections.singletonList("com.liferay.allowed.Class"),
-			Collections.emptyList(), Collections.emptyList(), false);
-
-		_assertLiferayObjectWrapper(
-			new LiferayObjectWrapper(
-				null, new String[] {LiferayObjectWrapper.class.getName()}),
-			Collections.emptyList(),
-			Collections.singletonList(LiferayObjectWrapper.class),
-			Collections.emptyList(), false);
-
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
 					LiferayObjectWrapper.class.getName(), Level.INFO)) {
 
-			_assertLiferayObjectWrapper(
-				new LiferayObjectWrapper(
-					null, new String[] {"com.liferay.package.name"}),
-				Collections.emptyList(), Collections.emptyList(),
-				Collections.singletonList("com.liferay.package.name"), false);
+			Assert.assertEquals(
+				Collections.singletonList("com.liferay.package.name"),
+				ReflectionTestUtil.getFieldValue(
+					new LiferayObjectWrapper(
+						null, new String[] {"com.liferay.package.name"}),
+					"_restrictedPackageNames"));
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -172,11 +144,12 @@ public class LiferayObjectWrapperTest {
 				JDKLoggerTestUtil.configureJDKLogger(
 					LiferayObjectWrapper.class.getName(), Level.OFF)) {
 
-			_assertLiferayObjectWrapper(
-				new LiferayObjectWrapper(
-					null, new String[] {"com.liferay.package.name"}),
-				Collections.emptyList(), Collections.emptyList(),
-				Collections.singletonList("com.liferay.package.name"), false);
+			Assert.assertEquals(
+				Collections.singletonList("com.liferay.package.name"),
+				ReflectionTestUtil.getFieldValue(
+					new LiferayObjectWrapper(
+						null, new String[] {"com.liferay.package.name"}),
+					"_restrictedPackageNames"));
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -332,42 +305,6 @@ public class LiferayObjectWrapperTest {
 			ReflectionTestUtil.getFieldValue(
 				LiferayObjectWrapper.class, modelFactoryFieldName),
 			modelFactories.get(clazz));
-	}
-
-	private void _assertLiferayObjectWrapper(
-		LiferayObjectWrapper liferayObjectWrapper,
-		List<String> expectedAllowedClassNames,
-		List<Class<?>> expectedRestrictedClasses,
-		List<String> expectedRestrictedPackageNames,
-		boolean expectedAllowAllClasses) {
-
-		Assert.assertEquals(
-			expectedAllowedClassNames,
-			ReflectionTestUtil.getFieldValue(
-				liferayObjectWrapper, "_allowedClassNames"));
-		Assert.assertEquals(
-			expectedRestrictedClasses,
-			ReflectionTestUtil.getFieldValue(
-				liferayObjectWrapper, "_restrictedClasses"));
-		Assert.assertEquals(
-			expectedRestrictedPackageNames,
-			ReflectionTestUtil.getFieldValue(
-				liferayObjectWrapper, "_restrictedPackageNames"));
-
-		if (expectedAllowAllClasses) {
-			Assert.assertTrue(
-				"_allowAllClasses should be true since \"*\" is in " +
-					"_allowedClassNames",
-				ReflectionTestUtil.getFieldValue(
-					liferayObjectWrapper, "_allowAllClasses"));
-		}
-		else {
-			Assert.assertFalse(
-				"_allowAllClasses should be false since \"*\" is not in " +
-					"_allowedClassNames",
-				ReflectionTestUtil.getFieldValue(
-					liferayObjectWrapper, "_allowAllClasses"));
-		}
 	}
 
 	private <T, R> void _assertTemplateModel(

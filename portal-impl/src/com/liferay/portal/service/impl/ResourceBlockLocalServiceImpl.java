@@ -1167,16 +1167,10 @@ public class ResourceBlockLocalServiceImpl
 				dynamicQuery.add(property.eq(oldResourceBlockId));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<PermissionedModel>() {
+			(PermissionedModel permissionedModel) -> {
+				permissionedModel.setResourceBlockId(newResourceBlockId);
 
-				@Override
-				public void performAction(PermissionedModel permissionedModel) {
-					permissionedModel.setResourceBlockId(newResourceBlockId);
-
-					permissionedModel.persist();
-				}
-
+				permissionedModel.persist();
 			});
 
 		actionableDynamicQuery.performActions();

@@ -20,7 +20,6 @@ import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -313,30 +312,21 @@ public class ExportImportConfigurationIndexer
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<ExportImportConfiguration>() {
+			(ExportImportConfiguration exportImportConfiguration) -> {
+				try {
+					Document document = getDocument(exportImportConfiguration);
 
-				@Override
-				public void performAction(
-					ExportImportConfiguration exportImportConfiguration) {
-
-					try {
-						Document document = getDocument(
-							exportImportConfiguration);
-
-						indexableActionableDynamicQuery.addDocuments(document);
-					}
-					catch (PortalException pe) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to index export import configuration " +
-									exportImportConfiguration.
-										getExportImportConfigurationId(),
-								pe);
-						}
+					indexableActionableDynamicQuery.addDocuments(document);
+				}
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index export import configuration " +
+								exportImportConfiguration.
+									getExportImportConfigurationId(),
+							pe);
 					}
 				}
-
 			});
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 

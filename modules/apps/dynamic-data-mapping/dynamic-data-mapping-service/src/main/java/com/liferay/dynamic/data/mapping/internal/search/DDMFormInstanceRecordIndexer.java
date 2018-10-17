@@ -25,7 +25,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
@@ -371,33 +370,22 @@ public class DDMFormInstanceRecordIndexer
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<DDMFormInstanceRecord>() {
+			(DDMFormInstanceRecord ddmFormInstanceRecord) -> {
+				try {
+					Document document = getDocument(ddmFormInstanceRecord);
 
-				@Override
-				public void performAction(
-						DDMFormInstanceRecord ddmFormInstanceRecord)
-					throws PortalException {
-
-					try {
-						Document document = getDocument(ddmFormInstanceRecord);
-
-						if (document != null) {
-							indexableActionableDynamicQuery.addDocuments(
-								document);
-						}
-					}
-					catch (PortalException pe) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to index form instance record " +
-									ddmFormInstanceRecord.
-										getFormInstanceRecordId(),
-								pe);
-						}
+					if (document != null) {
+						indexableActionableDynamicQuery.addDocuments(document);
 					}
 				}
-
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index form instance record " +
+								ddmFormInstanceRecord.getFormInstanceRecordId(),
+							pe);
+					}
+				}
 			});
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 

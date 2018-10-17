@@ -1373,17 +1373,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		layoutSetPrototypeActionableDynamicQuery.setCompanyId(companyId);
 		layoutSetPrototypeActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<LayoutSetPrototype>() {
-
-				@Override
-				public void performAction(LayoutSetPrototype layoutSetPrototype)
-					throws PortalException {
-
-					layoutSetPrototypeLocalService.deleteLayoutSetPrototype(
-						layoutSetPrototype);
-				}
-
+			(LayoutSetPrototype layoutSetPrototype) -> {
+				layoutSetPrototypeLocalService.deleteLayoutSetPrototype(
+					layoutSetPrototype);
 			});
 
 		layoutSetPrototypeActionableDynamicQuery.performActions();

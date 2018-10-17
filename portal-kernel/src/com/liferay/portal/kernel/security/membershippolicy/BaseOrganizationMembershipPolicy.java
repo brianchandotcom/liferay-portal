@@ -225,16 +225,8 @@ public abstract class BaseOrganizationMembershipPolicy
 				userGroupRoleActionableDynamicQuery.setGroupId(
 					organization.getGroupId());
 				userGroupRoleActionableDynamicQuery.setPerformActionMethod(
-					new ActionableDynamicQuery.
-						PerformActionMethod<UserGroupRole>() {
-
-						@Override
-						public void performAction(UserGroupRole userGroupRole)
-							throws PortalException {
-
-							verifyPolicy(userGroupRole.getRole());
-						}
-
+					(UserGroupRole userGroupRole) -> {
+						verifyPolicy(userGroupRole.getRole());
 					});
 
 				userGroupRoleActionableDynamicQuery.performActions();

@@ -211,8 +211,10 @@
 		</execute>
 
 		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/test-content-page-name?p_l_mode=edit" />
+			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
 		</execute>
+
+		<execute macro="ContentPages#gotoEditMode" />
 
 		<execute macro="PageEditor#expandContentPageFragmentSidebar" />
 
@@ -232,9 +234,7 @@
 			<var name="fragmentName" value="Title" />
 		</execute>
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
-		</execute>
+		<execute macro="ContentPages#gotoViewMode" />
 
 		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
 			<var name="key_content" value="New editable fragment text" />

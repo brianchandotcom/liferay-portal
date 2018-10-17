@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_MODE</td>
+	<td>//span[@class='toggle-switch-handle']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENABLE_COMMENTS</td>
 	<td>//label[contains(.,'Enable Comments')]/input[@type='checkbox']/../span[2]/span</td>
 	<td></td>

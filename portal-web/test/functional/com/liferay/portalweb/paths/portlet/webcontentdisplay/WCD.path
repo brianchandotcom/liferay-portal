@@ -71,6 +71,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WEB_CONTENT_CONTENT_CARD</td>
+	<td>//div[contains(@class,'journal-content-article')]//li[contains(@class,'card')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_CONTENT_FIGCAPTION</td>
+	<td>//div[contains(@class,'journal-content-article')]//div[contains(@class,'figcaption')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WEB_CONTENT_CONTENT_IMAGE</td>
 	<td>//div[@class='journal-content-article']/img</td>
 	<td></td>

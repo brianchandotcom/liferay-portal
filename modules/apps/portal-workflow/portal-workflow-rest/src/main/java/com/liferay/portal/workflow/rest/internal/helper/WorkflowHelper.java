@@ -201,9 +201,9 @@ public class WorkflowHelper {
 		String auditUserName = getAuditUserName(workflowLog);
 
 		if (workflowLog.getUserId() != 0) {
-			User user = _userLocalService.getUser(workflowLog.getUserId());
-
 			if (workflowLog.getAuditUserId() == workflowLog.getUserId()) {
+				User user = _userLocalService.getUser(workflowLog.getUserId());
+
 				if (user.isMale()) {
 					message = LanguageUtil.format(
 						locale, "x-assigned-the-task-to-himself",

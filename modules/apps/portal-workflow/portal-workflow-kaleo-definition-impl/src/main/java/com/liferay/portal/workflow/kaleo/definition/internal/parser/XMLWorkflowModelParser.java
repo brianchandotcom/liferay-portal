@@ -514,7 +514,6 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 				String roleType = GetterUtil.getString(
 					roleReceipientElement.elementTextTrim("role-type"),
 					RoleConstants.TYPE_REGULAR_LABEL);
-				String name = roleReceipientElement.elementTextTrim("name");
 
 				RoleRecipient roleRecipient = null;
 
@@ -522,6 +521,8 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 					roleRecipient = new RoleRecipient(roleId, roleType);
 				}
 				else {
+					String name = roleReceipientElement.elementTextTrim("name");
+
 					roleRecipient = new RoleRecipient(name, roleType);
 
 					boolean autoCreate = GetterUtil.getBoolean(

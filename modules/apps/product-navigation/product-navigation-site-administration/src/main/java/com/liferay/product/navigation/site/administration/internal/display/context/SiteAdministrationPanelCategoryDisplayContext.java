@@ -320,11 +320,11 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 			return _stagingLabel;
 		}
 
-		Group group = getGroup();
-
 		_stagingLabel = StringPool.BLANK;
 
 		if (isShowStagingInfo()) {
+			Group group = getGroup();
+
 			if (group.isStagingGroup()) {
 				_stagingLabel = "staging";
 			}

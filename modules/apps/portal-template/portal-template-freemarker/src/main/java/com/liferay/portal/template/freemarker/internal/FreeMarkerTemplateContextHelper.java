@@ -107,10 +107,9 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 		if (ftlVariables != null) {
 			for (Map.Entry<String, Object> entry : ftlVariables.entrySet()) {
 				String key = entry.getKey();
-				Object value = entry.getValue();
 
 				if (Validator.isNotNull(key)) {
-					contextObjects.put(key, value);
+					contextObjects.put(key, entry.getValue());
 				}
 			}
 		}

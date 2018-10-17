@@ -185,12 +185,12 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		configurationAction.processAction(
 			portletConfig, actionRequest, actionResponse);
 
-		Layout layout = themeDisplay.getLayout();
-
 		PortletLayoutListener portletLayoutListener =
 			portlet.getPortletLayoutListenerInstance();
 
 		if (portletLayoutListener != null) {
+			Layout layout = themeDisplay.getLayout();
+
 			portletLayoutListener.onSetup(
 				portlet.getPortletId(), layout.getPlid());
 		}
@@ -1013,9 +1013,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 	protected void updateScope(ActionRequest actionRequest, Portlet portlet)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String oldScopeName = getOldScopeName(actionRequest, portlet);
 
 		PortletPreferences portletPreferences = actionRequest.getPreferences();
@@ -1046,9 +1043,13 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			portletTitle, oldScopeName, newScopeName);
 
 		if (!newPortletTitle.equals(portletTitle)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
 			portletPreferences.setValue(
 				"portletSetupTitle_" + themeDisplay.getLanguageId(),
 				newPortletTitle);
+
 			portletPreferences.setValue(
 				"portletSetupUseCustomTitle", Boolean.TRUE.toString());
 		}

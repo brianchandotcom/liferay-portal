@@ -642,9 +642,9 @@ public class DefaultWorkflowEngineImpl
 		throws WorkflowException {
 
 		try {
-			Definition definition = _workflowModelParser.parse(inputStream);
-
 			if (_workflowValidator != null) {
+				Definition definition = _workflowModelParser.parse(inputStream);
+
 				_workflowValidator.validate(definition);
 			}
 		}

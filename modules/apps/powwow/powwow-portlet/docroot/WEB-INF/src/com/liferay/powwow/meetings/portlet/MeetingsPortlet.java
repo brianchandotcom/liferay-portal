@@ -139,11 +139,11 @@ public class MeetingsPortlet extends MVCPortlet {
 		long powwowMeetingId = ParamUtil.getLong(
 			actionRequest, "powwowMeetingId");
 
-		String hash = ParamUtil.getString(actionRequest, "hash");
-
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		if (powwowMeetingId > 0) {
+			String hash = ParamUtil.getString(actionRequest, "hash");
+
 			if (!hash.equals(PowwowUtil.getHash(powwowMeetingId))) {
 				jsonObject.put("success", Boolean.FALSE);
 
@@ -284,8 +284,6 @@ public class MeetingsPortlet extends MVCPortlet {
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
-		String providerType = ParamUtil.getString(
-			actionRequest, "providerType");
 		String languageId = ParamUtil.getString(actionRequest, "languageId");
 
 		PowwowMeeting powwowMeeting = null;
@@ -330,6 +328,9 @@ public class MeetingsPortlet extends MVCPortlet {
 		if (powwowMeetingId <= 0) {
 			long powwowServerId =
 				PowwowMeetingConstants.POWWOW_SERVER_ID_DEFAULT;
+
+			String providerType = ParamUtil.getString(
+				actionRequest, "providerType");
 
 			int addPowwowMeetingStrategy =
 				PowwowServiceProviderUtil.getAddPowwowMeetingStrategy(

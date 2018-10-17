@@ -387,7 +387,13 @@ AUI.add(
 							}
 						);
 
-						var editEntityBaseZIndex = parent.CKEDITOR ? parent.CKEDITOR.getNextZIndex() : Liferay.zIndex.WINDOW;
+						var editEntityBaseZIndex = Liferay.zIndex.WINDOW;
+
+						var iframeModalEl = window.parent.document.getElementsByClassName('dialog-iframe-modal');
+
+						if (iframeModalEl) {
+							editEntityBaseZIndex = window.getComputedStyle(iframeModalEl[0]).getPropertyValue('z-index');
+						}
 
 						Liferay.Util.editEntity(
 							{

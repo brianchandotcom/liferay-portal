@@ -114,6 +114,20 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
+	<command name="executeScript">
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Script" />
+		</execute>
+
+		<execute function="Select" locator1="ServerAdministrationScript#LANGUAGE_SELECT" value1="${language}" />
+
+		<execute function="Type" locator1="ServerAdministrationScript#SCRIPT_TEXT" value1="${script}" />
+
+		<execute function="AssertClick" locator1="ServerAdministrationScript#EXECUTE_BUTTON" value1="Execute" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="executeServerResourcesActions">
 		<execute function="AssertClick" locator1="NavBar#RESOURCES" value1="Resources" />
 

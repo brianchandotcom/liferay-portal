@@ -21,13 +21,16 @@ import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.router.ReusableNestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.portal.apio.identifier.ClassNameClassPK;
+import com.liferay.portal.apio.user.CurrentUser;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.AddressLocalService;
+import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.permission.CommonPermissionUtil;
 
@@ -38,9 +41,8 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose the <a
- * href="http://schema.org/address">Address</a> resources of a <a
- * href="http://schema.org/Person">Person</a> through a web API. The resources
- * are mapped from the internal model {@code Address}.
+ * href="http://schema.org/address">Address</a> resources through a web API. The
+ * resources are mapped from the internal model {@code Address}.
  *
  * @author Javier Gamarra
  */
@@ -56,31 +58,49 @@ public class AddressReusableNestedCollectionRouter
 				builder) {
 
 		return builder.addGetter(
-			this::_getPageItems, Credentials.class
+			this::_getPageItems, Credentials.class, CurrentUser.class
 		).build();
 	}
 
-	@Reference
-	protected AddressLocalService addressLocalService;
+	private List<Address> _getAddresses(
+			ClassNameClassPK classNameClassPK, Credentials credentials,
+			CurrentUser currentUser)
+		throws PortalException {
 
-	@Reference
-	protected UserService userService;
+		String className = classNameClassPK.getClassName();
+
+		long classPK = classNameClassPK.getClassPK();
+
+		if (className.equals(Organization.class.getName())) {
+			Organization organization = _organizationService.getOrganization(
+				classPK);
+
+			return _addressLocalService.getAddresses(
+				currentUser.getCompanyId(), organization.getModelClassName(),
+				organization.getOrganizationId());
+		}
+		else {
+			User user = _userService.getUserById(classPK);
+
+			String userModelClassName = user.getModelClassName();
+
+			CommonPermissionUtil.check(
+				(PermissionChecker)credentials.get(), userModelClassName,
+				user.getUserId(), ActionKeys.VIEW);
+
+			return _addressLocalService.getAddresses(
+				user.getCompanyId(), Contact.class.getName(),
+				user.getContactId());
+		}
+	}
 
 	private PageItems<Address> _getPageItems(
 			Pagination pagination, ClassNameClassPK classNameClassPK,
-			Credentials credentials)
+			Credentials credentials, CurrentUser currentUser)
 		throws PortalException {
 
-		User user = userService.getUserById(classNameClassPK.getClassPK());
-
-		String className = user.getModelClassName();
-
-		CommonPermissionUtil.check(
-			(PermissionChecker)credentials.get(), className, user.getUserId(),
-			ActionKeys.VIEW);
-
-		List<Address> addresses = addressLocalService.getAddresses(
-			user.getCompanyId(), Contact.class.getName(), user.getContactId());
+		List<Address> addresses = _getAddresses(
+			classNameClassPK, credentials, currentUser);
 
 		int count = addresses.size();
 
@@ -90,5 +110,14 @@ public class AddressReusableNestedCollectionRouter
 			addresses.subList(pagination.getStartPosition(), endPosition),
 			count);
 	}
+
+	@Reference
+	private AddressLocalService _addressLocalService;
+
+	@Reference
+	private OrganizationService _organizationService;
+
+	@Reference
+	private UserService _userService;
 
 }

@@ -160,6 +160,23 @@ public class AutoCloseUtil {
 				}
 			}
 
+			List<String> autoCloseGithubCommentMentionUsernames =
+				JenkinsResultsParserUtil.getBuildPropertyAsList(
+					"auto.close.github.comment.mention.usernames");
+
+			if (!autoCloseGithubCommentMentionUsernames.isEmpty()) {
+				sb.append("<div>cc");
+
+				for (String autoCloseGithubCommentMentionUsername :
+						autoCloseGithubCommentMentionUsernames) {
+
+					sb.append(" @");
+					sb.append(autoCloseGithubCommentMentionUsername);
+				}
+
+				sb.append("</div>");
+			}
+
 			pullRequest.addComment(sb.toString());
 
 			return true;
@@ -321,6 +338,23 @@ public class AutoCloseUtil {
 				e.printStackTrace();
 
 				throw e;
+			}
+
+			List<String> autoCloseGithubCommentMentionUsernames =
+				JenkinsResultsParserUtil.getBuildPropertyAsList(
+					"auto.close.github.comment.mention.usernames");
+
+			if (!autoCloseGithubCommentMentionUsernames.isEmpty()) {
+				sb.append("<div>cc");
+
+				for (String autoCloseGithubCommentMentionUsername :
+						autoCloseGithubCommentMentionUsernames) {
+
+					sb.append(" @");
+					sb.append(autoCloseGithubCommentMentionUsername);
+				}
+
+				sb.append("</div>");
 			}
 
 			pullRequest.addComment(sb.toString());

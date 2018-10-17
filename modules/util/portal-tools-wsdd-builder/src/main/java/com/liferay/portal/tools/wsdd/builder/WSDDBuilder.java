@@ -93,12 +93,13 @@ public class WSDDBuilder {
 		String packagePath = rootElement.attributeValue("package-path");
 
 		Element portletElement = rootElement.element("portlet");
-		Element namespaceElement = rootElement.element("namespace");
 
 		if (portletElement != null) {
 			_portletShortName = portletElement.attributeValue("short-name");
 		}
 		else {
+			Element namespaceElement = rootElement.element("namespace");
+
 			_portletShortName = namespaceElement.getText();
 		}
 

@@ -343,7 +343,6 @@ public class LangBuilder {
 				}
 
 				String key = array[0];
-				String value = array[1];
 
 				String translatedText = properties.getProperty(key);
 
@@ -376,6 +375,8 @@ public class LangBuilder {
 				}
 
 				if ((translatedText == null) || translatedText.equals("")) {
+					String value = array[1];
+
 					if (line.contains("{") || line.contains("<")) {
 						translatedText = value + AUTOMATIC_COPY;
 					}

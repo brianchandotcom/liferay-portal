@@ -96,11 +96,12 @@ public class BNDIncludeResourceCheck extends BaseFileCheck {
 			String afterIncludeResourceDir = matcher2.group(2);
 
 			int x = includeResources.lastIndexOf("\\", matcher2.start());
-			int y = matcher2.end();
 
 			String replacement = null;
 
 			if (afterIncludeResourceDir.equals(",\\\n")) {
+				int y = matcher2.end();
+
 				replacement =
 					includeResources.substring(0, x + 1) +
 						includeResources.substring(y - 1);

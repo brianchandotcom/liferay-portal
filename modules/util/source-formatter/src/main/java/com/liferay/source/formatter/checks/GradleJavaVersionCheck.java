@@ -54,10 +54,11 @@ public class GradleJavaVersionCheck extends BaseFileCheck {
 
 				if (array.length == 2) {
 					String key = array[0].trim();
-					String value = array[1].trim();
 
 					if (key.equals("sourceCompatibility") ||
 						key.equals("targetCompatibility")) {
+
+						String value = array[1].trim();
 
 						String strippedValue = StringUtil.removeChars(
 							value, CharPool.APOSTROPHE, CharPool.QUOTE);

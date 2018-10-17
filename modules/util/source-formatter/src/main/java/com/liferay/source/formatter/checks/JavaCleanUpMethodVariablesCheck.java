@@ -157,11 +157,11 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 
 			int x = variableContent.indexOf(javaTerm.getName());
 
-			String defaultValue = _getDefaultValue(javaFieldType);
-
 			String setVariableCommand = variableContent.substring(x);
 
 			if (!setVariableCommand.contains(" =")) {
+				String defaultValue = _getDefaultValue(javaFieldType);
+
 				setVariableCommand = StringUtil.replaceLast(
 					setVariableCommand, CharPool.SEMICOLON,
 					" = " + defaultValue + ";");

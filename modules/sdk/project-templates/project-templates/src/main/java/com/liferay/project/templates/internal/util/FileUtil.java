@@ -141,9 +141,7 @@ public class FileUtil {
 		for (Map.Entry<String, InputStream> entry :
 				filesAndDirectories.entrySet()) {
 
-			String pathKey = entry.getKey();
-
-			Path pathKeyPath = Paths.get(pathKey);
+			Path pathKeyPath = Paths.get(entry.getKey());
 
 			pathKeyPath = pathKeyPath.subpath(1, pathKeyPath.getNameCount());
 
@@ -361,9 +359,7 @@ public class FileUtil {
 
 		URL jarUrl = codeSource.getLocation();
 
-		URI jarUri = jarUrl.toURI();
-
-		return jarUri;
+		return jarUrl.toURI();
 	}
 
 }

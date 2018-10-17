@@ -5,5 +5,6 @@ dependencies {
 	compileOnly project(":apps:apio-architect:apio-architect-api")
 	compileOnly project(":apps:headless-apio:organization:organization-apio-api")
 	compileOnly project(":apps:headless-apio:person:person-apio-api")
+	compileOnly project(":apps:headless-apio:portal:portal-apio-api")
 	compileOnly project(":apps:headless-apio:web-url:web-url-apio-api")
 }

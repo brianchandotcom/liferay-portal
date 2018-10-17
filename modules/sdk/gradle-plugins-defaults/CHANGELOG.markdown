@@ -4809,6 +4809,15 @@ version 1.3.5.
 - [LPS-86408]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.164.
 
+## 5.5.85 - 2018-10-17
+
+### Added
+- [LPS-86477]: Allow the `test` and `testIntegration` task `ignoreFailures`
+property to be overridden for OSGi projects. This can be done via command line
+argument:
+	- `./gradlew test -Dtest.ignore.failures=false`
+	- `./gradlew testIntegration -DtestIntegration.ignore.failures=false`
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -5297,6 +5306,7 @@ version 1.3.5.
 [LPS-86362]: https://issues.liferay.com/browse/LPS-86362
 [LPS-86371]: https://issues.liferay.com/browse/LPS-86371
 [LPS-86408]: https://issues.liferay.com/browse/LPS-86408
+[LPS-86477]: https://issues.liferay.com/browse/LPS-86477
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

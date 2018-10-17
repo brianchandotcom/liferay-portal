@@ -139,11 +139,11 @@ public class DefaultUserResolver implements UserResolver {
 		}
 
 		long creatorUserId = 0;
-		boolean autoPassword = false;
+		boolean autoPassword = true;
 
-		String password1 = PwdGenerator.getPassword();
+		String password1 = null;
 
-		String password2 = password1;
+		String password2 = null;
 
 		boolean autoScreenName = false;
 		String screenName = getValueAsString("screenName", attributesMap);

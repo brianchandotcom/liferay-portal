@@ -25,6 +25,27 @@
 		</if>
 	</tear-down>
 
+	<command name="EscapeUrlRedirectWithGroovyScript" priority="5">
+		<description message="This is a use case for LPS-69372." />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#executeScript">
+			<var name="language" value="Groovy" />
+			<var name="script"><![CDATA[
+import com.liferay.portal.kernel.util.PortalUtil;
+
+out.println(PortalUtil.escapeRedirect("/"));
+]]></var>
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="ServerAdministrationScript#OUTPUT_FIELD" value1="/" />
+	</command>
+
 	<command name="NoGuestRoleFromWCDArticleHistoryURL" priority="5">
 		<property name="portal.acceptance" value="true" />
 

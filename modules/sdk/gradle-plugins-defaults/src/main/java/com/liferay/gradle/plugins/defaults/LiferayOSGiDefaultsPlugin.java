@@ -3412,7 +3412,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskTestIgnoreFailures(Test test) {
-		test.setIgnoreFailures(true);
+		boolean ignoreFailures = GradleUtil.getProperty(
+			test.getProject(), "test.ignore.failures", true);
+
+		test.setIgnoreFailures(ignoreFailures);
 	}
 
 	private void _configureTaskTestIntegration(Project project) {

@@ -668,7 +668,6 @@ public class ServiceBuilder {
 			}
 
 			Element portletElement = rootElement.element("portlet");
-			Element namespaceElement = rootElement.element("namespace");
 
 			if (portletElement != null) {
 				_portletShortName = portletElement.attributeValue("short-name");
@@ -683,6 +682,8 @@ public class ServiceBuilder {
 				_testOutputPath += "/" + portletPackageName;
 			}
 			else {
+				Element namespaceElement = rootElement.element("namespace");
+
 				_portletShortName = namespaceElement.getText();
 			}
 
@@ -1681,11 +1682,10 @@ public class ServiceBuilder {
 		JavaType javaType = null;
 
 		List<JavaType> parameterTypes = method.getParameterTypes(true);
-		JavaType returnType = method.getReturnType(true);
 
 		if (methodName.startsWith("get")) {
 			if (ListUtil.isEmpty(parameterTypes)) {
-				javaType = returnType;
+				javaType = method.getReturnType(true);
 			}
 		}
 		else if (methodName.startsWith("set")) {

@@ -126,7 +126,8 @@ public class ProjectTemplatesUtil {
 	}
 
 	public static List<String> getArchetypeJarNames() throws IOException {
-		Properties projectTemplateJarVersionsProperties = getProjectTemplateJarVersionsProperties();
+		Properties projectTemplateJarVersionsProperties =
+			getProjectTemplateJarVersionsProperties();
 
 		List<String> archetypeJarNames = new ArrayList<>();
 

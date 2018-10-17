@@ -63,8 +63,6 @@ public class BuildChangeLogTask extends DefaultTask {
 
 	@TaskAction
 	public void buildChangeLog() throws Exception {
-		Project project = getProject();
-
 		File changeLogFile = getChangeLogFile();
 
 		Path changeLogPath = changeLogFile.toPath();
@@ -96,6 +94,8 @@ public class BuildChangeLogTask extends DefaultTask {
 		String range = rangeStart + ".." + rangeEnd;
 
 		if (ticketIds.isEmpty()) {
+			Project project = getProject();
+
 			throw new StopExecutionException(
 				project + " does not have changes for range " + range);
 		}

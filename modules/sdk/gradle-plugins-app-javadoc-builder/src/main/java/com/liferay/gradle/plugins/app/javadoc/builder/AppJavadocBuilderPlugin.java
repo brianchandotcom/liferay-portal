@@ -179,10 +179,10 @@ public class AppJavadocBuilderPlugin implements Plugin<Project> {
 		Javadoc javadoc,
 		AppJavadocBuilderExtension appJavadocBuilderExtension) {
 
-		CoreJavadocOptions coreJavadocOptions =
-			(CoreJavadocOptions)javadoc.getOptions();
-
 		if (appJavadocBuilderExtension.isDoclintDisabled()) {
+			CoreJavadocOptions coreJavadocOptions =
+				(CoreJavadocOptions)javadoc.getOptions();
+
 			coreJavadocOptions.addStringOption("Xdoclint:none", "-quiet");
 		}
 	}

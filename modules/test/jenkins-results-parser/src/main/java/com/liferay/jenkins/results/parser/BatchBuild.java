@@ -549,10 +549,11 @@ public class BatchBuild extends BaseBuild {
 		JSONObject testReportJSONObject = getTestReportJSONObject();
 
 		int failCount = testReportJSONObject.getInt("failCount");
-		int skipCount = testReportJSONObject.getInt("skipCount");
-		int totalCount = testReportJSONObject.getInt("totalCount");
 
 		if (status.equals("SUCCESS")) {
+			int totalCount = testReportJSONObject.getInt("totalCount");
+			int skipCount = testReportJSONObject.getInt("skipCount");
+
 			return totalCount - skipCount - failCount;
 		}
 

@@ -168,10 +168,10 @@ public class ServiceBuilderBatchTestClassGroup
 		File portalModulesBaseDir = new File(
 			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
 
-		List<File> modifiedFiles =
-			portalGitWorkingDirectory.getModifiedFilesList();
-
 		if (testRelevantChanges) {
+			List<File> modifiedFiles =
+				portalGitWorkingDirectory.getModifiedFilesList();
+
 			List<File> modifiedPortalToolsServiceBuilderFiles =
 				JenkinsResultsParserUtil.getIncludedFiles(
 					null,

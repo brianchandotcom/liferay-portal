@@ -135,12 +135,10 @@ public class BuildLauncher {
 	private static Map<String, String> _getJenkinsBuildParameters(
 		Map<String, String> buildProperties) {
 
-		Map<String, String> jenkinsBuildParameters = new HashMap<>();
-
 		String buildURL = buildProperties.get("BUILD_URL");
 
 		if (buildURL == null) {
-			return jenkinsBuildParameters;
+			return new HashMap<>();
 		}
 
 		return JenkinsResultsParserUtil.getBuildParameters(buildURL);

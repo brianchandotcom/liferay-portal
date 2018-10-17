@@ -438,9 +438,6 @@ public class MBAttachmentsTest {
 			MBMessageLocalServiceUtil.moveMessageAttachmentToTrash(
 				TestPropsValues.getUserId(), _message.getMessageId(), fileName);
 
-		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
-			fileEntryId);
-
 		Assert.assertEquals(
 			initialNotInTrashCount, _message.getAttachmentsFileEntriesCount());
 		Assert.assertEquals(
@@ -462,6 +459,9 @@ public class MBAttachmentsTest {
 				_message.getMessageId(), fileName);
 		}
 		else {
+			FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+				fileEntryId);
+
 			MBMessageLocalServiceUtil.deleteMessageAttachment(
 				_message.getMessageId(), fileEntry.getTitle());
 

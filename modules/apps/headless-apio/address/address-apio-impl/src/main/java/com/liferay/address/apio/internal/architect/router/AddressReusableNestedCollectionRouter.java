@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.address.apio.internal.architect.router.base;
+package com.liferay.address.apio.internal.architect.router;
 
 import com.liferay.address.apio.architect.identifier.AddressIdentifier;
 import com.liferay.apio.architect.credentials.Credentials;
-import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
-import com.liferay.apio.architect.router.NestedCollectionRouter;
+import com.liferay.apio.architect.router.ReusableNestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
+import com.liferay.portal.apio.identifier.ClassNameClassPK;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
@@ -33,18 +33,26 @@ import com.liferay.portal.kernel.service.permission.CommonPermissionUtil;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eduardo Perez
+ * Provides the information necessary to expose the <a
+ * href="http://schema.org/address">Address</a> resources of a <a
+ * href="http://schema.org/Person">Person</a> through a web API. The resources
+ * are mapped from the internal model {@code Address}.
+ *
+ * @author Javier Gamarra
  */
-public abstract class BaseUserAccountAddressNestedCollectionRouter
-	<T extends Identifier<Long>> implements
-		NestedCollectionRouter<Address, Long, AddressIdentifier, Long, T> {
+@Component(immediate = true, service = ReusableNestedCollectionRouter.class)
+public class AddressReusableNestedCollectionRouter
+	implements
+	ReusableNestedCollectionRouter<Address, Long, AddressIdentifier, ClassNameClassPK> {
 
 	@Override
-	public NestedCollectionRoutes<Address, Long, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<Address, Long, Long> builder) {
+	public NestedCollectionRoutes<Address, Long, ClassNameClassPK> collectionRoutes(
+		NestedCollectionRoutes.Builder<Address, Long, ClassNameClassPK>
+			builder) {
 
 		return builder.addGetter(
 			this::_getPageItems, Credentials.class
@@ -58,10 +66,11 @@ public abstract class BaseUserAccountAddressNestedCollectionRouter
 	protected UserService userService;
 
 	private PageItems<Address> _getPageItems(
-			Pagination pagination, long personId, Credentials credentials)
+			Pagination pagination, ClassNameClassPK classNameClassPK,
+			Credentials credentials)
 		throws PortalException {
 
-		User user = userService.getUserById(personId);
+		User user = userService.getUserById(classNameClassPK.getClassPK());
 
 		String className = user.getModelClassName();
 

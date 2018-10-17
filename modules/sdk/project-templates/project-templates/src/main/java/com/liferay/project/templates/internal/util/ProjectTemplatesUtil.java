@@ -43,7 +43,7 @@ public class ProjectTemplatesUtil {
 		}
 
 		Properties projectTemplateJarVersionsProperties =
-			getProjectTemplateJarVersions();
+			getProjectTemplateJarVersionsProperties();
 
 		if (projectTemplateJarVersionsProperties.containsKey(artifactId)) {
 			String version = String.valueOf(
@@ -126,15 +126,16 @@ public class ProjectTemplatesUtil {
 	}
 
 	public static List<String> getArchetypeJarNamesList() throws IOException {
-		Properties projectTemplateJarVersions = getProjectTemplateJarVersions();
+		Properties projectTemplateJarVersionsProperties = getProjectTemplateJarVersionsProperties();
 
 		List<String> archetypeJarNames = new ArrayList<>();
 
 		Set<String> artifactIds =
-			projectTemplateJarVersions.stringPropertyNames();
+			projectTemplateJarVersionsProperties.stringPropertyNames();
 
 		for (String artifactId : artifactIds) {
-			String version = projectTemplateJarVersions.getProperty(artifactId);
+			String version = projectTemplateJarVersionsProperties.getProperty(
+				artifactId);
 
 			String jarName = getArchetypeJarName(artifactId, version);
 
@@ -147,24 +148,25 @@ public class ProjectTemplatesUtil {
 	public static String getArchetypeVersion(String artifactId)
 		throws IOException {
 
-		Properties projectTemplateJarVersions = getProjectTemplateJarVersions();
+		Properties projectTemplateJarVersionsProperties =
+			getProjectTemplateJarVersionsProperties();
 
-		return projectTemplateJarVersions.getProperty(artifactId);
+		return projectTemplateJarVersionsProperties.getProperty(artifactId);
 	}
 
-	public static Properties getProjectTemplateJarVersions()
+	public static Properties getProjectTemplateJarVersionsProperties()
 		throws IOException {
 
-		Properties projectTemplateJarVersions = new Properties();
+		Properties projectTemplateJarVersionsProperties = new Properties();
 
 		try (InputStream inputStream =
 				ProjectTemplatesUtil.class.getResourceAsStream(
 					"/project-template-jar-versions.properties")) {
 
-			projectTemplateJarVersions.load(inputStream);
+			projectTemplateJarVersionsProperties.load(inputStream);
 		}
 
-		return projectTemplateJarVersions;
+		return projectTemplateJarVersionsProperties;
 	}
 
 	public static String getTemplateName(String name) {

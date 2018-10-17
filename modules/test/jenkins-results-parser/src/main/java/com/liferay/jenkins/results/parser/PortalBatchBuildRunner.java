@@ -100,9 +100,60 @@ public abstract class PortalBatchBuildRunner
 			JenkinsResultsParserUtil.join(
 				",", portalBatchBuildData.getTestList()));
 
+		String batchName = portalBatchBuildData.getBatchName();
+
+		Map<String, String> environmentVariables = new HashMap<>();
+
+		if (JenkinsResultsParserUtil.isCINode()) {
+			environmentVariables.put("ANT_OPTS", _getAntOpts(batchName));
+			environmentVariables.put("JAVA_HOME", _getJavaHome(batchName));
+			environmentVariables.put("PATH", _getPath(batchName));
+		}
+
 		AntUtil.callTarget(
 			_getPrimaryPortalDirectory(), "build-test-batch.xml",
-			portalBatchBuildData.getBatchName(), parameters);
+			portalBatchBuildData.getBatchName(), parameters,
+			environmentVariables);
+	}
+
+	private String _getAntOpts(String batchName) {
+		String antOpts = System.getenv("ANT_OPTS");
+
+		if (batchName.endsWith("-jdk7")) {
+			return antOpts.replace("MetaspaceSize", "PermSize");
+		}
+
+		if (batchName.endsWith("-jdk8")) {
+			return antOpts.replace("PermSize", "MetaspaceSize");
+		}
+
+		return antOpts;
+	}
+
+	private String _getJavaHome(String batchName) {
+		if (batchName.endsWith("-jdk7")) {
+			return "/opt/java/jdk8";
+		}
+
+		if (batchName.endsWith("-jdk8")) {
+			return "/opt/java/jdk8";
+		}
+
+		return "/opt/java/jdk";
+	}
+
+	private String _getPath(String batchName) {
+		String path = System.getenv("PATH");
+
+		if (batchName.endsWith("-jdk7")) {
+			return path.replace("jdk", "jdk7");
+		}
+
+		if (batchName.endsWith("-jdk8")) {
+			return path.replace("jdk", "jdk8");
+		}
+
+		return path;
 	}
 
 	private File _getPrimaryPortalDirectory() {

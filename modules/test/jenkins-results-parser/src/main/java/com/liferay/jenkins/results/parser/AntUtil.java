@@ -59,6 +59,13 @@ public class AntUtil {
 		File baseDir, String buildFileName, String targetName,
 		Map<String, String> parameters) {
 
+		callTarget(baseDir, buildFileName, targetName, parameters, null);
+	}
+
+	public static void callTarget(
+		File baseDir, String buildFileName, String targetName,
+		Map<String, String> parameters, Map<String, String> envVariables) {
+
 		String[] bashCommands = new String[3];
 
 		if (JenkinsResultsParserUtil.isWindows()) {
@@ -71,6 +78,28 @@ public class AntUtil {
 		}
 
 		StringBuilder sb = new StringBuilder();
+
+		if (envVariables != null) {
+			for (Map.Entry<String, String> envVariable :
+					envVariables.entrySet()) {
+
+				sb.append("export ");
+				sb.append(envVariable.getKey());
+				sb.append("=");
+
+				String value = envVariable.getValue();
+
+				value = value.trim();
+
+				value = value.replaceAll("\"", "\\\\\"");
+
+				sb.append("\"");
+				sb.append(value);
+				sb.append("\"");
+
+				sb.append(" ; ");
+			}
+		}
 
 		sb.append("ant");
 
@@ -88,11 +117,21 @@ public class AntUtil {
 			for (Map.Entry<String, String> parameter : parameters.entrySet()) {
 				sb.append(" -D");
 				sb.append(parameter.getKey());
-				sb.append("=\"");
-				sb.append(parameter.getValue());
+				sb.append("=");
+
+				String value = parameter.getValue();
+
+				value = value.trim();
+
+				value = value.replaceAll("\"", "\\\\\"");
+
+				sb.append("\"");
+				sb.append(value);
 				sb.append("\"");
 			}
 		}
+
+		System.out.println(sb.toString());
 
 		bashCommands[2] = sb.toString();
 

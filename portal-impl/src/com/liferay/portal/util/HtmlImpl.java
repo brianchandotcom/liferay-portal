@@ -237,24 +237,6 @@ public class HtmlImpl implements Html {
 				if (!_VALID_CHARS[c]) {
 					String replacement = null;
 
-					if (mode == ESCAPE_MODE_ATTRIBUTE) {
-						if (c == CharPool.AMPERSAND) {
-							replacement = StringPool.AMPERSAND_ENCODED;
-						}
-						else if (c == CharPool.APOSTROPHE) {
-							replacement = "&#39;";
-						}
-						else if (c == CharPool.QUOTE) {
-							replacement = "&quot;";
-						}
-						else if (!_isValidXmlCharacter(c)) {
-							replacement = StringPool.SPACE;
-						}
-						else {
-							continue;
-						}
-					}
-
 					if (sb == null) {
 						sb = new StringBuilder(text.length() + 64);
 					}
@@ -263,26 +245,21 @@ public class HtmlImpl implements Html {
 						sb.append(text, lastReplacementIndex, i);
 					}
 
-					if (replacement != null) {
-						sb.append(replacement);
-					}
-					else {
-						sb.append(prefix);
+					sb.append(prefix);
 
-						_appendHexChars(sb, hexBuffer, c);
+					_appendHexChars(sb, hexBuffer, c);
 
-						sb.append(postfix);
+					sb.append(postfix);
 
-						if ((mode == ESCAPE_MODE_CSS) &&
-							(i < (text.length() - 1))) {
+					if ((mode == ESCAPE_MODE_CSS) &&
+						(i < (text.length() - 1))) {
 
-							char nextChar = text.charAt(i + 1);
+						char nextChar = text.charAt(i + 1);
 
-							if ((nextChar >= CharPool.NUMBER_0) &&
-								(nextChar <= CharPool.NUMBER_9)) {
+						if ((nextChar >= CharPool.NUMBER_0) &&
+							(nextChar <= CharPool.NUMBER_9)) {
 
-								sb.append(CharPool.SPACE);
-							}
+							sb.append(CharPool.SPACE);
 						}
 					}
 

@@ -24,10 +24,10 @@ import java.util.Date;
 public class AssignToMeForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code AssignToMeForm}
-	 * depending on the HTTP body.
+	 * Builds a {@code Form} that generates {@code AssignToMeForm} depending on
+	 * the HTTP body.
 	 *
-	 * @param formBuilder the {@code Form} builder
+	 * @param  formBuilder the {@code Form} builder
 	 * @return a context form instance
 	 * @review
 	 */

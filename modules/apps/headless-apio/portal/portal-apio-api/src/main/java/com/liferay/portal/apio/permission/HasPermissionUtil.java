@@ -33,7 +33,9 @@ import java.util.function.BiFunction;
 public class HasPermissionUtil {
 
 	/**
-	 * Execute the received function and transforms any occurred exception into a {@code false}
+	 * Execute the received function and transforms any occurred exception into
+	 * a {@code false}
+	 *
 	 * @review
 	 */
 	public static BiFunction<Credentials, Long, Boolean> failOnException(

@@ -22,13 +22,10 @@ import com.liferay.person.apio.internal.model.UserWrapper;
 import com.liferay.phone.apio.architect.identifier.PhoneIdentifier;
 import com.liferay.portal.apio.identifier.ClassNameClassPK;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ContactModel;
 import com.liferay.portal.kernel.model.ListType;
-import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.service.ListTypeService;
 import com.liferay.role.apio.identifier.RoleIdentifier;
 import com.liferay.web.url.apio.architect.identifier.WebUrlIdentifier;
@@ -70,20 +67,15 @@ public class UserAccountRepresentorBuilderHelperImpl
 				"ContactInformation"
 			).addRelatedCollection(
 				"address", AddressIdentifier.class,
-				userWrapper -> ClassNameClassPK.create(
-					Address.class.getName(), userWrapper.getUserId())
+				this::_createClassNameAndClassPK
 			).addRelatedCollection(
-				"email", EmailIdentifier.class,
-				userWrapper -> ClassNameClassPK.create(
-					User.class.getName(), userWrapper.getUserId())
+				"email", EmailIdentifier.class, this::_createClassNameAndClassPK
 			).addRelatedCollection(
 				"telephone", PhoneIdentifier.class,
-				userWrapper -> ClassNameClassPK.create(
-					Phone.class.getName(), userWrapper.getUserId())
+				this::_createClassNameAndClassPK
 			).addRelatedCollection(
 				"webUrl", WebUrlIdentifier.class,
-				userWrapper -> ClassNameClassPK.create(
-					Website.class.getName(), userWrapper.getUserId())
+				this::_createClassNameAndClassPK
 			).addString(
 				"facebook",
 				userWrapper -> _getContactInfo(
@@ -148,6 +140,13 @@ public class UserAccountRepresentorBuilderHelperImpl
 		).orElse(
 			null
 		);
+	}
+
+	private ClassNameClassPK _createClassNameAndClassPK(
+		UserWrapper userWrapper) {
+
+		return ClassNameClassPK.create(
+			User.class.getName(), userWrapper.getUserId());
 	}
 
 	private BiFunction<UserWrapper, Locale, String> _getContactField(

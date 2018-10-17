@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
+<taglib xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
 	<tlib-version>1.0</tlib-version>
 	<short-name>liferay-form</short-name>
 	<uri>http://liferay.com/tld/form</uri>
@@ -54,25 +54,25 @@
 		<tag-class>com.liferay.dynamic.data.mapping.form.taglib.servlet.taglib.DDMFormRendererTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>formInstanceId</name>
+			<name>ddmFormInstanceId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.Long</type>
 		</attribute>
 		<attribute>
-			<name>formInstanceRecordId</name>
+			<name>ddmFormInstanceRecordId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.Long</type>
 		</attribute>
 		<attribute>
-			<name>formInstanceRecordVersionId</name>
+			<name>ddmFormInstanceRecordVersionId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.Long</type>
 		</attribute>
 		<attribute>
-			<name>formInstanceVersionId</name>
+			<name>ddmFormInstanceVersionId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.Long</type>

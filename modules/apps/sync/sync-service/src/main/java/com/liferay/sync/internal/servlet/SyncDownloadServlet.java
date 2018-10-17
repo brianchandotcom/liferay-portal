@@ -76,7 +76,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -101,10 +100,8 @@ public class SyncDownloadServlet extends HttpServlet {
 		throws IOException, ServletException {
 
 		try {
-			HttpSession session = request.getSession();
-
 			if (PortalSessionThreadLocal.getHttpSession() == null) {
-				PortalSessionThreadLocal.setHttpSession(session);
+				PortalSessionThreadLocal.setHttpSession(request.getSession());
 			}
 
 			User user = _portal.getUser(request);

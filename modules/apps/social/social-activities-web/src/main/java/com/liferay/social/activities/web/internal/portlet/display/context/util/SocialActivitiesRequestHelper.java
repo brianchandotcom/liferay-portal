@@ -126,9 +126,9 @@ public class SocialActivitiesRequestHelper extends BaseRequestHelper {
 			return _rssEnabled;
 		}
 
-		PortletPreferences portletPreferences = _getPortletPreferences();
-
 		if (PortalUtil.isRSSFeedsEnabled()) {
+			PortletPreferences portletPreferences = _getPortletPreferences();
+
 			_rssEnabled = GetterUtil.getBoolean(
 				portletPreferences.getValue("enableRss", null), true);
 		}

@@ -91,13 +91,14 @@ public class TranslatorPortlet extends MVCPortlet {
 			TranslatorConfiguration.class.getName(), _translatorConfiguration);
 
 		try {
-			String fromLanguageId = ParamUtil.getString(
-				actionRequest, "fromLanguageId");
-			String toLanguageId = ParamUtil.getString(
-				actionRequest, "toLanguageId");
 			String fromText = ParamUtil.getString(actionRequest, "text");
 
 			if (Validator.isNotNull(fromText)) {
+				String fromLanguageId = ParamUtil.getString(
+					actionRequest, "fromLanguageId");
+				String toLanguageId = ParamUtil.getString(
+					actionRequest, "toLanguageId");
+
 				Translation translation = TranslatorUtil.getTranslation(
 					fromLanguageId, toLanguageId, fromText);
 

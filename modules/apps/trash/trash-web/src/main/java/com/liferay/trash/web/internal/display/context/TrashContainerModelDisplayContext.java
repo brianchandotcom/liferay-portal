@@ -223,14 +223,14 @@ public class TrashContainerModelDisplayContext {
 			return _missingContainerMessageArguments;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String trashRendererTitle = StringPool.BLANK;
 
 		TrashRenderer trashRenderer = getTrashRenderer();
 
 		if (trashRenderer != null) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 			trashRendererTitle = trashRenderer.getTitle(
 				themeDisplay.getLocale());
 		}
@@ -301,13 +301,13 @@ public class TrashContainerModelDisplayContext {
 			return _showBackIcon;
 		}
 
-		TrashHandler containerTrashHandler =
-			TrashHandlerRegistryUtil.getTrashHandler(
-				getContainerModelClassName());
-
 		ContainerModel containerModel = null;
 
 		if (getContainerModelId() > 0) {
+			TrashHandler containerTrashHandler =
+				TrashHandlerRegistryUtil.getTrashHandler(
+					getContainerModelClassName());
+
 			containerModel = containerTrashHandler.getContainerModel(
 				getContainerModelId());
 		}

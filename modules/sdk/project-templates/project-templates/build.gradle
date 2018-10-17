@@ -5,6 +5,7 @@ import org.gradle.execution.ProjectConfigurer
 import org.gradle.util.GUtil
 
 task cleanProjectTemplatesTests(type: Delete)
+task projectTemplateJarVersions
 task uploadProjectTemplateArchives
 task writeProjectTemplateVersions
 
@@ -71,7 +72,7 @@ dependencies {
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.content.targeting.rule", version: "1.0.17"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.content.targeting.tracking.action", version: "1.0.17"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.control.menu.entry", version: "1.0.17"
-	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.form.field", version: "1.0.15"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.form.field", version: "1.0.16"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.fragment", version: "1.0.16"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.freemarker.portlet", version: "1.0.13"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.layout.template", version: "1.0.14"
@@ -118,11 +119,31 @@ liferayOSGi {
 
 processResources {
 	from configurations.projectTemplates
+	from projectTemplateJarVersions
 }
 
 processTestResources {
 	dependsOn cleanProjectTemplatesTests
 	from configurations.projectTemplatesTests
+}
+
+projectTemplateJarVersions {
+	File projectTemplateVersionsFile = new File(buildDir, "project-template-jar-versions.properties")
+
+	outputs.file(projectTemplateVersionsFile)
+
+	Properties properties = new Properties()
+
+	doFirst {
+		configurations.projectTemplates.dependencies.each {
+			properties.setProperty(it.name, it.version)
+		}
+
+	}
+
+	doLast {
+		properties.store(projectTemplateVersionsFile.newWriter(), null)
+	}
 }
 
 test {

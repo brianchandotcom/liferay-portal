@@ -19,6 +19,7 @@ import aQute.bnd.main.bnd;
 import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.project.templates.internal.ProjectGenerator;
 import com.liferay.project.templates.internal.util.FileUtil;
+import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
 import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.util.DirectoryComparator;
 import com.liferay.project.templates.util.FileTestUtil;
@@ -54,10 +55,12 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
@@ -128,9 +131,6 @@ public class ProjectTemplatesTest {
 		}
 
 		_gradleDistribution = URI.create(gradleDistribution);
-
-		_projectTemplateVersions = FileUtil.readProperties(
-			Paths.get("build", "project-template-versions.properties"));
 
 		XPathFactory xPathFactory = XPathFactory.newInstance();
 
@@ -3645,25 +3645,27 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testListTemplatesWithCustomArchetypesDir() throws Exception {
-		File archetypesDir = FileUtil.getJarFile(ProjectTemplatesTest.class);
+		Properties archetypesProperties =
+			ProjectTemplatesUtil.getProjectTemplateJarVersionsProperties();
 
-		Path templateFilePath = FileTestUtil.getFile(
-			archetypesDir.toPath(), "*.jar");
+		Set<String> artifactIds = archetypesProperties.stringPropertyNames();
 
-		Assert.assertNotNull(templateFilePath);
+		Iterator<String> artifactIdIterator = artifactIds.iterator();
+
+		String artifactId = artifactIdIterator.next();
+
+		File templateFile = ProjectTemplatesUtil.getArchetypeFile(artifactId);
+
+		Path templateFilePath = templateFile.toPath();
 
 		File customArchetypesDir = temporaryFolder.newFolder();
 
 		Path customArchetypesDirPath = customArchetypesDir.toPath();
 
-		String fileName = String.valueOf(templateFilePath.getFileName());
-
-		String suffix = fileName.substring(fileName.indexOf('-'));
-
 		Files.copy(
 			templateFilePath,
 			customArchetypesDirPath.resolve(
-				"custom.name.project.templates.foo.bar-" + suffix));
+				"custom.name.project.templates.foo.bar-1.2.3.jar"));
 
 		List<File> customArchetypesDirs = new ArrayList<>();
 
@@ -3809,12 +3811,6 @@ public class ProjectTemplatesTest {
 
 		List<String> completeArgs = new ArrayList<>(args.length + 6);
 
-		completeArgs.add("--archetypes-dir");
-
-		File archetypesDir = FileUtil.getJarFile(ProjectTemplatesTest.class);
-
-		completeArgs.add(archetypesDir.getPath());
-
 		completeArgs.add("--destination");
 		completeArgs.add(destinationDir.getPath());
 
@@ -3918,8 +3914,8 @@ public class ProjectTemplatesTest {
 
 		completeArgs.add("-DarchetypeArtifactId=" + archetypeArtifactId);
 
-		String projectTemplateVersion = _projectTemplateVersions.getProperty(
-			archetypeArtifactId);
+		String projectTemplateVersion =
+			ProjectTemplatesUtil.getArchetypeVersion(archetypeArtifactId);
 
 		Assert.assertTrue(
 			"Unable to get project template version",
@@ -4337,8 +4333,6 @@ public class ProjectTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		projectTemplatesArgs.setArchetypesDirs(
-			Arrays.asList(FileUtil.getJarFile(ProjectTemplatesTest.class)));
 		projectTemplatesArgs.setAuthor(author);
 		projectTemplatesArgs.setClassName(className);
 		projectTemplatesArgs.setContributorType(contributorType);
@@ -5545,7 +5539,6 @@ public class ProjectTemplatesTest {
 		".*com\\.liferay\\.gradle\\.plugins:([0-9]+\\.[0-9]+\\.[0-9]+).*",
 		Pattern.DOTALL | Pattern.MULTILINE);
 	private static XPathExpression _pomXmlNpmInstallXPathExpression;
-	private static Properties _projectTemplateVersions;
 	private static final Pattern _serviceBuilderVersionPattern =
 		Pattern.compile(
 			".*service\\.builder:([0-9]+\\.[0-9]+\\.[0-9]+).*",

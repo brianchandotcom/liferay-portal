@@ -94,8 +94,6 @@ public class MessageSenderJob implements Job {
 
 		message.put(SchedulerEngine.DESTINATION_NAME, destinationName);
 
-		JobKey jobKey = jobDetail.getKey();
-
 		Map<String, Object> jobStateMap = (Map<String, Object>)jobDataMap.get(
 			SchedulerEngine.JOB_STATE);
 
@@ -106,6 +104,8 @@ public class MessageSenderJob implements Job {
 
 		if (jobExecutionContext.getNextFireTime() == null) {
 			message.put(SchedulerEngine.DISABLE, true);
+
+			JobKey jobKey = jobDetail.getKey();
 
 			if (GetterUtil.getBoolean(
 					_props.get(PropsKeys.CLUSTER_LINK_ENABLED)) &&

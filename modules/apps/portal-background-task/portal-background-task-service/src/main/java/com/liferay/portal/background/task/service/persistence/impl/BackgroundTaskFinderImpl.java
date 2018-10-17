@@ -89,11 +89,11 @@ public class BackgroundTaskFinderImpl
 	}
 
 	private String _getGroupCriteria(long[] groupIds) {
-		StringBundler sb = new StringBundler();
-
 		String result = StringPool.BLANK;
 
 		if (groupIds.length > 0) {
+			StringBundler sb = new StringBundler(groupIds.length + 2);
+
 			sb.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < groupIds.length; i++) {
@@ -110,11 +110,11 @@ public class BackgroundTaskFinderImpl
 	}
 
 	private String _getTaskExecutorClassNameCriteria(String[] classNames) {
-		StringBundler sb = new StringBundler();
-
 		String result = StringPool.BLANK;
 
 		if (classNames.length > 0) {
+			StringBundler sb = new StringBundler(classNames.length + 2);
+
 			sb.append(StringPool.OPEN_PARENTHESIS);
 
 			for (int i = 0; i < classNames.length; i++) {

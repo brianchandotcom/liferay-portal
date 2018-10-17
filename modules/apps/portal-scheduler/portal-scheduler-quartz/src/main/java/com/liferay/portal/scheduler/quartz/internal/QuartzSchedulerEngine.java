@@ -796,13 +796,14 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 					continue;
 				}
 
-				JobDetail jobDetail = _persistedScheduler.getJobDetail(jobKey);
-
-				JobDataMap jobDataMap = jobDetail.getJobDataMap();
-
-				Message message = getMessage(jobDataMap);
-
 				if (_schedulerEngineHelper != null) {
+					JobDetail jobDetail = _persistedScheduler.getJobDetail(
+						jobKey);
+
+					JobDataMap jobDataMap = jobDetail.getJobDataMap();
+
+					Message message = getMessage(jobDataMap);
+
 					_schedulerEngineHelper.auditSchedulerJobs(
 						message, TriggerState.EXPIRED);
 				}

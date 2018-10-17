@@ -319,9 +319,9 @@ public class CalendarDisplayContext {
 			Group calendarGroup = _groupLocalService.getGroup(
 				calendar.getGroupId());
 
-			long calendarGroupId = calendarGroup.getGroupId();
-
 			if (scopeGroup.isStagingGroup()) {
+				long calendarGroupId = calendarGroup.getGroupId();
+
 				if (calendarGroup.isStagingGroup()) {
 					if (scopeGroupId != calendarGroupId) {
 						calendar =

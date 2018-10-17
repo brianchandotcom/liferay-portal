@@ -41,7 +41,6 @@ public class ConfigurationDescriptionFactoryImpl
 			return null;
 		}
 
-		String factoryPid = null;
 		String pid = null;
 
 		String name = namedConfigurationContent.getName();
@@ -49,7 +48,7 @@ public class ConfigurationDescriptionFactoryImpl
 		int index = name.lastIndexOf('-');
 
 		if (index > 0) {
-			factoryPid = name.substring(0, index);
+			String factoryPid = name.substring(0, index);
 			pid = name.substring(index + 1);
 
 			return new FactoryConfigurationDescription(

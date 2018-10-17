@@ -83,7 +83,7 @@ setting the property `testIntegrationTomcat.hostName`. The default value is
 ## 2.4.0 - 2018-10-16
 
 ### Added
-- [LPS-86447]: Added ability to set environment vars for launching Tomcat.
+- [LPS-86447]: Added ability to set environment variables for launching Tomcat.
 
 [Liferay Portal Test]: https://github.com/liferay/liferay-portal/tree/master/portal-test
 [Liferay Portal Test Integration]: https://github.com/liferay/liferay-portal/tree/master/portal-test-integration

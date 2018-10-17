@@ -156,12 +156,10 @@ public class DetailASTUtil {
 	}
 
 	public static List<DetailAST> getParameterDefs(DetailAST detailAST) {
-		List<DetailAST> list = new ArrayList<>();
-
 		if ((detailAST.getType() != TokenTypes.CTOR_DEF) &&
 			(detailAST.getType() != TokenTypes.METHOD_DEF)) {
 
-			return list;
+			return new ArrayList<>();
 		}
 
 		DetailAST parametersAST = detailAST.findFirstToken(

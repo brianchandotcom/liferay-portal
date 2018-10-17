@@ -284,13 +284,14 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 
 			String strippedFinderName1 = finderName1.substring(
 				startsWithWeight);
-			String strippedFinderName2 = finderName2.substring(
-				startsWithWeight);
 
 			if (strippedFinderName1.startsWith("Gt") ||
 				strippedFinderName1.startsWith("Like") ||
 				strippedFinderName1.startsWith("Lt") ||
 				strippedFinderName1.startsWith("Not")) {
+
+				String strippedFinderName2 = finderName2.substring(
+					startsWithWeight);
 
 				if (!strippedFinderName2.startsWith("Gt") &&
 					!strippedFinderName2.startsWith("Like") &&

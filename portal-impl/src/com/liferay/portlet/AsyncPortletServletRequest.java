@@ -67,9 +67,8 @@ public class AsyncPortletServletRequest extends HttpServletRequestWrapper {
 			ServletContext servletContext = ServletContextPool.get(
 				PortalContextLoaderListener.getPortalServletContextName());
 
-			Map<String, ServletRegistration> servletRegistrationMap =
-				(Map<String, ServletRegistration>)
-					servletContext.getServletRegistrations();
+			Map<String, ? extends ServletRegistration> servletRegistrationMap =
+				servletContext.getServletRegistrations();
 
 			Set<String> servletURLPatterns = new HashSet<>();
 

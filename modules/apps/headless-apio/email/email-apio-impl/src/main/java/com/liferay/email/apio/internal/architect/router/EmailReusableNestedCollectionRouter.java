@@ -23,8 +23,10 @@ import com.liferay.portal.apio.identifier.ClassNameClassPK;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.EmailAddress;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.EmailAddressService;
+import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.UserService;
 
 import java.util.List;
@@ -34,9 +36,8 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose the <a
- * href="http://schema.org/email">Email</a> resources of a <a
- * href="http://schema.org/Person">Person</a> through a web API. The resources
- * are mapped from the internal model {@code EmailAddress}.
+ * href="http://schema.org/email">Email</a> resources through a web API. The
+ * resources are mapped from the internal model {@code EmailAddress}.
  *
  * @author Javier Gamarra
  * @review
@@ -57,15 +58,35 @@ public class EmailReusableNestedCollectionRouter
 		).build();
 	}
 
+	private List<EmailAddress> _getEmailAdresses(
+			ClassNameClassPK classNameClassPK)
+		throws PortalException {
+
+		String className = classNameClassPK.getClassName();
+
+		long classPK = classNameClassPK.getClassPK();
+
+		if (className.equals(Organization.class.getName())) {
+			Organization organization = _organizationService.getOrganization(
+				classPK);
+
+			return _emailAddressService.getEmailAddresses(
+				organization.getModelClassName(),
+				organization.getOrganizationId());
+		}
+		else {
+			User user = _userService.getUserById(classPK);
+
+			return _emailAddressService.getEmailAddresses(
+				Contact.class.getName(), user.getContactId());
+		}
+	}
+
 	private PageItems<EmailAddress> _getPageItems(
 			Pagination pagination, ClassNameClassPK classNameClassPK)
 		throws PortalException {
 
-		User user = _userService.getUserById(classNameClassPK.getClassPK());
-
-		List<EmailAddress> emailAddresses =
-			_emailAddressService.getEmailAddresses(
-				Contact.class.getName(), user.getContactId());
+		List<EmailAddress> emailAddresses = _getEmailAdresses(classNameClassPK);
 
 		int count = emailAddresses.size();
 
@@ -78,6 +99,9 @@ public class EmailReusableNestedCollectionRouter
 
 	@Reference
 	private EmailAddressService _emailAddressService;
+
+	@Reference
+	private OrganizationService _organizationService;
 
 	@Reference
 	private UserService _userService;

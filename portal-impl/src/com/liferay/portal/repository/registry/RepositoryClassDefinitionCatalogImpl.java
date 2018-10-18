@@ -65,6 +65,10 @@ public class RepositoryClassDefinitionCatalogImpl
 		}
 	}
 
+	public void destroy() {
+		_serviceTracker.close();
+	}
+
 	@Override
 	public Iterable<RepositoryClassDefinition>
 		getExternalRepositoryClassDefinitions() {

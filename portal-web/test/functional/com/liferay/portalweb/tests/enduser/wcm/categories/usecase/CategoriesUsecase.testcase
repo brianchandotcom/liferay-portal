@@ -112,6 +112,14 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name/category-page-name" />
+		</execute>
+
+		<execute macro="SearchPortlets#addWidgets">
+			<var name="searchPortletList" value="Search Bar,Search Results" />
+		</execute>
+
 		<execute macro="WebContent#openWebContentAdmin">
 			<var name="siteURLKey" value="test-site-name" />
 		</execute>
@@ -151,7 +159,7 @@
 			<var name="urlAppend" value="web/test-site-name/category-page-name" />
 		</execute>
 
-		<execute macro="SearchPortlets#searchEmbedded">
+		<execute macro="SearchPortlets#searchWidget">
 			<var name="searchTerm" value="Kategorienamen" />
 		</execute>
 
@@ -1423,7 +1431,11 @@
 			<var name="urlAppend" value="web/test-site-name/search-page" />
 		</execute>
 
-		<execute macro="SearchPortlets#searchEmbedded">
+		<execute macro="SearchPortlets#addWidgets">
+			<var name="searchPortletList" value="Search Bar,Search Results" />
+		</execute>
+
+		<execute macro="SearchPortlets#searchWidget">
 			<var name="searchTerm" value="Edited" />
 		</execute>
 

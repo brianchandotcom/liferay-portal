@@ -220,8 +220,6 @@
 			<var name="key_itemName" value="${itemName}" />
 		</execute>
 
-		<execute function="Pause" value1="3000" />
-
 		<execute function="Refresh" />
 	</command>
 

@@ -581,8 +581,6 @@
 
 		<execute function="AssertClick" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_ATTEND_ACTIVE" value1="${rsvp}" />
 
-		<execute function="Pause" value1="3000" />
-
 		<if>
 			<condition function="IsElementPresent" locator1="CalendarEditEvent#ENTIRE_SERIES_BUTTON" />
 			<then>
@@ -679,34 +677,25 @@
 						<if>
 							<condition function="IsElementPresent" locator1="xpath=(//input[contains(@value,'Repeating')])" />
 							<then>
-								<execute function="Pause" value1="1000" />
 
 								<execute function="AssertClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 
 								<execute function="AssertClick" locator1="CalendarEditEvent#ENTIRE_SERIES_BUTTON" value1="Entire Series" />
-
-								<execute function="Pause" value1="10000" />
 							</then>
 							<elseif>
 								<condition function="IsTextEqual" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_USERS_FIELD" value1="—" />
 								<then>
-									<execute function="Pause" value1="1000" />
 
 									<execute function="AssertClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 
 									<execute function="AssertConfirm#waitForConfirmation" value1="Would you like to delete this event?" />
-
-									<execute function="Pause" value1="2000" />
 								</then>
 							</elseif>
 							<else>
-								<execute function="Pause" value1="1000" />
 
 								<execute function="AssertClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 
 								<execute function="AssertConfirm#waitForConfirmation" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
-
-								<execute function="Pause" value1="2000" />
 							</else>
 						</if>
 					</else>
@@ -747,8 +736,6 @@
 		</if>
 
 		<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" />
-
-		<execute function="Pause" value1="1000" />
 
 		<execute function="ClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 
@@ -915,8 +902,6 @@
 
 					<execute function="Click" locator1="CalendarEditEvent#END_DATE_TIME" />
 
-					<execute function="Pause" value1="1000" />
-
 					<if>
 						<equals arg1="${optionSet}" arg2="true" />
 						<then>
@@ -952,8 +937,6 @@
 					<execute function="Type" locator1="CalendarEditEvent#END_DATE_TIME" value1="${endDateTime}" />
 
 					<execute function="Click" locator1="CalendarEditEvent#END_DATE_TIME" />
-
-					<execute function="Pause" value1="1000" />
 
 					<execute function="AssertChecked" locator1="CalendarEditEvent#REPEAT_CHECKBOX" />
 					<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_SUMMARY" value1="Daily, 1 Times" />
@@ -1056,8 +1039,6 @@
 
 	<command name="publishRepeating">
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Publish" />
-
-		<execute function="Pause" value1="30000" />
 
 		<execute function="AssertElementPresent" locator1="CalendarEditEvent#RECURRING_EVENT_DIALOG_BOX_HEADER" />
 
@@ -1222,11 +1203,7 @@
 			</then>
 		</if>
 
-		<execute function="Pause" value1="1000" />
-
 		<execute function="Click" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" />
-
-		<execute function="Pause" value1="1000" />
 
 		<if>
 			<equals arg1="${frequency}" arg2="Monthly" />
@@ -1298,11 +1275,7 @@
 
 		<execute function="Click" locator1="CalendarEditEvent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_RADIO" />
 
-		<execute function="Pause" value1="1000" />
-
 		<execute function="Click" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" />
-
-		<execute function="Pause" value1="1000" />
 
 		<if>
 			<condition function="IsTextEqual" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${yearlyRecurrenceSummary}" />

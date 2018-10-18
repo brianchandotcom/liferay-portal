@@ -228,8 +228,6 @@
 			<var name="viewType" value="Day" />
 		</execute>
 
-		<execute function="Pause" value1="1000" />
-
 		<var name="key_eventTitle" value="${eventTitle}" />
 
 		<if>

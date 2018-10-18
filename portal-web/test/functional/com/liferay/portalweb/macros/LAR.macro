@@ -113,8 +113,6 @@
 					<then>
 
 						<execute function="Check" locator1="ExportImport#CONTENT" />
-
-						<execute function="Pause" value1="1000" />
 					</then>
 				</if>
 			</then>
@@ -343,8 +341,6 @@
 							<condition function="IsNotChecked" locator1="ExportImport#CONTENT" />
 							<then>
 								<execute function="Check" locator1="ExportImport#CONTENT" />
-
-								<execute function="Pause" value1="1000" />
 							</then>
 						</if>
 					</then>

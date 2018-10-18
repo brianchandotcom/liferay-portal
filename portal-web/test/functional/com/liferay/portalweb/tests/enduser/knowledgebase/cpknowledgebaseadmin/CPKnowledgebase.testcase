@@ -358,8 +358,6 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
-		<execute function="Pause" value1="5000" />
-
 		<execute macro="KBArticle#viewCPWithHTML">
 			<var name="kbArticleContent" value="Knowledge Base’s Article Content" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />

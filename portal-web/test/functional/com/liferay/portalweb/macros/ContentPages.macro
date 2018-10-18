@@ -44,7 +44,15 @@
 		<execute function="SelectFrame#selectFrameTop" />
 	</command>
 
-	<command name="gotoEdit">
-		<execute function="Click" locator1="Icon#EDIT_PENCIL" />
+	<command name="gotoEditMode">
+		<execute function="Click" locator1="ToggleSwitch#EDIT_MODE" />
+
+		<execute function="AssertLocation#assertPartialLocation" value1="mode=edit" />
+	</command>
+
+	<command name="gotoViewMode">
+		<execute function="Click" locator1="ToggleSwitch#EDIT_MODE" />
+
+		<execute function="AssertLocation#assertPartialLocation" value1="mode=view" />
 	</command>
 </definition>

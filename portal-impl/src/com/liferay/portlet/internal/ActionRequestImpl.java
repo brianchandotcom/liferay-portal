@@ -60,10 +60,10 @@ public class ActionRequestImpl
 			request, portlet, invokerPortlet, portletContext, windowState,
 			portletMode, preferences, plid);
 
-		String portletNamespace = PortalUtil.getPortletNamespace(
-			getPortletName());
-
 		if (getPortletSpecMajorVersion() >= 3) {
+			String portletNamespace = PortalUtil.getPortletNamespace(
+				getPortletName());
+
 			_actionParameters = new ActionParametersImpl(
 				getPortletParameterMap(request, portletNamespace),
 				portletNamespace);

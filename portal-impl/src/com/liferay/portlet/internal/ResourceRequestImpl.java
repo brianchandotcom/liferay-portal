@@ -177,10 +177,10 @@ public class ResourceRequestImpl
 			_resourceID = StringPool.BLANK;
 		}
 
-		String portletNamespace = PortalUtil.getPortletNamespace(
-			getPortletName());
-
 		if (getPortletSpecMajorVersion() >= 3) {
+			String portletNamespace = PortalUtil.getPortletNamespace(
+				getPortletName());
+
 			_resourceParameters = new ResourceParametersImpl(
 				getPortletParameterMap(request, portletNamespace),
 				portletNamespace);

@@ -388,9 +388,10 @@ public class HeaderResponseImpl
 			if (existingKeyParts.length == 3) {
 				String existingName = existingKeyParts[0];
 				String existingScope = existingKeyParts[1];
-				String existingVersion = existingKeyParts[2];
 
 				if (name.equals(existingName) && scope.equals(existingScope)) {
+					String existingVersion = existingKeyParts[2];
+
 					SemVer existingSemVer = new SemVer(existingVersion);
 
 					if (existingSemVer.compareTo(semVer) < 0) {

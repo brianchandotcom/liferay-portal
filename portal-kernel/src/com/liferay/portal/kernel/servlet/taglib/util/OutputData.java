@@ -126,9 +126,9 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 
 			String outputKey = dataKey._outputKey;
 
-			StringBundler sb = entry.getValue();
-
 			if (!_outputKeys.contains(outputKey)) {
+				StringBundler sb = entry.getValue();
+
 				StringBundler mergedSB = _dataMap.get(dataKey);
 
 				if (mergedSB == null) {

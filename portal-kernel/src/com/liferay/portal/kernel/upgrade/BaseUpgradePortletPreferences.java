@@ -282,11 +282,11 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 					long portletPreferencesId = rs.getLong(
 						"portletPreferencesId");
 					long companyId = rs.getLong("companyId");
-					long ownerId = rs.getLong("ownerId");
-					int ownerType = rs.getInt("ownerType");
-					long plid = rs.getLong("plid");
 
 					if (companyId > 0) {
+						int ownerType = rs.getInt("ownerType");
+						long plid = rs.getLong("plid");
+						long ownerId = rs.getLong("ownerId");
 						String portletId = rs.getString("portletId");
 						String preferences = GetterUtil.getString(
 							rs.getString("preferences"));

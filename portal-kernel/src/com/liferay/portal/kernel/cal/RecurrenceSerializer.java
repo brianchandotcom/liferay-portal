@@ -38,7 +38,6 @@ public class RecurrenceSerializer {
 
 		DayAndPosition[] byDay = recurrence.getByDay();
 		int[] byMonthDay = recurrence.getByMonthDay();
-		int[] byMonth = recurrence.getByMonth();
 
 		String startDateSecond = String.valueOf(dtStart.get(Calendar.SECOND));
 		String startDateMinute = String.valueOf(dtStart.get(Calendar.MINUTE));
@@ -116,6 +115,8 @@ public class RecurrenceSerializer {
 			}
 		}
 		else if (frequency == Recurrence.YEARLY) {
+			int[] byMonth = recurrence.getByMonth();
+
 			dayOfMonth = StringPool.QUESTION;
 			dayOfWeek = StringPool.QUESTION;
 			year += _getIntervalValue(interval, Recurrence.YEARLY);

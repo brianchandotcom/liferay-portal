@@ -954,10 +954,6 @@ public class PortletContainerImpl implements PortletContainer {
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
 				request, portlet.getPortletId());
 
-		PortletPreferences portletPreferences =
-			PortletPreferencesLocalServiceUtil.getStrictPreferences(
-				portletPreferencesIds);
-
 		ServletContext servletContext = (ServletContext)request.getAttribute(
 			WebKeys.CTX);
 
@@ -966,8 +962,6 @@ public class PortletContainerImpl implements PortletContainer {
 
 		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
 			portlet, servletContext);
-
-		PortletContext portletContext = portletConfig.getPortletContext();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -1003,6 +997,11 @@ public class PortletContainerImpl implements PortletContainer {
 		LiferayResourceResponse liferayResourceResponse = null;
 
 		if (liferayResourceRequest == null) {
+			PortletContext portletContext = portletConfig.getPortletContext();
+			PortletPreferences portletPreferences =
+				PortletPreferencesLocalServiceUtil.getStrictPreferences(
+					portletPreferencesIds);
+
 			liferayResourceRequest = ResourceRequestFactory.create(
 				request, portlet, invokerPortlet, portletContext, windowState,
 				portletMode, portletPreferences, layout.getPlid());

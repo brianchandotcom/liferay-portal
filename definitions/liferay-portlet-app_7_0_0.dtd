@@ -93,7 +93,7 @@ users to configure the portlet at runtime.
 
 See:
 
-http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/message-boards/message-boards-web/src/main/java/com/liferay/message/boards/web/portlet/action/MBAdminConfigurationAction.java
+http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/collaboration/message-boards/message-boards-web/src/main/java/com/liferay/message/boards/web/internal/portlet/action/MBAdminConfigurationAction.java
 -->
 <!ELEMENT configuration-action-class (#PCDATA)>
 
@@ -207,7 +207,7 @@ example of its uses.
 
 See:
 
-http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/wiki/wiki-web/src/main/java/com/liferay/wiki/web/portlet/route/WikiFriendlyURLMapper.java
+http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/collaboration/wiki/wiki-web/src/main/java/com/liferay/wiki/web/internal/portlet/route/WikiFriendlyURLMapper.java
 http://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/portal/kernel/portlet/FriendlyURLMapper.html
 -->
 <!ELEMENT friendly-url-mapper-class (#PCDATA)>
@@ -241,8 +241,8 @@ tasks are run.
 
 See:
 
-http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/journal/journal-service/src/main/java/com/liferay/journal/lar/JournalPortletDataHandler.java
-http://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/portlet/exportimport/lar/PortletDataHandler.html
+http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/web-experience/journal/journal-service/src/main/java/com/liferay/journal/exportimport/data/handler/JournalPortletDataHandler.java
+http://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/exportimport/kernel/lar/PortletDataHandler.html
 -->
 <!ELEMENT portlet-data-handler-class (#PCDATA)>
 
@@ -260,7 +260,7 @@ is added, moved, or removed from a layout.
 
 See:
 
-http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/journal/journal-content-web/src/main/java/com/liferay/journal/content/web/JournalContentPortletLayoutListener.java
+http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/web-experience/journal/journal-content-web/src/main/java/com/liferay/journal/content/web/internal/JournalContentPortletLayoutListener.java
 http://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/portal/kernel/portlet/PortletLayoutListener.html
 -->
 <!ELEMENT portlet-layout-listener-class (#PCDATA)>
@@ -284,7 +284,7 @@ emails.
 
 See:
 
-http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/message-boards/message-boards-service/src/main/java/com/liferay/message/boards/pop/MessageListenerImpl.java
+http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/collaboration/message-boards/message-boards-service/src/main/java/com/liferay/message/boards/internal/pop/MessageListenerImpl.java
 http://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/portal/kernel/pop/MessageListener.html
 -->
 <!ELEMENT pop-message-listener-class (#PCDATA)>
@@ -297,8 +297,8 @@ human being.
 
 See:
 
-http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/message-boards/message-boards-web/src/main/java/com/liferay/message/boards/web/social/MBMessageActivityInterpreter.java
-http://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/portlet/social/model/SocialActivityInterpreter.html
+http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/collaboration/message-boards/message-boards-web/src/main/java/com/liferay/message/boards/web/social/MBMessageActivityInterpreter.java
+http://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/social/kernel/model/SocialActivityInterpreter.html
 -->
 <!ELEMENT social-activity-interpreter-class (#PCDATA)>
 
@@ -310,7 +310,7 @@ human being.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/portlet/social/model/SocialRequestInterpreter.html
+http://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/social/kernel/model/SocialRequestInterpreter.html
 -->
 <!ELEMENT social-request-interpreter-class (#PCDATA)>
 
@@ -338,7 +338,7 @@ this portlet.
 
 See:
 
-http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/document-library/document-library-web/src/main/java/com/liferay/document/library/web/webdav/DLWebDAVStorageImpl.java
+http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/collaboration/document-library/document-library-web/src/main/java/com/liferay/document/library/web/internal/webdav/DLWebDAVStorageImpl.java
 -->
 <!ELEMENT webdav-storage-token (#PCDATA)>
 
@@ -349,7 +349,7 @@ the WebDAV protocol.
 
 See:
 
-http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/document-library/document-library-web/src/main/java/com/liferay/document/library/web/webdav/DLWebDAVStorageImpl.java
+http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/collaboration/document-library/document-library-web/src/main/java/com/liferay/document/library/web/internal/webdav/DLWebDAVStorageImpl.java
 -->
 <!ELEMENT webdav-storage-class (#PCDATA)>
 
@@ -360,7 +360,7 @@ XML-RPC protocol.
 
 See:
 
-http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/blogs/blogs-service/src/main/java/com/liferay/blogs/util/PingbackMethodImpl.java
+http://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/collaboration/blogs/blogs-service/src/main/java/com/liferay/blogs/internal/util/PingbackMethodImpl.java
 -->
 <!ELEMENT xml-rpc-method-class (#PCDATA)>
 
@@ -397,7 +397,7 @@ context. The default value is set in portal.properties.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/portlet/ControlPanelEntry.html
+http://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/portal/kernel/portlet/ControlPanelEntry.html
 -->
 <!ELEMENT control-panel-entry-class (#PCDATA)>
 
@@ -408,7 +408,7 @@ Publisher.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/portlet/asset/model/AssetRendererFactory.html
+http://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/asset/kernel/model/AssetRendererFactory.html
 -->
 <!ELEMENT asset-renderer-factory (#PCDATA)>
 
@@ -425,7 +425,7 @@ custom fields administration UI.
 
 See:
 
-http://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/portlet/expando/model/CustomAttributesDisplay.html
+http://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/expando/kernel/model/CustomAttributesDisplay.html
 -->
 <!ELEMENT custom-attributes-display (#PCDATA)>
 

@@ -413,10 +413,10 @@ public class InputEditorTag extends BaseValidatorTagSupport {
 		request.setAttribute(
 			"liferay-ui:input-editor:onInitMethod", _onInitMethod);
 
-		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
-			pageContext);
-
 		if (Validator.isNull(_placeholder)) {
+			ResourceBundle resourceBundle =
+				TagResourceBundleUtil.getResourceBundle(pageContext);
+
 			_placeholder = LanguageUtil.get(
 				resourceBundle, "write-your-content-here");
 		}

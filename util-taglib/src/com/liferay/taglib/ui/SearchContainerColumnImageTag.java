@@ -107,11 +107,12 @@ public class SearchContainerColumnImageTag<R> extends SearchContainerColumnTag {
 		}
 
 		if (!searchContainerRowTag.isHeaderNamesAssigned()) {
-			List<String> headerNames = searchContainerRowTag.getHeaderNames();
-
 			String name = getName();
 
 			if (Validator.isNotNull(name)) {
+				List<String> headerNames =
+					searchContainerRowTag.getHeaderNames();
+
 				headerNames.add(name);
 			}
 		}

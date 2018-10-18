@@ -59,10 +59,8 @@ public interface DirectTag extends Tag {
 		if (this instanceof BodyTag) {
 			BodyTag bodyTag = (BodyTag)this;
 
-			JspWriter jspWriter = pageContext.getOut();
-
 			if (start == BodyTag.EVAL_BODY_BUFFERED) {
-				jspWriter = pageContext.pushBody();
+				JspWriter jspWriter = pageContext.pushBody();
 
 				bodyTag.setBodyContent((BodyContent)jspWriter);
 

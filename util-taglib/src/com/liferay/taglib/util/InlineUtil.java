@@ -35,12 +35,11 @@ public class InlineUtil {
 
 		for (Map.Entry<String, Object> entry : dynamicAttributes.entrySet()) {
 			String key = entry.getKey();
-			String value = String.valueOf(entry.getValue());
 
 			if (!key.equals("class")) {
 				sb.append(key);
 				sb.append("=\"");
-				sb.append(value);
+				sb.append(String.valueOf(entry.getValue()));
 				sb.append("\" ");
 			}
 		}

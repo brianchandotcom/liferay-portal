@@ -56,8 +56,9 @@
 				<var name="sitePageType" value="Full Page Application" />
 			</execute>
 
-			<execute macro="Navigator#gotoPage">
+			<execute macro="Navigator#gotoSitePage">
 				<var name="pageName" value="${portlet} Full Page Application" />
+				<var name="siteName" value="Site Name" />
 			</execute>
 
 			<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE" value1="${portlet}">

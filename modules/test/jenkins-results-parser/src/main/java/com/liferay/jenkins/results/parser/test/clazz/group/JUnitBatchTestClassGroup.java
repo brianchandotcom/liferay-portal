@@ -127,22 +127,6 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		protected static JunitBatchTestClass getInstance(
-			File file, GitWorkingDirectory gitWorkingDirectory, File srcFile) {
-
-			if (_junitTestClasses.containsKey(file)) {
-				return _junitTestClasses.get(file);
-			}
-
-			JunitBatchTestClass junitTestClass = new JunitBatchTestClass(
-				new TestClassFile(file.getAbsolutePath()), gitWorkingDirectory,
-				srcFile);
-
-			_junitTestClasses.put(file, junitTestClass);
-
-			return junitTestClass;
-		}
-
-		protected static JunitBatchTestClass getInstance(
 			String fullClassName, GitWorkingDirectory gitWorkingDirectory) {
 
 			File javaFile = gitWorkingDirectory.getJavaFileFromFullClassName(
@@ -155,15 +139,34 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				return null;
 			}
 
+			String packagePath = fullClassName.replace(".", "/");
+
+			packagePath = packagePath + ".class";
+
 			TestClassGroup.TestClass.TestClassFile testClassFile =
-				new TestClass.TestClassFile(
-					javaFile.getAbsolutePath());
+				new TestClass.TestClassFile(packagePath);
 
 			if (_junitTestClasses.containsKey(testClassFile)) {
 				return _junitTestClasses.get(testClassFile);
 			}
 
 			return getInstance(testClassFile, gitWorkingDirectory, javaFile);
+		}
+
+		protected static JunitBatchTestClass getInstance(
+			TestClassFile testClassFile,
+			GitWorkingDirectory gitWorkingDirectory, File srcFile) {
+
+			if (_junitTestClasses.containsKey(testClassFile)) {
+				return _junitTestClasses.get(testClassFile);
+			}
+
+			JunitBatchTestClass junitTestClass = new JunitBatchTestClass(
+				testClassFile, gitWorkingDirectory, srcFile);
+
+			_junitTestClasses.put(testClassFile, junitTestClass);
+
+			return junitTestClass;
 		}
 
 		protected static Map<File, JunitBatchTestClass> getJunitTestClasses() {
@@ -555,9 +558,11 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 						Matcher matcher = _packagePathPattern.matcher(filePath);
 
 						if (matcher.find()) {
+							String packagePath = matcher.group("packagePath");
+
 							return JunitBatchTestClass.getInstance(
 								new TestClass.TestClassFile(
-									filePath),
+									packagePath.replace(".java", ".class")),
 								portalGitWorkingDirectory, path.toFile());
 						}
 

@@ -61,8 +61,9 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 				TokenTypes.FOR_INIT) ||
 			_containsMethodName(
 				variableDefAST,
-				"_?(add|create|delete|post|put|register|resolve|send|" +
-					"transform|update)([A-Z].*)?",
+				"_?(add|channel|close|create|delete|execute|open|post|put|" +
+					"register|resolve|send|transform|unzip|update|zip)" +
+						"([A-Z].*)?",
 				"currentTimeMillis", "nextVersion", "toString") ||
 			_containsVariableType(variableDefAST, identValues, "File")) {
 

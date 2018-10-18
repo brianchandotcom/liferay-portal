@@ -73,7 +73,7 @@ public class LiferayObjectWrapperTest {
 			AspectJNewEnvTestRule.INSTANCE, CodeCoverageAssertor.INSTANCE);
 
 	@Test
-	public void testCheckClassIsRestricted() throws Exception {
+	public void testCheckClassIsRestricted() {
 		_testCheckClassIsRestricted(
 			new LiferayObjectWrapper(null, null), TestLiferayObject.class,
 			null);
@@ -321,9 +321,8 @@ public class LiferayObjectWrapperTest {
 	}
 
 	private void _testCheckClassIsRestricted(
-			LiferayObjectWrapper liferayObjectWrapper, Class<?> targetClass,
-			String exceptionMessage)
-		throws Exception {
+		LiferayObjectWrapper liferayObjectWrapper, Class<?> targetClass,
+		String exceptionMessage) {
 
 		try {
 			ReflectionTestUtil.invoke(

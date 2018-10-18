@@ -4809,6 +4809,12 @@ version 1.3.5.
 - [LPS-86408]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.164.
 
+## 5.5.85 - 2018-10-16
+
+### Changed
+- [LPS-85849]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.165.
+
 ## 5.5.91 - 2018-10-17
 
 ### Added
@@ -5298,6 +5304,7 @@ argument:
 [LPS-85677]: https://issues.liferay.com/browse/LPS-85677
 [LPS-85678]: https://issues.liferay.com/browse/LPS-85678
 [LPS-85771]: https://issues.liferay.com/browse/LPS-85771
+[LPS-85849]: https://issues.liferay.com/browse/LPS-85849
 [LPS-85905]: https://issues.liferay.com/browse/LPS-85905
 [LPS-85954]: https://issues.liferay.com/browse/LPS-85954
 [LPS-85959]: https://issues.liferay.com/browse/LPS-85959

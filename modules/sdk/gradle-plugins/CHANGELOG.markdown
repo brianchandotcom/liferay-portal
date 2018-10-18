@@ -5840,6 +5840,14 @@ to version 2.3.277.
 - [LPS-86408]: Update the [Liferay Source Formatter] dependency to version
 1.0.751.
 
+## 3.12.165 - 2018-10-16
+
+### Changed
+- [LPS-85849]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.1.59.
+- [LPS-85849]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.242.
+
 ## 3.13.0 - 2018-10-17
 
 ### Changed
@@ -6291,6 +6299,7 @@ to version 2.3.277.
 [LPS-85556]: https://issues.liferay.com/browse/LPS-85556
 [LPS-85609]: https://issues.liferay.com/browse/LPS-85609
 [LPS-85678]: https://issues.liferay.com/browse/LPS-85678
+[LPS-85849]: https://issues.liferay.com/browse/LPS-85849
 [LPS-85954]: https://issues.liferay.com/browse/LPS-85954
 [LPS-85959]: https://issues.liferay.com/browse/LPS-85959
 [LPS-86018]: https://issues.liferay.com/browse/LPS-86018

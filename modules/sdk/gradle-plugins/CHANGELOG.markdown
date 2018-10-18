@@ -5877,6 +5877,14 @@ to version 2.4.0.
 ### Changed
 - [LPS-86018]: Enable `watch` task for theme and WAR projects.
 
+## 3.13.1 - 2018-10-17
+
+### Changed
+- [LPS-86413]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.278.
+- [LPS-86413]: Update the [Liferay Source Formatter] dependency to version
+1.0.752.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -6331,5 +6339,6 @@ to version 2.4.0.
 [LPS-86362]: https://issues.liferay.com/browse/LPS-86362
 [LPS-86371]: https://issues.liferay.com/browse/LPS-86371
 [LPS-86408]: https://issues.liferay.com/browse/LPS-86408
+[LPS-86413]: https://issues.liferay.com/browse/LPS-86413
 [LPS-86447]: https://issues.liferay.com/browse/LPS-86447
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

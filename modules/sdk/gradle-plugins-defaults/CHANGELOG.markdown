@@ -4857,6 +4857,11 @@ argument:
 	- `./gradlew test -Dtest.ignore.failures=false`
 	- `./gradlew testIntegration -DtestIntegration.ignore.failures=false`
 
+## 5.5.92 - 2018-10-17
+
+### Changed
+- [LPS-86413]: Update the [Liferay Gradle Plugins] dependency to version 3.13.1.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -5347,6 +5352,7 @@ argument:
 [LPS-86362]: https://issues.liferay.com/browse/LPS-86362
 [LPS-86371]: https://issues.liferay.com/browse/LPS-86371
 [LPS-86408]: https://issues.liferay.com/browse/LPS-86408
+[LPS-86413]: https://issues.liferay.com/browse/LPS-86413
 [LPS-86447]: https://issues.liferay.com/browse/LPS-86447
 [LPS-86477]: https://issues.liferay.com/browse/LPS-86477
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594

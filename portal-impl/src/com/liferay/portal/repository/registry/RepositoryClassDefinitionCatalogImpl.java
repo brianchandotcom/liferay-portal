@@ -35,6 +35,7 @@ import com.liferay.registry.collections.StringServiceRegistrationMap;
 import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -164,15 +165,16 @@ public class RepositoryClassDefinitionCatalogImpl
 		_repositoryClassDefinitions = new ConcurrentHashMap<>();
 	private final StringServiceRegistrationMap<RepositoryDefiner>
 		_serviceRegistrations = new StringServiceRegistrationMapImpl<>();
-	private ServiceTracker<RepositoryDefiner, RepositoryDefiner>
-		_serviceTracker;
+	private ServiceTracker
+		<RepositoryDefiner, ServiceRegistration<RepositoryFactory>>
+			_serviceTracker;
 
 	private class RepositoryDefinerServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
-			<RepositoryDefiner, RepositoryDefiner> {
+			<RepositoryDefiner, ServiceRegistration<RepositoryFactory>> {
 
 		@Override
-		public RepositoryDefiner addingService(
+		public ServiceRegistration<RepositoryFactory> addingService(
 			ServiceReference<RepositoryDefiner> serviceReference) {
 
 			Registry registry = RegistryUtil.getRegistry();
@@ -193,21 +195,40 @@ public class RepositoryClassDefinitionCatalogImpl
 			_repositoryClassDefinitions.put(
 				className, repositoryClassDefinition);
 
-			return repositoryDefiner;
+			Map<String, Object> properties = new HashMap<>();
+
+			properties.put("class.name", className);
+
+			return registry.registerService(
+				RepositoryFactory.class, repositoryClassDefinition, properties);
 		}
 
 		@Override
 		public void modifiedService(
 			ServiceReference<RepositoryDefiner> serviceReference,
-			RepositoryDefiner repositoryDefiner) {
+			ServiceRegistration<RepositoryFactory> serviceRegistration) {
 		}
 
 		@Override
 		public void removedService(
 			ServiceReference<RepositoryDefiner> serviceReference,
-			RepositoryDefiner repositoryDefiner) {
+			ServiceRegistration<RepositoryFactory> serviceRegistration) {
 
-			unregisterRepositoryDefiner(repositoryDefiner.getClassName());
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			ServiceReference<RepositoryFactory>
+				repositoryFactoryServiceReference =
+					serviceRegistration.getServiceReference();
+
+			String className =
+				(String)repositoryFactoryServiceReference.getProperty(
+					"class.name");
+
+			unregisterRepositoryDefiner(className);
+
+			serviceRegistration.unregister();
 		}
 
 	}

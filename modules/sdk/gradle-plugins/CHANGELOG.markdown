@@ -5840,7 +5840,7 @@ to version 2.3.277.
 - [LPS-86408]: Update the [Liferay Source Formatter] dependency to version
 1.0.751.
 
-## 3.12.165 - 2018-10-17
+## 3.13.0 - 2018-10-17
 
 ### Changed
 - [LPS-86018]: Enable `watch` task for theme and WAR projects.

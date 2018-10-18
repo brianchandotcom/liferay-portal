@@ -200,22 +200,6 @@ public class RepositoryClassDefinitionCatalogImpl
 		public void modifiedService(
 			ServiceReference<RepositoryDefiner> serviceReference,
 			RepositoryDefiner repositoryDefiner) {
-
-			String className = repositoryDefiner.getClassName();
-			RepositoryClassDefinition repositoryClassDefinition =
-				RepositoryClassDefinition.fromRepositoryDefiner(
-					repositoryDefiner);
-
-			if (repositoryDefiner.isExternalRepository()) {
-				_externalRepositoryClassDefinitions.put(
-					className, repositoryClassDefinition);
-			}
-			else {
-				_externalRepositoryClassDefinitions.remove(className);
-			}
-
-			_repositoryClassDefinitions.put(
-				className, repositoryClassDefinition);
 		}
 
 		@Override

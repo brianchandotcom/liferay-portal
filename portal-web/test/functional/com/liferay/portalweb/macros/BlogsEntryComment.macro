@@ -43,7 +43,7 @@
 
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute function="Pause" value1="1000" />
+
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

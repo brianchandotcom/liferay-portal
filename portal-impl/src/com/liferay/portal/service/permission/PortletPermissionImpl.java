@@ -685,15 +685,9 @@ public class PortletPermissionImpl implements PortletPermission {
 
 		String portletId = portlet.getPortletId();
 
-		String name = null;
-		String resourcePermissionPrimKey = null;
-
 		if (layout == null) {
-			name = portletId;
-			resourcePermissionPrimKey = portletId;
-
 			return permissionChecker.hasPermission(
-				groupId, name, resourcePermissionPrimKey, actionId);
+				groupId, portletId, portletId, actionId);
 		}
 
 		Group group = null;
@@ -749,7 +743,8 @@ public class PortletPermissionImpl implements PortletPermission {
 			}
 		}
 
-		resourcePermissionPrimKey = getPrimaryKey(layout.getPlid(), portletId);
+		String resourcePermissionPrimKey = getPrimaryKey(
+			layout.getPlid(), portletId);
 
 		if (strict) {
 			return permissionChecker.hasPermission(

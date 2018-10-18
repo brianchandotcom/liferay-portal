@@ -695,12 +695,12 @@ public class PortalImpl implements Portal {
 		HttpServletRequest request, String title, String url,
 		Map<String, Object> data, boolean portletBreadcrumbEntry) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String name = WebKeys.PORTLET_BREADCRUMBS;
 
 		if (portletBreadcrumbEntry) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 			name += StringPool.UNDERLINE + portletDisplay.getId();
@@ -3677,13 +3677,13 @@ public class PortalImpl implements Portal {
 		requestURI = StringUtil.replace(
 			requestURI, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
-		String path = request.getPathInfo();
-
-		int x = path.indexOf(CharPool.SLASH, 1);
-
 		String layoutFriendlyURL = null;
 
 		if (originalLocale == null) {
+			String path = request.getPathInfo();
+
+			int x = path.indexOf(CharPool.SLASH, 1);
+
 			if ((x != -1) && ((x + 1) != path.length())) {
 				layoutFriendlyURL = path.substring(x);
 			}

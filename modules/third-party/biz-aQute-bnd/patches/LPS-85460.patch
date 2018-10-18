@@ -1,0 +1,211 @@
+diff --git a/aQute/bnd/deployer/http/HttpBasicAuthURLConnector.java b/aQute/bnd/deployer/http/HttpBasicAuthURLConnector.java
+index ea6a0ca..3d45e9e 100644
+--- a/aQute/bnd/deployer/http/HttpBasicAuthURLConnector.java
++++ b/aQute/bnd/deployer/http/HttpBasicAuthURLConnector.java
+@@ -1,5 +1,7 @@
+ package aQute.bnd.deployer.http;
+ 
++import static java.nio.charset.StandardCharsets.UTF_8;
++
+ import java.io.File;
+ import java.io.IOException;
+ import java.io.InputStream;
+@@ -17,7 +19,6 @@ import java.util.regex.Matcher;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+ 
+-import aQute.bnd.deployer.Constants;
+ import aQute.bnd.service.Plugin;
+ import aQute.bnd.service.url.TaggedData;
+ import aQute.bnd.service.url.URLConnector;
+@@ -166,7 +167,7 @@ public class HttpBasicAuthURLConnector implements URLConnector, Plugin {
+ 		// Add the authorization string using HTTP Basic Auth
+ 		if (user != null && pass != null) {
+ 			String authString = user + ":" + pass;
+-			String encoded = Base64.encodeBase64(authString.getBytes(Constants.UTF8));
++			String encoded = Base64.encodeBase64(authString.getBytes(UTF_8));
+ 			connection.setRequestProperty(HEADER_AUTHORIZATION, PREFIX_BASIC_AUTH + encoded);
+ 		}
+ 
+@@ -188,3 +189,4 @@ public class HttpBasicAuthURLConnector implements URLConnector, Plugin {
+ 	}
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/aQute/bnd/osgi/repository/ResourcesRepository.java b/aQute/bnd/osgi/repository/ResourcesRepository.java
+index 9fbe650..03ad027 100644
+--- a/aQute/bnd/osgi/repository/ResourcesRepository.java
++++ b/aQute/bnd/osgi/repository/ResourcesRepository.java
+@@ -16,10 +16,13 @@ import org.osgi.resource.Requirement;
+ import org.osgi.resource.Resource;
+ 
+ import aQute.bnd.osgi.resource.ResourceUtils;
++import java.util.HashMap;
+ 
+ public class ResourcesRepository extends BaseRepository {
+ 	final Set<Resource> resources = new LinkedHashSet<>();
+ 
++	private final Map<Requirement, List<Capability>> _cache = new HashMap<>();
++
+ 	public ResourcesRepository(Resource resource) {
+ 		add(resource);
+ 	}
+@@ -37,12 +40,22 @@ public class ResourcesRepository extends BaseRepository {
+ 	}
+ 
+ 	public List<Capability> findProvider(Requirement requirement) {
++		List<Capability> capabilities = _cache.get(requirement);
++
++		if (capabilities != null) {
++			return capabilities;
++		}
++
+ 		String namespace = requirement.getNamespace();
+-		return resources.stream()
++		capabilities = resources.stream()
+ 			.flatMap(resource -> resource.getCapabilities(namespace)
+ 				.stream())
+ 			.filter(capability -> ResourceUtils.matches(requirement, capability))
+ 			.collect(toCapabilities());
++
++		_cache.put(requirement, capabilities);
++
++		return capabilities;
+ 	}
+ 
+ 	public void add(Resource resource) {
+@@ -89,3 +102,4 @@ public class ResourcesRepository extends BaseRepository {
+ 		return t;
+ 	}
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/biz/aQute/resolve/BndrunResolveContext.java b/biz/aQute/resolve/BndrunResolveContext.java
+index 542c28b..d545428 100644
+--- a/biz/aQute/resolve/BndrunResolveContext.java
++++ b/biz/aQute/resolve/BndrunResolveContext.java
+@@ -111,13 +111,7 @@ public class BndrunResolveContext extends AbstractResolveContext {
+ 		}
+ 	}
+ 
+-	/**
+-	 * Initializes the resolver. Here we will load all the information from the
+-	 * model.
+-	 */
+-	@Override
+-	public synchronized void init() {
+-
++	public synchronized void init(Resource resource) {
+ 		if (initialized)
+ 			return;
+ 
+@@ -148,6 +142,30 @@ public class BndrunResolveContext extends AbstractResolveContext {
+ 
+ 			setInputResource(constructInputRequirements());
+ 
++			if (resource == null) {
++				resource = _createSystemResource();
++			}
++
++			setSystemResource(resource);
++		} catch (Exception e) {
++			log.log(LogService.LOG_ERROR, e.getMessage(), e);
++			throw new RuntimeException(e);
++		}
++		super.init();
++	}
++
++	/**
++	 * Initializes the resolver. Here we will load all the information from the
++	 * model.
++	 */
++	@Override
++	public synchronized void init() {
++		init(null);
++	}
++
++	private Resource _createSystemResource() {
++		try {
++
+ 			//
+ 			// We gradually build up the system resource that contains
+ 			// the system packages, the EE, etc.
+@@ -244,12 +262,11 @@ public class BndrunResolveContext extends AbstractResolveContext {
+ 				system.addCapability(crb);
+ 			}
+ 
+-			setSystemResource(system.build());
++			return system.build();
+ 		} catch (Exception e) {
+ 			log.log(LogService.LOG_ERROR, e.getMessage(), e);
+ 			throw new RuntimeException(e);
+ 		}
+-		super.init();
+ 	}
+ 
+ 	private void loadProvidedCapabilities(ResourceBuilder system) throws Exception {
+@@ -543,3 +560,4 @@ public class BndrunResolveContext extends AbstractResolveContext {
+ 		}
+ 	}
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/biz/aQute/resolve/ResolverValidator.java b/biz/aQute/resolve/ResolverValidator.java
+index cad653c..8b0f827 100644
+--- a/biz/aQute/resolve/ResolverValidator.java
++++ b/biz/aQute/resolve/ResolverValidator.java
+@@ -100,9 +100,18 @@ public class ResolverValidator extends Processor {
+ 		setProperty("-runfw", "dummy");
+ 		List<Resolution> result = new ArrayList<>();
+ 		List<Resource> resourceList = new ArrayList<>(resources);
++
++		BndrunResolveContext bndrunResolveContext = getResolveContext();
++
++		bndrunResolveContext.addRepository(repository);
++		bndrunResolveContext.init();
++
++		Resource systemResource = bndrunResolveContext.getSystemResource();
++
+ 		while (!resourceList.isEmpty()) {
+ 			Resource resource = resourceList.remove(0);
+-			Resolution resolution = resolve(repository, resource);
++			Resolution resolution = resolve(
++				repository, resource, systemResource);
+ 			result.add(resolution);
+ 			for (Resource resolved : resolution.resolved) {
+ 				if (resourceList.remove(resolved)) {
+@@ -139,7 +148,17 @@ public class ResolverValidator extends Processor {
+ 		return createRequirementFromCapability(identityCapability).buildSyntheticRequirement();
+ 	}
+ 
+-	public Resolution resolve(Repository repository, Resource resource) throws Exception {
++	public Resolution resolve(Repository repository, Resource resource)
++		throws Exception {
++
++		return resolve(repository, resource, null);
++	}
++
++	public Resolution resolve(
++			Repository repository, Resource resource,
++			Resource systemResource)
++		throws Exception {
++
+ 		Resolution resolution = new Resolution();
+ 
+ 		Requirement identity = getIdentity(resource);
+@@ -148,7 +167,7 @@ public class ResolverValidator extends Processor {
+ 		BndrunResolveContext context = getResolveContext();
+ 
+ 		context.addRepository(repository);
+-		context.init();
++		context.init(systemResource);
+ 
+ 		resolution.resource = resource;
+ 
+@@ -211,3 +230,4 @@ public class ResolverValidator extends Processor {
+ 		return resolution;
+ 	}
+ }
++/* @generated */
+\ No newline at end of file

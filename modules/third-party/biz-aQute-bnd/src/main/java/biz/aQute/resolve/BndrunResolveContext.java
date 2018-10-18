@@ -111,13 +111,7 @@ public class BndrunResolveContext extends AbstractResolveContext {
 		}
 	}
 
-	/**
-	 * Initializes the resolver. Here we will load all the information from the
-	 * model.
-	 */
-	@Override
-	public synchronized void init() {
-
+	public synchronized void init(Resource resource) {
 		if (initialized)
 			return;
 
@@ -147,6 +141,30 @@ public class BndrunResolveContext extends AbstractResolveContext {
 			//
 
 			setInputResource(constructInputRequirements());
+
+			if (resource == null) {
+				resource = _createSystemResource();
+			}
+
+			setSystemResource(resource);
+		} catch (Exception e) {
+			log.log(LogService.LOG_ERROR, e.getMessage(), e);
+			throw new RuntimeException(e);
+		}
+		super.init();
+	}
+
+	/**
+	 * Initializes the resolver. Here we will load all the information from the
+	 * model.
+	 */
+	@Override
+	public synchronized void init() {
+		init(null);
+	}
+
+	private Resource _createSystemResource() {
+		try {
 
 			//
 			// We gradually build up the system resource that contains
@@ -244,12 +262,11 @@ public class BndrunResolveContext extends AbstractResolveContext {
 				system.addCapability(crb);
 			}
 
-			setSystemResource(system.build());
+			return system.build();
 		} catch (Exception e) {
 			log.log(LogService.LOG_ERROR, e.getMessage(), e);
 			throw new RuntimeException(e);
 		}
-		super.init();
 	}
 
 	private void loadProvidedCapabilities(ResourceBuilder system) throws Exception {
@@ -543,3 +560,4 @@ public class BndrunResolveContext extends AbstractResolveContext {
 		}
 	}
 }
+/* @generated */

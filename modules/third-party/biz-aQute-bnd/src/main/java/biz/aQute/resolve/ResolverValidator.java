@@ -100,9 +100,18 @@ public class ResolverValidator extends Processor {
 		setProperty("-runfw", "dummy");
 		List<Resolution> result = new ArrayList<>();
 		List<Resource> resourceList = new ArrayList<>(resources);
+
+		BndrunResolveContext bndrunResolveContext = getResolveContext();
+
+		bndrunResolveContext.addRepository(repository);
+		bndrunResolveContext.init();
+
+		Resource systemResource = bndrunResolveContext.getSystemResource();
+
 		while (!resourceList.isEmpty()) {
 			Resource resource = resourceList.remove(0);
-			Resolution resolution = resolve(repository, resource);
+			Resolution resolution = resolve(
+				repository, resource, systemResource);
 			result.add(resolution);
 			for (Resource resolved : resolution.resolved) {
 				if (resourceList.remove(resolved)) {
@@ -139,7 +148,17 @@ public class ResolverValidator extends Processor {
 		return createRequirementFromCapability(identityCapability).buildSyntheticRequirement();
 	}
 
-	public Resolution resolve(Repository repository, Resource resource) throws Exception {
+	public Resolution resolve(Repository repository, Resource resource)
+		throws Exception {
+
+		return resolve(repository, resource, null);
+	}
+
+	public Resolution resolve(
+			Repository repository, Resource resource,
+			Resource systemResource)
+		throws Exception {
+
 		Resolution resolution = new Resolution();
 
 		Requirement identity = getIdentity(resource);
@@ -148,7 +167,7 @@ public class ResolverValidator extends Processor {
 		BndrunResolveContext context = getResolveContext();
 
 		context.addRepository(repository);
-		context.init();
+		context.init(systemResource);
 
 		resolution.resource = resource;
 
@@ -211,3 +230,4 @@ public class ResolverValidator extends Processor {
 		return resolution;
 	}
 }
+/* @generated */

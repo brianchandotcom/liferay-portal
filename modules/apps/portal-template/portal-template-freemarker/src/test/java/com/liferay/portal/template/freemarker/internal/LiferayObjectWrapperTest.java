@@ -330,9 +330,8 @@ public class LiferayObjectWrapperTest {
 				liferayObjectWrapper, "_checkClassIsRestricted",
 				new Class<?>[] {Class.class}, targetClass);
 
-			if (exceptionMessage != null) {
-				Assert.fail("Should throw TemplateModelException");
-			}
+			Assert.assertNull(
+				"Should throw TemplateModelException", exceptionMessage);
 		}
 		catch (Exception e) {
 			Assert.assertSame(TemplateModelException.class, e.getClass());

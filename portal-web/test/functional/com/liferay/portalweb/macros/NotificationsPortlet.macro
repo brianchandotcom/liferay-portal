@@ -11,7 +11,7 @@
 		</if>
 
 		<var name="key_actionType" value="${actionType}" />
-		<var method="StringUtil#replace('${contentType}',' ','-')" name="key_contentType" />
+		<var method="StringUtil#replace('${contentType}', ' ', '-')" name="key_contentType" />
 
 		<if>
 			<equals arg1="${notificationType}" arg2="Website" />
@@ -96,7 +96,7 @@
 
 		<execute function="AssertClick#assertTextClickCaseInsensitive" locator1="Notifications#NOTIFICATION_DELIVERY_PANEL" value1="Documents and Media" />
 
-		<var method="StringUtil#replace('${key_contentType}',' ','-')" name="key_contentType" />
+		<var method="StringUtil#replace('${key_contentType}', ' ', '-')" name="key_contentType" />
 
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="Adds a new document in a folder you are subscribed to." />
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="Updates a document you are subscribed to." />
@@ -115,7 +115,7 @@
 
 		<execute function="AssertClick#assertTextClickCaseInsensitive" locator1="Notifications#NOTIFICATION_DELIVERY_PANEL" value1="Message Boards" />
 
-		<var method="StringUtil#replace('${key_contentType}',' ','-')" name="key_contentType" />
+		<var method="StringUtil#replace('${key_contentType}', ' ', '-')" name="key_contentType" />
 
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="Adds a new post in a thread or category you are subscribed to." />
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="Updates a post you are subscribed to." />
@@ -137,7 +137,7 @@
 
 		<execute function="AssertClick#assertTextClickCaseInsensitive" locator1="Notifications#NOTIFICATION_DELIVERY_PANEL" value1="Web Content" />
 
-		<var method="StringUtil#replace('${key_contentType}',' ','-')" name="key_contentType" />
+		<var method="StringUtil#replace('${key_contentType}', ' ', '-')" name="key_contentType" />
 
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_1" value1="Adds new web content in a folder you are subscribed to." />
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATION_DELIVERY_TEXT_2" value1="Moves from folder web content you are subscribed to." />

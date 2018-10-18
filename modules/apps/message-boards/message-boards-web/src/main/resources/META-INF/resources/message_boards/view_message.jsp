@@ -76,6 +76,8 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 		window[editorName].setHTML(quote);
 		window[editorName].focus();
 
+		Liferay.Util.scrollTo('<portlet:namespace />addReplyToMessage' + messageId);
+
 		Liferay.Util.toggleDisabled('#<portlet:namespace />replyMessageButton' + messageId, true);
 	}
 

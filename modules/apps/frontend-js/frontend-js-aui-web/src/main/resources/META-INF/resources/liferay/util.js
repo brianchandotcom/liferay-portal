@@ -879,6 +879,16 @@
 			);
 		},
 
+		scrollTo: function(el) {
+			if (AUI().UA.ios) {
+				var element = document.getElementById(el);
+
+				if (element && element.nodeType) {
+					element.scrollIntoView();
+				}
+			}
+		},
+
 		selectEntityHandler: function(container, selectEventName, disableButton) {
 			container = $(container);
 

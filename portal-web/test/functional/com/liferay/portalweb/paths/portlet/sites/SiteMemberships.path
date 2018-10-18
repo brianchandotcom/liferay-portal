@@ -86,6 +86,17 @@
 	<td>//div[contains(@id,'organizationsSearchContainerSearchContainer')]//tr[contains(.,'${key_orgName}')]/td[1]//span[contains(@class,'tooltip-text')]</td>
 	<td></td>
 </tr>
+<!--USER_GROUPS_TABLE-->
+<tr>
+	<td>USER_GROUPS_TABLE_NAME</td>
+	<td>//td[contains(@class,'lfr-name-column') and contains(.,'${key_userGroupName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUPS_TABLE_SITE_ROLES</td>
+	<td>//td[contains(@class,'lfr-site-roles-column') and contains(.,'${key_siteRoleName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

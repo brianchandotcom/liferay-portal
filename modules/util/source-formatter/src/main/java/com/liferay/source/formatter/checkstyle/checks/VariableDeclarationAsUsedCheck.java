@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -53,6 +54,8 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 		DetailAST detailAST, DetailAST variableDefAST,
 		List<DetailAST> identASTList) {
 
+		List<String> identValues = _getIdentValues(variableDefAST);
+
 		if (DetailASTUtil.hasParentWithTokenType(
 				variableDefAST, TokenTypes.FOR_EACH_CLAUSE,
 				TokenTypes.FOR_INIT) ||
@@ -60,7 +63,8 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 				variableDefAST,
 				"_?(add|create|delete|post|put|register|resolve|send|" +
 					"transform|update)([A-Z].*)?",
-				"currentTimeMillis", "nextVersion", "toString")) {
+				"currentTimeMillis", "nextVersion", "toString") ||
+			_containsVariableType(variableDefAST, identValues, "File")) {
 
 			return;
 		}
@@ -72,8 +76,7 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 		int endLineNumber = DetailASTUtil.getEndLineNumber(variableDefAST);
 
 		DetailAST firstDependentIdentAST = _findFirstDependentIdentAST(
-			variableName, _getIdentValues(variableDefAST), identASTList,
-			endLineNumber + 1);
+			variableName, identValues, identASTList, endLineNumber + 1);
 
 		if (firstDependentIdentAST == null) {
 			return;
@@ -104,6 +107,23 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 				if (methodName.matches(methodNameRegex)) {
 					return true;
 				}
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _containsVariableType(
+		DetailAST variableDefAST, List<String> identValues,
+		String... variableTypeNames) {
+
+		for (String name : identValues) {
+			if (ArrayUtil.contains(
+					variableTypeNames,
+					DetailASTUtil.getVariableTypeName(
+						variableDefAST, name, false))) {
+
+				return true;
 			}
 		}
 

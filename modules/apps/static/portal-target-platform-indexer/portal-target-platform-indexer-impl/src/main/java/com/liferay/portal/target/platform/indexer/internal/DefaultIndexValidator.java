@@ -42,6 +42,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -248,9 +249,24 @@ public class DefaultIndexValidator implements IndexValidator {
 			_field.setAccessible(true);
 
 			_field.set(null, new PromiseFactory(null));
+
+			ThreadPoolExecutor threadPoolExecutor =
+				(ThreadPoolExecutor)Processor.getExecutor();
+
+			threadPoolExecutor.setMaximumPoolSize(1);
+
+			threadPoolExecutor.setThreadFactory(
+				runnable -> {
+					Thread thread = new Thread(
+						runnable, "bnd-Processor-Thread");
+
+					thread.setDaemon(true);
+
+					return thread;
+				});
 		}
 		catch (ReflectiveOperationException roe) {
-			throw new RuntimeException(roe);
+			throw new ExceptionInInitializerError(roe);
 		}
 	}
 

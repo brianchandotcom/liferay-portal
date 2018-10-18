@@ -5866,6 +5866,12 @@ version 1.0.243.
 ### Changed
 - [LPS-85678]: Update the [Liferay Ant BND] dependency to version 2.0.59.
 
+## 3.12.169 - 2018-10-17
+
+### Changed
+- [LPS-86447]: Update the [Liferay Gradle Plugins Test Integration] dependency
+to version 2.4.0.
+
 ## 3.13.0 - 2018-10-17
 
 ### Changed
@@ -6325,4 +6331,5 @@ version 1.0.243.
 [LPS-86362]: https://issues.liferay.com/browse/LPS-86362
 [LPS-86371]: https://issues.liferay.com/browse/LPS-86371
 [LPS-86408]: https://issues.liferay.com/browse/LPS-86408
+[LPS-86447]: https://issues.liferay.com/browse/LPS-86447
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

@@ -1270,6 +1270,12 @@
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
+	<command name="openWebContentAdmin">
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet" />
+		</execute>
+	</command>
+
 	<command name="paginateRelatedAssets">
 		<execute macro="WebContentNavigator#gotoEditCP">
 			<var name="webContentTitle" value="${webContentTitle}" />

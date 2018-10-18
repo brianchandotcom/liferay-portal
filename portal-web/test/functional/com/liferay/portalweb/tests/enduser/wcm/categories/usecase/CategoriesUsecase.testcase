@@ -353,7 +353,7 @@
 			<var name="pageName" value="Test Page Name" />
 		</execute>
 
-		<execute macro="AssetCategorization#addCategory">
+		<execute macro="Page#addCategory">
 			<var name="categoryName" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>

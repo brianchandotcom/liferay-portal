@@ -16,6 +16,17 @@
 		<execute function="AssertChecked#assertCheckedNotVisible" locator1="SitePagesEditPage#PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
 	</command>
 
+	<command name="addCategory">
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="SEO" />
+		</execute>
+
+		<execute macro="AssetCategorization#addCategory">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${categoryName}" />
+		</execute>
+	</command>
+
 	<command name="addFriendlyURLLocalizedPG">
 		<execute macro="Navigator#gotoNavTab">
 			<var name="navTab" value="General" />

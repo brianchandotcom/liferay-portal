@@ -75,7 +75,7 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 
 		int endLineNumber = DetailASTUtil.getEndLineNumber(variableDefAST);
 
-		DetailAST firstDependentIdentAST = _findFirstDependentIdentAST(
+		DetailAST firstDependentIdentAST = _getFirstDependentIdentAST(
 			variableName, identValues, identASTList, endLineNumber + 1);
 
 		if (firstDependentIdentAST == null) {
@@ -130,7 +130,7 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 		return false;
 	}
 
-	private DetailAST _findFirstDependentIdentAST(
+	private DetailAST _getFirstDependentIdentAST(
 		String variableName, List<String> identValues,
 		List<DetailAST> identASTList, int start) {
 

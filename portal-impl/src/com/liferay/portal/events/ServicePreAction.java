@@ -510,9 +510,6 @@ public class ServicePreAction extends Action {
 
 		boolean hasUpdateLayoutPermission = false;
 
-		boolean customizedView = SessionParamUtil.getBoolean(
-			request, "customized_view", true);
-
 		if (layout != null) {
 			LayoutTypeAccessPolicy layoutTypeAccessPolicy =
 				LayoutTypeAccessPolicyTracker.getLayoutTypeAccessPolicy(layout);
@@ -572,6 +569,9 @@ public class ServicePreAction extends Action {
 			layoutTypePortlet = (LayoutTypePortlet)layout.getLayoutType();
 
 			boolean customizable = layoutTypePortlet.isCustomizable();
+
+			boolean customizedView = SessionParamUtil.getBoolean(
+				request, "customized_view", true);
 
 			if (!customizable || group.isLayoutPrototype() ||
 				group.isLayoutSetPrototype() || group.isStagingGroup()) {

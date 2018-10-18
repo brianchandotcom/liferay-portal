@@ -18,7 +18,6 @@ import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.service.MicroblogsEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -40,17 +39,9 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 
 			actionableDynamicQuery.setCompanyId(company.getCompanyId());
 			actionableDynamicQuery.setPerformActionMethod(
-				new ActionableDynamicQuery.
-					PerformActionMethod<MicroblogsEntry>() {
-
-					@Override
-					public void performAction(MicroblogsEntry microblogsEntry)
-						throws PortalException {
-
-						_microblogsEntryLocalService.deleteMicroblogsEntry(
-							microblogsEntry);
-					}
-
+				(MicroblogsEntry microblogsEntry) -> {
+					_microblogsEntryLocalService.deleteMicroblogsEntry(
+						microblogsEntry);
 				});
 
 			actionableDynamicQuery.performActions();

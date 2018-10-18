@@ -365,23 +365,15 @@ public class JournalArticleIndexer
 						resourcePrimKeyProperty.in(journalArticleDynamicQuery));
 				});
 			actionableDynamicQuery.setPerformActionMethod(
-				new ActionableDynamicQuery.
-					PerformActionMethod<JournalArticleResource>() {
-
-					@Override
-					public void performAction(JournalArticleResource article)
-						throws PortalException {
-
-						try {
-							indexer.reindex(
-								indexer.getClassName(),
-								article.getResourcePrimKey());
-						}
-						catch (Exception e) {
-							throw new PortalException(e);
-						}
+				(JournalArticleResource article) -> {
+					try {
+						indexer.reindex(
+							indexer.getClassName(),
+							article.getResourcePrimKey());
 					}
-
+					catch (Exception e) {
+						throw new PortalException(e);
+					}
 				});
 
 			actionableDynamicQuery.performActions();
@@ -892,27 +884,20 @@ public class JournalArticleIndexer
 				_batchIndexingHelper.getBulkSize(
 					JournalArticle.class.getName()));
 			indexableActionableDynamicQuery.setPerformActionMethod(
-				new ActionableDynamicQuery.
-					PerformActionMethod<JournalArticle>() {
+				(JournalArticle article) -> {
+					try {
+						Document document = getDocument(article);
 
-					@Override
-					public void performAction(JournalArticle article) {
-						try {
-							Document document = getDocument(article);
-
-							indexableActionableDynamicQuery.addDocuments(
-								document);
-						}
-						catch (PortalException pe) {
-							if (_log.isWarnEnabled()) {
-								_log.warn(
-									"Unable to index journal article " +
-										article.getId(),
-									pe);
-							}
+						indexableActionableDynamicQuery.addDocuments(document);
+					}
+					catch (PortalException pe) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to index journal article " +
+									article.getId(),
+								pe);
 						}
 					}
-
 				});
 		}
 		else {
@@ -925,38 +910,28 @@ public class JournalArticleIndexer
 					JournalArticleResource.class.getName()));
 
 			indexableActionableDynamicQuery.setPerformActionMethod(
-				new ActionableDynamicQuery.
-					PerformActionMethod<JournalArticleResource>() {
+				(JournalArticleResource articleResource) -> {
+					JournalArticle latestIndexableArticle =
+						fetchLatestIndexableArticleVersion(
+							articleResource.getResourcePrimKey());
 
-					@Override
-					public void performAction(
-						JournalArticleResource articleResource) {
-
-						JournalArticle latestIndexableArticle =
-							fetchLatestIndexableArticleVersion(
-								articleResource.getResourcePrimKey());
-
-						if (latestIndexableArticle == null) {
-							return;
-						}
-
-						try {
-							Document document = getDocument(
-								latestIndexableArticle);
-
-							indexableActionableDynamicQuery.addDocuments(
-								document);
-						}
-						catch (PortalException pe) {
-							if (_log.isWarnEnabled()) {
-								_log.warn(
-									"Unable to index journal article " +
-										latestIndexableArticle.getId(),
-									pe);
-							}
-						}
+					if (latestIndexableArticle == null) {
+						return;
 					}
 
+					try {
+						Document document = getDocument(latestIndexableArticle);
+
+						indexableActionableDynamicQuery.addDocuments(document);
+					}
+					catch (PortalException pe) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to index journal article " +
+									latestIndexableArticle.getId(),
+								pe);
+						}
+					}
 				});
 		}
 

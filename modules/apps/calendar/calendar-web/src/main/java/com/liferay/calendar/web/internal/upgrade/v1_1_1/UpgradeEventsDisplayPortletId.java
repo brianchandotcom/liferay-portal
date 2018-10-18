@@ -58,24 +58,16 @@ public class UpgradeEventsDisplayPortletId extends BaseUpgradePortletId {
 				dynamicQuery.add(nameProperty.eq(new String(oldRootPortletId)));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<ResourcePermission>() {
+			(ResourcePermission resourcePermission) -> {
+				long total = getResourcePermissionsCount(
+					resourcePermission.getCompanyId(), newRootPortletId,
+					resourcePermission.getScope(),
+					resourcePermission.getRoleId());
 
-				@Override
-				public void performAction(ResourcePermission resourcePermission)
-					throws PortalException {
-
-					long total = getResourcePermissionsCount(
-						resourcePermission.getCompanyId(), newRootPortletId,
-						resourcePermission.getScope(),
-						resourcePermission.getRoleId());
-
-					if (total > 0) {
-						_resourcePermissionLocalService.
-							deleteResourcePermission(resourcePermission);
-					}
+				if (total > 0) {
+					_resourcePermissionLocalService.deleteResourcePermission(
+						resourcePermission);
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -142,17 +134,9 @@ public class UpgradeEventsDisplayPortletId extends BaseUpgradePortletId {
 			});
 		actionableDynamicQuery.setParallel(true);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<PortletPreferences>() {
-
-				@Override
-				public void performAction(PortletPreferences portletPreference)
-					throws PortalException {
-
-					updatePortletPreferences(
-						portletPreference, oldRootPortletId, newRootPortletId);
-				}
-
+			(PortletPreferences portletPreference) -> {
+				updatePortletPreferences(
+					portletPreference, oldRootPortletId, newRootPortletId);
 			});
 
 		actionableDynamicQuery.performActions();

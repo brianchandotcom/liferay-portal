@@ -71,17 +71,9 @@ public class RoleModelListener extends BaseModelListener<Role> {
 				dynamicQuery.add(assigneeClassPKProperty.eq(roleId));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<KaleoTaskAssignment>() {
-
-				@Override
-				public void performAction(
-					KaleoTaskAssignment kaleoTaskAssignment) {
-
-					_kaleoTaskAssignmentLocalService.deleteKaleoTaskAssignment(
-						kaleoTaskAssignment);
-				}
-
+			(KaleoTaskAssignment kaleoTaskAssignment) -> {
+				_kaleoTaskAssignmentLocalService.deleteKaleoTaskAssignment(
+					kaleoTaskAssignment);
 			});
 
 		actionableDynamicQuery.performActions();

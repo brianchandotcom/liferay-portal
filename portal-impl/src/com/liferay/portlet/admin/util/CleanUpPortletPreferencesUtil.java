@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -94,58 +93,50 @@ public class CleanUpPortletPreferencesUtil {
 				dynamicQuery.add(plidProperty.in(layoutRevisionDynamicQuery));
 			});
 		portletPreferencesActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<PortletPreferences>() {
+			(PortletPreferences portletPreferences) -> {
+				long layoutRevisionId = portletPreferences.getPlid();
 
-				@Override
-				public void performAction(PortletPreferences portletPreferences)
-					throws PortalException {
+				LayoutRevision layoutRevision =
+					LayoutRevisionLocalServiceUtil.getLayoutRevision(
+						layoutRevisionId);
 
-					long layoutRevisionId = portletPreferences.getPlid();
+				Layout layout = LayoutLocalServiceUtil.getLayout(
+					layoutRevision.getPlid());
 
-					LayoutRevision layoutRevision =
-						LayoutRevisionLocalServiceUtil.getLayoutRevision(
-							layoutRevisionId);
-
-					Layout layout = LayoutLocalServiceUtil.getLayout(
-						layoutRevision.getPlid());
-
-					if (!layout.isTypePortlet()) {
-						return;
-					}
-
-					if (containsPortlet(
-							layout, portletPreferences.getPortletId())) {
-
-						return;
-					}
-
-					LayoutStagingHandler layoutStagingHandler =
-						new LayoutStagingHandler(layout);
-
-					layoutStagingHandler.setLayoutRevision(layoutRevision);
-
-					Layout proxiedLayout = (Layout)ProxyUtil.newProxyInstance(
-						PortalClassLoaderUtil.getClassLoader(),
-						new Class<?>[] {Layout.class, ModelWrapper.class},
-						layoutStagingHandler);
-
-					if (containsPortlet(
-							proxiedLayout, portletPreferences.getPortletId())) {
-
-						return;
-					}
-
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Removing portlet preferences " +
-								portletPreferences.getPortletPreferencesId());
-					}
-
-					PortletPreferencesLocalServiceUtil.deletePortletPreferences(
-						portletPreferences);
+				if (!layout.isTypePortlet()) {
+					return;
 				}
 
+				if (containsPortlet(
+						layout, portletPreferences.getPortletId())) {
+
+					return;
+				}
+
+				LayoutStagingHandler layoutStagingHandler =
+					new LayoutStagingHandler(layout);
+
+				layoutStagingHandler.setLayoutRevision(layoutRevision);
+
+				Layout proxiedLayout = (Layout)ProxyUtil.newProxyInstance(
+					PortalClassLoaderUtil.getClassLoader(),
+					new Class<?>[] {Layout.class, ModelWrapper.class},
+					layoutStagingHandler);
+
+				if (containsPortlet(
+						proxiedLayout, portletPreferences.getPortletId())) {
+
+					return;
+				}
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Removing portlet preferences " +
+							portletPreferences.getPortletPreferencesId());
+				}
+
+				PortletPreferencesLocalServiceUtil.deletePortletPreferences(
+					portletPreferences);
 			});
 
 		return portletPreferencesActionableDynamicQuery;

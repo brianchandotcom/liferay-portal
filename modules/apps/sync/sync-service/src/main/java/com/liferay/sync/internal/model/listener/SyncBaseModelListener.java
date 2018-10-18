@@ -71,23 +71,14 @@ public abstract class SyncBaseModelListener<T extends BaseModel<T>>
 			_getActionableDynamicQuery(roleId);
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<ResourcePermission>() {
+			(ResourcePermission resourcePermission) -> {
+				SyncDLObject syncDLObject = getSyncDLObject(resourcePermission);
 
-				@Override
-				public void performAction(
-					ResourcePermission resourcePermission) {
-
-					SyncDLObject syncDLObject = getSyncDLObject(
-						resourcePermission);
-
-					if (syncDLObject == null) {
-						return;
-					}
-
-					updateSyncDLObject(syncDLObject);
+				if (syncDLObject == null) {
+					return;
 				}
 
+				updateSyncDLObject(syncDLObject);
 			});
 
 		TransactionCommitCallbackUtil.registerCallback(
@@ -117,28 +108,19 @@ public abstract class SyncBaseModelListener<T extends BaseModel<T>>
 			_getActionableDynamicQuery(roleId);
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<ResourcePermission>() {
+			(ResourcePermission resourcePermission) -> {
+				SyncDLObject syncDLObject = getSyncDLObject(resourcePermission);
 
-				@Override
-				public void performAction(
-					ResourcePermission resourcePermission) {
-
-					SyncDLObject syncDLObject = getSyncDLObject(
-						resourcePermission);
-
-					if (syncDLObject == null) {
-						return;
-					}
-
-					Date date = new Date();
-
-					syncDLObject.setModifiedTime(date.getTime());
-					syncDLObject.setLastPermissionChangeDate(date);
-
-					syncDLObjectLocalService.updateSyncDLObject(syncDLObject);
+				if (syncDLObject == null) {
+					return;
 				}
 
+				Date date = new Date();
+
+				syncDLObject.setModifiedTime(date.getTime());
+				syncDLObject.setLastPermissionChangeDate(date);
+
+				syncDLObjectLocalService.updateSyncDLObject(syncDLObject);
 			});
 
 		TransactionCommitCallbackUtil.registerCallback(

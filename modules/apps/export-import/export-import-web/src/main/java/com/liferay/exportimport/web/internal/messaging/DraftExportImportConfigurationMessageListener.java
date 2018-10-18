@@ -163,38 +163,29 @@ public class DraftExportImportConfigurationMessageListener
 			});
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<ExportImportConfiguration>() {
+			(ExportImportConfiguration exportImportConfiguration) -> {
+				List<BackgroundTask> backgroundTasks = getParentBackgroundTasks(
+					exportImportConfiguration);
 
-				@Override
-				public void performAction(
-						ExportImportConfiguration exportImportConfiguration)
-					throws PortalException {
+				if (ListUtil.isEmpty(backgroundTasks)) {
+					_exportImportConfigurationLocalService.
+						deleteExportImportConfiguration(
+							exportImportConfiguration);
 
-					List<BackgroundTask> backgroundTasks =
-						getParentBackgroundTasks(exportImportConfiguration);
-
-					if (ListUtil.isEmpty(backgroundTasks)) {
-						_exportImportConfigurationLocalService.
-							deleteExportImportConfiguration(
-								exportImportConfiguration);
-
-						return;
-					}
-
-					// BackgroundTaskModelListener deletes the linked
-					// configuration automatically
-
-					for (BackgroundTask backgroundTask : backgroundTasks) {
-						if (isLiveGroup(backgroundTask.getGroupId())) {
-							continue;
-						}
-
-						_backgroundTaskLocalService.deleteBackgroundTask(
-							backgroundTask.getBackgroundTaskId());
-					}
+					return;
 				}
 
+				// BackgroundTaskModelListener deletes the linked
+				// configuration automatically
+
+				for (BackgroundTask backgroundTask : backgroundTasks) {
+					if (isLiveGroup(backgroundTask.getGroupId())) {
+						continue;
+					}
+
+					_backgroundTaskLocalService.deleteBackgroundTask(
+						backgroundTask.getBackgroundTaskId());
+				}
 			});
 
 		actionableDynamicQuery.performActions();

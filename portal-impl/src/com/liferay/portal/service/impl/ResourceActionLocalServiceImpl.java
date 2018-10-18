@@ -259,27 +259,18 @@ public class ResourceActionLocalServiceImpl
 			actionableDynamicQuery.setAddCriteriaMethod(addCriteriaMethod);
 			actionableDynamicQuery.setCompanyId(company.getCompanyId());
 			actionableDynamicQuery.setPerformActionMethod(
-				new ActionableDynamicQuery.
-					PerformActionMethod<ResourcePermission>() {
+				(ResourcePermission resourcePermission) -> {
+					long actionIds = resourcePermission.getActionIds();
 
-					@Override
-					public void performAction(
-						ResourcePermission resourcePermission) {
+					if ((actionIds & bitwiseValue) != 0) {
+						actionIds &= ~bitwiseValue;
 
-						long actionIds = resourcePermission.getActionIds();
+						resourcePermission.setActionIds(actionIds);
+						resourcePermission.setViewActionId(actionIds % 2 == 1);
 
-						if ((actionIds & bitwiseValue) != 0) {
-							actionIds &= ~bitwiseValue;
-
-							resourcePermission.setActionIds(actionIds);
-							resourcePermission.setViewActionId(
-								actionIds % 2 == 1);
-
-							resourcePermissionPersistence.update(
-								resourcePermission);
-						}
+						resourcePermissionPersistence.update(
+							resourcePermission);
 					}
-
 				});
 
 			try {

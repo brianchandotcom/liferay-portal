@@ -130,6 +130,24 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 		return false;
 	}
 
+	private int _getClosestParentLineNumber(
+		DetailAST firstNameAST, int lineNumber) {
+
+		int closestLineNumber = firstNameAST.getLineNo();
+
+		DetailAST parentAST = firstNameAST.getParent();
+
+		while (true) {
+			if (parentAST.getLineNo() <= lineNumber) {
+				return closestLineNumber;
+			}
+
+			closestLineNumber = parentAST.getLineNo();
+
+			parentAST = parentAST.getParent();
+		}
+	}
+
 	private DetailAST _getFirstDependentIdentAST(
 		String variableName, List<String> identValues,
 		List<DetailAST> identASTList, int start) {
@@ -181,24 +199,6 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 		}
 
 		return null;
-	}
-
-	private int _getClosestParentLineNumber(
-		DetailAST firstNameAST, int lineNumber) {
-
-		int closestLineNumber = firstNameAST.getLineNo();
-
-		DetailAST parentAST = firstNameAST.getParent();
-
-		while (true) {
-			if (parentAST.getLineNo() <= lineNumber) {
-				return closestLineNumber;
-			}
-
-			closestLineNumber = parentAST.getLineNo();
-
-			parentAST = parentAST.getParent();
-		}
 	}
 
 	private List<String> _getIdentValues(DetailAST variableDefAST) {

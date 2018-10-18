@@ -137,7 +137,6 @@
 
 	<command name="PublishDisplayPage" priority="5">
 		<description message="Display pages only appear in live view after being published and should appear properly. This is a test case for LPS-86373 where web content articles lost their reference to display pages." />
-		<property name="portal.acceptance" value="true" />
 
 		<execute macro="WebContent#openWebContentAdmin">
 			<var name="siteURLKey" value="test-site-name-staging" />
@@ -270,6 +269,10 @@
 		<description message="Edits to display pages should not reflect in the live site until published." />
 		<property name="portal.acceptance" value="true" />
 
+		<execute macro="DisplayPagesAdmin#markDisplayPageAsDefault">
+			<var name="rowEntry" value="Display Page Name" />
+		</execute>
+
 		<execute macro="WebContent#openWebContentAdmin">
 			<var name="siteURLKey" value="test-site-name-staging" />
 		</execute>
@@ -281,10 +284,7 @@
 			<var name="webContentTitle" value="Webcontent Title" />
 		</execute>
 
-		<execute macro="WebContent#editDisplayPage">
-			<var name="pageName" value="Display Page Name" />
-			<var name="pageType" value="Display Pages" />
-		</execute>
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Staging#openStagingAdmin">
 			<var name="siteURLKey" value="test-site-name-staging" />

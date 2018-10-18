@@ -290,7 +290,7 @@
 
 		<execute macro="NavItem#gotoUserGroups" />
 
-		<execute macro="Site#viewSiteRoleViaSiteMembershipsCP">
+		<execute macro="Site#viewUserGroupSiteRoleViaSiteMembershipsCP">
 			<var name="resourceName" value="User Group Name" />
 			<var name="roleTitle" value="Site Content Reviewer" />
 		</execute>

@@ -142,8 +142,11 @@ public class BaseManagementToolbarDisplayContext
 				for (Map.Entry<String, String> entry : entriesMap.entrySet()) {
 					add(
 						dropdownItem -> {
-							dropdownItem.setActive(
-								parameterValue.equals(entry.getValue()));
+							if (parameterValue != null) {
+								dropdownItem.setActive(
+									parameterValue.equals(entry.getValue()));
+							}
+
 							dropdownItem.setHref(
 								entryURL, parameterName, entry.getValue());
 							dropdownItem.setLabel(

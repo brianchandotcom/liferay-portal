@@ -4809,7 +4809,7 @@ version 1.3.5.
 - [LPS-86408]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.164.
 
-## 5.5.85 - 2018-10-17
+## 5.5.91 - 2018-10-17
 
 ### Added
 - [LPS-86477]: Allow the `test` and `testIntegration` task `ignoreFailures`
@@ -5306,6 +5306,7 @@ argument:
 [LPS-86362]: https://issues.liferay.com/browse/LPS-86362
 [LPS-86371]: https://issues.liferay.com/browse/LPS-86371
 [LPS-86408]: https://issues.liferay.com/browse/LPS-86408
+[LPS-86447]: https://issues.liferay.com/browse/LPS-86447
 [LPS-86477]: https://issues.liferay.com/browse/LPS-86477
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

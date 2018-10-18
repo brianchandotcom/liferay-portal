@@ -19,6 +19,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 
 	testCompile group: "org.aspectj", name: "aspectjweaver", version: "1.8.9"
+	testCompile project(":core:petra:petra-function")
 	testCompile project(":core:registry-api")
 }
 

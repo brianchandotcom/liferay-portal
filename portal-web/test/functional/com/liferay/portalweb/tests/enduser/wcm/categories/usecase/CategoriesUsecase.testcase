@@ -451,6 +451,12 @@
 			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
+		<execute macro="Subcategory#viewCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="subcategoryName" value="Subcategory Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
 		<execute macro="Subcategory#addPropertyCP">
 			<var name="propertiesKeyField" value="Subcategory Key" />
 			<var name="propertiesValueField" value="Subcategory Value" />

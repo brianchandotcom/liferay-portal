@@ -46,6 +46,10 @@ public class NestableAutoFlushEventListener
 			return;
 		}
 
+		ActionQueue actionQueue = eventSource.getActionQueue();
+
+		int oldSize = actionQueue.numberOfCollectionRemovals();
+
 		PersistenceContext persistenceContext =
 			eventSource.getPersistenceContext();
 
@@ -83,10 +87,7 @@ public class NestableAutoFlushEventListener
 			}
 		}
 		else if (!persistenceContext.isFlushing()) {
-			ActionQueue actionQueue = eventSource.getActionQueue();
-
-			actionQueue.clearFromFlushNeededCheck(
-				actionQueue.numberOfCollectionRemovals());
+			actionQueue.clearFromFlushNeededCheck(oldSize);
 		}
 
 		autoFlushEvent.setFlushRequired(

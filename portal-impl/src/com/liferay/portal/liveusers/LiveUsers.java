@@ -122,9 +122,9 @@ public class LiveUsers {
 	public static void joinGroup(long companyId, long groupId, long userId) {
 		Map<Long, Set<Long>> liveUsers = _getLiveUsers(companyId);
 
-		if (_getUserTrackers(companyId, userId) != null) {
-			Set<Long> groupUsers = _getGroupUsers(liveUsers, groupId);
+		Set<Long> groupUsers = _getGroupUsers(liveUsers, groupId);
 
+		if (_getUserTrackers(companyId, userId) != null) {
 			groupUsers.add(userId);
 		}
 	}

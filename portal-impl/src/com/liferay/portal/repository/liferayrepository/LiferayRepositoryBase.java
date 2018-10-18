@@ -120,15 +120,14 @@ public abstract class LiferayRepositoryBase implements CapabilityProvider {
 		List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
 
 		for (DDMStructure ddmStructure : ddmStructures) {
+			String namespace = String.valueOf(ddmStructure.getStructureId());
+
 			DDMFormValues ddmFormValues =
 				(DDMFormValues)serviceContext.getAttribute(
 					DDMFormValues.class.getName() + StringPool.POUND +
 						ddmStructure.getStructureId());
 
 			if (ddmFormValues == null) {
-				String namespace = String.valueOf(
-					ddmStructure.getStructureId());
-
 				ddmFormValues = StorageEngineManagerUtil.getDDMFormValues(
 					ddmStructure.getStructureId(), namespace, serviceContext);
 			}

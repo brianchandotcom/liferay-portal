@@ -1116,10 +1116,10 @@ public class ResourceActionsImpl implements ResourceActions {
 			for (Element portletResourceElement :
 					rootElement.elements("portlet-resource")) {
 
-				if (portletNames != null) {
-					String portletName = _readPortletResource(
-						servletContextName, portletResourceElement);
+				String portletName = _readPortletResource(
+					servletContextName, portletResourceElement);
 
+				if (portletNames != null) {
 					portletNames.add(portletName);
 				}
 			}
@@ -1128,10 +1128,10 @@ public class ResourceActionsImpl implements ResourceActions {
 		for (Element modelResourceElement :
 				rootElement.elements("model-resource")) {
 
-			if (portletNames != null) {
-				String modelName = _readModelResource(
-					servletContextName, modelResourceElement);
+			String modelName = _readModelResource(
+				servletContextName, modelResourceElement);
 
+			if (portletNames != null) {
 				ModelResourceActionsBag modelResourceActionsBag =
 					_getModelResourceActionsBag(modelName);
 

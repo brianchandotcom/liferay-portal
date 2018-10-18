@@ -192,7 +192,6 @@ public class LayoutTemplateLocalServiceImpl
 				_portalCustom.entrySet()) {
 
 			String layoutTemplateId = entry.getKey();
-			LayoutTemplate layoutTemplate = entry.getValue();
 
 			LayoutTemplate themeCustomLayoutTemplate = themesCustom.get(
 				layoutTemplateId);
@@ -208,7 +207,7 @@ public class LayoutTemplateLocalServiceImpl
 					customLayoutTemplates.add(warCustomLayoutTemplate);
 				}
 				else {
-					customLayoutTemplates.add(layoutTemplate);
+					customLayoutTemplates.add(entry.getValue());
 				}
 			}
 		}

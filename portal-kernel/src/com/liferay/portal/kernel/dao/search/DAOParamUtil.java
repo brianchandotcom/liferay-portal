@@ -55,11 +55,12 @@ public class DAOParamUtil {
 		int month = ParamUtil.getInteger(request, param + "Month");
 		int day = ParamUtil.getInteger(request, param + "Day");
 		int year = ParamUtil.getInteger(request, param + "Year");
-		int hour = ParamUtil.getInteger(request, param + "Hour", -1);
-		int minute = ParamUtil.getInteger(request, param + "Minute", -1);
 
 		if ((month >= 0) && (day > 0) && (year > 0)) {
 			Calendar cal = CalendarFactoryUtil.getCalendar();
+
+			int minute = ParamUtil.getInteger(request, param + "Minute", -1);
+			int hour = ParamUtil.getInteger(request, param + "Hour", -1);
 
 			if ((hour == -1) || (minute == -1)) {
 				cal.set(year, month, day);
@@ -88,11 +89,13 @@ public class DAOParamUtil {
 		int month = ParamUtil.getInteger(portletRequest, param + "Month");
 		int day = ParamUtil.getInteger(portletRequest, param + "Day");
 		int year = ParamUtil.getInteger(portletRequest, param + "Year");
-		int hour = ParamUtil.getInteger(portletRequest, param + "Hour", -1);
-		int minute = ParamUtil.getInteger(portletRequest, param + "Minute", -1);
 
 		if ((month >= 0) && (day > 0) && (year > 0)) {
 			Calendar cal = CalendarFactoryUtil.getCalendar();
+
+			int minute = ParamUtil.getInteger(
+				portletRequest, param + "Minute", -1);
+			int hour = ParamUtil.getInteger(portletRequest, param + "Hour", -1);
 
 			if ((hour == -1) || (minute == -1)) {
 				cal.set(year, month, day);

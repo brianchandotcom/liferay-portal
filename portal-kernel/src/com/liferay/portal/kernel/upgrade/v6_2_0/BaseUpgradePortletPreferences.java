@@ -158,9 +158,6 @@ public abstract class BaseUpgradePortletPreferences
 				ResultSet rs = ps1.executeQuery()) {
 
 				while (rs.next()) {
-					long portletPreferencesId = rs.getLong(
-						"portletPreferencesId");
-
 					long companyId = rs.getLong("companyId");
 					long ownerId = rs.getLong("ownerId");
 					long plid = rs.getLong("plid");
@@ -174,7 +171,7 @@ public abstract class BaseUpgradePortletPreferences
 
 					if (!preferences.equals(newPreferences)) {
 						ps2.setString(1, newPreferences);
-						ps2.setLong(2, portletPreferencesId);
+						ps2.setLong(2, rs.getLong("portletPreferencesId"));
 
 						ps2.addBatch();
 					}

@@ -931,9 +931,9 @@ public class ModulesStructureTest {
 		Path gradlePropertiesPath = dirPath.resolve("gradle.properties");
 		Path settingsGradlePath = dirPath.resolve("settings.gradle");
 
-		String buildGradle = ModulesStructureTestUtil.read(buildGradlePath);
-
 		if (!privateRepo && !readOnlyRepo) {
+			String buildGradle = ModulesStructureTestUtil.read(buildGradlePath);
+
 			Assert.assertEquals(
 				"Incorrect " + buildGradlePath,
 				_getGitRepoBuildGradle(dirPath, buildGradleTemplate),
@@ -1094,9 +1094,6 @@ public class ModulesStructureTest {
 				repositoryPrivateUsername, "build.repository.private.username");
 		}
 
-		String settingsGradle = ModulesStructureTestUtil.read(
-			settingsGradlePath);
-
 		if (Files.notExists(dirPath.resolve("settings-ext.gradle"))) {
 			settingsGradleTemplate = StringUtil.removeSubstring(
 				settingsGradleTemplate,
@@ -1105,6 +1102,9 @@ public class ModulesStructureTest {
 		}
 
 		if (!privateRepo && !readOnlyRepo) {
+			String settingsGradle = ModulesStructureTestUtil.read(
+				settingsGradlePath);
+
 			Assert.assertEquals(
 				"Incorrect " + settingsGradlePath, settingsGradleTemplate,
 				settingsGradle);

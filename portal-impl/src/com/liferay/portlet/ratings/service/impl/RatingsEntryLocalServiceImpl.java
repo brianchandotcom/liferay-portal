@@ -66,8 +66,6 @@ public class RatingsEntryLocalServiceImpl
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
-		double oldScore = entry.getScore();
-
 		ratingsEntryPersistence.removeByU_C_C(userId, classNameId, classPK);
 
 		// Stats
@@ -81,6 +79,8 @@ public class RatingsEntryLocalServiceImpl
 			ratingsStatsPersistence.remove(stats);
 		}
 		else {
+			double oldScore = entry.getScore();
+
 			double totalScore = stats.getTotalScore() - oldScore;
 
 			double averageScore = 0;
@@ -196,7 +196,6 @@ public class RatingsEntryLocalServiceImpl
 		// Entry
 
 		long classNameId = classNameLocalService.getClassNameId(className);
-		double oldScore = 0;
 
 		validate(score);
 
@@ -204,7 +203,7 @@ public class RatingsEntryLocalServiceImpl
 			userId, classNameId, classPK);
 
 		if (entry != null) {
-			oldScore = entry.getScore();
+			double oldScore = entry.getScore();
 
 			entry.setScore(score);
 

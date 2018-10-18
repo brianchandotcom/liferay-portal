@@ -1335,10 +1335,11 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 				int pos = name.indexOf(
 					PortletQName.PRIVATE_RENDER_PARAMETER_NAMESPACE);
 
-				int privateRenderParameterNamespaceLength =
-					PortletQName.PRIVATE_RENDER_PARAMETER_NAMESPACE.length();
-
 				if (pos >= 0) {
+					int privateRenderParameterNamespaceLength =
+						PortletQName.
+							PRIVATE_RENDER_PARAMETER_NAMESPACE.length();
+
 					String privateRenderParameterName = name.substring(0, pos);
 
 					privateRenderParameterName =

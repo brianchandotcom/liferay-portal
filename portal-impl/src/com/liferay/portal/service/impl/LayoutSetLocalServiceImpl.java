@@ -540,12 +540,14 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		Group group = layoutSet.getGroup();
 
+		boolean privateLayout = layoutSet.isPrivateLayout();
+
 		if (group.isStagingGroup()) {
 			LayoutSet liveLayoutSet = null;
 
 			Group liveGroup = group.getLiveGroup();
 
-			if (layoutSet.isPrivateLayout()) {
+			if (privateLayout) {
 				liveLayoutSet = liveGroup.getPrivateLayoutSet();
 			}
 			else {

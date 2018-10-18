@@ -5856,6 +5856,11 @@ version 2.1.60.
 - [LPS-85556]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.243.
 
+## 3.12.167 - 2018-10-16
+
+### Changed
+- [LPS-85678]: Update the [Liferay Ant BND] dependency to version 2.0.58.
+
 ## 3.13.0 - 2018-10-17
 
 ### Changed

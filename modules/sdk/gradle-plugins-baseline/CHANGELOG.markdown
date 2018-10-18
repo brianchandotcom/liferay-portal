@@ -133,6 +133,7 @@ specified baseline warnings:
 	- `PACKAGE-REMOVED-UNNECESSARY-PACKAGEINFO`
 	- `VERSION-INCREASE-REQUIRED`
 	- `VERSION-INCREASE-SUGGESTED`
+- [LPS-85678]: Update the [Liferay Ant BND] dependency to version 2.0.58.
 
 ## 1.3.7 - 2018-10-16
 

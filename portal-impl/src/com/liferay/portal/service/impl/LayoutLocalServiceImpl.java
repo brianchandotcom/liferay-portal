@@ -1517,11 +1517,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 			for (Layout userGroupLayout : userGroupLayouts) {
 				long userGroupPlid = userGroupLayout.getPlid();
+				long userGroupLayoutId = userGroupLayout.getLayoutId();
 
 				if (checkedPlids.add(userGroupPlid)) {
 					layouts.add(userGroupLayout);
 
-					checkParentLayoutIds.add(userGroupLayout.getLayoutId());
+					checkParentLayoutIds.add(userGroupLayoutId);
 				}
 			}
 		}
@@ -2685,13 +2686,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		String layoutPrototypeUuid = ParamUtil.getString(
 			serviceContext, "layoutPrototypeUuid");
+		boolean layoutPrototypeLinkEnabled = ParamUtil.getBoolean(
+			serviceContext, "layoutPrototypeLinkEnabled");
 
 		if (Validator.isNotNull(layoutPrototypeUuid)) {
 			layout.setLayoutPrototypeUuid(layoutPrototypeUuid);
-
-			boolean layoutPrototypeLinkEnabled = ParamUtil.getBoolean(
-				serviceContext, "layoutPrototypeLinkEnabled");
-
 			layout.setLayoutPrototypeLinkEnabled(layoutPrototypeLinkEnabled);
 		}
 

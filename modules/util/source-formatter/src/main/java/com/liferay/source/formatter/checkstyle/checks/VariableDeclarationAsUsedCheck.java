@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -53,13 +54,18 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 		DetailAST detailAST, DetailAST variableDefAST,
 		List<DetailAST> identASTList) {
 
+		List<String> identValues = _getIdentValues(variableDefAST);
+
 		if (DetailASTUtil.hasParentWithTokenType(
 				variableDefAST, TokenTypes.FOR_EACH_CLAUSE,
 				TokenTypes.FOR_INIT) ||
 			_containsMethodName(
-				variableDefAST, "currentTimeMillis",
-				"(add|create|delete|post|put|register|update)([A-Z].*)?",
-				"toString")) {
+				variableDefAST,
+				"_?(add|channel|close|create|delete|execute|open|post|put|" +
+					"register|resolve|send|transform|unzip|update|zip)" +
+						"([A-Z].*)?",
+				"currentTimeMillis", "nextVersion", "toString") ||
+			_containsVariableType(variableDefAST, identValues, "File")) {
 
 			return;
 		}
@@ -70,9 +76,8 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 
 		int endLineNumber = DetailASTUtil.getEndLineNumber(variableDefAST);
 
-		DetailAST firstDependentIdentAST = _findFirstDependentIdentAST(
-			variableName, _getIdentValues(variableDefAST), identASTList,
-			endLineNumber + 1);
+		DetailAST firstDependentIdentAST = _getFirstDependentIdentAST(
+			variableName, identValues, identASTList, endLineNumber + 1);
 
 		if (firstDependentIdentAST == null) {
 			return;
@@ -109,7 +114,42 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 		return false;
 	}
 
-	private DetailAST _findFirstDependentIdentAST(
+	private boolean _containsVariableType(
+		DetailAST variableDefAST, List<String> identValues,
+		String... variableTypeNames) {
+
+		for (String name : identValues) {
+			if (ArrayUtil.contains(
+					variableTypeNames,
+					DetailASTUtil.getVariableTypeName(
+						variableDefAST, name, false))) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private int _getClosestParentLineNumber(
+		DetailAST firstNameAST, int lineNumber) {
+
+		int closestLineNumber = firstNameAST.getLineNo();
+
+		DetailAST parentAST = firstNameAST.getParent();
+
+		while (true) {
+			if (parentAST.getLineNo() <= lineNumber) {
+				return closestLineNumber;
+			}
+
+			closestLineNumber = parentAST.getLineNo();
+
+			parentAST = parentAST.getParent();
+		}
+	}
+
+	private DetailAST _getFirstDependentIdentAST(
 		String variableName, List<String> identValues,
 		List<DetailAST> identASTList, int start) {
 
@@ -160,24 +200,6 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 		}
 
 		return null;
-	}
-
-	private int _getClosestParentLineNumber(
-		DetailAST firstNameAST, int lineNumber) {
-
-		int closestLineNumber = firstNameAST.getLineNo();
-
-		DetailAST parentAST = firstNameAST.getParent();
-
-		while (true) {
-			if (parentAST.getLineNo() <= lineNumber) {
-				return closestLineNumber;
-			}
-
-			closestLineNumber = parentAST.getLineNo();
-
-			parentAST = parentAST.getParent();
-		}
 	}
 
 	private List<String> _getIdentValues(DetailAST variableDefAST) {

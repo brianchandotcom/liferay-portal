@@ -429,10 +429,11 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		themes = new ConcurrentHashMap<>();
 
 		for (Map.Entry<String, Theme> entry : _themes.entrySet()) {
+			String themeId = entry.getKey();
 			Theme theme = entry.getValue();
 
 			if (theme.isCompanyAvailable(companyId)) {
-				themes.put(entry.getKey(), theme);
+				themes.put(themeId, theme);
 			}
 		}
 

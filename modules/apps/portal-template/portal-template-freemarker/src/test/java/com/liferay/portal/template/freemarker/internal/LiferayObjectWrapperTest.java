@@ -185,9 +185,9 @@ public class LiferayObjectWrapperTest {
 			Collections.singletonList("testElement"));
 
 		_assertTemplateModel(
+			"testElement", enumerationModel -> enumerationModel.next(),
 			EnumerationModel.class.cast(
-				liferayObjectWrapper.handleUnknownType(enumeration)),
-			"testElement", enumerationModel -> enumerationModel.next());
+				liferayObjectWrapper.handleUnknownType(enumeration)));
 
 		_assertModelFactoryCache(
 			"_ENUMERATION_MODEL_FACTORY", enumeration.getClass());
@@ -238,10 +238,10 @@ public class LiferayObjectWrapperTest {
 		};
 
 		_assertTemplateModel(
-			ResourceBundleModel.class.cast(
-				liferayObjectWrapper.handleUnknownType(resourceBundle)),
 			resourceBundle.toString(),
-			resourceBundleModel -> resourceBundleModel.getBundle());
+			resourceBundleModel -> resourceBundleModel.getBundle(),
+			ResourceBundleModel.class.cast(
+				liferayObjectWrapper.handleUnknownType(resourceBundle)));
 
 		_assertModelFactoryCache(
 			"_RESOURCE_BUNDLE_MODEL_FACTORY", resourceBundle.getClass());
@@ -249,11 +249,11 @@ public class LiferayObjectWrapperTest {
 		// 4. handle Version
 
 		_assertTemplateModel(
+			"1.0", stringModel -> stringModel.getAsString(),
 			StringModel.class.cast(
 				liferayObjectWrapper.handleUnknownType(
 					liferayObjectWrapper.handleUnknownType(
-						new Version("1.0")))),
-			"1.0", stringModel -> stringModel.getAsString());
+						new Version("1.0")))));
 
 		_assertModelFactoryCache("_STRING_MODEL_FACTORY", Version.class);
 	}
@@ -311,8 +311,8 @@ public class LiferayObjectWrapperTest {
 	}
 
 	private <T, R> void _assertTemplateModel(
-			T templateModel, String expectResult,
-			UnsafeFunction<T, R, Exception> unsafeFunction)
+			String expectResult, UnsafeFunction<T, R, Exception> unsafeFunction,
+			T templateModel)
 		throws Exception {
 
 		R result = unsafeFunction.apply(templateModel);
@@ -362,35 +362,35 @@ public class LiferayObjectWrapperTest {
 		// 3. wrap TemplateNode
 
 		_assertTemplateModel(
+			"testName",
+			liferayTemplateModel -> liferayTemplateModel.get("name"),
 			LiferayTemplateModel.class.cast(
 				liferayObjectWrapper.wrap(
-					new TemplateNode(null, "testName", "", "", null))),
-			"testName",
-			liferayTemplateModel -> liferayTemplateModel.get("name"));
+					new TemplateNode(null, "testName", "", "", null))));
 
 		// 4. wrap liferay Collection
 
 		_assertTemplateModel(
+			"testElement", simpleSequence -> simpleSequence.get(0),
 			SimpleSequence.class.cast(
 				liferayObjectWrapper.wrap(
-					new TestLiferayCollection("testElement"))),
-			"testElement", simpleSequence -> simpleSequence.get(0));
+					new TestLiferayCollection("testElement"))));
 
 		// 5. wrap liferay Map
 
 		_assertTemplateModel(
+			"testValue", mapModel -> mapModel.get("testKey"),
 			MapModel.class.cast(
 				liferayObjectWrapper.wrap(
-					new TestLiferayMap("testKey", "testValue"))),
-			"testValue", mapModel -> mapModel.get("testKey"));
+					new TestLiferayMap("testKey", "testValue"))));
 
 		// 6. wrap liferay Object
 
 		_assertTemplateModel(
+			"TestLiferayObject", stringModel -> stringModel.getAsString(),
 			StringModel.class.cast(
 				liferayObjectWrapper.wrap(
-					new TestLiferayObject("TestLiferayObject"))),
-			"TestLiferayObject", stringModel -> stringModel.getAsString());
+					new TestLiferayObject("TestLiferayObject"))));
 
 		// 7. wrap non-liferay object when module factory is avaiable
 

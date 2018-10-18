@@ -105,19 +105,27 @@ the newer version do not match.
 ## 1.3.3 - 2018-09-24
 
 ### Changed
-[LPS-85677]: Display the file location for the jars in the log when semantic
+- [LPS-85677]: Display the file location for the jars in the log when semantic
 versioning is incorrect.
+- [LPS-85677]: Update the [Liferay Ant BND] dependency to version 2.0.55.
+- [LPS-85677]: Update the [Liferay Gradle Util] dependency to version 1.0.31.
 
 ## 1.3.4 - 2018-09-24
 
 ### Changed
-[LPS-85678]: Check the content of the `.lfrbuild-packageinfo` file to ignore
+- [LPS-85678]: Check the content of the `.lfrbuild-packageinfo` file to ignore
 specified baseline warnings.
+- [LPS-85678]: Update the [Liferay Ant BND] dependency to version 2.0.56.
 
-## 1.3.5 - 2018-10-15
+## 1.3.5 - 2018-10-05
 
 ### Changed
-[LPS-85678]: Check the content of the `.lfrbuild-packageinfo` file to ignore
+- [LPS-80388]: Update the [Liferay Ant BND] dependency to version 2.0.57.
+
+## 1.3.6 - 2018-10-16
+
+### Changed
+- [LPS-85678]: Check the content of the `.lfrbuild-packageinfo` file to ignore
 specified baseline warnings:
 	- `EXCESSIVE-VERSION-INCREASE`
 	- `PACKAGE ADDED-MISSING-PACKAGEINFO`
@@ -125,11 +133,12 @@ specified baseline warnings:
 	- `PACKAGE-REMOVED-UNNECESSARY-PACKAGEINFO`
 	- `VERSION-INCREASE-REQUIRED`
 	- `VERSION-INCREASE-SUGGESTED`
+- [LPS-85678]: Update the [Liferay Ant BND] dependency to version 2.0.58.
 
-## 1.3.6 - 2018-10-16
+## 1.3.7 - 2018-10-16
 
 ### Changed
-[LPS-85678]: Update the `baseline` task to ignore the specified baseline
+- [LPS-85678]: Update the `baseline` task to ignore the specified baseline
 warnings recursively:
 	- `EXCESSIVE-VERSION-INCREASE-RECURSIVE`
 	- `PACKAGE ADDED-MISSING-PACKAGEINFO-RECURSIVE`
@@ -137,9 +146,11 @@ warnings recursively:
 	- `PACKAGE-REMOVED-UNNECESSARY-PACKAGEINFO-RECURSIVE`
 	- `VERSION-INCREASE-REQUIRED-RECURSIVE`
 	- `VERSION-INCREASE-SUGGESTED-RECURSIVE`
+- [LPS-85678]: Update the [Liferay Ant BND] dependency to version 2.0.59.
 
 [Bnd Builder Gradle Plugin]: https://github.com/bndtools/bnd/tree/master/biz.aQute.bnd.gradle
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
+[Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
 [LPS-69470]: https://issues.liferay.com/browse/LPS-69470
 [LPS-69899]: https://issues.liferay.com/browse/LPS-69899
 [LPS-70379]: https://issues.liferay.com/browse/LPS-70379
@@ -151,6 +162,7 @@ warnings recursively:
 [LPS-76224]: https://issues.liferay.com/browse/LPS-76224
 [LPS-77350]: https://issues.liferay.com/browse/LPS-77350
 [LPS-77441]: https://issues.liferay.com/browse/LPS-77441
+[LPS-80388]: https://issues.liferay.com/browse/LPS-80388
 [LPS-83067]: https://issues.liferay.com/browse/LPS-83067
 [LPS-85677]: https://issues.liferay.com/browse/LPS-85677
 [LPS-85678]: https://issues.liferay.com/browse/LPS-85678

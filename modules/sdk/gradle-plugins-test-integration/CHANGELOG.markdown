@@ -80,7 +80,7 @@ setting the property `testIntegrationTomcat.hostName`. The default value is
 - [LPS-83790]: Update the `setUpTestableTomcat.zipUrl` property to
 `http://archive.apache.org/dist/tomcat/tomcat-9/v9.0.10/bin/apache-tomcat-9.0.10.zip`.
 
-## 2.4.0 - 2018-10-16
+## 2.4.0 - 2018-10-17
 
 ### Added
 - [LPS-86447]: Added ability to set environment variables for launching Tomcat.

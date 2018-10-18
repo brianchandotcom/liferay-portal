@@ -5840,7 +5840,39 @@ to version 2.3.277.
 - [LPS-86408]: Update the [Liferay Source Formatter] dependency to version
 1.0.751.
 
-## 3.12.165 - 2018-10-17
+## 3.12.165 - 2018-10-16
+
+### Changed
+- [LPS-85849]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.1.59.
+- [LPS-85849]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.242.
+
+## 3.12.166 - 2018-10-16
+
+### Changed
+- [LPS-85556]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.1.60.
+- [LPS-85556]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.243.
+
+## 3.12.167 - 2018-10-16
+
+### Changed
+- [LPS-85678]: Update the [Liferay Ant BND] dependency to version 2.0.58.
+
+## 3.12.168 - 2018-10-16
+
+### Changed
+- [LPS-85678]: Update the [Liferay Ant BND] dependency to version 2.0.59.
+
+## 3.12.169 - 2018-10-17
+
+### Changed
+- [LPS-86447]: Update the [Liferay Gradle Plugins Test Integration] dependency
+to version 2.4.0.
+
+## 3.13.0 - 2018-10-17
 
 ### Changed
 - [LPS-86018]: Enable `watch` task for theme and WAR projects.
@@ -6291,6 +6323,7 @@ to version 2.3.277.
 [LPS-85556]: https://issues.liferay.com/browse/LPS-85556
 [LPS-85609]: https://issues.liferay.com/browse/LPS-85609
 [LPS-85678]: https://issues.liferay.com/browse/LPS-85678
+[LPS-85849]: https://issues.liferay.com/browse/LPS-85849
 [LPS-85954]: https://issues.liferay.com/browse/LPS-85954
 [LPS-85959]: https://issues.liferay.com/browse/LPS-85959
 [LPS-86018]: https://issues.liferay.com/browse/LPS-86018
@@ -6298,4 +6331,5 @@ to version 2.3.277.
 [LPS-86362]: https://issues.liferay.com/browse/LPS-86362
 [LPS-86371]: https://issues.liferay.com/browse/LPS-86371
 [LPS-86408]: https://issues.liferay.com/browse/LPS-86408
+[LPS-86447]: https://issues.liferay.com/browse/LPS-86447
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

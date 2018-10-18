@@ -666,12 +666,10 @@ public class AssetUtil {
 	 */
 	@Deprecated
 	public static String getClassNameMessage(String className, Locale locale) {
-		String message = null;
-
 		int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
 
 		if (pos != -1) {
-			message = className.substring(
+			String message = className.substring(
 				pos + AssetUtil.CLASSNAME_SEPARATOR.length());
 
 			className = className.substring(0, pos);

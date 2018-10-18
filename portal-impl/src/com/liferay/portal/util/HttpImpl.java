@@ -1868,13 +1868,11 @@ public class HttpImpl implements Http {
 				}
 			}
 
-			long contentLengthLong = 0;
-
 			Header contentLengthHeader = closeableHttpResponse.getFirstHeader(
 				HttpHeaders.CONTENT_LENGTH);
 
 			if (contentLengthHeader != null) {
-				contentLengthLong = GetterUtil.getLong(
+				long contentLengthLong = GetterUtil.getLong(
 					contentLengthHeader.getValue());
 
 				response.setContentLengthLong(contentLengthLong);

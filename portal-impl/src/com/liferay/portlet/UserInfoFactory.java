@@ -132,8 +132,6 @@ public class UserInfoFactory {
 		for (Map.Entry<String, String> entry :
 				customUserAttributesClassNames.entrySet()) {
 
-			String userAttributeName = entry.getKey();
-
 			String customUserAttributesClassName = entry.getValue();
 
 			CustomUserAttributes customUserAttributes =
@@ -170,6 +168,8 @@ public class UserInfoFactory {
 			}
 
 			if (customUserAttributes != null) {
+				String userAttributeName = entry.getKey();
+
 				String attrValue = customUserAttributes.getValue(
 					userAttributeName, unmodifiableUserInfo);
 

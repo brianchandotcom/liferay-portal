@@ -854,10 +854,10 @@ public class DLFileEntryFinderImpl
 			}
 		}
 
-		StringBundler sb = new StringBundler(12);
-
 		if (ListUtil.isNotEmpty(repositoryIds) ||
 			ListUtil.isNotEmpty(folderIds) || ArrayUtil.isNotEmpty(mimeTypes)) {
+
+			StringBundler sb = new StringBundler(12);
 
 			if (ListUtil.isNotEmpty(repositoryIds)) {
 				sb.append(WHERE_AND);

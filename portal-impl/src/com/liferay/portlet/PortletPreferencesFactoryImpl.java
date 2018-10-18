@@ -855,9 +855,6 @@ public class PortletPreferencesFactoryImpl
 			Layout layout, String portletId, boolean modeEditGuest)
 		throws PortalException {
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
 		String originalPortletId = portletId;
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
@@ -868,6 +865,9 @@ public class PortletPreferencesFactoryImpl
 		long plid = 0;
 
 		if (modeEditGuest) {
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
 			boolean hasUpdateLayoutPermission = LayoutPermissionUtil.contains(
 				permissionChecker, layout, ActionKeys.UPDATE);
 

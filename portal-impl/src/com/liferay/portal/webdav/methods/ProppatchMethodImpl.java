@@ -169,18 +169,20 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 				List<Element> customPropElements = propElement.elements();
 
 				for (Element customPropElement : customPropElements) {
-					String name = customPropElement.getName();
 					String prefix = customPropElement.getNamespacePrefix();
 					String uri = customPropElement.getNamespaceURI();
-					String text = customPropElement.getText();
 
 					Namespace namespace = WebDAVUtil.createNamespace(
 						prefix, uri);
+
+					String name = customPropElement.getName();
 
 					String instructionElementName =
 						instructionElement.getName();
 
 					if (instructionElementName.equals("set")) {
+						String text = customPropElement.getText();
+
 						if (Validator.isNull(text)) {
 							webDAVProps.addProp(name, prefix, uri);
 						}

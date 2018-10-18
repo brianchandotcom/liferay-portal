@@ -56,9 +56,10 @@ public class StrutsActionPortletURL extends PortletURLImplWrapper {
 	public void setParameters(Map<String, String[]> params) {
 		for (Map.Entry<String, String[]> entry : params.entrySet()) {
 			String name = entry.getKey();
-			String[] values = entry.getValue();
 
 			if (name.equals("struts_action")) {
+				String[] values = entry.getValue();
+
 				for (int i = 0; i < values.length; i++) {
 					String value = values[i];
 

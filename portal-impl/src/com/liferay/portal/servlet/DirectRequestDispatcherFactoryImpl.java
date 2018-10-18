@@ -114,14 +114,13 @@ public class DirectRequestDispatcherFactoryImpl
 
 		Servlet servlet = DirectServletRegistryUtil.getServlet(fullPath);
 
-		RequestDispatcher requestDispatcher = null;
-
 		if (servlet == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("No servlet found for " + fullPath);
 			}
 
-			requestDispatcher = servletContext.getRequestDispatcher(path);
+			RequestDispatcher requestDispatcher =
+				servletContext.getRequestDispatcher(path);
 
 			return new DirectServletPathRegisterDispatcher(
 				path, requestDispatcher);

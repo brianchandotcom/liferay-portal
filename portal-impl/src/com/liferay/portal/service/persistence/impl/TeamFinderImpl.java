@@ -245,11 +245,10 @@ public class TeamFinderImpl extends TeamFinderBaseImpl implements TeamFinder {
 		StringBundler sb = new StringBundler(params.size());
 
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
-			String key = entry.getKey();
 			Object value = entry.getValue();
 
 			if (Validator.isNotNull(value)) {
-				sb.append(getJoin(key));
+				sb.append(getJoin(entry.getKey()));
 			}
 		}
 
@@ -285,11 +284,10 @@ public class TeamFinderImpl extends TeamFinderBaseImpl implements TeamFinder {
 		StringBundler sb = new StringBundler(params.size());
 
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
-			String key = entry.getKey();
 			Object value = entry.getValue();
 
 			if (Validator.isNotNull(value)) {
-				sb.append(getWhere(key));
+				sb.append(getWhere(entry.getKey()));
 			}
 		}
 

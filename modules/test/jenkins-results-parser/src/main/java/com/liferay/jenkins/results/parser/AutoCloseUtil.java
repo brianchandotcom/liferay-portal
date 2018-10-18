@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -42,13 +44,9 @@ public class AutoCloseUtil {
 		String gitHubReceiverUsername = pullRequest.getOwnerUsername();
 		String gitHubSenderUsername = pullRequest.getSenderUsername();
 
-		List<String> autoCloseReceiverUsernames =
-			JenkinsResultsParserUtil.getBuildPropertyAsList(
-				"auto.close.receiver.usernames");
-
 		if ((gitHubReceiverUsername == null) ||
 			(gitHubSenderUsername == null) ||
-			!autoCloseReceiverUsernames.contains(gitHubReceiverUsername) ||
+			!_autoCloseReceiverUsernames.contains(gitHubReceiverUsername) ||
 			gitHubReceiverUsername.equals(gitHubSenderUsername)) {
 
 			return false;
@@ -160,18 +158,14 @@ public class AutoCloseUtil {
 				}
 			}
 
-			List<String> autoCloseGithubCommentMentionUsernames =
-				JenkinsResultsParserUtil.getBuildPropertyAsList(
-					"auto.close.github.comment.mention.usernames");
-
-			if (!autoCloseGithubCommentMentionUsernames.isEmpty()) {
+			if (!_autoCloseGitHubCommentMentionUsernames.isEmpty()) {
 				sb.append("<div>cc");
 
-				for (String autoCloseGithubCommentMentionUsername :
-						autoCloseGithubCommentMentionUsernames) {
+				for (String autoCloseGitHubCommentMentionUsername :
+						_autoCloseGitHubCommentMentionUsernames) {
 
 					sb.append(" @");
-					sb.append(autoCloseGithubCommentMentionUsername);
+					sb.append(autoCloseGitHubCommentMentionUsername);
 				}
 
 				sb.append("</div>");
@@ -198,13 +192,9 @@ public class AutoCloseUtil {
 		String gitHubReceiverUsername = pullRequest.getOwnerUsername();
 		String gitHubSenderUsername = pullRequest.getSenderUsername();
 
-		List<String> autoCloseReceiverUsernames =
-			JenkinsResultsParserUtil.getBuildPropertyAsList(
-				"auto.close.receiver.usernames");
-
 		if ((gitHubReceiverUsername == null) ||
 			(gitHubSenderUsername == null) ||
-			!autoCloseReceiverUsernames.contains(gitHubReceiverUsername) ||
+			!_autoCloseReceiverUsernames.contains(gitHubReceiverUsername) ||
 			gitHubReceiverUsername.equals(gitHubSenderUsername)) {
 
 			return false;
@@ -340,15 +330,11 @@ public class AutoCloseUtil {
 				throw e;
 			}
 
-			List<String> autoCloseGithubCommentMentionUsernames =
-				JenkinsResultsParserUtil.getBuildPropertyAsList(
-					"auto.close.github.comment.mention.usernames");
-
-			if (!autoCloseGithubCommentMentionUsernames.isEmpty()) {
+			if (!_autoCloseGitHubCommentMentionUsernames.isEmpty()) {
 				sb.append("<div>cc");
 
 				for (String autoCloseGithubCommentMentionUsername :
-						autoCloseGithubCommentMentionUsernames) {
+						_autoCloseGitHubCommentMentionUsernames) {
 
 					sb.append(" @");
 					sb.append(autoCloseGithubCommentMentionUsername);
@@ -496,6 +482,22 @@ public class AutoCloseUtil {
 
 		return false;
 	}
+
+	private static List<String> _getBuildPropertyAsList(String propertyName) {
+		try {
+			return JenkinsResultsParserUtil.getBuildPropertyAsList(
+				propertyName);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to get property " + propertyName, ioe);
+		}
+	}
+
+	private static final List<String> _autoCloseGitHubCommentMentionUsernames =
+		_getBuildPropertyAsList("auto.close.github.comment.mention.usernames");
+	private static final List<String> _autoCloseReceiverUsernames =
+		_getBuildPropertyAsList("auto.close.receiver.usernames");
 
 	private static class AutoCloseRule {
 

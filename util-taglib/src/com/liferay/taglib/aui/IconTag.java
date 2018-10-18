@@ -102,11 +102,11 @@ public class IconTag extends BaseIconTag {
 
 	@Override
 	protected int processEndTag() throws Exception {
-		JspWriter jspWriter = pageContext.getOut();
-
 		String url = getUrl();
 
 		if (url == null) {
+			JspWriter jspWriter = pageContext.getOut();
+
 			jspWriter.write("<span ");
 
 			String cssClass = GetterUtil.getString(getCssClass());

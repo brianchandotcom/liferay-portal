@@ -97,9 +97,7 @@ public class ATag extends BaseATag {
 		String iconCssClass = getIconCssClass();
 		String label = getLabel();
 		String lang = getLang();
-		Boolean localizeLabel = getLocalizeLabel();
 		String onClick = getOnClick();
-		String target = getTarget();
 		String title = getTitle();
 
 		if (Validator.isNotNull(href)) {
@@ -108,6 +106,8 @@ public class ATag extends BaseATag {
 			jspWriter.write("href=\"");
 			jspWriter.write(HtmlUtil.escapeAttribute(href));
 			jspWriter.write("\" ");
+
+			String target = getTarget();
 
 			if (Validator.isNotNull(target)) {
 				jspWriter.write("target=\"");
@@ -172,6 +172,8 @@ public class ATag extends BaseATag {
 		jspWriter.write(">");
 
 		if (Validator.isNotNull(label)) {
+			Boolean localizeLabel = getLocalizeLabel();
+
 			if (localizeLabel) {
 				ResourceBundle resourceBundle =
 					TagResourceBundleUtil.getResourceBundle(pageContext);

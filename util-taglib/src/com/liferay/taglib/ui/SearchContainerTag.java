@@ -76,20 +76,20 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 	@Override
 	public int doStartTag() throws JspException {
 		try {
-			PortletRequest portletRequest =
-				(PortletRequest)request.getAttribute(
-					JavaConstants.JAVAX_PORTLET_REQUEST);
-
-			PortletResponse portletResponse =
-				(PortletResponse)request.getAttribute(
-					JavaConstants.JAVAX_PORTLET_RESPONSE);
-
 			if (_iteratorURL == null) {
+				PortletResponse portletResponse =
+					(PortletResponse)request.getAttribute(
+						JavaConstants.JAVAX_PORTLET_RESPONSE);
+
 				_iteratorURL =
 					((MimeResponse)portletResponse).createRenderURL();
 			}
 
 			if (_searchContainer == null) {
+				PortletRequest portletRequest =
+					(PortletRequest)request.getAttribute(
+						JavaConstants.JAVAX_PORTLET_REQUEST);
+
 				_searchContainer = new SearchContainer<>(
 					portletRequest, _displayTerms, _searchTerms, getCurParam(),
 					getDelta(), _iteratorURL, null, _emptyResultsMessage);

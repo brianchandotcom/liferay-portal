@@ -158,6 +158,8 @@ public class AMThumbnailsOSGiCommandsTest {
 
 	@Test
 	public void testCleanUpDeletesImageThumbnails() throws Exception {
+		_cleanUp();
+
 		int count = _getThumbnailCount();
 
 		_addPNGFileEntry();
@@ -171,6 +173,8 @@ public class AMThumbnailsOSGiCommandsTest {
 
 	@Test
 	public void testCleanUpDeletesOnlyImageThumbnails() throws Exception {
+		_cleanUp();
+
 		int count = _getThumbnailCount();
 
 		_addPDFFileEntry();

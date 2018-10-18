@@ -22,7 +22,9 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.test.util.BaseUADDisplayTestCase;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.uad.test.WikiPageUADTestHelper;
+import com.liferay.wiki.service.WikiNodeLocalService;
+import com.liferay.wiki.service.WikiPageLocalService;
+import com.liferay.wiki.uad.test.WikiPageUADTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,12 +47,14 @@ public class WikiPageUADDisplayTest extends BaseUADDisplayTestCase<WikiPage> {
 
 	@After
 	public void tearDown() throws Exception {
-		_wikiPageUADTestHelper.cleanUpDependencies(_wikiPages);
+		WikiPageUADTestUtil.cleanUpDependencies(
+			_wikiNodeLocalService, _wikiPages);
 	}
 
 	@Override
 	protected WikiPage addBaseModel(long userId) throws Exception {
-		WikiPage wikiPage = _wikiPageUADTestHelper.addWikiPage(userId);
+		WikiPage wikiPage = WikiPageUADTestUtil.addWikiPage(
+			_wikiNodeLocalService, _wikiPageLocalService, userId);
 
 		_wikiPages.add(wikiPage);
 
@@ -65,10 +69,13 @@ public class WikiPageUADDisplayTest extends BaseUADDisplayTestCase<WikiPage> {
 	@Inject(filter = "component.name=*.WikiPageUADDisplay")
 	private UADDisplay _uadDisplay;
 
-	@DeleteAfterTestRun
-	private final List<WikiPage> _wikiPages = new ArrayList<>();
+	@Inject
+	private WikiNodeLocalService _wikiNodeLocalService;
 
 	@Inject
-	private WikiPageUADTestHelper _wikiPageUADTestHelper;
+	private WikiPageLocalService _wikiPageLocalService;
+
+	@DeleteAfterTestRun
+	private final List<WikiPage> _wikiPages = new ArrayList<>();
 
 }

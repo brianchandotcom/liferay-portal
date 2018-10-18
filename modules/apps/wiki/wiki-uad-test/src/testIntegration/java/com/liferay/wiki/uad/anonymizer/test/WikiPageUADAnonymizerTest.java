@@ -24,8 +24,9 @@ import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.WikiPageLocalService;
-import com.liferay.wiki.uad.test.WikiPageUADTestHelper;
+import com.liferay.wiki.uad.test.WikiPageUADTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,9 +54,9 @@ public class WikiPageUADAnonymizerTest
 			long userId, long statusByUserId)
 		throws Exception {
 
-		WikiPage wikiPage =
-			_wikiPageUADTestHelper.addWikiPageWithStatusByUserId(
-				userId, statusByUserId);
+		WikiPage wikiPage = WikiPageUADTestUtil.addWikiPageWithStatusByUserId(
+			_wikiNodeLocalService, _wikiPageLocalService, userId,
+			statusByUserId);
 
 		_wikiPages.add(wikiPage);
 
@@ -64,7 +65,8 @@ public class WikiPageUADAnonymizerTest
 
 	@After
 	public void tearDown() throws Exception {
-		_wikiPageUADTestHelper.cleanUpDependencies(_wikiPages);
+		WikiPageUADTestUtil.cleanUpDependencies(
+			_wikiNodeLocalService, _wikiPages);
 	}
 
 	@Override
@@ -76,7 +78,8 @@ public class WikiPageUADAnonymizerTest
 	protected WikiPage addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		WikiPage wikiPage = _wikiPageUADTestHelper.addWikiPage(userId);
+		WikiPage wikiPage = WikiPageUADTestUtil.addWikiPage(
+			_wikiNodeLocalService, _wikiPageLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_wikiPages.add(wikiPage);
@@ -89,7 +92,8 @@ public class WikiPageUADAnonymizerTest
 	protected void deleteBaseModels(List<WikiPage> baseModels)
 		throws Exception {
 
-		_wikiPageUADTestHelper.cleanUpDependencies(baseModels);
+		WikiPageUADTestUtil.cleanUpDependencies(
+			_wikiNodeLocalService, baseModels);
 	}
 
 	@Override
@@ -130,12 +134,12 @@ public class WikiPageUADAnonymizerTest
 	private UADAnonymizer _uadAnonymizer;
 
 	@Inject
+	private WikiNodeLocalService _wikiNodeLocalService;
+
+	@Inject
 	private WikiPageLocalService _wikiPageLocalService;
 
 	@DeleteAfterTestRun
 	private final List<WikiPage> _wikiPages = new ArrayList<>();
-
-	@Inject
-	private WikiPageUADTestHelper _wikiPageUADTestHelper;
 
 }

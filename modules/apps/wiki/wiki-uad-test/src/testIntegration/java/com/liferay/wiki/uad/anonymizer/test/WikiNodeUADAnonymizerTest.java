@@ -25,12 +25,11 @@ import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalService;
-import com.liferay.wiki.uad.test.WikiNodeUADTestHelper;
+import com.liferay.wiki.uad.test.WikiNodeUADTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -53,18 +52,12 @@ public class WikiNodeUADAnonymizerTest
 			long userId, long statusByUserId)
 		throws Exception {
 
-		WikiNode wikiNode =
-			_wikiNodeUADTestHelper.addWikiNodeWithStatusByUserId(
-				userId, statusByUserId);
+		WikiNode wikiNode = WikiNodeUADTestUtil.addWikiNodeWithStatusByUserId(
+			_wikiNodeLocalService, userId, statusByUserId);
 
 		_wikiNodes.add(wikiNode);
 
 		return wikiNode;
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_wikiNodeUADTestHelper.cleanUpDependencies(_wikiNodes);
 	}
 
 	@Override
@@ -76,20 +69,14 @@ public class WikiNodeUADAnonymizerTest
 	protected WikiNode addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		WikiNode wikiNode = _wikiNodeUADTestHelper.addWikiNode(userId);
+		WikiNode wikiNode = WikiNodeUADTestUtil.addWikiNode(
+			_wikiNodeLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_wikiNodes.add(wikiNode);
 		}
 
 		return wikiNode;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<WikiNode> baseModels)
-		throws Exception {
-
-		_wikiNodeUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -134,8 +121,5 @@ public class WikiNodeUADAnonymizerTest
 
 	@DeleteAfterTestRun
 	private final List<WikiNode> _wikiNodes = new ArrayList<>();
-
-	@Inject
-	private WikiNodeUADTestHelper _wikiNodeUADTestHelper;
 
 }

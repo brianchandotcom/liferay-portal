@@ -15,45 +15,39 @@
 package com.liferay.users.admin.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.portal.kernel.model.UserTracker;
+import com.liferay.portal.kernel.service.UserTrackerLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
-
-import com.liferay.users.admin.uad.test.UserTrackerUADTestHelper;
-
-import org.junit.After;
-import org.junit.ClassRule;
-import org.junit.Rule;
-
-import org.junit.runner.RunWith;
+import com.liferay.users.admin.uad.test.UserTrackerUADTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.runner.RunWith;
+
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
 @RunWith(Arquillian.class)
-public class UserTrackerUADExporterTest extends BaseUADExporterTestCase<UserTracker> {
+public class UserTrackerUADExporterTest
+	extends BaseUADExporterTestCase<UserTracker> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
-
-	@After
-	public void tearDown() throws Exception {
-		_userTrackerUADTestHelper.cleanUpDependencies(_userTrackers);
-	}
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Override
 	protected UserTracker addBaseModel(long userId) throws Exception {
-		UserTracker userTracker = _userTrackerUADTestHelper.addUserTracker(userId);
+		UserTracker userTracker = UserTrackerUADTestUtil.addUserTracker(
+			_userTrackerLocalService, userId);
 
 		_userTrackers.add(userTracker);
 
@@ -70,10 +64,13 @@ public class UserTrackerUADExporterTest extends BaseUADExporterTestCase<UserTrac
 		return _uadExporter;
 	}
 
-	@DeleteAfterTestRun
-	private final List<UserTracker> _userTrackers = new ArrayList<UserTracker>();
-	@Inject
-	private UserTrackerUADTestHelper _userTrackerUADTestHelper;
 	@Inject(filter = "component.name=*.UserTrackerUADExporter")
 	private UADExporter _uadExporter;
+
+	@Inject
+	private UserTrackerLocalService _userTrackerLocalService;
+
+	@DeleteAfterTestRun
+	private final List<UserTracker> _userTrackers = new ArrayList<>();
+
 }

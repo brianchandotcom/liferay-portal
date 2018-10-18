@@ -15,42 +15,36 @@
 package com.liferay.portal.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.uad.test.RepositoryUADTestHelper;
-
+import com.liferay.portal.uad.test.RepositoryUADTestUtil;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
-
-import org.junit.After;
-import org.junit.ClassRule;
-import org.junit.Rule;
-
-import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.runner.RunWith;
+
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
 @RunWith(Arquillian.class)
-public class RepositoryUADAnonymizerTest extends BaseUADAnonymizerTestCase<Repository> {
+public class RepositoryUADAnonymizerTest
+	extends BaseUADAnonymizerTestCase<Repository> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
-
-	@After
-	public void tearDown() throws Exception {
-		_repositoryUADTestHelper.cleanUpDependencies(_repositories);
-	}
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Override
 	protected Repository addBaseModel(long userId) throws Exception {
@@ -60,19 +54,15 @@ public class RepositoryUADAnonymizerTest extends BaseUADAnonymizerTestCase<Repos
 	@Override
 	protected Repository addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
-		Repository repository = _repositoryUADTestHelper.addRepository(userId);
+
+		Repository repository = RepositoryUADTestUtil.addRepository(
+			_portal, _repositoryLocalService, userId);
 
 		if (deleteAfterTestRun) {
 			_repositories.add(repository);
 		}
 
 		return repository;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<Repository> baseModels)
-		throws Exception {
-		_repositoryUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -83,12 +73,15 @@ public class RepositoryUADAnonymizerTest extends BaseUADAnonymizerTestCase<Repos
 	@Override
 	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
-		Repository repository = _repositoryLocalService.getRepository(baseModelPK);
+
+		Repository repository = _repositoryLocalService.getRepository(
+			baseModelPK);
 
 		String userName = repository.getUserName();
 
 		if ((repository.getUserId() != user.getUserId()) &&
-				!userName.equals(user.getFullName())) {
+			!userName.equals(user.getFullName())) {
+
 			return true;
 		}
 
@@ -104,12 +97,16 @@ public class RepositoryUADAnonymizerTest extends BaseUADAnonymizerTestCase<Repos
 		return false;
 	}
 
+	@Inject
+	private Portal _portal;
+
 	@DeleteAfterTestRun
-	private final List<Repository> _repositories = new ArrayList<Repository>();
+	private final List<Repository> _repositories = new ArrayList<>();
+
 	@Inject
 	private RepositoryLocalService _repositoryLocalService;
-	@Inject
-	private RepositoryUADTestHelper _repositoryUADTestHelper;
+
 	@Inject(filter = "component.name=*.RepositoryUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
+
 }

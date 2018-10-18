@@ -22,12 +22,12 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.test.util.BaseUADDisplayTestCase;
 import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.uad.test.WikiNodeUADTestHelper;
+import com.liferay.wiki.service.WikiNodeLocalService;
+import com.liferay.wiki.uad.test.WikiNodeUADTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -43,14 +43,10 @@ public class WikiNodeUADDisplayTest extends BaseUADDisplayTestCase<WikiNode> {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_wikiNodeUADTestHelper.cleanUpDependencies(_wikiNodes);
-	}
-
 	@Override
 	protected WikiNode addBaseModel(long userId) throws Exception {
-		WikiNode wikiNode = _wikiNodeUADTestHelper.addWikiNode(userId);
+		WikiNode wikiNode = WikiNodeUADTestUtil.addWikiNode(
+			_wikiNodeLocalService, userId);
 
 		_wikiNodes.add(wikiNode);
 
@@ -65,10 +61,10 @@ public class WikiNodeUADDisplayTest extends BaseUADDisplayTestCase<WikiNode> {
 	@Inject(filter = "component.name=*.WikiNodeUADDisplay")
 	private UADDisplay _uadDisplay;
 
+	@Inject
+	private WikiNodeLocalService _wikiNodeLocalService;
+
 	@DeleteAfterTestRun
 	private final List<WikiNode> _wikiNodes = new ArrayList<>();
-
-	@Inject
-	private WikiNodeUADTestHelper _wikiNodeUADTestHelper;
 
 }

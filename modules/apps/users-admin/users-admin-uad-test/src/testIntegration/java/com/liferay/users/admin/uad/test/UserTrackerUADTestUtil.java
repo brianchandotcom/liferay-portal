@@ -19,19 +19,16 @@ import com.liferay.portal.kernel.service.UserTrackerLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 
-import java.util.List;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = UserTrackerUADTestHelper.class)
-public class UserTrackerUADTestHelper {
+public class UserTrackerUADTestUtil {
 
-	public UserTracker addUserTracker(long userId) throws Exception {
-		UserTracker userTracker = _userTrackerLocalService.createUserTracker(
+	public static UserTracker addUserTracker(
+			UserTrackerLocalService userTrackerLocalService, long userId)
+		throws Exception {
+
+		UserTracker userTracker = userTrackerLocalService.createUserTracker(
 			RandomTestUtil.nextLong());
 
 		userTracker.setCompanyId(TestPropsValues.getCompanyId());
@@ -42,14 +39,7 @@ public class UserTrackerUADTestHelper {
 		userTracker.setRemoteHost(RandomTestUtil.randomString());
 		userTracker.setUserAgent(RandomTestUtil.randomString());
 
-		return _userTrackerLocalService.updateUserTracker(userTracker);
+		return userTrackerLocalService.updateUserTracker(userTracker);
 	}
-
-	public void cleanUpDependencies(List<UserTracker> userTrackers)
-		throws Exception {
-	}
-
-	@Reference
-	private UserTrackerLocalService _userTrackerLocalService;
 
 }

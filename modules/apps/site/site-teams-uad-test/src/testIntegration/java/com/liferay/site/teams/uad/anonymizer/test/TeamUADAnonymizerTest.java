@@ -20,16 +20,17 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.site.teams.uad.test.TeamUADTestHelper;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -45,11 +46,6 @@ public class TeamUADAnonymizerTest extends BaseUADAnonymizerTestCase<Team> {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_teamUADTestHelper.cleanUpDependencies(_teams);
-	}
-
 	@Override
 	protected Team addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
@@ -59,18 +55,16 @@ public class TeamUADAnonymizerTest extends BaseUADAnonymizerTestCase<Team> {
 	protected Team addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		Team team = _teamUADTestHelper.addTeam(userId);
+		Team team = _teamLocalService.addTeam(
+			userId, TestPropsValues.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
 
 		if (deleteAfterTestRun) {
 			_teams.add(team);
 		}
 
 		return team;
-	}
-
-	@Override
-	protected void deleteBaseModels(List<Team> baseModels) throws Exception {
-		_teamUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
 	@Override
@@ -109,9 +103,6 @@ public class TeamUADAnonymizerTest extends BaseUADAnonymizerTestCase<Team> {
 
 	@DeleteAfterTestRun
 	private final List<Team> _teams = new ArrayList<>();
-
-	@Inject
-	private TeamUADTestHelper _teamUADTestHelper;
 
 	@Inject(filter = "component.name=*.TeamUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;

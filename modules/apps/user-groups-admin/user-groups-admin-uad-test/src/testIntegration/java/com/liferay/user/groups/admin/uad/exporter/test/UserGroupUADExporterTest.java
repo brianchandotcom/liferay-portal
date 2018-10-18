@@ -16,18 +16,22 @@ package com.liferay.user.groups.admin.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
-import com.liferay.user.groups.admin.uad.test.UserGroupUADTestHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -44,14 +48,15 @@ public class UserGroupUADExporterTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_userGroupUADTestHelper.cleanUpDependencies(_userGroups);
-	}
-
 	@Override
 	protected UserGroup addBaseModel(long userId) throws Exception {
-		UserGroup userGroup = _userGroupUADTestHelper.addUserGroup(userId);
+		UserGroup userGroup = _userGroupLocalService.addUserGroup(
+			userId, TestPropsValues.getCompanyId(),
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				UniqueStringRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
 
 		_userGroups.add(userGroup);
 
@@ -71,10 +76,10 @@ public class UserGroupUADExporterTest
 	@Inject(filter = "component.name=*.UserGroupUADExporter")
 	private UADExporter _uadExporter;
 
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
+
 	@DeleteAfterTestRun
 	private final List<UserGroup> _userGroups = new ArrayList<>();
-
-	@Inject
-	private UserGroupUADTestHelper _userGroupUADTestHelper;
 
 }

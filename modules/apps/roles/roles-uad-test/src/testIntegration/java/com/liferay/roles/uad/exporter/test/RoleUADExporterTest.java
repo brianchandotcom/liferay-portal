@@ -16,18 +16,18 @@ package com.liferay.roles.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.roles.uad.test.RoleUADTestHelper;
+import com.liferay.roles.uad.test.RoleUADTestUtil;
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -43,14 +43,9 @@ public class RoleUADExporterTest extends BaseUADExporterTestCase<Role> {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		_roleUADTestHelper.cleanUpDependencies(_roles);
-	}
-
 	@Override
 	protected Role addBaseModel(long userId) throws Exception {
-		Role role = _roleUADTestHelper.addRole(userId);
+		Role role = RoleUADTestUtil.addRole(_roleLocalService, userId);
 
 		_roles.add(role);
 
@@ -67,11 +62,11 @@ public class RoleUADExporterTest extends BaseUADExporterTestCase<Role> {
 		return _uadExporter;
 	}
 
+	@Inject
+	private RoleLocalService _roleLocalService;
+
 	@DeleteAfterTestRun
 	private final List<Role> _roles = new ArrayList<>();
-
-	@Inject
-	private RoleUADTestHelper _roleUADTestHelper;
 
 	@Inject(filter = "component.name=*.RoleUADExporter")
 	private UADExporter _uadExporter;

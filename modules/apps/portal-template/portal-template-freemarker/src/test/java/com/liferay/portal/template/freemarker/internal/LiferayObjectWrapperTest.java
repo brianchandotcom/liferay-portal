@@ -413,6 +413,8 @@ public class LiferayObjectWrapperTest {
 			add(element);
 		}
 
+		private static final long serialVersionUID = 1L;
+
 	}
 
 	private class TestLiferayMap extends HashMap<String, String> {
@@ -420,6 +422,8 @@ public class LiferayObjectWrapperTest {
 		private TestLiferayMap(String key, String value) {
 			put(key, value);
 		}
+
+		private static final long serialVersionUID = 1L;
 
 	}
 

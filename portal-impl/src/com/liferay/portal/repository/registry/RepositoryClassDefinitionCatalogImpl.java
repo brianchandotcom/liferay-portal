@@ -44,6 +44,27 @@ import java.util.concurrent.ConcurrentHashMap;
 public class RepositoryClassDefinitionCatalogImpl
 	implements CacheRegistryItem, RepositoryClassDefinitionCatalog {
 
+	public void afterPropertiesSet() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			RepositoryDefiner.class,
+			new RepositoryDefinerServiceTrackerCustomizer());
+
+		_serviceTracker.open();
+
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		for (String className : PropsValues.DL_REPOSITORY_IMPL) {
+			ExternalRepositoryFactory externalRepositoryFactory =
+				new ExternalRepositoryFactoryImpl(className, classLoader);
+
+			registerLegacyExternalRepositoryFactory(
+				className, externalRepositoryFactory,
+				LanguageUtil.getPortalResourceBundleLoader());
+		}
+	}
+
 	@Override
 	public Iterable<RepositoryClassDefinition>
 		getExternalRepositoryClassDefinitions() {
@@ -76,27 +97,6 @@ public class RepositoryClassDefinitionCatalogImpl
 				_repositoryClassDefinitions.values()) {
 
 			repositoryClassDefinition.invalidateCache();
-		}
-	}
-
-	public void loadDefaultRepositoryDefiners() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			RepositoryDefiner.class,
-			new RepositoryDefinerServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-
-		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
-
-		for (String className : PropsValues.DL_REPOSITORY_IMPL) {
-			ExternalRepositoryFactory externalRepositoryFactory =
-				new ExternalRepositoryFactoryImpl(className, classLoader);
-
-			registerLegacyExternalRepositoryFactory(
-				className, externalRepositoryFactory,
-				LanguageUtil.getPortalResourceBundleLoader());
 		}
 	}
 

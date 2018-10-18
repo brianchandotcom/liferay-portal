@@ -146,6 +146,7 @@ warnings recursively:
 	- `PACKAGE-REMOVED-UNNECESSARY-PACKAGEINFO-RECURSIVE`
 	- `VERSION-INCREASE-REQUIRED-RECURSIVE`
 	- `VERSION-INCREASE-SUGGESTED-RECURSIVE`
+- [LPS-85678]: Update the [Liferay Ant BND] dependency to version 2.0.59.
 
 [Bnd Builder Gradle Plugin]: https://github.com/bndtools/bnd/tree/master/biz.aQute.bnd.gradle
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

@@ -155,14 +155,14 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		protected static JunitBatchTestClass getInstance(
 			TestClassFile testClassFile,
-			GitWorkingDirectory gitWorkingDirectory, File srcFile) {
+			GitWorkingDirectory gitWorkingDirectory, File javaFile) {
 
 			if (_junitTestClasses.containsKey(testClassFile)) {
 				return _junitTestClasses.get(testClassFile);
 			}
 
 			JunitBatchTestClass junitTestClass = new JunitBatchTestClass(
-				testClassFile, gitWorkingDirectory, srcFile);
+				testClassFile, gitWorkingDirectory, javaFile);
 
 			_junitTestClasses.put(testClassFile, junitTestClass);
 

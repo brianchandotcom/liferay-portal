@@ -69,18 +69,11 @@ public class KaleoDesignerWebVerifyProcess extends VerifyProcess {
 				_kaleoDefinitionVersionLocalService.getActionableDynamicQuery();
 
 			actionableDynamicQuery.setPerformActionMethod(
-				new ActionableDynamicQuery.PerformActionMethod() {
+				(Object object) -> {
+					KaleoDefinitionVersion kaleoDefinitionVersion =
+						(KaleoDefinitionVersion)object;
 
-					@Override
-					public void performAction(Object object)
-						throws PortalException {
-
-						KaleoDefinitionVersion kaleoDefinitionVersion =
-							(KaleoDefinitionVersion)object;
-
-						verifyKaleoDefinitionVersions(kaleoDefinitionVersion);
-					}
-
+					verifyKaleoDefinitionVersions(kaleoDefinitionVersion);
 				});
 
 			actionableDynamicQuery.performActions();

@@ -14,14 +14,11 @@
 
 package com.liferay.portal.workflow.kaleo.forms.web.internal.upgrade.v1_0_3;
 
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -45,57 +42,43 @@ public class UpgradeLayoutTypeSettings extends BaseUpgradePortletId {
 			LayoutLocalServiceUtil.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Disjunction disjunction =
-						RestrictionsFactoryUtil.disjunction();
+				Property typeSettingsProperty = PropertyFactoryUtil.forName(
+					"typeSettings");
 
-					Property typeSettingsProperty = PropertyFactoryUtil.forName(
-						"typeSettings");
+				disjunction.add(
+					typeSettingsProperty.like(
+						"%" + LayoutTypePortletConstants.COLUMN_PREFIX +
+							"%=,%"));
+				disjunction.add(
+					typeSettingsProperty.like(
+						"%" + LayoutTypePortletConstants.NESTED_COLUMN_IDS +
+							"%=,%"));
 
-					disjunction.add(
-						typeSettingsProperty.like(
-							"%" + LayoutTypePortletConstants.COLUMN_PREFIX +
-								"%=,%"));
-					disjunction.add(
-						typeSettingsProperty.like(
-							"%" + LayoutTypePortletConstants.NESTED_COLUMN_IDS +
-								"%=,%"));
-
-					dynamicQuery.add(disjunction);
-				}
-
+				dynamicQuery.add(disjunction);
 			});
 		indexableActionableDynamicQuery.setParallel(true);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<Layout>() {
+			(Layout layout) -> {
+				try {
+					UnicodeProperties oldtypeSettings =
+						layout.getTypeSettingsProperties();
+					UnicodeProperties newTypeSettings = getNewTypeSettings(
+						layout.getTypeSettingsProperties());
 
-				@Override
-				public void performAction(Layout layout)
-					throws PortalException {
-
-					try {
-						UnicodeProperties oldtypeSettings =
-							layout.getTypeSettingsProperties();
-						UnicodeProperties newTypeSettings = getNewTypeSettings(
-							layout.getTypeSettingsProperties());
-
-						if (!oldtypeSettings.equals(newTypeSettings)) {
-							updateLayout(
-								layout.getPlid(), newTypeSettings.toString());
-						}
-					}
-					catch (Exception e) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to update layout " + layout.getPlid(),
-								e);
-						}
+					if (!oldtypeSettings.equals(newTypeSettings)) {
+						updateLayout(
+							layout.getPlid(), newTypeSettings.toString());
 					}
 				}
-
+				catch (Exception e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to update layout " + layout.getPlid(), e);
+					}
+				}
 			});
 
 		indexableActionableDynamicQuery.performActions();

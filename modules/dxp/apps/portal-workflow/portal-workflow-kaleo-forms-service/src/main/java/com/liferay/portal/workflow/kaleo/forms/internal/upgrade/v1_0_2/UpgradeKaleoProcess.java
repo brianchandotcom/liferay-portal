@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -136,33 +135,21 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 			_ddlRecordLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property recordSetIdProperty = PropertyFactoryUtil.forName(
+					"recordSetId");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property recordSetIdProperty = PropertyFactoryUtil.forName(
-						"recordSetId");
-
-					dynamicQuery.add(recordSetIdProperty.eq(ddlRecordSetId));
-				}
-
+				dynamicQuery.add(recordSetIdProperty.eq(ddlRecordSetId));
 			});
 		actionableDynamicQuery.setParallel(true);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<DDLRecord>() {
-
-				@Override
-				public void performAction(DDLRecord ddlRecord)
-					throws PortalException {
-
-					_assetEntryLocalService.updateEntry(
-						userId, groupId, createDate, modifiedDate,
-						KaleoProcess.class.getName(), ddlRecord.getRecordId(),
-						uuid, 0, null, null, true, true, null, null, null,
-						ContentTypes.TEXT_HTML, title, null, StringPool.BLANK,
-						null, null, 0, 0, null);
-				}
-
+			(DDLRecord ddlRecord) -> {
+				_assetEntryLocalService.updateEntry(
+					userId, groupId, createDate, modifiedDate,
+					KaleoProcess.class.getName(), ddlRecord.getRecordId(), uuid,
+					0, null, null, true, true, null, null, null,
+					ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
+					null, 0, 0, null);
 			});
 
 		actionableDynamicQuery.performActions();

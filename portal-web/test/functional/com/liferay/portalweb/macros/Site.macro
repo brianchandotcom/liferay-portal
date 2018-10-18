@@ -883,6 +883,12 @@
 		</execute>
 	</command>
 
+	<command name="openSiteSettingsAdmin">
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/${siteURLKey}/~/control_panel/manage/-/site/settings" />
+		</execute>
+	</command>
+
 	<command name="removeMemberCP">
 		<var name="key_cardText" value="${userScreenName}" />
 

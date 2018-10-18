@@ -75,7 +75,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			TestClass.TestClassFile testClassFile =
 				junitBatchTestClass.getTestClassFile();
 
-			String testFilePath = testClassFile.getRelativePath();
+			String testClassFileRelativePath = testClassFile.getRelativePath(
+				junitBatchTestClass.getWorkingDirectory());
 
 			String className = testClassFile.getName();
 
@@ -99,7 +100,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 					csvReportRow.add("");
 				}
 
-				csvReportRow.add(testFilePath);
+				csvReportRow.add(testClassFileRelativePath);
 
 				csvReport.addRow(csvReportRow);
 			}
@@ -120,6 +121,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	public static class JunitBatchTestClass extends BaseTestClass {
+
+		public File getWorkingDirectory() {
+			return _gitWorkingDirectory.getWorkingDirectory();
+		}
 
 		protected static JunitBatchTestClass getInstance(
 			File file, GitWorkingDirectory gitWorkingDirectory, File srcFile) {
@@ -150,21 +155,9 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				return null;
 			}
 
-			String filePath = fullClassName.substring(
-				0, fullClassName.lastIndexOf("."));
-
-			filePath = filePath.replace(".", "/");
-
-			String simpleClassName = fullClassName.substring(
-				fullClassName.lastIndexOf(".") + 1);
-
-			String packagePath = JenkinsResultsParserUtil.combine(
-				filePath, "/", simpleClassName, ".class");
-
 			TestClassGroup.TestClass.TestClassFile testClassFile =
 				new TestClass.TestClassFile(
-					packagePath, javaFile.getAbsolutePath(),
-					gitWorkingDirectory);
+					javaFile.getAbsolutePath());
 
 			if (_junitTestClasses.containsKey(testClassFile)) {
 				return _junitTestClasses.get(testClassFile);
@@ -562,15 +555,9 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 						Matcher matcher = _packagePathPattern.matcher(filePath);
 
 						if (matcher.find()) {
-							String packagePath = matcher.group("packagePath");
-
-							packagePath = packagePath.replace(
-								".java", ".class");
-
 							return JunitBatchTestClass.getInstance(
 								new TestClass.TestClassFile(
-									packagePath, filePath,
-									portalGitWorkingDirectory),
+									filePath),
 								portalGitWorkingDirectory, path.toFile());
 						}
 

@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
-import com.liferay.jenkins.results.parser.GitWorkingDirectory;
-
 import java.io.File;
 
 import java.util.List;
@@ -39,34 +37,25 @@ public interface TestClassGroup {
 
 			public TestClassFile(File parent, String child) {
 				super(parent, child);
-
-				_relativePath = getPath();
 			}
 
 			public TestClassFile(String pathname) {
 				super(pathname);
-
-				_relativePath = pathname;
 			}
 
-			public TestClassFile(
-				String pathname, String absolutePath,
-				GitWorkingDirectory gitWorkingDirectory) {
+			public String getRelativePath(File workingDirectory) {
+				String absolutePath = getAbsolutePath();
+				String workingDirectoryAbsolutePath =
+					workingDirectory.getAbsolutePath();
 
-				super(pathname);
+				if (!absolutePath.startsWith(workingDirectoryAbsolutePath)) {
+					throw new IllegalArgumentException(
+						"Working directory does not contain this file");
+				}
 
-				File workingDirectory =
-					gitWorkingDirectory.getWorkingDirectory();
-
-				_relativePath = absolutePath.replace(
-					workingDirectory.getAbsolutePath(), "");
+				return absolutePath.replaceAll(
+					workingDirectoryAbsolutePath, "");
 			}
-
-			public String getRelativePath() {
-				return _relativePath;
-			}
-
-			private final String _relativePath;
 
 		}
 

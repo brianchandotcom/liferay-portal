@@ -26,7 +26,15 @@ Properties properties = request.properties
 
 String liferayVersion = properties.get("liferayVersion")
 
-if (!liferayVersion.startsWith("7.1")) {
+if (liferayVersion.startsWith("7.1")) {
+	Path srcPath = projectPath.resolve("src")
+
+	Path mainPath = srcPath.resolve("main")
+
+	Path resourcesPath = mainPath.resolve("resources")
+
+	Path configPath = resourcesPath.resolve("configuration")
+
 	String cxfConfig =
 		"com.liferay.portal.remote.cxf.common.configuration." +
 			"CXFEndpointPublisherConfiguration-cxf.properties";
@@ -34,16 +42,10 @@ if (!liferayVersion.startsWith("7.1")) {
 		"com.liferay.portal.remote.rest.extender.configuration." +
 			"RestExtenderConfiguration-rest.properties";
 
-	List<String> paths = ["src", "main", "resources", "configuration"]
+	Path cxfConfigPath = configPath.resolve(cxfConfig)
 
-	Path cxfConfigResourcePath = paths.add cxfConfig
+	Path restExtenderConfigPath = configPath.resolve(restExtenderConfig)
 
-	Path restExtenderConfigResourcePath = paths.add restExtenderConfig
-
-	Path cxfResourceFullPath = projectPath.resolve(cxfConfigResourcePath)
-
-	Path restExtenderResourceFullPath =
-		projectPath.resolve(restExtenderResourcePath)
-
-	Files.deleteIfExists cxfResourceFullPath restExtenderResourceFullPath
+	Files.deleteIfExists cxfConfigPath
+	Files.deleteIfExists restExtenderConfigPath
 }

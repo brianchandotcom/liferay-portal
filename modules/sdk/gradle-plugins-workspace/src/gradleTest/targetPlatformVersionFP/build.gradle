@@ -1,0 +1,24 @@
+task runGradleTest
+
+allprojects {
+	repositories {
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+runGradleTest {
+	doLast {
+		String errorMessage = ""
+
+		try {
+			tasks.eclipseClasspath.execute()
+		}
+		catch (Exception e) {
+			errorMessage = e.cause.message
+		}
+
+		assert errorMessage.contains("release.dxp.bom")
+	}
+}

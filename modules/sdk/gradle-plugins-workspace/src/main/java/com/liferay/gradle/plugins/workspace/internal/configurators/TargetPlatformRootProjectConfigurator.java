@@ -22,13 +22,10 @@ import com.liferay.gradle.plugins.target.platform.extensions.TargetPlatformIDEEx
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.configurators.RootProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.workspace.internal.util.VersionUtil;
 import com.liferay.gradle.util.Validator;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.gradle.api.Action;
-import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
@@ -57,41 +54,8 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 			return;
 		}
 
-		Matcher matcher = _externalVersionPattern.matcher(
-			targetPlatformVersion);
-
-		String normalizedTargetPlatformVersion = null;
-
-		if (matcher.matches()) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append(matcher.group(1));
-			sb.append('.');
-			sb.append(matcher.group(2));
-			sb.append('.');
-
-			String label = matcher.group(3);
-
-			try {
-				int labelNumber = Integer.parseInt(matcher.group(4));
-
-				if (label.startsWith("GA")) {
-					sb.append(labelNumber - 1);
-				}
-				else if (label.startsWith("sp")) {
-					sb.append(labelNumber);
-				}
-			}
-			catch (NumberFormatException nfe) {
-				throw new GradleException(
-					"Invalid version property value", nfe);
-			}
-
-			normalizedTargetPlatformVersion = sb.toString();
-		}
-		else {
-			normalizedTargetPlatformVersion = targetPlatformVersion;
-		}
+		String normalizedTargetPlatformVersion =
+			VersionUtil.normalizeTargetPlatformVersion(targetPlatformVersion);
 
 		GradleUtil.applyPlugin(project, TargetPlatformIDEPlugin.class);
 
@@ -111,12 +75,10 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 	private void _addDependenciesTargetPlatformBoms(
 		Project project, String targetPlatformVersion) {
 
-		Matcher matcher = _dxpVersionPattern.matcher(targetPlatformVersion);
-
 		String bomArtifactId = null;
 		String bomCompileOnlyArtifactId = null;
 
-		if (matcher.matches()) {
+		if (VersionUtil.isDXPVersion(targetPlatformVersion)) {
 			bomArtifactId = _ARTIFACT_ID_RELEASE_DXP_BOM;
 			bomCompileOnlyArtifactId =
 				_ARTIFACT_ID_RELEASE_DXP_BOM_COMPILE_ONLY;
@@ -150,12 +112,9 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public void execute(DependencySet dependencySet) {
-					Matcher matcher = _dxpVersionPattern.matcher(
-						targetPlatformVersion);
-
 					String artifactId = _ARTIFACT_ID_RELEASE_PORTAL_DISTRO;
 
-					if (matcher.matches()) {
+					if (VersionUtil.isDXPVersion(targetPlatformVersion)) {
 						artifactId = _ARTIFACT_ID_RELEASE_DXP_DISTRO;
 					}
 
@@ -247,10 +206,5 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 		"release.portal.distro";
 
 	private static final String _GROUP_ID_LIFERAY_PORTAL = "com.liferay.portal";
-
-	private static final Pattern _dxpVersionPattern = Pattern.compile(
-		"7\\.[0-2]\\.1[0-9](\\.[0-9]+)?");
-	private static final Pattern _externalVersionPattern = Pattern.compile(
-		"([0-9]+)\\.([0-9]+)-([A-Za-z]+)([0-9]+)");
 
 }

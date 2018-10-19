@@ -707,7 +707,7 @@
 
 			<fileset
 				dir="${liferay.home}/tools/portal-tools-target-platform-indexer-client"
-				includes="com.liferay.portal.target.platform.indexer.api.jar,com.liferay.portal.target.platform.indexer.impl.jar,com.liferay.portal.tools.target.platform.indexer.client.jar"
+				includes="com.liferay.portal.target.platform.indexer.api.jar,com.liferay.portal.target.platform.indexer.impl.jar,com.liferay.portal.tools.target.platform.indexer.client.jar,slf4j-api.jar,slf4j-simple.jar"
 			/>
 			<fileset
 				dir="${osgi.dir}/core"

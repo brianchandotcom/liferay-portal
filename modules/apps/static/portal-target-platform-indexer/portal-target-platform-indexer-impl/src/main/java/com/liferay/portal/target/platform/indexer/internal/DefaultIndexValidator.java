@@ -16,21 +16,19 @@ package com.liferay.portal.target.platform.indexer.internal;
 
 import aQute.bnd.build.model.EE;
 import aQute.bnd.build.model.OSGI_CORE;
-import aQute.bnd.http.HttpClient;
-import aQute.bnd.http.HttpRequest;
+import aQute.bnd.header.Attrs;
+import aQute.bnd.header.Parameters;
+import aQute.bnd.osgi.Domain;
 import aQute.bnd.osgi.Processor;
 import aQute.bnd.osgi.repository.XMLResourceParser;
 import aQute.bnd.osgi.resource.CapReqBuilder;
 import aQute.bnd.osgi.resource.ResourceBuilder;
-import aQute.bnd.repository.osgi.OSGiRepository;
-
-import aQute.lib.strings.Strings;
+import aQute.bnd.osgi.resource.ResourceUtils;
 
 import biz.aQute.resolve.ResolverValidator;
 
 import com.liferay.portal.target.platform.indexer.IndexValidator;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.lang.reflect.Field;
@@ -38,18 +36,11 @@ import java.lang.reflect.Field;
 import java.net.URI;
 import java.net.URL;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.stream.Stream;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -75,6 +66,7 @@ public class DefaultIndexValidator implements IndexValidator {
 	@Override
 	public List<String> validate(List<URI> indexURIs) throws Exception {
 		Set<String> identities = new HashSet<>();
+		Set<Resource> resources = new HashSet<>();
 
 		for (URI uri : indexURIs) {
 			URL url = uri.toURL();
@@ -85,89 +77,29 @@ public class DefaultIndexValidator implements IndexValidator {
 
 				identities.add(identity);
 			}
+
+			resources.addAll(XMLResourceParser.getResources(uri));
 		}
 
 		try (ResolverValidator resolverValidator = new ResolverValidator()) {
 			ResourceBuilder resourceBuilder = new ResourceBuilder();
 
 			resourceBuilder.addEE(EE.JavaSE_1_8);
-			resourceBuilder.addManifest(OSGI_CORE.R6_0_0.getManifest());
 
-			_includeSystemBundleAlias(resourceBuilder);
+			Domain domain = OSGI_CORE.R7_0_0.getManifest();
+
+			resourceBuilder.addManifest(domain);
+
+			_includeSystemBundleAlias(resourceBuilder, domain);
 
 			_includeTargetPlatform(resourceBuilder, identities);
 
 			resolverValidator.setSystem(resourceBuilder.build());
 
+			List<ResolverValidator.Resolution> resolutions =
+				resolverValidator.validate(resources);
+
 			List<String> messages = new ArrayList<>();
-
-			List<ResolverValidator.Resolution> resolutions;
-
-			Path tempDir = Files.createTempDirectory(null);
-
-			Field field = HttpRequest.class.getDeclaredField("url");
-
-			field.setAccessible(true);
-
-			try (OSGiRepository oSGiRepository = new OSGiRepository();
-				HttpClient httpClient = new HttpClient() {
-
-					@Override
-					public Object send(HttpRequest<?> request)
-						throws Exception {
-
-						Path tempPath = Files.createTempFile(
-							tempDir, null, null);
-
-						URL url = (URL)field.get(request);
-
-						try (InputStream inputStream = url.openStream()) {
-							Files.copy(
-								inputStream, tempPath,
-								StandardCopyOption.REPLACE_EXISTING);
-						}
-
-						return tempPath.toFile();
-					}
-
-				}) {
-
-				Map<String, String> map = new HashMap<>();
-
-				map.put("locations", Strings.join(indexURIs));
-				map.put("poll.time", "0");
-
-				oSGiRepository.setProperties(map);
-
-				Processor processor = new Processor();
-
-				processor.addBasicPlugin(httpClient);
-
-				oSGiRepository.setRegistry(processor);
-
-				oSGiRepository.setReporter(resolverValidator);
-
-				Set<Resource> resources = ResolverValidator.getAllResources(
-					oSGiRepository);
-
-				resolutions = resolverValidator.validateResources(
-					oSGiRepository, resources);
-			}
-			finally {
-				Stream<Path> stream = Files.list(tempDir);
-
-				stream.forEach(
-					path -> {
-						try {
-							Files.delete(path);
-						}
-						catch (IOException ioe) {
-							throw new RuntimeException(ioe);
-						}
-					});
-
-				Files.delete(tempDir);
-			}
 
 			for (ResolverValidator.Resolution resolution : resolutions) {
 				if (resolution.succeeded) {
@@ -225,14 +157,25 @@ public class DefaultIndexValidator implements IndexValidator {
 		}
 	}
 
-	private void _includeSystemBundleAlias(ResourceBuilder resourceBuilder)
+	private void _includeSystemBundleAlias(
+			ResourceBuilder resourceBuilder, Domain domain)
 		throws Exception {
+
+		Parameters exportPackage = domain.getExportPackage();
+
+		Attrs attrs = exportPackage.get("org.osgi.framework");
+
+		String version = attrs.get(Constants.VERSION_ATTRIBUTE);
 
 		CapReqBuilder capability = new CapReqBuilder(
 			BundleNamespace.BUNDLE_NAMESPACE);
 
 		capability.addAttribute(
 			capability.getNamespace(), Constants.SYSTEM_BUNDLE_SYMBOLICNAME);
+		capability.addAttribute(
+			ResourceUtils.getVersionAttributeForNamespace(
+				capability.getNamespace()),
+			version);
 
 		resourceBuilder.addCapability(capability);
 
@@ -240,6 +183,10 @@ public class DefaultIndexValidator implements IndexValidator {
 
 		capability.addAttribute(
 			capability.getNamespace(), Constants.SYSTEM_BUNDLE_SYMBOLICNAME);
+		capability.addAttribute(
+			ResourceUtils.getVersionAttributeForNamespace(
+				capability.getNamespace()),
+			version);
 
 		resourceBuilder.addCapability(capability);
 
@@ -247,6 +194,10 @@ public class DefaultIndexValidator implements IndexValidator {
 
 		capability.addAttribute(
 			capability.getNamespace(), Constants.SYSTEM_BUNDLE_SYMBOLICNAME);
+		capability.addAttribute(
+			ResourceUtils.getVersionAttributeForNamespace(
+				capability.getNamespace()),
+			version);
 		capability.addAttribute(
 			IdentityNamespace.CAPABILITY_TYPE_ATTRIBUTE,
 			IdentityNamespace.TYPE_BUNDLE);

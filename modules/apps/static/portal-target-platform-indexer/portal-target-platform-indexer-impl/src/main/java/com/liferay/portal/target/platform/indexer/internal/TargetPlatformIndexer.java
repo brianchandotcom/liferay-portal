@@ -128,6 +128,7 @@ public class TargetPlatformIndexer implements Indexer {
 			simpleIndexer.base(tempPath.toUri());
 			simpleIndexer.compress(false);
 			simpleIndexer.files(jarFiles);
+			simpleIndexer.increment(1);
 			simpleIndexer.name("Liferay Target Platform");
 
 			simpleIndexer.index(byteArrayOutputStream);

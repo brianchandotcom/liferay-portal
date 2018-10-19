@@ -6,12 +6,6 @@ Import-Package:\
 	\
 	!com.liferay.portal.bootstrap,\
 	\
-	!org.apache.tools.ant.*,\
-	\
-	!org.osgi.annotation.bundle,\
-	!org.osgi.service.component.annotations,\
-	!org.osgi.service.metatype.annotations,\
-	\
 	*
 -conditionalpackage:\
 	aQute.bnd.*,\
@@ -37,7 +31,5 @@ Import-Package:\
 	org.osgi.service.resolver.*,\
 	org.osgi.util.*,\
 	\
-	org.slf4j.*,\
-	\
 	org.xmlpull.v1.*
--includeresource: @biz.aQute.bnd-*.jar!/aQute/bnd/build/model/osgi-core/*
+-includeresource: @biz.aQute.bndlib-*.jar!/aQute/bnd/build/model/osgi-core/*

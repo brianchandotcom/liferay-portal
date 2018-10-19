@@ -21,6 +21,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryRegistryUtil;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -122,6 +123,14 @@ public class FragmentEntryLinkStagedModelDataHandler
 			fragmentEntryLink.getOriginalFragmentEntryLinkId(),
 			fragmentEntryLink.getOriginalFragmentEntryLinkId());
 
+		Map<Long, Long> fragmentEntryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				FragmentEntry.class);
+
+		long fragmentEntryId = MapUtil.getLong(
+			fragmentEntryIds, fragmentEntryLink.getFragmentEntryId(),
+			fragmentEntryLink.getFragmentEntryId());
+
 		Map<Long, Long> referenceClassPKs =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				fragmentEntryLink.getClassName());
@@ -137,6 +146,7 @@ public class FragmentEntryLinkStagedModelDataHandler
 			portletDataContext.getScopeGroupId());
 		importedFragmentEntryLink.setOriginalFragmentEntryLinkId(
 			originalFragmentEntryLinkId);
+		importedFragmentEntryLink.setFragmentEntryId(fragmentEntryId);
 		importedFragmentEntryLink.setClassPK(referenceClassPK);
 
 		FragmentEntryLink existingFragmentEntryLink =

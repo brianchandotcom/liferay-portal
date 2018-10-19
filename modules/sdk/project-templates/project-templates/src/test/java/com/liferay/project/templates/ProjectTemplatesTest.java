@@ -1903,15 +1903,15 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateRest70() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle("rest", "my-rest",
-			"--liferayVersion", "7.0");
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"rest", "my-rest", "--liferayVersion", "7.0");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
 			"compileOnly group: \"javax.ws.rs\", name: \"javax.ws.rs-api\", " +
-			"version: \"2.0.1\"");
+				"version: \"2.0.1\"");
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/my/rest/application/MyRestApplication.java",
@@ -1951,15 +1951,15 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateRest71() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle("rest", "my-rest",
-			"--liferayVersion", "7.1");
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"rest", "my-rest", "--liferayVersion", "7.1");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			"compileOnly group: \"org.osgi\", " +
-			"name: \"org.osgi.service.jaxrs\", version: \"1.0.0\"");
+			"compileOnly group: \"org.osgi\", name: " +
+				"\"org.osgi.service.jaxrs\", version: \"1.0.0\"");
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/my/rest/application/MyRestApplication.java",
@@ -2023,7 +2023,8 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			"compileOnly group: \"org.osgi\", name: \"org.osgi.service.jaxrs\"");
+			"compileOnly group: \"org.osgi\", name: " +
+				"\"org.osgi.service.jaxrs\"");
 	}
 
 	@Test

@@ -16,14 +16,23 @@ package com.liferay.site.navigation.menu.web.internal.exportimport.portlet.prefe
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuPortletKeys;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.ReadOnlyException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,7 +64,36 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		return null;
+		try {
+			portletDataContext.addPortletPermissions(
+				SiteNavigationConstants.RESOURCE_NAME);
+		}
+		catch (PortalException pe) {
+			throw new PortletDataException(
+				"Unable to export portlet permissions", pe);
+		}
+
+		long siteNavigationMenuId = GetterUtil.getLong(
+			portletPreferences.getValue("siteNavigationMenuId", null));
+
+		if (siteNavigationMenuId == 0) {
+			return portletPreferences;
+		}
+
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuLocalService.fetchSiteNavigationMenu(
+				siteNavigationMenuId);
+
+		if (siteNavigationMenu == null) {
+			return portletPreferences;
+		}
+
+		String portletId = portletDataContext.getPortletId();
+
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
+			portletDataContext, portletId, siteNavigationMenu);
+
+		return portletPreferences;
 	}
 
 	@Override
@@ -64,7 +102,40 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		return null;
+		try {
+			portletDataContext.importPortletPermissions(
+				SiteNavigationConstants.RESOURCE_NAME);
+		}
+		catch (PortalException pe) {
+			throw new PortletDataException(
+				"Unable to import portlet permissions", pe);
+		}
+
+		long importedSiteNavigationMenuId = GetterUtil.getLong(
+			portletPreferences.getValue("siteNavigationMenuId", null));
+
+		Map<Long, Long> siteNavigationMenuIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				SiteNavigationMenu.class);
+
+		long siteNavigationMenuId = MapUtil.getLong(
+			siteNavigationMenuIds, importedSiteNavigationMenuId,
+			importedSiteNavigationMenuId);
+
+		if (siteNavigationMenuId == 0) {
+			return portletPreferences;
+		}
+
+		try {
+			portletPreferences.setValue(
+				"siteNavigationMenuId", String.valueOf(siteNavigationMenuId));
+		}
+		catch (ReadOnlyException roe) {
+			throw new PortletDataException(
+				"Unable to update portlet preferences during import", roe);
+		}
+
+		return portletPreferences;
 	}
 
 	@Reference(target = "(name=PortletDisplayTemplateExporter)")
@@ -72,5 +143,8 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 
 	@Reference(target = "(name=PortletDisplayTemplateImporter)")
 	private Capability _importCapability;
+
+	@Reference
+	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 }

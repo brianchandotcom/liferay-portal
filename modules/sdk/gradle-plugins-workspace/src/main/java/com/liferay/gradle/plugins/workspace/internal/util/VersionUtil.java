@@ -51,7 +51,7 @@ public class VersionUtil {
 			try {
 				int labelNumber = Integer.parseInt(matcher.group(4));
 
-				label = label.toLowerCase();
+				label = StringUtil.toLowerCase(label);
 
 				if (label.startsWith("fp")) {
 					sb.append("10.");

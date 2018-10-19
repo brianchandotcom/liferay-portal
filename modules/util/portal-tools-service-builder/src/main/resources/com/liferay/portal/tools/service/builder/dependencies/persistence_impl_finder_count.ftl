@@ -23,6 +23,12 @@ public int countBy${entityFinder.name}(
 </#list>
 
 ) {
+	<#list entityColumns as entityColumn>
+		<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+			${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
+		</#if>
+	</#list>
+
 	FinderPath finderPath =
 		<#if !entityFinder.hasCustomComparator()>
 			FINDER_PATH_COUNT_BY_${entityFinder.name?upper_case};
@@ -114,6 +120,12 @@ public int countBy${entityFinder.name}(
 					${entityColumn.names} = new ${entityColumn.type}[0];
 				}
 				else if (${entityColumn.names}.length > 1) {
+					<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+						for (int i = 0; i < ${entityColumn.names}.length; i++) {
+							${entityColumn.names}[i] = Objects.toString(${entityColumn.names}[i], "");
+						}
+					</#if>
+
 					${entityColumn.names} =
 						<#if stringUtil.equals(entityColumn.type, "String")>
 							ArrayUtil.distinct(${entityColumn.names}, NULL_SAFE_STRING_COMPARATOR);
@@ -127,6 +139,8 @@ public int countBy${entityFinder.name}(
 						Arrays.sort(${entityColumn.names});
 					</#if>
 				}
+			<#elseif stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+				${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
 			</#if>
 		</#list>
 
@@ -219,6 +233,12 @@ public int countBy${entityFinder.name}(
 					${entityColumn.names} = new ${entityColumn.type}[0];
 				}
 				else if (${entityColumn.names}.length > 1) {
+					<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+						for (int i = 0; i < ${entityColumn.names}.length; i++) {
+							${entityColumn.names}[i] = Objects.toString(${entityColumn.names}[i], "");
+						}
+					</#if>
+
 					${entityColumn.names} =
 						<#if stringUtil.equals(entityColumn.type, "String")>
 							ArrayUtil.distinct(${entityColumn.names}, NULL_SAFE_STRING_COMPARATOR);
@@ -405,6 +425,12 @@ public int countBy${entityFinder.name}(
 			);
 		}
 
+		<#list entityColumns as entityColumn>
+			<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+				${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
+			</#if>
+		</#list>
+
 		<#if entity.isPermissionedModel()>
 			<#include "persistence_impl_count_by_query.ftl">
 
@@ -536,6 +562,12 @@ public int countBy${entityFinder.name}(
 						${entityColumn.names} = new ${entityColumn.type}[0];
 					}
 					else if (${entityColumn.names}.length > 1) {
+						<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+							for (int i = 0; i < ${entityColumn.names}.length; i++) {
+								${entityColumn.names}[i] = Objects.toString(${entityColumn.names}[i], "");
+							}
+						</#if>
+
 						${entityColumn.names} =
 							<#if stringUtil.equals(entityColumn.type, "String")>
 								ArrayUtil.distinct(${entityColumn.names}, NULL_SAFE_STRING_COMPARATOR);

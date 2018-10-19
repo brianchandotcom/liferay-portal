@@ -38,10 +38,9 @@ boolean isFormPublished = ddmFormAdminDisplayContext.isFormPublished();
 boolean isFormSaved = formInstance != null ? true : false;
 String disableCopyBtnClass = "";
 
-if(!isFormPublished && isFormSaved) {
+if (!isFormPublished && isFormSaved) {
 	disableCopyBtnClass = "ddm-btn-disabled";
 }
-
 %>
 
 <portlet:actionURL name="saveFormInstance" var="saveFormInstanceURL">

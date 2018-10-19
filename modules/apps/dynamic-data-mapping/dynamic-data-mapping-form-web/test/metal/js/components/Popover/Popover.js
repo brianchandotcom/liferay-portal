@@ -11,7 +11,6 @@ const props = {
 
 let alignElement;
 
-
 describe(
 	'Popover',
 	() => {

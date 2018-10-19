@@ -14,6 +14,7 @@
 
 package com.liferay.login.authentication.openid.connect.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -105,7 +106,10 @@ public class OpenIdConnectLoginRequestMVCRenderCommand
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
-			_log.error("Unable to include JSP " + _JSP_PATH, e);
+			_log.error(
+				StringBundler.concat(
+					"Unable to include JSP ", _JSP_PATH, ": ", e.getMessage()),
+				e);
 
 			throw new PortletException("Unable to include JSP " + _JSP_PATH, e);
 		}

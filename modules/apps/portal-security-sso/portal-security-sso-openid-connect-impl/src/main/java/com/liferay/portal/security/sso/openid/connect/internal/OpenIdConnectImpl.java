@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -44,7 +45,11 @@ public class OpenIdConnectImpl implements OpenIdConnect {
 			return openIdConfiguration.enabled();
 		}
 		catch (ConfigurationException ce) {
-			_log.error("Unable to get OpenId configuration", ce);
+			_log.error(
+				StringBundler.concat(
+					"Unable to get OpenId configuration for company ",
+					companyId, ": ", ce.getMessage()),
+				ce);
 		}
 
 		return false;

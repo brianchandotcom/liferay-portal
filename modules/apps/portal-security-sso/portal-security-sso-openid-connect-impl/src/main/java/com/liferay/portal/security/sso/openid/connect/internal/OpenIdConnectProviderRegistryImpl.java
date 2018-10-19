@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProvider;
@@ -161,8 +162,10 @@ public class OpenIdConnectProviderRegistryImpl
 		catch (Exception e) {
 			throw new ConfigurationException(
 				null,
-				"Unable to instantiate provider metadata factory for " +
-					openIdConnectProviderConfiguration.providerName(),
+				StringBundler.concat(
+					"Unable to instantiate provider metadata factory for ",
+					openIdConnectProviderConfiguration.providerName(), ": ",
+					e.getMessage()),
 				e);
 		}
 

@@ -89,7 +89,9 @@ public class OpenIdConnectSessionValidationFilter extends BaseFilter {
 			}
 		}
 		catch (PortalException pe) {
-			_log.error("Unable to validate OpenId session", pe);
+			_log.error(
+				"Unable to validate OpenId Connect session: " + pe.getMessage(),
+				pe);
 
 			endSession = true;
 		}

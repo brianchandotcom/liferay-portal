@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 
 import com.nimbusds.jose.JWEAlgorithm;
@@ -81,13 +82,17 @@ public class OpenIdConnectMetadataFactoryImpl
 		}
 		catch (ParseException pe) {
 			throw new OpenIdConnectServiceException.ProviderException(
-				"Invalid subject types for OpenId Connect provider " +
-					_providerName,
+				StringBundler.concat(
+					"Invalid subject types ", StringUtil.merge(subjectTypes),
+					"for OpenId Connect provider ", _providerName, ": ",
+					pe.getMessage()),
 				pe);
 		}
 		catch (URISyntaxException urise) {
 			throw new OpenIdConnectServiceException.ProviderException(
-				"Invalid URLs for OpenId Connect provider " + _providerName,
+				StringBundler.concat(
+					"Invalid URLs for OpenId Connect provider ", _providerName,
+					": ", urise.getMessage()),
 				urise);
 		}
 	}
@@ -176,8 +181,10 @@ public class OpenIdConnectMetadataFactoryImpl
 			}
 			catch (IOException | ParseException e) {
 				throw new OpenIdConnectServiceException.ProviderException(
-					"Unable to get OpenId Connect provider metadata for " +
-						_providerName,
+					StringBundler.concat(
+						"Unable to get metadata for OpenId Connect provider ",
+						_providerName, " from ", _discoveryEndPointURL, ": ",
+						e.getMessage()),
 					e);
 			}
 			finally {

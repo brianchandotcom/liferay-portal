@@ -87,6 +87,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.minidev.json.JSONObject;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -110,7 +112,9 @@ public class OpenIdConnectServiceHandlerImpl
 				return refreshAuthToken(openIdConnectSessionImpl);
 			}
 			catch (OpenIdConnectServiceException oicse) {
-				_log.error(oicse, oicse);
+				_log.error(
+					"Unable to refresh auth token: " + oicse.getMessage(),
+					oicse);
 
 				return false;
 			}
@@ -214,7 +218,11 @@ public class OpenIdConnectServiceHandlerImpl
 		}
 		catch (IOException ioe) {
 			throw new SystemException(
-				"Unable to send user to OpenId Connect service", ioe);
+				StringBundler.concat(
+					"Unable to send user to OpenId Connect service ",
+					authenticationRequestURI.toString(), ": ",
+					ioe.getMessage()),
+				ioe);
 		}
 	}
 
@@ -279,15 +287,19 @@ public class OpenIdConnectServiceHandlerImpl
 				ErrorObject errorObject =
 					authenticationErrorResponse.getErrorObject();
 
+				JSONObject jsonObject = errorObject.toJSONObject();
+
 				throw new OpenIdConnectServiceException.AuthenticationException(
-					errorObject.toString());
+					jsonObject.toString());
 			}
 
 			return (AuthenticationSuccessResponse)authenticationResponse;
 		}
 		catch (ParseException | URISyntaxException e) {
 			throw new OpenIdConnectServiceException.AuthenticationException(
-				"Unable to process response string: " + requestURL.toString(),
+				StringBundler.concat(
+					"Unable to process response from ", requestURL.toString(),
+					": ", e.getMessage()),
 				e);
 		}
 	}
@@ -303,7 +315,9 @@ public class OpenIdConnectServiceHandlerImpl
 		}
 		catch (URISyntaxException urise) {
 			throw new SystemException(
-				"Unable to generate OpenId Connect login redirect URI", urise);
+				"Unable to generate OpenId Connect login redirect URI: " +
+					urise.getMessage(),
+				urise);
 		}
 	}
 
@@ -505,8 +519,10 @@ public class OpenIdConnectServiceHandlerImpl
 
 				ErrorObject errorObject = tokenErrorResponse.getErrorObject();
 
+				JSONObject jsonObject = errorObject.toJSONObject();
+
 				throw new OpenIdConnectServiceException.TokenException(
-					errorObject.toString());
+					jsonObject.toString());
 			}
 
 			OIDCTokenResponse oidcTokenResponse =
@@ -520,11 +536,17 @@ public class OpenIdConnectServiceHandlerImpl
 		}
 		catch (IOException ioe) {
 			throw new OpenIdConnectServiceException.TokenException(
-				"Unable to get tokens", ioe);
+				StringBundler.concat(
+					"Unable to get tokens from ", tokenEndpoint, ": ",
+					ioe.getMessage()),
+				ioe);
 		}
 		catch (ParseException pe) {
 			throw new OpenIdConnectServiceException.TokenException(
-				"Unable to parse tokens response", pe);
+				StringBundler.concat(
+					"Unable to parse tokens response from ", tokenEndpoint,
+					": ", pe.getMessage()),
+				pe);
 		}
 	}
 
@@ -551,8 +573,10 @@ public class OpenIdConnectServiceHandlerImpl
 				ErrorObject errorObject =
 					userInfoErrorResponse.getErrorObject();
 
+				JSONObject jsonObject = errorObject.toJSONObject();
+
 				throw new OpenIdConnectServiceException.UserInfoException(
-					errorObject.toString());
+					jsonObject.toString());
 			}
 
 			UserInfoSuccessResponse userInfoSuccessResponse =
@@ -562,11 +586,19 @@ public class OpenIdConnectServiceHandlerImpl
 		}
 		catch (IOException ioe) {
 			throw new OpenIdConnectServiceException.UserInfoException(
-				"Unable to get user information", ioe);
+				StringBundler.concat(
+					"Unable to get user information from ",
+					oidcProviderMetadata.getUserInfoEndpointURI(), ": ",
+					ioe.getMessage()),
+				ioe);
 		}
 		catch (ParseException pe) {
 			throw new OpenIdConnectServiceException.UserInfoException(
-				"Unable to parse user information response", pe);
+				StringBundler.concat(
+					"Unable to parse user information response from ",
+					oidcProviderMetadata.getUserInfoEndpointURI(), ": ",
+					pe.getMessage()),
+				pe);
 		}
 	}
 
@@ -606,11 +638,12 @@ public class OpenIdConnectServiceHandlerImpl
 		}
 		catch (GeneralException ge) {
 			throw new OpenIdConnectServiceException.TokenException(
-				"Unable to instantiate token validator", ge);
+				"Unable to instantiate token validator: " + ge.getMessage(),
+				ge);
 		}
 		catch (BadJOSEException | JOSEException e) {
 			throw new OpenIdConnectServiceException.TokenException(
-				"Unable to validate tokens", e);
+				"Unable to validate tokens: " + e.getMessage(), e);
 		}
 	}
 

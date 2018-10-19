@@ -2333,4 +2333,67 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 	</command>
+
+	<command name="ViewUpdatedFriendlyURL" priority="5">
+		<description message="This is a usecase for LPS-82025" />
+
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute macro="BlogsNavigator#gotoAddEntry" />
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panel" value="Configuration" />
+		</execute>
+
+		<execute function="ScrollWebElementIntoView" locator1="Button#PUBLISH" />
+
+		<execute function="Check" locator1="Radio#CUSTOM_URL" />
+
+		<execute function="Type" locator1="TextInput#BLOGS_ENTRY_URL" value1="custom-url-1" />
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEditPG">
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panel" value="Configuration" />
+		</execute>
+
+		<execute function="ScrollWebElementIntoView" locator1="Button#PUBLISH" />
+
+		<execute function="Type" locator1="TextInput#BLOGS_ENTRY_URL" value1="custom-url-2" />
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/web/guest/blogs-page/-/blogs/custom-url-1" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/web/guest/blogs-page/-/blogs/custom-url-2" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+	</command>
 </definition>

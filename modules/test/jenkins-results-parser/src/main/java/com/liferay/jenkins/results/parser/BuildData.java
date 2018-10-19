@@ -50,6 +50,8 @@ public interface BuildData {
 
 	public String getRunID();
 
+	public Long getStartTime();
+
 	public Integer getTopLevelBuildNumber();
 
 	public String getTopLevelJobName();
@@ -64,7 +66,15 @@ public interface BuildData {
 
 	public void setBuildDescription(String buildDescription);
 
+	public void setBuildDuration(Long buildDuration);
+
+	public void setBuildResult(String buildResult);
+
+	public void setBuildStatus(String buildStatus);
+
 	public void setBuildURL(String buildURL);
+
+	public void setInvocationTime(Long invocationTime);
 
 	public void setJenkinsGitHubURL(String jenkinsGitHubURL);
 

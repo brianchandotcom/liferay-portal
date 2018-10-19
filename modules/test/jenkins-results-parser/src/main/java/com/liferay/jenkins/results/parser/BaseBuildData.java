@@ -98,6 +98,11 @@ public abstract class BaseBuildData implements BuildData {
 	}
 
 	@Override
+	public Long getStartTime() {
+		return getLong("start_time");
+	}
+
+	@Override
 	public String getUserContentRelativePath() {
 		return JenkinsResultsParserUtil.combine(
 			"jobs/", getTopLevelJobName(), "/builds/",
@@ -112,6 +117,21 @@ public abstract class BaseBuildData implements BuildData {
 	@Override
 	public void setBuildDescription(String buildDescription) {
 		put("build_description", buildDescription);
+	}
+
+	@Override
+	public void setBuildDuration(Long buildDuration) {
+		put("build_duration", buildDuration);
+	}
+
+	@Override
+	public void setBuildResult(String buildResult) {
+		put("build_result", buildResult);
+	}
+
+	@Override
+	public void setBuildStatus(String buildStatus) {
+		put("build_status", buildStatus);
 	}
 
 	@Override
@@ -131,7 +151,13 @@ public abstract class BaseBuildData implements BuildData {
 		put("cohort_name", matcher.group("cohortName"));
 		put("hostname", _getHostname());
 		put("master_hostname", matcher.group("masterHostname"));
+		put("start_time", _getStartTime());
 		put("type", getType());
+	}
+
+	@Override
+	public void setInvocationTime(Long invocationTime) {
+		put("invocation_time", invocationTime);
 	}
 
 	@Override
@@ -232,6 +258,10 @@ public abstract class BaseBuildData implements BuildData {
 		return list;
 	}
 
+	protected Long getLong(String key) {
+		return _jsonObject.getLong(key);
+	}
+
 	protected String getString(String key) {
 		return _jsonObject.getString(key);
 	}
@@ -304,6 +334,16 @@ public abstract class BaseBuildData implements BuildData {
 		}
 
 		return buildURLJSONObject.getString("builtOn");
+	}
+
+	private long _getStartTime() {
+		JSONObject buildURLJSONObject = _getBuildURLJSONObject();
+
+		if (buildURLJSONObject == null) {
+			throw new RuntimeException("Please set the build url");
+		}
+
+		return buildURLJSONObject.getLong("timestamp");
 	}
 
 	private static final String[] _REQUIRED_KEYS = {

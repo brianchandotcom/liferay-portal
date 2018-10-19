@@ -26,12 +26,12 @@ String title = StringPool.BLANK;
 if (Objects.equals(mode, Constants.EDIT)) {
 	redirect = HttpUtil.setParameter(redirect, "p_l_mode", Constants.VIEW);
 
-	title = LanguageUtil.get(request, "edit-mode");
+	title = LanguageUtil.get(resourceBundle, "edit-mode");
 }
 else {
 	redirect = HttpUtil.setParameter(redirect, "p_l_mode", Constants.EDIT);
 
-	title = LanguageUtil.get(request, "view-mode");
+	title = LanguageUtil.get(resourceBundle, "view-mode");
 }
 
 String portletNamespace = PortalUtil.getPortletNamespace(ContentLayoutPortletKeys.CONTENT_PAGE_EDITOR_PORTLET);

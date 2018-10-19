@@ -59,8 +59,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.zip.CRC32;
 
 import org.osgi.framework.Bundle;
@@ -396,15 +394,6 @@ public class LPKGIndexValidator {
 
 		String content = unsyncByteArrayOutputStream.toString(StringPool.UTF8);
 
-		Matcher matcher = _incrementPattern.matcher(content);
-
-		if (matcher.find()) {
-			String start = content.substring(0, matcher.start(1));
-			String end = content.substring(matcher.end(1));
-
-			content = start.concat(end);
-		}
-
 		crc32.update(content.getBytes(StandardCharsets.UTF_8));
 
 		return StringUtil.toHexString(crc32.getValue());
@@ -424,9 +413,6 @@ public class LPKGIndexValidator {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LPKGIndexValidator.class);
-
-	private static final Pattern _incrementPattern = Pattern.compile(
-		"<repository.*( increment=\"\\d*\")");
 
 	@Reference
 	private BytesURLProtocolSupport _bytesURLProtocolSupport;

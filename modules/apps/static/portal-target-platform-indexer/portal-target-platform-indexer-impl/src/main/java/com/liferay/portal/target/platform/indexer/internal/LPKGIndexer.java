@@ -97,6 +97,7 @@ public class LPKGIndexer implements Indexer {
 			simpleIndexer.base(tempDir.toURI());
 			simpleIndexer.compress(false);
 			simpleIndexer.files(files);
+			simpleIndexer.increment(1);
 			simpleIndexer.name(_getRepositoryName(_lpkgFile));
 
 			simpleIndexer.index(outputStream);

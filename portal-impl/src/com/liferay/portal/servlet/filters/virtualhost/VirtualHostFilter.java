@@ -211,7 +211,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 		int widgetServletMappingPos = 0;
 
-		if (friendlyURL.contains(PropsValues.WIDGET_SERVLET_MAPPING)) {
+		if (friendlyURL.contains(_WIDGET_SERVLET_MAPPING_SLASH)) {
 			friendlyURL = StringUtil.replaceFirst(
 				friendlyURL, PropsValues.WIDGET_SERVLET_MAPPING,
 				StringPool.BLANK);
@@ -430,6 +430,9 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 	private static final String _PUBLIC_GROUP_SERVLET_MAPPING_SLASH =
 		_PUBLIC_GROUP_SERVLET_MAPPING + StringPool.SLASH;
+
+	private static final String _WIDGET_SERVLET_MAPPING_SLASH =
+		PropsValues.WIDGET_SERVLET_MAPPING + StringPool.SLASH;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		VirtualHostFilter.class);

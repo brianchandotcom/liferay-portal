@@ -18,8 +18,6 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -75,9 +73,6 @@ public class UpgradeStepRegistratorTracker {
 	@Reference(target = ModuleServiceLifecycle.DATABASE_INITIALIZED)
 	protected ModuleServiceLifecycle moduleServiceLifecycle;
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradeStepRegistratorTracker.class);
-
 	private BundleContext _bundleContext;
 	private ReleaseManagerConfiguration _releaseManagerConfiguration;
 
@@ -113,22 +108,17 @@ public class UpgradeStepRegistratorTracker {
 
 			int buildNumber = 0;
 
-			try {
+			ClassLoader classLoader = clazz.getClassLoader();
+
+			if (classLoader.getResource("service.properties") != null) {
 				Configuration configuration =
 					ConfigurationFactoryUtil.getConfiguration(
-						clazz.getClassLoader(), "service");
+						classLoader, "service");
 
 				Properties properties = configuration.getProperties();
 
 				buildNumber = GetterUtil.getInteger(
 					properties.getProperty("build.number"));
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to read service.properties for " +
-							bundleSymbolicName);
-				}
 			}
 
 			UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(

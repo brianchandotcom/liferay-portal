@@ -449,8 +449,14 @@ Liferay = window.Liferay || {};
 		componentIds.forEach(Liferay.destroyComponent);
 	};
 
+	/**
+	 * Clears the component promises map to make sure pending promises won't get
+	 * accidentally resolved at a later stage if a component with the same id appears
+	 * causing stale code to run.
+	 */
+
 	Liferay.destroyUnfulfilledPromises = function() {
-		componentPromiseWrappers = [];
+		componentPromiseWrappers = {};
 	};
 
 	Liferay._components = components;

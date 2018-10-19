@@ -163,10 +163,16 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 				OpenIdConnectWebKeys.OPEN_ID_CONNECT_REQUEST_ACTION_NAME);
 
 			if (e instanceof OpenIdConnectServiceException) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Unable to communicate with OpenID Connect provider: " +
-							e.getMessage());
+				String message =
+					"Unable to communicate with OpenID Connect provider: " +
+						e.getMessage();
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(message, e);
+				}
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(message);
 				}
 
 				SessionErrors.add(actionRequest, e.getClass());
@@ -174,10 +180,15 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 			else if (e instanceof
 						UserEmailAddressException.MustNotBeDuplicate) {
 
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
+
 				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
-				_log.error("Unable to process the OpenID Connect login", e);
+				_log.error(
+					"Unable to process the OpenID Connect login: " + e.getMessage(), e);
 
 				_portal.sendError(e, actionRequest, actionResponse);
 			}

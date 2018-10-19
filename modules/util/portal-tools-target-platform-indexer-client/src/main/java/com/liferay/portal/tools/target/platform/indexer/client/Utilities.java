@@ -32,8 +32,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.zip.CRC32;
 
 /**
@@ -89,15 +87,6 @@ public class Utilities {
 
 		String content = readURL(uri.toURL());
 
-		Matcher matcher = _incrementPattern.matcher(content);
-
-		if (matcher.find()) {
-			String start = content.substring(0, matcher.start(1));
-			String end = content.substring(matcher.end(1));
-
-			content = start.concat(end);
-		}
-
 		crc32.update(content.getBytes(StandardCharsets.UTF_8));
 
 		return Long.toHexString(crc32.getValue());
@@ -114,8 +103,5 @@ public class Utilities {
 
 		return integrityKey;
 	}
-
-	private static final Pattern _incrementPattern = Pattern.compile(
-		"<repository.*( increment=\"\\d*\")");
 
 }

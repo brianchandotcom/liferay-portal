@@ -396,15 +396,6 @@ public class LPKGIndexValidator {
 
 		String content = unsyncByteArrayOutputStream.toString(StringPool.UTF8);
 
-		Matcher matcher = _incrementPattern.matcher(content);
-
-		if (matcher.find()) {
-			String start = content.substring(0, matcher.start(1));
-			String end = content.substring(matcher.end(1));
-
-			content = start.concat(end);
-		}
-
 		crc32.update(content.getBytes(StandardCharsets.UTF_8));
 
 		return StringUtil.toHexString(crc32.getValue());
@@ -424,9 +415,6 @@ public class LPKGIndexValidator {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LPKGIndexValidator.class);
-
-	private static final Pattern _incrementPattern = Pattern.compile(
-		"<repository.*( increment=\"\\d*\")");
 
 	@Reference
 	private BytesURLProtocolSupport _bytesURLProtocolSupport;

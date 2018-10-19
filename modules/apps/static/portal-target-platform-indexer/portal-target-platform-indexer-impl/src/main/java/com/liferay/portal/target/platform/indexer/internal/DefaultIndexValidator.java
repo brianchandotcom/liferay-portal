@@ -91,7 +91,7 @@ public class DefaultIndexValidator implements IndexValidator {
 			ResourceBuilder resourceBuilder = new ResourceBuilder();
 
 			resourceBuilder.addEE(EE.JavaSE_1_8);
-			resourceBuilder.addManifest(OSGI_CORE.R6_0_0.getManifest());
+			resourceBuilder.addManifest(OSGI_CORE.R7_0_0.getManifest());
 
 			_includeSystemBundleAlias(resourceBuilder);
 

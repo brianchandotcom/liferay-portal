@@ -89,15 +89,6 @@ public class Utilities {
 
 		String content = readURL(uri.toURL());
 
-		Matcher matcher = _incrementPattern.matcher(content);
-
-		if (matcher.find()) {
-			String start = content.substring(0, matcher.start(1));
-			String end = content.substring(matcher.end(1));
-
-			content = start.concat(end);
-		}
-
 		crc32.update(content.getBytes(StandardCharsets.UTF_8));
 
 		return Long.toHexString(crc32.getValue());
@@ -114,8 +105,5 @@ public class Utilities {
 
 		return integrityKey;
 	}
-
-	private static final Pattern _incrementPattern = Pattern.compile(
-		"<repository.*( increment=\"\\d*\")");
 
 }

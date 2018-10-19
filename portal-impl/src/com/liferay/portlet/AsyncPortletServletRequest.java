@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -191,7 +192,14 @@ public class AsyncPortletServletRequest extends HttpServletRequestWrapper {
 				for (ServletRegistration servletRegistration :
 						servletRegistrations.values()) {
 
-					addAll(servletRegistration.getMappings());
+					Collection<String> mappings =
+						servletRegistration.getMappings();
+
+					// LPS-86502
+
+					if (mappings != null) {
+						addAll(mappings);
+					}
 				}
 			}
 		};

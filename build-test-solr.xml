@@ -90,7 +90,7 @@ SOLR_SSL_WANT_CLIENT_AUTH=true</echo>
 				<then>
 					<exec dir="${solr.dir}/bin" executable="/bin/bash">
 						<arg value="-c" />
-						<arg value="./solr create_core -c liferay -d ${solr.dir}/server/solr/liferay/conf" />
+						<arg value="./solr create_core -c liferay -d ${solr.dir}/server/solr/liferay/conf -force" />
 					</exec>
 				</then>
 				<elseif>
@@ -202,17 +202,17 @@ schema=schema.xml</echo>
 
 					<exec dir="${solr.dir}/bin" executable="/bin/bash">
 						<arg value="-c" />
-						<arg value="./solr start -cloud -p 8983 -s ${solr.dir}/example/cloud/node1/solr" />
+						<arg value="./solr start -cloud -p 8983 -s ${solr.dir}/example/cloud/node1/solr -force" />
 					</exec>
 
 					<exec dir="${solr.dir}/bin" executable="/bin/bash">
 						<arg value="-c" />
-						<arg value="./solr start -cloud -p 7574 -s ${solr.dir}/example/cloud/node2/solr -z localhost:9983" />
+						<arg value="./solr start -cloud -p 7574 -s ${solr.dir}/example/cloud/node2/solr -z localhost:9983 -force" />
 					</exec>
 
 					<exec dir="${solr.dir}/bin" executable="/bin/bash">
 						<arg value="-c" />
-						<arg value="./solr create_collection -c liferay -p 8983 -d liferay_configs -shards 2 -replicationFactor 2" />
+						<arg value="./solr create_collection -c liferay -p 8983 -d liferay_configs -shards 2 -replicationFactor 2 -force" />
 					</exec>
 				</then>
 				<elseif>
@@ -336,7 +336,7 @@ schema=schema.xml</echo>
 
 				<exec dir="${solr.dir}/bin" executable="/bin/bash">
 					<arg value="-c" />
-					<arg value="./solr start -V" />
+					<arg value="./solr start -V -force" />
 				</exec>
 			</then>
 			<elseif>

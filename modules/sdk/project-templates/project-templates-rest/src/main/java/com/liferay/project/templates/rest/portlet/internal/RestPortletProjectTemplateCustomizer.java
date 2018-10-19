@@ -1,0 +1,68 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.project.templates.rest.portlet.internal;
+
+import com.liferay.project.templates.ProjectTemplateCustomizer;
+import com.liferay.project.templates.ProjectTemplatesArgs;
+
+import java.io.File;
+
+import java.nio.file.Path;
+
+import org.apache.maven.archetype.ArchetypeGenerationRequest;
+import org.apache.maven.archetype.ArchetypeGenerationResult;
+
+/**
+ * @author Gregory Amerson
+ */
+public class RestPortletProjectTemplateCustomizer
+	implements ProjectTemplateCustomizer {
+
+	@Override
+	public void onAfterGenerateProject(
+			ProjectTemplatesArgs projectTemplatesArgs, File destinationDir,
+			ArchetypeGenerationResult archetypeGenerationResult)
+		throws Exception {
+
+		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
+
+		if (liferayVersion.startsWith("7.1")) {
+			String cxfConfig =
+				"com.liferay.portal.remote.cxf.common.configuration." +
+					"CXFEndpointPublisherConfiguration-cxf.properties";
+			String restExtenderConfig =
+				"com.liferay.portal.remote.rest.extender.configuration." +
+					"RestExtenderConfiguration-rest.properties";
+
+			Path destinationDirPath = destinationDir.toPath();
+
+			Path projectDirPath = destinationDirPath.resolve(
+				projectTemplatesArgs.getName());
+
+			ProjectTemplateCustomizer.deleteFileInPath(
+				cxfConfig, projectDirPath);
+
+			ProjectTemplateCustomizer.deleteFileInPath(
+				restExtenderConfig, projectDirPath);
+		}
+	}
+
+	@Override
+	public void onBeforeGenerateProject(
+			ProjectTemplatesArgs projectTemplatesArgs,
+			ArchetypeGenerationRequest archetypeGenerationRequest)
+		throws Exception {
+	}
+}

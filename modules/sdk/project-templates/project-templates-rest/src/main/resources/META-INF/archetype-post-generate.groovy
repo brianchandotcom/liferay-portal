@@ -21,3 +21,29 @@ Path projectPath = Paths.get(request.outputDirectory, request.artifactId)
 Path buildGradlePath = projectPath.resolve("build.gradle")
 
 Files.deleteIfExists buildGradlePath
+
+Properties properties = request.properties
+
+String liferayVersion = properties.get("liferayVersion")
+
+if (!liferayVersion.startsWith("7.1")) {
+	String cxfConfig =
+		"com.liferay.portal.remote.cxf.common.configuration." +
+			"CXFEndpointPublisherConfiguration-cxf.properties";
+	String restExtenderConfig =
+		"com.liferay.portal.remote.rest.extender.configuration." +
+			"RestExtenderConfiguration-rest.properties";
+
+	List<String> paths = ["src", "main", "resources", "configuration"]
+
+	Path cxfConfigResourcePath = paths.add cxfConfig
+
+	Path restExtenderConfigResourcePath = paths.add restExtenderConfig
+
+	Path cxfResourceFullPath = projectPath.resolve(cxfConfigResourcePath)
+
+	Path restExtenderResourceFullPath =
+		projectPath.resolve(restExtenderResourcePath)
+
+	Files.deleteIfExists cxfResourceFullPath restExtenderResourceFullPath
+}

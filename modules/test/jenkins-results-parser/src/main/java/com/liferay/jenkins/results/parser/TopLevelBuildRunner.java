@@ -63,6 +63,8 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		}
 
 		_topLevelBuild = (TopLevelBuild)build;
+
+		topLevelBuildData.setInvocationTime(topLevelBuildData.getStartTime());
 	}
 
 	protected void addInvocationBuildData(BuildData buildData) {
@@ -98,6 +100,8 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 	}
 
 	protected void publishJenkinsReport() {
+		_updateBuildData();
+
 		Element jenkinsReportElement = _topLevelBuild.getJenkinsReportElement();
 
 		try {
@@ -154,8 +158,6 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 	protected void waitForDownstreamBuildsToComplete() {
 		while (true) {
 			_topLevelBuild.update();
-
-			_updateBuildData();
 
 			updateJenkinsReport();
 
@@ -296,12 +298,21 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		invocationParameters.put(
 			"TOP_LEVEL_RUN_ID", topLevelBuildData.getRunID());
 
+		buildData.setInvocationTime(System.currentTimeMillis());
+
 		_invokeBuild(
 			topLevelBuildData.getCohortName(), buildData.getJobName(),
 			invocationParameters);
 	}
 
 	private void _updateBuildData() {
+		TopLevelBuildData topLevelBuildData = getBuildData();
+
+		topLevelBuildData.setBuildDuration(
+			System.currentTimeMillis() - topLevelBuildData.getStartTime());
+		topLevelBuildData.setBuildResult(_topLevelBuild.getResult());
+		topLevelBuildData.setBuildStatus(_topLevelBuild.getStatus());
+
 		for (Build downstreamBuild : _topLevelBuild.getDownstreamBuilds(null)) {
 			String buildURL = downstreamBuild.getBuildURL();
 
@@ -312,6 +323,9 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 			BuildData downstreamBuildData = _getDownstreamBuildData(
 				downstreamBuild);
 
+			downstreamBuildData.setBuildDuration(downstreamBuild.getDuration());
+			downstreamBuildData.setBuildResult(downstreamBuild.getResult());
+			downstreamBuildData.setBuildStatus(downstreamBuild.getStatus());
 			downstreamBuildData.setBuildURL(buildURL);
 		}
 	}

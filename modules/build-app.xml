@@ -688,6 +688,16 @@
 	</target>
 
 	<target name="index-modules-and-app-lpkgs">
+		<tstamp>
+			<format pattern="yyMMddHHmmssSSS" property="lpkg.tstamp"/>
+		</tstamp>
+
+		<if>
+			<equals arg1="${lpkg.index.tar.enabled}" arg2="true" />
+			<then>
+				<tar baseDir="${liferay.home}" destfile="/tmp/lpkg-index-tomcat-${lpkg.tstamp}.tar" longfile="gnu"/>
+			</then>
+		</if>
 		<path id="target.platform.indexer.classpath">
 
 			<!-- Order is important -->

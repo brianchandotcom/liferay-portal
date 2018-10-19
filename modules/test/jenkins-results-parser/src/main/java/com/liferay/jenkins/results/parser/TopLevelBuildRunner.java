@@ -66,12 +66,12 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 	}
 
 	protected void addInvocationBuildData(BuildData buildData) {
-		_invocationBuildDataList.add(buildData);
+		_downstreamBuildDataList.add(buildData);
 	}
 
 	protected void invokeDownstreamBuilds() {
-		for (BuildData invocationBuildData : _invocationBuildDataList) {
-			_invokeDownstreamBuild(invocationBuildData);
+		for (BuildData downstreamBuildData : _downstreamBuildDataList) {
+			_invokeDownstreamBuild(downstreamBuildData);
 		}
 	}
 
@@ -155,7 +155,7 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		while (true) {
 			_topLevelBuild.update();
 
-			_updateDownstreamBuildURLs();
+			_updateBuildData();
 
 			updateJenkinsReport();
 
@@ -206,6 +206,28 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		TopLevelBuildData topLevelBuildData = getBuildData();
 
 		return topLevelBuildData.getJenkinsGitHubURL();
+	}
+
+	private BuildData _getDownstreamBuildData(Build downstreamBuild) {
+		if (_downstreamBuildDataList.isEmpty()) {
+			return null;
+		}
+
+		String buildURL = downstreamBuild.getBuildURL();
+
+		if (buildURL == null) {
+			return null;
+		}
+
+		String runID = downstreamBuild.getParameterValue("RUN_ID");
+
+		for (BuildData downstreamBuildData : _downstreamBuildDataList) {
+			if (runID.equals(downstreamBuildData.getRunID())) {
+				return downstreamBuildData;
+			}
+		}
+
+		return null;
 	}
 
 	private void _invokeBuild(
@@ -279,37 +301,18 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 			invocationParameters);
 	}
 
-	private void _updateDownstreamBuildURLs() {
-		if (_invocationBuildDataList.isEmpty()) {
-			return;
-		}
-
-		List<Build> downstreamBuilds = _topLevelBuild.getDownstreamBuilds(null);
-
-		for (Build downstreamBuild : downstreamBuilds) {
+	private void _updateBuildData() {
+		for (Build downstreamBuild : _topLevelBuild.getDownstreamBuilds(null)) {
 			String buildURL = downstreamBuild.getBuildURL();
 
 			if (buildURL == null) {
 				continue;
 			}
 
-			String runID = downstreamBuild.getParameterValue("RUN_ID");
+			BuildData downstreamBuildData = _getDownstreamBuildData(
+				downstreamBuild);
 
-			BuildData invocationBuildDataToRemove = null;
-
-			for (BuildData invocationBuildData : _invocationBuildDataList) {
-				if (runID.equals(invocationBuildData.getRunID())) {
-					invocationBuildData.setBuildURL(buildURL);
-
-					invocationBuildDataToRemove = invocationBuildData;
-
-					break;
-				}
-			}
-
-			if (invocationBuildDataToRemove != null) {
-				_invocationBuildDataList.remove(invocationBuildDataToRemove);
-			}
+			downstreamBuildData.setBuildURL(buildURL);
 		}
 	}
 
@@ -328,7 +331,7 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 	private static final int _WAIT_FOR_INVOKED_JOB_DURATION = 30;
 
-	private final List<BuildData> _invocationBuildDataList = new ArrayList<>();
+	private final List<BuildData> _downstreamBuildDataList = new ArrayList<>();
 	private long _lastGeneratedReportTime = -1;
 	private final TopLevelBuild _topLevelBuild;
 

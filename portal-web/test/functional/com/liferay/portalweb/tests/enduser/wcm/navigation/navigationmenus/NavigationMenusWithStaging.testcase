@@ -1,0 +1,742 @@
+<definition component-name="portal-wcm">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Navigation" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Test Site Name" />
+		</execute>
+
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Test Page 1" />
+		</execute>
+
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Test Page 2" />
+		</execute>
+
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Test Page 3" />
+		</execute>
+
+		<execute macro="Staging#openStagingAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Test Site Name" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
+			<var name="siteURLKey" value="test-site-name-staging" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#addMenu">
+			<var name="menuName" value="Test Navigation Menu Name" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="JSONGroup#deleteGroupByName">
+					<var name="groupName" value="Test Site Name" />
+				</execute>
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="CannotEditNavigationMenuInLive" priority="5">
+		<description message="Navigation menus are only editable in the staging site and cannot be edited in the live site." />
+
+		<execute macro="Staging#openStagingAdmin">
+			<var name="siteURLKey" value="test-site-name-staging" />
+		</execute>
+
+		<execute macro="Staging#publishCustomPublication" />
+
+		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
+			<var name="siteURLKey" value="test-site-name-staging" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK">
+			<var name="key_rowEntry" value="Test Navigation Menu Name" />
+		</execute>
+
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="Test Navigation Menu Name" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="MenuItem#ANY_MENU_ITEM">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
+			<var name="key_rowEntry" value="Test Navigation Menu Name" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK">
+			<var name="key_rowEntry" value="Test Navigation Menu Name" />
+		</execute>
+
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="Test Navigation Menu Name" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
+	</command>
+
+	<command name="PublishEditedNavigationMenu" priority="5">
+		<description message="Edits to navigation menus will appear in live until after publish. This test has the navigation menu widget display a specific navigation menu and covers LPS-86525." />
+
+		<execute macro="NavigationMenusAdmin#addItem">
+			<var name="item" value="Page" />
+			<var name="pageNames" value="Test Page 1" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#addItem">
+			<var name="item" value="URL" />
+			<var name="url" value="https://www.liferay.com/" />
+			<var name="urlName" value="Liferay" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name-staging" />
+		</execute>
+
+		<execute macro="NavigationMenusWidget#gotoNavigationMenuWidgetConfig" />
+
+		<execute macro="NavigationMenusWidget#chooseMenu">
+			<var name="menuName" value="Test Navigation Menu Name" />
+		</execute>
+
+		<execute macro="Portlet#saveAndCloseConfig" />
+
+		<execute macro="Staging#openStagingAdmin">
+			<var name="siteURLKey" value="test-site-name-staging" />
+		</execute>
+
+		<execute macro="Staging#publishCustomPublication" />
+
+		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
+			<var name="siteURLKey" value="test-site-name-staging" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Test Navigation Menu Name" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#addItem">
+			<var name="item" value="Page" />
+			<var name="pageNames" value="Test Page 3" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#deleteItem">
+			<var name="itemName" value="Test Page 1" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name-staging" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Liferay" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 3" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 1" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 1" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Liferay" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 3" />
+		</execute>
+
+		<execute macro="Staging#openStagingAdmin">
+			<var name="siteURLKey" value="test-site-name-staging" />
+		</execute>
+
+		<execute macro="Staging#publishCustomPublication" />
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Liferay" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 3" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 1" />
+		</execute>
+
+		<execute function="Click" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 3" />
+		</execute>
+
+		<execute function="AssertLocation#assertPartialLocation" value1="web/test-site-name/test-page-3" />
+
+		<execute function="Click" locator1="Home#PAGE">
+			<var name="key_pageName" value="Liferay" />
+		</execute>
+
+		<execute function="AssertLocation" value1="https://www.liferay.com/" />
+	</command>
+
+	<command name="PublishEditedPrimaryNavigationMenu" priority="5">
+		<description message="Edits to navigation menus will appear in live until after publish. This test has the navigation menu widget display the primary navigation menu and covers LPS-86529." />
+
+		<execute macro="NavigationMenusAdmin#addItem">
+			<var name="item" value="Page" />
+			<var name="pageNames" value="Test Page 1" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#addItem">
+			<var name="item" value="URL" />
+			<var name="url" value="https://www.liferay.com/" />
+			<var name="urlName" value="Liferay" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name-staging" />
+		</execute>
+
+		<execute macro="NavigationMenusWidget#gotoNavigationMenuWidgetConfig" />
+
+		<execute macro="NavigationMenusWidget#selectNavigation">
+			<var name="menuType" value="Primary Navigation" />
+		</execute>
+
+		<execute macro="Portlet#saveAndCloseConfig" />
+
+		<execute macro="Staging#openStagingAdmin">
+			<var name="siteURLKey" value="test-site-name-staging" />
+		</execute>
+
+		<execute macro="Staging#publishCustomPublication" />
+
+		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
+			<var name="siteURLKey" value="test-site-name-staging" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Test Navigation Menu Name" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#addItem">
+			<var name="item" value="Page" />
+			<var name="pageNames" value="Test Page 3" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#deleteItem">
+			<var name="itemName" value="Test Page 1" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name-staging" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Liferay" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 3" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 1" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 1" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Liferay" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 3" />
+		</execute>
+
+		<execute macro="Staging#openStagingAdmin">
+			<var name="siteURLKey" value="test-site-name-staging" />
+		</execute>
+
+		<execute macro="Staging#publishCustomPublication" />
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Liferay" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 3" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 1" />
+		</execute>
+
+		<execute function="Click" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 3" />
+		</execute>
+
+		<execute function="AssertLocation#assertPartialLocation" value1="web/test-site-name/test-page-3" />
+
+		<execute function="Click" locator1="Home#PAGE">
+			<var name="key_pageName" value="Liferay" />
+		</execute>
+
+		<execute function="AssertLocation" value1="https://www.liferay.com/" />
+	</command>
+
+	<command name="PublishNavigationMenu" priority="5">
+		<description message="Navigation menus can be published to live and do not appear in live until published. This test has the navigation menu widget display a specific navigation menu. This test covers LPS-86142." />
+
+		<execute macro="NavigationMenusAdmin#addItem">
+			<var name="item" value="Page" />
+			<var name="pageNames" value="Test Page 1" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#addItem">
+			<var name="item" value="URL" />
+			<var name="url" value="https://www.liferay.com/" />
+			<var name="urlName" value="Liferay" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name-staging" />
+		</execute>
+
+		<execute macro="NavigationMenusWidget#gotoNavigationMenuWidgetConfig" />
+
+		<execute macro="NavigationMenusWidget#chooseMenu">
+			<var name="menuName" value="Test Navigation Menu Name" />
+		</execute>
+
+		<execute macro="Portlet#saveAndCloseConfig" />
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 1" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Liferay" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 2" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 3" />
+		</execute>
+
+		<execute function="Click" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 1" />
+		</execute>
+
+		<execute function="AssertLocation#assertPartialLocation" value1="web/test-site-name-staging/test-page-1" />
+
+		<execute function="Click" locator1="Home#PAGE">
+			<var name="key_pageName" value="Liferay" />
+		</execute>
+
+		<execute function="AssertLocation" value1="https://www.liferay.com/" />
+
+		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
+			<var name="key_rowEntry" value="Test Navigation Menu Name" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 1" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 2" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 3" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Liferay" />
+		</execute>
+
+		<execute macro="Staging#openStagingAdmin">
+			<var name="siteURLKey" value="test-site-name-staging" />
+		</execute>
+
+		<execute macro="Staging#publishCustomPublication" />
+
+		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
+			<var name="key_rowEntry" value="Test Navigation Menu Name" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 1" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Liferay" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 2" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 3" />
+		</execute>
+
+		<execute function="Click" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 1" />
+		</execute>
+
+		<execute function="AssertLocation#assertPartialLocation" value1="web/test-site-name/test-page-1" />
+
+		<execute function="Click" locator1="Home#PAGE">
+			<var name="key_pageName" value="Liferay" />
+		</execute>
+
+		<execute function="AssertLocation" value1="https://www.liferay.com/" />
+	</command>
+
+	<command name="PublishNavigationMenuWithDeletedPages" priority="5">
+		<description message="Publishing navigation menus should not also publish pages. When publishing only navigation menus, pages that exist in the staging site but do not exist in the live site should not appear in the navigation menu widget. This test has the navigation menu widget display a specific navigation menu and covers LPS-86525." />
+
+		<execute macro="NavigationMenusAdmin#addItem">
+			<var name="item" value="Page" />
+			<var name="pageNames" value="Test Page 1,Test Page 2,Test Page 3" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name-staging" />
+		</execute>
+
+		<execute macro="NavigationMenusWidget#gotoNavigationMenuWidgetConfig" />
+
+		<execute macro="NavigationMenusWidget#chooseMenu">
+			<var name="menuName" value="Test Navigation Menu Name" />
+		</execute>
+
+		<execute macro="Portlet#saveAndCloseConfig" />
+
+		<execute macro="SitePages#openPagesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute macro="SitePages#deletePage">
+			<var name="pageName" value="Test Page 3" />
+		</execute>
+
+		<execute macro="Staging#openStagingAdmin">
+			<var name="siteURLKey" value="test-site-name-staging" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="StagingPublishToLive#PAGES_TO_PUBLISH_CHECKBOX_CHECKED">
+				<var name="key_entryName" value="Test Page 3" />
+			</condition>
+
+			<then>
+				<execute function="Click" locator1="StagingPublishToLive#PAGES_TO_PUBLISH_CHECKBOX_CHECKED">
+					<var name="key_entryName" value="Test Page 3" />
+				</execute>
+			</then>
+		</if>
+
+		<execute function="AssertVisible" locator1="StagingPublishToLive#PAGES_TO_PUBLISH_CHECKBOX_UNCHECKED">
+			<var name="key_entryName" value="Test Page 3" />
+		</execute>
+
+		<execute function="AssertClickNoError" locator1="Staging#STAGING_PUBLISH_TO_LIVE_BUTTON" value1="Publish to Live" />
+
+		<execute function="Pause" locator1="30000" />
+
+		<execute function="AssertTextEquals" locator1="Staging#PROCESS_RESULT" value1="SUCCESSFUL" />
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 1" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 2" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 3" />
+		</execute>
+	</command>
+
+	<command name="PublishPrimaryNavigationMenu" priority="5">
+		<description message="Navigation menus can be published to live and do not appear in live until published. This test has the navigation menu widget display the primary navigation menu." />
+
+		<execute macro="NavigationMenusAdmin#addItem">
+			<var name="item" value="Page" />
+			<var name="pageNames" value="Test Page 1" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#addItem">
+			<var name="item" value="URL" />
+			<var name="url" value="https://www.liferay.com/" />
+			<var name="urlName" value="Liferay" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name-staging" />
+		</execute>
+
+		<execute macro="NavigationMenusWidget#gotoNavigationMenuWidgetConfig" />
+
+		<execute macro="NavigationMenusWidget#selectNavigation">
+			<var name="menuType" value="Primary Navigation" />
+		</execute>
+
+		<execute macro="Portlet#saveAndCloseConfig" />
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 1" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Liferay" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 2" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 3" />
+		</execute>
+
+		<execute function="Click" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 1" />
+		</execute>
+
+		<execute function="AssertLocation#assertPartialLocation" value1="web/test-site-name-staging/test-page-1" />
+
+		<execute function="Click" locator1="Home#PAGE">
+			<var name="key_pageName" value="Liferay" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
+			<var name="key_rowEntry" value="Test Navigation Menu Name" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 1" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 2" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 3" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Liferay" />
+		</execute>
+
+		<execute macro="Staging#openStagingAdmin">
+			<var name="siteURLKey" value="test-site-name-staging" />
+		</execute>
+
+		<execute macro="Staging#publishCustomPublication" />
+
+		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME">
+			<var name="key_rowEntry" value="Test Navigation Menu Name" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 1" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Liferay" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 2" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 3" />
+		</execute>
+
+		<execute function="Click" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 1" />
+		</execute>
+
+		<execute function="AssertLocation#assertPartialLocation" value1="web/test-site-name/test-page-1" />
+
+		<execute function="Click" locator1="Home#PAGE">
+			<var name="key_pageName" value="Liferay" />
+		</execute>
+
+		<execute function="AssertLocation" value1="https://www.liferay.com/" />
+	</command>
+
+	<command name="PublishPrimaryNavigationMenuWithDeletedPages" priority="5">
+		<description message="Publishing navigation menus should not also publish pages. When publishing only navigation menus, pages that exist in the staging site but do not exist in the live site should not appear in the navigation menu widget. This test has the navigation menu widget display the primary navigation menu." />
+
+		<execute macro="NavigationMenusAdmin#addItem">
+			<var name="item" value="Page" />
+			<var name="pageNames" value="Test Page 1,Test Page 2,Test Page 3" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name-staging" />
+		</execute>
+
+		<execute macro="NavigationMenusWidget#gotoNavigationMenuWidgetConfig" />
+
+		<execute macro="NavigationMenusWidget#selectNavigation">
+			<var name="menuType" value="Primary Navigation" />
+		</execute>
+
+		<execute macro="Portlet#saveAndCloseConfig" />
+
+		<execute macro="SitePages#openPagesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute macro="SitePages#deletePage">
+			<var name="pageName" value="Test Page 3" />
+		</execute>
+
+		<execute macro="Staging#openStagingAdmin">
+			<var name="siteURLKey" value="test-site-name-staging" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="StagingPublishToLive#PAGES_TO_PUBLISH_CHECKBOX_CHECKED">
+				<var name="key_entryName" value="Test Page 3" />
+			</condition>
+
+			<then>
+				<execute function="Click" locator1="StagingPublishToLive#PAGES_TO_PUBLISH_CHECKBOX_CHECKED">
+					<var name="key_entryName" value="Test Page 3" />
+				</execute>
+			</then>
+		</if>
+
+		<execute function="AssertVisible" locator1="StagingPublishToLive#PAGES_TO_PUBLISH_CHECKBOX_UNCHECKED">
+			<var name="key_entryName" value="Test Page 3" />
+		</execute>
+
+		<execute function="AssertClickNoError" locator1="Staging#STAGING_PUBLISH_TO_LIVE_BUTTON" value1="Publish to Live" />
+
+		<execute function="Pause" locator1="30000" />
+
+		<execute function="AssertTextEquals" locator1="Staging#PROCESS_RESULT" value1="SUCCESSFUL" />
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 1" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 2" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Page 3" />
+		</execute>
+	</command>
+</definition>

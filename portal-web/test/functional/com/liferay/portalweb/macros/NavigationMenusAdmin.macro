@@ -15,9 +15,11 @@
 
 		<execute macro="Portlet#expandTree" />
 
-		<execute macro="Portlet#selectTreeNode">
-			<var name="nodeName" value="${pageName}" />
-		</execute>
+		<for list="${pageNames}" param="pageName">
+			<execute macro="Portlet#selectTreeNode">
+				<var name="nodeName" value="${pageName}" />
+			</execute>
+		</for>
 	</command>
 
 	<command name="_addItemSubmenu">
@@ -88,7 +90,7 @@
 			<equals arg1="${item}" arg2="Page" />
 			<then>
 				<execute macro="NavigationMenusAdmin#_addItemPage">
-					<var name="pageName" value="${pageName}" />
+					<var name="pageNames" value="${pageNames}" />
 					<var name="privacy" value="${privacy}" />
 				</execute>
 			</then>

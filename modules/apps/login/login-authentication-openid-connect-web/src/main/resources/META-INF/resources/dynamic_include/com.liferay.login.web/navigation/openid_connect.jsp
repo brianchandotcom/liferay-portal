@@ -18,7 +18,7 @@
 
 <portlet:renderURL var="openIdConnectURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 	<portlet:param name="mvcRenderCommandName" value="<%= OpenIdConnectWebKeys.OPEN_ID_CONNECT_REQUEST_ACTION_NAME %>" />
-	<portlet:param name="saveLastPath" value="false" />
+	<portlet:param name="saveLastPath" value="<%= false %>" />
 </portlet:renderURL>
 
 <liferay-ui:icon

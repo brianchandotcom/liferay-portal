@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -43,6 +45,8 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		}
 
 		if (detailAST.getType() == TokenTypes.VARIABLE_DEF) {
+			_checkMissingEmptyLineAfterVariableDef(detailAST, "ThemeDisplay");
+
 			_checkMissingEmptyLineBeforeVariableDef(detailAST);
 
 			return;
@@ -192,6 +196,31 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			previousAST = nextSiblingAST;
 
 			nextSiblingAST = nextSiblingAST.getNextSibling();
+		}
+	}
+
+	private void _checkMissingEmptyLineAfterVariableDef(
+		DetailAST detailAST, String variableTypeName) {
+
+		if (detailAST.findFirstToken(TokenTypes.ASSIGN) == null) {
+			return;
+		}
+
+		DetailAST identAST = detailAST.findFirstToken(TokenTypes.IDENT);
+
+		if (variableTypeName.equals(
+				DetailASTUtil.getVariableTypeName(
+					detailAST, identAST.getText(), false))) {
+
+			String nextLine = StringUtil.trim(
+				getLine(DetailASTUtil.getEndLineNumber(detailAST)));
+
+			if (Validator.isNotNull(nextLine) && !nextLine.startsWith("}")) {
+				log(
+					detailAST,
+					_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_DEFINITION,
+					variableTypeName);
+			}
 		}
 	}
 
@@ -484,6 +513,10 @@ public class MissingEmptyLineCheck extends BaseCheck {
 
 	private static final String _MSG_MISSING_EMPTY_LINE_AFTER_METHOD_CALL =
 		"empty.line.missing.after.method.call";
+
+	private static final String
+		_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_DEFINITION =
+			"empty.line.missing.after.variable.definition";
 
 	private static final String
 		_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE =

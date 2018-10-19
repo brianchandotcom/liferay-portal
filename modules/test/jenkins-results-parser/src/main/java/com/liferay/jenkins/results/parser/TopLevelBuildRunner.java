@@ -36,6 +36,8 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 	@Override
 	public void run() {
+		publishJenkinsReport();
+
 		updateBuildDescription();
 
 		setUpWorkspace();
@@ -47,6 +49,13 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		invokeDownstreamBuilds();
 
 		waitForDownstreamBuildsToComplete();
+
+		publishJenkinsReport();
+	}
+
+	@Override
+	public void tearDown() {
+		tearDownWorkspace();
 
 		publishJenkinsReport();
 	}

@@ -312,11 +312,16 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		Locale localeThreadLocalDefaultLocale =
 			LocaleThreadLocal.getDefaultLocale();
 
+		Locale localeThreadSiteDefaultLocale =
+			LocaleThreadLocal.getSiteDefaultLocale();
+
 		try {
 			Locale companyDefaultLocale = LocaleUtil.fromLanguageId(
 				PropsValues.COMPANY_DEFAULT_LOCALE);
 
 			LocaleThreadLocal.setDefaultLocale(companyDefaultLocale);
+
+			LocaleThreadLocal.setSiteDefaultLocale(null);
 
 			final long companyId = company.getCompanyId();
 
@@ -460,6 +465,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			_companyProviderWrapper.setCompanyProvider(currentCompanyProvider);
 
 			LocaleThreadLocal.setDefaultLocale(localeThreadLocalDefaultLocale);
+			LocaleThreadLocal.setSiteDefaultLocale(
+				localeThreadSiteDefaultLocale);
 		}
 
 		return company;

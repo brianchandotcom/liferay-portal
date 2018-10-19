@@ -127,13 +127,13 @@ public int countBy${entityFinder.name}(
 					</#if>
 
 					${entityColumn.names} =
-						<#if stringUtil.equals(entityColumn.type, "String")>
+						<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
 							ArrayUtil.distinct(${entityColumn.names}, NULL_SAFE_STRING_COMPARATOR);
 						<#else>
 							ArrayUtil.unique(${entityColumn.names});
 						</#if>
 
-					<#if stringUtil.equals(entityColumn.type, "String")>
+					<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
 						Arrays.sort(${entityColumn.names}, NULL_SAFE_STRING_COMPARATOR);
 					<#else>
 						Arrays.sort(${entityColumn.names});
@@ -240,13 +240,13 @@ public int countBy${entityFinder.name}(
 					</#if>
 
 					${entityColumn.names} =
-						<#if stringUtil.equals(entityColumn.type, "String")>
+						<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
 							ArrayUtil.distinct(${entityColumn.names}, NULL_SAFE_STRING_COMPARATOR);
 						<#else>
 							ArrayUtil.unique(${entityColumn.names});
 						</#if>
 
-					<#if stringUtil.equals(entityColumn.type, "String")>
+					<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
 						Arrays.sort(${entityColumn.names}, NULL_SAFE_STRING_COMPARATOR);
 					<#else>
 						Arrays.sort(${entityColumn.names});
@@ -569,13 +569,13 @@ public int countBy${entityFinder.name}(
 						</#if>
 
 						${entityColumn.names} =
-							<#if stringUtil.equals(entityColumn.type, "String")>
+							<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
 								ArrayUtil.distinct(${entityColumn.names}, NULL_SAFE_STRING_COMPARATOR);
 							<#else>
 								ArrayUtil.unique(${entityColumn.names});
 							</#if>
 
-						<#if stringUtil.equals(entityColumn.type, "String")>
+						<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
 							Arrays.sort(${entityColumn.names}, NULL_SAFE_STRING_COMPARATOR);
 						<#else>
 							Arrays.sort(${entityColumn.names});

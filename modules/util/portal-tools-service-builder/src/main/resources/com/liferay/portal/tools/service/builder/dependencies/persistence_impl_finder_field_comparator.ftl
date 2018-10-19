@@ -5,6 +5,8 @@
 		<#else>
 			(${entityColumn.name} != ${entity.varName}.get${entityColumn.methodName}())
 		</#if>
+	<#elseif stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+		!${entityColumn.name}.equals(${entity.varName}.get${entityColumn.methodName}())
 	<#else>
 		!Objects.equals(${entityColumn.name}, ${entity.varName}.get${entityColumn.methodName}())
 	</#if>
@@ -15,6 +17,8 @@
 		<#else>
 			(${entityColumn.name} == ${entity.varName}.get${entityColumn.methodName}())
 		</#if>
+	<#elseif stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+		${entityColumn.name}.equals(${entity.varName}.get${entityColumn.methodName}())
 	<#else>
 		Objects.equals(${entityColumn.name}, ${entity.varName}.get${entityColumn.methodName}())
 	</#if>

@@ -1230,7 +1230,7 @@ that may or may not be enforced with a unique index at the database level. Case
 									ArrayUtil.unique(${entityColumn.names});
 								</#if>
 
-							<#if stringUtil.equals(entityColumn.type, "String")>
+							<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
 								Arrays.sort(${entityColumn.names}, NULL_SAFE_STRING_COMPARATOR);
 							<#else>
 								Arrays.sort(${entityColumn.names});
@@ -1545,13 +1545,13 @@ that may or may not be enforced with a unique index at the database level. Case
 					</#if>
 
 					${entityColumn.names} =
-						<#if stringUtil.equals(entityColumn.type, "String")>
+						<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
 							ArrayUtil.distinct(${entityColumn.names}, NULL_SAFE_STRING_COMPARATOR);
 						<#else>
 							ArrayUtil.unique(${entityColumn.names});
 						</#if>
 
-					<#if stringUtil.equals(entityColumn.type, "String")>
+					<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
 						Arrays.sort(${entityColumn.names}, NULL_SAFE_STRING_COMPARATOR);
 					<#else>
 						Arrays.sort(${entityColumn.names});
@@ -1906,13 +1906,13 @@ that may or may not be enforced with a unique index at the database level. Case
 					</#if>
 
 					${entityColumn.names} =
-						<#if stringUtil.equals(entityColumn.type, "String")>
+						<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
 							ArrayUtil.distinct(${entityColumn.names}, NULL_SAFE_STRING_COMPARATOR);
 						<#else>
 							ArrayUtil.unique(${entityColumn.names});
 						</#if>
 
-					<#if stringUtil.equals(entityColumn.type, "String")>
+					<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
 						Arrays.sort(${entityColumn.names}, NULL_SAFE_STRING_COMPARATOR);
 					<#else>
 						Arrays.sort(${entityColumn.names});

@@ -54,14 +54,14 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 			return;
 		}
 
-		String normalizedTargetPlatformVersion =
-			VersionUtil.normalizeTargetPlatformVersion(targetPlatformVersion);
-
 		GradleUtil.applyPlugin(project, TargetPlatformIDEPlugin.class);
 
 		_configureConfigurationBundles(project);
 		_configureTargetPlatform(project);
 		_configureTargetPlatformIDE(project);
+
+		String normalizedTargetPlatformVersion =
+			VersionUtil.normalizeTargetPlatformVersion(targetPlatformVersion);
 
 		_addDependenciesTargetPlatformBoms(
 			project, normalizedTargetPlatformVersion);

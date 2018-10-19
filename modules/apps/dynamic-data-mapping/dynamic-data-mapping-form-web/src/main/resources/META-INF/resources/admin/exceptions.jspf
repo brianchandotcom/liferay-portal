@@ -60,9 +60,15 @@
 
 	<%
 	DDMFormValidationException.MustSetValidValidationExpression msvve = (DDMFormValidationException.MustSetValidValidationExpression)errorException;
+	String validationExpression = HtmlUtil.escape(msvve.getValidationExpressionArgument());
+
+	String validationExpressionBold = "<b>" + validationExpression + "</b>";
+	String fieldName = HtmlUtil.escape(msvve.getFieldName());
+
+	String fieldNameBold = "<b>" + fieldName + "</b>";
 	%>
 
-	<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(msvve.getValidationExpression()), HtmlUtil.escape(msvve.getFieldName())} %>" key="the-validation-expression-x-set-for-field-x-is-invalid" translateArguments="<%= false %>" />
+	<liferay-ui:message arguments="<%= new Object[] {validationExpressionBold, fieldNameBold} %>" key="the-validation-expression-x-set-for-field-x-is-invalid" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= DDMFormValidationException.MustSetValidVisibilityExpression.class %>">

@@ -19,6 +19,8 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Brian Wing Shun Chan
@@ -299,6 +301,20 @@ public class DDMFormValidationException extends PortalException {
 		public String getValidationExpression() {
 			return expression;
 		}
+
+		public String getValidationExpressionArgument() {
+			String expressionArgument = "";
+			Matcher matcher = _expressionValidationPattern.matcher(expression);
+
+			while (matcher.find()) {
+				expressionArgument = matcher.group(3);
+			}
+
+			return expressionArgument;
+		}
+
+		private static final Pattern _expressionValidationPattern =
+			Pattern.compile("(contains|match)\\((.+), \"(.+)\"\\)");
 
 	}
 

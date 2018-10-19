@@ -61,6 +61,7 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -1141,8 +1142,8 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 	}
 
-	private List<String> _readActionKeys(Element parentElement) {
-		List<String> actions = new ArrayList<>();
+	private void _readActionKeys(
+		Collection<String> actions, Element parentElement) {
 
 		for (Element actionKeyElement : parentElement.elements("action-key")) {
 			String actionKey = actionKeyElement.getTextTrim();
@@ -1153,8 +1154,6 @@ public class ResourceActionsImpl implements ResourceActions {
 
 			actions.add(actionKey);
 		}
-
-		return actions;
 	}
 
 	private void _readGroupDefaultActions(
@@ -1180,7 +1179,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		groupDefaultActions.clear();
 
-		groupDefaultActions.addAll(_readActionKeys(groupDefaultsElement));
+		_readActionKeys(groupDefaultActions, groupDefaultsElement);
 	}
 
 	private void _readGuestDefaultActions(
@@ -1195,7 +1194,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		guestDefaultActions.clear();
 
-		guestDefaultActions.addAll(_readActionKeys(guestDefaultsElement));
+		_readActionKeys(guestDefaultActions, guestDefaultsElement);
 	}
 
 	private void _readGuestUnsupportedActions(
@@ -1211,8 +1210,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		guestUnsupportedActions.clear();
 
-		guestUnsupportedActions.addAll(
-			_readActionKeys(guestUnsupportedElement));
+		_readActionKeys(guestUnsupportedActions, guestUnsupportedElement);
 
 		_checkGuestUnsupportedActions(
 			guestUnsupportedActions, guestDefaultActions);
@@ -1233,7 +1231,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		layoutManagerActions.clear();
 
-		layoutManagerActions.addAll(_readActionKeys(layoutManagerElement));
+		_readActionKeys(layoutManagerActions, layoutManagerElement);
 	}
 
 	private String _readModelResource(
@@ -1359,7 +1357,7 @@ public class ResourceActionsImpl implements ResourceActions {
 			return;
 		}
 
-		ownerDefaultActions.addAll(_readActionKeys(ownerDefaultsElement));
+		_readActionKeys(ownerDefaultActions, ownerDefaultsElement);
 	}
 
 	private String _readPortletResource(
@@ -1428,7 +1426,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		Element supportsElement = _getPermissionsChildElement(
 			parentElement, "supports");
 
-		supportsActions.addAll(_readActionKeys(supportsElement));
+		_readActionKeys(supportsActions, supportsElement);
 
 		return supportsActions;
 	}

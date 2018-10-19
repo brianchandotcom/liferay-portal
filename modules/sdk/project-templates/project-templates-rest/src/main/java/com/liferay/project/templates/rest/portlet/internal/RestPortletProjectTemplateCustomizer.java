@@ -65,4 +65,5 @@ public class RestPortletProjectTemplateCustomizer
 			ArchetypeGenerationRequest archetypeGenerationRequest)
 		throws Exception {
 	}
+
 }

@@ -17,6 +17,7 @@ package com.liferay.portal.target.platform.indexer.internal;
 import aQute.bnd.build.model.EE;
 import aQute.bnd.build.model.OSGI_CORE;
 import aQute.bnd.http.HttpClient;
+import aQute.bnd.http.HttpRequest;
 import aQute.bnd.osgi.Processor;
 import aQute.bnd.osgi.repository.XMLResourceParser;
 import aQute.bnd.osgi.resource.CapReqBuilder;
@@ -29,12 +30,17 @@ import biz.aQute.resolve.ResolverValidator;
 
 import com.liferay.portal.target.platform.indexer.IndexValidator;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.lang.reflect.Field;
 
 import java.net.URI;
 import java.net.URL;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,6 +49,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.stream.Stream;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -96,8 +103,34 @@ public class DefaultIndexValidator implements IndexValidator {
 
 			List<ResolverValidator.Resolution> resolutions;
 
-			try (HttpClient httpClient = new HttpClient();
-				OSGiRepository oSGiRepository = new OSGiRepository();) {
+			Path tempDir = Files.createTempDirectory(null);
+
+			Field field = HttpRequest.class.getDeclaredField("url");
+
+			field.setAccessible(true);
+
+			try (OSGiRepository oSGiRepository = new OSGiRepository();
+				HttpClient httpClient = new HttpClient() {
+
+					@Override
+					public Object send(HttpRequest<?> request)
+						throws Exception {
+
+						URL url = (URL)field.get(request);
+
+						Path tempFile = Files.createTempFile(
+							tempDir, null, null);
+
+						try (InputStream inputStream = url.openStream()) {
+							Files.copy(
+								inputStream, tempFile,
+								StandardCopyOption.REPLACE_EXISTING);
+						}
+
+						return tempFile.toFile();
+					}
+
+				}) {
 
 				Map<String, String> map = new HashMap<>();
 
@@ -119,6 +152,21 @@ public class DefaultIndexValidator implements IndexValidator {
 
 				resolutions = resolverValidator.validateResources(
 					oSGiRepository, resources);
+			}
+			finally {
+				Stream<Path> stream = Files.list(tempDir);
+
+				stream.forEach(
+					path -> {
+						try {
+							Files.delete(path);
+						}
+						catch (IOException ioe) {
+							throw new RuntimeException(ioe);
+						}
+					});
+
+				Files.delete(tempDir);
 			}
 
 			for (ResolverValidator.Resolution resolution : resolutions) {

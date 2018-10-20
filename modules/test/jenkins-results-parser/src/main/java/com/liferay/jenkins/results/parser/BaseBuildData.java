@@ -138,7 +138,9 @@ public abstract class BaseBuildData implements BuildData {
 	public void setBuildURL(String buildURL) {
 		String currentBuildURL = getBuildURL();
 
-		if (!(currentBuildURL == null) && !currentBuildURL.equals(buildURL)) {
+		if ((currentBuildURL != null) && !currentBuildURL.isEmpty() &&
+			!currentBuildURL.equals(buildURL)) {
+
 			throw new IllegalStateException("Build URL may not be changed");
 		}
 

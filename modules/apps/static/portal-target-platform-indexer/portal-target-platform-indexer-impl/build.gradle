@@ -1,5 +1,3 @@
-task deployTool(type: Copy)
-
 dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "4.1.0"
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.repository", version: "4.1.0"
@@ -7,28 +5,5 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly group: "org.slf4j", name: "slf4j-api", version: "1.7.25"
-	compileOnly group: "org.slf4j", name: "slf4j-simple", version: "1.7.25"
 	compileOnly project(":apps:static:portal-target-platform-indexer:portal-target-platform-indexer-api")
-}
-
-deploy {
-	finalizedBy deployTool
-}
-
-deployTool {
-	from (jar) {
-		rename {
-			"com.liferay.portal.target.platform.indexer.impl.jar"
-		}
-	}
-
-	from (configurations.compileOnly) {
-		include "slf4j-api-*.jar"
-		include "slf4j-simple-*.jar"
-
-		rename "slf4j-api-(.*).jar", "slf4j-api.jar"
-		rename "slf4j-simple-(.*).jar", "slf4j-simple.jar"
-	}
-
-	into new File(liferay.liferayHome, "tools/portal-tools-target-platform-indexer-client")
 }

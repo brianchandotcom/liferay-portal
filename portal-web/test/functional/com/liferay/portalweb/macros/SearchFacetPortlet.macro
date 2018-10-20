@@ -140,7 +140,7 @@
 			</elseif>
 		</if>
 
-		<var method="StringUtil#replace('${searchURL}', '&amp;', ', ')" name="searchURLList" />
+		<var method="StringUtil#replace('${searchURL}', '&amp;', ',')" name="searchURLList" />
 
 		<var method="StringUtil#replace('${facetValue}', ' ', '%20')" name="facetValue" />
 

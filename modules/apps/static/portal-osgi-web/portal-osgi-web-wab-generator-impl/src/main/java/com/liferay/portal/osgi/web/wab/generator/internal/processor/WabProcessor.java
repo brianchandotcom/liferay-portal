@@ -25,7 +25,10 @@ import aQute.bnd.osgi.FileResource;
 import aQute.bnd.osgi.Jar;
 import aQute.bnd.osgi.Packages;
 import aQute.bnd.osgi.Resource;
+import aQute.bnd.service.verifier.VerifierPlugin;
 import aQute.bnd.version.Version;
+
+import aQute.lib.filter.Filter;
 
 import com.liferay.ant.bnd.jsp.JspAnalyzerPlugin;
 import com.liferay.petra.string.StringBundler;
@@ -73,9 +76,11 @@ import java.nio.file.Path;
 import java.text.Format;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -341,6 +346,113 @@ public class WabProcessor {
 		return webContextpath;
 	}
 
+	protected void processBeans(Builder analyzer) throws IOException {
+		String beansXMLFile = "WEB-INF/beans.xml";
+
+		File file = new File(_pluginDir, beansXMLFile);
+
+		if (!file.exists()) {
+			beansXMLFile = "WEB-INF/classes/META-INF/beans.xml";
+
+			file = new File(_pluginDir, beansXMLFile);
+		}
+
+		if (!file.exists()) {
+			return;
+		}
+
+		String cdiInstruction = analyzer.getProperty(Constants.CDIANNOTATIONS);
+
+		if (Validator.isNotNull(cdiInstruction)) {
+			return;
+		}
+
+		String finalBeansXMLFile = beansXMLFile;
+
+		Document document = readDocument(file);
+
+		cdiInstruction = "*;discover=all";
+
+		if (document.hasContent()) {
+			Element rootElement = document.getRootElement();
+
+			// bean-discovery-mode="all" version="1.1"
+
+			XPath xPath = SAXReaderUtil.createXPath(
+				"/cdi-beans:beans/@version", _xsds);
+
+			Node versionNode = xPath.selectSingleNode(rootElement);
+
+			if (versionNode != null) {
+				Version version = Version.valueOf(versionNode.getStringValue());
+
+				if (_CDI_ARCHIVE_VERSION.compareTo(version) <= 0) {
+					xPath = SAXReaderUtil.createXPath(
+						"/cdi-beans:beans/@bean-discovery-mode", _xsds);
+
+					Node beanDiscoveryModeNode = xPath.selectSingleNode(
+						rootElement);
+
+					if (beanDiscoveryModeNode == null) {
+						cdiInstruction = "*;discover=annotated";
+					}
+					else {
+						cdiInstruction =
+							"*;discover=" +
+								beanDiscoveryModeNode.getStringValue();
+					}
+				}
+			}
+		}
+
+		analyzer.setProperty(Constants.CDIANNOTATIONS, cdiInstruction);
+
+		appendProperty(
+			analyzer, Constants.REQUIRE_CAPABILITY, _CDI_REQUIREMENTS);
+
+		Set<Object> plugins = analyzer.getPlugins();
+
+		plugins.add(
+			new VerifierPlugin() {
+
+				@Override
+				public void verify(Analyzer analyzer) throws Exception {
+					Parameters requireCapabilities = analyzer.parseHeader(
+						analyzer.getProperty(Constants.REQUIRE_CAPABILITY));
+
+					Map<String, Object> arguments = new HashMap<>();
+
+					arguments.put("osgi.extender", "osgi.cdi");
+					arguments.put("version", new Version(1));
+
+					for (Map.Entry<String, Attrs> entry :
+							requireCapabilities.entrySet()) {
+
+						String namespace = entry.getKey();
+
+						Attrs attrs = entry.getValue();
+
+						String filterString = attrs.get(
+							Constants.FILTER_DIRECTIVE);
+
+						Filter filter = new Filter(filterString);
+
+						if ("osgi.extender".equals(namespace) &&
+							filter.matchMap(arguments)) {
+
+							attrs.putTyped(
+								"descriptor", Arrays.asList(finalBeansXMLFile));
+						}
+					}
+
+					analyzer.setProperty(
+						Constants.REQUIRE_CAPABILITY,
+						requireCapabilities.toString());
+				}
+
+			});
+	}
+
 	protected void processBundleClasspath(
 			Analyzer analyzer, Properties pluginPackageProperties)
 		throws IOException {
@@ -581,12 +693,11 @@ public class WabProcessor {
 				Resource resource = entry.getValue();
 
 				if (resource instanceof FileResource) {
-					try (FileResource fileResource = (FileResource)resource) {
-						classPath.put(path, fileResource.getFile());
+					FileResource fileResource = (FileResource)resource;
 
-						appendProperty(
-							analyzer, Constants.BUNDLE_CLASSPATH, path);
-					}
+					classPath.put(path, fileResource.getFile());
+
+					appendProperty(analyzer, Constants.BUNDLE_CLASSPATH, path);
 				}
 			}
 			else if (_ignoredResourcePaths.contains(path)) {
@@ -1059,14 +1170,16 @@ public class WabProcessor {
 
 		Set<Object> plugins = analyzer.getPlugins();
 
-		Iterator<Object> iterator = plugins.iterator();
+		Object dsAnnotationsPlugin = null;
 
-		while (iterator.hasNext()) {
-			Object plugin = iterator.next();
-
+		for (Object plugin : plugins) {
 			if (plugin instanceof DSAnnotations) {
-				iterator.remove();
+				dsAnnotationsPlugin = plugin;
 			}
+		}
+
+		if (dsAnnotationsPlugin != null) {
+			plugins.remove(dsAnnotationsPlugin);
 		}
 
 		plugins.add(new JspAnalyzerPlugin());
@@ -1101,6 +1214,8 @@ public class WabProcessor {
 		processPackageNames(analyzer);
 
 		processRequiredDeploymentContexts(analyzer);
+
+		processBeans(analyzer);
 
 		_processExcludedJSPs(analyzer);
 
@@ -1222,6 +1337,13 @@ public class WabProcessor {
 			PropsUtil.get(
 				"module.framework.web.generator.autodeployed.wars.store"));
 
+	private static final Version _CDI_ARCHIVE_VERSION = new Version(1, 1, 0);
+
+	private static final String _CDI_REQUIREMENTS = StringBundler.concat(
+		"osgi.cdi.extension;filter:='(osgi.cdi.extension=aries.cdi.http)',",
+		"osgi.cdi.extension;filter:='(osgi.cdi.extension=",
+		"com.liferay.bean.portlet.cdi.extension)'");
+
 	private static final String[] _KNOWN_PROPERTY_KEYS =
 		{"jdbc.driverClassName"};
 
@@ -1301,6 +1423,7 @@ public class WabProcessor {
 				put("aop", "http://www.springframework.org/schema/aop");
 				put("beans", "http://www.springframework.org/schema/beans");
 				put("blueprint", "http://www.osgi.org/xmlns/blueprint/v1.0.0");
+				put("cdi-beans", "http://xmlns.jcp.org/xml/ns/javaee");
 				put("context", "http://www.springframework.org/schema/context");
 				put(
 					"gemini-blueprint",

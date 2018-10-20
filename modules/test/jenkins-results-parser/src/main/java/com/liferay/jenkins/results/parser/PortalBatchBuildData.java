@@ -33,12 +33,30 @@ public class PortalBatchBuildData
 
 	@Override
 	public String getPortalGitHubURL() {
-		return getString("portal_github_url");
+		TopLevelBuildData topLevelBuildData = getTopLevelBuildData();
+
+		if (!(topLevelBuildData instanceof PortalTopLevelBuildData)) {
+			throw new RuntimeException("Invalid top level build data");
+		}
+
+		PortalTopLevelBuildData portalTopLevelBuildData =
+			(PortalTopLevelBuildData)topLevelBuildData;
+
+		return portalTopLevelBuildData.getPortalGitHubURL();
 	}
 
 	@Override
 	public String getPortalUpstreamBranchName() {
-		return getString("portal_upstream_branch_name");
+		TopLevelBuildData topLevelBuildData = getTopLevelBuildData();
+
+		if (!(topLevelBuildData instanceof PortalTopLevelBuildData)) {
+			throw new RuntimeException("Invalid top level build data");
+		}
+
+		PortalTopLevelBuildData portalTopLevelBuildData =
+			(PortalTopLevelBuildData)topLevelBuildData;
+
+		return portalTopLevelBuildData.getPortalUpstreamBranchName();
 	}
 
 	@Override
@@ -48,32 +66,25 @@ public class PortalBatchBuildData
 
 	@Override
 	public void setPortalGitHubURL(String portalGitHubURL) {
-		put("portal_github_url", portalGitHubURL);
+		throw new RuntimeException("Please do not set the portal github url");
 	}
 
 	@Override
 	public void setPortalUpstreamBranchName(String portalUpstreamBranchName) {
-		put("portal_upstream_branch_name", portalUpstreamBranchName);
+		throw new RuntimeException(
+			"Please do not set the portal upstream branch name");
 	}
 
 	protected PortalBatchBuildData(
 		String runID, String jobName, String buildURL) {
 
 		super(runID, jobName, buildURL);
-
-		setPortalGitHubURL(DEFAULT_PORTAL_GITHUB_URL);
-		setPortalUpstreamBranchName(DEFAULT_PORTAL_UPSTREAM_BRANCH_NAME);
-
-		validateKeys(_REQUIRED_KEYS);
 	}
 
 	@Override
 	protected String getType() {
 		return _TYPE;
 	}
-
-	private static final String[] _REQUIRED_KEYS =
-		{"portal_github_url", "portal_upstream_branch_name"};
 
 	private static final String _TYPE = "portal_batch";
 

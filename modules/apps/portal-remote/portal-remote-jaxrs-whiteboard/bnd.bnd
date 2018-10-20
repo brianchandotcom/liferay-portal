@@ -12,7 +12,7 @@ Export-Package:\
 	javax.wsdl.factory;version="1.2",\
 	javax.wsdl.xml;version="1.2",\
 	\
-	org.apache.cxf;version="3.2.5",\
+	org.apache.cxf;version="3.2.5";-split-package:=first,\
 	org.apache.cxf.annotations;version="3.2.5",\
 	org.apache.cxf.attachment;version="3.2.5",\
 	org.apache.cxf.binding;version="3.2.5",\

@@ -103,7 +103,7 @@ public abstract class BaseBuildRunner<T extends BuildData>
 			catch (IOException | TimeoutException e) {
 				if (retries == maxRetries) {
 					throw new RuntimeException(
-						"Unable to send the jenkins-report.html", e);
+						"Unable to send the " + file.getName(), e);
 				}
 
 				System.out.println(

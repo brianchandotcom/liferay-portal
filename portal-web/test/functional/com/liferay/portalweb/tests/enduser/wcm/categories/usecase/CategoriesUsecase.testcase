@@ -69,14 +69,6 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="User#openUsersAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/site-name" />
-		</execute>
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Members" />
 			<var name="panel" value="Site Administration" />
@@ -172,14 +164,6 @@
 	<command name="AddCategorywithSiteRole" priority="4">
 		<property name="testray.component.names" value="Categories,Permissions,Roles" />
 
-		<execute macro="Site#openSitesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
 		<execute macro="JSONLayout#addLayoutByGroupName">
 			<var name="groupName" value="Test Site Name" />
 			<var name="layoutName" value="Test Page Name" />
@@ -204,14 +188,6 @@
 			<var name="password" value="password" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#openUsersAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Test Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -602,15 +578,15 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Page Name" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="JSONLayout#addLayoutByGroupName">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="Page Name" />
 		</execute>
 
 		<execute macro="SitePages#gotoPageMenuItem">
@@ -765,10 +741,6 @@
 			<var name="password" value="password" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/site-name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -1100,7 +1072,7 @@
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
+			<var name="siteName" value="Test Site Name" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -1109,7 +1081,7 @@
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
+			<var name="siteName" value="Test Site Name" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -1118,11 +1090,11 @@
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
+			<var name="siteName" value="Test Site Name" />
 		</execute>
 
 		<execute macro="LAR#gotoExport">
-			<var name="siteScopeName" value="Site Name" />
+			<var name="siteScopeName" value="Test Site Name" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoAdd" />
@@ -1699,8 +1671,8 @@
 			<var name="webContentTitle" value="WC Content Title" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Child SiteName" />
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteNameURL" value="Child SiteName" />
 		</execute>
 
 		<execute macro="WebContent#openWebContentAdmin">

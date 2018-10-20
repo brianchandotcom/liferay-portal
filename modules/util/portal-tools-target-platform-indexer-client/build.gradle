@@ -1,7 +1,30 @@
+task deployClientDependencies(type: Copy)
+
 dependencies {
-	compile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
-	compile project(":apps:static:portal-target-platform-indexer:portal-target-platform-indexer-api")
-	compile project(":apps:static:portal-target-platform-indexer:portal-target-platform-indexer-impl")
+	compileOnly group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
+	compileOnly group: "org.slf4j", name: "slf4j-api", version: "1.7.25"
+	compileOnly group: "org.slf4j", name: "slf4j-simple", version: "1.7.25"
+	compileOnly project(":apps:static:portal-target-platform-indexer:portal-target-platform-indexer-api")
+	compileOnly project(":apps:static:portal-target-platform-indexer:portal-target-platform-indexer-impl")
+}
+
+deploy {
+	finalizedBy deployClientDependencies
+}
+
+deployClientDependencies {
+	from configurations.compileOnly
+	into new File(liferay.liferayHome, "tools/portal-tools-target-platform-indexer-client")
+
+	include "com.liferay.portal.target.platform.indexer.api-*.jar"
+	include "com.liferay.portal.target.platform.indexer.impl-*.jar"
+	include "slf4j-api-*.jar"
+	include "slf4j-simple-*.jar"
+
+	rename "com.liferay.portal.target.platform.indexer.api-(.*).jar", "com.liferay.portal.target.platform.indexer.api.jar"
+	rename "com.liferay.portal.target.platform.indexer.impl-(.*).jar", "com.liferay.portal.target.platform.indexer.impl.jar"
+	rename "slf4j-api-(.*).jar", "slf4j-api.jar"
+	rename "slf4j-simple-(.*).jar", "slf4j-simple.jar"
 }
 
 distributions {

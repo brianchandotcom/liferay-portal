@@ -6,5 +6,15 @@ Import-Package:\
 	\
 	*
 -conditionalpackage:\
+	aQute.bnd.*,\
+	\
+	aQute.lib.*,\
+	\
+	aQute.libg.*,\
+	\
+	aQute.service.reporter,\
+	\
 	com.liferay.ant.bnd.jsp,\
-	com.liferay.whip.util
+	com.liferay.whip.util,\
+	\
+	org.osgi.service.repository

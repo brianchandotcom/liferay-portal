@@ -58,6 +58,22 @@ public class GitBisectToolTopLevelBuildRunner
 		}
 	}
 
+	@Override
+	protected void setUpWorkspace() {
+		super.setUpWorkspace();
+
+		if (!(workspace instanceof PortalWorkspace)) {
+			throw new RuntimeException("Invalid workspace");
+		}
+
+		PortalWorkspace portalWorkspace = (PortalWorkspace)workspace;
+
+		WorkspaceGitRepository workspaceGitRepository =
+			portalWorkspace.getPrimaryPortalWorkspaceGitRepository();
+
+		workspaceGitRepository.storeCommitHistory(_getPortalBranchSHAs());
+	}
+
 	private String _getBatchName() {
 		BuildData buildData = getBuildData();
 

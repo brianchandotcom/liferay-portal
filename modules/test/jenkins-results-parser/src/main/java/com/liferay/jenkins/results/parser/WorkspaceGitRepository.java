@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.List;
+
 /**
  * @author Michael Hashimoto
  */
@@ -28,6 +30,8 @@ public interface WorkspaceGitRepository extends LocalGitRepository {
 	public void setBranchSHA(String branchSHA);
 
 	public void setUp();
+
+	public void storeCommitHistory(List<String> commitSHAs);
 
 	public void tearDown();
 

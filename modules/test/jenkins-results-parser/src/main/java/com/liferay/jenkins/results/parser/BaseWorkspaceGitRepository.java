@@ -17,10 +17,13 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -90,6 +93,45 @@ public abstract class BaseWorkspaceGitRepository
 		gitWorkingDirectory.clean();
 
 		gitWorkingDirectory.displayLog();
+	}
+
+	@Override
+	public void storeCommitHistory(List<String> commitSHAs) {
+		List<String> requiredCommitSHAs = new ArrayList<>();
+
+		requiredCommitSHAs.addAll(commitSHAs);
+
+		JSONArray commitsJSONArray = new JSONArray();
+
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		List<Commit> commits = gitWorkingDirectory.log(_MAX_COMMIT_HISTORY);
+
+		for (Commit commit : commits) {
+			JSONObject commitJSONObject = new JSONObject();
+
+			commitJSONObject.put("message", commit.getMessage());
+			commitJSONObject.put("sha", commit.getSHA());
+
+			commitsJSONArray.put(commitJSONObject);
+
+			String sha = commit.getSHA();
+
+			if (requiredCommitSHAs.contains(sha)) {
+				requiredCommitSHAs.remove(sha);
+			}
+
+			if (requiredCommitSHAs.isEmpty()) {
+				break;
+			}
+		}
+
+		if (!requiredCommitSHAs.isEmpty()) {
+			throw new RuntimeException(
+				"Could not find the following SHAs: " + requiredCommitSHAs);
+		}
+
+		put("commits", commitsJSONArray);
 	}
 
 	@Override
@@ -279,6 +321,8 @@ public abstract class BaseWorkspaceGitRepository
 	private void _setType() {
 		put("type", getType());
 	}
+
+	private static final Integer _MAX_COMMIT_HISTORY = 100;
 
 	private static final String[] _REQUIRED_CI_KEYS =
 		{"git_hub_dev_branch_name"};

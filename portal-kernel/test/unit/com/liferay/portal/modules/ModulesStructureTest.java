@@ -20,6 +20,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -182,6 +183,8 @@ public class ModulesStructureTest {
 
 						if (Files.exists(dirPath.resolve("app.bnd"))) {
 							_testEquals(buildGradlePath, _APP_BUILD_GRADLE);
+
+							_testRelengAppProprties(dirPath);
 						}
 						else {
 							Assert.assertFalse(
@@ -1305,6 +1308,49 @@ public class ModulesStructureTest {
 			Assert.assertEquals(
 				"Redundant dependency detected in " + path,
 				activeGradleDependency, gradleDependency);
+		}
+	}
+
+	private void _testRelengAppProprties(Path dirPath) throws IOException {
+		if (_branchName.contains("master")) {
+			return;
+		}
+
+		Path appBndPath = dirPath.resolve("app.bnd");
+
+		if (!Files.exists(appBndPath)) {
+			return;
+		}
+
+		try (InputStream inputStream = Files.newInputStream(appBndPath)) {
+			Properties properties = new Properties();
+
+			properties.load(inputStream);
+
+			String liferayRelengBundle = properties.getProperty(
+				"Liferay-Releng-Bundle");
+
+			if (!GetterUtil.getBoolean(liferayRelengBundle)) {
+				return;
+			}
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(".releng/");
+
+			if (_isInPrivateModulesDir(dirPath)) {
+				sb.append("private/");
+			}
+
+			sb.append("apps/");
+			sb.append(String.valueOf(dirPath.getFileName()));
+			sb.append("/app.properties");
+
+			Path appPropertiesPath = _modulesDirPath.resolve(sb.toString());
+
+			Assert.assertTrue(
+				"Missing " + appPropertiesPath,
+				Files.exists(appPropertiesPath));
 		}
 	}
 

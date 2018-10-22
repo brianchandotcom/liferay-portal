@@ -191,6 +191,13 @@ public class FragmentEntryServiceUtil {
 		return getService().getTempFileNames(groupId, folderName);
 	}
 
+	public static com.liferay.fragment.model.FragmentEntry moveFragmentEntry(
+		long fragmentEntryId, long fragmentCollectionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .moveFragmentEntry(fragmentEntryId, fragmentCollectionId);
+	}
+
 	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
 		long fragmentEntryId, long previewFileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

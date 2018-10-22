@@ -438,6 +438,13 @@ public class FragmentEntryLocalServiceUtil {
 		return getService().getTempFileNames(userId, groupId, folderName);
 	}
 
+	public static com.liferay.fragment.model.FragmentEntry moveFragmentEntry(
+		long fragmentEntryId, long fragmentCollectionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .moveFragmentEntry(fragmentEntryId, fragmentCollectionId);
+	}
+
 	/**
 	* Updates the fragment entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

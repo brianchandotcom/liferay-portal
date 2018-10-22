@@ -356,6 +356,9 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 	public String[] getTempFileNames(long userId, long groupId,
 		String folderName) throws PortalException;
 
+	public FragmentEntry moveFragmentEntry(long fragmentEntryId,
+		long fragmentCollectionId) throws PortalException;
+
 	/**
 	* Updates the fragment entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

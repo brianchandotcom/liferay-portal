@@ -317,9 +317,11 @@
 	<command name="saveAndCloseConfig">
 		<execute macro="Button#clickSave" />
 
+		<execute function="SelectFrameTop" />
+
 		<execute function="Click" locator1="Icon#CLOSE" />
 
-		<execute function="SelectFrameTop" />
+		<execute function="WaitForElementNotPresent" locator1="IFrame#DIALOG" />
 	</command>
 
 	<command name="selectApplicationDecorator">

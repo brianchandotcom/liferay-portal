@@ -1,4 +1,4 @@
-import 'clay-icon';
+import 'clay-button';
 import 'clay-sticker';
 import 'clay-select';
 import dom from 'metal-dom';
@@ -61,6 +61,12 @@ class ManageCollaborators extends PortletBase {
 		this._sharingEntryIdsAndPermissions.set(sharingEntryId, sharingEntryPermissionKey);
 	}
 
+	/**
+	 * Gets the selected expiration date.
+	 *
+	 * @param {Event} event
+	 * @protected
+	 */
 	_handleChangeExpirationDate(event) {
 		let sharingEntryExpirationDate = event.target.value;
 		let sharingEntryId = event.target.getAttribute('name');
@@ -85,6 +91,12 @@ class ManageCollaborators extends PortletBase {
 		this._deleteSharingEntryIds.push(sharingEntryId);
 	}
 
+	/**
+	 * Toggles the class 'active'
+	 *
+	 * @param {Event} event
+	 * @protectec
+	 */
 	_handleHoverCollaborator(event) {
 		dom.toggleClasses(event.delegateTarget, 'active');
 	}
@@ -138,6 +150,23 @@ class ManageCollaborators extends PortletBase {
 			);
 
 		this._loadingResponse = true;
+	}
+
+	/**
+	 * Hides or show the block where the expiration
+	 * date can be edited.
+	 *
+	 * @param  {Event} event
+	 * @protected
+	 */
+	_hideShowExpirationDateBlock(event) {
+		let collaboratorId = event.currentTarget.dataset.userid;
+
+		let expirationElementBlock = dom.toElement('#expiration' + collaboratorId);
+
+		if (expirationElementBlock) {
+			dom.toggleClasses(expirationElementBlock, 'hide');
+		}
 	}
 
 	/**

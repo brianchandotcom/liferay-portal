@@ -13,6 +13,7 @@
 	{@param? _handleHoverCollaborator: any}
 	{@param? _handleCancelButtonClick: any}
 	{@param? _handleSaveButtonClick: any}
+	{@param? _hideShowExpirationDateBlock: any}
 	{@param? _loadingResponse: bool}
 	{@param? _tomorrowDate: string}
 
@@ -25,6 +26,7 @@
 							{param _handleChangeExpirationDate: $_handleChangeExpirationDate /}
 							{param _handleChangePermission: $_handleChangePermission /}
 							{param _handleDeleteCollaborator: $_handleDeleteCollaborator /}
+							{param _hideShowExpirationDateBlock: $_hideShowExpirationDateBlock /}
 							{param _loadingResponse: $_loadingResponse /}
 							{param _tomorrowDate: $_tomorrowDate /}
 							{param spritemap: $spritemap /}
@@ -79,6 +81,7 @@
 	{@param? _handleChangeExpirationDate: any}
 	{@param? _handleChangePermission: any}
 	{@param? _handleDeleteCollaborator: any}
+	{@param? _hideShowExpirationDateBlock: any}
 	{@param? _loadingResponse: bool}
 	{@param? _tomorrowDate: string}
 	{@param spritemap: string}
@@ -110,20 +113,27 @@
 					$user.sharingEntryExpirationDateTooltip ? $untilMsg : $expirationDateMsg /}
 
 				<span class="lfr-portal-tooltip" title="{$tooltipMessage}">
-					{call ClayIcon.render}
+					{call ClayButton.render}
+						{param events: [
+							'click': $_hideShowExpirationDateBlock
+						] /}
+						{param data: ['userid': $user.id] /}
+						{param elementClasses: 'text-muted' /}
+						{param icon: 'time' /}
+						{param monospaced: true /}
 						{param spritemap: $spritemap /}
-						{param symbol: 'time' /}
+						{param style: 'link' /}
 					{/call}
 				</span>
 			</div>
 
 			<div class="autofit-col">
 				{call ClaySelect.render}
-					{param name: $user.sharingEntryId /}
-					{param options: $user.sharingEntryPermissionDisplaySelectOptions /}
 					{param events: [
 						'change': $_handleChangePermission
 					] /}
+					{param name: $user.sharingEntryId /}
+					{param options: $user.sharingEntryPermissionDisplaySelectOptions /}
 				{/call}
 			</div>
 
@@ -142,10 +152,11 @@
 			</div>
 		</div>
 
-		<div class="autofit-float autofit-row autofit-row-center">
-			<div class="autofit-col autofit-col-expand">
-				<span>{msg desc=""}has-permission-until{/msg}</span>
-
+		<div class="autofit-float autofit-row autofit-row-center hide" id="expiration{$user.id}">
+			<div class="autofit-col">
+				<span>{msg desc=""}has-permissions-until{/msg}</span>
+			</div>
+			<div class="autofit-col">
 				<input
 					data-onchange="{$_handleChangeExpirationDate}"
 					min="{$_tomorrowDate}"
@@ -155,8 +166,9 @@
 					value="{$user.sharingEntryExpirationDate}"
 					{/if}
 				/>
-
-				<button class="btn btn-link text-muted">
+			</div>
+			<div class="autofit-col">
+				<button class="btn btn-link btn-sm text-muted">
 					{msg desc=""}cancel{/msg}
 				</button>
 			</div>

@@ -35,7 +35,7 @@ public interface PortalCapabilityLocator {
 		DocumentRepository documentRepository);
 
 	public DynamicCapability getDynamicCapability(
-		DocumentRepository documentRepository);
+		DocumentRepository documentRepository, String repositoryClassName);
 
 	public ProcessorCapability getProcessorCapability(
 		DocumentRepository documentRepository,

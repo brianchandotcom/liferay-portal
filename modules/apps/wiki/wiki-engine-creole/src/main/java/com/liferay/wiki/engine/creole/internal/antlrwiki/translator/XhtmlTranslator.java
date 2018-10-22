@@ -35,7 +35,9 @@ import com.liferay.wiki.engine.creole.internal.parser.visitor.XhtmlTranslationVi
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletURL;
 
@@ -64,11 +66,21 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 
 		String unformattedText = getUnformattedHeadingText(headingNode);
 
-		String markup = getHeadingMarkup(_page.getTitle(), unformattedText);
+		String markup = getHeadingMarkup(
+			_page.getTitle(), unformattedText, _headingMap);
 
 		append(" id=\"");
 		append(markup);
 		append("\">");
+
+		if (_headingMap.containsKey(unformattedText)) {
+			int count = _headingMap.get(unformattedText);
+
+			_headingMap.put(unformattedText, count + 1);
+		}
+		else {
+			_headingMap.put(unformattedText, 1);
+		}
 
 		traverse(headingNode.getChildASTNodes());
 
@@ -129,6 +141,8 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		TableOfContentsVisitor tableOfContentsVisitor =
 			new TableOfContentsVisitor();
 
+		Map<String, Integer> contentMap = new HashMap<>();
+
 		TreeNode<HeadingNode> tableOfContents = tableOfContentsVisitor.compose(
 			_rootWikiPageNode);
 
@@ -148,7 +162,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		append("<a class=\"toc-trigger\" href=\"javascript:;\">[-]</a></h4>");
 		append("<div class=\"toc-index\">");
 
-		appendTableOfContents(tableOfContents, 1);
+		appendTableOfContents(tableOfContents, contentMap, 1);
 
 		append("</div>");
 		append("</div>");
@@ -177,7 +191,8 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 	}
 
 	protected void appendTableOfContents(
-		TreeNode<HeadingNode> tableOfContents, int depth) {
+		TreeNode<HeadingNode> tableOfContents, Map<String, Integer> contentMap,
+		int depth) {
 
 		List<TreeNode<HeadingNode>> treeNodes = tableOfContents.getChildNodes();
 
@@ -211,12 +226,21 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 			}
 
 			append(StringPool.POUND);
-			append(getHeadingMarkup(_page.getTitle(), content));
+			append(getHeadingMarkup(_page.getTitle(), content, contentMap));
 			append("\">");
 			append(content);
 			append("</a>");
 
-			appendTableOfContents(treeNode, depth + 1);
+			if (contentMap.containsKey(content)) {
+				int count = contentMap.get(content);
+
+				contentMap.put(content, count + 1);
+			}
+			else {
+				contentMap.put(content, 1);
+			}
+
+			appendTableOfContents(treeNode, contentMap, depth + 1);
 
 			append("</li>");
 		}
@@ -264,13 +288,22 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		}
 	}
 
-	protected String getHeadingMarkup(String prefix, String text) {
-		StringBundler sb = new StringBundler(4);
+	protected String getHeadingMarkup(
+		String prefix, String text, Map<String, Integer> map) {
+
+		StringBundler sb = new StringBundler(6);
 
 		sb.append(_HEADING_ANCHOR_PREFIX);
 		sb.append(prefix);
 		sb.append(StringPool.DASH);
 		sb.append(text.trim());
+
+		if ((map != null) && map.containsKey(text)) {
+			int count = map.get(text);
+
+			sb.append(StringPool.DASH);
+			sb.append(count);
+		}
 
 		return StringUtil.replace(sb.toString(), CharPool.SPACE, CharPool.PLUS);
 	}
@@ -305,6 +338,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 
 	private String _attachmentURLPrefix;
 	private PortletURL _editPageURL;
+	private final Map<String, Integer> _headingMap = new HashMap<>();
 	private WikiPage _page;
 	private WikiPageNode _rootWikiPageNode;
 	private PortletURL _viewPageURL;

@@ -305,11 +305,7 @@ public class LPKGIndexValidator {
 		List<File> additionalJarFiles = new ArrayList<>(_jarFiles);
 
 		additionalJarFiles.add(
-			new File(PropsValues.LIFERAY_LIB_PORTAL_DIR, "slf4j-api.jar"));
-		additionalJarFiles.add(
 			new File(PropsValues.LIFERAY_LIB_PORTAL_DIR, "util-taglib.jar"));
-		additionalJarFiles.add(
-			new File(PropsValues.LIFERAY_LIB_PORTAL_DIR, "util-slf4j.jar"));
 
 		Configuration configuration = _configurationAdmin.getConfiguration(
 			"com.liferay.modules.compat.internal.configuration." +

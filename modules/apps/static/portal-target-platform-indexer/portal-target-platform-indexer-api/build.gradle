@@ -1,0 +1,14 @@
+task deployTool(type: Copy)
+
+deploy {
+	finalizedBy deployTool
+}
+
+deployTool {
+	from jar
+	into new File(liferay.liferayHome, "tools/portal-tools-target-platform-indexer-client")
+
+	rename {
+		"com.liferay.portal.target.platform.indexer.api.jar"
+	}
+}

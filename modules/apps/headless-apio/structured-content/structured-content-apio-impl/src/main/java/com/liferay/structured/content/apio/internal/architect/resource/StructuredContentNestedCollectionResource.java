@@ -448,43 +448,6 @@ public class StructuredContentNestedCollectionResource
 		return ListUtil.toList(assetTags, AssetTag::getName);
 	}
 
-	private List<StructuredContentField> _getStructuredContentFields(
-		JournalArticleWrapper journalArticleWrapper) {
-
-		return Try.fromFallible(
-			() ->
-				AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
-					JournalArticle.class)
-		).map(
-			assetRendererFactory -> assetRendererFactory.getAssetRenderer(
-				journalArticleWrapper,
-				AssetRendererFactory.TYPE_LATEST_APPROVED)
-		).map(
-			AssetRenderer::getDDMFormValuesReader
-		).map(
-			DDMFormValuesReader::getDDMFormValues
-		).map(
-			DDMFormValues::getDDMFormFieldValues
-		).map(
-			ddmFormFieldValueList -> {
-				Stream<DDMFormFieldValue> stream =
-					ddmFormFieldValueList.stream();
-
-				return stream.map(
-					ddmFormFieldValue -> new StructuredContentField(
-						ddmFormFieldValue,
-						journalArticleWrapper.getDDMStructure())
-				).collect(
-					Collectors.toList()
-				);
-			}
-		).map(
-			this::_getFormFieldValues
-		).orElse(
-			null
-		);
-	}
-
 	private Long _getJournalArticleStructureId(
 		JournalArticleWrapper journalArticleWrapper) {
 
@@ -657,6 +620,43 @@ public class StructuredContentNestedCollectionResource
 				!sortField.isAscending())
 		).collect(
 			Collectors.toList()
+		);
+	}
+
+	private List<StructuredContentField> _getStructuredContentFields(
+		JournalArticleWrapper journalArticleWrapper) {
+
+		return Try.fromFallible(
+			() ->
+				AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+					JournalArticle.class)
+		).map(
+			assetRendererFactory -> assetRendererFactory.getAssetRenderer(
+				journalArticleWrapper,
+				AssetRendererFactory.TYPE_LATEST_APPROVED)
+		).map(
+			AssetRenderer::getDDMFormValuesReader
+		).map(
+			DDMFormValuesReader::getDDMFormValues
+		).map(
+			DDMFormValues::getDDMFormFieldValues
+		).map(
+			ddmFormFieldValueList -> {
+				Stream<DDMFormFieldValue> stream =
+					ddmFormFieldValueList.stream();
+
+				return stream.map(
+					ddmFormFieldValue -> new StructuredContentField(
+						ddmFormFieldValue,
+						journalArticleWrapper.getDDMStructure())
+				).collect(
+					Collectors.toList()
+				);
+			}
+		).map(
+			this::_getFormFieldValues
+		).orElse(
+			null
 		);
 	}
 

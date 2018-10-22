@@ -15,7 +15,7 @@
 
 	.list-group-item {
 		border: 0;
-		padding: .5rem;
+		padding: .5rem 20px;
 
 		.expiration-icon {
 			visibility: hidden;
@@ -27,7 +27,7 @@
 	}
 
 	.modal-body.inline-scroller {
-		padding: 0 20px;
+		padding: 0;
 	}
 
 	.modal-footer {

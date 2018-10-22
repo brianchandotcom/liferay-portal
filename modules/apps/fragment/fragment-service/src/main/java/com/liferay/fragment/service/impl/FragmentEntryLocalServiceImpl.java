@@ -327,6 +327,19 @@ public class FragmentEntryLocalServiceImpl
 	}
 
 	@Override
+	public FragmentEntry moveFragmentEntry(
+			long fragmentEntryId, long fragmentCollectionId)
+		throws PortalException {
+
+		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
+			fragmentEntryId);
+
+		fragmentEntry.setFragmentCollectionId(fragmentCollectionId);
+
+		return fragmentEntryPersistence.update(fragmentEntry);
+	}
+
+	@Override
 	public FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, long previewFileEntryId)
 		throws PortalException {

@@ -917,7 +917,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 						if (_log.isInfoEnabled()) {
 							StringBundler sb = new StringBundler(7);
 
-							sb.append(zipFile);
+							sb.append(zipFile.getName());
 							sb.append(StringPool.COLON);
 							sb.append(zipEntry);
 							sb.append(" is overridden by ");

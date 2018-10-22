@@ -50,19 +50,6 @@ public class FilterParserImplTest {
 	}
 
 	@Test
-	public void testParseUnsupportedMethod() {
-		String filterString = "(contains(fieldExternal, 'b'))";
-
-		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
-			() -> _filterParserImpl.parse(filterString)
-		).isInstanceOf(
-			ExpressionVisitException.class
-		);
-
-		exception.hasMessageStartingWith("Method call: contains");
-	}
-
-	@Test
 	public void testParseWithEmptyFilter() {
 		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
 			() -> _filterParserImpl.parse("")

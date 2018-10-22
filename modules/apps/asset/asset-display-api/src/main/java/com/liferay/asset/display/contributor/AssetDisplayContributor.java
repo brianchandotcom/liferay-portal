@@ -57,7 +57,9 @@ public interface AssetDisplayContributor {
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				getClassName());
 
-		if (assetRendererFactory == null) {
+		if ((assetRendererFactory == null) ||
+			!assetRendererFactory.isSupportsClassTypes()) {
+
 			return Collections.emptyList();
 		}
 
@@ -89,7 +91,9 @@ public interface AssetDisplayContributor {
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				getClassName());
 
-		if (assetRendererFactory == null) {
+		if ((assetRendererFactory == null) ||
+			!assetRendererFactory.isSupportsClassTypes()) {
+
 			return Collections.emptyList();
 		}
 

@@ -88,7 +88,7 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 		DocumentRepository documentRepository) {
 
 		LiferayDynamicCapability liferayDynamicCapability =
-			new LiferayDynamicCapability(_bundleContext);
+			new LiferayDynamicCapability(_bundleContext, documentRepository);
 
 		_liferayDynamicCapabilities.add(liferayDynamicCapability);
 

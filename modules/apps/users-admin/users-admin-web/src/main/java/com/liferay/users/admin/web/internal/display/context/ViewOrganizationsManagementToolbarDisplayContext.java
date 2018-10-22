@@ -157,8 +157,8 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 			return PortletURLUtil.clone(_currentURL, _renderResponse);
 		}
 		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
 			}
 
 			return _renderResponse.createRenderURL();

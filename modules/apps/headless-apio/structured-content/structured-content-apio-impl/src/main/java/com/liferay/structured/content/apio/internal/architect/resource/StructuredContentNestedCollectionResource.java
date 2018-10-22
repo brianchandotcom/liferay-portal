@@ -680,7 +680,7 @@ public class StructuredContentNestedCollectionResource
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
-		Locale locale = themeDisplay.getLocale();
+		Locale locale = acceptLanguage.getPreferredLocale();
 
 		String content =
 			_journalArticleContentHelper.createJournalArticleContent(

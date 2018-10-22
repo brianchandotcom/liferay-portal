@@ -958,6 +958,6 @@ public class RepositoryWrapper implements Repository {
 		return _repository.verifyInheritableLock(folderId, lockUuid);
 	}
 
-	private Repository _repository;
+	private volatile Repository _repository;
 
 }

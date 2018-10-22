@@ -489,6 +489,6 @@ public class LocalRepositoryWrapper implements LocalRepository {
 			folderId, parentFolderId, name, description, serviceContext);
 	}
 
-	private LocalRepository _localRepository;
+	private volatile LocalRepository _localRepository;
 
 }

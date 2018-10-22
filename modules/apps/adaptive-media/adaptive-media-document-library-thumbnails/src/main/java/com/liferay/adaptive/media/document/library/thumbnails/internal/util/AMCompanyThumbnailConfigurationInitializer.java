@@ -126,19 +126,8 @@ public class AMCompanyThumbnailConfigurationInitializer {
 
 		String name = String.format("%s %dx%d", "Preview", maxWidth, maxHeight);
 
-		String uuid = _normalize(name);
-
-		Map<String, String> properties = new HashMap<>();
-
-		properties.put("max-height", String.valueOf(maxHeight));
-		properties.put("max-width", String.valueOf(maxWidth));
-
-		if (!_configurationExists(company.getCompanyId(), name, uuid)) {
-			_amImageConfigurationHelper.addAMImageConfigurationEntry(
-				company.getCompanyId(), name,
-				"This image resolution was automatically added.", uuid,
-				properties);
-		}
+		_createAMDocumentLibraryConfiguration(
+			company, name, maxHeight, maxWidth);
 	}
 
 	private void _createAMDocumentLibraryThumbnailConfiguration(
@@ -148,14 +137,22 @@ public class AMCompanyThumbnailConfigurationInitializer {
 		String name = String.format(
 			"%s %dx%d", "Thumbnail", maxWidth, maxHeight);
 
+		_createAMDocumentLibraryConfiguration(
+			company, name, maxHeight, maxWidth);
+	}
+
+	private void _createAMDocumentLibraryConfiguration(
+			Company company, String name, int maxHeight, int maxWidth)
+		throws AMImageConfigurationException, IOException {
+
 		String uuid = _normalize(name);
 
-		Map<String, String> properties = new HashMap<>();
-
-		properties.put("max-height", String.valueOf(maxHeight));
-		properties.put("max-width", String.valueOf(maxWidth));
-
 		if (!_configurationExists(company.getCompanyId(), name, uuid)) {
+			Map<String, String> properties = new HashMap<>();
+
+			properties.put("max-height", String.valueOf(maxHeight));
+			properties.put("max-width", String.valueOf(maxWidth));
+
 			_amImageConfigurationHelper.addAMImageConfigurationEntry(
 				company.getCompanyId(), name,
 				"This image resolution was automatically added.", uuid,

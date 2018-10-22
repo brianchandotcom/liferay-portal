@@ -425,7 +425,27 @@ AUI.add(
 					_onSaveEditSuccess: function(event) {
 						var instance = this;
 
+						var touchEnabled = A.UA.touchEnabled;
+
+						// LPS-82848
+
+						if (touchEnabled && this._scrollView) {
+							this._detachSwipeEvents();
+						}
+
 						instance.appendNewLink(event.data);
+
+						// LPS-82848
+
+						if (touchEnabled && this._scrollView) {
+							this._scrollView.destroy();
+
+							this._scrollView = new A.ScrollView(this.get('swipe'));
+							this._plugPaginator();
+							this._scrollView.render();
+
+							this._attachSwipeEvents();
+						}
 					},
 
 					_populateImageMetadata: function(image, metadata) {

@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -151,10 +152,7 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.2.0", "1.2.1",
-			new com.liferay.dynamic.data.mapping.internal.upgrade.v1_2_0.
-				UpgradeDDMFormAdminPortletId(),
-			new com.liferay.dynamic.data.mapping.internal.upgrade.v1_2_0.
-				UpgradeDDMFormPortletId());
+			new DummyUpgradeStep());
 
 		registry.register(
 			"1.2.1", "2.0.0",

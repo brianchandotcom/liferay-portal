@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.internal.upgrade.v1_2_0;
+package com.liferay.dynamic.data.mapping.form.web.internal.upgrade.v1_0_0;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;

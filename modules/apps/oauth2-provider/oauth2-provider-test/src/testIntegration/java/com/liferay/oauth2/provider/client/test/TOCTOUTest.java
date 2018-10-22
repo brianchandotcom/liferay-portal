@@ -63,7 +63,6 @@ public class TOCTOUTest extends BaseClientTestCase {
 	/**
 	 * OAUTH2-101 / OAUTH2-102
 	 */
-	@Ignore
 	@Test
 	public void testPreventTOCTOUWithNewScopes() {
 

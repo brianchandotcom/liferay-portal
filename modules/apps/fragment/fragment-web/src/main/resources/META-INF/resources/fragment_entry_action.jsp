@@ -62,6 +62,18 @@ FragmentEntry fragmentEntry = (FragmentEntry)row.getObject();
 			url="javascript:;"
 		/>
 
+		<portlet:renderURL var="moveFragmentEntryURL">
+			<portlet:param name="mvcRenderCommandName" value="/fragment/move_fragment_entry" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentEntry.getFragmentCollectionId()) %>" />
+			<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentEntry.getFragmentEntryId()) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			message="move"
+			url="<%= moveFragmentEntryURL %>"
+		/>
+
 		<%
 		Map<String, Object> data = new HashMap<>();
 

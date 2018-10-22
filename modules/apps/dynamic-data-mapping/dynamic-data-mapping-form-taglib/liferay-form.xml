@@ -85,12 +85,14 @@
 				<required>false</required>
 			</attribute>
 			<attribute>
+				<defaultValue>true</defaultValue>
 				<name>showFormBasicInfo</name>
 				<required>false</required>
 				<rtexprvalue>true</rtexprvalue>
 				<type>boolean</type>
 			</attribute>
 			<attribute>
+				<defaultValue>true</defaultValue>
 				<name>showSubmitButton</name>
 				<required>false</required>
 				<rtexprvalue>true</rtexprvalue>

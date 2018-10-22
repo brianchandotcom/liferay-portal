@@ -1,5 +1,8 @@
 dependencies {
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testCompile group: "easyconf", name: "easyconf", version: "0.9.5"
+	testCompile group: "javax.portlet", name: "portlet-api", version: "3.0.0"
 	testCompile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	testCompile project(":apps:blogs:blogs-api")
 	testCompile project(":apps:blogs:blogs-service")
@@ -7,6 +10,7 @@ dependencies {
 	testCompile project(":apps:blogs:blogs-web")
 	testCompile project(":core:petra:petra-lang")
 	testCompile project(":core:petra:petra-string")
+	testCompile project(":core:registry-api")
 
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

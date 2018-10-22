@@ -113,7 +113,7 @@ public class PermissionsPortletConfigurationIcon
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		String rootPortletId = portletDisplay.getRootPortletId();
+		String portletDisplayId = portletDisplay.getId();
 
 		if (Validator.isNotNull(portletDisplay.getPortletResource())) {
 			String portletResource = portletDisplay.getPortletResource();
@@ -121,7 +121,7 @@ public class PermissionsPortletConfigurationIcon
 			Portlet portlet = _portletLocalService.getPortletById(
 				themeDisplay.getCompanyId(), portletResource);
 
-			rootPortletId = portlet.getRootPortletId();
+			portletDisplayId = portlet.getRootPortletId();
 		}
 
 		boolean showPermissionsIcon = false;
@@ -134,7 +134,7 @@ public class PermissionsPortletConfigurationIcon
 			try {
 				if (PortletPermissionUtil.contains(
 						themeDisplay.getPermissionChecker(), layout,
-						rootPortletId, ActionKeys.PERMISSIONS)) {
+						portletDisplayId, ActionKeys.PERMISSIONS)) {
 
 					showPermissionsIcon = true;
 				}

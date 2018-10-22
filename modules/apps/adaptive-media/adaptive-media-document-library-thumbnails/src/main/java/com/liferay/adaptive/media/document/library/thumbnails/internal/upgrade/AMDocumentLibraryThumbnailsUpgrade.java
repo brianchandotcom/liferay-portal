@@ -15,7 +15,6 @@
 package com.liferay.adaptive.media.document.library.thumbnails.internal.upgrade;
 
 import com.liferay.adaptive.media.document.library.thumbnails.internal.upgrade.v1_0_0.UpgradeDocumentLibraryThumbnailsConfiguration;
-import com.liferay.adaptive.media.document.library.thumbnails.internal.upgrade.v1_0_1.UpgradeDocumentLibraryThumbnailsPreviewConfiguration;
 import com.liferay.adaptive.media.document.library.thumbnails.internal.util.AMCompanyThumbnailConfigurationInitializer;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -39,10 +38,13 @@ public class AMDocumentLibraryThumbnailsUpgrade
 				_amCompanyThumbnailConfigurationInitializer,
 				_companyLocalService));
 
+		// See LPS-86356
+
 		registry.register(
 			"1.0.0", "1.0.1",
-			new UpgradeDocumentLibraryThumbnailsPreviewConfiguration(
-				_amImageConfigurationHelper, _companyLocalService));
+			new UpgradeDocumentLibraryThumbnailsConfiguration(
+				_amCompanyThumbnailConfigurationInitializer,
+				_companyLocalService));
 	}
 
 	@Reference(unbind = "-")

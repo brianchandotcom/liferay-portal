@@ -15,6 +15,7 @@
 package com.liferay.adaptive.media.document.library.thumbnails.internal.util;
 
 import com.liferay.adaptive.media.exception.AMImageConfigurationException;
+import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -23,10 +24,13 @@ import com.liferay.portal.util.PrefsPropsUtil;
 
 import java.io.IOException;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -95,21 +99,46 @@ public class AMCompanyThumbnailConfigurationInitializer {
 		}
 	}
 
+	private boolean _configurationExists(
+		long companyId, String name, String uuid) {
+
+		Collection<AMImageConfigurationEntry> amImageConfigurationEntries =
+			_amImageConfigurationHelper.getAMImageConfigurationEntries(
+				companyId);
+
+		Stream<AMImageConfigurationEntry> amImageConfigurationEntryStream =
+			amImageConfigurationEntries.stream();
+
+		Optional<AMImageConfigurationEntry>
+			duplicateNameAMImageConfigurationEntryOptional =
+				amImageConfigurationEntryStream.filter(
+					amImageConfigurationEntry ->
+						name.equals(amImageConfigurationEntry.getName()) ||
+						uuid.equals(amImageConfigurationEntry.getUUID())
+				).findFirst();
+
+		return duplicateNameAMImageConfigurationEntryOptional.isPresent();
+	}
+
 	private void _createAMDocumentLibraryPreviewConfiguration(
 			Company company, int maxHeight, int maxWidth)
 		throws AMImageConfigurationException, IOException {
 
 		String name = String.format("%s %dx%d", "Preview", maxWidth, maxHeight);
 
+		String uuid = _normalize(name);
+
 		Map<String, String> properties = new HashMap<>();
 
 		properties.put("max-height", String.valueOf(maxHeight));
 		properties.put("max-width", String.valueOf(maxWidth));
 
-		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			company.getCompanyId(), name,
-			"This image resolution was automatically added.", _normalize(name),
-			properties);
+		if (!_configurationExists(company.getCompanyId(), name, uuid)) {
+			_amImageConfigurationHelper.addAMImageConfigurationEntry(
+				company.getCompanyId(), name,
+				"This image resolution was automatically added.", uuid,
+				properties);
+		}
 	}
 
 	private void _createAMDocumentLibraryThumbnailConfiguration(

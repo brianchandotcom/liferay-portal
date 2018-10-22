@@ -9,7 +9,7 @@ copyGradleTestDependencies {
 }
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "2.2.3"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "2.2.4"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi25], dir: new File(rootProject.buildDir, "gradle-2.5"))
 }

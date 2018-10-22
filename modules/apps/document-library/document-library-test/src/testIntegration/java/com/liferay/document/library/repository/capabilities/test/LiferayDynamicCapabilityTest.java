@@ -42,6 +42,8 @@ import com.liferay.registry.ServiceRegistration;
 
 import java.io.File;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
@@ -187,6 +189,38 @@ public class LiferayDynamicCapabilityTest {
 	}
 
 	@Test
+	public void testDoesNotCallCapabilityLocalRepositoryEventListenersForACapabilityWithADifferentRepositoryType()
+		throws Exception {
+
+		AtomicInteger atomicInteger = new AtomicInteger(0);
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("repository.type", "unknown");
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceRegistration<Capability> capabilityServiceRegistration =
+			registry.registerService(
+				Capability.class,
+				(TestRepositoryEventAwareCapability)repositoryEventRegistry ->
+					repositoryEventRegistry.registerRepositoryEventListener(
+						RepositoryEventType.Add.class, FileEntry.class,
+						fileEntry -> atomicInteger.incrementAndGet()),
+				properties);
+
+		try {
+			_addRandomFileEntry(
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+			Assert.assertEquals(0, atomicInteger.get());
+		}
+		finally {
+			capabilityServiceRegistration.unregister();
+		}
+	}
+
+	@Test
 	public void testDoesNotCallCapabilityLocalRepositoryEventListenersWhenTheCapabilityIsGone()
 		throws Exception {
 
@@ -208,6 +242,64 @@ public class LiferayDynamicCapabilityTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(0, atomicInteger.get());
+	}
+
+	@Test
+	public void testDoesNotCallCapabilityLocalRepositoryWrapperForACapabilityWithADifferentRepositoryType()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		FileEntry fileEntry1 = _addRandomFileEntry(serviceContext);
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("repository.type", "unknown");
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceRegistration<Capability> capabilityServiceRegistration =
+			registry.registerService(
+				Capability.class,
+				new TestRepositoryWrapperAwareCapability() {
+
+					@Override
+					public LocalRepository wrapLocalRepository(
+						LocalRepository localRepository) {
+
+						return new LocalRepositoryWrapper(localRepository) {
+
+							@Override
+							public FileEntry addFileEntry(
+								long userId, long folderId,
+								String sourceFileName, String mimeType,
+								String title, String description,
+								String changeLog, File file,
+								ServiceContext serviceContext) {
+
+								return fileEntry1;
+							}
+
+						};
+					}
+
+					@Override
+					public Repository wrapRepository(Repository repository) {
+						return repository;
+					}
+
+				},
+				properties);
+
+		try {
+			FileEntry fileEntry2 = _addRandomFileEntry(serviceContext);
+
+			Assert.assertNotSame(fileEntry1, fileEntry2);
+		}
+		finally {
+			capabilityServiceRegistration.unregister();
+		}
 	}
 
 	private FileEntry _addRandomFileEntry(ServiceContext serviceContext)

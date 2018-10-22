@@ -28,6 +28,10 @@
 		</layout>
 	</appender>
 
+	<category name="aQute.bnd.osgi">
+		<priority value="WARN" />
+	</category>
+
 	<category name="com.browseengine.bobo">
 		<priority value="ERROR" />
 	</category>

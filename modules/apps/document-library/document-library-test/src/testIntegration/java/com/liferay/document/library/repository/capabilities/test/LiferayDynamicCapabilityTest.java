@@ -196,7 +196,7 @@ public class LiferayDynamicCapabilityTest {
 
 		Map<String, Object> properties = new HashMap<>();
 
-		properties.put("repository.type", "unknown");
+		properties.put("repository.class.name", "unknown");
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -255,7 +255,7 @@ public class LiferayDynamicCapabilityTest {
 
 		Map<String, Object> properties = new HashMap<>();
 
-		properties.put("repository.type", "unknown");
+		properties.put("repository.class.name", "unknown");
 
 		Registry registry = RegistryUtil.getRegistry();
 

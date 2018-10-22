@@ -16,7 +16,6 @@ package com.liferay.document.library.internal.repository.capabilities;
 
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
-import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
@@ -48,10 +47,7 @@ public class LiferayDynamicCapability
 	implements DynamicCapability, RepositoryEventAware, RepositoryWrapperAware {
 
 	public LiferayDynamicCapability(
-		BundleContext bundleContext,
-		DocumentRepository originalDocumentRepository) {
-
-		_repositoryType = originalDocumentRepository.getRepositoryType();
+		BundleContext bundleContext, String repositoryClassName) {
 
 		_serviceTracker = ServiceTrackerListFactory.open(
 			bundleContext, Capability.class, null,
@@ -61,11 +57,14 @@ public class LiferayDynamicCapability
 				public Capability addingService(
 					ServiceReference<Capability> serviceReference) {
 
-					String repositoryType =
-						(String)serviceReference.getProperty("repository.type");
+					String capabilityRepositoryClassName =
+						(String)serviceReference.getProperty(
+							"repository.class.name");
 
-					if ((repositoryType == null) ||
-						Objects.equals(repositoryType, _repositoryType)) {
+					if ((capabilityRepositoryClassName == null) ||
+						Objects.equals(
+							repositoryClassName,
+							capabilityRepositoryClassName)) {
 
 						Capability capability = bundleContext.getService(
 							serviceReference);
@@ -236,7 +235,6 @@ public class LiferayDynamicCapability
 	private LocalRepository _originalLocalRepository;
 	private Repository _originalRepository;
 	private RepositoryEventRegistry _repositoryEventRegistry;
-	private final String _repositoryType;
 	private final ServiceTrackerList<Capability, Capability> _serviceTracker;
 
 	private static class CapabilityRegistration {

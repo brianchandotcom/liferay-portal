@@ -85,10 +85,10 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 
 	@Override
 	public DynamicCapability getDynamicCapability(
-		DocumentRepository documentRepository) {
+		DocumentRepository documentRepository, String repositoryClassName) {
 
 		LiferayDynamicCapability liferayDynamicCapability =
-			new LiferayDynamicCapability(_bundleContext, documentRepository);
+			new LiferayDynamicCapability(_bundleContext, repositoryClassName);
 
 		_liferayDynamicCapabilities.add(liferayDynamicCapability);
 

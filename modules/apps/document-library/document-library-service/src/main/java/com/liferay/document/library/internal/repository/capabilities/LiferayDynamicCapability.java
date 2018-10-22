@@ -53,7 +53,7 @@ public class LiferayDynamicCapability
 
 		_repositoryType = originalDocumentRepository.getRepositoryType();
 
-		_capabilities = ServiceTrackerListFactory.open(
+		_serviceTracker = ServiceTrackerListFactory.open(
 			bundleContext, Capability.class, null,
 			new ServiceTrackerCustomizer<Capability, Capability>() {
 
@@ -61,25 +61,28 @@ public class LiferayDynamicCapability
 				public Capability addingService(
 					ServiceReference<Capability> serviceReference) {
 
-					Capability capability = bundleContext.getService(
-						serviceReference);
+					String repositoryType =
+						(String)serviceReference.getProperty("repository.type");
 
-					String repositoryType = _getRepositoryType(
-						serviceReference);
+					if ((repositoryType == null) ||
+						Objects.equals(repositoryType, _repositoryType)) {
 
-					if (capability instanceof RepositoryEventAware) {
-						_registerRepositoryEventListener(
-							capability, repositoryType);
+						Capability capability = bundleContext.getService(
+							serviceReference);
+
+						if (capability instanceof RepositoryEventAware) {
+							_registerRepositoryEventListeners(
+								(RepositoryEventAware & Capability)capability);
+						}
+
+						_capabilities.add(capability);
+
+						_updateRepositoryWrappers();
+
+						return capability;
 					}
 
-					Set<Capability> capabilities = _getCapabilities(
-						repositoryType);
-
-					capabilities.add(capability);
-
-					_updateRepositoryWrappers();
-
-					return capability;
+					return null;
 				}
 
 				@Override
@@ -97,30 +100,9 @@ public class LiferayDynamicCapability
 					ServiceReference<Capability> serviceReference,
 					Capability capability) {
 
-					Set<Capability> capabilities = _getCapabilities(
-						_getRepositoryType(serviceReference));
+					_unregisterRepositoryEventListeners(capability);
 
-					capabilities.remove(capability);
-
-					CapabilityRegistration capabilityRegistration =
-						_capabilityRegistrations.remove(capability);
-
-					if (capabilityRegistration != null) {
-						for (RepositoryEventListenerRegistration
-								repositoryEventListenerRegistration :
-									capabilityRegistration.
-										_repositoryEventListenerRegistrations) {
-
-							_repositoryEventRegistry.
-								unregisterRepositoryEventListener(
-									repositoryEventListenerRegistration.
-										getRepositoryEventTypeClass(),
-									repositoryEventListenerRegistration.
-										getModelClass(),
-									repositoryEventListenerRegistration.
-										getRepositoryEventListener());
-						}
-					}
+					_capabilities.remove(capability);
 
 					_updateRepositoryWrappers();
 				}
@@ -129,7 +111,8 @@ public class LiferayDynamicCapability
 	}
 
 	public void clear() {
-		_capabilities.close();
+		_serviceTracker.close();
+		_capabilities.clear();
 	}
 
 	@Override
@@ -163,50 +146,36 @@ public class LiferayDynamicCapability
 		return _liferayDynamicCapabilityRepositoryWrapper;
 	}
 
-	private Set<Capability> _getCapabilities(
-		DocumentRepository documentRepository) {
+	private <T extends Capability & RepositoryEventAware> void
+		_registerRepositoryEventListeners(T capability) {
 
-		Set<Capability> capabilities = new HashSet<>();
+		CapabilityRegistration capabilityRegistration =
+			new CapabilityRegistration();
 
-		capabilities.addAll(
-			_getCapabilities(documentRepository.getRepositoryType()));
+		_capabilityRegistrations.put(capability, capabilityRegistration);
 
-		if (documentRepository.getRepositoryType() != null) {
-			capabilities.addAll(_getCapabilities((String)null));
-		}
-
-		return capabilities;
+		capability.registerRepositoryEventListeners(
+			new DynamicCapabilityRepositoryEventRegistryWrapper(
+				capabilityRegistration, _repositoryEventRegistry));
 	}
 
-	private Set<Capability> _getCapabilities(String repositoryType) {
-		return _capabilitiesMap.computeIfAbsent(
-			repositoryType != null ? repositoryType : "*",
-			key -> new HashSet<>());
-	}
+	private void _unregisterRepositoryEventListeners(Capability capability) {
+		CapabilityRegistration capabilityRegistration =
+			_capabilityRegistrations.remove(capability);
 
-	private String _getRepositoryType(
-		ServiceReference<Capability> serviceReference) {
+		if (capabilityRegistration != null) {
+			for (RepositoryEventListenerRegistration
+					repositoryEventListenerRegistration :
+						capabilityRegistration.
+							_repositoryEventListenerRegistrations) {
 
-		return (String)serviceReference.getProperty("repository.type");
-	}
-
-	private void _registerRepositoryEventListener(
-		Capability capability, String repositoryType) {
-
-		if ((repositoryType == null) ||
-			Objects.equals(repositoryType, _repositoryType)) {
-
-			CapabilityRegistration capabilityRegistration =
-				new CapabilityRegistration();
-
-			_capabilityRegistrations.put(capability, capabilityRegistration);
-
-			RepositoryEventAware repositoryEventAware =
-				(RepositoryEventAware)capability;
-
-			repositoryEventAware.registerRepositoryEventListeners(
-				new DynamicCapabilityRepositoryEventRegistryWrapper(
-					capabilityRegistration, _repositoryEventRegistry));
+				_repositoryEventRegistry.unregisterRepositoryEventListener(
+					repositoryEventListenerRegistration.
+						getRepositoryEventTypeClass(),
+					repositoryEventListenerRegistration.getModelClass(),
+					repositoryEventListenerRegistration.
+						getRepositoryEventListener());
+			}
 		}
 	}
 
@@ -227,7 +196,7 @@ public class LiferayDynamicCapability
 
 		LocalRepository wrappedLocalRepository = localRepository;
 
-		for (Capability capability : _getCapabilities(localRepository)) {
+		for (Capability capability : _capabilities) {
 			if (capability instanceof RepositoryWrapperAware) {
 				RepositoryWrapperAware repositoryWrapperAware =
 					(RepositoryWrapperAware)capability;
@@ -244,7 +213,7 @@ public class LiferayDynamicCapability
 	private Repository _wrapRepository(Repository repository) {
 		Repository wrappedRepository = repository;
 
-		for (Capability capability : _getCapabilities(repository)) {
+		for (Capability capability : _capabilities) {
 			if (capability instanceof RepositoryWrapperAware) {
 				RepositoryWrapperAware repositoryWrapperAware =
 					(RepositoryWrapperAware)capability;
@@ -257,9 +226,7 @@ public class LiferayDynamicCapability
 		return wrappedRepository;
 	}
 
-	private final ServiceTrackerList<Capability, Capability> _capabilities;
-	private final Map<String, Set<Capability>> _capabilitiesMap =
-		new HashMap<>();
+	private Set<Capability> _capabilities = new HashSet<>();
 	private final Map<Capability, CapabilityRegistration>
 		_capabilityRegistrations = new HashMap<>();
 	private LiferayDynamicCapabilityLocalRepositoryWrapper
@@ -270,6 +237,7 @@ public class LiferayDynamicCapability
 	private Repository _originalRepository;
 	private RepositoryEventRegistry _repositoryEventRegistry;
 	private final String _repositoryType;
+	private final ServiceTrackerList<Capability, Capability> _serviceTracker;
 
 	private static class CapabilityRegistration {
 

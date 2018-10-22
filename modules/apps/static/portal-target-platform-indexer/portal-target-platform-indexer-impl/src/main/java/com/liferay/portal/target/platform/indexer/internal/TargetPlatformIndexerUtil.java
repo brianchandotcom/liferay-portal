@@ -94,15 +94,18 @@ public class TargetPlatformIndexerUtil {
 			targetPlatformIndexer.index(outputStream);
 		}
 		finally {
-			framework.stop();
+			if (framework != null) {
+				framework.stop();
 
-			FrameworkEvent frameworkEvent = framework.waitForStop(
-				stopWaitTimeout);
+				FrameworkEvent frameworkEvent = framework.waitForStop(
+					stopWaitTimeout);
 
-			if (frameworkEvent.getType() == FrameworkEvent.WAIT_TIMEDOUT) {
-				throw new Exception(
-					"OSGi framework event " + frameworkEvent +
-						" triggered after a " + stopWaitTimeout + "ms timeout");
+				if (frameworkEvent.getType() == FrameworkEvent.WAIT_TIMEDOUT) {
+					throw new Exception(
+						"OSGi framework event " + frameworkEvent +
+							" triggered after a " + stopWaitTimeout +
+								"ms timeout");
+				}
 			}
 
 			PathUtil.deltree(tempPath);

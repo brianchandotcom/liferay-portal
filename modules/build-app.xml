@@ -4,6 +4,8 @@
 <project name="build-app">
 	<extension-point name="release-tool-dependencies" />
 
+	<import file="build-common.xml" />
+
 	<property location="${modules.dir}/../bundles" name="liferay.home" />
 	<property location="${modules.dir}/.." name="project.dir" />
 

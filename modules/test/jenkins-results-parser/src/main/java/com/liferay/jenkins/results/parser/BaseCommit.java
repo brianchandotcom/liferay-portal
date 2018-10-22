@@ -63,7 +63,7 @@ public abstract class BaseCommit implements Commit {
 
 	@Override
 	public int hashCode() {
-		JSONObject jsonObject = _toJSONObject();
+		JSONObject jsonObject = toJSONObject();
 
 		String json = jsonObject.toString();
 
@@ -100,6 +100,16 @@ public abstract class BaseCommit implements Commit {
 		}
 	}
 
+	@Override
+	public JSONObject toJSONObject() {
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("message", _message);
+		jsonObject.put("sha", _sha);
+
+		return jsonObject;
+	}
+
 	protected BaseCommit(
 		String gitHubUserName, String message, String gitRepositoryName,
 		String sha, Type type) {
@@ -117,15 +127,6 @@ public abstract class BaseCommit implements Commit {
 	}
 
 	protected GitWorkingDirectory gitWorkingDirectory;
-
-	private JSONObject _toJSONObject() {
-		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put("message", _message);
-		jsonObject.put("sha", _sha);
-
-		return jsonObject;
-	}
 
 	private final String _gitHubUserName;
 	private final String _gitRepositoryName;

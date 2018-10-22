@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -35,6 +37,8 @@ public interface Commit {
 	public void setStatus(
 		Commit.Status status, String context, String description,
 		String targetURL);
+
+	public JSONObject toJSONObject();
 
 	public enum Status {
 

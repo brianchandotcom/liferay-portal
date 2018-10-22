@@ -108,12 +108,7 @@ public abstract class BaseWorkspaceGitRepository
 		List<Commit> commits = gitWorkingDirectory.log(_MAX_COMMIT_HISTORY);
 
 		for (Commit commit : commits) {
-			JSONObject commitJSONObject = new JSONObject();
-
-			commitJSONObject.put("message", commit.getMessage());
-			commitJSONObject.put("sha", commit.getSHA());
-
-			commitsJSONArray.put(commitJSONObject);
+			commitsJSONArray.put(commit.toJSONObject());
 
 			String sha = commit.getSHA();
 

@@ -32,4 +32,7 @@ Import-Package:\
 	org.osgi.util.*,\
 	\
 	org.xmlpull.v1.*
--includeresource: @biz.aQute.bndlib-*.jar!/aQute/bnd/build/model/osgi-core/*
+-includeresource:\
+	@biz.aQute.bndlib-*.jar!/aQute/bnd/build/model/osgi-core/*,\
+	@slf4j-api-*.jar,\
+	@slf4j-simple-*.jar

@@ -82,6 +82,22 @@ public class FragmentEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.fragment.model.FragmentEntrySoap moveFragmentEntry(
+		long fragmentCollectionId, long fragmentEntryId)
+		throws RemoteException {
+		try {
+			com.liferay.fragment.model.FragmentEntry returnValue = FragmentEntryServiceUtil.moveFragmentEntry(fragmentCollectionId,
+					fragmentEntryId);
+
+			return com.liferay.fragment.model.FragmentEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.fragment.model.FragmentEntrySoap addFragmentEntry(
 		long groupId, long fragmentCollectionId, String fragmentEntryKey,
 		String name, int status,

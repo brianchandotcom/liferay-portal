@@ -20,16 +20,12 @@ import com.liferay.dynamic.data.mapping.form.taglib.internal.security.permission
 import com.liferay.dynamic.data.mapping.form.taglib.servlet.taglib.base.BaseDDMFormRendererTag;
 import com.liferay.dynamic.data.mapping.form.taglib.servlet.taglib.util.DDMFormTaglibUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.petra.string.StringPool;
@@ -53,13 +49,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.portlet.RenderResponse;
-import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -68,26 +62,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author Rafael Praxedes
  */
 public class DDMFormRendererTag extends BaseDDMFormRendererTag {
-
-	protected DDMFormField createCaptchaField() {
-		DDMFormField captchaDDMFormField = new DDMFormField(
-			_DDM_FORM_FIELD_NAME_CAPTCHA, "captcha");
-
-		captchaDDMFormField.setDataType("string");
-		captchaDDMFormField.setProperty("url", createCaptchaResourceURL());
-
-		return captchaDDMFormField;
-	}
-
-	protected String createCaptchaResourceURL() {
-		RenderResponse renderResponse = getRenderResponse();
-
-		ResourceURL resourceURL = renderResponse.createResourceURL();
-
-		resourceURL.setResourceID("captcha");
-
-		return resourceURL.toString();
-	}
 
 	protected DDMFormRenderingContext createDDMFormRenderingContext(
 		DDMForm ddmForm) {
@@ -119,19 +93,6 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 		return ddmFormRenderingContext;
 	}
 
-	protected DDMFormLayoutRow createFullColumnDDMFormLayoutRow(
-		String ddmFormFieldName) {
-
-		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
-
-		DDMFormLayoutColumn ddmFormLayoutColumn = new DDMFormLayoutColumn(
-			DDMFormLayoutColumn.FULL, ddmFormFieldName);
-
-		ddmFormLayoutRow.addDDMFormLayoutColumn(ddmFormLayoutColumn);
-
-		return ddmFormLayoutRow;
-	}
-
 	protected DDMForm getDDMForm() {
 		DDMForm ddmForm = null;
 
@@ -151,10 +112,6 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 				latestDDMFormInstanceVersion.getStructureVersion();
 
 			ddmForm = ddmStructureVersion.getDDMForm();
-
-			if (isCaptchaRequired(ddmFormInstance)) {
-				ddmForm.addDDMFormField(createCaptchaField());
-			}
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
@@ -239,17 +196,6 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 				latestDDMFormInstanceVersion.getStructureVersion();
 
 			ddmFormLayout = ddmStructureVersion.getDDMFormLayout();
-
-			if (isCaptchaRequired(ddmFormInstance)) {
-				DDMFormLayoutPage lastDDMFormLayoutPage =
-					getLastDDMFormLayoutPage(ddmFormLayout);
-
-				DDMFormLayoutRow ddmFormLayoutRow =
-					createFullColumnDDMFormLayoutRow(
-						_DDM_FORM_FIELD_NAME_CAPTCHA);
-
-				lastDDMFormLayoutPage.addDDMFormLayoutRow(ddmFormLayoutRow);
-			}
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
@@ -258,15 +204,6 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 		}
 
 		return ddmFormLayout;
-	}
-
-	protected DDMFormLayoutPage getLastDDMFormLayoutPage(
-		DDMFormLayout ddmFormLayout) {
-
-		List<DDMFormLayoutPage> ddmFormLayoutPages =
-			ddmFormLayout.getDDMFormLayoutPages();
-
-		return ddmFormLayoutPages.get(ddmFormLayoutPages.size() - 1);
 	}
 
 	protected Locale getLocale(HttpServletRequest request, DDMForm ddmForm) {
@@ -409,24 +346,6 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 			ddmFormInstance.getFormInstanceId());
 	}
 
-	protected boolean isCaptchaRequired(DDMFormInstance ddmFormInstance) {
-		boolean captchaRequired = false;
-
-		try {
-			DDMFormInstanceSettings ddmFormInstanceSettings =
-				ddmFormInstance.getSettingsModel();
-
-			captchaRequired = ddmFormInstanceSettings.requireCaptcha();
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-		}
-
-		return captchaRequired;
-	}
-
 	protected boolean isFormAvailable() {
 		DDMFormInstance ddmFormInstance = getDDMFormInstance();
 
@@ -546,8 +465,6 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 			ddmFormRenderingContext.setShowSubmitButton(false);
 		}
 	}
-
-	private static final String _DDM_FORM_FIELD_NAME_CAPTCHA = "_CAPTCHA_";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormRendererTag.class);

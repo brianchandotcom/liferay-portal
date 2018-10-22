@@ -48,7 +48,6 @@ if (ddmFormInstance != null) {
 					<aui:input name="languageId" type="hidden" value="<%= languageId %>" />
 					<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
-					<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
 					<liferay-ui:error exception="<%= DDMFormRenderingException.class %>" message="unable-to-render-the-selected-form" />
 					<liferay-ui:error exception="<%= DDMFormValuesValidationException.class %>" message="field-validation-failed" />
 
@@ -100,7 +99,7 @@ if (ddmFormInstance != null) {
 						</div>
 					</c:if>
 
-					<div class="container-fluid-1280 ddm-form-builder-app">s
+					<div class="container-fluid-1280 ddm-form-builder-app">
 						<%= ddmFormHTML %>
 
 						<aui:input name="empty" type="hidden" value="" />

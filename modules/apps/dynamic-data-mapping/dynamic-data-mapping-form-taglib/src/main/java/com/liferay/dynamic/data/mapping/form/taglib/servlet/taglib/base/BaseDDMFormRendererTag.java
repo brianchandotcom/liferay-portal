@@ -106,8 +106,8 @@ public abstract class BaseDDMFormRendererTag extends com.liferay.taglib.util.Inc
 		_ddmFormInstanceRecordVersionId = null;
 		_ddmFormInstanceVersionId = null;
 		_namespace = null;
-		_showFormBasicInfo = false;
-		_showSubmitButton = false;
+		_showFormBasicInfo = true;
+		_showSubmitButton = true;
 	}
 
 	@Override
@@ -144,7 +144,7 @@ public abstract class BaseDDMFormRendererTag extends com.liferay.taglib.util.Inc
 	private java.lang.Long _ddmFormInstanceRecordVersionId = null;
 	private java.lang.Long _ddmFormInstanceVersionId = null;
 	private java.lang.String _namespace = null;
-	private boolean _showFormBasicInfo = false;
-	private boolean _showSubmitButton = false;
+	private boolean _showFormBasicInfo = true;
+	private boolean _showSubmitButton = true;
 
 }

@@ -61,9 +61,6 @@ FragmentEntry fragmentEntry = (FragmentEntry)row.getObject();
 			message="rename"
 			url="javascript:;"
 		/>
-	</c:if>
-
-	<c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
 
 		<%
 		Map<String, Object> data = new HashMap<>();

@@ -17,14 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 long fragmentCollectionId = ParamUtil.getLong(request, "fragmentCollectionId");
 
 FragmentCollection fragmentCollection = FragmentCollectionLocalServiceUtil.fetchFragmentCollection(fragmentCollectionId);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(fragmentDisplayContext.getRedirect());
 
 renderResponse.setTitle((fragmentCollection != null) ? fragmentCollection.getName() : LanguageUtil.get(request, "add-collection"));
 %>
@@ -37,7 +35,7 @@ renderResponse.setTitle((fragmentCollection != null) ? fragmentCollection.getNam
 	action="<%= editFragmentCollectionURL %>"
 	name="fm"
 >
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= fragmentDisplayContext.getRedirect() %>" />
 	<aui:input name="fragmentCollectionId" type="hidden" value="<%= fragmentCollectionId %>" />
 
 	<liferay-frontend:edit-form-body>
@@ -58,6 +56,6 @@ renderResponse.setTitle((fragmentCollection != null) ? fragmentCollection.getNam
 	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button href="<%= fragmentDisplayContext.getRedirect() %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>

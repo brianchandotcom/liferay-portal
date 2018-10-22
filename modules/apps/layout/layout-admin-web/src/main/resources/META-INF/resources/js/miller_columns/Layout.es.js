@@ -539,6 +539,25 @@ class Layout extends Component {
 				priority
 			)
 				.then(
+					response => {
+						let nextPromise = response;
+
+						if (this._draggingItemParentPlid !== '0') {
+							nextPromise = this._getItemChildren(this._draggingItemParentPlid).then(
+								response => {
+									if (response.children && response.children.length === 0) {
+										layoutColumns = this._removeHasChildArrow(
+											layoutColumns,
+											this._draggingItemParentPlid
+										);
+									}
+								}
+							);
+						}
+
+						return nextPromise;
+					}
+				).then(
 					() => {
 						this.layoutColumns = layoutColumns;
 
@@ -582,6 +601,10 @@ class Layout extends Component {
 		);
 
 		this._draggingItemColumnIndex = sourceItemColumnIndex;
+
+		this._draggingItemParentPlid = this._getLayoutColumnActiveItemPlid(
+			this.layoutColumns[sourceItemColumnIndex - 1]
+		);
 	}
 
 	/**
@@ -757,7 +780,7 @@ class Layout extends Component {
 
 		if (sameColumn || !(pathUpdated && targetBelongsPreviousColumn)) {
 			const draggingItemPlid = this._draggingItem.plid;
-			
+
 			const draggingItem = this._getLayoutColumnItemByPlid(
 				nextLayoutColumns,
 				draggingItemPlid
@@ -770,8 +793,45 @@ class Layout extends Component {
 	}
 
 	/**
+	 * Remove arrow if the item has no children
+	 * @param {Array} layoutColumns
+	 * @param {string} itemPlid
+	 * @private
+	 * @return {Array}
+	 * @review
+	 */
+
+	_removeHasChildArrow(layoutColumns, itemPlid) {
+		let nextLayoutColumns = layoutColumns;
+
+		const column = this._getParentColumnByPlid(
+			layoutColumns,
+			itemPlid
+		);
+		const item = this._getLayoutColumnItemByPlid(
+			nextLayoutColumns,
+			itemPlid
+		);
+
+		nextLayoutColumns = setIn(
+			nextLayoutColumns,
+			[
+				nextLayoutColumns.indexOf(column),
+				column.indexOf(item),
+				'hasChild'
+			],
+			false
+		);
+
+		this._draggingItemParentPlid = null;
+
+		return nextLayoutColumns;
+	}
+
+	/**
 	 * Resets dragging information to null
 	 * @private
+	 * @return {Array}
 	 */
 
 	_resetHoveredData() {
@@ -1052,6 +1112,16 @@ Layout.STATE = {
 	 */
 
 	_draggingItemColumnIndex: Config.number().internal(),
+
+	/**
+	 * Plid of the dragging item parent
+	 * @default undefined
+	 * @instance
+	 * @review
+	 * @type {!string}
+	 */
+
+	_draggingItemParentPlid: Config.string().internal(),
 
 	/**
 	 * Nearest border of the hovered layout column item when dragging.

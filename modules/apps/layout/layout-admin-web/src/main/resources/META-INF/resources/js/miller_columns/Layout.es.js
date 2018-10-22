@@ -436,6 +436,13 @@ class Layout extends Component {
 				layoutColumns = this._deleteEmptyColumns(layoutColumns);
 			}
 
+			if (this._draggingItem.homePage) {
+				layoutColumns = this._setHomePage(
+					layoutColumns,
+					this._draggingItem.plid
+				);
+			}
+
 			this._moveLayoutColumnItemOnServer(
 				parentPlid,
 				this._draggingItem.plid,
@@ -664,6 +671,51 @@ class Layout extends Component {
 			],
 			true
 		);
+	}
+
+	/** Set the first page as Home page
+	 * @param {!Array} layoutColumns
+	 * @private
+	 * @return {object|null}
+	 * @review
+	 */
+
+	_setHomePage(layoutColumns, currentHomeItemPlid) {
+		let nextLayoutColumns = layoutColumns;
+
+		const currentHomeItem = this._getLayoutColumnItemByPlid(
+			nextLayoutColumns,
+			currentHomeItemPlid
+		);
+		const currentHomeItemColumn = this._getParentColumnByPlid(
+			nextLayoutColumns,
+			currentHomeItemPlid
+		);
+		const currentHomeItemColumnIndex = nextLayoutColumns.indexOf(
+			currentHomeItemColumn
+		);
+
+		nextLayoutColumns = setIn(
+			nextLayoutColumns,
+			[
+				currentHomeItemColumnIndex,
+				currentHomeItemColumn.indexOf(currentHomeItem),
+				'homePage'
+			],
+			false
+		);
+
+		nextLayoutColumns = setIn(
+			nextLayoutColumns,
+			[
+				currentHomeItemColumnIndex,
+				0,
+				'homePage'
+			],
+			true
+		);
+
+		return nextLayoutColumns;
 	}
 
 	/**

@@ -16,6 +16,7 @@ package com.liferay.document.library.internal.repository.capabilities;
 
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
@@ -61,7 +62,8 @@ public class LiferayDynamicCapability
 						(String)serviceReference.getProperty(
 							"repository.class.name");
 
-					if ((capabilityRepositoryClassName == null) ||
+					if (Objects.equals(
+							StringPool.STAR, capabilityRepositoryClassName) ||
 						Objects.equals(
 							repositoryClassName,
 							capabilityRepositoryClassName)) {

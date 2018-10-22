@@ -88,12 +88,14 @@ public class LiferayDynamicCapabilityTest {
 
 		ServiceRegistration<Capability> capabilityServiceRegistration =
 			registry.registerService(
-				Capability.class, testRepositoryEventAwareCapability);
+				Capability.class, testRepositoryEventAwareCapability,
+				_getCapabilityProperties("*"));
 
 		capabilityServiceRegistration.unregister();
 
 		capabilityServiceRegistration = registry.registerService(
-			Capability.class, testRepositoryEventAwareCapability);
+			Capability.class, testRepositoryEventAwareCapability,
+			_getCapabilityProperties("*"));
 
 		try {
 			_addRandomFileEntry(
@@ -120,7 +122,8 @@ public class LiferayDynamicCapabilityTest {
 				(TestRepositoryEventAwareCapability)repositoryEventRegistry ->
 					repositoryEventRegistry.registerRepositoryEventListener(
 						RepositoryEventType.Add.class, FileEntry.class,
-						fileEntry -> atomicInteger.incrementAndGet()));
+						fileEntry -> atomicInteger.incrementAndGet()),
+				_getCapabilityProperties("*"));
 
 		try {
 			_addRandomFileEntry(
@@ -172,7 +175,8 @@ public class LiferayDynamicCapabilityTest {
 						return repository;
 					}
 
-				});
+				},
+				_getCapabilityProperties("*"));
 
 		try {
 			FileEntry fileEntry2 = _addRandomFileEntry(serviceContext);
@@ -189,14 +193,10 @@ public class LiferayDynamicCapabilityTest {
 	}
 
 	@Test
-	public void testDoesNotCallCapabilityLocalRepositoryEventListenersForACapabilityWithADifferentRepositoryType()
+	public void testDoesNotCallCapabilityLocalRepositoryEventListenersForACapabilityWithADifferentRepositoryClassName()
 		throws Exception {
 
 		AtomicInteger atomicInteger = new AtomicInteger(0);
-
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("repository.class.name", "unknown");
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -207,7 +207,7 @@ public class LiferayDynamicCapabilityTest {
 					repositoryEventRegistry.registerRepositoryEventListener(
 						RepositoryEventType.Add.class, FileEntry.class,
 						fileEntry -> atomicInteger.incrementAndGet()),
-				properties);
+				_getCapabilityProperties("unknown"));
 
 		try {
 			_addRandomFileEntry(
@@ -218,6 +218,59 @@ public class LiferayDynamicCapabilityTest {
 		finally {
 			capabilityServiceRegistration.unregister();
 		}
+	}
+
+	@Test
+	public void testDoesNotCallCapabilityLocalRepositoryEventListenersForACapabilityWithNoRepositoryClassName()
+		throws Exception {
+
+		AtomicInteger atomicInteger = new AtomicInteger(0);
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceRegistration<Capability> capabilityServiceRegistration =
+			registry.registerService(
+				Capability.class,
+				(TestRepositoryEventAwareCapability)repositoryEventRegistry ->
+					repositoryEventRegistry.registerRepositoryEventListener(
+						RepositoryEventType.Add.class, FileEntry.class,
+						fileEntry -> atomicInteger.incrementAndGet()),
+				_getCapabilityProperties(null));
+
+		try {
+			_addRandomFileEntry(
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+			Assert.assertEquals(0, atomicInteger.get());
+		}
+		finally {
+			capabilityServiceRegistration.unregister();
+		}
+	}
+
+	@Test
+	public void testDoesNotCallCapabilityLocalRepositoryEventListenersWhenTheCapabilityHasNoRepositoryClassName()
+		throws Exception {
+
+		AtomicInteger atomicInteger = new AtomicInteger(0);
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceRegistration<Capability> capabilityServiceRegistration =
+			registry.registerService(
+				Capability.class,
+				(TestRepositoryEventAwareCapability)repositoryEventRegistry ->
+					repositoryEventRegistry.registerRepositoryEventListener(
+						RepositoryEventType.Add.class, FileEntry.class,
+						fileEntry -> atomicInteger.incrementAndGet()),
+				_getCapabilityProperties(null));
+
+		capabilityServiceRegistration.unregister();
+
+		_addRandomFileEntry(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertEquals(0, atomicInteger.get());
 	}
 
 	@Test
@@ -234,7 +287,8 @@ public class LiferayDynamicCapabilityTest {
 				(TestRepositoryEventAwareCapability)repositoryEventRegistry ->
 					repositoryEventRegistry.registerRepositoryEventListener(
 						RepositoryEventType.Add.class, FileEntry.class,
-						fileEntry -> atomicInteger.incrementAndGet()));
+						fileEntry -> atomicInteger.incrementAndGet()),
+				_getCapabilityProperties("*"));
 
 		capabilityServiceRegistration.unregister();
 
@@ -245,17 +299,13 @@ public class LiferayDynamicCapabilityTest {
 	}
 
 	@Test
-	public void testDoesNotCallCapabilityLocalRepositoryWrapperForACapabilityWithADifferentRepositoryType()
+	public void testDoesNotCallCapabilityLocalRepositoryWrapperForACapabilityWithADifferentRepositoryClassName()
 		throws Exception {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		FileEntry fileEntry1 = _addRandomFileEntry(serviceContext);
-
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("repository.class.name", "unknown");
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -290,7 +340,61 @@ public class LiferayDynamicCapabilityTest {
 					}
 
 				},
-				properties);
+				_getCapabilityProperties("unknown"));
+
+		try {
+			FileEntry fileEntry2 = _addRandomFileEntry(serviceContext);
+
+			Assert.assertNotSame(fileEntry1, fileEntry2);
+		}
+		finally {
+			capabilityServiceRegistration.unregister();
+		}
+	}
+
+	@Test
+	public void testDoesNotCallCapabilityLocalRepositoryWrapperForACapabilityWithNoRepositoryClassName()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		FileEntry fileEntry1 = _addRandomFileEntry(serviceContext);
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceRegistration<Capability> capabilityServiceRegistration =
+			registry.registerService(
+				Capability.class,
+				new TestRepositoryWrapperAwareCapability() {
+
+					@Override
+					public LocalRepository wrapLocalRepository(
+						LocalRepository localRepository) {
+
+						return new LocalRepositoryWrapper(localRepository) {
+
+							@Override
+							public FileEntry addFileEntry(
+								long userId, long folderId,
+								String sourceFileName, String mimeType,
+								String title, String description,
+								String changeLog, File file,
+								ServiceContext serviceContext) {
+
+								return fileEntry1;
+							}
+
+						};
+					}
+
+					@Override
+					public Repository wrapRepository(Repository repository) {
+						return repository;
+					}
+
+				},
+				_getCapabilityProperties(null));
 
 		try {
 			FileEntry fileEntry2 = _addRandomFileEntry(serviceContext);
@@ -312,6 +416,16 @@ public class LiferayDynamicCapabilityTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			content.getBytes(), serviceContext);
+	}
+
+	private Map<String, Object> _getCapabilityProperties(
+		String repositoryClassName) {
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("repository.class.name", repositoryClassName);
+
+		return properties;
 	}
 
 	@DeleteAfterTestRun

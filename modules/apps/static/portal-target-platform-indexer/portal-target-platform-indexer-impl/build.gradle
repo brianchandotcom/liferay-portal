@@ -15,19 +15,10 @@ deploy {
 }
 
 deployTool {
-	from (jar) {
-		rename {
-			"com.liferay.portal.target.platform.indexer.impl.jar"
-		}
-	}
-
-	from (configurations.compileOnly) {
-		include "slf4j-api-*.jar"
-		include "slf4j-simple-*.jar"
-
-		rename "slf4j-api-(.*).jar", "slf4j-api.jar"
-		rename "slf4j-simple-(.*).jar", "slf4j-simple.jar"
-	}
-
+	from jar
 	into new File(liferay.liferayHome, "tools/portal-tools-target-platform-indexer-client")
+
+	rename {
+		"com.liferay.portal.target.platform.indexer.impl.jar"
+	}
 }

@@ -63,28 +63,6 @@ public class FilterProviderTest {
 				filterString));
 	}
 
-	@Test
-	public void testCreateContextWithUnsupportedOperationInFilter() {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		String filterString = "contains('invalid', 'unknown')";
-
-		mockHttpServletRequest.setParameter("filter", filterString);
-
-		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
-			() -> _provider.createContext(mockHttpServletRequest)
-		).isInstanceOf(
-			InvalidFilterException.class
-		);
-
-		exception.hasMessage(
-			String.format(
-				"Invalid query computed from filter '%s': Method call: " +
-					"contains",
-				filterString));
-	}
-
 	@Inject(
 		filter = "component.name=com.liferay.structured.content.apio.internal.architect.provider.FilterProvider"
 	)

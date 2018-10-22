@@ -14,6 +14,9 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.json.JSONObject;
 
 /**
@@ -60,19 +63,27 @@ public class PortalBatchBuildData
 	}
 
 	@Override
+	public void put(String key, Object value) {
+		if (_forbiddenKeys.contains(key)) {
+			throw new IllegalArgumentException(key + " may not be set");
+		}
+
+		super.put(key, value);
+	}
+
+	@Override
 	public void setPortalBranchSHA(String portalBranchSHA) {
 		put("portal_branch_sha", portalBranchSHA);
 	}
 
 	@Override
 	public void setPortalGitHubURL(String portalGitHubURL) {
-		throw new RuntimeException("Please do not set the portal github url");
+		put("portal_github_url", portalGitHubURL);
 	}
 
 	@Override
 	public void setPortalUpstreamBranchName(String portalUpstreamBranchName) {
-		throw new RuntimeException(
-			"Please do not set the portal upstream branch name");
+		put("portal_upstream_branch_name", portalUpstreamBranchName);
 	}
 
 	protected PortalBatchBuildData(
@@ -87,5 +98,8 @@ public class PortalBatchBuildData
 	}
 
 	private static final String _TYPE = "portal_batch";
+
+	private static final List<String> _forbiddenKeys = Arrays.asList(
+		"portal_github_url", "portal_upstream_branch_name");
 
 }

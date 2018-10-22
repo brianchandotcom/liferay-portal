@@ -15,7 +15,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.ant.bnd", version: "2.0.59"
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.31"
 
-	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi25], dir: new File(rootProject.buildDir, "gradle-2.5"))
+	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi214], dir: new File(rootProject.buildDir, "gradle-2.14"))
 }
 
 gradleTest {
@@ -23,7 +23,7 @@ gradleTest {
 	dependsOn installGradleTestSmokeSample100
 	dependsOn jar
 
-	versions "2.5", "2.6", "2.7", "2.8", "2.9", "2.10", "2.11", "2.12", "2.13", "2.14.1", "3.0", "3.1", "3.2.1", "3.3", "3.5", "3.5.1"
+	versions "2.14.1", "3.0", "3.1", "3.2.1", "3.3", "3.5", "3.5.1"
 }
 
 installGradleTestSmokeSample100 {

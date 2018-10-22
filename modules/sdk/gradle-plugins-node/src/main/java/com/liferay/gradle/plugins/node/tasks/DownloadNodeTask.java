@@ -82,19 +82,24 @@ public class DownloadNodeTask extends DefaultTask {
 
 				@Override
 				public void execute(CopySpec copySpec) {
-					copySpec.eachFile(new StripPathSegmentsAction(1));
-
 					String nodeFileName = nodeFile.getName();
 
-					if (nodeFileName.endsWith(".zip")) {
-						copySpec.from(project.zipTree(nodeFile));
+					if (nodeFileName.endsWith(".exe")) {
+						copySpec.from(nodeFile.getParentFile());
 					}
 					else {
-						copySpec.from(project.tarTree(nodeFile));
+						copySpec.eachFile(new StripPathSegmentsAction(1));
+						copySpec.setIncludeEmptyDirs(false);
+
+						if (nodeFileName.endsWith(".zip")) {
+							copySpec.from(project.zipTree(nodeFile));
+						}
+						else {
+							copySpec.from(project.tarTree(nodeFile));
+						}
 					}
 
 					copySpec.into(nodeDir);
-					copySpec.setIncludeEmptyDirs(false);
 				}
 
 			});

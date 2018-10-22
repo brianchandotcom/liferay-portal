@@ -148,15 +148,19 @@ public class AMCompanyThumbnailConfigurationInitializer {
 		String name = String.format(
 			"%s %dx%d", "Thumbnail", maxWidth, maxHeight);
 
+		String uuid = _normalize(name);
+
 		Map<String, String> properties = new HashMap<>();
 
 		properties.put("max-height", String.valueOf(maxHeight));
 		properties.put("max-width", String.valueOf(maxWidth));
 
-		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			company.getCompanyId(), name,
-			"This image resolution was automatically added.", _normalize(name),
-			properties);
+		if (!_configurationExists(company.getCompanyId(), name, uuid)) {
+			_amImageConfigurationHelper.addAMImageConfigurationEntry(
+				company.getCompanyId(), name,
+				"This image resolution was automatically added.", uuid,
+				properties);
+		}
 	}
 
 	private String _normalize(String str) {

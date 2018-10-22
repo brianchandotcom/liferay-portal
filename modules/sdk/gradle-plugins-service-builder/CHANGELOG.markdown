@@ -670,6 +670,12 @@ version 1.0.242.
 - [LPS-85556]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.243.
 
+## 2.1.61 - 2018-10-18
+
+### Changed
+- [LPS-85556]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.244.
+
 [Liferay Portal Tools Service Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-service-builder
 [LPS-53392]: https://issues.liferay.com/browse/LPS-53392
 [LPS-58672]: https://issues.liferay.com/browse/LPS-58672

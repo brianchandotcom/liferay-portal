@@ -14,6 +14,8 @@
 
 package com.liferay.portal.odata.filter.expression;
 
+import java.util.List;
+
 /**
  * Defines expression visitors with arbitrary return types. This interface's
  * methods are called when an expression node of the expression tree is
@@ -61,6 +63,20 @@ public interface ExpressionVisitor<T> {
 	 * @review
 	 */
 	public T visitMemberExpression(MemberExpression memberExpression)
+		throws ExpressionVisitException;
+
+	/**
+	 * Called for each traversed {@link MethodExpression} expression
+	 *
+	 * @param expressions List of return values created by visiting each method expression
+	 * @param type Method.Type
+	 * @return T the object of type {@code T}
+	 * @throws ExpressionVisitException if an expression visit exception
+	 *         occurred
+	 * @review
+	 */
+	public T visitMethodExpression(
+			List<T> expressions, MethodExpression.Type type)
 		throws ExpressionVisitException;
 
 }

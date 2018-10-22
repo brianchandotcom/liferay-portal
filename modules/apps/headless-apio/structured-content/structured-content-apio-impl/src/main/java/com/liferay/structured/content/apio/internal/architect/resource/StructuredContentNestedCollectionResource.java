@@ -18,6 +18,7 @@ import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
 import com.liferay.aggregate.rating.apio.architect.identifier.AggregateRatingIdentifier;
 import com.liferay.apio.architect.functional.Try;
+import com.liferay.apio.architect.language.AcceptLanguage;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -122,9 +123,10 @@ public class StructuredContentNestedCollectionResource
 				builder) {
 
 		return builder.addGetter(
-			this::_getPageItems, ThemeDisplay.class, Filter.class, Sort.class
+			this::_getPageItems, AcceptLanguage.class, ThemeDisplay.class,
+			Filter.class, Sort.class
 		).addCreator(
-			this::_addJournalArticle, ThemeDisplay.class,
+			this::_addJournalArticle, AcceptLanguage.class, ThemeDisplay.class,
 			_hasPermission.forAddingIn(ContentSpaceIdentifier.class),
 			StructuredContentCreatorForm::buildForm
 		).build();
@@ -140,12 +142,14 @@ public class StructuredContentNestedCollectionResource
 		ItemRoutes.Builder<JournalArticleWrapper, Long> builder) {
 
 		return builder.addGetter(
-			this::_getJournalArticleWrapper, ThemeDisplay.class
+			this::_getJournalArticleWrapper, AcceptLanguage.class,
+			ThemeDisplay.class
 		).addRemover(
 			idempotent(this::_deleteJournalArticle), _hasPermission::forDeleting
 		).addUpdater(
-			this::_updateJournalArticle, ThemeDisplay.class,
-			_hasPermission::forUpdating, StructuredContentUpdaterForm::buildForm
+			this::_updateJournalArticle, AcceptLanguage.class,
+			ThemeDisplay.class, _hasPermission::forUpdating,
+			StructuredContentUpdaterForm::buildForm
 		).build();
 	}
 
@@ -241,7 +245,7 @@ public class StructuredContentNestedCollectionResource
 	private JournalArticleWrapper _addJournalArticle(
 			long contentSpaceId,
 			StructuredContentCreatorForm structuredContentCreatorForm,
-			ThemeDisplay themeDisplay)
+			AcceptLanguage acceptLanguage, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		Long ddmStructureId =
@@ -287,7 +291,8 @@ public class StructuredContentNestedCollectionResource
 			0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, null,
 			serviceContext);
 
-		return new JournalArticleWrapper(journalArticle, themeDisplay);
+		return new JournalArticleWrapper(
+			journalArticle, acceptLanguage.getPreferredLocale(), themeDisplay);
 	}
 
 	private ClassNameClassPK _createClassNameClassPK(
@@ -464,13 +469,15 @@ public class StructuredContentNestedCollectionResource
 	}
 
 	private JournalArticleWrapper _getJournalArticleWrapper(
-			long journalArticleId, ThemeDisplay themeDisplay)
+			long journalArticleId, AcceptLanguage acceptLanguage,
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
 			journalArticleId);
 
-		return new JournalArticleWrapper(journalArticle, themeDisplay);
+		return new JournalArticleWrapper(
+			journalArticle, acceptLanguage.getPreferredLocale(), themeDisplay);
 	}
 
 	private String _getLayoutLink(JSONObject jsonObject)
@@ -520,13 +527,14 @@ public class StructuredContentNestedCollectionResource
 
 	private PageItems<JournalArticleWrapper> _getPageItems(
 			Pagination pagination, long contentSpaceId,
-			ThemeDisplay themeDisplay, Filter filter, Sort sort)
+			AcceptLanguage acceptLanguage, ThemeDisplay themeDisplay,
+			Filter filter, Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = _createSearchContext(
 			themeDisplay.getCompanyId(), contentSpaceId,
-			themeDisplay.getLocale(), sort, pagination.getStartPosition(),
-			pagination.getEndPosition());
+			acceptLanguage.getPreferredLocale(), sort,
+			pagination.getStartPosition(), pagination.getEndPosition());
 
 		Query fullQuery = _getFullQuery(
 			filter, themeDisplay.getLocale(), searchContext);
@@ -559,7 +567,8 @@ public class StructuredContentNestedCollectionResource
 			List::stream
 		).map(
 			journalArticle -> new JournalArticleWrapper(
-				journalArticle, themeDisplay)
+				journalArticle, acceptLanguage.getPreferredLocale(),
+				themeDisplay)
 		).collect(
 			Collectors.toList()
 		);
@@ -568,8 +577,9 @@ public class StructuredContentNestedCollectionResource
 	}
 
 	private String _getRenderedContent(
-		JournalArticleWrapper journalArticleWrapper, DDMTemplate ddmTemplate,
-		Locale locale) {
+		JournalArticleWrapper journalArticleWrapper, DDMTemplate ddmTemplate) {
+
+		Locale locale = journalArticleWrapper.getLocale();
 
 		return Try.fromFallible(
 			() -> _journalContent.getDisplay(
@@ -599,7 +609,7 @@ public class StructuredContentNestedCollectionResource
 			ddmTemplate -> RenderedJournalArticle.create(
 				ddmTemplate::getName,
 				locale -> _getRenderedContent(
-					journalArticleWrapper, ddmTemplate, locale))
+					journalArticleWrapper, ddmTemplate))
 		).collect(
 			Collectors.toList()
 		);
@@ -658,7 +668,7 @@ public class StructuredContentNestedCollectionResource
 	private JournalArticleWrapper _updateJournalArticle(
 			long journalArticleId,
 			StructuredContentUpdaterForm structuredContentUpdaterForm,
-			ThemeDisplay themeDisplay)
+			AcceptLanguage acceptLanguage, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
@@ -715,7 +725,8 @@ public class StructuredContentNestedCollectionResource
 				0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, null,
 				null, null, null, serviceContext);
 
-		return new JournalArticleWrapper(updatedJournalArticle, themeDisplay);
+		return new JournalArticleWrapper(
+			updatedJournalArticle, locale, themeDisplay);
 	}
 
 	@Reference

@@ -17,6 +17,8 @@ package com.liferay.structured.content.apio.internal.model;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
+import java.util.Locale;
+
 /**
  * Wraps a {@code JournalArticle} and includes a {@code ThemeDisplay} object.
  *
@@ -32,17 +34,32 @@ public class JournalArticleWrapper
 	 * @param themeDisplay the current request's theme display
 	 */
 	public JournalArticleWrapper(
-		JournalArticle journalArticle, ThemeDisplay themeDisplay) {
+		JournalArticle journalArticle, Locale locale,
+		ThemeDisplay themeDisplay) {
 
 		super(journalArticle);
 
+		_locale = locale;
 		_themeDisplay = themeDisplay;
 	}
 
+	/**
+	 * @return locale the {@link Locale}
+	 * @review
+	 */
+	public Locale getLocale() {
+		return _locale;
+	}
+
+	/**
+	 * @return themeDisplay the {@link ThemeDisplay}
+	 * @review
+	 */
 	public ThemeDisplay getThemeDisplay() {
 		return _themeDisplay;
 	}
 
+	private final Locale _locale;
 	private final ThemeDisplay _themeDisplay;
 
 }

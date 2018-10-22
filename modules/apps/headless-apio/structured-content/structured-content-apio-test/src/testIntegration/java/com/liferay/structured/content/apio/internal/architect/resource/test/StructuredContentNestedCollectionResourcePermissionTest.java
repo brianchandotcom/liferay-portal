@@ -14,6 +14,7 @@
 
 package com.liferay.structured.content.apio.internal.architect.resource.test;
 
+import com.liferay.apio.architect.language.AcceptLanguage;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.test.util.pagination.PaginationRequest;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -149,6 +150,7 @@ public class StructuredContentNestedCollectionResourcePermissionTest
 
 			PageItems<JournalArticle> pageItems = getPageItems(
 				PaginationRequest.of(10, 1), _group.getGroupId(),
+				_acceptLanguage,
 				getThemeDisplay(_group, LocaleUtil.getDefault()),
 				Filter.emptyFilter(), Sort.emptySort());
 
@@ -158,6 +160,9 @@ public class StructuredContentNestedCollectionResourcePermissionTest
 			_userLocalService.deleteUser(user);
 		}
 	}
+
+	private static final AcceptLanguage _acceptLanguage =
+		() -> LocaleUtil.getDefault();
 
 	@DeleteAfterTestRun
 	private Group _group;

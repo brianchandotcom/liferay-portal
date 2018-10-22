@@ -16,6 +16,7 @@ package com.liferay.structured.content.apio.internal.architect.resource.test;
 
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
 
+import com.liferay.apio.architect.language.AcceptLanguage;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.test.util.pagination.PaginationRequest;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -108,7 +109,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		DDMStructure ddmStructure = journalArticle1.getDDMStructure();
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(
 				_filterParser.parse(
@@ -142,7 +143,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(
 				_filterParser.parse(
@@ -195,7 +196,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(
 				_filterParser.parse(
@@ -244,7 +245,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(
 				_filterParser.parse(
@@ -297,7 +298,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(
 				_filterParser.parse(
@@ -332,7 +333,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(
 				_filterParser.parse(
@@ -385,7 +386,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(
 				_filterParser.parse(
@@ -438,7 +439,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(
 				_filterParser.parse(
@@ -487,7 +488,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(
 				_filterParser.parse(
@@ -529,7 +530,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(
 				_filterParser.parse(
@@ -595,7 +596,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			ZoneId.of("GMT"));
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(
 				_filterParser.parse(
@@ -662,7 +663,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			ZoneId.of("GMT"));
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(
 				_filterParser.parse(
@@ -698,7 +699,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(_filterParser.parse("(title eq 'hello')")),
 			Sort.emptySort());
@@ -738,7 +739,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(_filterParser.parse("(title eq 'hello world')")),
 			Sort.emptySort());
@@ -771,7 +772,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(_filterParser.parse("(title eq 'hel')")),
 			Sort.emptySort());
@@ -809,7 +810,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(_filterParser.parse("(title eq 'title1')")),
 			Sort.emptySort());
@@ -864,7 +865,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(_filterParser.parse("(title ge 'title2')")),
 			Sort.emptySort());
@@ -900,7 +901,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(_filterParser.parse("(title eq 'titulo1')")),
 			Sort.emptySort());
@@ -934,7 +935,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(_filterParser.parse("(title eq 'titulo1')")),
 			Sort.emptySort());
@@ -963,7 +964,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.SPAIN),
 			new Filter(_filterParser.parse("(title eq 'titulo1')")),
 			Sort.emptySort());
@@ -1008,7 +1009,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(_filterParser.parse("(title lt 'title2')")),
 			Sort.emptySort());
@@ -1063,7 +1064,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(_filterParser.parse("(title le 'title2')")),
 			Sort.emptySort());
@@ -1121,7 +1122,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(
 				_filterParser.parse(
@@ -1180,7 +1181,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(
 				_filterParser.parse(
@@ -1229,7 +1230,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(_filterParser.parse("(title eq 'great title')")),
 			Sort.emptySort());
@@ -1275,7 +1276,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(_filterParser.parse("(title eq 'Great Title')")),
 			Sort.emptySort());
@@ -1321,7 +1322,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			new Filter(_filterParser.parse("(title gt 'title1')")),
 			Sort.emptySort());
@@ -1344,6 +1345,9 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			"localized_title_en_US_sortable", termQuery.getField());
 		Assert.assertEquals("title value", termQuery.getValue());
 	}
+
+	private static final AcceptLanguage _acceptLanguage =
+		() -> LocaleUtil.getDefault();
 
 	@Inject(filter = "entity.model.name=StructuredContent")
 	private FilterParser _filterParser;

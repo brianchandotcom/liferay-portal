@@ -14,6 +14,7 @@
 
 package com.liferay.structured.content.apio.internal.architect.resource.test;
 
+import com.liferay.apio.architect.language.AcceptLanguage;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.test.util.pagination.PaginationRequest;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -104,7 +105,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(),
 			new Sort(_sortParser.parse("dateCreated:asc")));
@@ -150,7 +151,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(),
 			new Sort(_sortParser.parse("dateCreated:desc")));
@@ -196,7 +197,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(),
 			new Sort(_sortParser.parse("dateModified:asc")));
@@ -242,7 +243,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(),
 			new Sort(_sortParser.parse("dateModified:desc")));
@@ -298,7 +299,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(),
 			new Sort(_sortParser.parse("datePublished:asc")));
@@ -354,7 +355,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(),
 			new Sort(_sortParser.parse("datePublished:desc")));
@@ -398,7 +399,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(), new Sort(_sortParser.parse("title:asc")));
 
@@ -444,7 +445,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(), new Sort(_sortParser.parse("title:asc")));
 
@@ -492,8 +493,8 @@ public class StructuredContentNestedCollectionResourceSortingTest
 
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationRequest.of(10, 1), _group.getGroupId(),
-			getThemeDisplay(_group, LocaleUtil.SPAIN), Filter.emptyFilter(),
-			new Sort(_sortParser.parse("title:asc")));
+			() -> LocaleUtil.SPAIN, getThemeDisplay(_group, LocaleUtil.SPAIN),
+			Filter.emptyFilter(), new Sort(_sortParser.parse("title:asc")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -534,7 +535,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(), new Sort(_sortParser.parse("title")));
 
@@ -577,7 +578,7 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			serviceContext);
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(),
+			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(), new Sort(_sortParser.parse("title:desc")));
 
@@ -589,6 +590,9 @@ public class StructuredContentNestedCollectionResourceSortingTest
 		Assert.assertEquals(journalArticle2, journalArticles.get(0));
 		Assert.assertEquals(journalArticle1, journalArticles.get(1));
 	}
+
+	private static final AcceptLanguage _acceptLanguage =
+		() -> LocaleUtil.getDefault();
 
 	@DeleteAfterTestRun
 	private Group _group;

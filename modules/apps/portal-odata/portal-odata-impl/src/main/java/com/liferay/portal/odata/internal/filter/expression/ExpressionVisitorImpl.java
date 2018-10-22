@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.odata.filter.expression.LiteralExpression;
+import com.liferay.portal.odata.filter.expression.MethodExpression;
 
 import java.util.List;
 import java.util.Optional;
@@ -128,6 +129,11 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 	@Override
 	public Expression visitMethodCall(
 		MethodKind methodKind, List<Expression> expressions) {
+
+		if (methodKind == MethodKind.CONTAINS) {
+			return new MethodExpressionImpl(
+				expressions, MethodExpression.Type.CONTAINS);
+		}
 
 		throw new UnsupportedOperationException("Method call: " + methodKind);
 	}

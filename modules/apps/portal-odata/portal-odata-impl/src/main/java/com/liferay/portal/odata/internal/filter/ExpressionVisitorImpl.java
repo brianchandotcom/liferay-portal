@@ -16,12 +16,15 @@ package com.liferay.portal.odata.internal.filter;
 
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -30,6 +33,7 @@ import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
 import com.liferay.portal.odata.filter.expression.LiteralExpression;
 import com.liferay.portal.odata.filter.expression.MemberExpression;
+import com.liferay.portal.odata.filter.expression.MethodExpression;
 
 import java.text.Format;
 import java.text.ParseException;
@@ -93,6 +97,36 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			_entityModel.getEntityFieldsMap();
 
 		return entityFieldsMap.get(resourcePath.get(0));
+	}
+
+	@Override
+	public Object visitMethodExpression(
+		List<Object> expressions, MethodExpression.Type type) {
+
+		if (type == MethodExpression.Type.CONTAINS) {
+			if (expressions.size() != 2) {
+				throw new UnsupportedOperationException(
+					StringBundler.concat(
+						"Unsupported method visitMethodExpression with method",
+						"type ", type, " and", expressions.size(), "params"));
+			}
+
+			return _contains(
+				(EntityField)expressions.get(0), expressions.get(1), _locale);
+		}
+
+		throw new UnsupportedOperationException(
+			"Unsupported method visitMethodExpression with method type " +
+				type);
+	}
+
+	private Filter _contains(
+		EntityField entityField, Object fieldValue, Locale locale) {
+
+		return new QueryFilter(
+			new WildcardQueryImpl(
+				entityField.getFilterableName(locale),
+				"*" + entityField.getFilterableValue(fieldValue) + "*"));
 	}
 
 	private Filter _getANDFilter(Filter leftFilter, Filter rightFilter) {

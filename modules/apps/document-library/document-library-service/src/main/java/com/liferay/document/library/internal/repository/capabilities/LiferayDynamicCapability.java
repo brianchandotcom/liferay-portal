@@ -16,6 +16,7 @@ package com.liferay.document.library.internal.repository.capabilities;
 
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
@@ -30,8 +31,10 @@ import com.liferay.portal.repository.util.RepositoryWrapperAware;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -67,6 +70,14 @@ public class LiferayDynamicCapability
 								capabilityRegistration));
 					}
 
+					String repositoryType = _getRepositoryType(
+						serviceReference);
+
+					Set<Capability> capabilities = _getCapabilities(
+						repositoryType);
+
+					capabilities.add(capability);
+
 					_capabilityRegistrations.put(
 						capability, capabilityRegistration);
 
@@ -92,6 +103,11 @@ public class LiferayDynamicCapability
 
 					CapabilityRegistration capabilityRegistration =
 						_capabilityRegistrations.remove(capability);
+
+					Set<Capability> capabilities = _getCapabilities(
+						_getRepositoryType(serviceReference));
+
+					capabilities.remove(capability);
 
 					for (RepositoryEventListenerRegistration
 							repositoryEventListenerRegistration :
@@ -168,6 +184,33 @@ public class LiferayDynamicCapability
 
 	}
 
+	private Set<Capability> _getCapabilities(
+		DocumentRepository documentRepository) {
+
+		Set<Capability> capabilities = new HashSet<>();
+
+		capabilities.addAll(
+			_getCapabilities(documentRepository.getRepositoryType()));
+
+		if (documentRepository.getRepositoryType() != null) {
+			capabilities.addAll(_getCapabilities((String)null));
+		}
+
+		return capabilities;
+	}
+
+	private Set<Capability> _getCapabilities(String repositoryType) {
+		return _capabilitiesMap.computeIfAbsent(
+			repositoryType != null ? repositoryType : "*",
+			key -> new HashSet<>());
+	}
+
+	private String _getRepositoryType(
+		ServiceReference<Capability> serviceReference) {
+
+		return (String)serviceReference.getProperty("repository.type");
+	}
+
 	private void _updateRepositoryWrappers() {
 		for (Map.Entry<LocalRepositoryWrapper, LocalRepository>
 				localRepositoryEntry : _localRepositoriesMap.entrySet()) {
@@ -199,7 +242,7 @@ public class LiferayDynamicCapability
 
 		LocalRepository wrappedLocalRepository = localRepository;
 
-		for (Capability capability : _capabilityRegistrations.keySet()) {
+		for (Capability capability : _getCapabilities(localRepository)) {
 			if (capability instanceof RepositoryWrapperAware) {
 				RepositoryWrapperAware repositoryWrapperAware =
 					(RepositoryWrapperAware)capability;
@@ -217,7 +260,7 @@ public class LiferayDynamicCapability
 	private RepositoryWrapper _wrapRepository(Repository repository) {
 		Repository wrappedRepository = repository;
 
-		for (Capability capability : _capabilityRegistrations.keySet()) {
+		for (Capability capability : _getCapabilities(repository)) {
 			if (capability instanceof RepositoryWrapperAware) {
 				RepositoryWrapperAware repositoryWrapperAware =
 					(RepositoryWrapperAware)capability;
@@ -231,6 +274,8 @@ public class LiferayDynamicCapability
 	}
 
 	private final ServiceTrackerList<Capability, Capability> _capabilities;
+	private final Map<String, Set<Capability>> _capabilitiesMap =
+		new HashMap<>();
 	private final Map<Capability, CapabilityRegistration>
 		_capabilityRegistrations = new HashMap<>();
 	private final Map<LocalRepositoryWrapper, LocalRepository>

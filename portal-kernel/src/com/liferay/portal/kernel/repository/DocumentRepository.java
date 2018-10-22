@@ -189,6 +189,10 @@ public interface DocumentRepository extends CapabilityProvider {
 
 	public long getRepositoryId();
 
+	public default String getRepositoryType() {
+		return null;
+	}
+
 	public FileEntry moveFileEntry(
 			long userId, long fileEntryId, long newFolderId,
 			ServiceContext serviceContext)

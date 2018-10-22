@@ -231,6 +231,8 @@ public class StructuredContentNestedCollectionResource
 				).build()
 			).addRelativeURL(
 				"link", this::_getLink
+			).addLocalizedStringByLocale(
+				"label", StructuredContentField::getLocalizedLabel
 			).addString(
 				"name", StructuredContentField::getName
 			).build()

@@ -93,6 +93,32 @@ public class StructuredContentApioTest {
 	}
 
 	@Test
+	public void testDefaultStructuredFieldLabelIsDisplayedWhenAcceptLanguageIsSpecifiedAndDoesNotMatch()
+		throws Exception {
+
+		List<String> hrefs = JsonPath.read(
+			_toStringAsAdmin(
+				JsonPath.read(
+					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
+					"$._links.content-space.href")),
+			"$._embedded.ContentSpace[?(@.name == '" +
+				StructuredContentApioTestBundleActivator.SITE_NAME +
+					"')]._links.structuredContents.href");
+
+		Map<String, String> headers = _getHeaders();
+
+		headers.put("Accept-Language", "de-DE");
+
+		List<String> labels = JsonPath.read(
+			_toStringAsGuest(hrefs.get(0), headers),
+			"$._embedded.StructuredContent[*]._embedded.values._embedded[*]." +
+				"label");
+
+		Assert.assertTrue(labels.contains("TextFieldNameLabel_us"));
+		Assert.assertTrue(labels.contains("NestedTextFieldNameLabel_us"));
+	}
+
+	@Test
 	public void testDefaultStructuredFieldValueIsDisplayedWhenAcceptLanguageIsSpecifiedAndDoesNotMatch()
 		throws Exception {
 
@@ -202,6 +228,32 @@ public class StructuredContentApioTest {
 			titles.contains(
 				StructuredContentApioTestBundleActivator.
 					TITLE_YES_GUEST_YES_GROUP));
+	}
+
+	@Test
+	public void testLocalizedStructuredFieldLabelIsDisplayedWhenAcceptLanguageIsSpecifiedAndMatches()
+		throws Exception {
+
+		List<String> hrefs = JsonPath.read(
+			_toStringAsAdmin(
+				JsonPath.read(
+					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
+					"$._links.content-space.href")),
+			"$._embedded.ContentSpace[?(@.name == '" +
+				StructuredContentApioTestBundleActivator.SITE_NAME +
+					"')]._links.structuredContents.href");
+
+		Map<String, String> headers = _getHeaders();
+
+		headers.put("Accept-Language", "es-ES");
+
+		List<String> labels = JsonPath.read(
+			_toStringAsGuest(hrefs.get(0), headers),
+			"$._embedded.StructuredContent[*]._embedded.values._embedded[*]." +
+				"label");
+
+		Assert.assertTrue(labels.contains("TextFieldNameLabel_es"));
+		Assert.assertTrue(labels.contains("NestedTextFieldNameLabel_es"));
 	}
 
 	@Test

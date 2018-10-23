@@ -14,9 +14,11 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
+import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBeanHolder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.io.Closeable;
 import java.io.IOException;
 
 import java.lang.reflect.InvocationTargetException;
@@ -32,6 +34,8 @@ import javax.portlet.EventResponse;
 import javax.portlet.HeaderRequest;
 import javax.portlet.HeaderResponse;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -78,7 +82,7 @@ public class BeanFilterInvokerPortletFilter
 		throws IOException, PortletException {
 
 		if (ActionFilter.class.isAssignableFrom(_bean.getBeanClass())) {
-			_invokeMethod(
+			_invokeMethodWithActiveScopes(
 				_actionDoFilterMethod, actionRequest, actionResponse,
 				filterChain);
 		}
@@ -94,8 +98,8 @@ public class BeanFilterInvokerPortletFilter
 		throws IOException, PortletException {
 
 		if (EventFilter.class.isAssignableFrom(_bean.getBeanClass())) {
-			_invokeMethod(
-				_eventDoFilteMethod, eventRequest, eventResponse, filterChain);
+			_invokeMethodWithActiveScopes(
+				_eventDoFilterMethod, eventRequest, eventResponse, filterChain);
 		}
 		else {
 			filterChain.doFilter(eventRequest, eventResponse);
@@ -109,7 +113,7 @@ public class BeanFilterInvokerPortletFilter
 		throws IOException, PortletException {
 
 		if (HeaderFilter.class.isAssignableFrom(_bean.getBeanClass())) {
-			_invokeMethod(
+			_invokeMethodWithActiveScopes(
 				_headerDoFilterMethod, headerRequest, headerResponse,
 				headerFilterChain);
 		}
@@ -125,7 +129,7 @@ public class BeanFilterInvokerPortletFilter
 		throws IOException, PortletException {
 
 		if (RenderFilter.class.isAssignableFrom(_bean.getBeanClass())) {
-			_invokeMethod(
+			_invokeMethodWithActiveScopes(
 				_renderDoFilterMethod, renderRequest, renderResponse,
 				filterChain);
 		}
@@ -141,8 +145,8 @@ public class BeanFilterInvokerPortletFilter
 		throws IOException, PortletException {
 
 		if (ResourceFilter.class.isAssignableFrom(_bean.getBeanClass())) {
-			_invokeMethod(
-				_resourceDoFilteMethod, resourceRequest, resourceResponse,
+			_invokeMethodWithActiveScopes(
+				_resourceDoFilterMethod, resourceRequest, resourceResponse,
 				filterChain);
 		}
 		else {
@@ -179,16 +183,32 @@ public class BeanFilterInvokerPortletFilter
 		}
 	}
 
+	private void _invokeMethodWithActiveScopes(
+			Method method, PortletRequest portletRequest,
+			PortletResponse portletResponse, Object filterChain)
+		throws PortletException {
+
+		ScopedBeanHolder scopedBeanHolder = new ScopedBeanHolder(
+			portletRequest, portletResponse, null);
+
+		try (Closeable closeable = scopedBeanHolder.install()) {
+			_invokeMethod(method, portletRequest, portletResponse, filterChain);
+		}
+		catch (IOException ioe) {
+			throw new PortletException(ioe);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BeanFilterInvokerPortletFilter.class);
 
 	private static final Method _actionDoFilterMethod;
 	private static final Method _destroyMethod;
-	private static final Method _eventDoFilteMethod;
+	private static final Method _eventDoFilterMethod;
 	private static final Method _headerDoFilterMethod;
 	private static final Method _initMethod;
 	private static final Method _renderDoFilterMethod;
-	private static final Method _resourceDoFilteMethod;
+	private static final Method _resourceDoFilterMethod;
 
 	static {
 		try {
@@ -196,7 +216,7 @@ public class BeanFilterInvokerPortletFilter
 			_actionDoFilterMethod = ActionFilter.class.getMethod(
 				"doFilter", ActionRequest.class, ActionResponse.class,
 				FilterChain.class);
-			_eventDoFilteMethod = EventFilter.class.getMethod(
+			_eventDoFilterMethod = EventFilter.class.getMethod(
 				"doFilter", EventRequest.class, EventResponse.class,
 				FilterChain.class);
 			_headerDoFilterMethod = HeaderFilter.class.getMethod(
@@ -205,7 +225,7 @@ public class BeanFilterInvokerPortletFilter
 			_renderDoFilterMethod = RenderFilter.class.getMethod(
 				"doFilter", RenderRequest.class, RenderResponse.class,
 				FilterChain.class);
-			_resourceDoFilteMethod = ResourceFilter.class.getMethod(
+			_resourceDoFilterMethod = ResourceFilter.class.getMethod(
 				"doFilter", ResourceRequest.class, ResourceResponse.class,
 				FilterChain.class);
 			_initMethod = PortletFilter.class.getMethod(

@@ -15,13 +15,7 @@
 package com.liferay.journal.web.internal.asset.display.contributor;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.AssetDisplayContributorField;
-import com.liferay.asset.display.contributor.AssetDisplayContributorFieldTracker;
-import com.liferay.asset.display.contributor.AssetDisplayField;
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.display.contributor.BaseAssetDisplayContributor;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
@@ -39,7 +33,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
@@ -47,7 +40,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,80 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = AssetDisplayContributor.class)
 public class JournalArticleAssetDisplayContributor
-	implements AssetDisplayContributor {
-
-	@Override
-	public Set<AssetDisplayField> getAssetDisplayFields(
-			long classTypeId, Locale locale)
-		throws PortalException {
-
-		// Fields for asset entry
-
-		Set<AssetDisplayField> assetDisplayFields =
-			_assetDisplayContributorFieldTracker.
-				getAssetEntryAssetDisplayFields(locale);
-
-		// Fields for the specific asset type
-
-		Set<AssetDisplayField> journalArticleAssetDisplayFields =
-			_assetDisplayContributorFieldTracker.getAssetDisplayFields(
-				getClassName(), locale);
-
-		assetDisplayFields.addAll(journalArticleAssetDisplayFields);
-
-		// Fields for the class type
-
-		List<AssetDisplayField> classTypeFields = getClassTypeFields(
-			classTypeId, locale);
-
-		assetDisplayFields.addAll(classTypeFields);
-
-		return assetDisplayFields;
-	}
-
-	@Override
-	public Map<String, Object> getAssetDisplayFieldsValues(
-			AssetEntry assetEntry, Locale locale)
-		throws PortalException {
-
-		// Field values for asset entry
-
-		Map<String, Object> parameterMap =
-			_assetDisplayContributorFieldTracker.
-				getAssetEntryAssetDisplayFieldsValues(assetEntry, locale);
-
-		// Field values for the specific asset type
-
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(
-					assetEntry.getClassNameId());
-
-		List<AssetDisplayContributorField> assetDisplayContributorFields =
-			_assetDisplayContributorFieldTracker.
-				getAssetDisplayContributorFields(getClassName());
-
-		AssetRenderer<JournalArticle> assetRenderer =
-			assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
-
-		for (AssetDisplayContributorField assetDisplayContributorField :
-				assetDisplayContributorFields) {
-
-			parameterMap.put(
-				assetDisplayContributorField.getKey(),
-				assetDisplayContributorField.getValue(
-					assetRenderer.getAssetObject(), locale));
-		}
-
-		// Field values for the class type
-
-		Map<String, Object> classTypeValues = _getClassTypeValues(
-			assetRenderer.getAssetObject(), locale);
-
-		parameterMap.putAll(classTypeValues);
-
-		return parameterMap;
-	}
+	extends BaseAssetDisplayContributor<JournalArticle> {
 
 	@Override
 	public String getClassName() {
@@ -138,11 +57,7 @@ public class JournalArticleAssetDisplayContributor
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		return ResourceActionsUtil.getModelResource(locale, getClassName());
-	}
-
-	private Map<String, Object> _getClassTypeValues(
+	protected Map<String, Object> getClassTypeValues(
 		JournalArticle article, Locale locale) {
 
 		Map<String, Object> classTypeValues = new HashMap<>();
@@ -217,10 +132,6 @@ public class JournalArticleAssetDisplayContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleAssetDisplayContributor.class);
-
-	@Reference
-	private AssetDisplayContributorFieldTracker
-		_assetDisplayContributorFieldTracker;
 
 	@Reference
 	private DLAppService _dlAppService;

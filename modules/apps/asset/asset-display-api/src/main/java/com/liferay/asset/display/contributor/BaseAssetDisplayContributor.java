@@ -18,17 +18,12 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -50,37 +45,19 @@ public abstract class BaseAssetDisplayContributor<T>
 			long classTypeId, Locale locale)
 		throws PortalException {
 
-		Set<AssetDisplayField> assetDisplayFields = new LinkedHashSet<>();
+		// Fields for asset entry
 
-		ResourceBundle resourceBundle = getResourceBundle(locale);
-
-		// Default fields for asset entry
-
-		for (Map.Entry<String, String> assetEntryModelField :
-				_assetEntryModelFieldsMap.entrySet()) {
-
-			assetDisplayFields.add(
-				new AssetDisplayField(
-					assetEntryModelField.getKey(),
-					LanguageUtil.get(
-						resourceBundle, assetEntryModelField.getValue())));
-		}
+		Set<AssetDisplayField> assetDisplayFields =
+			_assetDisplayContributorFieldTracker.
+				getAssetEntryAssetDisplayFields(locale);
 
 		// Fields for the specific asset type
 
-		Map<String, String> assetEntryModelFieldsMap =
-			getAssetEntryModelFieldsMap();
+		Set<AssetDisplayField> journalArticleAssetDisplayFields =
+			_assetDisplayContributorFieldTracker.getAssetDisplayFields(
+				getClassName(), locale);
 
-		if (assetEntryModelFieldsMap != null) {
-			for (Map.Entry<String, String> entry :
-					assetEntryModelFieldsMap.entrySet()) {
-
-				assetDisplayFields.add(
-					new AssetDisplayField(
-						entry.getKey(),
-						LanguageUtil.get(resourceBundle, entry.getValue())));
-			}
-		}
+		assetDisplayFields.addAll(journalArticleAssetDisplayFields);
 
 		// Fields for the class type
 
@@ -97,33 +74,36 @@ public abstract class BaseAssetDisplayContributor<T>
 			AssetEntry assetEntry, Locale locale)
 		throws PortalException {
 
-		// Default fields for asset entry
+		// Field values for asset entry
 
-		Map<String, Object> parameterMap = _getDefaultParameterMap(
-			assetEntry, locale);
+		Map<String, Object> parameterMap =
+			_assetDisplayContributorFieldTracker.
+				getAssetEntryAssetDisplayFieldsValues(assetEntry, locale);
 
-		// Fields for the specific asset type
+		// Field values for the specific asset type
 
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.
 				getAssetRendererFactoryByClassNameId(
 					assetEntry.getClassNameId());
 
+		List<AssetDisplayContributorField> assetDisplayContributorFields =
+			_assetDisplayContributorFieldTracker.
+				getAssetDisplayContributorFields(getClassName());
+
 		AssetRenderer<T> assetRenderer = assetRendererFactory.getAssetRenderer(
 			assetEntry.getClassPK());
 
-		Map<String, String> assetEntryModelFieldsMap =
-			getAssetEntryModelFieldsMap();
+		for (AssetDisplayContributorField assetDisplayContributorField :
+				assetDisplayContributorFields) {
 
-		if (assetEntryModelFieldsMap != null) {
-			for (String key : assetEntryModelFieldsMap.keySet()) {
-				parameterMap.put(
-					key,
-					getFieldValue(assetRenderer.getAssetObject(), key, locale));
-			}
+			parameterMap.put(
+				assetDisplayContributorField.getKey(),
+				assetDisplayContributorField.getValue(
+					assetRenderer.getAssetObject(), locale));
 		}
 
-		// Fields for the class type
+		// Field values for the class type
 
 		Map<String, Object> classTypeValues = getClassTypeValues(
 			assetRenderer.getAssetObject(), locale);
@@ -180,45 +160,8 @@ public abstract class BaseAssetDisplayContributor<T>
 	@Reference
 	protected UserLocalService userLocalService;
 
-	private String _getAuthor(AssetEntry assetEntry) {
-		long userId = assetEntry.getUserId();
-
-		User user = userLocalService.fetchUser(userId);
-
-		if (user != null) {
-			return user.getFullName();
-		}
-
-		return StringPool.BLANK;
-	}
-
-	private Map<String, Object> _getDefaultParameterMap(
-		AssetEntry assetEntry, Locale locale) {
-
-		Map<String, Object> parameterMap = new HashMap<>();
-
-		parameterMap.put("author", _getAuthor(assetEntry));
-		parameterMap.put("categoryIds", assetEntry.getCategoryIds());
-		parameterMap.put("description", assetEntry.getDescription(locale));
-		parameterMap.put("publishDate", assetEntry.getPublishDate());
-		parameterMap.put("summary", assetEntry.getSummary(locale));
-		parameterMap.put("tagNames", assetEntry.getTagNames());
-		parameterMap.put("title", assetEntry.getTitle(locale));
-
-		return parameterMap;
-	}
-
-	private static final Map<String, String> _assetEntryModelFieldsMap =
-		new HashMap<String, String>() {
-			{
-				put("author", "author");
-				put("categoryIds", "categories");
-				put("description", "description");
-				put("publishDate", "publish-date");
-				put("summary", "summary");
-				put("tagNames", "tags");
-				put("title", "title");
-			}
-		};
+	@Reference
+	private AssetDisplayContributorFieldTracker
+		_assetDisplayContributorFieldTracker;
 
 }

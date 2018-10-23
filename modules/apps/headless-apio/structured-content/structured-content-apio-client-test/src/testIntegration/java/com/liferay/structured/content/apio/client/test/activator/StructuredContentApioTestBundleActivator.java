@@ -245,8 +245,7 @@ public class StructuredContentApioTestBundleActivator
 		}
 	}
 
-	private DDMStructure _getDDMStructureWithNestedField(
-		Group group, String fileName)
+	private DDMStructure _getDDMStructure(Group group, String fileName)
 		throws Exception {
 
 		DDMStructureTestHelper ddmStructureTestHelper =
@@ -273,7 +272,7 @@ public class StructuredContentApioTestBundleActivator
 			titleMap1, user.getUserId(), group.getGroupId(), LocaleUtil.SPAIN,
 			true, true);
 
-		DDMStructure ddmStructure = _getDDMStructureWithNestedField(
+		DDMStructure ddmStructure = _getDDMStructure(
 			group, "test-journal-structured-nested-fields.json");
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(

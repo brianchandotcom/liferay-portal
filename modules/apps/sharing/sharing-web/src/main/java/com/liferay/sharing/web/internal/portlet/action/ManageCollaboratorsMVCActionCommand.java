@@ -47,9 +47,14 @@ import java.io.IOException;
 
 import java.text.DateFormat;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -120,24 +125,14 @@ public class ManageCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 		return DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd", locale);
 	}
 
-	private void _manageCollaborators(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			ResourceBundle resourceBundle)
-		throws IOException, PortalException {
-
-		long[] deleteSharingEntryIds = ParamUtil.getLongValues(
-			actionRequest, "deleteSharingEntryIds");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		for (long sharingEntryId : deleteSharingEntryIds) {
-			_sharingEntryService.deleteSharingEntry(
-				sharingEntryId, serviceContext);
-		}
+	private Map<Long, Collection<SharingEntryAction>>
+		_getSharingEntryActions(ActionRequest actionRequest) {
 
 		String[] sharingEntryIdActionIdPairs = ParamUtil.getParameterValues(
 			actionRequest, "sharingEntryIdActionIdPairs", new String[0], false);
+
+		Map<Long, Collection<SharingEntryAction>> sharingEntryActions =
+			new HashMap<>();
 
 		for (String sharingEntryIdActionIdPair : sharingEntryIdActionIdPairs) {
 			String[] parts = StringUtil.split(sharingEntryIdActionIdPair);
@@ -145,19 +140,22 @@ public class ManageCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 			long sharingEntryId = Long.valueOf(parts[0]);
 
 			SharingEntryPermissionDisplayAction
-				sharingEntryPermissionDisplayActionKey =
+				sharingEntryPermissionDisplayAction =
 					SharingEntryPermissionDisplayAction.parseFromActionId(
 						parts[1]);
 
-			SharingEntry sharingEntry =
-				_sharingEntryLocalService.getSharingEntry(sharingEntryId);
-
-			_sharingEntryService.updateSharingEntry(
+			sharingEntryActions.put(
 				sharingEntryId,
-				sharingEntryPermissionDisplayActionKey.getSharingEntryActions(),
-				sharingEntry.isShareable(), sharingEntry.getExpirationDate(),
-				serviceContext);
+				sharingEntryPermissionDisplayAction.getSharingEntryActions());
 		}
+
+		return sharingEntryActions;
+	}
+
+	private Map<Long, Date> _getSharingEntryExpirationDates(
+		ActionRequest actionRequest, ResourceBundle resourceBundle) {
+
+		Map<Long, Date> expirationDates = new HashMap<>();
 
 		String[] sharingEntryIdExpirationDatePairs =
 			ParamUtil.getParameterValues(
@@ -175,15 +173,68 @@ public class ManageCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 				parts[1], _getDateFormat(resourceBundle.getLocale()), null);
 
 			if (expirationDate != null) {
-				SharingEntry sharingEntry =
-					_sharingEntryLocalService.getSharingEntry(sharingEntryId);
+				expirationDates.put(sharingEntryId, expirationDate);
+			}
+		}
 
-				_sharingEntryService.updateSharingEntry(
+		return expirationDates;
+	}
+
+	private Set<Long> _getSharingEntryIdsToDelete(ActionRequest actionRequest) {
+		long[] deleteSharingEntryIds = ParamUtil.getLongValues(
+			actionRequest, "deleteSharingEntryIds");
+
+		Set<Long> sharingEntryIdsToDelete = new HashSet<>();
+
+		for (Long sharingEntryId : deleteSharingEntryIds) {
+			sharingEntryIdsToDelete.add(sharingEntryId);
+		}
+
+		return sharingEntryIdsToDelete;
+	}
+
+	private void _manageCollaborators(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			ResourceBundle resourceBundle)
+		throws IOException, PortalException {
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		Map<Long, Collection<SharingEntryAction>> sharingEntryActions =
+			_getSharingEntryActions(actionRequest);
+
+		Map<Long, Date> sharingEntryExpirationDates =
+			_getSharingEntryExpirationDates(actionRequest, resourceBundle);
+
+		Set<Long> sharingEntryIdsToDelete = _getSharingEntryIdsToDelete(
+			actionRequest);
+
+		Set<Long> sharingEntryIdsToEdit = new HashSet<>();
+
+		sharingEntryIdsToEdit.addAll(sharingEntryActions.keySet());
+		sharingEntryIdsToEdit.addAll(sharingEntryExpirationDates.keySet());
+		sharingEntryIdsToEdit.removeAll(sharingEntryIdsToDelete);
+
+		for (Long sharingEntryId : sharingEntryIdsToEdit) {
+			SharingEntry sharingEntry =
+				_sharingEntryLocalService.getSharingEntry(sharingEntryId);
+
+			_sharingEntryService.updateSharingEntry(
+				sharingEntryId,
+				sharingEntryActions.getOrDefault(
 					sharingEntryId,
 					SharingEntryAction.getSharingEntryActions(
-						sharingEntry.getActionIds()),
-					sharingEntry.isShareable(), expirationDate, serviceContext);
-			}
+						sharingEntry.getActionIds())),
+				sharingEntry.isShareable(),
+				sharingEntryExpirationDates.getOrDefault(
+					sharingEntryId, sharingEntry.getExpirationDate()),
+				serviceContext);
+		}
+
+		for (long sharingEntryId : sharingEntryIdsToDelete) {
+			_sharingEntryService.deleteSharingEntry(
+				sharingEntryId, serviceContext);
 		}
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();

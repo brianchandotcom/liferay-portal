@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.Value;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.web.asset.JournalArticleDDMFormValuesReader;
 import com.liferay.petra.string.StringPool;
@@ -138,9 +137,6 @@ public class JournalArticleAssetDisplayContributor
 
 	@Reference
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
-
-	@Reference
-	private JournalContent _journalContent;
 
 	@Reference
 	private JournalConverter _journalConverter;

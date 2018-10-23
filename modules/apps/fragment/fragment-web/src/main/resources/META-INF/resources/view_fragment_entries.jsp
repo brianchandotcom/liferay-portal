@@ -130,7 +130,7 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 </portlet:actionURL>
 
 <aui:form action="<%= moveFragmentEntryURL %>" name="moveFragmentEntryFm">
-	<aui:input name="fragmentEntryId" type="hidden" />
+	<aui:input name="fragmentEntryIds" type="hidden" />
 	<aui:input name="fragmentCollectionId" type="hidden" />
 </aui:form>
 
@@ -230,27 +230,7 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 
 				var data = event.delegateTarget.dataset;
 
-				Liferay.Util.selectEntity(
-					{
-						dialog: {
-							constrain: true,
-							destroyOnHide: true,
-							modal: true
-						},
-						eventName: '<portlet:namespace />selectFragmentCollection',
-						id: '<portlet:namespace />selectSiteNavigationMenu',
-						title: '<liferay-ui:message arguments="collection" key="select-x" />',
-						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/fragment/select_fragment_collection" /></portlet:renderURL>'
-					},
-					function(selectedItem) {
-						if (selectedItem) {
-							document.<portlet:namespace/>moveFragmentEntryFm.<portlet:namespace/>fragmentCollectionId.value = selectedItem.id;
-							document.<portlet:namespace/>moveFragmentEntryFm.<portlet:namespace/>fragmentEntryId.value = data.fragmentEntryId;
-
-							submitForm(document.<portlet:namespace/>moveFragmentEntryFm);
-						}
-					}
-				);
+				moveFragmentEntries(data.fragmentEntryId);
 			}
 		);
 
@@ -283,9 +263,40 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 		submitForm(document.querySelector('#<portlet:namespace />fm'), '<portlet:resourceURL id="/fragment/export_fragment_entries" />');
 	}
 
+	var moveSelectedFragmentEntries = function() {
+		var form = document.querySelector('#<portlet:namespace />fm');
+
+		moveFragmentEntries(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+	}
+
+	var moveFragmentEntries = function(fragmentEntryIds) {
+		Liferay.Util.selectEntity(
+			{
+				dialog: {
+					constrain: true,
+					destroyOnHide: true,
+					modal: true
+				},
+				eventName: '<portlet:namespace />selectFragmentCollection',
+				id: '<portlet:namespace />selectSiteNavigationMenu',
+				title: '<liferay-ui:message arguments="collection" key="select-x" />',
+				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/fragment/select_fragment_collection" /></portlet:renderURL>'
+			},
+			function(selectedItem) {
+				if (selectedItem) {
+					document.<portlet:namespace/>moveFragmentEntryFm.<portlet:namespace/>fragmentCollectionId.value = selectedItem.id;
+					document.<portlet:namespace/>moveFragmentEntryFm.<portlet:namespace/>fragmentEntryIds.value = fragmentEntryIds;
+
+					submitForm(document.<portlet:namespace/>moveFragmentEntryFm);
+				}
+			}
+		);
+	}
+
 	var ACTIONS = {
 		'deleteSelectedFragmentEntries': deleteSelectedFragmentEntries,
-		'exportSelectedFragmentEntries': exportSelectedFragmentEntries
+		'exportSelectedFragmentEntries': exportSelectedFragmentEntries,
+		'moveSelectedFragmentEntries': moveSelectedFragmentEntries
 	};
 
 	Liferay.componentReady('fragmentEntriesManagementToolbar').then(

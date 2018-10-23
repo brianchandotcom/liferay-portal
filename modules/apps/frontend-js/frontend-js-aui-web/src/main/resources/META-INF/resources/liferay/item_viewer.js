@@ -235,8 +235,6 @@ AUI.add(
 							image.attr('src', itemFileURL);
 						}
 
-						var returnType = link.attr('data-returnType');
-
 						if (itemFile.resolvedValue) {
 							link.setData('value', itemFile.resolvedValue);
 						}
@@ -429,22 +427,24 @@ AUI.add(
 
 						// LPS-82848
 
-						if (touchEnabled && this._scrollView) {
-							this._detachSwipeEvents();
+						if (touchEnabled && instance._scrollView) {
+							instance._detachSwipeEvents();
 						}
 
 						instance.appendNewLink(event.data);
 
 						// LPS-82848
 
-						if (touchEnabled && this._scrollView) {
-							this._scrollView.destroy();
+						if (touchEnabled && instance._scrollView) {
+							instance._scrollView.destroy();
 
-							this._scrollView = new A.ScrollView(this.get('swipe'));
-							this._plugPaginator();
-							this._scrollView.render();
+							instance._scrollView = new A.ScrollView(instance.get('swipe'));
 
-							this._attachSwipeEvents();
+							instance._plugPaginator();
+
+							instance._scrollView.render();
+
+							instance._attachSwipeEvents();
 						}
 					},
 

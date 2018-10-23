@@ -85,7 +85,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		Matcher matcher = _attributePattern.matcher(annotation);
 
 		while (matcher.find()) {
-			if (!ToolsUtil.isInsideQuotes(annotation, matcher.end()) &&
+			if (!ToolsUtil.isInsideQuotes(annotation, matcher.end(1)) &&
 				(getLevel(annotation.substring(0, matcher.end()), "{", "}") ==
 					0)) {
 

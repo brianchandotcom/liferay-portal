@@ -14,7 +14,10 @@
 
 package com.liferay.sharing.security.permission;
 
+import java.util.Collection;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Provides the actions that users can perform on resources shared with them.
@@ -26,6 +29,25 @@ import java.util.Objects;
 public enum SharingEntryAction {
 
 	ADD_DISCUSSION("ADD_DISCUSSION", 4), UPDATE("UPDATE", 2), VIEW("VIEW", 1);
+
+	/**
+	 * Returns the sharing entry actions from the bitwise value.
+	 *
+	 * @param  bitwiseValue the bitwise value
+	 * @return the sharing entry actions
+	 */
+	public static Collection<SharingEntryAction> getSharingEntryActions(
+		long bitwiseValue) {
+
+		return Stream.of(
+			values()
+		).filter(
+			sharingEntryAction ->
+				(sharingEntryAction.getBitwiseValue() & bitwiseValue) != 0
+		).collect(
+			Collectors.toList()
+		);
+	}
 
 	/**
 	 * Returns {@code true} if the sharing entry action's ID matches a valid

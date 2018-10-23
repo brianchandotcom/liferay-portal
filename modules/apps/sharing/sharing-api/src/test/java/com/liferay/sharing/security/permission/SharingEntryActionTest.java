@@ -14,6 +14,11 @@
 
 package com.liferay.sharing.security.permission;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,6 +26,33 @@ import org.junit.Test;
  * @author Sergio González
  */
 public class SharingEntryActionTest {
+
+	@Test
+	public void testGetSharingEntryActionsInABitwiseValue() throws Exception {
+		_assertCollectionEquals(
+			Collections.emptyList(),
+			SharingEntryAction.getSharingEntryActions(0));
+
+		_assertCollectionEquals(
+			Arrays.asList(SharingEntryAction.VIEW),
+			SharingEntryAction.getSharingEntryActions(
+				SharingEntryAction.VIEW.getBitwiseValue()));
+
+		_assertCollectionEquals(
+			Arrays.asList(SharingEntryAction.VIEW, SharingEntryAction.UPDATE),
+			SharingEntryAction.getSharingEntryActions(
+				SharingEntryAction.VIEW.getBitwiseValue() |
+				SharingEntryAction.UPDATE.getBitwiseValue()));
+
+		_assertCollectionEquals(
+			Arrays.asList(
+				SharingEntryAction.VIEW, SharingEntryAction.UPDATE,
+				SharingEntryAction.ADD_DISCUSSION),
+			SharingEntryAction.getSharingEntryActions(
+				SharingEntryAction.VIEW.getBitwiseValue() |
+				SharingEntryAction.UPDATE.getBitwiseValue() |
+				SharingEntryAction.ADD_DISCUSSION.getBitwiseValue()));
+	}
 
 	@Test
 	public void testIsSupportedActionIdWithAddDiscussionActionId()
@@ -131,6 +163,13 @@ public class SharingEntryActionTest {
 		throws Exception {
 
 		SharingEntryAction.parseFromActionId("8");
+	}
+
+	private <T> void _assertCollectionEquals(
+		Collection<T> collection1, Collection<T> collection2) {
+
+		Assert.assertEquals(
+			new HashSet<>(collection1), new HashSet<>(collection2));
 	}
 
 }

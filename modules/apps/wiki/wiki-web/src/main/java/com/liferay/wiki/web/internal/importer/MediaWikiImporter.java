@@ -758,37 +758,36 @@ public class MediaWikiImporter implements WikiImporter {
 
 	protected String translateMediaLinks(WikiNode node, String content) {
 		try {
-			Company company = _companyLocalService.getCompany(
-				node.getCompanyId());
-
-			String portalURL = company.getPortalURL(node.getGroupId());
 
 			WikiPage sharedImagesPage = _wikiPageLocalService.getPage(
 				node.getNodeId(), SHARED_IMAGES_TITLE);
 
 			StringBuffer sb = new StringBuffer();
 
+			Company company = _companyLocalService.getCompany(
+				node.getCompanyId());
+
+			String portalURL = company.getPortalURL(node.getGroupId());
+
 			Matcher matcher = _mediaLinkPattern.matcher(content);
 
 			while (matcher.find()) {
-				String mediaLinkTag = matcher.group();
-
 				String fileName = matcher.group(2);
 
-				FileEntry attachmentFileEntry =
+				FileEntry fileEntry =
 					PortletFileRepositoryUtil.fetchPortletFileEntry(
 						node.getGroupId(),
 						sharedImagesPage.getAttachmentsFolderId(), fileName);
 
-				if (attachmentFileEntry == null) {
-					matcher.appendReplacement(sb, mediaLinkTag);
+				if (fileEntry == null) {
+					matcher.appendReplacement(sb, matcher.group());
 
 					continue;
 				}
 
-				String attachmentFileEntryURL =
+				String fileEntryURL =
 					PortletFileRepositoryUtil.getPortletFileEntryURL(
-						null, attachmentFileEntry, StringPool.BLANK);
+						null, fileEntry, StringPool.BLANK);
 
 				String linkLabel = matcher.group(3);
 
@@ -799,8 +798,7 @@ public class MediaWikiImporter implements WikiImporter {
 				matcher.appendReplacement(
 					sb,
 					StringBundler.concat(
-						"[[", portalURL, attachmentFileEntryURL, linkLabel,
-						"]]"));
+						"[[", portalURL, fileEntryURL, linkLabel, "]]"));
 			}
 
 			matcher.appendTail(sb);

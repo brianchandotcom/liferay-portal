@@ -53,7 +53,10 @@ public class OrganizationEntityModel implements EntityModel {
 	private static final Map<String, EntityField> _entityFieldsMap = Stream.of(
 		new EntityField(
 			Field.NAME, EntityField.Type.STRING,
-			locale -> Field.getSortableFieldName(Field.NAME))
+			locale -> Field.getSortableFieldName(Field.NAME)),
+		new EntityField(
+			"parentOrganizationId", EntityField.Type.STRING,
+			locale -> "parentOrganizationId")
 	).collect(
 		Collectors.toMap(EntityField::getName, Function.identity())
 	);

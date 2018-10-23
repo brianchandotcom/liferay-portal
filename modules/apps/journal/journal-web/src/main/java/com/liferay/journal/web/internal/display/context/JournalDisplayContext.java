@@ -657,6 +657,19 @@ public class JournalDisplayContext {
 		return orderColumns;
 	}
 
+	public String getOriginalAuthor(JournalArticle article) {
+		long classPK = JournalArticleAssetRenderer.getClassPK(article);
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			JournalArticle.class.getName(), classPK);
+
+		if (assetEntry != null) {
+			return assetEntry.getUserName();
+		}
+
+		return article.getUserName();
+	}
+
 	public long getParentFolderId() {
 		if (_parentFolderId != null) {
 			return _parentFolderId;

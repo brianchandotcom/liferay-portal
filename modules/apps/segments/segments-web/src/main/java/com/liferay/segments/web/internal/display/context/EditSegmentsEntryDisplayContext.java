@@ -127,14 +127,13 @@ public class EditSegmentsEntryDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() throws PortalException {
+		String currentTab = ParamUtil.getString(_request, "tabs1", "details");
+
 		return new NavigationItemList() {
 			{
 				add(
 					navigationItem -> {
-						String activeTab = ParamUtil.getString(
-							_request, "tabs1", "details");
-
-						navigationItem.setActive(activeTab.equals("details"));
+						navigationItem.setActive(currentTab.equals("details"));
 
 						navigationItem.setHref(_getDetailsURL());
 						navigationItem.setLabel(
@@ -148,10 +147,8 @@ public class EditSegmentsEntryDisplayContext {
 						navigationItem -> {
 							String type = segmentsEntry.getType();
 
-							String activeTab = ParamUtil.getString(
-								_request, "tabs1", "details");
-
-							navigationItem.setActive(activeTab.equals(type));
+							navigationItem.setActive(
+								!currentTab.equals("details"));
 
 							if (type.equals(Organization.class.getName())) {
 								navigationItem.setHref(_getOrganizationsURL());

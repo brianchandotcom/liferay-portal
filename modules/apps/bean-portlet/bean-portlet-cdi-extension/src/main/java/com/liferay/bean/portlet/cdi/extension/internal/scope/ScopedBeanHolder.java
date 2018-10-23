@@ -158,15 +158,25 @@ public class ScopedBeanHolder {
 	}
 
 	public Closeable install() {
-		_instance.set(this);
+		if (_instance.get() == null) {
+			_instance.set(this);
+
+			return new Closeable() {
+
+				@Override
+				public void close() throws IOException {
+					_release();
+
+					_instance.remove();
+				}
+
+			};
+		}
 
 		return new Closeable() {
 
 			@Override
 			public void close() throws IOException {
-				_release();
-
-				_instance.remove();
 			}
 
 		};
@@ -279,7 +289,7 @@ public class ScopedBeanHolder {
 		new CentralizedThreadLocal<>(ScopedBeanHolder.class + "._instance");
 
 	private final PortletConfig _portletConfig;
-	private final PortletRequest _portletRequest;
+	private PortletRequest _portletRequest;
 	private final PortletResponse _portletResponse;
 
 }

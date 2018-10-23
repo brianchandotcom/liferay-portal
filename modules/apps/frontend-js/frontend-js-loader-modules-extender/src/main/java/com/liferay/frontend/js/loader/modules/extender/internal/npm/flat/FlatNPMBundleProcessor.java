@@ -122,6 +122,33 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		return sb.toString();
 	}
 
+	/**
+	 * Get the arguments passed to the AMD define() call.
+	 *
+	 * @param url URL of module file
+	 * @return the arguments or null if not found or read failed
+	 * @review
+	 */
+	private String _getDefineArguments(URL url) {
+		try {
+			String urlContent = _normalizeModuleContent(
+				StringUtil.read(url.openStream()));
+
+			Matcher matcher = _moduleDefinitionPattern.matcher(urlContent);
+
+			if (!matcher.find()) {
+				return null;
+			}
+
+			return matcher.group(1);
+		}
+		catch (IOException ioe) {
+			_log.error("Unable to read URL: " + url, ioe);
+
+			return null;
+		}
+	}
+
 	private JSONObject _getJSONObject(
 		FlatJSBundle flatJSBundle, String location) {
 
@@ -206,24 +233,11 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	 * Returns the dependencies of a module given its URL. The dependencies are
 	 * parsed by reading the module's JavaScript code.
 	 *
-	 * @param  url the {@link URL} of the module
+	 * @param  defineArgs the arguments to the AMD's define() call
 	 * @return the dependencies of the module
 	 */
-	private Collection<String> _parseModuleDependencies(URL url)
-		throws IOException {
-
-		String urlContent = _normalizeModuleContent(
-			StringUtil.read(url.openStream()));
-
-		Matcher matcher = _moduleDefinitionPattern.matcher(urlContent);
-
-		if (!matcher.find()) {
-			return Collections.emptyList();
-		}
-
-		String group = matcher.group(1);
-
-		String[] dependencies = group.split(",");
+	private Collection<String> _parseModuleDependencies(String defineArgs) {
+		String[] dependencies = defineArgs.split(",");
 
 		if ((dependencies.length == 1) && dependencies[0].equals("")) {
 			return Collections.emptyList();
@@ -375,20 +389,17 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 				continue;
 			}
 
-			String name = path.substring(location.length() + 2);
+			String defineArgs = _getDefineArguments(url);
 
-			name = ModuleNameUtil.toModuleName(name);
-
-			Collection<String> dependencies = null;
-
-			try {
-				dependencies = _parseModuleDependencies(url);
-			}
-			catch (IOException ioe) {
-				_log.error("Unable to read URL: " + url, ioe);
-
+			if (defineArgs == null) {
 				continue;
 			}
+
+			String name = ModuleNameUtil.toModuleName(
+				path.substring(location.length() + 2));
+
+			Collection<String> dependencies = _parseModuleDependencies(
+				defineArgs);
 
 			FlatJSModule flatJSModule = new FlatJSModule(
 				flatJSPackage, name, dependencies);

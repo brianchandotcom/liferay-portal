@@ -60,13 +60,6 @@ request.setAttribute(LayoutAdminWebKeys.LAYOUT_PAGE_TEMPLATE_DISPLAY_CONTEXT, la
 			String imagePreviewURL = layoutPageTemplateEntry.getImagePreviewURL(themeDisplay);
 			%>
 
-			<portlet:renderURL var="editLayoutPageTemplateURL">
-				<portlet:param name="mvcRenderCommandName" value="/layout/edit_layout_page_template_entry" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="layoutPageTemplateEntryId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateEntryId()) %>" />
-				<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()) %>" />
-			</portlet:renderURL>
-
 			<liferay-ui:search-container-column-text>
 				<c:choose>
 					<c:when test="<%= Validator.isNotNull(imagePreviewURL) %>">
@@ -79,7 +72,7 @@ request.setAttribute(LayoutAdminWebKeys.LAYOUT_PAGE_TEMPLATE_DISPLAY_CONTEXT, la
 							resultRow="<%= row %>"
 							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= layoutPageTemplateEntry.getName() %>"
-							url="<%= editLayoutPageTemplateURL %>"
+							url="<%= layoutPageTemplateDisplayContext.getEditLayoutPageTemplateEntryURL(layoutPageTemplateEntry) %>"
 						>
 							<liferay-frontend:vertical-card-footer>
 								<div class="card-subtitle row">
@@ -114,7 +107,7 @@ request.setAttribute(LayoutAdminWebKeys.LAYOUT_PAGE_TEMPLATE_DISPLAY_CONTEXT, la
 							resultRow="<%= row %>"
 							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= layoutPageTemplateEntry.getName() %>"
-							url="<%= editLayoutPageTemplateURL %>"
+							url="<%= layoutPageTemplateDisplayContext.getEditLayoutPageTemplateEntryURL(layoutPageTemplateEntry) %>"
 						>
 							<liferay-frontend:vertical-card-footer>
 								<div class="card-subtitle row">

@@ -113,7 +113,7 @@ public class DDMFormRendererTagTest extends PowerMockito {
 
 	@Test
 	public void testCreateDDMFormRenderingContext() {
-		setDDMFormRendererTagInputs(1L, null, null, null);
+		setDDMFormRendererTagInputs(1L, null, null, null, false, false);
 
 		DDMForm ddmForm = new DDMForm();
 
@@ -279,6 +279,18 @@ public class DDMFormRendererTagTest extends PowerMockito {
 			ddmFormInstanceRecordVersionId);
 		_ddmFormRendererTag.setDdmFormInstanceVersionId(
 			ddmFormInstanceVersionId);
+	}
+
+	protected void setDDMFormRendererTagInputs(
+		Long ddmFormInstanceId, Long ddmFormInstanceRecordId,
+		Long ddmFormInstanceRecordVersionId, Long ddmFormInstanceVersionId,
+		Boolean showFormBasicInfo, Boolean showSubmitButton) {
+
+		setDDMFormRendererTagInputs(
+			ddmFormInstanceId, ddmFormInstanceRecordId,
+			ddmFormInstanceRecordVersionId, ddmFormInstanceVersionId);
+		_ddmFormRendererTag.setShowFormBasicInfo(showFormBasicInfo);
+		_ddmFormRendererTag.setShowSubmitButton(showSubmitButton);
 	}
 
 	protected void setUpDDMFormInstanceLocalService() throws Exception {

@@ -767,15 +767,14 @@ public class MediaWikiImporter implements WikiImporter {
 			WikiPage sharedImagesPage = _wikiPageLocalService.getPage(
 				node.getNodeId(), SHARED_IMAGES_TITLE);
 
-			Matcher matcher = _mediaLinkPattern.matcher(content);
-
 			StringBuilder sb = new StringBuilder(content);
 
 			int offset = 0;
 
+			Matcher matcher = _mediaLinkPattern.matcher(content);
+
 			while (matcher.find()) {
-				String mediaLinkTag = sb.substring(
-					matcher.start(0) + offset, matcher.end(0) + offset);
+				String mediaLinkTag = matcher.group();
 
 				int originalLength = mediaLinkTag.length();
 

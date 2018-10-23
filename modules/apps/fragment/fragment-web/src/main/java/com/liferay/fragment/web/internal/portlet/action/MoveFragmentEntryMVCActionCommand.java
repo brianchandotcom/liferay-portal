@@ -19,6 +19,7 @@ import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -44,14 +45,16 @@ public class MoveFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long fragmentEntryId = ParamUtil.getLong(
-			actionRequest, "fragmentEntryId");
+		long[] fragmentEntryIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "fragmentEntryIds"), 0L);
 
 		long fragmentCollectionId = ParamUtil.getLong(
 			actionRequest, "fragmentCollectionId");
 
-		_fragmentEntryService.moveFragmentEntry(
-			fragmentEntryId, fragmentCollectionId);
+		for (long fragmentEntryId : fragmentEntryIds) {
+			_fragmentEntryService.moveFragmentEntry(
+				fragmentEntryId, fragmentCollectionId);
+		}
 	}
 
 	@Reference

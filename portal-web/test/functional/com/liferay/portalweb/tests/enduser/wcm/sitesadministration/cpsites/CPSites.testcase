@@ -54,14 +54,8 @@
 			<var name="layoutName" value="Site Page" />
 		</execute>
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/site-name/" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
+		<execute macro="Site#openSiteSettingsAdmin">
+			<var name="siteURLKey" value="site-name" />
 		</execute>
 
 		<execute macro="Site#inactivateCP">
@@ -81,11 +75,7 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		<execute macro="Site#openSitesAdmin" />
 
 		<execute macro="Site#activateInactive">
 			<var name="siteName" value="Site Name" />
@@ -113,11 +103,7 @@
 			<var name="parentGroupName" value="Child SiteName" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		<execute macro="Site#openSitesAdmin" />
 
 		<execute macro="Site#viewChildCP">
 			<var name="childSiteName" value="Child SiteName" />
@@ -131,11 +117,7 @@
 	</command>
 
 	<command name="AddPublicVirtualHostsSiteURL" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		<execute macro="Site#openSitesAdmin" />
 
 		<execute macro="JSONGroup#addGroup">
 			<var name="groupName" value="Site Name" />
@@ -146,14 +128,8 @@
 			<var name="layoutName" value="Site Page" />
 		</execute>
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/site-name/" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
+		<execute macro="Site#openSiteSettingsAdmin">
+			<var name="siteURLKey" value="site-name" />
 		</execute>
 
 		<execute macro="Site#addVirtualHostsURLCP">
@@ -177,11 +153,7 @@
 			<var name="groupName" value="Site Name," />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		<execute macro="Site#openSitesAdmin" />
 
 		<execute macro="Site#viewCP">
 			<var name="siteName" value="Site Name," />
@@ -193,11 +165,7 @@
 			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		<execute macro="Site#openSitesAdmin" />
 
 		<execute macro="Site#viewCannotAdd">
 			<var name="siteName" value="Site Name" />
@@ -207,13 +175,7 @@
 
 	<command name="AddSiteWithInvalidName" priority="3">
 		<for list=" ,Site Name*,22222" param="siteName">
-			<execute macro="Navigator#openURL" />
-
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Sites" />
-				<var name="panel" value="Control Panel" />
-				<var name="portlet" value="Sites" />
-			</execute>
+			<execute macro="Site#openSitesAdmin" />
 
 			<execute macro="Site#viewCannotAdd">
 				<var name="siteName" value="${siteName}" />
@@ -223,24 +185,14 @@
 	</command>
 
 	<command name="EditSite" priority="5">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		<execute macro="Site#openSitesAdmin" />
 
 		<execute macro="JSONGroup#addGroup">
 			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/site-name/" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
+		<execute macro="Site#openSiteSettingsAdmin">
+			<var name="siteURLKey" value="site-name" />
 		</execute>
 
 		<execute macro="Site#editCP">
@@ -248,11 +200,7 @@
 			<var name="siteNameEdit" value="Site Name Edit" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		<execute macro="Site#openSitesAdmin" />
 
 		<execute macro="Site#viewCP">
 			<var name="siteName" value="Site Name Edit" />
@@ -262,14 +210,15 @@
 	<command name="EditSiteFriendlyURL" priority="4">
 		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		<execute macro="Site#openSitesAdmin" />
 
 		<execute macro="JSONGroup#addGroup">
 			<var name="groupName" value="Site Name" />
+		</execute>
+
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Site Name" />
+			<var name="layoutName" value="Site Page" />
 		</execute>
 
 		<execute macro="Navigator#openWithAppendToBaseURL">
@@ -282,19 +231,12 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
-			<var name="groupName" value="Site Name" />
-			<var name="layoutName" value="Site Page" />
-		</execute>
-
 		<execute macro="SitePages#addPrivatePage">
 			<var name="pageName" value="Test Private Page" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
+		<execute macro="Site#openSiteSettingsAdmin">
+			<var name="siteURLKey" value="site-name" />
 		</execute>
 
 		<execute macro="Site#editFriendlyURLCP">
@@ -336,14 +278,8 @@
 			<var name="layoutName" value="Site Page" />
 		</execute>
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/site-name/" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
+		<execute macro="Site#openSiteSettingsAdmin">
+			<var name="siteURLKey" value="site-name" />
 		</execute>
 
 		<execute macro="Site#editFriendlyURLCP">
@@ -374,11 +310,7 @@
 			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		<execute macro="Site#openSitesAdmin" />
 
 		<execute macro="Site#searchCP">
 			<var name="siteName" value="Site Name" />
@@ -386,24 +318,14 @@
 	</command>
 
 	<command name="SiteCannotBeItsOwnParent" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		<execute macro="Site#openSitesAdmin" />
 
 		<execute macro="Site#addCommunityCP">
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
+		<execute macro="Site#openSiteSettingsAdmin">
+			<var name="siteURLKey" value="site-name" />
 		</execute>
 
 		<execute macro="Site#selectParentSite">
@@ -413,11 +335,7 @@
 	</command>
 
 	<command name="SiteCannotBeItsOwnParentStaging" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		<execute macro="Site#openSitesAdmin" />
 
 		<execute macro="Site#addCommunityCP">
 			<var name="siteName" value="Site Name" />
@@ -445,14 +363,8 @@
 
 		<execute macro="Staging#viewStagingLocalLivePG" />
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Settings" />
+		<execute macro="Site#openSiteSettingsAdmin">
+			<var name="siteURLKey" value="site-name" />
 		</execute>
 
 		<execute macro="Site#selectParentSite">
@@ -462,11 +374,7 @@
 	</command>
 
 	<command name="ViewDisplayParentSiteViaSitesDirectory" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		<execute macro="Site#openSitesAdmin" />
 
 		<execute macro="JSONGroup#addGroup">
 			<var name="groupName" value="Site Name" />
@@ -497,11 +405,7 @@
 			<var name="layoutName" value="Site Page" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		<execute macro="Site#openSitesAdmin" />
 
 		<execute macro="Site#viewChildCP">
 			<var name="childSiteName" value="Child SiteName" />
@@ -537,11 +441,7 @@
 	</command>
 
 	<command name="ViewSiteHierarchiesViaSitesDirectory" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
+		<execute macro="Site#openSitesAdmin" />
 
 		<execute macro="JSONGroup#addGroup">
 			<var name="groupName" value="Site Name" />

@@ -112,12 +112,10 @@
 			<var name="rowEntry" value="Primary Menu Name 1" />
 		</execute>
 
-		<for list="1,2" param="index">
-			<execute macro="NavigationMenusAdmin#addItem">
-				<var name="item" value="Page" />
-				<var name="pageNames" value="Test Page Name ${index}" />
-			</execute>
-		</for>
+		<execute macro="NavigationMenusAdmin#addItem">
+			<var name="item" value="Page" />
+			<var name="pageNames" value="Test Page Name 1,Test Page Name 2" />
+		</execute>
 
 		<for list="1,2" param="index">
 			<execute macro="NavigationMenusAdmin#viewItemOrder">
@@ -167,12 +165,10 @@
 			<var name="rowEntry" value="Primary Menu Name 1" />
 		</execute>
 
-		<for list="1,2,3,4" param="index">
-			<execute macro="NavigationMenusAdmin#addItem">
-				<var name="item" value="Page" />
-				<var name="pageNames" value="Test Page Name ${index}" />
-			</execute>
-		</for>
+		<execute macro="NavigationMenusAdmin#addItem">
+			<var name="item" value="Page" />
+			<var name="pageNames" value="Test Page Name 1,Test Page Name 2,Test Page Name 3,Test Page Name 4" />
+		</execute>
 
 		<for list="1,2,3,4" param="index">
 			<execute macro="NavigationMenusAdmin#viewItemOrder">
@@ -483,12 +479,10 @@
 			<var name="menuName" value="Test Navigation Menu Name" />
 		</execute>
 
-		<for list="1,2" param="index">
-			<execute macro="NavigationMenusAdmin#addItem">
-				<var name="item" value="Page" />
-				<var name="pageNames" value="Site Page Name ${index}" />
-			</execute>
-		</for>
+		<execute macro="NavigationMenusAdmin#addItem">
+			<var name="item" value="Page" />
+			<var name="pageNames" value="Site Page Name 1,Site Page Name 2" />
+		</execute>
 
 		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
 			<var name="siteURLKey" value="test-site-name" />

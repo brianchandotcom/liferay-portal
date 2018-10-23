@@ -109,7 +109,7 @@ public class OAuth2ProviderShortcutPortalInstanceLifecycleListener
 						add(GrantType.REFRESH_TOKEN);
 					}
 				},
-				_generateRandomId(), ClientProfile.WEB_APPLICATION.id(),
+				StringPool.BLANK, ClientProfile.WEB_APPLICATION.id(),
 				_generateRandomSecret(), null, null,
 				"https://analytics.liferay.com", 0, _APPLICATION_NAME, null,
 				Collections.singletonList(
@@ -123,12 +123,6 @@ public class OAuth2ProviderShortcutPortalInstanceLifecycleListener
 
 		_oAuth2ApplicationLocalService.updateIcon(
 			oAuth2Application.getOAuth2ApplicationId(), inputStream);
-	}
-
-	private static String _generateRandomId() {
-		String randomSecret = _generateRandomSecret();
-
-		return StringUtil.replace(randomSecret, "secret-", "id-");
 	}
 
 	private static String _generateRandomSecret() {

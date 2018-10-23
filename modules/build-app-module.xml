@@ -110,8 +110,8 @@
 
 		<if>
 			<or>
-				<istrue value="${download.artifact.private.override}" />
 				<contains string="${basedir}" substring="private${file.separator}" />
+				<istrue value="${download.artifact.private.override}" />
 			</or>
 			<then>
 				<get

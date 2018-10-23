@@ -53,34 +53,29 @@
 	{@param? zoomOutDisabled: bool}
 
 	{let $zoomLabel: round(($zoomActual ?: 0) * 100) /}
+	{let $baseButtonsToolbar:[
+		'elementClasses': 'btn-dark',
+		'events': [ 'click': $_handleZoom ],
+		'spritemap': $spritemap,
+		'style': false
+	] /}
 
 	<div class="preview-toolbar-container">
 		<div class="btn-group" role="group">
-			{call ClayButton.render}
+			{call ClayButton.render data="$baseButtonsToolbar"}
 				{param disabled: $zoomOutDisabled /}
-				{param elementClasses: 'btn-dark' /}
-				{param events: [ 'click': $_handleZoom ] /}
 				{param icon: 'hr' /}
 				{param monospaced: true /}
-				{param spritemap: $spritemap /}
-				{param style: false /}
 				{param value: 'out' /}
 			{/call}
-			{call ClayButton.render}
-				{param elementClasses: 'btn-dark' /}
+			{call ClayButton.render data="$baseButtonsToolbar"}
 				{param label kind="text"}{$zoomLabel}%{/param}
-				{param style: false /}
-				{param events: [ 'click': $_handleZoom ] /}
 				{param value: 'real' /}
 			{/call}
-			{call ClayButton.render}
+			{call ClayButton.render data="$baseButtonsToolbar"}
 				{param disabled: $zoomInDisabled /}
-				{param elementClasses: 'btn-dark' /}
-				{param events: [ 'click': $_handleZoom ] /}
 				{param icon: 'plus' /}
 				{param monospaced: true /}
-				{param spritemap: $spritemap /}
-				{param style: false /}
 				{param value: 'in' /}
 			{/call}
 		</div>

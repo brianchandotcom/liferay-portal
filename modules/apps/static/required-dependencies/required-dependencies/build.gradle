@@ -64,6 +64,10 @@ deployDependencies {
 	rename(/geronimo-interceptor_1\.2_spec-(.+)\.jar/, "geronimo-interceptor_1.2_spec" + renameSuffix)
 	rename(/geronimo-jcdi_2\.0_spec-(.+)\.jar/, "geronimo-jcdi_2.0_spec" + renameSuffix)
 	rename(/javax.el-(.+)\.jar/, "javax.el" + renameSuffix)
+	rename(/geronimo-annotation_1\.3_spec-(.+)\.jar/, "geronimo-annotation_1.3_spec" + renameSuffix)
+	rename(/geronimo-atinject_1\.0_spec-(.+)\.jar/, "geronimo-atinject_1.0_spec" + renameSuffix)
+	rename(/geronimo-interceptor_1\.2_spec-(.+)\.jar/, "geronimo-interceptor_1.2_spec" + renameSuffix)
+	rename(/geronimo-jcdi_2\.0_spec-(.+)\.jar/, "geronimo-jcdi_2.0_spec" + renameSuffix)
 }
 
 deployTestLibs {

@@ -5925,6 +5925,14 @@ version 2.4.15.
 - [LPS-86581]: Update the [Liferay Gradle Plugins CSS Builder] dependency to
 version 2.2.4.
 
+## 3.13.7 - 2018-10-22
+
+### Changed
+- [LPS-86556]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.281.
+- [LPS-86556]: Update the [Liferay Source Formatter] dependency to version
+1.0.755.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -6382,6 +6390,7 @@ version 2.2.4.
 [LPS-86413]: https://issues.liferay.com/browse/LPS-86413
 [LPS-86447]: https://issues.liferay.com/browse/LPS-86447
 [LPS-86493]: https://issues.liferay.com/browse/LPS-86493
+[LPS-86556]: https://issues.liferay.com/browse/LPS-86556
 [LPS-86576]: https://issues.liferay.com/browse/LPS-86576
 [LPS-86581]: https://issues.liferay.com/browse/LPS-86581
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

@@ -190,6 +190,15 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
+	<command name="markAsPrimaryNavigation">
+		<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
+			<var name="menuItem" value="Primary Navigation" />
+			<var name="rowEntry" value="${newMenuName}" />
+		</execute>
+
+		<execute function="AssertConfirm" value1="Do you want to replace ${newMenuName} for ${oldMenuName} as primary navigation? This action will affect all the pages using primary navigation." />
+	</command>
+
 	<command name="moveItem">
 		<if>
 			<equals arg1="${direction}" arg2="up" />

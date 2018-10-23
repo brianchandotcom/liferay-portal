@@ -155,7 +155,7 @@
 			</div>
 		</div>
 
-		<div class="autofit-float autofit-row autofit-row-center hide" id="expiration{$collaborator.id}">
+		<div class="autofit-float autofit-row autofit-row-center {if not $collaborator.expanded}hide{/if}" id="expiration{$collaborator.id}">
 			<div class="autofit-col">
 				<span>{msg desc=""}has-permissions-until{/msg}</span>
 			</div>
@@ -181,7 +181,7 @@
 					{param events: [
 						'click': $_handleDeleteExpirationDate
 					] /}
-					{param data: ['sharingEntryId': $collaborator.sharingEntryId] /}
+					{param data: ['collaboratorId': $collaborator.id] /}
 					{param elementClasses: 'text-muted' /}
 					{param label: $cancelMsg /}
 					{param size: 'sm' /}

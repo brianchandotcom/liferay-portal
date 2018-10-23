@@ -40,6 +40,20 @@ class ManageCollaborators extends PortletBase {
 	}
 
 	/**
+	 * Finds a collaborator by his id
+	 *
+	 * @param  {String} collaboratorId The id of a collaborator
+	 * @return {Object} Collaborator
+	 */
+	_getCollaborator(collaboratorId) {
+		let collaborator = this.collaborators.find(
+			collaborator => collaborator.id === collaboratorId
+		);
+
+		return collaborator;
+	}
+
+	/**
 	 * Closes the dialog.
 	 * @protected
 	 */
@@ -97,19 +111,20 @@ class ManageCollaborators extends PortletBase {
 	 * @protected
 	 */
 	_handleDeleteExpirationDate(event) {
-		let sharingEntryId = event.currentTarget.dataset.sharingentryid;
+		let collaboratorId = event.currentTarget.dataset.collaboratorid;
 
-		this._sharingEntryIdsAndPermissions.set(sharingEntryId, null);
-
-		let collaborator = this.collaborators.find(
-			collaborator => collaborator.sharingEntryId === sharingEntryId
-		);
+		let collaborator = this._getCollaborator(collaboratorId);
 
 		if (collaborator) {
-			collaborator.sharingEntryExpirationDate = null; //TODO
-		}
+			let sharingEntryExpirationDate = null;
 
-		//TODO hide block
+			this._sharingEntryIdsAndExpirationDate.set(collaborator.sharingEntryId, sharingEntryExpirationDate);
+
+			collaborator.expanded = false;
+			collaborator.sharingEntryExpirationDate = sharingEntryExpirationDate;
+
+			this.collaborators = this.collaborators;
+		}
 	}
 
 	/**
@@ -183,11 +198,11 @@ class ManageCollaborators extends PortletBase {
 	_hideShowExpirationDateBlock(event) {
 		let collaboratorId = event.currentTarget.dataset.collaboratorid;
 
-		let expirationElementBlock = dom.toElement('#expiration' + collaboratorId);
+		let collaborator = this._getCollaborator(collaboratorId);
 
-		if (expirationElementBlock) {
-			dom.toggleClasses(expirationElementBlock, 'hide');
-		}
+		collaborator.expanded = !collaborator.expanded;
+
+		this.collaborators = this.collaborators;
 	}
 
 	/**

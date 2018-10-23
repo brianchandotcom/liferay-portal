@@ -109,7 +109,10 @@
 		</loadproperties>
 
 		<if>
-			<contains string="${basedir}" substring="private${file.separator}" />
+			<or>
+				<istrue value="${download.artifact.private.override}" />
+				<contains string="${basedir}" substring="private${file.separator}" />
+			</or>
 			<then>
 				<get
 					dest="${dist.dir}"

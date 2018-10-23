@@ -1061,7 +1061,7 @@
 	</command>
 
 	<command name="setScopeCP">
-		<execute function="Click" locator1="KnowledgeBase#SCOPE_DROPDOWN" />
+		<execute function="Click" locator1="ProductMenu#PRODUCT_MENU_PANEL_SCOPE_COG" />
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="MenuItem#ANY_MENU_ITEM" value1="${kbPageScope}">
 			<var name="key_menuItem" value="${kbPageScope}" />

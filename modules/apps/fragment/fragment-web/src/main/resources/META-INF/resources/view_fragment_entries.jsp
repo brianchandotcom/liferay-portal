@@ -16,26 +16,18 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext = new FragmentManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, fragmentDisplayContext);
+%>
+
 <liferay-ui:error exception="<%= RequiredFragmentEntryException.class %>" message="the-fragment-entry-cannot-be-deleted-because-it-is-required-by-one-or-more-page-templates" />
 
 <clay:management-toolbar
-	actionDropdownItems="<%= fragmentDisplayContext.getFragmentEntryActionItemsDropdownItems() %>"
-	clearResultsURL="<%= fragmentDisplayContext.getFragmentEntryClearResultsURL() %>"
-	componentId="fragmentEntriesManagementToolbar"
-	disabled="<%= fragmentDisplayContext.isDisabledFragmentEntriesManagementBar() %>"
-	filterDropdownItems="<%= fragmentDisplayContext.getFragmentEntryFilterItemsDropdownItems() %>"
-	itemsTotal="<%= fragmentDisplayContext.getFragmentEntryTotalItems() %>"
-	searchActionURL="<%= fragmentDisplayContext.getFragmentEntrySearchActionURL() %>"
-	searchContainerId="fragmentEntries"
-	searchFormName="searchFm"
-	showCreationMenu="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) ? true : false %>"
-	sortingOrder="<%= fragmentDisplayContext.getOrderByType() %>"
-	sortingURL="<%= fragmentDisplayContext.getFragmentEntrySortingURL() %>"
+	displayContext="<%= fragmentManagementToolbarDisplayContext %>"
 />
 
 <aui:form name="fm">
 	<liferay-ui:search-container
-		id="fragmentEntries"
 		searchContainer="<%= fragmentDisplayContext.getFragmentEntriesSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row

@@ -194,10 +194,10 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 
 	@Override
 	public com.liferay.fragment.model.FragmentEntry moveFragmentEntry(
-		long fragmentCollectionId, long fragmentEntryId)
+		long fragmentEntryId, long fragmentCollectionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _fragmentEntryService.moveFragmentEntry(fragmentCollectionId,
-			fragmentEntryId);
+		return _fragmentEntryService.moveFragmentEntry(fragmentEntryId,
+			fragmentCollectionId);
 	}
 
 	@Override

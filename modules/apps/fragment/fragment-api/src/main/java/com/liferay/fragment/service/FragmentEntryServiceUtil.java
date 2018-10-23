@@ -192,10 +192,10 @@ public class FragmentEntryServiceUtil {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntry moveFragmentEntry(
-		long fragmentCollectionId, long fragmentEntryId)
+		long fragmentEntryId, long fragmentCollectionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .moveFragmentEntry(fragmentCollectionId, fragmentEntryId);
+				   .moveFragmentEntry(fragmentEntryId, fragmentCollectionId);
 	}
 
 	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(

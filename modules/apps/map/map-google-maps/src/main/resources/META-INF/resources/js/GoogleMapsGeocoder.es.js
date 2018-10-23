@@ -33,13 +33,13 @@ class GoogleMapsGeocoder extends State {
 
 		if (!result.err) {
 			const geocoderResult = response[0];
-			const location = geocoderResult.geometry.location;
+			const geolocation = geocoderResult.geometry.location;
 
 			result.data = {
 				address: geocoderResult.formatted_address,
 				location: {
-					lat: location.lat(),
-					lng: location.lng(),
+					lat: geolocation.lat(),
+					lng: geolocation.lng(),
 				},
 			};
 		}

@@ -61,7 +61,7 @@ class GoogleMapsSearch extends State {
 		const place = this._autocomplete.getPlace();
 
 		if (place && typeof place === 'object' && place.geometry) {
-			const location = place.geometry.location;
+			const geolocation = place.geometry.location;
 
 			this.emit(
 				'search',
@@ -69,8 +69,8 @@ class GoogleMapsSearch extends State {
 					position: {
 						address: place.formatted_address,
 						location: {
-							lat: location.lat(),
-							lng: location.lng(),
+							lat: geolocation.lat(),
+							lng: geolocation.lng(),
 						},
 					},
 				}

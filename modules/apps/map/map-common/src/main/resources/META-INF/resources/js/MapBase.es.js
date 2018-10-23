@@ -75,9 +75,9 @@ class MapBase extends State {
 
 		this.on('positionChange', this._handlePositionChanged);
 
-		const location = this.position && this.position.location ? this.position.location : {};
+		const geolocation = this.position && this.position.location ? this.position.location : {};
 
-		if (!location.lat || !location.lng) {
+		if (!geolocation.lat || !geolocation.lng) {
 			Liferay.Util.getGeolocation(
 				(lat, lng) => {
 					this._initializeLocation({lat, lng})
@@ -85,7 +85,7 @@ class MapBase extends State {
 			);
 		}
 		else {
-			this._initializeLocation(location);
+			this._initializeLocation(geolocation);
 		}
 	}
 
@@ -201,7 +201,7 @@ class MapBase extends State {
 	 * @return {Object} Created map
 	 * @review
 	 */
-	_createMap(location, controlsConfig) {
+	_createMap(geolocation, controlsConfig) {
 		throw new Error('This method must be implemented');
 	}
 
@@ -406,17 +406,17 @@ class MapBase extends State {
 	 * @see this._initializeMap()
 	 * @see this._getGeocoder()
 	 */
-	_initializeLocation(location) {
+	_initializeLocation(geolocation) {
 		const geocoder = this._getGeocoder();
 
 		if (this.geolocation && geocoder) {
 			geocoder.reverse(
-				location,
+				geolocation,
 				({data}) => this._initializeMap(data)
 			);
 		}
 		else {
-			this._initializeMap({location});
+			this._initializeMap({location: geolocation});
 		}
 	}
 
@@ -437,10 +437,10 @@ class MapBase extends State {
 	 */
 	_initializeMap(position) {
 		const controlsConfig = this._getControlsConfig();
-		const location = position.location;
+		const geolocation = position.location;
 
 		this._originalPosition = position;
-		this._map = this._createMap(location, controlsConfig);
+		this._map = this._createMap(geolocation, controlsConfig);
 
 		if (
 			this.constructor.GeoJSONImpl &&
@@ -454,7 +454,7 @@ class MapBase extends State {
 		}
 
 		if (this.geolocation) {
-			this._geolocationMarker = this.addMarker(location);
+			this._geolocationMarker = this.addMarker(geolocation);
 		}
 
 		this.position = position;

@@ -8,9 +8,9 @@ describe('MapBase', () => {
 
 	class MapImpl extends MapBase {
 		_handlePositionChanged(data) {
-			const location = (data && data.location) || getLocation();
+			const geolocation = (data && data.location) || getLocation();
 
-			return super._handlePositionChanged({newVal: {location}});
+			return super._handlePositionChanged({newVal: {location: geolocation}});
 		}
 
 		_createMap(location, controlsConfig) {

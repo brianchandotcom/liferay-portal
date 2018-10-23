@@ -92,6 +92,27 @@ class ManageCollaborators extends PortletBase {
 	}
 
 	/**
+	 * Remove the expiration date
+	 * @param  {Event} event
+	 * @protected
+	 */
+	_handleDeleteExpirationDate(event) {
+		let sharingEntryId = event.currentTarget.dataset.sharingentryid;
+
+		this._sharingEntryIdsAndPermissions.set(sharingEntryId, null);
+
+		let collaborator = this.collaborators.find(
+			collaborator => collaborator.sharingEntryId === sharingEntryId
+		);
+
+		if (collaborator) {
+			collaborator.sharingEntryExpirationDate = null; //TODO
+		}
+
+		//TODO hide block
+	}
+
+	/**
 	 * Toggles the class 'active'
 	 *
 	 * @param {Event} event

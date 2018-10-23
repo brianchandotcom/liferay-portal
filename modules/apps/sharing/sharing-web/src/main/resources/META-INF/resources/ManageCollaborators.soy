@@ -10,6 +10,7 @@
 	{@param? _handleChangeExpirationDate: any}
 	{@param? _handleChangePermission: any}
 	{@param? _handleDeleteCollaborator: any}
+	{@param? _handleDeleteExpirationDate: any}
 	{@param? _handleHoverCollaborator: any}
 	{@param? _handleCancelButtonClick: any}
 	{@param? _handleSaveButtonClick: any}
@@ -26,6 +27,7 @@
 							{param _handleChangeExpirationDate: $_handleChangeExpirationDate /}
 							{param _handleChangePermission: $_handleChangePermission /}
 							{param _handleDeleteCollaborator: $_handleDeleteCollaborator /}
+							{param _handleDeleteExpirationDate: $_handleDeleteExpirationDate /}
 							{param _hideShowExpirationDateBlock: $_hideShowExpirationDateBlock /}
 							{param _loadingResponse: $_loadingResponse /}
 							{param _tomorrowDate: $_tomorrowDate /}
@@ -81,6 +83,7 @@
 	{@param? _handleChangeExpirationDate: any}
 	{@param? _handleChangePermission: any}
 	{@param? _handleDeleteCollaborator: any}
+	{@param? _handleDeleteExpirationDate: any}
 	{@param? _hideShowExpirationDateBlock: any}
 	{@param? _loadingResponse: bool}
 	{@param? _tomorrowDate: string}
@@ -170,9 +173,20 @@
 			</div>
 
 			<div class="autofit-col">
-				<button class="btn btn-link btn-sm text-muted">
+				{let $cancelMsg kind="text"}
 					{msg desc=""}cancel{/msg}
-				</button>
+				{/let}
+
+				{call ClayButton.render}
+					{param events: [
+						'click': $_handleDeleteExpirationDate
+					] /}
+					{param data: ['sharingEntryId': $user.sharingEntryId] /}
+					{param elementClasses: 'text-muted' /}
+					{param label: $cancelMsg /}
+					{param size: 'sm' /}
+					{param style: 'link' /}
+				{/call}
 			</div>
 		</div>
 	</div>

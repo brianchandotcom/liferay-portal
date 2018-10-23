@@ -150,9 +150,7 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v1_2_0.
 				UpgradeSchema());
 
-		registry.register(
-			"1.2.0", "1.2.1",
-			new DummyUpgradeStep());
+		registry.register("1.2.0", "1.2.1", new DummyUpgradeStep());
 
 		registry.register(
 			"1.2.1", "2.0.0",

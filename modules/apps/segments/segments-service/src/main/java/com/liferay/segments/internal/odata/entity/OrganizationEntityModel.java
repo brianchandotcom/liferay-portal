@@ -52,6 +52,10 @@ public class OrganizationEntityModel implements EntityModel {
 
 	private static final Map<String, EntityField> _entityFieldsMap = Stream.of(
 		new EntityField(
+			"dateModified", EntityField.Type.DATE,
+			locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
+			locale -> Field.MODIFIED_DATE),
+		new EntityField(
 			Field.NAME, EntityField.Type.STRING,
 			locale -> Field.getSortableFieldName(Field.NAME)),
 		new EntityField(

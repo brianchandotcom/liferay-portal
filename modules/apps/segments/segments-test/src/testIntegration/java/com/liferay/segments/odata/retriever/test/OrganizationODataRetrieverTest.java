@@ -14,6 +14,8 @@
 
 package com.liferay.segments.odata.retriever.test;
 
+import com.fasterxml.jackson.databind.util.ISO8601Utils;
+
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
@@ -28,7 +30,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.segments.odata.retriever.ODataRetriever;
 
+import java.time.Instant;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -49,6 +54,82 @@ public class OrganizationODataRetrieverTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerTestRule.INSTANCE);
+
+	@Test
+	public void testGetResultsFilterByDateModifiedEquals() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		Organization suborganization1 = OrganizationTestUtil.addOrganization(
+			organization.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
+
+		Organization suborganization2 = OrganizationTestUtil.addOrganization(
+			organization.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
+
+		_organizations.add(suborganization1);
+
+		_organizations.add(suborganization2);
+
+		_organizations.add(organization);
+
+		Date modifiedDate = suborganization1.getModifiedDate();
+
+		Instant instant = modifiedDate.toInstant();
+
+		suborganization2.setModifiedDate(Date.from(instant.plusSeconds(1)));
+
+		_organizationLocalService.updateOrganization(suborganization2);
+
+		List<Organization> organizations = _oDataRetriever.getResults(
+			TestPropsValues.getCompanyId(),
+			String.format(
+				"(dateModified eq %s) and (parentOrganizationId eq '%s')",
+				ISO8601Utils.format(suborganization1.getModifiedDate()),
+				organization.getOrganizationId()),
+			LocaleUtil.getDefault(), 0, 2);
+
+		Assert.assertEquals(organizations.toString(), 1, organizations.size());
+		Assert.assertEquals(suborganization1, organizations.get(0));
+	}
+
+	@Test
+	public void testGetResultsFilterByDateModifiedGreater() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		Organization suborganization1 = OrganizationTestUtil.addOrganization(
+			organization.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
+
+		Organization suborganization2 = OrganizationTestUtil.addOrganization(
+			organization.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
+
+		_organizations.add(suborganization1);
+
+		_organizations.add(suborganization2);
+
+		_organizations.add(organization);
+
+		Date modifiedDate = suborganization1.getModifiedDate();
+
+		Instant instant = modifiedDate.toInstant();
+
+		suborganization2.setModifiedDate(Date.from(instant.plusSeconds(1)));
+
+		_organizationLocalService.updateOrganization(suborganization2);
+
+		List<Organization> organizations = _oDataRetriever.getResults(
+			TestPropsValues.getCompanyId(),
+			String.format(
+				"(dateModified gt %s) and (parentOrganizationId eq '%s')",
+				ISO8601Utils.format(suborganization1.getModifiedDate()),
+				organization.getOrganizationId()),
+			LocaleUtil.getDefault(), 0, 2);
+
+		Assert.assertEquals(organizations.toString(), 1, organizations.size());
+		Assert.assertEquals(suborganization2, organizations.get(0));
+	}
 
 	@Test
 	public void testGetResultsFilterByName() throws Exception {
@@ -85,6 +166,124 @@ public class OrganizationODataRetrieverTest {
 
 		Assert.assertEquals(organizations.toString(), 1, organizations.size());
 		Assert.assertEquals(suborganization, organizations.get(0));
+	}
+
+	@Test
+	public void testGetUsersFilterByDateModifiedGreaterOrEquals()
+		throws Exception {
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		Organization suborganization1 = OrganizationTestUtil.addOrganization(
+			organization.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
+
+		Organization suborganization2 = OrganizationTestUtil.addOrganization(
+			organization.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
+
+		_organizations.add(suborganization1);
+
+		_organizations.add(suborganization2);
+
+		_organizations.add(organization);
+
+		Date modifiedDate = suborganization1.getModifiedDate();
+
+		Instant instant = modifiedDate.toInstant();
+
+		suborganization2.setModifiedDate(Date.from(instant.plusSeconds(1)));
+
+		_organizationLocalService.updateOrganization(suborganization2);
+
+		List<Organization> organizations = _oDataRetriever.getResults(
+			TestPropsValues.getCompanyId(),
+			String.format(
+				"(dateModified ge %s) and (parentOrganizationId eq '%s')",
+				ISO8601Utils.format(suborganization2.getModifiedDate()),
+				organization.getOrganizationId()),
+			LocaleUtil.getDefault(), 0, 2);
+
+		Assert.assertEquals(organizations.toString(), 1, organizations.size());
+		Assert.assertEquals(suborganization2, organizations.get(0));
+	}
+
+	@Test
+	public void testGetUsersFilterByDateModifiedLower() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		Organization suborganization1 = OrganizationTestUtil.addOrganization(
+			organization.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
+
+		Organization suborganization2 = OrganizationTestUtil.addOrganization(
+			organization.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
+
+		_organizations.add(suborganization1);
+
+		_organizations.add(suborganization2);
+
+		_organizations.add(organization);
+
+		Date modifiedDate = suborganization1.getModifiedDate();
+
+		Instant instant = modifiedDate.toInstant();
+
+		suborganization2.setModifiedDate(Date.from(instant.plusSeconds(1)));
+
+		_organizationLocalService.updateOrganization(suborganization2);
+
+		List<Organization> organizations = _oDataRetriever.getResults(
+			TestPropsValues.getCompanyId(),
+			String.format(
+				"(dateModified lt %s) and (parentOrganizationId eq '%s')",
+				ISO8601Utils.format(suborganization2.getModifiedDate()),
+				organization.getOrganizationId()),
+			LocaleUtil.getDefault(), 0, 2);
+
+		Assert.assertEquals(organizations.toString(), 1, organizations.size());
+		Assert.assertEquals(suborganization1, organizations.get(0));
+	}
+
+	@Test
+	public void testGetUsersFilterByDateModifiedLowerOrEquals()
+		throws Exception {
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		Organization suborganization1 = OrganizationTestUtil.addOrganization(
+			organization.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
+
+		Organization suborganization2 = OrganizationTestUtil.addOrganization(
+			organization.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
+
+		_organizations.add(suborganization1);
+
+		_organizations.add(suborganization2);
+
+		_organizations.add(organization);
+
+		Date modifiedDate = suborganization1.getModifiedDate();
+
+		Instant instant = modifiedDate.toInstant();
+
+		suborganization2.setModifiedDate(Date.from(instant.plusSeconds(1)));
+
+		_organizationLocalService.updateOrganization(suborganization2);
+
+		List<Organization> organizations = _oDataRetriever.getResults(
+			TestPropsValues.getCompanyId(),
+			String.format(
+				"(dateModified le %s) and (parentOrganizationId eq '%s')",
+				ISO8601Utils.format(modifiedDate),
+				organization.getOrganizationId()),
+			LocaleUtil.getDefault(), 0, 2);
+
+		Assert.assertEquals(organizations.toString(), 1, organizations.size());
+		Assert.assertEquals(suborganization1, organizations.get(0));
 	}
 
 	@Inject(

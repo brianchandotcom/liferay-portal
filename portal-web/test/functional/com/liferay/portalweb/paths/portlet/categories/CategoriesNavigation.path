@@ -40,13 +40,28 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADT_MULTI_COLUMN_VOCABULARY_NAME</td>
-	<td>//div[contains(@class,'portlet-content')]//div[contains(@class,'col-md-3')]//h3[contains(.,'${vocabularyName}')]</td>
+	<td>ADT_MULTI_COLUMN_1_VOCABULARY_NAME</td>
+	<td>//div[contains(@class,'portlet-content')]//div[contains(@class,'col-md-3')][1]//h3</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADT_MULTI_COLUMN_CATEGORY_NAME</td>
-	<td>//div[contains(@class,'portlet-content')]//div[contains(@class,'col-md-3')]//ul[@class='categories']/li[contains(.,'${categoryName}')]</td>
+	<td>ADT_MULTI_COLUMN_2_VOCABULARY_NAME</td>
+	<td>//div[contains(@class,'portlet-content')]//div[contains(@class,'col-md-3')][2]//h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_MULTI_COLUMN_2_CATEGORY_NAME</td>
+	<td>//div[contains(@class,'portlet-content')]//div[contains(@class,'col-md-3')][2]//ul[@class='categories']/li/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_MULTI_COLUMN_3_VOCABULARY_NAME</td>
+	<td>//div[contains(@class,'portlet-content')]//div[contains(@class,'col-md-3')][3]//h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_MULTI_COLUMN_3_CATEGORY_NAME</td>
+	<td>//div[contains(@class,'portlet-content')]//div[contains(@class,'col-md-3')][3]//ul[@class='categories']/li/a</td>
 	<td></td>
 </tr>
 </tbody>

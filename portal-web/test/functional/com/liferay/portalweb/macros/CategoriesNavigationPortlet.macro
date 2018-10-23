@@ -12,13 +12,13 @@
 		<execute function="AssertElementPresent" locator1="CategoriesNavigation#ADT_MULTI_COLUMN_2" />
 		<execute function="AssertElementPresent" locator1="CategoriesNavigation#ADT_MULTI_COLUMN_3" />
 
-		<var name="key_vocabularyName" value="${vocabularyName}" />
+		<execute function="AssertTextEquals" locator1="CategoriesNavigation#ADT_MULTI_COLUMN_1_VOCABULARY_NAME" value1="Topic" />
 
-		<execute function="AssertTextEquals" locator1="CategoriesNavigation#ADT_MULTI_COLUMN_VOCABULARY_NAME" value1="${vocabularyName}" />
+		<execute function="AssertTextEquals" locator1="CategoriesNavigation#ADT_MULTI_COLUMN_2_VOCABULARY_NAME" value1="${vocabularyName1}" />
+		<execute function="AssertTextEquals" locator1="CategoriesNavigation#ADT_MULTI_COLUMN_2_CATEGORY_NAME" value1="${categoryName1}" />
 
-		<var name="key_categoryName" value="${categoryName}" />
-
-		<execute function="AssertTextEquals" locator1="CategoriesNavigation#ADT_MULTI_COLUMN_CATEGORY_NAME" value1="${categoryName}" />
+		<execute function="AssertTextEquals" locator1="CategoriesNavigation#ADT_MULTI_COLUMN_3_VOCABULARY_NAME" value1="${vocabularyName2}" />
+		<execute function="AssertTextEquals" locator1="CategoriesNavigation#ADT_MULTI_COLUMN_3_CATEGORY_NAME" value1="${categoryName2}" />
 	</command>
 
 	<command name="viewDefaultPG">

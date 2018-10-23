@@ -36,6 +36,7 @@ dependencies {
 	compileOnly project(":apps:application-list:application-list-api")
 	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:fragment:fragment-api")
+	compileOnly project(":apps:fragment:fragment-item-selector-api")
 	compileOnly project(":apps:fragment:fragment-service")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")

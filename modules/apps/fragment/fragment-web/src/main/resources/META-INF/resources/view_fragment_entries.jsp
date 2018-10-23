@@ -16,26 +16,18 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext = new FragmentManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, fragmentDisplayContext);
+%>
+
 <liferay-ui:error exception="<%= RequiredFragmentEntryException.class %>" message="the-fragment-entry-cannot-be-deleted-because-it-is-required-by-one-or-more-page-templates" />
 
 <clay:management-toolbar
-	actionDropdownItems="<%= fragmentDisplayContext.getFragmentEntryActionItemsDropdownItems() %>"
-	clearResultsURL="<%= fragmentDisplayContext.getFragmentEntryClearResultsURL() %>"
-	componentId="fragmentEntriesManagementToolbar"
-	disabled="<%= fragmentDisplayContext.isDisabledFragmentEntriesManagementBar() %>"
-	filterDropdownItems="<%= fragmentDisplayContext.getFragmentEntryFilterItemsDropdownItems() %>"
-	itemsTotal="<%= fragmentDisplayContext.getFragmentEntryTotalItems() %>"
-	searchActionURL="<%= fragmentDisplayContext.getFragmentEntrySearchActionURL() %>"
-	searchContainerId="fragmentEntries"
-	searchFormName="searchFm"
-	showCreationMenu="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) ? true : false %>"
-	sortingOrder="<%= fragmentDisplayContext.getOrderByType() %>"
-	sortingURL="<%= fragmentDisplayContext.getFragmentEntrySortingURL() %>"
+	displayContext="<%= fragmentManagementToolbarDisplayContext %>"
 />
 
 <aui:form name="fm">
 	<liferay-ui:search-container
-		id="fragmentEntries"
 		searchContainer="<%= fragmentDisplayContext.getFragmentEntriesSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
@@ -133,6 +125,15 @@
 	<aui:input name="fileEntryId" type="hidden" />
 </aui:form>
 
+<portlet:actionURL name="/fragment/move_fragment_entry" var="moveFragmentEntryURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<aui:form action="<%= moveFragmentEntryURL %>" name="moveFragmentEntryFm">
+	<aui:input name="fragmentEntryIds" type="hidden" />
+	<aui:input name="fragmentCollectionId" type="hidden" />
+</aui:form>
+
 <c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
 	<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
 		function handleAddFragmentEntryMenuItemClick(event) {
@@ -220,7 +221,21 @@
 			}
 		);
 
+		var moveFragmentEntryMenuItemClickHandler = dom.delegate(
+			document.body,
+			'click',
+			'.move-fragment-entry-action > a',
+			function(event) {
+				event.preventDefault();
+
+				var data = event.delegateTarget.dataset;
+
+				moveFragmentEntries(data.fragmentEntryId);
+			}
+		);
+
 		function handleDestroyPortlet () {
+			moveFragmentEntryMenuItemClickHandler.removeListener();
 			updateFragmentEntryMenuItemClickHandler.removeListener();
 			updateFragmentEntryPreviewMenuItemClickHandler.removeListener();
 
@@ -248,9 +263,40 @@
 		submitForm(document.querySelector('#<portlet:namespace />fm'), '<portlet:resourceURL id="/fragment/export_fragment_entries" />');
 	}
 
+	var moveSelectedFragmentEntries = function() {
+		var form = document.querySelector('#<portlet:namespace />fm');
+
+		moveFragmentEntries(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+	}
+
+	var moveFragmentEntries = function(fragmentEntryIds) {
+		Liferay.Util.selectEntity(
+			{
+				dialog: {
+					constrain: true,
+					destroyOnHide: true,
+					modal: true
+				},
+				eventName: '<portlet:namespace />selectFragmentCollection',
+				id: '<portlet:namespace />selectSiteNavigationMenu',
+				title: '<liferay-ui:message arguments="collection" key="select-x" />',
+				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/fragment/select_fragment_collection" /></portlet:renderURL>'
+			},
+			function(selectedItem) {
+				if (selectedItem) {
+					document.<portlet:namespace/>moveFragmentEntryFm.<portlet:namespace/>fragmentCollectionId.value = selectedItem.id;
+					document.<portlet:namespace/>moveFragmentEntryFm.<portlet:namespace/>fragmentEntryIds.value = fragmentEntryIds;
+
+					submitForm(document.<portlet:namespace/>moveFragmentEntryFm);
+				}
+			}
+		);
+	}
+
 	var ACTIONS = {
 		'deleteSelectedFragmentEntries': deleteSelectedFragmentEntries,
-		'exportSelectedFragmentEntries': exportSelectedFragmentEntries
+		'exportSelectedFragmentEntries': exportSelectedFragmentEntries,
+		'moveSelectedFragmentEntries': moveSelectedFragmentEntries
 	};
 
 	Liferay.componentReady('fragmentEntriesManagementToolbar').then(

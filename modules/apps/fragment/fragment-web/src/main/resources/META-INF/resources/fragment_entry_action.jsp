@@ -61,15 +61,19 @@ FragmentEntry fragmentEntry = (FragmentEntry)row.getObject();
 			message="rename"
 			url="javascript:;"
 		/>
-	</c:if>
-
-	<c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
 
 		<%
 		Map<String, Object> data = new HashMap<>();
 
 		data.put("fragment-entry-id", fragmentEntry.getFragmentEntryId());
 		%>
+
+		<liferay-ui:icon
+			cssClass="move-fragment-entry-action"
+			data="<%= data %>"
+			message="move"
+			url="javascript:;"
+		/>
 
 		<liferay-ui:icon
 			cssClass="update-fragment-preview"

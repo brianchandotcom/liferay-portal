@@ -14,7 +14,7 @@
 
 package com.liferay.oauth2.provider.web.internal.portlet.action;
 
-import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration;
 import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
@@ -178,7 +178,7 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 						oAuth2ApplicationId, null);
 				}
 				else if (fileEntryId > 0) {
-					FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+					FileEntry fileEntry = _dlAppService.getFileEntry(
 						fileEntryId);
 
 					InputStream inputStream = fileEntry.getContentStream();
@@ -186,7 +186,7 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 					_oAuth2ApplicationService.updateIcon(
 						oAuth2ApplicationId, inputStream);
 
-					_dlAppLocalService.deleteFileEntry(fileEntryId);
+					_dlAppService.deleteFileEntry(fileEntryId);
 				}
 			}
 		}
@@ -228,7 +228,7 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 		UpdateOAuth2ApplicationMVCActionCommand.class);
 
 	@Reference
-	private DLAppLocalService _dlAppLocalService;
+	private DLAppService _dlAppService;
 
 	@Reference
 	private OAuth2ApplicationService _oAuth2ApplicationService;

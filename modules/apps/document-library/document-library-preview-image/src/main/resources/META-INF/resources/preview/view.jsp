@@ -30,8 +30,11 @@ if (status != WorkflowConstants.STATUS_ANY) {
 String previewFileURL = DLUtil.getPreviewURL(fileVersion.getFileEntry(), fileVersion, themeDisplay, previewQueryString);
 
 String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_view_file_entry_preview") + StringPool.UNDERLINE;
-%>
 
+Map<String, Object> context = new HashMap<>();
+context.put("imageURL", previewFileURL);
+context.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+%>
 
 <liferay-util:html-top
 	outputKey="social_bookmarks_css"
@@ -50,11 +53,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document
 </div>
 
 <soy:component-renderer
-	context="<%= new HashMap<String, Object>() {
-	{
-		put("imageURL", previewFileURL);
-	}
-} %>"
+	context="<%= context %>"
 	module="document-library-preview-image/preview/js/ImagePreviewer.es"
 	templateNamespace="com.liferay.document.library.preview.ImagePreviewer.render"
 />

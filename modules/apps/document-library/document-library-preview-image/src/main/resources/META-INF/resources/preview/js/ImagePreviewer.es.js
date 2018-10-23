@@ -14,7 +14,7 @@ const ZOOM_LEVELS = [
 	0.7,
 	0.8,
 	0.9,
-	1,
+	1
 ];
 
 const ZOOM_LEVELS_REVERSED = ZOOM_LEVELS.slice().reverse();
@@ -40,22 +40,22 @@ class ImagePreviewer extends Component {
 	}
 
 	_handleZoom(event) {
-		const value = event.delegateTarget.value;
+		const value = event.currentTarget.value;
 
 		let zoomValue;
 
 		switch (value) {
-			case 'in':
-				zoomValue = ZOOM_LEVELS
-					.find((zoom) => zoom > this.zoomActual);
-				break;
-			case 'out':
-				zoomValue = ZOOM_LEVELS_REVERSED
-					.find((zoom) => zoom < this.zoomActual);
-				break;
-			case '1':
-				zoomValue = 1;
-				break;
+		case 'in':
+			zoomValue = ZOOM_LEVELS
+				.find((zoom) => zoom > this.zoomActual);
+			break;
+		case 'out':
+			zoomValue = ZOOM_LEVELS_REVERSED
+				.find((zoom) => zoom < this.zoomActual);
+			break;
+		case 'real':
+			zoomValue = 1;
+			break;
 		}
 
 		this.zoomInDisabled = ZOOM_LEVELS_REVERSED[0] === zoomValue;
@@ -65,7 +65,9 @@ class ImagePreviewer extends Component {
 	}
 
 	_setZoom(zoomNumber) {
-		if (typeof zoomNumber == 'undefined') return;
+		if (typeof zoomNumber == 'undefined') {
+			return;
+		}
 
 		this.imageHeight = this.imageNaturalHeight * zoomNumber;
 		this.imageWidth = this.imageNaturalWidth * zoomNumber;
@@ -91,13 +93,14 @@ class ImagePreviewer extends Component {
  */
 
 ImagePreviewer.STATE = {
-	imageMargin: Config.string(),
 	imageHeight: Config.number(),
+	imageMargin: Config.string(),
 	imageURL: Config.string().required(),
 	imageWidth: Config.number(),
+	spritemap: Config.string().required(),
 	zoomActual: Config.number(),
 	zoomInDisabled: Config.bool(),
-	zoomOutDisabled: Config.bool(),
+	zoomOutDisabled: Config.bool()
 };
 
 Soy.register(ImagePreviewer, templates);

@@ -14,6 +14,7 @@
 		}
 	},
 	"dependencies": {
+		"clay-button": "^2.3.4",
 		"metal": "^2.13.2",
 		"metal-component": "^2.16.3",
 		"metal-soy": "^2.13.2",
@@ -24,11 +25,11 @@
 		"liferay-module-config-generator": "^1.1.10",
 		"metal-cli": "^4.3.3"
 	},
-	"version": "1.0.0",
 	"name": "document-library-preview-image",
 	"scripts": {
 		"checkFormat": "npm run csf",
 		"csf": "csf src/**/*.js src/**/*.soy",
 		"format": "npm run csf -- -i"
-	}
+	},
+	"version": "1.0.0"
 }

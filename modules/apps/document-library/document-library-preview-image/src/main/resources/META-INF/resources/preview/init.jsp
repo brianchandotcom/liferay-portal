@@ -20,7 +20,7 @@
 taglib uri="http://liferay.com/tld/soy" prefix="soy" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
-taglib prefix="liferay-util" uri="http://liferay.com/tld/util" %>
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
@@ -30,6 +30,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
 
-<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.Map" %>
 
 <liferay-theme:defineObjects />

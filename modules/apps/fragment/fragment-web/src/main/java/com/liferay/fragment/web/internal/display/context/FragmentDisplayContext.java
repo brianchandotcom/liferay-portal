@@ -38,12 +38,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -552,26 +549,6 @@ public class FragmentDisplayContext {
 		}
 
 		return redirect;
-	}
-
-	public long getRenderLayoutPlid() {
-		Layout renderLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-			_themeDisplay.getScopeGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-		if (renderLayout != null) {
-			return renderLayout.getPlid();
-		}
-
-		renderLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-			_themeDisplay.getScopeGroupId(), true,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-		if (renderLayout != null) {
-			return renderLayout.getPlid();
-		}
-
-		return _themeDisplay.getPlid();
 	}
 
 	public boolean isDisabledFragmentEntriesManagementBar() {

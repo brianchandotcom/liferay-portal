@@ -299,6 +299,12 @@
 		<execute function="Click" locator1="Button#CLOSE_MODAL" />
 	</command>
 
+	<command name="openPageAdmin">
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet" />
+		</execute>
+	</command>
+
 	<command name="openURLLocale">
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="${localizationPageURL}" />

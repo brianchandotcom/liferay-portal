@@ -133,6 +133,15 @@
 	<aui:input name="fileEntryId" type="hidden" />
 </aui:form>
 
+<portlet:actionURL name="/fragment/move_fragment_entry" var="moveFragmentEntryURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<aui:form action="<%= moveFragmentEntryURL %>" name="moveFragmentEntryFm">
+	<aui:input name="fragmentEntryId" type="hidden" />
+	<aui:input name="fragmentCollectionId" type="hidden" />
+</aui:form>
+
 <c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
 	<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
 		function handleAddFragmentEntryMenuItemClick(event) {
@@ -220,7 +229,41 @@
 			}
 		);
 
+		var moveFragmentEntryMenuItemClickHandler = dom.delegate(
+			document.body,
+			'click',
+			'.move-fragment-entry-action > a',
+			function(event) {
+				event.preventDefault();
+
+				var data = event.delegateTarget.dataset;
+
+				Liferay.Util.selectEntity(
+					{
+						dialog: {
+							constrain: true,
+							destroyOnHide: true,
+							modal: true
+						},
+						eventName: '<portlet:namespace />selectFragmentCollection',
+						id: '<portlet:namespace />selectSiteNavigationMenu',
+						title: '<liferay-ui:message arguments="collection" key="select-x" />',
+						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/fragment/select_fragment_collection" /></portlet:renderURL>'
+					},
+					function(selectedItem) {
+						if (selectedItem) {
+							document.<portlet:namespace/>moveFragmentEntryFm.<portlet:namespace/>fragmentCollectionId.value = selectedItem.id;
+							document.<portlet:namespace/>moveFragmentEntryFm.<portlet:namespace/>fragmentEntryId.value = data.fragmentEntryId;
+
+							submitForm(document.<portlet:namespace/>moveFragmentEntryFm);
+						}
+					}
+				);
+			}
+		);
+
 		function handleDestroyPortlet () {
+			moveFragmentEntryMenuItemClickHandler.removeListener();
 			updateFragmentEntryMenuItemClickHandler.removeListener();
 			updateFragmentEntryPreviewMenuItemClickHandler.removeListener();
 

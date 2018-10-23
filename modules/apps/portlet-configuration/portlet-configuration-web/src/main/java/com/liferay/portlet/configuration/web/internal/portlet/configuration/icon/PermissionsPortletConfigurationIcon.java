@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -116,12 +115,7 @@ public class PermissionsPortletConfigurationIcon
 		String portletDisplayId = portletDisplay.getId();
 
 		if (Validator.isNotNull(portletDisplay.getPortletResource())) {
-			String portletResource = portletDisplay.getPortletResource();
-
-			Portlet portlet = _portletLocalService.getPortletById(
-				themeDisplay.getCompanyId(), portletResource);
-
-			portletDisplayId = portlet.getRootPortletId();
+			portletDisplayId = portletDisplay.getPortletResource();
 		}
 
 		boolean showPermissionsIcon = false;

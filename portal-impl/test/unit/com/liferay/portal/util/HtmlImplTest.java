@@ -95,25 +95,25 @@ public class HtmlImplTest {
 		Assert.assertEquals(
 			StringPool.BLANK, _htmlImpl.escapeHREF(StringPool.BLANK));
 		Assert.assertEquals(
-			"javascript%3aalert(&#39;hello&#39;);",
+			"javascript&#x25;3aalert&#x28;&#x27;hello&#x27;&#x29;&#x3b;",
 			_htmlImpl.escapeHREF("javascript:alert('hello');"));
 		Assert.assertEquals(
-			"data%3atext/html;base64,PHNjcmlwdD5hbGVydCgndGVzdDMnKTwvc2NyaX" +
-				"B0Pg",
+			"data&#x25;3atext&#x2f;html&#x3b;base64&#x2c;PHNjcmlwdD5hbGVydCgn" +
+				"dGVzdDMnKTwvc2NyaXB0Pg",
 			_htmlImpl.escapeHREF(
 				"data:text/html;base64,PHNjcmlwdD5hbGVydCgndGVzdDMnKTwvc2NyaX" +
 					"B0Pg"));
 		Assert.assertEquals(
-			"http://localhost:8080",
+			"http&#x3a;&#x2f;&#x2f;localhost&#x3a;8080",
 			_htmlImpl.escapeHREF("http://localhost:8080"));
 		Assert.assertEquals(
-			"javascript\t%3aalert(1)",
+			"javascript&#x09;&#x25;3aalert&#x28;1&#x29;",
 			_htmlImpl.escapeHREF("javascript\t:alert(1)"));
 		Assert.assertEquals(
-			"java script%3aalert(1)",
+			"java&#x20;script&#x25;3aalert&#x28;1&#x29;",
 			_htmlImpl.escapeHREF("java script:alert(1)"));
 		Assert.assertEquals(
-			"java\nscript %3aalert(1)",
+			"java&#x0a;script&#x20;&#x25;3aalert&#x28;1&#x29;",
 			_htmlImpl.escapeHREF("java\nscript :alert(1)"));
 	}
 

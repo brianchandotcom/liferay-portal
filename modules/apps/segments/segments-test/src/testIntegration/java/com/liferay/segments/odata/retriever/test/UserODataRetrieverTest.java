@@ -74,7 +74,6 @@ public class UserODataRetrieverTest {
 	public void setUp() throws Exception {
 		_group1 = GroupTestUtil.addGroup();
 		_group2 = GroupTestUtil.addGroup();
-		_organizations = new ArrayList<>();
 	}
 
 	@Test
@@ -91,16 +90,16 @@ public class UserODataRetrieverTest {
 		Organization parentOrganization =
 			OrganizationTestUtil.addOrganization();
 
-		Organization childOrganization = OrganizationTestUtil.addOrganization(
+		Organization organization = OrganizationTestUtil.addOrganization(
 			parentOrganization.getOrganizationId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomBoolean());
 
-		_organizations.add(childOrganization);
+		_organizations.add(organization);
 
 		_organizations.add(parentOrganization);
 
 		_userLocalService.addOrganizationUser(
-			childOrganization.getOrganizationId(), _user1);
+			organization.getOrganizationId(), _user1);
 
 		List<User> users = _oDataRetriever.getResults(
 			_group1.getCompanyId(),
@@ -743,7 +742,7 @@ public class UserODataRetrieverTest {
 	private ODataRetriever<User> _oDataRetriever;
 
 	@DeleteAfterTestRun
-	private List<Organization> _organizations;
+	private final List<Organization> _organizations = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private Role _role;

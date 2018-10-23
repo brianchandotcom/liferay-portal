@@ -254,7 +254,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 	@Override
 	public FragmentEntry moveFragmentEntry(
-			long fragmentCollectionId, long fragmentEntryId)
+			long fragmentEntryId, long fragmentCollectionId)
 		throws PortalException {
 
 		FragmentEntry fragmentEntry =

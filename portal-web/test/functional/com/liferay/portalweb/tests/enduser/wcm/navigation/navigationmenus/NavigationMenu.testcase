@@ -58,7 +58,7 @@
 
 		<execute macro="NavigationMenusAdmin#addItem">
 			<var name="item" value="Page" />
-			<var name="pageName" value="Test Page Name" />
+			<var name="pageNames" value="Test Page Name" />
 		</execute>
 
 		<execute macro="NavigationMenusAdmin#viewItem">
@@ -115,7 +115,7 @@
 		<for list="1,2" param="index">
 			<execute macro="NavigationMenusAdmin#addItem">
 				<var name="item" value="Page" />
-				<var name="pageName" value="Test Page Name ${index}" />
+				<var name="pageNames" value="Test Page Name ${index}" />
 			</execute>
 		</for>
 
@@ -170,7 +170,7 @@
 		<for list="1,2,3,4" param="index">
 			<execute macro="NavigationMenusAdmin#addItem">
 				<var name="item" value="Page" />
-				<var name="pageName" value="Test Page Name ${index}" />
+				<var name="pageNames" value="Test Page Name ${index}" />
 			</execute>
 		</for>
 
@@ -224,7 +224,7 @@
 
 		<execute macro="NavigationMenusAdmin#addItem">
 			<var name="item" value="Page" />
-			<var name="pageName" value="Test Page Name" />
+			<var name="pageNames" value="Test Page Name" />
 		</execute>
 
 		<execute macro="NavigationMenusAdmin#viewItem">
@@ -486,7 +486,7 @@
 		<for list="1,2" param="index">
 			<execute macro="NavigationMenusAdmin#addItem">
 				<var name="item" value="Page" />
-				<var name="pageName" value="Site Page Name ${index}" />
+				<var name="pageNames" value="Site Page Name ${index}" />
 			</execute>
 		</for>
 
@@ -624,7 +624,7 @@
 
 		<execute macro="NavigationMenusAdmin#addItem">
 			<var name="item" value="Page" />
-			<var name="pageName" value="Test Page Name" />
+			<var name="pageNames" value="Test Page Name" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />

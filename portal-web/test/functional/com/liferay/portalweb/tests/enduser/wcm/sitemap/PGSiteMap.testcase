@@ -63,7 +63,7 @@
 
 		<execute macro="NavigationMenusAdmin#addItem">
 			<var name="item" value="Page" />
-			<var name="pageName" value="Child Page Name" />
+			<var name="pageNames" value="Child Page Name" />
 			<var name="privacy" value="Private Pages" />
 		</execute>
 

@@ -709,53 +709,6 @@ public class MediaWikiImporter implements WikiImporter {
 		return usersMap;
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetTagLocalService(
-		AssetTagLocalService assetTagLocalService) {
-
-		_assetTagLocalService = assetTagLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiEngineRenderer(
-		WikiEngineRenderer wikiEngineRenderer) {
-
-		_wikiEngineRenderer = wikiEngineRenderer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiGroupServiceConfiguration(
-		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
-
-		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiPageLocalService(
-		WikiPageLocalService wikiPageLocalService) {
-
-		_wikiPageLocalService = wikiPageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiPageTitleValidator(
-		WikiPageTitleValidator wikiPageTitleValidator) {
-
-		_wikiPageTitleValidator = wikiPageTitleValidator;
-	}
-
 	protected String translateMediaLinks(WikiNode node, String content) {
 		try {
 			WikiPage sharedImagesPage = _wikiPageLocalService.getPage(
@@ -870,7 +823,10 @@ public class MediaWikiImporter implements WikiImporter {
 	private static final Set<String> _specialMediaWikiDirs = SetUtil.fromArray(
 		new String[] {"archive", "temp", "thumb"});
 
+	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
@@ -878,10 +834,20 @@ public class MediaWikiImporter implements WikiImporter {
 
 	private final MediaWikiToCreoleTranslator _translator =
 		new MediaWikiToCreoleTranslator();
+
+	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
 	private WikiEngineRenderer _wikiEngineRenderer;
+
+	@Reference
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
+
+	@Reference
 	private WikiPageLocalService _wikiPageLocalService;
+
+	@Reference
 	private WikiPageTitleValidator _wikiPageTitleValidator;
 
 }

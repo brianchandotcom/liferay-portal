@@ -143,6 +143,27 @@ public class OrganizationODataRetrieverTest {
 	}
 
 	@Test
+	public void testGetResultsFilterByNameTreePath() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization(
+			0, "name", false);
+
+		Organization suborganization = OrganizationTestUtil.addOrganization(
+			organization.getOrganizationId(), "subname", false);
+
+		_organizations.add(suborganization);
+
+		_organizations.add(organization);
+
+		List<Organization> organizations = _oDataRetriever.getResults(
+			TestPropsValues.getCompanyId(),
+			"(nameTreePath eq 'name > subname')", LocaleUtil.getDefault(), 0,
+			2);
+
+		Assert.assertEquals(organizations.toString(), 1, organizations.size());
+		Assert.assertEquals(suborganization, organizations.get(0));
+	}
+
+	@Test
 	public void testGetResultsFilterByOrganizationId() throws Exception {
 		Organization organization1 = OrganizationTestUtil.addOrganization();
 		Organization organization2 = OrganizationTestUtil.addOrganization();

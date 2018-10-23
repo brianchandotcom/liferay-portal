@@ -19,13 +19,15 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 
+import java.io.Serializable;
+
 import java.util.Date;
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class KaleoTaskInstanceTokenQuery {
+public class KaleoTaskInstanceTokenQuery implements Serializable {
 
 	public KaleoTaskInstanceTokenQuery(ServiceContext serviceContext) {
 		_serviceContext = serviceContext;

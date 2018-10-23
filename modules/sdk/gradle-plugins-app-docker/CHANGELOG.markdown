@@ -21,7 +21,7 @@ building the app's Docker image.
 ### Changed
 - [LPS-75704]: Update the [Gradle Docker Plugin] dependency to version 3.2.0.
 
-## 1.0.5 - 2018-10-22
+## 1.0.6 - 2018-10-22
 
 ### Changed
 - [LPS-86588]: Update the [Gradle Docker Plugin] dependency to version 3.6.1.

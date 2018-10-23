@@ -86,6 +86,12 @@ the same application.
 - [LPS-85959]: Update the [Liferay Gradle Plugins Node] dependency to version
 4.4.2.
 
+## 2.0.11 - 2018-10-22
+
+### Changed
+- [LPS-86576]: Update the [Liferay Gradle Plugins Node] dependency to version
+4.4.3.
+
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-69802]: https://issues.liferay.com/browse/LPS-69802
 [LPS-74904]: https://issues.liferay.com/browse/LPS-74904
@@ -97,3 +103,4 @@ the same application.
 [LPS-82130]: https://issues.liferay.com/browse/LPS-82130
 [LPS-82568]: https://issues.liferay.com/browse/LPS-82568
 [LPS-85959]: https://issues.liferay.com/browse/LPS-85959
+[LPS-86576]: https://issues.liferay.com/browse/LPS-86576

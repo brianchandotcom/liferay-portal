@@ -127,17 +127,19 @@ public class OrganizationODataRetrieverTest {
 
 	@Test
 	public void testGetResultsFilterByName() throws Exception {
-		Organization organization = OrganizationTestUtil.addOrganization();
+		Organization organization1 = OrganizationTestUtil.addOrganization();
+		Organization organization2 = OrganizationTestUtil.addOrganization();
 
-		_organizations.add(organization);
+		_organizations.add(organization1);
+		_organizations.add(organization2);
 
 		List<Organization> organizations = _oDataRetriever.getResults(
 			TestPropsValues.getCompanyId(),
-			"(name eq '" + organization.getName() + "')",
+			"(name eq '" + organization1.getName() + "')",
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(organizations.toString(), 1, organizations.size());
-		Assert.assertEquals(organization, organizations.get(0));
+		Assert.assertEquals(organization1, organizations.get(0));
 	}
 
 	@Test
@@ -177,6 +179,23 @@ public class OrganizationODataRetrieverTest {
 
 		Assert.assertEquals(organizations.toString(), 1, organizations.size());
 		Assert.assertEquals(suborganization, organizations.get(0));
+	}
+
+	@Test
+	public void testGetResultsFilterByTreePath() throws Exception {
+		Organization organization1 = OrganizationTestUtil.addOrganization();
+		Organization organization2 = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization1);
+		_organizations.add(organization2);
+
+		List<Organization> organizations = _oDataRetriever.getResults(
+			TestPropsValues.getCompanyId(),
+			"(treePath eq '" + organization1.getTreePath() + "')",
+			LocaleUtil.getDefault(), 0, 2);
+
+		Assert.assertEquals(organizations.toString(), 1, organizations.size());
+		Assert.assertEquals(organization1, organizations.get(0));
 	}
 
 	@Test

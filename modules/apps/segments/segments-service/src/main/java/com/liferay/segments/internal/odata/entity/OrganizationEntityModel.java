@@ -63,7 +63,9 @@ public class OrganizationEntityModel implements EntityModel {
 			locale -> Field.ORGANIZATION_ID),
 		new EntityField(
 			"parentOrganizationId", EntityField.Type.STRING,
-			locale -> "parentOrganizationId")
+			locale -> "parentOrganizationId"),
+		new EntityField(
+			Field.TREE_PATH, EntityField.Type.STRING, locale -> Field.TREE_PATH)
 	).collect(
 		Collectors.toMap(EntityField::getName, Function.identity())
 	);

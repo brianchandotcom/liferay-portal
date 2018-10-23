@@ -4,8 +4,6 @@ apply plugin: "com.liferay.dependency.checker"
 
 task runGradleTest
 
-String standardOutputLog = ""
-
 configurations {
 	sourceFormatter
 }
@@ -25,17 +23,23 @@ repositories {
 }
 
 runGradleTest {
+	LogListener logListener = new LogListener()
+
+	logging.addStandardOutputListener(logListener)
+
 	doLast {
 		configurations.sourceFormatter.resolve()
 
-		assert standardOutputLog.contains("Dependency 'com.liferay:com.liferay.source.formatter:1.0.200', published")
+		assert logListener.log.contains("Dependency 'com.liferay:com.liferay.source.formatter:1.0.200', published")
 	}
 }
 
-gradle.useLogger new StandardOutputListener() {
+class LogListener implements StandardOutputListener {
 
-	void onOutput(CharSequence output) {
-		standardOutputLog = standardOutputLog + output
+	void onOutput(CharSequence charSequence) {
+		log = log + charSequence
 	}
+
+	String log = ""
 
 }

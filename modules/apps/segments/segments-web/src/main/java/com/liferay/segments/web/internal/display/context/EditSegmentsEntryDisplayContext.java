@@ -58,7 +58,9 @@ public class EditSegmentsEntryDisplayContext {
 
 	public EditSegmentsEntryDisplayContext(
 		HttpServletRequest request, RenderRequest renderRequest,
-		RenderResponse renderResponse, ODataRetriever<User> oDataRetriever,
+		RenderResponse renderResponse,
+		ODataRetriever<Organization> organizationODataRetriever,
+		ODataRetriever<User> userODataRetriever,
 		OrganizationLocalService organizationLocalService,
 		SegmentsEntryService segmentsEntryService,
 		SegmentsEntryRelService segmentsEntryRelService,
@@ -67,7 +69,8 @@ public class EditSegmentsEntryDisplayContext {
 		_request = request;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_oDataRetriever = oDataRetriever;
+		_organizationODataRetriever = organizationODataRetriever;
+		_userODataRetriever = userODataRetriever;
 		_organizationLocalService = organizationLocalService;
 		_segmentsEntryService = segmentsEntryService;
 		_segmentsEntryRelService = segmentsEntryRelService;
@@ -175,31 +178,66 @@ public class EditSegmentsEntryDisplayContext {
 		}
 
 		SearchContainer organizationSearchContainer = new SearchContainer(
-			_renderRequest, getPortletURL("organizations"), null,
-			"there-are-no-organizations-in-this-segment");
+			_renderRequest, getPortletURL("organizations"), null, null);
 
 		organizationSearchContainer.setId("segmentsEntryOrganizations");
-		organizationSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
 
-		int total = _segmentsEntryRelService.getSegmentsEntryRelsCount(
-			getSegmentsEntryId());
+		SegmentsEntry segmentsEntry = getSegmentsEntry();
 
-		organizationSearchContainer.setTotal(total);
+		if (segmentsEntry == null) {
+			return organizationSearchContainer;
+		}
 
-		List<SegmentsEntryRel> segmentsEntryRels =
-			_segmentsEntryRelService.getSegmentsEntryRels(getSegmentsEntryId());
+		int total = 0;
+		List<Organization> organizations = null;
 
-		Stream<SegmentsEntryRel> stream = segmentsEntryRels.stream();
+		if (Validator.isNotNull(segmentsEntry.getCriteria())) {
+			organizationSearchContainer.setEmptyResultsMessage(
+				"no-organizations-were-found-that-matched-the-segment-" +
+					"criteria");
 
-		List<Organization> organizations = stream.map(
-			segmentsEntryRel -> _organizationLocalService.fetchOrganization(
-				segmentsEntryRel.getClassPK())
-		).collect(
-			Collectors.toList()
-		);
+			try {
+				organizations = _organizationODataRetriever.getResults(
+					segmentsEntry.getCompanyId(), segmentsEntry.getCriteria(),
+					_themeDisplay.getLocale(),
+					organizationSearchContainer.getStart(),
+					organizationSearchContainer.getEnd());
+
+				total = organizations.size();
+			}
+			catch (PortalException pe) {
+				_log.error(
+					"Unable to retrieve organizations with the criteria " +
+						segmentsEntry.getCriteria(),
+					pe);
+			}
+		}
+		else {
+			organizationSearchContainer.setEmptyResultsMessage(
+				"no-organizations-have-been-assigned-to-this-segment");
+
+			organizationSearchContainer.setRowChecker(
+				new EmptyOnClickRowChecker(_renderResponse));
+
+			List<SegmentsEntryRel> segmentsEntryRels =
+				_segmentsEntryRelService.getSegmentsEntryRels(
+					getSegmentsEntryId());
+
+			Stream<SegmentsEntryRel> stream = segmentsEntryRels.stream();
+
+			organizations = stream.map(
+				segmentsEntryRel -> _organizationLocalService.fetchOrganization(
+					segmentsEntryRel.getClassPK())
+			).collect(
+				Collectors.toList()
+			);
+
+			total = _segmentsEntryRelService.getSegmentsEntryRelsCount(
+				getSegmentsEntryId());
+		}
 
 		organizationSearchContainer.setResults(organizations);
+		organizationSearchContainer.setTotal(total);
 
 		_organizationSearchContainer = organizationSearchContainer;
 
@@ -294,7 +332,7 @@ public class EditSegmentsEntryDisplayContext {
 				"no-users-were-found-that-matched-the-segment-criteria");
 
 			try {
-				users = _oDataRetriever.getResults(
+				users = _userODataRetriever.getResults(
 					segmentsEntry.getCompanyId(), segmentsEntry.getCriteria(),
 					_themeDisplay.getLocale(), userSearchContainer.getStart(),
 					userSearchContainer.getEnd());
@@ -429,8 +467,8 @@ public class EditSegmentsEntryDisplayContext {
 		EditSegmentsEntryDisplayContext.class);
 
 	private String _displayStyle;
-	private final ODataRetriever<User> _oDataRetriever;
 	private final OrganizationLocalService _organizationLocalService;
+	private final ODataRetriever<Organization> _organizationODataRetriever;
 	private SearchContainer _organizationSearchContainer;
 	private String _redirect;
 	private final RenderRequest _renderRequest;
@@ -443,6 +481,7 @@ public class EditSegmentsEntryDisplayContext {
 	private final SegmentsEntryService _segmentsEntryService;
 	private final ThemeDisplay _themeDisplay;
 	private final UserLocalService _userLocalService;
+	private final ODataRetriever<User> _userODataRetriever;
 	private SearchContainer _userSearchContainer;
 
 }

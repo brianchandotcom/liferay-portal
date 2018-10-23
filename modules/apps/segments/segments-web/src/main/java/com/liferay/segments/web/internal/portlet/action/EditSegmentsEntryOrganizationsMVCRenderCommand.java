@@ -14,6 +14,7 @@
 
 package com.liferay.segments.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
@@ -60,9 +61,9 @@ public class EditSegmentsEntryOrganizationsMVCRenderCommand
 		EditSegmentsEntryDisplayContext editSegmentsEntryDisplayContext =
 			new EditSegmentsEntryDisplayContext(
 				httpServletRequest, renderRequest, renderResponse,
-				_oDataRetriever, _organizationLocalService,
-				_segmentsEntryService, _segmentsEntryRelService,
-				_userLocalService);
+				_organizationODataRetriever, _userODataRetriever,
+				_organizationLocalService, _segmentsEntryService,
+				_segmentsEntryRelService, _userLocalService);
 
 		renderRequest.setAttribute(
 			SegmentsWebKeys.EDIT_SEGMENTS_ENTRY_DISPLAY_CONTEXT,
@@ -71,13 +72,13 @@ public class EditSegmentsEntryOrganizationsMVCRenderCommand
 		return "/edit_segments_entry_organizations.jsp";
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
-	)
-	private ODataRetriever<User> _oDataRetriever;
-
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.Organization)"
+	)
+	private ODataRetriever<Organization> _organizationODataRetriever;
 
 	@Reference
 	private Portal _portal;
@@ -90,5 +91,10 @@ public class EditSegmentsEntryOrganizationsMVCRenderCommand
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
+	)
+	private ODataRetriever<User> _userODataRetriever;
 
 }

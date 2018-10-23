@@ -37,11 +37,11 @@ import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayAct
 import com.liferay.sharing.web.internal.util.SharingUtil;
 
 import java.text.DateFormat;
+import java.text.Format;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
@@ -148,27 +148,31 @@ public class ManageCollaboratorsViewMVCRenderCommand
 				collaboratorJSONObject.put(
 					"sharingEntryId", sharingEntry.getSharingEntryId());
 
-				String sExpirationDate = null;
-				String sExpirationDateTooltip = null;
+				String expirationDateAsText = null;
+				String expirationDateTooltip = null;
 
 				Date expirationDate = sharingEntry.getExpirationDate();
 
 				if (expirationDate != null) {
-					sExpirationDate = _getDateFormat(
-						"yyyy-MM-dd",
-						themeDisplay.getLocale()).format(expirationDate);
+					DateFormat expirationDateFormat =
+						DateFormatFactoryUtil.getSimpleDateFormat(
+							"yyyy-MM-dd", themeDisplay.getLocale());
 
-					sExpirationDateTooltip = _getDateFormat(
-						"dd/MM/yyyy",
-						themeDisplay.getLocale()).format(expirationDate);
+					expirationDateAsText = expirationDateFormat.format(
+						expirationDate);
+
+					Format expirationDateTooltipDateFormat =
+						DateFormatFactoryUtil.getDate(themeDisplay.getLocale());
+
+					expirationDateTooltip =
+						expirationDateTooltipDateFormat.format(expirationDate);
 				}
 
 				collaboratorJSONObject.put(
-					"sharingEntryExpirationDate", sExpirationDate);
+					"sharingEntryExpirationDate", expirationDateAsText);
 
 				collaboratorJSONObject.put(
-					"sharingEntryExpirationDateTooltip",
-					sExpirationDateTooltip);
+					"sharingEntryExpirationDateTooltip", expirationDateTooltip);
 
 				collaboratorJSONObject.put(
 					"sharingEntryPermissionDisplaySelectOptions",
@@ -183,10 +187,6 @@ public class ManageCollaboratorsViewMVCRenderCommand
 		catch (PortalException pe) {
 			throw new PortletException(pe);
 		}
-	}
-
-	private DateFormat _getDateFormat(String format, Locale locale) {
-		return DateFormatFactoryUtil.getSimpleDateFormat(format, locale);
 	}
 
 	private String _getManageCollaboratorsActionURL(

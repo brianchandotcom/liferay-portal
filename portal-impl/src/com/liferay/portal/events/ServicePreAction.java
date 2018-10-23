@@ -729,6 +729,8 @@ public class ServicePreAction extends Action {
 
 		lifecycle = ParamUtil.getString(request, "p_t_lifecycle", lifecycle);
 
+		String async = ParamUtil.getString(request, "p_p_async");
+
 		String hub = ParamUtil.getString(request, "p_p_hub");
 
 		boolean isolated = ParamUtil.getBoolean(request, "p_p_isolated");
@@ -763,6 +765,7 @@ public class ServicePreAction extends Action {
 		themeDisplay.setServerPort(PortalUtil.getForwardedPort(request));
 		themeDisplay.setWidget(widget);
 
+		themeDisplay.setAsync(async.equals("1"));
 		themeDisplay.setCompany(company);
 		themeDisplay.setCompanyLogo(companyLogo);
 		themeDisplay.setCompanyLogoHeight(companyLogoHeight);

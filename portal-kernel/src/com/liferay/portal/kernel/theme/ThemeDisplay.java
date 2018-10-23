@@ -1133,6 +1133,10 @@ public class ThemeDisplay
 		return _ajax;
 	}
 
+	public boolean isAsync() {
+		return _async;
+	}
+
 	/**
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
@@ -1351,6 +1355,10 @@ public class ThemeDisplay
 
 	public void setAjax(boolean ajax) {
 		_ajax = ajax;
+	}
+
+	public void setAsync(boolean async) {
+		_async = async;
 	}
 
 	public void setCDNBaseURL(String cdnBase) {
@@ -2015,6 +2023,7 @@ public class ThemeDisplay
 	private Account _account;
 	private boolean _addSessionIdToURL;
 	private boolean _ajax;
+	private boolean _async;
 	private String _cdnBaseURL;
 	private String _cdnDynamicResourcesHost = StringPool.BLANK;
 	private String _cdnHost = StringPool.BLANK;

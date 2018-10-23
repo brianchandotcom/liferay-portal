@@ -21,10 +21,12 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayResourceRequest;
 import com.liferay.portal.kernel.servlet.PortletServlet;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.AsyncPortletServletRequest;
 
 import java.util.Collections;
@@ -72,9 +74,10 @@ public class ResourceRequestImpl
 
 	@Override
 	public DispatcherType getDispatcherType() {
-		if ((_portletAsyncContextImpl != null) &&
-			_portletAsyncContextImpl.isCalledDispatch()) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)getAttribute(
+			WebKeys.THEME_DISPLAY);
 
+		if (themeDisplay.isAsync()) {
 			return DispatcherType.ASYNC;
 		}
 

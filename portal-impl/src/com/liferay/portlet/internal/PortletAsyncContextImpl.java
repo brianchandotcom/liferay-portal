@@ -90,7 +90,7 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 			(HttpServletRequest)_getOriginalServletRequest();
 
 		String path = StringBundler.concat(
-			originalHttpServletRequest.getRequestURI(), "?",
+			originalHttpServletRequest.getRequestURI(), "?p_p_async=1&",
 			originalHttpServletRequest.getQueryString());
 
 		ServletContext servletContext =

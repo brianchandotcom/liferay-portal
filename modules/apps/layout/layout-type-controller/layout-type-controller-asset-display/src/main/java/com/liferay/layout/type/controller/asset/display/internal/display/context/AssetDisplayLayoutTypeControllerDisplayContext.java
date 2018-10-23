@@ -49,7 +49,7 @@ public class AssetDisplayLayoutTypeControllerDisplayContext {
 		_response = response;
 
 		_assetEntry = (AssetEntry)request.getAttribute(
-			AssetDisplayWebKeys.ASSET_ENTRY);
+			WebKeys.LAYOUT_ASSET_ENTRY);
 	}
 
 	public AssetEntry getAssetEntry() {

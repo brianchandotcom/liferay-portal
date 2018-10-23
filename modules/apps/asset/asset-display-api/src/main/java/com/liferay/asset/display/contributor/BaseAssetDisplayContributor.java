@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -30,8 +29,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -123,25 +120,37 @@ public abstract class BaseAssetDisplayContributor<T>
 	 *             #getAssetEntryModelFieldsMap()}
 	 */
 	@Deprecated
-	protected abstract String[] getAssetEntryModelFields();
+	protected String[] getAssetEntryModelFields() {
+		throw new UnsupportedOperationException();
+	}
 
-	protected abstract Map<String, String> getAssetEntryModelFieldsMap();
+	/**
+	 * @deprecated As of Judson (7.1.x), }
+	 */
+	@Deprecated
+	protected Map<String, String> getAssetEntryModelFieldsMap() {
+		throw new UnsupportedOperationException();
+	}
 
 	protected abstract Map<String, Object> getClassTypeValues(
 		T assetEntryObject, Locale locale);
 
-	protected abstract Object getFieldValue(
-		T assetEntryObject, String field, Locale locale);
+	/**
+	 * @deprecated As of Judson (7.1.x), }
+	 */
+	@Deprecated
+	protected Object getFieldValue(
+		T assetEntryObject, String field, Locale locale) {
 
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), }
+	 */
+	@Deprecated
 	protected ResourceBundle getResourceBundle(Locale locale) {
-		if (resourceBundleLoader == null) {
-			Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-			return ResourceBundleUtil.getBundle(
-				locale, bundle.getSymbolicName());
-		}
-
-		return resourceBundleLoader.loadResourceBundle(locale);
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -152,11 +161,19 @@ public abstract class BaseAssetDisplayContributor<T>
 	protected void setResourceBundleLoader(
 		ResourceBundleLoader resourceBundleLoader) {
 
-		this.resourceBundleLoader = resourceBundleLoader;
+		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), }
+	 */
+	@Deprecated
 	protected ResourceBundleLoader resourceBundleLoader;
 
+	/**
+	 * @deprecated As of Judson (7.1.x), }
+	 */
+	@Deprecated
 	@Reference
 	protected UserLocalService userLocalService;
 

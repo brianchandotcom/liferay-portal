@@ -57,15 +57,10 @@ request.setAttribute(LayoutAdminWebKeys.LAYOUT_PAGE_TEMPLATE_DISPLAY_CONTEXT, la
 			<%
 			row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
 
+			String editLayoutPageTemplateURL = layoutPageTemplateDisplayContext.getEditLayoutPageTemplateEntryURL(layoutPageTemplateEntry);
+
 			String imagePreviewURL = layoutPageTemplateEntry.getImagePreviewURL(themeDisplay);
 			%>
-
-			<portlet:renderURL var="editLayoutPageTemplateURL">
-				<portlet:param name="mvcRenderCommandName" value="/layout/edit_layout_page_template_entry" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="layoutPageTemplateEntryId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateEntryId()) %>" />
-				<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()) %>" />
-			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text>
 				<c:choose>

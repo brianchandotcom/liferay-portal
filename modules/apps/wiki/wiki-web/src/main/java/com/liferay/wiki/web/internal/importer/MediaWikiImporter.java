@@ -17,7 +17,6 @@ package com.liferay.wiki.web.internal.importer;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.util.AssetHelper;
-import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -760,69 +759,51 @@ public class MediaWikiImporter implements WikiImporter {
 
 	protected String translateMediaLinks(WikiNode node, String content) {
 		try {
-			ThemeDisplay themeDisplay = new ThemeDisplay();
-
 			Company company = _companyLocalService.getCompany(
 				node.getCompanyId());
 
-			String portalURL = company.getPortalURL(node.getGroupId());
+			ThemeDisplay themeDisplay = new ThemeDisplay();
 
-			themeDisplay.setPortalURL(portalURL);
+			themeDisplay.setPortalURL(company.getPortalURL(node.getGroupId()));
 
 			WikiPage sharedImagesPage = _wikiPageLocalService.getPage(
 				node.getNodeId(), SHARED_IMAGES_TITLE);
 
-			long sharedImagesPageAttachmentsFolderId =
-				sharedImagesPage.getAttachmentsFolderId();
-
 			Matcher matcher = _mediaLinkPattern.matcher(content);
 
-			StringBuffer sb = new StringBuffer(content);
-
-			FileEntry attachmentFileEntry = null;
-
-			String attachmentFileEntryURL = null;
-
-			String fileName = null;
-
-			String linkLabel = null;
-
-			String linkTag = null;
-
-			String mediaLinkTag = null;
+			StringBuilder sb = new StringBuilder(content);
 
 			int offset = 0;
-			int originalLength = 0;
 
 			while (matcher.find()) {
-				mediaLinkTag = sb.substring(
+				String mediaLinkTag = sb.substring(
 					matcher.start(0) + offset, matcher.end(0) + offset);
 
-				originalLength = mediaLinkTag.length();
+				int originalLength = mediaLinkTag.length();
 
-				fileName = matcher.group(2);
+				String fileName = matcher.group(2);
 
-				try {
-					attachmentFileEntry =
-						PortletFileRepositoryUtil.getPortletFileEntry(
-							node.getGroupId(),
-							sharedImagesPageAttachmentsFolderId, fileName);
-				}
-				catch (NoSuchFileEntryException nsfee) {
+				FileEntry attachmentFileEntry =
+					PortletFileRepositoryUtil.fetchPortletFileEntry(
+						node.getGroupId(),
+						sharedImagesPage.getAttachmentsFolderId(),
+						fileName);
+
+				if (attachmentFileEntry == null) {
 					continue;
 				}
 
-				attachmentFileEntryURL =
+				String attachmentFileEntryURL =
 					PortletFileRepositoryUtil.getPortletFileEntryURL(
 						themeDisplay, attachmentFileEntry, StringPool.BLANK);
 
-				linkLabel = matcher.group(3);
+				String linkLabel = matcher.group(3);
 
 				if (linkLabel == null) {
 					linkLabel = StringPool.PIPE + fileName;
 				}
 
-				linkTag = StringBundler.concat(
+				String linkTag = StringBundler.concat(
 					"[[", attachmentFileEntryURL, linkLabel, "]]");
 
 				sb.replace(
@@ -832,15 +813,15 @@ public class MediaWikiImporter implements WikiImporter {
 				offset += linkTag.length() - originalLength;
 			}
 
-			content = sb.toString();
+			return sb.toString();
 		}
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(pe, pe);
 			}
-		}
 
-		return content;
+			return content;
+		}
 	}
 
 	protected String translateMediaWikiImagePaths(String content) {

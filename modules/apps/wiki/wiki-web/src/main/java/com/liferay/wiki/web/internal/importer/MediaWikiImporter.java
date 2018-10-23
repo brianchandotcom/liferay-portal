@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -758,7 +758,6 @@ public class MediaWikiImporter implements WikiImporter {
 
 	protected String translateMediaLinks(WikiNode node, String content) {
 		try {
-
 			WikiPage sharedImagesPage = _wikiPageLocalService.getPage(
 				node.getNodeId(), SHARED_IMAGES_TITLE);
 
@@ -775,7 +774,7 @@ public class MediaWikiImporter implements WikiImporter {
 				String fileName = matcher.group(2);
 
 				FileEntry fileEntry =
-					PortletFileRepositoryUtil.fetchPortletFileEntry(
+					_portletFileRepository.fetchPortletFileEntry(
 						node.getGroupId(),
 						sharedImagesPage.getAttachmentsFolderId(), fileName);
 
@@ -786,7 +785,7 @@ public class MediaWikiImporter implements WikiImporter {
 				}
 
 				String fileEntryURL =
-					PortletFileRepositoryUtil.getPortletFileEntryURL(
+					_portletFileRepository.getPortletFileEntryURL(
 						null, fileEntry, StringPool.BLANK);
 
 				String linkLabel = matcher.group(3);
@@ -873,6 +872,10 @@ public class MediaWikiImporter implements WikiImporter {
 
 	private AssetTagLocalService _assetTagLocalService;
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
+
 	private final MediaWikiToCreoleTranslator _translator =
 		new MediaWikiToCreoleTranslator();
 	private UserLocalService _userLocalService;

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.PortletAsyncScopeManagerFactory;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -69,12 +70,14 @@ import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.AfterBeanDiscovery;
 import javax.enterprise.inject.spi.AnnotatedType;
+import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.BeforeBeanDiscovery;
 import javax.enterprise.inject.spi.Extension;
 import javax.enterprise.inject.spi.ProcessAnnotatedType;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletAsyncListener;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
@@ -424,6 +427,34 @@ public class BeanPortletExtension implements Extension {
 					_beanFilters.size(), " bean filters for ",
 					servletContext.getServletContextName()));
 		}
+
+		PortletAsyncScopeManagerFactory portletAsyncScopeManagerFactory =
+			(resourceRequest, resourceResponse, portletConfig) ->
+				new PortletAsyncScopeManagerImpl(
+					resourceRequest, resourceResponse, portletConfig);
+
+		servletContext.setAttribute(
+			WebKeys.PORTLET_ASYNC_SCOPE_MANAGER_FACTORY,
+			portletAsyncScopeManagerFactory);
+
+		Function<Class<? extends PortletAsyncListener>, PortletAsyncListener>
+			portletAsyncListenerFactory = listenerClass -> {
+				Set<Bean<?>> beans = beanManager.getBeans(listenerClass);
+
+				Bean<?> bean = beanManager.resolve(beans);
+
+				if (bean == null) {
+					return null;
+				}
+
+				return (PortletAsyncListener)beanManager.getReference(
+					bean, bean.getBeanClass(),
+					beanManager.createCreationalContext(bean));
+			};
+
+		servletContext.setAttribute(
+			WebKeys.PORTLET_ASYNC_LISTENER_FACTORY,
+			portletAsyncListenerFactory);
 	}
 
 	public void step5SessionScopeBeforeDestroyed(

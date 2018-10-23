@@ -407,6 +407,10 @@ public interface WebKeys {
 
 	public static final String PORTLET_AJAX_RENDER = "PORTLET_AJAX_RENDER";
 
+	public static final String PORTLET_ASYNC_LISTENER_FACTORY = "PORTLET_ASYNC_LISTENER_FACTORY";
+
+	public static final String PORTLET_ASYNC_SCOPE_MANAGER_FACTORY = "PORTLET_ASYNC_SCOPE_MANAGER_FACTORY";
+
 	public static final String PORTLET_BREADCRUMBS = "LIFERAY_SHARED_PORTLET_BREADCRUMBS";
 
 	public static final String PORTLET_CATEGORY = "PORTLET_CATEGORY";

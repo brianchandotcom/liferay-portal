@@ -182,6 +182,10 @@ public class ScopedBeanHolder {
 		};
 	}
 
+	public void setPortletRequest(PortletRequest portletRequest) {
+		_portletRequest = portletRequest;
+	}
+
 	private static String _getAttributeName(Bean<?> bean) {
 		String attributeName = bean.getName();
 

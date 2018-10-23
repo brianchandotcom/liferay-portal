@@ -174,6 +174,8 @@ public class ResourceRequestImpl
 		_cacheablity = ParamUtil.getString(
 			request, "p_p_cacheability", ResourceURL.PAGE);
 
+		_portletConfig = invokerPortlet.getPortletConfig();
+
 		_resourceID = request.getParameter("p_p_resource_id");
 
 		if (!PortalUtil.isValidResourceId(_resourceID)) {
@@ -260,7 +262,7 @@ public class ResourceRequestImpl
 		}
 
 		_portletAsyncContextImpl.initialize(
-			resourceRequest, resourceResponse, asyncContext,
+			resourceRequest, resourceResponse, _portletConfig, asyncContext,
 			hasOriginalRequestAndResponse);
 
 		// The portletConfig is already set by PortletRequestImpl.defineObjects
@@ -297,6 +299,7 @@ public class ResourceRequestImpl
 
 	private String _cacheablity;
 	private PortletAsyncContextImpl _portletAsyncContextImpl;
+	private PortletConfig _portletConfig;
 	private String _resourceID;
 	private ResourceParameters _resourceParameters;
 	private ResourceResponse _resourceResponse;

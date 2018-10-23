@@ -270,7 +270,7 @@
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Home#PAGE_TEMPLATE_2" value1="Page2 Name" />
+		<execute function="AssertClick" locator1="Home#PAGE_TEMPLATE_3" value1="Page2 Name" />
 
 		<execute macro="Portlet#addPG">
 			<var name="defaultURL" value="false" />

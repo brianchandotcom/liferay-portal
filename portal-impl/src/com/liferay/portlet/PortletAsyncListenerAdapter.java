@@ -117,6 +117,12 @@ public class PortletAsyncListenerAdapter implements AsyncListener {
 	public void onError(AsyncEvent asyncEvent) throws IOException {
 		_firedOnError = true;
 
+		Throwable t = asyncEvent.getThrowable();
+
+		if (_portletAsyncListenerAdapterEntries.isEmpty()) {
+			_log.error(t, t);
+		}
+
 		try {
 			for (PortletAsyncListenerAdapterEntry asyncListenerAdapterEntry :
 					_portletAsyncListenerAdapterEntries) {
@@ -128,8 +134,7 @@ public class PortletAsyncListenerAdapter implements AsyncListener {
 					new PortletAsyncEvent(
 						_portletAsyncContext,
 						asyncListenerAdapterEntry.getResourceRequest(),
-						asyncListenerAdapterEntry.getResourceResponse(),
-						asyncEvent.getThrowable()));
+						asyncListenerAdapterEntry.getResourceResponse(), t));
 			}
 		}
 		finally {

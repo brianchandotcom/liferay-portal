@@ -20,7 +20,7 @@
 String redirect = PortalUtil.escapeRedirect(ParamUtil.getString(request, "redirect"));
 
 if (Validator.isNull(redirect)) {
-	redirect = ParamUtil.getString(PortalUtil.getOriginalServletRequest(request), "redirect");
+	redirect = PortalUtil.escapeRedirect(ParamUtil.getString(PortalUtil.getOriginalServletRequest(request), "redirect"));
 }
 
 boolean showBackURL = GetterUtil.getBoolean(request.getAttribute("view.jsp-showBackURL"));

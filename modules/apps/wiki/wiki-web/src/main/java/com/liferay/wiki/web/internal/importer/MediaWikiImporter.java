@@ -762,9 +762,7 @@ public class MediaWikiImporter implements WikiImporter {
 			Company company = _companyLocalService.getCompany(
 				node.getCompanyId());
 
-			ThemeDisplay themeDisplay = new ThemeDisplay();
-
-			themeDisplay.setPortalURL(company.getPortalURL(node.getGroupId()));
+			String portalURL = company.getPortalURL(node.getGroupId());
 
 			WikiPage sharedImagesPage = _wikiPageLocalService.getPage(
 				node.getNodeId(), SHARED_IMAGES_TITLE);
@@ -795,7 +793,7 @@ public class MediaWikiImporter implements WikiImporter {
 
 				String attachmentFileEntryURL =
 					PortletFileRepositoryUtil.getPortletFileEntryURL(
-						themeDisplay, attachmentFileEntry, StringPool.BLANK);
+						null, attachmentFileEntry, StringPool.BLANK);
 
 				String linkLabel = matcher.group(3);
 
@@ -804,7 +802,7 @@ public class MediaWikiImporter implements WikiImporter {
 				}
 
 				String linkTag = StringBundler.concat(
-					"[[", attachmentFileEntryURL, linkLabel, "]]");
+					"[[", portalURL, attachmentFileEntryURL, linkLabel, "]]");
 
 				sb.replace(
 					matcher.start(0) + offset,

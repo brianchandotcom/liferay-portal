@@ -199,6 +199,29 @@ public class OrganizationODataRetrieverTest {
 	}
 
 	@Test
+	public void testGetResultsFilterByType() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		Organization suborganization = OrganizationTestUtil.addOrganization(
+			organization.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
+
+		_organizations.add(suborganization);
+
+		_organizations.add(organization);
+
+		List<Organization> organizations = _oDataRetriever.getResults(
+			TestPropsValues.getCompanyId(),
+			String.format(
+				" (parentOrganizationId eq '%s') and (type eq '%s')",
+				organization.getOrganizationId(), suborganization.getType()),
+			LocaleUtil.getDefault(), 0, 2);
+
+		Assert.assertEquals(organizations.toString(), 1, organizations.size());
+		Assert.assertEquals(suborganization, organizations.get(0));
+	}
+
+	@Test
 	public void testGetUsersFilterByDateModifiedGreaterOrEquals()
 		throws Exception {
 

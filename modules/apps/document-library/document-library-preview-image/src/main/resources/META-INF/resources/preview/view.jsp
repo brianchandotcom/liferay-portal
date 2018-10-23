@@ -29,8 +29,6 @@ if (status != WorkflowConstants.STATUS_ANY) {
 
 String previewFileURL = DLUtil.getPreviewURL(fileVersion.getFileEntry(), fileVersion, themeDisplay, previewQueryString);
 
-String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_view_file_entry_preview") + StringPool.UNDERLINE;
-
 Map<String, Object> context = new HashMap<>();
 context.put("imageURL", previewFileURL);
 context.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
@@ -42,26 +40,8 @@ context.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/preview/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<div class="lfr-preview-file lfr-preview-image" id="<portlet:namespace /><%= randomNamespace %>previewFile">
-	<div class="lfr-preview-file-content lfr-preview-image-content" id="<portlet:namespace /><%= randomNamespace %>previewFileContent">
-		<div class="lfr-preview-file-image-current-column">
-			<div class="lfr-preview-file-image-container">
-				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-preview-file-image-current" src="<%= previewFileURL %>" />
-			</div>
-		</div>
-	</div>
-</div>
-
 <soy:component-renderer
 	context="<%= context %>"
 	module="document-library-preview-image/preview/js/ImagePreviewer.es"
 	templateNamespace="com.liferay.document.library.preview.ImagePreviewer.render"
 />
-
-<aui:script use="aui-base">
-	var currentImage = A.one('.lfr-preview-file-image-current');
-
-	if (currentImage && (currentImage.get('complete') || currentImage.get('naturalWidth'))) {
-		currentImage.setStyle('background-image', 'none');
-	}
-</aui:script>

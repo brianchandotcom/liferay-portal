@@ -75,17 +75,20 @@ public interface KaleoTaskInstanceTokenLocalService extends BaseLocalService,
 	public KaleoTaskInstanceToken addKaleoTaskInstanceToken(
 		KaleoTaskInstanceToken kaleoTaskInstanceToken);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public KaleoTaskInstanceToken addKaleoTaskInstanceToken(
 		long kaleoInstanceTokenId, long kaleoTaskId, String kaleoTaskName,
 		Collection<KaleoTaskAssignment> kaleoTaskAssignments, Date dueDate,
 		Map<String, Serializable> workflowContext, ServiceContext serviceContext)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public KaleoTaskInstanceToken assignKaleoTaskInstanceToken(
 		long kaleoTaskInstanceTokenId, String assigneeClassName,
 		long assigneeClassPK, Map<String, Serializable> workflowContext,
 		ServiceContext serviceContext) throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public KaleoTaskInstanceToken completeKaleoTaskInstanceToken(
 		long kaleoTaskInstanceTokenId, ServiceContext serviceContext)
 		throws PortalException;

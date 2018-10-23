@@ -20,8 +20,6 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.MimeTypes;
 
-import java.net.URL;
-
 import javax.servlet.Servlet;
 
 import org.osgi.service.component.annotations.Component;
@@ -47,7 +45,7 @@ public class BuiltInJSModuleServlet extends BaseBuiltInJSModuleServlet {
 	}
 
 	@Override
-	protected URL getURL(String pathInfo) {
+	protected ResourceDescriptor getResourceDescriptor(String pathInfo) {
 		String identifier = pathInfo.substring(1);
 
 		int i = identifier.indexOf(StringPool.SLASH);
@@ -71,7 +69,7 @@ public class BuiltInJSModuleServlet extends BaseBuiltInJSModuleServlet {
 
 		String packagePath = ModuleNameUtil.getPackagePath(identifier);
 
-		return jsPackage.getResourceURL(packagePath);
+		return new ResourceDescriptor(jsPackage, packagePath);
 	}
 
 	private static final long serialVersionUID = -8753225208295935344L;

@@ -19,8 +19,6 @@ import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.portal.kernel.util.MimeTypes;
 
-import java.net.URL;
-
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -50,7 +48,7 @@ public class BuiltInJSResolvedModuleServlet extends BaseBuiltInJSModuleServlet {
 	}
 
 	@Override
-	protected URL getURL(String pathInfo) {
+	protected ResourceDescriptor getResourceDescriptor(String pathInfo) {
 		String identifier = pathInfo.substring(1);
 
 		String packageName = ModuleNameUtil.getPackageName(identifier);
@@ -63,7 +61,7 @@ public class BuiltInJSResolvedModuleServlet extends BaseBuiltInJSModuleServlet {
 
 		String packagePath = ModuleNameUtil.getPackagePath(identifier);
 
-		return jsPackage.getResourceURL(packagePath);
+		return new ResourceDescriptor(jsPackage, packagePath);
 	}
 
 	private JSPackage _getJSPackage(String packageName) {

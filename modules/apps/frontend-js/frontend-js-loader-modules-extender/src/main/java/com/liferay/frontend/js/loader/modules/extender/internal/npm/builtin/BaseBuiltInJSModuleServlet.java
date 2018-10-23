@@ -14,20 +14,35 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.npm.builtin;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.JSBundle;
+import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
-import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 
 import java.net.URL;
 
-import javax.servlet.ServletOutputStream;
+import java.util.Locale;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * Provides a base abstract class to implement servlets that return JavaScript
@@ -38,16 +53,32 @@ import javax.servlet.http.HttpServletResponse;
  */
 public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 
+	@Override
+	public void destroy() {
+		_bundleSymbolicNameServiceTrackerMap.close();
+	}
+
+	@Override
+	public void init() {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		_bundleSymbolicNameServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundle.getBundleContext(), ResourceBundleLoader.class,
+				"bundle.symbolic.name");
+	}
+
 	protected abstract MimeTypes getMimeTypes();
 
 	/**
-	 * Returns the requested resource. This is a template method that must be
-	 * implemented by subclasses to lookup the requested resource.
+	 * Returns the requested resource descriptor. This is a template method that
+	 * must be implemented by subclasses to lookup the requested resource.
 	 *
 	 * @param  pathInfo the request's pathInfo
-	 * @return the {@link JSModule} object describing the module
+	 * @return the {@link String} content of the resource or null
 	 */
-	protected abstract URL getURL(String pathInfo);
+	protected abstract ResourceDescriptor getResourceDescriptor(
+		String pathInfo);
 
 	@Override
 	protected void service(
@@ -56,7 +87,31 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 
 		String pathInfo = request.getPathInfo();
 
-		URL url = getURL(pathInfo);
+		ResourceDescriptor resourceDescriptor = getResourceDescriptor(pathInfo);
+
+		if (resourceDescriptor == null) {
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+
+			return;
+		}
+
+		_setContentType(response, pathInfo);
+
+		String languageId = request.getParameter("languageId");
+
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+		_sendResource(response, resourceDescriptor, locale);
+	}
+
+	private void _sendResource(
+			HttpServletResponse response, ResourceDescriptor resourceDescriptor,
+			Locale locale)
+		throws IOException {
+
+		JSPackage jsPackage = resourceDescriptor.getJsPackage();
+
+		URL url = jsPackage.getResourceURL(resourceDescriptor.getPackagePath());
 
 		if (url == null) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -64,30 +119,40 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 			return;
 		}
 
-		_setContentType(response, url);
-
-		_sendResource(response, url);
-	}
-
-	private void _sendResource(HttpServletResponse response, URL url)
-		throws IOException {
-
-		ServletOutputStream servletOutputStream = response.getOutputStream();
-
 		try (InputStream inputStream = url.openStream()) {
-			StreamUtil.transfer(inputStream, servletOutputStream, false);
+			String content = StringUtil.read(inputStream);
+
+			response.setCharacterEncoding(StringPool.UTF8);
+
+			PrintWriter printWriter = response.getWriter();
+
+			JSBundle jsBundle = jsPackage.getJSBundle();
+
+			ResourceBundleLoader resourceBundleLoader =
+				_bundleSymbolicNameServiceTrackerMap.getService(
+					jsBundle.getName());
+
+			if (resourceBundleLoader != null) {
+				content = LanguageUtil.process(
+					() -> resourceBundleLoader.loadResourceBundle(locale),
+					locale, content);
+			}
+
+			printWriter.print(content);
 		}
-		catch (Exception e) {
+		catch (IOException ioe) {
+			_log.error("Unable to read " + resourceDescriptor.toString(), ioe);
+
 			response.sendError(
 				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 				"Unable to read file");
 		}
 	}
 
-	private void _setContentType(HttpServletResponse response, URL url) {
-		String file = url.getFile();
+	private void _setContentType(
+		HttpServletResponse response, String pathInfo) {
 
-		String extension = FileUtil.getExtension(file);
+		String extension = FileUtil.getExtension(pathInfo);
 
 		if (extension.equals(".js")) {
 			response.setContentType(ContentTypes.TEXT_JAVASCRIPT_UTF8);
@@ -98,8 +163,14 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 		else {
 			MimeTypes mimeTypes = getMimeTypes();
 
-			response.setContentType(mimeTypes.getContentType(file));
+			response.setContentType(mimeTypes.getContentType(pathInfo));
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseBuiltInJSModuleServlet.class);
+
+	private ServiceTrackerMap<String, ResourceBundleLoader>
+		_bundleSymbolicNameServiceTrackerMap;
 
 }

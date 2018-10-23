@@ -796,6 +796,7 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Site Page" />
+			<var name="pageTypeURL" value="https://www.google.com" />
 			<var name="sitePageType" value="Embedded" />
 		</execute>
 

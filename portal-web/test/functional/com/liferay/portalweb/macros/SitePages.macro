@@ -18,6 +18,13 @@
 		<execute function="SelectFrame#selectFrameTop" />
 
 		<if>
+			<equals arg1="${sitePageType}" arg2="Embedded" />
+			<then>
+				<execute function="Type" locator1="SitePagesEditPage#PAGE_TYPE_EMBEDDED_URL_FIELD" value1="${pageTypeURL}" />
+			</then>
+		</if>
+
+		<if>
 			<isset var="inheritChanges" />
 			<then>
 				<execute macro="Page#togglePageTemplateInheritChanges">

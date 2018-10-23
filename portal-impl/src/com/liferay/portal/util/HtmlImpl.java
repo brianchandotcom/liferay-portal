@@ -235,8 +235,6 @@ public class HtmlImpl implements Html {
 
 			if (c < _VALID_CHARS.length) {
 				if (!_VALID_CHARS[c]) {
-					String replacement = null;
-
 					if (sb == null) {
 						sb = new StringBuilder(text.length() + 64);
 					}

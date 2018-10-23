@@ -449,11 +449,6 @@
 </tr>
 <!--SCOPE-->
 <tr>
-	<td>SCOPE_DROPDOWN</td>
-	<td>//div[@class='scope-selector']//a[contains(@class,'dropdown-toggle')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SCOPE</td>
 	<td>//div[@class='scope-selector']//li[contains(.,'${key_kbPageScope}')]//span</td>
 	<td></td>

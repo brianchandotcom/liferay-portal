@@ -240,6 +240,8 @@ public class StructuredContentNestedCollectionResource
 				).build()
 			).addRelativeURL(
 				"link", this::_getLink
+			).addString(
+				"dataType", StructuredContentField::getDDMFormFieldDataType
 			).addLocalizedStringByLocale(
 				"label", StructuredContentField::getLocalizedLabel
 			).addString(
@@ -833,6 +835,23 @@ public class StructuredContentNestedCollectionResource
 
 			_ddmFormFieldValue = ddmFormFieldValue;
 			_ddmStructure = ddmStructure;
+		}
+
+		public String getDDMFormFieldDataType() {
+			try {
+				return _ddmStructure.getFieldDataType(
+					_ddmFormFieldValue.getName());
+			}
+			catch (PortalException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to get data type for field name " +
+							_ddmFormFieldValue.getName(),
+						pe);
+				}
+
+				return null;
+			}
 		}
 
 		public DDMFormFieldValue getDDMFormFieldValue() {

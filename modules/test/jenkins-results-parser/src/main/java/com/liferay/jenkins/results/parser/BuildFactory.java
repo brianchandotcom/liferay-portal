@@ -54,6 +54,10 @@ public class BuildFactory {
 
 		String jobName = topLevelBuild.getJobName();
 
+		if (jobName.equals("git-bisect-tool")) {
+			return new GitBisectToolBuild(url, (TopLevelBuild)parentBuild);
+		}
+
 		if ((parentBuild != null) &&
 			jobName.equals("test-portal-acceptance-pullrequest(ee-6.2.x)")) {
 

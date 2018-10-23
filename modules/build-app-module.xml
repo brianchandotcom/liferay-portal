@@ -162,7 +162,10 @@
 			<isset property="artifact.sources.url" />
 			<then>
 				<if>
-					<contains string="${basedir}" substring="private${file.separator}" />
+					<or>
+						<contains string="${basedir}" substring="private${file.separator}" />
+						<istrue value="${download.artifact.private.override}" />
+					</or>
 					<then>
 						<get
 							dest="${dist.dir}/sources"
@@ -208,7 +211,10 @@
 		</loadproperties>
 
 		<if>
-			<contains string="${basedir}" substring="private${file.separator}" />
+			<or>
+				<contains string="${basedir}" substring="private${file.separator}" />
+				<istrue value="${download.artifact.private.override}" />
+			</or>
 			<then>
 				<get
 					dest="${dist.dir}"

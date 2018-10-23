@@ -144,11 +144,11 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 			return;
 		}
 
-		TermFilter parentCategoryTermsFilter = new TermFilter(
+		TermFilter parentCategoryTermFilter = new TermFilter(
 			KaleoTaskInstanceTokenField.ASSIGNEE_CLASS_NAME_IDS,
 			String.valueOf(portal.getClassNameId(assigneeClassName)));
 
-		booleanFilter.add(parentCategoryTermsFilter, BooleanClauseOccur.MUST);
+		booleanFilter.add(parentCategoryTermFilter, BooleanClauseOccur.MUST);
 	}
 
 	protected void appendAssigneeClassPKTerm(
@@ -161,11 +161,11 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 			return;
 		}
 
-		TermFilter parentCategoryTermsFilter = new TermFilter(
+		TermFilter parentCategoryTermFilter = new TermFilter(
 			KaleoTaskInstanceTokenField.ASSIGNEE_CLASS_PKS,
 			String.valueOf(assigneeClassPK));
 
-		booleanFilter.add(parentCategoryTermsFilter, BooleanClauseOccur.MUST);
+		booleanFilter.add(parentCategoryTermFilter, BooleanClauseOccur.MUST);
 	}
 
 	protected void appendCompletedTerm(
@@ -200,7 +200,7 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 			formatPattern);
 
 		DateRangeFilterBuilder dateRangeFilterBuilder =
-			_filterBuilders.dateRangeFilterBuilder();
+			filterBuilders.dateRangeFilterBuilder();
 
 		dateRangeFilterBuilder.setFieldName(
 			KaleoTaskInstanceTokenField.DUE_DATE);
@@ -501,6 +501,9 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 	}
 
 	@Reference
+	protected FilterBuilders filterBuilders;
+
+	@Reference
 	protected GroupLocalService groupLocalService;
 
 	protected Localization localization;
@@ -525,8 +528,5 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoTaskInstanceTokenModelPreFilterContributor.class);
-
-	@Reference
-	private FilterBuilders _filterBuilders;
 
 }

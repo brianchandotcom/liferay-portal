@@ -76,6 +76,16 @@ public class FragmentManagementToolbarDisplayContext
 					add(
 						dropdownItem -> {
 							dropdownItem.putData(
+								"action", "moveSelectedFragmentEntries");
+							dropdownItem.setIcon("change");
+							dropdownItem.setLabel(
+								LanguageUtil.get(request, "move"));
+							dropdownItem.setQuickAction(true);
+						});
+
+					add(
+						dropdownItem -> {
+							dropdownItem.putData(
 								"action", "deleteSelectedFragmentEntries");
 							dropdownItem.setIcon("times-circle");
 							dropdownItem.setLabel(

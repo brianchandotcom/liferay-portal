@@ -32,7 +32,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "logout.processor.type=" + LogoutProcessorType.REDIRECT
+	property = "logout.processor.type=" + LogoutProcessorType.REDIRECT,
+	service = LogoutProcessor.class
 )
 public class RedirectLogoutProcessor implements LogoutProcessor {
 

@@ -31,7 +31,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "logout.processor.type=" + LogoutProcessorType.COOKIE
+	property = "logout.processor.type=" + LogoutProcessorType.COOKIE,
+	service = LogoutProcessor.class
 )
 public class CookieLogoutProcessor implements LogoutProcessor {
 

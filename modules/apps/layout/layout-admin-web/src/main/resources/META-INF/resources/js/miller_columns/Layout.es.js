@@ -430,18 +430,26 @@ class Layout extends Component {
 	 */
 
 	_handleMoveLayoutColumnItem(eventData) {
+		let layoutColumns = this.layoutColumns.map(
+			layoutColumn => [...layoutColumn]
+		);
+
+		const sourceColumn = layoutColumns[this._draggingItemColumnIndex];
+		const sourceColumnIndex = layoutColumns.indexOf(sourceColumn);
+
 		const targetExists = eventData.targetItemPlid ||
 			eventData.targetColumnIndex;
-
 		const targetIsSource = eventData.sourceItemPlid === eventData.targetItemPlid;
 
-		if (this._draggingItem && targetExists && !targetIsSource) {
-			let layoutColumns = this.layoutColumns.map(
-				layoutColumn => [...layoutColumn]
-			);
+		const activeItemTargetsChildColumn = this._draggingItem &&
+		this._draggingItem.active &&
+		(eventData.targetColumnIndex > sourceColumnIndex);
 
-			const sourceColumn = layoutColumns[this._draggingItemColumnIndex];
-
+		if (this._draggingItem &&
+			targetExists &&
+			!targetIsSource &&
+			!activeItemTargetsChildColumn
+		) {
 			let parentPlid = null;
 			let priority = null;
 			let targetColumn = null;
@@ -455,7 +463,8 @@ class Layout extends Component {
 				eventData.targetItemPlid
 			);
 
-			if (eventData.targetColumnIndex) {
+			if (eventData.targetColumnIndex && !activeItemTargetsChildColumn) {
+
 				targetColumnIndex = eventData.targetColumnIndex;
 
 				targetColumn = layoutColumns[targetColumnIndex];

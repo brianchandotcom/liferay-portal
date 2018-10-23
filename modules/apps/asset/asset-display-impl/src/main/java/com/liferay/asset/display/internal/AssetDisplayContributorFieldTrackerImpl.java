@@ -159,7 +159,7 @@ public class AssetDisplayContributorFieldTrackerImpl
 		AssetDisplayContributorField assetDisplayContributorField,
 		Map<String, Object> properties) {
 
-		Object className = properties.get("model.class.name");
+		String className = (String)properties.get("model.class.name");
 
 		List<AssetDisplayContributorField> assetDisplayContributorFields =
 			_assetListContributorFields.get(className);

@@ -120,6 +120,25 @@ public class AMCompanyThumbnailConfigurationInitializer {
 		return duplicateNameAMImageConfigurationEntryOptional.isPresent();
 	}
 
+	private void _createAMDocumentLibraryConfiguration(
+			Company company, String name, int maxHeight, int maxWidth)
+		throws AMImageConfigurationException, IOException {
+
+		String uuid = _normalize(name);
+
+		if (!_configurationExists(company.getCompanyId(), name, uuid)) {
+			Map<String, String> properties = new HashMap<>();
+
+			properties.put("max-height", String.valueOf(maxHeight));
+			properties.put("max-width", String.valueOf(maxWidth));
+
+			_amImageConfigurationHelper.addAMImageConfigurationEntry(
+				company.getCompanyId(), name,
+				"This image resolution was automatically added.", uuid,
+				properties);
+		}
+	}
+
 	private void _createAMDocumentLibraryPreviewConfiguration(
 			Company company, int maxHeight, int maxWidth)
 		throws AMImageConfigurationException, IOException {
@@ -139,25 +158,6 @@ public class AMCompanyThumbnailConfigurationInitializer {
 
 		_createAMDocumentLibraryConfiguration(
 			company, name, maxHeight, maxWidth);
-	}
-
-	private void _createAMDocumentLibraryConfiguration(
-			Company company, String name, int maxHeight, int maxWidth)
-		throws AMImageConfigurationException, IOException {
-
-		String uuid = _normalize(name);
-
-		if (!_configurationExists(company.getCompanyId(), name, uuid)) {
-			Map<String, String> properties = new HashMap<>();
-
-			properties.put("max-height", String.valueOf(maxHeight));
-			properties.put("max-width", String.valueOf(maxWidth));
-
-			_amImageConfigurationHelper.addAMImageConfigurationEntry(
-				company.getCompanyId(), name,
-				"This image resolution was automatically added.", uuid,
-				properties);
-		}
 	}
 
 	private String _normalize(String str) {

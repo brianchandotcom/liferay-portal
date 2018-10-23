@@ -767,16 +767,12 @@ public class MediaWikiImporter implements WikiImporter {
 			WikiPage sharedImagesPage = _wikiPageLocalService.getPage(
 				node.getNodeId(), SHARED_IMAGES_TITLE);
 
-			StringBuilder sb = new StringBuilder(content);
-
-			int offset = 0;
+			StringBuffer sb = new StringBuffer();
 
 			Matcher matcher = _mediaLinkPattern.matcher(content);
 
 			while (matcher.find()) {
 				String mediaLinkTag = matcher.group();
-
-				int originalLength = mediaLinkTag.length();
 
 				String fileName = matcher.group(2);
 
@@ -787,6 +783,8 @@ public class MediaWikiImporter implements WikiImporter {
 						fileName);
 
 				if (attachmentFileEntry == null) {
+					matcher.appendReplacement(sb, mediaLinkTag);
+
 					continue;
 				}
 
@@ -800,15 +798,14 @@ public class MediaWikiImporter implements WikiImporter {
 					linkLabel = StringPool.PIPE + fileName;
 				}
 
-				String linkTag = StringBundler.concat(
-					"[[", portalURL, attachmentFileEntryURL, linkLabel, "]]");
-
-				sb.replace(
-					matcher.start(0) + offset,
-					matcher.start(0) + originalLength + offset, linkTag);
-
-				offset += linkTag.length() - originalLength;
+				matcher.appendReplacement(
+					sb,
+					StringBundler.concat(
+						"[[", portalURL, attachmentFileEntryURL, linkLabel,
+						"]]"));
 			}
+
+			matcher.appendTail(sb);
 
 			return sb.toString();
 		}

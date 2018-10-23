@@ -181,7 +181,7 @@ class ManageCollaborators extends PortletBase {
 	 * @protected
 	 */
 	_hideShowExpirationDateBlock(event) {
-		let collaboratorId = event.currentTarget.dataset.userid;
+		let collaboratorId = event.currentTarget.dataset.collaboratorid;
 
 		let expirationElementBlock = dom.toElement('#expiration' + collaboratorId);
 

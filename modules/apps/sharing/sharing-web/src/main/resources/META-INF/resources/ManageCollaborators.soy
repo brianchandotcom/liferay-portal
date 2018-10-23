@@ -21,8 +21,8 @@
 	<div id="{$id}">
 		<div class="inline-scroller modal-body">
 			<ul class="list-group">
-				{foreach $user in $collaborators}
-					<li class="list-group-item list-group-item-flex" data-onmouseout="{$_handleHoverCollaborator}" data-onmouseover="{$_handleHoverCollaborator}" id="collaborator{$user.id}">
+				{foreach $collaborator in $collaborators}
+					<li class="list-group-item list-group-item-flex" data-onmouseout="{$_handleHoverCollaborator}" data-onmouseover="{$_handleHoverCollaborator}" id="collaborator{$collaborator.id}">
 						{call .collaborator}
 							{param _handleChangeExpirationDate: $_handleChangeExpirationDate /}
 							{param _handleChangePermission: $_handleChangePermission /}
@@ -32,7 +32,7 @@
 							{param _loadingResponse: $_loadingResponse /}
 							{param _tomorrowDate: $_tomorrowDate /}
 							{param spritemap: $spritemap /}
-							{param user: $user /}
+							{param collaborator: $collaborator /}
 						{/call}
 					</li>
 				{ifempty}
@@ -87,13 +87,13 @@
 	{@param? _hideShowExpirationDateBlock: any}
 	{@param? _loadingResponse: bool}
 	{@param? _tomorrowDate: string}
+	{@param collaborator: ?}
 	{@param spritemap: string}
-	{@param user: ?}
 
 	<div class="autofit-col">
 		{call ClaySticker.render}
 			{param size: 'xl' /}
-			{param imageSrc: $user.imageSrc /}
+			{param imageSrc: $collaborator.imageSrc /}
 			{param shape: 'circle' /}
 		{/call}
 	</div>
@@ -102,7 +102,7 @@
 
 		<div class="autofit-row autofit-row-center">
 			<div class="autofit-col autofit-col-expand">
-				<h4>{$user.name}</h4>
+				<h4>{$collaborator.name}</h4>
 			</div>
 
 			<div class="autofit-col expiration-icon">
@@ -110,17 +110,17 @@
 					{msg desc=""}set-expiration-date{/msg}
 				{/let}
 				{let $untilMsg kind="text"}
-					{msg desc=""}until-{$user.sharingEntryExpirationDateTooltip}{/msg}
+					{msg desc=""}until-{$collaborator.sharingEntryExpirationDateTooltip}{/msg}
 				{/let}
 				{let $tooltipMessage:
-					$user.sharingEntryExpirationDateTooltip ? $untilMsg : $expirationDateMsg /}
+					$collaborator.sharingEntryExpirationDateTooltip ? $untilMsg : $expirationDateMsg /}
 
 				<span class="lfr-portal-tooltip" title="{$tooltipMessage}">
 					{call ClayButton.render}
 						{param events: [
 							'click': $_hideShowExpirationDateBlock
 						] /}
-						{param data: ['userid': $user.id] /}
+						{param data: ['collaboratorid': $collaborator.id] /}
 						{param elementClasses: 'text-muted' /}
 						{param icon: 'time' /}
 						{param monospaced: true /}
@@ -135,16 +135,16 @@
 					{param events: [
 						'change': $_handleChangePermission
 					] /}
-					{param name: $user.sharingEntryId /}
-					{param options: $user.sharingEntryPermissionDisplaySelectOptions /}
+					{param name: $collaborator.sharingEntryId /}
+					{param options: $collaborator.sharingEntryPermissionDisplaySelectOptions /}
 				{/call}
 			</div>
 
 			<div class="autofit-col">
 				<button
 					class="btn btn-link btn-monospaced btn-remove text-muted"
-					data-collaborator-id="{$user.id}"
-					data-sharingentry-id="{$user.sharingEntryId}"
+					data-collaborator-id="{$collaborator.id}"
+					data-sharingentry-id="{$collaborator.sharingEntryId}"
 					data-onclick="{$_handleDeleteCollaborator}"
 					{if $_loadingResponse}disabled{/if}
 				>
@@ -155,7 +155,7 @@
 			</div>
 		</div>
 
-		<div class="autofit-float autofit-row autofit-row-center hide" id="expiration{$user.id}">
+		<div class="autofit-float autofit-row autofit-row-center hide" id="expiration{$collaborator.id}">
 			<div class="autofit-col">
 				<span>{msg desc=""}has-permissions-until{/msg}</span>
 			</div>
@@ -164,10 +164,10 @@
 				<input
 					data-onchange="{$_handleChangeExpirationDate}"
 					min="{$_tomorrowDate}"
-					name="{$user.sharingEntryId}"
+					name="{$collaborator.sharingEntryId}"
 					type="date"
-					{if $user.sharingEntryExpirationDate}
-					value="{$user.sharingEntryExpirationDate}"
+					{if $collaborator.sharingEntryExpirationDate}
+					value="{$collaborator.sharingEntryExpirationDate}"
 					{/if}
 				/>
 			</div>
@@ -181,7 +181,7 @@
 					{param events: [
 						'click': $_handleDeleteExpirationDate
 					] /}
-					{param data: ['sharingEntryId': $user.sharingEntryId] /}
+					{param data: ['sharingEntryId': $collaborator.sharingEntryId] /}
 					{param elementClasses: 'text-muted' /}
 					{param label: $cancelMsg /}
 					{param size: 'sm' /}

@@ -47,7 +47,6 @@ import java.io.IOException;
 
 import java.text.DateFormat;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -180,8 +179,9 @@ public class ManageCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 					_sharingEntryLocalService.getSharingEntry(sharingEntryId);
 
 				_sharingEntryService.updateSharingEntry(
-					sharingEntryId, //TODO
-					Arrays.asList(SharingEntryAction.values()),
+					sharingEntryId,
+					SharingEntryAction.getSharingEntryActions(
+						sharingEntry.getActionIds()),
 					sharingEntry.isShareable(), expirationDate, serviceContext);
 			}
 		}

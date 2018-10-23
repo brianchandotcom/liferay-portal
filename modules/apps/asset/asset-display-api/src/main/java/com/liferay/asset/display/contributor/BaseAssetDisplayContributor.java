@@ -45,13 +45,13 @@ public abstract class BaseAssetDisplayContributor<T>
 		// Fields for asset entry
 
 		Set<AssetDisplayField> assetDisplayFields =
-			_assetDisplayContributorFieldTracker.
-				getAssetEntryAssetDisplayFields(locale);
+			assetDisplayContributorFieldTracker.getAssetEntryAssetDisplayFields(
+				locale);
 
 		// Fields for the specific asset type
 
 		Set<AssetDisplayField> journalArticleAssetDisplayFields =
-			_assetDisplayContributorFieldTracker.getAssetDisplayFields(
+			assetDisplayContributorFieldTracker.getAssetDisplayFields(
 				getClassName(), locale);
 
 		assetDisplayFields.addAll(journalArticleAssetDisplayFields);
@@ -74,7 +74,7 @@ public abstract class BaseAssetDisplayContributor<T>
 		// Field values for asset entry
 
 		Map<String, Object> parameterMap =
-			_assetDisplayContributorFieldTracker.
+			assetDisplayContributorFieldTracker.
 				getAssetEntryAssetDisplayFieldsValues(assetEntry, locale);
 
 		// Field values for the specific asset type
@@ -85,7 +85,7 @@ public abstract class BaseAssetDisplayContributor<T>
 					assetEntry.getClassNameId());
 
 		List<AssetDisplayContributorField> assetDisplayContributorFields =
-			_assetDisplayContributorFieldTracker.
+			assetDisplayContributorFieldTracker.
 				getAssetDisplayContributorFields(getClassName());
 
 		AssetRenderer<T> assetRenderer = assetRendererFactory.getAssetRenderer(
@@ -164,6 +164,10 @@ public abstract class BaseAssetDisplayContributor<T>
 		throw new UnsupportedOperationException();
 	}
 
+	@Reference
+	protected AssetDisplayContributorFieldTracker
+		assetDisplayContributorFieldTracker;
+
 	/**
 	 * @deprecated As of Judson (7.1.x), }
 	 */
@@ -176,9 +180,5 @@ public abstract class BaseAssetDisplayContributor<T>
 	@Deprecated
 	@Reference
 	protected UserLocalService userLocalService;
-
-	@Reference
-	private AssetDisplayContributorFieldTracker
-		_assetDisplayContributorFieldTracker;
 
 }

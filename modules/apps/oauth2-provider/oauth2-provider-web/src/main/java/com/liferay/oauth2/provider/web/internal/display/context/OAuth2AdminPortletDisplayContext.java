@@ -47,12 +47,6 @@ import javax.portlet.PortletRequest;
 public class OAuth2AdminPortletDisplayContext
 	extends BaseOAuth2PortletDisplayContext {
 
-	public static String generateRandomId() {
-		String randomSecret = generateRandomSecret();
-
-		return StringUtil.replace(randomSecret, "secret-", "id-");
-	}
-
 	public static String generateRandomSecret() {
 		int size = 16;
 

@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.InputStream;
 
@@ -131,11 +130,6 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 				OAuth2Application.class.getName(), request);
 
 			if (oAuth2ApplicationId == 0) {
-				if (Validator.isBlank(clientId)) {
-					clientId =
-						OAuth2AdminPortletDisplayContext.generateRandomId();
-				}
-
 				for (GrantType grantType : allowedGrantTypesList) {
 					if (!grantType.isSupportsPublicClients()) {
 						clientSecret =

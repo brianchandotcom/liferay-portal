@@ -1148,9 +1148,7 @@
 		<execute function="DownloadTempFile" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute macro="Site#openSitesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		<execute macro="Site#openSitesAdmin" />
 
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="Import Site Name" />
@@ -1190,12 +1188,8 @@
 			<var name="assetTitle" value="Subcategory WC Title" />
 		</execute>
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Import Site Name" />
-		</execute>
-
 		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
+			<var name="siteURLKey" value="import-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -1212,7 +1206,7 @@
 		</execute>
 
 		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
+			<var name="siteURLKey" value="import-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">

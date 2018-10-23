@@ -156,7 +156,7 @@ renderResponse.setTitle((ddmStructure != null) ? LanguageUtil.format(request, "e
 
 						<aui:input name="description" />
 
-						<aui:field-wrapper label="parent-strucutre">
+						<aui:field-wrapper label="parent-structure">
 							<aui:input name="parentStructureId" type="hidden" value="<%= journalEditDDMStructuresDisplayContext.getParentDDMStructureId() %>" />
 
 							<aui:input cssClass="lfr-input-text" disabled="<%= true %>" label="" name="parentDDMStructureName" type="text" value="<%= journalEditDDMStructuresDisplayContext.getParentDDMStructureName() %>" />

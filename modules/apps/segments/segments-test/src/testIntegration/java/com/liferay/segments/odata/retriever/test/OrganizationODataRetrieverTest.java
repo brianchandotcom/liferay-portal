@@ -62,15 +62,12 @@ public class OrganizationODataRetrieverTest {
 		Organization suborganization1 = OrganizationTestUtil.addOrganization(
 			organization.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
-
 		Organization suborganization2 = OrganizationTestUtil.addOrganization(
 			organization.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
 
 		_organizations.add(suborganization1);
-
 		_organizations.add(suborganization2);
-
 		_organizations.add(organization);
 
 		Date modifiedDate = suborganization1.getModifiedDate();
@@ -100,15 +97,12 @@ public class OrganizationODataRetrieverTest {
 		Organization suborganization1 = OrganizationTestUtil.addOrganization(
 			organization.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
-
 		Organization suborganization2 = OrganizationTestUtil.addOrganization(
 			organization.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
 
 		_organizations.add(suborganization1);
-
 		_organizations.add(suborganization2);
-
 		_organizations.add(organization);
 
 		Date modifiedDate = suborganization1.getModifiedDate();
@@ -147,6 +141,23 @@ public class OrganizationODataRetrieverTest {
 	}
 
 	@Test
+	public void testGetResultsFilterByOrganizationId() throws Exception {
+		Organization organization1 = OrganizationTestUtil.addOrganization();
+		Organization organization2 = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization1);
+		_organizations.add(organization2);
+
+		List<Organization> organizations = _oDataRetriever.getResults(
+			TestPropsValues.getCompanyId(),
+			"(organizationId eq '" + organization1.getOrganizationId() + "')",
+			LocaleUtil.getDefault(), 0, 2);
+
+		Assert.assertEquals(organizations.toString(), 1, organizations.size());
+		Assert.assertEquals(organization1, organizations.get(0));
+	}
+
+	@Test
 	public void testGetResultsFilterByParentOrganizationId() throws Exception {
 		Organization organization = OrganizationTestUtil.addOrganization();
 
@@ -177,15 +188,12 @@ public class OrganizationODataRetrieverTest {
 		Organization suborganization1 = OrganizationTestUtil.addOrganization(
 			organization.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
-
 		Organization suborganization2 = OrganizationTestUtil.addOrganization(
 			organization.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
 
 		_organizations.add(suborganization1);
-
 		_organizations.add(suborganization2);
-
 		_organizations.add(organization);
 
 		Date modifiedDate = suborganization1.getModifiedDate();
@@ -215,15 +223,12 @@ public class OrganizationODataRetrieverTest {
 		Organization suborganization1 = OrganizationTestUtil.addOrganization(
 			organization.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
-
 		Organization suborganization2 = OrganizationTestUtil.addOrganization(
 			organization.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
 
 		_organizations.add(suborganization1);
-
 		_organizations.add(suborganization2);
-
 		_organizations.add(organization);
 
 		Date modifiedDate = suborganization1.getModifiedDate();
@@ -255,15 +260,12 @@ public class OrganizationODataRetrieverTest {
 		Organization suborganization1 = OrganizationTestUtil.addOrganization(
 			organization.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
-
 		Organization suborganization2 = OrganizationTestUtil.addOrganization(
 			organization.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
 
 		_organizations.add(suborganization1);
-
 		_organizations.add(suborganization2);
-
 		_organizations.add(organization);
 
 		Date modifiedDate = suborganization1.getModifiedDate();

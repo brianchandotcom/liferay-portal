@@ -67,7 +67,9 @@ public class OrganizationODataRetrieverTest {
 			false);
 
 		_organizations.add(suborganization1);
+
 		_organizations.add(suborganization2);
+
 		_organizations.add(organization);
 
 		Date modifiedDate = suborganization1.getModifiedDate();
@@ -102,7 +104,9 @@ public class OrganizationODataRetrieverTest {
 			false);
 
 		_organizations.add(suborganization1);
+
 		_organizations.add(suborganization2);
+
 		_organizations.add(organization);
 
 		Date modifiedDate = suborganization1.getModifiedDate();
@@ -128,9 +132,11 @@ public class OrganizationODataRetrieverTest {
 	@Test
 	public void testGetResultsFilterByName() throws Exception {
 		Organization organization1 = OrganizationTestUtil.addOrganization();
+
 		Organization organization2 = OrganizationTestUtil.addOrganization();
 
 		_organizations.add(organization1);
+
 		_organizations.add(organization2);
 
 		List<Organization> organizations = _oDataRetriever.getResults(
@@ -166,9 +172,11 @@ public class OrganizationODataRetrieverTest {
 	@Test
 	public void testGetResultsFilterByOrganizationId() throws Exception {
 		Organization organization1 = OrganizationTestUtil.addOrganization();
+
 		Organization organization2 = OrganizationTestUtil.addOrganization();
 
 		_organizations.add(organization1);
+
 		_organizations.add(organization2);
 
 		List<Organization> organizations = _oDataRetriever.getResults(
@@ -205,9 +213,11 @@ public class OrganizationODataRetrieverTest {
 	@Test
 	public void testGetResultsFilterByTreePath() throws Exception {
 		Organization organization1 = OrganizationTestUtil.addOrganization();
+
 		Organization organization2 = OrganizationTestUtil.addOrganization();
 
 		_organizations.add(organization1);
+
 		_organizations.add(organization2);
 
 		List<Organization> organizations = _oDataRetriever.getResults(
@@ -256,7 +266,9 @@ public class OrganizationODataRetrieverTest {
 			false);
 
 		_organizations.add(suborganization1);
+
 		_organizations.add(suborganization2);
+
 		_organizations.add(organization);
 
 		Date modifiedDate = suborganization1.getModifiedDate();
@@ -291,7 +303,9 @@ public class OrganizationODataRetrieverTest {
 			false);
 
 		_organizations.add(suborganization1);
+
 		_organizations.add(suborganization2);
+
 		_organizations.add(organization);
 
 		Date modifiedDate = suborganization1.getModifiedDate();
@@ -323,12 +337,15 @@ public class OrganizationODataRetrieverTest {
 		Organization suborganization1 = OrganizationTestUtil.addOrganization(
 			organization.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
+
 		Organization suborganization2 = OrganizationTestUtil.addOrganization(
 			organization.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
 
 		_organizations.add(suborganization1);
+
 		_organizations.add(suborganization2);
+
 		_organizations.add(organization);
 
 		Date modifiedDate = suborganization1.getModifiedDate();

@@ -8,15 +8,6 @@
 		<var name="titleMap"><![CDATA[{"en_US":"${title}"}]]></var>
 
 		<if>
-			<not>
-				<isset var="folderId" />
-			</not>
-			<then>
-				<var name="folderId" value="0" />
-			</then>
-		</if>
-
-		<if>
 			<isset var="description" />
 			<then>
 				<var name="descriptionMap"><![CDATA[{"en_US":"${description}"}]]></var>
@@ -24,6 +15,15 @@
 			<else>
 				<var name="descriptionMap" value="{}" />
 			</else>
+		</if>
+
+		<if>
+			<not>
+				<isset var="folderId" />
+			</not>
+			<then>
+				<var name="folderId" value="0" />
+			</then>
 		</if>
 
 		<execute macro="JSONWebcontent#_convertToXML">
@@ -73,6 +73,15 @@
 
 	<command name="addWebContent">
 		<if>
+			<not>
+				<isset var="content" />
+			</not>
+			<then>
+				<fail message="Please set 'content.'" />
+			</then>
+		</if>
+
+		<if>
 			<isset var="groupName" />
 			<then>
 				<execute macro="JSONGroup#getGroupIdByName">
@@ -81,7 +90,7 @@
 				</execute>
 			</then>
 			<else>
-				<fail message="Please set 'groupName' to get groupId" />
+				<fail message="Please set 'groupName' to get groupId." />
 			</else>
 		</if>
 
@@ -91,15 +100,6 @@
 			</not>
 			<then>
 				<fail message="Please set 'title.'" />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset var="content" />
-			</not>
-			<then>
-				<fail message="Please set 'content.'" />
 			</then>
 		</if>
 

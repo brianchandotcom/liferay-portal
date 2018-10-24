@@ -28,6 +28,7 @@ import com.liferay.portal.output.stream.container.OutputStreamContainer;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactoryTracker;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
+import com.liferay.portal.upgrade.internal.index.updater.IndexUpdater;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
 import com.liferay.portal.upgrade.internal.release.ReleasePublisher;
 
@@ -36,6 +37,7 @@ import java.io.OutputStream;
 
 import java.util.List;
 
+import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -117,6 +119,9 @@ public class UpgradeExecutor {
 	}
 
 	@Reference
+	private IndexUpdater _indexUpdater;
+
+	@Reference
 	private OutputStreamContainerFactoryTracker
 		_outputStreamContainerFactoryTracker;
 
@@ -180,6 +185,12 @@ public class UpgradeExecutor {
 
 					_releaseLocalService.updateRelease(release);
 				}
+			}
+
+			Bundle bundle = _indexUpdater.getBundle(_bundleSymbolicName);
+
+			if (_indexUpdater.hasIndexes(bundle)) {
+				_indexUpdater.updateIndexes(bundle);
 			}
 
 			CacheRegistryUtil.clear();

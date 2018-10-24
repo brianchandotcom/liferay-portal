@@ -603,6 +603,9 @@
 
 		<!-- Other fields -->
 
+		<column name="parentPlid" type="long" />
+		<column name="leftPlid" type="long" />
+		<column name="rightPlid" type="long" />
 		<column name="privateLayout" type="boolean" />
 		<column accessor="true" name="layoutId" type="long" />
 		<column name="parentLayoutId" type="long" />
@@ -639,6 +642,9 @@
 		</finder>
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
+		</finder>
+		<finder name="ParentPlid" return-type="Collection">
+			<finder-column name="parentPlid" />
 		</finder>
 		<finder name="IconImageId" return-type="Layout">
 			<finder-column name="iconImageId" />

@@ -26,6 +26,7 @@ import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FileText;
+import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.ArrayList;
@@ -317,22 +318,35 @@ public class ChainingCheck extends BaseCheck {
 			return null;
 		}
 
-		DetailAST nameAST = null;
-
 		DetailAST firstChildAST = dotAST.getFirstChild();
 
 		if (firstChildAST.getType() == TokenTypes.LITERAL_NEW) {
-			nameAST = firstChildAST.findFirstToken(TokenTypes.IDENT);
-		}
-		else {
-			nameAST = dotAST.findFirstToken(TokenTypes.IDENT);
+			firstChildAST = firstChildAST.getFirstChild();
+
+			if (firstChildAST.getType() == TokenTypes.IDENT) {
+				return firstChildAST.getText();
+			}
+
+			if (firstChildAST.getType() == TokenTypes.DOT) {
+				dotAST = firstChildAST;
+			}
+
+			return null;
 		}
 
-		if (nameAST != null) {
-			return nameAST.getText();
+		FullIdent fullIdent = FullIdent.createFullIdent(dotAST);
+
+		String s = fullIdent.getText();
+
+		int x = s.lastIndexOf(CharPool.PERIOD);
+
+		int y = s.lastIndexOf(CharPool.PERIOD, x - 1);
+
+		if (y != -1) {
+			return s.substring(y + 1, x);
 		}
 
-		return null;
+		return s.substring(0, x);
 	}
 
 	private List<DetailAST> _getIdentASTList(DetailAST detailAST, String name) {

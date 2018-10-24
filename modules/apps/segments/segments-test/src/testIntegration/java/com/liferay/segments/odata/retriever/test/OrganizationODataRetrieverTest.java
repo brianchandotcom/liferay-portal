@@ -68,15 +68,21 @@ public class OrganizationODataRetrieverTest {
 
 		_organizations.add(parentOrganization);
 
+		String filterString = String.format(
+			"(companyId eq '%s') and (parentOrganizationId eq '%s')",
+			organization.getCompanyId(),
+			parentOrganization.getOrganizationId());
+
+		int count = _oDataRetriever.getResultsCount(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+
 		List<Organization> organizations = _oDataRetriever.getResults(
-			TestPropsValues.getCompanyId(),
-			String.format(
-				"(companyId eq '%s') and (parentOrganizationId eq '%s')",
-				organization.getCompanyId(),
-				parentOrganization.getOrganizationId()),
+			TestPropsValues.getCompanyId(), filterString,
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(organizations.toString(), 1, organizations.size());
 		Assert.assertEquals(organization, organizations.get(0));
 	}
 
@@ -108,15 +114,21 @@ public class OrganizationODataRetrieverTest {
 
 		_organizationLocalService.updateOrganization(organization2);
 
+		String filterString = String.format(
+			"(dateModified eq %s) and (parentOrganizationId eq '%s')",
+			ISO8601Utils.format(organization1.getModifiedDate()),
+			parentOrganization.getOrganizationId());
+
+		int count = _oDataRetriever.getResultsCount(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+
 		List<Organization> organizations = _oDataRetriever.getResults(
-			TestPropsValues.getCompanyId(),
-			String.format(
-				"(dateModified eq %s) and (parentOrganizationId eq '%s')",
-				ISO8601Utils.format(organization1.getModifiedDate()),
-				parentOrganization.getOrganizationId()),
+			TestPropsValues.getCompanyId(), filterString,
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(organizations.toString(), 1, organizations.size());
 		Assert.assertEquals(organization1, organizations.get(0));
 	}
 
@@ -148,15 +160,21 @@ public class OrganizationODataRetrieverTest {
 
 		_organizationLocalService.updateOrganization(organization2);
 
+		String filterString = String.format(
+			"(dateModified gt %s) and (parentOrganizationId eq '%s')",
+			ISO8601Utils.format(organization1.getModifiedDate()),
+			parentOrganization.getOrganizationId());
+
+		int count = _oDataRetriever.getResultsCount(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+
 		List<Organization> organizations = _oDataRetriever.getResults(
-			TestPropsValues.getCompanyId(),
-			String.format(
-				"(dateModified gt %s) and (parentOrganizationId eq '%s')",
-				ISO8601Utils.format(organization1.getModifiedDate()),
-				parentOrganization.getOrganizationId()),
+			TestPropsValues.getCompanyId(), filterString,
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(organizations.toString(), 1, organizations.size());
 		Assert.assertEquals(organization2, organizations.get(0));
 	}
 
@@ -188,15 +206,21 @@ public class OrganizationODataRetrieverTest {
 
 		_organizationLocalService.updateOrganization(organization2);
 
+		String filterString = String.format(
+			"(dateModified ge %s) and (parentOrganizationId eq '%s')",
+			ISO8601Utils.format(organization2.getModifiedDate()),
+			parentOrganization.getOrganizationId());
+
+		int count = _oDataRetriever.getResultsCount(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+
 		List<Organization> organizations = _oDataRetriever.getResults(
-			TestPropsValues.getCompanyId(),
-			String.format(
-				"(dateModified ge %s) and (parentOrganizationId eq '%s')",
-				ISO8601Utils.format(organization2.getModifiedDate()),
-				parentOrganization.getOrganizationId()),
+			TestPropsValues.getCompanyId(), filterString,
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(organizations.toString(), 1, organizations.size());
 		Assert.assertEquals(organization2, organizations.get(0));
 	}
 
@@ -228,15 +252,21 @@ public class OrganizationODataRetrieverTest {
 
 		_organizationLocalService.updateOrganization(organization2);
 
+		String filterString = String.format(
+			"(dateModified lt %s) and (parentOrganizationId eq '%s')",
+			ISO8601Utils.format(organization2.getModifiedDate()),
+			parentOrganization.getOrganizationId());
+
+		int count = _oDataRetriever.getResultsCount(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+
 		List<Organization> organizations = _oDataRetriever.getResults(
-			TestPropsValues.getCompanyId(),
-			String.format(
-				"(dateModified lt %s) and (parentOrganizationId eq '%s')",
-				ISO8601Utils.format(organization2.getModifiedDate()),
-				parentOrganization.getOrganizationId()),
+			TestPropsValues.getCompanyId(), filterString,
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(organizations.toString(), 1, organizations.size());
 		Assert.assertEquals(organization1, organizations.get(0));
 	}
 
@@ -268,15 +298,21 @@ public class OrganizationODataRetrieverTest {
 
 		_organizationLocalService.updateOrganization(organization2);
 
+		String filterString = String.format(
+			"(dateModified le %s) and (parentOrganizationId eq '%s')",
+			ISO8601Utils.format(modifiedDate),
+			parentOrganization.getOrganizationId());
+
+		int count = _oDataRetriever.getResultsCount(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+
 		List<Organization> organizations = _oDataRetriever.getResults(
-			TestPropsValues.getCompanyId(),
-			String.format(
-				"(dateModified le %s) and (parentOrganizationId eq '%s')",
-				ISO8601Utils.format(modifiedDate),
-				parentOrganization.getOrganizationId()),
+			TestPropsValues.getCompanyId(), filterString,
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(organizations.toString(), 1, organizations.size());
 		Assert.assertEquals(organization1, organizations.get(0));
 	}
 
@@ -289,12 +325,18 @@ public class OrganizationODataRetrieverTest {
 
 		_organizations.add(organization2);
 
+		String filterString = "(name eq '" + organization1.getName() + "')";
+
+		int count = _oDataRetriever.getResultsCount(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+
 		List<Organization> organizations = _oDataRetriever.getResults(
-			TestPropsValues.getCompanyId(),
-			"(name eq '" + organization1.getName() + "')",
+			TestPropsValues.getCompanyId(), filterString,
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(organizations.toString(), 1, organizations.size());
 		Assert.assertEquals(organization1, organizations.get(0));
 	}
 
@@ -310,11 +352,18 @@ public class OrganizationODataRetrieverTest {
 
 		_organizations.add(parentOrganization);
 
+		String filterString = "(nameTreePath eq 'A > B')";
+
+		int count = _oDataRetriever.getResultsCount(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+
 		List<Organization> organizations = _oDataRetriever.getResults(
-			TestPropsValues.getCompanyId(), "(nameTreePath eq 'A > B')",
+			TestPropsValues.getCompanyId(), filterString,
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(organizations.toString(), 1, organizations.size());
 		Assert.assertEquals(organization, organizations.get(0));
 	}
 
@@ -332,11 +381,18 @@ public class OrganizationODataRetrieverTest {
 
 		_organizations.add(parentOrganization);
 
+		String filterString = "contains(nameTreePath, 'B')";
+
+		int count = _oDataRetriever.getResultsCount(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+
 		List<Organization> organizations = _oDataRetriever.getResults(
-			TestPropsValues.getCompanyId(), "contains(nameTreePath, 'B')",
+			TestPropsValues.getCompanyId(), filterString,
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(organizations.toString(), 1, organizations.size());
 		Assert.assertEquals(organization, organizations.get(0));
 	}
 
@@ -349,12 +405,19 @@ public class OrganizationODataRetrieverTest {
 
 		_organizations.add(organization2);
 
+		String filterString =
+			"(organizationId eq '" + organization1.getOrganizationId() + "')";
+
+		int count = _oDataRetriever.getResultsCount(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+
 		List<Organization> organizations = _oDataRetriever.getResults(
-			TestPropsValues.getCompanyId(),
-			"(organizationId eq '" + organization1.getOrganizationId() + "')",
+			TestPropsValues.getCompanyId(), filterString,
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(organizations.toString(), 1, organizations.size());
 		Assert.assertEquals(organization1, organizations.get(0));
 	}
 
@@ -373,13 +436,20 @@ public class OrganizationODataRetrieverTest {
 
 		_organizations.add(parentOrganization);
 
-		List<Organization> organizations = _oDataRetriever.getResults(
-			TestPropsValues.getCompanyId(),
+		String filterString =
 			"(parentOrganizationId eq '" +
-				parentOrganization.getOrganizationId() + "')",
+				parentOrganization.getOrganizationId() + "')";
+
+		int count = _oDataRetriever.getResultsCount(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+
+		List<Organization> organizations = _oDataRetriever.getResults(
+			TestPropsValues.getCompanyId(), filterString,
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(organizations.toString(), 1, organizations.size());
 		Assert.assertEquals(organization, organizations.get(0));
 	}
 
@@ -392,12 +462,19 @@ public class OrganizationODataRetrieverTest {
 
 		_organizations.add(organization2);
 
+		String filterString =
+			"(treePath eq '" + organization1.getTreePath() + "')";
+
+		int count = _oDataRetriever.getResultsCount(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+
 		List<Organization> organizations = _oDataRetriever.getResults(
-			TestPropsValues.getCompanyId(),
-			"(treePath eq '" + organization1.getTreePath() + "')",
+			TestPropsValues.getCompanyId(), filterString,
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(organizations.toString(), 1, organizations.size());
 		Assert.assertEquals(organization1, organizations.get(0));
 	}
 
@@ -414,14 +491,20 @@ public class OrganizationODataRetrieverTest {
 
 		_organizations.add(parentOrganization);
 
+		String filterString = String.format(
+			" (parentOrganizationId eq '%s') and (type eq '%s')",
+			parentOrganization.getOrganizationId(), organization.getType());
+
+		int count = _oDataRetriever.getResultsCount(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+
 		List<Organization> organizations = _oDataRetriever.getResults(
-			TestPropsValues.getCompanyId(),
-			String.format(
-				" (parentOrganizationId eq '%s') and (type eq '%s')",
-				parentOrganization.getOrganizationId(), organization.getType()),
+			TestPropsValues.getCompanyId(), filterString,
 			LocaleUtil.getDefault(), 0, 2);
 
-		Assert.assertEquals(organizations.toString(), 1, organizations.size());
 		Assert.assertEquals(organization, organizations.get(0));
 	}
 

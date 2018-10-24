@@ -273,13 +273,13 @@ public class StructuredContentApioTestBundleActivator
 			true, true);
 
 		DDMStructure ddmStructure = _getDDMStructure(
-			group, "test-journal-structured-nested-fields.json");
+			group, "test-journal-all-fields-structure.json");
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			group.getGroupId(), ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
 			TemplateConstants.LANG_TYPE_VM,
-			_read("test-journal-template-nested-fields.xsl"), LocaleUtil.US);
+			_read("test-journal-all-fields-template.xsl"), LocaleUtil.US);
 
 		Map<Locale, String> titleMap2 = new HashMap<Locale, String>() {
 			{
@@ -290,7 +290,7 @@ public class StructuredContentApioTestBundleActivator
 
 		_addJournalArticle(
 			titleMap2, user.getUserId(), group.getGroupId(),
-			_read("test-journal-content-nested-fields.xml"), ddmStructure,
+			_read("test-journal-all-fields-content.xml"), ddmStructure,
 			ddmTemplate);
 	}
 

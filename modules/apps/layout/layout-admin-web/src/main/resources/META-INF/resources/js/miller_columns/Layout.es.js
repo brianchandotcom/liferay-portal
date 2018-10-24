@@ -222,31 +222,23 @@ class Layout extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleDropLayoutColumnItem(eventData) {
 		let layoutColumns = this.layoutColumns.map(
-			layoutColumn => [...layoutColumn]
+			(layoutColumn) => [...layoutColumn]
+		);
+		const {sourceItemPlid, targetColumnIndex, targetItemPlid} = eventData;
+
+		const itemDropIsValid = dropIsValid(
+			layoutColumns,
+			sourceItemPlid,
+			targetItemPlid,
+			targetColumnIndex
 		);
 
-		const sourceColumn = layoutColumns[this._draggingItemColumnIndex];
-		const sourceColumnIndex = layoutColumns.indexOf(sourceColumn);
-
-		const targetExists = eventData.targetItemPlid ||
-			eventData.targetColumnIndex;
-		const targetIsSource = eventData.sourceItemPlid === eventData.targetItemPlid;
-
-		const activeItemTargetsChildColumn =
-		this._draggingItem.active &&
-		(eventData.targetColumnIndex > sourceColumnIndex);
-
-		if (targetExists &&
-			!targetIsSource &&
-			!activeItemTargetsChildColumn
-		) {
+		if (itemDropIsValid) {
 			let parentPlid = null;
 			let priority = null;
 			let targetColumn = null;
-			let targetColumnIndex = null;
 			let targetItem = null;
 
 			let targetItemPlid = eventData.targetItemPlid;
@@ -256,7 +248,7 @@ class Layout extends Component {
 				eventData.targetItemPlid
 			);
 
-			if (eventData.targetColumnIndex) {
+			if (targetColumnIndex) {
 
 				targetColumnIndex = eventData.targetColumnIndex;
 

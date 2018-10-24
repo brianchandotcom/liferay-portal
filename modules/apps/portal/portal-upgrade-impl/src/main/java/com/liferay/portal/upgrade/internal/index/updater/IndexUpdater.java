@@ -105,17 +105,26 @@ public class IndexUpdater {
 
 		try (Connection connection = DataAccess.getConnection()) {
 			for (Bundle bundle : _bundleContext.getBundles()) {
-				if (hasIndexes(bundle)) {
-					String indexesSQL = _getSQLTemplateString(
-						bundle, "indexes.sql");
-					String tablesSQL = _getSQLTemplateString(
-						bundle, "tables.sql");
-
-					if ((indexesSQL != null) && (tablesSQL != null)) {
-						_executeUpdateIndexes(
-							bundle, db, connection, tablesSQL, indexesSQL);
-					}
+				if (!hasIndexes(bundle)) {
+					continue;
 				}
+
+				String indexesSQL = _getSQLTemplateString(
+					bundle, "indexes.sql");
+
+				if (indexesSQL == null) {
+					continue;
+				}
+
+				String tablesSQL = _getSQLTemplateString(
+					bundle, "tables.sql");
+
+				if (tablesSQL == null) {
+					continue;
+				}
+
+				_executeUpdateIndexes(
+					bundle, db, connection, tablesSQL, indexesSQL);
 			}
 		}
 		catch (Exception e) {

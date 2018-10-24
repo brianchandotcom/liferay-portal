@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.validator;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Locale;
@@ -303,17 +304,16 @@ public class DDMFormValidationException extends PortalException {
 		}
 
 		public String getValidationExpressionArgument() {
-			String expressionArgument = "";
-			Matcher matcher = _expressionValidationPattern.matcher(expression);
+			Matcher matcher = _validationExpressionPattern.matcher(expression);
 
-			while (matcher.find()) {
-				expressionArgument = matcher.group(3);
+			if (matcher.find()) {
+				return matcher.group(3);
 			}
 
-			return expressionArgument;
+			return StringPool.BLANK;
 		}
 
-		private static final Pattern _expressionValidationPattern =
+		private static final Pattern _validationExpressionPattern =
 			Pattern.compile("(contains|match)\\((.+), \"(.+)\"\\)");
 
 	}

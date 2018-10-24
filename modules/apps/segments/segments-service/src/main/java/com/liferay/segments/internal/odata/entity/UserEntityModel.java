@@ -15,8 +15,10 @@
 package com.liferay.segments.internal.odata.entity;
 
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.odata.entity.DateEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
 import java.util.function.Function;
@@ -50,51 +52,33 @@ public class UserEntityModel implements EntityModel {
 	}
 
 	private static final Map<String, EntityField> _entityFieldsMap = Stream.of(
-		new EntityField(
-			"ancestorOrganizationIds", EntityField.Type.STRING,
-			locale -> "ancestorOrganizationIds"),
-		new EntityField(
-			"companyId", EntityField.Type.STRING, locale -> "companyId"),
-		new EntityField(
-			"dateModified", EntityField.Type.DATE,
+		new StringEntityField(
+			"ancestorOrganizationIds", locale -> "ancestorOrganizationIds"),
+		new StringEntityField("companyId", locale -> "companyId"),
+		new DateEntityField(
+			"dateModified",
 			locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 			locale -> Field.MODIFIED_DATE),
-		new EntityField(
-			"emailAddress", EntityField.Type.STRING, locale -> "emailAddress"),
-		new EntityField(
-			"firstName", EntityField.Type.STRING,
-			locale -> Field.getSortableFieldName("firstName")),
-		new EntityField(
-			"groupId", EntityField.Type.STRING, locale -> "groupId"),
-		new EntityField(
-			"groupIds", EntityField.Type.STRING, locale -> "groupIds"),
-		new EntityField(
-			"jobTitle", EntityField.Type.STRING,
-			locale -> Field.getSortableFieldName("jobTitle")),
-		new EntityField(
-			"lastName", EntityField.Type.STRING,
-			locale -> Field.getSortableFieldName("lastName")),
-		new EntityField(
-			"organizationCount", EntityField.Type.STRING,
-			locale -> "organizationCount"),
-		new EntityField(
-			"organizationIds", EntityField.Type.STRING,
-			locale -> "organizationIds"),
-		new EntityField(
-			"roleIds", EntityField.Type.STRING, locale -> "roleIds"),
-		new EntityField(
-			"scopeGroupId", EntityField.Type.STRING, locale -> "scopeGroupId"),
-		new EntityField(
-			"screenName", EntityField.Type.STRING,
-			locale -> Field.getSortableFieldName("screenName"),
-			locale -> "screenName"),
-		new EntityField(
-			"teamIds", EntityField.Type.STRING, locale -> "teamIds"),
-		new EntityField(
-			"userGroupIds", EntityField.Type.STRING, locale -> "userGroupIds"),
-		new EntityField("userId", EntityField.Type.STRING, locale -> "userId"),
-		new EntityField(
-			"userName", EntityField.Type.STRING, locale -> "userName")
+		new StringEntityField("emailAddress", locale -> "emailAddress"),
+		new StringEntityField(
+			"firstName", locale -> Field.getSortableFieldName("firstName")),
+		new StringEntityField("groupId", locale -> "groupId"),
+		new StringEntityField("groupIds", locale -> "groupIds"),
+		new StringEntityField(
+			"jobTitle", locale -> Field.getSortableFieldName("jobTitle")),
+		new StringEntityField(
+			"lastName", locale -> Field.getSortableFieldName("lastName")),
+		new StringEntityField(
+			"organizationCount", locale -> "organizationCount"),
+		new StringEntityField("organizationIds", locale -> "organizationIds"),
+		new StringEntityField("roleIds", locale -> "roleIds"),
+		new StringEntityField("scopeGroupId", locale -> "scopeGroupId"),
+		new StringEntityField(
+			"screenName", locale -> Field.getSortableFieldName("screenName")),
+		new StringEntityField("teamIds", locale -> "teamIds"),
+		new StringEntityField("userGroupIds", locale -> "userGroupIds"),
+		new StringEntityField("userId", locale -> "userId"),
+		new StringEntityField("userName", locale -> "userName")
 	).collect(
 		Collectors.toMap(EntityField::getName, Function.identity())
 	);

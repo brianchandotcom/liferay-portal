@@ -15,8 +15,10 @@
 package com.liferay.segments.internal.odata.entity;
 
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.odata.entity.DateEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
 import java.util.function.Function;
@@ -51,29 +53,22 @@ public class OrganizationEntityModel implements EntityModel {
 	}
 
 	private static final Map<String, EntityField> _entityFieldsMap = Stream.of(
-		new EntityField(
-			Field.NAME, EntityField.Type.STRING,
-			locale -> Field.getSortableFieldName(Field.NAME)),
-		new EntityField(
-			Field.ORGANIZATION_ID, EntityField.Type.STRING,
-			locale -> Field.ORGANIZATION_ID),
-		new EntityField(
-			Field.TREE_PATH, EntityField.Type.STRING,
-			locale -> Field.TREE_PATH),
-		new EntityField(
-			Field.TYPE, EntityField.Type.STRING, locale -> Field.TYPE),
-		new EntityField(
-			"companyId", EntityField.Type.STRING, locale -> "companyId"),
-		new EntityField(
-			"dateModified", EntityField.Type.DATE,
+		new StringEntityField(
+			Field.NAME, locale -> Field.getSortableFieldName(Field.NAME)),
+		new StringEntityField(
+			Field.ORGANIZATION_ID, locale -> Field.ORGANIZATION_ID),
+		new StringEntityField(Field.TREE_PATH, locale -> Field.TREE_PATH),
+		new StringEntityField(Field.TYPE, locale -> Field.TYPE),
+		new StringEntityField("companyId", locale -> "companyId"),
+		new DateEntityField(
+			"dateModified",
 			locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 			locale -> Field.MODIFIED_DATE),
-		new EntityField(
-			"nameTreePath", EntityField.Type.STRING,
+		new StringEntityField(
+			"nameTreePath",
 			locale -> Field.getSortableFieldName("nameTreePath_String")),
-		new EntityField(
-			"parentOrganizationId", EntityField.Type.STRING,
-			locale -> "parentOrganizationId")
+		new StringEntityField(
+			"parentOrganizationId", locale -> "parentOrganizationId")
 	).collect(
 		Collectors.toMap(EntityField::getName, Function.identity())
 	);

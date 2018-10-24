@@ -74,7 +74,7 @@ public class
 	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+			locale, getClass());
 
 		return _language.get(
 			resourceBundle,

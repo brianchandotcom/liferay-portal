@@ -100,8 +100,7 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 
 		Locale locale = themeDisplay.getLocale();
 
-		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+		return ResourceBundleUtil.getBundle(locale, getClass());
 	}
 
 	protected abstract String getSuccessMessage(ActionRequest actionRequest);

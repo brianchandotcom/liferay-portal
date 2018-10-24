@@ -58,7 +58,8 @@ public class UnpublishDefinitionPortletConfigurationIcon
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getLocale(portletRequest), getClass());
+			getLocale(portletRequest),
+			UnpublishDefinitionPortletConfigurationIcon.class);
 
 		return LanguageUtil.get(resourceBundle, "unpublish");
 	}

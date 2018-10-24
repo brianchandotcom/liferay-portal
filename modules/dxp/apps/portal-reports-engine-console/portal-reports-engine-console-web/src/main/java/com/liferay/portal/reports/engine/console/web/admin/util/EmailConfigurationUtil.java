@@ -84,7 +84,7 @@ public class EmailConfigurationUtil {
 
 	public static ResourceBundle getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, EmailConfigurationUtil.class);
+			locale, EmailConfigurationUtil.class);
 	}
 
 }

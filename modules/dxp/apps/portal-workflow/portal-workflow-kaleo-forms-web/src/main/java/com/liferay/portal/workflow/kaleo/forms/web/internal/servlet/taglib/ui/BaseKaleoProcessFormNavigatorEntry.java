@@ -47,8 +47,7 @@ public abstract class BaseKaleoProcessFormNavigatorEntry
 	protected ResourceBundle getResourceBundle(Locale locale) {
 		Class<?> clazz = getClass();
 
-		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, clazz.getClassLoader());
+		return ResourceBundleUtil.getBundle(locale, clazz.getClassLoader());
 	}
 
 }

@@ -54,7 +54,7 @@ public class FieldSetsPortletConfigurationIcon
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getLocale(portletRequest), getClass());
+			getLocale(portletRequest), FieldSetsPortletConfigurationIcon.class);
 
 		return LanguageUtil.format(
 			getLocale(portletRequest), "manage-x",

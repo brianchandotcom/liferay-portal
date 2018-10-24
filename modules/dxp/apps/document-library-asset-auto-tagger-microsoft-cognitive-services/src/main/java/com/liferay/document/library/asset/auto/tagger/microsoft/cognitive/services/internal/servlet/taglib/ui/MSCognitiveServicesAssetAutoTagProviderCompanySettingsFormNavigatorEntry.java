@@ -73,7 +73,7 @@ public class
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, getClass());
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(locale, MSCognitiveServicesAssetAutoTagProviderCompanySettingsFormNavigatorEntry.class);
 
 		return _language.get(
 			resourceBundle,

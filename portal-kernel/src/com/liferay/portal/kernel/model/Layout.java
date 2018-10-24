@@ -30,7 +30,8 @@ import com.liferay.portal.kernel.util.Accessor;
  */
 @ImplementationClassName("com.liferay.portal.model.impl.LayoutImpl")
 @ProviderType
-public interface Layout extends LayoutModel, PersistedModel {
+public interface Layout extends LayoutModel, NestedSetsTreeNodeModel,
+	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -241,15 +242,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 	linked layout could be found
 	*/
 	public Layout getLinkedToLayout();
-
-	/**
-	* Returns the current layout's parent plid.
-	*
-	* @return the current layout's parent plid, or <code>0</code> if the
-	current layout is the topmost parent layout
-	*/
-	public long getParentPlid()
-		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public String getRegularURL(javax.servlet.http.HttpServletRequest request)
 		throws com.liferay.portal.kernel.exception.PortalException;

@@ -21,10 +21,13 @@ import com.liferay.oauth2.provider.web.internal.constants.OAuth2ProviderWebKeys;
 import com.liferay.oauth2.provider.web.internal.display.context.OAuth2AdminPortletDisplayContext;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
@@ -33,6 +36,9 @@ import javax.portlet.RenderResponse;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Tomas Polesovsky
@@ -61,6 +67,10 @@ public class ViewOAuth2ApplicationsMVCRenderCommand
 			OAuth2ProviderWebKeys.OAUTH2_ADMIN_PORTLET_DISPLAY_CONTEXT,
 			oAuth2AdminPortletDisplayContext);
 
+		renderRequest.setAttribute(
+			OAuth2ProviderWebKeys.OAUTH2_ADMIN_PORTLET_TOOLBAR_CONTRIBUTORS,
+			_portletToolbarContributorList);
+
 		return "/admin/view.jsp";
 	}
 
@@ -70,13 +80,33 @@ public class ViewOAuth2ApplicationsMVCRenderCommand
 			OAuth2ProviderConfiguration.class, properties);
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(javax.portlet.name=" + OAuth2ProviderPortletKeys.OAUTH2_ADMIN + ")"
+	)
+	protected void addPortletToolbarContributor(
+		PortletToolbarContributor portletToolbarContributor) {
+
+		_portletToolbarContributorList.add(portletToolbarContributor);
+	}
+
 	protected ThemeDisplay getThemeDisplay(PortletRequest portletRequest) {
 		return (ThemeDisplay)portletRequest.getAttribute(WebKeys.THEME_DISPLAY);
+	}
+
+	protected void removePortletToolbarContributor(
+		PortletToolbarContributor portletToolbarContributor) {
+
+		_portletToolbarContributorList.remove(portletToolbarContributor);
 	}
 
 	@Reference
 	private OAuth2ApplicationService _oAuth2ApplicationService;
 
 	private OAuth2ProviderConfiguration _oAuth2ProviderConfiguration;
+	private final List<PortletToolbarContributor>
+		_portletToolbarContributorList = new CopyOnWriteArrayList<>();
 
 }

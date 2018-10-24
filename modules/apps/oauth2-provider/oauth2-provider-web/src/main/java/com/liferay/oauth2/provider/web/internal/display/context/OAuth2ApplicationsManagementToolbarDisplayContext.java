@@ -22,6 +22,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.web.internal.constants.OAuth2ProviderPortletKeys;
+import com.liferay.oauth2.provider.web.internal.constants.OAuth2ProviderWebKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -29,6 +30,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
+import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
+import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -81,16 +85,34 @@ public class OAuth2ApplicationsManagementToolbarDisplayContext
 	public CreationMenu getCreationMenu() {
 		CreationMenu creationMenu = new CreationMenu();
 
-		creationMenu.addPrimaryDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setHref(
-					liferayPortletResponse.createRenderURL(),
-					"mvcRenderCommandName", "/admin/update_oauth2_application",
-					"redirect", currentURLObj.toString());
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						httpServletRequest, "add-o-auth2-application"));
-			});
+		List<PortletToolbarContributor> portletToolbarContributors =
+			(List<PortletToolbarContributor>)liferayPortletRequest.getAttribute(
+				OAuth2ProviderWebKeys.
+					OAUTH2_ADMIN_PORTLET_TOOLBAR_CONTRIBUTORS);
+
+		for (PortletToolbarContributor portletToolbarContributor :
+				portletToolbarContributors) {
+
+			List<Menu> menus = portletToolbarContributor.getPortletTitleMenus(
+				liferayPortletRequest, liferayPortletResponse);
+
+			if (menus.isEmpty()) {
+				continue;
+			}
+
+			for (Menu menu : menus) {
+				List<URLMenuItem> urlMenuItems =
+					(List<URLMenuItem>)(List<?>)menu.getMenuItems();
+
+				for (URLMenuItem urlMenuItem : urlMenuItems) {
+					creationMenu.addDropdownItem(
+						dropdownItem -> {
+							dropdownItem.setHref(urlMenuItem.getURL());
+							dropdownItem.setLabel(urlMenuItem.getLabel());
+						});
+				}
+			}
+		}
 
 		return creationMenu;
 	}

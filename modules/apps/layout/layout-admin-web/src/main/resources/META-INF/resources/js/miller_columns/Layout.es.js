@@ -9,6 +9,7 @@ import {DRAG_POSITIONS, LayoutDragDrop} from './utils/LayoutDragDrop.es';
 import {
 	clearFollowingColumns,
 	columnIsItemChild,
+	deleteEmptyColumns,
 	dropIsValid,
 	getColumnActiveItem,
 	getColumnLastItem,
@@ -112,24 +113,6 @@ class Layout extends Component {
 				this._layoutDragDrop.addTarget(element);
 			}
 		);
-	}
-
-	/**
-	 * Removes extra empty columns when there are more than three and returns
-	 * a new Array with the removed columns.
-	 * @param {Array} layoutColumns
-	 * @private
-	 * @return {Array}
-	 * @review
-	 */
-	_deleteEmptyColumns(layoutColumns) {
-		const columns = [...layoutColumns];
-
-		for (let i = 3; (i < columns.length) && (columns[i].length === 0); i++) {
-			columns.splice(i, 1);
-		}
-
-		return columns;
 	}
 
 	/**
@@ -288,7 +271,7 @@ class Layout extends Component {
 					targetColumnIndex
 				);
 
-				layoutColumns = this._deleteEmptyColumns(layoutColumns);
+				layoutColumns = deleteEmptyColumns(layoutColumns);
 			}
 
 			if (
@@ -302,7 +285,7 @@ class Layout extends Component {
 					this._draggingItemColumnIndex
 				);
 
-				layoutColumns = this._deleteEmptyColumns(layoutColumns);
+				layoutColumns = deleteEmptyColumns(layoutColumns);
 			}
 
 			if (this._draggingItem.homePage) {
@@ -855,7 +838,7 @@ class Layout extends Component {
 
 		this._currentPathItemPlid = targetItemPlid;
 
-		nextLayoutColumns = this._deleteEmptyColumns(nextLayoutColumns);
+		nextLayoutColumns = deleteEmptyColumns(nextLayoutColumns);
 
 		this._getItemChildren(targetItemPlid).
 			then(

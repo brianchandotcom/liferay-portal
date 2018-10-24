@@ -55,6 +55,25 @@ function columnIsItemChild(layoutColumns, columnIndex, itemPlid) {
 }
 
 /**
+ * Removes extra empty columns when there are more than three and returns
+ * a new Array with the columns removed.
+ * @param {object} layoutColumns
+ * @private
+ * @return {object}
+ * @review
+ */
+function deleteEmptyColumns(layoutColumns) {
+	const nextLayoutColumns = [...layoutColumns];
+
+	for (let i = 3; (i < nextLayoutColumns.length) &&
+		(nextLayoutColumns[i].length === 0); i++) {
+		nextLayoutColumns.splice(i, 1);
+	}
+
+	return nextLayoutColumns;
+}
+
+/**
  * @param {object[]} layoutColumns
  * @param {string} sourceItemPlid
  * @param {string} targetItemPlid
@@ -227,6 +246,7 @@ export {
 	appendItemToColumn,
 	clearFollowingColumns,
 	columnIsItemChild,
+	deleteEmptyColumns,
 	dropIsValid,
 	getColumnActiveItem,
 	getColumnLastItem,

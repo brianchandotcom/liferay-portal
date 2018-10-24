@@ -36,7 +36,7 @@ class ImagePreviewer extends Component {
 		this.imageContainerWidth = this.refs.imageContainer.clientWidth;
 		this.imageContainerHeight = this.refs.imageContainer.clientHeight;
 
-		this._setZoomNumber(this.refs.image.width);
+		this._caculateZoomActual(this.refs.image.width);
 	}
 
 	_handleZoom(event) {
@@ -77,10 +77,10 @@ class ImagePreviewer extends Component {
 			this.imageWidth > this.imageContainerWidth ? 0 : 'auto'
 		}`;
 
-		this._setZoomNumber(this.imageWidth);
+		this.zoomActual = zoomNumber;
 	}
 
-	_setZoomNumber(width) {
+	_caculateZoomActual(width) {
 		this.zoomActual = width / this.imageNaturalWidth;
 	}
 }

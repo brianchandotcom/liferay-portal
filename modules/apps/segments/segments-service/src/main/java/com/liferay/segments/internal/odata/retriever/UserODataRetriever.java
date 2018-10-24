@@ -102,7 +102,7 @@ public class UserODataRetriever implements ODataRetriever<User> {
 	}
 
 	@Override
-	public long getResultsCount(
+	public int getResultsCount(
 			long companyId, String filterString, Locale locale)
 		throws PortalException {
 
@@ -131,7 +131,8 @@ public class UserODataRetriever implements ODataRetriever<User> {
 				return hits.getLength();
 			}
 
-			return IndexSearcherHelperUtil.searchCount(searchContext1, query);
+			return
+				(int)IndexSearcherHelperUtil.searchCount(searchContext1, query);
 		}
 		catch (Exception e) {
 			throw new PortalException(

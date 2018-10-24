@@ -30,7 +30,7 @@ public interface ODataRetriever<T extends BaseModel<?>> {
 			int end)
 		throws PortalException;
 
-	public long getResultsCount(
+	public int getResultsCount(
 			long companyId, String filterString, Locale locale)
 		throws PortalException;
 

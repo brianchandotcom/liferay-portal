@@ -33,6 +33,35 @@ public abstract class BaseWorkspaceGitRepository
 	extends BaseLocalGitRepository implements WorkspaceGitRepository {
 
 	@Override
+	public List<Commit> getCommitHistory() {
+		if (_commitHistory != null) {
+			return _commitHistory;
+		}
+
+		if (!has("commits")) {
+			return new ArrayList<>();
+		}
+
+		_commitHistory = new ArrayList<>();
+
+		JSONArray commitsJSONArray = getJSONArray("commits");
+
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		for (int i = 0; i < commitsJSONArray.length(); i++) {
+			JSONObject commitJSONObject = commitsJSONArray.getJSONObject(i);
+
+			String gitLogEntity = JenkinsResultsParserUtil.combine(
+				commitJSONObject.getString("sha"), " ",
+				commitJSONObject.getString("message"));
+
+			_commitHistory.add(gitWorkingDirectory.getCommit(gitLogEntity));
+		}
+
+		return _commitHistory;
+	}
+
+	@Override
 	public String getFileContent(String filePath) {
 		File file = new File(getDirectory(), filePath);
 
@@ -49,6 +78,11 @@ public abstract class BaseWorkspaceGitRepository
 	@Override
 	public String getGitHubDevBranchName() {
 		return getString("git_hub_dev_branch_name");
+	}
+
+	@Override
+	public String getGitHubURL() {
+		return getString("git_hub_url");
 	}
 
 	@Override
@@ -119,6 +153,8 @@ public abstract class BaseWorkspaceGitRepository
 				index, currentGroupSize);
 
 			for (Commit commit : commits) {
+				_commitHistory.add(commit);
+
 				commitsJSONArray.put(commit.toJSONObject());
 
 				String sha = commit.getSHA();
@@ -173,7 +209,7 @@ public abstract class BaseWorkspaceGitRepository
 	@Override
 	public String toString() {
 		return JenkinsResultsParserUtil.combine(
-			_getGitHubURL(), " - ", _getBranchSHA());
+			getGitHubURL(), " - ", _getBranchSHA());
 	}
 
 	@Override
@@ -291,10 +327,6 @@ public abstract class BaseWorkspaceGitRepository
 		return optString("branch_sha");
 	}
 
-	private String _getGitHubURL() {
-		return getString("git_hub_url");
-	}
-
 	private void _setBranchHeadSHA(String branchHeadSHA) {
 		if (branchHeadSHA == null) {
 			throw new RuntimeException("Branch head SHA is null");
@@ -347,6 +379,7 @@ public abstract class BaseWorkspaceGitRepository
 
 	private static final String _SHA_REGEX = "[0-9a-f]{7,40}";
 
+	private List<Commit> _commitHistory;
 	private final Map<String, Properties> _propertiesFilesMap = new HashMap<>();
 
 }

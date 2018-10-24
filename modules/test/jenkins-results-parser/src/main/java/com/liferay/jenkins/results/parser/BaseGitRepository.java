@@ -20,6 +20,7 @@ import java.io.StringReader;
 
 import java.util.Properties;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -53,6 +54,10 @@ public abstract class BaseGitRepository implements GitRepository {
 
 	protected File getFile(String key) {
 		return new File(getString(key));
+	}
+
+	protected JSONArray getJSONArray(String key) {
+		return _jsonObject.getJSONArray(key);
 	}
 
 	protected Properties getRepositoryProperties() {

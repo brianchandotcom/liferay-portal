@@ -21,9 +21,13 @@ import java.util.List;
  */
 public interface WorkspaceGitRepository extends LocalGitRepository {
 
+	public List<Commit> getCommitHistory();
+
 	public String getFileContent(String filePath);
 
 	public String getGitHubDevBranchName();
+
+	public String getGitHubURL();
 
 	public String getType();
 

@@ -19,6 +19,9 @@ package com.liferay.fragment.web.internal.constants;
  */
 public class FragmentWebKeys {
 
+	public static final String FRAGMENT_ENTRY_PROCESSOR_REGISTRY =
+		"FRAGMENT_ENTRY_PROCESSOR_REGISTRY";
+
 	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
 
 }

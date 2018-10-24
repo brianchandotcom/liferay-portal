@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -56,6 +57,29 @@ public abstract class BaseTopLevelBuildData
 	@Override
 	public String getDistPath() {
 		return optString("dist_path");
+	}
+
+	@Override
+	public List<BuildData> getDownstreamBuildDataList() {
+		List<BuildData> downstreamBuildDataList = new ArrayList<>();
+
+		String downstreamRunIDs = optString("downstream_run_ids");
+
+		if (downstreamRunIDs == null) {
+			return downstreamBuildDataList;
+		}
+
+		for (String downstreamRunID : downstreamRunIDs.split(",")) {
+			if ((downstreamRunID == null) || downstreamRunID.isEmpty()) {
+				continue;
+			}
+
+			downstreamBuildDataList.add(
+				BuildDataFactory.newBatchBuildData(
+					downstreamRunID, getJobName() + "-batch", null));
+		}
+
+		return downstreamBuildDataList;
 	}
 
 	@Override

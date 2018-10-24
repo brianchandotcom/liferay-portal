@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -51,6 +50,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -77,7 +77,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
 	public String processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, String html, String mode)
+			FragmentEntryLink fragmentEntryLink, String html, String mode,
+			Locale locale)
 		throws PortalException {
 
 		validateFragmentEntryHTML(html);
@@ -162,7 +163,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				Objects.equals(mode, FragmentEntryLinkConstants.EDIT)) {
 
 				portletElement.appendChild(
-					_getPortletTopperElement(portletName, instanceId));
+					_getPortletTopperElement(portletName, instanceId, locale));
 			}
 
 			portletElement.appendChild(runtimeTagElement);
@@ -311,7 +312,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private Element _getPortletTopperElement(
-			String portletName, String instanceId)
+			String portletName, String instanceId, Locale locale)
 		throws PortalException {
 
 		Element portletTopperElement = new Element("header");
@@ -326,8 +327,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		portletNameElement.attr("class", "portlet-name-text");
 
-		String portletTitle = _portal.getPortletTitle(
-			portletName, LocaleThreadLocal.getThemeDisplayLocale());
+		String portletTitle = _portal.getPortletTitle(portletName, locale);
 
 		portletNameElement.text(portletTitle);
 

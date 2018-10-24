@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -87,7 +86,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
 	public String processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, String html, String mode)
+			FragmentEntryLink fragmentEntryLink, String html, String mode,
+			Locale locale)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -129,9 +129,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			}
 
 			if (Validator.isNull(value)) {
-				value = _getEditableValue(
-					editableValueJSONObject,
-					LocaleUtil.getMostRelevantLocale());
+				value = _getEditableValue(editableValueJSONObject, locale);
 			}
 
 			editableElementParser.replace(element, value);

@@ -60,6 +60,25 @@ function dropIsValid(
 }
 
 /**
+ * Return the active item of a given column
+ * @param {object} layoutColumns
+ * @param {number} columnIndex
+ * @return {string}
+ * @review
+ */
+function getColumnActiveItem(layoutColumns, columnIndex) {
+	const column = layoutColumns[columnIndex];
+
+	const activeItem = column.find(
+		(item) => item.active
+	);
+
+	return (
+		activeItem ? activeItem : null
+	);
+}
+
+/**
  * Get last item of a column
  * @param {object[]} layoutColumns
  * @param {number} columnIndex
@@ -188,6 +207,7 @@ export {
 	appendItemToColumn,
 	columnIsItemChild,
 	dropIsValid,
+	getColumnActiveItem,
 	getColumnLastItem,
 	getItem,
 	getItemColumn,

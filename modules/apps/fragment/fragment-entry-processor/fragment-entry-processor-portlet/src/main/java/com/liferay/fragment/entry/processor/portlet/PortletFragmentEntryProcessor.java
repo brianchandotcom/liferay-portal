@@ -85,7 +85,16 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		for (String alias : _portletRegistry.getPortletAliases()) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put("attributes", JSONFactoryUtil.createJSONArray());
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("<");
+			sb.append(_LFR_WIDGET + alias);
+			sb.append("></");
+			sb.append(_LFR_WIDGET + alias);
+			sb.append(">");
+
+			jsonObject.put("content", sb.toString());
+
 			jsonObject.put("name", _LFR_WIDGET + alias);
 
 			jsonArray.put(jsonObject);

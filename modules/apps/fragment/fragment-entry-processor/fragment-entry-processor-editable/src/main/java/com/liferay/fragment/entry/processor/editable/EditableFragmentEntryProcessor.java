@@ -19,6 +19,7 @@ import com.liferay.fragment.entry.processor.editable.parser.EditableElementParse
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -62,19 +63,43 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	public JSONArray getAvailableTags() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		for (Map.Entry<String, EditableElementParser> editableElementParser :
+				_editableElementParsers.entrySet()) {
 
-		jsonObject.put("name", _LFR_EDITABLE);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		JSONArray attributes = JSONFactoryUtil.createJSONArray();
+			StringBundler sb = new StringBundler(
+				5 + (5 * _REQUIRED_ATTRIBUTES.length));
 
-		for (String attribute : _REQUIRED_ATTRIBUTES) {
-			attributes.put(attribute);
+			sb.append("<");
+			sb.append(_LFR_EDITABLE);
+
+			for (String attribute : _REQUIRED_ATTRIBUTES) {
+				sb.append(StringPool.SPACE);
+				sb.append(attribute);
+				sb.append("=\"");
+
+				String value = StringPool.BLANK;
+
+				if (attribute.equals("type")) {
+					value = editableElementParser.getKey();
+				}
+
+				sb.append(value);
+				sb.append("\"");
+			}
+
+			sb.append("></");
+			sb.append(_LFR_EDITABLE);
+			sb.append(">");
+
+			jsonObject.put("content", sb.toString());
+
+			jsonObject.put(
+				"name", _LFR_EDITABLE + ":" + editableElementParser.getKey());
+
+			jsonArray.put(jsonObject);
 		}
-
-		jsonObject.put("attributes", attributes);
-
-		jsonArray.put(jsonObject);
 
 		return jsonArray;
 	}

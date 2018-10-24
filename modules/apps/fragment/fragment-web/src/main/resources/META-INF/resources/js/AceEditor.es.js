@@ -72,11 +72,6 @@ class AceEditor extends Component {
 				this, arguments);
 		};
 
-		const FragmentAutocompleteAttributeProcessor = function(options) {
-			FragmentAutocompleteProcessor.superclass.constructor.apply(
-				this, arguments);
-		};
-
 		const instance = this;
 
 		A.extend(
@@ -101,19 +96,11 @@ class AceEditor extends Component {
 				},
 
 				getSuggestion: function(match, selectedSuggestion) {
-					const selectedTag =
-						FragmentAutocompleteProcessor.superclass.getSuggestion.apply(
-							this, arguments);
+					const tag = instance.autocompleteTags.find(
+						tag => tag.name === selectedSuggestion
+					);
 
-					const attributes = instance.autocompleteTags.reduce(
-						(array, tag) =>
-							tag.name === selectedSuggestion ? tag.attributes : array,
-						[]);
-
-					return attributes.reduce(
-						(selectedSuggestion, attribute) =>
-							`${selectedSuggestion} ${attribute}=""`,
-						selectedSuggestion) + `></${selectedSuggestion}>`;
+					return tag ? tag.content.substring(1) : '';
 				}
 			});
 

@@ -131,6 +131,8 @@ public abstract class BaseWorkspaceGitRepository
 
 	@Override
 	public void storeCommitHistory(List<String> commitSHAs) {
+		_commitHistory = getCommitHistory();
+
 		List<String> requiredCommitSHAs = new ArrayList<>();
 
 		requiredCommitSHAs.addAll(commitSHAs);

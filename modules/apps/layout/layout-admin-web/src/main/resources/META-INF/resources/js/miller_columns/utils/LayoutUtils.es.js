@@ -16,6 +16,26 @@ function appendItemToColumn(item, layoutColumns, targetColumnIndex) {
 }
 
 /**
+ * Removes following columns starting at position indicated
+ * by startColumnIndex and returns a new array of columns
+ * @param {object} layoutColumns
+ * @param {number} startColumnIndex
+ * @return {object}
+ * @review
+ */
+function clearFollowingColumns(layoutColumns, startColumnIndex) {
+	const nextLayoutColumns = layoutColumns.map(
+		(layoutColumn) => [...layoutColumn]
+	);
+
+	for (let i = startColumnIndex + 1; i < nextLayoutColumns.length; i++) {
+		nextLayoutColumns[i] = [];
+	}
+
+	return nextLayoutColumns;
+}
+
+/**
  * @param {object[]} layoutColumns
  * @param {number} columnIndex
  * @param {string} itemPlid
@@ -205,6 +225,7 @@ function removeItem(itemPlid, layoutColumns) {
 
 export {
 	appendItemToColumn,
+	clearFollowingColumns,
 	columnIsItemChild,
 	dropIsValid,
 	getColumnActiveItem,

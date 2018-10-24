@@ -243,7 +243,7 @@ class Layout extends Component {
 			previousColumn
 		);
 
-		const activeItem = this._getLayoutColumnItemByPlid(
+		const activeItem = getItem(
 			nextLayoutColumns,
 			activeItemPlid
 		);
@@ -381,14 +381,14 @@ class Layout extends Component {
 				targetColumn.splice(priority, 0, this._draggingItem);
 			}
 			else {
-				targetColumn = this._getParentColumnByPlid(
+				targetColumn = getItemColumn(
 					layoutColumns,
 					targetItemPlid
 				);
 
 				targetColumnIndex = layoutColumns.indexOf(targetColumn);
 
-				targetItem = this._getLayoutColumnItemByPlid(
+				targetItem = getItem(
 					layoutColumns,
 					targetItemPlid
 				);
@@ -506,7 +506,7 @@ class Layout extends Component {
 	 */
 
 	_handleStartMovingLayoutColumnItem(eventData) {
-		const sourceItemColumn = this._getParentColumnByPlid(
+		const sourceItemColumn = getItemColumn(
 			this.layoutColumns,
 			eventData.sourceItemPlid
 		);
@@ -515,7 +515,7 @@ class Layout extends Component {
 			sourceItemColumn
 		);
 
-		this._draggingItem = this._getLayoutColumnItemByPlid(
+		this._draggingItem = getItem(
 			this.layoutColumns,
 			eventData.sourceItemPlid
 		);
@@ -569,7 +569,7 @@ class Layout extends Component {
 	_moveItemInside(layoutColumns, sourceItem, targetItem) {
 		let nextLayoutColumns = layoutColumns;
 
-		const targetColumn = this._getParentColumnByPlid(
+		const targetColumn = getItemColumn(
 			nextLayoutColumns,
 			targetItem.plid
 		);
@@ -687,7 +687,7 @@ class Layout extends Component {
 		const sourceColumn = nextLayoutColumns[this._draggingItemColumnIndex];
 		const sourceColumnIndex = nextLayoutColumns.indexOf(sourceColumn);
 
-		const targetColumn = this._getParentColumnByPlid(
+		const targetColumn = getItemColumn(
 			nextLayoutColumns,
 			targetItemPlid
 		);
@@ -701,7 +701,7 @@ class Layout extends Component {
 		if (sameColumn || !(pathUpdated && targetBelongsPreviousColumn)) {
 			const draggingItemPlid = this._draggingItem.plid;
 
-			const draggingItem = this._getLayoutColumnItemByPlid(
+			const draggingItem = getItem(
 				nextLayoutColumns,
 				draggingItemPlid
 			);
@@ -724,11 +724,11 @@ class Layout extends Component {
 	_removeHasChildArrow(layoutColumns, itemPlid) {
 		let nextLayoutColumns = layoutColumns;
 
-		const column = this._getParentColumnByPlid(
+		const column = getItemColumn(
 			layoutColumns,
 			itemPlid
 		);
-		const item = this._getLayoutColumnItemByPlid(
+		const item = getItem(
 			nextLayoutColumns,
 			itemPlid
 		);
@@ -833,9 +833,9 @@ class Layout extends Component {
 	 */
 
 	_setLayoutColumnItemChecked(plid, checked) {
-		const column = this._getParentColumnByPlid(this.layoutColumns, plid);
+		const column = getItemColumn(this.layoutColumns, plid);
 		const columnIndex = this.layoutColumns.indexOf(column);
-		const item = this._getLayoutColumnItemByPlid(this.layoutColumns, plid);
+		const item = getItem(this.layoutColumns, plid);
 
 		this.layoutColumns = setIn(
 			this.layoutColumns,
@@ -858,11 +858,11 @@ class Layout extends Component {
 	_setHomePage(layoutColumns, currentHomeItemPlid) {
 		let nextLayoutColumns = layoutColumns;
 
-		const currentHomeItem = this._getLayoutColumnItemByPlid(
+		const currentHomeItem = getItem(
 			nextLayoutColumns,
 			currentHomeItemPlid
 		);
-		const currentHomeItemColumn = this._getParentColumnByPlid(
+		const currentHomeItemColumn = getItemColumn(
 			nextLayoutColumns,
 			currentHomeItemPlid
 		);
@@ -910,7 +910,7 @@ class Layout extends Component {
 
 		const targetColumn = nextLayoutColumns[targetColumnIndex];
 
-		const targetItem = this._getLayoutColumnItemByPlid(
+		const targetItem = getItem(
 			nextLayoutColumns,
 			targetItemPlid
 		);
@@ -919,7 +919,7 @@ class Layout extends Component {
 			targetColumn
 		);
 
-		const activeItem = this._getLayoutColumnItemByPlid(
+		const activeItem = getItem(
 			nextLayoutColumns,
 			activeItemPlid
 		);

@@ -36,40 +36,45 @@ import java.util.Dictionary;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Ricardo Couso
  */
-@Component(immediate = true, service = IndexUpdater.class)
-public class IndexUpdater {
+public class IndexUpdaterUtil {
 
-	@Activate
-	public void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-	}
+	public static Bundle getBundle(BundleContext bundleContext, long bundleId) {
+		Bundle bundle = bundleContext.getBundle(bundleId);
 
-	public boolean hasIndexes(Bundle bundle) {
 		if (bundle == null) {
-			return false;
+			throw new IllegalArgumentException(
+				"Module with id " + bundleId + " does not exist");
 		}
 
+		return bundle;
+	}
+
+	public static Bundle getBundle(
+		BundleContext bundleContext, String bundleSymbolicName) {
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			if (bundleSymbolicName.equals(bundle.getSymbolicName())) {
+				return bundle;
+			}
+		}
+
+		throw new IllegalArgumentException(
+			"Module with symbolic name " + bundleSymbolicName +
+				" does not exist");
+	}
+
+	public static boolean isLiferayServiceBundle(Bundle bundle) {
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
 
 		return GetterUtil.getBoolean(headers.get("Liferay-Service"));
 	}
 
-	public boolean hasIndexes(long bundleId) {
-		return hasIndexes(_getBundle(bundleId));
-	}
-
-	public boolean hasIndexes(String bundleSymbolicName) {
-		return hasIndexes(_getBundle(bundleSymbolicName));
-	}
-
-	public void updateIndexes(Bundle bundle) {
+	public static void updateIndexes(Bundle bundle) {
 		String indexesSQL = _getSQLTemplateString(bundle, "indexes.sql");
 		String tablesSQL = _getSQLTemplateString(bundle, "tables.sql");
 
@@ -88,24 +93,12 @@ public class IndexUpdater {
 		}
 	}
 
-	public void updateIndexes(long bundleId) {
-		Bundle bundle = _getBundle(bundleId);
-
-		updateIndexes(bundle);
-	}
-
-	public void updateIndexes(String bundleSymbolicName) {
-		Bundle bundle = _getBundle(bundleSymbolicName);
-
-		updateIndexes(bundle);
-	}
-
-	public void updateIndexesAll() {
+	public static void updateIndexesAll(BundleContext bundleContext) {
 		DB db = DBManagerUtil.getDB();
 
 		try (Connection connection = DataAccess.getConnection()) {
-			for (Bundle bundle : _bundleContext.getBundles()) {
-				if (!hasIndexes(bundle)) {
+			for (Bundle bundle : bundleContext.getBundles()) {
+				if (!isLiferayServiceBundle(bundle)) {
 					continue;
 				}
 
@@ -116,8 +109,7 @@ public class IndexUpdater {
 					continue;
 				}
 
-				String tablesSQL = _getSQLTemplateString(
-					bundle, "tables.sql");
+				String tablesSQL = _getSQLTemplateString(bundle, "tables.sql");
 
 				if (tablesSQL == null) {
 					continue;
@@ -132,7 +124,7 @@ public class IndexUpdater {
 		}
 	}
 
-	private void _executeUpdateIndexes(
+	private static void _executeUpdateIndexes(
 		Bundle bundle, DB db, Connection connection, String tablesSQL,
 		String indexesSQL) {
 
@@ -147,30 +139,9 @@ public class IndexUpdater {
 		}
 	}
 
-	private Bundle _getBundle(long bundleId) {
-		Bundle bundle = _bundleContext.getBundle(bundleId);
+	private static String _getSQLTemplateString(
+		Bundle bundle, String templateName) {
 
-		if (bundle == null) {
-			throw new IllegalArgumentException(
-				"Module with id " + bundleId + " does not exist");
-		}
-
-		return bundle;
-	}
-
-	private Bundle _getBundle(String bundleSymbolicName) {
-		for (Bundle bundle : _bundleContext.getBundles()) {
-			if (bundleSymbolicName.equals(bundle.getSymbolicName())) {
-				return bundle;
-			}
-		}
-
-		throw new IllegalArgumentException(
-			"Module with symbolic name " + bundleSymbolicName +
-				" does not exist");
-	}
-
-	private String _getSQLTemplateString(Bundle bundle, String templateName) {
 		URL resource = bundle.getResource("/META-INF/sql/" + templateName);
 
 		if (resource == null) {
@@ -187,8 +158,7 @@ public class IndexUpdater {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(IndexUpdater.class);
-
-	private BundleContext _bundleContext;
+	private static final Log _log = LogFactoryUtil.getLog(
+		IndexUpdaterUtil.class);
 
 }

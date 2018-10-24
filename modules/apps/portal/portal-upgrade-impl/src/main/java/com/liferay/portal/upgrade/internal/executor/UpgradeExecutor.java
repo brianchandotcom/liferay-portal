@@ -29,7 +29,7 @@ import com.liferay.portal.output.stream.container.OutputStreamContainer;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactoryTracker;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
-import com.liferay.portal.upgrade.internal.index.updater.IndexUpdater;
+import com.liferay.portal.upgrade.internal.index.updater.IndexUpdaterUtil;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
 import com.liferay.portal.upgrade.internal.release.ReleasePublisher;
 
@@ -38,6 +38,9 @@ import java.io.OutputStream;
 
 import java.util.List;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -118,8 +121,12 @@ public class UpgradeExecutor {
 		}
 	}
 
-	@Reference
-	private IndexUpdater _indexUpdater;
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
+
+	private BundleContext _bundleContext;
 
 	@Reference
 	private OutputStreamContainerFactoryTracker
@@ -187,8 +194,11 @@ public class UpgradeExecutor {
 				}
 			}
 
-			if (_requiresUpdateIndexes()) {
-				_indexUpdater.updateIndexes(_bundleSymbolicName);
+			Bundle bundle = IndexUpdaterUtil.getBundle(
+				_bundleContext, _bundleSymbolicName);
+
+			if (_requiresUpdateIndexes(bundle)) {
+				IndexUpdaterUtil.updateIndexes(bundle);
 			}
 
 			CacheRegistryUtil.clear();
@@ -203,8 +213,8 @@ public class UpgradeExecutor {
 			_outputStream = outputStream;
 		}
 
-		private boolean _requiresUpdateIndexes() {
-			if (!_indexUpdater.hasIndexes(_bundleSymbolicName)) {
+		private boolean _requiresUpdateIndexes(Bundle bundle) {
+			if (!IndexUpdaterUtil.isLiferayServiceBundle(bundle)) {
 				return false;
 			}
 

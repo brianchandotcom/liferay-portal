@@ -14,12 +14,14 @@
 
 package com.liferay.portal.upgrade.internal.index.updater.osgi.commands;
 
-import com.liferay.portal.upgrade.internal.index.updater.IndexUpdater;
+import com.liferay.portal.upgrade.internal.index.updater.IndexUpdaterUtil;
 
 import org.apache.felix.service.command.Descriptor;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ricardo Couso
@@ -36,16 +38,12 @@ public class IndexUpdaterOSGiCommands {
 
 	@Descriptor("Update database indexes for a specific module via bundle id")
 	public String updateIndexes(long bundleId) {
-		try {
-			if (_indexUpdater.hasIndexes(bundleId)) {
-				_indexUpdater.updateIndexes(bundleId);
+		Bundle bundle = IndexUpdaterUtil.getBundle(_bundleContext, bundleId);
 
-				return "Completed update of indexes for module with id " +
-					bundleId;
-			}
-		}
-		catch (IllegalArgumentException iae) {
-			return "Module with id " + bundleId + " does not exist";
+		if (IndexUpdaterUtil.isLiferayServiceBundle(bundle)) {
+			IndexUpdaterUtil.updateIndexes(bundle);
+
+			return "Completed update of indexes for module with id " + bundleId;
 		}
 
 		return "Module with id " + bundleId +
@@ -56,17 +54,14 @@ public class IndexUpdaterOSGiCommands {
 		"Update database indexes for specific a module via symbolic name"
 	)
 	public String updateIndexes(String bundleSymbolicName) {
-		try {
-			if (_indexUpdater.hasIndexes(bundleSymbolicName)) {
-				_indexUpdater.updateIndexes(bundleSymbolicName);
+		Bundle bundle = IndexUpdaterUtil.getBundle(
+			_bundleContext, bundleSymbolicName);
 
-				return "Completed update of indexes for module " +
-					bundleSymbolicName;
-			}
-		}
-		catch (IllegalArgumentException iae) {
-			return "Module with symbolic name " + bundleSymbolicName +
-				" does not exist";
+		if (IndexUpdaterUtil.isLiferayServiceBundle(bundle)) {
+			IndexUpdaterUtil.updateIndexes(bundle);
+
+			return "Completed update of indexes for module " +
+				bundleSymbolicName;
 		}
 
 		return "Module " + bundleSymbolicName +
@@ -75,12 +70,16 @@ public class IndexUpdaterOSGiCommands {
 
 	@Descriptor("Update database indexes for all modules")
 	public String updateIndexesAll() {
-		_indexUpdater.updateIndexesAll();
+		IndexUpdaterUtil.updateIndexesAll(_bundleContext);
 
 		return "Completed update of indexes for all modules";
 	}
 
-	@Reference
-	private IndexUpdater _indexUpdater;
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
+
+	private BundleContext _bundleContext;
 
 }

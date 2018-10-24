@@ -48,11 +48,14 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
@@ -76,6 +79,26 @@ import org.osgi.service.component.annotations.Reference;
 public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
+	public List<com.liferay.portal.kernel.xml.Element> getAvailableTags() {
+		List<String> portletAliases = _portletRegistry.getPortletAliases();
+
+		Stream<String> stream = portletAliases.stream();
+
+		List<com.liferay.portal.kernel.xml.Element> availableTags = stream.map(
+			alias -> {
+				com.liferay.portal.kernel.xml.Element element =
+					SAXReaderUtil.createElement(_LFR_WIDGET + alias);
+
+				return element;
+			}
+		).collect(
+			Collectors.toList()
+		);
+
+		return availableTags;
+	}
+
+	@Override
 	public String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink, String html, String mode)
 		throws PortalException {
@@ -87,12 +110,12 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		for (Element element : document.select("*")) {
 			String tagName = element.tagName();
 
-			if (!StringUtil.startsWith(tagName, "lfr-widget-")) {
+			if (!StringUtil.startsWith(tagName, _LFR_WIDGET)) {
 				continue;
 			}
 
 			String alias = StringUtil.replace(
-				tagName, "lfr-widget-", StringPool.BLANK);
+				tagName, _LFR_WIDGET, StringPool.BLANK);
 
 			String portletName = _portletRegistry.getPortletName(alias);
 
@@ -182,12 +205,12 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		for (Element element : document.select("*")) {
 			String htmlTagName = element.tagName();
 
-			if (!StringUtil.startsWith(htmlTagName, "lfr-widget-")) {
+			if (!StringUtil.startsWith(htmlTagName, _LFR_WIDGET)) {
 				continue;
 			}
 
 			String alias = StringUtil.replace(
-				htmlTagName, "lfr-widget-", StringPool.BLANK);
+				htmlTagName, _LFR_WIDGET, StringPool.BLANK);
 
 			if (Validator.isNull(_portletRegistry.getPortletName(alias))) {
 				throw new FragmentEntryContentException(
@@ -416,6 +439,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				portletPreferences);
 		}
 	}
+
+	private static final String _LFR_WIDGET = "lfr-widget-";
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

@@ -28,9 +28,12 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -56,6 +59,18 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 	service = FragmentEntryProcessor.class
 )
 public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
+
+	@Override
+	public List<com.liferay.portal.kernel.xml.Element> getAvailableTags() {
+		com.liferay.portal.kernel.xml.Element element =
+			SAXReaderUtil.createElement(_LFR_EDITABLE);
+
+		for (String attribute : _REQUIRED_ATTRIBUTES) {
+			element.addAttribute(attribute, StringPool.BLANK);
+		}
+
+		return Collections.singletonList(element);
+	}
 
 	@Override
 	public JSONObject getDefaultEditableValuesJSONObject(String html) {

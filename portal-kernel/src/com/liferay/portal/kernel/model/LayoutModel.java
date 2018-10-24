@@ -225,6 +225,48 @@ public interface LayoutModel extends BaseModel<Layout>, LocalizedModel, MVCCMode
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the parent plid of this layout.
+	 *
+	 * @return the parent plid of this layout
+	 */
+	public long getParentPlid();
+
+	/**
+	 * Sets the parent plid of this layout.
+	 *
+	 * @param parentPlid the parent plid of this layout
+	 */
+	public void setParentPlid(long parentPlid);
+
+	/**
+	 * Returns the left plid of this layout.
+	 *
+	 * @return the left plid of this layout
+	 */
+	public long getLeftPlid();
+
+	/**
+	 * Sets the left plid of this layout.
+	 *
+	 * @param leftPlid the left plid of this layout
+	 */
+	public void setLeftPlid(long leftPlid);
+
+	/**
+	 * Returns the right plid of this layout.
+	 *
+	 * @return the right plid of this layout
+	 */
+	public long getRightPlid();
+
+	/**
+	 * Sets the right plid of this layout.
+	 *
+	 * @param rightPlid the right plid of this layout
+	 */
+	public void setRightPlid(long rightPlid);
+
+	/**
 	 * Returns the private layout of this layout.
 	 *
 	 * @return the private layout of this layout

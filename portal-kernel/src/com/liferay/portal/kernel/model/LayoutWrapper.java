@@ -67,6 +67,9 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("parentPlid", getParentPlid());
+		attributes.put("leftPlid", getLeftPlid());
+		attributes.put("rightPlid", getRightPlid());
 		attributes.put("privateLayout", isPrivateLayout());
 		attributes.put("layoutId", getLayoutId());
 		attributes.put("parentLayoutId", getParentLayoutId());
@@ -148,6 +151,24 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long parentPlid = (Long)attributes.get("parentPlid");
+
+		if (parentPlid != null) {
+			setParentPlid(parentPlid);
+		}
+
+		Long leftPlid = (Long)attributes.get("leftPlid");
+
+		if (leftPlid != null) {
+			setLeftPlid(leftPlid);
+		}
+
+		Long rightPlid = (Long)attributes.get("rightPlid");
+
+		if (rightPlid != null) {
+			setRightPlid(rightPlid);
 		}
 
 		Boolean privateLayout = (Boolean)attributes.get("privateLayout");
@@ -802,6 +823,16 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	/**
+	* Returns the left plid of this layout.
+	*
+	* @return the left plid of this layout
+	*/
+	@Override
+	public long getLeftPlid() {
+		return _layout.getLeftPlid();
+	}
+
+	/**
 	* Returns the current layout's linked layout.
 	*
 	* @return the current layout's linked layout, or <code>null</code> if no
@@ -919,14 +950,12 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	/**
-	* Returns the current layout's parent plid.
+	* Returns the parent plid of this layout.
 	*
-	* @return the current layout's parent plid, or <code>0</code> if the
-	current layout is the topmost parent layout
+	* @return the parent plid of this layout
 	*/
 	@Override
-	public long getParentPlid()
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public long getParentPlid() {
 		return _layout.getParentPlid();
 	}
 
@@ -993,6 +1022,16 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		javax.servlet.http.HttpServletRequest request)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layout.getResetMaxStateURL(request);
+	}
+
+	/**
+	* Returns the right plid of this layout.
+	*
+	* @return the right plid of this layout
+	*/
+	@Override
+	public long getRightPlid() {
+		return _layout.getRightPlid();
 	}
 
 	/**
@@ -1849,6 +1888,16 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	/**
+	* Sets the left plid of this layout.
+	*
+	* @param leftPlid the left plid of this layout
+	*/
+	@Override
+	public void setLeftPlid(long leftPlid) {
+		_layout.setLeftPlid(leftPlid);
+	}
+
+	/**
 	* Sets the modified date of this layout.
 	*
 	* @param modifiedDate the modified date of this layout
@@ -1945,6 +1994,16 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	/**
+	* Sets the parent plid of this layout.
+	*
+	* @param parentPlid the parent plid of this layout
+	*/
+	@Override
+	public void setParentPlid(long parentPlid) {
+		_layout.setParentPlid(parentPlid);
+	}
+
+	/**
 	* Sets the plid of this layout.
 	*
 	* @param plid the plid of this layout
@@ -1987,6 +2046,16 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	@Override
 	public void setPrivateLayout(boolean privateLayout) {
 		_layout.setPrivateLayout(privateLayout);
+	}
+
+	/**
+	* Sets the right plid of this layout.
+	*
+	* @param rightPlid the right plid of this layout
+	*/
+	@Override
+	public void setRightPlid(long rightPlid) {
+		_layout.setRightPlid(rightPlid);
 	}
 
 	/**
@@ -2239,6 +2308,31 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		}
 
 		return false;
+	}
+
+	@Override
+	public long getNestedSetsTreeNodeLeft() {
+		return _layout.getNestedSetsTreeNodeLeft();
+	}
+
+	@Override
+	public long getNestedSetsTreeNodeRight() {
+		return _layout.getNestedSetsTreeNodeRight();
+	}
+
+	@Override
+	public long getNestedSetsTreeNodeScopeId() {
+		return _layout.getNestedSetsTreeNodeScopeId();
+	}
+
+	@Override
+	public void setNestedSetsTreeNodeLeft(long nestedSetsTreeNodeLeft) {
+		_layout.setNestedSetsTreeNodeLeft(nestedSetsTreeNodeLeft);
+	}
+
+	@Override
+	public void setNestedSetsTreeNodeRight(long nestedSetsTreeNodeRight) {
+		_layout.setNestedSetsTreeNodeRight(nestedSetsTreeNodeRight);
 	}
 
 	@Override

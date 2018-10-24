@@ -70,7 +70,29 @@ public class IndexUpdater {
 	}
 
 	public void updateIndexes(Bundle bundle) {
-		_updateIndexes(bundle);
+		String indexesSQL = _getSQLTemplateString(bundle, "indexes.sql");
+		String tablesSQL = _getSQLTemplateString(bundle, "tables.sql");
+
+		if ((indexesSQL == null) || (tablesSQL == null)) {
+			return;
+		}
+
+		DB db = DBManagerUtil.getDB();
+
+		Connection connection = null;
+
+		try {
+			connection = DataAccess.getConnection();
+
+			_executeUpdateIndexes(
+				bundle, db, connection, tablesSQL, indexesSQL);
+		}
+		catch (SQLException sqle) {
+			_log.error(sqle, sqle);
+		}
+		finally {
+			DataAccess.cleanUp(connection);
+		}
 	}
 
 	public void updateIndexes(long bundleId) {
@@ -159,32 +181,6 @@ public class IndexUpdater {
 			_log.error("Unable to read SQL template " + templateName, ioe);
 
 			return null;
-		}
-	}
-
-	private void _updateIndexes(Bundle bundle) {
-		String indexesSQL = _getSQLTemplateString(bundle, "indexes.sql");
-		String tablesSQL = _getSQLTemplateString(bundle, "tables.sql");
-
-		if ((indexesSQL == null) || (tablesSQL == null)) {
-			return;
-		}
-
-		DB db = DBManagerUtil.getDB();
-
-		Connection connection = null;
-
-		try {
-			connection = DataAccess.getConnection();
-
-			_executeUpdateIndexes(
-				bundle, db, connection, tablesSQL, indexesSQL);
-		}
-		catch (SQLException sqle) {
-			_log.error(sqle, sqle);
-		}
-		finally {
-			DataAccess.cleanUp(connection);
 		}
 	}
 

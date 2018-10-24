@@ -1138,6 +1138,7 @@ war.path=${app.server.portal.dir}/</echo>
 	</macrodef>
 
 	<macrodef name="poshi-execute">
+		<attribute default="false" name="failonerror" />
 		<attribute name="task" />
 
 		<sequential>
@@ -1176,7 +1177,7 @@ war.path=${app.server.portal.dir}/</echo>
 
 					<get-poshi-java-jdk-opts />
 
-					<gradle-execute failonerror="false" gradleopts="${poshi.java.jdk.opts}" task="@{task}">
+					<gradle-execute failonerror="@{failonerror}" gradleopts="${poshi.java.jdk.opts}" task="@{task}">
 						<arg value="--build-file=portal-web/build-test.gradle" />
 						<arg value="-Plocal=${test.poshi.runner.local.release}" />
 						<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
@@ -1186,7 +1187,7 @@ war.path=${app.server.portal.dir}/</echo>
 					</gradle-execute>
 				</then>
 				<else>
-					<gradle-execute failonerror="false" task="@{task}">
+					<gradle-execute failonerror="@{failonerror}" task="@{task}">
 						<arg value="--build-file=portal-web/build-test.gradle" />
 						<arg value="-Plocal=${test.poshi.runner.local.release}" />
 						<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />

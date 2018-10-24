@@ -1155,7 +1155,7 @@
 
 		<execute function="Click" locator1="APConfiguration#ASSET_SELECTION_DYNAMIC" />
 
-		<for list="Source,Filter,Custom User Attributes,Ordering and Grouping" param="panel">
+		<for list="Source,Filter,Custom User Attributes,Ordering" param="panel">
 			<execute function="AssertElementPresent" locator1="Panel#PANEL_COLLAPSED">
 				<var name="key_panel" value="${panel}" />
 			</execute>

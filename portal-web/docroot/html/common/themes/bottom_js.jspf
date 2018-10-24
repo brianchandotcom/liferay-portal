@@ -73,7 +73,8 @@
 					'.management-bar [data-title]:not(.lfr-portal-tooltip)',
 					'.management-bar [title]:not(.lfr-portal-tooltip)',
 					'.taglib-discussion [data-title]:not(.lfr-portal-tooltip)',
-					'.taglib-discussion [title]:not(.lfr-portal-tooltip):not([title=""])'
+					'.taglib-discussion [title]:not(.lfr-portal-tooltip):not([title=""])',
+					'.manage-collaborators-dialog .expiration-icon button[data-title]:not(.lfr-portal-tooltip)'
 				]
 			}
 		);

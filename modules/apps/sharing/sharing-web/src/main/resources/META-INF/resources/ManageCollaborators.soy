@@ -115,19 +115,20 @@
 				{let $tooltipMessage:
 					$collaborator.sharingEntryExpirationDateTooltip ? $untilMsg : $expirationDateMsg /}
 
-				<span class="lfr-portal-tooltip" title="{$tooltipMessage}">
-					{call ClayButton.render}
-						{param events: [
-							'click': $_hideShowExpirationDateBlock
-						] /}
-						{param data: ['collaboratorid': $collaborator.id] /}
-						{param elementClasses: 'text-muted' /}
-						{param icon: 'time' /}
-						{param monospaced: true /}
-						{param spritemap: $spritemap /}
-						{param style: 'link' /}
-					{/call}
-				</span>
+				{call ClayButton.render}
+					{param events: [
+						'click': $_hideShowExpirationDateBlock
+					] /}
+					{param data: [
+						'collaboratorid': $collaborator.id,
+						'title': $tooltipMessage
+					] /}
+					{param elementClasses: 'text-muted' /}
+					{param icon: 'time' /}
+					{param monospaced: true /}
+					{param spritemap: $spritemap /}
+					{param style: 'link' /}
+				{/call}
 			</div>
 
 			<div class="autofit-col">

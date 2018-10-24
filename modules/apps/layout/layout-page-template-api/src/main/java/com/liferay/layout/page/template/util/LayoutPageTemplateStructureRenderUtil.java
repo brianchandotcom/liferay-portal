@@ -25,9 +25,12 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,6 +55,17 @@ public class LayoutPageTemplateStructureRenderUtil {
 			HttpServletRequest request, HttpServletResponse response,
 			LayoutPageTemplateStructure layoutPageTemplateStructure,
 			String mode, Map<String, Object> parameterMap)
+		throws PortalException {
+
+		return renderLayoutContent(
+			request, response, layoutPageTemplateStructure, mode, parameterMap,
+			LocaleUtil.getMostRelevantLocale());
+	}
+
+	public static String renderLayoutContent(
+			HttpServletRequest request, HttpServletResponse response,
+			LayoutPageTemplateStructure layoutPageTemplateStructure,
+			String mode, Map<String, Object> parameterMap, Locale locale)
 		throws PortalException {
 
 		String data = layoutPageTemplateStructure.getData();
@@ -117,12 +131,14 @@ public class LayoutPageTemplateStructureRenderUtil {
 						renderFragmentEntryLink =
 							FragmentEntryRenderUtil.renderFragmentEntryLink(
 								fragmentEntryLink, mode, parameterMap, request,
-								response);
+								response, locale);
 					}
 					else {
 						renderFragmentEntryLink =
 							FragmentEntryRenderUtil.renderFragmentEntryLink(
-								fragmentEntryLink, mode, request, response);
+								fragmentEntryLink, mode,
+								new HashMap<String, Object>(), request,
+								response, locale);
 					}
 
 					sb.append(renderFragmentEntryLink);

@@ -241,12 +241,7 @@ class Layout extends Component {
 			let targetColumn = null;
 			let targetItem = null;
 
-			let targetItemPlid = eventData.targetItemPlid;
-
-			layoutColumns = this._removeDraggingItem(
-				layoutColumns,
-				eventData.targetItemPlid
-			);
+			layoutColumns = removeItem(sourceItemPlid, layoutColumns);
 
 			if (targetColumnIndex) {
 

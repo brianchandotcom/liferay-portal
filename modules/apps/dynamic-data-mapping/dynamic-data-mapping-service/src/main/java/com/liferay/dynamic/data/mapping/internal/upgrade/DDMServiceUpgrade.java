@@ -32,6 +32,17 @@ import com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_0.UpgradeCheckboxF
 import com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_1.UpgradeDDMFormFieldSettings;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_3.UpgradeDDMFormInstanceDefinition;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_3.UpgradeDDMFormInstanceEntries;
+import com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_0.util.DDMContentTable;
+import com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_0.util.DDMDataProviderInstanceTable;
+import com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_0.util.DDMFormInstanceRecordTable;
+import com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_0.util.DDMFormInstanceRecordVersionTable;
+import com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_0.util.DDMFormInstanceTable;
+import com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_0.util.DDMFormInstanceVersionTable;
+import com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_0.util.DDMStructureLayoutTable;
+import com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_0.util.DDMStructureTable;
+import com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_0.util.DDMStructureVersionTable;
+import com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_0.util.DDMTemplateTable;
+import com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_0.util.DDMTemplateVersionTable;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
@@ -53,6 +64,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -186,6 +198,18 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeDDMFormInstanceEntries(_jsonFactory),
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_3.
 				UpgradeDDMFormInstanceSettings(_jsonFactory));
+
+		registry.register(
+			"2.0.3", "3.0.0",
+			new BaseUpgradeSQLServerDatetime(
+				new Class<?>[] {
+					DDMContentTable.class, DDMDataProviderInstanceTable.class,
+					DDMFormInstanceRecordTable.class,
+					DDMFormInstanceRecordVersionTable.class, DDMFormInstanceTable.class,
+					DDMFormInstanceVersionTable.class, DDMStructureLayoutTable.class,
+					DDMStructureTable.class, DDMStructureVersionTable.class,
+					DDMTemplateTable.class, DDMTemplateVersionTable.class
+				}));
 	}
 
 	protected DDMFormDeserializer getDDMFormJSONDeserializer() {

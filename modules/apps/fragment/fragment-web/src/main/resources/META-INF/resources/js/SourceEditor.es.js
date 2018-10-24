@@ -53,8 +53,8 @@ SourceEditor.STATE = {
 
 	autocompleteTags: Config.arrayOf(
 		Config.shapeOf({
-			name: Config.string(),
-			attributes: Config.arrayOf(Config.string())
+			content: Config.string(),
+			name: Config.string()
 		})),
 
 	/**

@@ -294,6 +294,28 @@ public class OrganizationODataRetrieverTest {
 	}
 
 	@Test
+	public void testGetOrganizationsFilterByNameTreePathContains()
+		throws Exception {
+
+		Organization parentOrganization = OrganizationTestUtil.addOrganization(
+			0, "A", false);
+
+		Organization organization = OrganizationTestUtil.addOrganization(
+			parentOrganization.getOrganizationId(), "B", false);
+
+		_organizations.add(organization);
+
+		_organizations.add(parentOrganization);
+
+		List<Organization> organizations = _oDataRetriever.getResults(
+			TestPropsValues.getCompanyId(), "contains(nameTreePath, 'B')",
+			LocaleUtil.getDefault(), 0, 2);
+
+		Assert.assertEquals(organizations.toString(), 1, organizations.size());
+		Assert.assertEquals(organization, organizations.get(0));
+	}
+
+	@Test
 	public void testGetOrganizationsFilterByOrganizationId() throws Exception {
 		Organization organization1 = OrganizationTestUtil.addOrganization();
 		Organization organization2 = OrganizationTestUtil.addOrganization();

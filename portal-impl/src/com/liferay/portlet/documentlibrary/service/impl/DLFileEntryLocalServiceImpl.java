@@ -106,6 +106,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -119,9 +120,6 @@ import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.awt.image.RenderedImage;
 
@@ -281,15 +279,6 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		return dlFileEntry;
-	}
-
-	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(VersioningStrategy.class);
 	}
 
 	@Override
@@ -1030,13 +1019,6 @@ public class DLFileEntryLocalServiceImpl
 			});
 
 		intervalActionProcessor.performIntervalActions();
-	}
-
-	@Override
-	public void destroy() {
-		super.destroy();
-
-		_serviceTracker.close();
 	}
 
 	@Override
@@ -2880,7 +2862,7 @@ public class DLFileEntryLocalServiceImpl
 			return DLVersionNumberIncrease.MINOR;
 		}
 
-		VersioningStrategy versioningStrategy = _serviceTracker.getService();
+		VersioningStrategy versioningStrategy = _versioningStrategy;
 
 		if (versioningStrategy == null) {
 			if ((dlVersionNumberIncrease == null) ||
@@ -3004,7 +2986,9 @@ public class DLFileEntryLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryLocalServiceImpl.class);
 
-	private ServiceTracker<VersioningStrategy, VersioningStrategy>
-		_serviceTracker;
+	private static volatile VersioningStrategy _versioningStrategy =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			VersioningStrategy.class, DLFileEntryLocalServiceImpl.class,
+			"_versioningStrategy", false, true);
 
 }

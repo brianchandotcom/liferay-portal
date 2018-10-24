@@ -13,11 +13,6 @@
 	<td>//div/a[contains(.,'Add Sample Booking')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SAMPLE_BOOKING_TABLE-->
 <tr>
 	<td>SAMPLE_BOOKING_TABLE_BOOKING_ID</td>

@@ -8,20 +8,10 @@
 <tr><td rowspan="1" colspan="3">DDL</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_ADD</td>
 	<td>//a[@*='Add ${key_ddlDataDefinitionName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--RECORD_TABLE-->
@@ -95,11 +85,6 @@
 	<td>//div[@class='ddl-record' and contains(.,'${key_ddlRecordFieldData}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--LIST_TABLE-->
 <tr>
 	<td>LIST_TABLE_NAME</td>
@@ -109,11 +94,6 @@
 <tr>
 	<td>LIST_TABLE_DESCRIPTION</td>
 	<td>//table[contains(@class,'table-autofit')]//tr[1]/td//following-sibling::td[contains(.,'${key_ddlListDescription}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--PORTLET_ACTIONS-->
@@ -142,17 +122,7 @@
 	<td>//a[contains(.,'Edit List')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MENULIST-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SPREADSHEET_EDIT_CONTROLS-->
 </tbody>
 </table>

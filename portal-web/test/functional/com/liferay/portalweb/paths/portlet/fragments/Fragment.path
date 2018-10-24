@@ -33,11 +33,6 @@
 	<td>//div[contains(.,'${key_text}') and contains(@id,'fragment-')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--FRAGMENT_HEADER-->
 <tr>
 	<td>FRAGMENT_HEADER</td>

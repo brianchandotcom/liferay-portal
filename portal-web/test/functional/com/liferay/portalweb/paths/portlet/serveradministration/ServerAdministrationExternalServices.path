@@ -14,11 +14,6 @@
 	<td>//input[contains(@id,'openOfficeEnabled')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--XUGGLER-->
 <tr>
 	<td>XUGGLER_JAR_FILE_SELECT</td>

@@ -13,11 +13,6 @@
 	<td>//button/i[contains(@class,'icon-trash')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

@@ -14,20 +14,10 @@
 	<td>//iframe</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CHOOSE_BUTTON-->
 <tr>
 	<td>CHOOSE_BUTTON</td>
 	<td>//div[contains(@class,'portlet-body')]//tr[contains(.,'${key_siteName}')]/td//button</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SITES_TABLE-->

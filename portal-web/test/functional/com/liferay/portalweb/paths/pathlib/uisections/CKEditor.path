@@ -44,17 +44,7 @@
 	<td>//span[@id='cke_1_resizer']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TOOLBOX-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_SOURCE_BUTTON</td>
@@ -66,35 +56,10 @@
 	<td>//div[contains(@class,'cke_2')]//a[contains(@class,'cke_button') and contains(@class,'source')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TOOLBAR_FONT_MENULIST-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TOOLBAR_STYLES_MENULIST-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TOOLBAR_SIZE_MENULIST-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TOOLBAR_FORMAT_MENULIST-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!-- CONTENT_AUDIO_LINK -->
 <tr>
 	<td>CONTENT_AUDIO_LINK_IMAGE</td>
@@ -107,28 +72,13 @@
 	<td>//img[contains(@src,'jpg')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CONTENT_VIDEO_LINK-->
 <tr>
 	<td>CONTENT_VIDEO_LINK_IMAGE</td>
 	<td>//img[contains(@class,'video')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--RESOURCES_BROWSER-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--LINK_IMAGE_BROWSE_SERVER-->
 </tbody>
 </table>

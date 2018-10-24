@@ -38,20 +38,10 @@
 	<td>//div[@class='page-actions']/div[@class='stats']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ADT_SOCIAL-->
 <tr>
 	<td>ADT_SOCIAL_LAST_MODIFIED_MESSAGE</td>
 	<td>//div[@class='wiki-info']/span[contains(.,'Last Modified')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--ATTACHMENT_TABLE-->
@@ -70,11 +60,6 @@
 	<td>//tr[contains(.,'${key_attachmentFileName}')]//span[contains(.,'Move to Recycle Bin')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CHILD_PAGE-->
 <tr>
 	<td>CHILD_PAGE_HEADER</td>
@@ -91,17 +76,7 @@
 	<td>//li[@class='list-group-item']//a</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--COMMENTS-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--COMPARE_ACTIVITIES_NAVIGATION-->
 <tr>
 	<td>COMPARE_ACTIVITIES_NAVIGATION_TEXT_MODE_LINK</td>
@@ -138,28 +113,13 @@
 	<td>//table[@id='taglib-diff-results']//tr[3]/td[2]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DESCRIPTIVE_VIEW-->
 <tr>
 	<td>DESCRIPTIVE_VIEW_ENTRY_TITLE</td>
 	<td>//li[@data-qa-id='row']/*[@data-qa-id='rowItemContent']/h4[contains(.,'${key_wikiPageTitle}')]/a</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--FILES_READY_TO_BE_SAVED-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--HISTORY-->
 <tr>
 	<td>HISTORY_ACTIVITIES_TABLE_COMPARE_TO_LINK</td>
@@ -179,11 +139,6 @@
 <tr>
 	<td>HISTORY_VERSIONS_SUMMARY</td>
 	<td>//tr[contains(.,'${key_wikiPageRevision}') and contains(.,'${key_wikiPageTitle}')]//td[contains(.,'${key_wikiVersionSummary}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--COMPARE_VERSIONS-->
@@ -232,11 +187,6 @@
 	<td>//div[contains(@id,'wikiPageVersionSearchContainer')]//tr/td//a[contains(@class,'selector-button') and contains(.,'${key_wikiPageVersion}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--NODE_TABLE-->
 <tr>
 	<td>NODE_TABLE</td>
@@ -268,11 +218,6 @@
 	<td>//tr[2]/td[5]//div/a</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PAGE_TABS-->
 <tr>
 	<td>PAGE_TABS_HISTORY</td>
@@ -287,11 +232,6 @@
 <tr>
 	<td>PAGE_TABS_CHANGE_PARENT</td>
 	<td>//ul[contains(@class,'nav nav-tabs')]//li/a[contains(.,'Change Parent')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SEARCH-->
@@ -323,11 +263,6 @@
 <tr>
 	<td>SEARCH_RESULT_TITLE</td>
 	<td>//div[@data-title='${key_wikiPageTitle}']//span[@class='entry-title']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 </tbody>

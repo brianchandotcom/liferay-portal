@@ -120,11 +120,6 @@
 	<td>//form[contains(@id,'OAuth2ConnectedApplicationsPortlet')]//h1[@class='name']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

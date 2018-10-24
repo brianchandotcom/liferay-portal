@@ -28,11 +28,6 @@
 	<td>//select[contains(@id,'paginationType')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ENABLE_CONVERSION-->
 <tr>
 	<td>ENABLE_CONVERSION_DOC_CHECKBOX</td>
@@ -62,11 +57,6 @@
 <tr>
 	<td>ENABLE_CONVERSION_TXT_CHECKBOX</td>
 	<td>//input[contains(@id,'extensionstxt')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SHOW_METADATA-->

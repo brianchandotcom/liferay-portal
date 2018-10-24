@@ -38,11 +38,6 @@
 	<td>//div[@class='panel-heading']//a[normalize-space(text())='${key_panel}'][@aria-expanded='true' and not(contains(@class,'collapsed'))]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MENU-->
 <tr>
 	<td>MENU_ITEM</td>
@@ -58,11 +53,6 @@
 <tr>
 	<td>ENTRY_REPORT_PARAMETERS</td>
 	<td>//div[contains(@id,'report-parametersHeader')]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 </tbody>

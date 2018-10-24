@@ -28,11 +28,6 @@
 	<td>//ul[@class='error-list-items']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CURRENT_AND_PREVIOUS-->
 <tr>
 	<td>CURRENT_AND_PREVIOUS_STATUS_1</td>

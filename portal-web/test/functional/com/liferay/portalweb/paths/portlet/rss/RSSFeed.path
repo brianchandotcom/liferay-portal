@@ -28,11 +28,6 @@
 	<td>//div[@id='rssFeedsPanelContainer']//div[@class='panel-toggle']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--FEEDS-->
 <tr>
 	<td>FEEDS_TITLE</td>
@@ -82,11 +77,6 @@
 <tr>
 	<td>FEEDS_2</td>
 	<td>xpath=(//div[contains(@class,'field-row')])[${key_toRowNumber}]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--DISPLAY_SETTINGS-->

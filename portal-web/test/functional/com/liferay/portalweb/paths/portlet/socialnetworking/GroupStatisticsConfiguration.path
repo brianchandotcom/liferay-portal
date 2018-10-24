@@ -13,11 +13,6 @@
 	<td>//div[contains(@id,'SocialGroupStatisticsPortlet')]//iframe</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SETUP_COUNTERS-->
 <tr>
 	<td>SETUP_COUNTERS_DISPLAY_ACTIVITY_COUNTER_NAME_DROPDOWN</td>
@@ -37,11 +32,6 @@
 <tr>
 	<td>SETUP_COUNTERS_DATA_RANGE_DROPDOWN</td>
 	<td>//select[contains(@id,'dataRange0')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 </tbody>

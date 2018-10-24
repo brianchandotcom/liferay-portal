@@ -13,11 +13,6 @@
 	<td>//div[contains(@class,'portlet-body') and contains(.,'There are no blogs.')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ENTRY-->
 <tr>
 	<td>ENTRY_TITLE</td>

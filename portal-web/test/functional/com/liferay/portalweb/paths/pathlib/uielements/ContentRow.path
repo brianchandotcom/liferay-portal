@@ -38,11 +38,6 @@
 	<td>xpath=(//*[@data-qa-id='row']//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]])[${key_rowNumber}]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ENTRY_CONTENT_ENTRY-->
 <tr>
 	<td>ENTRY_CONTENT_ENTRY_CHECKBOX</td>

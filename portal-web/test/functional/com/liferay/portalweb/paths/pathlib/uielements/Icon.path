@@ -178,11 +178,6 @@
 	<td>//span[*[name()='svg'][contains(@class,'icon-question')]]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ELLIPSIS-->
 <tr>
 	<td>BODY_VERTICAL_ELLIPSIS</td>

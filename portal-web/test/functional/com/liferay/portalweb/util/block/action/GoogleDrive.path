@@ -38,11 +38,6 @@
 	<td>//div[contains(@role,'button') and contains(@aria-label,'List view') and contains(@aria-hidden,'false')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--GRID_VIEW-->
 <tr>
 	<td>GRID_VIEW_DOCUMENT</td>
@@ -57,11 +52,6 @@
 <tr>
 	<td>GRID_VIEW_DOCUMENT_2</td>
 	<td>xpath=(//div[contains(@aria-label,'Files and folders grid view.')]//span[contains(.,'${key_googleDocName}')])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--LIST_VIEW-->

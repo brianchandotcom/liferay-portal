@@ -68,11 +68,6 @@
 	<td>//select[contains(@id,'questionId')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--POLLS_TABLE-->
 <tr>
 	<td>POLLS_TABLE_TITLE</td>
@@ -89,11 +84,6 @@
 	<td>//tr/td[5]//a</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--VOTES-->
 <tr>
 	<td>VOTES_PERCENTAGE</td>
@@ -108,11 +98,6 @@
 <tr>
 	<td>VOTES_TOTAL</td>
 	<td>//form[contains(@id,'PollsDisplayPortlet')]//div[contains(.,'Total Votes: ${key_pollsQuestionTotalVotes}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--CHART-->

@@ -63,11 +63,6 @@
 	<td>//a[@title='Video']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--VIEW_HISTORY-->
 <tr>
 	<td>VIEW_HISTORY_VERSION_CHECKBOX</td>
@@ -84,26 +79,11 @@
 	<td>//tr[contains(.,'${key_webContentTitle}')]/td[5]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--RELATED_ASSETS-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DISPLAY_PAGE-->
 <tr>
 	<td>DISPLAY_PAGE_SELECTION</td>
 	<td>//span[contains(@id,'displayPageNameInput')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--PERMISSIONS-->

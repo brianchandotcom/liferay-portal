@@ -39,11 +39,6 @@
 	<td>//span[contains(.,'Select All')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--REMOTE_STAGING-->
 <tr>
 	<td>REMOTE_STAGING_IP</td>

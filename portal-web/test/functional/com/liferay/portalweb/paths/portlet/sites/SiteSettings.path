@@ -8,55 +8,15 @@
 <tr><td rowspan="1" colspan="3">SiteSettings</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ACTIVE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PARENT_SITE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PARENT_SITE_TABLE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MENU_BASIC_INFORMATION-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MENU_SEARCH_ENGINE_OPTIMIZATION-->
 <!---->
 <!--MENU_ADVANCED-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MENU_MISCELLANEOUS-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MEMBERSHIP_OPTIONS-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PAGES-->
 </tbody>
 </table>

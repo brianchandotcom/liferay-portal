@@ -24,11 +24,6 @@
 	<td>//div[contains(@id,'parent-folderTitle')]//a[contains(.,'Parent Folder')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DESCRIPTIVE_ENTRY-->
 <tr>
 	<td>DESCRIPTIVE_ENTRY_TITLE</td>
@@ -40,20 +35,10 @@
 	<td>//li[contains(@class,'list-group-item')]//div/h5[contains(.,'${key_assetDescription}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--FOLDER_TABLE-->
 <tr>
 	<td>FOLDER_TABLE_CHOOSE</td>
 	<td>//tr[contains(.,'${key_folderName}')]/td[4]//button[contains(.,'Choose')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SEARCH_TABLE-->

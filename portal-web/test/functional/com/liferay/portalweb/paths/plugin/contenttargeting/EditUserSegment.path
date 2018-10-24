@@ -18,11 +18,6 @@
 	<td>xpath=(//div[@class='field-info']//h2[contains(.,'${key_userSegmentRuleName}')])['${ruleInstance}']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_SEGMENT_RULES-->
 <tr>
 	<td>USER_SEGMENT_RULES_RULE</td>
@@ -44,11 +39,6 @@
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//a[contains(.,'Select')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION-->
 <tr>
 	<td>USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION_LEVEL_SELECT</td>
@@ -60,31 +50,16 @@
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[contains(@id,'schoolName')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_SEGMENT_RULE_SOCIAL_FACEBOOK_CITY-->
 <tr>
 	<td>USER_SEGMENT_RULE_SOCIAL_FACEBOOK_CITY_FIELD</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[contains(@id,'cityName')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_SEGMENT_RULE_SOCIAL_FACEBOOK_PAGE_LIKE-->
 <tr>
 	<td>USER_SEGMENT_RULE_SOCIAL_FACEBOOK_PAGE_LIKE_FIELD</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[contains(@id,'facebookName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER-->
@@ -103,11 +78,6 @@
 	<td>//div[contains(@class,'facebookgenderrule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[@value='custom']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_SEGMENT_RULE_SOCIAL_FACEBOOK_FRIENDS-->
 <tr>
 	<td>USER_SEGMENT_RULE_SOCIAL_FACEBOOK_FRIENDS_MORE_LESS_THAN_SELECT</td>
@@ -119,11 +89,6 @@
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[contains(@id,'numberOfFriends')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE-->
 <tr>
 	<td>USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE_OLDER_THAN_FIELD</td>
@@ -133,11 +98,6 @@
 <tr>
 	<td>USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE_YOUNGER_OLDER_THAN_FIELD</td>
 	<td>//div[contains(@class,'facebookagerule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[contains(@id,'YoungerThan')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED-->
@@ -156,31 +116,16 @@
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//span[contains(@class,'lfr-card-title-text')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_SEGMENT_RULE_BEHAVIOR_SCORE_POINTS-->
 <tr>
 	<td>USER_SEGMENT_RULE_BEHAVIOR_SCORE_POINTS_FIELD</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[contains(@id,'scorePoints')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_SEGMENT_RULE_BEHAVIOR_PAGE_VISITED-->
 <tr>
 	<td>USER_SEGMENT_RULE_BEHAVIOR_PAGE_VISITED_FRIENDLY_URL_FIELD</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[contains(@id,'friendlyURL')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--USER_SEGMENT_RULE_BEHAVIOR_PREVIOUSLY_VISITED_SITE-->
@@ -199,20 +144,10 @@
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[contains(@id,'value')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_MEMBER-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_MEMBER_SELECT</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//div[contains(@id,'siteMemberNameContainer') and contains(.,'${key_selectSiteMemberSite}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_CUSTOM_FIELD-->
@@ -231,11 +166,6 @@
 	<td>//div[contains(@class,'customfieldrule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//div[contains(@id,'attributeContainer')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER_MALE_RADIO</td>
@@ -245,11 +175,6 @@
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER_FEMALE_RADIO</td>
 	<td>//div[contains(@class,'genderrule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[@value='female']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE-->
@@ -273,11 +198,6 @@
 	<td>//div[contains(@class,'siterolerule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//div[contains(@id,'siteMemberNameContainer')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER_SELECT</td>
@@ -289,28 +209,13 @@
 	<td>//tr[contains(.,'${key_userGroupName}')]/td[3]//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_USER_SIGNED_IN-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_USER_SIGNED_IN_MESSAGE</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]/p[@class='text-secondary']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_USER_LOGGED-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ROLE-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ROLE_SELECT</td>
@@ -322,20 +227,10 @@
 	<td>//div[contains(@class,'organizationrolerule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//select[contains(@id,'organizationId')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_MEMBER-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_MEMBER_SELECT</td>
 	<td>//div[contains(@class,'organizationmemberrule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//select[contains(@id,'organizationId')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_REGULAR_ROLE-->
@@ -349,11 +244,6 @@
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//select[contains(@id,'roleId') and contains(.,'${key_regularRole}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_OLDER_THAN_FIELD</td>
@@ -363,11 +253,6 @@
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_YOUNGER_THAN_FIELD</td>
 	<td>//div[contains(@class,'agerule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[contains(@id,'youngerThan')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION-->
@@ -381,31 +266,16 @@
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//select[contains(@id,'regionId')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_SEGMENT_RULE_SESSION_ATTRIBUTES_BROWSER-->
 <tr>
 	<td>USER_SEGMENT_RULE_SESSION_ATTRIBUTES_BROWSER_SELECT</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//select[contains(@id,'browser')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_SYSTEM-->
 <tr>
 	<td>USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_SYSTEM_SELECT</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//select[contains(@id,'os')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_TIME-->
@@ -417,11 +287,6 @@
 <tr>
 	<td>USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_END_TIME_FIELD</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[contains(@id,'endTime')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--USER_SEGMENT_RULE_SESSION_ATTRIBUTES_DEVICE-->

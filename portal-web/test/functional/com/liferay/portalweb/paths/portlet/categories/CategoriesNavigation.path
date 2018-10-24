@@ -18,11 +18,6 @@
 	<td>//div[contains(@class,'asset-categories-navigation')]//div[contains(@class,'panel-heading')]//span[contains(.,'${key_vocabularyName}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ADT_MULTI_COLUMN-->
 <tr>
 	<td>ADT_MULTI_COLUMN_1</td>

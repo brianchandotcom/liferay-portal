@@ -38,11 +38,6 @@
 	<td>//span[contains(.,'Requested By')]/../../div[contains(.,'Requested By') and contains(.,'${key_userName}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ENTRY_FILE_TABLE-->
 <tr>
 	<td>ENTRY_FILE_TABLE_FILE</td>
@@ -52,11 +47,6 @@
 <tr>
 	<td>ENTRY_FILE_TABLE_SCHEDULED_FILE</td>
 	<td>//tr[contains(.,'${key_reportsFileName}')]/td</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--ENTRY_FILE_MENULIST-->

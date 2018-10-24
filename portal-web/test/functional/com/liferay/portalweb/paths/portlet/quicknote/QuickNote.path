@@ -28,11 +28,6 @@
 	<td>//button[contains(@class,'btn-default')]/span[@class='icon-ok']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--NOTE_COLOR-->
 </tbody>
 </table>

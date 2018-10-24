@@ -13,11 +13,6 @@
 	<td>//iframe[contains(@id,'selectOrganization')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ORGANIZATION_TABLE-->
 <tr>
 	<td>ORGANIZATION_TABLE_NAME</td>

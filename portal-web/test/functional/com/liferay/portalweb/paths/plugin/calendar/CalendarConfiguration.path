@@ -13,20 +13,10 @@
 	<td>//iframe[contains(@class,'dialog-iframe-node') and contains(@name,'configurationIframe')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--EVENTS_DISPLAYED-->
 <tr>
 	<td>EVENTS_DISPLAYED_MAX_DAYS</td>
 	<td>//select[contains(@id,'eventsPerPage')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--NAVIGATION-->
@@ -38,11 +28,6 @@
 <tr>
 	<td>NAVIGATION_USER_RSS</td>
 	<td>//ul[contains(@class,'lfr-nav nav')]//a[contains(.,'RSS')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--USER_SETTINGS-->
@@ -79,11 +64,6 @@
 <tr>
 	<td>USER_SETTINGS_GLOBAL_TIME_ZONE_CHECKBOX</td>
 	<td>//input[contains(@id,'usePortalTimeZone')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--RSS-->

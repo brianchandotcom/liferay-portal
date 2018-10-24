@@ -8,17 +8,7 @@
 <tr><td rowspan="1" colspan="3">CategoriesEditSubcategory</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MOVE_CATEGORIES_CATEGORY-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PROPERTIES-->
 <tr>
 	<td>PROPERTIES_KEY_FIELD_DEFAULT</td>

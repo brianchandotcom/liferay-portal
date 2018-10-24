@@ -103,11 +103,6 @@
 	<td>//div[contains(@class,'list-group')]//a[contains(.,'Profile')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PRODUCT_MENU_PANEL-->
 <tr>
 	<td>PRODUCT_MENU_PANEL_SCOPE</td>

@@ -43,11 +43,6 @@
 	<td>//ol[contains(@class,'multi-step-nav')]//li/div[contains(.,'${key_formPageName}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ALT_PAGINATION-->
 <tr>
 	<td>ALT_PAGINATION_PAGE</td>
@@ -57,11 +52,6 @@
 <tr>
 	<td>ALT_PAGINATION_SUCCESS_PAGE</td>
 	<td>//div[contains(@class,'form-builder-pagination')]//li[contains(@class,'pagination-success-page')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--PAGE_CONTROLS-->
@@ -90,17 +80,7 @@
 	<td>//li[contains(@class,'dropdown-item')]//a[text()='Switch Pagination Mode']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ADD_COLUMN-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ADD_FIELD-->
 <tr>
 	<td>ADD_FIELD</td>
@@ -117,11 +97,6 @@
 	<td>//div[contains(@class,'yui3-dd-drop') and contains(@class,'col-empty')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SUCCESS_PAGE-->
 <tr>
 	<td>SUCCESS_PAGE_TITLE_FIELD</td>
@@ -131,11 +106,6 @@
 <tr>
 	<td>SUCCESS_PAGE_DESCRIPTION_FIELD</td>
 	<td>//div[@class='form-builder-success-page']//input[contains(@class,'success-page-content')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--PUBLISH-->
@@ -164,11 +134,6 @@
 	<td>//div[contains(@class,'alert-dismissable')]//div[contains(.,'${key_alertMessage}')]/preceding-sibling::button[@class='close']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SETTINGS_TAB-->
 <tr>
 	<td>SETTINGS_TAB_EMAIL_NOTIFICATIONS</td>
@@ -183,11 +148,6 @@
 <tr>
 	<td>SETTINGS_TAB_WORKFLOW_CONFIGURATION</td>
 	<td>//div[contains(@data-fieldname,'workflowDefinition')]//div[contains(@id,'workflowDefinition')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_workflowDefinition}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--FIELD-->

@@ -59,23 +59,8 @@
 	<td>//select[contains(@id,'fullPageApplication')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CATEGORIZATION-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SEO-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--LOOK_AND_FEEL-->
 <tr>
 	<td>CHANGE_CURRENT_THEME_BUTTON</td>
@@ -92,35 +77,10 @@
 	<td>//div[contains(@class, 'main-content-card')]//h4[contains(.,'Name')]/following-sibling::p[1]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--JAVASCRIPT-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CUSTOM_FIELDS-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ADVANCED_PANEL-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MOBILE_DEVICE_RULES-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CUSTOMIZATION_SETTINGS-->
 <tr>
 	<td>CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS</td>
@@ -130,11 +90,6 @@
 <tr>
 	<td>CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_CHECKBOX</td>
 	<td>//input[contains(@name,'column-${key_columnId}-customizable')]/../span[contains(@class,'toggle-switch')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 </tbody>

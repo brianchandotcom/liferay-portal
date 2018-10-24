@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">MicrosoftLogin</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--LOGIN-->
 <tr>
 	<td>LOGIN_EMAIL_FIELD</td>
@@ -37,11 +32,6 @@
 <tr>
 	<td>LOGIN_USER_CHOOSER</td>
 	<td>//td/div[contains(@class,'windows_tile_text') and contains(.,'${key_userEmail}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SHAREPOINT-->

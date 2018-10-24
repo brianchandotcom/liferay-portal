@@ -39,26 +39,11 @@
 	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//a</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--FILTER-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ENTRY_CARDS-->
 <tr>
 	<td>ENTRY_CARDS_THUMBNAIL</td>
 	<td>//li[contains(@data-title,'${key_webContentTitle}')]//div[contains(@class,'vertical-card-container')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--ENTRY_LIST-->
@@ -100,11 +85,6 @@
 <tr>
 	<td>ENTRY_LIST_WORKFLOW_STATUS</td>
 	<td>//li[contains(@data-title,'${key_webContentTitle}')]//span[@class='workflow-status']/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--ENTRY_TABLE-->

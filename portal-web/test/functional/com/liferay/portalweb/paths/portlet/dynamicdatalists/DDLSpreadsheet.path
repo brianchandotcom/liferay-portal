@@ -23,20 +23,10 @@
 	<td>//select[@name='${key_fieldName}']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--RECORD_TABLE-->
 <tr>
 	<td>RECORD_TABLE_FIELD_ENTRY</td>
 	<td>//tbody[@class='table-data']/tr[${key_ddlRecordRow}]/td[contains(@class,'${key_fieldName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SPREADSHEET_EDIT_CONTROLS-->

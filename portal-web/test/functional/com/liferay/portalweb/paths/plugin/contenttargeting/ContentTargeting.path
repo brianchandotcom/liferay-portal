@@ -29,11 +29,6 @@
 	<td>//div[contains(@class,'field-header') and contains(@class,'collapsed')]//h2[contains(.,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CARD-->
 <tr>
 	<td>CARD_CONTENT_TITLE</td>
@@ -43,11 +38,6 @@
 <tr>
 	<td>CARD_CONTENT_TYPE</td>
 	<td>//span[contains(@class,'lfr-card-subtitle-text') and contains(.,'${key_contentType}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--OTHERWISE_PANEL-->
@@ -81,11 +71,6 @@
 	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]//span[contains(@class,'lfr-card-subtitle-text') and contains(.,'${key_contentType}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PREVIEW-->
 <tr>
 	<td>PREVIEW</td>
@@ -115,11 +100,6 @@
 <tr>
 	<td>PREVIEW_ENTRY_SELECTED</td>
 	<td>//div[contains(@class,'show')]//li[@class='active' and contains(.,'${key_viewEntrySelected}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--REPORT_TABLE-->

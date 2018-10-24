@@ -14,11 +14,6 @@
 	<td>//ul[contains(@class,'nav')]//a[contains(.,'Scope')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SCOPE-->
 </tbody>
 </table>

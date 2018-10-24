@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">MessageBoardsAdmin</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--THREADS-->
 <tr>
 	<td>THREADS_RECYCLE_BIN_BUTTON</td>

@@ -19,17 +19,7 @@
 	<td>//div[contains(@id,'usersSearchContainerSearchContainer')]//tr[contains(.,'${key_userScreenName}')]/td[3]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ORGANIZATION_TABLE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_GROUP_TABLE-->
 </tbody>
 </table>

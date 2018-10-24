@@ -18,11 +18,6 @@
 	<td>//span[@class='lfr-inline-code']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DATABASE-->
 <tr>
 	<td>DATABASE_CONFIGURED_JDBC_DRIVER_CLASS_NAME_LABEL</td>
@@ -42,11 +37,6 @@
 <tr>
 	<td>DATABASE_CHANGE_LINK</td>
 	<td>//a[@id='customDatabaseOptionsLink']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--DATABASE_CHANGE-->

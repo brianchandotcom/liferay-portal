@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">SiteSettingsSiteURL</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SITE_URL-->
 <tr>
 	<td>SITE_URL_FRIENDLY_URL_LABEL</td>

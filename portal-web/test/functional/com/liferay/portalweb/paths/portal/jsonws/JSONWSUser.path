@@ -13,11 +13,6 @@
 	<td>//div[contains(@class,'lfr-api-method') and contains(@class,'lfr-api-section')]/h2</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--API_EXECUTE-->
 <tr>
 	<td>API_EXECUTE_USER_ID_FIELD</td>

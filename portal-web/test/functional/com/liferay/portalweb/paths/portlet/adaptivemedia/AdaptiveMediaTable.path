@@ -48,11 +48,6 @@
 	<td>//a[contains(.,'${key_imageName}')]/../..//td[contains(@class,'lfr-state-column') and contains(.,'${key_imageState}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--IMAGE_INFO_DETAILS-->
 <tr>
 	<td>IMAGE_INFO_DETAILS_ADAPTED_IMAGES</td>

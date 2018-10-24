@@ -18,11 +18,6 @@
 	<td>//div[@class='scheduler-view-agenda-no-events']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SCHEDULER_EVENT-->
 <tr>
 	<td>SCHEDULER_EVENT_SPECIFIC_1</td>

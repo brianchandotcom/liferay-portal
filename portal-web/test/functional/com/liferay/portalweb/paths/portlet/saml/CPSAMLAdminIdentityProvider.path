@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">CPSAMLAdminIdentityProvider</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--IDENTITY_PROVIDER-->
 <tr>
 	<td>IDENTITY_PROVIDER_SIGN_METADATA_CHECKBOX</td>

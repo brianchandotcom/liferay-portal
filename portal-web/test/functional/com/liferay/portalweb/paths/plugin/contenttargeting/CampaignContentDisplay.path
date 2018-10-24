@@ -13,11 +13,6 @@
 	<td>//div[contains(@id,'CampaignContentDisplayPortlet')]//div[@class='full-content']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--RULE_PANEL-->
 <tr>
 	<td>RULE_PANEL_CAMPAIGN_SELECT</td>

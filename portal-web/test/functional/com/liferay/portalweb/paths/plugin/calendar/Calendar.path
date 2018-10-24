@@ -28,20 +28,10 @@
 	<td>portal/screenshots/calendar/scheduler_view_day_resizer_icon.png</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_RESOURCES</td>
 	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Resources')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--VIEW-->
@@ -100,11 +90,6 @@
 	<td>//button[contains(@class,'scheduler-base-view') and contains(@class,'scheduler-base-view-agenda') and contains(@class,'active')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SMALL_CALENDAR-->
 <tr>
 	<td>SMALL_CALENDAR_PREVIOUS</td>
@@ -131,11 +116,6 @@
 	<td>xpath=(//tr[@class='yui3-calendar-weekdayrow']/th)[1]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MY_CALENDARS-->
 <tr>
 	<td>MY_CALENDARS_CALENDAR</td>
@@ -147,11 +127,6 @@
 	<td>//div[contains(@class,'calendar-portlet-list') and contains(.,'My Calendars')]//i[@class='icon-caret-down']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MY_CALENDARS_MENULIST-->
 <tr>
 	<td>MY_CALENDARS_MENULIST_ADD_CALENDAR</td>
@@ -161,11 +136,6 @@
 <tr>
 	<td>MY_CALENDARS_MENULIST_MANAGE_CALENDAR</td>
 	<td>//li[@class='simple-menu-item' and @data-id='manage']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--MY_CALENDARS_CALENDAR-->
@@ -214,11 +184,6 @@
 	<td>//div[contains(@id,'myCalendarList')]/div/div[2]/div[@class='calendar-list-item-arrow']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CURRENT_SITE_CALENDARS-->
 <tr>
 	<td>CURRENT_SITE_CALENDARS_HEADER</td>
@@ -235,11 +200,6 @@
 	<td>//div[contains(@class,'calendar-portlet-list') and contains(.,"${key_siteName}'s Calendars")]//i[@class='icon-caret-down']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CURRENT_SITE_CALENDARS_MENULIST-->
 <tr>
 	<td>CURRENT_SITE_CALENDARS_MENULIST_ADD_CALENDAR</td>
@@ -249,11 +209,6 @@
 <tr>
 	<td>CURRENT_SITE_CALENDARS_MENULIST_MANAGE_CALENDAR</td>
 	<td>//li[@class='simple-menu-item' and @data-id='manage']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--CURRENT_SITE_CALENDARS_CALENDAR-->
@@ -302,11 +257,6 @@
 	<td>//div[contains(@id,'siteCalendarList')]/div/div[contains(.,'${key_siteCalendarName}')]/div[@class='calendar-list-item-arrow']/i[contains(@class,'icon-caret-down')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--OTHER_CALENDARS-->
 <tr>
 	<td>OTHER_CALENDARS_SEARCH</td>
@@ -316,11 +266,6 @@
 <tr>
 	<td>OTHER_CALENDARS_SEARCH_LIST_RESULT</td>
 	<td>//ul[@role='listbox']/li[contains(@data-text,'${key_calendarName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--OTHER_CALENDARS_CALENDAR-->
@@ -344,11 +289,6 @@
 	<td>//div[contains(@id,'otherCalendarList')]/div/div/div[@class='calendar-list-item-arrow']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--OTHER_CALENDARS_CALENDAR_MENULIST-->
 <tr>
 	<td>OTHER_CALENDARS_CALENDAR_MENULIST_ADD_EVENT</td>
@@ -365,17 +305,7 @@
 	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[@class='simple-menu-item' and @data-id='colorPicker']/div/div/div/div[contains(@style,'${key_color}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SCHEDULER-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SCHEDULER_VIEW_DAY-->
 <tr>
 	<td>SCHEDULER_VIEW_DAY</td>
@@ -400,11 +330,6 @@
 <tr>
 	<td>SCHEDULER_VIEW_DAY_SHOW_MORE_LOCALIZED</td>
 	<td>//div[contains(@class,'scheduler-view-day-content') and not(contains(@class,'scheduler-view-week-content'))]//a[@class='scheduler-view-table-more' and contains(.,'${key_messageLocalized}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SCHEDULER_VIEW_WEEK-->
@@ -438,11 +363,6 @@
 	<td>//div[contains(@class,'scheduler-view-week-content')]//a[@class='scheduler-view-table-more' and contains(.,'${key_messageLocalized}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SCHEDULER_VIEW_MONTH-->
 <tr>
 	<td>SCHEDULER_VIEW_MONTH</td>
@@ -474,20 +394,10 @@
 	<td>//div[contains(@class,'scheduler-view-month-content')]//a[@class='scheduler-view-table-more' and contains(.,'${key_messageLocalized}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SCHEDULER_VIEW_AGENDA-->
 <tr>
 	<td>SCHEDULER_VIEW_AGENDA</td>
 	<td>//div[contains(@class,'scheduler-view scheduler-view-agenda') and not(contains(@class,'hide'))]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SCHEDULER_EVENT-->
@@ -594,11 +504,6 @@
 <tr>
 	<td>SCHEDULER_EVENT_SPECIFIC_EVENT_TIMES</td>
 	<td>//div[contains(@class,'calendar-portlet-event') and contains(@data-starttime,'${key_startDateTime}') and contains(@data-endtime,'${key_endDateTime}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SCHEDULER_EVENT_DIALOG_BOX-->

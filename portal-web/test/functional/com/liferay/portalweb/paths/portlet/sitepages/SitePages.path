@@ -13,11 +13,6 @@
 	<td>//span[contains(@class,'site-name') and contains(.,'${key_siteName}')] | //div[contains(@class,'site-name') and contains(.,'${key_siteName}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--LIST_GROUP_ITEM-->
 <tr>
 	<td>LIST_GROUP_ITEM</td>
@@ -55,32 +50,12 @@
 	<td></td>
 </tr>
 <!--NAVIGATION-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TOOLBAR-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PAGE_TREE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_FRIENDLY_BASE_URL</td>
 	<td>//span[contains(@id,'friendlyURL')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--DETAILS_PAGE_TYPE_PANEL-->
@@ -94,23 +69,8 @@
 	<td>//li[contains(@id,'selectPortletsRootNode')]//span[contains(.,'${key_componentOrPortletName}')]/../span[contains(@class,'tree-node-checkbox')]/input</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--STAGING-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--INCOMPLETE_STAGING_PAGE_VARIATION-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--LOGO-->
 <tr>
 	<td>LOGO_UPLOAD_IMAGE_IFRAME</td>
@@ -122,17 +82,7 @@
 	<td>//label[contains(@for,'ImageUploaderPortlet')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--LOOK_AND_FEEL-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--JAVASCRIPT-->
 <tr>
 	<td>JAVASCRIPT_TEXTAREA</td>
@@ -142,11 +92,6 @@
 <tr>
 	<td>JAVASCRIPT_LABEL</td>
 	<td>//label[contains(@for,'javascript')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--MENUITEM-->

@@ -178,11 +178,6 @@
 	<td>//div[contains(@class,'loading-animation')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SCOPE_SELECTOR_MENULIST-->
 <tr>
 	<td>SCOPE_SELECTOR_MENULIST_ITEM</td>
@@ -194,20 +189,10 @@
 	<td>//div[contains(@class,'control-panel-site-selector')]/a[contains(@id,'_145_controlPanelSiteSelector')]/span</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CONTENT_SCOPE_SELECTOR_MENULIST-->
 <tr>
 	<td>CONTENT_SCOPE_SELECTOR_MENULIST_ITEM</td>
 	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'${key_contentScopeName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--PAGE-->
@@ -326,11 +311,6 @@
 	<td>//div[@id='navigationCollapse']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--BREADCRUMB-->
 <tr>
 	<td>BREADCRUMB_1</td>
@@ -345,11 +325,6 @@
 <tr>
 	<td>BREADCRUMB_3</td>
 	<td>xpath=(//div[contains(@class,'breadcrumb') and contains(@class,'breadcrumb-horizontal')]/ul/li/a)[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--PAGE_COLUMN-->
@@ -388,11 +363,6 @@
 	<td>//div[contains(@class,'portlet-layout')]/div[@id='column-2' and contains(@class,'col-md-6')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PAGE_COLUMN_PORTLET-->
 <tr>
 	<td>PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE</td>
@@ -412,11 +382,6 @@
 <tr>
 	<td>PAGE_COLUMN_PORTLET_COLUMN_2_PORTLET_HEADER</td>
 	<td>//div[@id='column-2']//header[contains(.,'${key_portletTitleName}')]/div/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--PAGE_CUSTOMIZATION-->
@@ -440,11 +405,6 @@
 	<td>//li/a[contains(.,'View My Customized')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PORTLET_COLUMN-->
 <tr>
 	<td>PORTLET_COLUMN_1</td>
@@ -466,11 +426,6 @@
 	<td>//div[contains(@id,'column-2')]//h1[@class='portlet-title' and contains(.,'${key_portletTitleName}')]/span</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--NEW_PAGE-->
 <tr>
 	<td>NEW_PAGE_FIELD</td>
@@ -485,11 +440,6 @@
 <tr>
 	<td>NEW_PAGE_SAVE_BUTTON</td>
 	<td>//button/i[@class='icon-ok']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--PORTLET-->
@@ -538,11 +488,6 @@
 	<td>//div[@id='column-2']//section/header/h1[contains(.,'Sign In')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CONTROL_PANEL-->
 <tr>
 	<td>CONTROL_PANEL_INFO_MESSAGE</td>
@@ -572,11 +517,6 @@
 <tr>
 	<td>CONTROL_PANEL_MANAGE_BUTTON</td>
 	<td>//a[contains(@id,'controlPanelHomeActionManageSite')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SITE_ADMINISTRATION-->
@@ -618,11 +558,6 @@
 <tr>
 	<td>SITE_ADMINISTRATION_MEMBERS_SITE_TEAMS</td>
 	<td>//ul[contains(@class,'nav-equal-height')]/li[contains(.,'Site Teams')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SITE_LOCALIZATION-->

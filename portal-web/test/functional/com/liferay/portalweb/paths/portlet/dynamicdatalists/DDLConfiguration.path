@@ -13,11 +13,6 @@
 	<td>//iframe[contains(@src,'configuration')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_PERMISSIONS</td>
@@ -37,11 +32,6 @@
 <tr>
 	<td>NAVIGATION_OPTIONAL_CONFIGURATION</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Optional Configuration')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--TEMPLATES-->
@@ -65,11 +55,6 @@
 	<td>//input[contains(@id,'spreadsheet')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--LIST_TABLE-->
 <tr>
 	<td>LIST_TABLE_NAME</td>
@@ -84,11 +69,6 @@
 <tr>
 	<td>LIST_TABLE_ACTIONS_1</td>
 	<td>xpath=//td[contains(@class,'entry-action last')]//div/a/i[contains(@class,'menu-arrow caret')][1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--LIST_MENULIST-->

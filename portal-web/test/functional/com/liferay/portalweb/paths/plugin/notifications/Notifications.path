@@ -33,11 +33,6 @@
 	<td>//a[contains(@class,'list-group-heading') and (@aria-expanded='true')]/..//span[contains(@class,'badge')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--NOTIFICATIONS-->
 <tr>
 	<td>MARK_AS_READ</td>
@@ -69,11 +64,6 @@
 	<td>//div[@class='body-container']//div[@class='body']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--NOTIFICATIONS_CONFIGURATION-->
 <tr>
 	<td>NOTIFICATIONS_CONFIGURATION_EMAIL_SWITCH</td>
@@ -83,11 +73,6 @@
 <tr>
 	<td>NOTIFICATIONS_CONFIGURATION_WEBSITE_SWITCH</td>
 	<td>//div[contains(@id,'${key_contentType}Content')]//td[contains(.,'${key_actionType}')]//following-sibling::td/following-sibling::td[contains(@class,'lfr-website-column')]//span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--NOTIFICATIONS_DELIVERY-->
@@ -144,11 +129,6 @@
 <tr>
 	<td>NOTIFICATION_DELIVERY_TEXT_6</td>
 	<td>//div[contains(@id,'${key_contentType}')]//table//tr[7]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--REQUESTS-->

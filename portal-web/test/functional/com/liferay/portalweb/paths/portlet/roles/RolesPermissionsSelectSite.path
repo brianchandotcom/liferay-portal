@@ -14,11 +14,6 @@
 	<td>//iframe[contains(@id,'selectGroup')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SCOPE_SITES_TABLE-->
 <tr>
 	<td>SCOPE_SITES_TABLE_NAME</td>

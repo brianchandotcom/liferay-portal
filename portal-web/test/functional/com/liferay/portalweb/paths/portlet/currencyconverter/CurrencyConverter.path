@@ -23,11 +23,6 @@
 	<td>//select[@id='_com_liferay_currency_converter_web_portlet_CurrencyConverterPortlet_to']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DATA-->
 <tr>
 	<td>DATA_TABLE_FROM</td>

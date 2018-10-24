@@ -13,28 +13,13 @@
 	<td>//div[@class='kb-tools']//span[.='${key_kbTool}']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ADMIN_TABS-->
 <tr>
 	<td>ADMIN_TABS_SUGGESTIONS</td>
 	<td>//ul[contains(@class,'navbar')]/li/a[contains(.,'Suggestions')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MENUBAR-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ARTICLE_DESCRIPTIVE-->
 <tr>
 	<td>ARTICLE_DESCRIPTIVE_ARTICLE_TITLE</td>
@@ -49,11 +34,6 @@
 <tr>
 	<td>ARTICLE_DESCRIPTIVE_ARTICLE_TITLE_GENERIC</td>
 	<td>//ul[contains(@class,'descriptive')]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--ARTICLE_TABLE-->
@@ -72,11 +52,6 @@
 	<td>//input[contains(@name, 'knowledge_base_web') and contains(@name, 'allRowIds')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DESCRIPTIVE_VIEW-->
 <tr>
 	<td>DESCRIPTIVE_VIEW_ARTICLE_PRIORITY</td>
@@ -93,11 +68,6 @@
 	<td>//li[contains(.,'${key_kbArticleTitle}')]//a[contains(.,'Child Article')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CHILD_ARTICLES-->
 <tr>
 	<td>CHILD_PAGE_HEADER</td>
@@ -107,11 +77,6 @@
 <tr>
 	<td>CHILD_PAGE_TITLE</td>
 	<td>//li[@class='list-group-item']//a[contains(.,'${key_kbChildArticleTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--DISPLAY-->
@@ -128,11 +93,6 @@
 <tr>
 	<td>DISPLAY_VOTES</td>
 	<td>//div[@class='kb-article-container']//div[contains(@class,'rating-content')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--FOLDER-->
@@ -156,31 +116,16 @@
 	<td>//select[contains(@id,'rootKBFolderId')]/option[contains(.,'${key_kbFolderName}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--FOLDER_DESCRIPTIVE-->
 <tr>
 	<td>FOLDER_DESCRIPTIVE_FOLDER_NAME</td>
 	<td>//li[contains(@class,'list-group-item')]/div[contains(@class,'autofit-col')]/h4/a[contains(.,'${key_kbFolderName}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--FOLDER_TABLE-->
 <tr>
 	<td>FOLDER_TABLE_HEADER</td>
 	<td>//th[contains(.,'Folder')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--HIERARCHY_NAVIGATION-->
@@ -209,26 +154,11 @@
 	<td>//div[@class='kbarticle-navigation']//a[contains(.,'${key_kbGrandchildArticleTitle}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--KB_SEARCH-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--LINK-->
 <tr>
 	<td>LINK_THERE_ARE_SUGGESTIONS</td>
 	<td>//div[@class='sidenav-content']//div[contains(.,'suggestion')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--MOVE-->
@@ -260,11 +190,6 @@
 <tr>
 	<td>MOVE_NEW_PARENT_PRIORITY_LABEL</td>
 	<td>//div[contains(@id, 'knowledge_base_web') and contains(@id, 'newParent')]//label[(@class='control-label') and contains(.,'Priority')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SCOPE-->

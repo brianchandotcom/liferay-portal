@@ -13,11 +13,6 @@
 	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--METADATA_SETS_TABLE-->
 <tr>
 	<td>METADATA_SETS_NAME</td>
@@ -27,11 +22,6 @@
 <tr>
 	<td>METADATA_SETS_TABLE_ACTIONS_1</td>
 	<td>//div[contains(@class,'lfr-icon-menu')]/a[@title='Actions']/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 </tbody>

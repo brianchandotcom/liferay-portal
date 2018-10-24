@@ -13,20 +13,10 @@
 	<td>//div[contains(@id,'site_administration')]//span[contains(.,'${key_siteTemplateName}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CONFIGURATION-->
 <tr>
 	<td>CONFIGURATION_SITE_TEMPLATE_SETTINGS</td>
 	<td>//li[contains(.,'Site Template Settings')]/a[contains(@id,'SiteTemplateSettingsPortlet')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SITE_TEMPLATE_TABLE-->

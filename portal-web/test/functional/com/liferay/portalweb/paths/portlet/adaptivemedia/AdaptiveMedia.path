@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">AdaptiveMedia</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--IMAGE_VARIANT-->
 <tr>
 	<td>IMAGE_VARIANT_SOURCE_URL</td>

@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGES_SPECIFIC_PAGE_NAME</td>
 	<td>//li/div[contains(.,'${key_pageName}')]//span[contains(@class,'icon-check')]</td>
 	<td></td>

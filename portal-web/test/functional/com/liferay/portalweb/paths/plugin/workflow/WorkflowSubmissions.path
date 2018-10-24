@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">WorkflowSubmissions</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PENDING_TABLE-->
 <tr>
 	<td>PENDING_TABLE_ASSET_TITLE</td>

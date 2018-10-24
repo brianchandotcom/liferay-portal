@@ -23,11 +23,6 @@
 	<td>//h1[normalize-space()='Choose an account']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--LOGIN-->
 <tr>
 	<td>LOGIN_EMAIL_FIELD</td>
@@ -47,11 +42,6 @@
 <tr>
 	<td>LOGIN_SIGN_IN_BUTTON</td>
 	<td>//input[@id='signIn']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--ACCOUNT_MENULIST-->

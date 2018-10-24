@@ -33,11 +33,6 @@
 	<td>//textarea[contains(@class,'field-input')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TIMELINE_ENTRY-->
 <tr>
 	<td>TIMELINE_ENTRY_ACTION</td>
@@ -52,11 +47,6 @@
 <tr>
 	<td>TIMELINE_ENTRY_USER_NAME</td>
 	<td>//div[@class='microblogs-entry']//div[contains(@class,'user-name')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--TIMELINE_ENTRY_COMMENT-->

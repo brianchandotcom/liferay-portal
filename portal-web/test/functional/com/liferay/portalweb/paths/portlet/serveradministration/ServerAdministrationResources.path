@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">ServerAdministrationResources</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ACTIONS_TABLE-->
 <tr>
 	<td>ACTIONS_TABLE_DESCRIPTION</td>

@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">UsersAndOrganizationsOrganization</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MENU-->
 <tr>
 	<td>MENU_ASSIGN_USERS</td>
@@ -24,17 +19,7 @@
 	<td>//div[contains(@class,'lfr-asset-column-actions')]//span[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SUBORGANIZATION-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SUBORGANIZATION_TABLE-->
 <tr>
 	<td>SUBORGANIZATION_TABLE_NAME</td>
@@ -51,17 +36,7 @@
 	<td>//tr[contains(.,'${key_suborgName}')]/td[contains(@class,'action-column')]/div/a</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_NAME</td>

@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">KaleoFormsAdminEditProcessForm</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--FORM_TABLE-->
 <tr>
 	<td>FORM_TABLE_NAME</td>
@@ -27,11 +22,6 @@
 <tr>
 	<td>FORM_TABLE_NAME_LINK</td>
 	<td>//table[contains(@data-searchcontainerid,'ddmTemplatesSearchContainer')]//a[@data-name='${key_kfFormName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--FORM_MENULIST-->

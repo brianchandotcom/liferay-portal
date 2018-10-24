@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">WikiTable</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ALL_PAGES-->
 <tr>
 	<td>ALL_PAGES_PAGE_2</td>
@@ -49,11 +44,6 @@
 	<td>//tr[contains(.,'${key_wikiPageTitle}')]/.//td//div/a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DRAFT_PAGES_TABLE-->
 <tr>
 	<td>DRAFT_PAGES_WIKI_PAGE_NAME</td>
@@ -78,11 +68,6 @@
 <tr>
 	<td>DRAFT_PAGES_DATE</td>
 	<td>//div[@class='searchcontainer-content']//tr[contains(.,'${key_wikiPageTitle}')]/td[5]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--NAVIGATION-->
@@ -116,11 +101,6 @@
 	<td>//div[@class='navbar ' or contains(@class,'navbar-collapse')]//li/a[contains(.,'Draft Pages')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SELECT_VERSION-->
 <tr>
 	<td>SELECT_VERSION_NEW_VERSION_CHECKBOX</td>
@@ -130,11 +110,6 @@
 <tr>
 	<td>SELECT_VERSION_OLD_VERSION_CHECKBOX</td>
 	<td>//tr[contains(.,'${key_wikiPageVersionOld}')]/td[1]//input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 </tbody>

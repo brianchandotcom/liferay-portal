@@ -13,11 +13,6 @@
 	<td>//h3</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--THREAD-->
 <tr>
 	<td>THREAD_BODY</td>
@@ -69,23 +64,8 @@
 	<td>xpath=(//div[@class='panel-heading' and contains(.,'${key_threadSubject}')]//h5[contains(.,'${key_userName}')])[2]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--THREAD_CONTROLS-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--THREAD_TABLE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MESSAGE-->
 <tr>
 	<td>MESSAGE_WORKFLOW_STATUS_1</td>
@@ -162,17 +142,7 @@
 	<td>//li[@class='message-attachment']/span/a</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--QUICK_REPLY-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--REPORT_INAPPROPRIATE_CONTENT-->
 </tbody>
 </table>

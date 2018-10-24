@@ -8,17 +8,7 @@
 <tr><td rowspan="1" colspan="3">UserSegmentContentList</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SELECT_MULTIPLE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--VIEW_ENTRY-->
 </tbody>
 </table>

@@ -28,11 +28,6 @@
 	<td>//div[contains(@class,'asset-links')]//a[contains(.,'${key_assetTitle}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DOCUMENT_CONVERSION-->
 <tr>
 	<td>DOCUMENT_CONVERSION_TYPE</td>
@@ -42,11 +37,6 @@
 <tr>
 	<td>DOCUMENT_CONVERSION_TYPE_ICON</td>
 	<td>//span[contains(@class,'taglib-text') and contains (.,'${key_fileType}')]/../i</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--WEB_CONTENT-->
@@ -98,11 +88,6 @@
 <tr>
 	<td>WEB_CONTENT_VIDEO</td>
 	<td>//div[contains(@class,'video-content')]/video[@class='video-node']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 </tbody>

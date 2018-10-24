@@ -8,17 +8,7 @@
 <tr><td rowspan="1" colspan="3">SiteMembershipsAssignUserRoles</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ROLE_TABLE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_TABLE-->
 </tbody>
 </table>

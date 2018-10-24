@@ -18,17 +18,7 @@
 	<td>//div[contains(@class,'sidebar-header')]//a[contains(@class,'badge')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TOOLBAR-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_NAME</td>
@@ -38,11 +28,6 @@
 <tr>
 	<td>USER_TABLE_SCREEN_NAME</td>
 	<td>//div[contains(@id,'usersSearchContainer')]//tr[contains(.,'${key_userScreenName}')]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--ORGANIZATION_TABLE-->

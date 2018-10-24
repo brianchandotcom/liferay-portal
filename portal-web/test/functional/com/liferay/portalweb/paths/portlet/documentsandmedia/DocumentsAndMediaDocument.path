@@ -13,17 +13,7 @@
 	<td>//section[contains(@id,'DLAdminPortlet')]//span[@class='workflow-version']/span[contains(@class,'workflow-value')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TOOLBAR-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DOCUMENT_INFO-->
 <tr>
 	<td>DOCUMENT_INFO_TITLE</td>
@@ -95,11 +85,6 @@
 	<td>//input[contains(@id,'webDavURL')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DOCUMENT_DETAILS-->
 <tr>
 	<td>DOCUMENT_DETAILS_DOWNLOAD</td>
@@ -151,20 +136,10 @@
 	<td>//div[contains(@class,'sidebar-header')]//span[contains(@class,'workflow-status')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DOCUMENT_EXTRACTED_METADATA-->
 <tr>
 	<td>DOCUMENT_EXTRACTED_METADATA_FIELD</td>
 	<td>//div[contains(@id,'documentLibraryMetadataPanel')]//label[contains(.,'${key_metadataLabel}')]/../../div[contains(.,'${key_metadataData}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--MARKETING-->
@@ -193,20 +168,10 @@
 	<td>//div[@class='lfr-ddm-container']//div[contains(.,'${key_bannerDescription}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DETAILS_PANEL-->
 <tr>
 	<td>DETAILS_URL</td>
 	<td>//div[label[contains(.,'Latest Version URL')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--METADATA_PANEL-->
@@ -240,17 +205,7 @@
 	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_textContent}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SOCIAL_OFFICE_RATING-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--VIDEO_GENERATION-->
 <tr>
 	<td>VIDEO_GENERATION_THUMBNAIL_RESOLUTION</td>

@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">CPSAMLAdminAddServiceProvider</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SERVICE_PROVIDER-->
 <tr>
 	<td>SERVICE_PROVIDER_NAME_FIELD</td>

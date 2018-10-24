@@ -33,11 +33,6 @@
 	<td>//div/ul/li[contains(@class,'list-group-item')]/div[contains(@class,'autofit-col')]//h4[contains(.,'${kbSuggestionBody}')]/following-sibling::h5[contains(.,'${status}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_BAR</td>

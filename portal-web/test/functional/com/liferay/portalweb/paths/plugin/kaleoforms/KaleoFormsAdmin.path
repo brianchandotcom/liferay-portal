@@ -9,26 +9,11 @@
 </thead>
 <tbody>
 <!--OPTIONS_MENULIST-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TOOLBAR-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PROCESS_TABLE-->
 <tr>
 	<td>PROCESS_TABLE_NAME</td>
 	<td>//tr[contains(.,'${key_kfProcessName}')]/td[contains(.,'${key_kfProcessName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--PROCESS_MENULIST-->

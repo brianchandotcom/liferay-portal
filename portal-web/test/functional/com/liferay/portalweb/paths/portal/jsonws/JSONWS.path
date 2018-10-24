@@ -8,37 +8,17 @@
 <tr><td rowspan="1" colspan="3">JSONWS</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PANEL_HEADING-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ADDRESS-->
 <tr>
 	<td>ADDRESS_ADD_ADDRESS</td>
 	<td>//div[@id='apiServiceAddressServiceImplPanelContent']/div/ul/li/a[contains(.,'add-address')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER-->
 <tr>
 	<td>USER_UPDATE_USER</td>
 	<td>//div[@id='apiServiceUserServiceImplPanelContent']/div/ul/li/a[contains(.,'update-user')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SECURITY_TEST_PAGE-->

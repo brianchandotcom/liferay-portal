@@ -54,11 +54,6 @@
 	<td>xpath=(//*[contains(@id,'${key_configuration}')] | //div[*[contains(@class,'${key_configuration}')]])//button[@title='Move selected items from Current to Available.']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SETUP-->
 <tr>
 	<td>ARCHIVE_RESTORE</td>
@@ -100,11 +95,6 @@
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Display Settings')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SETUP_DISPLAY_SETTINGS-->
 <tr>
 	<td>SETUP_DISPLAY_SETTINGS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT</td>
@@ -114,11 +104,6 @@
 <tr>
 	<td>SETUP_DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT</td>
 	<td>//select[contains(@id,'displayStyle')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SETUP_RSS-->

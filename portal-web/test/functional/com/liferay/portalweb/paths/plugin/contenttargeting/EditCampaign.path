@@ -48,11 +48,6 @@
 	<td>//input[contains(@id,'ContentTargetingPortlet_priority')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CAMPAIGN_TABLE-->
 <tr>
 	<td>CAMPAIGN_TABLE_PRIORITY</td>
@@ -62,11 +57,6 @@
 <tr>
 	<td>CAMPAIGN_TABLE_STATUS</td>
 	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]/td[8]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--CAMPAIGN_TRACKING_ACTIONS-->
@@ -85,11 +75,6 @@
 	<td>//div[@class='field-info']/h2[contains(.,'${key_trackingAction}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CAMPAIGN_TRACKING_ACTIONS_PAGE-->
 <tr>
 	<td>CAMPAIGN_TRACKING_ACTIONS_PAGE_ALIAS_FIELD</td>
@@ -106,11 +91,6 @@
 	<td>//div[contains(@class,'pagetrackingaction')]//select</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CAMPAIGN_TRACKING_ACTIONS_CUSTOM_FORM-->
 <tr>
 	<td>CAMPAIGN_TRACKING_ACTIONS_CUSTOM_FORM_NAME_FIELD</td>
@@ -125,11 +105,6 @@
 <tr>
 	<td>CAMPAIGN_TRACKING_ACTIONS_CUSTOM_FORM_TRACKING_ACTION_SELECT</td>
 	<td>//div[contains(@class,'formtrackingaction')]//select[contains(@id,'eventType')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--CAMPAIGN_TRACKING_ACTIONS_DDL_FORM-->
@@ -153,11 +128,6 @@
 	<td>//div[contains(@class,'ddmformtrackingaction')]//select[contains(@id,'eventType')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CAMPAIGN_TRACKING_ACTIONS_YOUTUBE_VIDEOS-->
 <tr>
 	<td>CAMPAIGN_TRACKING_ACTIONS_YOUTUBE_VIDEOS_ALIAS_FIELD</td>
@@ -174,11 +144,6 @@
 	<td>//div[contains(@class,'youtubetrackingaction')]//select[contains(@id,'eventType')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CAMPAIGN_TRACKING_ACTIONS_CONTENT-->
 <tr>
 	<td>CAMPAIGN_TRACKING_ACTIONS_CONTENT_NAME_FIELD</td>
@@ -193,11 +158,6 @@
 <tr>
 	<td>CAMPAIGN_TRACKING_ACTIONS_CONTENT_TRACKING_ACTION</td>
 	<td>//div[contains(@class,'contenttrackingaction')]//select</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--CAMPAIGN_TRACKING_ACTIONS_LINK-->

@@ -8,23 +8,8 @@
 <tr><td rowspan="1" colspan="3">Store</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PURCHASE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--RECEIPT-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PURCHASED-->
 </tbody>
 </table>

@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>INDEPENDENT_MODULES_LINK</td>
 	<td>//ul[contains(@class,'list-group')]/*[contains(@data-qa-id,'row')]//h2/a[contains(.,'Independent Modules')]</td>
 	<td></td>

@@ -33,28 +33,13 @@
 	<td>//div[contains(@class,'alloy-editor-container')]//div[(contains(@data-placeholder,'Write your content here...') or contains(@data-placeholder,'Content')) and contains(@title,'Rich Text Editor')]//u[contains(.,'${key_underlineContent}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CONTENT_ADD_MENUBAR-->
 <tr>
 	<td>CONTENT_ADD_MENUBAR_IMAGE</td>
 	<td>//button[contains(@data-type,'image')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TABLE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TEXT_FORMATTING-->
 <tr>
 	<td>TEXT_FORMATTING_STYLE</td>
@@ -81,17 +66,7 @@
 	<td>//button[contains(@data-type,'button-underline')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CONTENT_EDITOR-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CONTENT_EDITOR_FULL_SCREEN-->
 </tbody>
 </table>

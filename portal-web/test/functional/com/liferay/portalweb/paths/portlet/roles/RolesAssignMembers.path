@@ -20,23 +20,8 @@
 	<td></td>
 </tr>
 <!--ORGANIZATION_TABLE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SITE_TABLE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_GROUP_TABLE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_CHECKBOX</td>

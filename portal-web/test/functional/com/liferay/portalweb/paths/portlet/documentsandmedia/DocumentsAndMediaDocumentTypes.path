@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">DocumentsAndMediaDocumentTypes</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DOCUMENT_TYPES_TABLE-->
 <tr>
 	<td>DOCUMENT_TYPES_TABLE_NAME</td>

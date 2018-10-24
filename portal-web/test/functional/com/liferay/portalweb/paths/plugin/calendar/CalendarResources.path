@@ -29,11 +29,6 @@
 	<td>//tr[contains(.,'${key_calendarResourceName}')]/td[4]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--RESOURCE_MENULIST-->
 </tbody>
 </table>

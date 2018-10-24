@@ -28,11 +28,6 @@
 	<td>//div/a[contains(.,'Unsubscribe')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DESCRIPTIVE_VIEW-->
 <tr>
 	<td>DESCRIPTIVE_VIEW_ENTRY_TITLE</td>
@@ -49,11 +44,6 @@
 	<td>//*[@data-qa-id='rowItemContent' and contains(.,'${key_entryTitle}')]//span[contains(@class,'status')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ICON_VIEW-->
 <tr>
 	<td>ICON_VIEW_ENTRY_TITLE</td>
@@ -65,17 +55,7 @@
 	<td>//div[contains(@id,'blogEntriesSearchContainer')]//li[contains(.,'${key_entryTitle}')]//span[contains(@class,'status')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PAGE_VIEW-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ENTRY_TABLE-->
 <tr>
 	<td>ENTRY_TABLE_ALL_CHECKBOX</td>
@@ -107,11 +87,6 @@
 	<td>//tr[contains(.,'${key_entryTitle}')]/td//span[@class='workflow-status']/strong</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--RECENT_BLOGGER-->
 <tr>
 	<td>RECENT_BLOGGER_USER_NAME</td>
@@ -123,17 +98,7 @@
 	<td>//div[@class='blogger-post-count']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SCHEDULED_ENTRY-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SEARCH_RESULTS-->
 </tbody>
 </table>

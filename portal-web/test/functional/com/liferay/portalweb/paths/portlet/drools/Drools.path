@@ -18,11 +18,6 @@
 	<td>//div[contains(@id,'sampledroolsportlet')]//div[@class='portlet-body']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SCREENSHOTS-->
 <tr>
 	<td>SCREENSHOTS_SAMPLEDROOLS_WEB_CONTENT_IMAGE_FIELD_PNG</td>

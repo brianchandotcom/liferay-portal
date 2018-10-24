@@ -34,11 +34,6 @@
 	<td>//input[contains(@id,'admin-email-from-address')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION-->
 <tr>
 	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_ENABLED_CHECKBOX</td>
@@ -78,16 +73,6 @@
 <tr>
 	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD</td>
 	<td>//div[contains(@id,'cke')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION-->

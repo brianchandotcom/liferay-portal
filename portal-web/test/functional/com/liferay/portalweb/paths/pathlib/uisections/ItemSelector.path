@@ -23,20 +23,10 @@
 	<td>//div[contains(@class,'modal-footer')]//button[@id='addButton' and not(contains(@class,' disabled'))]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_SPECIFIC_TAB</td>
 	<td>//ul[contains(@class,'navbar')]/li/a[contains(.,'${key_navTab}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SELECT_FILE-->
@@ -50,11 +40,6 @@
 	<td>//div[@id='itemSelectorUploadContainer']//label[contains(.,'Select File')] | //div[contains(@id,'ItemSelectorContainer')]//label[contains(.,'Select File')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--VIEWER-->
 <tr>
 	<td>CAPTION</td>
@@ -66,17 +51,7 @@
 	<td>//div[contains(@class,'image-viewer-focused')]//span[contains(@class,'item-viewer-icon-info')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SIDEBAR-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SIDEBAR_FILE_INFO-->
 <tr>
 	<td>SIDEBAR_FILE_INFO_FORMAT</td>
@@ -98,11 +73,6 @@
 	<td>//div[contains(@class,'image-viewer-sidenav-body')]//dt[contains(.,'Size')]/following-sibling::dd[1]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SIDEBAR_VERSION-->
 <tr>
 	<td>SIDEBAR_VERSION_STATUS</td>
@@ -114,20 +84,10 @@
 	<td>//div[contains(@class,'image-viewer-sidenav-body')]//dt[contains(.,'Version')]/following-sibling::dd[1]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SELECT_IMAGE_PREVIEW-->
 <tr>
 	<td>SELECT_IMAGE_PREVIEW</td>
 	<td>//div[@class='image-viewer-base-image-list']//img</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--URL-->

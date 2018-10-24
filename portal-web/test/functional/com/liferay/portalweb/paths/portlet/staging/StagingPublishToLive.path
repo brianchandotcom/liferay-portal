@@ -23,11 +23,6 @@
 	<td>//a[contains(.,'Publish Templates')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DATE-->
 <tr>
 	<td>DATE_SCHEDULE_RADIO</td>
@@ -64,11 +59,6 @@
 	<td>//option[contains(@id,'recurrenceType${key_frequency}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PAGES-->
 <tr>
 	<td>PAGES_TO_PUBLISH_CHECKBOX_CHECKED</td>
@@ -80,20 +70,10 @@
 	<td>//div[@class='pages-selector']//div[normalize-space()='${key_entryName}' and not(contains(@class,'checked'))]//span[contains(@class,'icon-check')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CONTENT-->
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX</td>
 	<td>//input[contains(@name,'DELETIONS')]//following-sibling::span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SCHEDULED_TABLE-->
@@ -107,20 +87,10 @@
 	<td>//tr[contains(.,'${key_scheduleTitleName}')]/td[4]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PUBLISH_TEMPLATES-->
 <tr>
 	<td>PUBLISH_TEMPLATES_NAME_FIELD</td>
 	<td>//div[contains(@class,'form-group')]//input[contains(@id,'name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--PUBLISH_TEMPLATES_TABLE-->

@@ -13,11 +13,6 @@
 	<td>//iframe[contains(@id,'selectCategory_iframe')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CATEGORY_TABLE-->
 <tr>
 	<td>CATEGORY_TABLE_CHOOSE_BUTTON_2</td>

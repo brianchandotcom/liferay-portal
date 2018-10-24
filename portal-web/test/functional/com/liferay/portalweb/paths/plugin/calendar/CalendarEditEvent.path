@@ -23,11 +23,6 @@
 	<td>//div[@id='Content']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--START_DATE-->
 <tr>
 	<td>START_DATE</td>
@@ -47,11 +42,6 @@
 <tr>
 	<td>START_DATE_TIME_OPTION</td>
 	<td>//div[contains(@class,'timepicker-popover') and contains(@style,'display: block')]//li[contains(.,'${key_startDateTime}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--END_DATE-->
@@ -76,18 +66,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ALL_DAY_CHECKBOX</td>
 	<td>//input[contains(@id,'_allDay')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--REPEAT-->
@@ -171,11 +151,6 @@
 	<td>xpath=(//td[contains(@class,'calendar-recurrence-weekday-checkbox')]//div/label)[1]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_PANEL_COLLAPSED</td>
@@ -197,11 +172,6 @@
 	<td>//select[contains(@id,'calendarId')]/option[contains(.,'${key_calendarName}')] | //select[contains(@name,'calendarId')]/option[contains(.,'${key_calendarName}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DETAILS_PERMISSIONS-->
 <tr>
 	<td>DETAILS_PERMISSIONS_VIEWABLE_BY_SELECT</td>
@@ -211,11 +181,6 @@
 <tr>
 	<td>DETAILS_PERMISSIONS_CHECKBOX</td>
 	<td>//tr[contains(.,'${key_roleTitle}')]//input[@value='${key_permissionDefinitionKey}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--INVITATIONS-->
@@ -257,11 +222,6 @@
 <tr>
 	<td>INVITATIONS_MAYBE</td>
 	<td>//div[contains(@id,'calendarListMaybe')]/div/div[contains(.,'${key_resource}')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--RESOURCES_AVAILABILITY-->
@@ -318,11 +278,6 @@
 <tr>
 	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REGULAR</td>
 	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event') and contains(@data-startdate,'${key_startDate}') and contains(@data-starttime,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-endtime,'${key_endDateTime}')]/div[@class='scheduler-event-content']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--REMINDERS-->
@@ -386,11 +341,6 @@
 	<td>xpath=(//div[@class='calendar-portlet-reminder-section form-inline']//select[contains(@name,'reminderDuration')])[2]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MINI_CALENDAR-->
 <tr>
 	<td>MINI_CALENDAR_WEEK_START_DAY_START_DATE</td>
@@ -415,11 +365,6 @@
 <tr>
 	<td>MINI_CALENDAR_DAY_SPECIFIC</td>
 	<td>//div[contains(@class,'datepicker-popover') and contains(@style,'display: block')]//table[contains(@class,'calendar-grid')]//tr//td[contains(@class,'calendar-day') and not(contains(@class,'calendar-column-hidden')) and contains(.,'${key_daySpecific}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--CATEGORIZATION-->
@@ -463,11 +408,6 @@
 	<td>//li[contains(@class,'textboxlistentry')]//span[contains(@class,'textboxlistentry-text') and contains(.,'${key_tagText}')]/..//i[@class='icon icon-remove']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--RELATED_ASSETS-->
 <tr>
 	<td>RELATED_ASSETS_PANEL_COLLAPSED</td>
@@ -477,11 +417,6 @@
 <tr>
 	<td>RELATED_ASSETS_PANEL_EXPANDED</td>
 	<td>//a[@aria-expanded='true' and contains(@aria-controls,'calendarBookingAssetLinksPanel')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--ARE_YOU_SURE_DIALOG_BOX-->
@@ -503,11 +438,6 @@
 <tr>
 	<td>DO_NOT_CHANGE_THE_EVENT_BUTTON</td>
 	<td>//button[@type='button' and contains(.,'Do not change the event')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--RECURRING_EVENT_DIALOG_BOX-->

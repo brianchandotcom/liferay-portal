@@ -14,18 +14,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//b[contains(.,'Your message has been sent.')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--LOGIN-->
@@ -99,20 +89,10 @@
 	<td>//div[contains(@role,'navigation')]//a[contains(@aria-label,'Mail')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--GMAIL_NORMAL_MODE-->
 <tr>
 	<td>GMAIL_NORMAL_MODE_USER_SCREENNAME</td>
 	<td>//div/a[contains(@title,'${key_userEmailAddress}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--GMAIL_HTML_MODE-->
@@ -149,11 +129,6 @@
 <tr>
 	<td>GMAIL_HTML_MODE_BACK_TO_INBOX_LINK</td>
 	<td>//a[contains(.,'Back to Inbox')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--GMAIL_HTML_MODE_MAIL_TABLE-->
@@ -205,11 +180,6 @@
 <tr>
 	<td>GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE_SOCIAL_OFFICE_MESSAGE</td>
 	<td>//form[@method='POST']//table[2]/tbody/tr[contains(.,'sent you a message')]/td[3]//a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--GMAIL_HTML_MODE_MESSAGE-->

@@ -13,29 +13,9 @@
 	<td>//span[contains(.,'${key_headerTitle}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--FIELDS-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SETTINGS-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--FORM-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SETTINGS_CELL_EDITOR-->
 </tbody>
 </table>

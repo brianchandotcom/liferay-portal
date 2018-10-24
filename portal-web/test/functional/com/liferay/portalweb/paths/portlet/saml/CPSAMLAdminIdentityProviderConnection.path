@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">CPSAMLAdminIdentityProviderConnection</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--IDENTITY_PROVIDER_CONNECTION-->
 <tr>
 	<td>IDENTITY_PROVIDER_CONNECTION_NAME_FIELD</td>

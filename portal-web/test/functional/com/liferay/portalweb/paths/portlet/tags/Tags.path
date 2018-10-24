@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">Tags</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TAG_ENTRY_TABLE-->
 <tr>
 	<td>TAG_ENTRY_TABLE_NAME</td>
@@ -24,17 +19,7 @@
 	<td>//*[@data-qa-id='row']//span[contains(@class,'asset-tag')]/span[contains(.,'${key_tagName}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SELECTED_TAG-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MERGE_TAGS-->
 </tbody>
 </table>

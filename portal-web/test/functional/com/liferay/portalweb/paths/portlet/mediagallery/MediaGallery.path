@@ -23,11 +23,6 @@
 	<td>//div[contains(@class,'image')]//span[contains(@class,'lfr-card-title-text') and contains(.,'${key_mgDocumentTitle}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ENTRY-->
 <tr>
 	<td>ENTRY_THUMBNAIL</td>
@@ -37,11 +32,6 @@
 <tr>
 	<td>ENTRIES_FOLDER</td>
 	<td>//span[@class='image-thumbnail']/img</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--FOLDER-->
@@ -55,17 +45,7 @@
 	<td>//h3[@class='header-title']/span[contains(.,'${mgFolderName}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SUBFOLDER-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ADT_CAROUSEL-->
 <tr>
 	<td>ADT_CAROUSEL_ITEM</td>

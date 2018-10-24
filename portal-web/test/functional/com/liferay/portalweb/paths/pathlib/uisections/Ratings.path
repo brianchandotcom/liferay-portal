@@ -84,11 +84,6 @@
 	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star-empty'])[${key_emptyStarPosition}]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--AVERAGE-->
 <tr>
 	<td>AVERAGE_LABEL</td>

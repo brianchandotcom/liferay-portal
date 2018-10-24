@@ -8,17 +8,7 @@
 <tr><td rowspan="1" colspan="3">RelatedassetsSelect</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ADVANCED_SEARCH-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ASSET_TABLE-->
 </tbody>
 </table>

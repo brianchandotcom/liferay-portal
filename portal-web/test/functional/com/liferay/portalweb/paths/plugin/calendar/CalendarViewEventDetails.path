@@ -48,29 +48,9 @@
 	<td>//button[@type='button' and contains(.,'Decline')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--YOUR_RATING-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--AVERAGE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--COMMENTS-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TAGS-->
 <tr>
 	<td>TAGS_LABEL</td>
@@ -80,11 +60,6 @@
 <tr>
 	<td>TAGS_TAG_SPECIFIC</td>
 	<td>//div[@class='entry-tags']//span[contains(@class,'tag') and contains(.,'Tags: ${key_tagText}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--REPEAT_SUMMARY-->

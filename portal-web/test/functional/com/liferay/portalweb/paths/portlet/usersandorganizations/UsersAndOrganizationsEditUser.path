@@ -69,11 +69,6 @@
 	<td>//input[contains(@id,'userId')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PASSWORD-->
 <tr>
 	<td>PASSWORD_NEW_PASSWORD_FIELD</td>
@@ -83,11 +78,6 @@
 <tr>
 	<td>PASSWORD_ENTER_AGAIN_FIELD</td>
 	<td>//input[contains(@id,'password2')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--ORGANIZATIONS-->
@@ -101,11 +91,6 @@
 	<td>//a[contains(@id,'selectOrganizationLink')]/span</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SITES-->
 <tr>
 	<td>SITES_TABLE_NAME</td>
@@ -117,31 +102,16 @@
 	<td>//a[contains(@id,'selectSiteLink')]/span</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_GROUPS-->
 <tr>
 	<td>USER_GROUPS_TABLE_NAME</td>
 	<td>//tr[contains(.,'${key_userGroupName}')]/td[1]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ROLES_INHERITED_ROLES_SITE_ROLES-->
 <tr>
 	<td>ROLES_INHERITED_SITE_ROLES_TABLE_TITLE</td>
 	<td>//div[contains(@class,'inherited-site-roles')]//span[contains(.,'${key_roleTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--ROLES_ORGANIZATION_ROLES-->
@@ -160,11 +130,6 @@
 	<td>//a[contains(@id,'selectOrganizationRoleLink')]/span</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ROLES_REGULAR_ROLES-->
 <tr>
 	<td>ROLES_REGULAR_ROLES_TABLE_TITLE</td>
@@ -174,11 +139,6 @@
 <tr>
 	<td>ROLES_REGULAR_ROLES_SELECT_LINK</td>
 	<td>//a[contains(@id,'selectRegularRoleLink')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--ROLES_SITE_ROLES-->
@@ -192,11 +152,6 @@
 	<td>//a[contains(@id,'selectSiteRoleLink')]/span</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PERSONAL_SITE-->
 <tr>
 	<td>PERSONAL_SITE_LABEL</td>
@@ -206,11 +161,6 @@
 <tr>
 	<td>PERSONAL_SITE_MY_DASHBOARD</td>
 	<td>//div[contains(@class,'form-group')]//select[contains(@id,'privateLayoutSetPrototypeId')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--DISPLAY_SETTINGS-->
@@ -227,11 +177,6 @@
 <tr>
 	<td>DISPLAY_SETTINGS_GREETING_FIELD</td>
 	<td>//input[contains(@name,'greeting')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--CATEGORIZATION-->

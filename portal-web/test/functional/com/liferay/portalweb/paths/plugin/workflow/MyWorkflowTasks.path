@@ -13,26 +13,11 @@
 	<td>//li[contains(@class,'active')]/a[@role='menuitem' and contains(.,'Assigned to Me')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--NAVIGATION-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TABLE_GENERIC-->
 <tr>
 	<td>TABLE_GENERIC_ASSET_TITLE</td>
 	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[1]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--ASSIGNED_TO_ME_TABLE-->
@@ -71,17 +56,7 @@
 	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[6]//div/a</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ASSIGNED_TO_ME_MENULIST-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ASSIGNED_TO_MY_ROLES_TABLE-->
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE</td>
@@ -118,17 +93,7 @@
 	<td>//tr[contains(.,'${key_workflowTask}') and contains(.,'${key_workflowAssetTitle}')]/td[6]//div/a</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ASSIGNED_TO_MY_ROLES_MENULIST-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DIALOG_BOX-->
 <tr>
 	<td>DIALOG_BOX_TITLE</td>
@@ -155,17 +120,7 @@
 	<td>//select[contains(@id,'MyWorkflowTaskPortlet_assigneeUserId')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PREVIEW-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--COMPLETED_TABLE-->
 <tr>
 	<td>COMPLETED_TABLE_ASSET_TITLE</td>

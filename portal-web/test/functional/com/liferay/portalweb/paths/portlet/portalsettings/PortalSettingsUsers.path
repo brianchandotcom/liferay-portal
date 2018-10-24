@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <!--FIELDS-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--RESERVED_CREDENTIALS-->
 <tr>
 	<td>RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER</td>
@@ -38,11 +33,6 @@
 <tr>
 	<td>RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD</td>
 	<td>//textarea[contains(@id,'admin-reserved-email-addresses')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--DEFAULT_USER_ASSOCIATIONS-->

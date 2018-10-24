@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">SiteMembershipsUserGroups</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_GROUP_TABLE-->
 <tr>
 	<td>USER_GROUP_TABLE_NAME</td>

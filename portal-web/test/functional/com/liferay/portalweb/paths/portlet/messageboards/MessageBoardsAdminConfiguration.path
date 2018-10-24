@@ -19,11 +19,6 @@
 	<td>//input[contains(@id,'threadAsQuestionByDefault')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--EMAIL_FROM-->
 <tr>
 	<td>EMAIL_FROM_NAME</td>
@@ -35,31 +30,16 @@
 	<td>//input[contains(@id,'emailFromAddress')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MESSAGE_ADDED_EMAIL-->
 <tr>
 	<td>MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX</td>
 	<td>//input[contains(@id,'emailMessageAddedEnabled')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MESSAGE_UPDATED_EMAIL-->
 <tr>
 	<td>MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX</td>
 	<td>//input[contains(@id,'emailMessageUpdatedEnabled')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SETUP_NAVIGATION-->

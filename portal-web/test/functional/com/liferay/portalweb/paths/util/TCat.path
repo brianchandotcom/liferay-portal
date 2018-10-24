@@ -24,11 +24,6 @@
 	<td>Log In Button</td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>DEPLOYMENT_TAB</td>
 	<td>//span[contains(@class,'x-tab-strip-text') and contains(.,'Deployments')]</td>
 	<td></td>
@@ -44,11 +39,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>UNREGISTERED</td>
 	<td>//span[contains(@class,'x-tree3-node-text') and contains(.,'Unregistered (1)')]</td>
 	<td></td>
@@ -61,11 +51,6 @@
 <tr>
 	<td>REGISTER_BUTTON</td>
 	<td>//button[contains(@class,'toolbar-btn-text') and contains(.,'Register')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <tr>
@@ -86,11 +71,6 @@
 <tr>
 	<td>NEW_WORKSPACE_ADD_BUTTON</td>
 	<td>tcat/buttons/new_workspace_add_button.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <tr>
@@ -129,11 +109,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>NEW_DEPLOYMENT_BUTTON</td>
 	<td>//button[contains(@class,'toolbar-btn-text') and contains(.,'New Deployment')]</td>
 	<td></td>
@@ -161,11 +136,6 @@
 <tr>
 	<td>SELECT_WEB_APPLICATION_BUTTON</td>
 	<td>tcat/buttons/select_web_application_button.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <tr>

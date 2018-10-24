@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">DocumentsAndMediaConfiguration</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DISPLAY_SETTINGS-->
 <tr>
 	<td>DISPLAY_SETTINGS_DROPDOWN</td>

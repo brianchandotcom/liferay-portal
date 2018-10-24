@@ -48,11 +48,6 @@
 	<td>//div[@id='templateDetailsSectionPanel']//a/span</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_SELECT_STRUCTURE</td>
@@ -67,11 +62,6 @@
 <tr>
 	<td>DETAILS_LANGUAGE_SELECT</td>
 	<td>//select[contains(@id,'language')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--DATA_LIST_RECORD_FIELDS-->

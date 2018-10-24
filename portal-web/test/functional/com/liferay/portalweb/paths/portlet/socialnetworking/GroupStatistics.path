@@ -13,11 +13,6 @@
 	<td>//div[contains(@class,'panel-heading')]/div/span[contains(.,'Site Statistics')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--GROUP_STATISTICS_BODY-->
 <tr>
 	<td>GROUP_STATISTICS_BODY_CHART</td>

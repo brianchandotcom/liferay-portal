@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">CategoriesEditCategory</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PROPERTIES-->
 <tr>
 	<td>PROPERTIES_UNDO_MESSAGE</td>
@@ -37,11 +32,6 @@
 <tr>
 	<td>PROPERTIES_VALUE_FIELD_1</td>
 	<td>//input[contains(@id,'value0')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--PERMISSIONS-->

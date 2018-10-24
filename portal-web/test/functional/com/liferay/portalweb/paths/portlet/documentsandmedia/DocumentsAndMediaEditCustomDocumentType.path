@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>BOOLEAN_CHECKBOX</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//input</td>
 	<td></td>

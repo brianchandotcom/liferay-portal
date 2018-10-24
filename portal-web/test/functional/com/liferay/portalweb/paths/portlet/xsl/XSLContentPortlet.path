@@ -13,11 +13,6 @@
 	<td>//div[@class='portlet-body']/h2</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TABLE-->
 <tr>
 	<td>TABLE_TITLE_HEADER</td>

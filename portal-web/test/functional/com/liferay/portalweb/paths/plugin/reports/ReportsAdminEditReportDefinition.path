@@ -18,11 +18,6 @@
 	<td>//input[contains(@id,'AdminPortlet_templateReport')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--REPORT_DEFINITION_PARAMETERS-->
 <tr>
 	<td>REPORT_DEFINITION_PARAMETERS_KEY</td>

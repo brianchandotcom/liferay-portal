@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD</td>
 	<td>//*[@data-qa-id='controlMenu']//*[@data-qa-id='add']</td>
 	<td></td>
@@ -41,11 +36,6 @@
 <tr>
 	<td>USER_NAME</td>
 	<td>//span[contains(@class,'user-name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--ADMIN-->

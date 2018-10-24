@@ -68,11 +68,6 @@
 	<td>//div[contains(.,'Do you have any suggestions?')]/h5</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ADMIN_VIEW-->
 <tr>
 	<td>ADMIN_VIEW_CHILD_ARTICLE_TITLE</td>
@@ -82,11 +77,6 @@
 <tr>
 	<td>ADMIN_VIEW_CHILD_ARTICLE_CONTENT</td>
 	<td>//div[@class='kb-element-body']//p</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--ATTACHMENTS-->
@@ -110,11 +100,6 @@
 	<td>//div[contains(@id,'AttachmentsContainer')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CUSTOM_FIELD-->
 <tr>
 	<td>CUSTOM_FIELD_BOOLEAN</td>
@@ -131,11 +116,6 @@
 	<td>//div[contains(@class,'ddm-field-group')]//span[contains(.,'${customFieldValue}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--EDIT-->
 <tr>
 	<td>EDIT_FRIENDLY_URL_FIELD</td>
@@ -145,11 +125,6 @@
 <tr>
 	<td>EDIT_SELECT_RELATED_ASSETS</td>
 	<td>//a[@role='menuitem' and contains(.,'${key_kbArticleRelatedAssetType}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--HISTORY-->
@@ -166,11 +141,6 @@
 <tr>
 	<td>HISTORY_SELECT_VERSION_CHECKBOX</td>
 	<td>//input[(@type='checkbox' and @value='${key_versionNumber}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SECTIONS-->

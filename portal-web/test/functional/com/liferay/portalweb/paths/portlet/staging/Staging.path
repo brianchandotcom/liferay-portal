@@ -116,31 +116,16 @@
 	<td>//div[contains(@class,'lfr-portlet-message-staging-alert')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SITE_PAGES_VARIATION_MENULIST-->
 <tr>
 	<td>SITE_PAGES_VARIATION_MENULIST_NAME</td>
 	<td>xpath=(//ul//li//a[contains(.,'${key_sitePagesVariationName}')])[1]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PAGE_VARIATION_MENULIST-->
 <tr>
 	<td>PAGE_VARIATION_MENULIST_NAME</td>
 	<td>//a[contains(.,'${key_pageVariationName}') and contains(@href,'layoutBranchId')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--HISTORY-->
@@ -159,20 +144,10 @@
 	<td>//select/option[contains(.,'${key_historyVersionName}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--LIVE_MENU-->
 <tr>
 	<td>LIVE_MENU_MESSAGE</td>
 	<td>//span[@class='last-publication-branch']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--STAGING_MENU-->

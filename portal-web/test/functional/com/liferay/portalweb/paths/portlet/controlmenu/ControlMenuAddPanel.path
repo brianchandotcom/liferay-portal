@@ -18,11 +18,6 @@
 	<td>//div[contains(@class,'lfr-add-panel')]//a[contains(@class,'sidenav-close')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CONTENT-->
 <tr>
 	<td>CONTENT_ACCORDION_PANEL_TITLE</td>
@@ -32,11 +27,6 @@
 <tr>
 	<td>CONTENT_TITLE</td>
 	<td>//div[contains(@class,'list-group-item-content')]//*[contains(.,'${key_assetTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--APPLICATIONS-->

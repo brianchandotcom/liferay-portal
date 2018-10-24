@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>FIELD_ADD</td>
 	<td>//div[contains(@class,'form-field-repeatable-toolbar')]//a[contains(@class,'add-button')]</td>
 	<td></td>
@@ -26,11 +21,6 @@
 <tr>
 	<td>FIELD_NAME_EDIT</td>
 	<td>//div[contains(@class,'key-value-editor')]/input[contains(@class, 'input')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--CHECKBOX-->
@@ -49,11 +39,6 @@
 	<td>//label[contains(.,'${key_checkboxOption}')]/input[@type='checkbox' and contains(@name,'${key_fieldName}')]/../span</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DATE-->
 <tr>
 	<td>DATE_FIELD</td>
@@ -70,11 +55,6 @@
 	<td>//div[contains(@class,'form-field-container')][${key_repeatableFieldNumber}]//div[contains(@data-fieldname,'${key_fieldName}')]//p[@class='liferay-ddm-form-field-tip'] | //div[contains(@class,'form-field-container')][${key_repeatableFieldNumber}]//div[contains(@data-fieldname,'${key_fieldName}')]/span</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--HELP TEXT-->
 <tr>
 	<td>HELP_TEXT</td>
@@ -84,11 +64,6 @@
 <tr>
 	<td>HELP_TEXT_INPUT_FIELD</td>
 	<td>//input[@type='text' and contains(@id,'${key_fieldName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--OPTIONS-->
@@ -127,11 +102,6 @@
 	<td>//div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//div[contains(@class,'key-value-editor')]/input[contains(@class, 'input')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--GRID-->
 <tr>
 	<td>GRID_OPTIONS_OPTION_DELETE_ROW_BUTTON</td>
@@ -163,11 +133,6 @@
 	<td>//div[contains(@data-fieldname,'${key_gridField}sOption')]/../../div[${key_rowNumber2}]//div[contains(@class,'drag-handle')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--RADIO-->
 <tr>
 	<td>RADIO_OPTION_LABEL</td>
@@ -182,11 +147,6 @@
 <tr>
 	<td>RADIO_LABEL</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--TEXT-->
@@ -230,11 +190,6 @@
 	<td>//textarea[contains(@id,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PARAGRAPH-->
 <tr>
 	<td>PARAGRAPH_BODY_TEXT_CONTENT</td>
@@ -251,20 +206,10 @@
 	<td>//div[contains(@class,'paragraph') and contains(@data-fieldname,'${key_fieldName}')]/label</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PASSWORD-->
 <tr>
 	<td>PASSWORD_FIELD</td>
 	<td>//input[@type='password' and contains(@id,'${key_fieldName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SELECT-->
@@ -301,11 +246,6 @@
 <tr>
 	<td>SELECT_LABEL</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SWITCHER-->
@@ -364,11 +304,6 @@
 <tr>
 	<td>CAPTCHA_TEXT_VERIFICATION</td>
 	<td>//div[@class='taglib-captcha']//input[@type='text' and contains(@id, 'captchaText')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--AUTOCOMPLETE-->

@@ -8,86 +8,21 @@
 <tr><td rowspan="1" colspan="3">MyAccount</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--NAVIGATION-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ORGANIZATIONS-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SITES-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_GROUPS-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ROLES_REGULAR_ROLES-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PHONE_NUMBERS-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ADDITIONAL_EMAIL_ADDRESSES-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--WEBSITES-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SMS-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PROJECTS-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ANNOUNCEMENTS-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DISPLAY_SETTINGS-->
 <tr>
 	<td>LANGUAGE_SELECT</td>
 	<td>//select[contains(@id,'MyAccountPortlet') and contains(@id,'languageId')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--COMMENTS-->

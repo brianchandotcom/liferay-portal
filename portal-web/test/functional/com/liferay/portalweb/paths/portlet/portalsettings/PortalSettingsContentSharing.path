@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONTENT_SHARING_CHECKBOX</td>
 	<td>//input[contains(@id,'sites-content-sharing-through-administrators-enabled')]</td>
 	<td></td>

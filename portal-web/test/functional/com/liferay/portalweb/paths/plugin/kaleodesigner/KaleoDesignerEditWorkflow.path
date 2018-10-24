@@ -43,20 +43,10 @@
 	<td>//dl[contains(@class,'sidebar-dl')]/dd[contains(.,'${key_totalModifications} Revisions')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!-- REVISION_HISTORY -->
 <tr>
 	<td>REVISION_HISTORY_RESTORE_BUTTON</td>
 	<td>//span[contains(.,'Restore')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--NODES-->
@@ -73,11 +63,6 @@
 <tr>
 	<td>NODE_CORNER</td>
 	<td>portal/screenshots/kaleodesigner/node_${key_nodeType}_corner.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SETTINGS-->
@@ -129,11 +114,6 @@
 <tr>
 	<td>SETTINGS_ASSIGNMENTS</td>
 	<td>//td[contains(@class,'table-col-name') and contains(.,'Assignments')]//following-sibling::td[contains(@class,'table-col-value')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SETTINGS_CELL_EDITOR-->
@@ -222,11 +202,6 @@
 	<td>//select[@name='assignmentType']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR-->
 <tr>
 	<td>SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_TYPE_SELECT</td>
@@ -253,11 +228,6 @@
 	<td>//select[@name='roleType']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--VIEW_FORM-->
 <!--VIEW_FORM_NODE-->
 <tr>
@@ -275,11 +245,6 @@
 	<td>//div[@class='diagram-node-label' and contains(.,'${key_nodeNodeLabel}')]/../div[3]/div/button</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--VIEW_FORM_CONNECTOR-->
 <tr>
 	<td>VIEW_FORM_CONNECTOR_DEFAULT</td>
@@ -291,20 +256,10 @@
 	<td>//span[contains(@class,'diagram-builder-connector-name') and not(contains(@class,'hide')) and contains(.,'${key_connectorLabel}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--VIEW_FORM_ADD_NEW-->
 <tr>
 	<td>VIEW_FORM_ADD_NEW_NODE</td>
 	<td>//div[@class='property-builder-field-label' and contains(.,'${key_newNode}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SOURCE_KALEO_XML-->

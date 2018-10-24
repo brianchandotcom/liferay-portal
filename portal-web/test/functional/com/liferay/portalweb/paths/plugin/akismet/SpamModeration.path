@@ -19,11 +19,6 @@
 	<td>//div[@class='button-holder ']/button[contains(.,'Not Spam')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--WIKI_PAGE_TABLE-->
 <tr>
 	<td>WIKI_PAGE_TABLE_CHECKBOX</td>

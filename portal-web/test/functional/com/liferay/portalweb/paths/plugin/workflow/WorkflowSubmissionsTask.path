@@ -8,20 +8,10 @@
 <tr><td rowspan="1" colspan="3">WorkflowSubmissionsTask</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MENU-->
 <tr>
 	<td>MENU_WITHDRAW_SUBMISSION</td>
 	<td>//a[contains(@id,'_menu_withdraw-submission_1')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--PREVIEW-->
@@ -55,41 +45,11 @@
 	<td>//div[contains(@class,'contacts-container')]//div[@class='lfr-contact-extra']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TASKS-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TASKS_TABLE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TASKS_MENULIST-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DIALOG_BOX-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ACTIVITIES-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--COMMENTS-->
 </tbody>
 </table>

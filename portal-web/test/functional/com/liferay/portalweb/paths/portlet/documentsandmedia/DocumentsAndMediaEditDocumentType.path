@@ -23,20 +23,10 @@
 	<td>//tbody/tr[contains(.,'${key_metadataSetName}')]/td/a[contains(.,Remove)]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_DESCRIPTION_FIELD</td>
 	<td>//textarea[contains(@id,'_description')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--PANEL-->

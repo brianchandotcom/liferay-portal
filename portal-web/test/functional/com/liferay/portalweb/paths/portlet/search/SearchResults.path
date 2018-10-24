@@ -24,11 +24,6 @@
 	<td>//div[contains(@class,'search-facet')]/ul/li[contains(@class,'facet-value') and contains(.,'${key_searchAssetType}')]/a</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_FACET-->
 <tr>
 	<td>USER_FACET_ANY_USER</td>
@@ -45,20 +40,10 @@
 	<td>//div[contains(@class,'search-facet')]/ul/li[contains(@class,'facet-value') and contains(.,'${key_userLoginFullName}')]/a</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MODIFIED_RANGE_FACET-->
 <tr>
 	<td>MODIFIED_RANGE_FACET_TIME_RANGE</td>
 	<td>//div[contains(@class,'search-facet')]/div/ul/li[contains(@class,'facet-value') and contains(.,'${key_searchModifiedRange}')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--ASSET_ENTRY_TABLE-->
@@ -90,11 +75,6 @@
 <tr>
 	<td>ASSET_ENTRY_TABLE_SUMMARY_SPECIFIC</td>
 	<td>//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//h6[contains(.,'${key_searchAssetType}')]/../h6[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--RESULTS_PORTLET-->

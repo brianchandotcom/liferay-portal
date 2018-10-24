@@ -113,23 +113,8 @@
 	<td>//div[@class='current-image' and contains(@src,'${key_smallImage}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SPECIFIC_ENTRY_YOUR_RATING-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SPECIFIC_ENTRY_AVERAGE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

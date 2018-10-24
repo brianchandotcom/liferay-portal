@@ -8,71 +8,16 @@
 <tr><td rowspan="1" colspan="3">KaleoForms</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SUBMIT_NEW_MENULIST-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TABLE_GENERIC-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ASSIGNED_TO_ME_TABLE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ASSIGNED_TO_ME_MENULIST-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ASSIGNED_TO_MY_ROLES_TABLE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ASSIGNED_TO_MY_ROLES_MENULIST-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DIALOG_BOX-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--REQUESTS_TABLE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--REQUESTS_MENULIST-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MY_PENDING_REQUESTS_TABLE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MY_COMPLETED_REQUESTS_TABLE-->
 </tbody>
 </table>

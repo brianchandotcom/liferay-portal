@@ -53,11 +53,6 @@
 	<td>xpath=(//span//span[contains(.,'${key_tagName}')])[2]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ICON_DOCUMENT-->
 <tr>
 	<td>ICON_DOCUMENT_GENERIC</td>
@@ -104,11 +99,6 @@
 	<td>//li[contains(@data-title,'${key_dmDocumentTitle}')]//span[@class='workflow-status']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ICON_FOLDER-->
 <tr>
 	<td>ICON_FOLDER_THUMBNAIL</td>
@@ -123,11 +113,6 @@
 <tr>
 	<td>ICON_FOLDER_TITLE</td>
 	<td>//span//a[@title='${key_dmFolderName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--DESCRIPTIVE_LIST_DOCUMENT-->
@@ -156,11 +141,6 @@
 	<td>//li[contains(.,'${key_dmDocumentTitle}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DESCRIPTIVE_LIST_FOLDER-->
 <tr>
 	<td>DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS</td>
@@ -187,17 +167,7 @@
 	<td>//li[@data-title='${key_dmFolderNameEdit}']//a</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--LIST_DOCUMENT-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--FILTER-->
 <tr>
 	<td>FILTER_REPOSITORY_GENERIC</td>
@@ -209,17 +179,7 @@
 	<td>xpath=(//div[contains(@id,'folderContainer')]/ul/li/a/../span[contains(@class,'entry-action')]/div/a)[2]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--LIFERAY_SYNC-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_ACTIONS</td>
@@ -231,11 +191,6 @@
 	<td>xpath=(//div[@class='checkbox']//input[@title='Select All'])[2]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SEARCH-->
 <tr>
 	<td>SEARCH_REPOSITORY_TAB</td>
@@ -245,11 +200,6 @@
 <tr>
 	<td>SEARCH_TITLE</td>
 	<td>//div[contains(@class,'searchcontainer')]//a[contains(.,'${dmDocumentTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--REPOSITORY-->

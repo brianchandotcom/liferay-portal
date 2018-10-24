@@ -8,23 +8,8 @@
 <tr><td rowspan="1" colspan="3">ServerAdministration</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--RESOURCES_ACTIONS_TABLE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PROPERTIES_PORTAL_PROPERTIES-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--FILE_UPLOADS-->
 </tbody>
 </table>

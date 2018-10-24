@@ -23,11 +23,6 @@
 	<td>//div[contains(@class,'list-group')]//a[contains(.,'${key_itemName}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--FRAGMENT_SIDEBAR-->
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL</td>
@@ -52,11 +47,6 @@
 <tr>
 	<td>FRAGMENT_SIDEBAR_TAB</td>
 	<td>//ul[contains(@class,'nav')]//li[contains(@class,'nav-item')]//a[contains(.,'${key_tabName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--CONTENT_PAGE-->

@@ -34,11 +34,6 @@
 	<td>//div[contains(@id,'messageBoardsGeneralStatistics')]/div/dl/dd[3]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TOP_POSTERS-->
 <tr>
 	<td>TOP_POSTERS_DROPDOWN</td>

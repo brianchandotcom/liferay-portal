@@ -13,17 +13,7 @@
 	<td>//a[contains(@class,'btn') and contains(.,'Add Service Provider')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SERVICE_PROVIDER_CONNECTIONS_TABLE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SERVICE_PROVIDER_CONNECTIONS_MENULIST-->
 </tbody>
 </table>

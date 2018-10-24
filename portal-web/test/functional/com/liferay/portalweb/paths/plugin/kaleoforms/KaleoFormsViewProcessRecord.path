@@ -8,47 +8,12 @@
 <tr><td rowspan="1" colspan="3">KaleoFormsViewProcessRecord</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ASSIGNED_TO-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CREATE_DATE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DUE_DATE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CURRENT_ENTRY-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TASKS_TABLE_REVIEW-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TASKS_TABLE_UPDATE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ACTIVITIES-->
 </tbody>
 </table>

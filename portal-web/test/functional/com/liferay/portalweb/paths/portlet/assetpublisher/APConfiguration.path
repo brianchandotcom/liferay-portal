@@ -19,11 +19,6 @@
 	<td>//input[contains(@id,'selectionStyleManual')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SUBSCRIPTIONS-->
 <tr>
 	<td>SUBSCRIPTIONS_ENABLE_RSS_SUBSCRIPTION_LABEL</td>
@@ -35,20 +30,10 @@
 	<td>//input[contains(@id,'enableRss')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--RULE_BUILDER-->
 <tr>
 	<td>RULE_BUILDER_ADD_CONDITION</td>
 	<td>//button[contains(@class,'form-builder-rule-add-condition')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--USER_SEGMENTS_FILTER-->
@@ -60,11 +45,6 @@
 <tr>
 	<td>ENABLE_USER_SEGMENTS_FILTER</td>
 	<td>//input[contains(@id,'UserSegments')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SOURCE_SCOPE-->
@@ -118,11 +98,6 @@
 	<td>//div[@class='asset-subtype']//span[contains(@id,'AssetRendererFactoryOptions') and @class='asset-subtypefields']/span/button</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SELECT_MORE_THAN_ONE_ASSET_TYPE-->
 <tr>
 	<td>SELECT_MORE_THAN_ONE_ASSET_TYPE_CONTENT</td>
@@ -139,11 +114,6 @@
 	<td>//button[contains(@class,'move-left') and contains(@title,'Move selected items from Available to Selected.')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SELECT_MORE_THAN_ONE_ASSET_SUBTYPE-->
 <tr>
 	<td>SELECT_MORE_THAN_ONE_ASSET_SUBTYPE_MOVE_AVAILABLE</td>
@@ -153,11 +123,6 @@
 <tr>
 	<td>SELECT_MORE_THAN_ONE_ASSET_SUBTYPE_MOVE_SELECTED</td>
 	<td>xpath=(//button[contains(@class,'move-left') and contains(@title,'Move selected items from Available to Selected.')])[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--FILTER-->
@@ -176,11 +141,6 @@
 	<td>//select[contains(@class,'asset-query')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CUSTOM_USER_ATTRIBUTES-->
 <tr>
 	<td>CUSTOM_USER_DROPDOWN</td>
@@ -190,11 +150,6 @@
 <tr>
 	<td>CUSTOM_USER_DROPDOWN_COLLAPSED</td>
 	<td>//div[contains(@class,'header') and contains(@class,'collapsed') and contains(.,'Custom User Attributes')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--ORDERING_AND_GROUPING-->
@@ -221,11 +176,6 @@
 <tr>
 	<td>ORDERING_AND_GROUPING_ORDER_GENERIC_ICON</td>
 	<td>//div[contains(@class,'order-by-type')]/span[not(contains(@class,'hide'))]//a[span/*[name()='svg'][contains(@class,'icon-angle')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--ASSET_SELECTION_MANUAL_ASSET_ENTRIES-->

@@ -13,20 +13,10 @@
 	<td>//div[contains(@id,'UserSegmentContentDisplayPortlet')]//div[@class='full-content']</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PREVIEW-->
 <tr>
 	<td>PREVIEW_DOCUMENT_1_PNG</td>
 	<td>portal/portlets/user_segment_content_display_document.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--RULE_PANEL-->
@@ -63,11 +53,6 @@
 <tr>
 	<td>RULE_PANEL_DISPLAY_CONTENT_SELECT</td>
 	<td>xpath=(//div/a[@title='Select Content'])[${key_rowNumber}]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT-->

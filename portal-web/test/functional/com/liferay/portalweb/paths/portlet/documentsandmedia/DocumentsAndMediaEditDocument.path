@@ -13,25 +13,10 @@
 	<td>//div[contains(@class,'alert-danger') and contains(.,'Please enter a unique document name.')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--INFO_BAR-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <tr>
 	<td>FOLDER</td>
 	<td>//input[contains(@id,'folderName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--REVISION_BUTTON-->

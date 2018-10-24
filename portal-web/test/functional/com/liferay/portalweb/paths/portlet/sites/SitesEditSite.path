@@ -23,20 +23,10 @@
 	<td>//input[contains(@id,'SiteSettingsPortlet_name')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ACTIVE-->
 <tr>
 	<td>ACTIVE_LABEL</td>
 	<td>//label[contains(@for,'active')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--PARENT_SITE-->
@@ -50,23 +40,8 @@
 	<td>//button[contains(@id,'selectParentSiteLink')]/span</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PARENT_SITE_TABLE-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MENU_BASIC_INFORMATION-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MENU_SEARCH_ENGINE_OPTIMIZATION-->
 <!---->
 <!--MENU_ADVANCED-->
@@ -75,17 +50,7 @@
 	<td>//li[contains(@id,'SiteSettingsPortlet')]/a[contains(.,'Advanced')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MENU_MISCELLANEOUS-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MEMBERSHIP_OPTIONS-->
 <tr>
 	<td>MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE_LABEL</td>
@@ -95,11 +60,6 @@
 <tr>
 	<td>MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE</td>
 	<td>//div[contains(@class,'form-group')]/select[contains(@id,'type')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--PAGES-->

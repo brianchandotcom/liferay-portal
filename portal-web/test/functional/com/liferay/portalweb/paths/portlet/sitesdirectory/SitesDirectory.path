@@ -18,26 +18,11 @@
 	<td>//div[contains(@id,'SitesDirectoryPortlet')]//h5/a[contains(.,'${key_orgName}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--BREADCRUMB-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DESCRIPTIVE-->
 <tr>
 	<td>DESCRIPTIVE_SITE_ENTRY</td>
 	<td>//*[@data-qa-id='rowItemContent']/h5/span[contains(.,'${key_siteName}')] | //*[@data-qa-id='rowItemContent']/h5/a[contains(.,'${key_siteName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--LIST_HIERARCHY-->

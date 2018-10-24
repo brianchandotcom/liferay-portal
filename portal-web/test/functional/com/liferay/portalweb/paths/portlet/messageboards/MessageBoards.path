@@ -23,20 +23,10 @@
 	<td>//div[contains(@class,'message-container')]/div[contains(@class,'message-container')]/div[contains(@class,'group-card')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CATEGORIES-->
 <tr>
 	<td>CATEGORIES_NAME_HEADER</td>
 	<td>//div[contains(@class,'content-body')]//h3</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--NAVIGATION-->
@@ -63,11 +53,6 @@
 <tr>
 	<td>NAVIGATION_BANNED_USERS</td>
 	<td>//div[contains(@class,'navbar')]//ul/li/a[contains(.,'Banned Users')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--CATEGORY_TABLE-->
@@ -104,11 +89,6 @@
 <tr>
 	<td>CATEGORY_TABLE_ACTIONS</td>
 	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td//div/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--CATEGORY_LIST-->
@@ -157,21 +137,11 @@
 	<td>//li[contains(.,'${key_categoryName}')]//span[contains(.,'${key_threadsNumber}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CATEGORY_LIST_ADMIN-->
 <!--QUESTION_CATEGORY_THREAD_TABLE-->
 <tr>
 	<td>QUESTION_CATEGORY_THREAD_TABLE_QUESTION</td>
 	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[2]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--SUBCATEGORY_TABLE-->
@@ -183,11 +153,6 @@
 <tr>
 	<td>SUBCATEGORY_TABLE_CATEGORY_GENERIC</td>
 	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[1]/td//a/span[@class='category-title']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--THREAD_LIST-->
@@ -236,20 +201,10 @@
 	<td>//li[contains(.,'${key_threadSubject}')]/div/span[2]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--THREAD_REPLY-->
 <tr>
 	<td>THREAD_REPLY_ACTIONS</td>
 	<td>//div[contains(@class,'message-content') and contains(.,'${key_threadReplyBody}')]/../..//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--THREAD_TABLE-->

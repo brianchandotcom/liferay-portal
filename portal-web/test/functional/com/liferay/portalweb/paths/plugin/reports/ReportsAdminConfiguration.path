@@ -24,11 +24,6 @@
 	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Notifications Email')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--EMAIL_FROM-->
 <tr>
 	<td>EMAIL_FROM_NAME_FIELD</td>
@@ -40,17 +35,7 @@
 	<td>//input[contains(@id,'emailFromAddress')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DELIVERY_EMAIL-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--NOTIFICATIONS_EMAIL-->
 <tr>
 	<td>NOTIFICATIONS_EMAIL_SUBJECT_FIELD</td>

@@ -13,11 +13,6 @@
 	<td>//iframe[contains(@id,'ImageEditor_iframe')] | //iframe[contains(@class,'dialog-iframe') and contains(@src,'ImageEditor')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--FILTER_EFFECT-->
 </tbody>
 </table>

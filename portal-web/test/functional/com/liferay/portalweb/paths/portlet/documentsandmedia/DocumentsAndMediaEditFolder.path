@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">DocumentsAndMediaEditFolder</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--WORKFLOW -->
 <tr>
 	<td>WORKFLOW_DOCUMENT_TYPE_RESTRICTIONS_TOGGLE</td>
@@ -47,11 +42,6 @@
 <tr>
 	<td>WORKFLOW_DEFAULT_WORKFLOW_WORKFLOW_SELECT</td>
 	<td>//select[contains(@id,'workflowDefinition-1')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--PERMISSIONS-->

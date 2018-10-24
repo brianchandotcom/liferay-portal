@@ -13,17 +13,7 @@
 	<td>//span[contains(@class,'label-lg')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TOOLBAR-->
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DEFINITION_TABLE-->
 <tr>
 	<td>DEFINITION_TABLE_TITLE</td>
@@ -43,11 +33,6 @@
 <tr>
 	<td>DEFINITION_TABLE_TITLE_UNPUBLISHED</td>
 	<td>//tr[count(preceding-sibling::tr[contains(@class,'table-divider')])=2 and contains(.,'${key_workflowDefinitionTitle}')]/td[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--DIALOG_BOX-->

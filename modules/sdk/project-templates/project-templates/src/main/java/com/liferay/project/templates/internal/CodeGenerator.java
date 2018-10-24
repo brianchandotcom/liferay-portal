@@ -101,83 +101,16 @@ public class CodeGenerator {
 
 			@Override
 			protected ArchetypeArtifactManager newArchetypeArtifactManager() {
-				VelocityComponent velocityComponent = createVelocityComponent();
+				try {
+					VelocityComponent velocityComponent =
+						createVelocityComponent();
 
-				return new ArchetyperArchetypeArtifactManager(archetypesDirs) {
-
-					@Override
-					public ArchetypeDescriptor getFileSetArchetypeDescriptor(
-							File archetypeFile)
-						throws UnknownArchetype {
-
-						ArchetypeDescriptor archetypeDescriptor =
-							super.getFileSetArchetypeDescriptor(archetypeFile);
-
-						for (FileSet fileSet :
-								archetypeDescriptor.getFileSets()) {
-
-							List<String> excludes = fileSet.getExcludes();
-
-							Stream<String> stream = excludes.stream();
-
-							List<String> newExcludes = stream.map(
-								this::_filterElement
-							).collect(
-								Collectors.toList()
-							);
-
-							fileSet.setExcludes(newExcludes);
-
-							List<String> includes = fileSet.getIncludes();
-
-							stream = includes.stream();
-
-							List<String> newIncludes = stream.map(
-								this::_filterElement
-							).collect(
-								Collectors.toList()
-							);
-
-							fileSet.setIncludes(newIncludes);
-						}
-
-						return archetypeDescriptor;
-					}
-
-					private String _filterElement(String element) {
-						try {
-							VelocityEngine velocityEngine =
-								velocityComponent.getEngine();
-
-							if (velocityEngine != null) {
-								VelocityContext velocityContext =
-									new VelocityContext();
-
-								velocityContext.put(
-									"StringUtils", new StringUtils());
-
-								velocityContext.put(
-									"template",
-									codeTemplatesArgs.getTemplate());
-
-								StringWriter stringWriter = new StringWriter();
-
-								boolean success = velocityEngine.evaluate(
-									velocityContext, stringWriter,
-									"CodeGenerator", element);
-
-								if (success) {
-									return stringWriter.toString();
-								}
-							}
-						}
-						catch (Exception ioe) {
-						}
-
-						return element;
-					}
-
-				};
+					return new CodeGeneratorArchetypeArtifactManager(
+						archetypesDirs, velocityComponent, codeTemplatesArgs);
+				}
+				catch (Exception e) {
+					return null;
+				}
 			}
 
 		};
@@ -194,6 +127,90 @@ public class CodeGenerator {
 		if (Validator.isNotNull(value)) {
 			properties.setProperty(name, value);
 		}
+	}
+
+	private static class CodeGeneratorArchetypeArtifactManager
+		extends ArchetyperArchetypeArtifactManager {
+
+		@Override
+		public ArchetypeDescriptor getFileSetArchetypeDescriptor(
+				File archetypeFile)
+			throws UnknownArchetype {
+
+			ArchetypeDescriptor archetypeDescriptor =
+				super.getFileSetArchetypeDescriptor(archetypeFile);
+
+			for (FileSet fileSet : archetypeDescriptor.getFileSets()) {
+				List<String> excludes = fileSet.getExcludes();
+
+				Stream<String> stream = excludes.stream();
+
+				List<String> newExcludes = stream.map(
+					this::_filterElement
+				).collect(
+					Collectors.toList()
+				);
+
+				fileSet.setExcludes(newExcludes);
+
+				List<String> includes = fileSet.getIncludes();
+
+				stream = includes.stream();
+
+				List<String> newIncludes = stream.map(
+					this::_filterElement
+				).collect(
+					Collectors.toList()
+				);
+
+				fileSet.setIncludes(newIncludes);
+			}
+
+			return archetypeDescriptor;
+		}
+
+		private CodeGeneratorArchetypeArtifactManager(
+			List<File> archetypesFiles, VelocityComponent velocityComponent,
+			CodeTemplatesArgs codeTemplatesArgs) {
+
+			super(archetypesFiles);
+
+			_velocityComponent = velocityComponent;
+			_codeTemplatesArgs = codeTemplatesArgs;
+		}
+
+		private String _filterElement(String element) {
+			try {
+				VelocityEngine velocityEngine = _velocityComponent.getEngine();
+
+				if (velocityEngine != null) {
+					VelocityContext velocityContext = new VelocityContext();
+
+					velocityContext.put("StringUtils", new StringUtils());
+
+					velocityContext.put(
+						"template", _codeTemplatesArgs.getTemplate());
+
+					StringWriter stringWriter = new StringWriter();
+
+					boolean success = velocityEngine.evaluate(
+						velocityContext, stringWriter, "CodeGenerator",
+						element);
+
+					if (success) {
+						return stringWriter.toString();
+					}
+				}
+			}
+			catch (Exception ioe) {
+			}
+
+			return element;
+		}
+
+		private final CodeTemplatesArgs _codeTemplatesArgs;
+		private final VelocityComponent _velocityComponent;
+
 	}
 
 }

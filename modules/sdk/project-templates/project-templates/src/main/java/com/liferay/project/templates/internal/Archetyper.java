@@ -74,30 +74,25 @@ public class Archetyper {
 		return archetypeManager;
 	}
 
-	public VelocityComponent createVelocityComponent() {
+	public VelocityComponent createVelocityComponent() throws Exception {
 		DefaultVelocityComponent defaultVelocityComponent =
 			new DefaultVelocityComponent();
 
-		try {
-			ReflectionUtil.setFieldValue(
-				_loggerField, defaultVelocityComponent, _logger);
+		ReflectionUtil.setFieldValue(
+			_loggerField, defaultVelocityComponent, _logger);
 
-			Properties properties = new Properties();
+		Properties properties = new Properties();
 
-			properties.setProperty(
-				RuntimeConstants.RESOURCE_LOADER, "classpath");
-			properties.setProperty(
-				"classpath.resource.loader.class",
-				ClasspathResourceLoader.class.getName());
+		properties.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+		properties.setProperty(
+			"classpath.resource.loader.class",
+			ClasspathResourceLoader.class.getName());
 
-			ReflectionUtil.setFieldValue(
-				DefaultVelocityComponent.class, "properties",
-				defaultVelocityComponent, properties);
+		ReflectionUtil.setFieldValue(
+			DefaultVelocityComponent.class, "properties",
+			defaultVelocityComponent, properties);
 
-			defaultVelocityComponent.initialize();
-		}
-		catch (Exception e) {
-		}
+		defaultVelocityComponent.initialize();
 
 		return defaultVelocityComponent;
 	}

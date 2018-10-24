@@ -14,9 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.Date;
-
-import org.apache.commons.lang.StringUtils;
+import java.util.List;
 
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -28,11 +26,14 @@ import org.json.JSONObject;
  */
 public class GitBisectToolBuild extends TopLevelBuild {
 
-	@Override
-	public Element getJenkinsReportElement() {
+	public Element getJenkinsReportElement(
+		WorkspaceGitRepository workspaceGitRepository,
+		List<BuildData> downstreamBuildDataList) {
+
 		return Dom4JUtil.getNewElement(
 			"html", null, getJenkinsReportHeadElement(),
-			getJenkinsReportBodyElement());
+			getJenkinsReportBodyElement(
+				workspaceGitRepository, downstreamBuildDataList));
 	}
 
 	protected GitBisectToolBuild(String url) {
@@ -43,8 +44,10 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		super(url, topLevelBuild);
 	}
 
-	@Override
-	protected Element getJenkinsReportBodyElement() {
+	protected Element getJenkinsReportBodyElement(
+		WorkspaceGitRepository workspaceGitRepository,
+		List<BuildData> downstreamBuildDataList) {
+
 		String buildURL = getBuildURL();
 
 		Element headingElement = Dom4JUtil.getNewElement(
@@ -72,18 +75,97 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		return Dom4JUtil.getNewElement(
 			"body", null, headingElement, subheadingElement,
 			getJenkinsReportSummaryElement(), getJenkinsReportTimelineElement(),
-			getJenkinsReportTopLevelTableElement(),
-			getJenkinsReportDownstreamElement());
+			getJenkinsReportTableElement(
+				workspaceGitRepository, downstreamBuildDataList),
+			Dom4JUtil.getNewElement(
+				"p", null,
+				Dom4JUtil.getNewElement(
+					"em", null, "Indicates HEAD Commit (*)")));
+	}
+
+	protected Element getJenkinsReportHeadElement() {
+		Element headElement = Dom4JUtil.getNewElement("head");
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("caption, td, th {");
+		sb.append("padding: .5em; text-align: left;");
+		sb.append("}\n");
+
+		sb.append("canvas {");
+		sb.append("display: block; height: 300px; width: 1900px;");
+		sb.append("}");
+
+		Dom4JUtil.getNewElement("style", headElement, sb.toString());
+
+		return headElement;
+	}
+
+	protected Element getJenkinsReportTableBodyElement(
+		WorkspaceGitRepository workspaceGitRepository,
+		List<BuildData> downstreamBuildDataList) {
+
+		Element tableBodyElement = Dom4JUtil.getNewElement("tbody");
+
+		List<Commit> commitHistory = workspaceGitRepository.getCommitHistory();
+
+		boolean first = true;
+
+		for (Commit commit : commitHistory) {
+			String shaText = commit.getSHA();
+
+			if (first) {
+				shaText = "*" + shaText;
+
+				first = false;
+			}
+
+			Element tableRowElement = Dom4JUtil.getNewElement(
+				"tr", tableBodyElement,
+				Dom4JUtil.getNewElement("td", null, shaText),
+				Dom4JUtil.getNewElement("td", null, commit.getMessage()));
+
+			BuildData buildData = _getBuildDataBySHA(
+				commit.getSHA(), downstreamBuildDataList);
+
+			if (buildData == null) {
+				Dom4JUtil.getNewElement("td", tableRowElement, "");
+				Dom4JUtil.getNewElement("td", tableRowElement, "");
+				Dom4JUtil.getNewElement("td", tableRowElement, "");
+				Dom4JUtil.getNewElement("td", tableRowElement, "");
+				Dom4JUtil.getNewElement("td", tableRowElement, "");
+
+				continue;
+			}
+
+			Dom4JUtil.getNewElement(
+				"td", tableRowElement,
+				Dom4JUtil.getNewAnchorElement(
+					buildData.getBuildURL(), "build"));
+
+			Dom4JUtil.getNewElement(
+				"td", tableRowElement, buildData.getStartTimeString());
+
+			Dom4JUtil.getNewElement(
+				"td", tableRowElement, buildData.getBuildDurationString());
+
+			Dom4JUtil.getNewElement(
+				"td", tableRowElement, buildData.getBuildStatus());
+
+			Dom4JUtil.getNewElement(
+				"td", tableRowElement, buildData.getBuildResult());
+		}
+
+		return tableBodyElement;
 	}
 
 	@Override
 	protected Element getJenkinsReportTableColumnHeadersElement() {
-		Element nameElement = Dom4JUtil.getNewElement("th", null, "Name");
+		Element commitElement = Dom4JUtil.getNewElement("th", null, "Commit");
 
-		Element consoleElement = Dom4JUtil.getNewElement("th", null, "Console");
+		Element shaElement = Dom4JUtil.getNewElement("th", null, "SHA");
 
-		Element testReportElement = Dom4JUtil.getNewElement(
-			"th", null, "Test Report");
+		Element buildElement = Dom4JUtil.getNewElement("th", null, "Build");
 
 		Element startTimeElement = Dom4JUtil.getNewElement(
 			"th", null, "Start Time");
@@ -98,101 +180,49 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		Element tableColumnHeaderElement = Dom4JUtil.getNewElement("tr");
 
 		Dom4JUtil.addToElement(
-			tableColumnHeaderElement, nameElement, consoleElement,
-			testReportElement, startTimeElement, buildTimeElement,
-			statusElement, resultElement);
+			tableColumnHeaderElement, commitElement, shaElement, buildElement,
+			startTimeElement, buildTimeElement, statusElement, resultElement);
 
 		return tableColumnHeaderElement;
 	}
 
-	protected Element getJenkinsReportTableRowElement() {
-		String cellElementTagName =
-			getJenkinsReportBuildInfoCellElementTagName();
+	protected Element getJenkinsReportTableElement(
+		WorkspaceGitRepository workspaceGitRepository,
+		List<BuildData> downstreamBuildDataList) {
 
-		Element buildInfoElement = Dom4JUtil.getNewElement(
-			"tr", null,
-			Dom4JUtil.getNewElement(
-				cellElementTagName, null,
-				Dom4JUtil.getNewAnchorElement(
-					getBuildURL(), null, getDisplayName())),
-			Dom4JUtil.getNewElement(
-				cellElementTagName, null,
-				Dom4JUtil.getNewAnchorElement(
-					getBuildURL() + "console", null, "Console")),
-			Dom4JUtil.getNewElement(
-				cellElementTagName, null,
-				Dom4JUtil.getNewAnchorElement(
-					getBuildURL() + "testReport", "Test Report")));
-
-		getStartTime();
-
-		if (startTime == null) {
-			Dom4JUtil.addToElement(
-				buildInfoElement,
-				Dom4JUtil.getNewElement(
-					cellElementTagName, null, "",
-					getJenkinsReportTimeZoneName()));
-		}
-		else {
-			Dom4JUtil.addToElement(
-				buildInfoElement,
-				Dom4JUtil.getNewElement(
-					cellElementTagName, null,
-					toJenkinsReportDateString(
-						new Date(startTime), getJenkinsReportTimeZoneName())));
-		}
-
-		Dom4JUtil.addToElement(
-			buildInfoElement,
-			Dom4JUtil.getNewElement(
-				cellElementTagName, null,
-				JenkinsResultsParserUtil.toDurationString(getDuration())));
-
-		String status = getStatus();
-
-		if (status != null) {
-			status = StringUtils.upperCase(status);
-		}
-		else {
-			status = "";
-		}
-
-		Dom4JUtil.getNewElement(cellElementTagName, buildInfoElement, status);
-
-		String result = getResult();
-
-		if (result == null) {
-			result = "";
-		}
-
-		Dom4JUtil.getNewElement(cellElementTagName, buildInfoElement, result);
-
-		return buildInfoElement;
-	}
-
-	@Override
-	protected Element getJenkinsReportTopLevelTableElement() {
 		Element topLevelTableElement = Dom4JUtil.getNewElement("table");
 
-		String result = getResult();
+		topLevelTableElement.addAttribute("border", "1");
 
-		if (result != null) {
-			Dom4JUtil.getNewElement(
-				"caption", topLevelTableElement, "Top Level Build - ",
-				Dom4JUtil.getNewElement("strong", null, getResult()));
-		}
-		else {
-			Dom4JUtil.getNewElement(
-				"caption", topLevelTableElement, "Top Level Build - ",
-				Dom4JUtil.getNewElement(
-					"strong", null, StringUtils.upperCase(getStatus())));
-		}
+		String gitHubURL = workspaceGitRepository.getGitHubURL();
+
+		Element captionElement = Dom4JUtil.getNewElement(
+			"caption", topLevelTableElement);
+
+		Dom4JUtil.getNewElement(
+			"h2", captionElement, "Commit history of ",
+			Dom4JUtil.getNewAnchorElement(gitHubURL, gitHubURL));
 
 		Dom4JUtil.addToElement(
 			topLevelTableElement, getJenkinsReportTableColumnHeadersElement(),
-			getJenkinsReportTableRowElement());
+			getJenkinsReportTableBodyElement(
+				workspaceGitRepository, downstreamBuildDataList));
 
 		return topLevelTableElement;
+	}
+
+	private BuildData _getBuildDataBySHA(
+		String sha, List<BuildData> downstreamBuildDataList) {
+
+		for (BuildData buildData : downstreamBuildDataList) {
+			PortalBuildData portalBuildData = (PortalBuildData)buildData;
+
+			if (sha.equals(portalBuildData.getPortalBranchSHA())) {
+				return portalBuildData;
+			}
+		}
+
+		return null;
 	}
 
 }

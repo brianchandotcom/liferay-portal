@@ -111,7 +111,29 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 	protected void publishJenkinsReport() {
 		_updateBuildData();
 
-		Element jenkinsReportElement = _topLevelBuild.getJenkinsReportElement();
+		Element jenkinsReportElement = Dom4JUtil.getNewElement("html");
+
+		if (_topLevelBuild instanceof GitBisectToolBuild) {
+			if ((workspace != null) && (workspace instanceof PortalWorkspace)) {
+				GitBisectToolBuild gitBisectToolBuild =
+					(GitBisectToolBuild)_topLevelBuild;
+
+				PortalWorkspace portalWorkspace = (PortalWorkspace)workspace;
+
+				WorkspaceGitRepository workspaceGitRepository =
+					portalWorkspace.getPrimaryPortalWorkspaceGitRepository();
+
+				TopLevelBuildData topLevelBuildData = getBuildData();
+
+				jenkinsReportElement =
+					gitBisectToolBuild.getJenkinsReportElement(
+						workspaceGitRepository,
+						topLevelBuildData.getDownstreamBuildDataList());
+			}
+		}
+		else {
+			jenkinsReportElement = _topLevelBuild.getJenkinsReportElement();
+		}
 
 		try {
 			BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
@@ -331,6 +353,10 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 			BuildData downstreamBuildData = _getDownstreamBuildData(
 				downstreamBuild);
+
+			if (downstreamBuildData == null) {
+				continue;
+			}
 
 			downstreamBuildData.setBuildDuration(downstreamBuild.getDuration());
 			downstreamBuildData.setBuildResult(downstreamBuild.getResult());

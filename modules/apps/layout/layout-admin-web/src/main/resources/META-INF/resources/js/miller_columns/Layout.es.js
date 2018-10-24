@@ -10,6 +10,7 @@ import {
 	appendItemToColumn,
 	columnIsItemChild,
 	dropIsValid,
+	getColumnActiveItem,
 	getColumnLastItem,
 	getItem,
 	getItemColumn,
@@ -154,24 +155,6 @@ class Layout extends Component {
 	}
 
 	/**
-	 * @param {Array} layoutColumn
-	 * @private
-	 * @return {string}
-	 * @review
-	 */
-	_getLayoutColumnActiveItemPlid(layoutColumn) {
-		const layoutColumnItem = layoutColumn.find(
-			(layoutColumnItem) => layoutColumnItem.active
-		);
-
-		return (
-			layoutColumnItem ?
-				layoutColumnItem.plid :
-				null
-		);
-	}
-
-	/**
 	 * Handle dragLayoutColumnItem event
 	 * @param {!object} eventData
 	 * @param {!string} eventData.position
@@ -294,9 +277,10 @@ class Layout extends Component {
 
 					targetColumn.splice(priority, 0, this._draggingItem);
 
-					parentPlid = this._getLayoutColumnActiveItemPlid(
-						layoutColumns[targetColumnIndex - 1]
-					);
+					parentPlid = getColumnActiveItem(
+						layoutColumns,
+						targetColumnIndex - 1
+					).plid;
 				}
 			}
 
@@ -406,13 +390,9 @@ class Layout extends Component {
 
 		const previousColumn = nextLayoutColumns[this._draggingItemColumnIndex - 1];
 
-		const activeItemPlid = this._getLayoutColumnActiveItemPlid(
-			previousColumn
-		);
-
-		const activeItem = getItem(
+		const activeItem = getColumnActiveItem(
 			nextLayoutColumns,
-			activeItemPlid
+			this._draggingItemColumnIndex - 1
 		);
 
 		return setIn(
@@ -511,9 +491,10 @@ class Layout extends Component {
 
 		this._draggingItemColumnIndex = sourceItemColumnIndex;
 
-		this._draggingItemParentPlid = this._getLayoutColumnActiveItemPlid(
-			this.layoutColumns[sourceItemColumnIndex - 1]
-		);
+		this._draggingItemParentPlid = getColumnActiveItem(
+			this.layoutColumns,
+			sourceItemColumnIndex - 1
+		).plid;
 	}
 
 	/**
@@ -866,13 +847,9 @@ class Layout extends Component {
 			targetItemPlid
 		);
 
-		const activeItemPlid = this._getLayoutColumnActiveItemPlid(
-			targetColumn
-		);
-
-		const activeItem = getItem(
+		const activeItem = getColumnActiveItem(
 			nextLayoutColumns,
-			activeItemPlid
+			targetColumnIndex
 		);
 
 		if (activeItem && (activeItem !== targetItem)) {

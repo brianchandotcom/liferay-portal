@@ -6,8 +6,21 @@ import Soy from 'metal-soy';
 import './LayoutBreadcrumbs.es';
 import './LayoutColumn.es';
 import {DRAG_POSITIONS, LayoutDragDrop} from './utils/LayoutDragDrop.es';
+import {
+	appendItemToColumn,
+	columnIsItemChild,
+	dropIsValid,
+	getColumnLastItem,
+	getItem,
+	getItemColumn,
+	getItemColumnIndex,
+	itemIsParent,
+	removeItem
+} from './utils/LayoutUtils.es';
 import {setIn} from '../utils/utils.es';
 import templates from './Layout.soy';
+
+const UPDATE_PATH_TIMEOUT = 1000;
 
 /**
  * Component that allows to show layouts tree in form of three dependent
@@ -15,20 +28,18 @@ import templates from './Layout.soy';
  * and N-th + 3 levels of layouts tree.
  * @review
  */
-
 class Layout extends Component {
 
 	/**
 	 * @inheritDoc
 	 */
-
 	attached() {
 		const A = new AUI();
 
 		A.use(
 			'liferay-search-container',
 			'liferay-search-container-select',
-			A => {
+			(A) => {
 				const plugins = [];
 
 				plugins.push(
@@ -43,8 +54,9 @@ class Layout extends Component {
 				const searchContainer = new Liferay.SearchContainer(
 					{
 						contentBox: A.one(this.refs.layout),
-						id: this.getInitialConfig().portletNamespace + this.getInitialConfig().searchContainerId,
-						plugins: plugins
+						id: this.getInitialConfig().portletNamespace +
+							this.getInitialConfig().searchContainerId,
+						plugins
 					}
 				);
 
@@ -57,7 +69,6 @@ class Layout extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
-
 	dispose() {
 		this._layoutDragDrop.dispose();
 	}
@@ -65,7 +76,6 @@ class Layout extends Component {
 	/**
 	 * @inheritDoc
 	 */
-
 	rendered(firstRendered) {
 		requestAnimationFrame(
 			() => {
@@ -89,13 +99,12 @@ class Layout extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_addLayoutDragDropTargets(items) {
 		let element = null;
 		let query = null;
 
 		items.forEach(
-			item => {
+			(item) => {
 				query = `[data-layout-column-item-plid="${item.plid}"]`;
 				element = document.querySelector(query);
 				this._layoutDragDrop.addTarget(element);
@@ -111,7 +120,6 @@ class Layout extends Component {
 	 * @return {Array}
 	 * @review
 	 */
-
 	_deleteEmptyColumns(layoutColumns) {
 		const columns = [...layoutColumns];
 
@@ -123,10 +131,11 @@ class Layout extends Component {
 	}
 
 	/**
+	 * @param {string} plid
 	 * @private
+	 * @return {Promise<object>}
 	 * @review
 	 */
-
 	_getItemChildren(plid) {
 		const formData = new FormData();
 
@@ -140,7 +149,7 @@ class Layout extends Component {
 				method: 'POST'
 			}
 		).then(
-			response => response.json()
+			(response) => response.json()
 		);
 	}
 
@@ -150,10 +159,9 @@ class Layout extends Component {
 	 * @return {string}
 	 * @review
 	 */
-
 	_getLayoutColumnActiveItemPlid(layoutColumn) {
 		const layoutColumnItem = layoutColumn.find(
-			layoutColumnItem => layoutColumnItem.active
+			(layoutColumnItem) => layoutColumnItem.active
 		);
 
 		return (
@@ -173,7 +181,6 @@ class Layout extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleDragLayoutColumnItem(eventData) {
 		clearTimeout(this._updatePathTimeout);
 
@@ -186,7 +193,7 @@ class Layout extends Component {
 
 		if (targetColumnIndex) {
 			this._setColumnHoveredData(sourceItemPlid, targetColumnIndex);
-			}
+		}
 		else if (targetItemPlid) {
 			this._setItemHoveredData(
 				position,
@@ -194,134 +201,18 @@ class Layout extends Component {
 				targetItemPlid
 			);
 
-				if (
-					this._draggingItemPosition === DRAG_POSITIONS.inside &&
-					this._currentPathItemPlid !== targetItemPlid
-				) {
-					this._updatePathTimeout = setTimeout(
-						() => {
+			if (
+				this._draggingItemPosition === DRAG_POSITIONS.inside &&
+				this._currentPathItemPlid !== targetItemPlid
+			) {
+				this._updatePathTimeout = setTimeout(
+					() => {
 						this._updatePath(targetItemPlid);
-						},
-						1000
-					);
-				}
+					},
+					UPDATE_PATH_TIMEOUT
+				);
 			}
 		}
-
-	/**
-	 * Method executed when a column is left empty after dragging.
-	 * Updates target item's status, removes empty columns if any
-	 * and returns a new columns array.
-	 *
-	 * @param {!Array} layoutColumns
-	 * @param {!number} targetColumnIndex
-	 * @private
-	 * @review
-	 */
-
-	_handleEmptyColumn(
-		layoutColumns,
-		targetColumnIndex
-	) {
-		let nextLayoutColumns = layoutColumns;
-
-		if (
-			this._draggingItem.active &&
-			(this._draggingItemColumnIndex !== targetColumnIndex)
-		) {
-			this._draggingItem.active = false;
-
-			nextLayoutColumns = this._clearFollowingColumns(
-				nextLayoutColumns,
-				this._draggingItemColumnIndex
-			);
-		}
-
-		const previousColumn = nextLayoutColumns[this._draggingItemColumnIndex - 1];
-
-		const activeItemPlid = this._getLayoutColumnActiveItemPlid(
-			previousColumn
-		);
-
-		const activeItem = getItem(
-			nextLayoutColumns,
-			activeItemPlid
-		);
-
-		return setIn(
-			nextLayoutColumns,
-			[
-				this._draggingItemColumnIndex - 1,
-				previousColumn.indexOf(activeItem),
-				'hasChild'
-			],
-			false
-		);
-	}
-
-	/**
-	 * Handle layout column item check event
-	 * @param {!object} event
-	 * @param {string} event.delegateTarget.value
-	 * @private
-	 * @review
-	 */
-
-	_handleLayoutColumnItemCheck(event) {
-		this._setLayoutColumnItemChecked(
-			event.delegateTarget.value,
-			event.delegateTarget.checked
-		);
-	}
-
-	/**
-	 * Handle click event on layout column item checkbox
-	 * @param {!object} event
-	 * @private
-	 * @review
-	 */
-
-	_handleLayoutColumnItemCheckboxClick(event) {
-		event.stopPropagation();
-	}
-
-	/**
-	 * Handle layout column item click event
-	 * @param {!object} event
-	 * @param {string} event.delegateTarget.dataset.layoutColumnItemPlid
-	 * @param {object} event.target.classList
-	 * @param {string} event.target.type
-	 * @private
-	 * @review
-	 */
-
-	_handleLayoutColumnItemClick(event) {
-		const targetIsA = event.target.tagName === 'A';
-		const targetIsButton = event.target.tagName === 'BUTTON';
-
-		if (!targetIsA && !targetIsButton) {
-			const itemUrl = event.delegateTarget.dataset.layoutColumnItemUrl;
-
-			if (itemUrl) {
-				navigate(itemUrl);
-			}
-			else {
-				const itemPlid = event.delegateTarget.dataset.layoutColumnItemPlid;
-
-				const item = this._getLayoutColumnItemByPlid(this.layoutColumns, itemPlid);
-
-				navigate(item.url);
-			}
-		}
-	}
-
-	/**
-	 * @private
-	 * @review
-	 */
-
-	_handleLeaveLayoutColumnItem() {
-		this._resetHoveredData();
 	}
 
 	/**
@@ -498,12 +389,124 @@ class Layout extends Component {
 	}
 
 	/**
+	 * Method executed when a column is left empty after dragging.
+	 * Updates target item's status, removes empty columns if any
+	 * and returns a new columns array.
+	 *
+	 * @param {object} layoutColumns
+	 * @param {number} targetColumnIndex
+	 * @private
+	 * @return {object}
+	 * @review
+	 */
+	_handleEmptyColumn(
+		layoutColumns,
+		targetColumnIndex
+	) {
+		let nextLayoutColumns = layoutColumns;
+
+		if (
+			this._draggingItem.active &&
+			(this._draggingItemColumnIndex !== targetColumnIndex)
+		) {
+			this._draggingItem.active = false;
+
+			nextLayoutColumns = this._clearFollowingColumns(
+				nextLayoutColumns,
+				this._draggingItemColumnIndex
+			);
+		}
+
+		const previousColumn = nextLayoutColumns[this._draggingItemColumnIndex - 1];
+
+		const activeItemPlid = this._getLayoutColumnActiveItemPlid(
+			previousColumn
+		);
+
+		const activeItem = getItem(
+			nextLayoutColumns,
+			activeItemPlid
+		);
+
+		return setIn(
+			nextLayoutColumns,
+			[
+				this._draggingItemColumnIndex - 1,
+				previousColumn.indexOf(activeItem),
+				'hasChild'
+			],
+			false
+		);
+	}
+
+	/**
+	 * Handle layout column item check event
+	 * @param {!object} event
+	 * @param {string} event.delegateTarget.value
+	 * @private
+	 * @review
+	 */
+	_handleLayoutColumnItemCheck(event) {
+		this._setLayoutColumnItemChecked(
+			event.delegateTarget.value,
+			event.delegateTarget.checked
+		);
+	}
+
+	/**
+	 * Handle click event on layout column item checkbox
+	 * @param {!object} event
+	 * @private
+	 * @review
+	 */
+	_handleLayoutColumnItemCheckboxClick(event) {
+		event.stopPropagation();
+	}
+
+	/**
+	 * Handle layout column item click event
+	 * @param {!object} event
+	 * @param {string} event.delegateTarget.dataset.layoutColumnItemPlid
+	 * @param {object} event.target.classList
+	 * @param {string} event.target.type
+	 * @private
+	 * @review
+	 */
+	_handleLayoutColumnItemClick(event) {
+		const targetIsA = event.target.tagName === 'A';
+		const targetIsButton = event.target.tagName === 'BUTTON';
+
+		if (!targetIsA && !targetIsButton) {
+			const itemUrl = event.delegateTarget.dataset.layoutColumnItemUrl;
+
+			if (itemUrl) {
+				navigate(itemUrl);
+			}
+			else {
+				const itemPlid = event.delegateTarget.dataset.layoutColumnItemPlid;
+
+				const item = this._getLayoutColumnItemByPlid(this.layoutColumns, itemPlid);
+
+				navigate(item.url);
+			}
+		}
+	}
+
+	/**
+	 * @private
+	 * @review
+	 */
+
+	_handleLeaveLayoutColumnItem() {
+		this._resetHoveredData();
+	}
+
+	/**
 	 * @param {!object} eventData
 	 * @param {!string} eventData.sourceItemPlid
 	 * @private
 	 * @review
 	 */
-
 	_handleStartMovingLayoutColumnItem(eventData) {
 		const sourceItemColumn = getItemColumn(
 			this.layoutColumns,
@@ -530,7 +533,6 @@ class Layout extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_initializeLayoutDragDrop() {
 		this._layoutDragDrop = new LayoutDragDrop();
 
@@ -562,9 +564,9 @@ class Layout extends Component {
 	 * @param {!Array} targetItem
 	 * @param {!number} targetColumnIndex
 	 * @private
+	 * @return {object}
 	 * @review
 	 */
-
 	_moveItemInside(layoutColumns, sourceItem, targetItem) {
 		let nextLayoutColumns = layoutColumns;
 
@@ -597,7 +599,10 @@ class Layout extends Component {
 
 				nextLayoutColumns = setIn(
 					nextLayoutColumns,
-					[targetColumnIndex + 1, 0],
+					[
+						targetColumnIndex + 1,
+						0
+					],
 					sourceItem
 				);
 			}
@@ -614,7 +619,11 @@ class Layout extends Component {
 
 		return setIn(
 			nextLayoutColumns,
-			[targetColumnIndex, targetColumn.indexOf(targetItem), 'hasChild'],
+			[
+				targetColumnIndex,
+				targetColumn.indexOf(targetItem),
+				'hasChild'
+			],
 			true
 		);
 	}
@@ -625,9 +634,9 @@ class Layout extends Component {
 	 * @param {string} plid
 	 * @param {string} priority
 	 * @private
+	 * @return {Promise<object>}
 	 * @review
 	 */
-
 	_moveLayoutColumnItemOnServer(parentPlid, plid, priority) {
 		const formData = new FormData();
 
@@ -661,7 +670,6 @@ class Layout extends Component {
 	 * @return {Array}
 	 * @review
 	 */
-
 	_clearFollowingColumns(layoutColumns, startColumnIndex) {
 		const columns = [...layoutColumns];
 
@@ -680,7 +688,6 @@ class Layout extends Component {
 	 * @return {Array}
 	 * @review
 	 */
-
 	_removeHasChildArrow(layoutColumns, itemPlid) {
 		let nextLayoutColumns = layoutColumns;
 
@@ -711,9 +718,7 @@ class Layout extends Component {
 	/**
 	 * Resets dragging information to null
 	 * @private
-	 * @return {Array}
 	 */
-
 	_resetHoveredData() {
 		this._draggingItemPosition = null;
 		this._hoveredLayoutColumnItemPlid = null;
@@ -784,14 +789,13 @@ class Layout extends Component {
 		}
 	}
 
-	/** Set an item active property to true
+	/**
+	 * Set an item active property to true
 	 * @param {!string} plid
 	 * @param {!boolean} checked
 	 * @private
-	 * @return {object|null}
 	 * @review
 	 */
-
 	_setLayoutColumnItemChecked(plid, checked) {
 		const column = getItemColumn(this.layoutColumns, plid);
 		const columnIndex = this.layoutColumns.indexOf(column);
@@ -808,13 +812,14 @@ class Layout extends Component {
 		);
 	}
 
-	/** Set the first page as Home page
+	/**
+	 * Set the first page as Home page
 	 * @param {!Array} layoutColumns
+	 * @param {string} currentHomeItemPlid
 	 * @private
 	 * @return {object|null}
 	 * @review
 	 */
-
 	_setHomePage(layoutColumns, currentHomeItemPlid) {
 		let nextLayoutColumns = layoutColumns;
 
@@ -859,7 +864,6 @@ class Layout extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_updatePath(targetColumnIndex, targetItemPlid) {
 		let nextLayoutColumns = this.layoutColumns;
 
@@ -887,14 +891,22 @@ class Layout extends Component {
 		if (activeItem && (activeItem !== targetItem)) {
 			nextLayoutColumns = setIn(
 				nextLayoutColumns,
-				[targetColumnIndex, targetColumn.indexOf(activeItem), 'active'],
+				[
+					targetColumnIndex,
+					targetColumn.indexOf(activeItem),
+					'active'
+				],
 				false
 			);
 		}
 
 		nextLayoutColumns = setIn(
 			nextLayoutColumns,
-			[targetColumnIndex, targetColumn.indexOf(targetItem), 'active'],
+			[
+				targetColumnIndex,
+				targetColumn.indexOf(targetItem),
+				'active'
+			],
 			true
 		);
 
@@ -902,10 +914,10 @@ class Layout extends Component {
 
 		nextLayoutColumns = this._deleteEmptyColumns(nextLayoutColumns);
 
-		this._getItemChildren(targetItemPlid)
-			.then(
-				response => {
-					const children = response.children;
+		this._getItemChildren(targetItemPlid).
+			then(
+				(response) => {
+					const {children} = response;
 					const lastColumnIndex = nextLayoutColumns.length - 1;
 
 					if (nextLayoutColumns[lastColumnIndex].length === 0) {
@@ -929,6 +941,7 @@ class Layout extends Component {
 				}
 			);
 	}
+
 }
 
 /**
@@ -1036,7 +1049,8 @@ Layout.STATE = {
 	 * @type {!string}
 	 */
 
-	_currentPathItemPlid: Config.string().internal().value(null),
+	_currentPathItemPlid: Config.string().internal().
+		value(null),
 
 	/**
 	 * Item that is being dragged.

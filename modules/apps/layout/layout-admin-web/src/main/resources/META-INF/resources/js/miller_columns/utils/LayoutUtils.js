@@ -35,9 +35,9 @@ function columnIsItemChild(layoutColumns, columnIndex, itemPlid) {
 }
 
 /**
- * @param {object[]} layoutColumns 
- * @param {string} sourceItemPlid 
- * @param {string} targetItemPlid 
+ * @param {object[]} layoutColumns
+ * @param {string} sourceItemPlid
+ * @param {string} targetItemPlid
  * @param {number} targetColumnIndex
  * @return {boolean} Returns whether a drop is valid or not
  * @review
@@ -48,7 +48,7 @@ function dropIsValid(
 	targetItemPlid,
 	targetColumnIndex
 ) {
-	const columnIsItemChild = columnIsItemChild(
+	const targetColumnIsChild = columnIsItemChild(
 		layoutColumns,
 		targetColumnIndex,
 		sourceItemPlid
@@ -56,7 +56,7 @@ function dropIsValid(
 	const targetEqualsSource = (sourceItemPlid === targetItemPlid);
 	const targetExists = targetItemPlid || targetColumnIndex;
 
-	return targetExists && !targetEqualsSource && !columnIsItemChild;
+	return targetExists && !targetEqualsSource && !targetColumnIsChild;
 }
 
 /**
@@ -78,17 +78,16 @@ function getColumnLastItem(layoutColumns, columnIndex) {
  * @param {object[]} layoutColumns
  * @param {string} itemPlid
  * @private
- * @return {object|undefined}
+ * @return {object|null}
  * @review
  */
-
 function getItem(layoutColumns, itemPlid) {
-	let item;
+	let item = null;
 
 	layoutColumns.forEach(
-		layoutColumn => {
+		(layoutColumn) => {
 			item = item || layoutColumn.find(
-				_item => _item.plid === itemPlid
+				(_item) => _item.plid === itemPlid
 			);
 		}
 	);
@@ -100,16 +99,16 @@ function getItem(layoutColumns, itemPlid) {
  * Get the container column of an item
  * @param {object[]} layoutColumns
  * @param {string} itemPlid
- * @return {object[]|undefined}
+ * @return {object[]|null}
  * @review
  */
 function getItemColumn(layoutColumns, itemPlid) {
-	let column;
+	let column = null;
 
 	layoutColumns.forEach(
-		layoutColumn => {
+		(layoutColumn) => {
 			const item = layoutColumn.find(
-				_item => _item.plid === itemPlid
+				(_item) => _item.plid === itemPlid
 			);
 
 			if (item) {

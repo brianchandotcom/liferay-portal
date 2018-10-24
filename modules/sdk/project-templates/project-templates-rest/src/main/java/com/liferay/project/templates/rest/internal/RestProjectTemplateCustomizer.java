@@ -51,11 +51,17 @@ public class RestProjectTemplateCustomizer
 			Path projectDirPath = destinationDirPath.resolve(
 				projectTemplatesArgs.getName());
 
+			Path configPath = projectDirPath.resolve(
+				"src/main/resources/configuration");
+
 			ProjectTemplateCustomizer.deleteFileInPath(
 				cxfConfig, projectDirPath);
 
 			ProjectTemplateCustomizer.deleteFileInPath(
 				restExtenderConfig, projectDirPath);
+
+			ProjectTemplateCustomizer.deleteFileInPath(
+				configPath.toString(), projectDirPath);
 		}
 	}
 

@@ -1974,6 +1974,7 @@ public class ProjectTemplatesTest {
 			"src/main/resources/configuration/com.liferay.portal.remote.rest." +
 				"extender.configuration.RestExtenderConfiguration-rest." +
 					"properties");
+		_testNotExists(gradleProjectDir, "src/main/resources/configuration");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"rest", "my-rest", "com.test", "-DclassName=MyRest",
@@ -1988,6 +1989,7 @@ public class ProjectTemplatesTest {
 			"src/main/resources/configuration" +
 				"/com.liferay.portal.remote.cxf.common.configuration." +
 					"CXFEndpointPublisherConfiguration-cxf.properties");
+		_testNotExists(mavenProjectDir, "src/main/resources/configuration");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}

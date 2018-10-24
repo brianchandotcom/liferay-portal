@@ -27,13 +27,7 @@ Properties properties = request.properties
 String liferayVersion = properties.get("liferayVersion")
 
 if (liferayVersion.startsWith("7.1")) {
-	Path srcPath = projectPath.resolve("src")
-
-	Path mainPath = srcPath.resolve("main")
-
-	Path resourcesPath = mainPath.resolve("resources")
-
-	Path configPath = resourcesPath.resolve("configuration")
+	Path configPath = projectPath.resolve("src/main/resources/configuration")
 
 	String cxfConfig =
 		"com.liferay.portal.remote.cxf.common.configuration." +
@@ -48,4 +42,5 @@ if (liferayVersion.startsWith("7.1")) {
 
 	Files.deleteIfExists cxfConfigPath
 	Files.deleteIfExists restExtenderConfigPath
+	Files.deleteIfExists configPath
 }

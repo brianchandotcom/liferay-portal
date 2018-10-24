@@ -77,6 +77,630 @@ public class UserODataRetrieverTest {
 	}
 
 	@Test
+	public void testCountUsersFilterByAncestorOrganizationIds()
+		throws Exception {
+
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+		_user2 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		Organization parentOrganization =
+			OrganizationTestUtil.addOrganization();
+
+		Organization organization = OrganizationTestUtil.addOrganization(
+			parentOrganization.getOrganizationId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomBoolean());
+
+		_organizations.add(organization);
+
+		_organizations.add(parentOrganization);
+
+		_userLocalService.addOrganizationUser(
+			organization.getOrganizationId(), _user1);
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			String.format(
+				"(firstName eq '%s') and (ancestorOrganizationIds eq '%s')",
+				firstName, parentOrganization.getOrganizationId()),
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByCompanyId() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			String.format(
+				"(firstName eq '%s') and (companyId eq '%s')", firstName,
+				_group1.getCompanyId()),
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByDateModifiedEquals() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+		_user2 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		Date modifiedDate = _user1.getModifiedDate();
+
+		Instant instant = modifiedDate.toInstant();
+
+		_user2.setModifiedDate(Date.from(instant.plusSeconds(1)));
+
+		_userLocalService.updateUser(_user2);
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			String.format(
+				"(dateModified eq %s) and (firstName eq '%s')",
+				ISO8601Utils.format(_user1.getModifiedDate()), firstName),
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByDateModifiedGreater() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+		_user2 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		Date modifiedDate = _user1.getModifiedDate();
+
+		Instant instant = modifiedDate.toInstant();
+
+		_user2.setModifiedDate(Date.from(instant.plusSeconds(1)));
+
+		_userLocalService.updateUser(_user2);
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			String.format(
+				"(dateModified gt %s) and (firstName eq '%s')",
+				ISO8601Utils.format(_user1.getModifiedDate()), firstName),
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByDateModifiedGreaterOrEquals()
+		throws Exception {
+
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+		_user2 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		Date modifiedDate = _user1.getModifiedDate();
+
+		Instant instant = modifiedDate.toInstant();
+
+		_user2.setModifiedDate(Date.from(instant.plusSeconds(1)));
+
+		_userLocalService.updateUser(_user2);
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			String.format(
+				"(dateModified ge %s) and (firstName eq '%s')",
+				ISO8601Utils.format(_user2.getModifiedDate()), firstName),
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByDateModifiedLower() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+		_user2 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		Date modifiedDate = _user1.getModifiedDate();
+
+		Instant instant = modifiedDate.toInstant();
+
+		_user2.setModifiedDate(Date.from(instant.plusSeconds(1)));
+
+		_userLocalService.updateUser(_user2);
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			String.format(
+				"(dateModified lt %s) and (firstName eq '%s')",
+				ISO8601Utils.format(_user2.getModifiedDate()), firstName),
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByDateModifiedLowerOrEquals()
+		throws Exception {
+
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+		_user2 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		Date modifiedDate = _user1.getModifiedDate();
+
+		Instant instant = modifiedDate.toInstant();
+
+		_user2.setModifiedDate(Date.from(instant.plusSeconds(1)));
+
+		_userLocalService.updateUser(_user2);
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			String.format(
+				"(dateModified le %s) and (firstName eq '%s')",
+				ISO8601Utils.format(modifiedDate), firstName),
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByEmailAddress() throws Exception {
+		_user1 = UserTestUtil.addUser(_group1.getGroupId());
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			"(emailAddress eq '" + _user1.getEmailAddress() + "')",
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByFirstName() throws Exception {
+		_user1 = UserTestUtil.addUser(_group1.getGroupId());
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			"(firstName eq '" + _user1.getFirstName() + "')",
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByFirstNameAndLastName() throws Exception {
+		_user1 = UserTestUtil.addUser(_group1.getGroupId());
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			"(firstName eq '" + _user1.getFirstName() + "') and (lastName eq " +
+				"'" + _user1.getLastName() + "') ",
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByFirstNameOrLastName() throws Exception {
+		_user1 = UserTestUtil.addUser(_group1.getGroupId());
+		_user2 = UserTestUtil.addUser(_group1.getGroupId());
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			"(firstName eq '" + _user1.getFirstName() + "') or (lastName eq '" +
+				_user2.getLastName() + "') ",
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(2, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByFirstNameOrLastNameWithSameFirstName()
+		throws Exception {
+
+		_user1 = UserTestUtil.addUser(_group1.getGroupId());
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			"(firstName eq '" + _user1.getFirstName() +
+				"') or (lastName eq 'nonexistentLastName') ",
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByFirstNameOrLastNameWithSameFirstNameAndLastName()
+		throws Exception {
+
+		_user1 = UserTestUtil.addUser(_group1.getGroupId());
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			"(firstName eq '" + _user1.getFirstName() + "') or (lastName eq '" +
+				_user1.getLastName() + "') ",
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByGroupId() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(),
+			new long[] {_group1.getGroupId(), _group2.getGroupId()});
+		_user2 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			"(firstName eq '" + firstName + "') and (groupId eq '" +
+				_group2.getGroupId() + "')",
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByGroupIds() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(),
+			new long[] {_group1.getGroupId(), _group2.getGroupId()});
+		_user2 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			"(firstName eq '" + firstName + "') and (groupIds eq '" +
+				_group2.getGroupId() + "')",
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByGroupIdsWithOr() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(),
+			new long[] {_group1.getGroupId(), _group2.getGroupId()});
+		_user2 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			"(firstName eq '" + firstName + "') and ((groupIds eq '" +
+				_group2.getGroupId() + "') or (groupIds eq '" +
+					_group1.getGroupId() + "'))",
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(2, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByGroupIdWithAnd() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(),
+			new long[] {_group1.getGroupId(), _group2.getGroupId()});
+		_user2 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			String.format(
+				"(firstName eq '%s') and (groupId eq '%s') and (groupId eq '" +
+					"%s')",
+				firstName, _group1.getGroupId(), _group2.getGroupId()),
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByJobTitle() throws Exception {
+		_user1 = UserTestUtil.addUser(_group1.getGroupId());
+
+		_user1.setJobTitle(RandomTestUtil.randomString());
+
+		_userLocalService.updateUser(_user1);
+
+		_user2 = UserTestUtil.addUser(
+			_group1.getGroupId(), LocaleUtil.getDefault());
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			"(jobTitle eq '" + _user1.getJobTitle() + "')",
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByLastName() throws Exception {
+		_user1 = UserTestUtil.addUser(_group1.getGroupId());
+		_user2 = UserTestUtil.addUser(_group1.getGroupId());
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			"(lastName eq '" + _user1.getLastName() + "')",
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByMultipleGroupIds() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(),
+			new long[] {_group1.getGroupId(), _group2.getGroupId()});
+		_user2 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			"(firstName eq '" + firstName + "') and (groupIds eq '" +
+				_group2.getGroupId() + "') and (groupIds eq '" +
+					_group1.getGroupId() + "')",
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByOrganizationCount() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+		_user2 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		Organization organization1 = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization1);
+
+		_userLocalService.addOrganizationUsers(
+			organization1.getOrganizationId(),
+			new long[] {_user1.getUserId(), _user2.getUserId()});
+
+		Organization organization2 = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization2);
+
+		_userLocalService.addOrganizationUser(
+			organization2.getOrganizationId(), _user1);
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			String.format(
+				"(firstName eq '%s') and (organizationCount eq '%s')",
+				firstName, 2),
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByOrganizationIds() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+		_user2 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization);
+
+		_userLocalService.addOrganizationUsers(
+			organization.getOrganizationId(), new long[] {_user1.getUserId()});
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			String.format(
+				"(firstName eq '%s') and (organizationIds eq '%s')", firstName,
+				organization.getOrganizationId()),
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByRoleIds() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+		_user2 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_userLocalService.addRoleUser(_role.getRoleId(), _user1);
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			String.format(
+				"(firstName eq '%s') and (roleIds eq '%s')", firstName,
+				_role.getRoleId()),
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByScopeGroupId() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(),
+			new long[] {_group1.getGroupId(), _group2.getGroupId()});
+		_user2 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			"(firstName eq '" + firstName + "') and (scopeGroupId eq '" +
+				_group2.getGroupId() + "')",
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByScreenName() throws Exception {
+		_user1 = UserTestUtil.addUser(_group1.getGroupId());
+		_user2 = UserTestUtil.addUser(_group1.getGroupId());
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			"(screenName eq '" + _user1.getScreenName() + "')",
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByTeamIds() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+		_user2 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		_team = _addTeam();
+
+		_userLocalService.addTeamUser(_team.getTeamId(), _user1);
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			String.format(
+				"(firstName eq '%s') and (teamIds eq '%s')", firstName,
+				_team.getTeamId()),
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByUserGroupIds() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+		_user2 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		_userGroup = UserGroupTestUtil.addUserGroup();
+
+		_userLocalService.addUserGroupUser(_userGroup.getUserGroupId(), _user1);
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			String.format(
+				"(firstName eq '%s') and (userGroupIds eq '%s')", firstName,
+				_userGroup.getUserGroupId()),
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByUserId() throws Exception {
+		_user1 = UserTestUtil.addUser(_group1.getGroupId());
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(), "(userId eq '" + _user1.getUserId() + "')",
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
+	public void testCountUsersFilterByUserName() throws Exception {
+		_user1 = UserTestUtil.addUser(_group1.getGroupId());
+		_user2 = UserTestUtil.addUser(_group1.getGroupId());
+
+		long count = _oDataRetriever.countResults(
+			_group1.getCompanyId(),
+			"(userName eq '" + StringUtil.toLowerCase(_user1.getFullName()) +
+				"')",
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
 	public void testGetUsersFilterByAncestorOrganizationIds() throws Exception {
 		String firstName = RandomTestUtil.randomString();
 
@@ -347,8 +971,8 @@ public class UserODataRetrieverTest {
 
 		List<User> users = _oDataRetriever.getResults(
 			_group1.getCompanyId(),
-			"(firstName eq '" + _user1.getFirstName() +
-				"') or (lastName eq 'nonexistentLastName') ",
+			"(firstName eq '" + _user1.getFirstName() + "') or (lastName eq " +
+				"'nonexistentLastName') ",
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(users.toString(), 1, users.size());

@@ -673,45 +673,6 @@ class Layout extends Component {
 	}
 
 	/**
-	 * Remove dragging item if necessary
-	 * @param {object} layoutColumns
-	 * @param {string} targetItemPlid
-	 * @private
-	 * @review
-	 */
-
-	_removeDraggingItem(layoutColumns, targetItemPlid) {
-		const nextLayoutColumns = layoutColumns;
-
-		const sourceColumn = nextLayoutColumns[this._draggingItemColumnIndex];
-		const sourceColumnIndex = nextLayoutColumns.indexOf(sourceColumn);
-
-		const targetColumn = getItemColumn(
-			nextLayoutColumns,
-			targetItemPlid
-		);
-		const targetColumnIndex = nextLayoutColumns.indexOf(targetColumn);
-
-		const pathUpdated = (this._currentPathItemPlid !== null);
-		const sameColumn = (sourceColumn === targetColumn);
-		const targetBelongsPreviousColumn = (this._draggingItemPosition === DRAG_POSITIONS.inside) &&
-			(targetColumnIndex === sourceColumnIndex - 1);
-
-		if (sameColumn || !(pathUpdated && targetBelongsPreviousColumn)) {
-			const draggingItemPlid = this._draggingItem.plid;
-
-			const draggingItem = getItem(
-				nextLayoutColumns,
-				draggingItemPlid
-			);
-
-			sourceColumn.splice(sourceColumn.indexOf(draggingItem), 1);
-		}
-
-		return nextLayoutColumns;
-	}
-
-	/**
 	 * Remove arrow if the item has no children
 	 * @param {Array} layoutColumns
 	 * @param {string} itemPlid

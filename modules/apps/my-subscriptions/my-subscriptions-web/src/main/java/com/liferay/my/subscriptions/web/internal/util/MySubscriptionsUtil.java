@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -144,11 +143,6 @@ public class MySubscriptionsUtil {
 			className.equals(_BLOGS_ENTRY_CLASSNAME)) {
 
 			title = "Blog at ";
-		}
-		else if (className.equals(BookmarksFolder.class.getName())) {
-			if (group != null) {
-				return LanguageUtil.get(locale, "home");
-			}
 		}
 		else if (className.equals(DLFileEntryType.class.getName())) {
 			if (group != null) {

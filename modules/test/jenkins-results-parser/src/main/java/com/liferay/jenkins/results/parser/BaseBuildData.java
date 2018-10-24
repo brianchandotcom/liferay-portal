@@ -20,9 +20,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -272,10 +269,8 @@ public abstract class BaseBuildData implements BuildData {
 	}
 
 	protected String getFormattedDate(Long timestamp) {
-		DateFormat dateFormat = new SimpleDateFormat(
-			"MMM dd, yyyy h:mm:ss a z");
-
-		return dateFormat.format(new Date(timestamp));
+		return JenkinsResultsParserUtil.toDateString(
+			new Date(timestamp), "MMM dd, yyyy h:mm:ss a z", "US/Pacific");
 	}
 
 	protected JSONArray getJSONArray(String key) {

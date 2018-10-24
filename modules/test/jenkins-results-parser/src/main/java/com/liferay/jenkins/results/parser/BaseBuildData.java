@@ -228,10 +228,16 @@ public abstract class BaseBuildData implements BuildData {
 	protected BaseBuildData(String runID, String jobName, String buildURL) {
 		JSONObject jsonObject = buildDatabase.getBuildDataJSONObject(runID);
 
-		if ((jsonObject == null) && (buildURL != null)) {
+		String jsonObjectString = jsonObject.toString();
+
+		if (jsonObjectString.equals("{}") && (buildURL != null)) {
 			try {
 				jsonObject = buildDatabase.getBuildDataJSONObject(
 					new URL(buildURL));
+
+				if (jsonObject.has("run_id")) {
+					runID = jsonObject.getString("run_id");
+				}
 			}
 			catch (MalformedURLException murle) {
 				throw new RuntimeException(murle);

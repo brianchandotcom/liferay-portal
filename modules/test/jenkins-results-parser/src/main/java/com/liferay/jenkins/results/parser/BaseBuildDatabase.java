@@ -63,6 +63,8 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 
 	@Override
 	public JSONObject getBuildDataJSONObject(URL buildURL) {
+		String buildURLString = buildURL.toString();
+
 		JSONObject buildsJSONObject = _jsonObject.getJSONObject("builds");
 
 		for (Object key : buildsJSONObject.keySet()) {
@@ -73,12 +75,12 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 				continue;
 			}
 
-			if (buildURL.equals(buildJSONObject.getString("build_url"))) {
+			if (buildURLString.equals(buildJSONObject.getString("build_url"))) {
 				return buildJSONObject;
 			}
 		}
 
-		return null;
+		return new JSONObject();
 	}
 
 	@Override

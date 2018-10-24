@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>WHOIS_FIELD</td>
-	<td>//input[@name='_com_liferay_network_utilities_web_portlet_NetworkUtilitiesPortlet_domain']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NETWORK_DOMAIN</td>
 	<td>//pre[contains(.,'${key_networkDomain}')]</td>
 	<td></td>

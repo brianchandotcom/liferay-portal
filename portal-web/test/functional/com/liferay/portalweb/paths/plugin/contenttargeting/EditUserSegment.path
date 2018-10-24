@@ -152,11 +152,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_WEB_CONTENT_ARTICLE_CHOOSE_BUTTON</td>
-	<td>//tr[contains(.,'${key_webContentTitle}')]/td[6]//button</td>
-	<td></td>
-</tr>
-<tr>
 	<td>USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_WEB_CONTENT_TITLE</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//span[contains(@class,'lfr-card-title-text')]</td>
 	<td></td>
@@ -311,11 +306,6 @@
 	<td></td>
 </tr>
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_USER_LOGGED-->
-<tr>
-	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_USER_LOGGED_MESSAGE</td>
-	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//div[contains(@class,'alert-info')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td></td>
 	<td></td>

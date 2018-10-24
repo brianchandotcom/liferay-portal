@@ -54,26 +54,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PUBLISHED_TIME</td>
-	<td>//div[contains(@class,'entry-date')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_LINK</td>
-	<td>//li[contains(@class,'edit-entry')]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_LINK</td>
-	<td>//li[contains(@class,'edit-entry-permissions')]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MOVE_TO_THE_RECYCLING_BIN</td>
-	<td>//li[contains(@class,'delete-entry')]//a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>COMMENTS_TRACKBACK_URL</td>
 	<td>//input[contains(@id,'trackbackURL')]</td>
 	<td></td>
@@ -109,21 +89,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>READ_MORE</td>
-	<td>//div[contains(@class,'read-more')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VOCABULARY</td>
-	<td>//span[@class='taglib-asset-categories-summary' and contains(.,'${key_vocabularyName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CATEGORY</td>
-	<td>//span[@class='taglib-asset-categories-summary']/a[contains(.,'${key_categoryName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TAG</td>
 	<td>//div[contains(.,'${key_entryTitle}')]//span/a[contains(.,'${key_tagName}')]</td>
 	<td></td>
@@ -139,73 +104,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RELATED_ASSETS_LINK_IMAGE</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//div/div[contains(@class,'asset-links')]/ul//a/i</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RELATED_ASSETS_TITLE</td>
 	<td>//div[contains(@class,'asset-links')]/ul//a[contains(.,'${key_assetTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_AUTHOR</td>
-	<td>//div[contains(@class,'entry-author')]//span[contains(@class,'user-name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIOUS_ENTRY_TITLE</td>
-	<td>//div[contains(@class,'previous-entry-content')]//span[contains(@class,'entry-content')]/h3</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIOUS_ENTRY_SUBTITLE</td>
-	<td>//div[contains(@class,'previous-entry-content')]//span[contains(@class,'entry-content-body')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIOUS_ENTRY_AUTHOR</td>
-	<td>//div[contains(@class,'previous-entry-content')]//span[contains(@class,'user-name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIOUS_ENTRY_IMAGE</td>
-	<td>//div[contains(@class,'previous-entry-content')]//span[contains(@class,'small-image')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NEXT_ENTRY_TITLE</td>
-	<td>//div[contains(@class,'next-entry-content')]//span[contains(@class,'entry-content')]/h3</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NEXT_ENTRY_SUBTITLE</td>
-	<td>//div[contains(@class,'next-entry-content')]//span[contains(@class,'entry-content-body')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NEXT_ENTRY_AUTHOR</td>
-	<td>//div[contains(@class,'next-entry-content')]//span[contains(@class,'user-name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NEXT_ENTRY_IMAGE</td>
-	<td>//div[contains(@class,'next-entry-content')]//span[contains(@class,'small-image')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DRAFT_ENTRY_STATUS</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'draft')]/div/h3</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WORKFLOW_STATUS</td>
-	<td>//span[contains(@class,'workflow-status')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REPLY_VERTICAL_ELLIPSES</td>
-	<td>//div[(@class='card-row') and contains(.,'${key_entryComment}')]//div[contains(@class,'dropdown')]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -220,116 +120,11 @@
 </tr>
 <!--SPECIFIC_ENTRY_YOUR_RATING-->
 <tr>
-	<td>SPECIFIC_ENTRY_YOUR_RATING_STAR_1</td>
-	<td>xpath=(//div[contains(@class,'entry approved') and contains(.,'${key_entryTitle}')]//div[contains(@id,'Content')])[1]/a[1][@class='rating-element icon-star']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SPECIFIC_ENTRY_YOUR_RATING_STAR_2</td>
-	<td>xpath=(//div[contains(@class,'entry approved') and contains(.,'${key_entryTitle}')]//div[contains(@id,'Content')])[1]/a[2][@class='rating-element icon-star']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SPECIFIC_ENTRY_YOUR_RATING_STAR_3</td>
-	<td>xpath=(//div[contains(@class,'entry approved') and contains(.,'${key_entryTitle}')]//div[contains(@id,'Content')])[1]/a[3][@class='rating-element icon-star']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SPECIFIC_ENTRY_YOUR_RATING_STAR_4</td>
-	<td>xpath=(//div[contains(@class,'entry approved') and contains(.,'${key_entryTitle}')]//div[contains(@id,'Content')])[1]/a[4][@class='rating-element icon-star']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SPECIFIC_ENTRY_YOUR_RATING_STAR_5</td>
-	<td>xpath=(//div[contains(@class,'entry approved') and contains(.,'${key_entryTitle}')]//div[contains(@id,'Content')])[1]/a[5][@class='rating-element icon-star']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SPECIFIC_ENTRY_YOUR_RATING_STAR_EMPTY_1</td>
-	<td>xpath=(//div[contains(@class,'entry approved') and contains(.,'${key_entryTitle}')]//div[contains(@id,'Content')])[1]/a[1][@class='rating-element icon-star-empty']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SPECIFIC_ENTRY_YOUR_RATING_STAR_EMPTY_2</td>
-	<td>xpath=(//div[contains(@class,'entry approved') and contains(.,'${key_entryTitle}')]//div[contains(@id,'Content')])[1]/a[2][@class='rating-element icon-star-empty']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SPECIFIC_ENTRY_YOUR_RATING_STAR_EMPTY_3</td>
-	<td>xpath=(//div[contains(@class,'entry approved') and contains(.,'${key_entryTitle}')]//div[contains(@id,'Content')])[1]/a[3][@class='rating-element icon-star-empty']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SPECIFIC_ENTRY_YOUR_RATING_STAR_EMPTY_4</td>
-	<td>xpath=(//div[contains(@class,'entry approved') and contains(.,'${key_entryTitle}')]//div[contains(@id,'Content')])[1]/a[4][@class='rating-element icon-star-empty']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SPECIFIC_ENTRY_YOUR_RATING_STAR_EMPTY_5</td>
-	<td>xpath=(//div[contains(@class,'entry approved') and contains(.,'${key_entryTitle}')]//div[contains(@id,'Content')])[1]/a[5][@class='rating-element icon-star-empty']</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--SPECIFIC_ENTRY_AVERAGE-->
-<tr>
-	<td>SPECIFIC_ENTRY_AVERAGE</td>
-	<td>//div[contains(@class,'entry approved') and contains(.,'${key_entryTitle}')]//div[contains(@id,'Score')]/div[contains(.,'Average')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SPECIFIC_ENTRY_AVERAGE_STAR_1</td>
-	<td>xpath=(//div[contains(@class,'entry approved') and contains(.,'${key_entryTitle}')]//div[contains(@id,'Score')])[2]/a[1][@class='rating-element icon-star']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SPECIFIC_ENTRY_AVERAGE_STAR_2</td>
-	<td>xpath=(//div[contains(@class,'entry approved') and contains(.,'${key_entryTitle}')]//div[contains(@id,'Score')])[2]/a[2][@class='rating-element icon-star']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SPECIFIC_ENTRY_AVERAGE_STAR_3</td>
-	<td>xpath=(//div[contains(@class,'entry approved') and contains(.,'${key_entryTitle}')]//div[contains(@id,'Score')])[2]/a[3][@class='rating-element icon-star']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SPECIFIC_ENTRY_AVERAGE_STAR_4</td>
-	<td>xpath=(//div[contains(@class,'entry approved') and contains(.,'${key_entryTitle}')]//div[contains(@id,'Score')])[2]/a[4][@class='rating-element icon-star']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SPECIFIC_ENTRY_AVERAGE_STAR_5</td>
-	<td>xpath=(//div[contains(@class,'entry approved') and contains(.,'${key_entryTitle}')]//div[contains(@id,'Score')])[2]/a[5][@class='rating-element icon-star']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SPECIFIC_ENTRY_AVERAGE_STAR_EMPTY_1</td>
-	<td>xpath=(//div[contains(@class,'entry approved') and contains(.,'${key_entryTitle}')]//div[contains(@id,'Score')])[2]/a[1][@class='rating-element icon-star-empty']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SPECIFIC_ENTRY_AVERAGE_STAR_EMPTY_2</td>
-	<td>xpath=(//div[contains(@class,'entry approved') and contains(.,'${key_entryTitle}')]//div[contains(@id,'Score')])[2]/a[2][@class='rating-element icon-star-empty']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SPECIFIC_ENTRY_AVERAGE_STAR_EMPTY_3</td>
-	<td>xpath=(//div[contains(@class,'entry approved') and contains(.,'${key_entryTitle}')]//div[contains(@id,'Score')])[2]/a[3][@class='rating-element icon-star-empty']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SPECIFIC_ENTRY_AVERAGE_STAR_EMPTY_4</td>
-	<td>xpath=(//div[contains(@class,'entry approved') and contains(.,'${key_entryTitle}')]//div[contains(@id,'Score')])[2]/a[4][@class='rating-element icon-star-empty']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SPECIFIC_ENTRY_AVERAGE_STAR_EMPTY_5</td>
-	<td>xpath=(//div[contains(@class,'entry approved') and contains(.,'${key_entryTitle}')]//div[contains(@id,'Score')])[2]/a[5][@class='rating-element icon-star-empty']</td>
-	<td></td>
-</tr>
 <tr>
 	<td></td>
 	<td></td>

@@ -30,11 +30,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ENABLED_ON_PRIVATE_PAGES_CHECKBOX</td>
-	<td>//span[contains(.,'Private Pages')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONTENT_CHECKBOX</td>
 	<td>//div[contains(@id,'stagingConfigurationControls')]//span[contains(.,'${key_contentName}')]</td>
 	<td></td>
@@ -58,11 +53,6 @@
 <tr>
 	<td>REMOTE_STAGING_PORT</td>
 	<td>//input[contains(@id,'remotePort')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REMOTE_STAGING_PATH_CONTEXT</td>
-	<td>//input[contains(@id,'remotePathContext')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -9,16 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>DOCKBAR_SIMULATOR_BUTTON</td>
-	<td>//*[@data-qa-id='simulation']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_SEGMENT_RULE</td>
-	<td>//div[contains(@class,'category-content')]//div[contains(.,'${key_userSegment}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>USER_SEGMENT_MATCHED</td>
 	<td>//div[contains(.,'${key_userSegmentMatched}')]//div[contains(@class,'center matched')]</td>
 	<td></td>

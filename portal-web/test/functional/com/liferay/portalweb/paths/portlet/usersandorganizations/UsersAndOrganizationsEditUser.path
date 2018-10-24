@@ -97,21 +97,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ORGANIZATIONS_TABLE_TYPE</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ORGANIZATIONS_TABLE_ROLES</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ORGANIZATIONS_TABLE_REMOVE_LINK</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[3]//a/span[contains(.,'Remove')]/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ORGANIZATIONS_SELECT_LINK</td>
 	<td>//a[contains(@id,'selectOrganizationLink')]/span</td>
 	<td></td>
@@ -128,16 +113,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITES_TABLE_ROLES</td>
-	<td>//tr[contains(.,'${key_siteName}')]/td[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITES_TABLE_REMOVE_LINK</td>
-	<td>//tr[contains(.,'${key_siteName}')]/td[3]//a/span[contains(.,'Remove')]/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITES_SELECT_LINK</td>
 	<td>//a[contains(@id,'selectSiteLink')]/span</td>
 	<td></td>
@@ -151,16 +126,6 @@
 <tr>
 	<td>USER_GROUPS_TABLE_NAME</td>
 	<td>//tr[contains(.,'${key_userGroupName}')]/td[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_GROUPS_TABLE_REMOVE_LINK</td>
-	<td>//tr[contains(.,'${key_userGroupName}')]/td[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_GROUPS_SELECT_LINK</td>
-	<td>//a[contains(@id,'openUserGroupsLink')]/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -186,11 +151,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ROLES_ORGANIZATION_ROLES_TABLE_REMOVE_LINK</td>
-	<td>//tr[contains(.,'${key_roleTitle}')]/td[2]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ROLES_ORGANIZATION_SELECT_CHOOSE_BUTTON</td>
 	<td>//tr[contains(.,'${key_roleTitle}')]/td[2]//button[contains(.,'Choose')]</td>
 	<td></td>
@@ -212,16 +172,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ROLES_REGULAR_ROLES_TABLE</td>
-	<td>//tr[contains(.,'${key_roleTitle}')]/td[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ROLES_REGULAR_ROLES_TABLE_REMOVE_LINK</td>
-	<td>//tr[contains(.,'${key_roleTitle}')]/td[2]//a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ROLES_REGULAR_ROLES_SELECT_LINK</td>
 	<td>//a[contains(@id,'selectRegularRoleLink')]/span</td>
 	<td></td>
@@ -235,11 +185,6 @@
 <tr>
 	<td>ROLES_SITE_ROLES_TABLE_TITLE</td>
 	<td>//tr[contains(.,'${key_siteRoleName}')]/td[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ROLES_SITE_ROLES_TABLE_REMOVE_LINK</td>
-	<td>//tr[contains(.,'${key_siteRoleName}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -259,11 +204,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PERSONAL_SITE_MY_PROFILE</td>
-	<td>//div[contains(@id,'Content')]//select[contains(@id,'publicLayoutSetPrototypeId')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PERSONAL_SITE_MY_DASHBOARD</td>
 	<td>//div[contains(@class,'form-group')]//select[contains(@id,'privateLayoutSetPrototypeId')]</td>
 	<td></td>
@@ -274,11 +214,6 @@
 	<td></td>
 </tr>
 <!--DISPLAY_SETTINGS-->
-<tr>
-	<td>DISPLAY_SETTINGS_LANGUAGE_SELECT</td>
-	<td>//select[contains(@id,'languageId')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>DISPLAY_SETTINGS_TIME_ZONE_SELECT</td>
 	<td>//select[contains(@id,'timeZoneId')]</td>

@@ -39,16 +39,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ARTICLE_TITLE</td>
-	<td>//div[@class='kb-article-container']//h1[@class='kb-title']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_CONTENT</td>
-	<td>//div[@class='kb-article-container']//div[@class='kb-article-body']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUBSCRIBE</td>
 	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'Subscribe')]</td>
 	<td></td>
@@ -116,11 +106,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ATTACHMENTS_SELECT_FILES_BUTTON</td>
-	<td>//button[contains(.,'Select Files')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER</td>
 	<td>//div[contains(@id,'AttachmentsContainer')]</td>
 	<td></td>
@@ -163,31 +148,11 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EDIT_TITLE_FIELD_REQUIRED</td>
-	<td>//span[contains(.,'Required')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_TITLE_FIELD_REQUIRED_ALERT</td>
-	<td>//div[contains(@class,'required') and contains(.,'This field is required.')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--HISTORY-->
-<tr>
-	<td>HISTORY_TITLE</td>
-	<td>//div[contains(@class,'taglib-diff')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>HISTORY_CONTENT</td>
-	<td>//div[contains(@class,'taglib-diff')]//p</td>
-	<td></td>
-</tr>
 <tr>
 	<td>HISTORY_CONTENT_ADDED_DIFF</td>
 	<td>//div[@class='panel-body']//p//span[contains(@id,'added-diff')]</td>
@@ -196,16 +161,6 @@
 <tr>
 	<td>HISTORY_CONTENT_REMOVED_DIFF</td>
 	<td>//div[@class='panel-body']//p[contains(.,'${key_kbArticleContentRemovedDiff}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>HISTORY_VERSION_TABLE_SOURCE</td>
-	<td>//table[contains(@data-searchcontainerid,'knowledge_base_web')]//thead[contains(.,'Version')]/..//a[contains(.,'(Source)')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>HISTORY_VERSION_TABLE_TARGET</td>
-	<td>//table[contains(@data-searchcontainerid,'knowledge_base_web')]//thead[contains(.,'Version')]/..//a[contains(.,'(Target)')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -225,11 +180,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADMIN_KB_ARTICLE_SECTION</td>
-	<td>xpath=(//div[contains(@data-fieldname,'KBArticleSections')]//textarea)[${key_counter}]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CATEGORY_HEADER</td>
 	<td>//span[@class='taglib-asset-categories-summary']</td>
 	<td></td>
@@ -240,11 +190,6 @@
 	<td></td>
 </tr>
 <!--SELECT_CATEGORIES-->
-<tr>
-	<td>SELECT_CATEGORIES_IFRAME</td>
-	<td>//div[contains(@id,'selectCategory')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

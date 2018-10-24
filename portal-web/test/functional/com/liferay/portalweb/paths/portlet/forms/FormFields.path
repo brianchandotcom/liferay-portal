@@ -24,16 +24,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FIELD_REMOVE</td>
-	<td>//div[contains(@class,'form-field-repeatable-toolbar')]//a[contains(@class,'delete-button') and not(contains(@class,'hide'))]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELD_NAME</td>
-	<td>//div[contains(@class,'key-value-editor')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FIELD_NAME_EDIT</td>
 	<td>//div[contains(@class,'key-value-editor')]/input[contains(@class, 'input')]</td>
 	<td></td>
@@ -41,11 +31,6 @@
 <tr>
 	<td></td>
 	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>HIDDEN_LABEL</td>
-	<td>xpath=(//div[contains(@class,'form-field-container')][2]//label[contains(.,'${key_fieldLabelHidden}')])</td>
 	<td></td>
 </tr>
 <!--CHECKBOX-->
@@ -57,11 +42,6 @@
 <tr>
 	<td>CHECKBOX_LABEL</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label | //li[contains(.,'${key_fieldName}')]//label | //label[.//input[@type='checkbox' and contains(@id,'${key_fieldName}')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHECKBOX_OPTION</td>
-	<td>//label[contains(.,'${key_checkboxOption}')]/input[@type='checkbox' and contains(@name,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -128,11 +108,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>OPTIONS_OPTION_LABEL_FIELD</td>
-	<td>//div[contains(@class,'ddm-options-row')][${key_rowNumber}]//input[contains(@name,'label')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>OPTIONS_OPTION_VALUE_FIELD</td>
 	<td>//div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//input</td>
 	<td></td>
@@ -150,11 +125,6 @@
 <tr>
 	<td>OPTIONS_OPTION_NAME_FIELD_EDIT</td>
 	<td>//div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//div[contains(@class,'key-value-editor')]/input[contains(@class, 'input')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OPTIONS_LABEL</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/span[contains(.,'${key_fieldLabel}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -200,11 +170,6 @@
 </tr>
 <!--RADIO-->
 <tr>
-	<td>RADIO_OPTION</td>
-	<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio' and contains(@name,'${key_fieldName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RADIO_OPTION_LABEL</td>
 	<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio' and contains(@name,'${key_fieldName}')]/../span</td>
 	<td></td>
@@ -217,11 +182,6 @@
 <tr>
 	<td>RADIO_LABEL</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEXT_MULTILINE_LABEL</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label[contains(.,'${key_fieldLabel}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -253,11 +213,6 @@
 <tr>
 	<td>TEXT_FIELD_2</td>
 	<td>xpath=(//input[@type='text' and contains(@id,'${key_fieldName}')])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEXT_FIELD_LINE_OPTION</td>
-	<td>//div[contains(@class,'radio-options')]//input[contains(@id,'${key_textFieldLineOption}')] | //div[contains(@class,'check')]//input[contains(@id,'${key_textFieldLineOption}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -329,11 +284,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_FIELD_OPTIONS_LIST_CHECKBOX</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//div[contains(@class,'form-builder-select-field')]//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_selectOption}')]//input</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SELECT_FIELD_MULTIPLE_OPTION</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//span[contains(.,'${key_selectOption}')]</td>
 	<td></td>
@@ -341,11 +291,6 @@
 <tr>
 	<td>SELECT_FIELD_MULTIPLE_OPTION_REMOVE</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//span[contains(.,'${key_selectOption}')]//button[contains(@class,'trigger-label-item-close')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_OPTION</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//select/option[contains(.,'${key_selectOption}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -428,18 +373,8 @@
 </tr>
 <!--AUTOCOMPLETE-->
 <tr>
-	<td>AUTOCOMPLETE_LIST</td>
-	<td>//ul[@role='listbox']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>AUTOCOMPLETE_OPTION</td>
 	<td>//li[@data-text='${key_autocompleteOption}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUTOCOMPLETE_PANEL</td>
-	<td>//div[@class='panel-body' and contains(.,'Autocomplete')]</td>
 	<td></td>
 </tr>
 <!--UPLOAD-->

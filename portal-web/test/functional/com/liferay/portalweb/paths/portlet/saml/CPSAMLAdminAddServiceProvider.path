@@ -9,16 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SAVE_BUTTON</td>
-	<td>//button[contains(.,'Save')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -52,21 +42,6 @@
 <tr>
 	<td>SERVICE_PROVIDER_NAME_IDENTIFIER_ATTRIBUTE_NAME_FIELD</td>
 	<td>//input[contains(@id,'SamlAdminPortlet_nameIdAttribute')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SERVICE_PROVIDER_ATTRIBUTES_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@id,'SamlAdminPortlet_attributesEnabled')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SERVICE_PROVIDER_ATTRIBUTES_NAMESPACE_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@id,'SamlAdminPortlet_attributesNamespaceEnabled')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SERVICE_PROVIDER_ATTRIBUTES_TEXTAREA</td>
-	<td>//textarea[contains(@id,'SamlAdminPortlet_attributeNames')]</td>
 	<td></td>
 </tr>
 </tbody>

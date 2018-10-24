@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VIEWABLE_BY_SELECT</td>
-	<td>//select[contains(@id,'microblogs')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -65,21 +60,6 @@
 	<td></td>
 </tr>
 <!--TIMELINE_ENTRY_COMMENT-->
-<tr>
-	<td>TIMELINE_ENTRY_COMMENT_ACTION</td>
-	<td>//div[contains(.,'${key_entryContent}')]/..//div[contains(@class,'comments-container')]//span[contains(@class,'action')]/a[contains(.,'${key_actionType}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TIMELINE_ENTRY_COMMENT_CONTENT</td>
-	<td>//div[contains(.,'${key_entryContent}')]/../div[contains(@class,'comments-container')]//div[@class='content']/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TIMELINE_ENTRY_COMMENT_USER_THUMBNAIL</td>
-	<td>//div[contains(.,'${key_entryContent}')]/../div[contains(@class,'comments-container')]//span[contains(@class,'thumbnail')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

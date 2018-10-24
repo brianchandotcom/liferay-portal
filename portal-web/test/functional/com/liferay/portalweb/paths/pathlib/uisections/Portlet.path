@@ -138,11 +138,6 @@
 	<td>//h2[contains(@class,'portlet-title') and contains(.,'${key_portletName}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>WORD</td>
-	<td>//h1[@class='head-entry']/span[contains(.,'${key_dictionaryTerm}')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

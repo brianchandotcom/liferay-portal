@@ -33,11 +33,6 @@
 	<td>//select[contains(@id,'displayStyle')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>CLOSE_BUTTON</td>
-	<td>//button[contains(@class,'btn close close-content')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

@@ -9,18 +9,8 @@
 </thead>
 <tbody>
 <tr>
-	<td>ITEM_ACTIONS</td>
-	<td>//ul[contains(@class,'list-group')]/*[contains(@data-qa-id,'row')]//h4[contains(.,'${key_itemName}')]/../..//a[span/*[name()='svg'][contains(.,'ellipsis-v')]]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ITEM_ACTIONS_DEFAULT</td>
 	<td>//ul[contains(@class,'list-group')]/*[contains(@data-qa-id,'row')]//h5/../..//a[span/*[name()='svg'][contains(.,'ellipsis-v')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ITEM_DESCRIPTION</td>
-	<td>//ul[contains(@class,'list-group')]/*[contains(@data-qa-id,'row')]//h5[contains(.,'${key_itemName}')]/../h6[1]</td>
 	<td></td>
 </tr>
 <tr>

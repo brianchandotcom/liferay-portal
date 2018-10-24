@@ -9,52 +9,17 @@
 </thead>
 <tbody>
 <tr>
-	<td>OPTIONS_ICON</td>
-	<td>//div[@id='main-content']//menu[@class='portlet-topper-toolbar']/div/a/i</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD</td>
-	<td>//div[@class='navbar-inner' or contains(@class,'navbar-default')]//a[contains(.,'Add')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_ICON</td>
-	<td>//a[@id='toggle_id_users_groups_admin_group_searchtoggleAdvanced']</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--ADVANCED_SEARCH-->
 <tr>
-	<td>ADVANCED_SEARCH_MATCH</td>
-	<td>//select[contains(@id,'andOperator')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_NAME</td>
-	<td>//input[contains(@id,'name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_DESCRIPTION</td>
-	<td>//input[contains(@id,'description')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--USER_GROUP_TABLE-->
-<tr>
-	<td>USER_GROUP_TABLE_ALL_CHECKBOX</td>
-	<td>//input[contains(@name,'allRowIds')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>USER_GROUP_TABLE_CHECKBOX</td>
 	<td>//tr[contains(.,'${key_userGroupName}')]/td[1]//input</td>
@@ -68,11 +33,6 @@
 <tr>
 	<td>USER_GROUP_TABLE_NAME_LINK</td>
 	<td>//tr[contains(.,'${key_userGroupName}')]/td[2]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_GROUP_TABLE_DESCRIPTION</td>
-	<td>//tr[contains(.,'${key_userGroupName}')]/td[3]//a</td>
 	<td></td>
 </tr>
 <tr>

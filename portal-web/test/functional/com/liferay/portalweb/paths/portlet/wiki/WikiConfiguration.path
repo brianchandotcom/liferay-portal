@@ -30,16 +30,6 @@
 	<td></td>
 </tr>
 <!--SCOPE-->
-<tr>
-	<td>SCOPE_SELECT</td>
-	<td>//div[@class='btn-group lfr-icon-menu']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCOPE_MENULIST_SITE_NAME</td>
-	<td>//a[@role='menuitem' and contains(.,'${key_siteName}')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

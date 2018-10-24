@@ -14,16 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_FOLDER_BUTTON</td>
-	<td>//div[@class='button-holder ']/button[contains(.,'Add Folder')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHOOSE_THIS_FOLDER_BUTTON</td>
-	<td>//div[@class='button-holder ']/button[contains(.,'Choose This Folder')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FOLDER</td>
 	<td>//a[contains(.,'${key_dmFolderName}')]//span[contains(@class,'taglib-text')]</td>
 	<td></td>
@@ -36,11 +26,6 @@
 <tr>
 	<td>CHOOSE_BUTTON</td>
 	<td>//tr[contains(.,'${key_dmFolderName}')]//button[contains(.,'Choose')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHOOSE_BUTTON_GENERIC</td>
-	<td>//tbody//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 </tbody>

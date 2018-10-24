@@ -18,11 +18,6 @@
 	<td>//div[contains(@id,'siteTemplateContent')]//div//div</td>
 	<td></td>
 </tr>
-<tr>
-	<td>SITE_TEMPLATE_SITE_CLONED_FROM</td>
-	<td>//div[contains(@id,'siteTemplateContent')]//div//div/em</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

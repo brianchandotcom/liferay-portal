@@ -35,16 +35,6 @@
 </tr>
 <!--SEARCH-->
 <tr>
-	<td>SEARCH_NONE</td>
-	<td>//div[@id='_15_entriesContainer']//div[contains(.,'No web content was found that matched the keywords: ${searchQuery}.')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_FILTER_REMOVE_BUTTON</td>
-	<td>//span[contains(@class,'close-search')]//i[contains(@class,'icon-remove')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SEARCH_TITLE</td>
 	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//a</td>
 	<td></td>
@@ -56,36 +46,6 @@
 </tr>
 <!--FILTER-->
 <tr>
-	<td>FILTER_HOME</td>
-	<td>//a[@data-title='Home']/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_HOME_ACTIONS</td>
-	<td>//span[contains(@class,'entry-action')]/div/a/i[contains(@class,'caret')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_RECENT</td>
-	<td>//a[@title='Recent']/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_MINE</td>
-	<td>//a[@title='Mine']/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_BROWSE_BY_STRUCTURE</td>
-	<td>//a[@title='Browse by Structure']/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_SELECTED</td>
-	<td>//li[contains(@class,'app-view-navigation-entry') and contains(@class,'folder') and contains(@class,'active')]/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -94,31 +54,6 @@
 <tr>
 	<td>ENTRY_CARDS_THUMBNAIL</td>
 	<td>//li[contains(@data-title,'${key_webContentTitle}')]//div[contains(@class,'vertical-card-container')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_CARDS_THUMBNAIL_GENERIC</td>
-	<td>//div[@class='entry-thumbnail']/img</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_CARDS_MENULIST_ICON</td>
-	<td>//div[@data-title='${key_webContentTitle}']//a[contains(@class,'dropdown-toggle')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_CARDS_CHECKBOX</td>
-	<td>//div[@data-title='${key_webContentTitle}']//input[contains(@name,'rowIdsJournal')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_CARDS_TITLE</td>
-	<td>//div[@data-title='${key_webContentTitle}']//span[@class='entry-title']/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_CARDS_WORKFLOW_STATUS</td>
-	<td>//div[@data-title='${key_webContentTitle}']//span[@class='workflow-status']/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -153,48 +88,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_LIST_TITLE_COPY</td>
-	<td>xpath=(//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//a)[2]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ENTRY_LIST_TITLE_ON_LIVE</td>
 	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//h5</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_LIST_VERSION</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//h6[contains(.,'Version')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ENTRY_LIST_LAST_MODIFIED</td>
 	<td>//*[@data-qa-id='row' and contains(.,'${key_webContentTitle}')]//h6[contains(.,'modified')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_LIST_CREATED</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//h6[contains(.,'Created')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_LIST_DISPLAY_DATE</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//h6[contains(.,'Display Date')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_LIST_CATEGORY</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//span[contains(@class,'asset-category') and contains(.,'${key_categoryName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_LIST_CATEGORY_COPY</td>
-	<td>xpath=(//li[contains(@data-title,'${key_webContentTitle}')]//span[contains(@class,'asset-category') and contains(.,'${key_categoryName}')])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_LIST_TAG</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//span[contains(@class,'asset-tags') and contains(.,'${key_tagName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -223,32 +123,7 @@
 	<td>//li[contains(@class,'move-article') and contains(.,'${key_webContentTitle}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>WEB_CONTENT_PLUS_ICON_COLLAPSED</td>
-	<td>//div[contains(@class,'treeview') and @aria-expanded='false']/div[contains(@class,'treeview-node-toggler')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WEB_CONTENT_PLUS_ICON_EXPANDED</td>
-	<td>//div[contains(@class,'treeview') and @aria-expanded='true']/div[contains(@class,'treeview-node-toggler')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_FOLDER</td>
-	<td>//div[contains(@class,'treeview')]//div[contains(@class,'card-horizontal') and contains(.,'${key_folderName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_TITLE</td>
-	<td>//a[contains(.,'${key_webContentTitle}')]</td>
-	<td></td>
-</tr>
 <!--FOLDER_TABLE-->
-<tr>
-	<td>FOLDER_TABLE_CHOOSE</td>
-	<td>//tr[contains(.,'${key_folderName}')]/td[4]//button[contains(.,'Choose')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

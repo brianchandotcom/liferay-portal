@@ -35,11 +35,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>POPOVER_CONTENT_TITLE</td>
-	<td>//div[contains(@class,'popover-content')]/div/div/div[contains(.,'${key_assetTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -48,11 +43,6 @@
 <tr>
 	<td>APPLICATIONS_ACCORDION_PANEL_TITLE</td>
 	<td>//div[contains(@id,'Accordion')]//div[@class='panel-title' and contains(.,'Widgets')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COLLAPSED_CATEGORY</td>
-	<td>//div[contains(@class,'toggler-header-collapsed')]/div</td>
 	<td></td>
 </tr>
 <tr>

@@ -49,11 +49,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_QUESTION</td>
-	<td>//div[contains(@class,'lfr-icon-actions')]/span[2]/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>POLL_QUESTION</td>
 	<td>//form[contains(@id,'PollsDisplayPortlet') and contains(.,'${key_pollsQuestion}')]</td>
 	<td></td>

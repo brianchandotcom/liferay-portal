@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SAML_ENABLED_CHECKBOX</td>
 	<td>//input[contains(@id,'saml-enabled') and @type='checkbox']</td>
 	<td></td>
@@ -62,11 +57,6 @@
 <tr>
 	<td>CERTIFICATE_AND_PRIVATE_KEY_KEY_PASSWORD_FIELD</td>
 	<td>//input[contains(@id,'saml-keystore-credential-password')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CERTIFICATE_AND_PRIVATE_KEY_SAVE_BUTTON</td>
-	<td>//fieldset[contains(.,'Certificate and Private Key')]//button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
 <tr>

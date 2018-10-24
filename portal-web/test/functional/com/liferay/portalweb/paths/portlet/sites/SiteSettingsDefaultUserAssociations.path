@@ -9,21 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>SITE_ROLES_SELECT</td>
-	<td>//div[contains(.,'Site Roles')]//button[contains(@id,'selectSiteRoleLink')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_ROLES_SELECT_IFRAME</td>
-	<td>//iframe[@class='dialog-iframe-node ' and contains(@id,'selectSiteRole')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_ROLES_CHOOSE_BUTTON</td>
-	<td>//tr[contains(.,'${key_siteRoleName}')]//button[contains(.,'Choose')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TEAMS_SELECT</td>
 	<td>//div[contains(.,'Teams')]//button[contains(@id,'selectTeamLink')]</td>
 	<td></td>
@@ -36,11 +21,6 @@
 <tr>
 	<td>TEAMS_SELECTED</td>
 	<td>//td[contains(.,'${key_teamName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEAMS_CHOOSE_BUTTON</td>
-	<td>//tr[contains(.,'${key_teamName}')]/td//a</td>
 	<td></td>
 </tr>
 </tbody>

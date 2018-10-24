@@ -9,18 +9,8 @@
 </thead>
 <tbody>
 <tr>
-	<td>ADD_COMMENT_LINK</td>
-	<td>link=Add Comment</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PANEL_TOGGLE</td>
 	<td>//div[contains(.,'Comments')]//div[@class='panel-heading']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BE_THE_FIRST_LINK</td>
-	<td>link=Be the first.</td>
 	<td></td>
 </tr>
 <tr>
@@ -54,28 +44,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>COMMENT_LABEL</td>
-	<td>//label[contains(.,'Comment')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DELETE_LINK</td>
-	<td>//div[(@class='lfr-discussion-body') and contains (.,'${key_entryComment}')]//a[contains(.,'Delete')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DELETE_LINK_GENERIC</td>
-	<td>//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Delete')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>EDIT_COMMENT_FIELD</td>
 	<td>//div[contains(@name,'editReplyBody')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_LINK</td>
-	<td>//div[(@class='lfr-discussion-body') and contains (.,'${key_entryComment}')]//a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -84,23 +54,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>POST_REPLY_BODY</td>
-	<td>//textarea[@class='field']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REPLY_BODY</td>
-	<td>//div[@class='lfr-discussion-message']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>REPLY_TO_COMMENT</td>
 	<td>//div[@class='lfr-discussion-body' and contains(.,'${key_entryComment}')]//span[contains(.,'Reply')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[contains(@class,'lfr-message-response') and contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>

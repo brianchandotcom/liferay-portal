@@ -9,33 +9,13 @@
 </thead>
 <tbody>
 <tr>
-	<td>NAME_FIELD</td>
-	<td>//input[contains(@id='name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DESCRIPTION_FIELD</td>
-	<td>//textarea[contains(@id,'description')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PUBLIC_PAGES_SELECT</td>
 	<td>//select[contains(@id,'publicLayoutSetPrototypeId')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PRIVATE_PAGES_SELECT</td>
-	<td>//select[contains(@id,'privateLayoutSetPrototypeId')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ENABLE_PROPAGATION_PUBLIC_PAGE_CHECKBOX</td>
 	<td>//input[contains(@id,'publicLayoutSetPrototypeLinkEnabled')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENABLE_PROPAGATION_PRIVATE_PAGE_CHECKBOX</td>
-	<td>//input[contains(@id,'privateLayoutSetPrototypeLinkEnabled')]</td>
 	<td></td>
 </tr>
 <tr>

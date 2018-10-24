@@ -14,38 +14,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_PAGE_ALERT_MESSAGE</td>
-	<td>//div[contains(@id,'selectedPageMessage') and contains(@class,'alert-alert')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECTED_PAGE_INFO_MESSAGE</td>
-	<td>//div[@class='alert alert-info']/span[@class='selected-page-message' and contains(.,'Public Pages > ${key_pageName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_PUBLIC_PAGE</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]//a[contains(.,'Public Pages')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_PRIVATE_PAGE</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]//a[contains(.,'Private Pages')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USE_DEFAULT_DISPLAY_PAGE</td>
-	<td>//label[contains(.,'default display page')]/input</td>
-	<td></td>
-</tr>
-<tr>
 	<td>USE_SPECIFIC_DISPLAY_PAGE</td>
 	<td>//label[contains(.,'specific display page')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USE_NO_DISPLAY_PAGE</td>
-	<td>//label[contains(.,'None')]//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -54,16 +24,6 @@
 	<td></td>
 </tr>
 <!--PUBLIC_PAGES-->
-<tr>
-	<td>PUBLIC_PAGES_SELECTION</td>
-	<td>//li[contains(@class,'treeview-node')]//div/span[contains(.,'${key_pageName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLIC_DISPLAY_PAGE_ITEM</td>
-	<td>//span[contains(@id,'displayPageNameInput')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

@@ -10,11 +10,6 @@
 <tbody>
 <!--CURRENT_RECORD-->
 <tr>
-	<td>CURRENT_RECORD_VERSION</td>
-	<td>//span[@class='workflow-version']/strong</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CURRENT_RECORD_STATUS</td>
 	<td>//span[@class='workflow-status']/span</td>
 	<td></td>

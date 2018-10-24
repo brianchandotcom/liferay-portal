@@ -9,46 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>NAME_FIELD</td>
-	<td>//input[contains(@id,'name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIRST_NAME_FIELD</td>
-	<td>//input[contains(@id,'firstName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MIDDLE_NAME_FIELD</td>
-	<td>//input[contains(@id,'middleName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LAST_NAME_FIELD</td>
-	<td>//input[contains(@id,'lastName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCREEN_NAME_FIELD</td>
-	<td>//input[contains(@id,'screenName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STREET_FIELD</td>
-	<td>//input[contains(@id,'street')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CITY_FIELD</td>
-	<td>//input[contains(@id,'city')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>POSTAL_CODE_FIELD</td>
-	<td>//input[contains(@id,'zip')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>EMAIL_ADDRESS_FIELD</td>
 	<td>//input[contains(@id,'emailAddress')]</td>
 	<td></td>

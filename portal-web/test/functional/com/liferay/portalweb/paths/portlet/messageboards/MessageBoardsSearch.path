@@ -14,31 +14,6 @@
 	<td>//div[contains(@id,'mbEntriesSearchContainer')]//a[contains(.,'${key_threadSubject}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>SEARCH_RESULTS_ENTRY_DESCRIPTION</td>
-	<td>//div[contains(@id,'mbEntriesSearchContainer')]//a[contains(.,'${key_threadSubject}')]//..//span[@class='entry-description']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_RESULTS_HIGHLIGHTED</td>
-	<td>//div[contains(@id,'mbEntriesSearchContainer')]//a[contains(.,'${key_threadSubject}')]//..//..//..//span[@class='highlight']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_RESULTS_ATTACHMENT_IMAGE</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'attachment')]/a/div[@class='image']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_RESULTS_ATTACHMENT_HEADER</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'attachment')]/a//span[contains(.,'Attachment added by ${key_userName}')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_RESULTS_ATTACHMENT_BODY</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'attachment')]/a/span[@class='body']</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

@@ -29,11 +29,6 @@
 	<td>xpath=(//div/a[@title='Select Content'])[${key_rowNumber}]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>RULE_PANEL_DELETE_ROW_BUTTON</td>
-	<td>xpath=(//button[contains(@class,'delete-row')])[${key_rowNumber}]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

@@ -30,11 +30,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>USER_INFORMATION</td>
-	<td>//li[contains(@class,'tab')]/a[contains(.,'User Information')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ORGANIZATION_COUNTRY_NAME</td>
 	<td>//select[contains(@id,'countryId') and contains(.,'${key_countryName}')]</td>
 	<td></td>
@@ -62,16 +57,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ORGANIZATION_TABLE_ACTIONS</td>
-	<td>//td[contains(@class,'name') and contains(.,'${key_orgName}')]/../td//div/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ORGANIZATION_TABLE_SUBORGANIZATION_COUNT</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[2]//em</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -88,21 +73,11 @@
 	<td></td>
 </tr>
 <tr>
-	<td>USERS_AND_SUBORGANIZATIONS_TABLE_ACTIONS</td>
-	<td>//td[contains(@class,'name') and contains(.,'${key_userFullName}')]/../td//div/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--USER_TABLE-->
-<tr>
-	<td>USER_TABLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]/td[1]/input</td>
-	<td></td>
-</tr>
 <tr>
 	<td>USER_TABLE_NAME</td>
 	<td>//tr[contains(.,'${key_userScreenName}')]/td[2]/a</td>
@@ -124,11 +99,6 @@
 	<td></td>
 </tr>
 <!--USER_TABLE_HEADER-->
-<tr>
-	<td>USER_TABLE_HEADER_FIRST_NAME</td>
-	<td>//div[contains(@id,'usersSearchContainer')]//th[contains(.,'First Name')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

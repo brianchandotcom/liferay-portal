@@ -9,18 +9,8 @@
 </thead>
 <tbody>
 <tr>
-	<td>SUCCESS_MESSAGE_DOCUMENT_VIEW</td>
-	<td>//div[@class='view']//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DOCUMENT_VIEW_VERSION_NUMBER</td>
 	<td>//section[contains(@id,'DLAdminPortlet')]//span[@class='workflow-version']/span[contains(@class,'workflow-value')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_VIEW_WORKFLOW_STATUS</td>
-	<td>//section[contains(@id,'DLAdminPortlet')]//span[@class='workflow-status']/span[contains(@class,'workflow-value')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -29,41 +19,6 @@
 	<td></td>
 </tr>
 <!--TOOLBAR-->
-<tr>
-	<td>TOOLBAR_DOWNLOAD_BUTTON</td>
-	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Download')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_EDIT_BUTTON</td>
-	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Edit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_MOVE_BUTTON</td>
-	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Move')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_CHECKOUT_BUTTON</td>
-	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Checkout')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_CANCEL_CHECKOUT_BUTTON</td>
-	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Cancel Checkout')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_CHECKIN_BUTTON</td>
-	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Checkin')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_PERMISSIONS_BUTTON</td>
-	<td>//div[contains(@id,'fileEntryToolbar')]/div/button[contains(.,'Permissions')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td></td>
 	<td></td>
@@ -101,11 +56,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DOCUMENT_INFO_LINKS</td>
-	<td>//div[contains(@class,'document-info')]/div[@class='entry-links']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DOCUMENT_INFO_DESCRIPTION</td>
 	<td>//div[contains(@class,'document-info')]/span[@class='document-description']</td>
 	<td></td>
@@ -121,11 +71,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DOCUMENT_INFO_URL_LINK</td>
-	<td>//div[@class='asset-details-content']//span/a[@class='show-url-file']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DOCUMENT_INFO_VERSION</td>
 	<td>//div[@class='sidebar-header']//span[contains(@class,'label-item') and contains(.,'Version')]</td>
 	<td></td>
@@ -133,11 +78,6 @@
 <tr>
 	<td>DOCUMENT_INFO_WORKFLOW_STATUS</td>
 	<td>//span[@class='workflow-status']/strong</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_INFO_LAST_UPDATED_BY</td>
-	<td>//div[contains(@class,'lfr-asset-icon') and contains(.,'Last Updated by Test Test')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -162,11 +102,6 @@
 </tr>
 <!--DOCUMENT_DETAILS-->
 <tr>
-	<td>DOCUMENT_DETAILS_DATE</td>
-	<td>//div[contains(@class,'sidebar-body')]//div[contains(@class,'lfr-asset-icon') and contains(@class,'icon-calendar')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DOCUMENT_DETAILS_DOWNLOAD</td>
 	<td>//div[@class='sidebar-section']//a[@title='Download (${key_dmDocumentSize})']</td>
 	<td></td>
@@ -184,11 +119,6 @@
 <tr>
 	<td>DOCUMENT_DETAILS_SIZE</td>
 	<td>//div[contains(@class,'sidebar-body')]//dd[contains(.,'${key_dmDocumentSize}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_DETAILS_TYPE</td>
-	<td>//div[contains(@class,'sidebar-body')]//dd[contains(.,'${key_dmDocumentType}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -219,11 +149,6 @@
 <tr>
 	<td>DOCUMENT_DETAILS_WORKFLOW</td>
 	<td>//div[contains(@class,'sidebar-header')]//span[contains(@class,'workflow-status')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_DETAILS_WORKFLOW_PNG</td>
-	<td>portal/icons/document_detail_workflow.png</td>
 	<td></td>
 </tr>
 <tr>
@@ -296,31 +221,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>METADATA_PANEL_DECIMAL</td>
-	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_decimalValue}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>METADATA_PANEL_DOCUMENTS_AND_MEDIA</td>
-	<td>//div[@class='lfr-ddm-container']/div[contains(.,'Documents and Media') and contains(.,'${key_dmDocument}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>METADATA_PANEL_DOCUMENTS_AND_MEDIA_FILE</td>
-	<td>//div[@class='lfr-ddm-container']/div[contains(.,'Documents and Media')]/a[contains(.,'${key_dmDocument}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>METADATA_PANEL_HTML</td>
-	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_htmlContent}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>METADATA_PANEL_INTERGER</td>
-	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_integerValue}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>METADATA_PANEL_NUMBER</td>
 	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_numberValue}')]</td>
 	<td></td>
@@ -341,21 +241,11 @@
 	<td></td>
 </tr>
 <tr>
-	<td>METADATA_PANEL_TEXT_BOX</td>
-	<td>//div[@class='lfr-ddm-container']/div[contains(.,'Text Box') and contains(.,'${key_textBoxContent}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--SOCIAL_OFFICE_RATING-->
-<tr>
-	<td>SOCIAL_OFFICE_AVERAGE_RATING_STAR_ICON_PNG</td>
-	<td>so/icons/average_rating_star_icon.png</td>
-	<td></td>
-</tr>
 <tr>
 	<td></td>
 	<td></td>

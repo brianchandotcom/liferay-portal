@@ -25,16 +25,6 @@
 	<td>//tr[contains(.,'${key_siteNameScope}')]/td[1]//a</td>
 	<td></td>
 </tr>
-<tr>
-	<td>SCOPE_SITES_TABLE_TYPE</td>
-	<td>//tr[contains(.,'${key_siteNameScope}')]/td[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCOPE_SITES_TABLE_CHOOSE_BUTTON</td>
-	<td>//tr[contains(.,'${key_siteNameScope}')]/td[3]//button[contains(.,'Choose')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

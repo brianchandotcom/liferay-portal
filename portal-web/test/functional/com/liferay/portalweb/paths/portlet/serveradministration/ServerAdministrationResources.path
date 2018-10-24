@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>SOURCE</td>
-	<td>//span[contains(@onmouseover,'ToolTip')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

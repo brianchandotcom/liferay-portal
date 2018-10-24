@@ -14,23 +14,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NAME_FIELD_LOCALIZED</td>
-	<td>//div[contains(@id,'nameEditor') and contains(@aria-label,'${key_localizedText}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_FIELD</td>
-	<td>//div[(contains(@id,'body') or contains(@id,'content') or contains(@id,'HTML')) and contains(@class,'alloy-editor-container')]//div[contains(@class,'alloy-editor-placeholder')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONTENT_FIELD_BOLD</td>
 	<td>//div[contains(@class,'alloy-editor-placeholder') and contains(@data-placeholder,'Write your content here...')]/p/strong[contains(.,'${key_boldContent}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_FIELD_LOCALIZED</td>
-	<td>//div[contains(@id,'contentEditor') and contains(@title,'${key_localizedText}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -49,26 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DESCRIPTION_FIELD</td>
-	<td>//div[contains(@id,'description')]//div[contains(@title,'Rich Text Editor')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAME_FIELD</td>
-	<td>//div[contains(@id,'nameEditor') and contains(@aria-label,'Rich Text Editor')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TITLE_FIELD</td>
-	<td>//div[contains(@id,'titleEditor') and contains(@aria-label,'Rich Text Editor')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TITLE_FIELD_LOCALIZED</td>
-	<td>//div[contains(@id,'titleEditor') and contains(@aria-label,'${key_localizedText}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -80,31 +45,11 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_ADD_MENUBAR_HORIZONTAL_LINE</td>
-	<td>//button[contains(@data-type,'hline')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_ADD_MENUBAR_TABLE</td>
-	<td>//button[contains(@data-type,'table')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--TABLE-->
-<tr>
-	<td>TABLE_ROWS</td>
-	<td>//input[contains(@placeholder,'Rows')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TABLE_COLS</td>
-	<td>//input[contains(@placeholder,'Colums')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td></td>
 	<td></td>
@@ -137,62 +82,17 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TEXT_FORMATTING_LINK</td>
-	<td>//button[contains(@data-type,'button-link')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEXT_FORMATTING_TWITTER</td>
-	<td>//button[contains(@data-type,'button-twitter')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--CONTENT_EDITOR-->
 <tr>
-	<td>CONTENT_EDITOR_SWITCH_ABC</td>
-	<td>//button[contains(@id,'contentEditorSwitch') and contains(.,'abc')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_EDITOR_FULL_SCREEN</td>
-	<td>//button[contains(@id,'contentEditorFullscreen')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_EDITOR_LIGHT_BACKGROUND</td>
-	<td>//button/i[contains(@class,'icon-sun')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_EDITOR_DARK_BACKGROUND</td>
-	<td>//button/i[contains(@class,'icon-moon')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--CONTENT_EDITOR_FULL_SCREEN-->
-<tr>
-	<td>CONTENT_EDITOR_FULL_SCREEN_VERTICAL_LAYOUT</td>
-	<td>//span[contains(@data-layout,'vertical')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_EDITOR_FULL_SCREEN_HORIZONTAL_LAYOUT</td>
-	<td>//span[contains(@data-layout,'horizontal')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_EDITOR_FULL_SCREEN_SIMPLE_LAYOUT</td>
-	<td>//span[contains(@data-layout,'simple')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

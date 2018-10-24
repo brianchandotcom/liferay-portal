@@ -14,28 +14,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EMAIL_PASSWORD</td>
-	<td>//div[@class='msg']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMAIL_VERIFICATION</td>
-	<td>//div[class='msg']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CAPTCHA_IMAGE</td>
 	<td>//img[@id='_com_liferay_login_web_portlet_LoginPortlet_captcha']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CAPTCHA_REFRESH</td>
-	<td>//img[@id='refreshCaptcha']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CREATE_ACCOUNT_POP_UP_WINDOW</td>
-	<td>title=Welcome - Liferay</td>
 	<td></td>
 </tr>
 <tr>

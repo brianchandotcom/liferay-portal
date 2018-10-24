@@ -112,23 +112,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REPEAT_REPEAT_ON_DAY_OF_THE_MONTH_RADIO</td>
-	<td>//label[@class='radio-inline' and contains(.,'Day of the Month')]/input</td>
-	<td></td>
-</tr>
-<tr>
 	<td>REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_RADIO</td>
 	<td>//label[@class='radio-inline' and contains(.,'Day of the Week')]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_POSITION_DROPDOWN</td>
-	<td>//div[contains(@id,'_viewPositionalWeekday')]//select[@title='Position']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_WEEKDAY_DROPDOWN</td>
-	<td>//div[contains(@id,'_viewPositionalWeekday')]//select[@title='Weekday']</td>
 	<td></td>
 </tr>
 <tr>
@@ -221,16 +206,6 @@
 <tr>
 	<td>DETAILS_PERMISSIONS_VIEWABLE_BY_SELECT</td>
 	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DETAILS_PERMISSIONS_MORE_OPTIONS_LINK</td>
-	<td>//span[contains(@id,'inputPermissionsShowOptions')]/a[contains(.,'More Options')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DETAILS_PERMISSIONS_HIDE_OPTIONS_LINK</td>
-	<td>//a[contains(@id,'inputPermissionsHideOptions') and contains (.,'Hide Options')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -341,48 +316,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_ALL_DAY_TITLE</td>
-	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'scheduler-event-all-day calendar-portlet-event') and contains(@data-startdate,'${key_startDate}') and contains(@data-startdate,'12:00 AM') and contains(@data-enddate,'${key_endDate}') and contains(@data-enddate,'11:59 PM')]/div[@class='scheduler-event-content']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC</td>
-	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event')]//div[contains(.,'${key_eventTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC_BACKGROUND_COLOR</td>
-	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event') and contains(@style,'${key_backgroundColor}')]/div[contains(.,'${key_eventTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC_BACKGROUND_COLOR_DEFAULT</td>
-	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event') and contains(@style,'rgb(240, 208, 208)')]/div[contains(.,'${key_eventTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC_FONT_COLOR</td>
-	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event') and contains(@style,'${key_fontColor}')]/div[contains(.,'${key_eventTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_SPECIFIC_FONT_COLOR_DEFAULT</td>
-	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event') and contains(@style,'rgb(217, 104, 104)')]/div[contains(.,'${key_eventTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REGULAR</td>
 	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event') and contains(@data-startdate,'${key_startDate}') and contains(@data-starttime,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-endtime,'${key_endDateTime}')]/div[@class='scheduler-event-content']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REPEAT</td>
-	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'scheduler-event-repeated calendar-portlet-event') and contains(@data-starttime,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-endtime,'${key_endDateTime}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REPEAT_TITLE</td>
-	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'scheduler-event-repeated calendar-portlet-event') and contains(@data-starttime,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-endtime,'${key_endDateTime}')]/div[@class='scheduler-event-content']</td>
 	<td></td>
 </tr>
 <tr>
@@ -579,11 +514,6 @@
 <tr>
 	<td>RECURRING_EVENT_DIALOG_BOX_HEADER</td>
 	<td>//h3[@class='modal-title' and contains(.,'Recurring Event')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RECURRING_EVENT_DIALOG_BOX_BODY</td>
-	<td>//div[contains(@class,'modal-body')]</td>
 	<td></td>
 </tr>
 <tr>

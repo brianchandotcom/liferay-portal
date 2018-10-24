@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_WEB_CONTENT</td>
-	<td>//span[contains(@class,'lfr-icon-action')]/a[contains(.,'Select Web Content')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_WEB_CONTENT</td>
 	<td>//*[@data-qa-id='addButton']//a[contains(@id,'JournalContent')]</td>
 	<td></td>
@@ -78,11 +73,6 @@
 <tr>
 	<td>WEB_CONTENT_CONTENT_IMAGE_ON_LIVE</td>
 	<td>//div[contains(@class,'journal-content-article')]/p/img</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WEB_CONTENT_LINK_TO_PAGE</td>
-	<td>//div[@class='journal-content-article']/a</td>
 	<td></td>
 </tr>
 <tr>

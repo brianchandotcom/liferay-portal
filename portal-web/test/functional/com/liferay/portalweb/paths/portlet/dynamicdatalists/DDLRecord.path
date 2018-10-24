@@ -33,11 +33,6 @@
 	<td>//div[@class='lfr-ddm-container']/div[not(contains(@class,'hide'))][2]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>FIELD_3</td>
-	<td>//div[@class='lfr-ddm-container']/div[not(contains(@class,'hide'))][3]</td>
-	<td></td>
-</tr>
 <!--NESTED_FIELDS-->
 <tr>
 	<td>NESTED_PARENT_FIELD</td>

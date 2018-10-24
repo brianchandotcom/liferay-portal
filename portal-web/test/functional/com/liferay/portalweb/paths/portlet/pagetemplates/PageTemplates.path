@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>OPEN_PAGE_TEMPLATE</td>
-	<td>//div[(contains(@class,'control-group') or contains(@class,'field-group')) and contains(@class,'field-wrapper')]/span/a/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ACTIVE_TOGGLE_SWITCH</td>
 	<td>//label[contains(.,'Active')]//span[contains(@class,'toggle-switch-handle')]</td>
 	<td></td>
@@ -30,21 +25,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TEMPLATE_TABLE_NAME_1</td>
-	<td>xpath=(//*[@data-qa-id='row']//span[contains(@class,'title')])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TEMPLATE_TABLE_NAME_2</td>
-	<td>xpath=(//*[@data-qa-id='row']//span[contains(@class,'title')])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TEMPLATE_TABLE_NAME_3</td>
-	<td>xpath=(//*[@data-qa-id='row']//span[contains(@class,'title')])[3]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGE_TEMPLATE_TABLE_NAME_4</td>
 	<td>xpath=(//*[@data-qa-id='row']//span[contains(@class,'title')])[4]</td>
 	<td></td>
@@ -55,33 +35,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TEMPLATE_TABLE_DESCRITPION_1</td>
-	<td>xpath=(//tr/td[2])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TEMPLATE_TABLE_DESCRIPTION_2</td>
-	<td>xpath=(//tr/td[2])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TEMPLATE_TABLE_DESCRIPTION_3</td>
-	<td>xpath=(//tr/td[2])[3]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGE_TEMPLATE_TABLE_ACTIVE</td>
 	<td>//*[@data-qa-id='row' and contains(.,'${key_pageTemplateName}')]//span[contains(@class,'workflow-text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TEMPLATE_TABLE_ACTIONS</td>
-	<td>//*[@data-qa-id='row' and contains(.,'${key_pageTemplateName}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TEMPLATE_TABLE_ACTIONS_4</td>
-	<td>xpath=(//tr/td[4]//div/a)[6]</td>
 	<td></td>
 </tr>
 </tbody>

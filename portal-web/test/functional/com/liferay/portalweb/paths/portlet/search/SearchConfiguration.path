@@ -9,43 +9,8 @@
 </thead>
 <tbody>
 <tr>
-	<td>ADVANCED_SEARCH_CONFIGURATION</td>
-	<td>//textarea[contains(@id,'searchConfiguration')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASIC_DISPLAY_SITE_FACET_CHECKBOX</td>
-	<td>//input[contains(@id,'displayScopeFacet')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASIC_DISPLAY_ASSET_TYPE_FACET_CHECKBOX</td>
-	<td>//input[contains(@id,'displayAssetTypeFacet')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASIC_DISPLAY_ASSET_TAGS_FACET_CHECKBOX</td>
-	<td>//input[contains(@id,'displayAssetTagsFacet')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASIC_DISPLAY_ASSET_CATEGORIES_FACET_CHECKBOX</td>
-	<td>//input[contains(@id,'displayAssetCategoriesFacet')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASIC_DISPLAY_FOLDER_FACET_CHECKBOX</td>
-	<td>//input[contains(@id,'displayFolderFacet')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>BASIC_DISPLAY_USER_FACET_CHECKBOX</td>
 	<td>//input[contains(@id,'UserSearchFacet')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASIC_DISPLAY_MODIFIED_RANGE_FACET_CHECKBOX</td>
-	<td>//input[contains(@id,'displayModifiedRangeFacet')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,21 +26,6 @@
 <tr>
 	<td>SCOPE_PARAMETER_NAME</td>
 	<td>//input[contains(@name,'scopeParameterName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_PORTLET_TAG_CONFIGURATION</td>
-	<td>//div[contains(@id,'PortletConfiguration')]//a[contains(@id,'AssetEntries')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_PORTLET_ASSET_TYPE_TAG_CONFIGURATION</td>
-	<td>//select[contains(@id,'currentAssetTypes')]//option[contains(.,'${key_searchAssetType}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_PORTLET_CONFIGURATION_MOVE_TO_AVAILABLE_BUTTON</td>
-	<td>//button[contains(@title,'Current to Available')]</td>
 	<td></td>
 </tr>
 </tbody>

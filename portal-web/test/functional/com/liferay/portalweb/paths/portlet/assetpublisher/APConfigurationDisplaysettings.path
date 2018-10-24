@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ABSTRACT_LENGTH_SELECT</td>
-	<td>//select[contains(@id,'abstractLength')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ASSET_LINK_BEHAVIOR_SELECT</td>
 	<td>//select[contains(@id,'assetLinkBehavior')]</td>
 	<td></td>

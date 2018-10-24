@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFIGURATION_OPTIONS</td>
-	<td>//a[@title='Options']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CUSTOM_FIELD</td>
 	<td>//div[contains(@class,'custom-attributes')]//input[contains(@id,'DLAdminPortlet')]</td>
 	<td></td>
@@ -51,16 +46,6 @@
 <tr>
 	<td>DOCUMENT_VERSION_VERTICAL_ELLIPSIS</td>
 	<td>//li[@class='list-group-item']/div[contains(.,'${key_dmDocumentVersionNumber}')]/..//div//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVBAR_CONTAINER</td>
-	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//div[contains(@class,'container')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PORTLET_TITLE</td>
-	<td>//span[contains(@class,'header-toolbar-title')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -85,16 +70,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ICON_DOCUMENT_THUMBNAIL</td>
-	<td>//li[@data-title='${key_dmDocumentTitle}']//div[contains(@class,'bg-cover')]/a/img</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ICON_DOCUMENT_THUMBNAIL_GENERIC</td>
-	<td>//a[@data-folder='false']/div[@class='entry-thumbnail']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ICON_DOCUMENT_ICON_LOCKED</td>
 	<td>//div[contains(@id,'entriesContainer')]//li[contains(@data-title,'${key_dmDocumentTitle}')]//span/*[name()='svg'][@message='locked']</td>
 	<td></td>
@@ -107,11 +82,6 @@
 <tr>
 	<td>ICON_DOCUMENT_CHECKBOX</td>
 	<td>//li[contains(@data-title,'${key_dmDocumentTitle}')]//input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ICON_DOCUMENT_SHORTCUT_ACTIONS</td>
-	<td>//div[contains(.,'${key_dmDocumentTitle}') and a/div/img[@class='shortcut-icon']]//span/div/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -146,18 +116,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ICON_FOLDER_THUMBNAIL_GENERIC</td>
-	<td>//div[contains(@class,'card-row') and contains(@class,'selectable')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ICON_FOLDER_CHECKBOX</td>
 	<td>//li[contains(@data-title,'${key_dmFolderName}')]//label/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ICON_FOLDER_ACTIONS</td>
-	<td>//div[contains(@class,'selectable') and contains(.,'${key_dmFolderName}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -187,18 +147,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DESCRIPTIVE_LIST_DOCUMENT_WORKFLOW</td>
-	<td>//li[@data-title='${key_dmDocumentTitle}']//span[contains(@class,'workflow-status')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DESCRIPTIVE_LIST_DOCUMENT_TYPE</td>
 	<td>//li[@data-title='${key_dmDocumentTitle}']//span[contains(.,'${key_dmDocumentType}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DESCRIPTIVE_LIST_DOCUMENT_LOCKED</td>
-	<td>//li[@data-title='${key_dmDocumentTitle}']//div[@class='entry-thumbnail']/img[@alt='Locked']</td>
 	<td></td>
 </tr>
 <tr>
@@ -244,69 +194,14 @@
 </tr>
 <!--LIST_DOCUMENT-->
 <tr>
-	<td>LIST_DOCUMENT</td>
-	<td>//table[contains(@class,'table-autofit')]//tr[contains(.,'${key_dmDocumentTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LIST_DOCUMENT_CHECKBOX</td>
-	<td>//table[contains(@class,'table-autofit')]//tr[contains(.,'${key_dmDocumentTitle}')]/td//input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LIST_DOCUMENT_ACTIONS</td>
-	<td>//table[contains(@class,'table-autofit')]//tr[contains(.,'${key_dmDocumentTitle}')]//span/div/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LIST_DOCUMENT_TITLE</td>
-	<td>//table[contains(@class,'table-autofit')]//tr[contains(.,'${key_dmDocumentTitle}')]/td[2]//div/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LIST_DOCUMENT_WORKFLOW_STATUS</td>
-	<td>//table[contains(@class,'table-autofit')]//tr[contains(.,'${key_dmDocumentTitle}')]//span[@class='workflow-status']/strong</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--FILTER-->
 <tr>
-	<td>FILTER_HOME</td>
-	<td>//div[contains(@id,'folderContainer')]/ul/li/a[contains(.,'Home')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_HOME_ACTIONS</td>
-	<td>//div[contains(@id,'folderContainer')]/ul/li/a[contains(.,'Home')]/../span[contains(@class,'entry-action')]/div/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_RECENT</td>
-	<td>//div[contains(@id,'folderContainer')]/ul/li/a[contains(.,'Recent')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_MINE</td>
-	<td>//div[contains(@id,'folderContainer')]/ul/li/a[contains(.,'Mine')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_REPOSITORY</td>
-	<td>//li[@data-title='${key_dmRepositoryName}']//span[contains(@title,'${key_dmRepositoryName}')]/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FILTER_REPOSITORY_GENERIC</td>
 	<td>xpath=(//div[contains(@id,'folderContainer')]/ul/li/a)[5]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_REPOSITORY_ACTIONS</td>
-	<td>//div[contains(@id,'folderContainer')]/ul/li/a[contains(.,'${key_dmRepositoryName}')]/../span[contains(@class,'entry-action')]/div/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -321,11 +216,6 @@
 </tr>
 <!--LIFERAY_SYNC-->
 <tr>
-	<td>LIFERAY_SYNC_LINK</td>
-	<td>//div[contains(@id,'syncNotificationContent')]/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -337,28 +227,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TOOLBAR_ADD</td>
-	<td>//ul[contains(@id,'toolbarContainer')]/li/a[@title='Add']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_DISPLAY_STYLE_BUTTON</td>
-	<td>//div[contains(@id,'displayStyleButtons')]/li/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_MANAGE</td>
-	<td>//ul[contains(@id,'toolbarContainer')]/li/a[@title='Manage']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TOOLBAR_SELECT_ALL_CHECKBOX</td>
 	<td>xpath=(//div[@class='checkbox']//input[@title='Select All'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_SORT_BY</td>
-	<td>//ul[contains(@id,'toolbarContainer')]/li/a[@title='Sort By']</td>
 	<td></td>
 </tr>
 <tr>
@@ -375,21 +245,6 @@
 <tr>
 	<td>SEARCH_TITLE</td>
 	<td>//div[contains(@class,'searchcontainer')]//a[contains(.,'${dmDocumentTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_PARENT_FOLDER</td>
-	<td>//a[@class='entry-link' and contains(.,'${dmDocumentTitle}')]//dd</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_FIELD</td>
-	<td>//div[contains(@class,'basic-search')]/input[contains(@id,'document_library')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_BUTTON</td>
-	<td>//*[@data-qa-id='searchButton']</td>
 	<td></td>
 </tr>
 <tr>

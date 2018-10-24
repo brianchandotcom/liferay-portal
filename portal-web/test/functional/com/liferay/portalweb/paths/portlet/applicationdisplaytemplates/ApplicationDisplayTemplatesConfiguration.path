@@ -9,18 +9,8 @@
 </thead>
 <tbody>
 <tr>
-	<td>SETUP</td>
-	<td>//a[contains(.,'Setup')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MANAGE_DISPLAY_TEMPLATES_LINK</td>
 	<td>//a[contains(@id,'selectDDMTemplate') and contains(.,'Manage Templates')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DISPLAY_TEMPLATE_SELECT</td>
-	<td>//select[contains(@id,'displayStyle')]</td>
 	<td></td>
 </tr>
 </tbody>

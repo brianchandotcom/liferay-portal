@@ -55,18 +55,8 @@
 </tr>
 <!--IMAGE_INFO_DETAILS-->
 <tr>
-	<td>IMAGE_INFO_DETAILS_DESCRIPTION</td>
-	<td>//dl[contains(@class,'sidebar-block')]/dt[contains(.,'Description')]/following-sibling::dd[contains(.,'${key_imageDescription}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>IMAGE_INFO_DETAILS_ADAPTED_IMAGES</td>
 	<td>//dl[contains(@class,'sidebar-block')]/dt[contains(.,'Adapted Images')]/following-sibling::dd[contains(.,'${key_numberOfAdaptedImages}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>IMAGE_INFO_DETAILS_ID</td>
-	<td>//dl[contains(@class,'sidebar-block')]/dt[contains(.,'IDs')]/following-sibling::dd[contains(.,'${key_imageID}')]</td>
 	<td></td>
 </tr>
 </tbody>

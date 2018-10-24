@@ -58,11 +58,6 @@
 	<td>//input[contains(@id,'smtpPassword')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>ADDITIONAL_JAVAMAIL_PROPERTIES</td>
-	<td>//textarea[contains(@id,'advancedProperties')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

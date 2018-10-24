@@ -24,26 +24,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>AVAILABLE_TRANSLATIONS_LABEL</td>
-	<td>//label[contains(.,'Available Translations:')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AVAILABLE_TRANSLATIONS_LINK</td>
-	<td>//span[contains(@class,'translation-manager-translation') and contains(.,'${key_localizedLanguage}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHANGE_DEFAULT_LANGUAGE</td>
-	<td>//a[contains(@class,'change') and contains(@class,'locale')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DEFAULT_LANGUAGE</td>
-	<td>//span[contains(@class,'translation')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CURRENT_LOCALE</td>
 	<td>//div[contains(@class,'localized')]//button[contains(@class,'localized')][*[normalize-space(text())='${key_locale}']]</td>
 	<td></td>
@@ -54,18 +34,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SELECTED_LOCALE</td>
-	<td>//span[contains(.,'${key_localizedLanguage}') and contains(@class,'-editing')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LOCALIZATION_NAME</td>
 	<td>//div[contains(@class,'menu-open')]//a[@data-value='${key_locale}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REMOVE_TRANSLATION</td>
-	<td>//span[contains(.,'${key_localizedLanguage}')]//i[contains(@class,'icon-remove')]</td>
 	<td></td>
 </tr>
 </tbody>

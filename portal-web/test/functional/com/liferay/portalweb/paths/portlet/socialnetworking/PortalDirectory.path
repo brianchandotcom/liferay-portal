@@ -9,21 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>USER_TABLE_FIRST_NAME</td>
-	<td>//tbody[@class='table-data']//td[contains(.,'${key_userFirstName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_TABLE_LAST_NAME</td>
-	<td>//tbody[@class='table-data']//td[contains(.,'${key_userLastName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_TABLE_SCREEN_NAME</td>
-	<td>//tbody[@class='table-data']//td[contains(.,'${key_userScreenName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>USER_TABLE_FIRST_NAME_LINK</td>
 	<td>//tr[contains(.,'${key_userScreenName}')]/td[1]//a</td>
 	<td></td>
@@ -36,16 +21,6 @@
 <tr>
 	<td>USER_TABLE_SCREEN_NAME_LINK</td>
 	<td>//tr[contains(.,'${key_userScreenName}')]/td[3]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_TABLE_JOB_TITLE_LINK</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]/td[4]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_TABLE_ORGANIZATIONS_LINK</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]/td[5]//a</td>
 	<td></td>
 </tr>
 </tbody>

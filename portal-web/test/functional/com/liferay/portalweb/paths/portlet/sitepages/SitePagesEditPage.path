@@ -10,38 +10,8 @@
 <tbody>
 <!--DETAILS-->
 <tr>
-	<td>LOCALIZED_FLAG_ICON</td>
-	<td>//li[@role='menuitem' and @data-value='${key_localizationName}']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRIENDLY_URL_TITLE</td>
-	<td>//label[contains(@for,'friendlyURL')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FRIENDLY_URL_FIELD</td>
 	<td>//input[contains(@id,'friendlyURL')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRIENDLY_URL_ENGLISH_UNITED_STATES</td>
-	<td>//div[contains(@id,'friendlyURL')]//li[@data-value='en_US']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRIENDLY_URL_LOCALIZED</td>
-	<td>//div[contains(@id,'friendlyURL')]//li[@data-value='${key_friendlyUrlLocalized}']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRIENDLY_URL_SPANISH_SPAIN</td>
-	<td>//div[contains(@id,'friendlyURL')]//li[@data-value='es_ES']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRIENDLY_URL_PORTUGUESE_BRAZIL</td>
-	<td>//div[contains(@id,'friendlyURL')]//li[@data-value='pt_BR']/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -60,53 +30,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TYPE_SELECT</td>
-	<td>//div[contains(@class,'input-select')]//select</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TYPE_SELECT_OPTION</td>
-	<td>//div[contains(@class,'input-select')]//select//option[contains(.,'${key_pageType}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TYPE_LAYOUT</td>
-	<td>//select[contains(@id,'type')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGE_TYPE_DESCRIPTION</td>
 	<td>//p[contains(@class,'text')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TYPE_PAGE_OPTIONS</td>
-	<td>//div[contains(@id,'typeOptions')]//select[contains(@id,'type')]/option[@value='embedded']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL</td>
-	<td>//div[contains(@data-search,'${key_pageType}')]//label[contains(@for,'addLayoutLayoutPrototypeLinkEnabled')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL_GENERIC</td>
-	<td>//label[contains(@for,'layoutPrototypeLinkEnabled')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX</td>
-	<td>//div[contains(@data-search,'${key_pageType}')]//input[contains(@name,'layoutPrototypeLinkEnabled')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX_GENERIC</td>
 	<td>//label[contains(.,'Inherit Changes')]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW</td>
-	<td>//span[contains(.,'${key_componentName}')]/../i[contains(@class,'tree-hitarea')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -125,16 +55,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TYPE_LINK_TO_PAGE_LABEL</td>
-	<td>//div[contains(@class,'link_to_layout')]/div/label[contains(@for,'linkToLayoutId')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TYPE_LINK_TO_PAGE_PAGE_SELECT</td>
-	<td>//select[contains(@id,'linkToLayoutId')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGE_TYPE_FULL_PAGE_APPLICATION_SELECT</td>
 	<td>//select[contains(@id,'fullPageApplication')]</td>
 	<td></td>
@@ -146,57 +66,17 @@
 </tr>
 <!--CATEGORIZATION-->
 <tr>
-	<td>CATEGORIZATION_PANEL_TOGGLE</td>
-	<td>//li/a[contains(@id,'categorization')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_CATEGORY_BUTTON</td>
-	<td>//button[contains(@title,'Select ${key_vocabularyName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CATEGORY_TREE_NODE</td>
-	<td>//li[contains(@id,'category')]//div//span[contains(@class,'tree-node-checkbox-container')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--SEO-->
 <tr>
-	<td>SEO_PANEL_LINK</td>
-	<td>//li/a[contains(@id,'seoLink')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEO_PANEL_TOGGLE</td>
-	<td>//div[contains(@id,'seo')]/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEO_HTML_TITLE_META_TAGS</td>
-	<td>//div[contains(.,'HTML')]/span//ul/li[@data-value='${key_defaultSiteLanguageKey}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEO_META_TAGS_DESCRIPTION</td>
-	<td>//div[contains(@id,'descriptionSEOContentBox')]//li[contains(@data-value,'${key_defaultSiteLanguageKey}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--LOOK_AND_FEEL-->
-<tr>
-	<td>LOOK_AND_FEEL_PANEL_TOGGLE</td>
-	<td>//li/a[contains(@id,'lookAndFeel')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>CHANGE_CURRENT_THEME_BUTTON</td>
 	<td>//button[contains(.,'Change Current Theme')]</td>
@@ -205,11 +85,6 @@
 <tr>
 	<td>REGULAR_UNIQUE_LOOK_AND_FEEL</td>
 	<td>//input[contains(@id,'regularUniqueLookAndFeel')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>THEME</td>
-	<td>//div[contains(@data-themeid,'${key_cardText}')]/div/div[2]/div/span/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -224,21 +99,11 @@
 </tr>
 <!--JAVASCRIPT-->
 <tr>
-	<td>JAVASCRIPT_PANEL_TOGGLE</td>
-	<td>//li/a[contains(@id,'javascript')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--CUSTOM_FIELDS-->
-<tr>
-	<td>CUSTOM_FIELDS_PANEL_TOGGLE</td>
-	<td>//li/a[contains(@id,'customFields')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td></td>
 	<td></td>
@@ -246,32 +111,17 @@
 </tr>
 <!--ADVANCED_PANEL-->
 <tr>
-	<td>ADVANCED_PANEL_TOGGLE</td>
-	<td>//li/a[contains(@id,'advanced')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--MOBILE_DEVICE_RULES-->
 <tr>
-	<td>MOBILE_DEVICE_RULES_PANEL_TOGGLE</td>
-	<td>//li/a[contains(@id,'mobileDeviceRules')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--CUSTOMIZATION_SETTINGS-->
-<tr>
-	<td>CUSTOMIZATION_SETTINGS_PANEL_TOGGLE</td>
-	<td>//li/a[contains(@id,'customizationSettings')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS</td>
 	<td>//input[contains(@id,'CUSTOMIZABLE_LAYOUT')]</td>
@@ -280,11 +130,6 @@
 <tr>
 	<td>CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_CHECKBOX</td>
 	<td>//input[contains(@name,'column-${key_columnId}-customizable')]/../span[contains(@class,'toggle-switch')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN</td>
-	<td>//input[contains(@name,'TypeSettingsProperties--column-${key_columnId}-customizable--')]</td>
 	<td></td>
 </tr>
 <tr>

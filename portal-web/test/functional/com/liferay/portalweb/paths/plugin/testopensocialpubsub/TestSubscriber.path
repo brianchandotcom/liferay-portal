@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUBSCRIBER_PORTLET_UNSUBSCRIBE_BUTTON</td>
-	<td>//section[contains(@id,'portlet_2')]//button[contains(.,'Unsubscribe')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUBSCRIBER_PORTLET_MESSAGE</td>
 	<td>//section[contains(@id,'portlet_2')]//div[contains(@id,'message')]</td>
 	<td></td>

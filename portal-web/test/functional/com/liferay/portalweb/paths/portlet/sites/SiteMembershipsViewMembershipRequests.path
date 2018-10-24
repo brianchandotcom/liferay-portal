@@ -39,31 +39,11 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REPLY_COMMENTS</td>
-	<td>//tbody/tr/td[7]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--VIEW_MEMBERSHIP_NAVIGATION-->
-<tr>
-	<td>VIEW_MEMBERSHIP_NAVIGATION_PENDING</td>
-	<td>//ul/li/a[contains(.,'Pending')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_MEMBERSHIP_NAVIGATION_APPROVED</td>
-	<td>//ul/li/a[contains(.,'Approved')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_MEMBERSHIP_NAVIGATION_DENIED</td>
-	<td>//ul/li/a[contains(.,'Denied')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

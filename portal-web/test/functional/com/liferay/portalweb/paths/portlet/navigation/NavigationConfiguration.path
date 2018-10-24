@@ -9,16 +9,6 @@
 </thead>
 <tbody>
 <!--PREVIEW-->
-<tr>
-	<td>PREVIEW_BREADCRUMB_ENTRY</td>
-	<td>//div[contains(@id,'navbar')]/ul/li[contains(.,'${key_pageName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_BREADCRUMB_HEADER2_ENTRY</td>
-	<td>//div[contains(@id,'navbar')]//a[contains(.,'${key_pageName}')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

@@ -9,16 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>SUBMIT_NEW</td>
-	<td>//div[contains(@class,'navbar')]//a[@role='menuitem']/span[contains(.,'Submit New')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EXPORT</td>
-	<td>//div[contains(@class,'navbar')]//a[@role='menuitem']/span[contains(.,'Export')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -40,26 +30,11 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RECORD_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_kfProcessFieldData}')]/td[@class='table-cell entry-action last']//div/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--RECORD_TABLE_MENULIST-->
-<tr>
-	<td>RECORD_TABLE_MENULIST_VIEW</td>
-	<td>//a[contains(@id,'_menu_view')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RECORD_TABLE_MENULIST_DELETE</td>
-	<td>//a[contains(@id,'_menu_delete')]/span</td>
-	<td></td>
-</tr>
 <tr>
 	<td></td>
 	<td></td>

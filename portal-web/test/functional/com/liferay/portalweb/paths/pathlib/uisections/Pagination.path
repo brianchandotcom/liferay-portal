@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_1</td>
-	<td>//div[@class='search-results']/a[contains(.,'1')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGE_2</td>
 	<td>//div[@class='search-results']/a[contains(.,'2')]</td>
 	<td></td>

@@ -19,18 +19,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>AVAILABLE_TAB</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Available')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_ICON</td>
-	<td>//span[@id='toggle_id_users_admin_user_searchtoggleAdvanced']</td>
 	<td></td>
 </tr>
 <tr>
@@ -39,41 +29,6 @@
 	<td></td>
 </tr>
 <!--ADVANCED_SEARCH-->
-<tr>
-	<td>ADVANCED_SEARCH_MATCH_SELECT</td>
-	<td>//select[contains(@id,'andOperator')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_FIRST_NAME_FIELD</td>
-	<td>//input[contains(@id,'firstName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_MIDDLE_NAME_FIELD</td>
-	<td>//input[contains(@id,'middleName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_LAST_NAME_FIELD</td>
-	<td>//input[contains(@id,'lastName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_SCREEN_NAME_FIELD</td>
-	<td>//input[contains(@id,'screenName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD</td>
-	<td>//input[contains(@id,'emailAddress')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_SEARCH_STATUS_SELECT</td>
-	<td>//select[contains(@id,'status')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td></td>
 	<td></td>

@@ -10,33 +10,8 @@
 <tbody>
 <!--CUSTOM_FIELDS_TABLE-->
 <tr>
-	<td>CUSTOM_FIELDS_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${customFieldName}')]/td[7]//div[contains(@class,'dropdown')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CUSTOM_FIELDS_TABLE_ACTIONS_GENERIC</td>
-	<td>//tr/td[7]//a[@class='dropdown-toggle ']/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CUSTOM_FIELDS_TABLE_HIDDEN</td>
-	<td>//tr[contains(.,'${customFieldName}')]/td[5]//a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CUSTOM_FIELDS_TABLE_NAME</td>
 	<td>//tr[contains(.,'${customFieldName}')][last()]/td[2]//a/strong</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CUSTOM_FIELDS_TABLE_SEARCHABLE</td>
-	<td>//tr[contains(.,'${customFieldName}')]/td[6]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CUSTOM_FIELDS_TABLE_TYPE</td>
-	<td>//tr[contains(.,'${customFieldName}')]/td[4]//a</td>
 	<td></td>
 </tr>
 </tbody>

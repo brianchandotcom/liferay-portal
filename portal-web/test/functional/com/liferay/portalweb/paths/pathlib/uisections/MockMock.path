@@ -19,23 +19,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MOCKMOCK_NO_EMAILS_MESSAGE</td>
-	<td>//div[@class='container' and contains(.,'No emails in queue')]/h2</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MOCKMOCK_EMAIL_COUNT_MESSAGE</td>
-	<td>//div[@class='container' and contains(.,'You have ${key_emailCount}!')]/h1</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MOCKMOCK_HAVE_EMAILS_MESSAGE</td>
 	<td>//div[@class='container' and contains(.,'You have')]/h1</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MOCKMOCK_EMAIL_FROM</td>
-	<td>//tr[contains(.,'${key_userName}') and contains(.,'${key_emailAddress}')]</td>
 	<td></td>
 </tr>
 <tr>

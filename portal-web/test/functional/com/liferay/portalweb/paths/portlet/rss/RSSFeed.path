@@ -50,11 +50,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FEEDS_CONTENT_TITLE</td>
-	<td>//div[@class='panel-toggle']/span[contains(.,'${key_feedContentTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FEEDS_CUSTOM_ADT_TITLE</td>
 	<td>//div[@class='portlet-body' and contains(.,'${key_feedContentTitle}')]</td>
 	<td></td>
@@ -106,23 +101,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DISPLAY_SETTINGS_SHOW_FEED_PUBLISHED_DATE</td>
-	<td>//input[contains(@id,'showFeedPublishedDate')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DISPLAY_SETTINGS_SHOW_FEED_DESCRIPTION</td>
 	<td>//input[contains(@id,'showFeedDescription')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DISPLAY_SETTINGS_SHOW_FEED_IMAGE</td>
-	<td>//input[contains(@id,'showFeedImage')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DISPLAY_SETTINGS_SHOW_FEED_ITEM_AUTHOR</td>
-	<td>//input[contains(@id,'showFeedItemAuthor')]</td>
 	<td></td>
 </tr>
 <tr>

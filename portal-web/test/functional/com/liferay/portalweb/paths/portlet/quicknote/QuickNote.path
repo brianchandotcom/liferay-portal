@@ -24,11 +24,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REMOVE_BUTTON</td>
-	<td>//button[contains(@class,'btn-default')]/span[@class='icon-remove']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>OK_BUTTON</td>
 	<td>//button[contains(@class,'btn-default')]/span[@class='icon-ok']</td>
 	<td></td>
@@ -39,26 +34,6 @@
 	<td></td>
 </tr>
 <!--NOTE_COLOR-->
-<tr>
-	<td>NOTE_COLOR_YELLOW</td>
-	<td>//span[contains(@class,'note-color') and contains(@class,'yellow')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NOTE_COLOR_GREEN</td>
-	<td>//span[contains(@class,'note-color') and contains(@class,'green')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NOTE_COLOR_BLUE</td>
-	<td>//span[contains(@class,'note-color') and contains(@class,'blue')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NOTE_COLOR_RED</td>
-	<td>//span[contains(@class,'note-color') and contains(@class,'red')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

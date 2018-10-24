@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>CONFIGURATION_ADMIN_NAME_LINK</td>
-	<td>//table[contains(@class,'table-autofit')]//tbody/tr/td//a[contains(.,'${key_configurationAdminName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

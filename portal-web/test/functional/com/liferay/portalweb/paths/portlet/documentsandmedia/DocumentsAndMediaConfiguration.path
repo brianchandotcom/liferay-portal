@@ -35,11 +35,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DISPLAY_SETTINGS_ROOT_FOLDER_REMOVE_BUTTON</td>
-	<td>//button[contains(.,'Remove')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX</td>
 	<td>//input[contains(@id,'showFoldersSearch')]</td>
 	<td></td>
@@ -67,11 +62,6 @@
 <tr>
 	<td>DISPLAY_SETTINGS_DISPLAY_STYLE_VIEW_CURRENT_PRESENT</td>
 	<td>//select[contains(@id,'currentDisplayViews')]/option</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DISPLAY_SETTINGS_DISPLAY_STYLE_VIEW_AVAILABLE_PRESENT</td>
-	<td>//select[contains(@id,'availableDisplayViews')]/option</td>
 	<td></td>
 </tr>
 <tr>

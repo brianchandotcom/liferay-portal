@@ -10,11 +10,6 @@
 <tbody>
 <!--CATEGORY_TABLE-->
 <tr>
-	<td>CATEGORY_TABLE_CATEGORY</td>
-	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CATEGORY_TABLE_CATEGORY_BREADCRUMB_1</td>
 	<td>xpath=(//div[contains(@id,'mbCategoriesSearchContainer')]//ul/li)[1]</td>
 	<td></td>

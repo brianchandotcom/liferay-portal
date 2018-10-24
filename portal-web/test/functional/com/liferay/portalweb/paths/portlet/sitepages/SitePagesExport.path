@@ -24,11 +24,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXPORT_TEMPLATE_BUTTON</td>
-	<td>//ul[contains(@id,'exportConfigurationButtons')]//li/a[@title='Export Templates']</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -63,11 +58,6 @@
 <tr>
 	<td>EXPORT_TEMPLATES_TABLE_DESCRIPTION</td>
 	<td>//div[contains(@id,'exportImportConfigurationsSearch')]//tr[contains(.,'${key_exportTemplateName}')]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EXPORT_TEMPLATES_TABLE_EXPORT_BUTTON</td>
-	<td>//a[@role='menuitem' and contains(.,'Export')]</td>
 	<td></td>
 </tr>
 </tbody>

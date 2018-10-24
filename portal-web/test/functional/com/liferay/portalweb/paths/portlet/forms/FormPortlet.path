@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FORM_CONTENT</td>
-	<td>//div[contains(@class,'form-container')]/div[contains(@class,'form-content')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LOCALIZATION_BUTTON</td>
 	<td>//button[contains(@id,'DDMFormPortlet')]</td>
 	<td></td>

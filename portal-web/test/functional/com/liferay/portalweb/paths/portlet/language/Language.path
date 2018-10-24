@@ -25,26 +25,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_NAME_TRANSLATION</td>
-	<td>//div[contains(@id,'nameContentBox')]//a[contains(@data-languageid,'${key_language}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_LANGUAGE</td>
-	<td>xpath=(//a | //span)[*[name()='svg'][@message='${key_language}']]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ICON_MENU_DROPDOWN</td>
-	<td>//a[i[contains(@class,'icon-globe')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ICON_MENU_LANGUAGE</td>
-	<td>//a[contains(.,'${key_language}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LANGUAGE_MENU_SELECT</td>
 	<td>//select[contains(@title,'Language')]</td>
 	<td></td>

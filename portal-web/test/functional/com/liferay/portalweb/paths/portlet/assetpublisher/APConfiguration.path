@@ -36,16 +36,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUBSCRIPTIONS_ENABLE_EMAIL_SUBSCRIPTION_LABEL</td>
-	<td>//label[contains(@for,'enableEmailSubscription')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUBSCRIPTIONS_ENABLE_EMAIL_SUBSCRIPTION</td>
-	<td>//input[contains(@id,'enableEmailSubscription')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -101,11 +91,6 @@
 <tr>
 	<td>SOURCE_SCOPE_DELETE</td>
 	<td>//div[contains(@id,'groupsSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[3]//span/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SOURCE_SCOPE_SELECT</td>
-	<td>//div[@class='select-asset-selector']/div/a[@title='Select']/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -192,41 +177,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FILTER_CATEGORIES_SELECT_BUTTON</td>
-	<td>//button[@title='Select Categories']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_TAGS_SELECT_BUTTON</td>
-	<td>//button[@title='Select Tags']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_CATEGORIES_CATEGORY_CHECKBOX</td>
-	<td>//div[contains(.,'${key_categoryName}')]/span[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_TAGS_CHECKBOX</td>
-	<td>//label[contains(.,'${key_tagName}')]//input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_TAGS_FIELD</td>
-	<td>//input[@title='Add Tags']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_ONLY_LAYOUT_ASSETS_CHECKBOX</td>
-	<td>//input[contains(@id,'showOnlyLayoutAssets')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_URL_TAGS_CHECKBOX</td>
-	<td>//input[contains(@id,'mergeUrlTags')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -259,23 +209,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ORDERING_AND_GROUPING_SECTION_COLLAPSED</td>
-	<td>//div[contains(@class,'toggler-header-collapsed')]/div/span[contains(.,'Ordering and Grouping')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ORDERING_AND_GROUPING_OPTIONS</td>
-	<td>//div[@id='assetPublisherOrderingAndGroupingPanelContent']/div[contains(@class,'toggler-header-expanded')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ORDERING_AND_GROUPING_ORDER_BY_SELECT</td>
 	<td>//select[contains(@id,'orderByColumn1')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ORDERING_AND_GROUPING_ORDER_DIRECTION_SELECT</td>
-	<td>//select[contains(@id,'orderByType1')]</td>
 	<td></td>
 </tr>
 <tr>

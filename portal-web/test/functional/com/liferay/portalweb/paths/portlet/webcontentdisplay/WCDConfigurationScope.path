@@ -9,21 +9,11 @@
 </thead>
 <tbody>
 <tr>
-	<td>SCOPE_MENULIST</td>
-	<td>//div[contains(@class,'form-group input-select')]/select[contains(@name,'scope')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--SCOPE_MENULIST-->
-<tr>
-	<td>SCOPE_MENULIST_SELECTION</td>
-	<td>//div[contains(@class,'form-group input-select')]/select[contains(@name,'scope')]/option[contains(.,'${key_scopeSelection}')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

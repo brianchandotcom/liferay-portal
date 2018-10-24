@@ -39,16 +39,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DESCRIPTION_FIELD</td>
-	<td>//div[contains(@class,'1_WAR_calendarportlet')]//p</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ACCEPT_BUTTON</td>
-	<td>//button[@type='button' and contains(.,'Accept')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MAYBE_BUTTON</td>
 	<td>//button[@type='button' and contains(.,'Maybe')]</td>
 	<td></td>
@@ -65,202 +55,17 @@
 </tr>
 <!--YOUR_RATING-->
 <tr>
-	<td>YOUR_RATING</td>
-	<td>xPath=(//div[@class='rating-label'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>YOUR_RATING_STAR_1</td>
-	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>YOUR_RATING_STAR_2</td>
-	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>YOUR_RATING_STAR_3</td>
-	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star'])[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>YOUR_RATING_STAR_4</td>
-	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star'])[4]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>YOUR_RATING_STAR_5</td>
-	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star'])[5]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>YOUR_RATING_STAR_EMPTY_1</td>
-	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star-empty'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>YOUR_RATING_STAR_EMPTY_2</td>
-	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star-empty'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>YOUR_RATING_STAR_EMPTY_3</td>
-	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star-empty'])[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>YOUR_RATING_STAR_EMPTY_4</td>
-	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star-empty'])[4]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>YOUR_RATING_STAR_EMPTY_5</td>
-	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star-empty'])[5]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--AVERAGE-->
 <tr>
-	<td>AVERAGE</td>
-	<td>xPath=(//div[@class='rating-label'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AVERAGE_STAR_1</td>
-	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AVERAGE_STAR_2</td>
-	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AVERAGE_STAR_3</td>
-	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star'])[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AVERAGE_STAR_4</td>
-	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star'])[4]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AVERAGE_STAR_5</td>
-	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star'])[5]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AVERAGE_STAR_EMPTY_1</td>
-	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star-empty'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AVERAGE_STAR_EMPTY_2</td>
-	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star-empty'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AVERAGE_STAR_EMPTY_3</td>
-	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star-empty'])[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AVERAGE_STAR_EMPTY_4</td>
-	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star-empty'])[4]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AVERAGE_STAR_EMPTY_5</td>
-	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star-empty'])[5]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--COMMENTS-->
-<tr>
-	<td>COMMENTS_SUCCESS</td>
-	<td>//div[@class='lfr-message-response alert alert-success']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_BE_THE_FIRST</td>
-	<td>//fieldset[@class='fieldset add-comment']/div/a[contains(.,'Be the first.')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_SUBSCRIBE_TO_COMMENTS</td>
-	<td>//fieldset[@class='fieldset add-comment']/div/span[@class='subscribe-link']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_ADD_COMMENT_LINK</td>
-	<td>//fieldset[@class='fieldset add-comment']//a[contains(.,'Add Comment')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_TEXT_AREA</td>
-	<td>//textarea[contains(@id,'postReplyBody')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_REPLY_BUTTON</td>
-	<td>//button[@type='button' and contains(.,'Reply')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_SUBMIT_BUTTON</td>
-	<td>//button[@type='button' and contains(.,'Submit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_CANCEL_BUTTON</td>
-	<td>//button[@type='button' and contains(.,'Cancel')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_USER_NAME</td>
-	<td>//span[@class='user-name' and contains (.,'${key_user}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_BODY</td>
-	<td>//div[contains(@class,'lfr-discussion-body') and contains(.,'${key_eventComment}')]/div[@class='lfr-discussion-message'] | //div[contains(@class,'lfr-discussion') and contains(.,'${key_eventComment}')]//div[@class='lfr-discussion-message']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_COMMENT_DELETE</td>
-	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_eventComment}')]//..//li/span/a/span[contains(.,'Delete')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_COMMENT_EDIT</td>
-	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_eventComment}')]//..//li/span/a/span[contains(.,'Edit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_COMMENT_EDIT_BODY_FIELD</td>
-	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_eventComment}')]//..//..//..//textarea[contains(@id,'editReplyBody')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_COMMENT_EDIT_PUBLISH_BUTTON</td>
-	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_eventComment}')]//..//..//..//button[contains(.,'Publish')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_COMMENT_EDIT_CANCEL_BUTTON</td>
-	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_eventComment}')]//..//..//..//button[contains(@class,'btn') and contains(@class,'btn-cancel')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td></td>
 	<td></td>
@@ -286,11 +91,6 @@
 <tr>
 	<td>REPEAT_OCCURRENCE_SUMMARY</td>
 	<td>//dl[contains(@class,'property-list')]/dd[5]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REPEAT_EVENT_DESCRIPTION</td>
-	<td>//p[contains(.,'${key_calendarEventDescription}')]</td>
 	<td></td>
 </tr>
 </tbody>

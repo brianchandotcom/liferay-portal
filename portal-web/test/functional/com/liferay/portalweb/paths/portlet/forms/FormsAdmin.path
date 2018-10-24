@@ -36,16 +36,6 @@
 </tr>
 <!--FORMS_DISPLAY-->
 <tr>
-	<td>FORM_ICON_DISPLAY_NAME</td>
-	<td>//div[@class='card-footer']//a/div[contains(.,'${key_formName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FORM_ICON_DISPLAY_THUMBNAIL</td>
-	<td>//div[contains(@class,'card')]//span[contains(@class,'icon-vertical-card-image')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -68,37 +58,12 @@
 </tr>
 <!--FORM_CONFIGURATION-->
 <tr>
-	<td>ADD_DISPLAY_STYLE</td>
-	<td>//div/a[contains(@class,'add-button')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_DISPLAY_STYLE</td>
-	<td>//div[contains(.,'Supported display view')]/div/input[@value='${key_displayStyle}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REMOVE_DISPLAY_STYLE</td>
-	<td>//div[div/input[contains(@value,'${key_displayStyle}')]]/following-sibling::div/a[contains(@class,'delete-button')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--DATA_PROVIDER-->
-<tr>
-	<td>DATA_PROVIDER_PLUS_BUTTON</td>
-	<td>//*[@data-qa-id='addButton' and contains(@id,'DDMDataProviderPortlet')]</td>
-	<td></td>
-</tr>
 <!--GRID_FIELD-->
-<tr>
-	<td>GRID_FIELD_FORM_ENTRY_TABLE_ENTRY</td>
-	<td>//tbody//td[@class=' lfr-${key_fieldLabel}-column']</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

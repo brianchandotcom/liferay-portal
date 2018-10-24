@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>ASSET_NAME</td>
-	<td>//tr[contains(@class,'asset-name')]//td[contains(.,'${key_assetName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ASSET_TITLE</td>
 	<td>//div[contains(@id,'MySubscriptions')]//td[contains(.,'${key_assetTitle}')]</td>
 	<td></td>

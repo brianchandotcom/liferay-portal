@@ -9,21 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>COPY_STRUCTURE_IFRAME</td>
-	<td>//iframe[contains(@id,'copyStructure_iframe_')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATES_IFRAME</td>
-	<td>//iframe[contains(@src,'scopeTitle=Templates')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BACK_TAB</td>
-	<td>//a[contains(@id,'TabsBack')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>COPY_FORM_TEMPLATES_CHECKBOX</td>
 	<td>//input[contains(@id,'copyFormTemplates')]</td>
 	<td></td>
@@ -34,51 +19,11 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INFO</td>
-	<td>//form[contains(@id,'DDMPortlet')]//div[contains(@class,'empty-message')]/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--TOOLBAR-->
-<tr>
-	<td>TOOLBAR_VIEW_ALL</td>
-	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'View All')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_ADD_FORM_TEMPLATE</td>
-	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'Add Form Template')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_ADD_DISPLAY_TEMPLATE</td>
-	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'Add Display Template')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_ADD_TEMPLATE</td>
-	<td>//div[@class='navbar-inner' or contains(@class,'navbar-default')]//span[@class='nav-item-label' and contains(.,'Add')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_ADVANCED_SEARCH_ICON</td>
-	<td>//div[@class='taglib-search-toggle']/div/a[contains(@id,'ddm_template')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_SEARCH_FIELD</td>
-	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//input[contains(@name,'keywords')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_SEARCH_BUTTON</td>
-	<td>//div[@id='toggle_id_ddm_template_searchsimple']//button[contains(.,'Search')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td></td>
 	<td></td>
@@ -88,16 +33,6 @@
 <tr>
 	<td>TEMPLATE_TABLE_ALL_CHECKBOX</td>
 	<td>//div[contains(@id,'DDMPortlet_managementBarContainerId')]//input[contains(@name,'allRowIds')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_TABLE_CHECKBOX</td>
-	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[1]//input[contains(@name,'rowIds')])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_TABLE_ID</td>
-	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[2]//a)[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -131,28 +66,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TEMPLATE_TABLE_MODIFIED_DATE</td>
-	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[8])[1]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TEMPLATE_TABLE_ELLIPSIS</td>
 	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[9]//div/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TEMPLATE_TABLE_NAME_1</td>
-	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr/td[3]//a)[1]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TEMPLATE_TABLE_ELLIPSIS_1</td>
 	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr/td[9]//div/a)[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATE_TABLE_CHOOSE_BUTTON</td>
-	<td>//tr[contains(.,'${key_ddlTemplateName}')]//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 </tbody>

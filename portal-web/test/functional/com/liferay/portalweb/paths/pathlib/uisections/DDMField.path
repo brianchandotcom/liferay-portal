@@ -44,11 +44,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>IMAGE</td>
-	<td>//div[@data-fieldname='${key_fieldName}']//input[contains(@type,'file')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>IMAGE_PREVIEW_PNG</td>
 	<td>portal/screenshots/ddm/spaceport_image_preview.png</td>
 	<td></td>
@@ -56,11 +51,6 @@
 <tr>
 	<td>INTEGER</td>
 	<td>//div[@data-fieldname='${key_fieldName}']//input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_TO_PAGE</td>
-	<td>//div[@data-fieldname='${key_fieldName}']//select</td>
 	<td></td>
 </tr>
 <tr>

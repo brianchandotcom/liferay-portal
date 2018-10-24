@@ -19,18 +19,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DEFAULT_CALENDAR_CHECKBOX</td>
-	<td>//input[contains(@id,'_defaultCalendar')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ENABLE_COMMENTS_CHECKBOX</td>
 	<td>//input[contains(@id,'_enableComments')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENABLE_RATINGS_CHECKBOX</td>
-	<td>//input[contains(@id,'_enableRatings')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -39,11 +29,6 @@
 	<td></td>
 </tr>
 <!--NAVIGATION-->
-<tr>
-	<td>NAVIGATION_GENERAL_TAB</td>
-	<td>//ul[contains(@class,'nav navbar-nav')]/li/a/span[contains(.,'General')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>NAVIGATION_NOTIFICATION_TEMPLATES_TAB</td>
 	<td>//ul[contains(@class,'nav navbar-nav')]/li/a/span[contains(.,'Notification Templates')]</td>
@@ -58,11 +43,6 @@
 <tr>
 	<td>NOTIFICATION_TEMPLATES_HEADER_TITLE</td>
 	<td>//h3[@class='header-title']/span[contains(.,'${key_calendarName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NOTIFICATION_TEMPLATES_BACK_BUTTON</td>
-	<td>//a[@title='Back']</td>
 	<td></td>
 </tr>
 <tr>

@@ -29,18 +29,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_STRUCTURE_LINK</td>
-	<td>//a[contains(.,'Select')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SELECT_STRUCTURE</td>
 	<td>//button[contains(.,'Select')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NONE_TEMPLATE</td>
-	<td>//span[contains(.,'None')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -59,16 +49,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DEFAULT_LANGUAGE</td>
-	<td>//span[contains(@class,'locale-text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEXT_FIELD_WIDTH</td>
-	<td>//div[contains(@data-fieldname,'Text')]//input[contains(@class,'input-${key_widthSize}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>USER_SEGMENT_DETAIL_TITLE</td>
 	<td>//label[contains(.,'${key_userSegmentDetailTitle}')]</td>
 	<td></td>
@@ -76,26 +56,6 @@
 <tr>
 	<td>AUDIO_BUTTON</td>
 	<td>//a[contains(@title,'Audio')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUDIO_DIALOGBOX</td>
-	<td>//div/table[contains(@class,'dialog_content')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUDIO_BROWSE_SERVER_BUTTON</td>
-	<td>//a[contains(@title,'Browse Server')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AUDIO_OK_BUTTON</td>
-	<td>//a[contains(@title,'OK')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BROWSE_IFRAME</td>
-	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -130,16 +90,6 @@
 	<td></td>
 </tr>
 <!--RELATED_ASSETS-->
-<tr>
-	<td>RELATED_ASSETS_SELECT</td>
-	<td>//a[contains(@id,'inputAssetLinks')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RELATED_ASSETS_MENULIST_SELECTION</td>
-	<td>//li[contains(@class,'asset-selector')]/a/span[contains(.,'${key_assetType}')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td></td>
 	<td></td>

@@ -9,36 +9,11 @@
 </thead>
 <tbody>
 <tr>
-	<td>MANAGE_MY_ACCOUNT_IFRAME</td>
-	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STATE</td>
-	<td>//div[@class='lfr-asset-status']/div/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>END_DATE</td>
-	<td>//div[@class='lfr-asset-date']/div/div</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--MENU-->
-<tr>
-	<td>MENU_WORKFLOW_NAME</td>
-	<td>//div[@class='lfr-asset-name']</td>
-	<td></td>
-</tr>
 <tr>
 	<td>MENU_WITHDRAW_SUBMISSION</td>
 	<td>//a[contains(@id,'_menu_withdraw-submission_1')]</td>
@@ -76,28 +51,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PREVIEW_AUTHOR</td>
-	<td>//span[contains(@class,'metadata-author')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PREVIEW_USER</td>
 	<td>//div[contains(@class,'contacts-container')]//div[@class='lfr-contact-extra']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_MORE_DETAILS_HEADER_COLLAPSED</td>
-	<td>//div[contains(@class,'asset-metadata-panel')]/div[contains(@class,'toggler-header-collapsed')]//span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_MORE_DETAILS_VOCABULARY</td>
-	<td>//span[@class='taglib-asset-categories-summary']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_MORE_DETAILS_CATEGORY</td>
-	<td>//span[@class='taglib-asset-categories-summary']/span[contains(.,'${key_categoryName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -107,41 +62,11 @@
 </tr>
 <!--TASKS-->
 <tr>
-	<td>TASKS</td>
-	<td>//div[@class='panel-toggle' and contains(.,'Tasks')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--TASKS_TABLE-->
-<tr>
-	<td>TASKS_TABLE_TASK</td>
-	<td>//table/tbody/tr/td[1]//span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TASKS_TABLE_DUE_DATE</td>
-	<td>//table/tbody/tr/td[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TASKS_TABLE_COMPLETED</td>
-	<td>//table/tbody/tr/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TASKS_TABLE_ASSIGN_TO_ME</td>
-	<td>//table/tbody/tr/td[4]//span/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TASKS_TABLE_ACTIONS</td>
-	<td>//table/tbody/tr/td[4]//div/a</td>
-	<td></td>
-</tr>
 <tr>
 	<td></td>
 	<td></td>
@@ -149,26 +74,11 @@
 </tr>
 <!--TASKS_MENULIST-->
 <tr>
-	<td>TASKS_MENULIST_APPROVE</td>
-	<td>//a[@role='menuitem' and contains(.,'Approve')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TASKS_MENULIST_REJECT</td>
-	<td>//a[@role='menuitem' and contains(.,'Reject')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--DIALOG_BOX-->
-<tr>
-	<td>DIALOG_BOX_COMMENT_FIELD</td>
-	<td>//textarea[contains(@id,'comment')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td></td>
 	<td></td>
@@ -176,61 +86,11 @@
 </tr>
 <!--ACTIVITIES-->
 <tr>
-	<td>ACTIVITIES</td>
-	<td>//div[@class='panel-toggle' and contains(.,'Activities')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ACTIVITIES_DATE_1</td>
-	<td>xpath=(//div[@class='task-activity task-type-1']/div[@class='task-activity-date'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ACTIVITIES_TEXT_1_LINE_A</td>
-	<td>xpath=(//div[@class='task-activity task-type-1']/div[2])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ACTIVITIES_TEXT_1_LINE_B</td>
-	<td>xpath=(//div[@class='task-activity task-type-1']/div[3])[1]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--COMMENTS-->
-<tr>
-	<td>COMMENTS</td>
-	<td>//div[@class='panel-toggle' and contains(.,'Comment')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_SUCCESS_MESSAGE</td>
-	<td>//div[contains(@id,'discussion-status-messages')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_BE_THE_FIRST</td>
-	<td>//fieldset[contains(@class,'add-comment')]/div/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_ADD_COMMENT</td>
-	<td>//fieldset[contains(@class,'add-comment')]/div/span/a/span[contains(.,'Add Comment')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_ADD_FIELD</td>
-	<td>//textarea[contains(@id,'_postReplyBody0')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENTS_REPLY_BUTTON</td>
-	<td>//button[contains(@id,'_postReplyButton0')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

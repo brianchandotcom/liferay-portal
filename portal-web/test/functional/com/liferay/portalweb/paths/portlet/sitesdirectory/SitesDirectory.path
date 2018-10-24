@@ -25,11 +25,6 @@
 </tr>
 <!--BREADCRUMB-->
 <tr>
-	<td>BREADCRUMB</td>
-	<td>//nav[@id='breadcrumbs']//ul/li[contains(.,'${key_breadcrumbName}')]/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

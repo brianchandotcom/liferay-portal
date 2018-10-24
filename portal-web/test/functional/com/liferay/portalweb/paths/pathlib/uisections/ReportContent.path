@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>HEADER</td>
-	<td>//h3[contains(.,'Report')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>WARNING</td>
 	<td>//p[contains(.,'You are about to report a violation')]</td>
 	<td></td>

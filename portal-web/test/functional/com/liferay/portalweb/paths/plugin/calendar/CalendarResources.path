@@ -35,26 +35,6 @@
 	<td></td>
 </tr>
 <!--RESOURCE_MENULIST-->
-<tr>
-	<td>RESOURCE_MENULIST_EDIT</td>
-	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESOURCE_MENULIST_PERMISSIONS</td>
-	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESOURCE_MENULIST_DELETE</td>
-	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESOURCE_MENULIST_VIEW_CALENDARS</td>
-	<td>//a[@role='menuitem' and contains(.,'View Calendars')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

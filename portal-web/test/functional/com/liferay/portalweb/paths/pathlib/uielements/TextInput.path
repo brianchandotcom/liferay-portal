@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BODY</td>
-	<td>//body</td>
-	<td></td>
-</tr>
-<tr>
 	<td>BLOGS_ENTRY_URL</td>
 	<td>//input[contains(@id,'_urlTitle')]</td>
 	<td></td>
@@ -34,18 +29,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CURRENT_PARENT</td>
-	<td>//input[contains(@id,'currentParent')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CURRENT_PASSWORD</td>
 	<td>//div[label[contains(.,'Current Password')]]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CURRENT_TITLE</td>
-	<td>//input[contains(@id,'currentTitle')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -119,16 +104,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EMAIL_ADDRESS_PNG</td>
-	<td>portal/fields/email_address_field.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EXTENSION</td>
-	<td>//div[label[contains(.,'Extension')]]//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ENTER_AGAIN</td>
 	<td>//div[label[contains(.,'Enter Again')]]/input</td>
 	<td></td>
@@ -136,16 +111,6 @@
 <tr>
 	<td>EXPIRATION_DATE</td>
 	<td>//input[contains(@id,'expirationDate')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EXPIRATION_DATE_TIME</td>
-	<td>//input[contains(@id,'expirationDateTime')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FACEBOOK</td>
-	<td>//div[label[contains(.,'Facebook')]]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -169,11 +134,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FROM</td>
-	<td>//div[label[contains(.,'From')]]//input[@type='number']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>GENERIC_TEXT_INPUT</td>
 	<td>//div[label[contains(.,'${key_fieldLabel}')]]//input[@type='text']</td>
 	<td></td>
@@ -189,18 +149,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>IMAGE_URL</td>
-	<td>//div[label[contains(.,'Image URL')]]//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>INITIAL_URL</td>
 	<td>//input[contains(@id,'_initUrl')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>JABBER</td>
-	<td>//div[label[contains(.,'Jabber')]]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -221,16 +171,6 @@
 <tr>
 	<td>GOOGLE_CLIENT_ID</td>
 	<td>//input[contains(@id,'googleClientId')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GOOGLE_CLIENT_SECRET</td>
-	<td>//input[contains(@id,'google-client-secret')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>KEYWORDS</td>
-	<td>//input[contains(@title,'keywords')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -299,11 +239,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NEW_PARENT</td>
-	<td>//input[contains(@id,'newParent')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NEW_PASSWORD</td>
 	<td>//div[label[contains(.,'New Password')]]/input</td>
 	<td></td>
@@ -319,23 +254,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NUMBER</td>
-	<td>//div[label[contains(.,'Number')]]//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_NAME_FIELD</td>
-	<td>//span[contains(@class,'input-localized-input')]/input[contains(@id,'addLayoutName')]</td>
-	<td>New Page Name Field</td>
-</tr>
-<tr>
 	<td>PASSWORD</td>
 	<td>//div[label[contains(.,'Password')]]/input | //div[label[contains(.,'Contraseña')]]/input | //div[label[contains(.,'パスワード')]]/input | //div[label[contains(.,'密码')]]/input | //div[contains(.,'Kennwort')]//input[@type='password']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PASSWORD_PNG</td>
-	<td>portal/fields/password_field.png</td>
 	<td></td>
 </tr>
 <tr>
@@ -374,11 +294,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REVIEW_DATE</td>
-	<td>//input[contains(@id,'reviewDate')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>REQUIRED_ALERT</td>
 	<td>//div[contains(@class,'has-error')]</td>
 	<td></td>
@@ -396,11 +311,6 @@
 <tr>
 	<td>SEARCH_2</td>
 	<td>xpath=(//input[@title='Search'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_FILES</td>
-	<td>//div[contains(@id,'uploaderContent') and contains(.,'Select Files')]/input</td>
 	<td></td>
 </tr>
 <tr>
@@ -424,11 +334,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SKYPE</td>
-	<td>//div[label[contains(.,'Skype')]]//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SOURCE_URL</td>
 	<td>//input[contains(@id,'_src')]</td>
 	<td></td>
@@ -439,18 +344,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>STRUCTURE</td>
-	<td>//div[label[contains(.,'Structure')]]/input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUBJECT</td>
 	<td>//input[contains(@id,'subject')] | //input[contains(@id,'Subject')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEXT_VERIFICATION</td>
-	<td>//div[label[contains(.,'Text Verification')]]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -459,23 +354,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TITLE_LOCALIZED</td>
-	<td>//input[contains(@id,'title')]/../div[contains(.,'${key_languageName} Translation')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TO</td>
-	<td>//div[label[contains(.,'To')]]//input[@type='input']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TRACKBACKS</td>
 	<td>//input[contains(@id,'trackbacks')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TRASH_ENTRIES_MAX_AGE</td>
-	<td>//input[contains(@id,'trashEntriesMaxAge')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -506,11 +386,6 @@
 <tr>
 	<td>WEB_ID</td>
 	<td>//input[contains(@id,'webId') and contains(@class,'input-text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>YIM</td>
-	<td>//div[label[contains(.,'YIM')]]//input[@type='text']</td>
 	<td></td>
 </tr>
 </tbody>

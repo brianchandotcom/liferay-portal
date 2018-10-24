@@ -36,23 +36,8 @@
 </tr>
 <!--CARD-->
 <tr>
-	<td>CARD_CONTENT_TITLE_GENERIC</td>
-	<td>//span[contains(@class,'lfr-card-title-text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CARD_CONTENT_TITLE_GENERIC_LINK</td>
-	<td>//span[contains(@class,'lfr-card-title-text')]//a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CARD_CONTENT_TITLE</td>
 	<td>//span[contains(@class,'lfr-card-title-text') and contains(.,'${key_contentTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CARD_CONTENT_TITLE_LINK</td>
-	<td>//span[contains(@class,'lfr-card-title-text') and contains(.,'${key_contentTitle}')]//a</td>
 	<td></td>
 </tr>
 <tr>
@@ -141,26 +126,6 @@
 <tr>
 	<td>REPORT_TABLE_CONTENT</td>
 	<td>//*[@data-qa-id='row'][contains(.,'${key_reportTitle}')]/td[normalize-space(.//text())='${key_contentReports}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REPORT_TABLE_TITLE</td>
-	<td>//*[@data-qa-id='row'][contains(.,'${key_reportTitle}')]/td[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REPORT_TABLE_TYPE</td>
-	<td>//*[@data-qa-id='row'][contains(.,'${key_reportTitle}')]/td[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REPORT_TABLE_EVENT</td>
-	<td>//*[@data-qa-id='row'][contains(.,'${key_reportTitle}')]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REPORT_TABLE_COUNT</td>
-	<td>//*[@data-qa-id='row'][contains(.,'${key_reportTitle}')]/td[4]</td>
 	<td></td>
 </tr>
 </tbody>

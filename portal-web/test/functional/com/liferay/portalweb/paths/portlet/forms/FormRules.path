@@ -20,11 +20,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RULE_BUILDER_SUMMARY</td>
-	<td>//p[contains(@class,'form-builder-rule-builder-rule-description')][${key_ruleNumber}]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RULE_BUILDER_ROW_VERTICAL_ELLIPSIS</td>
 	<td>xpath=(//p[contains(@class,'form-builder-rule-builder-rule-description')]/../..//a[contains(@class,'dropdown-toggle')])[${key_ruleNumber}]</td>
 	<td></td>
@@ -152,23 +147,8 @@
 </tr>
 <!--RULE_BUILDER_CALCULATE-->
 <tr>
-	<td>RULE_BUILDER_CALCULATE_NUMERIC_VALUE</td>
-	<td>//ul[contains(@class,'calculator-buttons-numbers')]//li[@data-calculator-key='${key_calculateNumericValue}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RULE_BUILDER_CALCULATE_OPERATOR</td>
 	<td>//ul[contains(@class,'calculator-buttons-operators')]//li[@data-calculator-key='${key_calculateOperator}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RULE_BUILDER_CALCULATE_ELLIPSIS</td>
-	<td>//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-h')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RULE_BUILDER_CALCULATE_ADVANCED_OPERATOR</td>
-	<td>//div[@class='container-list-advanced-operators']//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_calculateAdvancedOperator}')]</td>
 	<td></td>
 </tr>
 <tr>

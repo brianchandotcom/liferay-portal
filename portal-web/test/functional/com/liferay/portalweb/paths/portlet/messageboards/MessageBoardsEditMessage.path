@@ -9,31 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>MARK_AS_A_QUESTION_CHECKBOX</td>
-	<td>//input[contains(.,'Mark as a Question')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ANONYMOUS_CHECKBOX</td>
-	<td>//input[contains(.,'Anonymous')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUBSCRIBE_ME_CHECKBOX</td>
-	<td>//input[contains(.,'Subscribe Me')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRIORITY_SELECT</td>
-	<td>//select[@class='form-control']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ALLOW_PINGBACKS_CHECKBOX</td>
-	<td>//input[contains(.,'Allow Pingbacks')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

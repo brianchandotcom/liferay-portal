@@ -8,31 +8,6 @@
 <tr><td rowspan="1" colspan="3">KnowledgeBaseSearch</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>SEARCH_BACK_BUTTON</td>
-	<td>//a[contains(@id, 'knowledge_base_web') and contains(@id, 'TabsBack')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_FIELD</td>
-	<td>//input[contains(@id, 'knowledge_base_web') and contains(@id, 'keywords')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_RETURN_TO_FULL_PAGE</td>
-	<td>//a[contains(.,'Return to Full Page')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_RESULT_ARTICLE_TITLE</td>
-	<td>//div[contains(@class,'knowledge-base-portlet-search')]//h3[@class='header-title']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_RESULT_ARTICLE_CONTENT</td>
-	<td>//div[contains(@class,'knowledge-base-portlet-search')]//div[@class='kb-article-body']</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

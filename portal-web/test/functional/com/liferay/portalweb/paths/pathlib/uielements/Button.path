@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>ACTIVATE_ACCOUNT</td>
-	<td>//button[contains(.,'Activate Account')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD</td>
 	<td>//a[contains(text(),'Add')] | //button[contains(@type,'submit') and contains(.,'Add')] | //button[contains(@type,'button') and contains(.,'Add')]</td>
 	<td></td>
@@ -21,11 +16,6 @@
 <tr>
 	<td>ADD_ACTION</td>
 	<td>//span[contains(.,'Add Action')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_ATTACHMENTS</td>
-	<td>//button[contains(.,'Add Attachments')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -39,51 +29,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_COMMUNITY_SITE</td>
-	<td>//button[contains(.,'Add Community Site')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_CONSUMER</td>
-	<td>//a[contains(.,'Add Consumer')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_CUSTOM_FIELD</td>
-	<td>//a[contains(.,'Add Custom Field')]|//button[contains(.,'Add Custom Field')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_ENTRY</td>
-	<td>//button[contains(.,'Add Entry')]|//a[@data-original-title='Add Entry']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_FOLDER</td>
-	<td>//a[contains(.,'Add Folder')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_PAGE</td>
-	<td>//a[contains(.,'Add Page')] | //button[contains(.,'Add Page')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_PAGE_BTN</td>
-	<td>//button[contains(@id,'GroupPagesPortlet') and contains(.,'Add Page')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_PRODUCER</td>
-	<td>//a[contains(.,'Add Producer')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_PORTLET</td>
-	<td>//a[contains(.,'Add Portlet')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_PAGE_VARIATION</td>
 	<td>//a[contains(.,'Add Page Variation')]</td>
 	<td></td>
@@ -94,38 +39,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_ROW_N</td>
-	<td>xpath=(//button[contains(@class,'add-row')])[${key_rowIndexNumber}]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_ROW_LAST</td>
 	<td>xpath=(//button[contains(@class,'add-row')])[last()]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_SUBFOLDER</td>
-	<td>//a[contains(.,'Add Subfolder')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_TAGS</td>
 	<td>//button[contains(.,'Add')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_TEAM</td>
-	<td>//a[contains(@id,'teams') and contains(@class,'btn-action')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_TEAM_MEMBERS</td>
-	<td>//button[span[contains(.,'Add Team Members')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_USER</td>
-	<td>//button[contains(.,'Add Users')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -144,18 +64,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>APPLY</td>
-	<td>//button[contains(.,'Apply')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>APPLY_EFFECTS</td>
 	<td>//div[contains(@class,'controls-container') and contains(@class,'open')]//button[contains(@class,'btn') and contains(.,'Apply')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSIGN_SITE_ROLES</td>
-	<td>//*[@data-qa-id='assign-site-rolesButton']</td>
 	<td></td>
 </tr>
 <tr>
@@ -179,11 +89,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CANCEL_EFFECTS</td>
-	<td>//div[contains(@class,'controls-container') and contains(@class,'open')]//button[contains(@class,'btn') and contains(.,'Cancel')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CANCEL_GIVEN_POSITION</td>
 	<td>//div[contains(@class,'lfr-form-content')]/../div/a[contains(@class,'cancel') and contains(@class,'btn')] | //button[contains(.,'Cancel')] | //a[contains(@class,'btn') and contains(.,'Cancel')]</td>
 	<td></td>
@@ -196,11 +101,6 @@
 <tr>
 	<td>CHANGE_LOGO</td>
 	<td>//button[contains(@class,'edit-logo') and contains(.,'Change')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHANGE_NODE</td>
-	<td>//button[contains(.,'Change Node')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -229,11 +129,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CLEAR</td>
-	<td>//button[contains(.,'Clear')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CLOSE</td>
 	<td>//button[contains(.,'Close')]</td>
 	<td></td>
@@ -246,16 +141,6 @@
 <tr>
 	<td>CLOSE_MODAL</td>
 	<td>//h3[contains(@class,'modal-title') and contains(.,'${key_modalTitle}')]/../div/button[contains(@class,'close')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CLOSE_PANEL</td>
-	<td>//a[contains(@id,'closePanelAdd')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CLOSE_SIDE_NAVIGATION</td>
-	<td>//span[contains(@class,'sidenav-close')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -299,11 +184,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DEACTIVATE</td>
-	<td>//*[@data-qa-id='deactivateButton'] | //button[contains(.,'Deactivate')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DELETE</td>
 	<td>//*[@data-qa-id='deleteButton'] | //button[contains(.,'Delete')] | //button[contains(.,'delete')]</td>
 	<td></td>
@@ -314,18 +194,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DELETE_ROW</td>
-	<td>//button[contains(@class,'delete-row')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DELETE_ROW_N</td>
 	<td>xpath=(//button[contains(@class,'delete-row')])[${key_rowIndexNumber}]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DELETE_ROW_LAST</td>
-	<td>xpath=(//button[contains(@class,'delete-row')])[last()]</td>
 	<td></td>
 </tr>
 <tr>
@@ -384,11 +254,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXPIRE</td>
-	<td>//button[contains(.,'Expire')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>EXPORT</td>
 	<td>//div[contains(@class,'footer')]//button[contains(.,'Export')]</td>
 	<td></td>
@@ -411,11 +276,6 @@
 <tr>
 	<td>I_AGREE</td>
 	<td>//button[contains(.,'I Agree')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>I_DISAGREE_BUTTON</td>
-	<td>//button[contains(.,'I Disagree')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -456,11 +316,6 @@
 <tr>
 	<td>LOCALIZATION</td>
 	<td>//div[label[contains(.,'${key_fieldName}')]]//div[contains(@class,'localized')]//button[contains(@class,'localized')] | //div[contains(@class,'ddm-container')]//div[contains(@class,'localized')]//button[contains(@class,'localized')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MAP_TO</td>
-	<td>//button[contains(.,'Map to')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -509,16 +364,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_SELECT</td>
-	<td>//a[contains(@title,'Page') and contains(@title,'of')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PARENT_FOLDER_REMOVE</td>
-	<td>//button[contains(@id,'removeFolderButton')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PARENT_FOLDER_SELECT</td>
 	<td>//button[contains(@id,'selectFolderButton')]</td>
 	<td></td>
@@ -564,16 +409,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RECYCLE_BIN</td>
-	<td>//a[@data-qa-id='recycle-binButton']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REMOVE</td>
-	<td>//button[contains(.,'Remove')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>REMOVE_IMAGE</td>
 	<td>//button[@id='sdjj___removeImage']</td>
 	<td></td>
@@ -586,11 +421,6 @@
 <tr>
 	<td>RENAME</td>
 	<td>//button[contains(.,'Rename')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REORDER</td>
-	<td>//button[span[@class='icon-bar'][3]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -619,11 +449,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RESTORE</td>
-	<td>//button[contains(.,'Restore')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ROTATE_LEFT</td>
 	<td>//div[contains(@id,'rotate')]/a[contains(@class,'btn-link')][1]</td>
 	<td></td>
@@ -631,11 +456,6 @@
 <tr>
 	<td>ROTATE_RIGHT</td>
 	<td>//div[contains(@id,'rotate')]/a[contains(@class,'btn-link')][2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SAVE_ATTACHMENT</td>
-	<td>//div[contains(@id,'selectedFileName')]//button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -674,11 +494,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_2</td>
-	<td>xpath=(//button[contains(.,'Search')])[2]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SELECT</td>
 	<td>//a[contains(.,'Select') and contains(@class,'btn')] | //button[contains(.,'Select')]</td>
 	<td></td>
@@ -709,31 +524,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_PAGES</td>
-	<td>//button[contains(.,'Select Pages')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_SCOPE</td>
-	<td>//div[contains(@class,'btn-group')]/a[@title='Default']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_VOCABULARY</td>
-	<td>//button[contains(@title,'Select Vocabulary')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_WEB_CONTENT</td>
-	<td>//button[contains(.,'Select Web Content')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEND</td>
-	<td>//button[contains(.,'Send')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SEND_INVITATIONS</td>
 	<td>//button[contains(@id,'InviteMembersPortlet')]//span[contains(.,'Send Invitations')]</td>
 	<td></td>
@@ -746,16 +536,6 @@
 <tr>
 	<td>SIGN_IN</td>
 	<td>//button[contains(.,'Sign In')] | //button[contains(.,'Acceder')] | //button[contains(.,'Anmelden')] | //button[contains(.,'ログイン')] | //button[contains(.,'登录')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SIGN_IN_PNG</td>
-	<td>portal/buttons/sign_in_button.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SOURCE</td>
-	<td>//a[@role='button' and (@title='Source')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -826,11 +606,6 @@
 <tr>
 	<td>VERIFY</td>
 	<td>//button[contains(.,'Verify')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_HISTORY</td>
-	<td>//button[contains(.,'View History')] | //a[contains(.,'View History')]</td>
 	<td></td>
 </tr>
 <tr>

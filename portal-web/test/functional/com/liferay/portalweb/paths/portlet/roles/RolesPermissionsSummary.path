@@ -19,11 +19,6 @@
 	<td>//tr[contains(.,'${key_permissionNavigationValue}') and contains(.,'${key_permissionDefinitionValue}')]/td//a[contains(.,'Remove')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>PERMISSION_TABLE_VERTICAL_ELLIPSIS</td>
-	<td>//tr[contains(.,'${key_permissionNavigationValue}') and contains(.,'${key_permissionDefinitionValue}')]//a[contains(@class,'dropdown-toggle')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

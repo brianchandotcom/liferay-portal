@@ -24,11 +24,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>IMAGE</td>
-	<td>//li[@class='asset-links-list-item']//i</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RELATED_ASSETS_SELECT</td>
 	<td>//div[contains(@class,'select-existing')]/a[@title='Select']</td>
 	<td></td>
@@ -81,11 +76,6 @@
 	<td></td>
 </tr>
 <!--BOOKMARKS_ENTRY-->
-<tr>
-	<td>BOOKMARKS_ENTRY_NAVIGATION_ADD_BOOKMARKS_ENTRY</td>
-	<td>//div[@class='navbar-inner' or contains(@class,'navbar-default')]//li/a[contains(@href,'BookmarksEntry')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td></td>
 	<td></td>

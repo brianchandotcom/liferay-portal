@@ -10,21 +10,6 @@
 <tbody>
 <!--NAVIGATION-->
 <tr>
-	<td>NAVIGATION_PERMISSIONS</td>
-	<td>//ul[contains(@id,'nav')]//span[contains(.,'Permissions')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_COMMUNICATION</td>
-	<td>//ul[contains(@class,'nav')]//span[contains(.,'Communication')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_SHARING</td>
-	<td>//ul[contains(@class,'nav')]//span[contains(.,'Sharing')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NAVIGATION_SCOPE</td>
 	<td>//ul[contains(@class,'nav')]//a[contains(.,'Scope')]</td>
 	<td></td>
@@ -35,16 +20,6 @@
 	<td></td>
 </tr>
 <!--SCOPE-->
-<tr>
-	<td>SCOPE_DROPDOWN</td>
-	<td>//select[contains(@id,'PortletConfigurationPortlet_scope')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCOPE_MENULIST</td>
-	<td>//select[contains(@id,'PortletConfigurationPortlet_scope')]//option[contains(.,'${key_scopeName}')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

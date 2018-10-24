@@ -29,83 +29,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GUEST_ACCESS_CHECKBOX</td>
-	<td>//tr[contains(.,'Guest')]//input[@value='ACCESS']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GUEST_ACCESS_DISCUSSION_CHECKBOX</td>
-	<td>//tr[contains(.,'Guest')]//input[@value='ACCESS_DISCUSSION']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GUEST_ADD_ARTICLE_CHECKBOX</td>
-	<td>//tr[contains(.,'Guest')]//input[@value='ADD_ARTICLE']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GUEST_ADD_DISCUSSION_CHECKBOX</td>
-	<td>//tr[contains(.,'Guest')]//input[@value='ADD_DISCUSSION']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GUEST_ADD_DOCUMENT_CHECKBOX</td>
-	<td>//tr[contains(.,'Guest')]//input[@value='ADD_DOCUMENT']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GUEST_ADD_ENTRY</td>
-	<td>//tr[contains(.,'Guest')]//input[@value='ADD_ENTRY']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GUEST_ADD_SHORTCUT_CHECKBOX</td>
-	<td>//tr[contains(.,'Guest')]//input[@value='ADD_SHORTCUT']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GUEST_ADD_SUBFOLDER_CHECKBOX</td>
-	<td>//tr[contains(.,'Guest')]//input[@value='ADD_SUBFOLDER']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GUEST_DELETE_CHECKBOX</td>
-	<td>//tr[contains(.,'Guest')]//input[@value='DELETE']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GUEST_DELETE_DISCUSSION_CHECKBOX</td>
-	<td>//tr[contains(.,'Guest')]//input[@value='DELETE_DISCUSSION']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GUEST_OVERRIDE_CHECKOUT_CHECKBOX</td>
-	<td>//tr[contains(.,'Guest')]//input[@value='OVERRIDE_CHECKOUT']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GUEST_PERMISSIONS_CHECKBOX</td>
-	<td>//tr[contains(.,'Guest')]//input[@value='PERMISSIONS']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>GUEST_REPLY_TO_MESSAGE_CHECKBOX</td>
 	<td>//tr[contains(.,'Guest')]//input[contains(@name,'ACTION_REPLY_TO_MESSAGE') and contains(@type,'checkbox')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GUEST_SUBSCRIBE_CHECKBOX</td>
-	<td>//input[@id='_198_guestPermissions_SUBSCRIBE']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GUEST_UPDATE_CHECKBOX</td>
-	<td>//tr[contains(.,'Guest')]//input[@value='UPDATE']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GUEST_UPDATE_DISCUSSION_CHECKBOX</td>
-	<td>//tr[contains(.,'Guest')]//input[@value='UPDATE_DISCUSSION']</td>
 	<td></td>
 </tr>
 <tr>
@@ -129,73 +54,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ROLE_LINK</td>
-	<td>//div[contains(@class,'edit-permissions')]//td/a[normalize-space(.//text())='${key_roleName}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_MEMBER_ACCESS_CHECKBOX</td>
-	<td>//tr[contains(.,'Site Member')]//input[@value='ACCESS']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_MEMBER_ADD_ARTICLE_CHECKBOX</td>
-	<td>//tr[contains(.,'Site Member')]//input[@value='ADD_ARTICLE']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_MEMBER_ADD_DISCUSSION_CHECKBOX</td>
-	<td>//tr[contains(.,'Site Member')]//input[@value='ADD_DISCUSSION']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_MEMBER_ADD_ENTRY_CHECKBOX</td>
-	<td>//tr[contains(.,'Site Member')]//input[@value='ADD_ENTRY']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_MEMBER_ADD_SUBFOLDER_CHECKBOX</td>
-	<td>//tr[contains(.,'Site Member')]//input[@value='ADD_SUBFOLDER']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_MEMBER_DELETE_CHECKBOX</td>
-	<td>//tr[contains(.,'Site Member')]//input[@value='DELETE']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_MEMBER_DELETE_DISCUSSION_CHECKBOX</td>
-	<td>//tr[contains(.,'Site Member')]//input[@value='DELETE_DISCUSSION']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_MEMBER_OVERRIDE_CHECKOUT_CHECKBOX</td>
-	<td>//tr[contains(.,'Site Member')]//input[@value='OVERRIDE_CHECKOUT']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_MEMBER_PERMISSIONS_CHECKBOX</td>
-	<td>//tr[contains(.,'Site Member')]//input[@value='PERMISSIONS']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_MEMBER_SUBSCRIBE_CHECKBOX</td>
-	<td>//tr[contains(.,'Site Member')]//input[@value='SUBSCRIBE']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_MEMBER_UPDATE_CHECKBOX</td>
-	<td>//tr[contains(.,'Site Member')]//input[@value='UPDATE']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_MEMBER_UPDATE_DISCUSSION_CHECKBOX</td>
-	<td>//tr[contains(.,'Site Member')]//input[@value='UPDATE_DISCUSSION']</td>
 	<td></td>
 </tr>
 <tr>

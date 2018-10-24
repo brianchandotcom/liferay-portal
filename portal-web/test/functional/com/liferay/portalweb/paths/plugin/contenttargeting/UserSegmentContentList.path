@@ -9,52 +9,17 @@
 </thead>
 <tbody>
 <tr>
-	<td>SELECT_ASSET_TYPE</td>
-	<td>//select[contains(@name,'PortletConfigurationPortlet')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--SELECT_MULTIPLE-->
 <tr>
-	<td>SELECTED_ASSETS</td>
-	<td>//select[contains(@class,'left-selector')]/option</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AVAILABLE_ASSET_TYPE</td>
-	<td>//select/option[contains(.,'${key_assetType}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MOVE_AVAILABLE_TO_SELECTED_BUTTON</td>
-	<td>//button[contains(@title,'from Available to Selected.')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MOVE_SELECTED_TO_AVAILABLE_BUTTON</td>
-	<td>//button[contains(@title,'from Selected to Available.')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--VIEW_ENTRY-->
-<tr>
-	<td>VIEW_ENTRY_CONTENT</td>
-	<td>//div[@class='asset-content'][contains(.,'${key_entryContent}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_ENTRY_CONTENT_BASIC</td>
-	<td>//div[@class='asset-content']</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

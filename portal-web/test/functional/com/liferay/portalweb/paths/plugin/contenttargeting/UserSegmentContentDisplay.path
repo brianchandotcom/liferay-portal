@@ -81,16 +81,6 @@
 	<td>//div[contains(.,'${key_userSegmentName}')]//span[@class='tree-label'][contains(.,'${key_siteScope}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_SEARCH_BAR</td>
-	<td>//input[contains(@class,'search-query')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CLOSE_BUTTON</td>
-	<td>//div[contains(@class,'selector-popup')]//button[contains(@class,'close-content')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

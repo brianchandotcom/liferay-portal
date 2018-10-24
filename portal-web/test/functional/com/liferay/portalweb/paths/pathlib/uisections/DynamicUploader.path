@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>UPLOADER</td>
-	<td>//div[@class='lfr-dynamic-uploader']//div[contains(@class,'upload-target')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SELECT_FILES_BUTTON</td>
 	<td>//button[contains(.,'Select Files')]</td>
 	<td></td>
@@ -24,18 +19,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_FILE_CHECKBOX</td>
-	<td>//input[contains(@class,'select-file') and contains(@data-title,'${key_fileName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ALL_FILES_READY_TO_BE_SAVED_DOCUMENT_TITLE</td>
 	<td>//span[contains(@title,'${key_documentName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DELETE_FILE_BUTTON</td>
-	<td>//a[contains(@class,'delete-button') and contains(.,'Delete File')]</td>
 	<td></td>
 </tr>
 </tbody>

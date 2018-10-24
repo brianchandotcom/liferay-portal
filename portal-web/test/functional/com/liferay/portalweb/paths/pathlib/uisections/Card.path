@@ -9,21 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>GENERIC_CHECKBOX</td>
-	<td>//div[contains(@class,'card')]//input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GENERIC_LARGE_TEXT</td>
-	<td>//div[contains(@class,'card')]//span[contains(@class,'lfr-card-title-text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GENERIC_LARGE_TEXT_LINK</td>
-	<td>//div[contains(@class,'card')]//span[contains(@class,'lfr-card-title-text')]//a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>GENERIC_SMALL_TEXT</td>
 	<td>//div[contains(@class,'card')][contains(.,'${key_rowEntry}')]//span[contains(@class,'lfr-card-workflow-text')]</td>
 	<td></td>

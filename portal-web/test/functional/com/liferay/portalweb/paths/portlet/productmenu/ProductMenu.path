@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>PANEL</td>
-	<td>//div[contains(@id,'ProductMenuPortlet_${key_panel}Heading')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PANEL_COLLAPSED</td>
 	<td>//div[contains(@id,'ProductMenuPortlet_${key_panel}Heading')]/div/a[@aria-expanded='false']</td>
 	<td></td>
@@ -21,11 +16,6 @@
 <tr>
 	<td>PANEL_EXPANDED</td>
 	<td>//div[contains(@id,'ProductMenuPortlet_${key_panel}Heading')]/div/a[@aria-expanded='true']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CATEGORY</td>
-	<td>xpath=(//div[@class='panel'] | //div[contains(@class,'panel-secondary')])[div[contains(@id,'ProductMenu')]/div/a[@aria-expanded='true']]//a[@data-qa-id='appGroup'][normalize-space(.//text())='${key_category}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -49,16 +39,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_PLUS_ICON_COLLAPSED</td>
-	<td>//ul[contains(@class,'tree-container')]//span[contains(@class,'icon-plus') and not (contains(@class,'hidden'))]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_PLUS_ICON_EXPANDED</td>
-	<td>//ul[contains(@class,'tree-container')]//span[contains(@class,'tree-hitarea') and contains(@class,'icon-minus')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PRODUCT_MENU_OPENED</td>
 	<td>//div[contains(@id,'sidenavSliderId') and contains(@class,'open') and not(contains(@class,'sidenav-transition')) and not(contains(@class,'closed'))]</td>
 	<td></td>
@@ -66,11 +46,6 @@
 <tr>
 	<td>PRODUCT_MENU_CLOSED</td>
 	<td>//div[contains(@id,'sidenavSliderId') and contains(@class,'closed') and not(contains(@class,'sidenav-transition')) and not(contains(@class,'open'))]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TAB</td>
-	<td>//div[contains(.,'${key_tab}')]/../div[contains(@class,'tab-icon')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -84,11 +59,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITES_POPUP</td>
-	<td>//div[div[contains(@id,'siteSelectorContent')] and contains(@class,'popover-content')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITES_MODAL_TITLE</td>
 	<td>//h3[@class='modal-title']</td>
 	<td></td>
@@ -99,78 +69,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PRIVATE_PAGE_LINK</td>
-	<td>//div[contains(@id,'layoutsTreeOutput')]//a[contains(.,'${key_pageName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRIVATE_PAGES</td>
-	<td>//*[@data-qa-id='goToPrivatePages']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRIVATE_PAGES_SELECTED</td>
-	<td>//div[contains(@class,'selected-layout-set')]/*[@data-qa-id='goToPrivatePages']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLIC_PAGES</td>
-	<td>//*[@data-qa-id='goToPublicPages']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLIC_PAGES_SELECTED</td>
-	<td>//div[contains(@class,'selected-layout-set')]/*[@data-qa-id='goToPublicPages']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGES</td>
 	<td>//div[@class='list-group-item']//span[contains(.,'${key_page}')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGES_ICON</td>
-	<td>//*[contains(@data-qa-id,'PagesOptions')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_PAGE_ICON</td>
-	<td>//span/*[name()='a' or 'span'][contains(.,'${key_page}')]/..//a[span/*[name()='svg'][contains(@class,'icon-plus')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_PUBLIC_PAGE_ICON</td>
-	<td>//*[@data-qa-id='addPublicPage']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_PRIVATE_PAGE_ICON</td>
-	<td>//*[@data-qa-id='addPrivatePage']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_PUBLIC_PAGE_ICON</td>
-	<td>//*[@data-qa-id='editPublicPages']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_PRIVATE_PAGE_ICON</td>
-	<td>//*[@data-qa-id='editPrivatePages']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_PAGE</td>
-	<td>//a[contains(@class,'tree-edit') and contains(.,'${key_page}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LAYOUT_SET_1</td>
-	<td>//div[@class='layout-set-tabs']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LAYOUT_SET_2</td>
-	<td>//div[@class='layout-set-tabs']/div[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -179,28 +79,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PORTLET_SELECTED</td>
-	<td>//li[@class='active']//*[@data-qa-id='app' and contains(@data-title,'${key_portlet}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PORTLET_SELECTED_TRANSLATION</td>
-	<td>//li[@class='active']//*[@data-qa-id='app' and contains(@data-title,'${key_portletLocalization}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITE</td>
 	<td>//div[contains(@id,'siteSelector')]//div[h5[.='${key_site}']]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRIVATE_SITE_LINK</td>
-	<td>//*[@data-qa-id='rowItemContent' and contains (.,'Private')]//h5[contains(.,'${key_site}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLIC_SITE_LINK</td>
-	<td>//*[@data-qa-id='rowItemContent' and contains (.,'Public')]//h5[contains(.,'${key_site}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -219,21 +99,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_NAME_HEADER</td>
-	<td>//div[contains(@class,'sidebar-header')]//span[contains(.,'${key_siteName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_PROFILE_PICTURE</td>
-	<td>//div[contains(@class,'user-icon')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_FULL_NAME</td>
-	<td>//div[contains(@class,'nameplate')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>USER_PROFILE</td>
 	<td>//div[contains(@class,'list-group')]//a[contains(.,'Profile')]</td>
 	<td></td>
@@ -244,26 +109,6 @@
 	<td></td>
 </tr>
 <!--PRODUCT_MENU_PANEL-->
-<tr>
-	<td>PRODUCT_MENU_PANEL_SITES_PANEL_TITLE</td>
-	<td>//div[contains(@id,'site_administration')]//a[contains(.,'${key_portletCategoryName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRODUCT_MENU_PANEL_ALL_SITES_PANEL_TITLE</td>
-	<td>//div[contains(@id,'all_sites')]//a[contains(.,'${key_portletCategoryName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRODUCT_MENU_PANEL_MY_SPACE_PANEL_TITLE</td>
-	<td>//div[contains(@id,'my_space')]//a[contains(.,'${key_portletCategoryName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRODUCT_MENU_PANEL_CONTROL_PANEL_PANEL_TITLE</td>
-	<td>//div[contains(@class,'active') and contains(@id,'control_panel')]/div/a[contains(.,'${key_portletCategoryName}')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>PRODUCT_MENU_PANEL_SCOPE</td>
 	<td>//div[contains(@class,'scope-selector')]//span[contains(@class,'scope-name')]</td>
@@ -280,18 +125,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PRODUCT_MENU_PANEL_MENU_ITEM_2</td>
-	<td>xpath=(//div[@class='list-group-item']//li/a[contains(.,'${key_portletName}')])[2]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME</td>
 	<td>//span[contains(@class,'site-name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRODUCT_MENU_PANEL_SITE_SELECTOR</td>
-	<td>//a[contains(@id,'mySitesLink')]</td>
 	<td></td>
 </tr>
 </tbody>

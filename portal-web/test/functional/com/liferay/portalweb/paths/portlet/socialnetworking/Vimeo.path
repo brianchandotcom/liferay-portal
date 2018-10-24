@@ -8,21 +8,6 @@
 <tr><td rowspan="1" colspan="3">Vimeo</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>VIMEO_VIDEO</td>
-	<td>//div[contains(@class,'portlet-body')]/div/object</td>
-	<td></td>
-</tr>
-<tr>
-	<td>URL_LABEL</td>
-	<td>//label[contains(@for,'url')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADVANCED_OPTIONS</td>
-	<td>//div[contains(@class,'panel-toggle')]/span[@class='title-text']</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

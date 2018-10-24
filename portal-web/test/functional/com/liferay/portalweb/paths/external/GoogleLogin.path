@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ACCEPT</td>
-	<td>//button[contains(.,'Accept')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ALLOW</td>
 	<td>//button[contains(.,'Allow')]</td>
 	<td></td>
@@ -60,21 +55,6 @@
 	<td></td>
 </tr>
 <!--ACCOUNT_MENULIST-->
-<tr>
-	<td>ACCOUNT_MENULIST</td>
-	<td>//a[contains(@title,'Account')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ACCOUNT_MENULIST_SIGN_OUT</td>
-	<td>//a[contains(.,'Sign out')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ACCOUNT_MENULIST_ADD_ACCOUNT</td>
-	<td>//a[contains(.,'Add account')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>ACCOUNT_MENULIST_USE_ANOTHER_ACCOUNT</td>
 	<td>//div[@role='button']//p[contains(.,'Use another account')]</td>

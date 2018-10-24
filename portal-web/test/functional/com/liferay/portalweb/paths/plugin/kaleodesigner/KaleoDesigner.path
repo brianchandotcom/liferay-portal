@@ -9,16 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>ADD_NEW_DEFINITION_BUTTON</td>
-	<td>//button[@class='btn btn-primary' and contains(.,'Add New Definition')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INFO_MESSAGE</td>
-	<td>//div[contains(@class,'taglib-empty-result-message')]//div[contains(@class,'text-center')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[contains(.,'Save') and not (contains(@class,'toolbar'))]</td>
 	<td></td>
@@ -29,31 +19,6 @@
 	<td></td>
 </tr>
 <!--DEFINITION_TABLE-->
-<tr>
-	<td>DEFINITION_TABLE_NAME</td>
-	<td>//*[contains(@id,'kaleoDefinitionVersionsSearchContainer')]//td[contains(@class,'lfr-name-column')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DEFINITION_TABLE_TITLE</td>
-	<td>//*[contains(@id,'kaleoDefinitionVersionsSearchContainer')]//td[contains(@class,'lfr-title-column')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DEFINITION_TABLE_VERSION</td>
-	<td>//*[contains(@id,'kaleoDefinitionVersionsSearchContainer')]//td[contains(@class,'lfr-version-column')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DEFINITION_TABLE_DRAFT_VERSION</td>
-	<td>//*[contains(@id,'kaleoDefinitionVersionsSearchContainer')]//td[contains(@class,'lfr-draft-version-column')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DEFINITION_TABLE_PUBLISHED</td>
-	<td>//*[contains(@id,'kaleoDefinitionVersionsSearchContainer')]//td[contains(@class,'lfr-published-column')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

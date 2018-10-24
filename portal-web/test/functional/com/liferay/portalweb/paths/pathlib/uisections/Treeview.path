@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NODE_EXPANDED</td>
-	<td>//div[contains(@class,'treeview-node-main') and @aria-expanded='true']/div[@class='treeview-node-toggler'] | //span[contains(@class,'glyphicon-minus')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NODE_SELECTED</td>
 	<td>//div[contains(@class,'treeview-node-main') and contains(@class,'selected')]/div[contains(@class,'card-horizontal')]/div/div[2]/span[contains(.,'${key_nodeName}')]</td>
 	<td></td>

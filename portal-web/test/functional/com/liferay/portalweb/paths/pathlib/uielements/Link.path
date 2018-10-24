@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>ACCESS_FROM_DESKTOP</td>
-	<td>//span[contains(@class,'taglib-text') and contains(.,'Access from Desktop')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_CHILD_PAGE</td>
 	<td>//a/span[contains(.,'Add Child Page')]</td>
 	<td></td>
@@ -31,11 +26,6 @@
 <tr>
 	<td>CONFIGURE_TWITTER</td>
 	<td>//a[contains(.,'Please configure your Twitter screen name.')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHANGE_EMAIL_ADDRESS</td>
-	<td>//div/a[contains(.,'Change Email Address')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -84,11 +74,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MANAGE_DISPLAY_TEMPLATES_FOR_LIFERAY</td>
-	<td>//a[contains(.,'Manage Templates')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MESSAGE_BOARDS_ATTACHMENT</td>
 	<td>//li[@class='message-attachment']//a</td>
 	<td></td>
@@ -106,11 +91,6 @@
 <tr>
 	<td>MOVE_TO_RECYCLING_BIN</td>
 	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Move to Recycle Bin')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NEW_PAGE</td>
-	<td>//a[contains(.,'New Page')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -141,11 +121,6 @@
 <tr>
 	<td>REFRESH_COUNTS</td>
 	<td>//a[contains(@id,'rangeLink')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEND_NEW_VERIFICATION_CODE</td>
-	<td>//div/a[contains(.,'Send New Verification Code')]</td>
 	<td></td>
 </tr>
 <tr>

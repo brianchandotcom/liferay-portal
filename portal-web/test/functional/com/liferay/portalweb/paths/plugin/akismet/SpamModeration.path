@@ -10,16 +10,6 @@
 <tbody>
 <!--NAVIGATION-->
 <tr>
-	<td>NAVIGATION_MESSAGE_BOARDS</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Message Boards')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_DISCUSSIONS</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Discussions')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NAVIGATION_WIKIS</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Wikis')]</td>
 	<td></td>
@@ -27,11 +17,6 @@
 <tr>
 	<td>WIKIS_NOT_SPAM_BUTTON</td>
 	<td>//div[@class='button-holder ']/button[contains(.,'Not Spam')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WIKIS_SPAM_BUTTON</td>
-	<td>//div[@class='button-holder ']/button[contains(.,'Spam')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -8,40 +8,10 @@
 <tr><td rowspan="1" colspan="3">CalendarManageCalendars</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>TITLE</td>
-	<td>//h3[@class='header-title']/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_CALENDAR</td>
-	<td>//a[contains(@class,'btn') and contains (.,'Add Calendar')]</td>
-	<td></td>
-</tr>
 <!--CALENDAR_TABLE-->
 <tr>
 	<td>CALENDAR_TABLE_NAME</td>
 	<td>//tr[contains(.,'${key_calendarName}')]/td[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CALENDAR_TABLE_DESCRIPTION</td>
-	<td>//tr[contains(.,'${key_calendarName}')]/td[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CALENDAR_TABLE_COLOR</td>
-	<td>//tr[contains(.,'${key_calendarName}')]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CALENDAR_TABLE_DEFAULT</td>
-	<td>//tr[contains(.,'${key_calendarName}')]/td[4]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CALENDAR_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_calendarName}')]/td[5]//div/a</td>
 	<td></td>
 </tr>
 </tbody>

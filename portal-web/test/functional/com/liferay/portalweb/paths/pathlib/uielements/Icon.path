@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_REPEATABLE_ENTRY</td>
-	<td>xpath=(//div[contains(@data-fieldname,'${key_assetType}')]/../div//a[contains(@class,'repeatable-add-button')])[${key_counter}]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADVANCED_SEARCH</td>
 	<td>//button[contains(@class,'toggle-advanced') and span[@class='caret']] | //a[contains(@id,'searchtoggleAdvanced')]</td>
 	<td></td>
@@ -26,11 +21,6 @@
 <tr>
 	<td>ANGLE_LEFT_BACK</td>
 	<td>//div[contains(@class,'taglib-header')]//span[contains(.,'Back')]/a | //a[span/*[name()='svg'][contains(@class,'icon-angle-left')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ANGLE_RIGHT</td>
-	<td>//a[span/*[contains(@class,'angle-right')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -54,38 +44,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CARET_LEFT</td>
-	<td>//span[contains(@class,'icon-caret-left')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CARET_RIGHT</td>
-	<td>//span[contains(@class,'icon-caret-right')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CARET_ASCENDING</td>
-	<td>//*[@data-qa-id='ascendingButton']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CARET_DESCENDING</td>
-	<td>//*[@data-qa-id='descendingButton']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CLEAR_SEARCH</td>
-	<td>//input[@type='image' and @title='Clear Search']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CLOSE</td>
 	<td>//button[contains(@class,'close')] | //a[contains(@id,'closePanelAdd') and contains(@class,'close')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CLOSE_SPECIFIC</td>
-	<td>//div[contains(@class,'alert-danger-content')]//div[contains(.,'${key_messageSpecific}')]/preceding-sibling::button[@class='close']</td>
 	<td></td>
 </tr>
 <tr>
@@ -124,18 +84,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EDIT</td>
-	<td>//a[span[contains(.,'${key_assetTitle}')]//*[name()='svg'][contains(@class,'icon-pencil')]]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CUSTOM_EDIT</td>
 	<td>//a[contains(@class,'taglib-icon')]/i[contains(@class,'icon-edit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_CONTROLS</td>
-	<td>//li[contains(@id,'toggleControls')]/a[i[contains(@class,'icon-eye-close') or contains(@class,'icon-eye-open')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -174,16 +124,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INFO_ALL_ENTRIES</td>
-	<td>//div[contains(@class,'management-bar-no-collapse on')]//a[contains(@class,'infoPanelToggler')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LOCALIZED_FLAG</td>
-	<td>//li[@role='menuitem' and @data-value='${key_localizationName}']/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MARK_AS_READ</td>
 	<td>//nav[contains(@class,'management-bar')]//div[contains(@class,'container-fluid')]//button[contains(@aria-label,'envelope-open')]</td>
 	<td></td>
@@ -191,11 +131,6 @@
 <tr>
 	<td>MARK_AS_UNREAD</td>
 	<td>//nav[contains(@class,'management-bar')]//div[contains(@class,'container-fluid')]//button[contains(@aria-label,'envelope-closed')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MERGE</td>
-	<td>//a[contains(.,'Merge')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -216,16 +151,6 @@
 <tr>
 	<td>PRINT</td>
 	<td>//span/a[contains(.,'Print')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REMOVE</td>
-	<td>//a/i[@class='icon-remove']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REORDER</td>
-	<td>//a/i[@class='icon-reorder']</td>
 	<td></td>
 </tr>
 <tr>
@@ -254,16 +179,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INHERIT_CHANGES_TOOLTIP</td>
-	<td>//div[not(contains(@class,'hide'))]/div/label[contains(.,'Inherit Changes')]//a[span/*[name()='svg'][contains(@class,'icon-question')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TWITTER</td>
-	<td>//i[contains(@class,'icon-twitter')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -277,11 +192,6 @@
 <tr>
 	<td>BODY_VERTICAL_ELLIPSIS_2</td>
 	<td>xpath=(//div[contains(@class,'portlet') and contains(@class,'container')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FAVORITE</td>
-	<td>//div[contains(@class,'open')]//li[contains(@class,'dropdown-header') and contains(.,'Favorite')]</td>
 	<td></td>
 </tr>
 <tr>

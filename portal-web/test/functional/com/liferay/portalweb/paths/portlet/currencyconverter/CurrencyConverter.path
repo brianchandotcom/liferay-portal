@@ -40,11 +40,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DATA_TABLE_HISTORICAL_CHARTS</td>
-	<td>//table[contains(@class,'conversion-data')]/tbody/tr/td[3]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DATA_GRAPH</td>
 	<td>//div[@class='conversion-graph']/img</td>
 	<td></td>

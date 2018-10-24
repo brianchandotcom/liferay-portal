@@ -20,21 +20,6 @@
 </tr>
 <!--TOOLBAR-->
 <tr>
-	<td>TOOLBAR_VIEW_ALL</td>
-	<td>//ul[contains(@class,'nav')]//a/span[contains(.,'View All')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_ADD_NEW_DEFINITION</td>
-	<td>//ul[contains(@class,'nav')]//a/span[contains(.,'Add New Definition')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_UPLOAD_DEFINITION</td>
-	<td>//ul[contains(@class,'nav')]//a/span[contains(.,'Upload Definition')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

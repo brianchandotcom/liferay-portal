@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DETAILS</td>
-	<td>//div[@id='detailsMetadataFields']/div/div</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SELECT_BUTTON</td>
 	<td>//span[contains(.,'Select')]/a/span</td>
 	<td></td>
@@ -40,31 +35,11 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DETAILS_PARENT_SELECT_BUTTON</td>
-	<td>//button[contains(.,'Select')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DETAILS_PARENT_REMOVE_BUTTON</td>
-	<td>//button[contains(@id,'_removeParentStructureButton')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--PANEL-->
-<tr>
-	<td>PANEL_MAIN_METADATA_FIELDS</td>
-	<td>//div[@id='main-metadata-fieldsHeader']//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PANEL_ADDITIONAL_METADATA_FIELDS</td>
-	<td>//div[contains(@id,'additionalMetadataFields')]//a[contains(.,'Additional Metadata Fields')</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

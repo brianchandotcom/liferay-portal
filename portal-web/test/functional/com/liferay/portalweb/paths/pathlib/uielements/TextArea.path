@@ -44,26 +44,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>IMAGE_VARIANT</td>
-	<td>//div[contains(.,'Image variants')]//textarea</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TYPE_PANEL_DESCRIPTION</td>
-	<td>//textarea[contains(@id,'descriptionPanel')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PIWIK</td>
-	<td>//textarea[contains(@id,'_analytics_piwik')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>POLLS_QUESTION</td>
-	<td>//textarea[contains(@id,'pollsweb_description')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SEO_META_TAGS_DESCRIPTION</td>
 	<td>//textarea[contains(@id,'descriptionSEO')]</td>
 	<td></td>
@@ -74,18 +54,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUMMARY</td>
-	<td>//textarea[contains(@id,'description')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>URL</td>
 	<td>//textarea[contains(@id,'url')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>WEB_EDITOR</td>
-	<td>//textarea[contains(@id,'contentEditor')]</td>
 	<td></td>
 </tr>
 </tbody>

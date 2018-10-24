@@ -61,38 +61,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TOP_POSTERS_AUTHOR_NAME_1</td>
-	<td>xpath=(//span[@class='user-name'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOP_POSTERS_AUTHOR_NAME_2</td>
-	<td>xpath=(//span[@class='user-name'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOP_POSTERS_AUTHOR_NAME_3</td>
-	<td>xpath=(//span[@class='user-name'])[3]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TOP_POSTERS_AUTHOR_RANK</td>
 	<td>//*[@data-qa-id='rowItemContent']//h4[contains(@title,'${key_userName}')]/../h5</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOP_POSTERS_AUTHOR_RANK_1</td>
-	<td>xpath=(//div[@class='thread-user-rank'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOP_POSTERS_AUTHOR_RANK_2</td>
-	<td>xpath=(//div[@class='thread-user-rank'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOP_POSTERS_AUTHOR_RANK_3</td>
-	<td>xpath=(//div[@class='thread-user-rank'])[3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -101,78 +71,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TOP_POSTERS_AUTHOR_POSTS_1</td>
-	<td>xpath=(//div[@class='thread-user-post-count'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOP_POSTERS_AUTHOR_POSTS_2</td>
-	<td>xpath=(//div[@class='thread-user-post-count'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOP_POSTERS_AUTHOR_POSTS_3</td>
-	<td>xpath=(//div[@class='thread-user-post-count'])[3]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TOP_POSTERS_AUTHOR_JOIN_DATE</td>
 	<td>//*[@data-qa-id='rowItemContent']//h4[contains(@title,'${key_userName}')]//following-sibling::span[contains(.,'Join Date')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TOP_POSTERS_AUTHOR_JOIN_DATE_1</td>
-	<td>xpath=(//div[@class='thread-user-join-date'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOP_POSTERS_AUTHOR_JOIN_DATE_2</td>
-	<td>xpath=(//div[@class='thread-user-join-date'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOP_POSTERS_AUTHOR_JOIN_DATE_3</td>
-	<td>xpath=(//div[@class='thread-user-join-date'])[3]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TOP_POSTERS_AUTHOR_LAST_POST_DATE</td>
 	<td>//*[@data-qa-id='rowItemContent']//h4[contains(@title,'${key_userName}')]//following-sibling::span[contains(.,'Last Post Date')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOP_POSTERS_AUTHOR_LAST_POST_DATE_1</td>
-	<td>xpath=(//div[@class='thread-user-last-post-date'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOP_POSTERS_AUTHOR_LAST_POST_DATE_2</td>
-	<td>xpath=(//div[@class='thread-user-last-post-date'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOP_POSTERS_AUTHOR_LAST_POST_DATE_3</td>
-	<td>xpath=(//div[@class='thread-user-last-post-date'])[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOP_POSTERS_AUTHOR_PROFILE_PICTURE</td>
-	<td>//tr[contains(.,'Test Test')]//span[@class='user-profile-image']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOP_POSTERS_AUTHOR_PROFILE_PICTURE_1</td>
-	<td>xpath=(//span[@class='user-profile-image'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOP_POSTERS_AUTHOR_PROFILE_PICTURE_2</td>
-	<td>xpath=(//span[@class='user-profile-image'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOP_POSTERS_AUTHOR_PROFILE_PICTURE_3</td>
-	<td>xpath=(//span[@class='user-profile-image'])[3]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -14,21 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CLOSE</td>
-	<td>//button[contains(@class,'image-viewer-close') and contains(@class,'close')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MEDIA_CAPTION</td>
-	<td>//h4[@class='image-viewer-caption']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_EDIT_ICON</td>
-	<td>//span[contains(@class,'text-icon') and contains(.,'Edit')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ENTRY_RECYCLE_BIN_ICON</td>
 	<td>//ul//span[contains(.,'Move to Recycle Bin')]</td>
 	<td></td>
@@ -61,23 +46,8 @@
 </tr>
 <!--FOLDER-->
 <tr>
-	<td>FOLDER_THUMBNAIL</td>
-	<td>//a[contains(.,'${key_mgFolderName}')]/span[@class='image-thumbnail']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FOLDER_AVATAR_NAME</td>
-	<td>//h4[contains(.,'${key_mgFolderName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FOLDER_NAME</td>
 	<td>//span//a[@title='${key_mgFolderName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FOLDER_GENERIC</td>
-	<td>//li[@data-qa-id='row']//div[contains(@class,'card-row')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,26 +56,11 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FOLDER_DESCRIPTION</td>
-	<td>//div[@class='lfr-asset-description' and contains(.,'${mgFolderDescription}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--SUBFOLDER-->
-<tr>
-	<td>SUBFOLDER_THUMBNAIL</td>
-	<td>//a[contains(.,'${key_mgDocumentTitle}')]/span[@class='image-thumbnail']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUBFOLDER_NAME</td>
-	<td>//span[@class='image-title' and contains(.,'${mgSubfolderName}')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td></td>
 	<td></td>
@@ -138,11 +93,6 @@
 	<td></td>
 </tr>
 <!--MEDIA_TABLE-->
-<tr>
-	<td>MEDIA_TABLE_BASIC_DOCUMENT</td>
-	<td>//a[@class='select-file-entry-type' and contains(.,'Basic Document')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

@@ -56,33 +56,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_CATEGORIZATION</td>
-	<td>//div[@id='categorizationHeader']//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_RELATED_ASSETS</td>
-	<td>//div[@id='relatedAssetsHeader']//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_CONFIGURATION</td>
-	<td>//div[@id='configurationHeader']//a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ENTRY_REPORT_PARAMETERS</td>
 	<td>//div[contains(@id,'report-parametersHeader')]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_REPOSITORY_CONFIGURATION</td>
-	<td>//div[@id='repository-configurationHeader']//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_PERMISSIONS</td>
-	<td>//div[@id='permissionsHeader']//a</td>
 	<td></td>
 </tr>
 <tr>

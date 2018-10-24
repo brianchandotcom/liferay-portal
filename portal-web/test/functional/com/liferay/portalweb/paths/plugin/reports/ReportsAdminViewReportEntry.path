@@ -29,11 +29,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REPORT_PARAMETERS_DEFAULT_FIELD</td>
-	<td>//span[contains(.,'Report Parameters')]/../../div[contains(.,'Report Parameters')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>REPORT_PARAMETERS_FIELD</td>
 	<td>//span[contains(.,'Report Parameters')]/../../div[contains(.,'Report Parameters') and contains(.,'[${key_reportParameters}]')]</td>
 	<td></td>
@@ -60,11 +55,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_FILE_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_reportsFileName}')]/td[2]//div/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -78,11 +68,6 @@
 <tr>
 	<td>ENTRY_FILE_MENULIST_DOWNLOAD</td>
 	<td>//a[@role='menuitem' and contains(.,'Download')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_FILE_MENULIST_DELETE</td>
-	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 </tbody>

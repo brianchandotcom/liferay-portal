@@ -24,16 +24,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>USER_MY_ACCOUNT</td>
-	<td>//a[@title='My Account']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_MY_ACCOUNT_LOCALIZED</td>
-	<td>//a[@title='${key_myAccount}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>USER_SIGN_OUT</td>
 	<td>//a[contains(.,'Sign Out')] | //a[@href='/c/portal/logout']</td>
 	<td></td>

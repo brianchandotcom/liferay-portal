@@ -9,54 +9,19 @@
 </thead>
 <tbody>
 <tr>
-	<td>CURRENT</td>
-	<td>link=Current</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AVAILABLE</td>
-	<td>link=Available</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--USER_GROUP_TABLE-->
 <tr>
-	<td>USER_GROUP_TABLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_userGroupName}')]/td[1]//input[contains(@name,'rowIds')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>USER_GROUP_TABLE_NAME</td>
 	<td>//tr[contains(.,'${key_userGroupName}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>USER_GROUP_TABLE_DESCRIPTION</td>
-	<td>//tr[contains(.,'${key_userGroupName}')]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_GROUP_TABLE_SITE_ROLES</td>
-	<td>//tr[contains(.,'${key_userGroupName}')]/td[4]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>USER_GROUP_TABLE_ACTIONS</td>
 	<td>//tr[contains(.,'${key_userGroupName}')]/td[5]//span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_GROUP_TABLE_USER_NAME</td>
-	<td>//tr[contains(.,'${key_userGroupName}')]/td[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_GROUP_TABLE_SCREEN_NAME</td>
-	<td>//tr[contains(.,'${key_userGroupName}')]/td[3]</td>
 	<td></td>
 </tr>
 </tbody>

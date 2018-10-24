@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>TITLE_HEADER</td>
-	<td>//h3[@class='header-title']</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -22,11 +17,6 @@
 <tr>
 	<td>THREAD_TABLE_SUBJECT</td>
 	<td>//table[contains(@id,'message_boards_view_message_thread')]//tr[contains(.,'${key_threadSubject}')]/td//a/strong</td>
-	<td></td>
-</tr>
-<tr>
-	<td>THREAD_TABLE_AUTHOR</td>
-	<td>//table[contains(@id,'message_boards_view_message_thread')]//td[contains(.,'${key_user}')]</td>
 	<td></td>
 </tr>
 <tr>

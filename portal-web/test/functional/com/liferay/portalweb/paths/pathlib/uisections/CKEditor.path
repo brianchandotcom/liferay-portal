@@ -14,16 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BODY_FIELD_2</td>
-	<td>//div[contains(@class,'cke_2')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BODY_FIELD_LOCALIZED</td>
-	<td>//div[contains(@id,'cke__')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>BODY_FIELD_SOURCE_ON</td>
 	<td>//div[@id='cke_1_contents']/textarea</td>
 	<td></td>
@@ -39,18 +29,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>IFRAME</td>
-	<td>//iframe[contains(@class,'cke_panel')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>BODY</td>
 	<td>//body[contains(@class,'cke_editable')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELD_SOURCE_ON</td>
-	<td>//div[@id='cke_1_contents']/textarea</td>
 	<td></td>
 </tr>
 <tr>
@@ -60,18 +40,8 @@
 </tr>
 <!--This locator is necessary for tests that require the sendKey action-->
 <tr>
-	<td>BODY_FIELD_SOURCE_ON_SEND_KEYS</td>
-	<td>//div[@id='cke_1_contents']/textarea</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RESIZER</td>
 	<td>//span[@id='cke_1_resizer']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CKEDITOR_PNG</td>
-	<td>/portal/fields/ckeditor.png</td>
 	<td></td>
 </tr>
 <tr>
@@ -87,66 +57,6 @@
 </tr>
 <!--TOOLBAR-->
 <tr>
-	<td>TOOLBAR_BLOCK_QUOTE_BUTTON</td>
-	<td>//span[@class='cke_button_icon cke_button__blockquote_icon']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_BLOCK_QUOTE_FIELD</td>
-	<td>//div[@id='cke__19_editor']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_FONT_BUTTON</td>
-	<td>//a[contains(@class,'cke_combo_button') and contains(.,'Font')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_STYLES_BUTTON</td>
-	<td>//a[contains(@class,'cke_combo_button') and @title='Formatting Styles']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_SIZE_BUTTON</td>
-	<td>//a[contains(@class,'cke_combo_button') and contains(.,'Size')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_SIZE_BUTTON_DROPDOWN</td>
-	<td>//span[contains(@class,'fontsize')]//span[contains(.,'${key_fontSize}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_FORMAT_BUTTON</td>
-	<td>//a[contains(@class,'cke_combo_button') and contains(@title,'Format')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_BOLD_BUTTON</td>
-	<td>//a[contains(@class,'cke_button') and contains(@class,'bold')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_ITALIC_BUTTON</td>
-	<td>//a[contains(@class,'cke_button') and contains(@class,'italic')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_UNDERLINE_BUTTON</td>
-	<td>//a[contains(@class,'cke_button') and contains(@class,'underline')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_UNDO_BUTTON</td>
-	<td>//a[contains(@class,'cke_button') and contains(@class,'undo')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_REDO_BUTTON</td>
-	<td>//a[contains(@class,'cke_button') and contains(@class,'redo')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TOOLBAR_SOURCE_BUTTON</td>
 	<td>//a[contains(@class,'cke_button') and contains(@class,'source')]</td>
 	<td></td>
@@ -157,66 +67,11 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TOOLBAR_LINK_BUTTON</td>
-	<td>//a[contains(@class,'cke_button') and contains(@title,'Link')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_FONT_BUTTON_PORTLET</td>
-	<td>//span[contains(@class,'portlet-title-text') and contains(.,'${key_portletName}')]/../../..//a[contains(@class,'cke_combo_button') and contains(.,'Font')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_SIZE_BUTTON_PORTLET</td>
-	<td>//span[contains(@class,'portlet-title-text') and contains(.,'${key_portletName}')]/../../..//a[contains(@class,'cke_combo_button') and contains(.,'14')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_FORMAT_BUTTON_PORTLET</td>
-	<td>//span[contains(@class,'portlet-title-text') and contains(.,'${key_portletName}')]/../../..//a[contains(@class,'cke_combo_button') and contains(.,'Format')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_UNDO_BUTTON_PORTLET</td>
-	<td>//span[contains(@class,'portlet-title-text') and contains(.,'${key_portletName}')]/../../..//a[contains(@class,'cke_button__undo')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_REDO_BUTTON_PORTLET</td>
-	<td>n[contains(@class,'portlet-title-text') and contains(.,'${key_portletName}')]/../../..//a[contains(@class,'cke_button__redo')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_SOURCE_BUTTON_PORTLET</td>
-	<td>n[contains(@class,'portlet-title-text') and contains(.,'${key_portletName}')]/../../..//a[contains(@class,'cke_button__source')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_FONT_IFRAME</td>
-	<td>//div[contains(@class,'cke_combopanel') and contains(@class,'font')]/iframe</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_SIZE_IFRAME</td>
-	<td>//div[contains(@class,'cke_combopanel') and contains(@class,'fontsize')]/iframe</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_FORMAT_IFRAME</td>
-	<td>//div[contains(@class,'cke_combopanel') and contains(@class,'format')]/iframe</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--TOOLBAR_FONT_MENULIST-->
-<tr>
-	<td>TOOLBAR_FONT_MENULIST</td>
-	<td>//div[@class='cke_panel_block' and contains(.,'Font Name')]//li/a[contains(.,'${key_font}')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td></td>
 	<td></td>
@@ -224,21 +79,11 @@
 </tr>
 <!--TOOLBAR_STYLES_MENULIST-->
 <tr>
-	<td>TOOLBAR_STYLES_MENULIST</td>
-	<td>//div[@class='cke_panel_block' and contains(@title,'Formatting Styles')]/ul/li/a[@title='${key_styles}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--TOOLBAR_SIZE_MENULIST-->
-<tr>
-	<td>TOOLBAR_SIZE_MENULIST</td>
-	<td>//div[@class='cke_panel_block' and contains(.,'Font Size')]//li/a[contains(.,'${key_size}')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td></td>
 	<td></td>
@@ -246,47 +91,17 @@
 </tr>
 <!--TOOLBAR_FORMAT_MENULIST-->
 <tr>
-	<td>TOOLBAR_FORMAT_MENULIST</td>
-	<td>//div[@class='cke_panel_block' and contains(.,'Format')]//li/a[contains(.,'${key_format}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!-- CONTENT_AUDIO_LINK -->
 <tr>
-	<td>CONTENT_AUDIO_LINK_URL_FIELD</td>
-	<td>//input[@id='cke_99_textInput']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONTENT_AUDIO_LINK_IMAGE</td>
 	<td>//img[contains(@class,'audio')]</td>
 	<td></td>
 </tr>
 <!--CONTENT_IMAGE_LINK-->
-<tr>
-	<td>CONTENT_IMAGE_LINK</td>
-	<td>//span[@class='cke_toolbox']//span/a[contains(.,'Image')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_IMAGE_LINK_URL_FIELD</td>
-	<td>//input[@id='cke_73_textInput']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_IMAGE_LINK_BROWSE_SERVER_BUTTON</td>
-	<td>//td//a[@title='Browse Server']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_IMAGE_LINK_OK_BUTTON</td>
-	<td>//a/span[contains(.,'OK')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>CONTENT_IMAGE_LINK_IMAGE</td>
 	<td>//img[contains(@src,'jpg')]</td>
@@ -310,66 +125,11 @@
 </tr>
 <!--RESOURCES_BROWSER-->
 <tr>
-	<td>RESOURCES_BROWSER_DOCUMENTS_AND_MEDIA_DOCUMENT_PNG</td>
-	<td>portal/links/resources_browser_documents_and_media_document.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESOURCES_BROWSER_LIFERAY_PNG</td>
-	<td>portal/links/resources_browser_liferay.png</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--LINK_IMAGE_BROWSE_SERVER-->
-<tr>
-	<td>LINK_IMAGE_BROWSE_SERVER_IFRAME</td>
-	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_IMAGE_BROWSE_SERVER_SITE_BUTTON</td>
-	<td>//body[contains(@class,'portal-popup')]//a[contains(@class,'dropdown-toggle')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_IMAGE_BROWSE_SERVER_SITE_MENULIST_BUTTON</td>
-	<td>//body[contains(@class,'portal-popup')]//ul/li/a[contains(.,'${key_siteName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_IMAGE_BROWSE_SERVER_ADD_BUTTON</td>
-	<td>//div/ul/li/a[@title='Add']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_IMAGE_BROWSE_SERVER_SEARCH_FIELD</td>
-	<td>//input[contains(@id,'searchkeywords')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_IMAGE_BROWSE_SERVER_SEARCH_BUTTON</td>
-	<td>//span/button[contains(.,'Search')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_IMAGE_BROWSE_SERVER_FOLDER_NAME</td>
-	<td>//tr/td//a[contains(.,'${key_folderName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_IMAGE_BROWSE_SERVER_DOCUMENT_NAME</td>
-	<td>//tr[contains(.,'${key_documentName}')]/td[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_IMAGE_BROWSE_SERVER_DOCUMENT_CHOOSE_BUTTON</td>
-	<td>//tr[contains(.,'${key_documentName}')]/td//button[contains(.,'Choose')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

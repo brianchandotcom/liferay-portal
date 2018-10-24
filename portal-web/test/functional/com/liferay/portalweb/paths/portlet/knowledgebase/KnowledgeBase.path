@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>MESSAGE_NO_ARTICLES_FOUND</td>
-	<td>//div[contains(@class,'alert') and contains(.,'No articles were found.')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>KB_TOOLS</td>
 	<td>//div[@class='kb-tools']//span[.='${key_kbTool}']</td>
 	<td></td>
@@ -25,18 +20,8 @@
 </tr>
 <!--ADMIN_TABS-->
 <tr>
-	<td>ADMIN_TABS_ARTICLES</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li[contains(.,'Articles')]/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADMIN_TABS_SUGGESTIONS</td>
 	<td>//ul[contains(@class,'navbar')]/li/a[contains(.,'Suggestions')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADMIN_TABS_TEMPLATES</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li[contains(.,'Templates')]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -45,21 +30,6 @@
 	<td></td>
 </tr>
 <!--MENUBAR-->
-<tr>
-	<td>MENUBAR_ACTIONS</td>
-	<td>//ul[@role='menubar']//a[contains(.,'Actions')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MENUBAR_ADD</td>
-	<td>//ul[@role='menubar']//a[contains(.,'Add')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MENUBAR_PERMISSIONS</td>
-	<td>//ul[@role='menubar']//a[contains(.,'Permissions')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td></td>
 	<td></td>
@@ -72,23 +42,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ARTICLE_DESCRIPTIVE_ARTICLE_AUTHOR</td>
-	<td>//li[contains(.,'${key_kbArticleTitle}')]//h5[contains(.,'${key_userName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ARTICLE_DESCRIPTIVE_ARTICLE_CHECKBOX</td>
 	<td>//li[contains(.,'${key_kbArticleTitle}')]//input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_DESCRIPTIVE_ARTICLE_PRIORITY</td>
-	<td>//li[contains(.,'${key_kbArticleTitle}')]//span[contains(.,'Priority')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_DESCRIPTIVE_ARTICLE_STATUS</td>
-	<td>//li[contains(.,'${key_kbArticleTitle}')]//span[contains(@class,'status')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -103,53 +58,8 @@
 </tr>
 <!--ARTICLE_TABLE-->
 <tr>
-	<td>ARTICLE_TABLE_ARTICLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[9]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_TABLE_ARTICLE_AUTHOR</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[4]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_TABLE_ARTICLE_AUTHOR_LINK</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[4]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_TABLE_ARTICLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[1]//input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_TABLE_CREATE_DATE</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[5]//span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_TABLE_CREATE_DATE_POPUP</td>
-	<td>//div[contains(@class,'tooltip-inner')]/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_TABLE_ARTICLE_PRIORITY</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[2]//input[@title='Priority']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ARTICLE_TABLE_ARTICLE_STATUS</td>
 	<td>//div[contains(.,'${key_kbArticleTitle}')]//h5//span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_TABLE_ARTICLE_TITLE</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_TABLE_ARTICLE_TITLE_LINK</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[3]//a</td>
 	<td></td>
 </tr>
 <tr>
@@ -168,11 +78,6 @@
 	<td></td>
 </tr>
 <!--DESCRIPTIVE_VIEW-->
-<tr>
-	<td>DESCRIPTIVE_VIEW_ARTICLE_OPTIONS_DROPDOWN</td>
-	<td>//li[contains(.,'${key_kbArticleTitle}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>DESCRIPTIVE_VIEW_ARTICLE_PRIORITY</td>
 	<td>//div[contains(.,'${key_kbArticleTitle}')]/h5/span[@class='kb-descriptive-details' and contains(.,'Priority')]</td>
@@ -210,21 +115,6 @@
 	<td></td>
 </tr>
 <!--DISPLAY-->
-<tr>
-	<td>DISPLAY_ACTIONS_BUTTON</td>
-	<td>//div[@class='kb-article-container']//div//span[contains(.,'Actions')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DISPLAY_CHILD_TITLE</td>
-	<td>//div[@class='kb-article-container']//h2[contains(.,'${key_kbChildArticleTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DISPLAY_CHILD_CONTENT</td>
-	<td>//div[@class='kb-article-child']//div[@class='kb-element-body']</td>
-	<td></td>
-</tr>
 <tr>
 	<td>DISPLAY_CONTENT</td>
 	<td>//div[contains(@class,'kb-entity-body')]//p</td>
@@ -278,46 +168,11 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FOLDER_DESCRIPTIVE_AUTHOR_NAME</td>
-	<td>//ul[contains(@class,'descriptive')]//h5[contains(.,'${key_userName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--FOLDER_TABLE-->
-<tr>
-	<td>FOLDER_TABLE_ACTIONS_BUTTON_GENERIC</td>
-	<td>//td[5]//a[@title='Actions']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FOLDER_TABLE_FOLDER_NAME</td>
-	<td>//tr[contains(.,'${kbFolderName}')]/td//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FOLDER_TABLE_FOLDER_AUTHOR</td>
-	<td>//tr[contains(.,'${kbFolderName}')]/td[2]//a[contains(.,'${key_userName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FOLDER_TABLE_FOLDER_CREATE_DATE</td>
-	<td>//tr[contains(.,'${kbFolderName}')]/td[3]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FOLDER_TABLE_FOLDER_MODIFIED_DATE</td>
-	<td>//tr[contains(.,'${kbFolderName}')]/td[4]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FOLDER_TABLE_FOLDER_ACTIONS</td>
-	<td>//tr[contains(.,'${kbFolderName}')]/td[5]//span[contains(.,'Actions')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>FOLDER_TABLE_HEADER</td>
 	<td>//th[contains(.,'Folder')]</td>
@@ -361,36 +216,11 @@
 </tr>
 <!--KB_SEARCH-->
 <tr>
-	<td>KB_SEARCH_RESULTS_TITLE</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]//a</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--LINK-->
-<tr>
-	<td>LINK_RSS</td>
-	<td>//span[contains(.,'RSS')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_SUBSCRIBE</td>
-	<td>//span[contains(.,'Subscribe')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_UNSUBSCRIBE</td>
-	<td>//span[contains(.,'Unsubscribe')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_DO_YOU_HAVE_ANY_SUGGESTIONS</td>
-	<td>//div[@class='kb-article-container']//div/a[contains(.,'Do you have any suggestions?')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>LINK_THERE_ARE_SUGGESTIONS</td>
 	<td>//div[@class='sidenav-content']//div[contains(.,'suggestion')]</td>
@@ -418,11 +248,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MOVE_CURRENT_PARENT_PRIORITY_FIELD</td>
-	<td>//div[contains(.,'Current Parent')]/div/input[2]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MOVE_NEW_PARENT_TITLE_LABEL</td>
 	<td>//span[(@class='control-label') and contains (.,'New Parent')]</td>
 	<td></td>
@@ -438,21 +263,11 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MOVE_NEW_PARENT_PRIORITY_FIELD</td>
-	<td>//div[contains(@id, 'knowledge_base_web') and contains(@id, 'newParent')]/input[2]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--SCOPE-->
-<tr>
-	<td>SCOPE</td>
-	<td>//div[@class='scope-selector']//li[contains(.,'${key_kbPageScope}')]//span</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

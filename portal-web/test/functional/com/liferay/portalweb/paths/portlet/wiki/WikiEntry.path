@@ -24,23 +24,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BODY_ASSET</td>
-	<td>//div[@class='portlet-body']/p[contains(.,'${key_wikiPageContent}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BODY_BOLD_TEXT</td>
-	<td>//div[@class='wiki-body']/b</td>
-	<td></td>
-</tr>
-<tr>
 	<td>BODY_GENERIC</td>
 	<td>//div[@class='wiki-body']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BODY_HEADER</td>
-	<td>//div[@class='wiki-body']/h4</td>
 	<td></td>
 </tr>
 <tr>

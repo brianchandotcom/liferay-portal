@@ -24,11 +24,6 @@
 	<td>//div[contains(@id,'teamsSearchContainer')]//tr[contains(.,'${key_teamName}')]/td[4]//div/a</td>
 	<td></td>
 </tr>
-<tr>
-	<td>TEAM_TABLE_ACTIONS_GENERIC</td>
-	<td>//td[3]//div/a</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

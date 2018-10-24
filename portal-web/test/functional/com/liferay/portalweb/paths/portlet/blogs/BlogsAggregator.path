@@ -24,16 +24,6 @@
 	<td>//div[contains(@class,'entry-title') and contains(.,'${key_entryTitle}')]/h2/a</td>
 	<td></td>
 </tr>
-<tr>
-	<td>ENTRY_AUTHOR</td>
-	<td>//span[contains(@class,'entry-author')]/a[contains(.,'${key_entryAuthor}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_ABSTRACT_DESCRIPTION</td>
-	<td>//div[@class='abstract']</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

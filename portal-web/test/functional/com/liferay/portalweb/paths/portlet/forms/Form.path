@@ -24,16 +24,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SAVE_BUTTON_DISABLED</td>
-	<td>//div[@class='button-holder']//button[contains(.,'Save') and contains(@class,'disabled')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SAVE_BUTTON_DROPDOWN</td>
-	<td>//div[@class='button-holder']//button[contains(@id,'submitToggle')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NAME_FIELD</td>
 	<td>//div[contains(@id,'nameEditorContainer')]/div</td>
 	<td></td>
@@ -46,11 +36,6 @@
 <tr>
 	<td>PAGE_TITLE_FIELD</td>
 	<td>//textarea[contains(@class,'form-builder-page-header-title')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_DESCRIPTION_FIELD</td>
-	<td>//textarea[contains(@class,'form-builder-page-header-description')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -112,21 +97,6 @@
 </tr>
 <!--ADD_COLUMN-->
 <tr>
-	<td>ADD_COLUMN_LEFT</td>
-	<td>//div[@class='layout-row-container-row'][${key_rowNumber}]//div[contains(@class,'last-col')]/following-sibling::div[1]//div[contains(@class,'resize-col-draggable-handle')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_COLUMN_RIGHT</td>
-	<td>//div[@class='layout-row-container-row'][${key_rowNumber}]//div[contains(@class,'last-col')]/following-sibling::div[2]//div[contains(@class,'resize-col-draggable-handle')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_COLUMN_LINE</td>
-	<td>xpath=(//div[@class='layout-row-container-row'][${key_rowNumber}]//div[contains(@class,'layout-builder-resize-col-breakpoint-line')])[${key_columnLineNumber}]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -172,11 +142,6 @@
 <tr>
 	<td>PUBLISH_FORM_NAME_FIELD</td>
 	<td>//h1[contains(@class,'form-name') and contains(.,'${key_formName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLISH_FORM_SWITCHER</td>
-	<td>//label[contains(@class,'publish-checkbox')]//span[@class='toggle-switch-bar']</td>
 	<td></td>
 </tr>
 <tr>
@@ -232,21 +197,11 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FIELD_BODY_DUPLICATE</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/../following-sibling::div/following-sibling::div/div[contains(@data-fieldname,'${key_fieldName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FIELD_LABEL</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label</td>
 	<td></td>
 </tr>
 <!--SIDEBAR -->
-<tr>
-	<td>SIDEBAR_HEADER</td>
-	<td>//h4[contains(@class,'form-builder-sidebar-title')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>SIDEBAR_PROPERTIES_TAB</td>
 	<td>//a[contains(@class,'tab') and .='Properties']</td>
@@ -306,16 +261,6 @@
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_LABEL_FIELD_2</td>
 	<td>//div[contains(@data-fieldname,'outputParameters')]/../following-sibling::div/div//input[@type='text' and contains(@id,'outputParameters') and contains(@placeholder,'label')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DATA_PROVIDER_OUTPUT_PARAMETER_NAME_FIELD</td>
-	<td>//div[contains(@data-fieldname,'outputParameters')]//input[@type='text' and contains(@id,'outputParameters') and contains(@placeholder,'name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DATA_PROVIDER_OUTPUT_PARAMETER_NAME_FIELD_2</td>
-	<td>//div[contains(@data-fieldname,'outputParameters')]/../following-sibling::div/div//input[@type='text' and contains(@id,'outputParameters') and contains(@placeholder,'name')]</td>
 	<td></td>
 </tr>
 <tr>

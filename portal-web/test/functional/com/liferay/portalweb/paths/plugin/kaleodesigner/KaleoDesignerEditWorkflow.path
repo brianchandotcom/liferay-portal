@@ -9,16 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>HEADER_TITLE</td>
-	<td>//h3[@class='header-title']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DETAILS_TOGGLE</td>
-	<td>//div[@id='kaleoDesignerSectionPanel']//a/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DETAILS</td>
 	<td>//li[@class='tab']/a[contains(.,'Details')]</td>
 	<td></td>
@@ -65,11 +55,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DRAFT_HISTORY_LATEST_VERSION_BUTTON</td>
-	<td>//button[contains(@id,'latestButton')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -78,16 +63,6 @@
 <tr>
 	<td>NODES_TAB</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Nodes')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODES_NODE</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='${key_nodeType}']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODES_NODE_UNSELECTABLE</td>
-	<td>//div[@class='tab-content']/div/ul/li[contains(@class,'unselectable') and @title='${key_nodeType}']/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -107,11 +82,6 @@
 </tr>
 <!--SETTINGS-->
 <tr>
-	<td>SETTINGS_TAB</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Settings')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SETTINGS_SCRIPT</td>
 	<td>//td[contains(@class,'table-col-name') and contains(.,'Script')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
@@ -119,16 +89,6 @@
 <tr>
 	<td>SETTINGS_SCRIPT_CONTENT</td>
 	<td>//div[contains(@class,'ace_editor')]/textarea</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_SCRIPT_LANGUAGE</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Script Language')]//following-sibling::td[contains(@class,'table-col-value')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_ACTIONS</td>
-	<td>//td[contains(@class,'table-col-name') and contains(.,'Actions')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -178,16 +138,6 @@
 </tr>
 <!--SETTINGS_CELL_EDITOR-->
 <tr>
-	<td>SETTINGS_CELL_EDITOR_SAVE_BUTTON</td>
-	<td>//div[contains(@class,'component toolbar')]//button[contains(.,'Save')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_CELL_EDITOR_CANCEL_BUTTON</td>
-	<td>//div[contains(@class,'component toolbar')]//button[contains(.,'Cancel')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SETTINGS_CELL_EDITOR_ADD_SECTION</td>
 	<td>//button[@id='addSectionButton']</td>
 	<td></td>
@@ -195,11 +145,6 @@
 <tr>
 	<td>SETTINGS_CELL_EDITOR_AUTO_CREATE</td>
 	<td>//form[contains(@class,'assignments-cell-editor')]//input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_CELL_EDITOR_REMOVE_SECTION</td>
-	<td>//a[@class='celleditor-view-menu-remove']</td>
 	<td></td>
 </tr>
 <tr>
@@ -253,16 +198,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SETTINGS_CELL_EDITOR_SCRIPT_LANGUAGE_SELECT</td>
-	<td>//select[@name='scriptLanguage']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_CELL_EDITOR_PRIORITY</td>
-	<td>//input[@name='priority']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SETTINGS_CELL_EDITOR_TEMPLATE_LANGUAGE_SELECT</td>
 	<td>//select[@name='templateLanguage']</td>
 	<td></td>
@@ -285,16 +220,6 @@
 <tr>
 	<td>SETTINGS_CELL_EDITOR_ASSIGNMENT_TYPE_SELECT</td>
 	<td>//select[@name='assignmentType']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_CELL_EDITOR_EDIT_RECIPIENTS</td>
-	<td>//a[.='Edit Recipients']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_CELL_EDITOR</td>
-	<td>//div[contains(@class,'celleditor-full-view')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -334,11 +259,6 @@
 	<td></td>
 </tr>
 <!--VIEW_FORM-->
-<tr>
-	<td>VIEW_FORM_BUILDER</td>
-	<td>//div[@class='diagram-builder-canvas']/div[2]</td>
-	<td></td>
-</tr>
 <!--VIEW_FORM_NODE-->
 <tr>
 	<td>VIEW_FORM_NODE_DEFAULT</td>
@@ -348,11 +268,6 @@
 <tr>
 	<td>VIEW_FORM_NODE</td>
 	<td>//div[@class='diagram-node-label' and .='${key_nodeNodeLabel}']/../div/div/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_FORM_NODE_LABEL</td>
-	<td>//div[@class='diagram-node-label' and contains(.,'${key_nodeNodeLabel}')]</td>
 	<td></td>
 </tr>
 <tr>

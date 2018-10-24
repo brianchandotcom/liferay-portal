@@ -10,16 +10,6 @@
 <tbody>
 <!--TOOLBAR-->
 <tr>
-	<td>TOOLBAR_VIEW_ALL</td>
-	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'View All')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_ADD</td>
-	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//li/a[contains(.,'Add')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -33,31 +23,6 @@
 <tr>
 	<td>DDM_STRUCTURE_ELLIPSIS_1</td>
 	<td>xpath=(//td[contains(@class,'entry-action')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURE_TABLE</td>
-	<td>//div[contains(@id,'ddmStructuresSearchContainer')]/table/tbody/tr[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURE_TABLE_ALL_CHECKBOX</td>
-	<td>//div[contains(@id,'DDMPortlet_managementBarContainerId')]//input[contains(@name,'allRowIds')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURE_TABLE_CHECKBOX_1</td>
-	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[1]//input[contains(@name,'rowIds')])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURE_TABLE_ID</td>
-	<td>//tr[contains(.,'${key_ddlDataDefinitionName}')]/td[count(//th[contains(.,'ID')]//preceding-sibling::th) + 1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURE_TABLE_ID_1</td>
-	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[count(//th[contains(.,'ID')]//preceding-sibling::th) + 1])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -83,41 +48,6 @@
 <tr>
 	<td>DDM_STRUCTURE_TABLE_DESCRIPTION</td>
 	<td>//tr[contains(.,'${key_ddlDataDefinitionName}')]/td[count(//th[contains(.,'Description')]//preceding-sibling::th) + 1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURE_TABLE_DESCRIPTION_1</td>
-	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[count(//th[contains(.,'Description')]//preceding-sibling::th) + 1])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURE_TABLE_MODIFIED_DATE</td>
-	<td>//tr[contains(.,'${key_ddlDataDefinitionName}')]/td[count(//th[contains(.,'Modified Date')]//preceding-sibling::th) + 1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURE_TABLE_CHOOSE_BUTTON</td>
-	<td>//tr[contains(.,'${key_ddlDataDefinitionName}')]//button[contains(.,'Choose')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURE_TABLE_CHOOSE_BUTTON_1</td>
-	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td//button[contains(.,'Choose')])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURE_TABLE_ACTIONS</td>
-	<td>xpath=(//tr[contains(.,'${key_ddlDataDefinitionName}')]/td//div/a[contains(@id,'ddmStructuresSearchContainer')])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURE_TABLE_ACTIONS_1</td>
-	<td>xpath=(//a[contains(@id,'ddmStructuresSearchContainer')])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURE_TABLE_ACTIONS_GENERIC</td>
-	<td>//a[contains(@id,'ddmStructuresSearchContainer')]</td>
 	<td></td>
 </tr>
 </tbody>

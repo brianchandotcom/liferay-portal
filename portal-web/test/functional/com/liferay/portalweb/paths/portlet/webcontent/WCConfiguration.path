@@ -9,21 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>CONFIGURATION_IFRAME</td>
-	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAME_FIELD</td>
-	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/input[contains(@id,'emailFromName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADDRESS_FIELD</td>
-	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/input[contains(@id,'emailFromAddress')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

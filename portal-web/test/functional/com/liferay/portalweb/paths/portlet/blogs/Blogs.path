@@ -9,38 +9,13 @@
 </thead>
 <tbody>
 <tr>
-	<td>ACE_EDITOR</td>
-	<td>//div[contains(@class,'alloy-editor-wrapper')]//div[contains(@class,'ace_line')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_BLOGS_ENTRY</td>
 	<td>//a[contains(@aria-label,'Add Blog Entry')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>AGGREGATOR_NO_ENTRY_MESSAGE</td>
-	<td>//div[contains(@class,'portlet-body') and contains(.,'There are no blogs.')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_CHECKBOX</td>
-	<td>//ul[contains(@id,'blogEntriesSearchContainer') and contains(.,'${key_entryTitle}')]//input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ENTRY_COMMENTS_COUNT</td>
 	<td>//div[contains(@class,'widget-content') and contains (.,'${key_entryContent}')]/div//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS</td>
-	<td>//a[@data-title='Permissions']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_ERROR_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class, 'alert-danger') and contains(.,'You do not have the required permissions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,16 +61,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ICON_VIEW_ENTRY_TITLE_LINK</td>
-	<td>//div[contains(@id,'blogEntriesSearchContainer')]//li[contains(.,'${key_entryTitle}')]//span[contains(@class,'lfr-card-title-text')]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ICON_VIEW_ENTRY_OPTIONS_DROPDOWN</td>
-	<td>//div[contains(@class,'taglib-vertical-card-footer') and contains(.,'${key_entryTitle}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ICON_VIEW_ENTRY_STATUS</td>
 	<td>//div[contains(@id,'blogEntriesSearchContainer')]//li[contains(.,'${key_entryTitle}')]//span[contains(@class,'status')]</td>
 	<td></td>
@@ -106,21 +71,6 @@
 	<td></td>
 </tr>
 <!--PAGE_VIEW-->
-<tr>
-	<td>PAGE_VIEW_ENTRY_TITLE</td>
-	<td>//div[@class='entry-title']//h2</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_VIEW_ENTRY_CONTENT</td>
-	<td>//div[@class='entry-body']//p</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_VIEW_ENTRY_OPTIONS_DROPDOWN</td>
-	<td>//div[@class='entry-title' and contains(.,'${key_entryTitle}')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td></td>
 	<td></td>
@@ -158,11 +108,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_entryTitle}')]/td//div/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -179,62 +124,17 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RECENT_BLOGGER_STARS</td>
-	<td>//div[@class='blogger-stars']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RECENT_BLOGGER_DATE</td>
-	<td>//div[@class='blogger-date']</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--SCHEDULED_ENTRY-->
 <tr>
-	<td>SCHEDULED_ENTRY_STATUS</td>
-	<td>//span[contains(@class,'workflow-status')]/strong[contains(.,'Scheduled')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCHEDULED_ENTRY_TITLE</td>
-	<td>//tr[contains(@data-qa-id,'row')]//a[contains(.,'${key_entryTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCHEDULED_ENTRY_VERTICAL_ELLIPSIS</td>
-	<td>//tr[contains(.,'${key_entryTitle}')]/.//td//div/a[contains(@class,'dropdown-toggle')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--SEARCH_RESULTS-->
-<tr>
-	<td>SEARCH_RESULTS_ENTRY_TITLE</td>
-	<td>//a[@class='entry-link']/div/span[@class='entry-title' and contains(.,'${key_entryTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_RESULTS_ENTRY_DESCRIPTION</td>
-	<td>//a[@class='entry-link']/div/span[@class='entry-description' and contains(.,'${key_entryContent}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_RESULTS_ENTRY_COMMENT</td>
-	<td>//span[@class='entry-title' and contains(.,'${key_entryTitle}')]//..//..//..//div[@class='entry-discussion']/a/span[@class='body']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_RESULTS_HIGHLIGHTED</td>
-	<td>//span[@class='entry-title' and contains(.,'${key_entryTitle}')]//..//..//..//span[@class='highlight']</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

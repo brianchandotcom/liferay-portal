@@ -13,16 +13,31 @@
 	<td>//button[@type='submit' and contains(.,'Add')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SITE_VARIATION-->
 <tr>
 	<td>ADD_SITE_PAGES_VARIATIONS_BUTTON</td>
 	<td>//a[contains(@id,'_addBranchButton')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SITE_PAGES_VARIATIONS_TABLE-->
 <tr>
 	<td>UPDATE_BUTTON</td>
 	<td>//div[contains(@class,'button-holder')]//button[contains(@id,'StagingBarPortlet') and contains(.,'Update')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--ADD_SITE_PAGES_VARIATION-->
@@ -34,6 +49,11 @@
 <tr>
 	<td>ADD_SITE_PAGES_VARIATION_COPY_PAGES_SELECT</td>
 	<td>//select[contains(@id,'_copyLayoutSetBranchId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--MERGE_SITE_PAGES_VARIATION_TABLE-->

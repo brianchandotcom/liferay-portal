@@ -38,10 +38,20 @@
 	<td>//input[contains(@id,'sourceURL')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--This locator is necessary for tests that require the sendKey action-->
 <tr>
 	<td>RESIZER</td>
 	<td>//span[@id='cke_1_resizer']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--TOOLBAR-->
@@ -55,16 +65,31 @@
 	<td>//div[contains(@class,'cke_2')]//a[contains(@class,'cke_button') and contains(@class,'source')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!-- CONTENT_AUDIO_LINK -->
 <tr>
 	<td>CONTENT_AUDIO_LINK_IMAGE</td>
 	<td>//img[contains(@class,'audio')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--CONTENT_IMAGE_LINK-->
 <tr>
 	<td>CONTENT_IMAGE_LINK_IMAGE</td>
 	<td>//img[contains(@src,'jpg')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--CONTENT_VIDEO_LINK-->

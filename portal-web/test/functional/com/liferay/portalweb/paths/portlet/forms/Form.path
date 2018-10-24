@@ -43,6 +43,11 @@
 	<td>//ol[contains(@class,'multi-step-nav')]//li/div[contains(.,'${key_formPageName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ALT_PAGINATION-->
 <tr>
 	<td>ALT_PAGINATION_PAGE</td>
@@ -52,6 +57,11 @@
 <tr>
 	<td>ALT_PAGINATION_SUCCESS_PAGE</td>
 	<td>//div[contains(@class,'form-builder-pagination')]//li[contains(@class,'pagination-success-page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--PAGE_CONTROLS-->
@@ -80,6 +90,11 @@
 	<td>//li[contains(@class,'dropdown-item')]//a[text()='Switch Pagination Mode']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ADD_FIELD-->
 <tr>
 	<td>ADD_FIELD</td>
@@ -96,6 +111,11 @@
 	<td>//div[contains(@class,'yui3-dd-drop') and contains(@class,'col-empty')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SUCCESS_PAGE-->
 <tr>
 	<td>SUCCESS_PAGE_TITLE_FIELD</td>
@@ -105,6 +125,11 @@
 <tr>
 	<td>SUCCESS_PAGE_DESCRIPTION_FIELD</td>
 	<td>//div[@class='form-builder-success-page']//input[contains(@class,'success-page-content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--PUBLISH-->
@@ -133,6 +158,11 @@
 	<td>//div[contains(@class,'alert-dismissable')]//div[contains(.,'${key_alertMessage}')]/preceding-sibling::button[@class='close']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SETTINGS_TAB-->
 <tr>
 	<td>SETTINGS_TAB_EMAIL_NOTIFICATIONS</td>
@@ -149,6 +179,11 @@
 	<td>//div[contains(@data-fieldname,'workflowDefinition')]//div[contains(@id,'workflowDefinition')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_workflowDefinition}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--FIELD-->
 <tr>
 	<td>FIELD_BODY</td>
@@ -158,6 +193,11 @@
 <tr>
 	<td>FIELD_LABEL</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--SIDEBAR -->
@@ -199,6 +239,11 @@
 <tr>
 	<td>SIDEBAR_CLOSE</td>
 	<td>//div[contains(@class,'open') and contains(@class,'form-builder-sidebar')]//a[contains(@class,'close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--DATA_PROVIDER_OUTPUT_PARAMETER-->
@@ -245,6 +290,11 @@
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_REPEAT_ICON</td>
 	<td>//div[contains(@data-fieldname,'outputParameters')]/following-sibling::div[contains(@class,'field-repeatable')]//a[contains(@class,'add-button')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--DATA_PROVIDER_PERMISSIONS_PARAMETER-->

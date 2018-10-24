@@ -19,6 +19,11 @@
 	<td>//div[contains(@class,'lfr-asset-column-actions')]//span[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SUBORGANIZATION_TABLE-->
 <tr>
 	<td>SUBORGANIZATION_TABLE_NAME</td>
@@ -33,6 +38,11 @@
 <tr>
 	<td>SUBORGANIZATION_TABLE_ACTIONS</td>
 	<td>//tr[contains(.,'${key_suborgName}')]/td[contains(@class,'action-column')]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--USER_TABLE-->

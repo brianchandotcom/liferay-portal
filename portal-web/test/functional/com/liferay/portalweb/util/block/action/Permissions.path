@@ -33,6 +33,11 @@
 	<td>//button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--CONFIGURATION_PERMISSIONS-->
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_TEAM_ROLE_NAME</td>
@@ -72,6 +77,11 @@
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX</td>
 	<td>//input[contains(@id,'${key_roleTitle}') and contains(@name,'ACCESS_IN_CONTROL_PANEL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--INLINE_PERMISSIONS-->
@@ -118,6 +128,11 @@
 <tr>
 	<td>INLINE_PERMISSIONS_VIEW_CHECKBOX</td>
 	<td>//input[@id='${key_roleTitle}_ACTION_VIEW']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--CONTENT_PERMISSIONS-->
@@ -224,6 +239,11 @@
 <tr>
 	<td>CONTENT_PERMISSIONS_VIEW_CHECKBOX</td>
 	<td>//input[contains(@id,'${key_roleTitle}_ACTION_VIEW')] | //tr[contains(.,'${key_roleTitle}')]//input[contains(@id,'ACTION_VIEW')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--EVENT_PERMISSIONS-->

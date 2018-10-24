@@ -14,6 +14,11 @@
 	<td>//table[contains(@id,'message_boards_view_message_thread')]//tr[contains(.,'${key_threadSubject}')]/td//a/strong</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ADD_EXPLANATION_POST-->
 <tr>
 	<td>ADD_EXPLANATION_POST_CHECKBOX</td>

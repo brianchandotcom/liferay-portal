@@ -13,6 +13,11 @@
 	<td>//select[contains(@id,'AnnouncementsPortlet') and contains(@id,'priority')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_ENTRIES_READ</td>
@@ -27,6 +32,11 @@
 <tr>
 	<td>NAVIGATION_MANAGE_ENTRIES</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Manage Entries')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--CARD_VIEW_ENTRY-->

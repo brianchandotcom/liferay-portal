@@ -28,6 +28,11 @@
 	<td>//a[*[name()='svg'][contains(@class,'icon-caret-double')]]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--FILTER-->
 <tr>
 	<td>FILTER_AND_ORDER</td>

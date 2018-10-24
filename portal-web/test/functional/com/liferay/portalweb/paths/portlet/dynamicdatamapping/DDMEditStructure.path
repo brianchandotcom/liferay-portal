@@ -28,6 +28,11 @@
 	<td>//div[contains(@class,'button-holder ')]/button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_DESCRIPTION_FIELD</td>
@@ -44,6 +49,11 @@
 	<td>//select[contains(@id,'mode')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--FIELDS-->
 <tr>
 	<td>FIELDS_LINK</td>
@@ -58,6 +68,11 @@
 <tr>
 	<td>FIELDS_FIELD_UNSELECTABLE</td>
 	<td>//div[@class='tab-content']/div/ul/li[@title='${key_field}' and not(contains(@class,'property-builder-field-draggable'))]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--SETTINGS-->
@@ -121,6 +136,11 @@
 	<td>//td[contains(@class,'table-col-name') and contains(.,'Options')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--FORM-->
 <tr>
 	<td>FORM_BUILDER</td>
@@ -175,6 +195,11 @@
 <tr>
 	<td>FORM_FIELD_SELECT</td>
 	<td>//select[@name='${key_fieldName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--SETTINGS_CELL_EDITOR-->
@@ -243,10 +268,20 @@
 	<td>xPath=(//div[contains(@class,'celleditor-edit-option-row')])[3]//input[contains(@class,'celleditor-edit-input-value')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SOURCE_EDITOR-->
 <tr>
 	<td>SOURCE_EDITOR_CONTENT</td>
 	<td>//div[contains(@id,'formBuilderEditor')]/textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--ARE_YOU_SURE_DIALOG_BOX-->

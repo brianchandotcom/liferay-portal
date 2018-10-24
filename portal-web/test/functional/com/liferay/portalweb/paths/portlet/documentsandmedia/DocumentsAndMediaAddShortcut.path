@@ -18,6 +18,11 @@
 	<td>//button[contains(@id,'selectToFileEntryButton')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SELECT_FILE-->
 <tr>
 	<td>SELECT_FILE_FOLDER_NAME</td>

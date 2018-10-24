@@ -33,6 +33,11 @@
 	<td>//textarea[contains(@class,'field-input')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--TIMELINE_ENTRY-->
 <tr>
 	<td>TIMELINE_ENTRY_ACTION</td>

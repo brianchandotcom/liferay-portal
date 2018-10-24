@@ -33,6 +33,11 @@
 	<td>//div[@class='lfr-ddm-container']/div[not(contains(@class,'hide'))][2]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--NESTED_FIELDS-->
 <tr>
 	<td>NESTED_PARENT_FIELD</td>
@@ -52,6 +57,11 @@
 <tr>
 	<td>NESTED_CHILD_REPEATING_FIELD</td>
 	<td>//div[@data-fieldname='${key_nestedParentFieldFieldName}' and @data-repeatable='true']/following-sibling::div[@data-fieldname='${key_nestedParentFieldFieldName}']/div[@class='form-group']/following-sibling::div[@data-fieldname='${key_nestedChildFieldFieldName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--INFO_SIDEBAR-->

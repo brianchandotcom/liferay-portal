@@ -38,10 +38,20 @@
 	<td>//div[@class='panel-heading']//a[normalize-space(text())='${key_panel}'][@aria-expanded='true' and not(contains(@class,'collapsed'))]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--MENU-->
 <tr>
 	<td>MENU_ITEM</td>
 	<td>//div[contains(@class,'toggler-content-expanded')]//a[contains(.,'${key_portletName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--ENTRY-->

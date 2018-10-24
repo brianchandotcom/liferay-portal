@@ -104,6 +104,11 @@
 	<td>//tr[td[@class=' lfr-name-column' and contains(.,'${key_tableName}')]]/td[@class=' lfr-scopes-column']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--USER-->
 <tr>
 	<td>USER_CONNECTED_APP_REMOVE_ACCESS_BUTTON</td>

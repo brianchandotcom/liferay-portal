@@ -13,6 +13,11 @@
 	<td>//input[contains(@id,'widgetShowAddAppLink')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--COMMUNICATION-->
 <tr>
 	<td>COMMUNICATION_SELECT_NODE_ID</td>

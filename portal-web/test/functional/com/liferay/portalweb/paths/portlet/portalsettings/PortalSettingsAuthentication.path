@@ -44,6 +44,11 @@
 	<td>//select[contains(@id,'company-security-auth-type')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--AUTHENTICATION_CAS-->
 <tr>
 	<td>AUTHENTICATION_CAS_ENABLED_CHECKBOX</td>
@@ -120,6 +125,11 @@
 	<td>//button[contains(.,'Test CAS Configuration')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--AUTHENTICATION_GOOGLE-->
 <tr>
 	<td>AUTHENTICATION_GOOGLE_ENABLED_CHECKBOX</td>
@@ -134,6 +144,11 @@
 <tr>
 	<td>AUTHENTICATION_GOOGLE_CLIENT_SECRET</td>
 	<td>//input[contains(@name,'google_clientSecret')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--AUTHENTICATION_FACEBOOK-->
@@ -172,16 +187,31 @@
 	<td>//input[contains(@name,'facebook_oauthRedirectURL')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--AUTHENTICATION_LDAP-->
 <tr>
 	<td>AUTHENTICATION_LDAP_ADD_BUTTON</td>
 	<td>//a[contains(@id,'addButton')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--LDAP_SERVERS_TABLE-->
 <tr>
 	<td>LDAP_SERVERS_TABLE_EDIT</td>
 	<td>//tr[contains(.,'${key_LDAPServerName}')]/td[3]//span[.='Edit']/preceding-sibling::i</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--LDAP_SERVER-->
@@ -255,6 +285,11 @@
 	<td>//button[contains(.,'Test LDAP Groups')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--AUTHENTICATION_NTLM-->
 <tr>
 	<td>AUTHENTICATION_NTLM_ENABLED_CHECKBOX</td>
@@ -311,16 +346,31 @@
 	<td>//input[contains(@name,'ntlm_servicePassword')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--AUTHENTICATION_OPEN_ID-->
 <tr>
 	<td>AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX</td>
 	<td>//input[contains(@name,'openid_enabled')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--AUTHENTICATION_OPEN_ID_CONNECT-->
 <tr>
 	<td>AUTHENTICATION_OPEN_ID_CONNECT_ENABLED_CHECKBOX</td>
 	<td>//input[contains(@name,'openid_connect_enabled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--AUTHENTICATION_OPEN_SSO-->

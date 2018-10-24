@@ -38,10 +38,20 @@
 	<td>//li[@class='asset-links-list-item']//a/span | //li[@class='asset-links-list-item']//a</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--This is temporary. After path restructure, the ideal solution is to make the path variable more generic.-->
 <tr>
 	<td>KB_RELATED_ASSETS_LINKS</td>
 	<td>//ul[@class='asset-links-list']/li/a[contains(.,'${key_kbArticleRelatedAssetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--RELATED_ASSETS_TABLE-->
@@ -65,6 +75,11 @@
 	<td>//tr[contains(.,'${key_assetTitle}')]//td[4]//a</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--MESSAGE_BOARDS_THREAD-->
 <tr>
 	<td>MESSAGE_BOARDS_THREAD_TITLE</td>
@@ -81,10 +96,20 @@
 	<td>//iframe[contains(@id,'selectAsset')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--KB_ASSET_TABLE-->
 <tr>
 	<td>KB_ASSET_TABLE_TITLE_LINK</td>
 	<td>//div[contains(@id,'assetEntriesSearchContainer')]//tr[contains(.,'${key_kbArticleRelatedAssetTitle}')]/td[1]//a[contains(.,'${key_kbArticleRelatedAssetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--ASSET_TABLE-->

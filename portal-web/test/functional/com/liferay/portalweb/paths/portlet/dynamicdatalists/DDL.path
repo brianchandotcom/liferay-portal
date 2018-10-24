@@ -14,6 +14,11 @@
 	<td>//a[@*='Add ${key_ddlDataDefinitionName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--RECORD_TABLE-->
 <tr>
 	<td>RECORD_TABLE_ENTRY</td>
@@ -85,6 +90,11 @@
 	<td>//div[@class='ddl-record' and contains(.,'${key_ddlRecordFieldData}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--LIST_TABLE-->
 <tr>
 	<td>LIST_TABLE_NAME</td>
@@ -94,6 +104,11 @@
 <tr>
 	<td>LIST_TABLE_DESCRIPTION</td>
 	<td>//table[contains(@class,'table-autofit')]//tr[1]/td//following-sibling::td[contains(.,'${key_ddlListDescription}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--PORTLET_ACTIONS-->

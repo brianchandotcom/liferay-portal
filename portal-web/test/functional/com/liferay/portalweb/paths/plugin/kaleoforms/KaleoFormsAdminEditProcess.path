@@ -18,6 +18,11 @@
 	<td>//button[@disabled='' and contains(.,'Next')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--FORM_NAVIGATOR-->
 <tr>
 	<td>FORM_NAVIGATOR_PROGRESS_BAR_NAME</td>
@@ -27,6 +32,11 @@
 <tr>
 	<td>FORM_NAVIGATOR_PROGRESS_BAR_STEP</td>
 	<td>//ul[contains(@class,'nav-list')]/li[contains(@id,'${key_kfProgressName}Tab')]//div[@class='progress-bar-step']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--FIELD_SET-->
@@ -40,10 +50,20 @@
 	<td>//button[contains(.,'Add Field Set')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--FIELD_SET_PAGINATION-->
 <tr>
 	<td>FIELD_SET_PAGINATION_SELECTOR_BUTTON</td>
 	<td>//div[@class='dropdown pagination-items-per-page']//a[@role='button']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--WORKFLOW-->
@@ -57,6 +77,11 @@
 	<td>//button[contains(.,'Add Workflow')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--WORKFLOW_NAVIGATION-->
 <tr>
 	<td>WORKFLOW_NAVIGATION_PUBLISHED_TAB</td>
@@ -68,10 +93,20 @@
 	<td>//a[@title='Unpublished']/span</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--WORKFLOW_TABLE-->
 <tr>
 	<td>WORKFLOW_TABLE_TITLE</td>
 	<td>//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[contains(.,'${key_workflowDefinitionTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--FORMS_TABLE-->

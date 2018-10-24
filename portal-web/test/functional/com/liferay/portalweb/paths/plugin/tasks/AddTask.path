@@ -48,6 +48,11 @@
 	<td>//li[contains(.,'${key_tagNumber}')]/span/span</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--DUE_DATE-->
 <tr>
 	<td>DUE_DATE_FIELD</td>

@@ -18,10 +18,20 @@
 	<td>//div/span[contains(.,'State')]/..//div[@class='panel-body']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--MENU-->
 <tr>
 	<td>MENU_REJECT</td>
 	<td>//a[contains(@id,'rejecttaskChangeStatusLink')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--PREVIEW-->
@@ -35,6 +45,11 @@
 	<td>//h3[@class='task-content-title']/../div[2] | //h3[@class='task-content-title']/../../div</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ACTIVITIES-->
 <tr>
 	<td>ACTIVITIES</td>
@@ -44,6 +59,11 @@
 <tr>
 	<td>ACTIVITIES_LINE_1</td>
 	<td>xpath=(//div[@class='task-activity']//tbody/tr/td[1])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--COMMENTS-->

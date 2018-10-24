@@ -59,6 +59,11 @@
 	<td>//select[contains(@id,'fullPageApplication')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--LOOK_AND_FEEL-->
 <tr>
 	<td>CHANGE_CURRENT_THEME_BUTTON</td>
@@ -73,6 +78,11 @@
 <tr>
 	<td>VIEW_THEME</td>
 	<td>//div[contains(@class, 'main-content-card')]//h4[contains(.,'Name')]/following-sibling::p[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--CUSTOMIZATION_SETTINGS-->

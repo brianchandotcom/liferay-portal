@@ -38,6 +38,11 @@
 	<td>//span[contains(@class,'user-name')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ADMIN-->
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_USERS</td>

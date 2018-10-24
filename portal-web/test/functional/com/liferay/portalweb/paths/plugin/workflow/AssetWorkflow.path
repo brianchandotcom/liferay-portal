@@ -28,6 +28,11 @@
 	<td>//span[@class='workflow-status']/span</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--DETAILS_WORKFLOW-->
 <tr>
 	<td>DETAILS_WORKFLOW_CREATED_BY</td>

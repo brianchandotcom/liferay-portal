@@ -13,6 +13,11 @@
 	<td>//h3</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--THREAD-->
 <tr>
 	<td>THREAD_BODY</td>
@@ -62,6 +67,11 @@
 <tr>
 	<td>THREAD_USERNAME_2</td>
 	<td>xpath=(//div[@class='panel-heading' and contains(.,'${key_threadSubject}')]//h5[contains(.,'${key_userName}')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--MESSAGE-->

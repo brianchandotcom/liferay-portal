@@ -18,6 +18,11 @@
 	<td>//input[contains(@id,'InputFile')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--FOLDER_TABLE-->
 <tr>
 	<td>FOLDER_TABLE_FOLDER</td>
@@ -27,6 +32,11 @@
 <tr>
 	<td>FOLDER_TABLE_FOLDER_CHOOSE</td>
 	<td>//tr[contains(.,'${key_dmFolderName}')]/td[4]//button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--DOCUMENTS_TABLE-->

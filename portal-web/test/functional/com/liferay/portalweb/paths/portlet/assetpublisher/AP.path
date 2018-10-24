@@ -23,6 +23,11 @@
 	<td>//div[@class='asset-abstract '][//a[normalize-space(./text())='${key_assetTitle}']]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--CATEGORIES_FILTER-->
 <tr>
 	<td>CATEGORIES_FILTER_CATEGORY</td>
@@ -34,16 +39,31 @@
 	<td>//div[contains(@class,'portlet-asset-publisher')]//div[@class='portlet-body']//span[contains(.,'${key_categoryName}')]//a</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ASSET_EDIT-->
 <tr>
 	<td>ASSET_EDIT</td>
 	<td>//a[contains(@data-id,'editAsset')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ASSET_RICH_SUMMARY-->
 <tr>
 	<td>ASSET_RICH_SUMMARY_TITLE</td>
 	<td>//section[@class='portlet']//h3[@class='asset-title']/a[contains(.,'${key_assetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--ASSET_ABSTRACT-->
@@ -92,10 +112,20 @@
 	<td>//div[contains(@class,'asset-abstract')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ASSET_ABSTRACT_DETAIL-->
 <tr>
 	<td>ASSET_ABSTRACT_DETAIL_CONTENT</td>
 	<td>//div[@class='asset-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--ASSET_ORDER-->
@@ -114,10 +144,20 @@
 	<td>//div[@class='portlet-body']/div[4]/h4/a</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ASSET_ABSTRACT_BOOKMARK-->
 <tr>
 	<td>ASSET_ABSTRACT_BOOKMARK_TABLE_DISPLAY_TEMPLATE_BOOKMARK_ICON</td>
 	<td>//h3/a[contains(.,'${key_bookmarkName}')]/i[@class='icon-bookmark-empty']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--ASSET_ABSTRACT_BOOKMARK_DETAIL-->
@@ -129,6 +169,11 @@
 <tr>
 	<td>ASSET_ABSTRACT_BOOKMARK_LIFERAY_LOGO</td>
 	<td>//*[contains(@class,'logo')][*[name()='svg'][*[name()='use']]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--ASSET_ABSTRACT_DDL_RECORD-->
@@ -145,6 +190,11 @@
 <tr>
 	<td>ASSET_ABSTRACT_DDL_RECORD_3</td>
 	<td>xPath=(//div[@class='asset-content']//div[contains(@class,'field-wrapper-content')])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--METADATA-->

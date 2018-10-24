@@ -39,6 +39,11 @@
 	<td>//tr[contains(.,'${key_workflowAssetTitle}')]/td[6]//a</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--COMPLETED_TABLE-->
 <tr>
 	<td>COMPLETED_TABLE_ASSET_TITLE</td>

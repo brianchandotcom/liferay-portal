@@ -24,6 +24,11 @@
 	<td>//td[contains(@class,'author-column') and contains(.,'${key_kfAuthor}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--EXPORT_DIALOG_BOX-->
 <tr>
 	<td>EXPORT_DIALOG_BOX_FILE_EXTENSION_SELECT</td>

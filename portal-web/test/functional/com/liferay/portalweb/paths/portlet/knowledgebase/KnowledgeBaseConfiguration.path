@@ -13,6 +13,11 @@
 	<td>//iframe[contains(@id,'knowledge_base_web')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--NAVIGATION_TAB-->
 <tr>
 	<td>NAVIGATION_TAB_DISPLAY_SETTINGS</td>
@@ -39,6 +44,11 @@
 	<td>//a[contains(.,'Suggestion Resolved')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--DISPLAY_SETTINGS-->
 <tr>
 	<td>DISPLAY_SETTINGS_ENABLE_SUBSCRIPTIONS_CHECKBOX</td>
@@ -55,6 +65,11 @@
 	<td>//input[contains(@id,'enableKBArticlePrint')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--EMAIL_FROM-->
 <tr>
 	<td>EMAIL_FROM_NAME_FIELD</td>
@@ -66,16 +81,31 @@
 	<td>//input[contains(@id,'emailFromAddress')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SUGGESTION_RECEIVED_EMAIL-->
 <tr>
 	<td>SUGGESTION_RECEIVED_EMAIL_EDITOR_IFRAME</td>
 	<td>//li[@class='tab active' and contains(.,'Suggestion Received Email')]/../..//div[contains(@id,'SuggestionReceived')]//div[contains(@class,'cke_inner')]//iframe</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SUGGESTION_IN_PROGRESS_EMAIL-->
 <tr>
 	<td>SUGGESTION_IN_PROGRESS_EMAIL_EDITOR_IFRAME</td>
 	<td>//li[@class='tab active' and contains(.,'Suggestion in Progress Email')]/../..//div[contains(@id,'SuggestionInProgress')]//div[contains(@class,'cke_inner')]//iframe</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--SUGGESTION_RESOLVED_EMAIL-->

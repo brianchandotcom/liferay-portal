@@ -18,6 +18,11 @@
 	<td>//div[contains(@id,'main-content')]//div[contains(@class,'portlet-content')]//ul/li/a[contains(.,'${childPageName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ADT_MULTI_COLUMN-->
 <tr>
 	<td>ADT_MULTI_COLUMN_PAGE_DISPLAY</td>

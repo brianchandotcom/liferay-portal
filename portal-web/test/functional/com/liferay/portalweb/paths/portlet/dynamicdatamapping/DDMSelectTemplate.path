@@ -18,6 +18,11 @@
 	<td>//input[contains(@id,'copyDisplayTemplates')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--TEMPLATE_TABLE-->
 <tr>
 	<td>TEMPLATE_TABLE_ALL_CHECKBOX</td>

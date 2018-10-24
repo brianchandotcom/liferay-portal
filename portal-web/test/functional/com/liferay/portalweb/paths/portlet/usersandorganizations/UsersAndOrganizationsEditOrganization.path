@@ -19,6 +19,11 @@
 	<td>//input[@value='${key_orgType}' and @type='text']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--PARENT_ORGANIZATION-->
 <tr>
 	<td>PARENT_ORGANIZATION_TABLE_NAME</td>
@@ -33,6 +38,11 @@
 <tr>
 	<td>PARENT_ORGANIZATION_SELECT_BUTTON</td>
 	<td>//span[@class='modify-link']/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--ORGANIZATION_SITE-->
@@ -51,6 +61,11 @@
 	<td>//input[contains(@id,'publicLayoutSetPrototypeLinkEnabled')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--CATEGORIZATION-->
 <tr>
 	<td>CATEGORIZATION_TAG</td>
@@ -65,6 +80,11 @@
 <tr>
 	<td>CATEGORIZATION_TAGS_ADD_BUTTON</td>
 	<td>//button[@title='Add Tags']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--ADDRESSES-->
@@ -108,6 +128,11 @@
 	<td>//select[contains(@id,'addressRegionId0')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--PHONE_NUMBERS-->
 <tr>
 	<td>PHONE_NUMBERS_NUMBER_FIELD</td>
@@ -119,10 +144,20 @@
 	<td>//input[contains(@id,'phonePrimary0')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ADDITIONAL_EMAIL_ADDRESSES-->
 <tr>
 	<td>ADDITIONAL_EMAIL_ADDRESSES_EMAIL_ADDRESS_FIELD</td>
 	<td>//input[contains(@id,'emailAddressAddress0')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--WEBSITES-->
@@ -136,6 +171,11 @@
 	<td>//input[contains(@id,'websitePrimary0')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SERVICES-->
 <tr>
 	<td>SERVICES_MONDAY_OPEN_SELECT</td>
@@ -147,10 +187,20 @@
 	<td>//select[contains(@id,'monClose0')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--COMMENTS-->
 <tr>
 	<td>COMMENTS_FIELD</td>
 	<td>//textarea[contains(@id,'comments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--REMINDER_QUERIES-->

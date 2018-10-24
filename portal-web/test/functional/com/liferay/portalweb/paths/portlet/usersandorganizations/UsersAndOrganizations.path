@@ -13,6 +13,11 @@
 	<td>//ul[@role='menubar']/li/a[@title='Add']/span</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--EDIT_TABS-->
 <tr>
 	<td>MISCELLANEOUS</td>
@@ -46,6 +51,11 @@
 	<td>//tr[contains(.,'${key_orgName}')]/td[count(//div[contains(@id,'organizationsSearchContainer')]//th[contains(.,'Type')]/preceding-sibling::th) + 1]//a</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--USERS_AND_SUBORGANIZATIONS_TABLE-->
 <tr>
 	<td>USERS_AND_SUBORGANIZATIONS_TABLE_NAME</td>
@@ -55,6 +65,11 @@
 <tr>
 	<td>USERS_AND_SUBORGANIZATIONS_TABLE_NAME_GENERIC</td>
 	<td>//div[contains(@id,'organizationUsersSearchContainer')]//tr/td[2]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--USER_TABLE-->

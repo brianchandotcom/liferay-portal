@@ -18,6 +18,7 @@ import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
@@ -36,6 +37,9 @@ import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCri
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -48,6 +52,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.xml.Attribute;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.template.soy.utils.SoyContext;
 
 import java.util.ArrayList;
@@ -75,6 +81,9 @@ public class FragmentDisplayContext {
 		_renderResponse = renderResponse;
 		_request = request;
 
+		_fragmentEntryProcessorRegistry =
+			(FragmentEntryProcessorRegistry)_request.getAttribute(
+				FragmentWebKeys.FRAGMENT_ENTRY_PROCESSOR_REGISTRY);
 		_fragmentPortletConfiguration =
 			(FragmentPortletConfiguration)_request.getAttribute(
 				FragmentPortletConfiguration.class.getName());
@@ -215,6 +224,32 @@ public class FragmentDisplayContext {
 			"draft", String.valueOf(WorkflowConstants.STATUS_DRAFT));
 
 		soyContext.put("allowedStatus", allowedStatusSoyContext);
+
+		JSONArray autocompleteTags = JSONFactoryUtil.createJSONArray();
+
+		List<Element> availableTags =
+			_fragmentEntryProcessorRegistry.getAvailableTags();
+
+		availableTags.forEach(
+			tag -> {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+				jsonObject.put("name", tag.getName());
+
+				JSONArray attributesJSONArray =
+					JSONFactoryUtil.createJSONArray();
+
+				List<Attribute> attributes = tag.attributes();
+
+				attributes.forEach(
+					attribute -> attributesJSONArray.put(attribute.getName()));
+
+				jsonObject.put("attributes", attributesJSONArray);
+
+				autocompleteTags.put(jsonObject);
+			});
+
+		soyContext.put("autocompleteTags", autocompleteTags);
 
 		soyContext.put("fragmentCollectionId", getFragmentCollectionId());
 		soyContext.put("fragmentEntryId", getFragmentEntryId());
@@ -542,6 +577,8 @@ public class FragmentDisplayContext {
 	private SearchContainer _fragmentEntriesSearchContainer;
 	private FragmentEntry _fragmentEntry;
 	private Long _fragmentEntryId;
+	private final FragmentEntryProcessorRegistry
+		_fragmentEntryProcessorRegistry;
 	private final FragmentPortletConfiguration _fragmentPortletConfiguration;
 	private String _htmlContent;
 	private final ItemSelector _itemSelector;

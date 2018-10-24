@@ -25,13 +25,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LIST_GROUP_ITEM_ANGLE_ICON</td>
-	<td>xpath=(//a[*[name()='svg'][contains(@class,'icon-angle-right')]])[${key_depth}]</td>
+	<td>LIST_GROUP_ITEM_CARET_ICON</td>
+	<td>xpath=(//a[*[name()='svg'][contains(@class,'icon-caret-right')]])[${key_depth}]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>LIST_GROUP_ITEM_ANGLE_ICON_SPECIFIC</td>
-	<td>//li[normalize-space()='${key_pageName}']//*[*[name()='svg'][contains(@class,'icon-angle-right')]]</td>
+	<td>LIST_GROUP_ITEM_CARET_ICON_SPECIFIC</td>
+	<td>//li[normalize-space()='${key_pageName}']//*[*[name()='svg'][contains(@class,'icon-caret-right')]]</td>
 	<td></td>
 </tr>
 <tr>

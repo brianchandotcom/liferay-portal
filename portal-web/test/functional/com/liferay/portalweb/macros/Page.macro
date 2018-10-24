@@ -560,7 +560,7 @@
 		<if>
 			<isset var="pageName" />
 			<then>
-				<execute function="Click" locator1="SitePages#LIST_GROUP_ITEM_ANGLE_ICON_SPECIFIC">
+				<execute function="Click" locator1="SitePages#LIST_GROUP_ITEM_CARET_ICON_SPECIFIC">
 					<var name="key_pageName" value="${pageName}" />
 				</execute>
 			</then>

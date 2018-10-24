@@ -293,7 +293,7 @@
 			<then>
 				<var method="MathUtil#sum('${count}', '1')" name="index" />
 
-				<execute function="Click" locator1="SitePages#LIST_GROUP_ITEM_ANGLE_ICON">
+				<execute function="Click" locator1="SitePages#LIST_GROUP_ITEM_CARET_ICON">
 					<var name="key_depth" value="${index}" />
 				</execute>
 
@@ -319,7 +319,7 @@
 	</command>
 
 	<command name="togglePrivacy">
-		<execute function="Click" locator1="SitePages#LIST_GROUP_ITEM_ANGLE_ICON_SPECIFIC">
+		<execute function="Click" locator1="SitePages#LIST_GROUP_ITEM_CARET_ICON_SPECIFIC">
 			<var name="key_pageName" value="${privacy}" />
 		</execute>
 	</command>

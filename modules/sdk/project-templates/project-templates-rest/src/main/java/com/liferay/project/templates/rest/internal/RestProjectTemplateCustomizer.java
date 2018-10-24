@@ -39,13 +39,6 @@ public class RestProjectTemplateCustomizer
 		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
 
 		if (liferayVersion.startsWith("7.1")) {
-			String cxfConfig =
-				"com.liferay.portal.remote.cxf.common.configuration." +
-					"CXFEndpointPublisherConfiguration-cxf.properties";
-			String restExtenderConfig =
-				"com.liferay.portal.remote.rest.extender.configuration." +
-					"RestExtenderConfiguration-rest.properties";
-
 			Path destinationDirPath = destinationDir.toPath();
 
 			Path projectDirPath = destinationDirPath.resolve(
@@ -54,8 +47,16 @@ public class RestProjectTemplateCustomizer
 			Path configPath = projectDirPath.resolve(
 				"src/main/resources/configuration");
 
+			String cxfConfig =
+				"com.liferay.portal.remote.cxf.common.configuration." +
+					"CXFEndpointPublisherConfiguration-cxf.properties";
+
 			ProjectTemplateCustomizer.deleteFileInPath(
 				cxfConfig, projectDirPath);
+
+			String restExtenderConfig =
+				"com.liferay.portal.remote.rest.extender.configuration." +
+					"RestExtenderConfiguration-rest.properties";
 
 			ProjectTemplateCustomizer.deleteFileInPath(
 				restExtenderConfig, projectDirPath);

@@ -38,6 +38,8 @@ import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -383,6 +385,10 @@ public class DefaultDLViewFileVersionDisplayContext
 				dlPreviewRenderer.render(request, response);
 			}
 			catch (Exception e) {
+				_log.error(
+					"Exception trying to render preview for file version: " +
+						_fileVersion.getTitle());
+
 				JSPRenderer jspRenderer = new JSPRenderer(
 					"/document_library/view_file_entry_preview_error.jsp");
 
@@ -398,6 +404,9 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	private static final UUID _UUID = UUID.fromString(
 		"85F6C50E-3893-4E32-9D63-208528A503FA");
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DefaultDLViewFileVersionDisplayContext.class);
 
 	private List<DDMStructure> _ddmStructures;
 	private final DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;

@@ -7,6 +7,7 @@ import './LayoutBreadcrumbs.es';
 import './LayoutColumn.es';
 import {DRAG_POSITIONS, LayoutDragDrop} from './utils/LayoutDragDrop.es';
 import {
+	clearFollowingColumns,
 	columnIsItemChild,
 	dropIsValid,
 	getColumnActiveItem,
@@ -296,7 +297,7 @@ class Layout extends Component {
 			) {
 				this._draggingItem.active = false;
 
-				layoutColumns = this._clearFollowingColumns(
+				layoutColumns = clearFollowingColumns(
 					layoutColumns,
 					this._draggingItemColumnIndex
 				);
@@ -379,7 +380,7 @@ class Layout extends Component {
 		) {
 			this._draggingItem.active = false;
 
-			nextLayoutColumns = this._clearFollowingColumns(
+			nextLayoutColumns = clearFollowingColumns(
 				nextLayoutColumns,
 				this._draggingItemColumnIndex
 			);
@@ -627,25 +628,6 @@ class Layout extends Component {
 	}
 
 	/**
-	 * Removes following columns starting at position indicated
-	 * by startColumnIndex
-	 * @param {!Array} layoutColumns
-	 * @param {!number} startColumnIndex
-	 * @private
-	 * @return {Array}
-	 * @review
-	 */
-	_clearFollowingColumns(layoutColumns, startColumnIndex) {
-		const columns = [...layoutColumns];
-
-		for (let i = startColumnIndex + 1; i < columns.length; i++) {
-			columns[i] = [];
-		}
-
-		return columns;
-	}
-
-	/**
 	 * Remove arrow if the item has no children
 	 * @param {Array} layoutColumns
 	 * @param {string} itemPlid
@@ -832,7 +814,7 @@ class Layout extends Component {
 	_updatePath(targetColumnIndex, targetItemPlid) {
 		let nextLayoutColumns = this.layoutColumns;
 
-		nextLayoutColumns = this._clearFollowingColumns(
+		nextLayoutColumns = clearFollowingColumns(
 			nextLayoutColumns,
 			targetColumnIndex
 		);

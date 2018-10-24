@@ -13,7 +13,6 @@
 	<td>//div[contains(@id,'SocialUserStatisticsPortlet')]//iframe</td>
 	<td></td>
 </tr>
-<!--SETUP_COUNTERS-->
 </tbody>
 </table>
 </body>

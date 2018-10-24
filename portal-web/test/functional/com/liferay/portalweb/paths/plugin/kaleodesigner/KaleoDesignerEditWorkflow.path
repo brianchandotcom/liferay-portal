@@ -228,7 +228,6 @@
 	<td>//select[@name='roleType']</td>
 	<td></td>
 </tr>
-<!--VIEW_FORM-->
 <!--VIEW_FORM_NODE-->
 <tr>
 	<td>VIEW_FORM_NODE_DEFAULT</td>

@@ -64,8 +64,6 @@
 	<td>xpath=(//div[@class='panel-heading' and contains(.,'${key_threadSubject}')]//h5[contains(.,'${key_userName}')])[2]</td>
 	<td></td>
 </tr>
-<!--THREAD_CONTROLS-->
-<!--THREAD_TABLE-->
 <!--MESSAGE-->
 <tr>
 	<td>MESSAGE_WORKFLOW_STATUS_1</td>
@@ -142,8 +140,6 @@
 	<td>//li[@class='message-attachment']/span/a</td>
 	<td></td>
 </tr>
-<!--QUICK_REPLY-->
-<!--REPORT_INAPPROPRIATE_CONTENT-->
 </tbody>
 </table>
 </body>

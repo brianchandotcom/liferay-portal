@@ -19,8 +19,6 @@
 	<td>//tr[contains(.,'${key_permissionNavigationValue}') and contains(.,'${key_permissionDefinitionValue}')]/td</td>
 	<td></td>
 </tr>
-<!---->
-<!--SEARCH-->
 </tbody>
 </table>
 </body>

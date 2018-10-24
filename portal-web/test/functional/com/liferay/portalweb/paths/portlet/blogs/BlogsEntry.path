@@ -113,8 +113,6 @@
 	<td>//div[@class='current-image' and contains(@src,'${key_smallImage}')]</td>
 	<td></td>
 </tr>
-<!--SPECIFIC_ENTRY_YOUR_RATING-->
-<!--SPECIFIC_ENTRY_AVERAGE-->
 </tbody>
 </table>
 </body>

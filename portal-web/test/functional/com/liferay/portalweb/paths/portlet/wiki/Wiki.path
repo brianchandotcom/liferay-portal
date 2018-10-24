@@ -76,7 +76,6 @@
 	<td>//li[@class='list-group-item']//a</td>
 	<td></td>
 </tr>
-<!--COMMENTS-->
 <!--COMPARE_ACTIVITIES_NAVIGATION-->
 <tr>
 	<td>COMPARE_ACTIVITIES_NAVIGATION_TEXT_MODE_LINK</td>
@@ -119,7 +118,6 @@
 	<td>//li[@data-qa-id='row']/*[@data-qa-id='rowItemContent']/h4[contains(.,'${key_wikiPageTitle}')]/a</td>
 	<td></td>
 </tr>
-<!--FILES_READY_TO_BE_SAVED-->
 <!--HISTORY-->
 <tr>
 	<td>HISTORY_ACTIVITIES_TABLE_COMPARE_TO_LINK</td>

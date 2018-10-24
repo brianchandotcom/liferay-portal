@@ -24,7 +24,6 @@
 	<td>//select[contains(@Id,'title')]</td>
 	<td></td>
 </tr>
-<!--SCOPE-->
 </tbody>
 </table>
 </body>

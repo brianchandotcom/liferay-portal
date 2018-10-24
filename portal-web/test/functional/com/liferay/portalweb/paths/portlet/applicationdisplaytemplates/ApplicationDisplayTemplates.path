@@ -23,8 +23,6 @@
 	<td>//ul[@class='palette-item-content']//li/span[contains(.,'Portlet Preferences')]</td>
 	<td></td>
 </tr>
-<!--OPTIONS_MENULIST-->
-<!--ADD_MENULIST-->
 <!--ADT_TABLE-->
 <tr>
 	<td>ADT_TABLE_NAME_1</td>

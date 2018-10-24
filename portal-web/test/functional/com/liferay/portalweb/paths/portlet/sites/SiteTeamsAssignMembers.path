@@ -8,7 +8,6 @@
 <tr><td rowspan="1" colspan="3">SiteTeamsAssignMembers</td></tr>
 </thead>
 <tbody>
-<!--USER_TABLE-->
 <!--USER_GROUPS_TABLE-->
 <tr>
 	<td>USER_GROUPS_TABLE_NAME</td>

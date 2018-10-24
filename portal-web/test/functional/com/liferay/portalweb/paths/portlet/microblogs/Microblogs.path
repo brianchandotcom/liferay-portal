@@ -49,7 +49,6 @@
 	<td>//div[@class='microblogs-entry']//div[contains(@class,'user-name')]/span</td>
 	<td></td>
 </tr>
-<!--TIMELINE_ENTRY_COMMENT-->
 </tbody>
 </table>
 </body>

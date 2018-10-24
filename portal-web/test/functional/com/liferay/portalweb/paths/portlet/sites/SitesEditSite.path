@@ -40,17 +40,12 @@
 	<td>//button[contains(@id,'selectParentSiteLink')]/span</td>
 	<td></td>
 </tr>
-<!--PARENT_SITE_TABLE-->
-<!--MENU_BASIC_INFORMATION-->
-<!--MENU_SEARCH_ENGINE_OPTIMIZATION-->
-<!---->
 <!--MENU_ADVANCED-->
 <tr>
 	<td>MENU_ADVANCED_TAB</td>
 	<td>//li[contains(@id,'SiteSettingsPortlet')]/a[contains(.,'Advanced')]</td>
 	<td></td>
 </tr>
-<!--MENU_MISCELLANEOUS-->
 <!--MEMBERSHIP_OPTIONS-->
 <tr>
 	<td>MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE_LABEL</td>

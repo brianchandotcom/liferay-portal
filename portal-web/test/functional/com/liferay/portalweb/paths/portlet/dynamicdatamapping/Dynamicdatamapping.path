@@ -13,10 +13,6 @@
 	<td>//span[contains(.,'${key_headerTitle}')]</td>
 	<td></td>
 </tr>
-<!--FIELDS-->
-<!--SETTINGS-->
-<!--FORM-->
-<!--SETTINGS_CELL_EDITOR-->
 </tbody>
 </table>
 </body>

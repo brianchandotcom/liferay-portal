@@ -18,7 +18,6 @@
 	<td>//div[contains(@id,'SitesDirectoryPortlet')]//h5/a[contains(.,'${key_orgName}')]</td>
 	<td></td>
 </tr>
-<!--BREADCRUMB-->
 <!--DESCRIPTIVE-->
 <tr>
 	<td>DESCRIPTIVE_SITE_ENTRY</td>

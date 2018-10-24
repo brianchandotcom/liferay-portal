@@ -66,9 +66,6 @@
 	<td>//input[contains(@id,'emailFromAddress')]</td>
 	<td></td>
 </tr>
-<!--GENERAL-->
-<!--SECTION-->
-<!--SCOPE-->
 <!--SUGGESTION_RECEIVED_EMAIL-->
 <tr>
 	<td>SUGGESTION_RECEIVED_EMAIL_EDITOR_IFRAME</td>

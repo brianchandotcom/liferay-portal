@@ -8,7 +8,6 @@
 <tr><td rowspan="1" colspan="3">KnowledgeBaseTemplate</td></tr>
 </thead>
 <tbody>
-<!--MENUBAR-->
 <!--TEMPLATE-->
 <tr>
 	<td>TEMPLATE_TITLE</td>
@@ -20,8 +19,6 @@
 	<td>//div[@class='kb-entity-body']</td>
 	<td></td>
 </tr>
-<!--TEMPLATE_COMMENTS-->
-<!--TEMPLATE_TABLE-->
 </tbody>
 </table>
 </body>

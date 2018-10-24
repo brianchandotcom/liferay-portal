@@ -24,7 +24,6 @@
 	<td>//a[contains(@id,'rejecttaskChangeStatusLink')]</td>
 	<td></td>
 </tr>
-<!--DIALOG_BOX-->
 <!--PREVIEW-->
 <tr>
 	<td>PREVIEW_TITLE</td>

@@ -19,8 +19,6 @@
 	<td>//*[@data-qa-id='row']//span[contains(@class,'asset-tag')]/span[contains(.,'${key_tagName}')]</td>
 	<td></td>
 </tr>
-<!--SELECTED_TAG-->
-<!--MERGE_TAGS-->
 </tbody>
 </table>
 </body>

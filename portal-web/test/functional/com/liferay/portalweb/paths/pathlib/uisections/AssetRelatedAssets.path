@@ -65,7 +65,6 @@
 	<td>//tr[contains(.,'${key_assetTitle}')]//td[4]//a</td>
 	<td></td>
 </tr>
-<!--BOOKMARKS_ENTRY-->
 <!--MESSAGE_BOARDS_THREAD-->
 <tr>
 	<td>MESSAGE_BOARDS_THREAD_TITLE</td>
@@ -82,7 +81,6 @@
 	<td>//iframe[contains(@id,'selectAsset')]</td>
 	<td></td>
 </tr>
-<!--This is temporary. After path restructure, the ideal solution is to make the key_kbArticleRelatedAssetTitle path variable more generic.-->
 <!--KB_ASSET_TABLE-->
 <tr>
 	<td>KB_ASSET_TABLE_TITLE_LINK</td>

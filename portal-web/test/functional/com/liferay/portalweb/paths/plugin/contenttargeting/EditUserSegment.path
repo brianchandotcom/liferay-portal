@@ -215,7 +215,6 @@
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]/p[@class='text-secondary']</td>
 	<td></td>
 </tr>
-<!--USER_SEGMENT_RULE_USER_ATTRIBUTES_USER_LOGGED-->
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ROLE-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ROLE_SELECT</td>

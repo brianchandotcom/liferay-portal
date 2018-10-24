@@ -159,7 +159,6 @@
 	<td>//div[@class='kb-article-assets']/span/a[contains(.,'${key_categoryName}')]</td>
 	<td></td>
 </tr>
-<!--SELECT_CATEGORIES-->
 </tbody>
 </table>
 </body>

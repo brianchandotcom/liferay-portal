@@ -45,12 +45,6 @@
 	<td>//div[contains(@class,'contacts-container')]//div[@class='lfr-contact-extra']</td>
 	<td></td>
 </tr>
-<!--TASKS-->
-<!--TASKS_TABLE-->
-<!--TASKS_MENULIST-->
-<!--DIALOG_BOX-->
-<!--ACTIVITIES-->
-<!--COMMENTS-->
 </tbody>
 </table>
 </body>

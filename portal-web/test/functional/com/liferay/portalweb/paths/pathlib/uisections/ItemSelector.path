@@ -51,7 +51,6 @@
 	<td>//div[contains(@class,'image-viewer-focused')]//span[contains(@class,'item-viewer-icon-info')]</td>
 	<td></td>
 </tr>
-<!--SIDEBAR-->
 <!--SIDEBAR_FILE_INFO-->
 <tr>
 	<td>SIDEBAR_FILE_INFO_FORMAT</td>

@@ -8,7 +8,6 @@
 <tr><td rowspan="1" colspan="3">DDMSelectStructure</td></tr>
 </thead>
 <tbody>
-<!--TOOLBAR-->
 <!--DDM_STRUCTURE_TABLE-->
 <tr>
 	<td>DDM_STRUCTURE_ELLIPSIS</td>

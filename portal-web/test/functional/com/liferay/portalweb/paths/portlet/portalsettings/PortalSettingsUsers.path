@@ -13,7 +13,6 @@
 	<td>//input[contains(@id,'admin-sync-default-associations')]</td>
 	<td></td>
 </tr>
-<!--FIELDS-->
 <!--RESERVED_CREDENTIALS-->
 <tr>
 	<td>RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER</td>

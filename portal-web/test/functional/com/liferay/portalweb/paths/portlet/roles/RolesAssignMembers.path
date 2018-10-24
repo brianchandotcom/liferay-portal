@@ -19,9 +19,6 @@
 	<td>//div[contains(@id,'assigneesSearchSearchContainer')]//tr[contains(.,'${key_assigneeName}')]/td[2]</td>
 	<td></td>
 </tr>
-<!--ORGANIZATION_TABLE-->
-<!--SITE_TABLE-->
-<!--USER_GROUP_TABLE-->
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_CHECKBOX</td>

@@ -24,7 +24,6 @@
 	<td>//table[contains(@data-searchcontainerid,'ddmTemplatesSearchContainer')]//a[@data-name='${key_kfFormName}']</td>
 	<td></td>
 </tr>
-<!--FORM_MENULIST-->
 </tbody>
 </table>
 </body>

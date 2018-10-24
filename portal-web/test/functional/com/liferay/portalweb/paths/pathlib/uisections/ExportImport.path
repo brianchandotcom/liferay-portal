@@ -13,7 +13,6 @@
 	<td>//input[contains(@id,'exportFileName')]</td>
 	<td></td>
 </tr>
-<!--NAVIGATION-->
 <!--CURRENT_AND_PREVIOUS-->
 <tr>
 	<td>CURRENT_AND_PREVIOUS_STATUS</td>

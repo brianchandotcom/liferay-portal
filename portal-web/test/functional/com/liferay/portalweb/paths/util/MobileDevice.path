@@ -13,7 +13,6 @@
 	<td>//tr[contains(.,'${key_deviceFamilyName}')]/td[contains(@class,'name')]/a</td>
 	<td></td>
 </tr>
-<!--ADD_DEVICE_FAMILY-->
 <!--ADD_CLASSIFICATION_RULE-->
 <tr>
 	<td>ADD_CLASSIFICATION_RULE_OPERATING_SYSTEM</td>

@@ -24,7 +24,6 @@
 	<td>//div[contains(@class,'searchcontainer')]//h5[contains(.,'${key_formDescription}')]</td>
 	<td></td>
 </tr>
-<!--FORMS_DISPLAY-->
 <!--FORMS_ENTRY_TABLE-->
 <tr>
 	<td>FORM_ENTRY_TABLE_ENTRY</td>
@@ -36,9 +35,6 @@
 	<td>//table[contains(.,'${key_fieldLabel}')]//tbody/tr/td[contains(.,'${key_fieldValue}')]//..//strong[contains(.,'${key_workflowStatus}')]</td>
 	<td></td>
 </tr>
-<!--FORM_CONFIGURATION-->
-<!--DATA_PROVIDER-->
-<!--GRID_FIELD-->
 </tbody>
 </table>
 </body>

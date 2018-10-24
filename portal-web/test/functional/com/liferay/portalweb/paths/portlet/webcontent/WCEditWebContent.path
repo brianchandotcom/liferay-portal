@@ -79,7 +79,6 @@
 	<td>//tr[contains(.,'${key_webContentTitle}')]/td[5]</td>
 	<td></td>
 </tr>
-<!--RELATED_ASSETS-->
 <!--DISPLAY_PAGE-->
 <tr>
 	<td>DISPLAY_PAGE_SELECTION</td>

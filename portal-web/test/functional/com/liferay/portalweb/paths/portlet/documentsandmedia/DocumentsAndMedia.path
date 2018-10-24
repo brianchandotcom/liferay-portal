@@ -167,7 +167,6 @@
 	<td>//li[@data-title='${key_dmFolderNameEdit}']//a</td>
 	<td></td>
 </tr>
-<!--LIST_DOCUMENT-->
 <!--FILTER-->
 <tr>
 	<td>FILTER_REPOSITORY_GENERIC</td>
@@ -179,7 +178,6 @@
 	<td>xpath=(//div[contains(@id,'folderContainer')]/ul/li/a/../span[contains(@class,'entry-action')]/div/a)[2]</td>
 	<td></td>
 </tr>
-<!--LIFERAY_SYNC-->
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_ACTIONS</td>

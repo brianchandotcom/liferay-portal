@@ -8,8 +8,6 @@
 <tr><td rowspan="1" colspan="3">UsersAndOrganizationsAssignOrganizationalRoles</td></tr>
 </thead>
 <tbody>
-<!--ADVANCED_SEARCH-->
-<!--ROLE_TABLE-->
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_SCREEN_NAME_1</td>

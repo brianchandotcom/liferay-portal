@@ -305,7 +305,6 @@
 	<td>//div[not(contains(@class,'simple-menu-hidden hide'))]/ul/li[@class='simple-menu-item' and @data-id='colorPicker']/div/div/div/div[contains(@style,'${key_color}')]</td>
 	<td></td>
 </tr>
-<!--SCHEDULER-->
 <!--SCHEDULER_VIEW_DAY-->
 <tr>
 	<td>SCHEDULER_VIEW_DAY</td>

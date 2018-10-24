@@ -19,7 +19,6 @@
 	<td>//ul[contains(@class,'navbar')]/li/a[contains(.,'Suggestions')]</td>
 	<td></td>
 </tr>
-<!--MENUBAR-->
 <!--ARTICLE_DESCRIPTIVE-->
 <tr>
 	<td>ARTICLE_DESCRIPTIVE_ARTICLE_TITLE</td>
@@ -154,7 +153,6 @@
 	<td>//div[@class='kbarticle-navigation']//a[contains(.,'${key_kbGrandchildArticleTitle}')]</td>
 	<td></td>
 </tr>
-<!--KB_SEARCH-->
 <!--LINK-->
 <tr>
 	<td>LINK_THERE_ARE_SUGGESTIONS</td>
@@ -192,7 +190,6 @@
 	<td>//div[contains(@id, 'knowledge_base_web') and contains(@id, 'newParent')]//label[(@class='control-label') and contains(.,'Priority')]</td>
 	<td></td>
 </tr>
-<!--SCOPE-->
 </tbody>
 </table>
 </body>

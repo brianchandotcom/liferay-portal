@@ -49,9 +49,6 @@
 	<td>xpath=(//li[contains(@class,'list-group-item')])[${key_index}]//button[*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
-<!--NAVIGATION-->
-<!--TOOLBAR-->
-<!--PAGE_TREE-->
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_FRIENDLY_BASE_URL</td>
@@ -69,8 +66,6 @@
 	<td>//li[contains(@id,'selectPortletsRootNode')]//span[contains(.,'${key_componentOrPortletName}')]/../span[contains(@class,'tree-node-checkbox')]/input</td>
 	<td></td>
 </tr>
-<!--STAGING-->
-<!--INCOMPLETE_STAGING_PAGE_VARIATION-->
 <!--LOGO-->
 <tr>
 	<td>LOGO_UPLOAD_IMAGE_IFRAME</td>
@@ -82,7 +77,6 @@
 	<td>//label[contains(@for,'ImageUploaderPortlet')]</td>
 	<td></td>
 </tr>
-<!--LOOK_AND_FEEL-->
 <!--JAVASCRIPT-->
 <tr>
 	<td>JAVASCRIPT_TEXTAREA</td>
@@ -94,8 +88,6 @@
 	<td>//label[contains(@for,'javascript')]</td>
 	<td></td>
 </tr>
-<!--MENUITEM-->
-<!--ELLIPSIS-->
 </tbody>
 </table>
 </body>

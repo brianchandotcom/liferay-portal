@@ -55,7 +55,6 @@
 	<td>//div[contains(@id,'blogEntriesSearchContainer')]//li[contains(.,'${key_entryTitle}')]//span[contains(@class,'status')]</td>
 	<td></td>
 </tr>
-<!--PAGE_VIEW-->
 <!--ENTRY_TABLE-->
 <tr>
 	<td>ENTRY_TABLE_ALL_CHECKBOX</td>
@@ -98,8 +97,6 @@
 	<td>//div[@class='blogger-post-count']</td>
 	<td></td>
 </tr>
-<!--SCHEDULED_ENTRY-->
-<!--SEARCH_RESULTS-->
 </tbody>
 </table>
 </body>

@@ -8,24 +8,12 @@
 <tr><td rowspan="1" colspan="3">MyAccount</td></tr>
 </thead>
 <tbody>
-<!--NAVIGATION-->
-<!--ORGANIZATIONS-->
-<!--SITES-->
-<!--USER_GROUPS-->
-<!--ROLES_REGULAR_ROLES-->
-<!--PHONE_NUMBERS-->
-<!--ADDITIONAL_EMAIL_ADDRESSES-->
-<!--WEBSITES-->
-<!--SMS-->
-<!--PROJECTS-->
-<!--ANNOUNCEMENTS-->
 <!--DISPLAY_SETTINGS-->
 <tr>
 	<td>LANGUAGE_SELECT</td>
 	<td>//select[contains(@id,'MyAccountPortlet') and contains(@id,'languageId')]</td>
 	<td></td>
 </tr>
-<!--COMMENTS-->
 </tbody>
 </table>
 </body>

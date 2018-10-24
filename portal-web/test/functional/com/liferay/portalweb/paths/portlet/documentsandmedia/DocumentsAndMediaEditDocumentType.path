@@ -29,7 +29,6 @@
 	<td>//textarea[contains(@id,'_description')]</td>
 	<td></td>
 </tr>
-<!--PANEL-->
 </tbody>
 </table>
 </body>

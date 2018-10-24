@@ -59,8 +59,6 @@
 	<td>//select[contains(@id,'fullPageApplication')]</td>
 	<td></td>
 </tr>
-<!--CATEGORIZATION-->
-<!--SEO-->
 <!--LOOK_AND_FEEL-->
 <tr>
 	<td>CHANGE_CURRENT_THEME_BUTTON</td>
@@ -77,10 +75,6 @@
 	<td>//div[contains(@class, 'main-content-card')]//h4[contains(.,'Name')]/following-sibling::p[1]</td>
 	<td></td>
 </tr>
-<!--JAVASCRIPT-->
-<!--CUSTOM_FIELDS-->
-<!--ADVANCED_PANEL-->
-<!--MOBILE_DEVICE_RULES-->
 <!--CUSTOMIZATION_SETTINGS-->
 <tr>
 	<td>CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS</td>

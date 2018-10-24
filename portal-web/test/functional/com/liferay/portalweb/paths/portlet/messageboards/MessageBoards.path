@@ -137,7 +137,6 @@
 	<td>//li[contains(.,'${key_categoryName}')]//span[contains(.,'${key_threadsNumber}')]</td>
 	<td></td>
 </tr>
-<!--CATEGORY_LIST_ADMIN-->
 <!--QUESTION_CATEGORY_THREAD_TABLE-->
 <tr>
 	<td>QUESTION_CATEGORY_THREAD_TABLE_QUESTION</td>

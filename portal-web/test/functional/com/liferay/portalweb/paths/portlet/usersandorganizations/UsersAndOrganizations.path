@@ -73,7 +73,6 @@
 	<td>//tr[contains(.,'${key_userScreenName}')]/td[7]//span/a[contains(.,'Impersonate User')]</td>
 	<td></td>
 </tr>
-<!--USER_TABLE_HEADER-->
 </tbody>
 </table>
 </body>

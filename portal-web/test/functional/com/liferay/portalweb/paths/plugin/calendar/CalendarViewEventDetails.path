@@ -48,9 +48,6 @@
 	<td>//button[@type='button' and contains(.,'Decline')]</td>
 	<td></td>
 </tr>
-<!--YOUR_RATING-->
-<!--AVERAGE-->
-<!--COMMENTS-->
 <!--TAGS-->
 <tr>
 	<td>TAGS_LABEL</td>

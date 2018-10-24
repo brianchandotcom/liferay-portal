@@ -8,7 +8,6 @@
 <tr><td rowspan="1" colspan="3">UserGroups</td></tr>
 </thead>
 <tbody>
-<!--ADVANCED_SEARCH-->
 <!--USER_GROUP_TABLE-->
 <tr>
 	<td>USER_GROUP_TABLE_CHECKBOX</td>

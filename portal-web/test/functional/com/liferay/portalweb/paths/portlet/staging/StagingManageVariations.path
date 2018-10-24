@@ -36,7 +36,6 @@
 	<td>//select[contains(@id,'_copyLayoutSetBranchId')]</td>
 	<td></td>
 </tr>
-<!--EDIT_SITE_PAGES_VARIATION-->
 <!--MERGE_SITE_PAGES_VARIATION_TABLE-->
 <tr>
 	<td>MERGE_SITE_PAGES_VARIATION_TABLE_BRANCH</td>

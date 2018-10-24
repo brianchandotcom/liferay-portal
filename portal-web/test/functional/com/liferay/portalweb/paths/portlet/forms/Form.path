@@ -80,7 +80,6 @@
 	<td>//li[contains(@class,'dropdown-item')]//a[text()='Switch Pagination Mode']</td>
 	<td></td>
 </tr>
-<!--ADD_COLUMN-->
 <!--ADD_FIELD-->
 <tr>
 	<td>ADD_FIELD</td>

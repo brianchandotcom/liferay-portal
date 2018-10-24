@@ -18,7 +18,6 @@
 	<td>//input[contains(@id,'InputFile')]</td>
 	<td></td>
 </tr>
-<!--ADD_MENULIST-->
 <!--FOLDER_TABLE-->
 <tr>
 	<td>FOLDER_TABLE_FOLDER</td>

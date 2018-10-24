@@ -13,7 +13,6 @@
 	<td>//section[contains(@id,'DLAdminPortlet')]//span[@class='workflow-version']/span[contains(@class,'workflow-value')]</td>
 	<td></td>
 </tr>
-<!--TOOLBAR-->
 <!--DOCUMENT_INFO-->
 <tr>
 	<td>DOCUMENT_INFO_TITLE</td>
@@ -205,7 +204,6 @@
 	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_textContent}')]</td>
 	<td></td>
 </tr>
-<!--SOCIAL_OFFICE_RATING-->
 <!--VIDEO_GENERATION-->
 <tr>
 	<td>VIDEO_GENERATION_THUMBNAIL_RESOLUTION</td>

@@ -13,7 +13,6 @@
 	<td>//button[contains(.,'Save') and not (contains(@class,'toolbar'))]</td>
 	<td></td>
 </tr>
-<!--DEFINITION_TABLE-->
 </tbody>
 </table>
 </body>

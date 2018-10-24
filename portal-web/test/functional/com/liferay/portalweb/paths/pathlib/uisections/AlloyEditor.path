@@ -39,7 +39,6 @@
 	<td>//button[contains(@data-type,'image')]</td>
 	<td></td>
 </tr>
-<!--TABLE-->
 <!--TEXT_FORMATTING-->
 <tr>
 	<td>TEXT_FORMATTING_STYLE</td>
@@ -66,8 +65,6 @@
 	<td>//button[contains(@data-type,'button-underline')]</td>
 	<td></td>
 </tr>
-<!--CONTENT_EDITOR-->
-<!--CONTENT_EDITOR_FULL_SCREEN-->
 </tbody>
 </table>
 </body>

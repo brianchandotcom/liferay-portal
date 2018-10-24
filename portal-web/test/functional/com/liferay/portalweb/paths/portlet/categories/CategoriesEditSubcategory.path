@@ -8,7 +8,6 @@
 <tr><td rowspan="1" colspan="3">CategoriesEditSubcategory</td></tr>
 </thead>
 <tbody>
-<!--MOVE_CATEGORIES_CATEGORY-->
 <!--PROPERTIES-->
 <tr>
 	<td>PROPERTIES_KEY_FIELD_DEFAULT</td>

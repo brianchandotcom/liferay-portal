@@ -39,7 +39,6 @@
 	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//a</td>
 	<td></td>
 </tr>
-<!--FILTER-->
 <!--ENTRY_CARDS-->
 <tr>
 	<td>ENTRY_CARDS_THUMBNAIL</td>
@@ -103,7 +102,6 @@
 	<td>//li[contains(@class,'move-article') and contains(.,'${key_webContentTitle}')]</td>
 	<td></td>
 </tr>
-<!--FOLDER_TABLE-->
 </tbody>
 </table>
 </body>

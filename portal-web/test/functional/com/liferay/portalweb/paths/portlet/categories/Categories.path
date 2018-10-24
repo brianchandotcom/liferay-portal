@@ -44,7 +44,6 @@
 	<td>//*[@data-qa-id='row'][td[contains(@class,'category')][contains(.,'${key_categoryName}')]]//td[contains(@class,'lfr-path-column')]</td>
 	<td></td>
 </tr>
-<!--CATEGORY_ENTRY_MENULIST-->
 <!--CATEGORY_DETAILS-->
 <tr>
 	<td>CATEGORY_DETAILS_PROPERTY_KEY_2</td>

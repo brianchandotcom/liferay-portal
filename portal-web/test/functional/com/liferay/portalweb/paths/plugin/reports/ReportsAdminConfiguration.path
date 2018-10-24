@@ -35,7 +35,6 @@
 	<td>//input[contains(@id,'emailFromAddress')]</td>
 	<td></td>
 </tr>
-<!--DELIVERY_EMAIL-->
 <!--NOTIFICATIONS_EMAIL-->
 <tr>
 	<td>NOTIFICATIONS_EMAIL_SUBJECT_FIELD</td>

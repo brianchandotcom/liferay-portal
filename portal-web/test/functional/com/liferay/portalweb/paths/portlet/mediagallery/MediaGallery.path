@@ -45,7 +45,6 @@
 	<td>//h3[@class='header-title']/span[contains(.,'${mgFolderName}')]</td>
 	<td></td>
 </tr>
-<!--SUBFOLDER-->
 <!--ADT_CAROUSEL-->
 <tr>
 	<td>ADT_CAROUSEL_ITEM</td>
@@ -72,7 +71,6 @@
 	<td>//li/a[contains(@class,'carousel-menu-item') and contains(@class,'carousel-menu-index')]</td>
 	<td></td>
 </tr>
-<!--MEDIA_TABLE-->
 </tbody>
 </table>
 </body>

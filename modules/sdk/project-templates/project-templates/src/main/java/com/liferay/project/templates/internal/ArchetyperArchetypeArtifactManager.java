@@ -19,11 +19,14 @@ import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
 
 import java.io.File;
 import java.io.IOException;
+
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
+
 import java.nio.file.Path;
+
 import java.util.List;
 
 import org.apache.maven.archetype.common.DefaultArchetypeArtifactManager;

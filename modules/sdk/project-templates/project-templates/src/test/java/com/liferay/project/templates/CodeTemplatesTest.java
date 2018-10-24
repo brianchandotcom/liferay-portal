@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 import java.util.AbstractMap;
 import java.util.Collections;
@@ -52,7 +53,9 @@ public class CodeTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		File archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
+		Path jarPath = FileUtil.getJarPath();
+
+		File archetypesDir = jarPath.toFile();
 
 		projectTemplatesArgs.setArchetypesDirs(
 			Collections.singletonList(archetypesDir));
@@ -68,8 +71,6 @@ public class CodeTemplatesTest {
 		File projectDir = new File(destinationDir, "foo");
 
 		CodeTemplatesArgs codeTemplatesArgs = new CodeTemplatesArgs();
-
-		archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
 
 		codeTemplatesArgs.setAddtionalParameters(
 			Collections.unmodifiableMap(
@@ -120,7 +121,9 @@ public class CodeTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		File archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
+		Path jarPath = FileUtil.getJarPath();
+
+		File archetypesDir = jarPath.toFile();
 
 		projectTemplatesArgs.setArchetypesDirs(
 			Collections.singletonList(archetypesDir));
@@ -136,8 +139,6 @@ public class CodeTemplatesTest {
 		File projectDir = new File(destinationDir, "foo");
 
 		CodeTemplatesArgs codeTemplatesArgs = new CodeTemplatesArgs();
-
-		archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
 
 		codeTemplatesArgs.setArchetypesDirs(
 			Collections.singletonList(archetypesDir));
@@ -175,7 +176,9 @@ public class CodeTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		File archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
+		Path jarPath = FileUtil.getJarPath();
+
+		File archetypesDir = jarPath.toFile();
 
 		projectTemplatesArgs.setArchetypesDirs(
 			Collections.singletonList(archetypesDir));
@@ -189,8 +192,6 @@ public class CodeTemplatesTest {
 		new ProjectTemplates(projectTemplatesArgs);
 
 		File projectDir = new File(destinationDir, "foo");
-
-		archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
 
 		CodeTemplatesArgs codeTemplatesArgs = new CodeTemplatesArgs();
 
@@ -240,7 +241,9 @@ public class CodeTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		File archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
+		Path jarPath = FileUtil.getJarPath();
+
+		File archetypesDir = jarPath.toFile();
 
 		projectTemplatesArgs.setArchetypesDirs(
 			Collections.singletonList(archetypesDir));
@@ -302,7 +305,9 @@ public class CodeTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		File archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
+		Path jarPath = FileUtil.getJarPath();
+
+		File archetypesDir = jarPath.toFile();
 
 		projectTemplatesArgs.setArchetypesDirs(
 			Collections.singletonList(archetypesDir));
@@ -379,7 +384,9 @@ public class CodeTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		File archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
+		Path jarPath = FileUtil.getJarPath();
+
+		File archetypesDir = jarPath.toFile();
 
 		projectTemplatesArgs.setArchetypesDirs(
 			Collections.singletonList(archetypesDir));
@@ -446,7 +453,9 @@ public class CodeTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		File archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
+		Path jarPath = FileUtil.getJarPath();
+
+		File archetypesDir = jarPath.toFile();
 
 		projectTemplatesArgs.setArchetypesDirs(
 			Collections.singletonList(archetypesDir));
@@ -514,7 +523,9 @@ public class CodeTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		File archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
+		Path jarPath = FileUtil.getJarPath();
+
+		File archetypesDir = jarPath.toFile();
 
 		projectTemplatesArgs.setArchetypesDirs(
 			Collections.singletonList(archetypesDir));
@@ -580,7 +591,9 @@ public class CodeTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		File archetypesDir = FileUtil.getJarFile(CodeTemplatesTest.class);
+		Path jarPath = FileUtil.getJarPath();
+
+		File archetypesDir = jarPath.toFile();
 
 		projectTemplatesArgs.setArchetypesDirs(
 			Collections.singletonList(archetypesDir));

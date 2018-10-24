@@ -35,7 +35,7 @@ context.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg
 %>
 
 <liferay-util:html-top
-	outputKey="social_bookmarks_css"
+	outputKey="document_library_preview_image_css"
 >
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/preview/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>

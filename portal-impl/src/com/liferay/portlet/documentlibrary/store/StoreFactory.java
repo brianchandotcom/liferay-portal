@@ -135,18 +135,7 @@ public class StoreFactory {
 	public Store getStore(String key) {
 		Store store = _storeServiceTrackerMap.getService(key);
 
-		List<StoreWrapper> storeWrappers =
-			_storeWrapperServiceTrackerMap.getService(key);
-
-		if (storeWrappers == null) {
-			return store;
-		}
-
-		for (StoreWrapper storeWrapper : storeWrappers) {
-			store = storeWrapper.wrap(store);
-		}
-
-		return store;
+		return _wrapStore(store, key);
 	}
 
 	public String[] getStoreTypes() {
@@ -169,6 +158,21 @@ public class StoreFactory {
 
 		_store = getStore(key);
 		_storeType = key;
+	}
+
+	private Store _wrapStore(Store store, String key) {
+		List<StoreWrapper> storeWrappers =
+			_storeWrapperServiceTrackerMap.getService(key);
+
+		if (storeWrappers == null) {
+			return store;
+		}
+
+		for (StoreWrapper storeWrapper : storeWrappers) {
+			store = storeWrapper.wrap(store);
+		}
+
+		return store;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(StoreFactory.class);
@@ -209,6 +213,8 @@ public class StoreFactory {
 				"store.type");
 
 			if (PropsValues.DL_STORE_IMPL.equals(storeType)) {
+				_store = _wrapStore(store, storeType);
+
 				Map<String, Object> properties = new HashMap<>();
 
 				properties.put("current.store", "true");

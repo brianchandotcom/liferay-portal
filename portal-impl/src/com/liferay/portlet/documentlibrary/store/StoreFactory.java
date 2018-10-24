@@ -53,6 +53,15 @@ public class StoreFactory {
 		return _storeFactory;
 	}
 
+	public StoreFactory() {
+		_storeWrapperServiceTrackerMap =
+			ServiceTrackerCollections.openMultiValueMap(
+				StoreWrapper.class, "store.type");
+
+		_storeServiceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
+			Store.class, "store.type", new StoreServiceTrackerCustomizer());
+	}
+
 	public void checkProperties() {
 		if (_warned) {
 			return;
@@ -183,14 +192,10 @@ public class StoreFactory {
 	private volatile ServiceRegistration<Store>
 		_currentStoreServiceRegistration;
 	private volatile Store _store;
-	private final ServiceTrackerMap<String, Store> _storeServiceTrackerMap =
-		ServiceTrackerCollections.openSingleValueMap(
-			Store.class, "store.type", new StoreServiceTrackerCustomizer());
+	private final ServiceTrackerMap<String, Store> _storeServiceTrackerMap;
 	private String _storeType;
 	private final ServiceTrackerMap<String, List<StoreWrapper>>
-		_storeWrapperServiceTrackerMap =
-			ServiceTrackerCollections.openMultiValueMap(
-				StoreWrapper.class, "store.type");
+		_storeWrapperServiceTrackerMap;
 
 	private class StoreServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<Store, Store> {

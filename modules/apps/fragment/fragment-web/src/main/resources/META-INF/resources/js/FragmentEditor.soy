@@ -19,6 +19,10 @@
 		preview: string,
 		render: string
 	]}
+	{@param? autocompleteTags: list<[
+		name: string,
+		attributes: list<string>
+	]>}
 	{@param? _css: string}
 	{@param? _handleCSSChanged: any}
 	{@param? _handleHTMLChanged: any}
@@ -89,6 +93,7 @@
 
 		<div class="fragment-editor">
 			{call com.liferay.fragment.web.SourceEditor.render}
+				{param autocompleteTags: $autocompleteTags /}
 				{param events: ['contentChanged': $_handleHTMLChanged] /}
 				{param initialContent: $initialHTML /}
 				{param spritemap: $spritemap /}

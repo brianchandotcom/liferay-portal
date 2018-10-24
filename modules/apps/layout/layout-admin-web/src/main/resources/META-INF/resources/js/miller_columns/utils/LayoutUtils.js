@@ -184,3 +184,15 @@ function removeItem(itemPlid, layoutColumns) {
 
 	return nextLayoutColumns;
 }
+
+export {
+	appendItemToColumn,
+	columnIsItemChild,
+	dropIsValid,
+	getColumnLastItem,
+	getItem,
+	getItemColumn,
+	getItemColumnIndex,
+	itemIsParent,
+	removeItem
+};

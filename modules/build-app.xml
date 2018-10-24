@@ -388,7 +388,7 @@
 		</subant>
 	</target>
 
-	<target depends="check-stale-artifacts,get-artifact-versions-previous-release" name="dist-module-artifacts">
+	<target depends="check-stale-artifacts,get-artifact-versions-previous-release" name="dist-module-artifacts" unless="module.dirs.null">
 		<mkdir dir="${dist.dir}" />
 
 		<subant genericantfile="${modules.dir}/build-app-module.xml" target="dist-module-artifact">
@@ -451,7 +451,7 @@
 		</subant>
 	</target>
 
-	<target depends="init-build-app,get-app-version" name="get-app-artifacts">
+	<target depends="init-build-app,get-app-version" name="get-app-artifacts" unless="module.dirs.null">
 		<pathconvert pathsep=",\${line.separator}&#x0009;" property="module.versions.list">
 			<flattenmapper />
 
@@ -466,7 +466,7 @@
 		<property name="app.artifacts" value="app.artifacts-${app.version}=\${line.separator}&#x0009;${module.versions.list}" />
 	</target>
 
-	<target depends="dist-module-artifacts,init-build-app,get-app-version" name="get-app-change-log">
+	<target depends="dist-module-artifacts,init-build-app,get-app-version" name="get-app-change-log" unless="module.dirs.null">
 		<loadfile
 			failonerror="false"
 			property="app.ticket.list"

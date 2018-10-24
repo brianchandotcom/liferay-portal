@@ -56,6 +56,31 @@ public class OrganizationODataRetrieverTest {
 			PermissionCheckerTestRule.INSTANCE);
 
 	@Test
+	public void testGetOrganizationsFilterByCompanyId() throws Exception {
+		Organization parentOrganization =
+			OrganizationTestUtil.addOrganization();
+
+		Organization organization = OrganizationTestUtil.addOrganization(
+			parentOrganization.getOrganizationId(),
+			RandomTestUtil.randomString(), false);
+
+		_organizations.add(organization);
+
+		_organizations.add(parentOrganization);
+
+		List<Organization> organizations = _oDataRetriever.getResults(
+			TestPropsValues.getCompanyId(),
+			String.format(
+				"(companyId eq '%s') and (parentOrganizationId eq '%s')",
+				organization.getCompanyId(),
+				parentOrganization.getOrganizationId()),
+			LocaleUtil.getDefault(), 0, 2);
+
+		Assert.assertEquals(organizations.toString(), 1, organizations.size());
+		Assert.assertEquals(organization, organizations.get(0));
+	}
+
+	@Test
 	public void testGetOrganizationsFilterByDateModifiedEquals()
 		throws Exception {
 

@@ -15,6 +15,7 @@
 package com.liferay.portal.search.indexer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.portal.kernel.model.Contact;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -54,6 +56,8 @@ import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Gregory Amerson
+ * @author István Sajtos
+ * @author Tibor Lipusz
  */
 @RunWith(Arquillian.class)
 public class IndexerPostProcessorRegistryTest {
@@ -62,94 +66,6 @@ public class IndexerPostProcessorRegistryTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@Test
-	public void testIndexerPostProcessorWithEntityClassName() throws Exception {
-		Indexer<MBMessage> mbMessageIndexer = IndexerRegistryUtil.getIndexer(
-			MBMessage.class.getName());
-
-		IndexerPostProcessor[] mbMessageIndexerPostProcessors =
-			mbMessageIndexer.getIndexerPostProcessors();
-
-		Assert.assertEquals(
-			Arrays.toString(mbMessageIndexerPostProcessors), 1,
-			mbMessageIndexerPostProcessors.length);
-
-		IndexerRegistryUtil.unregister(mbMessageIndexer);
-
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		HashMapDictionary<String, String> properties =
-			new HashMapDictionary<>();
-
-		properties.put("indexer.class.name", MBMessage.class.getName());
-
-		IndexerPostProcessor baseIndexerPostProcessor =
-			new BaseIndexerPostProcessor();
-
-		bundleContext.registerService(
-			IndexerPostProcessor.class, baseIndexerPostProcessor, properties);
-
-		IndexerRegistryUtil.register(mbMessageIndexer);
-
-		mbMessageIndexerPostProcessors =
-			mbMessageIndexer.getIndexerPostProcessors();
-
-		Assert.assertEquals(
-			Arrays.toString(mbMessageIndexerPostProcessors), 2,
-			mbMessageIndexerPostProcessors.length);
-
-		mbMessageIndexer.unregisterIndexerPostProcessor(
-			baseIndexerPostProcessor);
-	}
-
-	@Test
-	public void testIndexerPostProcessorWithIndexerClassName()
-		throws Exception {
-
-		Indexer<MBMessage> mbMessageIndexer = IndexerRegistryUtil.getIndexer(
-			MBMessage.class.getName());
-
-		IndexerPostProcessor[] mbMessageIndexerPostProcessors =
-			mbMessageIndexer.getIndexerPostProcessors();
-
-		Assert.assertEquals(
-			Arrays.toString(mbMessageIndexerPostProcessors), 1,
-			mbMessageIndexerPostProcessors.length);
-
-		IndexerRegistryUtil.unregister(mbMessageIndexer);
-
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		HashMapDictionary<String, String> properties =
-			new HashMapDictionary<>();
-
-		Class<?> clazz = mbMessageIndexer.getClass();
-
-		properties.put("indexer.class.name", clazz.getName());
-
-		IndexerPostProcessor baseIndexerPostProcessor =
-			new BaseIndexerPostProcessor();
-
-		bundleContext.registerService(
-			IndexerPostProcessor.class, baseIndexerPostProcessor, properties);
-
-		IndexerRegistryUtil.register(mbMessageIndexer);
-
-		mbMessageIndexerPostProcessors =
-			mbMessageIndexer.getIndexerPostProcessors();
-
-		Assert.assertEquals(
-			Arrays.toString(mbMessageIndexerPostProcessors), 2,
-			mbMessageIndexerPostProcessors.length);
-
-		mbMessageIndexer.unregisterIndexerPostProcessor(
-			baseIndexerPostProcessor);
-	}
 
 	@Test
 	public void testMultipleIndexerPostProcessors() throws Exception {
@@ -305,6 +221,29 @@ public class IndexerPostProcessorRegistryTest {
 	}
 
 	@Test
+	public void testQueuedIndexerPostProcessorWithIndexerClassName()
+		throws Exception {
+
+		Indexer<BlogsEntry> blogsEntryIndexer = IndexerRegistryUtil.getIndexer(
+			BlogsEntry.class.getName());
+
+		Class<?> clazz = blogsEntryIndexer.getClass();
+
+		testQueuedIndexerPostProcessor(blogsEntryIndexer, clazz.getName());
+	}
+
+	@Test
+	public void testQueuedIndexerPostProcessorWithModelClassName()
+		throws Exception {
+
+		Indexer<BlogsEntry> blogsEntryIndexer = IndexerRegistryUtil.getIndexer(
+			BlogsEntry.class.getName());
+
+		testQueuedIndexerPostProcessor(
+			blogsEntryIndexer, BlogsEntry.class.getName());
+	}
+
+	@Test
 	public void testSingleIndexerPostProcessor() throws Exception {
 		Indexer<Organization> organizationIndexer =
 			IndexerRegistryUtil.getIndexer(Organization.class.getName());
@@ -338,6 +277,49 @@ public class IndexerPostProcessorRegistryTest {
 			contactIndexerPostProcessors[0];
 
 		Assert.assertNotNull(contactIndexerPostProcessor);
+	}
+
+	protected void testQueuedIndexerPostProcessor(
+			Indexer<?> indexer, String indexerClassName)
+		throws Exception {
+
+		IndexerPostProcessor[] indexerPostProcessors =
+			indexer.getIndexerPostProcessors();
+
+		Assert.assertEquals(
+			Arrays.toString(indexerPostProcessors), 0,
+			indexerPostProcessors.length);
+
+		IndexerRegistryUtil.unregister(indexer);
+
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		IndexerPostProcessor indexerPostProcessor =
+			new BaseIndexerPostProcessor();
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("indexer.class.name", indexerClassName);
+
+		ServiceRegistration<?> serviceRegistration =
+			bundleContext.registerService(
+				IndexerPostProcessor.class, indexerPostProcessor, properties);
+
+		try {
+			IndexerRegistryUtil.register(indexer);
+
+			indexerPostProcessors = indexer.getIndexerPostProcessors();
+
+			Assert.assertEquals(
+				Arrays.toString(indexerPostProcessors), 1,
+				indexerPostProcessors.length);
+			Assert.assertEquals(indexerPostProcessor, indexerPostProcessors[0]);
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
 	}
 
 }

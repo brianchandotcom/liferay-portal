@@ -187,10 +187,12 @@ public class UpgradeExecutor {
 				}
 			}
 
-			Bundle bundle = _indexUpdater.getBundle(_bundleSymbolicName);
+			if (_requiresUpdateIndexes()) {
+				Bundle bundle = _indexUpdater.getBundle(_bundleSymbolicName);
 
-			if (_indexUpdater.hasIndexes(bundle)) {
-				_indexUpdater.updateIndexes(bundle);
+				if (_indexUpdater.hasIndexes(bundle)) {
+					_indexUpdater.updateIndexes(bundle);
+				}
 			}
 
 			CacheRegistryUtil.clear();
@@ -203,6 +205,30 @@ public class UpgradeExecutor {
 			_bundleSymbolicName = bundleSymbolicName;
 			_upgradeInfos = upgradeInfos;
 			_outputStream = outputStream;
+		}
+
+		private boolean _requiresUpdateIndexes() {
+			if (_upgradeInfos.size() != 1) {
+				return true;
+			}
+			else {
+				UpgradeInfo upgradeInfo = _upgradeInfos.get(0);
+
+				String fromSchemaVersion =
+					upgradeInfo.getFromSchemaVersionString();
+
+				UpgradeStep upgradeStep = upgradeInfo.getUpgradeStep();
+
+				String upgradeStepName = upgradeStep.toString();
+
+				if (fromSchemaVersion.equals("0.0.0") &&
+					upgradeStepName.equals("Initial Database Creation")) {
+
+					return false;
+				}
+
+				return true;
+			}
 		}
 
 		private void _updateReleaseState(int state) {

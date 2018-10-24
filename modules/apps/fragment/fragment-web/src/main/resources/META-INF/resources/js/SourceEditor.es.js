@@ -46,7 +46,7 @@ SourceEditor.STATE = {
 	 * List of tags to support custom autocomplete in the HTML editor
 	 * @default []
 	 * @instance
-	 * @memberOf AceEditor
+	 * @memberOf SourceEditor
 	 * @review
 	 * @type Array
 	 */

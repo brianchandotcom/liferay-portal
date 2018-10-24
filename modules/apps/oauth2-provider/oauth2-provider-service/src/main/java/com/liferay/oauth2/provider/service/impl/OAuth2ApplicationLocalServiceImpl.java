@@ -511,7 +511,7 @@ public class OAuth2ApplicationLocalServiceImpl
 					!Objects.equals(scheme, Http.HTTPS) &&
 					_ianaRegisteredUriSchemes.contains(scheme)) {
 
-					throw new OAuth2ApplicationHomePageURLSchemeException(
+					throw new OAuth2ApplicationRedirectURISchemeException(
 						redirectURI);
 				}
 

@@ -14,6 +14,7 @@ configurations {
 
 dependencies {
 	compileOnly group: "com.liferay", name: "javax.servlet.jsp.jstl", version: "1.2.3.LIFERAY-PATCHED-2"
+	compileOnly group: "com.liferay", name: "org.apache.aries.spifly.dynamic.framework.extension", version: "1.0.14.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay", name: "org.apache.felix.configadmin", version: "1.9.8.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay", name: "org.apache.felix.fileinstall", version: "3.5.4.LIFERAY-PATCHED-3"
 	compileOnly group: "com.liferay", name: "org.apache.felix.gogo.runtime", version: "1.1.0.LIFERAY-PATCHED-1"
@@ -24,7 +25,6 @@ dependencies {
 	compileOnly group: "org.apache.aries.cdi", name: "org.apache.aries.cdi.extender", version: "0.0.2-20181011.200152-21"
 	compileOnly group: "org.apache.aries.cdi", name: "org.apache.aries.cdi.extension.http", version: "0.0.2-20181011.200203-21"
 	compileOnly group: "org.apache.aries.cdi", name: "org.apache.aries.cdi.extra", version: "0.0.2-20181011.200139-21"
-	compileOnly group: "org.apache.aries.spifly", name: "org.apache.aries.spifly.dynamic.framework.extension", version: "1.0.14"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.dependencymanager", version: "3.2.0"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.dependencymanager.shell", version: "3.2.0"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.eventadmin", version: "1.5.0"

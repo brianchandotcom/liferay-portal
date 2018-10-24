@@ -214,6 +214,90 @@ function itemIsParent(layoutColumns, childItemPlid, parentItemPlid) {
 	return parentItem.active && (childItemColumnIndex > parentItemColumnIndex);
 }
 
+
+/**
+ * Insert an item inside another item's children
+ * and returns a new array of columns
+ * @param {object} layoutColumns
+ * @param {boolean} pathUpdated
+ * @param {string} sourceItemPlid
+ * @param {string} targetItemPlid
+ * @return {object}
+ * @review
+ */
+function moveItemInside(layoutColumns, pathUpdated, sourceItemPlid, targetItemPlid) {
+	let nextLayoutColumns = layoutColumns;
+
+	const sourceItem = getItem(nextLayoutColumns, sourceItemPlid);
+	const sourceItemColumnIndex = getItemColumnIndex(
+		nextLayoutColumns,
+		sourceItemPlid
+	);
+
+	const targetColumn = getItemColumn(
+		nextLayoutColumns,
+		targetItemPlid
+	);
+
+	const targetColumnIndex = getItemColumnIndex(
+		nextLayoutColumns,
+		targetItemPlid
+	);
+
+	const targetItem = getItem(nextLayoutColumns, targetItemPlid);
+
+	if (targetItem.active) {
+		const nextColumn = nextLayoutColumns[targetColumnIndex + 1];
+
+		if (nextColumn) {
+			nextLayoutColumns = setIn(
+				nextLayoutColumns,
+				[
+					targetColumnIndex + 1,
+					nextColumn.length
+				],
+				sourceItem
+			);
+		}
+		else {
+			nextLayoutColumns = setIn(
+				nextLayoutColumns,
+				[targetColumnIndex + 1],
+				[]
+			);
+
+			nextLayoutColumns = setIn(
+				nextLayoutColumns,
+				[
+					targetColumnIndex + 1,
+					0
+				],
+				sourceItem
+			);
+		}
+	}
+
+	if (sourceItem.active && !pathUpdated) {
+		nextLayoutColumns = clearFollowingColumns(
+			nextLayoutColumns,
+			sourceItemColumnIndex
+		);
+
+		nextLayoutColumns = deleteEmptyColumns(nextLayoutColumns);
+	}
+
+	return setIn(
+		nextLayoutColumns,
+		[
+			targetColumnIndex,
+			targetColumn.indexOf(targetItem),
+			'hasChild'
+		],
+		true
+	);
+}
+
+
 /**
  * Removes an item from a column and returns a new array of columns
  * @param {string} itemPlid
@@ -301,6 +385,7 @@ export {
 	getItemColumn,
 	getItemColumnIndex,
 	itemIsParent,
+	moveItemInside,
 	removeItem,
 	setHomePage
 };

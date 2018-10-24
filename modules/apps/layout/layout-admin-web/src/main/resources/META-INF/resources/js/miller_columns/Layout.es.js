@@ -17,6 +17,7 @@ import {
 	getItemColumn,
 	getItemColumnIndex,
 	itemIsParent,
+	moveItemInside,
 	removeItem,
 	setHomePage
 } from './utils/LayoutUtils.es';
@@ -236,8 +237,11 @@ class Layout extends Component {
 				);
 
 				if (this._draggingItemPosition === DRAG_POSITIONS.inside) {
-					layoutColumns = this._moveItemInside(
+					const pathUpdated = !!this._currentPathItemPlid;
+
+					layoutColumns = moveItemInside(
 						layoutColumns,
+						pathUpdated,
 						this._draggingItem,
 						targetItem
 					);
@@ -504,77 +508,6 @@ class Layout extends Component {
 		this._layoutDragDrop.on(
 			'startMovingLayoutColumnItem',
 			this._handleStartMovingLayoutColumnItem.bind(this)
-		);
-	}
-
-	/**
-	 * Moves sourceItem inside targetItem and refresh targetItem children
-	 * @param {!Array} layoutColumns
-	 * @param {!Array} sourceItem
-	 * @param {!Array} targetItem
-	 * @param {!number} targetColumnIndex
-	 * @private
-	 * @return {object}
-	 * @review
-	 */
-	_moveItemInside(layoutColumns, sourceItem, targetItem) {
-		let nextLayoutColumns = layoutColumns;
-
-		const targetColumn = getItemColumn(
-			nextLayoutColumns,
-			targetItem.plid
-		);
-
-		const targetColumnIndex = nextLayoutColumns.indexOf(targetColumn);
-
-		if (targetItem.active) {
-			const nextColumn = nextLayoutColumns[targetColumnIndex + 1];
-
-			if (nextColumn) {
-				nextLayoutColumns = setIn(
-					nextLayoutColumns,
-					[
-						targetColumnIndex + 1,
-						nextColumn.length
-					],
-					sourceItem
-				);
-			}
-			else {
-				nextLayoutColumns = setIn(
-					nextLayoutColumns,
-					[targetColumnIndex + 1],
-					[]
-				);
-
-				nextLayoutColumns = setIn(
-					nextLayoutColumns,
-					[
-						targetColumnIndex + 1,
-						0
-					],
-					sourceItem
-				);
-			}
-		}
-
-		if (sourceItem.active && !this._currentPathItemPlid) {
-			nextLayoutColumns = this._clearFollowingColumns(
-				nextLayoutColumns,
-				this._draggingItemColumnIndex
-			);
-
-			nextLayoutColumns = this._deleteEmptyColumns(nextLayoutColumns);
-		}
-
-		return setIn(
-			nextLayoutColumns,
-			[
-				targetColumnIndex,
-				targetColumn.indexOf(targetItem),
-				'hasChild'
-			],
-			true
 		);
 	}
 

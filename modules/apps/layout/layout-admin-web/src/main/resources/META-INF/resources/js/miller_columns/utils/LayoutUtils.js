@@ -18,6 +18,48 @@ function columnIsItemChild(layoutColumns, columnIndex, itemPlid) {
 }
 
 /**
+ * @param {object[]} layoutColumns 
+ * @param {string} sourceItemPlid 
+ * @param {string} targetItemPlid 
+ * @param {number} targetColumnIndex
+ * @return {boolean} Returns whether a drop is valid or not
+ * @review
+ */
+function dropIsValid(
+	layoutColumns,
+	sourceItemPlid,
+	targetItemPlid,
+	targetColumnIndex
+) {
+	const columnIsItemChild = columnIsItemChild(
+		layoutColumns,
+		targetColumnIndex,
+		sourceItemPlid
+	);
+	const targetEqualsSource = (sourceItemPlid === targetItemPlid);
+	const targetExists = targetItemPlid || targetColumnIndex;
+
+	return targetExists && !targetEqualsSource && !columnIsItemChild;
+}
+
+/**
+ * Append an item to a column and returns a new array of columns
+ * @param {object} item 
+ * @param {object[]} layoutColumns 
+ * @param {number} targetColumnIndex
+ * @return {object[]}
+ * @review
+ */
+function appendItemToColumn(item, layoutColumns, targetColumnIndex) {
+	const newLayoutColumns = layoutColumns;
+	const targetColumn = newLayoutColumns[targetColumnIndex];
+
+	targetColumn.splice(targetColumn.length, 0, item);
+
+	return nextLayoutColumns;
+}
+
+/**
  * Get last item of a column
  * @param {object[]} layoutColumns
  * @param {number} columnIndex

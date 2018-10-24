@@ -200,7 +200,9 @@ public class EditSegmentsEntryDisplayContext {
 					organizationSearchContainer.getStart(),
 					organizationSearchContainer.getEnd());
 
-				total = organizations.size();
+				total = _organizationODataRetriever.getResultsCount(
+					segmentsEntry.getCompanyId(), segmentsEntry.getCriteria(),
+					_themeDisplay.getLocale());
 			}
 			catch (PortalException pe) {
 				_log.error(
@@ -329,12 +331,14 @@ public class EditSegmentsEntryDisplayContext {
 				"no-users-were-found-that-matched-the-segment-criteria");
 
 			try {
+				total = _userODataRetriever.getResultsCount(
+					segmentsEntry.getCompanyId(), segmentsEntry.getCriteria(),
+					_themeDisplay.getLocale());
+
 				users = _userODataRetriever.getResults(
 					segmentsEntry.getCompanyId(), segmentsEntry.getCriteria(),
 					_themeDisplay.getLocale(), userSearchContainer.getStart(),
 					userSearchContainer.getEnd());
-
-				total = users.size();
 			}
 			catch (PortalException pe) {
 				_log.error(

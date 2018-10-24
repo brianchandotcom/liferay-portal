@@ -4101,6 +4101,43 @@ log.sanitizer.enabled=false</echo>
 		</run-batch-test>
 	</target>
 
+	<target name="jsp-runtime-compile-jdk8">
+		<run-batch-test>
+			<test-action>
+				<database-test-run-test database.type="mysql" stop.app.server="true">
+					<test-action>
+						<delete dir="${liferay.home}/work" />
+
+						<antcall inheritall="false" target="start-app-server" />
+
+						<trycatch>
+							<try>
+								<antcall inheritall="false" target="run-selenium-test">
+									<param name="test.class" value="PortalSmoke#Smoke" />
+								</antcall>
+							</try>
+							<finally>
+								<antcall target="stop-app-server" />
+							</finally>
+						</trycatch>
+					</test-action>
+				</database-test-run-test>
+			</test-action>
+
+			<test-set-up>
+				<if>
+					<isset property="env.DIST_PATH" />
+					<then>
+						<prepare-test-environment />
+					</then>
+					<else>
+						<prepare-test-build />
+					</else>
+				</if>
+			</test-set-up>
+		</run-batch-test>
+	</target>
+
 	<target name="legacy-functional-bundle-tomcat-db2">
 		<run-legacy-database-dump database.type="db2" />
 	</target>

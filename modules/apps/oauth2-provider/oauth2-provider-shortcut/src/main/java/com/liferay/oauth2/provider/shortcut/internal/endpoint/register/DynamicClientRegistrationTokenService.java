@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.util.PwdGenerator;
 import java.security.SignatureException;
 
 import java.util.Collections;
+import java.util.concurrent.DelayQueue;
+import java.util.concurrent.Delayed;
+import java.util.concurrent.TimeUnit;
 
 import net.oauth.jsontoken.Checker;
 import net.oauth.jsontoken.JsonToken;
@@ -59,6 +62,17 @@ public class DynamicClientRegistrationTokenService {
 			throw new SecurityException("Invalid issued_at token parameter");
 		}
 
+		JsonPrimitive jti = jsonToken.getParamAsPrimitive("jti");
+
+		String nonce = jti.getAsString();
+
+		if (!verifyNonce(nonce)) {
+			throw new SecurityException("Reused token");
+		}
+		else {
+			useNonce(nonce);
+		}
+
 		RegistrationToken registrationToken = new RegistrationToken();
 
 		JsonPrimitive sub = jsonToken.getParamAsPrimitive("sub");
@@ -78,6 +92,7 @@ public class DynamicClientRegistrationTokenService {
 		jsonToken.setExpiration(now.plus(_EXPIRATION));
 		jsonToken.setIssuedAt(now);
 
+		jsonToken.setParam("jti", PwdGenerator.getPassword(16));
 		jsonToken.setParam("sub", registrationToken.getUserId());
 
 		return jsonToken.serializeAndSign();
@@ -95,6 +110,16 @@ public class DynamicClientRegistrationTokenService {
 
 		private long _userId;
 
+	}
+
+	protected static void useNonce(String nonce) {
+		_nonceDelayQueue.put(new NonceDelayed(nonce));
+	}
+
+	protected static boolean verifyNonce(String nonce) {
+		_cleanUp();
+
+		return !_nonceDelayQueue.contains(new NonceDelayed(nonce));
 	}
 
 	protected JsonTokenParser getJsonTokenParser() throws Exception {
@@ -133,11 +158,73 @@ public class DynamicClientRegistrationTokenService {
 		}
 	}
 
+	private static void _cleanUp() {
+		while (_nonceDelayQueue.poll() != null);
+	}
+
 	private static final long _EXPIRATION = 1800000;
 
 	private static final String _SECRET = PwdGenerator.getPassword(32);
 
 	private static JsonTokenParser _jsonTokenParser;
+	private static final DelayQueue<NonceDelayed> _nonceDelayQueue =
+		new DelayQueue<>();
 	private static Signer _signer;
+
+	private static class NonceDelayed implements Delayed {
+
+		public NonceDelayed(String nonce) {
+			if (nonce == null) {
+				throw new NullPointerException("Nonce is null");
+			}
+
+			_nonce = nonce;
+			_createTime = System.currentTimeMillis();
+		}
+
+		@Override
+		public int compareTo(Delayed delayed) {
+			NonceDelayed nonceDelayed = (NonceDelayed)delayed;
+
+			long result = _createTime - nonceDelayed._createTime;
+
+			if (result == 0) {
+				return 0;
+			}
+			else if (result > 0) {
+				return 1;
+			}
+
+			return -1;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			NonceDelayed nonceDelayed = (NonceDelayed)obj;
+
+			if (_nonce.equals(nonceDelayed._nonce)) {
+				return true;
+			}
+
+			return false;
+		}
+
+		@Override
+		public long getDelay(TimeUnit timeUnit) {
+			long leftDelayTime =
+				_EXPIRATION + _createTime - System.currentTimeMillis();
+
+			return timeUnit.convert(leftDelayTime, TimeUnit.MILLISECONDS);
+		}
+
+		@Override
+		public int hashCode() {
+			return _nonce.hashCode();
+		}
+
+		private final long _createTime;
+		private final String _nonce;
+
+	}
 
 }

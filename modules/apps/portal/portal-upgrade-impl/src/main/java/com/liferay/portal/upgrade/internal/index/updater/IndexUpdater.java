@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -118,12 +119,10 @@ public class IndexUpdater {
 		Bundle bundle, DB db, Connection connection, String tablesSQL,
 		String indexesSQL) {
 
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Updating database indexes for " + bundle.getSymbolicName());
-		}
+		String loggingTimerName =
+			"update of database indexes for " + bundle.getSymbolicName();
 
-		try {
+		try (LoggingTimer loggingTimer = new LoggingTimer(loggingTimerName)) {
 			db.updateIndexes(connection, tablesSQL, indexesSQL, true);
 		}
 		catch (IOException | SQLException e) {

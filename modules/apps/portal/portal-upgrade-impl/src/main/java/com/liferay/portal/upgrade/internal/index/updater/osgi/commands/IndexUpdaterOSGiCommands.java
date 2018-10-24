@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Component;
 public class IndexUpdaterOSGiCommands {
 
 	@Descriptor("Update database indexes for a specific module via bundle id")
-	public String updateIndexes(long bundleId) {
+	public String updateIndexes(long bundleId) throws Exception {
 		Bundle bundle = IndexUpdaterUtil.getBundle(_bundleContext, bundleId);
 
 		if (IndexUpdaterUtil.isLiferayServiceBundle(bundle)) {
@@ -60,7 +60,7 @@ public class IndexUpdaterOSGiCommands {
 	@Descriptor(
 		"Update database indexes for specific a module via symbolic name"
 	)
-	public String updateIndexes(String bundleSymbolicName) {
+	public String updateIndexes(String bundleSymbolicName) throws Exception {
 		Bundle bundle = IndexUpdaterUtil.getBundle(
 			_bundleContext, bundleSymbolicName);
 

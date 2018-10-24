@@ -19,6 +19,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.db.DBContext;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
@@ -126,6 +128,9 @@ public class UpgradeExecutor {
 		_bundleContext = bundleContext;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeExecutor.class);
+
 	private BundleContext _bundleContext;
 
 	@Reference
@@ -198,7 +203,12 @@ public class UpgradeExecutor {
 				_bundleContext, _bundleSymbolicName);
 
 			if (_requiresUpdateIndexes(bundle)) {
-				IndexUpdaterUtil.updateIndexes(bundle);
+				try {
+					IndexUpdaterUtil.updateIndexes(bundle);
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
 			}
 
 			CacheRegistryUtil.clear();

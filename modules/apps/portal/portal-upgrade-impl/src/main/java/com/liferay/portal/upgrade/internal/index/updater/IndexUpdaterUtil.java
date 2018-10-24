@@ -30,7 +30,6 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import java.util.Dictionary;
 
@@ -93,7 +92,7 @@ public class IndexUpdaterUtil {
 		return GetterUtil.getBoolean(headers.get("Liferay-Service"));
 	}
 
-	public static void updateIndexes(Bundle bundle) {
+	public static void updateIndexes(Bundle bundle) throws Exception {
 		String indexesSQL = getSQLTemplateString(bundle, "indexes.sql");
 		String tablesSQL = getSQLTemplateString(bundle, "tables.sql");
 
@@ -104,15 +103,12 @@ public class IndexUpdaterUtil {
 		DB db = DBManagerUtil.getDB();
 
 		String loggingTimerName =
-			"update of database indexes for " + bundle.getSymbolicName();
+			"Updating database indexes for " + bundle.getSymbolicName();
 
 		try (Connection connection = DataAccess.getConnection();
 			LoggingTimer loggingTimer = new LoggingTimer(loggingTimerName)) {
 
 			db.updateIndexes(connection, tablesSQL, indexesSQL, true);
-		}
-		catch (IOException | SQLException e) {
-			_log.error(e, e);
 		}
 	}
 

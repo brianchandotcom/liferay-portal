@@ -20,7 +20,11 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -53,8 +57,28 @@ public abstract class BaseBuildData implements BuildData {
 	}
 
 	@Override
+	public Long getBuildDuration() {
+		return optLong("build_duration", Long.valueOf(0));
+	}
+
+	@Override
+	public String getBuildDurationString() {
+		return JenkinsResultsParserUtil.toDurationString(getBuildDuration());
+	}
+
+	@Override
 	public Integer getBuildNumber() {
 		return optInt("build_number");
+	}
+
+	@Override
+	public String getBuildResult() {
+		return optString("build_result", "");
+	}
+
+	@Override
+	public String getBuildStatus() {
+		return optString("build_status", "");
 	}
 
 	@Override
@@ -100,6 +124,11 @@ public abstract class BaseBuildData implements BuildData {
 	@Override
 	public Long getStartTime() {
 		return getLong("start_time");
+	}
+
+	@Override
+	public String getStartTimeString() {
+		return getFormattedDate(getStartTime());
 	}
 
 	@Override
@@ -242,6 +271,13 @@ public abstract class BaseBuildData implements BuildData {
 		return new File(getString(key));
 	}
 
+	protected String getFormattedDate(Long timestamp) {
+		DateFormat dateFormat = new SimpleDateFormat(
+			"MMM dd, yyyy h:mm:ss a z");
+
+		return dateFormat.format(new Date(timestamp));
+	}
+
 	protected JSONArray getJSONArray(String key) {
 		return _jsonObject.getJSONArray(key);
 	}
@@ -278,6 +314,10 @@ public abstract class BaseBuildData implements BuildData {
 
 	protected Integer optInt(String key) {
 		return _jsonObject.optInt(key);
+	}
+
+	protected Long optLong(String key, Long defaultValue) {
+		return _jsonObject.optLong(key, defaultValue);
 	}
 
 	protected String optString(String key) {

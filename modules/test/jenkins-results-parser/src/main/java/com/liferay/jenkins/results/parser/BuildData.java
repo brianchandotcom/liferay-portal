@@ -32,7 +32,15 @@ public interface BuildData {
 
 	public String getBuildDescription();
 
+	public Long getBuildDuration();
+
+	public String getBuildDurationString();
+
 	public Integer getBuildNumber();
+
+	public String getBuildResult();
+
+	public String getBuildStatus();
 
 	public String getBuildURL();
 
@@ -51,6 +59,8 @@ public interface BuildData {
 	public String getRunID();
 
 	public Long getStartTime();
+
+	public String getStartTimeString();
 
 	public Integer getTopLevelBuildNumber();
 

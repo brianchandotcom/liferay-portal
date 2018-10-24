@@ -43,8 +43,8 @@ import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
 import com.liferay.trash.service.TrashEntryLocalService;
 import com.liferay.trash.service.TrashVersionLocalService;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -89,12 +89,10 @@ public class PortalCapabilityLocatorImpl
 	public DynamicCapability getDynamicCapability(
 		DocumentRepository documentRepository, String repositoryClassName) {
 
-		LiferayDynamicCapability liferayDynamicCapability =
-			new LiferayDynamicCapability(_bundleContext, repositoryClassName);
-
-		_liferayDynamicCapabilities.add(liferayDynamicCapability);
-
-		return liferayDynamicCapability;
+		return _liferayDynamicCapabilities.computeIfAbsent(
+			documentRepository,
+			key -> new LiferayDynamicCapability(
+				_bundleContext, repositoryClassName));
 	}
 
 	@Override
@@ -197,8 +195,7 @@ public class PortalCapabilityLocatorImpl
 
 	@Override
 	public void invalidate() {
-		_liferayDynamicCapabilities.forEach(LiferayDynamicCapability::clear);
-		_liferayDynamicCapabilities.clear();
+		_clearLiferayDynamicCapabilities();
 	}
 
 	@Activate
@@ -208,7 +205,17 @@ public class PortalCapabilityLocatorImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_liferayDynamicCapabilities.forEach(LiferayDynamicCapability::clear);
+		_clearLiferayDynamicCapabilities();
+	}
+
+	private void _clearLiferayDynamicCapabilities() {
+		for (LiferayDynamicCapability liferayDynamicCapability :
+				_liferayDynamicCapabilities.values()) {
+
+			liferayDynamicCapability.clear();
+		}
+
+		_liferayDynamicCapabilities.clear();
 	}
 
 	private final ProcessorCapability _alwaysGeneratingProcessorCapability =
@@ -224,8 +231,8 @@ public class PortalCapabilityLocatorImpl
 	@Reference
 	private DLSyncEventLocalService _dlSyncEventLocalService;
 
-	private final Set<LiferayDynamicCapability> _liferayDynamicCapabilities =
-		new HashSet<>();
+	private final Map<DocumentRepository, LiferayDynamicCapability>
+		_liferayDynamicCapabilities = new HashMap<>();
 	private final RepositoryEntryConverter _repositoryEntryConverter =
 		new RepositoryEntryConverter();
 	private final ProcessorCapability _reusingProcessorCapability =

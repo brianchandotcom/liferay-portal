@@ -332,7 +332,7 @@ class Layout extends Component {
 	 * @review
 	 */
 
-	_handleMoveLayoutColumnItem(eventData) {
+	_handleDropLayoutColumnItem(eventData) {
 		let layoutColumns = this.layoutColumns.map(
 			layoutColumn => [...layoutColumn]
 		);
@@ -545,8 +545,8 @@ class Layout extends Component {
 		);
 
 		this._layoutDragDrop.on(
-			'moveLayoutColumnItem',
-			this._handleMoveLayoutColumnItem.bind(this)
+			'dropLayoutColumnItem',
+			this._handleDropLayoutColumnItem.bind(this)
 		);
 
 		this._layoutDragDrop.on(

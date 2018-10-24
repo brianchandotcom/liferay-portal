@@ -147,7 +147,7 @@ class LayoutDragDrop extends State {
 		}
 
 		this.emit(
-			'moveLayoutColumnItem',
+			'dropLayoutColumnItem',
 			{
 				sourceItemPlid,
 				targetColumnIndex,

@@ -172,9 +172,7 @@ public class ManageCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 			Date expirationDate = GetterUtil.getDate(
 				parts[1], _getDateFormat(resourceBundle.getLocale()), null);
 
-			if (expirationDate != null) {
-				expirationDates.put(sharingEntryId, expirationDate);
-			}
+			expirationDates.put(sharingEntryId, expirationDate);
 		}
 
 		return expirationDates;

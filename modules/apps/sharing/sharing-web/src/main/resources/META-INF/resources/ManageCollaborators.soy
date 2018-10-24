@@ -105,7 +105,8 @@
 				<h4>{$collaborator.name}</h4>
 			</div>
 
-			<div class="autofit-col expiration-icon">
+			<div class="autofit-col expiration-icon {if not $collaborator.sharingEntryExpirationDate}hidden {/if}
+				{if $collaborator.expanded}hide{/if}">
 				{let $expirationDateMsg kind="text"}
 					{msg desc=""}set-expiration-date{/msg}
 				{/let}
@@ -169,7 +170,7 @@
 					name="{$collaborator.sharingEntryId}"
 					type="date"
 					{if $collaborator.sharingEntryExpirationDate}
-					value="{$collaborator.sharingEntryExpirationDate}"
+						value="{$collaborator.sharingEntryExpirationDate}"
 					{/if}
 				/>
 			</div>

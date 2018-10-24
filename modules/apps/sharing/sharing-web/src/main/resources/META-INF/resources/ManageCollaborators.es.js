@@ -118,10 +118,11 @@ class ManageCollaborators extends PortletBase {
 		if (collaborator) {
 			let sharingEntryExpirationDate = null;
 
-			this._sharingEntryIdsAndExpirationDate.set(collaborator.sharingEntryId, sharingEntryExpirationDate);
-
 			collaborator.expanded = false;
 			collaborator.sharingEntryExpirationDate = sharingEntryExpirationDate;
+			collaborator.sharingEntryExpirationDateTooltip = null;
+
+			this._sharingEntryIdsAndExpirationDate.set(collaborator.sharingEntryId, sharingEntryExpirationDate);
 
 			this.collaborators = this.collaborators;
 		}
@@ -202,7 +203,28 @@ class ManageCollaborators extends PortletBase {
 
 		collaborator.expanded = !collaborator.expanded;
 
+		if (collaborator.expanded && !collaborator.sharingEntryExpirationDate) {
+			collaborator.sharingEntryExpirationDate = this._tomorrowDate;
+			collaborator.sharingEntryExpirationDateTooltip = this._getTooltipDate(this._tomorrowDate);
+
+			this._sharingEntryIdsAndExpirationDate.set(
+				collaborator.sharingEntryId,
+				collaborator.sharingEntryExpirationDate
+			);
+		}
+
 		this.collaborators = this.collaborators;
+	}
+
+	/**
+	 * Get the formatted date that has to be shown
+	 * in the tooltip.
+	 *
+	 * @param  {Date} expirationDate [description]
+	 * @return {String}                [description]
+	 */
+	_getTooltipDate(expirationDate) {
+		return new Date(expirationDate).toLocaleDateString(Liferay.ThemeDisplay.getBCP47LanguageId());
 	}
 
 	/**

@@ -20,11 +20,11 @@
 		border: 0;
 		padding: .5rem 20px;
 
-		.expiration-icon {
+		.expiration-icon.hidden {
 			visibility: hidden;
 		}
 
-		&.active .expiration-icon {
+		&.active .expiration-icon.hidden {
 			visibility: visible;
 		}
 	}

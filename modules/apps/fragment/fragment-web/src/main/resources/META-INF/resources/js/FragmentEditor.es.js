@@ -188,7 +188,7 @@ FragmentEditor.STATE = {
 	 * List of tags to support custom autocomplete in the HTML editor
 	 * @default []
 	 * @instance
-	 * @memberOf AceEditor
+	 * @memberOf FragmentEditor
 	 * @review
 	 * @type Array
 	 */

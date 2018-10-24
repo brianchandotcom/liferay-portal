@@ -20,7 +20,11 @@ import {
 	removeItem,
 	setHomePage
 } from './utils/LayoutUtils.es';
-import {dropItemInsideColumn, dropItemInsideItem} from './utils/LayoutDropUtils.es';
+import {
+	dropItemInsideColumn,
+	dropItemInsideItem,
+	dropItemNextToItem
+} from './utils/LayoutDropUtils.es';
 import {setIn} from '../utils/utils.es';
 import templates from './Layout.soy';
 
@@ -240,18 +244,16 @@ class Layout extends Component {
 					priority = dropData.priority;
 				}
 				else {
-					priority = targetColumn.indexOf(targetItem);
-
-					if (this._draggingItemPosition === DRAG_POSITIONS.bottom) {
-						priority++;
-					}
-
-					targetColumn.splice(priority, 0, this._draggingItem);
-
-					parentPlid = getColumnActiveItem(
+					const dropData = dropItemNextToItem(
 						layoutColumns,
-						targetColumnIndex - 1
-					).plid;
+						this._draggingItem,
+						this._draggingItemPosition,
+						targetItemPlid
+					);
+
+					layoutColumns = dropData.layoutColumns;
+					parentPlid = dropData.newParentPlid;
+					priority = dropData.priority;
 				}
 			}
 

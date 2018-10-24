@@ -3,8 +3,10 @@ import {
 	getColumnActiveItem,
 	getItem,
 	getItemColumnIndex,
-	moveItemInside
+	moveItemInside,
+	getItemColumn
 } from './LayoutUtils.es';
+import {DRAG_POSITIONS} from './LayoutDragDrop.es';
 
 /**
  * Append an item to a column and calculates newParentPlid and priority
@@ -78,7 +80,47 @@ function dropItemInsideItem(
 	};
 }
 
+/**
+ * Insert an item next to another item and
+ * calculates new parent plid and priority
+ * @param {object} layoutColumns
+ * @param {object} item
+ * @param {string} dropPosition
+ * @param {string} targetItemPlid
+ * @return {object}
+ * @review
+ */
+function dropItemNextToItem(layoutColumns, item, dropPosition, targetItemPlid) {
+	const nextLayoutColumns = layoutColumns.map(
+		(layoutColumn) => [...layoutColumn]
+	);
+
+	const targetColumn = getItemColumn(nextLayoutColumns, targetItemPlid);
+	const targetColumnIndex = nextLayoutColumns.indexOf(targetColumn);
+
+	const targetItemIndex = targetColumn.findIndex(
+		(targetColumnItem) => targetColumnItem.plid === targetItemPlid
+	);
+
+	const priority = (dropPosition === DRAG_POSITIONS.bottom) ?
+		(targetItemIndex + 1) : targetItemIndex;
+
+	targetColumn.splice(priority, 0, item);
+
+	const parentPlid = getColumnActiveItem(
+		nextLayoutColumns,
+		targetColumnIndex - 1
+	).plid;
+
+	return {
+		layoutColumns: nextLayoutColumns,
+		newParentPlid: parentPlid,
+		priority
+	};
+}
+
 export {
 	dropItemInsideColumn,
-	dropItemInsideItem
+	dropItemInsideItem,
+	dropItemNextToItem
 };

@@ -19,7 +19,12 @@ import com.liferay.dynamic.data.lists.internal.upgrade.v1_0_0.UpgradeKernelPacka
 import com.liferay.dynamic.data.lists.internal.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.dynamic.data.lists.internal.upgrade.v1_0_0.UpgradeSchema;
 import com.liferay.dynamic.data.lists.internal.upgrade.v1_0_1.UpgradeRecordGroup;
+import com.liferay.dynamic.data.lists.internal.upgrade.v2_0_0.util.DDLRecordSetTable;
+import com.liferay.dynamic.data.lists.internal.upgrade.v2_0_0.util.DDLRecordSetVersionTable;
+import com.liferay.dynamic.data.lists.internal.upgrade.v2_0_0.util.DDLRecordTable;
+import com.liferay.dynamic.data.lists.internal.upgrade.v2_0_0.util.DDLRecordVersionTable;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -58,6 +63,14 @@ public class DDLServiceUpgrade implements UpgradeStepRegistrator {
 			new com.liferay.dynamic.data.lists.internal.upgrade.v1_1_0.
 				UpgradeDDLRecordSetVersion(
 					_counterLocalService, _userLocalService));
+
+		registry.register(
+			"1.1.0", "2.0.0",
+			new BaseUpgradeSQLServerDatetime(
+				new Class<?>[] {
+					DDLRecordSetTable.class, DDLRecordSetVersionTable.class,
+					DDLRecordTable.class, DDLRecordVersionTable.class
+				}));
 	}
 
 	@Reference

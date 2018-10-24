@@ -24,12 +24,17 @@ import com.liferay.calendar.internal.upgrade.v2_0_0.UpgradeSchema;
 import com.liferay.calendar.internal.upgrade.v3_0_0.UpgradeCalendarBookingResourceBlock;
 import com.liferay.calendar.internal.upgrade.v3_0_0.UpgradeCalendarResourceBlock;
 import com.liferay.calendar.internal.upgrade.v3_0_0.UpgradeCalendarResourceResourceBlock;
+import com.liferay.calendar.internal.upgrade.v4_0_0.util.CalendarBookingTable;
+import com.liferay.calendar.internal.upgrade.v4_0_0.util.CalendarNotificationTemplateTable;
+import com.liferay.calendar.internal.upgrade.v4_0_0.util.CalendarResourceTable;
+import com.liferay.calendar.internal.upgrade.v4_0_0.util.CalendarTable;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -83,6 +88,14 @@ public class CalendarServiceUpgrade implements UpgradeStepRegistrator {
 			"2.0.0", "3.0.0", new UpgradeCalendarBookingResourceBlock(),
 			new UpgradeCalendarResourceBlock(),
 			new UpgradeCalendarResourceResourceBlock());
+
+		registry.register(
+			"3.0.0", "4.0.0",
+			new BaseUpgradeSQLServerDatetime(
+				new Class<?>[] {
+					CalendarBookingTable.class, CalendarNotificationTemplateTable.class,
+					CalendarResourceTable.class, CalendarTable.class
+				}));
 	}
 
 	@Reference(unbind = "-")

@@ -164,54 +164,6 @@ class Layout extends Component {
 	}
 
 	/**
-	 * @param {Array} layoutColumns
-	 * @param {string} plid
-	 * @private
-	 * @return {object|null}
-	 * @review
-	 */
-
-	_getLayoutColumnItemByPlid(layoutColumns, plid) {
-		let item = null;
-
-		layoutColumns.forEach(
-			layoutColumn => {
-				item = item || layoutColumn.find(
-					_item => _item.plid === plid
-				);
-			}
-		);
-
-		return item;
-	}
-
-	/**
-	 * @param {Array} layoutColumns
-	 * @param {string} plid
-	 * @private
-	 * @return {object|null}
-	 * @review
-	 */
-
-	_getParentColumnByPlid(layoutColumns, plid) {
-		let column = null;
-
-		layoutColumns.forEach(
-			layoutColumn => {
-				const item = layoutColumn.find(
-					_item => _item.plid === plid
-				);
-
-				if (item) {
-					column = layoutColumn;
-				}
-			}
-		);
-
-		return column;
-	}
-
-	/**
 	 * Handle dragLayoutColumnItem event
 	 * @param {!object} eventData
 	 * @param {!string} eventData.position

@@ -88,12 +88,22 @@ public class GitBisectToolBuild extends TopLevelBuild {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("caption, td, th {");
-		sb.append("padding: .5em; text-align: left;");
-		sb.append("}\n");
+		sb.append("caption, td, th {\n");
+		sb.append("padding: .5em;\n");
+		sb.append("text-align: left;\n");
+		sb.append("}\n\n");
 
-		sb.append("canvas {");
-		sb.append("display: block; height: 300px; width: 1900px;");
+		sb.append("td {\n");
+		sb.append("max-width:500px;\n");
+		sb.append("overflow: hidden;\n");
+		sb.append("text-overflow:ellipsis;\n");
+		sb.append("white-space: nowrap;\n");
+		sb.append("}\n\n");
+
+		sb.append("canvas {\n");
+		sb.append("display: block;\n");
+		sb.append("height: 300px;\n");
+		sb.append("width: 1900px;\n");
 		sb.append("}");
 
 		Dom4JUtil.getNewElement("style", headElement, sb.toString());

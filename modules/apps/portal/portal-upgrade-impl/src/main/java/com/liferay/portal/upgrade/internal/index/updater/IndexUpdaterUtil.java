@@ -84,12 +84,16 @@ public class IndexUpdaterUtil {
 
 		DB db = DBManagerUtil.getDB();
 
-		try (Connection connection = DataAccess.getConnection()) {
-			_executeUpdateIndexes(
-				bundle, db, connection, tablesSQL, indexesSQL);
+		String loggingTimerName =
+			"update of database indexes for " + bundle.getSymbolicName();
+
+		try (Connection connection = DataAccess.getConnection();
+			LoggingTimer loggingTimer = new LoggingTimer(loggingTimerName)) {
+
+			db.updateIndexes(connection, tablesSQL, indexesSQL, true);
 		}
-		catch (SQLException sqle) {
-			_log.error(sqle, sqle);
+		catch (IOException | SQLException e) {
+			_log.error(e, e);
 		}
 	}
 
@@ -115,26 +119,20 @@ public class IndexUpdaterUtil {
 					continue;
 				}
 
-				_executeUpdateIndexes(
-					bundle, db, connection, tablesSQL, indexesSQL);
+				String loggingTimerName =
+					"Updating database indexes for " + bundle.getSymbolicName();
+
+				try (LoggingTimer loggingTimer =
+						new LoggingTimer(loggingTimerName)) {
+
+					db.updateIndexes(connection, tablesSQL, indexesSQL, true);
+				}
+				catch (IOException | SQLException e) {
+					_log.error(e, e);
+				}
 			}
 		}
 		catch (Exception e) {
-			_log.error(e, e);
-		}
-	}
-
-	private static void _executeUpdateIndexes(
-		Bundle bundle, DB db, Connection connection, String tablesSQL,
-		String indexesSQL) {
-
-		String loggingTimerName =
-			"update of database indexes for " + bundle.getSymbolicName();
-
-		try (LoggingTimer loggingTimer = new LoggingTimer(loggingTimerName)) {
-			db.updateIndexes(connection, tablesSQL, indexesSQL, true);
-		}
-		catch (IOException | SQLException e) {
 			_log.error(e, e);
 		}
 	}

@@ -240,7 +240,7 @@ public class DynamicClientRegistrationProtocolService {
 
 		if (!extensions.isEmpty()) {
 			processedExtensions.addAll(
-				_processExtensions(body, extensions, user, true));
+				_processExtensions(body, extensions, user, null, true));
 		}
 
 		OAuth2Application oAuth2Application = _addOAuth2Application(
@@ -251,7 +251,8 @@ public class DynamicClientRegistrationProtocolService {
 
 		if (!extensions.isEmpty()) {
 			processedExtensions.addAll(
-				_processExtensions(body, extensions, user, false));
+				_processExtensions(
+					body, extensions, user, oAuth2Application, false));
 		}
 
 		DynamicClientRegistrationResponse dynamicClientRegistrationResponse =
@@ -491,7 +492,8 @@ public class DynamicClientRegistrationProtocolService {
 	}
 
 	private List<String> _processExtensions(
-			String body, List<String> extensions, User user, boolean preProcess)
+			String body, List<String> extensions, User user,
+			OAuth2Application oAuth2Application, boolean preProcess)
 		throws Exception {
 
 		List<String> processedExtensions = new ArrayList<>();
@@ -511,7 +513,7 @@ public class DynamicClientRegistrationProtocolService {
 				extension.preProcess(object, user);
 			}
 			else {
-				extension.postProcess(object, user);
+				extension.postProcess(object, oAuth2Application);
 			}
 
 			processedExtensions.add(extensionType);

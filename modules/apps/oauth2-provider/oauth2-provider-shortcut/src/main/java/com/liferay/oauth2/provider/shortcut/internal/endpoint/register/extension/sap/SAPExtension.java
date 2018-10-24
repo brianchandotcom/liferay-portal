@@ -14,6 +14,7 @@
 
 package com.liferay.oauth2.provider.shortcut.internal.endpoint.register.extension.sap;
 
+import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.shortcut.internal.endpoint.register.extension.Extension;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -46,7 +47,8 @@ import org.osgi.service.component.annotations.Reference;
 public class SAPExtension implements Extension {
 
 	@Override
-	public void postProcess(Object object, User user) throws Exception {
+	public void postProcess(Object object, OAuth2Application oAuth2Application)
+		throws Exception {
 	}
 
 	@Override

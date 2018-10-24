@@ -14,6 +14,7 @@
 
 package com.liferay.oauth2.provider.shortcut.internal.endpoint.register.extension;
 
+import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.portal.kernel.model.User;
 
 /**
@@ -21,7 +22,8 @@ import com.liferay.portal.kernel.model.User;
  */
 public interface Extension {
 
-	public void postProcess(Object object, User user) throws Exception;
+	public void postProcess(Object object, OAuth2Application oAuth2Application)
+		throws Exception;
 
 	public void preProcess(Object object, User user) throws Exception;
 

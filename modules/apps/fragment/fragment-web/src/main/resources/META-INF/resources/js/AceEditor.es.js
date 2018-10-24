@@ -22,7 +22,7 @@ class AceEditor extends Component {
 		this._handleDocumentChanged = this._handleDocumentChanged.bind(this);
 
 		AUI().use(
-			'aui-ace-editor',
+			'aui-ace-editor', 'aui-ace-autocomplete-plugin', 'aui-ace-autocomplete-templateprocessor',
 			A => {
 				const editor = new A.AceEditor(
 					{
@@ -47,6 +47,8 @@ class AceEditor extends Component {
 				if (this.initialContent) {
 					this._editorDocument.setValue(this.initialContent);
 				}
+
+				this._initAutocomplete(A, editor);
 			}
 		);
 	}
@@ -58,6 +60,78 @@ class AceEditor extends Component {
 
 	shouldUpdate() {
 		return false;
+	}
+
+	_initAutocomplete(A, editor) {
+		if (this.syntax !== 'html') {
+			return;
+		}
+
+		const FragmentAutocompleteProcessor = function(options) {
+			FragmentAutocompleteProcessor.superclass.constructor.apply(
+				this, arguments);
+		};
+
+		const FragmentAutocompleteAttributeProcessor = function(options) {
+			FragmentAutocompleteProcessor.superclass.constructor.apply(
+				this, arguments);
+		};
+
+		const instance = this;
+
+		A.extend(
+			FragmentAutocompleteProcessor,
+			A.AceEditor.TemplateProcessor, {
+				getMatch: function(content) {
+					let match, matchIndex;
+
+					if ((matchIndex = content.lastIndexOf('<')) >= 0) {
+						content = content.substring(matchIndex);
+
+						if (/<lfr[\w]*[^<lfr]*$/.test(content)) {
+							match = {
+								content: content.substring(1),
+								start: matchIndex,
+								type: 0
+							};
+						}
+					}
+
+					return match;
+				},
+
+				getSuggestion: function(match, selectedSuggestion) {
+					const selectedTag =
+						FragmentAutocompleteProcessor.superclass.getSuggestion.apply(
+							this, arguments);
+
+					const attributes = instance.autocompleteTags.reduce(
+						(array, tag) =>
+							tag.name === selectedSuggestion ? tag.attributes : array,
+						[]);
+
+					return attributes.reduce(
+						(selectedSuggestion, attribute) =>
+							`${selectedSuggestion} ${attribute}=""`,
+						selectedSuggestion);
+				}
+			});
+
+		const autocompleteProcessor = new FragmentAutocompleteProcessor(
+			{
+				directives: this.autocompleteTags.map((tag) => tag.name)
+			}
+		);
+
+		editor.plug(
+			A.Plugin.AceAutoComplete,
+			{
+				processor: autocompleteProcessor,
+				render: true,
+				visible: false,
+				zIndex: 10000
+			}
+		);
 	}
 
 	/**
@@ -125,6 +199,21 @@ AceEditor.SYNTAX = {
  */
 
 AceEditor.STATE = {
+
+	/**
+	 * List of tags to support custom autocomplete in the HTML editor
+	 * @default []
+	 * @instance
+	 * @memberOf AceEditor
+	 * @review
+	 * @type Array
+	 */
+
+	autocompleteTags: Config.arrayOf(
+		Config.shapeOf({
+			name: Config.string(),
+			attributes: Config.arrayOf(Config.string())
+		})),
 
 	/**
 	 * Initial content sent to the editor

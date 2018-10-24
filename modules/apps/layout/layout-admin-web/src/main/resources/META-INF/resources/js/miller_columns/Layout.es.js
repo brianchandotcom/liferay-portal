@@ -17,11 +17,10 @@ import {
 	getItemColumn,
 	getItemColumnIndex,
 	itemIsParent,
-	moveItemInside,
 	removeItem,
 	setHomePage
 } from './utils/LayoutUtils.es';
-import {dropItemInsideColumn} from './utils/LayoutDropUtils.es';
+import {dropItemInsideColumn, dropItemInsideItem} from './utils/LayoutDropUtils.es';
 import {setIn} from '../utils/utils.es';
 import templates from './Layout.soy';
 
@@ -223,36 +222,22 @@ class Layout extends Component {
 				parentPlid = dropData.newParentPlid;
 				priority = dropData.priority;
 			}
-			else {
-				targetColumn = getItemColumn(
-					layoutColumns,
-					targetItemPlid
-				);
-
-				targetColumnIndex = layoutColumns.indexOf(targetColumn);
-
-				targetItem = getItem(
-					layoutColumns,
-					targetItemPlid
-				);
+			else if (targetItemPlid) {
+				targetItem = getItem(layoutColumns, targetItemPlid);
 
 				if (this._draggingItemPosition === DRAG_POSITIONS.inside) {
 					const pathUpdated = !!this._currentPathItemPlid;
 
-					layoutColumns = moveItemInside(
+					const dropData = dropItemInsideItem(
 						layoutColumns,
-						pathUpdated,
 						this._draggingItem,
-						targetItem
+						pathUpdated,
+						targetItemPlid
 					);
 
-					parentPlid = targetItemPlid;
-
-					if (this._currentPathItemPlid) {
-						const nextColumn = layoutColumns[targetColumnIndex + 1];
-
-						priority = nextColumn.indexOf(this._draggingItem);
-					}
+					layoutColumns = dropData.layoutColumns;
+					parentPlid = dropData.newParentPlid;
+					priority = dropData.priority;
 				}
 				else {
 					priority = targetColumn.indexOf(targetItem);

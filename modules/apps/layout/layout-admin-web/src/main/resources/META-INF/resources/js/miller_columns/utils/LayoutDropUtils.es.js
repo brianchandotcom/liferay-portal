@@ -1,6 +1,9 @@
 import {
 	appendItemToColumn,
-	getColumnActiveItem
+	getColumnActiveItem,
+	getItem,
+	getItemColumnIndex,
+	moveItemInside
 } from './LayoutUtils.es';
 
 /**
@@ -32,4 +35,50 @@ function dropItemInsideColumn(layoutColumns, item, columnIndex) {
 	};
 }
 
-export {dropItemInsideColumn};
+
+/**
+ * Inserts an item inside another item's children and
+ * calculates new parent plid and priority
+ * @param {object} layoutColumns
+ * @param {object} item
+ * @param {bollean} pathUpdated
+ * @param {string} targetItemPlid
+ * @return {object}
+ * @review
+ */
+function dropItemInsideItem(
+	layoutColumns,
+	item,
+	pathUpdated,
+	targetItemPlid
+) {
+	let nextLayoutColumns = layoutColumns;
+	let priority = null;
+
+	const targetItem = getItem(nextLayoutColumns, targetItemPlid);
+
+	nextLayoutColumns = moveItemInside(
+		layoutColumns,
+		pathUpdated,
+		item,
+		targetItem
+	);
+
+	if (pathUpdated) {
+		const targetColumnIndex = getItemColumnIndex(nextLayoutColumns, targetItemPlid);
+		const nextColumn = nextLayoutColumns[targetColumnIndex + 1];
+
+		priority = nextColumn.indexOf(item);
+	}
+
+	return {
+		layoutColumns: nextLayoutColumns,
+		newParentPlid: targetItemPlid,
+		priority
+	};
+}
+
+export {
+	dropItemInsideColumn,
+	dropItemInsideItem
+};

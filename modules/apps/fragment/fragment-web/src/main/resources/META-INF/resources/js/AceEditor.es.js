@@ -113,7 +113,7 @@ class AceEditor extends Component {
 					return attributes.reduce(
 						(selectedSuggestion, attribute) =>
 							`${selectedSuggestion} ${attribute}=""`,
-						selectedSuggestion);
+						selectedSuggestion) + `></${selectedSuggestion}>`;
 				}
 			});
 

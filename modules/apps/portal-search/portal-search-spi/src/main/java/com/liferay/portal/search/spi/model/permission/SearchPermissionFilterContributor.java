@@ -20,8 +20,9 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
- * Contributes new filters to search result permission checking based on the
- * fields indexed by {@link SearchPermissionFieldContributor}.
+ * Contributes new filters for checking permissions on search results. Checks
+ * are based on the fields indexed by the corresponding
+ * {@link SearchPermissionFieldContributor}.
  *
  * Implementations of this interface must be registered as OSGi components using
  * the service {@code SearchPermissionFilterContributor}.

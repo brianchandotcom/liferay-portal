@@ -19,11 +19,12 @@ import aQute.bnd.annotation.ConsumerType;
 import com.liferay.portal.kernel.search.Document;
 
 /**
- * Contributes new fields to the search document for permission checks when
- * returning search results via {@link SearchPermissionFilterContributor}.
+ * Indexes new permission checking fields in a search document. These fields can
+ * be checked when returning search results via a
+ * {@link SearchPermissionFilterContributor}.
  *
- * Implementations of this interface must be registered as OSGi components using
- * the service {@code SearchPermissionFieldContributor}.
+ * Register implementations of this interface as OSGi components using the
+ * service {@code SearchPermissionFieldContributor}.
  *
  * @author Bryan Engler
  */

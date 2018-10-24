@@ -133,6 +133,10 @@ public class LayoutPersistenceTest {
 
 		newLayout.setModifiedDate(RandomTestUtil.nextDate());
 
+		newLayout.setLeftPlid(RandomTestUtil.nextLong());
+
+		newLayout.setRightPlid(RandomTestUtil.nextLong());
+
 		newLayout.setPrivateLayout(RandomTestUtil.randomBoolean());
 
 		newLayout.setLayoutId(RandomTestUtil.nextLong());
@@ -195,6 +199,12 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingLayout.getModifiedDate()),
 			Time.getShortTimestamp(newLayout.getModifiedDate()));
+		Assert.assertEquals(existingLayout.getParentPlid(),
+			newLayout.getParentPlid());
+		Assert.assertEquals(existingLayout.getLeftPlid(),
+			newLayout.getLeftPlid());
+		Assert.assertEquals(existingLayout.getRightPlid(),
+			newLayout.getRightPlid());
 		Assert.assertEquals(existingLayout.isPrivateLayout(),
 			newLayout.isPrivateLayout());
 		Assert.assertEquals(existingLayout.getLayoutId(),
@@ -274,6 +284,13 @@ public class LayoutPersistenceTest {
 		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
+	public void testCountByParentPlid() throws Exception {
+		_persistence.countByParentPlid(RandomTestUtil.nextLong());
+
+		_persistence.countByParentPlid(0L);
 	}
 
 	@Test
@@ -433,7 +450,8 @@ public class LayoutPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("Layout", "mvccVersion",
 			true, "uuid", true, "plid", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "privateLayout", true, "layoutId", true,
+			"modifiedDate", true, "parentPlid", true, "leftPlid", true,
+			"rightPlid", true, "privateLayout", true, "layoutId", true,
 			"parentLayoutId", true, "name", true, "title", true, "description",
 			true, "keywords", true, "robots", true, "type", true, "hidden",
 			true, "friendlyURL", true, "iconImageId", true, "themeId", true,
@@ -711,6 +729,10 @@ public class LayoutPersistenceTest {
 
 		layout.setModifiedDate(RandomTestUtil.nextDate());
 
+		layout.setLeftPlid(RandomTestUtil.nextLong());
+
+		layout.setRightPlid(RandomTestUtil.nextLong());
+
 		layout.setPrivateLayout(RandomTestUtil.randomBoolean());
 
 		layout.setLayoutId(RandomTestUtil.nextLong());
@@ -754,6 +776,275 @@ public class LayoutPersistenceTest {
 		layout.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_layouts.add(_persistence.update(layout));
+
+		return layout;
+	}
+
+	@Test
+	public void testMoveTree() throws Exception {
+		long groupId = RandomTestUtil.nextLong();
+
+		Layout rootLayout = addLayout(groupId, null);
+
+		long previousRootLeftPlid = rootLayout.getLeftPlid();
+		long previousRootRightPlid = rootLayout.getRightPlid();
+
+		Layout childLayout = addLayout(groupId, rootLayout.getPlid());
+
+		rootLayout = _persistence.fetchByPrimaryKey(rootLayout.getPrimaryKey());
+
+		Assert.assertEquals(previousRootLeftPlid, rootLayout.getLeftPlid());
+		Assert.assertEquals(previousRootRightPlid + 2, rootLayout.getRightPlid());
+		Assert.assertEquals(rootLayout.getLeftPlid() + 1,
+			childLayout.getLeftPlid());
+		Assert.assertEquals(rootLayout.getRightPlid() - 1,
+			childLayout.getRightPlid());
+	}
+
+	@Test
+	public void testMoveTreeFromLeft() throws Exception {
+		long groupId = RandomTestUtil.nextLong();
+
+		Layout parentLayout = addLayout(groupId, null);
+
+		Layout childLayout = addLayout(groupId, parentLayout.getPlid());
+
+		parentLayout = _persistence.fetchByPrimaryKey(parentLayout.getPrimaryKey());
+
+		Layout rootLayout = addLayout(groupId, null);
+
+		long previousRootLeftPlid = rootLayout.getLeftPlid();
+		long previousRootRightPlid = rootLayout.getRightPlid();
+
+		parentLayout.setParentPlid(rootLayout.getPlid());
+
+		_persistence.update(parentLayout);
+
+		rootLayout = _persistence.fetchByPrimaryKey(rootLayout.getPrimaryKey());
+		childLayout = _persistence.fetchByPrimaryKey(childLayout.getPrimaryKey());
+
+		Assert.assertEquals(previousRootLeftPlid - 4, rootLayout.getLeftPlid());
+		Assert.assertEquals(previousRootRightPlid, rootLayout.getRightPlid());
+		Assert.assertEquals(rootLayout.getLeftPlid() + 1,
+			parentLayout.getLeftPlid());
+		Assert.assertEquals(rootLayout.getRightPlid() - 1,
+			parentLayout.getRightPlid());
+		Assert.assertEquals(parentLayout.getLeftPlid() + 1,
+			childLayout.getLeftPlid());
+		Assert.assertEquals(parentLayout.getRightPlid() - 1,
+			childLayout.getRightPlid());
+	}
+
+	@Test
+	public void testMoveTreeFromRight() throws Exception {
+		long groupId = RandomTestUtil.nextLong();
+
+		Layout rootLayout = addLayout(groupId, null);
+
+		long previousRootLeftPlid = rootLayout.getLeftPlid();
+		long previousRootRightPlid = rootLayout.getRightPlid();
+
+		Layout parentLayout = addLayout(groupId, null);
+
+		Layout childLayout = addLayout(groupId, parentLayout.getPlid());
+
+		parentLayout = _persistence.fetchByPrimaryKey(parentLayout.getPrimaryKey());
+
+		parentLayout.setParentPlid(rootLayout.getPlid());
+
+		_persistence.update(parentLayout);
+
+		rootLayout = _persistence.fetchByPrimaryKey(rootLayout.getPrimaryKey());
+		childLayout = _persistence.fetchByPrimaryKey(childLayout.getPrimaryKey());
+
+		Assert.assertEquals(previousRootLeftPlid, rootLayout.getLeftPlid());
+		Assert.assertEquals(previousRootRightPlid + 4, rootLayout.getRightPlid());
+		Assert.assertEquals(rootLayout.getLeftPlid() + 1,
+			parentLayout.getLeftPlid());
+		Assert.assertEquals(rootLayout.getRightPlid() - 1,
+			parentLayout.getRightPlid());
+		Assert.assertEquals(parentLayout.getLeftPlid() + 1,
+			childLayout.getLeftPlid());
+		Assert.assertEquals(parentLayout.getRightPlid() - 1,
+			childLayout.getRightPlid());
+	}
+
+	@Test
+	public void testMoveTreeIntoTreeFromLeft() throws Exception {
+		long groupId = RandomTestUtil.nextLong();
+
+		Layout parentLayout = addLayout(groupId, null);
+
+		Layout parentChildLayout = addLayout(groupId, parentLayout.getPlid());
+
+		parentLayout = _persistence.fetchByPrimaryKey(parentLayout.getPrimaryKey());
+
+		Layout rootLayout = addLayout(groupId, null);
+
+		Layout leftRootChildLayout = addLayout(groupId, rootLayout.getPlid());
+
+		rootLayout = _persistence.fetchByPrimaryKey(rootLayout.getPrimaryKey());
+
+		Layout rightRootChildLayout = addLayout(groupId, rootLayout.getPlid());
+
+		rootLayout = _persistence.fetchByPrimaryKey(rootLayout.getPrimaryKey());
+
+		long previousRootLeftPlid = rootLayout.getLeftPlid();
+		long previousRootRightPlid = rootLayout.getRightPlid();
+
+		parentLayout.setParentPlid(rightRootChildLayout.getPlid());
+
+		_persistence.update(parentLayout);
+
+		rootLayout = _persistence.fetchByPrimaryKey(rootLayout.getPrimaryKey());
+		leftRootChildLayout = _persistence.fetchByPrimaryKey(leftRootChildLayout.getPrimaryKey());
+		rightRootChildLayout = _persistence.fetchByPrimaryKey(rightRootChildLayout.getPrimaryKey());
+		parentChildLayout = _persistence.fetchByPrimaryKey(parentChildLayout.getPrimaryKey());
+
+		Assert.assertEquals(previousRootLeftPlid - 4, rootLayout.getLeftPlid());
+		Assert.assertEquals(previousRootRightPlid, rootLayout.getRightPlid());
+		Assert.assertEquals(rootLayout.getLeftPlid() + 1,
+			leftRootChildLayout.getLeftPlid());
+		Assert.assertEquals(rootLayout.getRightPlid() - 7,
+			leftRootChildLayout.getRightPlid());
+		Assert.assertEquals(rootLayout.getLeftPlid() + 3,
+			rightRootChildLayout.getLeftPlid());
+		Assert.assertEquals(rootLayout.getRightPlid() - 1,
+			rightRootChildLayout.getRightPlid());
+		Assert.assertEquals(rightRootChildLayout.getLeftPlid() + 1,
+			parentLayout.getLeftPlid());
+		Assert.assertEquals(rightRootChildLayout.getRightPlid() - 1,
+			parentLayout.getRightPlid());
+		Assert.assertEquals(parentLayout.getLeftPlid() + 1,
+			parentChildLayout.getLeftPlid());
+		Assert.assertEquals(parentLayout.getRightPlid() - 1,
+			parentChildLayout.getRightPlid());
+	}
+
+	@Test
+	public void testMoveTreeIntoTreeFromRight() throws Exception {
+		long groupId = RandomTestUtil.nextLong();
+
+		Layout rootLayout = addLayout(groupId, null);
+
+		Layout leftRootChildLayout = addLayout(groupId, rootLayout.getPlid());
+
+		rootLayout = _persistence.fetchByPrimaryKey(rootLayout.getPrimaryKey());
+
+		Layout rightRootChildLayout = addLayout(groupId, rootLayout.getPlid());
+
+		rootLayout = _persistence.fetchByPrimaryKey(rootLayout.getPrimaryKey());
+
+		long previousRootLeftPlid = rootLayout.getLeftPlid();
+		long previousRootRightPlid = rootLayout.getRightPlid();
+
+		Layout parentLayout = addLayout(groupId, null);
+
+		Layout parentChildLayout = addLayout(groupId, parentLayout.getPlid());
+
+		parentLayout = _persistence.fetchByPrimaryKey(parentLayout.getPrimaryKey());
+
+		parentLayout.setParentPlid(leftRootChildLayout.getPlid());
+
+		_persistence.update(parentLayout);
+
+		rootLayout = _persistence.fetchByPrimaryKey(rootLayout.getPrimaryKey());
+		leftRootChildLayout = _persistence.fetchByPrimaryKey(leftRootChildLayout.getPrimaryKey());
+		rightRootChildLayout = _persistence.fetchByPrimaryKey(rightRootChildLayout.getPrimaryKey());
+		parentChildLayout = _persistence.fetchByPrimaryKey(parentChildLayout.getPrimaryKey());
+
+		Assert.assertEquals(previousRootLeftPlid, rootLayout.getLeftPlid());
+		Assert.assertEquals(previousRootRightPlid + 4, rootLayout.getRightPlid());
+		Assert.assertEquals(rootLayout.getLeftPlid() + 1,
+			leftRootChildLayout.getLeftPlid());
+		Assert.assertEquals(rootLayout.getRightPlid() - 3,
+			leftRootChildLayout.getRightPlid());
+		Assert.assertEquals(rootLayout.getLeftPlid() + 7,
+			rightRootChildLayout.getLeftPlid());
+		Assert.assertEquals(rootLayout.getRightPlid() - 1,
+			rightRootChildLayout.getRightPlid());
+		Assert.assertEquals(leftRootChildLayout.getLeftPlid() + 1,
+			parentLayout.getLeftPlid());
+		Assert.assertEquals(leftRootChildLayout.getRightPlid() - 1,
+			parentLayout.getRightPlid());
+		Assert.assertEquals(parentLayout.getLeftPlid() + 1,
+			parentChildLayout.getLeftPlid());
+		Assert.assertEquals(parentLayout.getRightPlid() - 1,
+			parentChildLayout.getRightPlid());
+	}
+
+	protected Layout addLayout(long groupId, Long parentPlid)
+		throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		Layout layout = _persistence.create(pk);
+
+		layout.setMvccVersion(RandomTestUtil.nextLong());
+
+		layout.setUuid(RandomTestUtil.randomString());
+		layout.setGroupId(groupId);
+
+		layout.setCompanyId(RandomTestUtil.nextLong());
+
+		layout.setUserId(RandomTestUtil.nextLong());
+
+		layout.setUserName(RandomTestUtil.randomString());
+
+		layout.setCreateDate(RandomTestUtil.nextDate());
+
+		layout.setModifiedDate(RandomTestUtil.nextDate());
+
+		layout.setLeftPlid(RandomTestUtil.nextLong());
+
+		layout.setRightPlid(RandomTestUtil.nextLong());
+
+		layout.setPrivateLayout(RandomTestUtil.randomBoolean());
+
+		layout.setLayoutId(RandomTestUtil.nextLong());
+
+		layout.setParentLayoutId(RandomTestUtil.nextLong());
+
+		layout.setName(RandomTestUtil.randomString());
+
+		layout.setTitle(RandomTestUtil.randomString());
+
+		layout.setDescription(RandomTestUtil.randomString());
+
+		layout.setKeywords(RandomTestUtil.randomString());
+
+		layout.setRobots(RandomTestUtil.randomString());
+
+		layout.setType(RandomTestUtil.randomString());
+
+		layout.setTypeSettings(RandomTestUtil.randomString());
+
+		layout.setHidden(RandomTestUtil.randomBoolean());
+
+		layout.setFriendlyURL(RandomTestUtil.randomString());
+
+		layout.setIconImageId(RandomTestUtil.nextLong());
+
+		layout.setThemeId(RandomTestUtil.randomString());
+
+		layout.setColorSchemeId(RandomTestUtil.randomString());
+
+		layout.setCss(RandomTestUtil.randomString());
+
+		layout.setPriority(RandomTestUtil.nextInt());
+
+		layout.setLayoutPrototypeUuid(RandomTestUtil.randomString());
+
+		layout.setLayoutPrototypeLinkEnabled(RandomTestUtil.randomBoolean());
+
+		layout.setSourcePrototypeLayoutUuid(RandomTestUtil.randomString());
+
+		layout.setLastPublishDate(RandomTestUtil.nextDate());
+
+		if (parentPlid != null) {
+			layout.setParentPlid(parentPlid);
+		}
+
+		_persistence.update(layout);
 
 		return layout;
 	}

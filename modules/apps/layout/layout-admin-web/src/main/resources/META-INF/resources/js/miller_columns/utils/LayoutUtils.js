@@ -154,3 +154,33 @@ function itemIsParent(layoutColumns, childItemPlid, parentItemPlid) {
 
 	return parentItem.active && (childItemColumnIndex > parentItemColumnIndex);
 }
+
+/**
+ * Removes an item from a column and returns a new array of columns
+ * @param {string} itemPlid
+ * @param {object[]} layoutColumns
+ * @param {string} targetItemPlid
+ * @return {object[]} new column array
+ * @review
+ */
+function removeItem(itemPlid, layoutColumns) {
+	const nextLayoutColumns = [...layoutColumns];
+
+	const itemColumn = getItemColumn(nextLayoutColumns, itemPlid);
+
+	if (itemColumn) {
+		const itemIndex = itemColumn.findIndex(
+			(item) => item.plid === itemPlid
+		);
+		const nextItemColumn = [...itemColumn];
+		const nextItemColumnIndex = getItemColumnIndex(
+			nextLayoutColumns,
+			itemPlid
+		);
+
+		nextItemColumn.splice(itemIndex, 1);
+		nextLayoutColumns[nextItemColumnIndex] = nextItemColumn;
+	}
+
+	return nextLayoutColumns;
+}

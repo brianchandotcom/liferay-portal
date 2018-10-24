@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.store.StoreWrapper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -26,11 +27,14 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -172,6 +176,8 @@ public class StoreFactory {
 	private static StoreFactory _storeFactory;
 	private static boolean _warned;
 
+	private volatile ServiceRegistration<Store>
+		_currentStoreServiceRegistration;
 	private volatile Store _store;
 	private final ServiceTrackerMap<String, Store> _storeServiceTrackerMap =
 		ServiceTrackerCollections.openSingleValueMap(
@@ -187,11 +193,32 @@ public class StoreFactory {
 
 		@Override
 		public Store addingService(ServiceReference<Store> serviceReference) {
+			if (GetterUtil.getBoolean(
+					serviceReference.getProperty("current.store"))) {
+
+				return null;
+			}
+
 			cleanUp(serviceReference);
 
 			Registry registry = RegistryUtil.getRegistry();
 
-			return registry.getService(serviceReference);
+			Store store = registry.getService(serviceReference);
+
+			String storeType = (String)serviceReference.getProperty(
+				"store.type");
+
+			if (PropsValues.DL_STORE_IMPL.equals(storeType)) {
+				Map<String, Object> properties = new HashMap<>();
+
+				properties.put("current.store", "true");
+				properties.put("store.type", storeType);
+
+				_currentStoreServiceRegistration = registry.registerService(
+					Store.class, store, properties);
+			}
+
+			return store;
 		}
 
 		@Override
@@ -206,6 +233,15 @@ public class StoreFactory {
 			ServiceReference<Store> serviceReference, Store service) {
 
 			cleanUp(serviceReference);
+
+			String storeType = (String)serviceReference.getProperty(
+				"store.type");
+
+			if (PropsValues.DL_STORE_IMPL.equals(storeType)) {
+				_currentStoreServiceRegistration.unregister();
+
+				_currentStoreServiceRegistration = null;
+			}
 
 			Registry registry = RegistryUtil.getRegistry();
 

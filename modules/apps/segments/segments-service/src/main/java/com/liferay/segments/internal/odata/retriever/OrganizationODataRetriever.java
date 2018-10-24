@@ -61,6 +61,43 @@ public class OrganizationODataRetriever
 	implements ODataRetriever<Organization> {
 
 	@Override
+	public long countResults(long companyId, String filterString, Locale locale)
+		throws PortalException {
+
+		try {
+			SearchContext searchContext1 = _createSearchContext(
+				companyId, 0, 0);
+
+			Query query = _getQuery(filterString, locale, searchContext1);
+
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			if (permissionChecker != null) {
+				if (searchContext1.getUserId() == 0) {
+					searchContext1.setUserId(permissionChecker.getUserId());
+				}
+
+				SearchResultPermissionFilter searchResultPermissionFilter =
+					_searchResultPermissionFilterFactory.create(
+						searchContext2 -> IndexSearcherHelperUtil.search(
+							searchContext2, query),
+						permissionChecker);
+
+				Hits hits = searchResultPermissionFilter.search(searchContext1);
+
+				return hits.getLength();
+			}
+
+			return IndexSearcherHelperUtil.searchCount(searchContext1, query);
+		}
+		catch (Exception e) {
+			throw new PortalException(
+				"Unable to retrieve organizations count: " + e.getMessage(), e);
+		}
+	}
+
+	@Override
 	public List<Organization> getResults(
 			long companyId, String filterString, Locale locale, int start,
 			int end)

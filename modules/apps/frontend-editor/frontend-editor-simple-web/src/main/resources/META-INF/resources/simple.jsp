@@ -181,7 +181,7 @@ name = HtmlUtil.escapeJS(name);
 			Liferay.component('<%= name %>', window['<%= name %>']);
 
 			Liferay.on('inputLocalized:localeChanged', this._onLocaleChangedHandler, this)
-	},
+		},
 
 		instanceReady: false,
 

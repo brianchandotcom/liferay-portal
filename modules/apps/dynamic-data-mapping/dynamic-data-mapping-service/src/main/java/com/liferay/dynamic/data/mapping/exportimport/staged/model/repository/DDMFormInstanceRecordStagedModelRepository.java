@@ -78,6 +78,8 @@ public class DDMFormInstanceRecordStagedModelRepository
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			ddmFormInstanceRecord);
 
+		serviceContext.setAttribute("validateDDMFormValues", Boolean.FALSE);
+
 		if (portletDataContext.isDataStrategyMirror()) {
 			serviceContext.setUuid(ddmFormInstanceRecord.getUuid());
 		}
@@ -213,6 +215,8 @@ public class DDMFormInstanceRecordStagedModelRepository
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			ddmFormInstanceRecord);
+
+		serviceContext.setAttribute("validateDDMFormValues", Boolean.FALSE);
 
 		DDMFormInstanceRecord importedFormInstanceRecord =
 			_ddmFormInstanceRecordLocalService.updateFormInstanceRecord(

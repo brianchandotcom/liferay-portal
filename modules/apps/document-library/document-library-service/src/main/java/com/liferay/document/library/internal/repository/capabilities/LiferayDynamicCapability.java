@@ -286,8 +286,6 @@ public class LiferayDynamicCapability
 			unregisterRepositoryEventListener(
 				Class<S> repositoryEventTypeClass, Class<T> modelClass,
 				RepositoryEventListener<S, T> repositoryEventListener) {
-
-			return;
 		}
 
 		private final CapabilityRegistration _capabilityRegistration;

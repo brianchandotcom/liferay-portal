@@ -49,7 +49,8 @@ public class LayoutIndexer extends BaseIndexer<Layout> {
 	}
 
 	@Override
-	protected void doDelete(Layout object) throws Exception {
+	protected void doDelete(Layout layout) throws Exception {
+		deleteDocument(layout.getCompanyId(), layout.getPlid());
 	}
 
 	@Override

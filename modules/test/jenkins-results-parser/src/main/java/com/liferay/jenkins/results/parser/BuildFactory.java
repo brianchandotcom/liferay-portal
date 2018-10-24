@@ -43,6 +43,10 @@ public class BuildFactory {
 			return new ValidationBuild(url, (TopLevelBuild)parentBuild);
 		}
 
+		if (url.contains("git-bisect-tool-batch")) {
+			return new FreestyleBatchBuild(url, (TopLevelBuild)parentBuild);
+		}
+
 		for (String batchIndicator : _BATCH_INDICATORS) {
 			if (url.contains(batchIndicator)) {
 				return new BatchBuild(url, (TopLevelBuild)parentBuild);

@@ -50,31 +50,23 @@ public class IndexUpdater {
 		_bundleContext = bundleContext;
 	}
 
-	public Bundle getBundle(long bundleId) {
-		Bundle bundle = _bundleContext.getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new IllegalArgumentException(
-				"Module with id " + bundleId + " does not exist");
-		}
-
-		return bundle;
-	}
-
-	public Bundle getBundle(String bundleSymbolicName) {
-		for (Bundle bundle : _bundleContext.getBundles()) {
-			if (bundleSymbolicName.equals(bundle.getSymbolicName())) {
-				return bundle;
-			}
-		}
-
-		throw new IllegalArgumentException(
-			"Module with symbolic name " + bundleSymbolicName +
-				" does not exist");
-	}
-
 	public boolean hasIndexes(Bundle bundle) {
-		return _isLiferayService(bundle);
+		if (bundle == null) {
+			return false;
+		}
+
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
+
+		return GetterUtil.getBoolean(headers.get("Liferay-Service"));
+	}
+
+	public boolean hasIndexes(long bundleId) {
+		return hasIndexes(_getBundle(bundleId));
+	}
+
+	public boolean hasIndexes(String bundleSymbolicName) {
+		return hasIndexes(_getBundle(bundleSymbolicName));
 	}
 
 	public void updateIndexes(Bundle bundle) {
@@ -82,13 +74,13 @@ public class IndexUpdater {
 	}
 
 	public void updateIndexes(long bundleId) {
-		Bundle bundle = getBundle(bundleId);
+		Bundle bundle = _getBundle(bundleId);
 
 		updateIndexes(bundle);
 	}
 
 	public void updateIndexes(String bundleSymbolicName) {
-		Bundle bundle = getBundle(bundleSymbolicName);
+		Bundle bundle = _getBundle(bundleSymbolicName);
 
 		updateIndexes(bundle);
 	}
@@ -130,6 +122,29 @@ public class IndexUpdater {
 		}
 	}
 
+	private Bundle _getBundle(long bundleId) {
+		Bundle bundle = _bundleContext.getBundle(bundleId);
+
+		if (bundle == null) {
+			throw new IllegalArgumentException(
+				"Module with id " + bundleId + " does not exist");
+		}
+
+		return bundle;
+	}
+
+	private Bundle _getBundle(String bundleSymbolicName) {
+		for (Bundle bundle : _bundleContext.getBundles()) {
+			if (bundleSymbolicName.equals(bundle.getSymbolicName())) {
+				return bundle;
+			}
+		}
+
+		throw new IllegalArgumentException(
+			"Module with symbolic name " + bundleSymbolicName +
+				" does not exist");
+	}
+
 	private String _getSQLTemplateString(Bundle bundle, String templateName) {
 		URL resource = bundle.getResource("/META-INF/sql/" + templateName);
 
@@ -145,17 +160,6 @@ public class IndexUpdater {
 
 			return null;
 		}
-	}
-
-	private boolean _isLiferayService(Bundle bundle) {
-		if (bundle == null) {
-			return false;
-		}
-
-		Dictionary<String, String> headers = bundle.getHeaders(
-			StringPool.BLANK);
-
-		return GetterUtil.getBoolean(headers.get("Liferay-Service"));
 	}
 
 	private void _updateIndexes(Bundle bundle) {

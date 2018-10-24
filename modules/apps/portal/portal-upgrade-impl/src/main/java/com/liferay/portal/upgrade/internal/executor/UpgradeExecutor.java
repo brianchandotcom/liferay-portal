@@ -38,7 +38,6 @@ import java.io.OutputStream;
 
 import java.util.List;
 
-import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -189,11 +188,7 @@ public class UpgradeExecutor {
 			}
 
 			if (_requiresUpdateIndexes()) {
-				Bundle bundle = _indexUpdater.getBundle(_bundleSymbolicName);
-
-				if (_indexUpdater.hasIndexes(bundle)) {
-					_indexUpdater.updateIndexes(bundle);
-				}
+				_indexUpdater.updateIndexes(_bundleSymbolicName);
 			}
 
 			CacheRegistryUtil.clear();
@@ -209,31 +204,33 @@ public class UpgradeExecutor {
 		}
 
 		private boolean _requiresUpdateIndexes() {
+			if (!_indexUpdater.hasIndexes(_bundleSymbolicName)) {
+				return false;
+			}
+
 			if (_upgradeInfos.size() != 1) {
 				return true;
 			}
-			else {
-				UpgradeInfo upgradeInfo = _upgradeInfos.get(0);
 
-				UpgradeStep upgradeStep = upgradeInfo.getUpgradeStep();
+			UpgradeInfo upgradeInfo = _upgradeInfos.get(0);
 
-				if (upgradeStep instanceof DummyUpgradeStep) {
-					return false;
-				}
+			UpgradeStep upgradeStep = upgradeInfo.getUpgradeStep();
 
-				String fromSchemaVersion =
-					upgradeInfo.getFromSchemaVersionString();
-
-				String upgradeStepName = upgradeStep.toString();
-
-				if (fromSchemaVersion.equals("0.0.0") &&
-					upgradeStepName.equals("Initial Database Creation")) {
-
-					return false;
-				}
-
-				return true;
+			if (upgradeStep instanceof DummyUpgradeStep) {
+				return false;
 			}
+
+			String fromSchemaVersion = upgradeInfo.getFromSchemaVersionString();
+
+			String upgradeStepName = upgradeStep.toString();
+
+			if (fromSchemaVersion.equals("0.0.0") &&
+				upgradeStepName.equals("Initial Database Creation")) {
+
+				return false;
+			}
+
+			return true;
 		}
 
 		private void _updateReleaseState(int state) {

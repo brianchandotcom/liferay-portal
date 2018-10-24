@@ -7,6 +7,10 @@
 	{@param initialContent: string}
 	{@param spritemap: string}
 	{@param syntax: string}
+	{@param? autocompleteTags: list<[
+		name: string,
+		attributes: list<string>
+	]>}
 	{@param? codeHeader: string}
 	{@param? codeHeaderHelp: html|string}
 	{@param? codeFooter: string}
@@ -27,6 +31,7 @@
 		{/if}
 
 		{call com.liferay.fragment.web.AceEditor.render}
+			{param autocompleteTags: $autocompleteTags /}
 			{param events: ['contentChanged': $_handleContentChanged] /}
 			{param initialContent: $initialContent /}
 			{param syntax: $syntax /}

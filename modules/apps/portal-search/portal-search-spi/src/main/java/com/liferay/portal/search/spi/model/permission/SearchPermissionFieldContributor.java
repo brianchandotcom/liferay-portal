@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.search.Document;
 public interface SearchPermissionFieldContributor {
 
 	/**
-	 * Contributes the fields.
+	 * Contributes permission checking fields to the search document.
 	 *
 	 * @param document the document being indexed
 	 * @param className the class name of the entity being indexed

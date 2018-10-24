@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.internal.search;
+package com.liferay.portal.workflow.kaleo.internal.search.spi.model.query.contributor;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,9 +36,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Localization;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -47,6 +44,7 @@ import com.liferay.portal.search.filter.DateRangeFilterBuilder;
 import com.liferay.portal.search.filter.FilterBuilders;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
+import com.liferay.portal.workflow.kaleo.internal.search.KaleoTaskInstanceTokenField;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskInstanceTokenQuery;
 
 import java.text.Format;
@@ -56,7 +54,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -144,11 +141,11 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 			return;
 		}
 
-		TermFilter parentCategoryTermFilter = new TermFilter(
+		TermFilter assigneeClassNameTermFilter = new TermFilter(
 			KaleoTaskInstanceTokenField.ASSIGNEE_CLASS_NAME_IDS,
 			String.valueOf(portal.getClassNameId(assigneeClassName)));
 
-		booleanFilter.add(parentCategoryTermFilter, BooleanClauseOccur.MUST);
+		booleanFilter.add(assigneeClassNameTermFilter, BooleanClauseOccur.MUST);
 	}
 
 	protected void appendAssigneeClassPKTerm(
@@ -161,11 +158,11 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 			return;
 		}
 
-		TermFilter parentCategoryTermFilter = new TermFilter(
+		TermFilter assigneeClassPKTermFilter = new TermFilter(
 			KaleoTaskInstanceTokenField.ASSIGNEE_CLASS_PKS,
 			String.valueOf(assigneeClassPK));
 
-		booleanFilter.add(parentCategoryTermFilter, BooleanClauseOccur.MUST);
+		booleanFilter.add(assigneeClassPKTermFilter, BooleanClauseOccur.MUST);
 	}
 
 	protected void appendCompletedTerm(
@@ -383,24 +380,6 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 		return false;
 	}
 
-	protected Localization getLocalization() {
-
-		// See LPS-72507
-
-		if (localization != null) {
-			return localization;
-		}
-
-		return LocalizationUtil.getLocalization();
-	}
-
-	protected String getLocalizedName(String name, Locale locale) {
-		Localization localization = getLocalization();
-
-		return localization.getLocalizedName(
-			name, LocaleUtil.toLanguageId(locale));
-	}
-
 	protected Map<Long, Set<Long>> getRoleIdGroupIdsMap(
 		KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery) {
 
@@ -505,8 +484,6 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 
 	@Reference
 	protected GroupLocalService groupLocalService;
-
-	protected Localization localization;
 
 	@Reference
 	protected Portal portal;

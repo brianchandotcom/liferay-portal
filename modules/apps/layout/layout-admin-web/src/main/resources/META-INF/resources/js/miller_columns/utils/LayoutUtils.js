@@ -1,4 +1,21 @@
 /**
+ * Append an item to a column and returns a new array of columns
+ * @param {object} item 
+ * @param {object[]} layoutColumns 
+ * @param {number} targetColumnIndex
+ * @return {object[]}
+ * @review
+ */
+function appendItemToColumn(item, layoutColumns, targetColumnIndex) {
+	const newLayoutColumns = layoutColumns;
+	const targetColumn = newLayoutColumns[targetColumnIndex];
+
+	targetColumn.splice(targetColumn.length, 0, item);
+
+	return nextLayoutColumns;
+}
+
+/**
  * @param {object[]} layoutColumns
  * @param {number} columnIndex
  * @param {string} itemPlid
@@ -40,23 +57,6 @@ function dropIsValid(
 	const targetExists = targetItemPlid || targetColumnIndex;
 
 	return targetExists && !targetEqualsSource && !columnIsItemChild;
-}
-
-/**
- * Append an item to a column and returns a new array of columns
- * @param {object} item 
- * @param {object[]} layoutColumns 
- * @param {number} targetColumnIndex
- * @return {object[]}
- * @review
- */
-function appendItemToColumn(item, layoutColumns, targetColumnIndex) {
-	const newLayoutColumns = layoutColumns;
-	const targetColumn = newLayoutColumns[targetColumnIndex];
-
-	targetColumn.splice(targetColumn.length, 0, item);
-
-	return nextLayoutColumns;
 }
 
 /**

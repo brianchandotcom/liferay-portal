@@ -7,7 +7,6 @@ import './LayoutBreadcrumbs.es';
 import './LayoutColumn.es';
 import {DRAG_POSITIONS, LayoutDragDrop} from './utils/LayoutDragDrop.es';
 import {
-	appendItemToColumn,
 	columnIsItemChild,
 	dropIsValid,
 	getColumnActiveItem,
@@ -18,6 +17,7 @@ import {
 	itemIsParent,
 	removeItem
 } from './utils/LayoutUtils.es';
+import {dropItemInsideColumn} from './utils/LayoutDropUtils.es';
 import {setIn} from '../utils/utils.es';
 import templates from './Layout.soy';
 
@@ -227,18 +227,15 @@ class Layout extends Component {
 			layoutColumns = removeItem(sourceItemPlid, layoutColumns);
 
 			if (targetColumnIndex) {
-
-				targetColumnIndex = eventData.targetColumnIndex;
-
-				targetColumn = layoutColumns[targetColumnIndex];
-
-				parentPlid = this._getLayoutColumnActiveItemPlid(
-					layoutColumns[targetColumnIndex - 1]
+				const dropData = dropItemInsideColumn(
+					layoutColumns,
+					this._draggingItem,
+					targetColumnIndex
 				);
 
-				priority = targetColumn.length;
-
-				targetColumn.splice(priority, 0, this._draggingItem);
+				layoutColumns = dropData.layoutColumns;
+				parentPlid = dropData.newParentPlid;
+				priority = dropData.priority;
 			}
 			else {
 				targetColumn = getItemColumn(

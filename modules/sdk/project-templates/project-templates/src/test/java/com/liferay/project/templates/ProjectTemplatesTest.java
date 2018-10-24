@@ -2020,13 +2020,11 @@ public class ProjectTemplatesTest {
 			"rest", "rest-dependency-management",
 			"--dependency-management-enabled", "--liferayVersion", "7.1");
 
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
 		_testContains(
 			gradleProjectDir, "build.gradle",
+			"compileOnly group: \"javax.ws.rs\", name: \"javax.ws.rs-api\"\n",
 			"compileOnly group: \"org.osgi\", name: " +
-				"\"org.osgi.service.jaxrs\"");
+				"\"org.osgi.service.jaxrs\", version: \"1.0.0\"");
 	}
 
 	@Test

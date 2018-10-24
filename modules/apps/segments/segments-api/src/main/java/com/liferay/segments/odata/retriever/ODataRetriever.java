@@ -25,12 +25,13 @@ import java.util.Locale;
  */
 public interface ODataRetriever<T extends BaseModel<?>> {
 
-	public long countResults(long companyId, String filterString, Locale locale)
-		throws PortalException;
-
 	public List<T> getResults(
 			long companyId, String filterString, Locale locale, int start,
 			int end)
+		throws PortalException;
+
+	public long getResultsCount(
+			long companyId, String filterString, Locale locale)
 		throws PortalException;
 
 }

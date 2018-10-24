@@ -60,7 +60,8 @@ import org.osgi.service.component.annotations.Reference;
 public class UserODataRetriever implements ODataRetriever<User> {
 
 	@Override
-	public long countResults(long companyId, String filterString, Locale locale)
+	public long getResultsCount(
+			long companyId, String filterString, Locale locale)
 		throws PortalException {
 
 		try {
@@ -98,8 +99,8 @@ public class UserODataRetriever implements ODataRetriever<User> {
 
 	@Override
 	public List<User> getResults(
-			long companyId, String filterString, Locale locale, int start,
-			int end)
+		long companyId, String filterString, Locale locale, int start,
+		int end)
 		throws PortalException {
 
 		try {

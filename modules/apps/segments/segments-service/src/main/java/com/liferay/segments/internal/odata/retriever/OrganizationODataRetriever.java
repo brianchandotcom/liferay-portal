@@ -61,7 +61,8 @@ public class OrganizationODataRetriever
 	implements ODataRetriever<Organization> {
 
 	@Override
-	public long countResults(long companyId, String filterString, Locale locale)
+	public long getResultsCount(
+			long companyId, String filterString, Locale locale)
 		throws PortalException {
 
 		try {
@@ -99,8 +100,8 @@ public class OrganizationODataRetriever
 
 	@Override
 	public List<Organization> getResults(
-			long companyId, String filterString, Locale locale, int start,
-			int end)
+		long companyId, String filterString, Locale locale, int start,
+		int end)
 		throws PortalException {
 
 		try {

@@ -153,6 +153,12 @@ warnings recursively:
 ### Added
 - [LPS-86583]: Skip the `baseline` task if the project was never published.
 
+## 1.3.9 - 2018-10-24
+
+### Added
+- [LPS-86583]: Improve performance of the configuration phase for the `baseline`
+task.
+
 [Bnd Builder Gradle Plugin]: https://github.com/bndtools/bnd/tree/master/biz.aQute.bnd.gradle
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util

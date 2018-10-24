@@ -43,6 +43,21 @@ class SourceEditor extends Component {
 SourceEditor.STATE = {
 
 	/**
+	 * List of tags to support custom autocomplete in the HTML editor
+	 * @default []
+	 * @instance
+	 * @memberOf AceEditor
+	 * @review
+	 * @type Array
+	 */
+
+	autocompleteTags: Config.arrayOf(
+		Config.shapeOf({
+			name: Config.string(),
+			attributes: Config.arrayOf(Config.string())
+		})),
+
+	/**
 	 * Initial content sent to the editor
 	 * @default undefined
 	 * @instance

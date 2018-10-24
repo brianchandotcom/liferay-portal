@@ -185,6 +185,21 @@ class FragmentEditor extends PortletBase {
 FragmentEditor.STATE = {
 
 	/**
+	 * List of tags to support custom autocomplete in the HTML editor
+	 * @default []
+	 * @instance
+	 * @memberOf AceEditor
+	 * @review
+	 * @type Array
+	 */
+
+	autocompleteTags: Config.arrayOf(
+		Config.shapeOf({
+			name: Config.string(),
+			attributes: Config.arrayOf(Config.string())
+		})),
+
+	/**
 	 * Fragment collection id
 	 * @default undefined
 	 * @instance

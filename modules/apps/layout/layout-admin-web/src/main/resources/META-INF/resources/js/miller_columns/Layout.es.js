@@ -344,12 +344,11 @@ class Layout extends Component {
 			eventData.targetColumnIndex;
 		const targetIsSource = eventData.sourceItemPlid === eventData.targetItemPlid;
 
-		const activeItemTargetsChildColumn = this._draggingItem &&
+		const activeItemTargetsChildColumn =
 		this._draggingItem.active &&
 		(eventData.targetColumnIndex > sourceColumnIndex);
 
-		if (this._draggingItem &&
-			targetExists &&
+		if (targetExists &&
 			!targetIsSource &&
 			!activeItemTargetsChildColumn
 		) {
@@ -366,7 +365,7 @@ class Layout extends Component {
 				eventData.targetItemPlid
 			);
 
-			if (eventData.targetColumnIndex && !activeItemTargetsChildColumn) {
+			if (eventData.targetColumnIndex) {
 
 				targetColumnIndex = eventData.targetColumnIndex;
 

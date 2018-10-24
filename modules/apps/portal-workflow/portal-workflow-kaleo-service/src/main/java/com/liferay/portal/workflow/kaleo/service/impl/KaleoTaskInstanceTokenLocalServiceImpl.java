@@ -552,9 +552,10 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery =
 			new KaleoTaskInstanceTokenQuery(serviceContext);
 
+		kaleoTaskInstanceTokenQuery.setAndOperator(andOperator);
 		kaleoTaskInstanceTokenQuery.setAssetTitle(assetTitle);
-		kaleoTaskInstanceTokenQuery.setAssetPrimaryKeys(assetPrimaryKeys);
 		kaleoTaskInstanceTokenQuery.setAssetTypes(assetTypes);
+		kaleoTaskInstanceTokenQuery.setAssetPrimaryKeys(assetPrimaryKeys);
 		kaleoTaskInstanceTokenQuery.setCompleted(completed);
 		kaleoTaskInstanceTokenQuery.setDueDateGT(dueDateGT);
 		kaleoTaskInstanceTokenQuery.setDueDateLT(dueDateLT);
@@ -563,7 +564,6 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		kaleoTaskInstanceTokenQuery.setSearchByUserRoles(searchByUserRoles);
 		kaleoTaskInstanceTokenQuery.setStart(start);
 		kaleoTaskInstanceTokenQuery.setTaskName(taskName);
-		kaleoTaskInstanceTokenQuery.setAndOperator(andOperator);
 
 		try {
 			Indexer<KaleoTaskInstanceToken> indexer =
@@ -644,15 +644,15 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery =
 			new KaleoTaskInstanceTokenQuery(serviceContext);
 
+		kaleoTaskInstanceTokenQuery.setAndOperator(andOperator);
 		kaleoTaskInstanceTokenQuery.setAssetTitle(assetTitle);
-		kaleoTaskInstanceTokenQuery.setAssetPrimaryKeys(assetPrimaryKeys);
 		kaleoTaskInstanceTokenQuery.setAssetTypes(assetTypes);
+		kaleoTaskInstanceTokenQuery.setAssetPrimaryKeys(assetPrimaryKeys);
 		kaleoTaskInstanceTokenQuery.setCompleted(completed);
 		kaleoTaskInstanceTokenQuery.setDueDateGT(dueDateGT);
 		kaleoTaskInstanceTokenQuery.setDueDateLT(dueDateLT);
 		kaleoTaskInstanceTokenQuery.setSearchByUserRoles(searchByUserRoles);
 		kaleoTaskInstanceTokenQuery.setTaskName(taskName);
-		kaleoTaskInstanceTokenQuery.setAndOperator(andOperator);
 
 		try {
 			Indexer<KaleoTaskInstanceToken> indexer =
@@ -764,18 +764,17 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 
 		SearchContext searchContext = new SearchContext();
 
-		searchContext.setCompanyId(kaleoTaskInstanceTokenQuery.getCompanyId());
-		searchContext.setUserId(kaleoTaskInstanceTokenQuery.getUserId());
-
 		searchContext.setAttribute(
 			"kaleoTaskInstanceTokenQuery", kaleoTaskInstanceTokenQuery);
-
+		searchContext.setCompanyId(kaleoTaskInstanceTokenQuery.getCompanyId());
 		searchContext.setEnd(end);
 		searchContext.setStart(start);
 
 		if (orderByComparator != null) {
 			searchContext.setSorts(getSortsFromComparator(orderByComparator));
 		}
+
+		searchContext.setUserId(kaleoTaskInstanceTokenQuery.getUserId());
 
 		return searchContext;
 	}

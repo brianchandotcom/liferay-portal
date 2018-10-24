@@ -41,12 +41,16 @@
 		col-11
 		{sp}col-lg-4
 		{sp}col-md-6
-		{sp}layout-drop-target
+
 		{sp}layout-column
 		{sp}show-quick-actions-on-hover
 
 		{if length($layoutColumn) == 0}
 			{sp}layout-column--placeholder
+		{/if}
+
+		{if $layoutColumnIndex != 0}
+			{sp}layout-drop-target
 		{/if}
 	{/let}
 
@@ -97,6 +101,7 @@
  * Renders a Lexicon Horizontal Card
  */
 {template .layoutColumnItem}
+	{@param layoutColumnIndex: number}
 	{@param layoutColumnItem: [
 		actionURLs: map<string, string>,
 		active: bool,
@@ -109,7 +114,6 @@
 		title: string,
 		url: string
 	]}
-	{@param layoutColumnIndex: number}
 	{@param handleLayoutColumnItemCheck: any}
 	{@param handleLayoutColumnItemCheckboxClick: any}
 	{@param handleLayoutColumnItemClick: any}
@@ -120,16 +124,19 @@
 	{let $listGroupItemClasses kind="text"}
 		list-group-item
 		{sp}list-group-item-flex
-		{sp}drag-layout-column-item
-		{sp}layout-drop-target
 
-		{if $styleModifier}
-			{sp}{$styleModifier}
+		{if $layoutColumnIndex != 0}
+			{sp}drag-layout-column-item
+			{sp}layout-drop-target
 		{/if}
 
 		{if $layoutColumnItem.active}
 			{sp}active-item
 			{sp}focus
+		{/if}
+
+		{if $styleModifier}
+			{sp}{$styleModifier}
 		{/if}
 	{/let}
 

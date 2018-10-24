@@ -31,8 +31,6 @@ public interface RepositoryEventRegistry {
 		void unregisterRepositoryEventListener(
 			Class<S> repositoryEventTypeClass, Class<T> modelClass,
 			RepositoryEventListener<S, T> repositoryEventListener) {
-
-		return;
 	}
 
 }

@@ -1,3 +1,5 @@
+import {setIn} from '../../utils/utils.es';
+
 /**
  * Append an item to a column and returns a new array of columns
  * @param {object} item 
@@ -242,6 +244,51 @@ function removeItem(itemPlid, layoutColumns) {
 	return nextLayoutColumns;
 }
 
+/**
+ * Set the first page as Home page
+ * @param {!Array} layoutColumns
+ * @param {string} currentHomeItemPlid
+ * @return {object|null}
+ * @review
+ */
+function setHomePage(layoutColumns, currentHomeItemPlid) {
+	let nextLayoutColumns = layoutColumns;
+
+	const currentHomeItem = getItem(
+		nextLayoutColumns,
+		currentHomeItemPlid
+	);
+	const currentHomeItemColumn = getItemColumn(
+		nextLayoutColumns,
+		currentHomeItemPlid
+	);
+	const currentHomeItemColumnIndex = nextLayoutColumns.indexOf(
+		currentHomeItemColumn
+	);
+
+	nextLayoutColumns = setIn(
+		nextLayoutColumns,
+		[
+			currentHomeItemColumnIndex,
+			currentHomeItemColumn.indexOf(currentHomeItem),
+			'homePage'
+		],
+		false
+	);
+
+	nextLayoutColumns = setIn(
+		nextLayoutColumns,
+		[
+			currentHomeItemColumnIndex,
+			0,
+			'homePage'
+		],
+		true
+	);
+
+	return nextLayoutColumns;
+}
+
 export {
 	appendItemToColumn,
 	clearFollowingColumns,
@@ -254,5 +301,6 @@ export {
 	getItemColumn,
 	getItemColumnIndex,
 	itemIsParent,
-	removeItem
+	removeItem,
+	setHomePage
 };

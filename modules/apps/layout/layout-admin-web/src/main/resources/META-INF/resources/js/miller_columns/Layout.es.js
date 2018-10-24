@@ -17,7 +17,8 @@ import {
 	getItemColumn,
 	getItemColumnIndex,
 	itemIsParent,
-	removeItem
+	removeItem,
+	setHomePage
 } from './utils/LayoutUtils.es';
 import {dropItemInsideColumn} from './utils/LayoutDropUtils.es';
 import {setIn} from '../utils/utils.es';
@@ -289,7 +290,7 @@ class Layout extends Component {
 			}
 
 			if (this._draggingItem.homePage) {
-				layoutColumns = this._setHomePage(
+				layoutColumns = setHomePage(
 					layoutColumns,
 					this._draggingItem.plid
 				);
@@ -740,52 +741,6 @@ class Layout extends Component {
 			],
 			checked
 		);
-	}
-
-	/**
-	 * Set the first page as Home page
-	 * @param {!Array} layoutColumns
-	 * @param {string} currentHomeItemPlid
-	 * @private
-	 * @return {object|null}
-	 * @review
-	 */
-	_setHomePage(layoutColumns, currentHomeItemPlid) {
-		let nextLayoutColumns = layoutColumns;
-
-		const currentHomeItem = getItem(
-			nextLayoutColumns,
-			currentHomeItemPlid
-		);
-		const currentHomeItemColumn = getItemColumn(
-			nextLayoutColumns,
-			currentHomeItemPlid
-		);
-		const currentHomeItemColumnIndex = nextLayoutColumns.indexOf(
-			currentHomeItemColumn
-		);
-
-		nextLayoutColumns = setIn(
-			nextLayoutColumns,
-			[
-				currentHomeItemColumnIndex,
-				currentHomeItemColumn.indexOf(currentHomeItem),
-				'homePage'
-			],
-			false
-		);
-
-		nextLayoutColumns = setIn(
-			nextLayoutColumns,
-			[
-				currentHomeItemColumnIndex,
-				0,
-				'homePage'
-			],
-			true
-		);
-
-		return nextLayoutColumns;
 	}
 
 	/**

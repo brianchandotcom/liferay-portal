@@ -77,7 +77,7 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 		window[editorName].focus();
 
 		if (AUI().UA.mobile) {
-			document.getElementByUd('<portlet:namespace />addReplyToMessage' + messageId).scrollIntoView(true);
+			document.getElementById('<portlet:namespace />addReplyToMessage' + messageId).scrollIntoView(true);
 		}
 
 		Liferay.Util.toggleDisabled('#<portlet:namespace />replyMessageButton' + messageId, true);

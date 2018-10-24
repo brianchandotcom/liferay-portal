@@ -16,14 +16,12 @@ const DRAG_POSITIONS = {
 /**
  * LayoutDragDrop
  */
-
 class LayoutDragDrop extends State {
 
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
-
 	constructor(config, ...args) {
 		super(config, ...args);
 
@@ -34,7 +32,6 @@ class LayoutDragDrop extends State {
 	 * @inheritDoc
 	 * @review
 	 */
-
 	dispose() {
 		this._dragDrop.dispose();
 	}
@@ -44,7 +41,6 @@ class LayoutDragDrop extends State {
 	 * @param {!HTMLElement} target
 	 * @review
 	 */
-
 	addTarget(target) {
 		this._dragDrop.addTarget(target);
 	}
@@ -57,14 +53,12 @@ class LayoutDragDrop extends State {
 	 * @private
 	 * @review
 	 */
-
 	_handleDrag(data) {
 		const targetItem = data.target;
 
 		if (targetItem) {
 			const mouseY = data.originalEvent.clientY;
-			const placeholderItem = data.placeholder;
-			const placeholderItemRegion = position.getRegion(placeholderItem);
+			const placeholderItemRegion = position.getRegion(data.placeholder);
 			const sourceItemPlid = data.source.dataset.layoutColumnItemPlid;
 			const targetItemPlid = targetItem.dataset.layoutColumnItemPlid;
 			const targetItemRegion = position.getRegion(targetItem);
@@ -73,7 +67,8 @@ class LayoutDragDrop extends State {
 				placeholderItemRegion.bottom < targetItemRegion.bottom) {
 				this._draggingItemPosition = DRAG_POSITIONS.inside;
 			}
-			else if (Math.abs(mouseY - targetItemRegion.top) <= Math.abs(mouseY - targetItemRegion.bottom)) {
+			else if (Math.abs(mouseY - targetItemRegion.top) <=
+				Math.abs(mouseY - targetItemRegion.bottom)) {
 				this._draggingItemPosition = DRAG_POSITIONS.top;
 			}
 			else {
@@ -81,7 +76,10 @@ class LayoutDragDrop extends State {
 			}
 
 			let targetColumnIndex = targetItem.dataset.layoutColumnIndex;
-			targetColumnIndex = targetColumnIndex === '0' ? null : targetColumnIndex;
+
+			targetColumnIndex = targetColumnIndex === '0' ?
+				null :
+				targetColumnIndex;
 
 			this.emit(
 				'dragLayoutColumnItem',
@@ -100,17 +98,17 @@ class LayoutDragDrop extends State {
 	 * @private
 	 * @review
 	 */
-
 	_handleDragEnd() {
 		this.emit('leaveLayoutColumnItem');
 	}
 
 	/**
 	 * Callback that is executed when a target starts being dragged.
+	 * @param {object} data
+	 * @param {MouseEvent} event
 	 * @private
 	 * @review
 	 */
-
 	_handleDragStart(data, event) {
 		const sourceItemPlid = event.target.getActiveDrag().dataset.layoutColumnItemPlid;
 
@@ -131,7 +129,6 @@ class LayoutDragDrop extends State {
 	 * @private
 	 * @review
 	 */
-
 	_handleDrop(data, event) {
 		event.preventDefault();
 
@@ -160,7 +157,6 @@ class LayoutDragDrop extends State {
 	 * @private
 	 * @review
 	 */
-
 	_initializeDragAndDrop() {
 		if (this._dragDrop) {
 			this._dragDrop.dispose();
@@ -197,6 +193,7 @@ class LayoutDragDrop extends State {
 			this._handleDragEnd.bind(this)
 		);
 	}
+
 }
 
 /**

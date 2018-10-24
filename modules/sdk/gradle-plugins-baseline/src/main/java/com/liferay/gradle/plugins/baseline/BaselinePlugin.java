@@ -287,12 +287,12 @@ public class BaselinePlugin implements Plugin<Project> {
 			return;
 		}
 
-		if (_isModuleVersionNotFound(oldJarFileCollection) &&
-			(versionNumber.compareTo(VersionNumber.parse("2.0.0")) == 0)) {
+		if (versionNumber.compareTo(VersionNumber.parse("2.0.0")) == 0) {
+			if (_isModuleVersionNotFound(oldJarFileCollection)) {
+				baselineTask.setEnabled(false);
 
-			baselineTask.setEnabled(false);
-
-			return;
+				return;
+			}
 		}
 
 		Integer lowestMajorVersion =

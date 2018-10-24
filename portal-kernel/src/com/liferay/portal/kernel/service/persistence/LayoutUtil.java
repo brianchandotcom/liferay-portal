@@ -886,6 +886,166 @@ public class LayoutUtil {
 	}
 
 	/**
+	* Returns all the layouts where parentPlid = &#63;.
+	*
+	* @param parentPlid the parent plid
+	* @return the matching layouts
+	*/
+	public static List<Layout> findByParentPlid(long parentPlid) {
+		return getPersistence().findByParentPlid(parentPlid);
+	}
+
+	/**
+	* Returns a range of all the layouts where parentPlid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param parentPlid the parent plid
+	* @param start the lower bound of the range of layouts
+	* @param end the upper bound of the range of layouts (not inclusive)
+	* @return the range of matching layouts
+	*/
+	public static List<Layout> findByParentPlid(long parentPlid, int start,
+		int end) {
+		return getPersistence().findByParentPlid(parentPlid, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the layouts where parentPlid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param parentPlid the parent plid
+	* @param start the lower bound of the range of layouts
+	* @param end the upper bound of the range of layouts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching layouts
+	*/
+	public static List<Layout> findByParentPlid(long parentPlid, int start,
+		int end, OrderByComparator<Layout> orderByComparator) {
+		return getPersistence()
+				   .findByParentPlid(parentPlid, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the layouts where parentPlid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param parentPlid the parent plid
+	* @param start the lower bound of the range of layouts
+	* @param end the upper bound of the range of layouts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching layouts
+	*/
+	public static List<Layout> findByParentPlid(long parentPlid, int start,
+		int end, OrderByComparator<Layout> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByParentPlid(parentPlid, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first layout in the ordered set where parentPlid = &#63;.
+	*
+	* @param parentPlid the parent plid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching layout
+	* @throws NoSuchLayoutException if a matching layout could not be found
+	*/
+	public static Layout findByParentPlid_First(long parentPlid,
+		OrderByComparator<Layout> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
+		return getPersistence()
+				   .findByParentPlid_First(parentPlid, orderByComparator);
+	}
+
+	/**
+	* Returns the first layout in the ordered set where parentPlid = &#63;.
+	*
+	* @param parentPlid the parent plid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching layout, or <code>null</code> if a matching layout could not be found
+	*/
+	public static Layout fetchByParentPlid_First(long parentPlid,
+		OrderByComparator<Layout> orderByComparator) {
+		return getPersistence()
+				   .fetchByParentPlid_First(parentPlid, orderByComparator);
+	}
+
+	/**
+	* Returns the last layout in the ordered set where parentPlid = &#63;.
+	*
+	* @param parentPlid the parent plid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching layout
+	* @throws NoSuchLayoutException if a matching layout could not be found
+	*/
+	public static Layout findByParentPlid_Last(long parentPlid,
+		OrderByComparator<Layout> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
+		return getPersistence()
+				   .findByParentPlid_Last(parentPlid, orderByComparator);
+	}
+
+	/**
+	* Returns the last layout in the ordered set where parentPlid = &#63;.
+	*
+	* @param parentPlid the parent plid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching layout, or <code>null</code> if a matching layout could not be found
+	*/
+	public static Layout fetchByParentPlid_Last(long parentPlid,
+		OrderByComparator<Layout> orderByComparator) {
+		return getPersistence()
+				   .fetchByParentPlid_Last(parentPlid, orderByComparator);
+	}
+
+	/**
+	* Returns the layouts before and after the current layout in the ordered set where parentPlid = &#63;.
+	*
+	* @param plid the primary key of the current layout
+	* @param parentPlid the parent plid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next layout
+	* @throws NoSuchLayoutException if a layout with the primary key could not be found
+	*/
+	public static Layout[] findByParentPlid_PrevAndNext(long plid,
+		long parentPlid, OrderByComparator<Layout> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
+		return getPersistence()
+				   .findByParentPlid_PrevAndNext(plid, parentPlid,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the layouts where parentPlid = &#63; from the database.
+	*
+	* @param parentPlid the parent plid
+	*/
+	public static void removeByParentPlid(long parentPlid) {
+		getPersistence().removeByParentPlid(parentPlid);
+	}
+
+	/**
+	* Returns the number of layouts where parentPlid = &#63;.
+	*
+	* @param parentPlid the parent plid
+	* @return the number of matching layouts
+	*/
+	public static int countByParentPlid(long parentPlid) {
+		return getPersistence().countByParentPlid(parentPlid);
+	}
+
+	/**
 	* Returns the layout where iconImageId = &#63; or throws a {@link NoSuchLayoutException} if it could not be found.
 	*
 	* @param iconImageId the icon image ID
@@ -3458,6 +3618,40 @@ public class LayoutUtil {
 
 	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
+	}
+
+	public static long countAncestors(Layout layout) {
+		return getPersistence().countAncestors(layout);
+	}
+
+	public static long countDescendants(Layout layout) {
+		return getPersistence().countDescendants(layout);
+	}
+
+	public static List<Layout> getAncestors(Layout layout) {
+		return getPersistence().getAncestors(layout);
+	}
+
+	public static List<Layout> getDescendants(Layout layout) {
+		return getPersistence().getDescendants(layout);
+	}
+
+	/**
+	* Rebuilds the layouts tree for the scope using the modified pre-order tree traversal algorithm.
+	*
+	* <p>
+	* Only call this method if the tree has become stale through operations other than normal CRUD. Under normal circumstances the tree is automatically rebuilt whenver necessary.
+	* </p>
+	*
+	* @param groupId the ID of the scope
+	* @param force whether to force the rebuild even if the tree is not stale
+	*/
+	public static void rebuildTree(long groupId, boolean force) {
+		getPersistence().rebuildTree(groupId, force);
+	}
+
+	public static void setRebuildTreeEnabled(boolean rebuildTreeEnabled) {
+		getPersistence().setRebuildTreeEnabled(rebuildTreeEnabled);
 	}
 
 	public static LayoutPersistence getPersistence() {

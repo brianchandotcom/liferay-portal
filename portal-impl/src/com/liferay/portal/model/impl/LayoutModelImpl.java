@@ -88,6 +88,9 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
+			{ "parentPlid", Types.BIGINT },
+			{ "leftPlid", Types.BIGINT },
+			{ "rightPlid", Types.BIGINT },
 			{ "privateLayout", Types.BOOLEAN },
 			{ "layoutId", Types.BIGINT },
 			{ "parentLayoutId", Types.BIGINT },
@@ -122,6 +125,9 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("parentPlid", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("leftPlid", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("rightPlid", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("privateLayout", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("layoutId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("parentLayoutId", Types.BIGINT);
@@ -145,7 +151,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Layout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Layout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,leftPlid LONG,rightPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 	public static final String ORDER_BY_JPQL = " ORDER BY layout.parentLayoutId ASC, layout.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Layout.parentLayoutId ASC, Layout.priority ASC";
@@ -168,11 +174,12 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	public static final long LAYOUTID_COLUMN_BITMASK = 16L;
 	public static final long LAYOUTPROTOTYPEUUID_COLUMN_BITMASK = 32L;
 	public static final long PARENTLAYOUTID_COLUMN_BITMASK = 64L;
-	public static final long PRIORITY_COLUMN_BITMASK = 128L;
-	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 256L;
-	public static final long SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK = 512L;
-	public static final long TYPE_COLUMN_BITMASK = 1024L;
-	public static final long UUID_COLUMN_BITMASK = 2048L;
+	public static final long PARENTPLID_COLUMN_BITMASK = 128L;
+	public static final long PRIORITY_COLUMN_BITMASK = 256L;
+	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 512L;
+	public static final long SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK = 1024L;
+	public static final long TYPE_COLUMN_BITMASK = 2048L;
+	public static final long UUID_COLUMN_BITMASK = 4096L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -196,6 +203,9 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setParentPlid(soapModel.getParentPlid());
+		model.setLeftPlid(soapModel.getLeftPlid());
+		model.setRightPlid(soapModel.getRightPlid());
 		model.setPrivateLayout(soapModel.isPrivateLayout());
 		model.setLayoutId(soapModel.getLayoutId());
 		model.setParentLayoutId(soapModel.getParentLayoutId());
@@ -290,6 +300,9 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("parentPlid", getParentPlid());
+		attributes.put("leftPlid", getLeftPlid());
+		attributes.put("rightPlid", getRightPlid());
 		attributes.put("privateLayout", isPrivateLayout());
 		attributes.put("layoutId", getLayoutId());
 		attributes.put("parentLayoutId", getParentLayoutId());
@@ -374,6 +387,24 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long parentPlid = (Long)attributes.get("parentPlid");
+
+		if (parentPlid != null) {
+			setParentPlid(parentPlid);
+		}
+
+		Long leftPlid = (Long)attributes.get("leftPlid");
+
+		if (leftPlid != null) {
+			setLeftPlid(leftPlid);
+		}
+
+		Long rightPlid = (Long)attributes.get("rightPlid");
+
+		if (rightPlid != null) {
+			setRightPlid(rightPlid);
 		}
 
 		Boolean privateLayout = (Boolean)attributes.get("privateLayout");
@@ -667,6 +698,51 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@JSON
+	@Override
+	public long getParentPlid() {
+		return _parentPlid;
+	}
+
+	@Override
+	public void setParentPlid(long parentPlid) {
+		_columnBitmask |= PARENTPLID_COLUMN_BITMASK;
+
+		if (!_setOriginalParentPlid) {
+			_setOriginalParentPlid = true;
+
+			_originalParentPlid = _parentPlid;
+		}
+
+		_parentPlid = parentPlid;
+	}
+
+	public long getOriginalParentPlid() {
+		return _originalParentPlid;
+	}
+
+	@JSON
+	@Override
+	public long getLeftPlid() {
+		return _leftPlid;
+	}
+
+	@Override
+	public void setLeftPlid(long leftPlid) {
+		_leftPlid = leftPlid;
+	}
+
+	@JSON
+	@Override
+	public long getRightPlid() {
+		return _rightPlid;
+	}
+
+	@Override
+	public void setRightPlid(long rightPlid) {
+		_rightPlid = rightPlid;
 	}
 
 	@JSON
@@ -1505,6 +1581,26 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		_lastPublishDate = lastPublishDate;
 	}
 
+	public long getNestedSetsTreeNodeLeft() {
+		return _leftPlid;
+	}
+
+	public long getNestedSetsTreeNodeRight() {
+		return _rightPlid;
+	}
+
+	public long getNestedSetsTreeNodeScopeId() {
+		return _groupId;
+	}
+
+	public void setNestedSetsTreeNodeLeft(long nestedSetsTreeNodeLeft) {
+		_leftPlid = nestedSetsTreeNodeLeft;
+	}
+
+	public void setNestedSetsTreeNodeRight(long nestedSetsTreeNodeRight) {
+		_rightPlid = nestedSetsTreeNodeRight;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -1693,6 +1789,9 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		layoutImpl.setUserName(getUserName());
 		layoutImpl.setCreateDate(getCreateDate());
 		layoutImpl.setModifiedDate(getModifiedDate());
+		layoutImpl.setParentPlid(getParentPlid());
+		layoutImpl.setLeftPlid(getLeftPlid());
+		layoutImpl.setRightPlid(getRightPlid());
 		layoutImpl.setPrivateLayout(isPrivateLayout());
 		layoutImpl.setLayoutId(getLayoutId());
 		layoutImpl.setParentLayoutId(getParentLayoutId());
@@ -1808,6 +1907,10 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 		layoutModelImpl._setModifiedDate = false;
 
+		layoutModelImpl._originalParentPlid = layoutModelImpl._parentPlid;
+
+		layoutModelImpl._setOriginalParentPlid = false;
+
 		layoutModelImpl._originalPrivateLayout = layoutModelImpl._privateLayout;
 
 		layoutModelImpl._setOriginalPrivateLayout = false;
@@ -1886,6 +1989,12 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		else {
 			layoutCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
+
+		layoutCacheModel.parentPlid = getParentPlid();
+
+		layoutCacheModel.leftPlid = getLeftPlid();
+
+		layoutCacheModel.rightPlid = getRightPlid();
 
 		layoutCacheModel.privateLayout = isPrivateLayout();
 
@@ -2021,7 +2130,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -2041,6 +2150,12 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", parentPlid=");
+		sb.append(getParentPlid());
+		sb.append(", leftPlid=");
+		sb.append(getLeftPlid());
+		sb.append(", rightPlid=");
+		sb.append(getRightPlid());
 		sb.append(", privateLayout=");
 		sb.append(isPrivateLayout());
 		sb.append(", layoutId=");
@@ -2090,7 +2205,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(94);
+		StringBundler sb = new StringBundler(103);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.kernel.model.Layout");
@@ -2131,6 +2246,18 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		sb.append(
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>parentPlid</column-name><column-value><![CDATA[");
+		sb.append(getParentPlid());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>leftPlid</column-name><column-value><![CDATA[");
+		sb.append(getLeftPlid());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>rightPlid</column-name><column-value><![CDATA[");
+		sb.append(getRightPlid());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>privateLayout</column-name><column-value><![CDATA[");
@@ -2241,6 +2368,11 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _parentPlid;
+	private long _originalParentPlid;
+	private boolean _setOriginalParentPlid;
+	private long _leftPlid;
+	private long _rightPlid;
 	private boolean _privateLayout;
 	private boolean _originalPrivateLayout;
 	private boolean _setOriginalPrivateLayout;

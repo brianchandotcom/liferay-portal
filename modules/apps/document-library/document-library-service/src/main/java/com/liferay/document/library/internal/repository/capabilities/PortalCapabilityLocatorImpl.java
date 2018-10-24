@@ -16,6 +16,7 @@ package com.liferay.document.library.internal.repository.capabilities;
 
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.sync.service.DLSyncEventLocalService;
+import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.CommentCapability;
@@ -54,8 +55,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(service = PortalCapabilityLocator.class)
-public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
+@Component(service = {CacheRegistryItem.class, PortalCapabilityLocator.class})
+public class PortalCapabilityLocatorImpl
+	implements CacheRegistryItem, PortalCapabilityLocator {
 
 	@Override
 	public BulkOperationCapability getBulkOperationCapability(
@@ -109,6 +111,13 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 		}
 
 		return _reusingProcessorCapability;
+	}
+
+	@Override
+	public String getRegistryName() {
+		Class<?> clazz = getClass();
+
+		return clazz.getName();
 	}
 
 	@Override
@@ -184,6 +193,12 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 		return new LiferayWorkflowCapability(
 			DLFileEntryServiceAdapter.create(documentRepository),
 			DLFileVersionServiceAdapter.create(documentRepository));
+	}
+
+	@Override
+	public void invalidate() {
+		_liferayDynamicCapabilities.forEach(LiferayDynamicCapability::clear);
+		_liferayDynamicCapabilities.clear();
 	}
 
 	@Activate

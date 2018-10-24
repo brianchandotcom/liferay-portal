@@ -48,6 +48,10 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.bean.portlet">
+		<priority value="INFO" />
+	</category>
+
 	<category name="com.liferay.jdbc">
 		<priority value="ERROR" />
 	</category>

@@ -423,7 +423,7 @@ public class BeanPortletExtension implements Extension {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"Discovered ", _beanPortlets.size(), " bean portlets and ",
+					"Registered ", _beanPortlets.size(), " bean portlets and ",
 					_beanFilters.size(), " bean filters for ",
 					servletContext.getServletContextName()));
 		}
@@ -478,7 +478,7 @@ public class BeanPortletExtension implements Extension {
 	}
 
 	public void step6ApplicationScopedBeforeDestroyed(
-		@Destroyed(ApplicationScoped.class) @Observes Object ignore) {
+		@Destroyed(ApplicationScoped.class) @Observes Object contextObject) {
 
 		for (ServiceRegistration<?> serviceRegistration :
 				_serviceRegistrations) {
@@ -487,6 +487,17 @@ public class BeanPortletExtension implements Extension {
 		}
 
 		_serviceRegistrations.clear();
+
+		ServletContext servletContext = (ServletContext)contextObject;
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Unregistered ", _beanPortlets.size(),
+					" bean portlets and ", _beanFilters.size(),
+					" bean filters for ",
+					servletContext.getServletContextName()));
+		}
 	}
 
 	private void _addBeanFiltersFromAnnotatedClasses() {

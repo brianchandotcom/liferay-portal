@@ -79,19 +79,12 @@ public class IndexUpdater {
 
 		DB db = DBManagerUtil.getDB();
 
-		Connection connection = null;
-
-		try {
-			connection = DataAccess.getConnection();
-
+		try (Connection connection = DataAccess.getConnection()) {
 			_executeUpdateIndexes(
 				bundle, db, connection, tablesSQL, indexesSQL);
 		}
 		catch (SQLException sqle) {
 			_log.error(sqle, sqle);
-		}
-		finally {
-			DataAccess.cleanUp(connection);
 		}
 	}
 
@@ -110,11 +103,7 @@ public class IndexUpdater {
 	public void updateIndexesAll() {
 		DB db = DBManagerUtil.getDB();
 
-		Connection connection = null;
-
-		try {
-			connection = DataAccess.getConnection();
-
+		try (Connection connection = DataAccess.getConnection()) {
 			for (Bundle bundle : _bundleContext.getBundles()) {
 				if (hasIndexes(bundle)) {
 					_updateIndexes(bundle, db, connection);
@@ -123,9 +112,6 @@ public class IndexUpdater {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
-		finally {
-			DataAccess.cleanUp(connection);
 		}
 	}
 

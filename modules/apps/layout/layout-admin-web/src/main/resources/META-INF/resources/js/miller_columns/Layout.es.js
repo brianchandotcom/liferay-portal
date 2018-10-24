@@ -177,70 +177,22 @@ class Layout extends Component {
 	_handleDragLayoutColumnItem(eventData) {
 		clearTimeout(this._updatePathTimeout);
 
-		if (eventData.targetColumnIndex) {
-			const sourceColumn = this._getParentColumnByPlid(
-				this.layoutColumns,
-				eventData.sourceItemPlid
-			);
-			const sourceItem = this._getLayoutColumnItemByPlid(
-				this.layoutColumns,
-				eventData.sourceItemPlid
-			);
+		const {
+			position,
+			sourceItemPlid,
+			targetColumnIndex,
+			targetItemPlid
+		} = eventData;
 
-			const targetColumn = this.layoutColumns[eventData.targetColumnIndex];
-			const targetColumnLastItem = targetColumn[targetColumn.length - 1];
-
-			const targetColumnIsChild = this.layoutColumns.indexOf(targetColumn) >
-				this.layoutColumns.indexOf(sourceColumn);
-
-			if (targetColumnLastItem &&
-				!(sourceItem.active && targetColumnIsChild) &&
-				!(sourceItem === targetColumnLastItem)
-			) {
-				this._draggingItemPosition = DRAG_POSITIONS.bottom;
-				this._hoveredLayoutColumnItemPlid = targetColumnLastItem.plid;
+		if (targetColumnIndex) {
+			this._setColumnHoveredData(sourceItemPlid, targetColumnIndex);
 			}
-
-		}
-		else {
-			const targetItemPlid = eventData.targetItemPlid;
-
-			const targetItem = this._getLayoutColumnItemByPlid(
-				this.layoutColumns,
+		else if (targetItemPlid) {
+			this._setItemHoveredData(
+				position,
+				sourceItemPlid,
 				targetItemPlid
 			);
-
-			const targetColumn = this._getParentColumnByPlid(
-				this.layoutColumns,
-				targetItemPlid
-			);
-
-			if (targetItem && targetColumn) {
-				const targetColumnIndex = this.layoutColumns.indexOf(targetColumn);
-				const targetInFirstColumn = (this.layoutColumns.indexOf(targetColumn) === 0);
-				const targetIsSource = (this._draggingItem === targetItem);
-
-				const targetIsChild = (
-					this._draggingItem.active &&
-					(this._draggingItemColumnIndex < targetColumnIndex)
-				);
-
-				const targetIsParent = (
-					targetItem.active &&
-					(eventData.position === DRAG_POSITIONS.inside) &&
-						(targetColumnIndex === (this._draggingItemColumnIndex - 1)) &&
-						!this._currentPathItemPlid
-				);
-
-				if (
-					!targetInFirstColumn &&
-					!targetIsSource &&
-					!targetIsChild &&
-					!targetIsParent
-				) {
-					this._draggingItemPosition = eventData.position;
-					this._hoveredLayoutColumnItemPlid = targetItemPlid;
-				}
 
 				if (
 					this._draggingItemPosition === DRAG_POSITIONS.inside &&
@@ -248,14 +200,13 @@ class Layout extends Component {
 				) {
 					this._updatePathTimeout = setTimeout(
 						() => {
-							this._updatePath(targetColumnIndex, targetItemPlid);
+						this._updatePath(targetItemPlid);
 						},
 						1000
 					);
 				}
 			}
 		}
-	}
 
 	/**
 	 * Method executed when a column is left empty after dragging.
@@ -806,6 +757,71 @@ class Layout extends Component {
 	_resetHoveredData() {
 		this._draggingItemPosition = null;
 		this._hoveredLayoutColumnItemPlid = null;
+	}
+
+	/**
+	 * Set hovered data with the last item of a column
+	 * @param {string} draggingItemPlid
+	 * @param {number} targetColumnIndex Index of the column whose last item
+	 * will be stored inside hoveredLayoutColumnItemPlid
+	 * @private
+	 * @review
+	 */
+	_setColumnHoveredData(draggingItemPlid, targetColumnIndex) {
+		const targetColumnIsChild = columnIsItemChild(
+			this.layoutColumns,
+			targetColumnIndex,
+			draggingItemPlid
+		);
+		const targetColumnLastItem = getColumnLastItem(
+			this.layoutColumns,
+			targetColumnIndex
+		);
+		const targetEqualsSource = targetColumnLastItem &&
+			(draggingItemPlid === targetColumnLastItem.plid);
+
+		if (
+			targetColumnLastItem &&
+			!targetColumnIsChild &&
+			!targetEqualsSource
+		) {
+			this._draggingItemPosition = DRAG_POSITIONS.bottom;
+			this._hoveredLayoutColumnItemPlid = targetColumnLastItem.plid;
+		}
+	}
+
+	/**
+	 * Set hovered data with an item
+	 * @param {string} position Position where item is being dragged
+	 * @param {string} sourceItemPlid
+	 * @param {string} targetItemPlid
+	 * @private
+	 * @review
+	 * @see DRAG_POSITIONS
+	 */
+	_setItemHoveredData(position, sourceItemPlid, targetItemPlid) {
+		const targetColumnIndex = getItemColumnIndex(
+			this.layoutColumns,
+			targetItemPlid
+		);
+
+		const targetIsChild = columnIsItemChild(
+			this.layoutColumns,
+			targetColumnIndex,
+			sourceItemPlid
+		);
+
+		const targetEqualsSource = (sourceItemPlid === targetItemPlid);
+
+		const draggingInsideParent = (
+			(position === DRAG_POSITIONS.inside) &&
+			itemIsParent(this.layoutColumns, sourceItemPlid, targetItemPlid)
+		);
+
+		if (!targetEqualsSource && !targetIsChild && !draggingInsideParent) {
+			this._draggingItemPosition = position;
+			this._hoveredLayoutColumnItemPlid = targetItemPlid;
+		}
 	}
 
 	/** Set an item active property to true

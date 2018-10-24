@@ -44,16 +44,18 @@ public class IndexUpdaterOSGiCommands {
 
 	@Descriptor("Update database indexes for a specific module via bundle id")
 	public String updateIndexes(long bundleId) {
-		Bundle bundle = _bundleContext.getBundle(bundleId);
+		try {
+			Bundle bundle = _indexUpdater.getBundle(bundleId);
 
-		if (bundle == null) {
-			return "Module with id " + bundleId + " does not exist";
+			if (_indexUpdater.hasIndexes(bundle)) {
+				_indexUpdater.updateIndexes(bundle);
+
+				return "Completed update of indexes for module with id " +
+					bundleId;
+			}
 		}
-
-		if (_indexUpdater.hasIndexes(bundle)) {
-			_indexUpdater.updateIndexes(bundle);
-
-			return "Completed update of indexes for module with id " + bundleId;
+		catch (IllegalArgumentException iae) {
+			return "Module with id " + bundleId + " does not exist";
 		}
 
 		return "Module with id " + bundleId +
@@ -64,18 +66,19 @@ public class IndexUpdaterOSGiCommands {
 		"Update database indexes for specific a module via symbolic name"
 	)
 	public String updateIndexes(String bundleSymbolicName) {
-		Bundle bundle = _indexUpdater.getBundle(bundleSymbolicName);
+		try {
+			Bundle bundle = _indexUpdater.getBundle(bundleSymbolicName);
 
-		if (bundle == null) {
+			if (_indexUpdater.hasIndexes(bundle)) {
+				_indexUpdater.updateIndexes(bundle);
+
+				return "Completed update of indexes for module " +
+					bundleSymbolicName;
+			}
+		}
+		catch (IllegalArgumentException iae) {
 			return "Module with symbolic name " + bundleSymbolicName +
 				" does not exist";
-		}
-
-		if (_indexUpdater.hasIndexes(bundle)) {
-			_indexUpdater.updateIndexes(bundle);
-
-			return "Completed update of indexes for module " +
-				bundleSymbolicName;
 		}
 
 		return "Module " + bundleSymbolicName +

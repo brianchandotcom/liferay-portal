@@ -49,6 +49,17 @@ public class IndexUpdater {
 		_bundleContext = bundleContext;
 	}
 
+	public Bundle getBundle(long bundleId) {
+		Bundle bundle = _bundleContext.getBundle(bundleId);
+
+		if (bundle == null) {
+			throw new IllegalArgumentException(
+				"Module with id " + bundleId + " does not exist");
+		}
+
+		return bundle;
+	}
+
 	public Bundle getBundle(String bundleSymbolicName) {
 		for (Bundle bundle : _bundleContext.getBundles()) {
 			if (bundleSymbolicName.equals(bundle.getSymbolicName())) {
@@ -56,7 +67,9 @@ public class IndexUpdater {
 			}
 		}
 
-		return null;
+		throw new IllegalArgumentException(
+			"Module with symbolic name " + bundleSymbolicName +
+				" does not exist");
 	}
 
 	public boolean hasIndexes(Bundle bundle) {
@@ -68,24 +81,13 @@ public class IndexUpdater {
 	}
 
 	public void updateIndexes(long bundleId) {
-		Bundle bundle = _bundleContext.getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new IllegalArgumentException(
-				"Module with id " + bundleId + " does not exist");
-		}
+		Bundle bundle = getBundle(bundleId);
 
 		updateIndexes(bundle);
 	}
 
 	public void updateIndexes(String bundleSymbolicName) {
 		Bundle bundle = getBundle(bundleSymbolicName);
-
-		if (bundle == null) {
-			throw new IllegalArgumentException(
-				"Module with symbolic name " + bundleSymbolicName +
-					" does not exist");
-		}
 
 		updateIndexes(bundle);
 	}

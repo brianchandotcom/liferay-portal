@@ -18,9 +18,8 @@ import com.liferay.portal.upgrade.internal.index.updater.IndexUpdater;
 
 import org.apache.felix.service.command.Descriptor;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ricardo Couso
@@ -34,12 +33,6 @@ import org.osgi.service.component.annotations.Component;
 	service = IndexUpdaterOSGiCommands.class
 )
 public class IndexUpdaterOSGiCommands {
-
-	@Activate
-	public void activate(final BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-		_indexUpdater = new IndexUpdater();
-	}
 
 	@Descriptor("Update database indexes for a specific module via bundle id")
 	public String updateIndexes(long bundleId) {
@@ -87,7 +80,7 @@ public class IndexUpdaterOSGiCommands {
 		return "Completed update of indexes for all modules";
 	}
 
-	private BundleContext _bundleContext;
+	@Reference
 	private IndexUpdater _indexUpdater;
 
 }

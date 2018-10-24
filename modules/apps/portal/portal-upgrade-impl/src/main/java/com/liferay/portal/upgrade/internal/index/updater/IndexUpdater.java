@@ -49,6 +49,16 @@ public class IndexUpdater {
 		_bundleContext = bundleContext;
 	}
 
+	public Bundle getBundle(String bundleSymbolicName) {
+		for (Bundle bundle : _bundleContext.getBundles()) {
+			if (bundleSymbolicName.equals(bundle.getSymbolicName())) {
+				return bundle;
+			}
+		}
+
+		return null;
+	}
+
 	public boolean hasIndexes(Bundle bundle) {
 		return _isLiferayService(bundle);
 	}
@@ -69,7 +79,7 @@ public class IndexUpdater {
 	}
 
 	public void updateIndexes(String bundleSymbolicName) {
-		Bundle bundle = _getBundle(bundleSymbolicName);
+		Bundle bundle = getBundle(bundleSymbolicName);
 
 		if (bundle == null) {
 			throw new IllegalArgumentException(
@@ -117,16 +127,6 @@ public class IndexUpdater {
 		catch (IOException | SQLException e) {
 			_log.error(e, e);
 		}
-	}
-
-	private Bundle _getBundle(String bundleSymbolicName) {
-		for (Bundle bundle : _bundleContext.getBundles()) {
-			if (bundleSymbolicName.equals(bundle.getSymbolicName())) {
-				return bundle;
-			}
-		}
-
-		return null;
 	}
 
 	private String _getSQLTemplateString(Bundle bundle, String templateName) {

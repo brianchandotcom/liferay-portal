@@ -32,11 +32,14 @@ class ImagePreviewer extends Component {
 		this._setDimensions();
 	}
 
-	_setDimensions() {
-		this.imageContainerWidth = this.refs.imageContainer.clientWidth;
-		this.imageContainerHeight = this.refs.imageContainer.clientHeight;
+	rendered(isFirstRender) {
+		if (!isFirstRender) {
+			this._setScrollContainer();
+		}
+	}
 
-		this._caculateZoomActual(this.refs.image.width);
+	_caculateZoomActual(width) {
+		this.zoomActual = width / this.imageNaturalWidth;
 	}
 
 	_handleZoom(event) {
@@ -64,6 +67,18 @@ class ImagePreviewer extends Component {
 		this._setZoom(zoomValue);
 	}
 
+	_setDimensions() {
+		this.imageContainerWidth = this.refs.imageContainer.clientWidth;
+		this.imageContainerHeight = this.refs.imageContainer.clientHeight;
+
+		this._caculateZoomActual(this.refs.image.width);
+	}
+
+	_setScrollContainer() {
+		this.refs.imageContainer.scrollTop = (this.imageHeight - this.refs.imageContainer.clientHeight) / 2;
+		this.refs.imageContainer.scrollLeft = (this.imageWidth - this.refs.imageContainer.clientWidth) / 2;
+	}
+
 	_setZoom(zoomNumber) {
 		if (typeof zoomNumber == 'undefined') {
 			return;
@@ -78,10 +93,6 @@ class ImagePreviewer extends Component {
 		}`;
 
 		this.zoomActual = zoomNumber;
-	}
-
-	_caculateZoomActual(width) {
-		this.zoomActual = width / this.imageNaturalWidth;
 	}
 }
 

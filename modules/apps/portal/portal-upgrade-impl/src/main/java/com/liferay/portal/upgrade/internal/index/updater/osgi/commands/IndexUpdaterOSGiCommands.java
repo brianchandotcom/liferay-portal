@@ -14,7 +14,14 @@
 
 package com.liferay.portal.upgrade.internal.index.updater.osgi.commands;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.upgrade.internal.index.updater.IndexUpdaterUtil;
+
+import java.sql.Connection;
 
 import org.apache.felix.service.command.Descriptor;
 
@@ -69,10 +76,47 @@ public class IndexUpdaterOSGiCommands {
 	}
 
 	@Descriptor("Update database indexes for all modules")
-	public String updateIndexesAll() {
-		IndexUpdaterUtil.updateIndexesAll(_bundleContext);
+	public String updateIndexesAll() throws Exception {
+		DB db = DBManagerUtil.getDB();
 
-		return "Completed update of indexes for all modules";
+		try (Connection connection = DataAccess.getConnection()) {
+			for (Bundle bundle : _bundleContext.getBundles()) {
+				if (!IndexUpdaterUtil.isLiferayServiceBundle(bundle)) {
+					continue;
+				}
+
+				String indexesSQL = IndexUpdaterUtil.getSQLTemplateString(
+					bundle, "indexes.sql");
+
+				if (indexesSQL == null) {
+					continue;
+				}
+
+				String tablesSQL = IndexUpdaterUtil.getSQLTemplateString(
+					bundle, "tables.sql");
+
+				if (tablesSQL == null) {
+					continue;
+				}
+
+				String loggingTimerName =
+					"Updating database indexes for " + bundle.getSymbolicName();
+
+				try (LoggingTimer loggingTimer =
+						new LoggingTimer(loggingTimerName)) {
+
+					db.updateIndexes(connection, tablesSQL, indexesSQL, true);
+				}
+				catch (Exception e) {
+					System.out.println(
+						StringBundler.concat(
+							"Failed to update indexes for ",
+							bundle.getSymbolicName(), " with error ", e));
+				}
+			}
+		}
+
+		return "Completed updating module database indexes";
 	}
 
 	@Activate

@@ -67,6 +67,25 @@ public class IndexUpdaterUtil {
 				" does not exist");
 	}
 
+	public static String getSQLTemplateString(
+		Bundle bundle, String templateName) {
+
+		URL resource = bundle.getResource("/META-INF/sql/" + templateName);
+
+		if (resource == null) {
+			return null;
+		}
+
+		try (InputStream inputStream = resource.openStream()) {
+			return StringUtil.read(inputStream);
+		}
+		catch (IOException ioe) {
+			_log.error("Unable to read SQL template " + templateName, ioe);
+
+			return null;
+		}
+	}
+
 	public static boolean isLiferayServiceBundle(Bundle bundle) {
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
@@ -75,8 +94,8 @@ public class IndexUpdaterUtil {
 	}
 
 	public static void updateIndexes(Bundle bundle) {
-		String indexesSQL = _getSQLTemplateString(bundle, "indexes.sql");
-		String tablesSQL = _getSQLTemplateString(bundle, "tables.sql");
+		String indexesSQL = getSQLTemplateString(bundle, "indexes.sql");
+		String tablesSQL = getSQLTemplateString(bundle, "tables.sql");
 
 		if ((indexesSQL == null) || (tablesSQL == null)) {
 			return;
@@ -94,65 +113,6 @@ public class IndexUpdaterUtil {
 		}
 		catch (IOException | SQLException e) {
 			_log.error(e, e);
-		}
-	}
-
-	public static void updateIndexesAll(BundleContext bundleContext) {
-		DB db = DBManagerUtil.getDB();
-
-		try (Connection connection = DataAccess.getConnection()) {
-			for (Bundle bundle : bundleContext.getBundles()) {
-				if (!isLiferayServiceBundle(bundle)) {
-					continue;
-				}
-
-				String indexesSQL = _getSQLTemplateString(
-					bundle, "indexes.sql");
-
-				if (indexesSQL == null) {
-					continue;
-				}
-
-				String tablesSQL = _getSQLTemplateString(bundle, "tables.sql");
-
-				if (tablesSQL == null) {
-					continue;
-				}
-
-				String loggingTimerName =
-					"Updating database indexes for " + bundle.getSymbolicName();
-
-				try (LoggingTimer loggingTimer =
-						new LoggingTimer(loggingTimerName)) {
-
-					db.updateIndexes(connection, tablesSQL, indexesSQL, true);
-				}
-				catch (IOException | SQLException e) {
-					_log.error(e, e);
-				}
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-	}
-
-	private static String _getSQLTemplateString(
-		Bundle bundle, String templateName) {
-
-		URL resource = bundle.getResource("/META-INF/sql/" + templateName);
-
-		if (resource == null) {
-			return null;
-		}
-
-		try (InputStream inputStream = resource.openStream()) {
-			return StringUtil.read(inputStream);
-		}
-		catch (IOException ioe) {
-			_log.error("Unable to read SQL template " + templateName, ioe);
-
-			return null;
 		}
 	}
 

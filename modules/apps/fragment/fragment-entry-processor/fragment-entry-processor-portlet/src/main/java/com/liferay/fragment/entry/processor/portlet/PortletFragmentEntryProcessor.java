@@ -23,6 +23,9 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -48,14 +51,11 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
@@ -79,23 +79,19 @@ import org.osgi.service.component.annotations.Reference;
 public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
-	public List<com.liferay.portal.kernel.xml.Element> getAvailableTags() {
-		List<String> portletAliases = _portletRegistry.getPortletAliases();
+	public JSONArray getAvailableTags() {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		Stream<String> stream = portletAliases.stream();
+		for (String alias : _portletRegistry.getPortletAliases()) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		List<com.liferay.portal.kernel.xml.Element> availableTags = stream.map(
-			alias -> {
-				com.liferay.portal.kernel.xml.Element element =
-					SAXReaderUtil.createElement(_LFR_WIDGET + alias);
+			jsonObject.put("attributes", JSONFactoryUtil.createJSONArray());
+			jsonObject.put("name", _LFR_WIDGET + alias);
 
-				return element;
-			}
-		).collect(
-			Collectors.toList()
-		);
+			jsonArray.put(jsonObject);
+		}
 
-		return availableTags;
+		return jsonArray;
 	}
 
 	@Override

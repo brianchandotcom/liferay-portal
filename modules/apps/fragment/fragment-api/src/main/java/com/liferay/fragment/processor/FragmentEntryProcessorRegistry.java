@@ -16,19 +16,16 @@ package com.liferay.fragment.processor;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.xml.Element;
-
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author Lance Ji
  */
 public interface FragmentEntryProcessorRegistry {
 
-	public default List<Element> getAvailableTags() {
-		return Collections.emptyList();
+	public default JSONArray getAvailableTags() {
+		return null;
 	}
 
 	public JSONObject getDefaultEditableValuesJSONObject(String html);

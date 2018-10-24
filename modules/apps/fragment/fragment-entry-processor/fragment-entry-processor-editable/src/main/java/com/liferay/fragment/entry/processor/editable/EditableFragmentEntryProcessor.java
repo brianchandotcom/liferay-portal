@@ -21,6 +21,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -28,12 +29,9 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -61,15 +59,24 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
-	public List<com.liferay.portal.kernel.xml.Element> getAvailableTags() {
-		com.liferay.portal.kernel.xml.Element element =
-			SAXReaderUtil.createElement(_LFR_EDITABLE);
+	public JSONArray getAvailableTags() {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("name", _LFR_EDITABLE);
+
+		JSONArray attributes = JSONFactoryUtil.createJSONArray();
 
 		for (String attribute : _REQUIRED_ATTRIBUTES) {
-			element.addAttribute(attribute, StringPool.BLANK);
+			attributes.put(attribute);
 		}
 
-		return Collections.singletonList(element);
+		jsonObject.put("attributes", attributes);
+
+		jsonArray.put(jsonObject);
+
+		return jsonArray;
 	}
 
 	@Override

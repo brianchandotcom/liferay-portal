@@ -37,9 +37,6 @@ import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCri
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -52,8 +49,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.xml.Attribute;
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.template.soy.utils.SoyContext;
 
 import java.util.ArrayList;
@@ -225,32 +220,9 @@ public class FragmentDisplayContext {
 
 		soyContext.put("allowedStatus", allowedStatusSoyContext);
 
-		JSONArray autocompleteTags = JSONFactoryUtil.createJSONArray();
-
-		List<Element> availableTags =
-			_fragmentEntryProcessorRegistry.getAvailableTags();
-
-		availableTags.forEach(
-			tag -> {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-				jsonObject.put("name", tag.getName());
-
-				JSONArray attributesJSONArray =
-					JSONFactoryUtil.createJSONArray();
-
-				List<Attribute> attributes = tag.attributes();
-
-				attributes.forEach(
-					attribute -> attributesJSONArray.put(attribute.getName()));
-
-				jsonObject.put("attributes", attributesJSONArray);
-
-				autocompleteTags.put(jsonObject);
-			});
-
-		soyContext.put("autocompleteTags", autocompleteTags);
-
+		soyContext.put(
+			"autocompleteTags",
+			_fragmentEntryProcessorRegistry.getAvailableTags());
 		soyContext.put("fragmentCollectionId", getFragmentCollectionId());
 		soyContext.put("fragmentEntryId", getFragmentEntryId());
 		soyContext.put("initialCSS", getCssContent());

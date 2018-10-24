@@ -22,13 +22,12 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.xml.Element;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -44,16 +43,25 @@ public class FragmentEntryProcessorRegistryImpl
 	implements FragmentEntryProcessorRegistry {
 
 	@Override
-	public List<Element> getAvailableTags() {
-		List<Element> availableTags = new ArrayList<>();
+	public JSONArray getAvailableTags() {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (FragmentEntryProcessor fragmentEntryProcessor :
 				_serviceTrackerList) {
 
-			availableTags.addAll(fragmentEntryProcessor.getAvailableTags());
+			JSONArray availableTagsJSONArray =
+				fragmentEntryProcessor.getAvailableTags();
+
+			if (availableTagsJSONArray == null) {
+				continue;
+			}
+
+			for (int i = 0; i < availableTagsJSONArray.length(); i++) {
+				jsonArray.put(availableTagsJSONArray.getJSONObject(i));
+			}
 		}
 
-		return availableTags;
+		return jsonArray;
 	}
 
 	@Override

@@ -42,6 +42,7 @@ public class RestProjectTemplateCustomizer
 			String cxfConfig =
 				"com.liferay.portal.remote.cxf.common.configuration." +
 					"CXFEndpointPublisherConfiguration-cxf.properties";
+
 			Path destinationDirPath = destinationDir.toPath();
 
 			Path projectDirPath = destinationDirPath.resolve(

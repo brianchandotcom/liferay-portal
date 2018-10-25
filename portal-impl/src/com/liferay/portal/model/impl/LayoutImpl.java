@@ -701,15 +701,19 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 *         current layout is the topmost parent layout
 	 */
 	@Override
-	public long getParentPlid() throws PortalException {
+	public long getParentPlid() {
 		if (getParentLayoutId() == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
 			return 0;
 		}
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(
 			getGroupId(), isPrivateLayout(), getParentLayoutId());
 
-		return layout.getPlid();
+		if (layout != null) {
+			return layout.getPlid();
+		}
+
+		return 0;
 	}
 
 	@Override

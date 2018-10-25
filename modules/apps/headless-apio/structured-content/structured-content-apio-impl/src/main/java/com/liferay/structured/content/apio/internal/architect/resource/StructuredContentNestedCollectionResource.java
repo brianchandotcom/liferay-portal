@@ -38,6 +38,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.Value;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
@@ -243,6 +244,9 @@ public class StructuredContentNestedCollectionResource
 				"link", this::_getLink
 			).addString(
 				"dataType", StructuredContentField::getDDMFormFieldDataType
+			).addString(
+				"inputControl",
+				StructuredContentField::getDDMFormFieldInputControl
 			).addLocalizedStringByLocale(
 				"label", StructuredContentField::getLocalizedLabel
 			).addString(
@@ -864,6 +868,33 @@ public class StructuredContentNestedCollectionResource
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to get data type for field name " +
+							_ddmFormFieldValue.getName(),
+						pe);
+				}
+
+				return null;
+			}
+		}
+
+		public String getDDMFormFieldInputControl() {
+			try {
+				String type = _ddmStructure.getFieldType(
+					_ddmFormFieldValue.getName());
+
+				if (Objects.equals(type, DDMFormFieldType.CHECKBOX) ||
+					Objects.equals(type, DDMFormFieldType.RADIO) ||
+					Objects.equals(type, DDMFormFieldType.SELECT) ||
+					Objects.equals(type, DDMFormFieldType.TEXT) ||
+					Objects.equals(type, DDMFormFieldType.TEXT_AREA)) {
+
+					return type;
+				}
+				else return null;
+			}
+			catch (PortalException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to get input control for field name " +
 							_ddmFormFieldValue.getName(),
 						pe);
 				}

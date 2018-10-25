@@ -269,6 +269,30 @@
 			"type": "ddm-integer"
 		},
 		{
+			"dataType": "journal-article",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Journal Article",
+				"es_ES": "Journal Article"
+			},
+			"localizable": true,
+			"name": "MyJournalArticle",
+			"predefinedValue": {
+				"en_US": "",
+				"es_ES": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": "",
+				"es_ES": ""
+			},
+			"type": "ddm-journal-article"
+		},
+		{
 			"dataType": "link-to-page",
 			"fieldNamespace": "ddm",
 			"indexType": "keyword",
@@ -431,30 +455,6 @@
 				"es_ES": ""
 			},
 			"type": "textarea"
-		},
-		{
-			"dataType": "journal-article",
-			"fieldNamespace": "ddm",
-			"indexType": "keyword",
-			"label": {
-				"en_US": "Web Content",
-				"es_ES": "Web Content"
-			},
-			"localizable": true,
-			"name": "MyWebContent",
-			"predefinedValue": {
-				"en_US": "",
-				"es_ES": ""
-			},
-			"readOnly": false,
-			"repeatable": false,
-			"required": false,
-			"showLabel": true,
-			"tip": {
-				"en_US": "",
-				"es_ES": ""
-			},
-			"type": "ddm-journal-article"
 		}
 	]
 }

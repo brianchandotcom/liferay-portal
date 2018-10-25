@@ -494,6 +494,35 @@ public class StructuredContentApioTest {
 	}
 
 	@Test
+	public void testJournalArticleDataTypeIsDisplayed() throws Exception {
+		List<String> hrefs = JsonPath.read(
+			_toStringAsAdmin(
+				JsonPath.read(
+					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
+					"$._links.content-space.href")),
+			"$._embedded.ContentSpace[?(@.name == '" +
+				StructuredContentApioTestBundleActivator.SITE_NAME +
+					"')]._links.structuredContents.href");
+
+		Map<String, String> headers = _getHeaders();
+
+		headers.put("Accept-Language", "en-US");
+
+		List<String> dataTypes = JsonPath.read(
+			_toStringAsGuest(
+				_getURLWithFilterByTitle(
+					hrefs.get(0),
+					StructuredContentApioTestBundleActivator.
+						TITLE_2_LOCALE_DEFAULT),
+				headers),
+			"$._embedded.StructuredContent[*]._embedded.values._embedded" +
+				"[?(@.name=='MyJournalArticle')].dataType");
+
+		Assert.assertEquals(dataTypes.toString(), 1, dataTypes.size());
+		Assert.assertTrue(dataTypes.contains("journal-article"));
+	}
+
+	@Test
 	public void testLinkToPageDataTypeIsDisplayed() throws Exception {
 		List<String> hrefs = JsonPath.read(
 			_toStringAsAdmin(
@@ -874,35 +903,6 @@ public class StructuredContentApioTest {
 
 		Assert.assertEquals(dataTypes.toString(), 1, dataTypes.size());
 		Assert.assertTrue(dataTypes.contains("string"));
-	}
-
-	@Test
-	public void testWebContentDataTypeIsDisplayed() throws Exception {
-		List<String> hrefs = JsonPath.read(
-			_toStringAsAdmin(
-				JsonPath.read(
-					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"')]._links.structuredContents.href");
-
-		Map<String, String> headers = _getHeaders();
-
-		headers.put("Accept-Language", "en-US");
-
-		List<String> dataTypes = JsonPath.read(
-			_toStringAsGuest(
-				_getURLWithFilterByTitle(
-					hrefs.get(0),
-					StructuredContentApioTestBundleActivator.
-						TITLE_2_LOCALE_DEFAULT),
-				headers),
-			"$._embedded.StructuredContent[*]._embedded.values._embedded" +
-				"[?(@.name=='MyWebContent')].dataType");
-
-		Assert.assertEquals(dataTypes.toString(), 1, dataTypes.size());
-		Assert.assertTrue(dataTypes.contains("journal-article"));
 	}
 
 	private JSONWebServiceClient _getGuestJSONWebServiceClient() {

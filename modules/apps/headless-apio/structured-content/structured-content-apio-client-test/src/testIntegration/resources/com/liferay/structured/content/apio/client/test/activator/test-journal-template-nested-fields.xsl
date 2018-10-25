@@ -18,6 +18,8 @@ ${MyHTML.getData()}
 
 ${MyInteger.getData()}
 
+${MyJournalArticle.getData()}
+
 <a href="${MyLinkToPage.getFriendlyUrl()}"> Link to Page </a>
 
 ${MyNumber.getData()}
@@ -27,5 +29,3 @@ ${MyRadio.getData()}
 ${MySelect.getData()}
 
 ${MyTextBox.getData()}
-
-${MyWebContent.getData()}

@@ -58,6 +58,7 @@ public class UserEntityModel implements EntityModel {
 			locale -> Field.MODIFIED_DATE),
 		new StringEntityField(
 			"ancestorOrganizationIds", locale -> "ancestorOrganizationIds"),
+		new StringEntityField("classPK", locale -> Field.USER_ID),
 		new StringEntityField("companyId", locale -> Field.COMPANY_ID),
 		new StringEntityField("emailAddress", locale -> "emailAddress"),
 		new StringEntityField(

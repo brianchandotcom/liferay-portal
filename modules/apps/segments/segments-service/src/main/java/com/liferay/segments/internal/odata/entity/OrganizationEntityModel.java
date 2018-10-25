@@ -57,6 +57,7 @@ public class OrganizationEntityModel implements EntityModel {
 			"dateModified",
 			locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 			locale -> Field.MODIFIED_DATE),
+		new StringEntityField("classPK", locale -> Field.ORGANIZATION_ID),
 		new StringEntityField("companyId", locale -> Field.COMPANY_ID),
 		new StringEntityField(
 			"name", locale -> Field.getSortableFieldName(Field.NAME)),

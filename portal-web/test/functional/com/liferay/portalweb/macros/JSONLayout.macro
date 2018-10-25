@@ -19,6 +19,30 @@
 			</else>
 		</if>
 
+		<if>
+			<not>
+				<equals arg1="${privateLayout}" arg2="true" />
+			</not>
+			<then>
+				<var name="privateLayout" value="false" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="parentLayoutName" />
+			<then>
+				<execute macro="JSONLayout#getLayoutIdByName">
+					<return name="parentLayoutId" />
+					<var name="groupId" value="${groupId}" />
+					<var name="layoutName" value="${parentLayoutName}" />
+					<var name="privateLayout" value="${privateLayout}" />
+				</execute>
+			</then>
+			<else>
+				<var name="parentLayoutId" value="0" />
+			</else>
+		</if>
+
 		<execute macro="JSONCompany#getPortalURL">
 			<return name="portalURL" />
 		</execute>
@@ -27,8 +51,8 @@
 			${portalURL}/api/jsonws/layout/add-layout \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
-				-d privateLayout=false \
-				-d parentLayoutId=0 \
+				-d privateLayout=${privateLayout} \
+				-d parentLayoutId=${parentLayoutId} \
 				-d name=${layoutNameEncoded} \
 				-d title= \
 				-d description= \
@@ -78,6 +102,56 @@
 		<execute macro="JSONLayout#_addLayout">
 			<var name="groupId" value="${groupId}" />
 			<var name="layoutName" value="${layoutName}" />
+			<var name="parentLayoutName" value="${parentLayoutName}" />
+			<var name="privateLayout" value="${privateLayout}" />
 		</execute>
+	</command>
+
+	<command name="getLayoutIdByName">
+		<if>
+			<not>
+				<isset var="groupId" />
+			</not>
+			<then>
+				<fail message="Please set 'groupId'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="layoutName" />
+			</not>
+			<then>
+				<fail message="Please set 'layoutName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<equals arg1="${privateLayout}" arg2="true" />
+			</not>
+			<then>
+				<var name="privateLayout" value="false" />
+			</then>
+		</if>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return name="portalURL" />
+		</execute>
+
+		<var name="curl"><![CDATA[
+			${portalURL}/api/jsonws/layout/get-layouts \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d privateLayout=${privateLayout}
+		]]></var>
+
+		<var method="JSONCurlUtil#post('${curl}', '$.[?(@[\'nameCurrentValue\'] == \'${layoutName}\')][\'layoutId\']')" name="layoutId" />
+
+		<var method="StringUtil#replace('${layoutId}', '[&quot;', '')" name="layoutId" />
+
+		<var method="StringUtil#replace('${layoutId}', '&quot;]', '')" name="layoutId" />
+
+		<return value="${layoutId}" />
 	</command>
 </definition>

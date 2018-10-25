@@ -217,18 +217,10 @@
 			<var name="layoutName" value="Site Page" />
 		</execute>
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPrivatePage">
-			<var name="pageName" value="Test Private Page" />
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Site Name" />
+			<var name="layoutName" value="Site Page" />
+			<var name="privateLayout" value="true" />
 		</execute>
 
 		<execute macro="Site#openSiteSettingsAdmin">

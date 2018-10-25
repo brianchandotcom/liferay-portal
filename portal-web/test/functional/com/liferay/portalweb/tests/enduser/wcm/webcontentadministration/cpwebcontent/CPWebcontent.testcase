@@ -1775,22 +1775,12 @@
 			<var name="larFileName" value="WebContent_portlet2.lar" />
 		</execute>
 
-		<execute macro="WebContent#tearDownCP" />
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
+		<execute macro="JSONGroup#deleteGroupByName">
+			<var name="groupName" value="Test Site Name" />
 		</execute>
 
-		<execute macro="WebContentTemplates#deleteCP">
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="WebContent#openWebContentAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="WebContentStructures#deleteCP">
-			<var name="structureName" value="WC Structure Name" />
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Test Site Name" />
 		</execute>
 
 		<execute macro="WebContent#openWebContentAdmin">

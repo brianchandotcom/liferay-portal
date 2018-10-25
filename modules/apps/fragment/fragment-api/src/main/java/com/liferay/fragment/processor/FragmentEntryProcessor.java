@@ -31,7 +31,7 @@ import java.util.Locale;
  */
 public interface FragmentEntryProcessor {
 
-	public default JSONArray getAvailableTags() {
+	public default JSONArray getAvailableTagsJSONArray() {
 		return null;
 	}
 

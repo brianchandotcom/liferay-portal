@@ -45,14 +45,14 @@ public class FragmentEntryProcessorRegistryImpl
 	implements FragmentEntryProcessorRegistry {
 
 	@Override
-	public JSONArray getAvailableTags() {
+	public JSONArray getAvailableTagsJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (FragmentEntryProcessor fragmentEntryProcessor :
 				_serviceTrackerList) {
 
 			JSONArray availableTagsJSONArray =
-				fragmentEntryProcessor.getAvailableTags();
+				fragmentEntryProcessor.getAvailableTagsJSONArray();
 
 			if (availableTagsJSONArray == null) {
 				continue;

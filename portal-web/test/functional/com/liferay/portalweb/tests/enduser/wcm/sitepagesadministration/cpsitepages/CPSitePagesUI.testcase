@@ -58,11 +58,6 @@
 			<var name="pageName" value="Site Page" />
 		</execute>
 
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="pageName" value="Site Page" />
-			<var name="url" value="${portalURL}/group/site-name/site-page" />
-		</execute>
-
 		<execute macro="Page#view">
 			<var name="pageName" value="Site Page" />
 			<var name="privacy" value="Private Pages" />
@@ -79,13 +74,6 @@
 		<execute macro="SitePages#addPublicChildPage">
 			<var name="childPageName" value="Site Child Page" />
 			<var name="parentPageName" value="Site Page" />
-		</execute>
-
-		<var method="PropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="pageName" value="Site Page" />
-			<var name="url" value="${portalURL}/web/site-name/site-child-page" />
 		</execute>
 
 		<execute macro="Page#view">

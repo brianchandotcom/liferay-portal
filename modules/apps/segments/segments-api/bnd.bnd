@@ -6,5 +6,6 @@ Export-Package:\
 	com.liferay.segments.exception,\
 	com.liferay.segments.model,\
 	com.liferay.segments.odata.retriever,\
+	com.liferay.segments.provider,\
 	com.liferay.segments.service,\
 	com.liferay.segments.service.persistence

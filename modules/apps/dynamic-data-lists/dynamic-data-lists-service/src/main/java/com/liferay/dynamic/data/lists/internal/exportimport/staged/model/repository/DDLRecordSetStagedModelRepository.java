@@ -117,7 +117,13 @@ public class DDLRecordSetStagedModelRepository
 			new DDLRecordSetNameComparator());
 
 		for (DDLRecordSet recordSet : recordSets) {
-			recordSetDDMStructureIds.add(recordSet.getDDMStructureId());
+			DDMStructure ddmStructure =
+				_ddmStructureLocalService.getDDMStructure(
+					recordSet.getDDMStructureId());
+
+			if (ddmStructure.getGroupId() == recordSet.getGroupId()) {
+				recordSetDDMStructureIds.add(recordSet.getDDMStructureId());
+			}
 
 			_ddlRecordSetLocalService.deleteRecordSet(recordSet);
 		}

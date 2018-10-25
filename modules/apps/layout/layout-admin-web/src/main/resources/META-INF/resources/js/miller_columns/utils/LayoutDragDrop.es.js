@@ -168,8 +168,8 @@ class LayoutDragDrop extends State {
 				dragPlaceholder: Drag.Placeholder.CLONE,
 				handles: '.layout-drag-handler',
 				scrollContainers: '.layout-column, .layout-columns',
-				sources: '.drag-layout-column-item',
-				targets: '.layout-drop-target'
+				sources: '.layout-drag-item',
+				targets: '.layout-drop-target-item'
 			}
 		);
 

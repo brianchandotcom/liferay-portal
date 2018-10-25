@@ -9767,7 +9767,15 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="run-poshi-runner">
-		<poshi-execute task="runPoshi" />
+		<if>
+			<equals arg1="${failonerror}" arg2="true" />
+			<then>
+				<poshi-execute failonerror="true" task="runPoshi" />
+			</then>
+			<else>
+				<poshi-execute task="runPoshi" />
+			</else>
+		</if>
 	</target>
 
 	<target name="run-poshi-validation">

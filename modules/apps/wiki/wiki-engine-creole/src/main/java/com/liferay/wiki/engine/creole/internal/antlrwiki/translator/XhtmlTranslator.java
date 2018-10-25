@@ -141,8 +141,6 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		TableOfContentsVisitor tableOfContentsVisitor =
 			new TableOfContentsVisitor();
 
-		Map<String, Integer> contentMap = new HashMap<>();
-
 		TreeNode<HeadingNode> tableOfContents = tableOfContentsVisitor.compose(
 			_rootWikiPageNode);
 
@@ -162,7 +160,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		append("<a class=\"toc-trigger\" href=\"javascript:;\">[-]</a></h4>");
 		append("<div class=\"toc-index\">");
 
-		appendTableOfContents(tableOfContents, contentMap, 1);
+		appendTableOfContents(tableOfContents, 1);
 
 		append("</div>");
 		append("</div>");
@@ -191,8 +189,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 	}
 
 	protected void appendTableOfContents(
-		TreeNode<HeadingNode> tableOfContents, Map<String, Integer> contentMap,
-		int depth) {
+		TreeNode<HeadingNode> tableOfContents, int depth) {
 
 		List<TreeNode<HeadingNode>> treeNodes = tableOfContents.getChildNodes();
 
@@ -226,21 +223,21 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 			}
 
 			append(StringPool.POUND);
-			append(getHeadingMarkup(_page.getTitle(), content, contentMap));
+			append(getHeadingMarkup(_page.getTitle(), content, _contentMap));
 			append("\">");
 			append(content);
 			append("</a>");
 
-			if (contentMap.containsKey(content)) {
-				int count = contentMap.get(content);
+			if (_contentMap.containsKey(content)) {
+				int count = _contentMap.get(content);
 
-				contentMap.put(content, count + 1);
+				_contentMap.put(content, count + 1);
 			}
 			else {
-				contentMap.put(content, 1);
+				_contentMap.put(content, 1);
 			}
 
-			appendTableOfContents(treeNode, contentMap, depth + 1);
+			appendTableOfContents(treeNode, depth + 1);
 
 			append("</li>");
 		}
@@ -291,21 +288,19 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 	protected String getHeadingMarkup(
 		String prefix, String text, Map<String, Integer> map) {
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_HEADING_ANCHOR_PREFIX);
-		sb.append(prefix);
-		sb.append(StringPool.DASH);
-		sb.append(text.trim());
-
-		if ((map != null) && map.containsKey(text)) {
-			int count = map.get(text);
-
-			sb.append(StringPool.DASH);
-			sb.append(count);
+		if ((map == null) || map.isEmpty() || !map.containsKey(text)) {
+			return StringUtil.replace(
+				StringBundler.concat(
+					_HEADING_ANCHOR_PREFIX, prefix, StringPool.DASH,
+					text.trim()),
+				CharPool.SPACE, CharPool.PLUS);
 		}
 
-		return StringUtil.replace(sb.toString(), CharPool.SPACE, CharPool.PLUS);
+		return StringUtil.replace(
+			StringBundler.concat(
+				_HEADING_ANCHOR_PREFIX, prefix, StringPool.DASH, text.trim(),
+				StringPool.DASH, map.get(text)),
+			CharPool.SPACE, CharPool.PLUS);
 	}
 
 	protected String getUnformattedHeadingText(HeadingNode headingNode) {
@@ -337,6 +332,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		XhtmlTranslator.class);
 
 	private String _attachmentURLPrefix;
+	private final Map<String, Integer> _contentMap = new HashMap<>();
 	private PortletURL _editPageURL;
 	private final Map<String, Integer> _headingMap = new HashMap<>();
 	private WikiPage _page;

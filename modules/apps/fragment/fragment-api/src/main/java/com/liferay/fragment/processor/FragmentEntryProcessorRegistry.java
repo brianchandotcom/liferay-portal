@@ -30,7 +30,7 @@ import java.util.Locale;
  */
 public interface FragmentEntryProcessorRegistry {
 
-	public default JSONArray getAvailableTags() {
+	public default JSONArray getAvailableTagsJSONArray() {
 		return null;
 	}
 

@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
-	public JSONArray getAvailableTags() {
+	public JSONArray getAvailableTagsJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (Map.Entry<String, EditableElementParser> editableElementParser :

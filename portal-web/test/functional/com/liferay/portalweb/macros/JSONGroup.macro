@@ -495,7 +495,7 @@
 
 		<echo message="## Searching for a 'Group Id' with the following info using JSONWS:" />
 
-		<echo message="## * Group Key: ${groupKey}" />
+		<echo message="## * Group Name: ${groupName}" />
 
 		<var method="JSONCurlUtil#post('${curl}', '$.[?(@[\'groupKey\'] == \'${groupName}\')][\'groupId\']')" name="groupId" />
 

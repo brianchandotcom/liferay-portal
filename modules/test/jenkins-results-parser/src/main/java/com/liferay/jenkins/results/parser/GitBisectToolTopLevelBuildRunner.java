@@ -48,12 +48,12 @@ public class GitBisectToolTopLevelBuildRunner
 		GitBisectToolBuild gitBisectToolBuild =
 			(GitBisectToolBuild)getTopLevelBuild();
 
-		WorkspaceGitRepository workspaceGitRepository =
-			workspace.getPrimaryPortalWorkspaceGitRepository();
-
-		return gitBisectToolBuild.getJenkinsReportElement(
-			workspaceGitRepository,
+		gitBisectToolBuild.setDownstreamBuildDataList(
 			portalTopLevelBuildData.getDownstreamBuildDataList());
+		gitBisectToolBuild.setWorkspaceGitRepository(
+			workspace.getPrimaryPortalWorkspaceGitRepository());
+
+		return super.getJenkinsReportElement();
 	}
 
 	@Override

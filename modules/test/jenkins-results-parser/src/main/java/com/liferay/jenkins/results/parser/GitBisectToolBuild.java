@@ -26,14 +26,34 @@ import org.json.JSONObject;
  */
 public class GitBisectToolBuild extends TopLevelBuild {
 
-	public Element getJenkinsReportElement(
-		WorkspaceGitRepository workspaceGitRepository,
-		List<BuildData> downstreamBuildDataList) {
+	@Override
+	public Element getJenkinsReportElement() {
+		if (_workspaceGitRepository == null) {
+			throw new IllegalStateException(
+				"Please set the workspace git repository");
+		}
+
+		if (_downstreamBuildDataList == null) {
+			throw new IllegalStateException(
+				"Please set the downstream build data list");
+		}
 
 		return Dom4JUtil.getNewElement(
 			"html", null, getJenkinsReportHeadElement(),
 			getJenkinsReportBodyElement(
-				workspaceGitRepository, downstreamBuildDataList));
+				_workspaceGitRepository, _downstreamBuildDataList));
+	}
+
+	public void setDownstreamBuildDataList(
+		List<BuildData> downstreamBuildDataList) {
+
+		_downstreamBuildDataList = downstreamBuildDataList;
+	}
+
+	public void setWorkspaceGitRepository(
+		WorkspaceGitRepository workspaceGitRepository) {
+
+		_workspaceGitRepository = workspaceGitRepository;
 	}
 
 	protected GitBisectToolBuild(String url) {
@@ -234,5 +254,8 @@ public class GitBisectToolBuild extends TopLevelBuild {
 
 		return null;
 	}
+
+	private List<BuildData> _downstreamBuildDataList;
+	private WorkspaceGitRepository _workspaceGitRepository;
 
 }

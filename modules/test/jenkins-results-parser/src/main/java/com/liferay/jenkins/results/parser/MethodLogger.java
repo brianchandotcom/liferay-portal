@@ -68,7 +68,7 @@ public class MethodLogger implements InvocationHandler {
 	private String _getClassMethodName(Method method) {
 		Class<?> clazz = _object.getClass();
 
-		return clazz.getName() + "." + method.getName();
+		return clazz.getSimpleName() + "." + method.getName();
 	}
 
 	private final Logger _logger;

@@ -106,6 +106,11 @@ public class LayoutAssetRendererFactory
 		return TYPE;
 	}
 
+	@Override
+	public boolean isSearchable() {
+		return true;
+	}
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
 		unbind = "-"

@@ -83,6 +83,10 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 			(KaleoTaskInstanceTokenQuery)searchContext.getAttribute(
 				"kaleoTaskInstanceTokenQuery");
 
+		if (kaleoTaskInstanceTokenQuery == null) {
+			return;
+		}
+
 		appendAssigneeClassIdsNameTerm(
 			booleanFilter, kaleoTaskInstanceTokenQuery);
 		appendAssigneeClassPKsTerm(booleanFilter, kaleoTaskInstanceTokenQuery);

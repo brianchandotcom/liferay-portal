@@ -23,7 +23,6 @@ import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.util.PortalTools;
-import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 

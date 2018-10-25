@@ -694,24 +694,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 			getGroupId(), isPrivateLayout(), linkToLayoutId);
 	}
 
-	/**
-	 * Returns the current layout's parent plid.
-	 *
-	 * @return the current layout's parent plid, or <code>0</code> if the
-	 *         current layout is the topmost parent layout
-	 */
-	@Override
-	public long getParentPlid() throws PortalException {
-		if (getParentLayoutId() == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
-			return 0;
-		}
-
-		Layout layout = LayoutLocalServiceUtil.getLayout(
-			getGroupId(), isPrivateLayout(), getParentLayoutId());
-
-		return layout.getPlid();
-	}
-
 	@Override
 	public String getRegularURL(HttpServletRequest request)
 		throws PortalException {

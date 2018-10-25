@@ -216,12 +216,14 @@ public class SegmentsEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_T() throws Exception {
-		_persistence.countByG_T(RandomTestUtil.nextLong(), "");
+	public void testCountByG_A_T() throws Exception {
+		_persistence.countByG_A_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), "");
 
-		_persistence.countByG_T(0L, "null");
+		_persistence.countByG_A_T(0L, RandomTestUtil.randomBoolean(), "null");
 
-		_persistence.countByG_T(0L, (String)null);
+		_persistence.countByG_A_T(0L, RandomTestUtil.randomBoolean(),
+			(String)null);
 	}
 
 	@Test

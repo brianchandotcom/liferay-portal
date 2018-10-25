@@ -228,12 +228,13 @@ public interface SegmentsEntryLocalService extends BaseLocalService,
 	public List<SegmentsEntry> getSegmentsEntries(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsEntry> getSegmentsEntries(long groupId, int start,
-		int end, OrderByComparator<SegmentsEntry> orderByComparator);
+	public List<SegmentsEntry> getSegmentsEntries(long groupId, boolean active,
+		String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsEntry> getSegmentsEntries(long groupId, String type,
-		int start, int end, OrderByComparator<SegmentsEntry> orderByComparator);
+	public List<SegmentsEntry> getSegmentsEntries(long groupId, int start,
+		int end, OrderByComparator<SegmentsEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsEntry> getSegmentsEntries(String type, int start,

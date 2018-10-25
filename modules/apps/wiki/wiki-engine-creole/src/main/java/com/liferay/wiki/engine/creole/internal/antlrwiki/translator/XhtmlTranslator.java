@@ -141,6 +141,8 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		TableOfContentsVisitor tableOfContentsVisitor =
 			new TableOfContentsVisitor();
 
+		_contentMap.clear();
+
 		TreeNode<HeadingNode> tableOfContents = tableOfContentsVisitor.compose(
 			_rootWikiPageNode);
 

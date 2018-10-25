@@ -18,11 +18,9 @@ package com.liferay.jenkins.results.parser;
  * @author Michael Hashimoto
  */
 public abstract class PortalTopLevelBuildRunner
-	extends TopLevelBuildRunner<PortalTopLevelBuildData> {
+	<T extends PortalTopLevelBuildData> extends TopLevelBuildRunner<T> {
 
-	protected PortalTopLevelBuildRunner(
-		PortalTopLevelBuildData portalTopLevelBuildData) {
-
+	protected PortalTopLevelBuildRunner(T portalTopLevelBuildData) {
 		super(portalTopLevelBuildData);
 	}
 

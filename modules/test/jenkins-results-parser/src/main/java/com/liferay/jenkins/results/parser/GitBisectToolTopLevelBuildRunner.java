@@ -21,7 +21,7 @@ import java.util.List;
  * @author Michael Hashimoto
  */
 public class GitBisectToolTopLevelBuildRunner
-	extends PortalTopLevelBuildRunner {
+	extends PortalTopLevelBuildRunner<PortalTopLevelBuildData> {
 
 	protected GitBisectToolTopLevelBuildRunner(
 		PortalTopLevelBuildData portalTopLevelBuildData) {

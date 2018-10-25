@@ -345,7 +345,7 @@ public class StructuredContentApioTest {
 				"[?(@.name=='MyDocumentsAndMedia')].dataType");
 
 		Assert.assertEquals(dataTypes.toString(), 1, dataTypes.size());
-		Assert.assertTrue(dataTypes.contains("document-library"));
+		Assert.assertTrue(dataTypes.contains("document"));
 	}
 
 	@Test
@@ -519,7 +519,7 @@ public class StructuredContentApioTest {
 				"[?(@.name=='MyJournalArticle')].dataType");
 
 		Assert.assertEquals(dataTypes.toString(), 1, dataTypes.size());
-		Assert.assertTrue(dataTypes.contains("journal-article"));
+		Assert.assertTrue(dataTypes.contains("structuredContent"));
 	}
 
 	@Test
@@ -548,7 +548,7 @@ public class StructuredContentApioTest {
 				"[?(@.name=='MyLinkToPage')].dataType");
 
 		Assert.assertEquals(dataTypes.toString(), 1, dataTypes.size());
-		Assert.assertTrue(dataTypes.contains("link-to-page"));
+		Assert.assertTrue(dataTypes.contains("url"));
 	}
 
 	@Test
@@ -723,7 +723,7 @@ public class StructuredContentApioTest {
 				"[?(@.name=='MyRadio')].dataType");
 
 		Assert.assertEquals(dataTypes.toString(), 1, dataTypes.size());
-		Assert.assertTrue(dataTypes.contains("radio"));
+		Assert.assertTrue(dataTypes.contains("string"));
 	}
 
 	@Test

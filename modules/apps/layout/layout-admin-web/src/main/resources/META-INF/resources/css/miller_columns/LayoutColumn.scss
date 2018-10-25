@@ -52,7 +52,7 @@
 	margin-bottom: 0;
 }
 
-.layout-column-item-drag-bottom + .layout-drop-target {
+.layout-column-item-drag-bottom + .layout-drop-target-item {
 	border-top: 0;
 }
 
@@ -87,13 +87,17 @@
 	cursor: inherit;
 }
 
-.list-group-item.drag-layout-column-item {
+.list-group-item.layout-item {
 	cursor: pointer;
 	height: 68px;
 	max-height: 68px;
 }
 
-.list-group-item.drag-layout-column-item.dragging {
+.list-group-item.layout-item:last-child {
+	border-radius: 0;
+}
+
+.list-group-item.layout-drag-item.dragging {
 	background-color: #F0F5FF;
 	border: none;
 	border-radius: 4px;
@@ -115,10 +119,6 @@
 			margin-top: 0;
 		}
 	}
-}
-
-.list-group-item.drag-layout-column-item:last-child {
-	border-radius: 0;
 }
 
 .select-item-checkbox-label {

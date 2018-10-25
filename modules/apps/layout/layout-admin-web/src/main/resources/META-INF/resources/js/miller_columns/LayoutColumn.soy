@@ -50,7 +50,7 @@
 		{/if}
 
 		{if $layoutColumnIndex != 0}
-			{sp}layout-drop-target
+			{sp}layout-drop-target-item
 		{/if}
 	{/let}
 
@@ -122,12 +122,13 @@
 	{@param? styleModifier: string}
 
 	{let $listGroupItemClasses kind="text"}
-		list-group-item
+		layout-item
+		{sp}list-group-item
 		{sp}list-group-item-flex
 
 		{if $layoutColumnIndex != 0}
-			{sp}drag-layout-column-item
-			{sp}layout-drop-target
+			{sp}layout-drag-item
+			{sp}layout-drop-target-item
 		{/if}
 
 		{if $layoutColumnItem.active}

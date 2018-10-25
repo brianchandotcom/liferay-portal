@@ -17,6 +17,8 @@ package com.liferay.jenkins.results.parser;
 import java.util.Arrays;
 import java.util.List;
 
+import org.dom4j.Element;
+
 /**
  * @author Michael Hashimoto
  */
@@ -27,6 +29,31 @@ public class GitBisectToolTopLevelBuildRunner
 		PortalTopLevelBuildData portalTopLevelBuildData) {
 
 		super(portalTopLevelBuildData);
+	}
+
+	@Override
+	protected Element getJenkinsReportElement() {
+		PortalTopLevelBuildData portalTopLevelBuildData = getBuildData();
+
+		if (workspace == null) {
+			return Dom4JUtil.getNewElement(
+				"html", null,
+				Dom4JUtil.getNewElement(
+					"h1", null, "Report building in progress for ",
+					Dom4JUtil.getNewAnchorElement(
+						portalTopLevelBuildData.getBuildURL(),
+						portalTopLevelBuildData.getBuildURL())));
+		}
+
+		GitBisectToolBuild gitBisectToolBuild =
+			(GitBisectToolBuild)getTopLevelBuild();
+
+		WorkspaceGitRepository workspaceGitRepository =
+			workspace.getPrimaryPortalWorkspaceGitRepository();
+
+		return gitBisectToolBuild.getJenkinsReportElement(
+			workspaceGitRepository,
+			portalTopLevelBuildData.getDownstreamBuildDataList());
 	}
 
 	@Override

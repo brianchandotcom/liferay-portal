@@ -81,6 +81,14 @@ public abstract class TopLevelBuildRunner
 		_downstreamBuildDataList.add(buildData);
 	}
 
+	protected Element getJenkinsReportElement() {
+		return _topLevelBuild.getJenkinsReportElement();
+	}
+
+	protected TopLevelBuild getTopLevelBuild() {
+		return _topLevelBuild;
+	}
+
 	protected void invokeDownstreamBuilds() {
 		for (BuildData downstreamBuildData : _downstreamBuildDataList) {
 			_invokeDownstreamBuild(downstreamBuildData);
@@ -112,39 +120,11 @@ public abstract class TopLevelBuildRunner
 	protected void publishJenkinsReport() {
 		_updateBuildData();
 
-		TopLevelBuildData topLevelBuildData = getBuildData();
-
-		Element jenkinsReportElement = Dom4JUtil.getNewElement(
-			"html", null,
-			Dom4JUtil.getNewElement(
-				"h1", null, "Report building in progress for ",
-				Dom4JUtil.getNewAnchorElement(
-					topLevelBuildData.getBuildURL(),
-					topLevelBuildData.getBuildURL())));
-
-		if (_topLevelBuild instanceof GitBisectToolBuild) {
-			if ((workspace != null) && (workspace instanceof PortalWorkspace)) {
-				GitBisectToolBuild gitBisectToolBuild =
-					(GitBisectToolBuild)_topLevelBuild;
-
-				PortalWorkspace portalWorkspace = (PortalWorkspace)workspace;
-
-				WorkspaceGitRepository workspaceGitRepository =
-					portalWorkspace.getPrimaryPortalWorkspaceGitRepository();
-
-				jenkinsReportElement =
-					gitBisectToolBuild.getJenkinsReportElement(
-						workspaceGitRepository,
-						topLevelBuildData.getDownstreamBuildDataList());
-			}
-		}
-		else {
-			jenkinsReportElement = _topLevelBuild.getJenkinsReportElement();
-		}
-
 		try {
 			String jenkinsReportString = StringEscapeUtils.unescapeXml(
-				Dom4JUtil.format(jenkinsReportElement, true));
+				Dom4JUtil.format(getJenkinsReportElement(), true));
+
+			TopLevelBuildData topLevelBuildData = getBuildData();
 
 			File jenkinsReportFile = new File(
 				topLevelBuildData.getWorkspaceDir(), "jenkins-report.html");

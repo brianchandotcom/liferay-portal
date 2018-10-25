@@ -4902,6 +4902,12 @@ version 1.3.8.
 - [LPS-86500]: Remove the `portal` configuration from the compile classpath of
 the `test` source set.
 
+## 5.5.100 - 2018-10-24
+
+### Changed
+- [LPS-86583]: Update the [Liferay Gradle Plugins Baseline] dependency to
+version 1.3.9.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

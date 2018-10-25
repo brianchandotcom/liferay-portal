@@ -14,18 +14,17 @@
 
 package com.liferay.portal.security.sso.opensso.internal;
 
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.sso.SSO;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration;
+import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
 
-import java.util.Map;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Enables the OpenSSO module to participate in significant portal session
@@ -41,10 +40,11 @@ public class SSOImpl implements SSO {
 
 	@Override
 	public String getSessionExpirationRedirectUrl(long companyId) {
-		if (isSessionRedirectOnExpire(companyId)) {
-			return PrefsPropsUtil.getString(
-				companyId, PropsKeys.OPEN_SSO_LOGOUT_URL,
-				_openSSOConfiguration.logoutURL());
+		OpenSSOConfiguration openSSOConfiguration = _getOpenSSOConfiguration(
+			companyId);
+
+		if (_isSessionRedirectOnExpire(openSSOConfiguration)) {
+			return openSSOConfiguration.logoutURL();
 		}
 
 		return null;
@@ -52,21 +52,22 @@ public class SSOImpl implements SSO {
 
 	@Override
 	public String getSignInURL(long companyId, String defaultSigninURL) {
-		if (!isOpenSSOEnabled(companyId)) {
+		OpenSSOConfiguration openSSOConfiguration = _getOpenSSOConfiguration(
+			companyId);
+
+		if (!openSSOConfiguration.enabled()) {
 			return null;
 		}
 
-		if (Validator.isNotNull(_openSSOConfiguration.loginURL())) {
-			defaultSigninURL = _openSSOConfiguration.loginURL();
-		}
-
-		return PrefsPropsUtil.getString(
-			companyId, PropsKeys.OPEN_SSO_LOGIN_URL, defaultSigninURL);
+		return openSSOConfiguration.loginURL();
 	}
 
 	@Override
 	public boolean isLoginRedirectRequired(long companyId) {
-		return isOpenSSOEnabled(companyId);
+		OpenSSOConfiguration openSSOConfiguration = _getOpenSSOConfiguration(
+			companyId);
+
+		return openSSOConfiguration.enabled();
 	}
 
 	@Override
@@ -76,31 +77,48 @@ public class SSOImpl implements SSO {
 
 	@Override
 	public boolean isSessionRedirectOnExpire(long companyId) {
-		if (isOpenSSOEnabled(companyId)) {
-			return _openSSOConfiguration.logoutOnSessionExpiration();
+		OpenSSOConfiguration openSSOConfiguration = _getOpenSSOConfiguration(
+			companyId);
+
+		return _isSessionRedirectOnExpire(openSSOConfiguration);
+	}
+
+	@Reference(unbind = "-")
+	protected void setConfigurationProvider(
+		ConfigurationProvider configurationProvider) {
+
+		_configurationProvider = configurationProvider;
+	}
+
+	private OpenSSOConfiguration _getOpenSSOConfiguration(long companyId) {
+		try {
+			OpenSSOConfiguration casCompanyServiceSettings =
+				_configurationProvider.getConfiguration(
+					OpenSSOConfiguration.class,
+					new CompanyServiceSettingsLocator(
+						companyId, OpenSSOConstants.SERVICE_NAME));
+
+			return casCompanyServiceSettings;
+		}
+		catch (ConfigurationException ce) {
+			_log.error("Unable to get OpenSSO configuration", ce);
+		}
+
+		return null;
+	}
+
+	private boolean _isSessionRedirectOnExpire(
+		OpenSSOConfiguration openSSOConfiguration) {
+
+		if (openSSOConfiguration.enabled()) {
+			return openSSOConfiguration.logoutOnSessionExpiration();
 		}
 
 		return false;
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_openSSOConfiguration = ConfigurableUtil.createConfigurable(
-			OpenSSOConfiguration.class, properties);
-	}
+	private static final Log _log = LogFactoryUtil.getLog(SSOImpl.class);
 
-	protected boolean isOpenSSOEnabled(long companyId) {
-		if (PrefsPropsUtil.getBoolean(
-				companyId, PropsKeys.OPEN_SSO_AUTH_ENABLED,
-				_openSSOConfiguration.enabled())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private volatile OpenSSOConfiguration _openSSOConfiguration;
+	private ConfigurationProvider _configurationProvider;
 
 }

@@ -47,6 +47,21 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Site Page 3" />
 		</execute>
+
+		<execute macro="Page#view">
+			<var name="pageName" value="Site Page 1" />
+			<var name="privacy" value="Public Pages" />
+		</execute>
+
+		<execute macro="Page#view">
+			<var name="pageName" value="Site Page 2" />
+			<var name="privacy" value="Public Pages" />
+		</execute>
+
+		<execute macro="Page#view">
+			<var name="pageName" value="Site Page 3" />
+			<var name="privacy" value="Public Pages" />
+		</execute>
 	</command>
 
 	<command name="AddSitePrivatePage" priority="4">

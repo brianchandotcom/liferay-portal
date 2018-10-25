@@ -117,8 +117,6 @@
 	</command>
 
 	<command name="AddPublicVirtualHostsSiteURL" priority="3">
-		<execute macro="Site#openSitesAdmin" />
-
 		<execute macro="JSONGroup#addGroup">
 			<var name="groupName" value="Site Name" />
 		</execute>
@@ -138,13 +136,13 @@
 		</execute>
 
 		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://www.able.com:8080/test-public-page" />
+			<var name="url" value="http://www.able.com:8080/site-page" />
 		</execute>
 
 		<execute macro="Site#viewVirtualHostsURLPG">
 			<var name="pageName" value="Test Public Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePageURL" value="http://www.able.com:8080/test-public-page" />
+			<var name="sitePageURL" value="http://www.able.com:8080/site-page" />
 		</execute>
 	</command>
 

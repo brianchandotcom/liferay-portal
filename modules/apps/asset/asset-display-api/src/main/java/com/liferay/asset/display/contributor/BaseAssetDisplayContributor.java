@@ -14,6 +14,7 @@
 
 package com.liferay.asset.display.contributor;
 
+import com.liferay.asset.display.contributor.util.AssetDisplayContributorFieldHelperUtil;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
@@ -84,7 +85,7 @@ public abstract class BaseAssetDisplayContributor<T>
 					assetEntry.getClassNameId());
 
 		List<AssetDisplayContributorField> assetDisplayContributorFields =
-			assetDisplayContributorFieldTracker.
+			AssetDisplayContributorFieldHelperUtil.
 				getAssetDisplayContributorFields(getClassName());
 
 		AssetRenderer<T> assetRenderer = assetRendererFactory.getAssetRenderer(
@@ -163,10 +164,6 @@ public abstract class BaseAssetDisplayContributor<T>
 		throw new UnsupportedOperationException();
 	}
 
-	@Reference
-	protected AssetDisplayContributorFieldTracker
-		assetDisplayContributorFieldTracker;
-
 	/**
 	 * @deprecated As of Judson (7.1.x), }
 	 */
@@ -183,7 +180,7 @@ public abstract class BaseAssetDisplayContributor<T>
 	private List<AssetDisplayContributorField>
 		_getAssetDisplayContributorFields(String className) {
 
-		return assetDisplayContributorFieldTracker.
+		return AssetDisplayContributorFieldHelperUtil.
 			getAssetDisplayContributorFields(className);
 	}
 

@@ -85,6 +85,79 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="checkout-subrepository">
+		<attribute name="checkout.subrepository.branch" />
+		<attribute name="checkout.subrepository.destination" />
+		<attribute name="checkout.subrepository.dir" />
+		<attribute name="checkout.subrepository.name" />
+		<attribute name="checkout.subrepository.sha" />
+
+		<sequential>
+			<fetch-subrepository
+				fetch.subrepository.dir="@{checkout.subrepository.dir}"
+				fetch.subrepository.local.branch.name="git-branch-subrepository"
+				fetch.subrepository.name="@{checkout.subrepository.name}"
+				fetch.subrepository.remote.branch.name="@{checkout.subrepository.branch}"
+			/>
+
+			<local name="return.code" />
+
+			<echo>git -C @{checkout.subrepository.dir} tag --force git-tag-subrepository @{checkout.subrepository.sha}</echo>
+
+			<exec executable="git" failonerror="false" resultproperty="return.code">
+				<arg value="-C" />
+				<arg value="@{checkout.subrepository.dir}" />
+				<arg value="tag" />
+				<arg value="--force" />
+				<arg value="git-tag-subrepository" />
+				<arg value="@{checkout.subrepository.sha}" />
+			</exec>
+
+			<exec executable="git">
+				<arg value="-C" />
+				<arg value="@{checkout.subrepository.dir}" />
+				<arg value="branch" />
+				<arg value="--delete" />
+				<arg value="--force" />
+				<arg value="git-branch-subrepository" />
+			</exec>
+
+			<fail message="Please fetch the subrepository from upstream before using this command.">
+				<condition>
+					<not>
+						<equals arg1="${return.code}" arg2="0" />
+					</not>
+				</condition>
+			</fail>
+
+			<delete dir="@{checkout.subrepository.destination}" />
+
+			<echo>git clone --shared --branch git-tag-subrepository @{checkout.subrepository.dir} @{checkout.subrepository.destination}</echo>
+
+			<exec executable="git" failonerror="true">
+				<arg value="clone" />
+				<arg value="--shared" />
+				<arg value="--branch" />
+				<arg value="git-tag-subrepository" />
+				<arg value="@{checkout.subrepository.dir}" />
+				<arg value="@{checkout.subrepository.destination}" />
+			</exec>
+
+			<delete dir="@{checkout.subrepository.destination}/.git" />
+			<delete dir="@{checkout.subrepository.destination}/gradle" />
+			<delete file="@{checkout.subrepository.destination}/gradlew" />
+			<delete file="@{checkout.subrepository.destination}/gradlew.bat" />
+
+			<exec executable="git">
+				<arg value="-C" />
+				<arg value="@{checkout.subrepository.dir}" />
+				<arg value="tag" />
+				<arg value="--delete" />
+				<arg value="git-tag-subrepository" />
+			</exec>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="fetch-portal">
 		<attribute name="fetch.portal.local.branch.name" />
 		<attribute name="fetch.portal.remote.branch.name" />
@@ -113,6 +186,41 @@
 				<arg value="--no-tags" />
 				<arg value="${fetch.portal.repository.url}" />
 				<arg value="@{fetch.portal.remote.branch.name}:${fetch.portal.branch.name}" />
+			</exec>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="fetch-subrepository">
+		<attribute name="fetch.subrepository.dir" />
+		<attribute name="fetch.subrepository.local.branch.name" />
+		<attribute name="fetch.subrepository.name" />
+		<attribute name="fetch.subrepository.remote.branch.name" />
+
+		<sequential>
+			<local name="fetch.subrepository.url" />
+
+			<condition else="git@github.com:liferay/@{fetch.subrepository.name}.git" property="fetch.subrepository.url" value="git@github-dev.liferay.com:liferay/@{fetch.subrepository.name}.git">
+				<isset property="env.JENKINS_HOME" />
+			</condition>
+
+			<local name="fetch.subrepository.branch.name" />
+
+			<condition else="@{fetch.subrepository.remote.branch.name}" property="fetch.subrepository.branch.name" value="@{fetch.subrepository.local.branch.name}">
+				<not>
+					<equals arg1="${fetch.subrepository.local.branch.name}" arg2="" />
+				</not>
+			</condition>
+
+			<echo>git -C @{fetch.subrepository.dir} fetch --force --no-tags ${fetch.subrepository.url} @{fetch.subrepository.remote.branch.name}:${fetch.subrepository.branch.name}</echo>
+
+			<exec executable="git">
+				<arg value="-C" />
+				<arg value="@{fetch.subrepository.dir}" />
+				<arg value="fetch" />
+				<arg value="--force" />
+				<arg value="--no-tags" />
+				<arg value="${fetch.subrepository.url}" />
+				<arg value="@{fetch.subrepository.remote.branch.name}:${fetch.subrepository.branch.name}" />
 			</exec>
 		</sequential>
 	</macrodef>
@@ -489,7 +597,29 @@
 		</script>
 	</target>
 
-	<target depends="checkout-portal,checkout-portal-private,checkout-private-projects" name="prepare-working-dir">
+	<target if="working.dir.checkout.subrepository.names" name="checkout-subrepositories">
+		<script language="javascript">
+			<![CDATA[
+				var workingDirCheckoutSubrepositoryNames = project.getProperty("working.dir.checkout.subrepository.names");
+
+				var subrepositoryNames = workingDirCheckoutSubrepositoryNames.split(",");
+
+				for (i = 0; i < subrepositoryNames.length; i++) {
+					var task = project.createTask("checkout-subrepository");
+
+					task.setDynamicAttribute("checkout.subrepository.branch", project.getProperty("working.dir.checkout.subrepository." + subrepositoryNames[i] + ".branch"));
+					task.setDynamicAttribute("checkout.subrepository.destination", project.getProperty("working.dir.checkout.subrepository." + subrepositoryNames[i] + ".destination"));
+					task.setDynamicAttribute("checkout.subrepository.dir", project.getProperty("working.dir.checkout.subrepository." + subrepositoryNames[i] + ".dir"));
+					task.setDynamicAttribute("checkout.subrepository.name", project.getProperty("working.dir.checkout.subrepository." + subrepositoryNames[i] + ".name"));
+					task.setDynamicAttribute("checkout.subrepository.sha", project.getProperty("working.dir.checkout.subrepository." + subrepositoryNames[i] + ".sha"));
+
+					task.perform();
+				}
+			]]>
+		</script>
+	</target>
+
+	<target depends="checkout-portal,checkout-portal-private,checkout-private-projects,checkout-subrepositories" name="prepare-working-dir">
 		<property name="from.branch.name" value="${public.branch.name}" />
 		<property name="to.branch.name" value="${private.branch.name}" />
 

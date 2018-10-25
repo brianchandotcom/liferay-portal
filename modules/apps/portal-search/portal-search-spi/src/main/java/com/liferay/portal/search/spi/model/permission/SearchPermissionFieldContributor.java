@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.search.Document;
 
 /**
  * Indexes new permission checking fields in a search document. These fields can
- * be checked when returning search results via a
+ * be matched when returning search results via a corresponding
  * {@link SearchPermissionFilterContributor}.
  *
  * Register implementations of this interface as OSGi components using the

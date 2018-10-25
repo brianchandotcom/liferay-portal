@@ -16,6 +16,7 @@ package com.liferay.gogo.shell.web.internal.portlet;
 
 import com.liferay.gogo.shell.web.internal.constants.GogoShellPortletKeys;
 import com.liferay.gogo.shell.web.internal.constants.GogoShellWebKeys;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -214,7 +215,8 @@ public class GogoShellPortlet extends MVCPortlet {
 			errorUnsyncByteArrayOutputStream);
 
 		CommandSession commandSession = _commandProcessor.createSession(
-			null, outputPrintStream, errorPrintStream);
+			new UnsyncByteArrayInputStream(new byte[0]), outputPrintStream,
+			errorPrintStream);
 
 		commandSession.put("prompt", "g!");
 

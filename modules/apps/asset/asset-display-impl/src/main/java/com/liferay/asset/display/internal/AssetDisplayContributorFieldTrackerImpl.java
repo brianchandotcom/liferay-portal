@@ -16,17 +16,11 @@ package com.liferay.asset.display.internal;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributorField;
 import com.liferay.asset.display.contributor.AssetDisplayContributorFieldTracker;
-import com.liferay.asset.display.contributor.AssetDisplayField;
-import com.liferay.asset.kernel.model.AssetEntry;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -62,70 +56,6 @@ public class AssetDisplayContributorFieldTrackerImpl
 		}
 
 		return Collections.emptyList();
-	}
-
-	@Override
-	public Set<AssetDisplayField> getAssetDisplayFields(
-		String className, Locale locale) {
-
-		Set<AssetDisplayField> assetDisplayFields = new LinkedHashSet<>();
-
-		List<AssetDisplayContributorField> assetDisplayContributorFields =
-			getAssetDisplayContributorFields(className);
-
-		for (AssetDisplayContributorField assetDisplayContributorField :
-				assetDisplayContributorFields) {
-
-			assetDisplayFields.add(
-				new AssetDisplayField(
-					assetDisplayContributorField.getKey(),
-					assetDisplayContributorField.getLabel(locale),
-					assetDisplayContributorField.getType()));
-		}
-
-		return assetDisplayFields;
-	}
-
-	@Override
-	public Set<AssetDisplayField> getAssetEntryAssetDisplayFields(
-		Locale locale) {
-
-		Set<AssetDisplayField> assetDisplayFields = new LinkedHashSet<>();
-
-		List<AssetDisplayContributorField> assetDisplayContributorFields =
-			getAssetDisplayContributorFields(AssetEntry.class.getName());
-
-		for (AssetDisplayContributorField assetDisplayContributorField :
-				assetDisplayContributorFields) {
-
-			assetDisplayFields.add(
-				new AssetDisplayField(
-					assetDisplayContributorField.getKey(),
-					assetDisplayContributorField.getLabel(locale),
-					assetDisplayContributorField.getType()));
-		}
-
-		return assetDisplayFields;
-	}
-
-	@Override
-	public Map<String, Object> getAssetEntryAssetDisplayFieldsValues(
-		AssetEntry assetEntry, Locale locale) {
-
-		Map<String, Object> assetDisplayFieldsValues = new HashMap<>();
-
-		List<AssetDisplayContributorField> assetDisplayContributorFields =
-			getAssetDisplayContributorFields(AssetEntry.class.getName());
-
-		for (AssetDisplayContributorField assetDisplayContributorField :
-				assetDisplayContributorFields) {
-
-			assetDisplayFieldsValues.put(
-				assetDisplayContributorField.getKey(),
-				assetDisplayContributorField.getValue(assetEntry, locale));
-		}
-
-		return assetDisplayFieldsValues;
 	}
 
 	@Reference(

@@ -14,12 +14,7 @@
 
 package com.liferay.asset.display.contributor;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Jürgen Kappler
@@ -28,14 +23,5 @@ public interface AssetDisplayContributorFieldTracker {
 
 	public List<AssetDisplayContributorField> getAssetDisplayContributorFields(
 		String className);
-
-	public Set<AssetDisplayField> getAssetDisplayFields(
-		String className, Locale locale);
-
-	public Set<AssetDisplayField> getAssetEntryAssetDisplayFields(
-		Locale locale);
-
-	public Map<String, Object> getAssetEntryAssetDisplayFieldsValues(
-		AssetEntry assetEntry, Locale locale);
 
 }

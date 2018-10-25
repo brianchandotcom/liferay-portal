@@ -101,6 +101,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -839,8 +840,25 @@ public class StructuredContentNestedCollectionResource
 
 		public String getDDMFormFieldDataType() {
 			try {
-				return _ddmStructure.getFieldDataType(
+				String dataType = _ddmStructure.getFieldDataType(
 					_ddmFormFieldValue.getName());
+
+				String displayDataType = dataType;
+
+				if (Objects.equals(dataType, "document-library")) {
+					displayDataType = "document";
+				}
+				else if (Objects.equals(dataType, "journal-article")) {
+					displayDataType = "structuredContent";
+				}
+				else if (Objects.equals(dataType, "link-to-page")) {
+					displayDataType = "url";
+				}
+				else if (Objects.equals(dataType, "radio")) {
+					displayDataType = "string";
+				}
+
+				return displayDataType;
 			}
 			catch (PortalException pe) {
 				if (_log.isWarnEnabled()) {

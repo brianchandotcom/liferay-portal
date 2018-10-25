@@ -1,5 +1,6 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
+import navigate from 'frontend-js-web/liferay/util/navigate.es';
 import Soy from 'metal-soy';
 
 import './LayoutBreadcrumbs.es';
@@ -396,11 +397,18 @@ class Layout extends Component {
 		const targetIsButton = event.target.tagName === 'BUTTON';
 
 		if (!targetIsA && !targetIsButton) {
-			const itemPlid = event.delegateTarget.dataset.layoutColumnItemPlid;
+			const itemUrl = event.delegateTarget.dataset.layoutColumnItemUrl;
 
-			const item = this._getLayoutColumnItemByPlid(this.layoutColumns, itemPlid);
+			if (itemUrl) {
+				navigate(itemUrl);
+			}
+			else {
+				const itemPlid = event.delegateTarget.dataset.layoutColumnItemPlid;
 
-			window.location.href = item.url;
+				const item = this._getLayoutColumnItemByPlid(this.layoutColumns, itemPlid);
+
+				navigate(item.url);
+			}
 		}
 	}
 

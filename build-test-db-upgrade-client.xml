@@ -138,8 +138,8 @@
 					</then>
 					<elseif>
 						<resourcecontains
-						resource="${db.upgrade.client.log}"
-						substring="Unable to open Gogo shell"
+							resource="${db.upgrade.client.log}"
+							substring="Unable to open Gogo shell"
 						/>
 						<then>
 							<fail message="The Gogo shell connection failed" />

@@ -1,8 +1,12 @@
+import org.gradle.util.VersionNumber
+
 apply plugin: "com.liferay.test.integration.base"
 apply plugin: "eclipse"
 apply plugin: "idea"
 
 task runGradleTest
+
+VersionNumber gradleVersionNumber = VersionNumber.parse(gradle.gradleVersion)
 
 runGradleTest {
 	dependsOn tasks.eclipse
@@ -22,8 +26,17 @@ runGradleTest {
 		String ideaModule = ideaModuleFile.text
 
 		for (String dirName : ["src/testIntegration/java", "src/testIntegration/javaBar", "src/testIntegration/javaFoo", "src/testIntegration/resources", "src/testIntegration/resourcesBar", "src/testIntegration/resourcesFoo"]) {
-			assert eclipseClasspath.contains("<classpathentry kind=\"src\" path=\"${dirName}\"/>") || eclipseClasspath.contains("<classpathentry path=\"${dirName}\" kind=\"src\"/>")
-			assert ideaModule.contains("<sourceFolder url=\"file://\$MODULE_DIR\$/${dirName}\" isTestSource=\"true\"/>") || ideaModule.contains("<sourceFolder isTestSource=\"true\" url=\"file://\$MODULE_DIR\$/${dirName}\"/>")
+			String expectedEclipseClasspathFragment = "<classpathentry path=\"${dirName}\" kind=\"src\"/>"
+
+			if (gradleVersionNumber >= new VersionNumber(3, 0, 0, null)) {
+				expectedEclipseClasspathFragment = "<classpathentry kind=\"src\" path=\"${dirName}\"/>"
+			}
+			else if (gradleVersionNumber >= new VersionNumber(4, 4, 0, null)) {
+				expectedEclipseClasspathFragment = "<classpathentry output=\"bin/testIntegration\" kind=\"src\" path=\"${dirName}\">"
+			}
+
+			assert eclipseClasspath.contains(expectedEclipseClasspathFragment)
+			assert ideaModule.contains("<sourceFolder url=\"file://\$MODULE_DIR\$/${dirName}\" isTestSource=\"true\"/>")
 		}
 	}
 }

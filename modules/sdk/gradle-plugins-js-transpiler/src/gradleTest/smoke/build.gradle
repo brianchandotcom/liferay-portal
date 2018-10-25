@@ -40,9 +40,9 @@ runGradleTest {
 private String _normalize(String text) {
 	String s = text.normalize()
 
-	s = s.replace("\r\n", "\n")
+	s = s.replace("\\r\\n", "\\n")
 
-	s = s.replace("\r", "\n")
+	s = s.replace("\\r", "\\n")
 
 	return s.trim()
 }

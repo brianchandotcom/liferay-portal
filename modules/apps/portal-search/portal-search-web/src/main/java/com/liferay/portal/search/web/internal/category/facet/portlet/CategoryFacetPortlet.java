@@ -17,7 +17,6 @@ package com.liferay.portal.search.web.internal.category.facet.portlet;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -102,7 +101,7 @@ public class CategoryFacetPortlet extends MVCPortlet {
 		RenderRequest renderRequest) {
 
 		Facet facet = portletSharedSearchResponse.getFacet(
-			getAggregationName(getPortletId(renderRequest)));
+			getAggregationName(renderRequest));
 
 		CategoryFacetPortletPreferences categoryFacetPortletPreferences =
 			new CategoryFacetPortletPreferencesImpl(
@@ -153,18 +152,16 @@ public class CategoryFacetPortlet extends MVCPortlet {
 		return assetCategoriesSearchFacetDisplayBuilder.build();
 	}
 
-	protected String getAggregationName(String portletId) {
-		return Field.ASSET_CATEGORY_IDS + StringPool.PERIOD + portletId;
+	protected String getAggregationName(RenderRequest renderRequest) {
+		String portletId = portal.getPortletId(renderRequest);
+
+		return getFieldName() + StringPool.PERIOD + portletId;
 	}
 
 	protected String getFieldName() {
 		Facet facet = categoryFacetFactory.newInstance(null);
 
 		return facet.getFieldName();
-	}
-
-	protected String getPortletId(RenderRequest renderRequest) {
-		return _portal.getPortletId(renderRequest);
 	}
 
 	@Reference
@@ -174,9 +171,9 @@ public class CategoryFacetPortlet extends MVCPortlet {
 	protected CategoryFacetFactory categoryFacetFactory;
 
 	@Reference
-	protected PortletSharedSearchRequest portletSharedSearchRequest;
+	protected Portal portal;
 
 	@Reference
-	private Portal _portal;
+	protected PortletSharedSearchRequest portletSharedSearchRequest;
 
 }

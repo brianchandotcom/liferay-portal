@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.web.internal.category.facet.builder;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -34,7 +35,7 @@ public class AssetCategoriesFacetBuilder {
 	public Facet build() {
 		Facet facet = _categoryFacetFactory.newInstance(_searchContext);
 
-		facet.setAggregationName(_aggregationName);
+		facet.setAggregationName(getAggregationName(facet.getFieldName()));
 
 		facet.setFacetConfiguration(buildFacetConfiguration(facet));
 
@@ -45,16 +46,16 @@ public class AssetCategoriesFacetBuilder {
 		return facet;
 	}
 
-	public void setAggregationName(String aggregationName) {
-		_aggregationName = aggregationName;
-	}
-
 	public void setFrequencyThreshold(int frequencyThreshold) {
 		_frequencyThreshold = frequencyThreshold;
 	}
 
 	public void setMaxTerms(int maxTerms) {
 		_maxTerms = maxTerms;
+	}
+
+	public void setPortletId(String portletId) {
+		_portletId = portletId;
 	}
 
 	public void setSearchContext(SearchContext searchContext) {
@@ -84,10 +85,14 @@ public class AssetCategoriesFacetBuilder {
 		return facetConfiguration;
 	}
 
-	private String _aggregationName;
+	protected String getAggregationName(String fieldName) {
+		return fieldName + StringPool.PERIOD + _portletId;
+	}
+
 	private final CategoryFacetFactory _categoryFacetFactory;
 	private int _frequencyThreshold;
 	private int _maxTerms;
+	private String _portletId;
 	private SearchContext _searchContext;
 	private long[] _selectedCategoryIds;
 

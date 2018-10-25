@@ -16,7 +16,6 @@ package com.liferay.portal.search.web.internal.site.facet.portlet;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -104,7 +103,7 @@ public class SiteFacetPortlet extends MVCPortlet {
 		RenderRequest renderRequest) {
 
 		Facet facet = portletSharedSearchResponse.getFacet(
-			getAggregationName(getPortletId(renderRequest)));
+			getAggregationName(renderRequest));
 
 		ScopeFacetConfiguration siteFacetConfiguration =
 			new ScopeFacetConfigurationImpl(facet.getFacetConfiguration());
@@ -145,8 +144,10 @@ public class SiteFacetPortlet extends MVCPortlet {
 		return scopeSearchFacetDisplayBuilder.build();
 	}
 
-	protected String getAggregationName(String portletId) {
-		return Field.ASSET_CATEGORY_IDS + StringPool.PERIOD + portletId;
+	protected String getAggregationName(RenderRequest renderRequest) {
+		String portletId = portal.getPortletId(renderRequest);
+
+		return getFieldName() + StringPool.PERIOD + portletId;
 	}
 
 	protected String getFieldName() {
@@ -188,20 +189,16 @@ public class SiteFacetPortlet extends MVCPortlet {
 		return optional.map(Arrays::asList);
 	}
 
-	protected String getPortletId(RenderRequest renderRequest) {
-		return _portal.getPortletId(renderRequest);
-	}
-
 	@Reference
 	protected GroupLocalService groupLocalService;
+
+	@Reference
+	protected Portal portal;
 
 	@Reference
 	protected PortletSharedSearchRequest portletSharedSearchRequest;
 
 	@Reference
 	protected SiteFacetFactory siteFacetFactory;
-
-	@Reference
-	private Portal _portal;
 
 }

@@ -16,7 +16,6 @@ package com.liferay.portal.search.web.internal.tag.facet.portlet;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -98,7 +97,7 @@ public class TagFacetPortlet extends MVCPortlet {
 		RenderRequest renderRequest) {
 
 		Facet facet = portletSharedSearchResponse.getFacet(
-			getAggregationName(getPortletId(renderRequest)));
+			getAggregationName(renderRequest));
 
 		TagFacetPortletPreferences tagFacetPortletPreferences =
 			new TagFacetPortletPreferencesImpl(
@@ -133,8 +132,10 @@ public class TagFacetPortlet extends MVCPortlet {
 		return assetTagsSearchFacetDisplayBuilder.build();
 	}
 
-	protected String getAggregationName(String portletId) {
-		return Field.ASSET_CATEGORY_IDS + StringPool.PERIOD + portletId;
+	protected String getAggregationName(RenderRequest renderRequest) {
+		String portletId = portal.getPortletId(renderRequest);
+
+		return getFieldName() + StringPool.PERIOD + portletId;
 	}
 
 	protected String getFieldName() {
@@ -143,17 +144,13 @@ public class TagFacetPortlet extends MVCPortlet {
 		return facet.getFieldName();
 	}
 
-	protected String getPortletId(RenderRequest renderRequest) {
-		return _portal.getPortletId(renderRequest);
-	}
-
 	@Reference
 	protected AssetTagNamesFacetFactory assetTagNamesFacetFactory;
 
 	@Reference
-	protected PortletSharedSearchRequest portletSharedSearchRequest;
+	protected Portal portal;
 
 	@Reference
-	private Portal _portal;
+	protected PortletSharedSearchRequest portletSharedSearchRequest;
 
 }

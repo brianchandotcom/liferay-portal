@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.web.internal.category.facet.portlet.shared.search;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -65,12 +63,12 @@ public class CategoryFacetPortletSharedSearchContributor
 		AssetCategoriesFacetBuilder assetCategoriesFacetBuilder =
 			new AssetCategoriesFacetBuilder(categoryFacetFactory);
 
-		assetCategoriesFacetBuilder.setAggregationName(
-			getAggregationName(portletSharedSearchSettings.getPortletId()));
 		assetCategoriesFacetBuilder.setFrequencyThreshold(
 			categoryFacetPortletPreferences.getFrequencyThreshold());
 		assetCategoriesFacetBuilder.setMaxTerms(
 			categoryFacetPortletPreferences.getMaxTerms());
+		assetCategoriesFacetBuilder.setPortletId(
+			portletSharedSearchSettings.getPortletId());
 		assetCategoriesFacetBuilder.setSearchContext(
 			portletSharedSearchSettings.getSearchContext());
 
@@ -86,10 +84,6 @@ public class CategoryFacetPortletSharedSearchContributor
 			assetCategoriesFacetBuilder::setSelectedCategoryIds);
 
 		return assetCategoriesFacetBuilder.build();
-	}
-
-	protected String getAggregationName(String portletId) {
-		return Field.ASSET_CATEGORY_IDS + StringPool.PERIOD + portletId;
 	}
 
 	@Reference

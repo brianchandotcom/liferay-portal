@@ -14,11 +14,6 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal.scope;
 
-import com.liferay.petra.lang.CentralizedThreadLocal;
-
-import java.io.Closeable;
-import java.io.IOException;
-
 import java.util.Enumeration;
 
 import javax.enterprise.context.spi.CreationalContext;
@@ -39,19 +34,85 @@ import javax.portlet.annotations.RenderStateScoped;
 /**
  * @author Neil Griffin
  */
-public class ScopedBeanHolder {
+public class ScopedBeanManager {
 
-	public static ScopedBeanHolder getCurrentInstance() {
-		return _instance.get();
-	}
-
-	public ScopedBeanHolder(
+	public ScopedBeanManager(
 		PortletRequest portletRequest, PortletResponse portletResponse,
 		PortletConfig portletConfig) {
 
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 		_portletConfig = portletConfig;
+	}
+
+	public void destroyScopedBeans() {
+		if (_portletResponse instanceof StateAwareResponse) {
+			StateAwareResponse stateAwareResponse = (StateAwareResponse)
+				_portletResponse;
+
+			Enumeration<String> attributeNames =
+				_portletRequest.getAttributeNames();
+
+			while (attributeNames.hasMoreElements()) {
+				String attributeName = attributeNames.nextElement();
+
+				if (!attributeName.startsWith(_ATTRIBUTE_NAME_PREFIX)) {
+					continue;
+				}
+
+				Object attributeValue = _portletRequest.getAttribute(
+					attributeName);
+
+				if (!(attributeValue instanceof ScopedBean)) {
+					continue;
+				}
+
+				ScopedBean<?> scopedBean = (ScopedBean<?>)attributeValue;
+
+				Object beanInstance = scopedBean.getBeanInstance();
+
+				if (!(beanInstance instanceof PortletSerializable)) {
+					continue;
+				}
+
+				Class<?> beanInstanceClass = beanInstance.getClass();
+
+				RenderStateScoped renderStateScoped =
+					beanInstanceClass.getAnnotation(RenderStateScoped.class);
+
+				if (renderStateScoped == null) {
+					continue;
+				}
+
+				PortletSerializable portletSerializable =
+					(PortletSerializable)beanInstance;
+
+				MutableRenderParameters mutableRenderParameters =
+					stateAwareResponse.getRenderParameters();
+
+				mutableRenderParameters.setValues(
+					_getParameterName(portletSerializable),
+					portletSerializable.serialize());
+			}
+		}
+
+		Enumeration<String> enumeration = _portletRequest.getAttributeNames();
+
+		while (enumeration.hasMoreElements()) {
+			String name = enumeration.nextElement();
+
+			if (name.startsWith(_ATTRIBUTE_NAME_PREFIX)) {
+				Object value = _portletRequest.getAttribute(name);
+
+				if ((value != null) && (value instanceof ScopedBean)) {
+					ScopedBean scopedBean = (ScopedBean)value;
+
+					scopedBean.destroy();
+				}
+
+				_portletRequest.removeAttribute(name);
+			}
+		}
 	}
 
 	public PortletConfig getPortletConfig() {
@@ -157,35 +218,6 @@ public class ScopedBeanHolder {
 		return scopedBean.getBeanInstance();
 	}
 
-	public Closeable install() {
-		if (_instance.get() == null) {
-			_instance.set(this);
-
-			return new Closeable() {
-
-				@Override
-				public void close() throws IOException {
-					_release();
-
-					_instance.remove();
-				}
-
-			};
-		}
-
-		return new Closeable() {
-
-			@Override
-			public void close() throws IOException {
-			}
-
-		};
-	}
-
-	public void setPortletRequest(PortletRequest portletRequest) {
-		_portletRequest = portletRequest;
-	}
-
 	private static String _getAttributeName(Bean<?> bean) {
 		String attributeName = bean.getName();
 
@@ -217,83 +249,10 @@ public class ScopedBeanHolder {
 		return parameterName;
 	}
 
-	private void _release() {
-		if (_portletResponse instanceof StateAwareResponse) {
-			StateAwareResponse stateAwareResponse = (StateAwareResponse)
-				_portletResponse;
-
-			Enumeration<String> attributeNames =
-				_portletRequest.getAttributeNames();
-
-			while (attributeNames.hasMoreElements()) {
-				String attributeName = attributeNames.nextElement();
-
-				if (!attributeName.startsWith(_ATTRIBUTE_NAME_PREFIX)) {
-					continue;
-				}
-
-				Object attributeValue = _portletRequest.getAttribute(
-					attributeName);
-
-				if (!(attributeValue instanceof ScopedBean)) {
-					continue;
-				}
-
-				ScopedBean<?> scopedBean = (ScopedBean<?>)attributeValue;
-
-				Object beanInstance = scopedBean.getBeanInstance();
-
-				if (!(beanInstance instanceof PortletSerializable)) {
-					continue;
-				}
-
-				Class<?> beanInstanceClass = beanInstance.getClass();
-
-				RenderStateScoped renderStateScoped =
-					beanInstanceClass.getAnnotation(RenderStateScoped.class);
-
-				if (renderStateScoped == null) {
-					continue;
-				}
-
-				PortletSerializable portletSerializable =
-					(PortletSerializable)beanInstance;
-
-				MutableRenderParameters mutableRenderParameters =
-					stateAwareResponse.getRenderParameters();
-
-				mutableRenderParameters.setValues(
-					_getParameterName(portletSerializable),
-					portletSerializable.serialize());
-			}
-		}
-
-		Enumeration<String> enumeration = _portletRequest.getAttributeNames();
-
-		while (enumeration.hasMoreElements()) {
-			String name = enumeration.nextElement();
-
-			if (name.startsWith(_ATTRIBUTE_NAME_PREFIX)) {
-				Object value = _portletRequest.getAttribute(name);
-
-				if ((value != null) && (value instanceof ScopedBean)) {
-					ScopedBean scopedBean = (ScopedBean)value;
-
-					scopedBean.destroy();
-				}
-
-				_portletRequest.removeAttribute(name);
-			}
-		}
-	}
-
 	private static final String _ATTRIBUTE_NAME_PREFIX = "com.liferay.cdi.";
 
-	private static final ThreadLocal<ScopedBeanHolder> _instance =
-		new CentralizedThreadLocal<>(ScopedBeanHolder.class + "._instance");
-
 	private final PortletConfig _portletConfig;
-	private PortletRequest _portletRequest;
+	private final PortletRequest _portletRequest;
 	private final PortletResponse _portletResponse;
 
 }

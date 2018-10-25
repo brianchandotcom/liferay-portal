@@ -22,6 +22,7 @@ import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletRequestBeanC
 import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletSessionBeanContext;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.RenderStateBeanContext;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBean;
+import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBeanManagerStack;
 import com.liferay.bean.portlet.cdi.extension.internal.util.BeanMethodIndexUtil;
 import com.liferay.bean.portlet.cdi.extension.internal.util.PortletScannerUtil;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.DisplayDescriptorParser;
@@ -429,9 +430,18 @@ public class BeanPortletExtension implements Extension {
 		}
 
 		PortletAsyncScopeManagerFactory portletAsyncScopeManagerFactory =
-			(resourceRequest, resourceResponse, portletConfig) ->
-				new PortletAsyncScopeManagerImpl(
-					resourceRequest, resourceResponse, portletConfig);
+			(resourceRequest, resourceResponse, portletConfig) -> {
+				ScopedBeanManagerStack scopedBeanManagerStack =
+					ScopedBeanManagerStack.getCurrentInstance();
+
+				if (scopedBeanManagerStack == null) {
+					scopedBeanManagerStack = new ScopedBeanManagerStack();
+				}
+
+				return new PortletAsyncScopeManagerImpl(
+					resourceRequest, resourceResponse, portletConfig,
+					scopedBeanManagerStack);
+			};
 
 		servletContext.setAttribute(
 			WebKeys.PORTLET_ASYNC_SCOPE_MANAGER_FACTORY,

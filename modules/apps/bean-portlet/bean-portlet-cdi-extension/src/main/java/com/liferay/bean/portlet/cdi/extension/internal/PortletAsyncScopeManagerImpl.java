@@ -14,7 +14,8 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal;
 
-import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBeanHolder;
+import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBeanManager;
+import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBeanManagerStack;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortletAsyncScopeManager;
@@ -25,7 +26,6 @@ import java.io.IOException;
 import javax.portlet.PortletConfig;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.portlet.filter.ResourceRequestWrapper;
 
 /**
  * @author Neil Griffin
@@ -34,40 +34,34 @@ public class PortletAsyncScopeManagerImpl implements PortletAsyncScopeManager {
 
 	public PortletAsyncScopeManagerImpl(
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
-		PortletConfig portletConfig) {
+		PortletConfig portletConfig,
+		ScopedBeanManagerStack scopedBeanManagerStack) {
 
-		_resourceRequest = new AsyncResourceRequest(resourceRequest);
+		_resourceRequest = resourceRequest;
 		_resourceResponse = resourceResponse;
 		_portletConfig = portletConfig;
+		_scopedBeanManagerStack = scopedBeanManagerStack;
 	}
 
 	@Override
 	public void activateScopeContexts() {
-		if (_scopeContexts != null) {
+		if (_closeable != null) {
 			return;
 		}
 
-		ScopedBeanHolder scopedBeanHolder =
-			ScopedBeanHolder.getCurrentInstance();
-
-		if (scopedBeanHolder == null) {
-			scopedBeanHolder = new ScopedBeanHolder(
-				_resourceRequest, _resourceResponse, _portletConfig);
-		}
-
-		scopedBeanHolder.setPortletRequest(_resourceRequest);
-
-		_scopeContexts = scopedBeanHolder.install();
+		_closeable = _scopedBeanManagerStack.install(
+			new ScopedBeanManager(
+				_resourceRequest, _resourceResponse, _portletConfig));
 	}
 
 	@Override
 	public void deactivateScopeContexts() {
-		if (_scopeContexts == null) {
+		if (_closeable == null) {
 			return;
 		}
 
 		try {
-			_scopeContexts.close();
+			_closeable.close();
 		}
 		catch (IOException ioe) {
 			_log.error(ioe, ioe);
@@ -77,24 +71,10 @@ public class PortletAsyncScopeManagerImpl implements PortletAsyncScopeManager {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletAsyncScopeManagerImpl.class);
 
+	private Closeable _closeable;
 	private final PortletConfig _portletConfig;
 	private final ResourceRequest _resourceRequest;
 	private final ResourceResponse _resourceResponse;
-	private Closeable _scopeContexts;
-
-	private static class AsyncResourceRequest extends ResourceRequestWrapper {
-
-		public AsyncResourceRequest(ResourceRequest resourceRequest) {
-			super(resourceRequest);
-		}
-
-		@Override
-		public void removeAttribute(String name) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Retaining @PortletRequestScoped bean " + name);
-			}
-		}
-
-	}
+	private final ScopedBeanManagerStack _scopedBeanManagerStack;
 
 }

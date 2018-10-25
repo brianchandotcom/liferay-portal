@@ -29,13 +29,15 @@ public abstract class BaseContextImpl implements Context {
 
 	@Override
 	public boolean isActive() {
-		ScopedBeanHolder scopedBeanHolder =
-			ScopedBeanHolder.getCurrentInstance();
+		ScopedBeanManagerStack scopedBeanManagerStack =
+			ScopedBeanManagerStack.getCurrentInstance();
 
-		if ((scopedBeanHolder != null) &&
-			(scopedBeanHolder.getPortletRequest() != null)) {
+		if (scopedBeanManagerStack != null) {
+			ScopedBeanManager scopedBeanManager = scopedBeanManagerStack.peek();
 
-			return true;
+			if (scopedBeanManager.getPortletRequest() != null) {
+				return true;
+			}
 		}
 
 		return false;

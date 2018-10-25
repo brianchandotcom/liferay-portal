@@ -14,6 +14,10 @@
 
 package com.liferay.layout.internal.search;
 
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.util.LayoutPageTemplateStructureRenderUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,20 +32,28 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.batch.BatchIndexingHelper;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,9 +64,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = Indexer.class)
 public class LayoutIndexer extends BaseIndexer<Layout> {
 
+	public static final String CLASS_NAME = Layout.class.getName();
+
 	@Override
 	public String getClassName() {
-		return Layout.class.getName();
+		return CLASS_NAME;
 	}
 
 	@Override
@@ -64,7 +78,45 @@ public class LayoutIndexer extends BaseIndexer<Layout> {
 
 	@Override
 	protected Document doGetDocument(Layout layout) throws Exception {
-		return null;
+		Document document = getBaseModelDocument(CLASS_NAME, layout);
+
+		document.addUID(CLASS_NAME, layout.getPlid());
+
+		document.addText(
+			Field.DEFAULT_LANGUAGE_ID, layout.getDefaultLanguageId());
+
+		document.addLocalizedText(Field.NAME, layout.getNameMap());
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(), _portal.getClassNameId(Layout.class),
+					layout.getPlid());
+
+		if (layoutPageTemplateStructure == null) {
+			return document;
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		HttpServletRequest request = serviceContext.getRequest();
+		HttpServletResponse response = serviceContext.getResponse();
+
+		for (String languageId : layout.getAvailableLanguageIds()) {
+			Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+			String content =
+				LayoutPageTemplateStructureRenderUtil.renderLayoutContent(
+					request, response, layoutPageTemplateStructure,
+					FragmentEntryLinkConstants.VIEW, new HashMap<>(), locale);
+
+			document.addText(
+				LocalizationUtil.getLocalizedName(Field.CONTENT, languageId),
+				content);
+		}
+
+		return document;
 	}
 
 	@Override
@@ -179,5 +231,12 @@ public class LayoutIndexer extends BaseIndexer<Layout> {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

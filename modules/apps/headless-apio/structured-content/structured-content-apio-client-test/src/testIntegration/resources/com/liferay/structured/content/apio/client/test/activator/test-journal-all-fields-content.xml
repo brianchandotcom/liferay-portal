@@ -50,6 +50,10 @@
 		<dynamic-content language-id="en_US"><![CDATA[2]]></dynamic-content>
 		<dynamic-content language-id="es_ES"><![CDATA[2]]></dynamic-content>
 	</dynamic-element>
+	<dynamic-element index-type="keyword" name="MyJournalArticle" type="ddm-journal-article">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+		<dynamic-content language-id="es_ES"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
 	<dynamic-element index-type="keyword" name="MyLinkToPage" type="link_to_layout">
 		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
 		<dynamic-content language-id="es_ES"><![CDATA[]]></dynamic-content>
@@ -69,9 +73,5 @@
 	<dynamic-element index-type="text" name="MyTextBox" type="text_box">
 		<dynamic-content language-id="en_US"><![CDATA[abcdef]]></dynamic-content>
 		<dynamic-content language-id="es_ES"><![CDATA[abcdef]]></dynamic-content>
-	</dynamic-element>
-	<dynamic-element index-type="keyword" name="MyWebContent" type="ddm-journal-article">
-		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
-		<dynamic-content language-id="es_ES"><![CDATA[]]></dynamic-content>
 	</dynamic-element>
 </root>

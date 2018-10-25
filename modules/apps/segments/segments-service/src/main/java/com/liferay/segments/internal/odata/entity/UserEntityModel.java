@@ -58,11 +58,11 @@ public class UserEntityModel implements EntityModel {
 			locale -> Field.MODIFIED_DATE),
 		new StringEntityField(
 			"ancestorOrganizationIds", locale -> "ancestorOrganizationIds"),
-		new StringEntityField("companyId", locale -> "companyId"),
+		new StringEntityField("companyId", locale -> Field.COMPANY_ID),
 		new StringEntityField("emailAddress", locale -> "emailAddress"),
 		new StringEntityField(
 			"firstName", locale -> Field.getSortableFieldName("firstName")),
-		new StringEntityField("groupId", locale -> "groupId"),
+		new StringEntityField("groupId", locale -> Field.GROUP_ID),
 		new StringEntityField("groupIds", locale -> "groupIds"),
 		new StringEntityField(
 			"jobTitle", locale -> Field.getSortableFieldName("jobTitle")),
@@ -72,13 +72,13 @@ public class UserEntityModel implements EntityModel {
 			"organizationCount", locale -> "organizationCount"),
 		new StringEntityField("organizationIds", locale -> "organizationIds"),
 		new StringEntityField("roleIds", locale -> "roleIds"),
-		new StringEntityField("scopeGroupId", locale -> "scopeGroupId"),
+		new StringEntityField("scopeGroupId", locale -> Field.SCOPE_GROUP_ID),
 		new StringEntityField(
 			"screenName", locale -> Field.getSortableFieldName("screenName")),
 		new StringEntityField("teamIds", locale -> "teamIds"),
 		new StringEntityField("userGroupIds", locale -> "userGroupIds"),
-		new StringEntityField("userId", locale -> "userId"),
-		new StringEntityField("userName", locale -> "userName")
+		new StringEntityField("userId", locale -> Field.USER_ID),
+		new StringEntityField("userName", locale -> Field.USER_NAME)
 	).collect(
 		Collectors.toMap(EntityField::getName, Function.identity())
 	);

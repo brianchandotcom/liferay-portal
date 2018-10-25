@@ -57,18 +57,18 @@ public class OrganizationEntityModel implements EntityModel {
 			"dateModified",
 			locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 			locale -> Field.MODIFIED_DATE),
+		new StringEntityField("companyId", locale -> Field.COMPANY_ID),
 		new StringEntityField(
-			Field.NAME, locale -> Field.getSortableFieldName(Field.NAME)),
-		new StringEntityField(
-			Field.ORGANIZATION_ID, locale -> Field.ORGANIZATION_ID),
-		new StringEntityField(Field.TREE_PATH, locale -> Field.TREE_PATH),
-		new StringEntityField(Field.TYPE, locale -> Field.TYPE),
-		new StringEntityField("companyId", locale -> "companyId"),
+			"name", locale -> Field.getSortableFieldName(Field.NAME)),
 		new StringEntityField(
 			"nameTreePath",
 			locale -> Field.getSortableFieldName("nameTreePath_String")),
 		new StringEntityField(
-			"parentOrganizationId", locale -> "parentOrganizationId")
+			"organizationId", locale -> Field.ORGANIZATION_ID),
+		new StringEntityField(
+			"parentOrganizationId", locale -> "parentOrganizationId"),
+		new StringEntityField("treePath", locale -> Field.TREE_PATH),
+		new StringEntityField("type", locale -> Field.TYPE)
 	).collect(
 		Collectors.toMap(EntityField::getName, Function.identity())
 	);

@@ -475,6 +475,10 @@ class Layout extends Component {
 	 * @review
 	 */
 	_initializeLayoutDragDrop() {
+		if (this._layoutDragDrop) {
+			this._layoutDragDrop.dispose();
+		}
+
 		this._layoutDragDrop = new LayoutDragDrop();
 
 		this._layoutDragDrop.on(

@@ -36,7 +36,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration {
 
 	/**
-	 * Sets the API Key for Google Cloud Vision API.
+	 * Sets the API Key for the Google Cloud Vision API.
 	 */
 	@ExtendedAttributeDefinition(
 		descriptionArguments = GoogleCloudVisionAssetAutoTagProviderConstants.API_KEY_DOCS_URL
@@ -47,7 +47,7 @@ public interface GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration {
 	public String apiKey();
 
 	/**
-	 * Enables auto tagging of images using Google Cloud Vision API.
+	 * Enables auto tagging of images using the Google Cloud Vision API.
 	 */
 	@Meta.AD(
 		description = "enabled-description", name = "enabled", required = false

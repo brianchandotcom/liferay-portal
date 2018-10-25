@@ -62,14 +62,8 @@ public class GitBisectToolTopLevelBuildRunner
 	protected void setUpWorkspace() {
 		super.setUpWorkspace();
 
-		if (!(workspace instanceof PortalWorkspace)) {
-			throw new RuntimeException("Invalid workspace");
-		}
-
-		PortalWorkspace portalWorkspace = (PortalWorkspace)workspace;
-
 		WorkspaceGitRepository workspaceGitRepository =
-			portalWorkspace.getPrimaryPortalWorkspaceGitRepository();
+			workspace.getPrimaryPortalWorkspaceGitRepository();
 
 		workspaceGitRepository.storeCommitHistory(_getPortalBranchSHAs());
 	}

@@ -39,16 +39,10 @@ public class GitBisectToolBatchBuildRunner
 	}
 
 	protected void publishPoshiReport() {
-		if (!(workspace instanceof PortalWorkspace)) {
-			throw new RuntimeException("Invalid workspace");
-		}
-
 		PortalBatchBuildData portalBatchBuildData = getBuildData();
 
-		PortalWorkspace portalWorkspace = (PortalWorkspace)workspace;
-
 		WorkspaceGitRepository workspaceGitRepository =
-			portalWorkspace.getPrimaryPortalWorkspaceGitRepository();
+			workspace.getPrimaryPortalWorkspaceGitRepository();
 
 		File portalWebTestResultsDir = new File(
 			workspaceGitRepository.getDirectory(), "portal-web/test-results");

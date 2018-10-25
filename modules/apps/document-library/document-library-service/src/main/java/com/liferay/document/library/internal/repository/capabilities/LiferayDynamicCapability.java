@@ -30,12 +30,12 @@ import com.liferay.portal.repository.util.RepositoryWrapper;
 import com.liferay.portal.repository.util.RepositoryWrapperAware;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -71,14 +71,17 @@ public class LiferayDynamicCapability
 						Capability capability = bundleContext.getService(
 							serviceReference);
 
-						if (capability instanceof RepositoryEventAware) {
-							_registerRepositoryEventListeners(
-								(RepositoryEventAware & Capability)capability);
+						synchronized (this) {
+							if (capability instanceof RepositoryEventAware) {
+								_registerRepositoryEventListeners(
+									(RepositoryEventAware & Capability)
+										capability);
+							}
+
+							_capabilities.add(capability);
+
+							_updateRepositoryWrappers();
 						}
-
-						_capabilities.add(capability);
-
-						_updateRepositoryWrappers();
 
 						return capability;
 					}
@@ -87,7 +90,7 @@ public class LiferayDynamicCapability
 				}
 
 				@Override
-				public void modifiedService(
+				public synchronized void modifiedService(
 					ServiceReference<Capability> serviceReference,
 					Capability capability) {
 
@@ -97,15 +100,17 @@ public class LiferayDynamicCapability
 				}
 
 				@Override
-				public void removedService(
+				public synchronized void removedService(
 					ServiceReference<Capability> serviceReference,
 					Capability capability) {
 
-					_unregisterRepositoryEventListeners(capability);
+					synchronized (this) {
+						_unregisterRepositoryEventListeners(capability);
 
-					_capabilities.remove(capability);
+						_capabilities.remove(capability);
 
-					_updateRepositoryWrappers();
+						_updateRepositoryWrappers();
+					}
 				}
 
 			});
@@ -229,14 +234,14 @@ public class LiferayDynamicCapability
 
 	private Set<Capability> _capabilities = new HashSet<>();
 	private final Map<Capability, CapabilityRegistration>
-		_capabilityRegistrations = new HashMap<>();
-	private LiferayDynamicCapabilityLocalRepositoryWrapper
+		_capabilityRegistrations = new ConcurrentHashMap<>();
+	private volatile LiferayDynamicCapabilityLocalRepositoryWrapper
 		_liferayDynamicCapabilityLocalRepositoryWrapper;
-	private LiferayDynamicCapabilityRepositoryWrapper
+	private volatile LiferayDynamicCapabilityRepositoryWrapper
 		_liferayDynamicCapabilityRepositoryWrapper;
-	private LocalRepository _originalLocalRepository;
-	private Repository _originalRepository;
-	private RepositoryEventRegistry _repositoryEventRegistry;
+	private volatile LocalRepository _originalLocalRepository;
+	private volatile Repository _originalRepository;
+	private volatile RepositoryEventRegistry _repositoryEventRegistry;
 	private final ServiceTrackerList<Capability, Capability> _serviceTracker;
 
 	private static class CapabilityRegistration {

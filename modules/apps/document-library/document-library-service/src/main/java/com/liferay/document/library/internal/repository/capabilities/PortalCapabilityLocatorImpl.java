@@ -43,8 +43,8 @@ import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
 import com.liferay.trash.service.TrashEntryLocalService;
 import com.liferay.trash.service.TrashVersionLocalService;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -232,7 +232,7 @@ public class PortalCapabilityLocatorImpl
 	private DLSyncEventLocalService _dlSyncEventLocalService;
 
 	private final Map<DocumentRepository, LiferayDynamicCapability>
-		_liferayDynamicCapabilities = new HashMap<>();
+		_liferayDynamicCapabilities = new ConcurrentHashMap<>();
 	private final RepositoryEntryConverter _repositoryEntryConverter =
 		new RepositoryEntryConverter();
 	private final ProcessorCapability _reusingProcessorCapability =

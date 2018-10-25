@@ -266,16 +266,16 @@
 		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Site Pages Administration" />
 
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<for list="Site Page 1,Site Page 2,Site Page 3" param="pageName">
 			<execute macro="JSONLayout#addLayoutByGroupName">
 				<var name="groupName" value="Test Site Name" />
 				<var name="layoutName" value="${pageName}" />
 			</execute>
 		</for>
+
+		<execute macro="SitePages#openPagesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
 
 		<execute macro="SitePages#deletePage">
 			<var name="pageName" value="Site Page 2" />

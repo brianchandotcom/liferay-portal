@@ -222,7 +222,7 @@ public class FragmentDisplayContext {
 
 		soyContext.put(
 			"autocompleteTags",
-			_fragmentEntryProcessorRegistry.getAvailableTags());
+			_fragmentEntryProcessorRegistry.getAvailableTagsJSONArray());
 		soyContext.put("fragmentCollectionId", getFragmentCollectionId());
 		soyContext.put("fragmentEntryId", getFragmentEntryId());
 		soyContext.put("initialCSS", getCssContent());

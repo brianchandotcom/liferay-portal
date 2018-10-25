@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.json.JSONObject;
  */
 public interface FragmentEntryProcessorRegistry {
 
-	public default JSONArray getAvailableTags() {
+	public default JSONArray getAvailableTagsJSONArray() {
 		return null;
 	}
 

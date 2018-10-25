@@ -2066,10 +2066,6 @@ public class GitWorkingDirectory {
 		return executionResult.getStandardOut();
 	}
 
-	private String _log(int num, File file, String format) {
-		return _log(0, num, file, format);
-	}
-
 	private String _log(int start, int num, File file, String format) {
 		StringBuilder sb = new StringBuilder();
 

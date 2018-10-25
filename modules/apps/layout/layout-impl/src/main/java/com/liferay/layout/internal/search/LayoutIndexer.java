@@ -31,9 +31,12 @@ import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -66,9 +69,32 @@ public class LayoutIndexer extends BaseIndexer<Layout> {
 
 	public static final String CLASS_NAME = Layout.class.getName();
 
+	public LayoutIndexer() {
+		setDefaultSelectedFieldNames(
+			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
+			Field.DEFAULT_LANGUAGE_ID, Field.GROUP_ID, Field.MODIFIED_DATE,
+			Field.SCOPE_GROUP_ID, Field.UID);
+		setDefaultSelectedLocalizedFieldNames(Field.CONTENT, Field.NAME);
+		setFilterSearch(true);
+		setPermissionAware(true);
+		setSelectAllLocales(true);
+	}
+
 	@Override
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+
+	@Override
+	public boolean hasPermission(
+			PermissionChecker permissionChecker, String entryClassName,
+			long entryClassPK, String actionId)
+		throws Exception {
+
+		Layout layout = _layoutLocalService.getLayout(entryClassPK);
+
+		return LayoutPermissionUtil.contains(
+			permissionChecker, layout, true, ActionKeys.VIEW);
 	}
 
 	@Override

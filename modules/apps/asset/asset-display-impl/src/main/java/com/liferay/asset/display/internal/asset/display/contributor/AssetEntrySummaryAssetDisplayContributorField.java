@@ -12,13 +12,11 @@
  * details.
  */
 
-package com.liferay.asset.display.internal.asset.display.contributor.field;
+package com.liferay.asset.display.internal.asset.display.contributor;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributorField;
-import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -33,12 +31,12 @@ import org.osgi.service.component.annotations.Component;
 	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
 	service = AssetDisplayContributorField.class
 )
-public class AssetEntryCategoriesAssetDisplayContributorField
+public class AssetEntrySummaryAssetDisplayContributorField
 	implements AssetDisplayContributorField<AssetEntry> {
 
 	@Override
 	public String getKey() {
-		return "categories";
+		return "summary";
 	}
 
 	@Override
@@ -46,7 +44,7 @@ public class AssetEntryCategoriesAssetDisplayContributorField
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "categories");
+		return LanguageUtil.get(resourceBundle, "summary");
 	}
 
 	@Override
@@ -56,8 +54,7 @@ public class AssetEntryCategoriesAssetDisplayContributorField
 
 	@Override
 	public String getValue(AssetEntry assetEntry, Locale locale) {
-		return ListUtil.toString(
-			assetEntry.getCategories(), AssetCategory.NAME_ACCESSOR);
+		return assetEntry.getSummary(locale);
 	}
 
 }

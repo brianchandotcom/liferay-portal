@@ -12,43 +12,41 @@
  * details.
  */
 
-package com.liferay.journal.web.internal.asset.display.contributor.field;
+package com.liferay.asset.display.internal.asset.display.contributor;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributorField;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.petra.string.StringPool;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
  */
 @Component(
-	property = "model.class.name=com.liferay.journal.model.JournalArticle",
+	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
 	service = AssetDisplayContributorField.class
 )
-public class JournalArticleLastEditorNameAssetDisplayContributorField
-	implements AssetDisplayContributorField<JournalArticle> {
+public class AssetEntryCategoriesAssetDisplayContributorField
+	implements AssetDisplayContributorField<AssetEntry> {
 
 	@Override
 	public String getKey() {
-		return "lastEditorName";
+		return "categories";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, "com.liferay.journal.lang");
+			locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "last-editor-name");
+		return LanguageUtil.get(resourceBundle, "categories");
 	}
 
 	@Override
@@ -57,19 +55,9 @@ public class JournalArticleLastEditorNameAssetDisplayContributorField
 	}
 
 	@Override
-	public String getValue(JournalArticle article, Locale locale) {
-		long userId = article.getUserId();
-
-		User user = _userLocalService.fetchUser(userId);
-
-		if (user != null) {
-			return user.getFullName();
-		}
-
-		return StringPool.BLANK;
+	public String getValue(AssetEntry assetEntry, Locale locale) {
+		return ListUtil.toString(
+			assetEntry.getCategories(), AssetCategory.NAME_ACCESSOR);
 	}
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

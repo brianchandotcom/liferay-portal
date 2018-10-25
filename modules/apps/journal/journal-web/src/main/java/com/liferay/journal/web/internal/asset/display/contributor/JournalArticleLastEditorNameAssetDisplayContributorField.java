@@ -12,39 +12,43 @@
  * details.
  */
 
-package com.liferay.asset.display.internal.asset.display.contributor.field;
+package com.liferay.journal.web.internal.asset.display.contributor;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributorField;
-import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
  */
 @Component(
-	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
+	property = "model.class.name=com.liferay.journal.model.JournalArticle",
 	service = AssetDisplayContributorField.class
 )
-public class AssetEntryDescriptionAssetDisplayContributorField
-	implements AssetDisplayContributorField<AssetEntry> {
+public class JournalArticleLastEditorNameAssetDisplayContributorField
+	implements AssetDisplayContributorField<JournalArticle> {
 
 	@Override
 	public String getKey() {
-		return "description";
+		return "lastEditorName";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, getClass());
+			locale, "com.liferay.journal.lang");
 
-		return LanguageUtil.get(resourceBundle, "description");
+		return LanguageUtil.get(resourceBundle, "last-editor-name");
 	}
 
 	@Override
@@ -53,8 +57,19 @@ public class AssetEntryDescriptionAssetDisplayContributorField
 	}
 
 	@Override
-	public String getValue(AssetEntry assetEntry, Locale locale) {
-		return assetEntry.getDescription(locale);
+	public String getValue(JournalArticle article, Locale locale) {
+		long userId = article.getUserId();
+
+		User user = _userLocalService.fetchUser(userId);
+
+		if (user != null) {
+			return user.getFullName();
+		}
+
+		return StringPool.BLANK;
 	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

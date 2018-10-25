@@ -23,8 +23,8 @@ import java.util.Map;
 /**
  * @author Michael Hashimoto
  */
-public abstract class PortalBatchBuildRunner
-	extends BatchBuildRunner<PortalBatchBuildData> {
+public abstract class PortalBatchBuildRunner<T extends PortalBatchBuildData>
+	extends BatchBuildRunner<T, BatchPortalWorkspace> {
 
 	@Override
 	public void run() {
@@ -37,9 +37,7 @@ public abstract class PortalBatchBuildRunner
 		publishTestResults();
 	}
 
-	protected PortalBatchBuildRunner(
-		PortalBatchBuildData portalBatchBuildData) {
-
+	protected PortalBatchBuildRunner(T portalBatchBuildData) {
 		super(portalBatchBuildData);
 	}
 
@@ -47,17 +45,17 @@ public abstract class PortalBatchBuildRunner
 	protected void initWorkspace() {
 		PortalBatchBuildData portalBatchBuildData = getBuildData();
 
-		workspace = WorkspaceFactory.newBatchWorkspace(
+		BatchWorkspace batchWorkspace = WorkspaceFactory.newBatchWorkspace(
 			portalBatchBuildData.getPortalGitHubURL(),
 			portalBatchBuildData.getPortalUpstreamBranchName(),
 			portalBatchBuildData.getBatchName(),
 			portalBatchBuildData.getPortalBranchSHA());
 
-		if (!(workspace instanceof BatchPortalWorkspace)) {
+		if (!(batchWorkspace instanceof BatchPortalWorkspace)) {
 			throw new RuntimeException("Invalid workspace");
 		}
 
-		_batchPortalWorkspace = (BatchPortalWorkspace)workspace;
+		workspace = (BatchPortalWorkspace)batchWorkspace;
 	}
 
 	protected void publishTestResults() {
@@ -158,11 +156,9 @@ public abstract class PortalBatchBuildRunner
 
 	private File _getPrimaryPortalDirectory() {
 		WorkspaceGitRepository workspaceGitRepository =
-			_batchPortalWorkspace.getPrimaryPortalWorkspaceGitRepository();
+			workspace.getPrimaryPortalWorkspaceGitRepository();
 
 		return workspaceGitRepository.getDirectory();
 	}
-
-	private BatchPortalWorkspace _batchPortalWorkspace;
 
 }

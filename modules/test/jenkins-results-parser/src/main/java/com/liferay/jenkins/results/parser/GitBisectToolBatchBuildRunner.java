@@ -20,7 +20,8 @@ import java.io.IOException;
 /**
  * @author Michael Hashimoto
  */
-public class GitBisectToolBatchBuildRunner extends PortalBatchBuildRunner {
+public class GitBisectToolBatchBuildRunner
+	extends PortalBatchBuildRunner<PortalBatchBuildData> {
 
 	@Override
 	public void run() {

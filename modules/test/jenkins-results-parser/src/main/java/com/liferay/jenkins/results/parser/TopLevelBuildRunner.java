@@ -31,8 +31,9 @@ import org.dom4j.Element;
 /**
  * @author Michael Hashimoto
  */
-public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
-	extends BaseBuildRunner<T> {
+public abstract class TopLevelBuildRunner
+	<T extends TopLevelBuildData, V extends TopLevelWorkspace>
+		extends BaseBuildRunner<T, V> {
 
 	@Override
 	public void run() {

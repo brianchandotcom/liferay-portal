@@ -8,7 +8,6 @@ Import-Package:\
 	!jline.*,\
 	\
 	!org.apache.commons.math3.*,\
-	!org.apache.log4j.*,\
 	!org.apache.lucene.sandbox.*,\
 	\
 	!org.jboss.netty.*,\

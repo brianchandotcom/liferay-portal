@@ -17,7 +17,7 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public interface BuildRunner<T extends BuildData, V extends Workspace> {
+public interface BuildRunner<T extends BuildData, S extends Workspace> {
 
 	public T getBuildData();
 

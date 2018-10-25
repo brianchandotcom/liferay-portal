@@ -22,8 +22,8 @@ import java.util.concurrent.TimeoutException;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseBuildRunner<T extends BuildData, V extends Workspace>
-	implements BuildRunner<T, V> {
+public abstract class BaseBuildRunner<T extends BuildData, S extends Workspace>
+	implements BuildRunner<T, S> {
 
 	@Override
 	public T getBuildData() {
@@ -157,7 +157,7 @@ public abstract class BaseBuildRunner<T extends BuildData, V extends Workspace>
 			_buildData.getMasterHostname(), "script=" + sb.toString());
 	}
 
-	protected V workspace;
+	protected S workspace;
 
 	private final T _buildData;
 	private final Job _job;

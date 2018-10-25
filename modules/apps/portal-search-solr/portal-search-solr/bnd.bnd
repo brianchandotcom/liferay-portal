@@ -7,7 +7,6 @@ Import-Package:\
 	\
 	!jline.*,\
 	\
-	!org.apache.log4j.*,\
 	!org.apache.lucene.sandbox.*,\
 	\
 	!org.jboss.netty.*,\

@@ -73,6 +73,10 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 		<liferay-ui:message arguments="<%= new Object[] {ResourceActionsUtil.getModelResource(locale, duplicateClassName), name} %>" key="please-enter-a-unique-friendly-url" translateArguments="<%= false %>" />
 	</c:if>
 
+	<c:if test="<%= gfurle.getType() == GroupFriendlyURLException.ENDS_WITH_DASH %>">
+		<liferay-ui:message key="please-enter-a-friendly-url-that-does-not-end-with-a-dash" />
+	</c:if>
+
 	<c:if test="<%= gfurle.getType() == GroupFriendlyURLException.ENDS_WITH_SLASH %>">
 		<liferay-ui:message key="please-enter-a-friendly-url-that-does-not-end-with-a-slash" />
 	</c:if>

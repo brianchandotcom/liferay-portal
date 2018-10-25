@@ -50,6 +50,7 @@ public class ConfigurationUpgradeStepFactoryImpl
 				if (_persistenceManager.exists(oldPid)) {
 					Dictionary<String, String> dictionary =
 						_persistenceManager.load(oldPid);
+
 					dictionary.remove("service.pid");
 
 					dictionary.put("service.pid", newPid);

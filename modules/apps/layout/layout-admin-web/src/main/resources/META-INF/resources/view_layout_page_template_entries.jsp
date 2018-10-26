@@ -44,6 +44,8 @@ request.setAttribute(LayoutAdminWebKeys.LAYOUT_PAGE_TEMPLATE_DISPLAY_CONTEXT, la
 </portlet:actionURL>
 
 <aui:form action="<%= deleteLayoutPageTemplateEntryURL %>" name="fm">
+	<liferay-ui:error key="<%= PortalException.class.getName() %>" message="one-or-more-entries-could-not-be-deleted" />
+
 	<liferay-ui:search-container
 		id="layoutPageTemplateEntries"
 		searchContainer="<%= layoutPageTemplateDisplayContext.getLayoutPageTemplateEntriesSearchContainer() %>"

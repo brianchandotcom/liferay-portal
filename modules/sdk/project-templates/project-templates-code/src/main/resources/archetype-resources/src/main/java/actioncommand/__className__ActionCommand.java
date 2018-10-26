@@ -35,8 +35,6 @@ public class ${className}ActionCommand implements MVCActionCommand {
 
 		_log.log(LogService.LOG_INFO, message);
 
-		String name = "${className.toUpperCase()}_MESSAGE";
-
 		actionRequest.setAttribute("${className.toUpperCase()}_MESSAGE", message);
 
 		return true;

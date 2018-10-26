@@ -60,11 +60,7 @@ public class CodeGenerator {
 			ProjectTemplates.TEMPLATE_BUNDLE_PREFIX + "code");
 
 		archetypeGenerationRequest.setArchetypeGroupId("com.liferay");
-
-		// archetypeVersion is ignored
-
 		archetypeGenerationRequest.setArchetypeVersion("0");
-
 		archetypeGenerationRequest.setArtifactId("code");
 		archetypeGenerationRequest.setGroupId("com.liferay");
 		archetypeGenerationRequest.setInteractiveMode(false);
@@ -187,7 +183,6 @@ public class CodeGenerator {
 					VelocityContext velocityContext = new VelocityContext();
 
 					velocityContext.put("StringUtils", new StringUtils());
-
 					velocityContext.put(
 						"template", _codeTemplatesArgs.getTemplate());
 

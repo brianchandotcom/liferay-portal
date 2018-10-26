@@ -62,8 +62,8 @@ public class CodeTemplatesTest {
 
 		projectTemplatesArgs.setDestinationDir(destinationDir);
 		projectTemplatesArgs.setLiferayVersion("7.1");
-		projectTemplatesArgs.setName("foo");
 		projectTemplatesArgs.setMaven(true);
+		projectTemplatesArgs.setName("foo");
 		projectTemplatesArgs.setTemplate("mvc-portlet");
 
 		new ProjectTemplates(projectTemplatesArgs);
@@ -363,13 +363,13 @@ public class CodeTemplatesTest {
 			String content = new String(
 				Files.readAllBytes(buildGradle.toPath()));
 
-			String deps =
+			String dependencies =
 				"compileOnly group: \"com.liferay\", name: " +
 					"\"com.liferay.captcha.api\", version: \"1.1.0\"\n" +
 						"compileOnly group: \"org.osgi\", name: " +
 							"\"osgi.core\", version: \"6.0.0\"\ncompileOnly";
 
-			content = content.replaceFirst("compileOnly", deps);
+			content = content.replaceFirst("compileOnly", dependencies);
 
 			Files.write(buildGradle.toPath(), content.getBytes());
 
@@ -432,11 +432,11 @@ public class CodeTemplatesTest {
 			String content = new String(
 				Files.readAllBytes(buildGradle.toPath()));
 
-			String deps =
+			String dependencies =
 				"compileOnly group: \"javax.ws.rs\", name: " +
 					"\"javax.ws.rs-api\", version: \"2.0.1\"\ncompileOnly";
 
-			content = content.replaceFirst("compileOnly", deps);
+			content = content.replaceFirst("compileOnly", dependencies);
 
 			Files.write(buildGradle.toPath(), content.getBytes());
 
@@ -499,14 +499,14 @@ public class CodeTemplatesTest {
 			String content = new String(
 				Files.readAllBytes(buildGradle.toPath()));
 
-			String deps =
+			String dependencies =
 				"compileOnly group: \"com.liferay\", name: " +
 					"\"com.liferay.portal.search.api\", version: \"2.0.0\"\n" +
 						"compileOnly group: \"com.liferay\", name: " +
 							"\"com.liferay.portal.search.spi\",  version: " +
 								"\"2.0.0\"\ncompileOnly";
 
-			content = content.replaceFirst("compileOnly", deps);
+			content = content.replaceFirst("compileOnly", dependencies);
 
 			Files.write(buildGradle.toPath(), content.getBytes());
 
@@ -569,14 +569,14 @@ public class CodeTemplatesTest {
 			String content = new String(
 				Files.readAllBytes(buildGradle.toPath()));
 
-			String deps =
+			String dependencies =
 				"compileOnly group: \"com.liferay\", name: " +
 					"\"com.liferay.portal.search.api\", version: \"2.0.0\"\n" +
 						"compileOnly group: \"com.liferay\", name: " +
 							"\"com.liferay.portal.search.spi\", version: " +
 								"\"2.0.0\"\ncompileOnly";
 
-			content = content.replaceFirst("compileOnly", deps);
+			content = content.replaceFirst("compileOnly", dependencies);
 
 			Files.write(buildGradle.toPath(), content.getBytes());
 

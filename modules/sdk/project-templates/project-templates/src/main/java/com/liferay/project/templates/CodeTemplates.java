@@ -20,8 +20,6 @@ import com.beust.jcommander.ParameterException;
 import com.liferay.project.templates.internal.CodeGenerator;
 import com.liferay.project.templates.internal.util.FileUtil;
 
-import java.io.File;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -55,11 +53,10 @@ public class CodeTemplates {
 	}
 
 	public CodeTemplates(CodeTemplatesArgs codeTemplatesArgs) throws Exception {
-		File destinationDir = codeTemplatesArgs.getDestinationDir();
-
 		CodeGenerator codeGenerator = new CodeGenerator();
 
-		codeGenerator.generateCode(codeTemplatesArgs, destinationDir);
+		codeGenerator.generateCode(
+			codeTemplatesArgs, codeTemplatesArgs.getDestinationDir());
 	}
 
 }

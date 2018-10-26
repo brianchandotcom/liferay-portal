@@ -18,4 +18,5 @@ public class ${className}ServiceWrapper extends ${serviceWrapperClassName} {
 	public ${className}ServiceWrapper() {
 		super(null);
 	}
+
 }

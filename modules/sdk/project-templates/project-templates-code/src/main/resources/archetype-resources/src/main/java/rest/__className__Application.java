@@ -29,7 +29,7 @@ public class ${className}Application extends Application {
 
 	@Activate
 	public void activate() {
-		_log.log(LogService.LOG_INFO, "${className} Rest Portlet Deployed!");
+		_log.log(LogService.LOG_INFO, "${className} activated.");
 	}
 
 	@Override
@@ -41,14 +41,14 @@ public class ${className}Application extends Application {
 	@Path("/$className.toLowerCase()/list")
 	@Produces("text/plain")
 	public String getUsers() {
-		StringBuilder result = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 
 		for (User user : _userLocalService.getUsers(-1, -1)) {
-			result.append(user.getFullName());
-			result.append(",\n");
+			sb.append(user.getFullName());
+			sb.append(",\n");
 		}
 
-		return result.toString();
+		return sb.toString();
 	}
 
 	@Reference

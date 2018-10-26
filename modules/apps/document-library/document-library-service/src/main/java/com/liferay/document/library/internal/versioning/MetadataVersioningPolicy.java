@@ -119,7 +119,9 @@ public class MetadataVersioningPolicy implements VersioningPolicy {
 			return false;
 		}
 		catch (PortalException pe) {
-			_log.warn(pe, pe);
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
 
 			return false;
 		}

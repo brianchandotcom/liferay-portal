@@ -111,17 +111,37 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray structureJSONArray = JSONFactoryUtil.createJSONArray();
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
 				groupId, classNameId, classPK);
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			jsonArray.put(fragmentEntryLink.getFragmentEntryLinkId());
+			JSONObject columnsJSONObject = JSONFactoryUtil.createJSONObject();
+
+			JSONArray columnsJSONArray = JSONFactoryUtil.createJSONArray();
+
+			JSONObject fragmentEntryLinkIdsJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			JSONArray fragmentEntryLinkIdsJSONArray =
+				JSONFactoryUtil.createJSONArray();
+
+			fragmentEntryLinkIdsJSONArray.put(
+				fragmentEntryLink.getFragmentEntryLinkId());
+
+			fragmentEntryLinkIdsJSONObject.put(
+				"fragmentEntryLinkIds", fragmentEntryLinkIdsJSONArray);
+
+			columnsJSONArray.put(fragmentEntryLinkIdsJSONObject);
+
+			columnsJSONObject.put("columns", columnsJSONArray);
+
+			structureJSONArray.put(columnsJSONObject);
 		}
 
-		jsonObject.put("structure", jsonArray);
+		jsonObject.put("structure", structureJSONArray);
 
 		return addLayoutPageTemplateStructure(
 			PrincipalThreadLocal.getUserId(), groupId, classNameId, classPK,

@@ -58,7 +58,6 @@ public class CodeGenerator {
 
 		archetypeGenerationRequest.setArchetypeArtifactId(
 			ProjectTemplates.TEMPLATE_BUNDLE_PREFIX + "code");
-
 		archetypeGenerationRequest.setArchetypeGroupId("com.liferay");
 		archetypeGenerationRequest.setArchetypeVersion("0");
 		archetypeGenerationRequest.setArtifactId("code");

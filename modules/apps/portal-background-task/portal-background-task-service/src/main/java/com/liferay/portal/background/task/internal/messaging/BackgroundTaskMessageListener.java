@@ -14,6 +14,7 @@
 
 package com.liferay.portal.background.task.internal.messaging;
 
+import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.background.task.internal.SerialBackgroundTaskExecutor;
 import com.liferay.portal.background.task.internal.ThreadLocalAwareBackgroundTaskExecutor;
@@ -38,7 +39,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StackTraceUtil;
@@ -228,7 +229,7 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
 			if (Validator.isNotNull(servletContextNames)) {
-				classLoader = ClassLoaderUtil.getAggregatePluginsClassLoader(
+				classLoader = _getAggregatePluginsClassLoader(
 					StringUtil.split(servletContextNames), false);
 			}
 
@@ -260,7 +261,7 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 		String servletContextNames = backgroundTask.getServletContextNames();
 
 		if (Validator.isNotNull(servletContextNames)) {
-			classLoader = ClassLoaderUtil.getAggregatePluginsClassLoader(
+			classLoader = _getAggregatePluginsClassLoader(
 				StringUtil.split(servletContextNames), false);
 		}
 
@@ -287,6 +288,34 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 			backgroundTaskExecutor, _backgroundTaskThreadLocalManager);
 
 		return backgroundTaskExecutor;
+	}
+
+	private ClassLoader _getAggregatePluginsClassLoader(
+		String[] servletContextNames, boolean addContextClassLoader) {
+
+		ClassLoader[] classLoaders = null;
+
+		int offset = 0;
+
+		if (addContextClassLoader) {
+			classLoaders = new ClassLoader[servletContextNames.length + 1];
+
+			Thread currentThread = Thread.currentThread();
+
+			classLoaders[0] = currentThread.getContextClassLoader();
+
+			offset = 1;
+		}
+		else {
+			classLoaders = new ClassLoader[servletContextNames.length];
+		}
+
+		for (int i = 0; i < servletContextNames.length; i++) {
+			classLoaders[offset + i] = ClassLoaderPool.getClassLoader(
+				servletContextNames[i]);
+		}
+
+		return AggregateClassLoader.getAggregateClassLoader(classLoaders);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

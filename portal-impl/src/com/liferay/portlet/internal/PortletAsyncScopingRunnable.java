@@ -17,14 +17,11 @@ package com.liferay.portlet.internal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManager;
-import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManagerFactory;
 import com.liferay.portlet.PortletAsyncListenerAdapter;
 
 import java.io.IOException;
 
-import javax.portlet.PortletConfig;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
+import java.util.function.Supplier;
 
 import javax.servlet.AsyncEvent;
 
@@ -34,28 +31,21 @@ import javax.servlet.AsyncEvent;
 public class PortletAsyncScopingRunnable implements Runnable {
 
 	public PortletAsyncScopingRunnable(
-		Runnable runnable, ResourceRequest resourceRequest,
-		ResourceResponse resourceResponse, PortletConfig portletConfig,
+		Runnable runnable,
 		PortletAsyncListenerAdapter portletAsyncListenerAdapter,
-		PortletAsyncScopeManagerFactory portletAsyncScopeManagerFactory) {
+		Supplier<PortletAsyncScopeManager> portletAsyncScopeManagerSupplier) {
 
 		_runnable = runnable;
-		_resourceRequest = resourceRequest;
-		_resourceResponse = resourceResponse;
-		_portletConfig = portletConfig;
 		_portletAsyncListenerAdapter = portletAsyncListenerAdapter;
-		_portletAsyncScopeManagerFactory = portletAsyncScopeManagerFactory;
+		_portletAsyncScopeManagerSupplier = portletAsyncScopeManagerSupplier;
 	}
 
 	@Override
 	public void run() {
 		PortletAsyncScopeManager portletAsyncScopeManager =
-			_portletAsyncScopeManagerFactory.getPortletAsyncScopeManager(
-				_resourceRequest, _resourceResponse, _portletConfig);
+			_portletAsyncScopeManagerSupplier.get();
 
-		if (portletAsyncScopeManager != null) {
-			portletAsyncScopeManager.activateScopeContexts();
-		}
+		portletAsyncScopeManager.activateScopeContexts();
 
 		try {
 			_runnable.run();
@@ -69,20 +59,15 @@ public class PortletAsyncScopingRunnable implements Runnable {
 			}
 		}
 
-		if (portletAsyncScopeManager != null) {
-			portletAsyncScopeManager.deactivateScopeContexts();
-		}
+		portletAsyncScopeManager.deactivateScopeContexts();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletAsyncScopingRunnable.class);
 
 	private final PortletAsyncListenerAdapter _portletAsyncListenerAdapter;
-	private final PortletAsyncScopeManagerFactory
-		_portletAsyncScopeManagerFactory;
-	private final PortletConfig _portletConfig;
-	private final ResourceRequest _resourceRequest;
-	private final ResourceResponse _resourceResponse;
+	private final Supplier<PortletAsyncScopeManager>
+		_portletAsyncScopeManagerSupplier;
 	private final Runnable _runnable;
 
 }

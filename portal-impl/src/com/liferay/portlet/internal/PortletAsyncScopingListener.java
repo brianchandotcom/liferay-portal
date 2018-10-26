@@ -16,15 +16,13 @@ package com.liferay.portlet.internal;
 
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManager;
-import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManagerFactory;
 import com.liferay.portlet.PortletAsyncListenerAdapter;
 
 import java.io.IOException;
 
+import java.util.function.Supplier;
+
 import javax.portlet.PortletAsyncContext;
-import javax.portlet.PortletConfig;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 
 import javax.servlet.AsyncEvent;
 
@@ -34,16 +32,12 @@ import javax.servlet.AsyncEvent;
 public class PortletAsyncScopingListener extends PortletAsyncListenerAdapter {
 
 	public PortletAsyncScopingListener(
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
-		PortletConfig portletConfig, PortletAsyncContext portletAsyncContext,
-		PortletAsyncScopeManagerFactory portletAsyncScopeManagerFactory) {
+		PortletAsyncContext portletAsyncContext,
+		Supplier<PortletAsyncScopeManager> portletAsyncScopeManagerSupplier) {
 
 		super(portletAsyncContext);
 
-		_resourceRequest = resourceRequest;
-		_resourceResponse = resourceResponse;
-		_portletConfig = portletConfig;
-		_portletAsyncScopeManagerFactory = portletAsyncScopeManagerFactory;
+		_portletAsyncScopeManagerSupplier = portletAsyncScopeManagerSupplier;
 	}
 
 	@Override
@@ -69,27 +63,17 @@ public class PortletAsyncScopingListener extends PortletAsyncListenerAdapter {
 	private void _invokeCallback(UnsafeRunnable<IOException> unsafeRunnable)
 		throws IOException {
 
-		PortletAsyncScopeManager portletAsyncScopeManager = null;
+		PortletAsyncScopeManager portletAsyncScopeManager =
+			_portletAsyncScopeManagerSupplier.get();
 
-		if (_portletAsyncScopeManagerFactory != null) {
-			portletAsyncScopeManager =
-				_portletAsyncScopeManagerFactory.getPortletAsyncScopeManager(
-					_resourceRequest, _resourceResponse, _portletConfig);
-
-			portletAsyncScopeManager.activateScopeContexts();
-		}
+		portletAsyncScopeManager.activateScopeContexts();
 
 		unsafeRunnable.run();
 
-		if (portletAsyncScopeManager != null) {
-			portletAsyncScopeManager.deactivateScopeContexts();
-		}
+		portletAsyncScopeManager.deactivateScopeContexts();
 	}
 
-	private final PortletAsyncScopeManagerFactory
-		_portletAsyncScopeManagerFactory;
-	private final PortletConfig _portletConfig;
-	private final ResourceRequest _resourceRequest;
-	private final ResourceResponse _resourceResponse;
+	private final Supplier<PortletAsyncScopeManager>
+		_portletAsyncScopeManagerSupplier;
 
 }

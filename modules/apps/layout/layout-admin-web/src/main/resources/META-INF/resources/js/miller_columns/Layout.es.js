@@ -210,6 +210,7 @@ class Layout extends Component {
 		if (itemDropIsValid) {
 			let parentPlid = null;
 			let priority = null;
+			const targetItem = getItem(layoutColumns, targetItemPlid);
 
 			layoutColumns = clearPath(
 				layoutColumns,
@@ -238,7 +239,7 @@ class Layout extends Component {
 						this._draggingItem,
 						this._draggingItemColumnIndex,
 						pathUpdated,
-						targetItemPlid
+						targetItem
 					);
 
 					layoutColumns = dropData.layoutColumns;
@@ -250,7 +251,7 @@ class Layout extends Component {
 						layoutColumns,
 						this._draggingItem,
 						this._draggingItemPosition,
-						targetItemPlid
+						targetItem
 					);
 
 					layoutColumns = dropData.layoutColumns;
@@ -410,7 +411,6 @@ class Layout extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleLeaveLayoutColumnItem() {
 		this._resetHoveredData();
 	}

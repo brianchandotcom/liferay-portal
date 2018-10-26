@@ -88,7 +88,7 @@ if (Validator.isNotNull(userFilter) && !userFilter.equals(StringPool.STAR)) {
 	catch (NameNotFoundException nnfe) {
 %>
 
-		<liferay-ui:message key="please-enter-a-valid-ldap-baseDN" />
+		<liferay-ui:message key="please-enter-a-valid-ldap-base-dn" />
 
 <%
 		return;

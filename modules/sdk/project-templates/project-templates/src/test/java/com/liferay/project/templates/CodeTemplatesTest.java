@@ -130,8 +130,8 @@ public class CodeTemplatesTest {
 
 		projectTemplatesArgs.setDestinationDir(destinationDir);
 		projectTemplatesArgs.setLiferayVersion("7.1");
-		projectTemplatesArgs.setName("foo");
 		projectTemplatesArgs.setMaven(true);
+		projectTemplatesArgs.setName("foo");
 		projectTemplatesArgs.setTemplate("mvc-portlet");
 
 		new ProjectTemplates(projectTemplatesArgs);
@@ -185,8 +185,8 @@ public class CodeTemplatesTest {
 
 		projectTemplatesArgs.setDestinationDir(destinationDir);
 		projectTemplatesArgs.setLiferayVersion("7.1");
-		projectTemplatesArgs.setName("foo");
 		projectTemplatesArgs.setMaven(true);
+		projectTemplatesArgs.setName("foo");
 		projectTemplatesArgs.setTemplate("mvc-portlet");
 
 		new ProjectTemplates(projectTemplatesArgs);
@@ -250,8 +250,8 @@ public class CodeTemplatesTest {
 
 		projectTemplatesArgs.setDestinationDir(destinationDir);
 		projectTemplatesArgs.setLiferayVersion("7.1");
-		projectTemplatesArgs.setName("foo");
 		projectTemplatesArgs.setMaven(true);
+		projectTemplatesArgs.setName("foo");
 		projectTemplatesArgs.setTemplate("mvc-portlet");
 
 		new ProjectTemplates(projectTemplatesArgs);
@@ -393,8 +393,8 @@ public class CodeTemplatesTest {
 
 		projectTemplatesArgs.setDestinationDir(destinationDir);
 		projectTemplatesArgs.setLiferayVersion("7.1");
-		projectTemplatesArgs.setName("foo");
 		projectTemplatesArgs.setMaven(true);
+		projectTemplatesArgs.setName("foo");
 		projectTemplatesArgs.setTemplate("mvc-portlet");
 
 		new ProjectTemplates(projectTemplatesArgs);
@@ -462,8 +462,8 @@ public class CodeTemplatesTest {
 
 		projectTemplatesArgs.setDestinationDir(destinationDir);
 		projectTemplatesArgs.setLiferayVersion("7.1");
-		projectTemplatesArgs.setName("foo");
 		projectTemplatesArgs.setMaven(true);
+		projectTemplatesArgs.setName("foo");
 		projectTemplatesArgs.setTemplate("mvc-portlet");
 
 		new ProjectTemplates(projectTemplatesArgs);
@@ -532,8 +532,8 @@ public class CodeTemplatesTest {
 
 		projectTemplatesArgs.setDestinationDir(destinationDir);
 		projectTemplatesArgs.setLiferayVersion("7.1");
-		projectTemplatesArgs.setName("foo");
 		projectTemplatesArgs.setMaven(true);
+		projectTemplatesArgs.setName("foo");
 		projectTemplatesArgs.setTemplate("mvc-portlet");
 
 		new ProjectTemplates(projectTemplatesArgs);
@@ -600,8 +600,8 @@ public class CodeTemplatesTest {
 
 		projectTemplatesArgs.setDestinationDir(destinationDir);
 		projectTemplatesArgs.setLiferayVersion("7.1");
-		projectTemplatesArgs.setName("foo");
 		projectTemplatesArgs.setMaven(true);
+		projectTemplatesArgs.setName("foo");
 		projectTemplatesArgs.setTemplate("mvc-portlet");
 
 		new ProjectTemplates(projectTemplatesArgs);

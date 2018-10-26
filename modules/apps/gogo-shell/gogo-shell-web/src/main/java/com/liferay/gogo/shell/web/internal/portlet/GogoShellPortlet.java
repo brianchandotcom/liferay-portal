@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
 
 import java.util.ResourceBundle;
@@ -215,8 +216,7 @@ public class GogoShellPortlet extends MVCPortlet {
 			errorUnsyncByteArrayOutputStream);
 
 		CommandSession commandSession = _commandProcessor.createSession(
-			new UnsyncByteArrayInputStream(new byte[0]), outputPrintStream,
-			errorPrintStream);
+			_emptyInputStream, outputPrintStream, errorPrintStream);
 
 		commandSession.put("prompt", "g!");
 
@@ -251,6 +251,8 @@ public class GogoShellPortlet extends MVCPortlet {
 		return null;
 	}
 
+	private static final InputStream _emptyInputStream =
+		new UnsyncByteArrayInputStream(new byte[0]);
 	private static final Pattern _pattern = Pattern.compile(
 		"\\b(close|disconnect|exit|shutdown)\\b");
 

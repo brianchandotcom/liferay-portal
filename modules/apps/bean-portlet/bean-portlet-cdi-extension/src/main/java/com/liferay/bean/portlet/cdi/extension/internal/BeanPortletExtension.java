@@ -429,23 +429,22 @@ public class BeanPortletExtension implements Extension {
 					servletContext.getServletContextName()));
 		}
 
-		PortletAsyncScopeManagerFactory portletAsyncScopeManagerFactory =
-			(resourceRequest, resourceResponse, portletConfig) -> {
-				ScopedBeanManagerStack scopedBeanManagerStack =
-					ScopedBeanManagerStack.getCurrentInstance();
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				PortletAsyncScopeManagerFactory.class,
+				(resourceRequest, resourceResponse, portletConfig) -> {
+					ScopedBeanManagerStack scopedBeanManagerStack =
+						ScopedBeanManagerStack.getCurrentInstance();
 
-				if (scopedBeanManagerStack == null) {
-					scopedBeanManagerStack = new ScopedBeanManagerStack();
-				}
+					if (scopedBeanManagerStack == null) {
+						scopedBeanManagerStack = new ScopedBeanManagerStack();
+					}
 
-				return new PortletAsyncScopeManagerImpl(
-					resourceRequest, resourceResponse, portletConfig,
-					scopedBeanManagerStack);
-			};
-
-		servletContext.setAttribute(
-			WebKeys.PORTLET_ASYNC_SCOPE_MANAGER_FACTORY,
-			portletAsyncScopeManagerFactory);
+					return new PortletAsyncScopeManagerImpl(
+						resourceRequest, resourceResponse, portletConfig,
+						scopedBeanManagerStack);
+				},
+				null));
 
 		Function<Class<? extends PortletAsyncListener>, PortletAsyncListener>
 			portletAsyncListenerFactory = listenerClass -> {

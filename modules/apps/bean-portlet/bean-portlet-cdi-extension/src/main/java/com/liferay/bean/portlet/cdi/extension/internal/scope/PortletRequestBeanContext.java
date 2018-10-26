@@ -32,7 +32,7 @@ public class PortletRequestBeanContext extends BaseContextImpl {
 		Contextual<T> contextual, CreationalContext<T> creationalContext) {
 
 		ScopedBeanManager scopedBeanManager =
-			ScopedBeanManagerStack.getCurrentInstance();
+			ScopedBeanManagerThreadLocal.getCurrentInstance();
 
 		return scopedBeanManager.getPortletRequestScopedBean(
 			(Bean<T>)contextual, creationalContext);

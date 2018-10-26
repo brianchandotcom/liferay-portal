@@ -15,7 +15,7 @@
 package com.liferay.bean.portlet.cdi.extension.internal;
 
 import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBeanManager;
-import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBeanManagerStack;
+import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBeanManagerThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManager;
@@ -38,7 +38,7 @@ public class PortletAsyncScopeManagerImpl implements PortletAsyncScopeManager {
 			return;
 		}
 
-		_closeable = ScopedBeanManagerStack.install(_scopedBeanManager);
+		_closeable = ScopedBeanManagerThreadLocal.install(_scopedBeanManager);
 	}
 
 	@Override

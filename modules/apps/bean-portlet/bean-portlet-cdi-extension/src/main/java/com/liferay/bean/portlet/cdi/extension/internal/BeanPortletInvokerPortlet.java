@@ -15,7 +15,7 @@
 package com.liferay.bean.portlet.cdi.extension.internal;
 
 import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBeanManager;
-import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBeanManagerStack;
+import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBeanManagerThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -270,14 +270,14 @@ public class BeanPortletInvokerPortlet
 		}
 
 		ScopedBeanManager scopedBeanManager =
-			ScopedBeanManagerStack.getCurrentInstance();
+			ScopedBeanManagerThreadLocal.getCurrentInstance();
 
 		if (scopedBeanManager == null) {
 			scopedBeanManager = new ScopedBeanManager(
 				portletRequest, portletResponse, _portletConfig);
 		}
 
-		try (Closeable closable = ScopedBeanManagerStack.install(
+		try (Closeable closable = ScopedBeanManagerThreadLocal.install(
 				scopedBeanManager)) {
 
 			_invokeBeanMethods(beanMethods, portletRequest, portletResponse);

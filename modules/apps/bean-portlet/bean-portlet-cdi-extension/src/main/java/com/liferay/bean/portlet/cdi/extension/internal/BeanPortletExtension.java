@@ -23,7 +23,7 @@ import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletSessionBeanC
 import com.liferay.bean.portlet.cdi.extension.internal.scope.RenderStateBeanContext;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBean;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBeanManager;
-import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBeanManagerStack;
+import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBeanManagerThreadLocal;
 import com.liferay.bean.portlet.cdi.extension.internal.util.BeanMethodIndexUtil;
 import com.liferay.bean.portlet.cdi.extension.internal.util.PortletScannerUtil;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.DisplayDescriptorParser;
@@ -436,7 +436,7 @@ public class BeanPortletExtension implements Extension {
 				PortletAsyncScopeManagerFactory.class,
 				(resourceRequest, resourceResponse, portletConfig) -> {
 					ScopedBeanManager scopedBeanManager =
-						ScopedBeanManagerStack.getCurrentInstance();
+						ScopedBeanManagerThreadLocal.getCurrentInstance();
 
 					if (scopedBeanManager == null) {
 						scopedBeanManager = new ScopedBeanManager(

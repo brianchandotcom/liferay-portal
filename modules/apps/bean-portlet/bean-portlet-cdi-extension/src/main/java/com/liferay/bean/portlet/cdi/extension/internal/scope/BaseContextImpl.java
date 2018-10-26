@@ -30,7 +30,7 @@ public abstract class BaseContextImpl implements Context {
 	@Override
 	public boolean isActive() {
 		ScopedBeanManager scopedBeanManager =
-			ScopedBeanManagerStack.getCurrentInstance();
+			ScopedBeanManagerThreadLocal.getCurrentInstance();
 
 		if ((scopedBeanManager != null) &&
 			(scopedBeanManager.getPortletRequest() != null)) {

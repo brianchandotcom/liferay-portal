@@ -15,7 +15,7 @@
 package com.liferay.bean.portlet.cdi.extension.internal;
 
 import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBeanManager;
-import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBeanManagerStack;
+import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBeanManagerThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -190,14 +190,14 @@ public class BeanFilterInvokerPortletFilter
 		throws PortletException {
 
 		ScopedBeanManager scopedBeanManager =
-			ScopedBeanManagerStack.getCurrentInstance();
+			ScopedBeanManagerThreadLocal.getCurrentInstance();
 
 		if (scopedBeanManager == null) {
 			scopedBeanManager = new ScopedBeanManager(
 				portletRequest, portletResponse, null);
 		}
 
-		try (Closeable closable = ScopedBeanManagerStack.install(
+		try (Closeable closable = ScopedBeanManagerThreadLocal.install(
 				scopedBeanManager)) {
 
 			_invokeMethod(method, portletRequest, portletResponse, filterChain);

@@ -24,7 +24,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 /**
  * @author Neil Griffin
  */
-public class ScopedBeanManagerStack {
+public class ScopedBeanManagerThreadLocal {
 
 	public static ScopedBeanManager getCurrentInstance() {
 		Deque<ScopedBeanManager> scopedBeanManagers = _instance.get();
@@ -54,7 +54,7 @@ public class ScopedBeanManagerStack {
 
 	private static final ThreadLocal<Deque<ScopedBeanManager>> _instance =
 		new CentralizedThreadLocal<>(
-			ScopedBeanManagerStack.class + "._instance",
+			ScopedBeanManagerThreadLocal.class + "._instance",
 			ConcurrentLinkedDeque::new);
 
 }

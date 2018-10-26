@@ -53,6 +53,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="key" />
 		</finder>
+		<finder name="A_T" return-type="Collection">
+			<finder-column name="active" />
+			<finder-column name="type" />
+		</finder>
 		<finder name="G_A_T" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="active" />

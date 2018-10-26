@@ -48,13 +48,8 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 		long parentPlid = ParamUtil.getLong(actionRequest, "parentPlid");
 		int priority = ParamUtil.getInteger(actionRequest, "priority");
 
-		if (priority > 0) {
-			_layoutService.updateParentLayoutIdAndPriority(
-				plid, parentPlid, priority);
-		}
-		else {
-			_layoutService.updateParentLayoutId(plid, parentPlid);
-		}
+		_layoutService.updateParentLayoutIdAndPriority(
+			plid, parentPlid, priority);
 	}
 
 	@Reference

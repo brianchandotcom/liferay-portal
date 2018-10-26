@@ -58,7 +58,8 @@ page import="com.liferay.portal.util.PropsValues" %>
 page import="java.util.List" %><%@
 page import="java.util.Properties" %>
 
-<%@ page import="javax.naming.directory.Attribute" %><%@
+<%@ page import="javax.naming.NameNotFoundException" %><%@
+page import="javax.naming.directory.Attribute" %><%@
 page import="javax.naming.directory.Attributes" %><%@
 page import="javax.naming.directory.SearchResult" %><%@
 page import="javax.naming.ldap.LdapContext" %>

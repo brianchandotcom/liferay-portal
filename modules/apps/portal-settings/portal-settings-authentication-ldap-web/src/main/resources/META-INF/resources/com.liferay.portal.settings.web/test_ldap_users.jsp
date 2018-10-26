@@ -82,7 +82,17 @@ String[] attributeIds = StringUtil.split(StringUtil.merge(userMappings.values())
 List<SearchResult> searchResults = new ArrayList<SearchResult>();
 
 if (Validator.isNotNull(userFilter) && !userFilter.equals(StringPool.STAR)) {
-	PortalLDAPUtil.getUsers(themeDisplay.getCompanyId(), ldapContext, new byte[0], 20, baseDN, userFilter, attributeIds, searchResults);
+	try {
+		PortalLDAPUtil.getUsers(themeDisplay.getCompanyId(), ldapContext, new byte[0], 20, baseDN, userFilter, attributeIds, searchResults);
+	}
+	catch (NameNotFoundException nnfe) {
+%>
+
+		<liferay-ui:message key="please-enter-a-valid-ldap-baseDN" />
+
+<%
+		return;
+	}
 }
 %>
 

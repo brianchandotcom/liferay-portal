@@ -65,8 +65,10 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -380,11 +382,22 @@ public class MBMessageIndexer
 	protected void doReindex(String className, long classPK) throws Exception {
 		MBMessage message = mbMessageLocalService.getMessage(classPK);
 
-		doReindex(message);
-
 		if (message.isRoot()) {
-			List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
-				message.getThreadId(), WorkflowConstants.STATUS_APPROVED);
+			List<MBMessage> messages = new LinkedList<>();
+
+			Optional.ofNullable(
+				mbMessageLocalService.getThreadMessages(
+					message.getThreadId(), WorkflowConstants.STATUS_APPROVED)
+			).ifPresent(
+				messages::addAll
+			);
+
+			Optional.ofNullable(
+				mbMessageLocalService.getThreadMessages(
+					message.getThreadId(), WorkflowConstants.STATUS_IN_TRASH)
+			).ifPresent(
+				messages::addAll
+			);
 
 			for (MBMessage curMessage : messages) {
 				reindex(curMessage);

@@ -28,6 +28,10 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -40,7 +44,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.text.DateFormat;
 import java.text.Format;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.UUID;
 
 import javax.portlet.PortletPreferences;
@@ -126,6 +132,74 @@ public class DefaultAnnouncementsDisplayContext
 		return GetterUtil.getInteger(
 			portletPreferences.getValue(
 				"pageDelta", String.valueOf(SearchContainer.DEFAULT_DELTA)));
+	}
+
+	@Override
+	public List<Group> getSelectedGroups() throws PortalException {
+		List<Group> selectedOrganizations = new ArrayList<>();
+
+		String[] selectedScopeGroupIds = StringUtil.split(
+			getSelectedScopeGroupIds());
+
+		for (String selectedScopeGroupId : selectedScopeGroupIds) {
+			selectedOrganizations.add(
+				GroupLocalServiceUtil.getGroup(
+					Long.valueOf(selectedScopeGroupId)));
+		}
+
+		return selectedOrganizations;
+	}
+
+	@Override
+	public List<Organization> getSelectedOrganizations()
+		throws PortalException {
+
+		List<Organization> selectedOrganizations = new ArrayList<>();
+
+		String[] selectedScopeOrganizationIds = StringUtil.split(
+			getSelectedScopeOrganizationIds());
+
+		for (String selectedScopeOrganizationId :
+				selectedScopeOrganizationIds) {
+
+			selectedOrganizations.add(
+				OrganizationLocalServiceUtil.getOrganization(
+					Long.valueOf(selectedScopeOrganizationId)));
+		}
+
+		return selectedOrganizations;
+	}
+
+	@Override
+	public List<Role> getSelectedRoles() throws PortalException {
+		List<Role> selectedRoles = new ArrayList<>();
+
+		String[] selectedScopeRoleIds = StringUtil.split(
+			getSelectedScopeRoleIds());
+
+		for (String selectedScopeRoleId : selectedScopeRoleIds) {
+			selectedRoles.add(
+				RoleLocalServiceUtil.getRole(
+					Long.valueOf(selectedScopeRoleId)));
+		}
+
+		return selectedRoles;
+	}
+
+	@Override
+	public List<UserGroup> getSelectedUserGroups() throws PortalException {
+		List<UserGroup> selectedUserGroups = new ArrayList<>();
+
+		String[] selectedScopeUserGroupIds = StringUtil.split(
+			getSelectedScopeUserGroupIds());
+
+		for (String selectedScopeUserGroupId : selectedScopeUserGroupIds) {
+			selectedUserGroups.add(
+				UserGroupLocalServiceUtil.getUserGroup(
+					Long.valueOf(selectedScopeUserGroupId)));
+		}
+
+		return selectedUserGroups;
 	}
 
 	@Override

@@ -30,6 +30,8 @@
 					<var name="groupName" value="Test Site Name" />
 				</execute>
 
+				<execute macro="Site#tearDownCP" />
+
 				<execute macro="User#tearDownCP" />
 			</else>
 		</if>

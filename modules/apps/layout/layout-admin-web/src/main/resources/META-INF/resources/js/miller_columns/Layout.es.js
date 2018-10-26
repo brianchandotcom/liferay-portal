@@ -8,6 +8,7 @@ import './LayoutColumn.es';
 import {DRAG_POSITIONS, LayoutDragDrop} from './utils/LayoutDragDrop.es';
 import {
 	clearFollowingColumns,
+	clearPath,
 	columnIsItemChild,
 	deleteEmptyColumns,
 	dropIsValid,
@@ -213,7 +214,11 @@ class Layout extends Component {
 			let targetColumn = null;
 			let targetItem = null;
 
-			layoutColumns = removeItem(sourceItemPlid, layoutColumns);
+			layoutColumns = clearPath(
+				layoutColumns,
+				sourceItemPlid,
+				targetItemPlid
+			);
 
 			if (targetColumnIndex) {
 				const dropData = dropItemInsideColumn(
@@ -257,35 +262,7 @@ class Layout extends Component {
 				}
 			}
 
-			if (sourceColumn.length === 0 && !this._currentPathItemPlid) {
-				layoutColumns = this._handleEmptyColumn(
-					layoutColumns,
-					targetColumnIndex
-				);
-
-				layoutColumns = deleteEmptyColumns(layoutColumns);
-			}
-
-			if (
-				this._draggingItem.active &&
-				(this._draggingItemColumnIndex !== targetColumnIndex)
-			) {
-				this._draggingItem.active = false;
-
-				layoutColumns = clearFollowingColumns(
-					layoutColumns,
-					this._draggingItemColumnIndex
-				);
-
-				layoutColumns = deleteEmptyColumns(layoutColumns);
-			}
-
-			if (this._draggingItem.homePage) {
-				layoutColumns = setHomePage(
-					layoutColumns,
-					this._draggingItem.plid
-				);
-			}
+			layoutColumns = setHomePage(layoutColumns);
 
 			this._moveLayoutColumnItemOnServer(
 				parentPlid,

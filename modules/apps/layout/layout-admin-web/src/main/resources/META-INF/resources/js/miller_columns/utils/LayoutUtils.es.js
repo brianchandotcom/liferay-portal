@@ -38,6 +38,49 @@ function clearFollowingColumns(layoutColumns, startColumnIndex) {
 }
 
 /**
+ * Clears path if an active item is moved to another column
+ * @param {object} layoutColumns
+ * @param {string} sourceItemPlid
+ * @param {string} targetItemPlid
+ * @return {object}
+ * @review
+ */
+function clearPath(layoutColumns, sourceItemPlid, targetItemPlid) {
+	let nextLayoutColumns = layoutColumns.map(
+		(layoutColumn) => [...layoutColumn]
+	);
+
+	const sourceItem = getItem(nextLayoutColumns, sourceItemPlid);
+
+	const sourceColumnIndex = getItemColumnIndex(
+		nextLayoutColumns,
+		sourceItemPlid
+	);
+
+	const targetColumnIndex = getItemColumnIndex(
+		nextLayoutColumns,
+		targetItemPlid
+	);
+
+	if (
+		sourceItem &&
+		sourceItem.active &&
+		(sourceColumnIndex !== targetColumnIndex))
+	{
+		sourceItem.active = false;
+
+		nextLayoutColumns = clearFollowingColumns(
+			nextLayoutColumns,
+			sourceColumnIndex
+		);
+
+		nextLayoutColumns = deleteEmptyColumns(nextLayoutColumns);
+	}
+
+	return nextLayoutColumns;
+}
+
+/**
  * @param {object[]} layoutColumns
  * @param {number} columnIndex
  * @param {string} itemPlid
@@ -131,6 +174,27 @@ function getColumnLastItem(layoutColumns, columnIndex) {
 	const column = layoutColumns[columnIndex];
 
 	return column[column.length - 1];
+}
+
+/**
+ * Returns the Home item of an array of columns
+ * @param {object[]} layoutColumns
+ * @private
+ * @return {object|null}
+ * @review
+ */
+function getHomeItem(layoutColumns) {
+	let item = null;
+
+	layoutColumns.forEach(
+		(layoutColumn) => {
+			item = item || layoutColumn.find(
+				(_item) => _item.homePage
+			);
+		}
+	);
+
+	return item;
 }
 
 /**
@@ -335,40 +399,29 @@ function removeItem(itemPlid, layoutColumns) {
  * @return {object|null}
  * @review
  */
-function setHomePage(layoutColumns, currentHomeItemPlid) {
+function setHomePage(layoutColumns) {
 	let nextLayoutColumns = layoutColumns;
 
-	const currentHomeItem = getItem(
-		nextLayoutColumns,
-		currentHomeItemPlid
+	const firstItem = nextLayoutColumns[1][0];
+
+	if (!firstItem.homePage) {
+		const currentHomeItem = getHomeItem(layoutColumns);
+		const currentHomeItemIndex = nextLayoutColumns[1].findIndex(
+			(item) => item.plid === currentHomeItem.plid
 	);
-	const currentHomeItemColumn = getItemColumn(
-		nextLayoutColumns,
-		currentHomeItemPlid
-	);
-	const currentHomeItemColumnIndex = nextLayoutColumns.indexOf(
-		currentHomeItemColumn
-	);
+
+		nextLayoutColumns = setIn(nextLayoutColumns, [1, 0, 'homePage'], true);
 
 	nextLayoutColumns = setIn(
 		nextLayoutColumns,
 		[
-			currentHomeItemColumnIndex,
-			currentHomeItemColumn.indexOf(currentHomeItem),
+				1,
+				currentHomeItemIndex,
 			'homePage'
 		],
 		false
 	);
-
-	nextLayoutColumns = setIn(
-		nextLayoutColumns,
-		[
-			currentHomeItemColumnIndex,
-			0,
-			'homePage'
-		],
-		true
-	);
+	}
 
 	return nextLayoutColumns;
 }
@@ -376,6 +429,7 @@ function setHomePage(layoutColumns, currentHomeItemPlid) {
 export {
 	appendItemToColumn,
 	clearFollowingColumns,
+	clearPath,
 	columnIsItemChild,
 	deleteEmptyColumns,
 	dropIsValid,

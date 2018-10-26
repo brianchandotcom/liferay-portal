@@ -293,21 +293,19 @@ function moveItemInside(
 	pathUpdated,
 	sourceItem,
 	sourceItemColumnIndex,
-	targetItemPlid
+	targetItem
 ) {
 	let nextLayoutColumns = removeItem(sourceItem.plid, layoutColumns);
 
 	const targetColumn = getItemColumn(
 		nextLayoutColumns,
-		targetItemPlid
+		targetItem.plid
 	);
 
 	const targetColumnIndex = getItemColumnIndex(
 		nextLayoutColumns,
-		targetItemPlid
+		targetItem.plid
 	);
-
-	const targetItem = getItem(nextLayoutColumns, targetItemPlid);
 
 	if (targetItem.active) {
 		const nextColumn = nextLayoutColumns[targetColumnIndex + 1];

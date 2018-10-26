@@ -104,16 +104,18 @@
 			<var name="layoutName" value="Category Page Name" />
 		</execute>
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/category-page-name" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Category Page Name" />
+			<var name="siteName" value="Test Site Name" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/category-page-name" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Category Page Name" />
+			<var name="siteName" value="Test Site Name" />
 		</execute>
 
 		<execute macro="SearchPortlets#addWidgets">
@@ -142,8 +144,9 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/category-page-name" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Category Page Name" />
+			<var name="siteName" value="Test Site Name" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#selectWebContent">
@@ -155,8 +158,9 @@
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/category-page-name" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Category Page Name" />
+			<var name="siteName" value="Test Site Name" />
 		</execute>
 
 		<execute macro="SearchPortlets#searchWidget">
@@ -177,9 +181,7 @@
 			<var name="layoutName" value="Test Page Name" />
 		</execute>
 
-		<execute macro="User#openUsersAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		<execute macro="User#openUsersAdmin" />
 
 		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="userea@liferay.com" />
@@ -188,9 +190,7 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="User#openUsersAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		<execute macro="User#openUsersAdmin" />
 
 		<execute macro="User#editPasswordCP">
 			<var name="password" value="password" />
@@ -210,9 +210,7 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="Role#openRolesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		<execute macro="Role#openRolesAdmin" />
 
 		<execute macro="RoleNavigator#gotoRoleType">
 			<var name="roleType" value="Site" />
@@ -222,9 +220,7 @@
 			<var name="roleTitle" value="Category Role Name" />
 		</execute>
 
-		<execute macro="Role#openRolesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		<execute macro="Role#openRolesAdmin" />
 
 		<execute macro="Role#definePermissionCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_CATEGORIES_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
@@ -235,9 +231,7 @@
 			<var name="roleType" value="Site" />
 		</execute>
 
-		<execute macro="Role#openRolesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		<execute macro="Role#openRolesAdmin" />
 
 		<execute macro="Role#definePermissionCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES_ADD_CATEGORY_CHECKBOX" />
@@ -248,9 +242,7 @@
 			<var name="roleType" value="Site" />
 		</execute>
 
-		<execute macro="Role#openRolesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		<execute macro="Role#openRolesAdmin" />
 
 		<execute macro="Role#definePermissionCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES_ADD_VOCABULARY_CHECKBOX" />
@@ -261,9 +253,7 @@
 			<var name="roleType" value="Site" />
 		</execute>
 
-		<execute macro="Role#openRolesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		<execute macro="Role#openRolesAdmin" />
 
 		<execute macro="Role#definePermissionCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_CATEGORIES_RESOURCE_PERMISSIONS_CATEGORY_VOCABULARY_VIEW_CHECKBOX" />
@@ -274,9 +264,7 @@
 			<var name="roleType" value="Site" />
 		</execute>
 
-		<execute macro="Role#openRolesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		<execute macro="Role#openRolesAdmin" />
 
 		<execute macro="Role#definePermissionCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_CATEGORIES_RESOURCE_PERMISSIONS_CATEGORY_ADD_CATEGORY_CHECKBOX" />
@@ -287,9 +275,7 @@
 			<var name="roleType" value="Site" />
 		</execute>
 
-		<execute macro="User#openUsersAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
+		<execute macro="User#openUsersAdmin" />
 
 		<execute macro="User#assignSiteRoleCP">
 			<var name="siteRoleName" value="Category Role Name" />
@@ -342,10 +328,8 @@
 			<var name="layoutName" value="Test Page Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
+		<execute macro="SitePages#openPagesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="SitePages#gotoPageMenuItem">
@@ -360,8 +344,8 @@
 
 		<execute macro="PortletEntry#save" />
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/site-name" />
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Test Site Name" />
 		</execute>
 
 		<execute macro="Page#viewSpecificPG">
@@ -388,21 +372,15 @@
 			<var name="displayStyle" value="Flattened Tree" />
 		</execute>
 
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Category Name" />
+		<execute macro="JSONCategory#addCategoryByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Category Name" />
 			<var name="vocabularyName" value="Topic" />
 		</execute>
 
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="Subcategory#addCP">
+		<execute macro="JSONCategory#addSubcategoryByGroupName">
 			<var name="categoryName" value="Category Name" />
+			<var name="groupName" value="Test Site Name" />
 			<var name="subcategoryName" value="Subcategory Name" />
 			<var name="vocabularyName" value="Topic" />
 		</execute>
@@ -718,8 +696,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/site-name" />
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -1029,10 +1007,6 @@
 			<var name="layoutName" value="Test Page Name" />
 		</execute>
 
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<execute macro="JSONCategory#addVocabularyByGroupName">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Vocabulary Name" />
@@ -1041,6 +1015,13 @@
 		<execute macro="JSONCategory#addCategoryByGroupName">
 			<var name="groupName" value="Test Site Name" />
 			<var name="title" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="JSONCategory#addSubcategoryByGroupName">
+			<var name="categoryName" value="Category Name" />
+			<var name="groupName" value="Test Site Name" />
+			<var name="subcategoryName" value="Subcategory Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -1063,13 +1044,6 @@
 
 		<execute macro="WebContent#viewCategorizationCategoryCP">
 			<var name="categoryNameList" value="Category Name" />
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="JSONCategory#addSubcategoryByGroupName">
-			<var name="categoryName" value="Category Name" />
-			<var name="groupName" value="Test Site Name" />
-			<var name="subcategoryName" value="Subcategory Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -1113,51 +1087,31 @@
 			<var name="portletName" value="Categories Navigation" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Test Site Name" />
-		</execute>
-
-		<execute macro="LAR#gotoExport">
+		<execute macro="LAR#exportSiteCP">
 			<var name="siteScopeName" value="Test Site Name" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoAdd" />
+		<var name="key_larFileName" value="${larFileName}" />
 
-		<execute macro="LAR#exportSuccess" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
-		<execute function="Refresh" />
-
-		<execute macro="LexiconEntry#changeExportDisplayStyle">
-			<var name="displayStyle" value="table" />
-		</execute>
-
-		<var method="selenium#getText('//tr/td/span/a/span')" name="valueName" />
+		<var method="selenium#getText('//ul/li/div/h5')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var method="RegexUtil#replace('${valueName}', '([0-9a-zA-Z_.-]+).*', '1')" name="larFileName" />
+		<var method="RegexUtil#replace('${valueName}', '([a-zA-z0-9_.-]*)[(0-9KB)]*', '1')" name="larFileName" />
 
 		<echo message="lar file name ${larFileName}" />
 
-		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
-		</execute>
+		<execute macro="LAR#downloadLar" />
 
-		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute function="DownloadTempFile" />
-		<execute function="SelectFrame" value1="relative=top" />
-
-		<execute macro="Site#openSitesAdmin" />
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Import Site Name" />
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Import Site Name" />
 		</execute>
 
 		<execute macro="LAR#importSiteCP">
 			<var name="larFileName" value="${larFileName}" />
 			<var name="siteName" value="Import Site Name" />
-			<var name="siteScopeName" value="Import Site Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -1199,10 +1153,6 @@
 		<execute macro="WebContent#viewCategorizationCategoryCP">
 			<var name="categoryNameList" value="Category Name" />
 			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Import Site Name" />
 		</execute>
 
 		<execute macro="WebContent#openWebContentAdmin">
@@ -1427,8 +1377,9 @@
 			<var name="vocabularyName" value="Topic" />
 		</execute>
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/test-site-name/search-page" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Search Page" />
+			<var name="siteName" value="Test Site Name" />
 		</execute>
 
 		<execute macro="SearchPortlets#addWidgets">

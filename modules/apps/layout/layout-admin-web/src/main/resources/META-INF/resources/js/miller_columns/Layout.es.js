@@ -201,8 +201,8 @@ class Layout extends Component {
 		const {sourceItemPlid, targetColumnIndex, targetItemPlid} = eventData;
 
 		const itemDropIsValid = dropIsValid(
-			layoutColumns,
-			sourceItemPlid,
+			this._draggingItem,
+			this._draggingItemColumnIndex,
 			targetItemPlid,
 			targetColumnIndex
 		);
@@ -213,7 +213,8 @@ class Layout extends Component {
 
 			layoutColumns = clearPath(
 				layoutColumns,
-				sourceItemPlid,
+				this._draggingItem,
+				this._draggingItemColumnIndex,
 				targetItemPlid
 			);
 
@@ -235,6 +236,7 @@ class Layout extends Component {
 					const dropData = dropItemInsideItem(
 						layoutColumns,
 						this._draggingItem,
+						this._draggingItemColumnIndex,
 						pathUpdated,
 						targetItemPlid
 					);
@@ -261,7 +263,7 @@ class Layout extends Component {
 
 			this._moveLayoutColumnItemOnServer(
 				parentPlid,
-				this._draggingItem.plid,
+				sourceItemPlid,
 				priority
 			)
 				.then(
@@ -397,7 +399,7 @@ class Layout extends Component {
 			else {
 				const itemPlid = event.delegateTarget.dataset.layoutColumnItemPlid;
 
-				const item = this._getLayoutColumnItemByPlid(this.layoutColumns, itemPlid);
+				const item = getItem(this.layoutColumns, itemPlid);
 
 				navigate(item.url);
 			}
@@ -561,9 +563,9 @@ class Layout extends Component {
 	 */
 	_setColumnHoveredData(draggingItemPlid, targetColumnIndex) {
 		const targetColumnIsChild = columnIsItemChild(
-			this.layoutColumns,
 			targetColumnIndex,
-			draggingItemPlid
+			this._draggingItem,
+			this._draggingItemColumnIndex
 		);
 		const targetColumnLastItem = getColumnLastItem(
 			this.layoutColumns,
@@ -598,9 +600,9 @@ class Layout extends Component {
 		);
 
 		const targetIsChild = columnIsItemChild(
-			this.layoutColumns,
 			targetColumnIndex,
-			sourceItemPlid
+			this._draggingItem,
+			this._draggingItemColumnIndex
 		);
 
 		const targetEqualsSource = (sourceItemPlid === targetItemPlid);

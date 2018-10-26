@@ -278,14 +278,12 @@ public class JSR362BeanProducer {
 	@PortletRequestScoped
 	@Produces
 	public PortletConfig getPortletConfig() {
-		ScopedBeanManagerStack scopedBeanManagerStack =
+		ScopedBeanManager scopedBeanManager =
 			ScopedBeanManagerStack.getCurrentInstance();
 
-		if (scopedBeanManagerStack == null) {
+		if (scopedBeanManager == null) {
 			return null;
 		}
-
-		ScopedBeanManager scopedBeanManager = scopedBeanManagerStack.peek();
 
 		return scopedBeanManager.getPortletConfig();
 	}
@@ -351,14 +349,12 @@ public class JSR362BeanProducer {
 	@PortletRequestScoped
 	@Produces
 	public PortletRequest getPortletRequest() {
-		ScopedBeanManagerStack scopedBeanManagerStack =
+		ScopedBeanManager scopedBeanManager =
 			ScopedBeanManagerStack.getCurrentInstance();
 
-		if (scopedBeanManagerStack == null) {
+		if (scopedBeanManager == null) {
 			return null;
 		}
-
-		ScopedBeanManager scopedBeanManager = scopedBeanManagerStack.peek();
 
 		return scopedBeanManager.getPortletRequest();
 	}
@@ -367,14 +363,12 @@ public class JSR362BeanProducer {
 	@PortletRequestScoped
 	@Produces
 	public PortletResponse getPortletResponse() {
-		ScopedBeanManagerStack scopedBeanManagerStack =
+		ScopedBeanManager scopedBeanManager =
 			ScopedBeanManagerStack.getCurrentInstance();
 
-		if (scopedBeanManagerStack == null) {
+		if (scopedBeanManager == null) {
 			return null;
 		}
-
-		ScopedBeanManager scopedBeanManager = scopedBeanManagerStack.peek();
 
 		return scopedBeanManager.getPortletResponse();
 	}

@@ -23,24 +23,13 @@ import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManager;
 import java.io.Closeable;
 import java.io.IOException;
 
-import javax.portlet.PortletConfig;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
-
 /**
  * @author Neil Griffin
  */
 public class PortletAsyncScopeManagerImpl implements PortletAsyncScopeManager {
 
-	public PortletAsyncScopeManagerImpl(
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
-		PortletConfig portletConfig,
-		ScopedBeanManagerStack scopedBeanManagerStack) {
-
-		_resourceRequest = resourceRequest;
-		_resourceResponse = resourceResponse;
-		_portletConfig = portletConfig;
-		_scopedBeanManagerStack = scopedBeanManagerStack;
+	public PortletAsyncScopeManagerImpl(ScopedBeanManager scopedBeanManager) {
+		_scopedBeanManager = scopedBeanManager;
 	}
 
 	@Override
@@ -49,9 +38,7 @@ public class PortletAsyncScopeManagerImpl implements PortletAsyncScopeManager {
 			return;
 		}
 
-		_closeable = _scopedBeanManagerStack.install(
-			new ScopedBeanManager(
-				_resourceRequest, _resourceResponse, _portletConfig));
+		_closeable = ScopedBeanManagerStack.install(_scopedBeanManager);
 	}
 
 	@Override
@@ -72,9 +59,6 @@ public class PortletAsyncScopeManagerImpl implements PortletAsyncScopeManager {
 		PortletAsyncScopeManagerImpl.class);
 
 	private Closeable _closeable;
-	private final PortletConfig _portletConfig;
-	private final ResourceRequest _resourceRequest;
-	private final ResourceResponse _resourceResponse;
-	private final ScopedBeanManagerStack _scopedBeanManagerStack;
+	private final ScopedBeanManager _scopedBeanManager;
 
 }

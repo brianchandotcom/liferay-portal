@@ -18,38 +18,43 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
 
 import java.io.Closeable;
 
+import java.util.Deque;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
  * @author Neil Griffin
  */
-public class ScopedBeanManagerStack
-	extends ConcurrentLinkedDeque<ScopedBeanManager> {
+public class ScopedBeanManagerStack {
 
-	public static ScopedBeanManagerStack getCurrentInstance() {
-		return _instance.get();
+	public static ScopedBeanManager getCurrentInstance() {
+		Deque<ScopedBeanManager> scopedBeanManagers = _instance.get();
+
+		return scopedBeanManagers.peek();
 	}
 
-	public Closeable install(ScopedBeanManager scopedBeanManager) {
-		push(scopedBeanManager);
+	public static Closeable install(ScopedBeanManager scopedBeanManager) {
+		Deque<ScopedBeanManager> scopedBeanManagers = _instance.get();
 
-		_instance.set(this);
+		scopedBeanManagers.push(scopedBeanManager);
 
 		return () -> {
-			int sizeBeforePop = size();
+			Deque<ScopedBeanManager> closingScopedBeanManagers =
+				_instance.get();
 
-			pop();
+			ScopedBeanManager closingScopedBeanManager =
+				closingScopedBeanManagers.pop();
 
-			if (sizeBeforePop == 1) {
-				scopedBeanManager.destroyScopedBeans();
+			if (closingScopedBeanManagers.isEmpty()) {
+				closingScopedBeanManager.destroyScopedBeans();
 
 				_instance.remove();
 			}
 		};
 	}
 
-	private static final ThreadLocal<ScopedBeanManagerStack> _instance =
+	private static final ThreadLocal<Deque<ScopedBeanManager>> _instance =
 		new CentralizedThreadLocal<>(
-			ScopedBeanManagerStack.class + "._instance");
+			ScopedBeanManagerStack.class + "._instance",
+			ConcurrentLinkedDeque::new);
 
 }

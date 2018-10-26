@@ -269,16 +269,16 @@ public class BeanPortletInvokerPortlet
 			return;
 		}
 
-		ScopedBeanManagerStack scopedBeanManagerStack =
+		ScopedBeanManager scopedBeanManager =
 			ScopedBeanManagerStack.getCurrentInstance();
 
-		if (scopedBeanManagerStack == null) {
-			scopedBeanManagerStack = new ScopedBeanManagerStack();
+		if (scopedBeanManager == null) {
+			scopedBeanManager = new ScopedBeanManager(
+				portletRequest, portletResponse, _portletConfig);
 		}
 
-		try (Closeable closable = scopedBeanManagerStack.install(
-				new ScopedBeanManager(
-					portletRequest, portletResponse, _portletConfig))) {
+		try (Closeable closable = ScopedBeanManagerStack.install(
+				scopedBeanManager)) {
 
 			_invokeBeanMethods(beanMethods, portletRequest, portletResponse);
 		}

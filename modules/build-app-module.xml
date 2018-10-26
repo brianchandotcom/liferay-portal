@@ -272,7 +272,7 @@
 				<tokenfilter>
 					<filetokenizer />
 
-					<replaceregex pattern="[\s\S]* Bundle Version ${artifact.version.previous.release}" replace="" />
+					<replaceregex pattern="[\s\S]* Bundle Version ${artifact.version.previous.release}\s" replace="" />
 				</tokenfilter>
 
 				<linecontainsregexp>

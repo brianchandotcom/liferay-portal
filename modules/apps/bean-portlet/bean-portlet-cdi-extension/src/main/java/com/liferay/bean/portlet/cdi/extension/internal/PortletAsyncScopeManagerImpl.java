@@ -34,19 +34,11 @@ public class PortletAsyncScopeManagerImpl implements PortletAsyncScopeManager {
 
 	@Override
 	public void activateScopeContexts() {
-		if (_closeable != null) {
-			return;
-		}
-
 		_closeable = ScopedBeanManagerThreadLocal.install(_scopedBeanManager);
 	}
 
 	@Override
 	public void deactivateScopeContexts() {
-		if (_closeable == null) {
-			return;
-		}
-
 		try {
 			_closeable.close();
 		}

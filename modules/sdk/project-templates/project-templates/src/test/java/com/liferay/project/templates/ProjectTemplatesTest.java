@@ -14,6 +14,22 @@
 
 package com.liferay.project.templates;
 
+import aQute.bnd.main.bnd;
+
+import com.liferay.maven.executor.MavenExecutor;
+import com.liferay.project.templates.internal.ProjectGenerator;
+import com.liferay.project.templates.internal.util.FileUtil;
+import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
+import com.liferay.project.templates.internal.util.Validator;
+import com.liferay.project.templates.util.DirectoryComparator;
+import com.liferay.project.templates.util.FileTestUtil;
+import com.liferay.project.templates.util.StringTestUtil;
+import com.liferay.project.templates.util.XMLTestUtil;
+
+import difflib.Delta;
+import difflib.DiffUtils;
+import difflib.Patch;
+
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -22,7 +38,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.StringWriter;
+
 import java.net.URI;
+
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
@@ -33,6 +51,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -61,12 +80,17 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import net.diibadaaba.zipdiff.DifferenceCalculator;
+import net.diibadaaba.zipdiff.Differences;
+
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipFile;
+
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.BuildTask;
 import org.gradle.testkit.runner.GradleRunner;
 import org.gradle.testkit.runner.TaskOutcome;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -74,28 +98,12 @@ import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
-
-import com.liferay.maven.executor.MavenExecutor;
-import com.liferay.project.templates.internal.ProjectGenerator;
-import com.liferay.project.templates.internal.util.FileUtil;
-import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
-import com.liferay.project.templates.internal.util.Validator;
-import com.liferay.project.templates.util.DirectoryComparator;
-import com.liferay.project.templates.util.FileTestUtil;
-import com.liferay.project.templates.util.StringTestUtil;
-import com.liferay.project.templates.util.XMLTestUtil;
-
-import aQute.bnd.main.bnd;
-import difflib.Delta;
-import difflib.DiffUtils;
-import difflib.Patch;
-import net.diibadaaba.zipdiff.DifferenceCalculator;
-import net.diibadaaba.zipdiff.Differences;
 
 /**
  * @author Lawrence Lee
@@ -4179,34 +4187,22 @@ public class ProjectTemplatesTest {
 								"\"" + _REPOSITORY_CDN_URL + "\"",
 								"\"" + repositoryUrl + "\"");
 						}
-						
-						String mavenRepoString = System.getProperty("maven.repo.local");
-						Path mavenRepoPath = Paths.get(mavenRepoString);
-						Path mavenRepoParentPath = mavenRepoPath.getParent();
-						Path m2tmpPath = mavenRepoParentPath.resolve(".m2-tmp");
-						content = content.replace(
-							"repositories {", "repositories {" +
-								System.lineSeparator() + "\t\t" + "mavenLocal()" +
-								System.lineSeparator() + "\t\t" + "maven { " +
-								System.lineSeparator() + "\t\t\turl " + "\"" + mavenRepoString + "\"" +
-								System.lineSeparator() + "\t\t}" +
-								System.lineSeparator() + "\t\t" + "maven { " +
-								System.lineSeparator() + "\t\t\turl " + "\"" + m2tmpPath + "\"" +
-								System.lineSeparator() + "\t\t}" +
-								System.lineSeparator()
-								);
+
+						String mavenRepoString = System.getProperty(
+							"maven.repo.local");
+
+						Path m2tmpPath = Paths.get(mavenRepoString + "-tmp");
+
+						if (Files.exists(m2tmpPath)) {
+							content = content.replace(
+								"repositories {",
+								"repositories {\n\t\tmavenLocal()\n\t\tmaven " +
+									"{ \n\t\t\turl " + "\"" + m2tmpPath + "\"" +
+										"\n\t\t}");
+						}
 
 						Files.write(
 							path, content.getBytes(StandardCharsets.UTF_8));
-
-						if (content.contains("repositories") &&
-							fileName.equals("settings.gradle")) {
-
-							System.err.println(content);
-							System.err.println(System.lineSeparator() + "********");
-							System.err.println("REPOSITORY_URL = " + repositoryUrl);
-							System.err.println("********" + System.lineSeparator());
-						}
 					}
 
 					return FileVisitResult.CONTINUE;

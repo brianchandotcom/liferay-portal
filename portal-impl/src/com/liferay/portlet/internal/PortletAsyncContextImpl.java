@@ -248,10 +248,8 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 		PortletAsyncScopeManagerFactory portletAsyncScopeManagerFactory =
 			_portletAsyncScopeManagerFactory;
 
-		PortletAsyncScopeManager portletAsyncScopeManager = null;
-
 		if (portletAsyncScopeManagerFactory != null) {
-			portletAsyncScopeManager =
+			PortletAsyncScopeManager portletAsyncScopeManager =
 				portletAsyncScopeManagerFactory.getPortletAsyncScopeManager(
 					resourceRequest, resourceResponse, portletConfig);
 

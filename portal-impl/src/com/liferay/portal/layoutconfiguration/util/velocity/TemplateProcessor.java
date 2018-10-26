@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.layoutconfiguration.util.PortletRenderer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -232,15 +233,29 @@ public class TemplateProcessor implements ColumnProcessor {
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
 
+		boolean modified = false;
+
 		for (Map.Entry<String, ?> entry : defaultSettingsMap.entrySet()) {
 			String key = entry.getKey();
 			Object value = entry.getValue();
 
 			if (value instanceof String) {
-				modifiableSettings.setValue(key, (String)value);
+				Object storedValue = modifiableSettings.getValue(key, null);
+
+				if (!value.equals(storedValue)) {
+					modifiableSettings.setValue(key, (String)value);
+
+					modified = true;
+				}
 			}
 			else if (value instanceof String[]) {
-				modifiableSettings.setValues(key, (String[])value);
+				Object[] storedValues = modifiableSettings.getValues(key, null);
+
+				if (!Arrays.equals((String[])value, storedValues)) {
+					modifiableSettings.setValues(key, (String[])value);
+
+					modified = true;
+				}
 			}
 			else {
 				throw new IllegalArgumentException(
@@ -250,7 +265,9 @@ public class TemplateProcessor implements ColumnProcessor {
 			}
 		}
 
-		modifiableSettings.store();
+		if (modified) {
+			modifiableSettings.store();
+		}
 
 		return processPortlet(portletId);
 	}

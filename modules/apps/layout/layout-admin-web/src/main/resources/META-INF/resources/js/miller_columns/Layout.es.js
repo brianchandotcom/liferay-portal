@@ -18,7 +18,6 @@ import {
 	getItemColumn,
 	getItemColumnIndex,
 	itemIsParent,
-	removeItem,
 	setHomePage
 } from './utils/LayoutUtils.es';
 import {

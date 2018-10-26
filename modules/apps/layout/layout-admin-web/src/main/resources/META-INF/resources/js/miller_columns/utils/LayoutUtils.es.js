@@ -2,17 +2,25 @@ import {setIn} from '../../utils/utils.es';
 
 /**
  * Append an item to a column and returns a new array of columns
- * @param {object} item 
- * @param {object[]} layoutColumns 
+ * @param {string} sourceItemPlid
+ * @param {object[]} layoutColumns
  * @param {number} targetColumnIndex
  * @return {object[]}
  * @review
  */
-function appendItemToColumn(item, layoutColumns, targetColumnIndex) {
-	const newLayoutColumns = layoutColumns;
-	const targetColumn = newLayoutColumns[targetColumnIndex];
+function appendItemToColumn(sourceItemPlid, layoutColumns, targetColumnIndex) {
+	let nextLayoutColumns = layoutColumns;
+	const sourceItem = getItem(nextLayoutColumns, sourceItemPlid);
 
-	targetColumn.splice(targetColumn.length, 0, item);
+	if (sourceItem) {
+		nextLayoutColumns = removeItem(sourceItemPlid, nextLayoutColumns);
+
+		const nextTargetColumn = [...nextLayoutColumns[targetColumnIndex]];
+
+		nextTargetColumn.splice(nextTargetColumn.length, 0, sourceItem);
+
+		nextLayoutColumns[targetColumnIndex] = nextTargetColumn;
+	}
 
 	return nextLayoutColumns;
 }
@@ -290,13 +298,14 @@ function itemIsParent(layoutColumns, childItemPlid, parentItemPlid) {
  * @review
  */
 function moveItemInside(layoutColumns, pathUpdated, sourceItemPlid, targetItemPlid) {
-	let nextLayoutColumns = layoutColumns;
+	const sourceItem = getItem(layoutColumns, sourceItemPlid);
 
-	const sourceItem = getItem(nextLayoutColumns, sourceItemPlid);
 	const sourceItemColumnIndex = getItemColumnIndex(
-		nextLayoutColumns,
+		layoutColumns,
 		sourceItemPlid
 	);
+
+	let nextLayoutColumns = removeItem(sourceItemPlid, layoutColumns);
 
 	const targetColumn = getItemColumn(
 		nextLayoutColumns,
@@ -408,19 +417,19 @@ function setHomePage(layoutColumns) {
 		const currentHomeItem = getHomeItem(layoutColumns);
 		const currentHomeItemIndex = nextLayoutColumns[1].findIndex(
 			(item) => item.plid === currentHomeItem.plid
-	);
+		);
 
 		nextLayoutColumns = setIn(nextLayoutColumns, [1, 0, 'homePage'], true);
 
-	nextLayoutColumns = setIn(
-		nextLayoutColumns,
-		[
+		nextLayoutColumns = setIn(
+			nextLayoutColumns,
+			[
 				1,
 				currentHomeItemIndex,
-			'homePage'
-		],
-		false
-	);
+				'homePage'
+			],
+			false
+		);
 	}
 
 	return nextLayoutColumns;

@@ -1390,6 +1390,22 @@ AUI.add(
 										instance.setValue(A.Date.format(date));
 									}
 								},
+								popover: {
+									on: {
+										keydown: function(event) {
+											var instance = this;
+
+											var event = event.domEvent._event;
+
+											var node = A.one('#' + event.target.id);
+
+											if (event.key === 'Tab' && (node && node.hasClass('yui3-calendar-grid'))) {
+												instance.hide();
+												A.one('.liferay-ddm-form-field-date > input').focus();
+											}
+										}
+									}
+								},
 								trigger: instance.get('templateNode').one('input')
 							}
 						).render();

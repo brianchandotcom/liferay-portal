@@ -248,7 +248,21 @@ else {
 						}
 					},
 					popover: {
-						zIndex: Liferay.zIndex.POPOVER
+						zIndex: Liferay.zIndex.POPOVER,
+						on: {
+							keydown: function(event) {
+								var instance = this;
+
+								var event = event.domEvent._event;
+
+								var node = A.one('#' + event.target.id);
+
+								if (event.key === 'Tab' && (node && node.hasClass('yui3-calendar-grid'))) {
+									instance.hide();
+									A.one('.lfr-input-date > input').focus();
+								}
+							}
+						}
 					},
 					trigger: '#<%= nameId %>'
 				}

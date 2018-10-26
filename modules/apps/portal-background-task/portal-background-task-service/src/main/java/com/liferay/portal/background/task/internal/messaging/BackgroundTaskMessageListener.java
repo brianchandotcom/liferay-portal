@@ -230,7 +230,7 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 
 			if (Validator.isNotNull(servletContextNames)) {
 				classLoader = _getAggregatePluginsClassLoader(
-					StringUtil.split(servletContextNames), false);
+					servletContextNames);
 			}
 
 			try {
@@ -261,8 +261,7 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 		String servletContextNames = backgroundTask.getServletContextNames();
 
 		if (Validator.isNotNull(servletContextNames)) {
-			classLoader = _getAggregatePluginsClassLoader(
-				StringUtil.split(servletContextNames), false);
+			classLoader = _getAggregatePluginsClassLoader(servletContextNames);
 		}
 
 		return classLoader;
@@ -291,27 +290,16 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 	}
 
 	private ClassLoader _getAggregatePluginsClassLoader(
-		String[] servletContextNames, boolean addContextClassLoader) {
+		String servletContextNamesString) {
 
-		ClassLoader[] classLoaders = null;
+		String[] servletContextNames = StringUtil.split(
+			servletContextNamesString);
 
-		int offset = 0;
-
-		if (addContextClassLoader) {
-			classLoaders = new ClassLoader[servletContextNames.length + 1];
-
-			Thread currentThread = Thread.currentThread();
-
-			classLoaders[0] = currentThread.getContextClassLoader();
-
-			offset = 1;
-		}
-		else {
-			classLoaders = new ClassLoader[servletContextNames.length];
-		}
+		ClassLoader[] classLoaders =
+			new ClassLoader[servletContextNames.length];
 
 		for (int i = 0; i < servletContextNames.length; i++) {
-			classLoaders[offset + i] = ClassLoaderPool.getClassLoader(
+			classLoaders[i] = ClassLoaderPool.getClassLoader(
 				servletContextNames[i]);
 		}
 

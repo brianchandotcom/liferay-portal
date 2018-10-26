@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.internal;
 
+import com.liferay.portal.kernel.portlet.async.PortletAsyncListenerFactory;
 import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManager;
 import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManagerFactory;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
@@ -21,8 +22,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.AsyncPortletServletRequest;
 import com.liferay.portlet.PortletAsyncListenerAdapter;
-
-import java.util.function.Function;
 
 import javax.portlet.PortletAsyncContext;
 import javax.portlet.PortletAsyncListener;
@@ -97,8 +96,8 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 
 		PortletContext portletContext = _resourceRequest.getPortletContext();
 
-		Function<Class<T>, T> portletAsyncListenerFactory =
-			(Function<Class<T>, T>)
+		PortletAsyncListenerFactory portletAsyncListenerFactory =
+			(PortletAsyncListenerFactory)
 				portletContext.getAttribute(
 					WebKeys.PORTLET_ASYNC_LISTENER_FACTORY);
 
@@ -114,8 +113,9 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 		T portletAsyncListener = null;
 
 		try {
-			portletAsyncListener = portletAsyncListenerFactory.apply(
-				listenerClass);
+			portletAsyncListener =
+				portletAsyncListenerFactory.getPortletAsyncListener(
+					listenerClass);
 		}
 		catch (Exception e) {
 			throw new PortletException(

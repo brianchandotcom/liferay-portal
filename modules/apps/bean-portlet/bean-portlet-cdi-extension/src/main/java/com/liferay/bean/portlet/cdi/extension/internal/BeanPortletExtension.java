@@ -33,6 +33,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.async.PortletAsyncListenerFactory;
 import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManagerFactory;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -446,19 +447,27 @@ public class BeanPortletExtension implements Extension {
 				},
 				null));
 
-		Function<Class<? extends PortletAsyncListener>, PortletAsyncListener>
-			portletAsyncListenerFactory = listenerClass -> {
-				Set<Bean<?>> beans = beanManager.getBeans(listenerClass);
+		PortletAsyncListenerFactory portletAsyncListenerFactory =
+			new PortletAsyncListenerFactory() {
 
-				Bean<?> bean = beanManager.resolve(beans);
+				@Override
+				public <T extends PortletAsyncListener> T
+					getPortletAsyncListener(Class<T> clazz) {
 
-				if (bean == null) {
-					return null;
+					Set<Bean<?>> beans = beanManager.getBeans(clazz);
+
+					Bean<?> bean = beanManager.resolve(beans);
+
+					if (bean == null) {
+						return null;
+					}
+
+					return clazz.cast(
+						beanManager.getReference(
+							bean, bean.getBeanClass(),
+							beanManager.createCreationalContext(bean)));
 				}
 
-				return (PortletAsyncListener)beanManager.getReference(
-					bean, bean.getBeanClass(),
-					beanManager.createCreationalContext(bean));
 			};
 
 		servletContext.setAttribute(

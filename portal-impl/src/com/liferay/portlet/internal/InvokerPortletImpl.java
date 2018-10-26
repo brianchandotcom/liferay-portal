@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -198,7 +199,7 @@ public class InvokerPortletImpl
 				PluginContextListener.PLUGIN_CLASS_LOADER);
 
 		if (classLoader == null) {
-			classLoader = ClassLoaderUtil.getPortalClassLoader();
+			classLoader = PortalClassLoaderUtil.getClassLoader();
 		}
 
 		return classLoader;

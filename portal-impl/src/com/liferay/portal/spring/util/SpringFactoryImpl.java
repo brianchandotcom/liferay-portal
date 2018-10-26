@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.spring.util.FactoryBean;
 import com.liferay.portal.kernel.spring.util.SpringFactory;
 import com.liferay.portal.kernel.spring.util.SpringFactoryException;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -76,7 +76,7 @@ public class SpringFactoryImpl implements SpringFactory {
 		}
 
 		Object bean = InstanceFactory.newInstance(
-			ClassLoaderUtil.getPortalClassLoader(), className);
+			PortalClassLoaderUtil.getClassLoader(), className);
 
 		FactoryBean<Object> factoryBean = null;
 

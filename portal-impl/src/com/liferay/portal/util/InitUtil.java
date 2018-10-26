@@ -239,7 +239,7 @@ public class InitUtil {
 				};
 
 			BeanLocator beanLocator = new BeanLocatorImpl(
-				ClassLoaderUtil.getPortalClassLoader(), appApplicationContext);
+				PortalClassLoaderUtil.getClassLoader(), appApplicationContext);
 
 			PortalBeanLocatorUtil.setBeanLocator(beanLocator);
 

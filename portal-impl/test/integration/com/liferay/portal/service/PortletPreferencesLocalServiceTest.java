@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.service.util.test.PortletPreferencesImplTestUtil;
@@ -1506,7 +1506,7 @@ public class PortletPreferencesLocalServiceTest {
 				(PortletPreferencesLocalService)previousService);
 
 		_serviceBag = new ServiceBag<>(
-			ClassLoaderUtil.getPortalClassLoader(), advisedSupport,
+			PortalClassLoaderUtil.getClassLoader(), advisedSupport,
 			PortletPreferencesLocalService.class, serviceWrapper);
 	}
 

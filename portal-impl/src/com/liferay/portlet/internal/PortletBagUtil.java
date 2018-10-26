@@ -16,7 +16,7 @@ package com.liferay.portlet.internal;
 
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portlet.PortletBagFactory;
 
 import javax.portlet.Portlet;
@@ -46,7 +46,7 @@ public class PortletBagUtil {
 			PortletBagFactory portletBagFactory = new PortletBagFactory();
 
 			portletBagFactory.setClassLoader(
-				ClassLoaderUtil.getPortalClassLoader());
+				PortalClassLoaderUtil.getClassLoader());
 			portletBagFactory.setServletContext(servletContext);
 			portletBagFactory.setWARFile(false);
 

@@ -47,11 +47,11 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -289,7 +289,7 @@ public class ExportImportChangesetMVCActionCommandImpl
 
 				try {
 					currentThread.setContextClassLoader(
-						ClassLoaderUtil.getPortalClassLoader());
+						PortalClassLoaderUtil.getClassLoader());
 
 					Group liveGroup = GroupServiceHttp.getGroup(
 						httpPrincipal, liveGroupId);

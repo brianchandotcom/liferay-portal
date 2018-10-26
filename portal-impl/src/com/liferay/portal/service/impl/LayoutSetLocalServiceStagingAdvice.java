@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.model.LayoutSetStagingHandler;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
@@ -83,7 +83,7 @@ public class LayoutSetLocalServiceStagingAdvice implements BeanFactoryAware {
 		}
 
 		return (LayoutSet)ProxyUtil.newProxyInstance(
-			ClassLoaderUtil.getPortalClassLoader(),
+			PortalClassLoaderUtil.getClassLoader(),
 			new Class<?>[] {LayoutSet.class, ModelWrapper.class},
 			new LayoutSetStagingHandler(layoutSet));
 	}

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -224,7 +225,7 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 			backgroundTaskExecutor = backgroundTaskExecutor.clone();
 		}
 		else {
-			ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
+			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
 			if (Validator.isNotNull(servletContextNames)) {
 				classLoader = ClassLoaderUtil.getAggregatePluginsClassLoader(
@@ -254,7 +255,7 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 			return null;
 		}
 
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
 		String servletContextNames = backgroundTask.getServletContextNames();
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portlet.InvokerFilterContainer;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.impl.PortletFilterImpl;
 import com.liferay.portal.util.PropsValues;
@@ -121,7 +122,7 @@ public class InvokerFilterContainerImpl
 
 		try {
 			ClassLoaderUtil.setContextClassLoader(
-				ClassLoaderUtil.getPortalClassLoader());
+				PortalClassLoaderUtil.getClassLoader());
 
 			for (String portletFilterClassName :
 					PropsValues.PORTLET_FILTERS_SYSTEM) {

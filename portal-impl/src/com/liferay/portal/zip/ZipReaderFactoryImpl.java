@@ -15,6 +15,7 @@
 package com.liferay.portal.zip;
 
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
 
@@ -29,7 +30,7 @@ public class ZipReaderFactoryImpl implements ZipReaderFactory {
 
 	@Override
 	public ZipReader getZipReader(File file) {
-		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
+		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
 
 		ClassLoader contextClassLoader =
 			ClassLoaderUtil.getContextClassLoader();
@@ -50,7 +51,7 @@ public class ZipReaderFactoryImpl implements ZipReaderFactory {
 
 	@Override
 	public ZipReader getZipReader(InputStream inputStream) throws IOException {
-		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
+		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
 
 		ClassLoader contextClassLoader =
 			ClassLoaderUtil.getContextClassLoader();

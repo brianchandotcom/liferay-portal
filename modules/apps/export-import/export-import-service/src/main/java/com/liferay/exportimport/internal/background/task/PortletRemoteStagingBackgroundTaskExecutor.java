@@ -31,9 +31,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portlet.exportimport.service.http.StagingServiceHttp;
 
 import java.io.File;
@@ -85,7 +85,7 @@ public class PortletRemoteStagingBackgroundTaskExecutor
 
 		try {
 			currentThread.setContextClassLoader(
-				ClassLoaderUtil.getPortalClassLoader());
+				PortalClassLoaderUtil.getClassLoader());
 
 			ExportImportThreadLocal.setPortletStagingInProcess(true);
 

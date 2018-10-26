@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.deploy.hot.BaseHotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployException;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.spring.context.PortletContextLoaderListener;
 
 import java.util.HashMap;
@@ -74,7 +75,7 @@ public class SpringHotDeployListener extends BaseHotDeployListener {
 
 		try {
 			ClassLoaderUtil.setContextClassLoader(
-				ClassLoaderUtil.getPortalClassLoader());
+				PortalClassLoaderUtil.getClassLoader());
 
 			contextLoaderListener.contextInitialized(
 				new ServletContextEvent(servletContext));
@@ -105,7 +106,7 @@ public class SpringHotDeployListener extends BaseHotDeployListener {
 
 		try {
 			ClassLoaderUtil.setContextClassLoader(
-				ClassLoaderUtil.getPortalClassLoader());
+				PortalClassLoaderUtil.getClassLoader());
 
 			contextLoaderListener.contextDestroyed(
 				new ServletContextEvent(servletContext));

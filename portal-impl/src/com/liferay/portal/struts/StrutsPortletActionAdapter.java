@@ -15,7 +15,7 @@
 package com.liferay.portal.struts;
 
 import com.liferay.portal.kernel.struts.BaseStrutsPortletAction;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -59,7 +59,7 @@ public class StrutsPortletActionAdapter extends BaseStrutsPortletAction {
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		currentThread.setContextClassLoader(
-			ClassLoaderUtil.getPortalClassLoader());
+			PortalClassLoaderUtil.getClassLoader());
 
 		try {
 			_portletAction.processAction(
@@ -82,7 +82,7 @@ public class StrutsPortletActionAdapter extends BaseStrutsPortletAction {
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		currentThread.setContextClassLoader(
-			ClassLoaderUtil.getPortalClassLoader());
+			PortalClassLoaderUtil.getClassLoader());
 
 		try {
 			ActionForward actionForward = _portletAction.render(
@@ -111,7 +111,7 @@ public class StrutsPortletActionAdapter extends BaseStrutsPortletAction {
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		currentThread.setContextClassLoader(
-			ClassLoaderUtil.getPortalClassLoader());
+			PortalClassLoaderUtil.getClassLoader());
 
 		try {
 			_portletAction.serveResource(

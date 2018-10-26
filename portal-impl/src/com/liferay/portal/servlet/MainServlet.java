@@ -58,10 +58,10 @@ import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.InactiveRequestHandler;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.template.TemplateManager;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -913,7 +913,7 @@ public class MainServlet extends ActionServlet {
 		PortletBagFactory portletBagFactory = new PortletBagFactory();
 
 		portletBagFactory.setClassLoader(
-			ClassLoaderUtil.getPortalClassLoader());
+			PortalClassLoaderUtil.getClassLoader());
 		portletBagFactory.setServletContext(servletContext);
 		portletBagFactory.setWARFile(false);
 
@@ -966,8 +966,6 @@ public class MainServlet extends ActionServlet {
 	}
 
 	protected void initSocial(PluginPackage pluginPackage) throws Exception {
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
 		ServletContext servletContext = getServletContext();
 
 		String[] xmls = {
@@ -977,7 +975,8 @@ public class MainServlet extends ActionServlet {
 				servletContext.getResource("/WEB-INF/liferay-social-ext.xml"))
 		};
 
-		SocialConfigurationUtil.read(classLoader, xmls);
+		SocialConfigurationUtil.read(
+			PortalClassLoaderUtil.getClassLoader(), xmls);
 	}
 
 	protected void initThemes(

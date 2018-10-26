@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.Converter;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PreloadClassLoader;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -102,7 +103,7 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
 			for (String className : _PRELOAD_CLASS_NAMES) {
 				ClassLoader portalClassLoader =
-					ClassLoaderUtil.getPortalClassLoader();
+					PortalClassLoaderUtil.getClassLoader();
 
 				Class<?> clazz = portalClassLoader.loadClass(className);
 
@@ -358,7 +359,7 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 						proxyFactory,
 						(ProxyFactory pf) -> {
 							ClassLoader classLoader =
-								ClassLoaderUtil.getPortalClassLoader();
+								PortalClassLoaderUtil.getClassLoader();
 
 							ClassLoader contextClassLoader =
 								ClassLoaderUtil.getContextClassLoader();

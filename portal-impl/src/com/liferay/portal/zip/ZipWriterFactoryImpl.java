@@ -15,6 +15,7 @@
 package com.liferay.portal.zip;
 
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
 
@@ -27,7 +28,7 @@ public class ZipWriterFactoryImpl implements ZipWriterFactory {
 
 	@Override
 	public ZipWriter getZipWriter() {
-		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
+		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
 
 		ClassLoader contextClassLoader =
 			ClassLoaderUtil.getContextClassLoader();
@@ -48,7 +49,7 @@ public class ZipWriterFactoryImpl implements ZipWriterFactory {
 
 	@Override
 	public ZipWriter getZipWriter(File file) {
-		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
+		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
 
 		ClassLoader contextClassLoader =
 			ClassLoaderUtil.getContextClassLoader();

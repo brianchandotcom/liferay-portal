@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.url.URLContainer;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -246,7 +247,7 @@ public class HotDeployImpl implements HotDeploy {
 			ClassLoader contextClassLoader = getContextClassLoader();
 
 			try {
-				setContextClassLoader(ClassLoaderUtil.getPortalClassLoader());
+				setContextClassLoader(PortalClassLoaderUtil.getClassLoader());
 
 				List<HotDeployEvent> dependentEvents = new ArrayList<>(
 					_dependentHotDeployEvents);

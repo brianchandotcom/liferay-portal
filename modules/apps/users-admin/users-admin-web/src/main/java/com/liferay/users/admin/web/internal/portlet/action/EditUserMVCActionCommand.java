@@ -174,6 +174,9 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		long[] deleteUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "deleteUserIds"), 0L);
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			User.class.getName(), actionRequest);
+
 		for (long deleteUserId : deleteUserIds) {
 			if (cmd.equals(Constants.DEACTIVATE) ||
 				cmd.equals(Constants.RESTORE)) {
@@ -184,8 +187,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 					status = WorkflowConstants.STATUS_INACTIVE;
 				}
 
-				_userService.updateStatus(
-					deleteUserId, status, new ServiceContext());
+				_userService.updateStatus(deleteUserId, status, serviceContext);
 			}
 			else {
 				_userService.deleteUser(deleteUserId);

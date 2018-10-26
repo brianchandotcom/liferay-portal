@@ -64,6 +64,7 @@ class ImagePreviewer extends Component {
 		this.zoomInDisabled = ZOOM_LEVELS_REVERSED[0] === zoomValue;
 		this.zoomOutDisabled = ZOOM_LEVELS[0] === zoomValue;
 
+		this.zoomRatio = zoomValue / this.zoomActual;
 		this._setZoom(zoomValue);
 	}
 
@@ -75,8 +76,10 @@ class ImagePreviewer extends Component {
 	}
 
 	_setScrollContainer() {
-		this.refs.imageContainer.scrollTop = (this.imageHeight - this.refs.imageContainer.clientHeight) / 2;
-		this.refs.imageContainer.scrollLeft = (this.imageWidth - this.refs.imageContainer.clientWidth) / 2;
+		this.refs.imageContainer.scrollLeft = this.refs.imageContainer.clientWidth * (this.zoomRatio - 1) / 2
+			+ this.refs.imageContainer.scrollLeft * this.zoomRatio;
+		this.refs.imageContainer.scrollTop = this.refs.imageContainer.clientHeight * (this.zoomRatio - 1) / 2
+			+ this.refs.imageContainer.scrollTop * this.zoomRatio;
 	}
 
 	_setZoom(zoomNumber) {

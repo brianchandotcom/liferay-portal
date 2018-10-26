@@ -68,9 +68,12 @@ public class PortletAsyncScopingListener extends PortletAsyncListenerAdapter {
 
 		portletAsyncScopeManager.activateScopeContexts();
 
-		unsafeRunnable.run();
-
-		portletAsyncScopeManager.deactivateScopeContexts();
+		try {
+			unsafeRunnable.run();
+		}
+		finally {
+			portletAsyncScopeManager.deactivateScopeContexts();
+		}
 	}
 
 	private final Supplier<PortletAsyncScopeManager>

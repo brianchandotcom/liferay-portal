@@ -2699,11 +2699,9 @@ public class DataFactory {
 	public List<ResourcePermissionModel> newResourcePermissionModels(
 		MBMessageModel mbMessageModel) {
 
-		return Collections.singletonList(
-			newResourcePermissionModel(
-				MBMessage.class.getName(),
-				String.valueOf(mbMessageModel.getMessageId()),
-				_ownerRoleModel.getRoleId(), _sampleUserId));
+		return newResourcePermissionModels(
+			MBMessage.class.getName(),
+			String.valueOf(mbMessageModel.getMessageId()), _sampleUserId);
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(

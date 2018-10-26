@@ -15,8 +15,8 @@
 package com.liferay.portlet.internal;
 
 import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.portal.kernel.util.PortletAsyncScopeManager;
-import com.liferay.portal.kernel.util.PortletAsyncScopeManagerFactory;
+import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManager;
+import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManagerFactory;
 import com.liferay.portlet.PortletAsyncListenerAdapter;
 
 import java.io.IOException;

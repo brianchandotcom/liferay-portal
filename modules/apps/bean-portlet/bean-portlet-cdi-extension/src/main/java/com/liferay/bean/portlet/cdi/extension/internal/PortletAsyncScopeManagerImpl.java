@@ -18,7 +18,7 @@ import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBeanManager;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBeanManagerStack;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PortletAsyncScopeManager;
+import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManager;
 
 import java.io.Closeable;
 import java.io.IOException;

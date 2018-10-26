@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.JSPSupportServlet;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -51,11 +50,12 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 
 		JspFactory jspFactory = JspFactory.getDefaultFactory();
 
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		try {
-			ClassLoaderUtil.setContextClassLoader(
+			currentThread.setContextClassLoader(
 				PortalClassLoaderUtil.getClassLoader());
 
 			_pageContext = jspFactory.getPageContext(
@@ -63,7 +63,7 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 				response, null, false, 0, false);
 		}
 		finally {
-			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 
 		_writer = _pageContext.getOut();

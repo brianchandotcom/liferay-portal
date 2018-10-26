@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.PortletServlet;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -143,12 +142,13 @@ public class InvokerPortletImpl
 			return;
 		}
 
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		try {
 			if (_portletClassLoader != null) {
-				ClassLoaderUtil.setContextClassLoader(_portletClassLoader);
+				currentThread.setContextClassLoader(_portletClassLoader);
 			}
 
 			Closeable closeable = (Closeable)_invokerFilterContainer;
@@ -162,7 +162,7 @@ public class InvokerPortletImpl
 		}
 		finally {
 			if (_portletClassLoader != null) {
-				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+				currentThread.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}
@@ -234,21 +234,22 @@ public class InvokerPortletImpl
 	public void init(PortletConfig portletConfig) throws PortletException {
 		_liferayPortletConfig = (LiferayPortletConfig)portletConfig;
 
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		_portletClassLoader = getPortletClassLoader();
 
 		try {
 			if (_portletClassLoader != null) {
-				ClassLoaderUtil.setContextClassLoader(_portletClassLoader);
+				currentThread.setContextClassLoader(_portletClassLoader);
 			}
 
 			_portlet.init(portletConfig);
 		}
 		finally {
 			if (_portletClassLoader != null) {
-				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+				currentThread.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}

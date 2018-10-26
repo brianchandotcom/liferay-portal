@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.nio.intraband.mailbox.MailboxUtil;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.DistributedRegistry;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThreadLocalDistributor;
@@ -243,8 +242,9 @@ public class SPIAgentSerializable implements Serializable {
 
 		Deserializer deserializer = new Deserializer(byteBuffer);
 
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		try {
 			String servletContextName = deserializer.readString();
@@ -252,7 +252,7 @@ public class SPIAgentSerializable implements Serializable {
 			ClassLoader classLoader = ClassLoaderPool.getClassLoader(
 				servletContextName);
 
-			ClassLoaderUtil.setContextClassLoader(classLoader);
+			currentThread.setContextClassLoader(classLoader);
 
 			T t = deserializer.readObject();
 
@@ -264,7 +264,7 @@ public class SPIAgentSerializable implements Serializable {
 			throw new IOException(cnfe);
 		}
 		finally {
-			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

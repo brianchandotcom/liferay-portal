@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -332,7 +331,9 @@ public abstract class BaseDB implements DB {
 	public void runSQLTemplate(String path, boolean failOnError)
 		throws IOException, NamingException, SQLException {
 
-		ClassLoader classLoader = ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader classLoader = currentThread.getContextClassLoader();
 
 		InputStream is = classLoader.getResourceAsStream(
 			"com/liferay/portal/tools/sql/dependencies/" + path);
@@ -393,6 +394,10 @@ public abstract class BaseDB implements DB {
 
 			String line = null;
 
+			Thread currentThread = Thread.currentThread();
+
+			ClassLoader classLoader = currentThread.getContextClassLoader();
+
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				if (line.isEmpty() || line.startsWith("##")) {
 					continue;
@@ -408,9 +413,6 @@ public abstract class BaseDB implements DB {
 					}
 
 					String includeFileName = line.substring(pos + 1, end);
-
-					ClassLoader classLoader =
-						ClassLoaderUtil.getContextClassLoader();
 
 					InputStream is = classLoader.getResourceAsStream(
 						"com/liferay/portal/tools/sql/dependencies/" +
@@ -852,12 +854,14 @@ public abstract class BaseDB implements DB {
 			return StringPool.BLANK;
 		}
 
-		ClassLoader classLoader = ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader classLoader = currentThread.getContextClassLoader();
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		try {
-			ClassLoaderUtil.setContextClassLoader(
+			currentThread.setContextClassLoader(
 				PortalClassLoaderUtil.getClassLoader());
 
 			StringTemplateResource stringTemplateResource =
@@ -872,7 +876,7 @@ public abstract class BaseDB implements DB {
 			template.processTemplate(unsyncStringWriter);
 		}
 		finally {
-			ClassLoaderUtil.setContextClassLoader(classLoader);
+			currentThread.setContextClassLoader(classLoader);
 		}
 
 		// Trim insert statements because it breaks MySQL Query Browser

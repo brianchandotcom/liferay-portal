@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.FileTimestampUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -150,11 +149,12 @@ public class ThemeHotDeployListener extends BaseHotDeployListener {
 
 		// LEP-2057
 
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		try {
-			ClassLoaderUtil.setContextClassLoader(
+			currentThread.setContextClassLoader(
 				PortalClassLoaderUtil.getClassLoader());
 
 			TemplateResourceLoaderUtil.clearCache(
@@ -163,7 +163,7 @@ public class ThemeHotDeployListener extends BaseHotDeployListener {
 				TemplateConstants.LANG_TYPE_VM);
 		}
 		finally {
-			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 
 		if (_log.isInfoEnabled()) {

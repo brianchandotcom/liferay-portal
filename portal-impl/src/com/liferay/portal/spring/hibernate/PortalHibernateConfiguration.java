@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.Converter;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PreloadClassLoader;
@@ -361,8 +360,10 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 							ClassLoader classLoader =
 								PortalClassLoaderUtil.getClassLoader();
 
+							Thread currentThread = Thread.currentThread();
+
 							ClassLoader contextClassLoader =
-								ClassLoaderUtil.getContextClassLoader();
+								currentThread.getContextClassLoader();
 
 							if (classLoader != contextClassLoader) {
 								classLoader = new PreloadClassLoader(

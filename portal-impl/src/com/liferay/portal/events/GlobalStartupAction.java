@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PortalLifecycle;
@@ -173,10 +172,10 @@ public class GlobalStartupAction extends SimpleAction {
 
 		// Javadoc
 
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
 
-		JavadocManagerUtil.load(StringPool.BLANK, contextClassLoader);
+		JavadocManagerUtil.load(
+			StringPool.BLANK, currentThread.getContextClassLoader());
 
 		// JNDI
 

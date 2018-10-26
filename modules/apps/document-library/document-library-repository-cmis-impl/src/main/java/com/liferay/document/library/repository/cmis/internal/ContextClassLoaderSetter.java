@@ -14,8 +14,6 @@
 
 package com.liferay.document.library.repository.cmis.internal;
 
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
-
 import java.io.Closeable;
 
 /**
@@ -24,14 +22,18 @@ import java.io.Closeable;
 public class ContextClassLoaderSetter implements Closeable {
 
 	public ContextClassLoaderSetter(ClassLoader classLoader) {
-		_originalClassLoader = ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
 
-		ClassLoaderUtil.setContextClassLoader(classLoader);
+		_originalClassLoader = currentThread.getContextClassLoader();
+
+		currentThread.setContextClassLoader(classLoader);
 	}
 
 	@Override
 	public void close() {
-		ClassLoaderUtil.setContextClassLoader(_originalClassLoader);
+		Thread currentThread = Thread.currentThread();
+
+		currentThread.setContextClassLoader(_originalClassLoader);
 	}
 
 	private final ClassLoader _originalClassLoader;

@@ -15,7 +15,6 @@
 package com.liferay.portal.javadoc;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -47,8 +46,9 @@ public class JavadocUtil {
 			}
 		}
 
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		if (classLoader != contextClassLoader) {
 			try {

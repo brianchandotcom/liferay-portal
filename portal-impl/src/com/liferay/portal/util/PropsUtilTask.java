@@ -14,8 +14,6 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
-
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
@@ -27,20 +25,21 @@ public class PropsUtilTask extends Task {
 
 	@Override
 	public void execute() throws BuildException {
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		try {
 			Class<?> clazz = getClass();
 
-			ClassLoaderUtil.setContextClassLoader(clazz.getClassLoader());
+			currentThread.setContextClassLoader(clazz.getClassLoader());
 
 			Project project = getProject();
 
 			project.setUserProperty(_result, PropsUtil.get(_key));
 		}
 		finally {
-			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

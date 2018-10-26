@@ -17,7 +17,6 @@ package com.liferay.portal.deploy.hot;
 import com.liferay.portal.kernel.deploy.hot.BaseHotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployException;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.spring.context.PortletContextLoaderListener;
 
@@ -70,18 +69,19 @@ public class SpringHotDeployListener extends BaseHotDeployListener {
 		ContextLoaderListener contextLoaderListener =
 			new PortletContextLoaderListener();
 
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		try {
-			ClassLoaderUtil.setContextClassLoader(
+			currentThread.setContextClassLoader(
 				PortalClassLoaderUtil.getClassLoader());
 
 			contextLoaderListener.contextInitialized(
 				new ServletContextEvent(servletContext));
 		}
 		finally {
-			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 
 		_contextLoaderListeners.put(servletContextName, contextLoaderListener);
@@ -101,18 +101,19 @@ public class SpringHotDeployListener extends BaseHotDeployListener {
 			return;
 		}
 
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		try {
-			ClassLoaderUtil.setContextClassLoader(
+			currentThread.setContextClassLoader(
 				PortalClassLoaderUtil.getClassLoader());
 
 			contextLoaderListener.contextDestroyed(
 				new ServletContextEvent(servletContext));
 		}
 		finally {
-			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
@@ -111,9 +110,11 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 					_whitelistedClassLoaders.toArray(
 						new ClassLoader[_whitelistedClassLoaders.size()]);
 
+				Thread currentThread = Thread.currentThread();
+
 				ClassLoader[] classLoaders = ArrayUtil.append(
 					wwhitelistedClassLoaders,
-					ClassLoaderUtil.getContextClassLoader());
+					currentThread.getContextClassLoader());
 
 				ClassLoader wwhitelistedAggregateClassLoader =
 					AggregateClassLoader.getAggregateClassLoader(classLoaders);

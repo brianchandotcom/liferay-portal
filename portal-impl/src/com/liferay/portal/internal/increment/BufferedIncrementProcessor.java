@@ -16,7 +16,6 @@ package com.liferay.portal.internal.increment;
 
 import com.liferay.portal.kernel.increment.Increment;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 
 import java.io.Serializable;
@@ -46,10 +45,12 @@ public class BufferedIncrementProcessor {
 		threadPoolExecutor.setRejectedExecutionHandler(
 			new ThreadPoolExecutor.DiscardPolicy());
 
+		Thread currentThread = Thread.currentThread();
+
 		threadPoolExecutor.setThreadFactory(
 			new NamedThreadFactory(
 				"BufferedIncrement-".concat(configuration),
-				Thread.NORM_PRIORITY, ClassLoaderUtil.getContextClassLoader()));
+				Thread.NORM_PRIORITY, currentThread.getContextClassLoader()));
 
 		_executorService = threadPoolExecutor;
 	}

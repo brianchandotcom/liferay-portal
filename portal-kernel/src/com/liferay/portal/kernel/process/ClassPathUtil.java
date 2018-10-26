@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -136,7 +135,9 @@ public class ClassPathUtil {
 		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
 		if (classLoader == null) {
-			classLoader = ClassLoaderUtil.getContextClassLoader();
+			Thread currentThread = Thread.currentThread();
+
+			classLoader = currentThread.getContextClassLoader();
 		}
 
 		StringBundler sb = new StringBundler(8);

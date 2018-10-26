@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.patcher.PatcherUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -119,7 +118,9 @@ public class StartupHelper {
 		DB db, Connection connection, boolean dropIndexes) {
 
 		try {
-			ClassLoader classLoader = ClassLoaderUtil.getContextClassLoader();
+			Thread currentThread = Thread.currentThread();
+
+			ClassLoader classLoader = currentThread.getContextClassLoader();
 
 			String tablesSQL = StringUtil.read(
 				classLoader,

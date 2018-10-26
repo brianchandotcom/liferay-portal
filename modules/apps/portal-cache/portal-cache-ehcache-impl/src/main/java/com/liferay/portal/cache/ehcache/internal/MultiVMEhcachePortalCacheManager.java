@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 
@@ -63,7 +62,7 @@ public class MultiVMEhcachePortalCacheManager
 
 		Class<?> clazz = getClass();
 
-		ClassLoaderUtil.setContextClassLoader(
+		currentThread.setContextClassLoader(
 			AggregateClassLoader.getAggregateClassLoader(
 				contextClassLoader, clazz.getClassLoader()));
 
@@ -73,7 +72,7 @@ public class MultiVMEhcachePortalCacheManager
 			initPortalCacheConfiguratorSettingsServiceTracker();
 		}
 		finally {
-			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 
 		if (_log.isDebugEnabled()) {

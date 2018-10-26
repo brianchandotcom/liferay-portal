@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 import javax.xml.XMLConstants;
@@ -105,14 +104,15 @@ public class SecureXMLFactoryProviderImpl implements SecureXMLFactoryProvider {
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		XMLReader xmlReader = null;
 
 		try {
 			if (classLoader != contextClassLoader) {
-				ClassLoaderUtil.setContextClassLoader(classLoader);
+				currentThread.setContextClassLoader(classLoader);
 			}
 
 			xmlReader = new SAXParser();
@@ -122,7 +122,7 @@ public class SecureXMLFactoryProviderImpl implements SecureXMLFactoryProvider {
 		}
 		finally {
 			if (classLoader != contextClassLoader) {
-				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+				currentThread.setContextClassLoader(contextClassLoader);
 			}
 		}
 

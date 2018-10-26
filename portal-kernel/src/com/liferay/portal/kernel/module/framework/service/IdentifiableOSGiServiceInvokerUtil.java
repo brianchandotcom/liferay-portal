@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.module.framework.service;
 
 import com.liferay.petra.lang.ClassLoaderPool;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 
@@ -31,8 +30,10 @@ public class IdentifiableOSGiServiceInvokerUtil {
 
 		MethodHandler methodHandler = new MethodHandler(method, args);
 
+		Thread currentThread = Thread.currentThread();
+
 		String threadContextServletContextName = ClassLoaderPool.getContextName(
-			ClassLoaderUtil.getContextClassLoader());
+			currentThread.getContextClassLoader());
 
 		IdentifiableOSGiService identifiableOSGiService =
 			(IdentifiableOSGiService)targetObject;
@@ -57,19 +58,20 @@ public class IdentifiableOSGiServiceInvokerUtil {
 				"Unable to load OSGi service " + osgiServiceIdentifier);
 		}
 
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		ClassLoader classLoader = ClassLoaderPool.getClassLoader(
 			threadContextServletContextName);
 
-		ClassLoaderUtil.setContextClassLoader(classLoader);
+		currentThread.setContextClassLoader(classLoader);
 
 		try {
 			return methodHandler.invoke(osgiService);
 		}
 		finally {
-			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -151,10 +150,10 @@ public abstract class VerifyProcess extends BaseDBProcess {
 			return _portalTableNames;
 		}
 
-		ClassLoader classLoader = ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
 
 		String sql = StringUtil.read(
-			classLoader,
+			currentThread.getContextClassLoader(),
 			"com/liferay/portal/tools/sql/dependencies/portal-tables.sql");
 
 		Matcher matcher = _createTablePattern.matcher(sql);

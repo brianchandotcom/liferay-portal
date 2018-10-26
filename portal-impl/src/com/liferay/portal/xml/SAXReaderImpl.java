@@ -15,7 +15,6 @@
 package com.liferay.portal.xml;
 
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -318,12 +317,13 @@ public class SAXReaderImpl implements SAXReader {
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		try {
 			if (classLoader != contextClassLoader) {
-				ClassLoaderUtil.setContextClassLoader(classLoader);
+				currentThread.setContextClassLoader(classLoader);
 			}
 
 			org.dom4j.io.SAXReader saxReader = getSAXReader(validate);
@@ -335,7 +335,7 @@ public class SAXReaderImpl implements SAXReader {
 		}
 		finally {
 			if (classLoader != contextClassLoader) {
-				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+				currentThread.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}
@@ -353,12 +353,13 @@ public class SAXReaderImpl implements SAXReader {
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		try {
 			if (classLoader != contextClassLoader) {
-				ClassLoaderUtil.setContextClassLoader(classLoader);
+				currentThread.setContextClassLoader(classLoader);
 			}
 
 			org.dom4j.io.SAXReader saxReader = getSAXReader(validate);
@@ -370,7 +371,7 @@ public class SAXReaderImpl implements SAXReader {
 		}
 		finally {
 			if (classLoader != contextClassLoader) {
-				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+				currentThread.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}
@@ -388,12 +389,13 @@ public class SAXReaderImpl implements SAXReader {
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		try {
 			if (classLoader != contextClassLoader) {
-				ClassLoaderUtil.setContextClassLoader(classLoader);
+				currentThread.setContextClassLoader(classLoader);
 			}
 
 			org.dom4j.io.SAXReader saxReader = getSAXReader(validate);
@@ -405,7 +407,7 @@ public class SAXReaderImpl implements SAXReader {
 		}
 		finally {
 			if (classLoader != contextClassLoader) {
-				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+				currentThread.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}
@@ -430,12 +432,13 @@ public class SAXReaderImpl implements SAXReader {
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		try {
 			if (classLoader != contextClassLoader) {
-				ClassLoaderUtil.setContextClassLoader(classLoader);
+				currentThread.setContextClassLoader(classLoader);
 			}
 
 			org.dom4j.io.SAXReader saxReader = getSAXReader(xmlSchema);
@@ -449,7 +452,7 @@ public class SAXReaderImpl implements SAXReader {
 		}
 		finally {
 			if (classLoader != contextClassLoader) {
-				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+				currentThread.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}
@@ -465,12 +468,13 @@ public class SAXReaderImpl implements SAXReader {
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		try {
 			if (classLoader != contextClassLoader) {
-				ClassLoaderUtil.setContextClassLoader(classLoader);
+				currentThread.setContextClassLoader(classLoader);
 			}
 
 			org.dom4j.io.SAXReader saxReader = getSAXReader(validate);
@@ -482,7 +486,7 @@ public class SAXReaderImpl implements SAXReader {
 		}
 		finally {
 			if (classLoader != contextClassLoader) {
-				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+				currentThread.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}

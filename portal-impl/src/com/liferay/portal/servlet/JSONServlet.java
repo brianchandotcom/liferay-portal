@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlThreadLocal;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.struts.JSONAction;
 
 import java.io.IOException;
@@ -63,16 +62,18 @@ public class JSONServlet extends HttpServlet {
 				_jsonAction.execute(null, null, request, response);
 			}
 			else {
+				Thread currentThread = Thread.currentThread();
+
 				ClassLoader contextClassLoader =
-					ClassLoaderUtil.getContextClassLoader();
+					currentThread.getContextClassLoader();
 
 				try {
-					ClassLoaderUtil.setContextClassLoader(_pluginClassLoader);
+					currentThread.setContextClassLoader(_pluginClassLoader);
 
 					_jsonAction.execute(null, null, request, response);
 				}
 				finally {
-					ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+					currentThread.setContextClassLoader(contextClassLoader);
 				}
 			}
 		}

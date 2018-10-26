@@ -16,7 +16,6 @@ package com.liferay.portal.servlet;
 
 import com.liferay.portal.kernel.security.access.control.AccessControlThreadLocal;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 
 import java.io.IOException;
 
@@ -42,16 +41,18 @@ public class AxisServlet extends com.liferay.util.axis.AxisServlet {
 			super.init(servletConfig);
 		}
 		else {
+			Thread currentThread = Thread.currentThread();
+
 			ClassLoader contextClassLoader =
-				ClassLoaderUtil.getContextClassLoader();
+				currentThread.getContextClassLoader();
 
 			try {
-				ClassLoaderUtil.setContextClassLoader(_pluginClassLoader);
+				currentThread.setContextClassLoader(_pluginClassLoader);
 
 				super.init(servletConfig);
 			}
 			finally {
-				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+				currentThread.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}
@@ -70,16 +71,18 @@ public class AxisServlet extends com.liferay.util.axis.AxisServlet {
 				super.service(request, response);
 			}
 			else {
+				Thread currentThread = Thread.currentThread();
+
 				ClassLoader contextClassLoader =
-					ClassLoaderUtil.getContextClassLoader();
+					currentThread.getContextClassLoader();
 
 				try {
-					ClassLoaderUtil.setContextClassLoader(_pluginClassLoader);
+					currentThread.setContextClassLoader(_pluginClassLoader);
 
 					super.service(request, response);
 				}
 				finally {
-					ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+					currentThread.setContextClassLoader(contextClassLoader);
 				}
 			}
 		}

@@ -18,7 +18,6 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceRegistrator;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceRegistratorFactory;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -103,20 +102,21 @@ public class JSONWebServiceTracker
 			"json.web.service.context.path");
 		Object service = getService(serviceReference);
 
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		ClassLoader classLoader = getBundleClassLoader(
 			serviceReference.getBundle());
 
-		ClassLoaderUtil.setContextClassLoader(classLoader);
+		currentThread.setContextClassLoader(classLoader);
 
 		try {
 			_jsonWebServiceActionsManager.registerService(
 				contextName, contextPath, service, _jsonWebServiceRegistrator);
 		}
 		finally {
-			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 
 		return service;

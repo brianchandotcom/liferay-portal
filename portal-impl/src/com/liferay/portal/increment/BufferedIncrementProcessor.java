@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.concurrent.BatchablePipe;
 import com.liferay.portal.kernel.increment.Increment;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -75,10 +74,12 @@ public class BufferedIncrementProcessor {
 		sb.setIndex(sb.index() - 1);
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
+		Thread currentThread = Thread.currentThread();
+
 		threadPoolExecutor.setThreadFactory(
 			new NamedThreadFactory(
 				sb.toString(), Thread.NORM_PRIORITY,
-				ClassLoaderUtil.getContextClassLoader()));
+				currentThread.getContextClassLoader()));
 
 		_executorService = threadPoolExecutor;
 	}

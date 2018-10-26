@@ -19,7 +19,9 @@ import com.liferay.petra.lang.ClassLoaderPool;
 /**
  * @author Raymond Augé
  * @author Shuyang Zhou
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 public class ClassLoaderUtil {
 
 	public static ClassLoader getAggregatePluginsClassLoader(

@@ -76,7 +76,7 @@ public abstract class BaseBuildRunner<T extends BuildData, S extends Workspace>
 		int returnCode = remoteExecutor.execute(
 			1, new String[] {_buildData.getMasterHostname()},
 			new String[] {
-				"mkdir -p /opt/java/jenkins/userContent" +
+				"mkdir -p /opt/java/jenkins/userContent/" +
 					userContentRelativePath
 			});
 

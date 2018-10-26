@@ -645,20 +645,20 @@ class Layout extends Component {
 	}
 
 	/**
-	 * @param {string} targetColumnIndex
 	 * @param {string} targetItemPlid
 	 * @private
 	 * @review
 	 */
-	_updatePath(targetColumnIndex, targetItemPlid) {
+	_updatePath(targetItemPlid) {
 		let nextLayoutColumns = this.layoutColumns;
+
+		const targetColumn = getItemColumn(nextLayoutColumns, targetItemPlid);
+		const targetColumnIndex = nextLayoutColumns.indexOf(targetColumn);
 
 		nextLayoutColumns = clearFollowingColumns(
 			nextLayoutColumns,
 			targetColumnIndex
 		);
-
-		const targetColumn = nextLayoutColumns[targetColumnIndex];
 
 		const targetItem = getItem(
 			nextLayoutColumns,

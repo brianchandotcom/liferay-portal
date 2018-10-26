@@ -16,7 +16,6 @@ package com.liferay.portal.store.jcr;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.memory.FinalizeManager;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.store.jcr.configuration.JCRStoreConfiguration;
 import com.liferay.portal.store.jcr.jackrabbit.JCRFactoryImpl;
@@ -79,9 +78,10 @@ public class JCRFactoryWrapper {
 		JCRSessionInvocationHandler jcrSessionInvocationHandler =
 			new JCRSessionInvocationHandler(jcrSession);
 
+		Class<?> clazz = getClass();
+
 		Object sessionProxy = ProxyUtil.newProxyInstance(
-			ClassLoaderUtil.getClassLoader(getClass()),
-			new Class<?>[] {Map.class, Session.class},
+			clazz.getClassLoader(), new Class<?>[] {Map.class, Session.class},
 			jcrSessionInvocationHandler);
 
 		FinalizeManager.register(

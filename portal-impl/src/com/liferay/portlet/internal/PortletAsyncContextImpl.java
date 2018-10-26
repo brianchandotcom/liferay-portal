@@ -19,14 +19,12 @@ import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManager;
 import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManagerFactory;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.AsyncPortletServletRequest;
 import com.liferay.portlet.PortletAsyncListenerAdapter;
 
 import javax.portlet.PortletAsyncContext;
 import javax.portlet.PortletAsyncListener;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -94,12 +92,8 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 				nsme);
 		}
 
-		PortletContext portletContext = _resourceRequest.getPortletContext();
-
 		PortletAsyncListenerFactory portletAsyncListenerFactory =
-			(PortletAsyncListenerFactory)
-				portletContext.getAttribute(
-					WebKeys.PORTLET_ASYNC_LISTENER_FACTORY);
+			_portletAsyncListenerFactory;
 
 		if (portletAsyncListenerFactory == null) {
 			try {
@@ -291,6 +285,12 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 		return originalServletRequest;
 	}
 
+	private static volatile PortletAsyncListenerFactory
+		_portletAsyncListenerFactory =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				PortletAsyncListenerFactory.class,
+				PortletAsyncContextImpl.class, "_portletAsyncListenerFactory",
+				false, true);
 	private static volatile PortletAsyncScopeManagerFactory
 		_portletAsyncScopeManagerFactory =
 			ServiceProxyFactory.newServiceTrackedInstance(

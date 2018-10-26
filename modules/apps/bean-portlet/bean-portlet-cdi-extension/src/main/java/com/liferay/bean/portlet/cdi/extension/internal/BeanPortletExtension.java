@@ -447,32 +447,31 @@ public class BeanPortletExtension implements Extension {
 				},
 				null));
 
-		PortletAsyncListenerFactory portletAsyncListenerFactory =
-			new PortletAsyncListenerFactory() {
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				PortletAsyncListenerFactory.class,
+				new PortletAsyncListenerFactory() {
 
-				@Override
-				public <T extends PortletAsyncListener> T
-					getPortletAsyncListener(Class<T> clazz) {
+					@Override
+					public <T extends PortletAsyncListener> T
+						getPortletAsyncListener(Class<T> clazz) {
 
-					Set<Bean<?>> beans = beanManager.getBeans(clazz);
+						Set<Bean<?>> beans = beanManager.getBeans(clazz);
 
-					Bean<?> bean = beanManager.resolve(beans);
+						Bean<?> bean = beanManager.resolve(beans);
 
-					if (bean == null) {
-						return null;
+						if (bean == null) {
+							return null;
+						}
+
+						return clazz.cast(
+							beanManager.getReference(
+								bean, bean.getBeanClass(),
+								beanManager.createCreationalContext(bean)));
 					}
 
-					return clazz.cast(
-						beanManager.getReference(
-							bean, bean.getBeanClass(),
-							beanManager.createCreationalContext(bean)));
-				}
-
-			};
-
-		servletContext.setAttribute(
-			WebKeys.PORTLET_ASYNC_LISTENER_FACTORY,
-			portletAsyncListenerFactory);
+				},
+				null));
 	}
 
 	public void step5SessionScopeBeforeDestroyed(

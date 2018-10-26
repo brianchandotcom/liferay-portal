@@ -210,8 +210,6 @@ class Layout extends Component {
 		if (itemDropIsValid) {
 			let parentPlid = null;
 			let priority = null;
-			let targetColumn = null;
-			let targetItem = null;
 
 			layoutColumns = clearPath(
 				layoutColumns,
@@ -231,8 +229,6 @@ class Layout extends Component {
 				priority = dropData.priority;
 			}
 			else if (targetItemPlid) {
-				targetItem = getItem(layoutColumns, targetItemPlid);
-
 				if (this._draggingItemPosition === DRAG_POSITIONS.inside) {
 					const pathUpdated = !!this._currentPathItemPlid;
 

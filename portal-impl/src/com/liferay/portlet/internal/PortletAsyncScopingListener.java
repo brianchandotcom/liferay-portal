@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.internal;
 
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.util.PortletAsyncScopeManager;
 import com.liferay.portal.kernel.util.PortletAsyncScopeManagerFactory;
 import com.liferay.portlet.PortletAsyncListenerAdapter;
@@ -47,26 +48,25 @@ public class PortletAsyncScopingListener extends PortletAsyncListenerAdapter {
 
 	@Override
 	public void onComplete(AsyncEvent asyncEvent) throws IOException {
-		_invokeCallback(CallbackType.ON_COMPLETE, asyncEvent);
+		_invokeCallback(() -> super.onComplete(asyncEvent));
 	}
 
 	@Override
 	public void onError(AsyncEvent asyncEvent) throws IOException {
-		_invokeCallback(CallbackType.ON_ERROR, asyncEvent);
+		_invokeCallback(() -> super.onError(asyncEvent));
 	}
 
 	@Override
 	public void onStartAsync(AsyncEvent asyncEvent) throws IOException {
-		_invokeCallback(CallbackType.ON_START_ASYNC, asyncEvent);
+		_invokeCallback(() -> super.onStartAsync(asyncEvent));
 	}
 
 	@Override
 	public void onTimeout(AsyncEvent asyncEvent) throws IOException {
-		_invokeCallback(CallbackType.ON_TIMEOUT, asyncEvent);
+		_invokeCallback(() -> super.onTimeout(asyncEvent));
 	}
 
-	private void _invokeCallback(
-			CallbackType callbackType, AsyncEvent asyncEvent)
+	private void _invokeCallback(UnsafeRunnable<IOException> unsafeRunnable)
 		throws IOException {
 
 		PortletAsyncScopeManager portletAsyncScopeManager = null;
@@ -79,18 +79,7 @@ public class PortletAsyncScopingListener extends PortletAsyncListenerAdapter {
 			portletAsyncScopeManager.activateScopeContexts();
 		}
 
-		if (callbackType == CallbackType.ON_COMPLETE) {
-			super.onComplete(asyncEvent);
-		}
-		else if (callbackType == CallbackType.ON_ERROR) {
-			super.onError(asyncEvent);
-		}
-		else if (callbackType == CallbackType.ON_START_ASYNC) {
-			super.onStartAsync(asyncEvent);
-		}
-		else if (callbackType == CallbackType.ON_TIMEOUT) {
-			super.onTimeout(asyncEvent);
-		}
+		unsafeRunnable.run();
 
 		if (portletAsyncScopeManager != null) {
 			portletAsyncScopeManager.deactivateScopeContexts();
@@ -102,11 +91,5 @@ public class PortletAsyncScopingListener extends PortletAsyncListenerAdapter {
 	private final PortletConfig _portletConfig;
 	private final ResourceRequest _resourceRequest;
 	private final ResourceResponse _resourceResponse;
-
-	private enum CallbackType {
-
-		ON_COMPLETE, ON_ERROR, ON_START_ASYNC, ON_TIMEOUT
-
-	}
 
 }

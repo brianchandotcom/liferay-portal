@@ -1,0 +1,58 @@
+<definition>
+	<command name="click">
+		<var name="key_menuBar" value="${menuBar}" />
+
+		<if>
+			<condition function="IsElementNotPresent" locator1="MenuBar#ACTIVE_NAV_LINK" />
+			<then>
+				<execute function="AssertClick" locator1="MenuBar#NAV_LINK" value1="${menuBar}" />
+			</then>
+		</if>
+
+		<execute macro="MenuBar#viewActive">
+			<var name="menuBar" value="${menuBar}" />
+		</execute>
+	</command>
+
+	<command name="gotoAddresses">
+		<execute macro="MenuBar#click">
+			<var name="menuBar" value="Addresses" />
+		</execute>
+	</command>
+
+	<command name="gotoContactInformation">
+		<execute macro="MenuBar#click">
+			<var name="menuBar" value="Contact Information" />
+		</execute>
+	</command>
+
+	<command name="gotoInformation">
+		<execute macro="MenuBar#click">
+			<var name="menuBar" value="Information" />
+		</execute>
+	</command>
+
+	<command name="gotoOpeningHours">
+		<execute macro="MenuBar#click">
+			<var name="menuBar" value="Opening Hours" />
+		</execute>
+	</command>
+
+	<command name="gotoOrganizationSite">
+		<execute macro="MenuBar#click">
+			<var name="menuBar" value="Organization Site" />
+		</execute>
+	</command>
+
+	<command name="gotoSecurityQuestions">
+		<execute macro="MenuBar#click">
+			<var name="menuBar" value="Security Questions" />
+		</execute>
+	</command>
+
+	<command name="viewActive">
+		<execute function="AssertElementPresent" locator1="MenuBar#ACTIVE_NAV_LINK">
+			<var name="key_menuBar" value="${menuBar}" />
+		</execute>
+	</command>
+</definition>

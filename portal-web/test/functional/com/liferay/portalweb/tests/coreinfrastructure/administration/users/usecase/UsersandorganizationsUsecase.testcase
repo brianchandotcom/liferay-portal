@@ -546,6 +546,10 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="Organization#editOrganizationCP">
+			<var name="orgName" value="${orgName}" />
+		</execute>
+
 		<execute macro="Organization#addCategorizationCP">
 			<var name="orgName" value="Organization Name 1" />
 			<var name="tagName" value="alpha" />
@@ -579,6 +583,10 @@
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#editOrganizationCP">
+			<var name="orgName" value="${orgName}" />
 		</execute>
 
 		<execute macro="Organization#addCategorizationCP">

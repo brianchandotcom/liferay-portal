@@ -37,11 +37,6 @@
 	</command>
 
 	<command name="addCategorizationCP">
-		<execute macro="Organization#editOrganizationInformationCP">
-			<var name="orgName" value="${orgName}" />
-			<var name="panel" value="Categorization" />
-		</execute>
-
 		<var name="key_tagName" value="${tagName}" />
 
 		<execute function="Click" locator1="UsersAndOrganizationsEditOrganization#CATEGORIZATION_TAGS_FIELD" />
@@ -54,9 +49,7 @@
 
 		<execute macro="PortletEntry#save" />
 
-		<execute macro="Organization#gotoOrganizationInformationCP">
-			<var name="panel" value="Categorization" />
-		</execute>
+		<execute macro="UsersAndOrganizationsNavigator#gotoMenuBarInformation" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#CATEGORIZATION_TAG" value1="${tagName}" />
 	</command>
@@ -214,10 +207,11 @@
 	</command>
 
 	<command name="addSiteCP">
-		<execute macro="Organization#editOrganizationInformationCP">
+		<execute macro="Organization#editOrganizationCP">
 			<var name="orgName" value="${orgName}" />
-			<var name="panel" value="Organization Site" />
 		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoMenuBarOrganizationSite" />
 
 		<execute function="Check" locator1="UsersAndOrganizationsEditOrganization#ORGANIZATION_SITE_CREATE_SITE_CHECKBOX" />
 
@@ -371,7 +365,7 @@
 		<execute function="AssertElementNotPresent" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" />
 	</command>
 
-	<command name="editOrganizationInformationCP">
+	<command name="editOrganizationCP">
 		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#gotoActionsCmd">
@@ -382,10 +376,6 @@
 
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="Edit" />
-		</execute>
-
-		<execute macro="Organization#gotoOrganizationInformationCP">
-			<var name="panel" value="${panel}" />
 		</execute>
 	</command>
 
@@ -456,19 +446,6 @@
 
 	<command name="gotoMiscellaneousCP">
 		<execute function="AssertClick" locator1="UsersAndOrganizations#MISCELLANEOUS" value1="Miscellaneous" />
-
-		<if>
-			<isset var="panel" />
-			<then>
-				<execute macro="Panel#expandPanel">
-					<var name="panel" value="${panel}" />
-				</execute>
-			</then>
-		</if>
-	</command>
-
-	<command name="gotoOrganizationInformationCP">
-		<execute function="AssertClick" locator1="UsersAndOrganizations#ORGANIZATION_INFORMATION" value1="Organization Information" />
 
 		<if>
 			<isset var="panel" />

@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>MenuBar</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MenuBar</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ACTIVE_NAV_LINK</td>
+	<td>//div[contains(@class,'menubar')]//a[contains(@class,'active') and normalize-space()='${key_menuBar}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAV_LINK</td>
+	<td>//div[contains(@class,'menubar')]//a[normalize-space()='${key_menuBar}']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

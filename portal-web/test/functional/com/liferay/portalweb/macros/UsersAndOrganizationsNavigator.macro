@@ -1,4 +1,12 @@
 <definition>
+	<command name="gotoMenuBarInformation">
+		<execute macro="MenuBar#gotoInformation" />
+	</command>
+
+	<command name="gotoMenuBarOrganizationSite">
+		<execute macro="MenuBar#gotoOrganizationSite" />
+	</command>
+
 	<command name="gotoOrganizations">
 		<execute function="Pause" locator1="1000" />
 

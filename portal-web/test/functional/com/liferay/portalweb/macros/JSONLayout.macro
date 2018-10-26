@@ -1,34 +1,6 @@
 <definition>
 	<command name="_addLayout">
 		<if>
-			<not>
-				<isset var="groupId" />
-			</not>
-			<then>
-				<fail message="Please set 'groupId'." />
-			</then>
-		</if>
-
-		<if>
-			<isset var="layoutName" />
-			<then>
-				<var method="URLUtil#encodeUTF8('${layoutName}')" name="layoutNameEncoded" />
-			</then>
-			<else>
-				<fail message="Please set 'layoutName'." />
-			</else>
-		</if>
-
-		<if>
-			<not>
-				<equals arg1="${privateLayout}" arg2="true" />
-			</not>
-			<then>
-				<var name="privateLayout" value="false" />
-			</then>
-		</if>
-
-		<if>
 			<isset var="parentLayoutName" />
 			<then>
 				<execute macro="JSONLayout#getLayoutIdByName">
@@ -43,6 +15,15 @@
 			</else>
 		</if>
 
+		<if>
+			<not>
+				<equals arg1="${privateLayout}" arg2="true" />
+			</not>
+			<then>
+				<var name="privateLayout" value="false" />
+			</then>
+		</if>
+
 		<execute macro="JSONCompany#getPortalURL">
 			<return name="portalURL" />
 		</execute>
@@ -53,7 +34,7 @@
 				-d groupId=${groupId} \
 				-d privateLayout=${privateLayout} \
 				-d parentLayoutId=${parentLayoutId} \
-				-d name=${layoutNameEncoded} \
+				-d name=${layoutName} \
 				-d title= \
 				-d description= \
 				-d type=portlet \

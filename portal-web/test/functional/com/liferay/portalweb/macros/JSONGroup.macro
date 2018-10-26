@@ -33,7 +33,7 @@
 				</execute>
 			</then>
 			<else>
-				<var name="parentGroupId" value="0" /> 
+				<var name="parentGroupId" value="0" />
 			</else>
 		</if>
 

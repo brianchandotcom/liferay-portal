@@ -1,34 +1,34 @@
 import {
 	appendItemToColumn,
 	getColumnActiveItem,
-	getItem,
+	getItemColumn,
 	getItemColumnIndex,
 	moveItemInside,
-	getItemColumn
+	removeItem
 } from './LayoutUtils.es';
 import {DRAG_POSITIONS} from './LayoutDragDrop.es';
 
 /**
  * Append an item to a column and calculates newParentPlid and priority
  * @param {object} layoutColumns
- * @param {object} item
- * @param {number} columnIndex
+ * @param {object} sourceItem
+ * @param {number} targetColumnIndex
  * @return {object}
  * @review
  */
-function dropItemInsideColumn(layoutColumns, item, columnIndex) {
+function dropItemInsideColumn(layoutColumns, sourceItem, targetColumnIndex) {
 	const nextLayoutColumns = appendItemToColumn(
-		item,
+		sourceItem,
 		layoutColumns,
-		columnIndex
+		targetColumnIndex
 	);
 
 	const newParentPlid = getColumnActiveItem(
 		nextLayoutColumns,
-		columnIndex - 1
-	);
+		targetColumnIndex - 1
+	).plid;
 
-	const priority = layoutColumns[columnIndex].length;
+	const priority = layoutColumns[targetColumnIndex].length;
 
 	return {
 		layoutColumns: nextLayoutColumns,
@@ -42,40 +42,44 @@ function dropItemInsideColumn(layoutColumns, item, columnIndex) {
  * Inserts an item inside another item's children and
  * calculates new parent plid and priority
  * @param {object} layoutColumns
- * @param {object} item
+ * @param {object} sourceItem
+ * @param {number} sourceItemColumnIndex
  * @param {bollean} pathUpdated
- * @param {string} targetItemPlid
+ * @param {object} targetItem
  * @return {object}
  * @review
  */
 function dropItemInsideItem(
 	layoutColumns,
-	item,
+	sourceItem,
+	sourceItemColumnIndex,
 	pathUpdated,
-	targetItemPlid
+	targetItem
 ) {
 	let nextLayoutColumns = layoutColumns;
 	let priority = null;
 
-	const targetItem = getItem(nextLayoutColumns, targetItemPlid);
-
 	nextLayoutColumns = moveItemInside(
 		layoutColumns,
 		pathUpdated,
-		item,
+		sourceItem,
+		sourceItemColumnIndex,
 		targetItem
 	);
 
 	if (pathUpdated) {
-		const targetColumnIndex = getItemColumnIndex(nextLayoutColumns, targetItemPlid);
+		const targetColumnIndex = getItemColumnIndex(
+			nextLayoutColumns,
+			targetItem.plid
+		);
 		const nextColumn = nextLayoutColumns[targetColumnIndex + 1];
 
-		priority = nextColumn.indexOf(item);
+		priority = nextColumn.indexOf(sourceItem);
 	}
 
 	return {
 		layoutColumns: nextLayoutColumns,
-		newParentPlid: targetItemPlid,
+		newParentPlid: targetItem.plid,
 		priority
 	};
 }
@@ -84,33 +88,32 @@ function dropItemInsideItem(
  * Insert an item next to another item and
  * calculates new parent plid and priority
  * @param {object} layoutColumns
- * @param {object} item
+ * @param {object} sourceItem
  * @param {string} dropPosition
- * @param {string} targetItemPlid
+ * @param {object} targetItem
  * @return {object}
  * @review
  */
-function dropItemNextToItem(layoutColumns, item, dropPosition, targetItemPlid) {
-	const nextLayoutColumns = layoutColumns.map(
-		(layoutColumn) => [...layoutColumn]
-	);
+function dropItemNextToItem(layoutColumns, sourceItem, dropPosition, targetItem) {
+	const nextLayoutColumns = removeItem(sourceItem.plid, layoutColumns);
 
-	const targetColumn = getItemColumn(nextLayoutColumns, targetItemPlid);
+	const targetColumn = getItemColumn(nextLayoutColumns, targetItem.plid);
 	const targetColumnIndex = nextLayoutColumns.indexOf(targetColumn);
 
+	const parentPlid = getColumnActiveItem(nextLayoutColumns, targetColumnIndex - 1).plid;
+
 	const targetItemIndex = targetColumn.findIndex(
-		(targetColumnItem) => targetColumnItem.plid === targetItemPlid
+		(targetColumnItem) => targetColumnItem.plid === targetItem.plid
 	);
 
 	const priority = (dropPosition === DRAG_POSITIONS.bottom) ?
 		(targetItemIndex + 1) : targetItemIndex;
 
-	targetColumn.splice(priority, 0, item);
+	const nextTargetColumn = [...targetColumn];
 
-	const parentPlid = getColumnActiveItem(
-		nextLayoutColumns,
-		targetColumnIndex - 1
-	).plid;
+	nextTargetColumn.splice(priority, 0, sourceItem);
+
+	nextLayoutColumns[targetColumnIndex] = nextTargetColumn;
 
 	return {
 		layoutColumns: nextLayoutColumns,

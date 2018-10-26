@@ -2,18 +2,17 @@ import {setIn} from '../../utils/utils.es';
 
 /**
  * Append an item to a column and returns a new array of columns
- * @param {string} sourceItemPlid
+ * @param {object} sourceItem
  * @param {object[]} layoutColumns
  * @param {number} targetColumnIndex
  * @return {object[]}
  * @review
  */
-function appendItemToColumn(sourceItemPlid, layoutColumns, targetColumnIndex) {
+function appendItemToColumn(sourceItem, layoutColumns, targetColumnIndex) {
 	let nextLayoutColumns = layoutColumns;
-	const sourceItem = getItem(nextLayoutColumns, sourceItemPlid);
 
 	if (sourceItem) {
-		nextLayoutColumns = removeItem(sourceItemPlid, nextLayoutColumns);
+		nextLayoutColumns = removeItem(sourceItem.plid, nextLayoutColumns);
 
 		const nextTargetColumn = [...nextLayoutColumns[targetColumnIndex]];
 
@@ -48,21 +47,20 @@ function clearFollowingColumns(layoutColumns, startColumnIndex) {
 /**
  * Clears path if an active item is moved to another column
  * @param {object} layoutColumns
- * @param {string} sourceItemPlid
+ * @param {object} sourceItem
+ * @param {number} sourceItemColumnIndex
  * @param {string} targetItemPlid
  * @return {object}
  * @review
  */
-function clearPath(layoutColumns, sourceItemPlid, targetItemPlid) {
+function clearPath(
+	layoutColumns,
+	sourceItem,
+	sourceItemColumnIndex,
+	targetItemPlid
+) {
 	let nextLayoutColumns = layoutColumns.map(
 		(layoutColumn) => [...layoutColumn]
-	);
-
-	const sourceItem = getItem(nextLayoutColumns, sourceItemPlid);
-
-	const sourceColumnIndex = getItemColumnIndex(
-		nextLayoutColumns,
-		sourceItemPlid
 	);
 
 	const targetColumnIndex = getItemColumnIndex(
@@ -73,13 +71,13 @@ function clearPath(layoutColumns, sourceItemPlid, targetItemPlid) {
 	if (
 		sourceItem &&
 		sourceItem.active &&
-		(sourceColumnIndex !== targetColumnIndex))
-	{
+		(sourceItemColumnIndex !== targetColumnIndex)
+	) {
 		sourceItem.active = false;
 
 		nextLayoutColumns = clearFollowingColumns(
 			nextLayoutColumns,
-			sourceColumnIndex
+			sourceItemColumnIndex
 		);
 
 		nextLayoutColumns = deleteEmptyColumns(nextLayoutColumns);
@@ -89,22 +87,14 @@ function clearPath(layoutColumns, sourceItemPlid, targetItemPlid) {
 }
 
 /**
- * @param {object[]} layoutColumns
  * @param {number} columnIndex
- * @param {string} itemPlid
+ * @param {object} item
+ * @param {number} itemColumnIndex
  * @return {boolean} Returns whether a column is child of an item or not
  * @review
  */
-function columnIsItemChild(layoutColumns, columnIndex, itemPlid) {
-	let isChild = false;
-	const item = getItem(layoutColumns, itemPlid);
-
-	if (item) {
-		const itemColumnIndex = getItemColumnIndex(layoutColumns, itemPlid);
-		isChild = item.active && (itemColumnIndex < columnIndex);
-	}
-
-	return isChild;
+function columnIsItemChild(columnIndex, item, itemColumnIndex) {
+	return item.active && (itemColumnIndex < columnIndex);
 }
 
 /**
@@ -127,25 +117,25 @@ function deleteEmptyColumns(layoutColumns) {
 }
 
 /**
- * @param {object[]} layoutColumns
- * @param {string} sourceItemPlid
+ * @param {object} sourceItem
+ * @param {string} sourceItemColumnIndex
  * @param {string} targetItemPlid
  * @param {number} targetColumnIndex
  * @return {boolean} Returns whether a drop is valid or not
  * @review
  */
 function dropIsValid(
-	layoutColumns,
-	sourceItemPlid,
+	sourceItem,
+	sourceItemColumnIndex,
 	targetItemPlid,
 	targetColumnIndex
 ) {
 	const targetColumnIsChild = columnIsItemChild(
-		layoutColumns,
 		targetColumnIndex,
-		sourceItemPlid
+		sourceItem,
+		sourceItemColumnIndex
 	);
-	const targetEqualsSource = (sourceItemPlid === targetItemPlid);
+	const targetEqualsSource = (sourceItem.plid === targetItemPlid);
 	const targetExists = targetItemPlid || targetColumnIndex;
 
 	return targetExists && !targetEqualsSource && !targetColumnIsChild;
@@ -292,20 +282,20 @@ function itemIsParent(layoutColumns, childItemPlid, parentItemPlid) {
  * and returns a new array of columns
  * @param {object} layoutColumns
  * @param {boolean} pathUpdated
- * @param {string} sourceItemPlid
+ * @param {object} sourceItem
+ * @param {number} sourceItemColumnIndex
  * @param {string} targetItemPlid
  * @return {object}
  * @review
  */
-function moveItemInside(layoutColumns, pathUpdated, sourceItemPlid, targetItemPlid) {
-	const sourceItem = getItem(layoutColumns, sourceItemPlid);
-
-	const sourceItemColumnIndex = getItemColumnIndex(
-		layoutColumns,
-		sourceItemPlid
-	);
-
-	let nextLayoutColumns = removeItem(sourceItemPlid, layoutColumns);
+function moveItemInside(
+	layoutColumns,
+	pathUpdated,
+	sourceItem,
+	sourceItemColumnIndex,
+	targetItemPlid
+) {
+	let nextLayoutColumns = removeItem(sourceItem.plid, layoutColumns);
 
 	const targetColumn = getItemColumn(
 		nextLayoutColumns,
@@ -372,7 +362,7 @@ function moveItemInside(layoutColumns, pathUpdated, sourceItemPlid, targetItemPl
 
 
 /**
- * Removes an item from a column and returns a new array of columns
+ * Removes an item, if any, from a column and returns a new array of columns
  * @param {string} itemPlid
  * @param {object[]} layoutColumns
  * @param {string} targetItemPlid
@@ -380,22 +370,27 @@ function moveItemInside(layoutColumns, pathUpdated, sourceItemPlid, targetItemPl
  * @review
  */
 function removeItem(itemPlid, layoutColumns) {
-	const nextLayoutColumns = [...layoutColumns];
+	const item = getItem(layoutColumns, itemPlid);
+	let nextLayoutColumns = layoutColumns;
 
-	const itemColumn = getItemColumn(nextLayoutColumns, itemPlid);
+	if (item) {
+		nextLayoutColumns = [...layoutColumns];
 
-	if (itemColumn) {
-		const itemIndex = itemColumn.findIndex(
-			(item) => item.plid === itemPlid
-		);
-		const nextItemColumn = [...itemColumn];
-		const nextItemColumnIndex = getItemColumnIndex(
-			nextLayoutColumns,
-			itemPlid
-		);
+		const itemColumn = getItemColumn(nextLayoutColumns, itemPlid);
 
-		nextItemColumn.splice(itemIndex, 1);
-		nextLayoutColumns[nextItemColumnIndex] = nextItemColumn;
+		if (itemColumn) {
+			const itemIndex = itemColumn.findIndex(
+				(_item) => _item.plid === itemPlid
+			);
+			const nextItemColumn = [...itemColumn];
+			const nextItemColumnIndex = getItemColumnIndex(
+				nextLayoutColumns,
+				itemPlid
+			);
+
+			nextItemColumn.splice(itemIndex, 1);
+			nextLayoutColumns[nextItemColumnIndex] = nextItemColumn;
+		}
 	}
 
 	return nextLayoutColumns;

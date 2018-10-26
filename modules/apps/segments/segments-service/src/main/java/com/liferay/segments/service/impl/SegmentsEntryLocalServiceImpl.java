@@ -152,6 +152,15 @@ public class SegmentsEntryLocalServiceImpl
 
 	@Override
 	public List<SegmentsEntry> getSegmentsEntries(
+		boolean active, String type, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return segmentsEntryPersistence.findByA_T(
+			active, type, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<SegmentsEntry> getSegmentsEntries(
 		long groupId, boolean active, String type, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 

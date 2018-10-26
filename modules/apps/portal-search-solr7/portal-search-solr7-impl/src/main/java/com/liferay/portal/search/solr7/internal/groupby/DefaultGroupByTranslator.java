@@ -124,7 +124,7 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 		int groupBySize = groupBy.getSize();
 
 		if (groupBySize == 0) {
-			groupBySize = end - start + 1;
+			groupBySize = end - start;
 		}
 
 		solrQuery.set(GroupParams.GROUP_LIMIT, groupBySize);

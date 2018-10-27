@@ -229,7 +229,7 @@ Flags.STATE = {
 	label: Config.bool().required(),
 
 	/**
-	 * Text to display next to the flag icon.
+	 * Text to display next to the flag icon or in the tooltip.
 	 * @instance
 	 * @memberof Flags
 	 * @type {String}

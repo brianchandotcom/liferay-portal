@@ -73,11 +73,11 @@
  * Prints the flag icon and the text message.
  */
 {template .flagIcon}
+	{@param? _handleFlagButtonClick: any}
+	{@param? enabled: bool}
 	{@param label: bool}
 	{@param message: string|null}
 	{@param spritemap: string}
-	{@param? _handleFlagButtonClick: any}
-	{@param? enabled: bool}
 
 	{let $defaultMessage kind="text"}
 		{msg desc=""}report{/msg}
@@ -85,10 +85,8 @@
 
 	{let $labelMessage: isNull($message) ? $defaultMessage : $message /}
 
-	{let $emptyMessage: $labelMessage == '' /}
-
 	{let $wrapperAttributes kind="attributes"}
-		{if not $label and not $emptyMessage}
+		{if not $label}
 			class="lfr-portal-tooltip"
 			title="{$labelMessage}"
 		{/if}
@@ -96,13 +94,13 @@
 
 	<span {$wrapperAttributes}>
 		{call ClayButton.render}
-			{param ariaLabel: not $emptyMessage ? $labelMessage : $defaultMessage /}
+			{param ariaLabel: $labelMessage /}
 			{param elementClasses: 'btn-outline-borderless btn-outline-secondary' /}
 			{param events: ['click': $_handleFlagButtonClick] /}
 			{param disabled: not $enabled /}
 			{param icon: 'flag-empty' /}
-			{param label: $label and not $emptyMessage ? $labelMessage : null /}
-			{param monospaced: $emptyMessage or not $label /}
+			{param label: $label ? $labelMessage : null /}
+			{param monospaced: not $label /}
 			{param size: 'sm' /}
 			{param spritemap: $spritemap /}
 			{param type: 'button' /}

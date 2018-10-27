@@ -51,7 +51,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The text to display next to the flag icon. The default text is <![CDATA[<code>Flag</code>]]>.</description>
+			<description>The text to display next to the flag icon. The default text is <![CDATA[<code>Report</code>]]>.</description>
 			<name>message</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -171,7 +171,8 @@ request.setAttribute("view.jsp-showIconLabel", true);
 					classPK="<%= assetEntry.getClassPK() %>"
 					contentTitle="<%= title %>"
 					enabled="<%= !inTrash %>"
-					message='<%= inTrash ? "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" : StringPool.BLANK %>'
+					label="<%= false %>"
+					message='<%= inTrash ? "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" : null %>'
 					reportedUserId="<%= assetRenderer.getUserId() %>"
 				/>
 			</div>

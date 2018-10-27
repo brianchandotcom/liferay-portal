@@ -165,7 +165,8 @@ if (message.isAnonymous()) {
 								classPK="<%= message.getMessageId() %>"
 								contentTitle="<%= message.getSubject() %>"
 								enabled="<%= !message.isInTrash() %>"
-								message='<%= message.isInTrash() ? "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" : StringPool.BLANK %>'
+								label="<%= false %>"
+								message='<%= message.isInTrash() ? "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" : null %>'
 								reportedUserId="<%= message.getUserId() %>"
 							/>
 						</c:if>

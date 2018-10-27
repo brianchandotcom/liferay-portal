@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.failure.message.generator.CIFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.DownstreamFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.FailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.GenericFailureMessageGenerator;
@@ -1340,6 +1341,7 @@ public class TopLevelBuild extends BaseBuild {
 
 			new DownstreamFailureMessageGenerator(),
 
+			new CIFailureMessageGenerator(),
 			new GenericFailureMessageGenerator()
 		};
 

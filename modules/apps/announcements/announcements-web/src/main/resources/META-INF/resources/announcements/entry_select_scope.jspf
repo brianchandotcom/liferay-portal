@@ -29,14 +29,7 @@ boolean hasDistributionScope = false;
 	</c:if>
 
 	<%
-	List<Group> groups = null;
-
-	if (announcementsDisplayContext.isCustomizeAnnouncementsDisplayed()) {
-		groups = announcementsDisplayContext.getSelectedGroups();
-	}
-	else {
-		groups = AnnouncementsUtil.getGroups(themeDisplay);
-	}
+	List<Group> groups = announcementsDisplayContext.getSelectedGroups();
 	%>
 
 	<c:if test="<%= !groups.isEmpty() %>">
@@ -58,14 +51,7 @@ boolean hasDistributionScope = false;
 	</c:if>
 
 	<%
-	List<Organization> organizations = null;
-
-	if (announcementsDisplayContext.isCustomizeAnnouncementsDisplayed()) {
-		organizations = announcementsDisplayContext.getSelectedOrganizations();
-	}
-	else {
-		organizations = AnnouncementsUtil.getOrganizations(themeDisplay);
-	}
+	List<Organization> organizations = announcementsDisplayContext.getSelectedOrganizations();
 	%>
 
 	<c:if test="<%= !organizations.isEmpty() %>">
@@ -87,14 +73,7 @@ boolean hasDistributionScope = false;
 	</c:if>
 
 	<%
-	List<Role> roles = null;
-
-	if (announcementsDisplayContext.isCustomizeAnnouncementsDisplayed()) {
-		roles = announcementsDisplayContext.getSelectedRoles();
-	}
-	else {
-		roles = AnnouncementsUtil.getRoles(themeDisplay);
-	}
+	List<Role> roles = announcementsDisplayContext.getSelectedRoles();
 	%>
 
 	<c:if test="<%= !roles.isEmpty() %>">
@@ -116,14 +95,7 @@ boolean hasDistributionScope = false;
 	</c:if>
 
 	<%
-	List<UserGroup> userGroups = null;
-
-	if (announcementsDisplayContext.isCustomizeAnnouncementsDisplayed()) {
-		userGroups = announcementsDisplayContext.getSelectedUserGroups();
-	}
-	else {
-		userGroups = AnnouncementsUtil.getUserGroups(themeDisplay);
-	}
+	List<UserGroup> userGroups = announcementsDisplayContext.getSelectedUserGroups();
 	%>
 
 	<c:if test="<%= !userGroups.isEmpty() %>">

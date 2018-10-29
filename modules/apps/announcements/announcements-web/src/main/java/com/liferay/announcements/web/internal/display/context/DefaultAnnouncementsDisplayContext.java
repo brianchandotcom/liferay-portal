@@ -136,6 +136,11 @@ public class DefaultAnnouncementsDisplayContext
 
 	@Override
 	public List<Group> getSelectedGroups() throws PortalException {
+		if (!isCustomizeAnnouncementsDisplayed()) {
+			return AnnouncementsUtil.getGroups(
+				_announcementsRequestHelper.getThemeDisplay());
+		}
+
 		List<Group> selectedOrganizations = new ArrayList<>();
 
 		String[] selectedScopeGroupIds = StringUtil.split(
@@ -153,6 +158,11 @@ public class DefaultAnnouncementsDisplayContext
 	@Override
 	public List<Organization> getSelectedOrganizations()
 		throws PortalException {
+
+		if (!isCustomizeAnnouncementsDisplayed()) {
+			return AnnouncementsUtil.getOrganizations(
+				_announcementsRequestHelper.getThemeDisplay());
+		}
 
 		List<Organization> selectedOrganizations = new ArrayList<>();
 
@@ -172,6 +182,11 @@ public class DefaultAnnouncementsDisplayContext
 
 	@Override
 	public List<Role> getSelectedRoles() throws PortalException {
+		if (!isCustomizeAnnouncementsDisplayed()) {
+			return AnnouncementsUtil.getRoles(
+				_announcementsRequestHelper.getThemeDisplay());
+		}
+
 		List<Role> selectedRoles = new ArrayList<>();
 
 		String[] selectedScopeRoleIds = StringUtil.split(
@@ -188,6 +203,11 @@ public class DefaultAnnouncementsDisplayContext
 
 	@Override
 	public List<UserGroup> getSelectedUserGroups() throws PortalException {
+		if (!isCustomizeAnnouncementsDisplayed()) {
+			return AnnouncementsUtil.getUserGroups(
+				_announcementsRequestHelper.getThemeDisplay());
+		}
+
 		List<UserGroup> selectedUserGroups = new ArrayList<>();
 
 		String[] selectedScopeUserGroupIds = StringUtil.split(

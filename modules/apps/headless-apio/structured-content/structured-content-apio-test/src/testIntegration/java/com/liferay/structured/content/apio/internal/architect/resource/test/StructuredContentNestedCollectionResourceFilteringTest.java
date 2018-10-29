@@ -118,14 +118,14 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		_ddmStructure = ddmStructureTestHelper.addStructure(
 			PortalUtil.getClassNameId(JournalArticle.class),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			deserialize(_read("test-journal-structured-text-field.json")),
+			deserialize(_read("test-journal-text-field-structure.json")),
 			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
 		_ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), _ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
 			TemplateConstants.LANG_TYPE_VM,
-			_read("test-journal-template-text-field.xsl"), LocaleUtil.US);
+			_read("test-journal-text-field-template.xsl"), LocaleUtil.US);
 	}
 
 	@After
@@ -979,7 +979,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			JournalArticleLocalServiceUtil.addArticle(
 				TestPropsValues.getUser().getUserId(), _group.getGroupId(),
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, stringMap1,
-				null, _read("test-journal-content-text-field.xml"),
+				null, _read("test-journal-text-field-content.xml"),
 				_ddmStructure.getStructureKey(), _ddmTemplate.getTemplateKey(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 

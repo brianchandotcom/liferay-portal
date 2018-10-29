@@ -23,7 +23,7 @@
 
 		<execute macro="AssetCategorization#addCategory">
 			<var name="categoryName" value="${categoryName}" />
-			<var name="vocabularyName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 	</command>
 

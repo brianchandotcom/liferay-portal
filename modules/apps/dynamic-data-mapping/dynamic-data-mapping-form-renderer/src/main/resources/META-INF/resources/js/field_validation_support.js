@@ -31,7 +31,7 @@ AUI.add(
 			hasErrors: function() {
 				var instance = this;
 
-				return instance.get('visible') && !instance.get('valid');
+				return instance.get('enabled') && instance.get('visible') && !instance.get('valid');
 			},
 
 			validate: function(callback) {

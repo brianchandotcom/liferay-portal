@@ -3433,15 +3433,6 @@ public class ProjectTemplatesTest {
 		_testNotExists(workspaceProjectDir, "themes/pom.xml");
 		_testNotExists(workspaceProjectDir, "wars/pom.xml");
 
-		String gradlePluginsWorkspaceVersion = System.getProperty(
-			"com.liferay.gradle.plugins.workspace.version");
-
-		Assert.assertNotNull(gradlePluginsWorkspaceVersion);
-
-		_testContains(
-			workspaceProjectDir, "settings.gradle",
-			"version: \"" + gradlePluginsWorkspaceVersion + "\"");
-
 		File moduleProjectDir = _buildTemplateWithGradle(
 			new File(workspaceProjectDir, "modules"), "", "foo-portlet");
 

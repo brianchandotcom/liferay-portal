@@ -4193,12 +4193,14 @@ public class ProjectTemplatesTest {
 
 						Path m2tmpPath = Paths.get(mavenRepoString + "-tmp");
 
-						if (Files.exists(m2tmpPath)) {
-							content = content.replace(
-								"repositories {",
-								"repositories {\n\t\tmavenLocal()\n\t\tmaven " +
-									"{ \n\t\t\turl " + "\"" + m2tmpPath + "\"" +
-										"\n\t\t}");
+						if (!content.contains("mavenLocal()")) {
+							if (Files.exists(m2tmpPath)) {
+								content = content.replace(
+									"repositories {",
+									"repositories {\n\t\tmavenLocal()\n\t\tmaven " +
+										"{ \n\t\t\turl " + "\"" + m2tmpPath + "\"" +
+											"\n\t\t}");
+							}
 						}
 
 						Files.write(

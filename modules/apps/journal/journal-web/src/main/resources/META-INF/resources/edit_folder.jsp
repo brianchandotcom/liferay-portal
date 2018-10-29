@@ -257,13 +257,14 @@ renderResponse.setTitle(title);
 									modelVar="ddmStructure"
 								>
 									<liferay-ui:search-container-column-text
+										cssClass="table-cell-expand table-cell-minw-200 table-title"
 										name="name"
-										truncate="<%= true %>"
 										value="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
 									/>
 
 									<c:if test="<%= workflowEnabled %>">
 										<liferay-ui:search-container-column-text
+											cssClass="table-cell-expand table-cell-minw-200"
 											name="workflow"
 										>
 											<aui:select label="" name='<%= "workflowDefinition" + ddmStructure.getStructureId() %>'>

@@ -81,6 +81,7 @@
 		<check name="FTLWhitespaceCheck" />
 	</source-processor>
 	<source-processor name="FunctionSourceProcessor">
+		<check name="FunctionIndentationCheck" />
 		<check name="WhitespaceCheck" />
 	</source-processor>
 	<source-processor name="GradleSourceProcessor">

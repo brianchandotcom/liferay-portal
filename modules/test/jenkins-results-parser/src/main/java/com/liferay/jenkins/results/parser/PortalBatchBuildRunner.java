@@ -34,7 +34,9 @@ public abstract class PortalBatchBuildRunner<T extends PortalBatchBuildData>
 
 		runTestBatch();
 
-		publishTestResults();
+		publishArtifacts();
+
+		updateBuildDescription();
 	}
 
 	protected PortalBatchBuildRunner(T portalBatchBuildData) {
@@ -56,6 +58,16 @@ public abstract class PortalBatchBuildRunner<T extends PortalBatchBuildData>
 		}
 
 		workspace = (BatchPortalWorkspace)batchWorkspace;
+	}
+
+	protected void publishArtifacts() {
+		PortalBatchBuildData portalBatchBuildData = getBuildData();
+
+		File artifactDir = portalBatchBuildData.getArtifactDir();
+
+		if (artifactDir.exists()) {
+			publishToUserContentDir(artifactDir);
+		}
 	}
 
 	protected void publishTestResults() {

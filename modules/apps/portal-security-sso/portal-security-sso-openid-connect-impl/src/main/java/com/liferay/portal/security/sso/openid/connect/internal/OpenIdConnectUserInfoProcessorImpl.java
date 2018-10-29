@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 
@@ -84,12 +83,9 @@ public class OpenIdConnectUserInfoProcessorImpl
 		}
 
 		long creatorUserId = 0;
-		boolean autoPassword = false;
-
-		String password1 = PwdGenerator.getPassword();
-
-		String password2 = password1;
-
+		boolean autoPassword = true;
+		String password1 = null;
+		String password2 = null;
 		boolean autoScreenName = true;
 		String screenName = StringPool.BLANK;
 		long facebookId = 0;

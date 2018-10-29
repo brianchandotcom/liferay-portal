@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -278,12 +277,9 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 
 		long creatorUserId = 0;
 		long companyId = themeDisplay.getCompanyId();
-		boolean autoPassword = false;
-
-		String password1 = PwdGenerator.getPassword();
-
-		String password2 = password1;
-
+		boolean autoPassword = true;
+		String password1 = null;
+		String password2 = null;
 		boolean autoScreenName = true;
 		String screenName = StringPool.BLANK;
 		long facebookId = 0;

@@ -140,7 +140,7 @@
 		</execute>
 
 		<execute macro="Site#viewVirtualHostsURLPG">
-			<var name="pageName" value="Test Public Page" />
+			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageURL" value="http://www.able.com:8080/site-page" />
 		</execute>
@@ -183,8 +183,6 @@
 	</command>
 
 	<command name="EditSite" priority="5">
-		<execute macro="Site#openSitesAdmin" />
-
 		<execute macro="JSONGroup#addGroup">
 			<var name="groupName" value="Site Name" />
 		</execute>
@@ -219,8 +217,8 @@
 			<var name="layoutName" value="Site Page" />
 		</execute>
 
-		<execute macro="Navigator#openWithAppendToBaseURL">
-			<var name="urlAppend" value="web/site-name/" />
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -286,10 +284,8 @@
 			<var name="siteFriendlyURLEdit" value="/alpha/alpha" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
+		<execute macro="SitePages#openPagesAdmin">
+			<var name="siteURLKey" value="site-name" />
 		</execute>
 
 		<execute macro="SitePages#gotoPageMenuItem">
@@ -316,10 +312,8 @@
 	</command>
 
 	<command name="SiteCannotBeItsOwnParent" priority="3">
-		<execute macro="Site#openSitesAdmin" />
-
-		<execute macro="Site#addCommunityCP">
-			<var name="siteName" value="Site Name" />
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Site Name" />
 		</execute>
 
 		<execute macro="Site#openSiteSettingsAdmin">
@@ -333,21 +327,17 @@
 	</command>
 
 	<command name="SiteCannotBeItsOwnParentStaging" priority="3">
-		<execute macro="Site#openSitesAdmin" />
-
-		<execute macro="Site#addCommunityCP">
-			<var name="siteName" value="Site Name" />
-			<var name="uncheckPropagation" value="true" />
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Site Name" />
+			<var name="layoutName" value="Site Page" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
+		<execute macro="Staging#openStagingAdmin">
+			<var name="siteURLKey" value="site-name" />
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
@@ -355,7 +345,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Home" />
+			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 

@@ -33,8 +33,20 @@ public class URLCodecTest {
 	public void testDecodeURL() throws Exception {
 		for (int i = 0; i < _RAW_URLS.length; i++) {
 			Assert.assertEquals(
+				_RAW_URLS[i], URLCodec.decodeURL(_ENCODED_URLS[i]));
+
+			Assert.assertEquals(
 				_RAW_URLS[i],
 				URLCodec.decodeURL(_ENCODED_URLS[i], StringPool.UTF8));
+
+			Assert.assertEquals(
+				_RAW_URLS[i],
+				URLCodec.decodeURL(_ESCAPE_SPACES_ENCODED_URLS[i]));
+
+			Assert.assertEquals(
+				_RAW_URLS[i],
+				URLCodec.decodeURL(
+					_ESCAPE_SPACES_ENCODED_URLS[i], StringPool.UTF8));
 		}
 
 		testDecodeURL("%");
@@ -57,14 +69,27 @@ public class URLCodecTest {
 	@Test
 	public void testEncodeURL() throws Exception {
 		for (int i = 0; i < _RAW_URLS.length; i++) {
-			Assert.assertTrue(
-				StringUtil.equalsIgnoreCase(
-					_ENCODED_URLS[i],
+			Assert.assertEquals(
+				StringUtil.toLowerCase(_ENCODED_URLS[i]),
+				StringUtil.toLowerCase(URLCodec.encodeURL(_RAW_URLS[i])));
+
+			Assert.assertEquals(
+				StringUtil.toLowerCase(_ENCODED_URLS[i]),
+				StringUtil.toLowerCase(
+					URLCodec.encodeURL(_RAW_URLS[i], false)));
+
+			Assert.assertEquals(
+				StringUtil.toLowerCase(_ENCODED_URLS[i]),
+				StringUtil.toLowerCase(
 					URLCodec.encodeURL(_RAW_URLS[i], StringPool.UTF8, false)));
 
-			Assert.assertTrue(
-				StringUtil.equalsIgnoreCase(
-					_ESCAPE_SPACES_ENCODED_URLS[i],
+			Assert.assertEquals(
+				StringUtil.toLowerCase(_ESCAPE_SPACES_ENCODED_URLS[i]),
+				StringUtil.toLowerCase(URLCodec.encodeURL(_RAW_URLS[i], true)));
+
+			Assert.assertEquals(
+				StringUtil.toLowerCase(_ESCAPE_SPACES_ENCODED_URLS[i]),
+				StringUtil.toLowerCase(
 					URLCodec.encodeURL(_RAW_URLS[i], StringPool.UTF8, true)));
 		}
 	}

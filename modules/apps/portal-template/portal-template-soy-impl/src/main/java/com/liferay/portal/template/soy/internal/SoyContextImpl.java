@@ -24,6 +24,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * This is the central class to store template arguments. It stores everything
@@ -44,27 +46,25 @@ import java.util.Set;
 public class SoyContextImpl implements SoyContext {
 
 	public SoyContextImpl() {
-		this(Collections.emptyMap(), false);
+		this(Collections.emptyMap(), Collections.emptySet());
+	}
+
+	public SoyContextImpl(Map<String, Object> context) {
+		this(context, Collections.emptySet());
 	}
 
 	/**
 	 * Create a context with initial values.
 	 *
 	 * @param context initial context values
-	 * @param wrap whether to wrap the given context or make a copy of it
+	 * @param restrictedVariables list of restricted (read-only) variables
 	 * @review
 	 */
-	public SoyContextImpl(Map<String, Object> context, boolean wrap) {
-		if (wrap) {
-			_map = context;
-		}
-		else {
-			_map = new HashMap<>(context);
-		}
+	public SoyContextImpl(
+		Map<String, Object> context, Set<String> restrictedVariables) {
 
-		if (getInjectedData() == null) {
-			put(SoyTemplateConstants.INJECTED_DATA, new HashMap<>());
-		}
+		_map = new HashMap<>(context);
+		_restrictedVariables = restrictedVariables;
 	}
 
 	@Override
@@ -74,9 +74,7 @@ public class SoyContextImpl implements SoyContext {
 
 	@Override
 	public void clearInjectedData() {
-		Map<String, Object> injectedData = getInjectedData();
-
-		injectedData.clear();
+		_map.remove(SoyTemplateConstants.INJECTED_DATA);
 	}
 
 	@Override
@@ -89,6 +87,21 @@ public class SoyContextImpl implements SoyContext {
 		return _map.containsValue(value);
 	}
 
+	public SoyTemplateRecord createInjectedSoyTemplateRecord() {
+		Map<String, Object> injectedData = (Map<String, Object>)_map.get(
+			SoyTemplateConstants.INJECTED_DATA);
+
+		if (injectedData == null) {
+			injectedData = Collections.emptyMap();
+		}
+
+		return new SoyTemplateRecord(_filterRestrictedVariables(injectedData));
+	}
+
+	public SoyTemplateRecord createSoyTemplateRecord() {
+		return new SoyTemplateRecord(_filterRestrictedVariables(_map));
+	}
+
 	@Override
 	public Set<Entry<String, Object>> entrySet() {
 		return _map.entrySet();
@@ -99,9 +112,15 @@ public class SoyContextImpl implements SoyContext {
 		return _map.get(key);
 	}
 
-	public Map<String, Object> getInjectedData() {
-		return (Map<String, Object>)_map.get(
+	public Object getInjectedData(String key) {
+		Map<String, Object> injectedData = (Map<String, Object>)_map.get(
 			SoyTemplateConstants.INJECTED_DATA);
+
+		if (injectedData == null) {
+			return null;
+		}
+
+		return injectedData.get(key);
 	}
 
 	@Override
@@ -116,12 +135,20 @@ public class SoyContextImpl implements SoyContext {
 
 	@Override
 	public Object put(String key, Object value) {
+		if (key.equals(SoyTemplateConstants.INJECTED_DATA) &&
+			!(value instanceof Map)) {
+
+			throw new IllegalArgumentException("Injected data must be a Map");
+		}
+
 		return _map.put(key, value);
 	}
 
 	@Override
 	public void putAll(Map<? extends String, ?> m) {
-		_map.putAll(m);
+		for (Entry<? extends String, ?> entry : m.entrySet()) {
+			put(entry.getKey(), entry.getValue());
+		}
 	}
 
 	@Override
@@ -134,7 +161,14 @@ public class SoyContextImpl implements SoyContext {
 
 	@Override
 	public void putInjectedData(String key, Object value) {
-		Map<String, Object> injectedData = getInjectedData();
+		Map<String, Object> injectedData = (Map<String, Object>)_map.get(
+			SoyTemplateConstants.INJECTED_DATA);
+
+		if (injectedData == null) {
+			injectedData = new HashMap<>();
+
+			_map.put(SoyTemplateConstants.INJECTED_DATA, injectedData);
+		}
 
 		injectedData.put(key, value);
 	}
@@ -146,9 +180,12 @@ public class SoyContextImpl implements SoyContext {
 
 	@Override
 	public void removeInjectedData(String key) {
-		Map<String, Object> injectedData = getInjectedData();
+		Map<String, Object> injectedData = (Map<String, Object>)_map.get(
+			SoyTemplateConstants.INJECTED_DATA);
 
-		injectedData.remove(key);
+		if (injectedData != null) {
+			injectedData.remove(key);
+		}
 	}
 
 	@Override
@@ -161,6 +198,21 @@ public class SoyContextImpl implements SoyContext {
 		return _map.values();
 	}
 
+	private Map<String, Object> _filterRestrictedVariables(
+		Map<String, Object> map) {
+
+		Set<Entry<String, Object>> entries = map.entrySet();
+
+		Stream<Entry<String, Object>> stream = entries.stream();
+
+		return stream.filter(
+			entry -> !_restrictedVariables.contains(entry.getKey())
+		).collect(
+			Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
+		);
+	}
+
 	private final Map<String, Object> _map;
+	private final Set<String> _restrictedVariables;
 
 }

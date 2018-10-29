@@ -35,7 +35,7 @@ public class SoyContextFactoryImpl implements SoyContextFactory {
 
 	@Override
 	public SoyContext createSoyContext(Map<String, Object> context) {
-		return new SoyContextImpl(context, false);
+		return new SoyContextImpl(context);
 	}
 
 }

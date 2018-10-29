@@ -17,7 +17,6 @@ package com.liferay.portal.template.soy.internal;
 import com.google.common.io.CharStreams;
 import com.google.template.soy.SoyFileSet;
 import com.google.template.soy.data.SanitizedContent;
-import com.google.template.soy.data.SoyRecord;
 import com.google.template.soy.msgs.SoyMsgBundle;
 import com.google.template.soy.tofu.SoyTofu;
 
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.AbstractMultiResourceTemplate;
-import com.liferay.portal.template.TemplateContextHelper;
 
 import java.io.Reader;
 import java.io.Writer;
@@ -51,8 +49,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -71,13 +70,57 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		SoyTofuCacheHandler soyTofuCacheHandler) {
 
 		super(
-			templateResources, errorTemplateResource, context,
+			templateResources, errorTemplateResource, null,
 			templateContextHelper, TemplateConstants.LANG_TYPE_SOY, 0);
 
 		_templateContextHelper = templateContextHelper;
 
-		_soyContext = new SoyContextImpl(this, true);
+		_soyContextImpl = new SoyContextImpl(
+			context, templateContextHelper.getRestrictedVariables());
 		_soyTofuCacheHandler = soyTofuCacheHandler;
+
+		_setBaseContext();
+	}
+
+	@Override
+	public Object compute(
+		String key,
+		BiFunction<? super String, ? super Object, ?> remappingFunction) {
+
+		return _soyContextImpl.compute(key, remappingFunction);
+	}
+
+	@Override
+	public Object computeIfAbsent(
+		String key, Function<? super String, ?> mappingFunction) {
+
+		return _soyContextImpl.computeIfAbsent(key, mappingFunction);
+	}
+
+	@Override
+	public Object computeIfPresent(
+		String key,
+		BiFunction<? super String, ? super Object, ?> remappingFunction) {
+
+		return _soyContextImpl.computeIfPresent(key, remappingFunction);
+	}
+
+	@Override
+	public void forEach(BiConsumer<? super String, ? super Object> action) {
+		_soyContextImpl.forEach(action);
+	}
+
+	@Override
+	public Object getOrDefault(Object key, Object defaultValue) {
+		return _soyContextImpl.getOrDefault(key, defaultValue);
+	}
+
+	@Override
+	public Object merge(
+		String key, Object value,
+		BiFunction<? super Object, ? super Object, ?> remappingFunction) {
+
+		return _soyContextImpl.merge(key, value, remappingFunction);
 	}
 
 	@Override
@@ -87,12 +130,35 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		_templateContextHelper.prepare(injectedDataObjects, request);
 
 		for (Map.Entry<String, Object> entry : injectedDataObjects.entrySet()) {
-			putInjectedData(entry.getKey(), entry.getValue());
+			_soyContextImpl.putInjectedData(entry.getKey(), entry.getValue());
 		}
 	}
 
-	public void putInjectedData(String key, Object value) {
-		_soyContext.putInjectedData(key, value);
+	@Override
+	public Object putIfAbsent(String key, Object value) {
+		return _soyContextImpl.putIfAbsent(key, value);
+	}
+
+	@Override
+	public boolean remove(Object key, Object value) {
+		return _soyContextImpl.remove(key, value);
+	}
+
+	@Override
+	public Object replace(String key, Object value) {
+		return _soyContextImpl.replace(key, value);
+	}
+
+	@Override
+	public boolean replace(String key, Object oldValue, Object newValue) {
+		return _soyContextImpl.replace(key, oldValue, newValue);
+	}
+
+	@Override
+	public void replaceAll(
+		BiFunction<? super String, ? super Object, ?> function) {
+
+		_soyContextImpl.replaceAll(function);
 	}
 
 	protected SoyMsgBundleBridge createSoyMsgBundleBridge(
@@ -179,10 +245,6 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		return CharStreams.toString(reader);
 	}
 
-	protected TemplateContextHelper getTemplateContextHelper() {
-		return _templateContextHelper;
-	}
-
 	@Override
 	protected void handleException(Exception exception, Writer writer)
 		throws TemplateException {
@@ -231,8 +293,8 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 
 		SoyTofu.Renderer renderer = soyTofu.newRenderer(namespace);
 
-		renderer.setData(_getDataSoyRecord());
-		renderer.setIjData(_getInjectedDataSoyRecord());
+		renderer.setData(_soyContextImpl.createSoyTemplateRecord());
+		renderer.setIjData(_soyContextImpl.createInjectedSoyTemplateRecord());
 
 		SoyFileSet soyFileSet = soyTofuCacheBag.getSoyFileSet();
 
@@ -254,35 +316,6 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		else {
 			writer.write(renderer.render());
 		}
-	}
-
-	private Map<String, Object> _filterRestrictedVariables(
-		Map<String, Object> map) {
-
-		TemplateContextHelper templateContextHelper =
-			getTemplateContextHelper();
-
-		Set<String> restrictedVariables =
-			templateContextHelper.getRestrictedVariables();
-
-		Set<Entry<String, Object>> entries = map.entrySet();
-
-		Stream<Entry<String, Object>> stream = entries.stream();
-
-		return stream.filter(
-			entry -> !restrictedVariables.contains(entry.getKey())
-		).collect(
-			Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
-		);
-	}
-
-	private SoyRecord _getDataSoyRecord() {
-		return new SoyTemplateRecord(_filterRestrictedVariables(_soyContext));
-	}
-
-	private SoyRecord _getInjectedDataSoyRecord() {
-		return new SoyTemplateRecord(
-			_filterRestrictedVariables(_soyContext.getInjectedData()));
 	}
 
 	private ResourceBundle _getLanguageResourceBundle(Locale locale) {
@@ -323,9 +356,21 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		return aggregateResourceBundleLoader.loadResourceBundle(locale);
 	}
 
+	/**
+	 * Point base context to Soy context just in case someone tries to access
+	 * it. That shouldn't happen because it would break the SoyContext
+	 * abstraction and that would mean that some code is incorrect, but it is
+	 * better than failing.
+	 *
+	 * @review
+	 */
+	private void _setBaseContext() {
+		context = _soyContextImpl;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(SoyTemplate.class);
 
-	private final SoyContextImpl _soyContext;
+	private final SoyContextImpl _soyContextImpl;
 	private final SoyTofuCacheHandler _soyTofuCacheHandler;
 	private final SoyTemplateContextHelper _templateContextHelper;
 

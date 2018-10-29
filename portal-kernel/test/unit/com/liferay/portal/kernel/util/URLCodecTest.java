@@ -32,10 +32,9 @@ public class URLCodecTest {
 	@Test
 	public void testDecodeURL() throws Exception {
 		for (int i = 0; i < _RAW_URLS.length; i++) {
-			String result = URLCodec.decodeURL(
-				_ENCODED_URLS[i], StringPool.UTF8);
-
-			Assert.assertEquals(_RAW_URLS[i], result);
+			Assert.assertEquals(
+				_RAW_URLS[i],
+				URLCodec.decodeURL(_ENCODED_URLS[i], StringPool.UTF8));
 		}
 
 		testDecodeURL("%");
@@ -58,17 +57,15 @@ public class URLCodecTest {
 	@Test
 	public void testEncodeURL() throws Exception {
 		for (int i = 0; i < _RAW_URLS.length; i++) {
-			String result = URLCodec.encodeURL(
-				_RAW_URLS[i], StringPool.UTF8, false);
-
 			Assert.assertTrue(
-				StringUtil.equalsIgnoreCase(_ENCODED_URLS[i], result));
-
-			result = URLCodec.encodeURL(_RAW_URLS[i], StringPool.UTF8, true);
+				StringUtil.equalsIgnoreCase(
+					_ENCODED_URLS[i],
+					URLCodec.encodeURL(_RAW_URLS[i], StringPool.UTF8, false)));
 
 			Assert.assertTrue(
 				StringUtil.equalsIgnoreCase(
-					_ESCAPE_SPACES_ENCODED_URLS[i], result));
+					_ESCAPE_SPACES_ENCODED_URLS[i],
+					URLCodec.encodeURL(_RAW_URLS[i], StringPool.UTF8, true)));
 		}
 	}
 
@@ -85,9 +82,7 @@ public class URLCodecTest {
 
 		String animalsString = new String(animalsInts, 0, animalsInts.length);
 
-		byte[] animalsBytes = animalsString.getBytes(StringPool.UTF8);
-
-		for (byte animalsByte : animalsBytes) {
+		for (byte animalsByte : animalsString.getBytes(StringPool.UTF8)) {
 			sb.append(StringPool.PERCENT);
 			sb.append(Integer.toHexString(0xFF & animalsByte));
 		}

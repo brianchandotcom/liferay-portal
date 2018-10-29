@@ -16,7 +16,12 @@ package com.liferay.portal.template.soy.utils;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of Judson (7.1.x), use
+ * 		{@link com.liferay.portal.template.soy.data.SoyHTMLData} to wrap HTML
+ * 		values
+ * @review
  */
+@Deprecated
 public interface SoyHTMLSanitizer {
 
 	public Object sanitize(String value);

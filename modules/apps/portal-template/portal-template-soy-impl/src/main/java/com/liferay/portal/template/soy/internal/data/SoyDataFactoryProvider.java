@@ -12,30 +12,34 @@
  * details.
  */
 
-package com.liferay.portal.template.soy.internal.util;
+package com.liferay.portal.template.soy.internal.data;
 
-import com.liferay.portal.template.soy.internal.SoyContextImpl;
-import com.liferay.portal.template.soy.utils.SoyContext;
-import com.liferay.portal.template.soy.utils.SoyContextFactory;
-
-import java.util.Map;
+import com.liferay.portal.template.soy.data.SoyDataFactory;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Matthew Tambara
+ * @author Iván Zaera Avellón
  */
-@Component(immediate = true, service = SoyContextFactory.class)
-public class SoyContextFactoryImpl implements SoyContextFactory {
+@Component(immediate = true, service = {})
+public class SoyDataFactoryProvider {
 
-	@Override
-	public SoyContext createSoyContext() {
-		return new SoyContextImpl();
+	public static SoyDataFactory getSoyDataFactory() {
+		if (_soyDataFactoryProvider == null) {
+			return null;
+		}
+
+		return _soyDataFactoryProvider._soyDataFactory;
 	}
 
-	@Override
-	public SoyContext createSoyContext(Map<String, Object> context) {
-		return new SoyContextImpl(context, false);
+	public SoyDataFactoryProvider() {
+		_soyDataFactoryProvider = this;
 	}
+
+	private static SoyDataFactoryProvider _soyDataFactoryProvider;
+
+	@Reference
+	private SoyDataFactory _soyDataFactory;
 
 }

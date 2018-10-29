@@ -85,11 +85,11 @@ else {
 
 						<div class="mb-2 text-muted">
 							<span id="<portlet:namespace />navigationMenuName">
-								<c:if test="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuId() > 0 %>">
-									<%= siteNavigationMenuName %>
+								<c:if test="<%= siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() && (siteNavigationMenu != null) %>">
+									<%= siteNavigationMenu.getName() %>
 								</c:if>
 							</span>
-							<span class="mt-1 <%= (siteNavigationMenuDisplayContext.getSiteNavigationMenuId() > 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />removeSiteNavigationMenu" role="button">
+							<span class="mt-1 <%= (siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() && (siteNavigationMenu != null)) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />removeSiteNavigationMenu" role="button">
 								<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
 							</span>
 						</div>

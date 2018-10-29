@@ -159,6 +159,13 @@ warnings recursively:
 - [LPS-86583]: Improve performance of the configuration phase for the `baseline`
 task.
 
+## 1.3.10 - 2018-10-29
+
+### Changed
+- [LPS-86583]: Add the property `baselineConfiguration` that has the
+configuration which contains exactly one dependency to the previously released
+version of the project for baselining.
+
 [Bnd Builder Gradle Plugin]: https://github.com/bndtools/bnd/tree/master/biz.aQute.bnd.gradle
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util

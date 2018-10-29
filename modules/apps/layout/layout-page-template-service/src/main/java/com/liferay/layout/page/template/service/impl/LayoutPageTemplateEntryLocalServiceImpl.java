@@ -205,8 +205,14 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		long layoutPrototypeId = layoutPageTemplateEntry.getLayoutPrototypeId();
 
 		if (layoutPrototypeId > 0) {
-			_layoutPrototypeLocalService.deleteLayoutPrototype(
-				layoutPrototypeId);
+			LayoutPrototype layoutPrototype =
+				_layoutPrototypeLocalService.fetchLayoutPrototype(
+					layoutPrototypeId);
+
+			if (layoutPrototype != null) {
+				_layoutPrototypeLocalService.deleteLayoutPrototype(
+					layoutPrototypeId);
+			}
 		}
 
 		// Resources

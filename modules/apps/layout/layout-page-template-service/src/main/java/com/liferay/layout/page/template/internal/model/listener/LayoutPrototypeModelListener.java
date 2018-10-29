@@ -75,6 +75,30 @@ public class LayoutPrototypeModelListener
 	}
 
 	@Override
+	public void onAfterRemove(LayoutPrototype layoutPrototype)
+		throws ModelListenerException {
+
+		try {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchFirstLayoutPageTemplateEntry(
+						layoutPrototype.getLayoutPrototypeId());
+
+			if (layoutPageTemplateEntry != null) {
+				_layoutPageTemplateEntryLocalService.
+					deleteLayoutPageTemplateEntry(layoutPageTemplateEntry);
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
+			throw new ModelListenerException(pe);
+		}
+	}
+
+	@Override
 	public void onAfterUpdate(LayoutPrototype layoutPrototype)
 		throws ModelListenerException {
 
@@ -108,30 +132,6 @@ public class LayoutPrototypeModelListener
 
 		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
 			layoutPageTemplateEntry);
-	}
-
-	@Override
-	public void onBeforeRemove(LayoutPrototype layoutPrototype)
-		throws ModelListenerException {
-
-		try {
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.
-					fetchFirstLayoutPageTemplateEntry(
-						layoutPrototype.getLayoutPrototypeId());
-
-			if (layoutPageTemplateEntry != null) {
-				_layoutPageTemplateEntryLocalService.
-					deleteLayoutPageTemplateEntry(layoutPageTemplateEntry);
-			}
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-
-			throw new ModelListenerException(pe);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

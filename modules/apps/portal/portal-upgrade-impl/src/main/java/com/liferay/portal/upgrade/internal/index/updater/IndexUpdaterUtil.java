@@ -41,17 +41,6 @@ import org.osgi.framework.BundleContext;
  */
 public class IndexUpdaterUtil {
 
-	public static Bundle getBundle(BundleContext bundleContext, long bundleId) {
-		Bundle bundle = bundleContext.getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new IllegalArgumentException(
-				"Module with id " + bundleId + " does not exist");
-		}
-
-		return bundle;
-	}
-
 	public static Bundle getBundle(
 		BundleContext bundleContext, String bundleSymbolicName) {
 

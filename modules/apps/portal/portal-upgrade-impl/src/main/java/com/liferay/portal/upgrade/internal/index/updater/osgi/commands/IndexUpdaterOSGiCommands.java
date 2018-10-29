@@ -45,7 +45,12 @@ public class IndexUpdaterOSGiCommands {
 
 	@Descriptor("Update database indexes for a specific module via bundle id")
 	public String updateIndexes(long bundleId) throws Exception {
-		Bundle bundle = IndexUpdaterUtil.getBundle(_bundleContext, bundleId);
+		Bundle bundle = _bundleContext.getBundle(bundleId);
+
+		if (bundle == null) {
+			throw new IllegalArgumentException(
+				"Module with id " + bundleId + " does not exist");
+		}
 
 		if (IndexUpdaterUtil.isLiferayServiceBundle(bundle)) {
 			IndexUpdaterUtil.updateIndexes(bundle);

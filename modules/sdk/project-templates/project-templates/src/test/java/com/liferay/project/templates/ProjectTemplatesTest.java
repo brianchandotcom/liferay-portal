@@ -4197,9 +4197,9 @@ public class ProjectTemplatesTest {
 							if (Files.exists(m2tmpPath)) {
 								content = content.replace(
 									"repositories {",
-									"repositories {\n\t\tmavenLocal()\n\t\tmaven " +
-										"{ \n\t\t\turl " + "\"" + m2tmpPath + "\"" +
-											"\n\t\t}");
+									"repositories {\n\t\tmavenLocal()\n\t\t" +
+										"maven { \n\t\t\turl \"" + m2tmpPath +
+											"\"\n\t\t}");
 							}
 						}
 

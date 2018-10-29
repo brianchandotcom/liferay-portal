@@ -273,6 +273,11 @@ version 2.0.4.
 - [LPS-83922]: Update the [Liferay Gradle Plugins Target Platform] dependency to
 version 1.1.2.
 
+## 1.10.9 - 2018-10-29
+
+### Fixed
+- [LPS-83922]: Update the [Liferay Gradle Plugins] dependency to version 3.13.8.
+
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins Poshi Runner]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-poshi-runner
@@ -335,3 +340,4 @@ version 1.1.2.
 [LPS-82534]: https://issues.liferay.com/browse/LPS-82534
 [LPS-83922]: https://issues.liferay.com/browse/LPS-83922
 [LPS-84119]: https://issues.liferay.com/browse/LPS-84119
+[LPS-86549]: https://issues.liferay.com/browse/LPS-86549

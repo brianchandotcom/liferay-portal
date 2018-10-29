@@ -223,6 +223,7 @@ renderResponse.setTitle(title);
 				<liferay-frontend:fieldset
 					collapsed="<%= true %>"
 					collapsible="<%= true %>"
+					cssClass="structure-restrictions"
 					helpMessage='<%= rootFolder ? "" : "structure-restrictions-help" %>'
 					label='<%= rootFolder ? "" : (workflowEnabled ? "structure-restrictions-and-workflow" : "structure-restrictions") %>'
 				>

@@ -43,6 +43,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				<c:if test="<%= (installedPatches != null) && (installedPatches.length > 0) %>">
 					<strong><liferay-ui:message key="patch" /></strong>: <%= StringUtil.merge(installedPatches) %>
 				</c:if>
+
 				<strong><liferay-ui:message key="uptime" /></strong>:
 
 				<c:if test="<%= days > 0 %>">

@@ -20,6 +20,10 @@ package com.liferay.jenkins.results.parser;
 public abstract class BaseTestBatch
 	<T extends BatchBuildData, S extends Workspace> implements TestBatch<T, S> {
 
+	public JDK getJDK() {
+		return _jdk;
+	}
+
 	@Override
 	public void run() {
 		executeBatch();
@@ -29,23 +33,14 @@ public abstract class BaseTestBatch
 
 	protected BaseTestBatch(T batchBuildData, S workspace) {
 		_batchBuildData = batchBuildData;
+		_jdk = JDKFactory.getJDK(batchBuildData.getBatchName());
 		_workspace = workspace;
 	}
 
 	protected abstract void executeBatch();
 
 	protected String getAntOpts(String batchName) {
-		String antOpts = System.getenv("ANT_OPTS");
-
-		if (batchName.endsWith("-jdk7")) {
-			return antOpts.replace("MetaspaceSize", "PermSize");
-		}
-
-		if (batchName.endsWith("-jdk8")) {
-			return antOpts.replace("PermSize", "MetaspaceSize");
-		}
-
-		return antOpts;
+		return _jdk.getAntOpts();
 	}
 
 	protected T getBatchBuildData() {
@@ -53,29 +48,13 @@ public abstract class BaseTestBatch
 	}
 
 	protected String getJavaHome(String batchName) {
-		if (batchName.endsWith("-jdk7")) {
-			return "/opt/java/jdk8";
-		}
-
-		if (batchName.endsWith("-jdk8")) {
-			return "/opt/java/jdk8";
-		}
-
-		return "/opt/java/jdk";
+		return _jdk.getJavaHome();
 	}
 
 	protected String getPath(String batchName) {
 		String path = System.getenv("PATH");
 
-		if (batchName.endsWith("-jdk7")) {
-			return path.replace("jdk", "jdk7");
-		}
-
-		if (batchName.endsWith("-jdk8")) {
-			return path.replace("jdk", "jdk8");
-		}
-
-		return path;
+		return path.replaceAll("jdk", _jdk.getName());
 	}
 
 	protected S getWorkspace() {
@@ -85,6 +64,7 @@ public abstract class BaseTestBatch
 	protected abstract void publishResults();
 
 	private final T _batchBuildData;
+	private final JDK _jdk;
 	private final S _workspace;
 
 }

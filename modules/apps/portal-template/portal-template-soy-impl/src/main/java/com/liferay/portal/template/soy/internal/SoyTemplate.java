@@ -17,7 +17,6 @@ package com.liferay.portal.template.soy.internal;
 import com.google.common.io.CharStreams;
 import com.google.template.soy.SoyFileSet;
 import com.google.template.soy.data.SanitizedContent;
-import com.google.template.soy.data.SoyRecord;
 import com.google.template.soy.msgs.SoyMsgBundle;
 import com.google.template.soy.tofu.SoyTofu;
 
@@ -109,6 +108,11 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		return soyMsgBundleBridge;
 	}
 
+	protected SoyTemplateRecord getInjectedSoyTemplateRecord() {
+		return new SoyTemplateRecord(
+			_filterRestrictedVariables(_soyContext.getInjectedData()));
+	}
+
 	protected SoyFileSet getSoyFileSet(List<TemplateResource> templateResources)
 		throws Exception {
 
@@ -150,6 +154,10 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		}
 
 		return Optional.empty();
+	}
+
+	protected SoyTemplateRecord getSoyTemplateRecord() {
+		return new SoyTemplateRecord(_filterRestrictedVariables(_soyContext));
 	}
 
 	protected SoyTofuCacheBag getSoyTofuCacheBag(
@@ -231,8 +239,8 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 
 		SoyTofu.Renderer renderer = soyTofu.newRenderer(namespace);
 
-		renderer.setData(_getDataSoyRecord());
-		renderer.setIjData(_getInjectedDataSoyRecord());
+		renderer.setData(getSoyTemplateRecord());
+		renderer.setIjData(getInjectedSoyTemplateRecord());
 
 		SoyFileSet soyFileSet = soyTofuCacheBag.getSoyFileSet();
 
@@ -274,15 +282,6 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		).collect(
 			Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
 		);
-	}
-
-	private SoyRecord _getDataSoyRecord() {
-		return new SoyTemplateRecord(_filterRestrictedVariables(_soyContext));
-	}
-
-	private SoyRecord _getInjectedDataSoyRecord() {
-		return new SoyTemplateRecord(
-			_filterRestrictedVariables(_soyContext.getInjectedData()));
 	}
 
 	private ResourceBundle _getLanguageResourceBundle(Locale locale) {

@@ -213,7 +213,9 @@
 
 		<execute macro="UsersAndOrganizationsNavigator#gotoMenuBarOrganizationSite" />
 
-		<execute function="Check" locator1="UsersAndOrganizationsEditOrganization#ORGANIZATION_SITE_CREATE_SITE_CHECKBOX" />
+		<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#ANY_TOGGLE_SWITCH">
+			<var name="key_toggleSwitchLabel" value="Create Site" />
+		</execute>
 
 		<if>
 			<or>
@@ -236,17 +238,6 @@
 		</if>
 
 		<execute macro="PortletEntry#save" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Organization Site" />
-		</execute>
-
-		<if>
-			<condition function="IsElementPresent" locator1="UsersAndOrganizationsEditOrganization#ORGANIZATION_SITE_PUBLIC_PAGES_SELECT" />
-			<then>
-				<execute function="AssertChecked" locator1="UsersAndOrganizationsEditOrganization#ORGANIZATION_SITE_CREATE_SITE_CHECKBOX" />
-			</then>
-		</if>
 	</command>
 
 	<command name="addWebsitesCP">

@@ -17,6 +17,7 @@ package com.liferay.users.admin.test.util.search;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -67,6 +69,29 @@ public class UserSearchFixture {
 		return group;
 	}
 
+	public Organization addOrganization() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization);
+
+		return organization;
+	}
+
+	public Organization addOrganization(
+			OrganizationBlueprint organizationBlueprint)
+		throws Exception {
+
+		Organization organization = addOrganization();
+
+		String[] assetTagNames = organizationBlueprint.getAssetTagNames();
+
+		if (assetTagNames != null) {
+			OrganizationTestUtil.updateAsset(organization, null, assetTagNames);
+		}
+
+		return organization;
+	}
+
 	public User addUser(String screenName, Group group, String... assetTagNames)
 		throws Exception {
 
@@ -93,6 +118,10 @@ public class UserSearchFixture {
 
 	public List<Group> getGroups() {
 		return _groups;
+	}
+
+	public List<Organization> getOrganizations() {
+		return _organizations;
 	}
 
 	public SearchContext getSearchContext(String keywords) throws Exception {
@@ -220,6 +249,7 @@ public class UserSearchFixture {
 	private final List<AssetTag> _assetTags = new ArrayList<>();
 	private long _companyId;
 	private final List<Group> _groups = new ArrayList<>();
+	private final List<Organization> _organizations = new ArrayList<>();
 	private PermissionChecker _permissionChecker;
 	private String _principal;
 	private final List<User> _users = new ArrayList<>();

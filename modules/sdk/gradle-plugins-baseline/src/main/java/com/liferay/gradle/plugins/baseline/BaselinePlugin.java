@@ -180,17 +180,17 @@ public class BaselinePlugin implements Plugin<Project> {
 		Dependency dependency = _createDependencyBaseline(
 			newJarTask, majorVersion);
 
-		final Configuration configuration =
+		final Configuration baselineConfiguration =
 			configurationContainer.detachedConfiguration(dependency);
 
-		_configureConfigurationBaseline(configuration);
+		_configureConfigurationBaseline(baselineConfiguration);
 
 		baselineTask.setOldJarFile(
 			new Callable<File>() {
 
 				@Override
 				public File call() throws Exception {
-					return configuration.getSingleFile();
+					return baselineConfiguration.getSingleFile();
 				}
 
 			});
@@ -240,12 +240,14 @@ public class BaselinePlugin implements Plugin<Project> {
 		return baselineTask;
 	}
 
-	private void _configureConfigurationBaseline(Configuration configuration) {
-		configuration.setTransitive(false);
-		configuration.setVisible(false);
+	private void _configureConfigurationBaseline(
+		Configuration baselineConfiguration) {
+
+		baselineConfiguration.setTransitive(false);
+		baselineConfiguration.setVisible(false);
 
 		ResolutionStrategy resolutionStrategy =
-			configuration.getResolutionStrategy();
+			baselineConfiguration.getResolutionStrategy();
 
 		ComponentSelectionRules componentSelectionRules =
 			resolutionStrategy.getComponentSelection();

@@ -17,33 +17,17 @@
 <%
 DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 
-if (Validator.isNull(displayTerms.getKeywords())) {
-	total = DDLRecordLocalServiceUtil.getRecordsCount(recordSet.getRecordSetId(), WorkflowConstants.STATUS_ANY);
+SearchContext searchContext = SearchContextFactory.getInstance(request);
 
-	searchContainer.setTotal(total);
+searchContext.setAttribute(Field.STATUS, WorkflowConstants.STATUS_ANY);
+searchContext.setAttribute("recordSetId", recordSet.getRecordSetId());
+searchContext.setAttribute("recordSetScope", recordSet.getScope());
+searchContext.setEnd(searchContainer.getEnd());
+searchContext.setKeywords(displayTerms.getKeywords());
+searchContext.setStart(searchContainer.getStart());
 
-	results = DDLRecordLocalServiceUtil.getRecords(recordSet.getRecordSetId(), WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+BaseModelSearchResult<DDLRecord> baseModelSearchResult = DDLRecordLocalServiceUtil.searchDDLRecords(searchContext);
 
-	searchContainer.setResults(results);
-}
-else {
-	SearchContext searchContext = SearchContextFactory.getInstance(request);
-
-	searchContext.setAttribute(Field.STATUS, WorkflowConstants.STATUS_ANY);
-	searchContext.setAttribute("recordSetId", recordSet.getRecordSetId());
-	searchContext.setAttribute("recordSetScope", recordSet.getScope());
-	searchContext.setEnd(searchContainer.getEnd());
-	searchContext.setKeywords(displayTerms.getKeywords());
-	searchContext.setStart(searchContainer.getStart());
-
-	BaseModelSearchResult<DDLRecord> baseModelSearchResult = DDLRecordLocalServiceUtil.searchDDLRecords(searchContext);
-
-	results = baseModelSearchResult.getBaseModels();
-
-	total = baseModelSearchResult.getLength();
-
-	searchContainer.setTotal(total);
-}
-
-searchContainer.setResults(results);
+searchContainer.setTotal(baseModelSearchResult.getLength());
+searchContainer.setResults(baseModelSearchResult.getBaseModels());
 %>

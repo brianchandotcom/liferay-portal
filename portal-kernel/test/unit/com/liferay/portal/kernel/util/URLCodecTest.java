@@ -118,9 +118,9 @@ public class URLCodecTest {
 	private static final String[] _ESCAPE_SPACES_ENCODED_URLS;
 
 	private static final String[] _RAW_URLS = {
-		"abcdefghijklmnopqrstuvwxyz", "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-		"0123456789", ".-*_", " ", "~`!@#$%^&()+={[}]|\\:;\"'<,>?/", "中文测试",
-		"/abc/def", "abc <def> ghi"
+		null, StringPool.BLANK, "abcdefghijklmnopqrstuvwxyz",
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZ", "0123456789", ".-*_", " ",
+		"~`!@#$%^&()+={[}]|\\:;\"'<,>?/", "中文测试", "/abc/def", "abc <def> ghi"
 	};
 
 	private static final String[] _UNICODE_CATS_AND_DOGS = {
@@ -131,8 +131,11 @@ public class URLCodecTest {
 		_ENCODED_URLS = new String[_RAW_URLS.length];
 		_ESCAPE_SPACES_ENCODED_URLS = new String[_RAW_URLS.length];
 
+		_ENCODED_URLS[0] = null;
+		_ESCAPE_SPACES_ENCODED_URLS[0] = null;
+
 		try {
-			for (int i = 0; i < _RAW_URLS.length; i++) {
+			for (int i = 1; i < _RAW_URLS.length; i++) {
 				_ENCODED_URLS[i] = URLEncoder.encode(
 					_RAW_URLS[i], StringPool.UTF8);
 

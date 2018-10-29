@@ -88,7 +88,8 @@ public class EditImageConfigurationEntryMVCActionCommand
 		boolean autoModifiedUuid = false;
 
 		if (automaticUuid) {
-			String normalizedName = FriendlyURLNormalizerUtil.normalize(name);
+			String normalizedName =
+				FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(name);
 
 			newUuid = _getAutomaticUuid(
 				themeDisplay.getCompanyId(), normalizedName, uuid);

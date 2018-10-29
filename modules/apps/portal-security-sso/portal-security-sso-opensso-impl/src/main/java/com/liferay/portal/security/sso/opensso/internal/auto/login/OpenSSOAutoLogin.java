@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -86,12 +85,9 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		throws Exception {
 
 		long creatorUserId = 0;
-		boolean autoPassword = false;
-
-		String password1 = PwdGenerator.getPassword();
-
-		String password2 = password1;
-
+		boolean autoPassword = true;
+		String password1 = null;
+		String password2 = null;
 		boolean autoScreenName = false;
 		long facebookId = 0;
 		String openId = StringPool.BLANK;

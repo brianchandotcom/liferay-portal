@@ -60,66 +60,41 @@ else {
 						<aui:input id="siteNavigationMenuId" name="preferences--siteNavigationMenuId--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuId() %>" />
 						<aui:input id="siteNavigationMenuType" name="preferences--siteNavigationMenuType--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() %>" />
 
-						<c:choose>
-							<c:when test="<%= SiteNavigationMenuLocalServiceUtil.getSiteNavigationMenusCount(scopeGroupId) > 0 %>">
-								<div>
-									<aui:input checked="<%= !siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() %>" cssClass="select-navigation" label="select-navigation" name="selectNavigation" type="radio" value="0" />
+						<aui:input checked="<%= !siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() %>" cssClass="select-navigation" label="select-navigation" name="selectNavigation" type="radio" value="0" />
 
-									<aui:select disabled="<%= siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() %>" label="" name="selectSiteNavigationMenuType" value="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() %>">
+						<aui:select disabled="<%= siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() %>" label="" name="selectSiteNavigationMenuType" value="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() %>">
 
-										<%
-										Group scopeGroup = themeDisplay.getScopeGroup();
-										%>
+							<%
+							Group scopeGroup = themeDisplay.getScopeGroup();
+							%>
 
-										<c:if test="<%= scopeGroup.hasPublicLayouts() && layout.isPublicLayout() %>">
-											<aui:option label="public-pages-hierarchy" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY %>" value="<%= SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY %>" />
-										</c:if>
+							<c:if test="<%= scopeGroup.hasPublicLayouts() && layout.isPublicLayout() %>">
+								<aui:option label="public-pages-hierarchy" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY %>" value="<%= SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY %>" />
+							</c:if>
 
-										<c:if test="<%= scopeGroup.hasPrivateLayouts() && layout.isPrivateLayout() %>">
-											<aui:option label="private-pages-hierarchy" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY %>" value="<%= SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY %>" />
-										</c:if>
+							<c:if test="<%= scopeGroup.hasPrivateLayouts() && layout.isPrivateLayout() %>">
+								<aui:option label="private-pages-hierarchy" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY %>" value="<%= SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY %>" />
+							</c:if>
 
-										<aui:option label="primary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIMARY %>" value="<%= SiteNavigationConstants.TYPE_PRIMARY %>" />
-										<aui:option label="secondary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_SECONDARY %>" value="<%= SiteNavigationConstants.TYPE_SECONDARY %>" />
-										<aui:option label="social-navigation" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_SOCIAL %>" value="<%= SiteNavigationConstants.TYPE_SOCIAL %>" />
-									</aui:select>
+							<aui:option label="primary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIMARY %>" value="<%= SiteNavigationConstants.TYPE_PRIMARY %>" />
+							<aui:option label="secondary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_SECONDARY %>" value="<%= SiteNavigationConstants.TYPE_SECONDARY %>" />
+							<aui:option label="social-navigation" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_SOCIAL %>" value="<%= SiteNavigationConstants.TYPE_SOCIAL %>" />
+						</aui:select>
 
-									<aui:input checked="<%= siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() %>" cssClass="select-navigation" label="choose-menu" name="selectNavigation" type="radio" value="-1" />
+						<aui:input checked="<%= siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() %>" cssClass="select-navigation" label="choose-menu" name="selectNavigation" type="radio" value="-1" />
 
-									<div class="mb-2 text-muted">
-										<span id="<portlet:namespace />navigationMenuName">
-											<c:if test="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuId() > 0 %>">
-												<%= siteNavigationMenuName %>
-											</c:if>
-										</span>
-										<span class="mt-1 <%= (siteNavigationMenuDisplayContext.getSiteNavigationMenuId() > 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />removeSiteNavigationMenu" role="button">
-											<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
-										</span>
-									</div>
+						<div class="mb-2 text-muted">
+							<span id="<portlet:namespace />navigationMenuName">
+								<c:if test="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuId() > 0 %>">
+									<%= siteNavigationMenuName %>
+								</c:if>
+							</span>
+							<span class="mt-1 <%= (siteNavigationMenuDisplayContext.getSiteNavigationMenuId() > 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />removeSiteNavigationMenu" role="button">
+								<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+							</span>
+						</div>
 
-									<aui:button disabled="<%= !siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() %>" name="chooseSiteNavigationMenu" value="select" />
-								</div>
-							</c:when>
-							<c:otherwise>
-								<aui:input name="selectSiteNavigationMenuType" type="hidden" value="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() %>" />
-
-								<div class="card card-horizontal taglib-horizontal-card">
-									<div class="card-row card-row-padded ">
-										<div class="card-col-field">
-											<div class="sticker sticker-secondary sticker-static">
-												<aui:icon image="blogs" markupView="lexicon" />
-											</div>
-										</div>
-
-										<div class="card-col-content card-col-gutters">
-											<span class="lfr-card-title-text truncate-text" id="<portlet:namespace />siteNavigationMenuName">
-												<%= siteNavigationMenuName %>
-											</span>
-										</div>
-									</div>
-								</div>
-							</c:otherwise>
-						</c:choose>
+						<aui:button disabled="<%= !siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() %>" name="chooseSiteNavigationMenu" value="select" />
 
 						<div class="display-template mt-4">
 							<liferay-ddm:template-selector

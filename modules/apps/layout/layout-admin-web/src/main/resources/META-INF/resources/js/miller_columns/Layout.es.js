@@ -5,7 +5,11 @@ import Soy from 'metal-soy';
 
 import './LayoutBreadcrumbs.es';
 import './LayoutColumn.es';
-import {DRAG_POSITIONS, LayoutDragDrop} from './utils/LayoutDragDrop.es';
+import {
+	DRAG_POSITIONS,
+	DROP_TARGET_TYPES,
+	LayoutDragDrop
+} from './utils/LayoutDragDrop.es';
 import {
 	clearFollowingColumns,
 	clearPath,
@@ -148,8 +152,8 @@ class Layout extends Component {
 	 * @param {!object} eventData
 	 * @param {!string} eventData.position
 	 * @param {!string} eventData.sourceItemPlid
-	 * @param {!number} eventData.targetColumnIndex
-	 * @param {!string} eventData.targetItemPlid
+	 * @param {!string} eventData.targetId
+	 * @param {!string} eventData.targetType
 	 * @private
 	 * @review
 	 */
@@ -159,27 +163,27 @@ class Layout extends Component {
 		const {
 			position,
 			sourceItemPlid,
-			targetColumnIndex,
-			targetItemPlid
+			targetId,
+			targetType
 		} = eventData;
 
-		if (targetColumnIndex) {
-			this._setColumnHoveredData(sourceItemPlid, targetColumnIndex);
+		if (targetType === DROP_TARGET_TYPES.column) {
+			this._setColumnHoveredData(sourceItemPlid, targetId);
 		}
-		else if (targetItemPlid) {
+		else if (targetType === DROP_TARGET_TYPES.item) {
 			this._setItemHoveredData(
 				position,
 				sourceItemPlid,
-				targetItemPlid
+				targetId
 			);
 
 			if (
 				this._draggingItemPosition === DRAG_POSITIONS.inside &&
-				this._currentPathItemPlid !== targetItemPlid
+				this._currentPathItemPlid !== targetId
 			) {
 				this._updatePathTimeout = setTimeout(
 					() => {
-						this._updatePath(targetItemPlid);
+						this._updatePath(targetId);
 					},
 					UPDATE_PATH_TIMEOUT
 				);
@@ -189,8 +193,8 @@ class Layout extends Component {
 
 	/**
 	 * @param {!object} eventData
-	 * @param {!string} eventData.sourceItemPlid
-	 * @param {!string} eventData.targetItemPlid
+	 * @param {!string} eventData.targetId
+	 * @param {!string} eventData.targetType
 	 * @private
 	 * @review
 	 */
@@ -198,31 +202,31 @@ class Layout extends Component {
 		let layoutColumns = this.layoutColumns.map(
 			(layoutColumn) => [...layoutColumn]
 		);
-		const {sourceItemPlid, targetColumnIndex, targetItemPlid} = eventData;
+		const {sourceItemPlid, targetId, targetType} = eventData;
 
 		const itemDropIsValid = dropIsValid(
 			this._draggingItem,
 			this._draggingItemColumnIndex,
-			targetItemPlid,
-			targetColumnIndex
+			targetId,
+			targetType
 		);
 
 		if (itemDropIsValid) {
 			let parentPlid = null;
 			let priority = null;
 
-			if (targetColumnIndex) {
+			if (targetType === DROP_TARGET_TYPES.column) {
 				const dropData = dropItemInsideColumn(
 					layoutColumns,
 					this._draggingItem,
-					targetColumnIndex
+					targetId
 				);
 
 				layoutColumns = dropData.layoutColumns;
 				parentPlid = dropData.newParentPlid;
 				priority = dropData.priority;
 			}
-			else if (targetItemPlid) {
+			else if (targetType === DROP_TARGET_TYPES.item) {
 				const targetItem = getItem(layoutColumns, targetId);
 
 				layoutColumns = clearPath(

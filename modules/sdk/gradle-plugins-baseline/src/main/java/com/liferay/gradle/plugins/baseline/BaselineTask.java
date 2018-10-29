@@ -149,11 +149,6 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 		return GradleUtil.toFile(getProject(), _newJarFile);
 	}
 
-	@InputFile
-	public File getOldJarFile() {
-		return GradleUtil.toFile(getProject(), _oldJarFile);
-	}
-
 	@Input
 	@Optional
 	public File getSourceDir() {
@@ -211,10 +206,6 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 		_newJarFile = newJarFile;
 	}
 
-	public void setOldJarFile(Object oldJarFile) {
-		_oldJarFile = oldJarFile;
-	}
-
 	public void setReportDiff(boolean reportDiff) {
 		_reportDiff = reportDiff;
 	}
@@ -227,6 +218,18 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 		_sourceDir = sourceDir;
 	}
 
+	protected File getOldJarFile() {
+		if (_oldJarFile != null) {
+			return _oldJarFile;
+		}
+
+		Configuration baselineConfiguration = getBaselineConfiguration();
+
+		_oldJarFile = baselineConfiguration.getSingleFile();
+
+		return _oldJarFile;
+	}
+
 	private Configuration _baselineConfiguration;
 	private Object _bndFile;
 	private boolean _forceCalculatedVersion;
@@ -234,7 +237,7 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 	private boolean _ignoreFailures;
 	private String _logFileName;
 	private Object _newJarFile;
-	private Object _oldJarFile;
+	private File _oldJarFile;
 	private boolean _reportDiff;
 	private boolean _reportOnlyDirtyPackages;
 	private Object _sourceDir;

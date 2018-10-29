@@ -186,15 +186,6 @@ public class BaselinePlugin implements Plugin<Project> {
 		_configureConfigurationBaseline(baselineConfiguration);
 
 		baselineTask.setBaselineConfiguration(baselineConfiguration);
-		baselineTask.setOldJarFile(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return baselineConfiguration.getSingleFile();
-				}
-
-			});
 
 		return baselineTask;
 	}
@@ -343,15 +334,6 @@ public class BaselinePlugin implements Plugin<Project> {
 		baselineTask.dependsOn(newJarTask);
 
 		baselineTask.setBaselineConfiguration(baselineConfiguration);
-		baselineTask.setOldJarFile(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return baselineConfiguration.getSingleFile();
-				}
-
-			});
 	}
 
 	private void _configureTaskBaseline(

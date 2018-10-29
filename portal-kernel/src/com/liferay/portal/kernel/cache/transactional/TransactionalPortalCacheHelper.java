@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.SkipReplicationThreadLocal;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionDefinition;
@@ -32,6 +33,8 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Field;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -301,6 +304,8 @@ public class TransactionalPortalCacheHelper {
 	private static final ValueEntry _NULL_HOLDER_VALUE_ENTRY = new ValueEntry(
 		_NULL_HOLDER, PortalCache.DEFAULT_TIME_TO_LIVE, false);
 
+	private static final Object _NULL_MODEL;
+
 	private static final ThreadLocal<List<List<PortalCacheMap>>>
 		_backupPortalCacheMapsThreadLocal =
 			new CentralizedThreadLocal<>(
@@ -314,6 +319,20 @@ public class TransactionalPortalCacheHelper {
 					"._portalCacheMapsThreadLocal",
 				ArrayList::new, false);
 	private static volatile Boolean _transactionalCacheEnabled;
+
+	static {
+		try {
+			Field field = BasePersistenceImpl.class.getDeclaredField(
+				"nullModel");
+
+			field.setAccessible(true);
+
+			_NULL_MODEL = field.get(null);
+		}
+		catch (ReflectiveOperationException roe) {
+			throw new ExceptionInInitializerError(roe);
+		}
+	}
 
 	private static class MarkerUncommittedBuffer extends UncommittedBuffer {
 
@@ -476,7 +495,7 @@ public class TransactionalPortalCacheHelper {
 		public void commitTo(
 			PortalCache<Serializable, Object> portalCache, Serializable key) {
 
-			if (_value == _NULL_HOLDER) {
+			if ((_value == _NULL_HOLDER) || (_value == _NULL_MODEL)) {
 				if (_skipReplicator) {
 					PortalCacheHelperUtil.removeWithoutReplicator(
 						portalCache, key);

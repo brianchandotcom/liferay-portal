@@ -17,6 +17,7 @@ package com.liferay.login.authentication.openid.connect.web.internal.portlet.act
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -30,7 +31,6 @@ import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWeb
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.MimeResponse;
 import javax.portlet.RenderURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,8 +78,10 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 			HttpSession session = httpServletRequest.getSession(false);
 
 			if (session != null) {
-				RenderURL renderURL = actionResponse.createRedirectURL(
-					MimeResponse.Copy.PUBLIC);
+				LiferayPortletResponse liferayPortletResponse =
+					_portal.getLiferayPortletResponse(actionResponse);
+
+				RenderURL renderURL = liferayPortletResponse.createRenderURL();
 
 				renderURL.setParameter(
 					"mvcRenderCommandName",

@@ -36,19 +36,19 @@ public interface AnnouncementsDisplayContext extends DisplayContext {
 
 	public Format getDateFormatDate();
 
-	public int getPageDelta();
-
 	public List<Group> getGroups() throws PortalException;
 
 	public List<Organization> getOrganizations() throws PortalException;
 
-	public List<Role> getRoles() throws PortalException;
+	public int getPageDelta();
 
-	public List<UserGroup> getUserGroups() throws PortalException;
+	public List<Role> getRoles() throws PortalException;
 
 	public String getTabs1Names();
 
 	public String getTabs1PortletURL();
+
+	public List<UserGroup> getUserGroups() throws PortalException;
 
 	public boolean isCustomizeAnnouncementsDisplayed();
 

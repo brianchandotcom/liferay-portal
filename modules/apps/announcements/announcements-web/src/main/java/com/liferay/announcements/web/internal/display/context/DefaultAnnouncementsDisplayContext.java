@@ -109,7 +109,7 @@ public class DefaultAnnouncementsDisplayContext
 				_announcementsRequestHelper.getUser());
 		}
 
-		scopes.put(Long.valueOf(0), new long[] {0});
+		scopes.put(0L, new long[] {0});
 
 		return scopes;
 	}
@@ -122,16 +122,6 @@ public class DefaultAnnouncementsDisplayContext
 		return FastDateFormatFactoryUtil.getDate(
 			DateFormat.FULL, themeDisplay.getLocale(),
 			themeDisplay.getTimeZone());
-	}
-
-	@Override
-	public int getPageDelta() {
-		PortletPreferences portletPreferences =
-			_announcementsRequestHelper.getPortletPreferences();
-
-		return GetterUtil.getInteger(
-			portletPreferences.getValue(
-				"pageDelta", String.valueOf(SearchContainer.DEFAULT_DELTA)));
 	}
 
 	@Override
@@ -156,9 +146,7 @@ public class DefaultAnnouncementsDisplayContext
 	}
 
 	@Override
-	public List<Organization> getOrganizations()
-		throws PortalException {
-
+	public List<Organization> getOrganizations() throws PortalException {
 		if (!isCustomizeAnnouncementsDisplayed()) {
 			return AnnouncementsUtil.getOrganizations(
 				_announcementsRequestHelper.getThemeDisplay());
@@ -178,6 +166,16 @@ public class DefaultAnnouncementsDisplayContext
 		}
 
 		return selectedOrganizations;
+	}
+
+	@Override
+	public int getPageDelta() {
+		PortletPreferences portletPreferences =
+			_announcementsRequestHelper.getPortletPreferences();
+
+		return GetterUtil.getInteger(
+			portletPreferences.getValue(
+				"pageDelta", String.valueOf(SearchContainer.DEFAULT_DELTA)));
 	}
 
 	@Override
@@ -202,6 +200,24 @@ public class DefaultAnnouncementsDisplayContext
 	}
 
 	@Override
+	public String getTabs1Names() {
+		return "unread,read";
+	}
+
+	@Override
+	public String getTabs1PortletURL() {
+		LiferayPortletResponse liferayPortletResponse =
+			_announcementsRequestHelper.getLiferayPortletResponse();
+
+		PortletURL tabs1URL = liferayPortletResponse.createRenderURL();
+
+		tabs1URL.setParameter("mvcRenderCommandName", "/announcements/view");
+		tabs1URL.setParameter("tabs1", _announcementsRequestHelper.getTabs1());
+
+		return tabs1URL.toString();
+	}
+
+	@Override
 	public List<UserGroup> getUserGroups() throws PortalException {
 		if (!isCustomizeAnnouncementsDisplayed()) {
 			return AnnouncementsUtil.getUserGroups(
@@ -220,24 +236,6 @@ public class DefaultAnnouncementsDisplayContext
 		}
 
 		return selectedUserGroups;
-	}
-
-	@Override
-	public String getTabs1Names() {
-		return "unread,read";
-	}
-
-	@Override
-	public String getTabs1PortletURL() {
-		LiferayPortletResponse liferayPortletResponse =
-			_announcementsRequestHelper.getLiferayPortletResponse();
-
-		PortletURL tabs1URL = liferayPortletResponse.createRenderURL();
-
-		tabs1URL.setParameter("mvcRenderCommandName", "/announcements/view");
-		tabs1URL.setParameter("tabs1", _announcementsRequestHelper.getTabs1());
-
-		return tabs1URL.toString();
 	}
 
 	@Override

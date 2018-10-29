@@ -78,7 +78,7 @@ public class AnnouncementsUtil {
 
 		// General announcements
 
-		scopes.put(Long.valueOf(0), new long[] {0});
+		scopes.put(0L, new long[] {0});
 
 		// Personal announcements
 

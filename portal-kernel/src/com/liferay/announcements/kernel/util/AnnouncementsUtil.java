@@ -167,7 +167,7 @@ public class AnnouncementsUtil {
 	}
 
 	public static List<Group> getGroups(ThemeDisplay themeDisplay)
-		throws Exception {
+		throws PortalException {
 
 		List<Group> filteredGroups = new ArrayList<>();
 
@@ -189,7 +189,7 @@ public class AnnouncementsUtil {
 	}
 
 	public static List<Organization> getOrganizations(ThemeDisplay themeDisplay)
-		throws Exception {
+		throws PortalException {
 
 		List<Organization> filteredOrganizations = new ArrayList<>();
 
@@ -211,7 +211,7 @@ public class AnnouncementsUtil {
 	}
 
 	public static List<Role> getRoles(ThemeDisplay themeDisplay)
-		throws Exception {
+		throws PortalException {
 
 		List<Role> filteredRoles = new ArrayList<>();
 
@@ -243,9 +243,7 @@ public class AnnouncementsUtil {
 		return filteredRoles;
 	}
 
-	public static List<UserGroup> getUserGroups(ThemeDisplay themeDisplay)
-		throws Exception {
-
+	public static List<UserGroup> getUserGroups(ThemeDisplay themeDisplay) {
 		List<UserGroup> filteredUserGroups = new ArrayList<>();
 
 		List<UserGroup> userGroups = UserGroupLocalServiceUtil.getUserGroups(

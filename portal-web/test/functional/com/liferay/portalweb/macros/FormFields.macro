@@ -31,7 +31,7 @@
 
 	<command name="disableCheckbox">
 		<if>
-			<condition function="IsChecked" locator1="FormFields#CHECKBOX">
+			<condition function="IsChecked#isCheckedNotVisible" locator1="FormFields#CHECKBOX">
 				<var name="key_fieldName" value="${fieldName}" />
 			</condition>
 
@@ -180,7 +180,7 @@
 
 	<command name="enableCheckbox">
 		<if>
-			<condition function="IsNotChecked" locator1="FormFields#CHECKBOX">
+			<condition function="IsNotChecked#isNotCheckedNotVisible" locator1="FormFields#CHECKBOX">
 				<var name="key_fieldName" value="${fieldName}" />
 			</condition>
 

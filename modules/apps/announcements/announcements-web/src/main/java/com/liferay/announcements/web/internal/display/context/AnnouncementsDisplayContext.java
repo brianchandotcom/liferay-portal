@@ -38,13 +38,13 @@ public interface AnnouncementsDisplayContext extends DisplayContext {
 
 	public int getPageDelta();
 
-	public List<Group> getSelectedGroups() throws PortalException;
+	public List<Group> getGroups() throws PortalException;
 
-	public List<Organization> getSelectedOrganizations() throws PortalException;
+	public List<Organization> getOrganizations() throws PortalException;
 
-	public List<Role> getSelectedRoles() throws PortalException;
+	public List<Role> getRoles() throws PortalException;
 
-	public List<UserGroup> getSelectedUserGroups() throws PortalException;
+	public List<UserGroup> getUserGroups() throws PortalException;
 
 	public String getTabs1Names();
 

@@ -135,7 +135,7 @@ public class DefaultAnnouncementsDisplayContext
 	}
 
 	@Override
-	public List<Group> getSelectedGroups() throws PortalException {
+	public List<Group> getGroups() throws PortalException {
 		if (!isCustomizeAnnouncementsDisplayed()) {
 			return AnnouncementsUtil.getGroups(
 				_announcementsRequestHelper.getThemeDisplay());
@@ -156,7 +156,7 @@ public class DefaultAnnouncementsDisplayContext
 	}
 
 	@Override
-	public List<Organization> getSelectedOrganizations()
+	public List<Organization> getOrganizations()
 		throws PortalException {
 
 		if (!isCustomizeAnnouncementsDisplayed()) {
@@ -181,7 +181,7 @@ public class DefaultAnnouncementsDisplayContext
 	}
 
 	@Override
-	public List<Role> getSelectedRoles() throws PortalException {
+	public List<Role> getRoles() throws PortalException {
 		if (!isCustomizeAnnouncementsDisplayed()) {
 			return AnnouncementsUtil.getRoles(
 				_announcementsRequestHelper.getThemeDisplay());
@@ -202,7 +202,7 @@ public class DefaultAnnouncementsDisplayContext
 	}
 
 	@Override
-	public List<UserGroup> getSelectedUserGroups() throws PortalException {
+	public List<UserGroup> getUserGroups() throws PortalException {
 		if (!isCustomizeAnnouncementsDisplayed()) {
 			return AnnouncementsUtil.getUserGroups(
 				_announcementsRequestHelper.getThemeDisplay());

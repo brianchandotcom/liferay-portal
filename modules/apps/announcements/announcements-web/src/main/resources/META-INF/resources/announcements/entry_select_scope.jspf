@@ -29,7 +29,7 @@ boolean hasDistributionScope = false;
 	</c:if>
 
 	<%
-	List<Group> groups = announcementsDisplayContext.getSelectedGroups();
+	List<Group> groups = announcementsDisplayContext.getGroups();
 	%>
 
 	<c:if test="<%= !groups.isEmpty() %>">
@@ -51,7 +51,7 @@ boolean hasDistributionScope = false;
 	</c:if>
 
 	<%
-	List<Organization> organizations = announcementsDisplayContext.getSelectedOrganizations();
+	List<Organization> organizations = announcementsDisplayContext.getOrganizations();
 	%>
 
 	<c:if test="<%= !organizations.isEmpty() %>">
@@ -73,7 +73,7 @@ boolean hasDistributionScope = false;
 	</c:if>
 
 	<%
-	List<Role> roles = announcementsDisplayContext.getSelectedRoles();
+	List<Role> roles = announcementsDisplayContext.getRoles();
 	%>
 
 	<c:if test="<%= !roles.isEmpty() %>">
@@ -95,7 +95,7 @@ boolean hasDistributionScope = false;
 	</c:if>
 
 	<%
-	List<UserGroup> userGroups = announcementsDisplayContext.getSelectedUserGroups();
+	List<UserGroup> userGroups = announcementsDisplayContext.getUserGroups();
 	%>
 
 	<c:if test="<%= !userGroups.isEmpty() %>">

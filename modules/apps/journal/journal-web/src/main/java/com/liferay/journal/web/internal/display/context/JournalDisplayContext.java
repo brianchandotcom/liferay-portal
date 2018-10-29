@@ -52,7 +52,6 @@ import com.liferay.journal.web.internal.search.EntriesChecker;
 import com.liferay.journal.web.internal.search.EntriesMover;
 import com.liferay.journal.web.internal.search.JournalSearcher;
 import com.liferay.journal.web.util.JournalPortletUtil;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
@@ -1401,11 +1400,9 @@ public class JournalDisplayContext {
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			JournalArticle.class.getName(), classPK);
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			AssetDisplayPageHelper.getAssetDisplayPageLayoutPageTemplateEntry(
-				_themeDisplay.getScopeGroupId(), assetEntry);
+		if (AssetDisplayPageHelper.hasAssetDisplayPage(
+				_themeDisplay.getScopeGroupId(), assetEntry)) {
 
-		if (layoutPageTemplateEntry != null) {
 			return true;
 		}
 

@@ -36,10 +36,8 @@ import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ResolutionStrategy;
-import org.gradle.api.artifacts.ResolveException;
 import org.gradle.api.artifacts.component.ModuleComponentIdentifier;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
-import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
@@ -48,7 +46,6 @@ import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.AbstractArchiveTask;
 import org.gradle.api.tasks.bundling.Jar;
-import org.gradle.internal.resolve.ModuleVersionNotFoundException;
 import org.gradle.util.VersionNumber;
 
 /**
@@ -281,14 +278,6 @@ public class BaselinePlugin implements Plugin<Project> {
 			return;
 		}
 
-		if (versionNumber.compareTo(VersionNumber.parse("2.0.0")) == 0) {
-			if (_isModuleVersionNotFound(baselineConfiguration)) {
-				baselineTask.setEnabled(false);
-
-				return;
-			}
-		}
-
 		Integer lowestMajorVersion =
 			baselineConfigurationExtension.getLowestMajorVersion();
 
@@ -452,21 +441,6 @@ public class BaselinePlugin implements Plugin<Project> {
 		args.put("version", version);
 
 		return dependencyHandler.create(args);
-	}
-
-	private boolean _isModuleVersionNotFound(FileCollection fileCollection) {
-		try {
-			fileCollection.getSingleFile();
-		}
-		catch (ResolveException re) {
-			Throwable throwable = re.getCause();
-
-			if (throwable instanceof ModuleVersionNotFoundException) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 }

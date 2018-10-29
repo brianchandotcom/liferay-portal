@@ -20,6 +20,7 @@ import aQute.bnd.version.Version;
 import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.LiferayOSGiPlugin;
 import com.liferay.gradle.plugins.baseline.BaselinePlugin;
+import com.liferay.gradle.plugins.baseline.BaselineTask;
 import com.liferay.gradle.plugins.cache.CacheExtension;
 import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.cache.task.TaskCache;
@@ -209,6 +210,7 @@ import org.gradle.api.tasks.testing.TestTaskReports;
 import org.gradle.execution.ProjectConfigurer;
 import org.gradle.external.javadoc.CoreJavadocOptions;
 import org.gradle.external.javadoc.StandardJavadocDocletOptions;
+import org.gradle.internal.resolve.ModuleVersionNotFoundException;
 import org.gradle.internal.service.ServiceRegistry;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
 import org.gradle.plugins.ide.api.XmlFileContentMerger;
@@ -223,6 +225,7 @@ import org.gradle.plugins.ide.idea.model.IdeaModule;
 import org.gradle.process.ExecSpec;
 import org.gradle.util.CollectionUtils;
 import org.gradle.util.GUtil;
+import org.gradle.util.VersionNumber;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -448,6 +451,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureTaskTest(project);
 		_configureTaskTestIntegration(project);
 		_configureTaskTlddoc(project, portalRootDir);
+		_configureTasksBaseline(project);
 		_configureTasksCheckOSGiBundleState(project, liferayExtension);
 		_configureTasksFindBugs(project);
 		_configureTasksJavaCompile(project);
@@ -2683,6 +2687,47 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				sourceSet.getRuntimeClasspath(), portalTestConfiguration));
 	}
 
+	private void _configureTaskBaseline(BaselineTask baselineTask) {
+		Spec<Task> spec = new Spec<Task>() {
+
+			@Override
+			public boolean isSatisfiedBy(Task task) {
+				BaselineTask baselineTask = (BaselineTask)task;
+
+				Jar newJar = (Jar)GradleUtil.getTask(
+					baselineTask.getProject(), JavaPlugin.JAR_TASK_NAME);
+
+				VersionNumber newVersionNumber = VersionNumber.parse(
+					newJar.getVersion());
+
+				VersionNumber versionNumber = VersionNumber.parse("2.0.0");
+
+				if (newVersionNumber.compareTo(versionNumber) != 0) {
+					return true;
+				}
+
+				Configuration baselineConfiguration =
+					baselineTask.getBaselineConfiguration();
+
+				try {
+					baselineConfiguration.getSingleFile();
+				}
+				catch (ResolveException re) {
+					Throwable t = re.getCause();
+
+					if (t instanceof ModuleVersionNotFoundException) {
+						return false;
+					}
+				}
+
+				return true;
+			}
+
+		};
+
+		baselineTask.onlyIf(spec);
+	}
+
 	private void _configureTaskBaselineSyncReleaseVersions(
 		Task task, final File versionOverrideFile) {
 
@@ -3293,6 +3338,21 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					file);
 			}
 		}
+	}
+
+	private void _configureTasksBaseline(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BaselineTask.class,
+			new Action<BaselineTask>() {
+
+				@Override
+				public void execute(BaselineTask baselineTask) {
+					_configureTaskBaseline(baselineTask);
+				}
+
+			});
 	}
 
 	private void _configureTasksCheckOSGiBundleState(

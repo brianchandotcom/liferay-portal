@@ -86,8 +86,8 @@ String fieldsJSONArrayString = fieldsJSONArray.toString();
 		formBuilder.set('allowRemoveRequiredFields', modeEdit);
 
 		var setFieldsHiddenAttributes = <portlet:namespace />setFieldsHiddenAttributes.bind(this, formBuilder, mode)
-		_.forEach(formBuilder.get('fields')._items, setFieldsHiddenAttributes);
-		_.forEach(formBuilder.get('availableFields'), setFieldsHiddenAttributes);
+		formBuilder.get('fields')._items.forEach(setFieldsHiddenAttributes);
+		formBuilder.get('availableFields').forEach(setFieldsHiddenAttributes);
 
 		var editingField = formBuilder.editingField;
 
@@ -104,8 +104,7 @@ String fieldsJSONArrayString = fieldsJSONArray.toString();
 
 		var availableFields = <%= structureJSONArray.toString() %>;
 
-		AUI._.forEach(
-			availableFields,
+		availableFields.forEach(
 			function(item, index) {
 				item.iconClass = FormBuilder.DEFAULT_ICON_CLASS;
 			}

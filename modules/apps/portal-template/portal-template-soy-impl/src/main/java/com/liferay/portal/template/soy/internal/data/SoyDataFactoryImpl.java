@@ -12,28 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.template.soy.internal.util;
+package com.liferay.portal.template.soy.internal.data;
 
-import com.liferay.portal.template.soy.utils.SoyHTMLSanitizer;
+import com.liferay.portal.template.soy.data.SoyDataFactory;
+import com.liferay.portal.template.soy.data.SoyHTMLData;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Matthew Tambara
+ * @author Iván Zaera Avellón
  */
-@Component(immediate = true, service = {})
-public class SoyHTMLSanitizerUtil {
+@Component(service = SoyDataFactory.class)
+public class SoyDataFactoryImpl implements SoyDataFactory {
 
-	public static Object sanitize(String value) {
-		return _soyHTMLSanitizer.sanitize(value);
+	@Override
+	public SoyHTMLData createSoyHTMLData(String html) {
+		return new SoyHTMLDataImpl(html);
 	}
-
-	@Reference(unbind = "-")
-	protected void setSoyHTMLSanitizer(SoyHTMLSanitizer soyHTMLSanitizer) {
-		_soyHTMLSanitizer = soyHTMLSanitizer;
-	}
-
-	private static SoyHTMLSanitizer _soyHTMLSanitizer;
 
 }

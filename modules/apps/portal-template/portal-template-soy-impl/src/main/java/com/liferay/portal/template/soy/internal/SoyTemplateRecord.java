@@ -58,11 +58,18 @@ import org.apache.commons.lang3.ClassUtils;
  * sub-elements to Soy types as late as possible.
  *
  * @author Raymond Augé
+ * @see SoyContextImpl
  */
 public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 
-	public Object add(String key, Object value) {
-		return _map.put(key, value);
+	/**
+	 * Create a record with initial values.
+	 *
+	 * @param map initial values
+	 * @review
+	 */
+	public SoyTemplateRecord(Map<String, Object> map) {
+		_map = new ConcurrentHashMap<>(map);
 	}
 
 	@Override
@@ -335,6 +342,6 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 
 	private final Map<String, SoyValueProvider> _computedValues =
 		new ConcurrentHashMap<>();
-	private final Map<String, Object> _map = new ConcurrentHashMap<>();
+	private final Map<String, Object> _map;
 
 }

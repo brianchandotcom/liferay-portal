@@ -12,29 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.template.soy.utils;
+package com.liferay.portal.template.soy.internal.data;
 
-import java.util.Map;
+import com.google.template.soy.data.SanitizedContent;
+import com.google.template.soy.data.UnsafeSanitizedContentOrdainer;
+
+import com.liferay.portal.template.soy.data.SoyHTMLData;
 
 /**
- * @author Bruno Basto
+ * @author Iván Zaera Avellón
  */
-public interface SoyContext extends Map<String, Object> {
+public class SoyHTMLDataImpl implements SoyHTMLData {
 
-	public void clearInjectedData();
+	public SoyHTMLDataImpl(String html) {
+		_html = UnsafeSanitizedContentOrdainer.ordainAsSafe(
+			html, SanitizedContent.ContentKind.HTML);
+	}
 
-	/**
-	 * Put an HTML parameter in the SoyContext container.
-	 * @param key
-	 * @param value
-	 * @deprecated As of Judson (7.1.x), use standard {@link Map} methods with
-	 * 		{@link com.liferay.portal.template.soy.data.SoyHTMLData} values
-	 */
-	@Deprecated
-	public void putHTML(String key, String value);
+	@Override
+	public Object getValue() {
+		return _html;
+	}
 
-	public void putInjectedData(String key, Object value);
-
-	public void removeInjectedData(String key);
+	private final SanitizedContent _html;
 
 }

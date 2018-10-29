@@ -12,29 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.template.soy.utils;
+package com.liferay.portal.template.soy.data;
 
-import java.util.Map;
+import com.liferay.portal.template.soy.utils.SoyRawData;
 
 /**
- * @author Bruno Basto
+ * Objects of this type contain sanitized HTML suitable for its use in Soy
+ * templates.
+ *
+ * Use the {@link SoyDataFactory} OSGi service to create objects of this class.
+ *
+ * @author Iván Zaera Avellón
+ * @review
  */
-public interface SoyContext extends Map<String, Object> {
-
-	public void clearInjectedData();
-
-	/**
-	 * Put an HTML parameter in the SoyContext container.
-	 * @param key
-	 * @param value
-	 * @deprecated As of Judson (7.1.x), use standard {@link Map} methods with
-	 * 		{@link com.liferay.portal.template.soy.data.SoyHTMLData} values
-	 */
-	@Deprecated
-	public void putHTML(String key, String value);
-
-	public void putInjectedData(String key, Object value);
-
-	public void removeInjectedData(String key);
-
+public interface SoyHTMLData extends SoyRawData {
 }

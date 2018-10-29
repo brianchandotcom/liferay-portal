@@ -15,69 +15,152 @@
 package com.liferay.portal.template.soy.internal;
 
 import com.liferay.portal.template.soy.constants.SoyTemplateConstants;
-import com.liferay.portal.template.soy.internal.util.SoyHTMLSanitizerUtil;
+import com.liferay.portal.template.soy.data.SoyDataFactory;
+import com.liferay.portal.template.soy.internal.data.SoyDataFactoryProvider;
 import com.liferay.portal.template.soy.utils.SoyContext;
-import com.liferay.portal.template.soy.utils.SoyRawData;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
+ * This is the central class to store template arguments. It stores everything
+ * as given by the template user, without any transformation to Soy internal
+ * types. This is so that values put into this maps are immutables.
+ *
+ * It can, of course, contain {@link com.liferay.portal.template.soy.utils.SoyRawData}
+ * values as they are part of the public API and are types known to the user.
+ *
+ * In order to make use of a {@link SoyContext} in the template engine, it is
+ * necessary to process it with a {@link SoyTemplateRecord}, which is the class
+ * that really knows how to coerce userland values into soyland values.
+ *
  * @author Matthew Tambara
+ * @see SoyTemplateRecord
+ * @review
  */
-public class SoyContextImpl
-	extends HashMap<String, Object> implements SoyContext {
+public class SoyContextImpl implements SoyContext {
 
 	public SoyContextImpl() {
-		_injectedData = new HashMap<>();
-
-		put(SoyTemplateConstants.INJECTED_DATA, _injectedData);
+		this(Collections.emptyMap(), false);
 	}
 
-	public SoyContextImpl(Map<String, Object> context) {
-		super(context);
-
-		Map<String, Object> injectedData = (Map<String, Object>)get(
-			SoyTemplateConstants.INJECTED_DATA);
-
-		if (injectedData == null) {
-			injectedData = new HashMap<>();
-
-			put(SoyTemplateConstants.INJECTED_DATA, injectedData);
+	/**
+	 * Create a context with initial values.
+	 *
+	 * @param context initial context values
+	 * @param wrap whether to wrap the given context or make a copy of it
+	 * @review
+	 */
+	public SoyContextImpl(Map<String, Object> context, boolean wrap) {
+		if (wrap) {
+			_map = context;
+		}
+		else {
+			_map = new HashMap<>(context);
 		}
 
-		_injectedData = injectedData;
+		if (getInjectedData() == null) {
+			put(SoyTemplateConstants.INJECTED_DATA, new HashMap<>());
+		}
+	}
+
+	@Override
+	public void clear() {
+		_map.clear();
 	}
 
 	@Override
 	public void clearInjectedData() {
-		_injectedData.clear();
+		Map<String, Object> injectedData = getInjectedData();
+
+		injectedData.clear();
+	}
+
+	@Override
+	public boolean containsKey(Object key) {
+		return _map.containsKey(key);
+	}
+
+	@Override
+	public boolean containsValue(Object value) {
+		return _map.containsValue(value);
+	}
+
+	@Override
+	public Set<Entry<String, Object>> entrySet() {
+		return _map.entrySet();
+	}
+
+	@Override
+	public Object get(Object key) {
+		return _map.get(key);
+	}
+
+	public Map<String, Object> getInjectedData() {
+		return (Map<String, Object>)_map.get(
+			SoyTemplateConstants.INJECTED_DATA);
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return _map.isEmpty();
+	}
+
+	@Override
+	public Set<String> keySet() {
+		return _map.keySet();
+	}
+
+	@Override
+	public Object put(String key, Object value) {
+		return _map.put(key, value);
+	}
+
+	@Override
+	public void putAll(Map<? extends String, ?> m) {
+		_map.putAll(m);
 	}
 
 	@Override
 	public void putHTML(String key, String value) {
-		SoyRawData soyRawData = new SoyRawData() {
+		SoyDataFactory soyDataFactory =
+			SoyDataFactoryProvider.getSoyDataFactory();
 
-			@Override
-			public Object getValue() {
-				return SoyHTMLSanitizerUtil.sanitize(value);
-			}
-
-		};
-
-		put(key, soyRawData);
+		_map.put(key, soyDataFactory.createSoyHTMLData(value));
 	}
 
 	@Override
 	public void putInjectedData(String key, Object value) {
-		_injectedData.put(key, value);
+		Map<String, Object> injectedData = getInjectedData();
+
+		injectedData.put(key, value);
+	}
+
+	@Override
+	public Object remove(Object key) {
+		return _map.remove(key);
 	}
 
 	@Override
 	public void removeInjectedData(String key) {
-		_injectedData.remove(key);
+		Map<String, Object> injectedData = getInjectedData();
+
+		injectedData.remove(key);
 	}
 
-	private final Map<String, Object> _injectedData;
+	@Override
+	public int size() {
+		return _map.size();
+	}
+
+	@Override
+	public Collection<Object> values() {
+		return _map.values();
+	}
+
+	private final Map<String, Object> _map;
 
 }

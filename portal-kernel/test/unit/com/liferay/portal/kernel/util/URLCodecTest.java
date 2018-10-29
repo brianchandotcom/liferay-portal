@@ -120,6 +120,13 @@ public class URLCodecTest {
 		Assert.assertEquals(
 			StringUtil.toUpperCase(escapedAnimalsString),
 			URLCodec.encodeURL(animalsString, StringPool.UTF8, false));
+
+		// Character missing low surrogate
+
+		Assert.assertEquals(
+			"%3F", URLCodec.encodeURL(animalsString.substring(0, 1)));
+		Assert.assertEquals(
+			"%3Fx", URLCodec.encodeURL(animalsString.substring(0, 1) + "x"));
 	}
 
 	protected void testDecodeURL(String encodedURLString) {

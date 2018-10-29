@@ -87,7 +87,8 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 					"mvcRenderCommandName",
 					OpenIdConnectWebKeys.OPEN_ID_CONNECT_REQUEST_ACTION_NAME);
 
-				renderURL.setParameter("saveLastPath", "false");
+				renderURL.setParameter(
+					"saveLastPath", Boolean.FALSE.toString());
 
 				session.setAttribute(
 					"OPEN_ID_CONNECT_RENDER_URL", renderURL.toString());

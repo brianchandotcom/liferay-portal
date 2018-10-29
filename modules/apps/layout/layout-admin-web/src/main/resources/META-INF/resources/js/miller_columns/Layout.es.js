@@ -833,8 +833,7 @@ Layout.STATE = {
 	 * @type {!string}
 	 */
 
-	_currentPathItemPlid: Config.string().internal()
-		.value(null),
+	_currentPathItemPlid: Config.string().internal().value(null),
 
 	/**
 	 * Item that is being dragged.

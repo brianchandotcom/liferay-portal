@@ -285,7 +285,6 @@ function itemIsParent(layoutColumns, childItemPlid, parentItemPlid) {
 	return parentItem.active && (childItemColumnIndex > parentItemColumnIndex);
 }
 
-
 /**
  * Insert an item inside another item's children
  * and returns a new array of columns
@@ -293,7 +292,7 @@ function itemIsParent(layoutColumns, childItemPlid, parentItemPlid) {
  * @param {boolean} pathUpdated
  * @param {object} sourceItem
  * @param {number} sourceItemColumnIndex
- * @param {string} targetItemPlid
+ * @param {object} targetItem
  * @return {object}
  * @review
  */
@@ -366,7 +365,6 @@ function moveItemInside(
 		true
 	);
 }
-
 
 /**
  * Removes an item, if any, from a column and returns a new array of columns

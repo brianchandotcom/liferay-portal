@@ -37,7 +37,6 @@ function dropItemInsideColumn(layoutColumns, sourceItem, targetColumnIndex) {
 	};
 }
 
-
 /**
  * Inserts an item inside another item's children and
  * calculates new parent plid and priority
@@ -72,6 +71,7 @@ function dropItemInsideItem(
 			nextLayoutColumns,
 			targetItem.plid
 		);
+
 		const nextColumn = nextLayoutColumns[targetColumnIndex + 1];
 
 		priority = nextColumn.indexOf(sourceItem);

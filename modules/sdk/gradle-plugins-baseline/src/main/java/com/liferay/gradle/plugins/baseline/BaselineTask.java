@@ -25,6 +25,7 @@ import java.io.File;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
+import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.reporting.ReportingExtension;
@@ -107,6 +108,11 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 	}
 
 	@Input
+	public Configuration getBaselineConfiguration() {
+		return _baselineConfiguration;
+	}
+
+	@Input
 	@Optional
 	public File getBndFile() {
 		return GradleUtil.toFile(getProject(), _bndFile);
@@ -174,6 +180,10 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 		return _reportOnlyDirtyPackages;
 	}
 
+	public void setBaselineConfiguration(Configuration baselineConfiguration) {
+		_baselineConfiguration = baselineConfiguration;
+	}
+
 	public void setBndFile(Object bndFile) {
 		_bndFile = bndFile;
 	}
@@ -217,6 +227,7 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 		_sourceDir = sourceDir;
 	}
 
+	private Configuration _baselineConfiguration;
 	private Object _bndFile;
 	private boolean _forceCalculatedVersion;
 	private boolean _ignoreExcessiveVersionIncreases;

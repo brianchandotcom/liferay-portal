@@ -185,6 +185,7 @@ public class BaselinePlugin implements Plugin<Project> {
 
 		_configureConfigurationBaseline(baselineConfiguration);
 
+		baselineTask.setBaselineConfiguration(baselineConfiguration);
 		baselineTask.setOldJarFile(
 			new Callable<File>() {
 
@@ -275,7 +276,7 @@ public class BaselinePlugin implements Plugin<Project> {
 
 	private void _configureTaskBaseline(
 		BaselineTask baselineTask, final AbstractArchiveTask newJarTask,
-		final FileCollection oldJarFileCollection,
+		final Configuration baselineConfiguration,
 		BaselineConfigurationExtension baselineConfigurationExtension) {
 
 		VersionNumber lowestBaselineVersionNumber = VersionNumber.parse(
@@ -290,7 +291,7 @@ public class BaselinePlugin implements Plugin<Project> {
 		}
 
 		if (versionNumber.compareTo(VersionNumber.parse("2.0.0")) == 0) {
-			if (_isModuleVersionNotFound(oldJarFileCollection)) {
+			if (_isModuleVersionNotFound(baselineConfiguration)) {
 				baselineTask.setEnabled(false);
 
 				return;
@@ -341,12 +342,13 @@ public class BaselinePlugin implements Plugin<Project> {
 
 		baselineTask.dependsOn(newJarTask);
 
+		baselineTask.setBaselineConfiguration(baselineConfiguration);
 		baselineTask.setOldJarFile(
 			new Callable<File>() {
 
 				@Override
 				public File call() throws Exception {
-					return oldJarFileCollection.getSingleFile();
+					return baselineConfiguration.getSingleFile();
 				}
 
 			});

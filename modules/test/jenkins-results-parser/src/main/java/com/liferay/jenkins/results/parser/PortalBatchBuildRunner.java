@@ -15,10 +15,6 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-import java.io.IOException;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Michael Hashimoto
@@ -70,107 +66,11 @@ public abstract class PortalBatchBuildRunner<T extends PortalBatchBuildData>
 		}
 	}
 
-	protected void publishTestResults() {
-		AntUtil.callTarget(
-			_getPrimaryPortalDirectory(), "build-test.xml",
-			"merge-test-results");
-
-		File source = new File(
-			_getPrimaryPortalDirectory(), "test-results/TESTS-TestSuites.xml");
-
-		if (!source.exists()) {
-			return;
-		}
-
-		PortalBatchBuildData portalBatchBuildData = getBuildData();
-
-		File target = new File(
-			portalBatchBuildData.getWorkspaceDir(),
-			"test-results/TESTS-TestSuites.xml");
-
-		try {
-			JenkinsResultsParserUtil.copy(source, target);
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to copy test results file from ", source.getPath(),
-					" to ", target.getPath()),
-				ioe);
-		}
-	}
-
 	protected void runTestBatch() {
-		Map<String, String> parameters = new HashMap<>();
+		TestBatch testBatch = TestBatchFactory.newTestBatch(
+			getBuildData(), workspace);
 
-		PortalBatchBuildData portalBatchBuildData = getBuildData();
-
-		parameters.put(
-			"axis.variable",
-			JenkinsResultsParserUtil.join(
-				",", portalBatchBuildData.getTestList()));
-
-		String batchName = portalBatchBuildData.getBatchName();
-
-		Map<String, String> environmentVariables = new HashMap<>();
-
-		if (JenkinsResultsParserUtil.isCINode()) {
-			environmentVariables.put("ANT_OPTS", _getAntOpts(batchName));
-			environmentVariables.put("JAVA_HOME", _getJavaHome(batchName));
-			environmentVariables.put("PATH", _getPath(batchName));
-		}
-
-		AntUtil.callTarget(
-			_getPrimaryPortalDirectory(), "build-test-batch.xml",
-			portalBatchBuildData.getBatchName(), parameters,
-			environmentVariables);
-	}
-
-	private String _getAntOpts(String batchName) {
-		String antOpts = System.getenv("ANT_OPTS");
-
-		if (batchName.endsWith("-jdk7")) {
-			return antOpts.replace("MetaspaceSize", "PermSize");
-		}
-
-		if (batchName.endsWith("-jdk8")) {
-			return antOpts.replace("PermSize", "MetaspaceSize");
-		}
-
-		return antOpts;
-	}
-
-	private String _getJavaHome(String batchName) {
-		if (batchName.endsWith("-jdk7")) {
-			return "/opt/java/jdk8";
-		}
-
-		if (batchName.endsWith("-jdk8")) {
-			return "/opt/java/jdk8";
-		}
-
-		return "/opt/java/jdk";
-	}
-
-	private String _getPath(String batchName) {
-		String path = System.getenv("PATH");
-
-		if (batchName.endsWith("-jdk7")) {
-			return path.replace("jdk", "jdk7");
-		}
-
-		if (batchName.endsWith("-jdk8")) {
-			return path.replace("jdk", "jdk8");
-		}
-
-		return path;
-	}
-
-	private File _getPrimaryPortalDirectory() {
-		WorkspaceGitRepository workspaceGitRepository =
-			workspace.getPrimaryPortalWorkspaceGitRepository();
-
-		return workspaceGitRepository.getDirectory();
+		testBatch.run();
 	}
 
 }

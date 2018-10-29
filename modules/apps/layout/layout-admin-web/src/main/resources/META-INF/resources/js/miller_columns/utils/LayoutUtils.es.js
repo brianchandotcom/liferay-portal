@@ -1,4 +1,5 @@
 import {setIn} from '../../utils/utils.es';
+import {DROP_TARGET_TYPES} from './LayoutDragDrop.es';
 
 /**
  * Append an item to a column and returns a new array of columns
@@ -119,24 +120,32 @@ function deleteEmptyColumns(layoutColumns) {
 /**
  * @param {object} sourceItem
  * @param {string} sourceItemColumnIndex
- * @param {string} targetItemPlid
- * @param {number} targetColumnIndex
+ * @param {string} targetId
+ * @param {string} targetType
  * @return {boolean} Returns whether a drop is valid or not
  * @review
  */
 function dropIsValid(
 	sourceItem,
 	sourceItemColumnIndex,
-	targetItemPlid,
-	targetColumnIndex
+	targetId,
+	targetType
 ) {
-	const targetColumnIsChild = columnIsItemChild(
-		targetColumnIndex,
-		sourceItem,
-		sourceItemColumnIndex
-	);
-	const targetEqualsSource = (sourceItem.plid === targetItemPlid);
-	const targetExists = targetItemPlid || targetColumnIndex;
+	let targetColumnIsChild = false;
+	let targetEqualsSource = false;
+
+	if (targetType === DROP_TARGET_TYPES.column) {
+		targetColumnIsChild = columnIsItemChild(
+			targetId,
+			sourceItem,
+			sourceItemColumnIndex
+		);
+	}
+	else if (targetType === DROP_TARGET_TYPES.item) {
+		targetEqualsSource = (sourceItem.plid === targetId);
+	}
+
+	const targetExists = (targetId !== null);
 
 	return targetExists && !targetEqualsSource && !targetColumnIsChild;
 }

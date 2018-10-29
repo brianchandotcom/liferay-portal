@@ -30,6 +30,11 @@ import org.junit.Test;
 public class URLCodecTest {
 
 	@Test
+	public void testConstructor() {
+		new URLCodec();
+	}
+
+	@Test
 	public void testDecodeURL() throws Exception {
 		for (int i = 0; i < _RAW_URLS.length; i++) {
 			Assert.assertEquals(

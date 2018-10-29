@@ -52,9 +52,7 @@ import com.liferay.journal.web.internal.search.EntriesChecker;
 import com.liferay.journal.web.internal.search.EntriesMover;
 import com.liferay.journal.web.internal.search.JournalSearcher;
 import com.liferay.journal.web.util.JournalPortletUtil;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
@@ -1310,35 +1308,6 @@ public class JournalDisplayContext {
 		return searchContext;
 	}
 
-	private Map<Long, LayoutPageTemplateEntry>
-		_getDefaultLayoutPageTemplateEntriesMap() {
-
-		if (_defaultLayoutPageTemplateEntriesMap != null) {
-			return _defaultLayoutPageTemplateEntriesMap;
-		}
-
-		Map<Long, LayoutPageTemplateEntry> layoutPageTemplateEntriesMap =
-			new HashMap<>();
-
-		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
-			LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
-				_themeDisplay.getScopeGroupId(),
-				PortalUtil.getClassNameId(JournalArticle.class.getName()),
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, true);
-
-		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
-				layoutPageTemplateEntries) {
-
-			layoutPageTemplateEntriesMap.put(
-				layoutPageTemplateEntry.getClassTypeId(),
-				layoutPageTemplateEntry);
-		}
-
-		_defaultLayoutPageTemplateEntriesMap = layoutPageTemplateEntriesMap;
-
-		return _defaultLayoutPageTemplateEntriesMap;
-	}
-
 	private String _getFeedsURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
@@ -1440,25 +1409,6 @@ public class JournalDisplayContext {
 			return true;
 		}
 
-		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
-			_themeDisplay.getSiteGroupId(),
-			PortalUtil.getClassNameId(JournalArticle.class),
-			article.getDDMStructureKey(), true);
-
-		if (ddmStructure == null) {
-			return false;
-		}
-
-		Map<Long, LayoutPageTemplateEntry> defaultLayoutPageTemplateEntriesMap =
-			_getDefaultLayoutPageTemplateEntriesMap();
-
-		layoutPageTemplateEntry = defaultLayoutPageTemplateEntriesMap.get(
-			ddmStructure.getStructureId());
-
-		if (layoutPageTemplateEntry != null) {
-			return true;
-		}
-
 		return false;
 	}
 
@@ -1473,8 +1423,6 @@ public class JournalDisplayContext {
 	private String _ddmStructureName;
 	private List<DDMStructure> _ddmStructures;
 	private String _ddmTemplateKey;
-	private Map<Long, LayoutPageTemplateEntry>
-		_defaultLayoutPageTemplateEntriesMap;
 	private String _displayStyle;
 	private String[] _displayViews;
 	private JournalFolder _folder;

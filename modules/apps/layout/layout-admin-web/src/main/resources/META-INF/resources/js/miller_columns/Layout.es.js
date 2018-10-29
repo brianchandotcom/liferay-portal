@@ -210,14 +210,6 @@ class Layout extends Component {
 		if (itemDropIsValid) {
 			let parentPlid = null;
 			let priority = null;
-			const targetItem = getItem(layoutColumns, targetItemPlid);
-
-			layoutColumns = clearPath(
-				layoutColumns,
-				this._draggingItem,
-				this._draggingItemColumnIndex,
-				targetItemPlid
-			);
 
 			if (targetColumnIndex) {
 				const dropData = dropItemInsideColumn(
@@ -231,6 +223,15 @@ class Layout extends Component {
 				priority = dropData.priority;
 			}
 			else if (targetItemPlid) {
+				const targetItem = getItem(layoutColumns, targetId);
+
+				layoutColumns = clearPath(
+					layoutColumns,
+					this._draggingItem,
+					this._draggingItemColumnIndex,
+					targetId
+				);
+
 				if (this._draggingItemPosition === DRAG_POSITIONS.inside) {
 					const pathUpdated = !!this._currentPathItemPlid;
 

@@ -1395,10 +1395,9 @@ public class JournalDisplayContext {
 			return false;
 		}
 
-		long classPK = JournalArticleAssetRenderer.getClassPK(article);
-
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			JournalArticle.class.getName(), classPK);
+			JournalArticle.class.getName(),
+			JournalArticleAssetRenderer.getClassPK(article));
 
 		if (AssetDisplayPageHelper.hasAssetDisplayPage(
 				_themeDisplay.getScopeGroupId(), assetEntry)) {

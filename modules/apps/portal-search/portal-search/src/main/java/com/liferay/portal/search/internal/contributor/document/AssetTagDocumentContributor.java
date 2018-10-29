@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentContributor;
@@ -96,6 +97,10 @@ public class AssetTagDocumentContributor implements DocumentContributor {
 	protected Long getGroupId(BaseModel baseModel) {
 		if (baseModel instanceof GroupedModel) {
 			return ((GroupedModel)baseModel).getGroupId();
+		}
+
+		if (baseModel instanceof Organization) {
+			return ((Organization)baseModel).getGroupId();
 		}
 
 		if (baseModel instanceof User) {

@@ -30,6 +30,8 @@ public interface BuildData {
 
 	public static final String DIST_ROOT_PATH = "/tmp/dist";
 
+	public File getArtifactDir();
+
 	public String getBuildDescription();
 
 	public Long getBuildDuration();

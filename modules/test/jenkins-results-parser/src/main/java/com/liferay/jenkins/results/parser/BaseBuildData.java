@@ -49,6 +49,11 @@ public abstract class BaseBuildData implements BuildData {
 	}
 
 	@Override
+	public File getArtifactDir() {
+		return new File(getWorkspaceDir(), getRunID());
+	}
+
+	@Override
 	public String getBuildDescription() {
 		return getString("build_description");
 	}

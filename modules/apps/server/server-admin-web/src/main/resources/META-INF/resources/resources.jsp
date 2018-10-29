@@ -41,7 +41,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 			<div class="alert alert-info">
 				<strong><liferay-ui:message key="info" /></strong>: <%= ReleaseInfo.getReleaseInfo() %>
 				<c:if test="<%= (installedPatches != null) && (installedPatches.length > 0) %>">
-					<strong><liferay-ui:message key="patch" /></strong>: <%= StringUtil.merge(installedPatches) %>
+					<strong><liferay-ui:message key="patch" /></strong>: <%= StringUtil.merge(installedPatches, StringPool.COMMA_AND_SPACE) %>
 				</c:if>
 
 				<strong><liferay-ui:message key="uptime" /></strong>:

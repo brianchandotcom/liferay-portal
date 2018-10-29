@@ -143,6 +143,16 @@ public class OrganizationTestUtil {
 			new ServiceContext());
 	}
 
+	public static void updateAsset(
+			Organization organization, long[] assetCategoryIds,
+			String[] assetTagNames)
+		throws Exception {
+
+		OrganizationLocalServiceUtil.updateAsset(
+			organization.getUserId(), organization, assetCategoryIds,
+			assetTagNames);
+	}
+
 	private static long _getListTypeId(String type) throws Exception {
 		List<ListType> listTypes = ListTypeServiceUtil.getListTypes(type);
 

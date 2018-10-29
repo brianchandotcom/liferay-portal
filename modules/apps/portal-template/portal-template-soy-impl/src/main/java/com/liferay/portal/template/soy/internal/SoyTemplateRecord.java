@@ -225,6 +225,9 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 		else if (object instanceof Long) {
 			return IntegerData.forValue((Long)object);
 		}
+		else if (object instanceof Enum) {
+			return StringData.forValue(object.toString());
+		}
 		else if (object instanceof Map<?, ?>) {
 			@SuppressWarnings("unchecked")
 			Map<String, ?> map = (Map<String, ?>)object;

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
+import com.liferay.portal.transaction.TransactionsUtil;
 import org.aopalliance.intercept.MethodInterceptor;
 
 /**
@@ -107,7 +108,7 @@ public class ServiceBeanAopProxy
 			new ServiceBeanMethodInvocation(
 				_advisedSupport.getTarget(), method, arguments);
 
-		if (_enabled) {
+		if (TransactionsUtil.isEnabled()) {
 			serviceBeanMethodInvocation.setMethodInterceptors(
 				_serviceBeanAopCacheManager.getMethodInterceptors(
 					serviceBeanMethodInvocation));
@@ -139,7 +140,6 @@ public class ServiceBeanAopProxy
 
 	private static final MethodInterceptor[] _emptyMethodInterceptors =
 		new MethodInterceptor[0];
-	private static boolean _enabled = true;
 
 	private final AdvisedSupport _advisedSupport;
 	private volatile ServiceBeanAopCacheManager _serviceBeanAopCacheManager;

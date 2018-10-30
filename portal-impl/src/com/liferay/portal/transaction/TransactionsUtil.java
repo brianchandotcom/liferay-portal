@@ -18,11 +18,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-
-import java.lang.reflect.Field;
 
 /**
  * @author Miguel Pastor
@@ -36,18 +33,7 @@ public class TransactionsUtil {
 
 		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = false;
 
-		try {
-			Field field = ServiceBeanAopProxy.class.getDeclaredField(
-				"_enabled");
-
-			field.setAccessible(true);
-
-			field.set(null, false);
-		}
-		catch (Exception e) {
-			throw new RuntimeException(
-				"Unexpected error disabling transactions", e);
-		}
+		_enabled = false;
 	}
 
 	public static void enableTransactions() {
@@ -58,21 +44,16 @@ public class TransactionsUtil {
 		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.SPRING_HIBERNATE_SESSION_DELEGATED));
 
-		try {
-			Field field = ServiceBeanAopProxy.class.getDeclaredField(
-				"_enabled");
+		_enabled = true;
+	}
 
-			field.setAccessible(true);
-
-			field.set(null, true);
-		}
-		catch (Exception e) {
-			throw new RuntimeException(
-				"Unexpected error enabling transactions", e);
-		}
+	public static boolean isEnabled() {
+		return _enabled;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TransactionsUtil.class);
+
+	private static boolean _enabled = true;
 
 }

@@ -60,6 +60,6 @@ OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayCo
 	ContactInformation.registerContactInformationListener(
 		'.modify-website-link a',
 		'<%= editWebsiteRenderURL.toString() %>',
-		390
+		460
 	);
 </aui:script>

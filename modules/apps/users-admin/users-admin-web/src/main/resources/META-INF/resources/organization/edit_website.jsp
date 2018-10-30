@@ -27,6 +27,12 @@ if (primaryKey > 0L) {
 %>
 
 <aui:form cssClass="modal-body" name="fm">
+	<clay:alert
+		message='<%= LanguageUtil.format(request, "url-must-start-with-x-or-x", new String[] {"http://", "https://"}, false) %>'
+		style="info"
+		title='<%= LanguageUtil.get(request, "info") + ":" %>'
+	/>
+
 	<aui:model-context bean="<%= website %>" model="<%= Website.class %>" />
 
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />

@@ -15,7 +15,6 @@
 package com.liferay.segments.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -38,7 +37,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -46,11 +44,9 @@ import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.segments.constants.SegmentsActionKeys;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryService;
+import com.liferay.segments.test.util.SegmentsTestUtil;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -107,7 +103,11 @@ public class SegmentsEntryServiceTest {
 		try (ContextUserReplace contextUserReplace =
 				new ContextUserReplace(_groupUser, permissionChecker)) {
 
-			_addSegmentsEntry(
+			_segmentsEntryService.addSegmentsEntry(
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), true,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(
 					_group, _groupUser.getUserId()));
 		}
@@ -120,7 +120,11 @@ public class SegmentsEntryServiceTest {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, PermissionCheckerFactoryUtil.create(_groupUser))) {
 
-			_addSegmentsEntry(
+			_segmentsEntryService.addSegmentsEntry(
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), true,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(
 					_group, _groupUser.getUserId()));
 		}
@@ -128,7 +132,7 @@ public class SegmentsEntryServiceTest {
 
 	@Test
 	public void testDeleteSegmentsEntryWithDeletePermission() throws Exception {
-		SegmentsEntry segmentsEntry = _addSegmentsEntry(
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			ServiceContextTestUtil.getServiceContext(
 				_group, _companyAdminUser.getUserId()));
 
@@ -152,7 +156,7 @@ public class SegmentsEntryServiceTest {
 	public void testDeleteSegmentsEntryWithoutDeletePermission()
 		throws Exception {
 
-		SegmentsEntry segmentsEntry = _addSegmentsEntry(
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			ServiceContextTestUtil.getServiceContext(
 				_group, _companyAdminUser.getUserId()));
 
@@ -172,10 +176,11 @@ public class SegmentsEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, _companyAdminUser.getUserId());
 
-		SegmentsEntry segmentsEntry = _addSegmentsEntry(serviceContext);
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			serviceContext);
 
-		_addSegmentsEntry(serviceContext);
-		_addSegmentsEntry(serviceContext);
+		SegmentsTestUtil.addSegmentsEntry(serviceContext);
+		SegmentsTestUtil.addSegmentsEntry(serviceContext);
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
 			_company.getCompanyId());
@@ -211,9 +216,9 @@ public class SegmentsEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, _companyAdminUser.getUserId());
 
-		_addSegmentsEntry(serviceContext);
-		_addSegmentsEntry(serviceContext);
-		_addSegmentsEntry(serviceContext);
+		SegmentsTestUtil.addSegmentsEntry(serviceContext);
+		SegmentsTestUtil.addSegmentsEntry(serviceContext);
+		SegmentsTestUtil.addSegmentsEntry(serviceContext);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, PermissionCheckerFactoryUtil.create(_groupUser))) {
@@ -231,9 +236,12 @@ public class SegmentsEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, _companyAdminUser.getUserId());
 
-		SegmentsEntry segmentsEntry1 = _addSegmentsEntry(serviceContext);
-		SegmentsEntry segmentsEntry2 = _addSegmentsEntry(serviceContext);
-		SegmentsEntry segmentsEntry3 = _addSegmentsEntry(serviceContext);
+		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
+			serviceContext);
+		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
+			serviceContext);
+		SegmentsEntry segmentsEntry3 = SegmentsTestUtil.addSegmentsEntry(
+			serviceContext);
 
 		for (Role role :
 				RoleLocalServiceUtil.getRoles(_company.getCompanyId())) {
@@ -271,9 +279,12 @@ public class SegmentsEntryServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, _companyAdminUser.getUserId());
 
-		SegmentsEntry segmentsEntry1 = _addSegmentsEntry(serviceContext);
-		SegmentsEntry segmentsEntry2 = _addSegmentsEntry(serviceContext);
-		SegmentsEntry segmentsEntry3 = _addSegmentsEntry(serviceContext);
+		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
+			serviceContext);
+		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
+			serviceContext);
+		SegmentsEntry segmentsEntry3 = SegmentsTestUtil.addSegmentsEntry(
+			serviceContext);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, PermissionCheckerFactoryUtil.create(_groupUser))) {
@@ -293,7 +304,7 @@ public class SegmentsEntryServiceTest {
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testGetSegmentsEntryWithoutViewPermission() throws Exception {
-		SegmentsEntry segmentsEntry = _addSegmentsEntry(
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			ServiceContextTestUtil.getServiceContext(
 				_group, _companyAdminUser.getUserId()));
 
@@ -323,7 +334,7 @@ public class SegmentsEntryServiceTest {
 
 	@Test
 	public void testGetSegmentsEntryWithViewPermission() throws Exception {
-		SegmentsEntry segmentsEntry = _addSegmentsEntry(
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			ServiceContextTestUtil.getServiceContext(
 				_group, _companyAdminUser.getUserId()));
 
@@ -339,15 +350,18 @@ public class SegmentsEntryServiceTest {
 	public void testUpdateSegmentsEntryWithoutUpdatePermission()
 		throws Exception {
 
-		SegmentsEntry segmentsEntry = _addSegmentsEntry(
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			ServiceContextTestUtil.getServiceContext(
 				_group, _companyAdminUser.getUserId()));
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, PermissionCheckerFactoryUtil.create(_groupUser))) {
 
-			_updateSegmentsEntry(
+			_segmentsEntryService.updateSegmentsEntry(
 				segmentsEntry.getSegmentsEntryId(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), true,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(
 					_group, _groupUser.getUserId()));
 		}
@@ -355,7 +369,7 @@ public class SegmentsEntryServiceTest {
 
 	@Test
 	public void testUpdateSegmentsEntryWithUpdatePermission() throws Exception {
-		SegmentsEntry entry = _addSegmentsEntry(
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			ServiceContextTestUtil.getServiceContext(
 				_group, _companyAdminUser.getUserId()));
 
@@ -370,48 +384,14 @@ public class SegmentsEntryServiceTest {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, PermissionCheckerFactoryUtil.create(_groupUser))) {
 
-			_updateSegmentsEntry(
-				entry.getSegmentsEntryId(),
+			_segmentsEntryService.updateSegmentsEntry(
+				segmentsEntry.getSegmentsEntryId(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), true,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(
 					_group, _groupUser.getUserId()));
 		}
-	}
-
-	private SegmentsEntry _addSegmentsEntry(ServiceContext serviceContext)
-		throws PortalException {
-
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
-
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		descriptionMap.put(
-			LocaleUtil.getDefault(), RandomTestUtil.randomString());
-
-		return _segmentsEntryService.addSegmentsEntry(
-			nameMap, descriptionMap, true, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
-	}
-
-	private SegmentsEntry _updateSegmentsEntry(
-			long segmentsEntryId, ServiceContext serviceContext)
-		throws PortalException {
-
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
-
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		descriptionMap.put(
-			LocaleUtil.getDefault(), RandomTestUtil.randomString());
-
-		return _segmentsEntryService.updateSegmentsEntry(
-			segmentsEntryId, nameMap, descriptionMap, true,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
 	}
 
 	@DeleteAfterTestRun

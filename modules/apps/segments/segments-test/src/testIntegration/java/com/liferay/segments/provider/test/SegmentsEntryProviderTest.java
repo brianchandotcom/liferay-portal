@@ -16,13 +16,11 @@ package com.liferay.segments.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -32,6 +30,7 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.provider.SegmentsEntryProvider;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
+import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.List;
 
@@ -63,27 +62,19 @@ public class SegmentsEntryProviderTest {
 		_user1 = UserTestUtil.addUser(_group.getGroupId());
 		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
-		SegmentsEntry segmentsEntry1 = _addSegmentsEntry(
-			StringPool.BLANK, User.class.getName());
+		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), User.class.getName(), _user1.getUserId());
 
-		_segmentsEntryRelLocalService.addSegmentsEntryRel(
-			segmentsEntry1.getSegmentsEntryId(),
-			_portal.getClassNameId(User.class.getName()), _user1.getUserId(),
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		SegmentsEntry segmentsEntry2 = _addSegmentsEntry(
+		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(),
 			String.format("(firstName eq '%s')", _user1.getFirstName()),
 			User.class.getName());
 
-		SegmentsEntry segmentsEntry3 = _addSegmentsEntry(
-			StringPool.BLANK, User.class.getName());
+		SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), User.class.getName(), _user2.getUserId());
 
-		_segmentsEntryRelLocalService.addSegmentsEntryRel(
-			segmentsEntry3.getSegmentsEntryId(),
-			_portal.getClassNameId(User.class.getName()), _user2.getUserId(),
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		_addSegmentsEntry(
+		SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(),
 			String.format("(firstName eq '%s')", _user2.getFirstName()),
 			User.class.getName());
 
@@ -102,7 +93,8 @@ public class SegmentsEntryProviderTest {
 		_user1 = UserTestUtil.addUser(_group.getGroupId());
 		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
-		SegmentsEntry segmentsEntry = _addSegmentsEntry(
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(),
 			String.format("(firstName eq '%s')", _user1.getFirstName()),
 			User.class.getName());
 
@@ -119,8 +111,8 @@ public class SegmentsEntryProviderTest {
 		_user1 = UserTestUtil.addUser(_group.getGroupId());
 		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
-		SegmentsEntry segmentsEntry = _addSegmentsEntry(
-			StringPool.BLANK, User.class.getName());
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), StringPool.BLANK, User.class.getName());
 
 		_segmentsEntryRelLocalService.addSegmentsEntryRel(
 			segmentsEntry.getSegmentsEntryId(),
@@ -133,16 +125,6 @@ public class SegmentsEntryProviderTest {
 
 		Assert.assertArrayEquals(
 			new long[] {_user1.getUserId()}, segmentsEntryClassPKs);
-	}
-
-	private SegmentsEntry _addSegmentsEntry(String criteria, String type)
-		throws PortalException {
-
-		return _segmentsEntryLocalService.addSegmentsEntry(
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(), true, criteria,
-			RandomTestUtil.randomString(), type,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
 	@DeleteAfterTestRun

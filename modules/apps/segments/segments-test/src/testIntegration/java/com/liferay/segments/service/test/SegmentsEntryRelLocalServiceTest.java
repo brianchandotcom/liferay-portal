@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -31,10 +30,7 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryRel;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -63,7 +59,8 @@ public class SegmentsEntryRelLocalServiceTest {
 
 	@Test
 	public void testAddSegmentsEntryRel() throws PortalException {
-		SegmentsEntry segmentsEntry = _addSegmentsEntry();
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
 
 		int classNameId = RandomTestUtil.randomInt();
 		int classPK = RandomTestUtil.randomInt();
@@ -83,7 +80,8 @@ public class SegmentsEntryRelLocalServiceTest {
 
 	@Test
 	public void testDeleteSegmentsEntryRel() throws PortalException {
-		SegmentsEntry segmentsEntry = _addSegmentsEntry();
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
 
 		int classNameId = RandomTestUtil.randomInt();
 		int classPK = RandomTestUtil.randomInt();
@@ -105,7 +103,8 @@ public class SegmentsEntryRelLocalServiceTest {
 	public void testDeleteSegmentsEntryRelsByClassNameIdAndClassPK()
 		throws PortalException {
 
-		SegmentsEntry segmentsEntry = _addSegmentsEntry();
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
 
 		int classNameId = RandomTestUtil.randomInt();
 		int classPK = RandomTestUtil.randomInt();
@@ -127,7 +126,8 @@ public class SegmentsEntryRelLocalServiceTest {
 	public void testDeleteSegmentsEntryRelsBySegmentsEntryId()
 		throws PortalException {
 
-		SegmentsEntry segmentsEntry = _addSegmentsEntry();
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
 
 		_segmentsEntryRelLocalService.addSegmentsEntryRel(
 			segmentsEntry.getSegmentsEntryId(), RandomTestUtil.randomInt(),
@@ -145,7 +145,8 @@ public class SegmentsEntryRelLocalServiceTest {
 
 	@Test
 	public void testHasSegmentsEntryRel() throws PortalException {
-		SegmentsEntry segmentsEntry = _addSegmentsEntry();
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
 
 		int classNameId = RandomTestUtil.randomInt();
 		int classPK = RandomTestUtil.randomInt();
@@ -163,28 +164,13 @@ public class SegmentsEntryRelLocalServiceTest {
 	public void testHasSegmentsEntryRelWithNoSegmentsEntryRels()
 		throws PortalException {
 
-		SegmentsEntry segmentsEntry = _addSegmentsEntry();
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
 
 		Assert.assertFalse(
 			_segmentsEntryRelLocalService.hasSegmentsEntryRel(
 				segmentsEntry.getSegmentsEntryId(), RandomTestUtil.randomInt(),
 				RandomTestUtil.randomInt()));
-	}
-
-	private SegmentsEntry _addSegmentsEntry() throws PortalException {
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
-
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		descriptionMap.put(
-			LocaleUtil.getDefault(), RandomTestUtil.randomString());
-
-		return _segmentsEntryLocalService.addSegmentsEntry(
-			nameMap, descriptionMap, true, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
 	@DeleteAfterTestRun

@@ -34,6 +34,7 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryRel;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
+import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -73,8 +74,8 @@ public class SegmentsEntryLocalServiceTest {
 		String key = RandomTestUtil.randomString();
 		String type = RandomTestUtil.randomString();
 
-		SegmentsEntry segmentsEntry = _addSegmentsEntry(
-			name, description, criteria, key, type);
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), name, description, criteria, key, type);
 
 		Assert.assertEquals(
 			name, segmentsEntry.getName(LocaleUtil.getDefault()));
@@ -96,13 +97,14 @@ public class SegmentsEntryLocalServiceTest {
 	public void testAddSegmentsEntryWithExistingKey() throws PortalException {
 		String key = RandomTestUtil.randomString();
 
-		_addSegmentsEntry(key);
-		_addSegmentsEntry(key);
+		SegmentsTestUtil.addSegmentsEntry(_group.getGroupId(), key);
+		SegmentsTestUtil.addSegmentsEntry(_group.getGroupId(), key);
 	}
 
 	@Test
 	public void testDeleteSegmentsEntry() throws PortalException {
-		SegmentsEntry segmentsEntry = _addSegmentsEntry();
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
 
 		_segmentsEntryLocalService.deleteSegmentsEntry(
 			segmentsEntry.getSegmentsEntryId());
@@ -118,7 +120,7 @@ public class SegmentsEntryLocalServiceTest {
 		int count = 5;
 
 		for (int i = 0; i < count; i++) {
-			_addSegmentsEntry();
+			SegmentsTestUtil.addSegmentsEntry(_group.getGroupId());
 		}
 
 		Assert.assertEquals(
@@ -138,7 +140,8 @@ public class SegmentsEntryLocalServiceTest {
 	public void testDeleteSegmentsEntryWithSegmentsEntryRels()
 		throws PortalException {
 
-		SegmentsEntry segmentsEntry = _addSegmentsEntry();
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -168,7 +171,8 @@ public class SegmentsEntryLocalServiceTest {
 
 	@Test
 	public void testUpdateSegmentsEntry() throws PortalException {
-		SegmentsEntry segmentsEntry = _addSegmentsEntry();
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
 
 		Map<Locale, String> nameMap = new HashMap<>();
 
@@ -212,43 +216,15 @@ public class SegmentsEntryLocalServiceTest {
 
 		String key1 = RandomTestUtil.randomString();
 
-		_addSegmentsEntry(key1);
+		SegmentsTestUtil.addSegmentsEntry(_group.getGroupId(), key1);
 
-		SegmentsEntry segmentsEntry = _addSegmentsEntry(
-			RandomTestUtil.randomString());
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), RandomTestUtil.randomString());
 
 		_segmentsEntryLocalService.updateSegmentsEntry(
 			segmentsEntry.getSegmentsEntryId(), segmentsEntry.getNameMap(),
 			segmentsEntry.getDescriptionMap(), segmentsEntry.isActive(),
 			segmentsEntry.getCriteria(), key1,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-	}
-
-	private SegmentsEntry _addSegmentsEntry() throws PortalException {
-		return _addSegmentsEntry(RandomTestUtil.randomString());
-	}
-
-	private SegmentsEntry _addSegmentsEntry(String key) throws PortalException {
-		return _addSegmentsEntry(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), key, RandomTestUtil.randomString());
-	}
-
-	private SegmentsEntry _addSegmentsEntry(
-			final String name, final String description, String criteria,
-			String key, String type)
-		throws PortalException {
-
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.getDefault(), name);
-
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		descriptionMap.put(LocaleUtil.getDefault(), description);
-
-		return _segmentsEntryLocalService.addSegmentsEntry(
-			nameMap, descriptionMap, true, criteria, key, type,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 

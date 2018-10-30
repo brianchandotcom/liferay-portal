@@ -15,11 +15,10 @@
 package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.portal.dao.db.MySQLDB;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import org.mockito.Mockito;
 
 /**
  * @author Manuel de la Peña
@@ -120,13 +119,10 @@ public class MySQLSQLTransformerLogicTest
 	}
 
 	private static MySQLDB _getCaseInsensitiveMySQLDB() {
-		MySQLDB mySQLDB = Mockito.spy(new MySQLDB(5, 7));
+		MySQLDB mySQLDB = new MySQLDB(5, 7);
 
-		Mockito.when(
-			mySQLDB.isSupportsStringCaseSensitiveQuery()
-		).thenReturn(
-			false
-		);
+		ReflectionTestUtil.setFieldValue(
+			mySQLDB, "_supportsStringCaseSensitiveQuery", false);
 
 		return mySQLDB;
 	}

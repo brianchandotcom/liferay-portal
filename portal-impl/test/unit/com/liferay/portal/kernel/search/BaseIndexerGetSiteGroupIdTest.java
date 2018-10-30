@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupWrapper;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -35,22 +36,17 @@ import javax.portlet.PortletResponse;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareOnlyThisForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Miguel Angelo Caldas Gallindo
  * @author André de Oliveira
  */
-@PrepareOnlyThisForTest(GroupLocalServiceUtil.class)
-@RunWith(PowerMockRunner.class)
 public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 
 	@Before
@@ -152,13 +148,8 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 	}
 
 	protected void setUpGroupLocalServiceUtil() {
-		mockStatic(GroupLocalServiceUtil.class, Mockito.CALLS_REAL_METHODS);
-
-		stub(
-			method(GroupLocalServiceUtil.class, "getService")
-		).toReturn(
-			_groupLocalService
-		);
+		ReflectionTestUtil.setFieldValue(
+			GroupLocalServiceUtil.class, "_service", _groupLocalService);
 	}
 
 	protected Group setUpLayoutGroup(

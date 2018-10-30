@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.PortletWrapper;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceWrapper;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -55,7 +56,6 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.internal.stubbing.answers.CallsRealMethods;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
@@ -72,7 +72,7 @@ import org.springframework.mock.web.MockServletContext;
  * @author Raymond Augé
  */
 @PowerMockIgnore("javax.net.ssl.*")
-@PrepareForTest({PortletLocalServiceUtil.class, PrefsPropsUtil.class})
+@PrepareForTest(PrefsPropsUtil.class)
 @RunWith(PowerMockRunner.class)
 public class ComboServletTest extends PowerMockito {
 
@@ -118,13 +118,8 @@ public class ComboServletTest extends PowerMockito {
 
 		};
 
-		mockStatic(PortletLocalServiceUtil.class, new CallsRealMethods());
-
-		stub(
-			method(PortletLocalServiceUtil.class, "getService")
-		).toReturn(
-			_portletLocalService
-		);
+		ReflectionTestUtil.setFieldValue(
+			PortletLocalServiceUtil.class, "_service", _portletLocalService);
 
 		setUpComboServlet();
 

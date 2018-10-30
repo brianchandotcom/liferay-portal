@@ -102,8 +102,6 @@ import com.liferay.social.kernel.util.SocialConfigurationUtil;
 
 import java.io.IOException;
 
-import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -131,7 +129,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.commons.chain.config.ConfigParser;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.RequestProcessor;
@@ -789,8 +786,6 @@ public class MainServlet extends ActionServlet {
 		try {
 			_initServlet();
 
-			_initChain();
-
 			ServletContext servletContext = getServletContext();
 
 			servletContext.setAttribute(Globals.ACTION_SERVLET_KEY, this);
@@ -843,21 +838,6 @@ public class MainServlet extends ActionServlet {
 			ue.addSuppressed(t);
 
 			throw ue;
-		}
-	}
-
-	private void _initChain() throws ServletException {
-		try {
-			List<URL> urls = splitAndResolvePaths(chainConfig);
-
-			ConfigParser parser = new ConfigParser();
-
-			for (URL url : urls) {
-				parser.parse(url);
-			}
-		}
-		catch (Exception e) {
-			throw new ServletException(e);
 		}
 	}
 

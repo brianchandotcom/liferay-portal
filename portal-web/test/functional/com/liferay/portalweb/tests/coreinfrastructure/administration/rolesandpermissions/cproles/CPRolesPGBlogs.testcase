@@ -688,7 +688,7 @@
 	</command>
 
 	<command name="DeleteBlogsEntryOrgRoleDefaultPermission" priority="5">
-		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Permissions#setUpOrgRoleLoginUserPG">
 			<var name="orgName" value="Organization Name" />
@@ -734,7 +734,7 @@
 	</command>
 
 	<command name="DeleteBlogsEntryOrgRoleDefinePermission" priority="5">
-		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Permissions#setUpOrgRoleLoginUserPG">
 			<var name="orgName" value="Organization Name" />

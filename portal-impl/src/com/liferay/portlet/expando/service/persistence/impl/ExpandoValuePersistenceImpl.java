@@ -4345,6 +4345,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 		String data, int start, int end,
 		OrderByComparator<ExpandoValue> orderByComparator,
 		boolean retrieveFromCache) {
+		data = Objects.toString(data, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4374,7 +4376,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 				for (ExpandoValue expandoValue : list) {
 					if ((tableId != expandoValue.getTableId()) ||
 							(columnId != expandoValue.getColumnId()) ||
-							!Objects.equals(data, expandoValue.getData())) {
+							!data.equals(expandoValue.getData())) {
 						list = null;
 
 						break;
@@ -4402,10 +4404,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 			boolean bindData = false;
 
-			if (data == null) {
-				query.append(_FINDER_COLUMN_T_C_D_DATA_1);
-			}
-			else if (data.equals("")) {
+			if (data.isEmpty()) {
 				query.append(_FINDER_COLUMN_T_C_D_DATA_3);
 			}
 			else {
@@ -4616,6 +4615,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 		long columnId, String data,
 		OrderByComparator<ExpandoValue> orderByComparator)
 		throws NoSuchValueException {
+		data = Objects.toString(data, "");
+
 		ExpandoValue expandoValue = findByPrimaryKey(valueId);
 
 		Session session = null;
@@ -4665,10 +4666,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 		boolean bindData = false;
 
-		if (data == null) {
-			query.append(_FINDER_COLUMN_T_C_D_DATA_1);
-		}
-		else if (data.equals("")) {
+		if (data.isEmpty()) {
 			query.append(_FINDER_COLUMN_T_C_D_DATA_3);
 		}
 		else {
@@ -4796,6 +4794,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public int countByT_C_D(long tableId, long columnId, String data) {
+		data = Objects.toString(data, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_T_C_D;
 
 		Object[] finderArgs = new Object[] { tableId, columnId, data };
@@ -4814,10 +4814,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 			boolean bindData = false;
 
-			if (data == null) {
-				query.append(_FINDER_COLUMN_T_C_D_DATA_1);
-			}
-			else if (data.equals("")) {
+			if (data.isEmpty()) {
 				query.append(_FINDER_COLUMN_T_C_D_DATA_3);
 			}
 			else {

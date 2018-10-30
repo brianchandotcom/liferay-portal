@@ -152,6 +152,8 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	@Override
 	public Release fetchByServletContextName(String servletContextName,
 		boolean retrieveFromCache) {
+		servletContextName = Objects.toString(servletContextName, "");
+
 		Object[] finderArgs = new Object[] { servletContextName };
 
 		Object result = null;
@@ -177,10 +179,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 
 			boolean bindServletContextName = false;
 
-			if (servletContextName == null) {
-				query.append(_FINDER_COLUMN_SERVLETCONTEXTNAME_SERVLETCONTEXTNAME_1);
-			}
-			else if (servletContextName.equals("")) {
+			if (servletContextName.isEmpty()) {
 				query.append(_FINDER_COLUMN_SERVLETCONTEXTNAME_SERVLETCONTEXTNAME_3);
 			}
 			else {
@@ -259,6 +258,8 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	 */
 	@Override
 	public int countByServletContextName(String servletContextName) {
+		servletContextName = Objects.toString(servletContextName, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_SERVLETCONTEXTNAME;
 
 		Object[] finderArgs = new Object[] { servletContextName };
@@ -273,10 +274,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 
 			boolean bindServletContextName = false;
 
-			if (servletContextName == null) {
-				query.append(_FINDER_COLUMN_SERVLETCONTEXTNAME_SERVLETCONTEXTNAME_1);
-			}
-			else if (servletContextName.equals("")) {
+			if (servletContextName.isEmpty()) {
 				query.append(_FINDER_COLUMN_SERVLETCONTEXTNAME_SERVLETCONTEXTNAME_3);
 			}
 			else {

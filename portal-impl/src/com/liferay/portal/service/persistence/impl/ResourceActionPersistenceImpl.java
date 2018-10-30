@@ -172,6 +172,8 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	public List<ResourceAction> findByName(String name, int start, int end,
 		OrderByComparator<ResourceAction> orderByComparator,
 		boolean retrieveFromCache) {
+		name = Objects.toString(name, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -195,7 +197,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ResourceAction resourceAction : list) {
-					if (!Objects.equals(name, resourceAction.getName())) {
+					if (!name.equals(resourceAction.getName())) {
 						list = null;
 
 						break;
@@ -219,10 +221,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 			boolean bindName = false;
 
-			if (name == null) {
-				query.append(_FINDER_COLUMN_NAME_NAME_1);
-			}
-			else if (name.equals("")) {
+			if (name.isEmpty()) {
 				query.append(_FINDER_COLUMN_NAME_NAME_3);
 			}
 			else {
@@ -404,6 +403,8 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	public ResourceAction[] findByName_PrevAndNext(long resourceActionId,
 		String name, OrderByComparator<ResourceAction> orderByComparator)
 		throws NoSuchResourceActionException {
+		name = Objects.toString(name, "");
+
 		ResourceAction resourceAction = findByPrimaryKey(resourceActionId);
 
 		Session session = null;
@@ -449,10 +450,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 		boolean bindName = false;
 
-		if (name == null) {
-			query.append(_FINDER_COLUMN_NAME_NAME_1);
-		}
-		else if (name.equals("")) {
+		if (name.isEmpty()) {
 			query.append(_FINDER_COLUMN_NAME_NAME_3);
 		}
 		else {
@@ -572,6 +570,8 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 */
 	@Override
 	public int countByName(String name) {
+		name = Objects.toString(name, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_NAME;
 
 		Object[] finderArgs = new Object[] { name };
@@ -586,10 +586,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 			boolean bindName = false;
 
-			if (name == null) {
-				query.append(_FINDER_COLUMN_NAME_NAME_1);
-			}
-			else if (name.equals("")) {
+			if (name.isEmpty()) {
 				query.append(_FINDER_COLUMN_NAME_NAME_3);
 			}
 			else {
@@ -703,6 +700,9 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	@Override
 	public ResourceAction fetchByN_A(String name, String actionId,
 		boolean retrieveFromCache) {
+		name = Objects.toString(name, "");
+		actionId = Objects.toString(actionId, "");
+
 		Object[] finderArgs = new Object[] { name, actionId };
 
 		Object result = null;
@@ -728,10 +728,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 			boolean bindName = false;
 
-			if (name == null) {
-				query.append(_FINDER_COLUMN_N_A_NAME_1);
-			}
-			else if (name.equals("")) {
+			if (name.isEmpty()) {
 				query.append(_FINDER_COLUMN_N_A_NAME_3);
 			}
 			else {
@@ -742,10 +739,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 			boolean bindActionId = false;
 
-			if (actionId == null) {
-				query.append(_FINDER_COLUMN_N_A_ACTIONID_1);
-			}
-			else if (actionId.equals("")) {
+			if (actionId.isEmpty()) {
 				query.append(_FINDER_COLUMN_N_A_ACTIONID_3);
 			}
 			else {
@@ -830,6 +824,9 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 */
 	@Override
 	public int countByN_A(String name, String actionId) {
+		name = Objects.toString(name, "");
+		actionId = Objects.toString(actionId, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_N_A;
 
 		Object[] finderArgs = new Object[] { name, actionId };
@@ -844,10 +841,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 			boolean bindName = false;
 
-			if (name == null) {
-				query.append(_FINDER_COLUMN_N_A_NAME_1);
-			}
-			else if (name.equals("")) {
+			if (name.isEmpty()) {
 				query.append(_FINDER_COLUMN_N_A_NAME_3);
 			}
 			else {
@@ -858,10 +852,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 			boolean bindActionId = false;
 
-			if (actionId == null) {
-				query.append(_FINDER_COLUMN_N_A_ACTIONID_1);
-			}
-			else if (actionId.equals("")) {
+			if (actionId.isEmpty()) {
 				query.append(_FINDER_COLUMN_N_A_ACTIONID_3);
 			}
 			else {

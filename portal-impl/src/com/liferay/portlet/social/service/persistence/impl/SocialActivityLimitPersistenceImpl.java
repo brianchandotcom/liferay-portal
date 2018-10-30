@@ -1769,6 +1769,8 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	public SocialActivityLimit fetchByG_U_C_C_A_A(long groupId, long userId,
 		long classNameId, long classPK, int activityType,
 		String activityCounterName, boolean retrieveFromCache) {
+		activityCounterName = Objects.toString(activityCounterName, "");
+
 		Object[] finderArgs = new Object[] {
 				groupId, userId, classNameId, classPK, activityType,
 				activityCounterName
@@ -1812,10 +1814,7 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 
 			boolean bindActivityCounterName = false;
 
-			if (activityCounterName == null) {
-				query.append(_FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYCOUNTERNAME_1);
-			}
-			else if (activityCounterName.equals("")) {
+			if (activityCounterName.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYCOUNTERNAME_3);
 			}
 			else {
@@ -1917,6 +1916,8 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	@Override
 	public int countByG_U_C_C_A_A(long groupId, long userId, long classNameId,
 		long classPK, int activityType, String activityCounterName) {
+		activityCounterName = Objects.toString(activityCounterName, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_U_C_C_A_A;
 
 		Object[] finderArgs = new Object[] {
@@ -1944,10 +1945,7 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 
 			boolean bindActivityCounterName = false;
 
-			if (activityCounterName == null) {
-				query.append(_FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYCOUNTERNAME_1);
-			}
-			else if (activityCounterName.equals("")) {
+			if (activityCounterName.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYCOUNTERNAME_3);
 			}
 			else {

@@ -922,6 +922,8 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	@Override
 	public PowwowParticipant fetchByPMI_EA(long powwowMeetingId,
 		String emailAddress, boolean retrieveFromCache) {
+		emailAddress = Objects.toString(emailAddress, "");
+
 		Object[] finderArgs = new Object[] { powwowMeetingId, emailAddress };
 
 		Object result = null;
@@ -950,10 +952,7 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 			boolean bindEmailAddress = false;
 
-			if (emailAddress == null) {
-				query.append(_FINDER_COLUMN_PMI_EA_EMAILADDRESS_1);
-			}
-			else if (emailAddress.equals("")) {
+			if (emailAddress.isEmpty()) {
 				query.append(_FINDER_COLUMN_PMI_EA_EMAILADDRESS_3);
 			}
 			else {
@@ -1037,6 +1036,8 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 	 */
 	@Override
 	public int countByPMI_EA(long powwowMeetingId, String emailAddress) {
+		emailAddress = Objects.toString(emailAddress, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_PMI_EA;
 
 		Object[] finderArgs = new Object[] { powwowMeetingId, emailAddress };
@@ -1053,10 +1054,7 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 
 			boolean bindEmailAddress = false;
 
-			if (emailAddress == null) {
-				query.append(_FINDER_COLUMN_PMI_EA_EMAILADDRESS_1);
-			}
-			else if (emailAddress.equals("")) {
+			if (emailAddress.isEmpty()) {
 				query.append(_FINDER_COLUMN_PMI_EA_EMAILADDRESS_3);
 			}
 			else {

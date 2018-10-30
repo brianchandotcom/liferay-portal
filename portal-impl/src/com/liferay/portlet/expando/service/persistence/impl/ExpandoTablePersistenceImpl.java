@@ -714,6 +714,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	@Override
 	public ExpandoTable fetchByC_C_N(long companyId, long classNameId,
 		String name, boolean retrieveFromCache) {
+		name = Objects.toString(name, "");
+
 		Object[] finderArgs = new Object[] { companyId, classNameId, name };
 
 		Object result = null;
@@ -744,10 +746,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 
 			boolean bindName = false;
 
-			if (name == null) {
-				query.append(_FINDER_COLUMN_C_C_N_NAME_1);
-			}
-			else if (name.equals("")) {
+			if (name.isEmpty()) {
 				query.append(_FINDER_COLUMN_C_C_N_NAME_3);
 			}
 			else {
@@ -834,6 +833,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 	 */
 	@Override
 	public int countByC_C_N(long companyId, long classNameId, String name) {
+		name = Objects.toString(name, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_C_N;
 
 		Object[] finderArgs = new Object[] { companyId, classNameId, name };
@@ -852,10 +853,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 
 			boolean bindName = false;
 
-			if (name == null) {
-				query.append(_FINDER_COLUMN_C_C_N_NAME_1);
-			}
-			else if (name.equals("")) {
+			if (name.isEmpty()) {
 				query.append(_FINDER_COLUMN_C_C_N_NAME_3);
 			}
 			else {

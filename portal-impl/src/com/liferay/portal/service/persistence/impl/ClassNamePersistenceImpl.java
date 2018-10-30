@@ -144,6 +144,8 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	 */
 	@Override
 	public ClassName fetchByValue(String value, boolean retrieveFromCache) {
+		value = Objects.toString(value, "");
+
 		Object[] finderArgs = new Object[] { value };
 
 		Object result = null;
@@ -168,10 +170,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 
 			boolean bindValue = false;
 
-			if (value == null) {
-				query.append(_FINDER_COLUMN_VALUE_VALUE_1);
-			}
-			else if (value.equals("")) {
+			if (value.isEmpty()) {
 				query.append(_FINDER_COLUMN_VALUE_VALUE_3);
 			}
 			else {
@@ -250,6 +249,8 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	 */
 	@Override
 	public int countByValue(String value) {
+		value = Objects.toString(value, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_VALUE;
 
 		Object[] finderArgs = new Object[] { value };
@@ -264,10 +265,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 
 			boolean bindValue = false;
 
-			if (value == null) {
-				query.append(_FINDER_COLUMN_VALUE_VALUE_1);
-			}
-			else if (value.equals("")) {
+			if (value.isEmpty()) {
 				query.append(_FINDER_COLUMN_VALUE_VALUE_3);
 			}
 			else {

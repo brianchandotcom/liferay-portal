@@ -177,6 +177,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	@Override
 	public List<Address> findByUuid(String uuid, int start, int end,
 		OrderByComparator<Address> orderByComparator, boolean retrieveFromCache) {
+		uuid = Objects.toString(uuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -200,7 +202,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Address address : list) {
-					if (!Objects.equals(uuid, address.getUuid())) {
+					if (!uuid.equals(address.getUuid())) {
 						list = null;
 
 						break;
@@ -224,10 +226,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -408,6 +407,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	public Address[] findByUuid_PrevAndNext(long addressId, String uuid,
 		OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException {
+		uuid = Objects.toString(uuid, "");
+
 		Address address = findByPrimaryKey(addressId);
 
 		Session session = null;
@@ -453,10 +454,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -576,6 +574,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public int countByUuid(String uuid) {
+		uuid = Objects.toString(uuid, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID;
 
 		Object[] finderArgs = new Object[] { uuid };
@@ -590,10 +590,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -730,6 +727,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	public List<Address> findByUuid_C(String uuid, long companyId, int start,
 		int end, OrderByComparator<Address> orderByComparator,
 		boolean retrieveFromCache) {
+		uuid = Objects.toString(uuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -757,7 +756,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Address address : list) {
-					if (!Objects.equals(uuid, address.getUuid()) ||
+					if (!uuid.equals(address.getUuid()) ||
 							(companyId != address.getCompanyId())) {
 						list = null;
 
@@ -782,10 +781,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -982,6 +978,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	public Address[] findByUuid_C_PrevAndNext(long addressId, String uuid,
 		long companyId, OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException {
+		uuid = Objects.toString(uuid, "");
+
 		Address address = findByPrimaryKey(addressId);
 
 		Session session = null;
@@ -1027,10 +1025,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1156,6 +1151,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
+		uuid = Objects.toString(uuid, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_C;
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
@@ -1170,10 +1167,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {

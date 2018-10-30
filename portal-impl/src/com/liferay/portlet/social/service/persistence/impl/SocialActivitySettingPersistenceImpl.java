@@ -2392,6 +2392,8 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	@Override
 	public SocialActivitySetting fetchByG_C_A_N(long groupId, long classNameId,
 		int activityType, String name, boolean retrieveFromCache) {
+		name = Objects.toString(name, "");
+
 		Object[] finderArgs = new Object[] {
 				groupId, classNameId, activityType, name
 			};
@@ -2427,10 +2429,7 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 
 			boolean bindName = false;
 
-			if (name == null) {
-				query.append(_FINDER_COLUMN_G_C_A_N_NAME_1);
-			}
-			else if (name.equals("")) {
+			if (name.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_C_A_N_NAME_3);
 			}
 			else {
@@ -2535,6 +2534,8 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	@Override
 	public int countByG_C_A_N(long groupId, long classNameId, int activityType,
 		String name) {
+		name = Objects.toString(name, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_A_N;
 
 		Object[] finderArgs = new Object[] {
@@ -2557,10 +2558,7 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 
 			boolean bindName = false;
 
-			if (name == null) {
-				query.append(_FINDER_COLUMN_G_C_A_N_NAME_1);
-			}
-			else if (name.equals("")) {
+			if (name.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_C_A_N_NAME_3);
 			}
 			else {

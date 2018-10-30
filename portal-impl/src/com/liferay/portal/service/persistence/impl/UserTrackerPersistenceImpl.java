@@ -1181,6 +1181,8 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	public List<UserTracker> findBySessionId(String sessionId, int start,
 		int end, OrderByComparator<UserTracker> orderByComparator,
 		boolean retrieveFromCache) {
+		sessionId = Objects.toString(sessionId, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1204,7 +1206,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (UserTracker userTracker : list) {
-					if (!Objects.equals(sessionId, userTracker.getSessionId())) {
+					if (!sessionId.equals(userTracker.getSessionId())) {
 						list = null;
 
 						break;
@@ -1228,10 +1230,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 
 			boolean bindSessionId = false;
 
-			if (sessionId == null) {
-				query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_1);
-			}
-			else if (sessionId.equals("")) {
+			if (sessionId.isEmpty()) {
 				query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_3);
 			}
 			else {
@@ -1415,6 +1414,8 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	public UserTracker[] findBySessionId_PrevAndNext(long userTrackerId,
 		String sessionId, OrderByComparator<UserTracker> orderByComparator)
 		throws NoSuchUserTrackerException {
+		sessionId = Objects.toString(sessionId, "");
+
 		UserTracker userTracker = findByPrimaryKey(userTrackerId);
 
 		Session session = null;
@@ -1460,10 +1461,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 
 		boolean bindSessionId = false;
 
-		if (sessionId == null) {
-			query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_1);
-		}
-		else if (sessionId.equals("")) {
+		if (sessionId.isEmpty()) {
 			query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_3);
 		}
 		else {
@@ -1583,6 +1581,8 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	@Override
 	public int countBySessionId(String sessionId) {
+		sessionId = Objects.toString(sessionId, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_SESSIONID;
 
 		Object[] finderArgs = new Object[] { sessionId };
@@ -1597,10 +1597,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 
 			boolean bindSessionId = false;
 
-			if (sessionId == null) {
-				query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_1);
-			}
-			else if (sessionId.equals("")) {
+			if (sessionId.isEmpty()) {
 				query.append(_FINDER_COLUMN_SESSIONID_SESSIONID_3);
 			}
 			else {

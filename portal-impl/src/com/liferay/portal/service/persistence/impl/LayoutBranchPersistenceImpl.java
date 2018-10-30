@@ -1227,6 +1227,8 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	@Override
 	public LayoutBranch fetchByL_P_N(long layoutSetBranchId, long plid,
 		String name, boolean retrieveFromCache) {
+		name = Objects.toString(name, "");
+
 		Object[] finderArgs = new Object[] { layoutSetBranchId, plid, name };
 
 		Object result = null;
@@ -1257,10 +1259,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 
 			boolean bindName = false;
 
-			if (name == null) {
-				query.append(_FINDER_COLUMN_L_P_N_NAME_1);
-			}
-			else if (name.equals("")) {
+			if (name.isEmpty()) {
 				query.append(_FINDER_COLUMN_L_P_N_NAME_3);
 			}
 			else {
@@ -1347,6 +1346,8 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	@Override
 	public int countByL_P_N(long layoutSetBranchId, long plid, String name) {
+		name = Objects.toString(name, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_L_P_N;
 
 		Object[] finderArgs = new Object[] { layoutSetBranchId, plid, name };
@@ -1365,10 +1366,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 
 			boolean bindName = false;
 
-			if (name == null) {
-				query.append(_FINDER_COLUMN_L_P_N_NAME_1);
-			}
-			else if (name.equals("")) {
+			if (name.isEmpty()) {
 				query.append(_FINDER_COLUMN_L_P_N_NAME_3);
 			}
 			else {

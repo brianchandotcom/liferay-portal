@@ -184,6 +184,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public List<Layout> findByUuid(String uuid, int start, int end,
 		OrderByComparator<Layout> orderByComparator, boolean retrieveFromCache) {
+		uuid = Objects.toString(uuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -207,7 +209,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Layout layout : list) {
-					if (!Objects.equals(uuid, layout.getUuid())) {
+					if (!uuid.equals(layout.getUuid())) {
 						list = null;
 
 						break;
@@ -231,10 +233,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -414,6 +413,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public Layout[] findByUuid_PrevAndNext(long plid, String uuid,
 		OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
+		uuid = Objects.toString(uuid, "");
+
 		Layout layout = findByPrimaryKey(plid);
 
 		Session session = null;
@@ -459,10 +460,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -582,6 +580,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 */
 	@Override
 	public int countByUuid(String uuid) {
+		uuid = Objects.toString(uuid, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID;
 
 		Object[] finderArgs = new Object[] { uuid };
@@ -596,10 +596,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -727,6 +724,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public Layout fetchByUUID_G_P(String uuid, long groupId,
 		boolean privateLayout, boolean retrieveFromCache) {
+		uuid = Objects.toString(uuid, "");
+
 		Object[] finderArgs = new Object[] { uuid, groupId, privateLayout };
 
 		Object result = null;
@@ -753,10 +752,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_P_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_G_P_UUID_3);
 			}
 			else {
@@ -847,6 +843,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 */
 	@Override
 	public int countByUUID_G_P(String uuid, long groupId, boolean privateLayout) {
+		uuid = Objects.toString(uuid, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_G_P;
 
 		Object[] finderArgs = new Object[] { uuid, groupId, privateLayout };
@@ -861,10 +859,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_P_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_G_P_UUID_3);
 			}
 			else {
@@ -1012,6 +1007,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public List<Layout> findByUuid_C(String uuid, long companyId, int start,
 		int end, OrderByComparator<Layout> orderByComparator,
 		boolean retrieveFromCache) {
+		uuid = Objects.toString(uuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1039,7 +1036,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Layout layout : list) {
-					if (!Objects.equals(uuid, layout.getUuid()) ||
+					if (!uuid.equals(layout.getUuid()) ||
 							(companyId != layout.getCompanyId())) {
 						list = null;
 
@@ -1064,10 +1061,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1264,6 +1258,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public Layout[] findByUuid_C_PrevAndNext(long plid, String uuid,
 		long companyId, OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
+		uuid = Objects.toString(uuid, "");
+
 		Layout layout = findByPrimaryKey(plid);
 
 		Session session = null;
@@ -1309,10 +1305,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1438,6 +1431,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
+		uuid = Objects.toString(uuid, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_C;
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
@@ -1452,10 +1447,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -3170,6 +3162,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public List<Layout> findByLayoutPrototypeUuid(String layoutPrototypeUuid,
 		int start, int end, OrderByComparator<Layout> orderByComparator,
 		boolean retrieveFromCache) {
+		layoutPrototypeUuid = Objects.toString(layoutPrototypeUuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3197,7 +3191,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Layout layout : list) {
-					if (!Objects.equals(layoutPrototypeUuid,
+					if (!layoutPrototypeUuid.equals(
 								layout.getLayoutPrototypeUuid())) {
 						list = null;
 
@@ -3222,10 +3216,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			boolean bindLayoutPrototypeUuid = false;
 
-			if (layoutPrototypeUuid == null) {
-				query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_1);
-			}
-			else if (layoutPrototypeUuid.equals("")) {
+			if (layoutPrototypeUuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3);
 			}
 			else {
@@ -3409,6 +3400,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public Layout[] findByLayoutPrototypeUuid_PrevAndNext(long plid,
 		String layoutPrototypeUuid, OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
+		layoutPrototypeUuid = Objects.toString(layoutPrototypeUuid, "");
+
 		Layout layout = findByPrimaryKey(plid);
 
 		Session session = null;
@@ -3454,10 +3447,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		boolean bindLayoutPrototypeUuid = false;
 
-		if (layoutPrototypeUuid == null) {
-			query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_1);
-		}
-		else if (layoutPrototypeUuid.equals("")) {
+		if (layoutPrototypeUuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3);
 		}
 		else {
@@ -3577,6 +3567,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 */
 	@Override
 	public int countByLayoutPrototypeUuid(String layoutPrototypeUuid) {
+		layoutPrototypeUuid = Objects.toString(layoutPrototypeUuid, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_LAYOUTPROTOTYPEUUID;
 
 		Object[] finderArgs = new Object[] { layoutPrototypeUuid };
@@ -3591,10 +3583,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			boolean bindLayoutPrototypeUuid = false;
 
-			if (layoutPrototypeUuid == null) {
-				query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_1);
-			}
-			else if (layoutPrototypeUuid.equals("")) {
+			if (layoutPrototypeUuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_LAYOUTPROTOTYPEUUID_LAYOUTPROTOTYPEUUID_3);
 			}
 			else {
@@ -3739,6 +3728,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public List<Layout> findBySourcePrototypeLayoutUuid(
 		String sourcePrototypeLayoutUuid, int start, int end,
 		OrderByComparator<Layout> orderByComparator, boolean retrieveFromCache) {
+		sourcePrototypeLayoutUuid = Objects.toString(sourcePrototypeLayoutUuid,
+				"");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3766,7 +3758,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Layout layout : list) {
-					if (!Objects.equals(sourcePrototypeLayoutUuid,
+					if (!sourcePrototypeLayoutUuid.equals(
 								layout.getSourcePrototypeLayoutUuid())) {
 						list = null;
 
@@ -3791,10 +3783,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			boolean bindSourcePrototypeLayoutUuid = false;
 
-			if (sourcePrototypeLayoutUuid == null) {
-				query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_1);
-			}
-			else if (sourcePrototypeLayoutUuid.equals("")) {
+			if (sourcePrototypeLayoutUuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_3);
 			}
 			else {
@@ -3983,6 +3972,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		String sourcePrototypeLayoutUuid,
 		OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
+		sourcePrototypeLayoutUuid = Objects.toString(sourcePrototypeLayoutUuid,
+				"");
+
 		Layout layout = findByPrimaryKey(plid);
 
 		Session session = null;
@@ -4028,10 +4020,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		boolean bindSourcePrototypeLayoutUuid = false;
 
-		if (sourcePrototypeLayoutUuid == null) {
-			query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_1);
-		}
-		else if (sourcePrototypeLayoutUuid.equals("")) {
+		if (sourcePrototypeLayoutUuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_3);
 		}
 		else {
@@ -4154,6 +4143,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public int countBySourcePrototypeLayoutUuid(
 		String sourcePrototypeLayoutUuid) {
+		sourcePrototypeLayoutUuid = Objects.toString(sourcePrototypeLayoutUuid,
+				"");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_SOURCEPROTOTYPELAYOUTUUID;
 
 		Object[] finderArgs = new Object[] { sourcePrototypeLayoutUuid };
@@ -4168,10 +4160,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			boolean bindSourcePrototypeLayoutUuid = false;
 
-			if (sourcePrototypeLayoutUuid == null) {
-				query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_1);
-			}
-			else if (sourcePrototypeLayoutUuid.equals("")) {
+			if (sourcePrototypeLayoutUuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_SOURCEPROTOTYPELAYOUTUUID_SOURCEPROTOTYPELAYOUTUUID_3);
 			}
 			else {
@@ -5230,6 +5219,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public List<Layout> findByG_T(long groupId, String type, int start,
 		int end, OrderByComparator<Layout> orderByComparator,
 		boolean retrieveFromCache) {
+		type = Objects.toString(type, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5258,7 +5249,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if ((list != null) && !list.isEmpty()) {
 				for (Layout layout : list) {
 					if ((groupId != layout.getGroupId()) ||
-							!Objects.equals(type, layout.getType())) {
+							!type.equals(layout.getType())) {
 						list = null;
 
 						break;
@@ -5284,10 +5275,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			boolean bindType = false;
 
-			if (type == null) {
-				query.append(_FINDER_COLUMN_G_T_TYPE_1);
-			}
-			else if (type.equals("")) {
+			if (type.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_T_TYPE_3);
 			}
 			else {
@@ -5481,6 +5469,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public Layout[] findByG_T_PrevAndNext(long plid, long groupId, String type,
 		OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
+		type = Objects.toString(type, "");
+
 		Layout layout = findByPrimaryKey(plid);
 
 		Session session = null;
@@ -5528,10 +5518,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		boolean bindType = false;
 
-		if (type == null) {
-			query.append(_FINDER_COLUMN_G_T_TYPE_1);
-		}
-		else if (type.equals("")) {
+		if (type.isEmpty()) {
 			query.append(_FINDER_COLUMN_G_T_TYPE_3);
 		}
 		else {
@@ -5685,6 +5672,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			return findByG_T(groupId, type, start, end, orderByComparator);
 		}
 
+		type = Objects.toString(type, "");
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5706,10 +5695,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		boolean bindType = false;
 
-		if (type == null) {
-			query.append(_FINDER_COLUMN_G_T_TYPE_1_SQL);
-		}
-		else if (type.equals("")) {
+		if (type.isEmpty()) {
 			query.append(_FINDER_COLUMN_G_T_TYPE_3_SQL);
 		}
 		else {
@@ -5795,6 +5781,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			return findByG_T_PrevAndNext(plid, groupId, type, orderByComparator);
 		}
 
+		type = Objects.toString(type, "");
+
 		Layout layout = findByPrimaryKey(plid);
 
 		Session session = null;
@@ -5847,10 +5835,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		boolean bindType = false;
 
-		if (type == null) {
-			query.append(_FINDER_COLUMN_G_T_TYPE_1_SQL);
-		}
-		else if (type.equals("")) {
+		if (type.isEmpty()) {
 			query.append(_FINDER_COLUMN_G_T_TYPE_3_SQL);
 		}
 		else {
@@ -6004,6 +5989,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 */
 	@Override
 	public int countByG_T(long groupId, String type) {
+		type = Objects.toString(type, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_T;
 
 		Object[] finderArgs = new Object[] { groupId, type };
@@ -6020,10 +6007,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			boolean bindType = false;
 
-			if (type == null) {
-				query.append(_FINDER_COLUMN_G_T_TYPE_1);
-			}
-			else if (type.equals("")) {
+			if (type.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_T_TYPE_3);
 			}
 			else {
@@ -6079,6 +6063,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			return countByG_T(groupId, type);
 		}
 
+		type = Objects.toString(type, "");
+
 		StringBundler query = new StringBundler(3);
 
 		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
@@ -6087,10 +6073,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		boolean bindType = false;
 
-		if (type == null) {
-			query.append(_FINDER_COLUMN_G_T_TYPE_1_SQL);
-		}
-		else if (type.equals("")) {
+		if (type.isEmpty()) {
 			query.append(_FINDER_COLUMN_G_T_TYPE_3_SQL);
 		}
 		else {
@@ -6234,6 +6217,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public List<Layout> findByC_L(long companyId, String layoutPrototypeUuid,
 		int start, int end, OrderByComparator<Layout> orderByComparator,
 		boolean retrieveFromCache) {
+		layoutPrototypeUuid = Objects.toString(layoutPrototypeUuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -6262,7 +6247,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			if ((list != null) && !list.isEmpty()) {
 				for (Layout layout : list) {
 					if ((companyId != layout.getCompanyId()) ||
-							!Objects.equals(layoutPrototypeUuid,
+							!layoutPrototypeUuid.equals(
 								layout.getLayoutPrototypeUuid())) {
 						list = null;
 
@@ -6289,10 +6274,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			boolean bindLayoutPrototypeUuid = false;
 
-			if (layoutPrototypeUuid == null) {
-				query.append(_FINDER_COLUMN_C_L_LAYOUTPROTOTYPEUUID_1);
-			}
-			else if (layoutPrototypeUuid.equals("")) {
+			if (layoutPrototypeUuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_C_L_LAYOUTPROTOTYPEUUID_3);
 			}
 			else {
@@ -6489,6 +6471,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public Layout[] findByC_L_PrevAndNext(long plid, long companyId,
 		String layoutPrototypeUuid, OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
+		layoutPrototypeUuid = Objects.toString(layoutPrototypeUuid, "");
+
 		Layout layout = findByPrimaryKey(plid);
 
 		Session session = null;
@@ -6536,10 +6520,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		boolean bindLayoutPrototypeUuid = false;
 
-		if (layoutPrototypeUuid == null) {
-			query.append(_FINDER_COLUMN_C_L_LAYOUTPROTOTYPEUUID_1);
-		}
-		else if (layoutPrototypeUuid.equals("")) {
+		if (layoutPrototypeUuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_C_L_LAYOUTPROTOTYPEUUID_3);
 		}
 		else {
@@ -6663,6 +6644,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 */
 	@Override
 	public int countByC_L(long companyId, String layoutPrototypeUuid) {
+		layoutPrototypeUuid = Objects.toString(layoutPrototypeUuid, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_L;
 
 		Object[] finderArgs = new Object[] { companyId, layoutPrototypeUuid };
@@ -6679,10 +6662,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			boolean bindLayoutPrototypeUuid = false;
 
-			if (layoutPrototypeUuid == null) {
-				query.append(_FINDER_COLUMN_C_L_LAYOUTPROTOTYPEUUID_1);
-			}
-			else if (layoutPrototypeUuid.equals("")) {
+			if (layoutPrototypeUuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_C_L_LAYOUTPROTOTYPEUUID_3);
 			}
 			else {
@@ -8907,6 +8887,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public List<Layout> findByG_P_T(long groupId, boolean privateLayout,
 		String type, int start, int end,
 		OrderByComparator<Layout> orderByComparator, boolean retrieveFromCache) {
+		type = Objects.toString(type, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -8936,7 +8918,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				for (Layout layout : list) {
 					if ((groupId != layout.getGroupId()) ||
 							(privateLayout != layout.isPrivateLayout()) ||
-							!Objects.equals(type, layout.getType())) {
+							!type.equals(layout.getType())) {
 						list = null;
 
 						break;
@@ -8964,10 +8946,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			boolean bindType = false;
 
-			if (type == null) {
-				query.append(_FINDER_COLUMN_G_P_T_TYPE_1);
-			}
-			else if (type.equals("")) {
+			if (type.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
 			}
 			else {
@@ -9178,6 +9157,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		boolean privateLayout, String type,
 		OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
+		type = Objects.toString(type, "");
+
 		Layout layout = findByPrimaryKey(plid);
 
 		Session session = null;
@@ -9227,10 +9208,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		boolean bindType = false;
 
-		if (type == null) {
-			query.append(_FINDER_COLUMN_G_P_T_TYPE_1);
-		}
-		else if (type.equals("")) {
+		if (type.isEmpty()) {
 			query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
 		}
 		else {
@@ -9392,6 +9370,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				orderByComparator);
 		}
 
+		type = Objects.toString(type, "");
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -9415,10 +9395,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		boolean bindType = false;
 
-		if (type == null) {
-			query.append(_FINDER_COLUMN_G_P_T_TYPE_1_SQL);
-		}
-		else if (type.equals("")) {
+		if (type.isEmpty()) {
 			query.append(_FINDER_COLUMN_G_P_T_TYPE_3_SQL);
 		}
 		else {
@@ -9509,6 +9486,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				orderByComparator);
 		}
 
+		type = Objects.toString(type, "");
+
 		Layout layout = findByPrimaryKey(plid);
 
 		Session session = null;
@@ -9563,10 +9542,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		boolean bindType = false;
 
-		if (type == null) {
-			query.append(_FINDER_COLUMN_G_P_T_TYPE_1_SQL);
-		}
-		else if (type.equals("")) {
+		if (type.isEmpty()) {
 			query.append(_FINDER_COLUMN_G_P_T_TYPE_3_SQL);
 		}
 		else {
@@ -9724,6 +9700,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	 */
 	@Override
 	public int countByG_P_T(long groupId, boolean privateLayout, String type) {
+		type = Objects.toString(type, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_P_T;
 
 		Object[] finderArgs = new Object[] { groupId, privateLayout, type };
@@ -9742,10 +9720,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			boolean bindType = false;
 
-			if (type == null) {
-				query.append(_FINDER_COLUMN_G_P_T_TYPE_1);
-			}
-			else if (type.equals("")) {
+			if (type.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_P_T_TYPE_3);
 			}
 			else {
@@ -9805,6 +9780,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			return countByG_P_T(groupId, privateLayout, type);
 		}
 
+		type = Objects.toString(type, "");
+
 		StringBundler query = new StringBundler(4);
 
 		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
@@ -9815,10 +9792,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		boolean bindType = false;
 
-		if (type == null) {
-			query.append(_FINDER_COLUMN_G_P_T_TYPE_1_SQL);
-		}
-		else if (type.equals("")) {
+		if (type.isEmpty()) {
 			query.append(_FINDER_COLUMN_G_P_T_TYPE_3_SQL);
 		}
 		else {
@@ -9955,6 +9929,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public Layout fetchByG_P_F(long groupId, boolean privateLayout,
 		String friendlyURL, boolean retrieveFromCache) {
+		friendlyURL = Objects.toString(friendlyURL, "");
+
 		Object[] finderArgs = new Object[] { groupId, privateLayout, friendlyURL };
 
 		Object result = null;
@@ -9985,10 +9961,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			boolean bindFriendlyURL = false;
 
-			if (friendlyURL == null) {
-				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_1);
-			}
-			else if (friendlyURL.equals("")) {
+			if (friendlyURL.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_3);
 			}
 			else {
@@ -10076,6 +10049,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public int countByG_P_F(long groupId, boolean privateLayout,
 		String friendlyURL) {
+		friendlyURL = Objects.toString(friendlyURL, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_P_F;
 
 		Object[] finderArgs = new Object[] { groupId, privateLayout, friendlyURL };
@@ -10094,10 +10069,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			boolean bindFriendlyURL = false;
 
-			if (friendlyURL == null) {
-				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_1);
-			}
-			else if (friendlyURL.equals("")) {
+			if (friendlyURL.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_P_F_FRIENDLYURL_3);
 			}
 			else {
@@ -10233,6 +10205,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public Layout fetchByG_P_SPLU(long groupId, boolean privateLayout,
 		String sourcePrototypeLayoutUuid, boolean retrieveFromCache) {
+		sourcePrototypeLayoutUuid = Objects.toString(sourcePrototypeLayoutUuid,
+				"");
+
 		Object[] finderArgs = new Object[] {
 				groupId, privateLayout, sourcePrototypeLayoutUuid
 			};
@@ -10266,10 +10241,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			boolean bindSourcePrototypeLayoutUuid = false;
 
-			if (sourcePrototypeLayoutUuid == null) {
-				query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_1);
-			}
-			else if (sourcePrototypeLayoutUuid.equals("")) {
+			if (sourcePrototypeLayoutUuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3);
 			}
 			else {
@@ -10369,6 +10341,9 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	public int countByG_P_SPLU(long groupId, boolean privateLayout,
 		String sourcePrototypeLayoutUuid) {
+		sourcePrototypeLayoutUuid = Objects.toString(sourcePrototypeLayoutUuid,
+				"");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_P_SPLU;
 
 		Object[] finderArgs = new Object[] {
@@ -10389,10 +10364,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			boolean bindSourcePrototypeLayoutUuid = false;
 
-			if (sourcePrototypeLayoutUuid == null) {
-				query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_1);
-			}
-			else if (sourcePrototypeLayoutUuid.equals("")) {
+			if (sourcePrototypeLayoutUuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3);
 			}
 			else {

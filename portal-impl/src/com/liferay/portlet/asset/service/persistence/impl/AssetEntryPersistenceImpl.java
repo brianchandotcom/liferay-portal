@@ -2790,6 +2790,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	public List<AssetEntry> findByLayoutUuid(String layoutUuid, int start,
 		int end, OrderByComparator<AssetEntry> orderByComparator,
 		boolean retrieveFromCache) {
+		layoutUuid = Objects.toString(layoutUuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2813,7 +2815,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetEntry assetEntry : list) {
-					if (!Objects.equals(layoutUuid, assetEntry.getLayoutUuid())) {
+					if (!layoutUuid.equals(assetEntry.getLayoutUuid())) {
 						list = null;
 
 						break;
@@ -2837,10 +2839,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 			boolean bindLayoutUuid = false;
 
-			if (layoutUuid == null) {
-				query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_1);
-			}
-			else if (layoutUuid.equals("")) {
+			if (layoutUuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_3);
 			}
 			else {
@@ -3024,6 +3023,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	public AssetEntry[] findByLayoutUuid_PrevAndNext(long entryId,
 		String layoutUuid, OrderByComparator<AssetEntry> orderByComparator)
 		throws NoSuchEntryException {
+		layoutUuid = Objects.toString(layoutUuid, "");
+
 		AssetEntry assetEntry = findByPrimaryKey(entryId);
 
 		Session session = null;
@@ -3069,10 +3070,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 		boolean bindLayoutUuid = false;
 
-		if (layoutUuid == null) {
-			query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_1);
-		}
-		else if (layoutUuid.equals("")) {
+		if (layoutUuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_3);
 		}
 		else {
@@ -3192,6 +3190,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public int countByLayoutUuid(String layoutUuid) {
+		layoutUuid = Objects.toString(layoutUuid, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_LAYOUTUUID;
 
 		Object[] finderArgs = new Object[] { layoutUuid };
@@ -3206,10 +3206,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 			boolean bindLayoutUuid = false;
 
-			if (layoutUuid == null) {
-				query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_1);
-			}
-			else if (layoutUuid.equals("")) {
+			if (layoutUuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_3);
 			}
 			else {
@@ -3323,6 +3320,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	@Override
 	public AssetEntry fetchByG_CU(long groupId, String classUuid,
 		boolean retrieveFromCache) {
+		classUuid = Objects.toString(classUuid, "");
+
 		Object[] finderArgs = new Object[] { groupId, classUuid };
 
 		Object result = null;
@@ -3350,10 +3349,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 			boolean bindClassUuid = false;
 
-			if (classUuid == null) {
-				query.append(_FINDER_COLUMN_G_CU_CLASSUUID_1);
-			}
-			else if (classUuid.equals("")) {
+			if (classUuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_CU_CLASSUUID_3);
 			}
 			else {
@@ -3447,6 +3443,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public int countByG_CU(long groupId, String classUuid) {
+		classUuid = Objects.toString(classUuid, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_CU;
 
 		Object[] finderArgs = new Object[] { groupId, classUuid };
@@ -3463,10 +3461,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 			boolean bindClassUuid = false;
 
-			if (classUuid == null) {
-				query.append(_FINDER_COLUMN_G_CU_CLASSUUID_1);
-			}
-			else if (classUuid.equals("")) {
+			if (classUuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_CU_CLASSUUID_3);
 			}
 			else {

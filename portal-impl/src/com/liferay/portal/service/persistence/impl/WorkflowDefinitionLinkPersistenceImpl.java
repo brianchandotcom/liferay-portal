@@ -1314,6 +1314,8 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		int start, int end,
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
 		boolean retrieveFromCache) {
+		workflowDefinitionName = Objects.toString(workflowDefinitionName, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1344,7 +1346,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 			if ((list != null) && !list.isEmpty()) {
 				for (WorkflowDefinitionLink workflowDefinitionLink : list) {
 					if ((companyId != workflowDefinitionLink.getCompanyId()) ||
-							!Objects.equals(workflowDefinitionName,
+							!workflowDefinitionName.equals(
 								workflowDefinitionLink.getWorkflowDefinitionName()) ||
 							(workflowDefinitionVersion != workflowDefinitionLink.getWorkflowDefinitionVersion())) {
 						list = null;
@@ -1372,10 +1374,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 
 			boolean bindWorkflowDefinitionName = false;
 
-			if (workflowDefinitionName == null) {
-				query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_1);
-			}
-			else if (workflowDefinitionName.equals("")) {
+			if (workflowDefinitionName.isEmpty()) {
 				query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_3);
 			}
 			else {
@@ -1598,6 +1597,8 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		String workflowDefinitionName, int workflowDefinitionVersion,
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException {
+		workflowDefinitionName = Objects.toString(workflowDefinitionName, "");
+
 		WorkflowDefinitionLink workflowDefinitionLink = findByPrimaryKey(workflowDefinitionLinkId);
 
 		Session session = null;
@@ -1649,10 +1650,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 
 		boolean bindWorkflowDefinitionName = false;
 
-		if (workflowDefinitionName == null) {
-			query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_1);
-		}
-		else if (workflowDefinitionName.equals("")) {
+		if (workflowDefinitionName.isEmpty()) {
 			query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_3);
 		}
 		else {
@@ -1785,6 +1783,8 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	@Override
 	public int countByC_W_W(long companyId, String workflowDefinitionName,
 		int workflowDefinitionVersion) {
+		workflowDefinitionName = Objects.toString(workflowDefinitionName, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_W_W;
 
 		Object[] finderArgs = new Object[] {
@@ -1803,10 +1803,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 
 			boolean bindWorkflowDefinitionName = false;
 
-			if (workflowDefinitionName == null) {
-				query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_1);
-			}
-			else if (workflowDefinitionName.equals("")) {
+			if (workflowDefinitionName.isEmpty()) {
 				query.append(_FINDER_COLUMN_C_W_W_WORKFLOWDEFINITIONNAME_3);
 			}
 			else {

@@ -188,6 +188,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> findByUuid(String uuid, int start, int end,
 		OrderByComparator<Role> orderByComparator, boolean retrieveFromCache) {
+		uuid = Objects.toString(uuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -211,7 +213,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Role role : list) {
-					if (!Objects.equals(uuid, role.getUuid())) {
+					if (!uuid.equals(role.getUuid())) {
 						list = null;
 
 						break;
@@ -235,10 +237,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -415,6 +414,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public Role[] findByUuid_PrevAndNext(long roleId, String uuid,
 		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
+		uuid = Objects.toString(uuid, "");
+
 		Role role = findByPrimaryKey(roleId);
 
 		Session session = null;
@@ -459,10 +460,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -609,6 +607,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			return findByUuid(uuid, start, end, orderByComparator);
 		}
 
+		uuid = Objects.toString(uuid, "");
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -628,10 +628,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1_SQL);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3_SQL);
 		}
 		else {
@@ -712,6 +709,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			return findByUuid_PrevAndNext(roleId, uuid, orderByComparator);
 		}
 
+		uuid = Objects.toString(uuid, "");
+
 		Role role = findByPrimaryKey(roleId);
 
 		Session session = null;
@@ -761,10 +760,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1_SQL);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3_SQL);
 		}
 		else {
@@ -913,6 +909,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int countByUuid(String uuid) {
+		uuid = Objects.toString(uuid, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID;
 
 		Object[] finderArgs = new Object[] { uuid };
@@ -927,10 +925,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -983,16 +978,15 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			return countByUuid(uuid);
 		}
 
+		uuid = Objects.toString(uuid, "");
+
 		StringBundler query = new StringBundler(2);
 
 		query.append(_FILTER_SQL_COUNT_ROLE_WHERE);
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1_SQL);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3_SQL);
 		}
 		else {
@@ -1131,6 +1125,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public List<Role> findByUuid_C(String uuid, long companyId, int start,
 		int end, OrderByComparator<Role> orderByComparator,
 		boolean retrieveFromCache) {
+		uuid = Objects.toString(uuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1158,7 +1154,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Role role : list) {
-					if (!Objects.equals(uuid, role.getUuid()) ||
+					if (!uuid.equals(role.getUuid()) ||
 							(companyId != role.getCompanyId())) {
 						list = null;
 
@@ -1183,10 +1179,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1380,6 +1373,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public Role[] findByUuid_C_PrevAndNext(long roleId, String uuid,
 		long companyId, OrderByComparator<Role> orderByComparator)
 		throws NoSuchRoleException {
+		uuid = Objects.toString(uuid, "");
+
 		Role role = findByPrimaryKey(roleId);
 
 		Session session = null;
@@ -1425,10 +1420,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1584,6 +1576,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 		}
 
+		uuid = Objects.toString(uuid, "");
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1603,10 +1597,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1_SQL);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3_SQL);
 		}
 		else {
@@ -1694,6 +1685,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				orderByComparator);
 		}
 
+		uuid = Objects.toString(uuid, "");
+
 		Role role = findByPrimaryKey(roleId);
 
 		Session session = null;
@@ -1744,10 +1737,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1_SQL);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3_SQL);
 		}
 		else {
@@ -1902,6 +1892,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
+		uuid = Objects.toString(uuid, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_C;
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
@@ -1916,10 +1908,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1977,16 +1966,15 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			return countByUuid_C(uuid, companyId);
 		}
 
+		uuid = Objects.toString(uuid, "");
+
 		StringBundler query = new StringBundler(3);
 
 		query.append(_FILTER_SQL_COUNT_ROLE_WHERE);
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1_SQL);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3_SQL);
 		}
 		else {
@@ -2974,6 +2962,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> findByName(String name, int start, int end,
 		OrderByComparator<Role> orderByComparator, boolean retrieveFromCache) {
+		name = Objects.toString(name, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2997,7 +2987,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Role role : list) {
-					if (!Objects.equals(name, role.getName())) {
+					if (!name.equals(role.getName())) {
 						list = null;
 
 						break;
@@ -3021,10 +3011,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			boolean bindName = false;
 
-			if (name == null) {
-				query.append(_FINDER_COLUMN_NAME_NAME_1);
-			}
-			else if (name.equals("")) {
+			if (name.isEmpty()) {
 				query.append(_FINDER_COLUMN_NAME_NAME_3);
 			}
 			else {
@@ -3201,6 +3188,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public Role[] findByName_PrevAndNext(long roleId, String name,
 		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
+		name = Objects.toString(name, "");
+
 		Role role = findByPrimaryKey(roleId);
 
 		Session session = null;
@@ -3245,10 +3234,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		boolean bindName = false;
 
-		if (name == null) {
-			query.append(_FINDER_COLUMN_NAME_NAME_1);
-		}
-		else if (name.equals("")) {
+		if (name.isEmpty()) {
 			query.append(_FINDER_COLUMN_NAME_NAME_3);
 		}
 		else {
@@ -3395,6 +3381,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			return findByName(name, start, end, orderByComparator);
 		}
 
+		name = Objects.toString(name, "");
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -3414,10 +3402,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		boolean bindName = false;
 
-		if (name == null) {
-			query.append(_FINDER_COLUMN_NAME_NAME_1);
-		}
-		else if (name.equals("")) {
+		if (name.isEmpty()) {
 			query.append(_FINDER_COLUMN_NAME_NAME_3);
 		}
 		else {
@@ -3498,6 +3483,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			return findByName_PrevAndNext(roleId, name, orderByComparator);
 		}
 
+		name = Objects.toString(name, "");
+
 		Role role = findByPrimaryKey(roleId);
 
 		Session session = null;
@@ -3547,10 +3534,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		boolean bindName = false;
 
-		if (name == null) {
-			query.append(_FINDER_COLUMN_NAME_NAME_1);
-		}
-		else if (name.equals("")) {
+		if (name.isEmpty()) {
 			query.append(_FINDER_COLUMN_NAME_NAME_3);
 		}
 		else {
@@ -3699,6 +3683,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int countByName(String name) {
+		name = Objects.toString(name, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_NAME;
 
 		Object[] finderArgs = new Object[] { name };
@@ -3713,10 +3699,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			boolean bindName = false;
 
-			if (name == null) {
-				query.append(_FINDER_COLUMN_NAME_NAME_1);
-			}
-			else if (name.equals("")) {
+			if (name.isEmpty()) {
 				query.append(_FINDER_COLUMN_NAME_NAME_3);
 			}
 			else {
@@ -3769,16 +3752,15 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			return countByName(name);
 		}
 
+		name = Objects.toString(name, "");
+
 		StringBundler query = new StringBundler(2);
 
 		query.append(_FILTER_SQL_COUNT_ROLE_WHERE);
 
 		boolean bindName = false;
 
-		if (name == null) {
-			query.append(_FINDER_COLUMN_NAME_NAME_1);
-		}
-		else if (name.equals("")) {
+		if (name.isEmpty()) {
 			query.append(_FINDER_COLUMN_NAME_NAME_3);
 		}
 		else {
@@ -4752,6 +4734,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> findBySubtype(String subtype, int start, int end,
 		OrderByComparator<Role> orderByComparator, boolean retrieveFromCache) {
+		subtype = Objects.toString(subtype, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4775,7 +4759,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Role role : list) {
-					if (!Objects.equals(subtype, role.getSubtype())) {
+					if (!subtype.equals(role.getSubtype())) {
 						list = null;
 
 						break;
@@ -4799,10 +4783,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			boolean bindSubtype = false;
 
-			if (subtype == null) {
-				query.append(_FINDER_COLUMN_SUBTYPE_SUBTYPE_1);
-			}
-			else if (subtype.equals("")) {
+			if (subtype.isEmpty()) {
 				query.append(_FINDER_COLUMN_SUBTYPE_SUBTYPE_3);
 			}
 			else {
@@ -4980,6 +4961,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public Role[] findBySubtype_PrevAndNext(long roleId, String subtype,
 		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
+		subtype = Objects.toString(subtype, "");
+
 		Role role = findByPrimaryKey(roleId);
 
 		Session session = null;
@@ -5025,10 +5008,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		boolean bindSubtype = false;
 
-		if (subtype == null) {
-			query.append(_FINDER_COLUMN_SUBTYPE_SUBTYPE_1);
-		}
-		else if (subtype.equals("")) {
+		if (subtype.isEmpty()) {
 			query.append(_FINDER_COLUMN_SUBTYPE_SUBTYPE_3);
 		}
 		else {
@@ -5176,6 +5156,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			return findBySubtype(subtype, start, end, orderByComparator);
 		}
 
+		subtype = Objects.toString(subtype, "");
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -5195,10 +5177,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		boolean bindSubtype = false;
 
-		if (subtype == null) {
-			query.append(_FINDER_COLUMN_SUBTYPE_SUBTYPE_1);
-		}
-		else if (subtype.equals("")) {
+		if (subtype.isEmpty()) {
 			query.append(_FINDER_COLUMN_SUBTYPE_SUBTYPE_3);
 		}
 		else {
@@ -5279,6 +5258,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			return findBySubtype_PrevAndNext(roleId, subtype, orderByComparator);
 		}
 
+		subtype = Objects.toString(subtype, "");
+
 		Role role = findByPrimaryKey(roleId);
 
 		Session session = null;
@@ -5329,10 +5310,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		boolean bindSubtype = false;
 
-		if (subtype == null) {
-			query.append(_FINDER_COLUMN_SUBTYPE_SUBTYPE_1);
-		}
-		else if (subtype.equals("")) {
+		if (subtype.isEmpty()) {
 			query.append(_FINDER_COLUMN_SUBTYPE_SUBTYPE_3);
 		}
 		else {
@@ -5481,6 +5459,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int countBySubtype(String subtype) {
+		subtype = Objects.toString(subtype, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_SUBTYPE;
 
 		Object[] finderArgs = new Object[] { subtype };
@@ -5495,10 +5475,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			boolean bindSubtype = false;
 
-			if (subtype == null) {
-				query.append(_FINDER_COLUMN_SUBTYPE_SUBTYPE_1);
-			}
-			else if (subtype.equals("")) {
+			if (subtype.isEmpty()) {
 				query.append(_FINDER_COLUMN_SUBTYPE_SUBTYPE_3);
 			}
 			else {
@@ -5551,16 +5528,15 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			return countBySubtype(subtype);
 		}
 
+		subtype = Objects.toString(subtype, "");
+
 		StringBundler query = new StringBundler(2);
 
 		query.append(_FILTER_SQL_COUNT_ROLE_WHERE);
 
 		boolean bindSubtype = false;
 
-		if (subtype == null) {
-			query.append(_FINDER_COLUMN_SUBTYPE_SUBTYPE_1);
-		}
-		else if (subtype.equals("")) {
+		if (subtype.isEmpty()) {
 			query.append(_FINDER_COLUMN_SUBTYPE_SUBTYPE_3);
 		}
 		else {
@@ -5673,6 +5649,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public Role fetchByC_N(long companyId, String name,
 		boolean retrieveFromCache) {
+		name = Objects.toString(name, "");
+
 		Object[] finderArgs = new Object[] { companyId, name };
 
 		Object result = null;
@@ -5700,10 +5678,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			boolean bindName = false;
 
-			if (name == null) {
-				query.append(_FINDER_COLUMN_C_N_NAME_1);
-			}
-			else if (name.equals("")) {
+			if (name.isEmpty()) {
 				query.append(_FINDER_COLUMN_C_N_NAME_3);
 			}
 			else {
@@ -5786,6 +5761,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int countByC_N(long companyId, String name) {
+		name = Objects.toString(name, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_N;
 
 		Object[] finderArgs = new Object[] { companyId, name };
@@ -5802,10 +5779,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			boolean bindName = false;
 
-			if (name == null) {
-				query.append(_FINDER_COLUMN_C_N_NAME_1);
-			}
-			else if (name.equals("")) {
+			if (name.isEmpty()) {
 				query.append(_FINDER_COLUMN_C_N_NAME_3);
 			}
 			else {
@@ -7343,6 +7317,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<Role> findByT_S(int type, String subtype, int start, int end,
 		OrderByComparator<Role> orderByComparator, boolean retrieveFromCache) {
+		subtype = Objects.toString(subtype, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -7371,7 +7347,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			if ((list != null) && !list.isEmpty()) {
 				for (Role role : list) {
 					if ((type != role.getType()) ||
-							!Objects.equals(subtype, role.getSubtype())) {
+							!subtype.equals(role.getSubtype())) {
 						list = null;
 
 						break;
@@ -7397,10 +7373,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			boolean bindSubtype = false;
 
-			if (subtype == null) {
-				query.append(_FINDER_COLUMN_T_S_SUBTYPE_1);
-			}
-			else if (subtype.equals("")) {
+			if (subtype.isEmpty()) {
 				query.append(_FINDER_COLUMN_T_S_SUBTYPE_3);
 			}
 			else {
@@ -7591,6 +7564,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public Role[] findByT_S_PrevAndNext(long roleId, int type, String subtype,
 		OrderByComparator<Role> orderByComparator) throws NoSuchRoleException {
+		subtype = Objects.toString(subtype, "");
+
 		Role role = findByPrimaryKey(roleId);
 
 		Session session = null;
@@ -7638,10 +7613,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		boolean bindSubtype = false;
 
-		if (subtype == null) {
-			query.append(_FINDER_COLUMN_T_S_SUBTYPE_1);
-		}
-		else if (subtype.equals("")) {
+		if (subtype.isEmpty()) {
 			query.append(_FINDER_COLUMN_T_S_SUBTYPE_3);
 		}
 		else {
@@ -7795,6 +7767,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			return findByT_S(type, subtype, start, end, orderByComparator);
 		}
 
+		subtype = Objects.toString(subtype, "");
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -7816,10 +7790,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		boolean bindSubtype = false;
 
-		if (subtype == null) {
-			query.append(_FINDER_COLUMN_T_S_SUBTYPE_1);
-		}
-		else if (subtype.equals("")) {
+		if (subtype.isEmpty()) {
 			query.append(_FINDER_COLUMN_T_S_SUBTYPE_3);
 		}
 		else {
@@ -7905,6 +7876,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				orderByComparator);
 		}
 
+		subtype = Objects.toString(subtype, "");
+
 		Role role = findByPrimaryKey(roleId);
 
 		Session session = null;
@@ -7957,10 +7930,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		boolean bindSubtype = false;
 
-		if (subtype == null) {
-			query.append(_FINDER_COLUMN_T_S_SUBTYPE_1);
-		}
-		else if (subtype.equals("")) {
+		if (subtype.isEmpty()) {
 			query.append(_FINDER_COLUMN_T_S_SUBTYPE_3);
 		}
 		else {
@@ -8113,6 +8083,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int countByT_S(int type, String subtype) {
+		subtype = Objects.toString(subtype, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_T_S;
 
 		Object[] finderArgs = new Object[] { type, subtype };
@@ -8129,10 +8101,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			boolean bindSubtype = false;
 
-			if (subtype == null) {
-				query.append(_FINDER_COLUMN_T_S_SUBTYPE_1);
-			}
-			else if (subtype.equals("")) {
+			if (subtype.isEmpty()) {
 				query.append(_FINDER_COLUMN_T_S_SUBTYPE_3);
 			}
 			else {
@@ -8188,6 +8157,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			return countByT_S(type, subtype);
 		}
 
+		subtype = Objects.toString(subtype, "");
+
 		StringBundler query = new StringBundler(3);
 
 		query.append(_FILTER_SQL_COUNT_ROLE_WHERE);
@@ -8196,10 +8167,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		boolean bindSubtype = false;
 
-		if (subtype == null) {
-			query.append(_FINDER_COLUMN_T_S_SUBTYPE_1);
-		}
-		else if (subtype.equals("")) {
+		if (subtype.isEmpty()) {
 			query.append(_FINDER_COLUMN_T_S_SUBTYPE_3);
 		}
 		else {

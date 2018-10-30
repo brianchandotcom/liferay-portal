@@ -150,6 +150,8 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 */
 	@Override
 	public Ticket fetchByKey(String key, boolean retrieveFromCache) {
+		key = Objects.toString(key, "");
+
 		Object[] finderArgs = new Object[] { key };
 
 		Object result = null;
@@ -174,10 +176,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 
 			boolean bindKey = false;
 
-			if (key == null) {
-				query.append(_FINDER_COLUMN_KEY_KEY_1);
-			}
-			else if (key.equals("")) {
+			if (key.isEmpty()) {
 				query.append(_FINDER_COLUMN_KEY_KEY_3);
 			}
 			else {
@@ -266,6 +265,8 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 */
 	@Override
 	public int countByKey(String key) {
+		key = Objects.toString(key, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_KEY;
 
 		Object[] finderArgs = new Object[] { key };
@@ -280,10 +281,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 
 			boolean bindKey = false;
 
-			if (key == null) {
-				query.append(_FINDER_COLUMN_KEY_KEY_1);
-			}
-			else if (key.equals("")) {
+			if (key.isEmpty()) {
 				query.append(_FINDER_COLUMN_KEY_KEY_3);
 			}
 			else {

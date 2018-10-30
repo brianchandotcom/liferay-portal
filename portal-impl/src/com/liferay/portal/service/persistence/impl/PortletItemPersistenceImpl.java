@@ -740,6 +740,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		long classNameId, int start, int end,
 		OrderByComparator<PortletItem> orderByComparator,
 		boolean retrieveFromCache) {
+		portletId = Objects.toString(portletId, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -768,8 +770,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 			if ((list != null) && !list.isEmpty()) {
 				for (PortletItem portletItem : list) {
 					if ((groupId != portletItem.getGroupId()) ||
-							!Objects.equals(portletId,
-								portletItem.getPortletId()) ||
+							!portletId.equals(portletItem.getPortletId()) ||
 							(classNameId != portletItem.getClassNameId())) {
 						list = null;
 
@@ -796,10 +797,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 
 			boolean bindPortletId = false;
 
-			if (portletId == null) {
-				query.append(_FINDER_COLUMN_G_P_C_PORTLETID_1);
-			}
-			else if (portletId.equals("")) {
+			if (portletId.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_P_C_PORTLETID_3);
 			}
 			else {
@@ -1012,6 +1010,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		long groupId, String portletId, long classNameId,
 		OrderByComparator<PortletItem> orderByComparator)
 		throws NoSuchPortletItemException {
+		portletId = Objects.toString(portletId, "");
+
 		PortletItem portletItem = findByPrimaryKey(portletItemId);
 
 		Session session = null;
@@ -1060,10 +1060,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 
 		boolean bindPortletId = false;
 
-		if (portletId == null) {
-			query.append(_FINDER_COLUMN_G_P_C_PORTLETID_1);
-		}
-		else if (portletId.equals("")) {
+		if (portletId.isEmpty()) {
 			query.append(_FINDER_COLUMN_G_P_C_PORTLETID_3);
 		}
 		else {
@@ -1193,6 +1190,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	 */
 	@Override
 	public int countByG_P_C(long groupId, String portletId, long classNameId) {
+		portletId = Objects.toString(portletId, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_P_C;
 
 		Object[] finderArgs = new Object[] { groupId, portletId, classNameId };
@@ -1209,10 +1208,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 
 			boolean bindPortletId = false;
 
-			if (portletId == null) {
-				query.append(_FINDER_COLUMN_G_P_C_PORTLETID_1);
-			}
-			else if (portletId.equals("")) {
+			if (portletId.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_P_C_PORTLETID_3);
 			}
 			else {
@@ -1356,6 +1352,9 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	@Override
 	public PortletItem fetchByG_N_P_C(long groupId, String name,
 		String portletId, long classNameId, boolean retrieveFromCache) {
+		name = Objects.toString(name, "");
+		portletId = Objects.toString(portletId, "");
+
 		Object[] finderArgs = new Object[] { groupId, name, portletId, classNameId };
 
 		Object result = null;
@@ -1385,10 +1384,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 
 			boolean bindName = false;
 
-			if (name == null) {
-				query.append(_FINDER_COLUMN_G_N_P_C_NAME_1);
-			}
-			else if (name.equals("")) {
+			if (name.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_N_P_C_NAME_3);
 			}
 			else {
@@ -1399,10 +1395,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 
 			boolean bindPortletId = false;
 
-			if (portletId == null) {
-				query.append(_FINDER_COLUMN_G_N_P_C_PORTLETID_1);
-			}
-			else if (portletId.equals("")) {
+			if (portletId.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_N_P_C_PORTLETID_3);
 			}
 			else {
@@ -1510,6 +1503,9 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	@Override
 	public int countByG_N_P_C(long groupId, String name, String portletId,
 		long classNameId) {
+		name = Objects.toString(name, "");
+		portletId = Objects.toString(portletId, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_N_P_C;
 
 		Object[] finderArgs = new Object[] { groupId, name, portletId, classNameId };
@@ -1526,10 +1522,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 
 			boolean bindName = false;
 
-			if (name == null) {
-				query.append(_FINDER_COLUMN_G_N_P_C_NAME_1);
-			}
-			else if (name.equals("")) {
+			if (name.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_N_P_C_NAME_3);
 			}
 			else {
@@ -1540,10 +1533,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 
 			boolean bindPortletId = false;
 
-			if (portletId == null) {
-				query.append(_FINDER_COLUMN_G_N_P_C_PORTLETID_1);
-			}
-			else if (portletId.equals("")) {
+			if (portletId.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_N_P_C_PORTLETID_3);
 			}
 			else {

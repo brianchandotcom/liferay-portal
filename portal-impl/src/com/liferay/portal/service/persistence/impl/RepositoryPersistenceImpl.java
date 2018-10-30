@@ -177,6 +177,8 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	public List<Repository> findByUuid(String uuid, int start, int end,
 		OrderByComparator<Repository> orderByComparator,
 		boolean retrieveFromCache) {
+		uuid = Objects.toString(uuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -200,7 +202,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Repository repository : list) {
-					if (!Objects.equals(uuid, repository.getUuid())) {
+					if (!uuid.equals(repository.getUuid())) {
 						list = null;
 
 						break;
@@ -224,10 +226,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -408,6 +407,8 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	public Repository[] findByUuid_PrevAndNext(long repositoryId, String uuid,
 		OrderByComparator<Repository> orderByComparator)
 		throws NoSuchRepositoryException {
+		uuid = Objects.toString(uuid, "");
+
 		Repository repository = findByPrimaryKey(repositoryId);
 
 		Session session = null;
@@ -453,10 +454,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -576,6 +574,8 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	 */
 	@Override
 	public int countByUuid(String uuid) {
+		uuid = Objects.toString(uuid, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID;
 
 		Object[] finderArgs = new Object[] { uuid };
@@ -590,10 +590,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -707,6 +704,8 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	@Override
 	public Repository fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache) {
+		uuid = Objects.toString(uuid, "");
+
 		Object[] finderArgs = new Object[] { uuid, groupId };
 
 		Object result = null;
@@ -732,10 +731,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -820,6 +816,8 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
+		uuid = Objects.toString(uuid, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_G;
 
 		Object[] finderArgs = new Object[] { uuid, groupId };
@@ -834,10 +832,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -978,6 +973,8 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	public List<Repository> findByUuid_C(String uuid, long companyId,
 		int start, int end, OrderByComparator<Repository> orderByComparator,
 		boolean retrieveFromCache) {
+		uuid = Objects.toString(uuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1005,7 +1002,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Repository repository : list) {
-					if (!Objects.equals(uuid, repository.getUuid()) ||
+					if (!uuid.equals(repository.getUuid()) ||
 							(companyId != repository.getCompanyId())) {
 						list = null;
 
@@ -1030,10 +1027,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1233,6 +1227,8 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		String uuid, long companyId,
 		OrderByComparator<Repository> orderByComparator)
 		throws NoSuchRepositoryException {
+		uuid = Objects.toString(uuid, "");
+
 		Repository repository = findByPrimaryKey(repositoryId);
 
 		Session session = null;
@@ -1278,10 +1274,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1407,6 +1400,8 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
+		uuid = Objects.toString(uuid, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_C;
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
@@ -1421,10 +1416,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -2057,6 +2049,9 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	@Override
 	public Repository fetchByG_N_P(long groupId, String name, String portletId,
 		boolean retrieveFromCache) {
+		name = Objects.toString(name, "");
+		portletId = Objects.toString(portletId, "");
+
 		Object[] finderArgs = new Object[] { groupId, name, portletId };
 
 		Object result = null;
@@ -2085,10 +2080,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 			boolean bindName = false;
 
-			if (name == null) {
-				query.append(_FINDER_COLUMN_G_N_P_NAME_1);
-			}
-			else if (name.equals("")) {
+			if (name.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_N_P_NAME_3);
 			}
 			else {
@@ -2099,10 +2091,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 			boolean bindPortletId = false;
 
-			if (portletId == null) {
-				query.append(_FINDER_COLUMN_G_N_P_PORTLETID_1);
-			}
-			else if (portletId.equals("")) {
+			if (portletId.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_N_P_PORTLETID_3);
 			}
 			else {
@@ -2191,6 +2180,9 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	 */
 	@Override
 	public int countByG_N_P(long groupId, String name, String portletId) {
+		name = Objects.toString(name, "");
+		portletId = Objects.toString(portletId, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_N_P;
 
 		Object[] finderArgs = new Object[] { groupId, name, portletId };
@@ -2207,10 +2199,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 			boolean bindName = false;
 
-			if (name == null) {
-				query.append(_FINDER_COLUMN_G_N_P_NAME_1);
-			}
-			else if (name.equals("")) {
+			if (name.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_N_P_NAME_3);
 			}
 			else {
@@ -2221,10 +2210,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 			boolean bindPortletId = false;
 
-			if (portletId == null) {
-				query.append(_FINDER_COLUMN_G_N_P_PORTLETID_1);
-			}
-			else if (portletId.equals("")) {
+			if (portletId.isEmpty()) {
 				query.append(_FINDER_COLUMN_G_N_P_PORTLETID_3);
 			}
 			else {

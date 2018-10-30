@@ -5,24 +5,32 @@ import {Config} from 'metal-state';
 import templates from './AceEditor.soy';
 
 /**
+ * @param  {...any} args
+ */
+const FragmentAutocompleteProcessor = function(...args) {
+	FragmentAutocompleteProcessor.superclass.constructor.apply(this, args);
+};
+
+/**
  * Component that creates an instance of Ace editor
  * to allow code editing.
  * @review
  */
-
 class AceEditor extends Component {
 
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
-
 	attached() {
 		this._editorDocument = null;
 		this._handleDocumentChanged = this._handleDocumentChanged.bind(this);
 
 		AUI().use(
-			'aui-ace-editor', 'aui-ace-autocomplete-plugin', 'aui-ace-autocomplete-templateprocessor',
+			'aui-ace-editor',
+			'aui-ace-autocomplete-plugin',
+			'aui-ace-autocomplete-templateprocessor',
+
 			A => {
 				const editor = new A.AceEditor(
 					{
@@ -57,35 +65,37 @@ class AceEditor extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
-
 	shouldUpdate() {
 		return false;
 	}
 
+	/**
+	 * @param {object} A
+	 * @param {object} editor
+	 * @private
+	 * @review
+	 */
 	_initAutocomplete(A, editor) {
 		if (this.syntax !== 'html') {
 			return;
 		}
 
-		const FragmentAutocompleteProcessor = function(options) {
-			FragmentAutocompleteProcessor.superclass.constructor.apply(
-				this, arguments);
-		};
-
-		const instance = this;
-
 		A.extend(
 			FragmentAutocompleteProcessor,
-			A.AceEditor.TemplateProcessor, {
-				getMatch: function(content) {
-					let match, matchIndex;
+			A.AceEditor.TemplateProcessor,
 
-					if ((matchIndex = content.lastIndexOf('<')) >= 0) {
-						content = content.substring(matchIndex);
+			{
+				getMatch: content => {
+					let match = null;
+					let matchContent = content;
+					let matchIndex = null;
 
-						if (/<lfr[\w]*[^<lfr]*$/.test(content)) {
+					if ((matchIndex = matchContent.lastIndexOf('<')) >= 0) {
+						matchContent = matchContent.substring(matchIndex);
+
+						if (/<lfr[\w]*[^<lfr]*$/.test(matchContent)) {
 							match = {
-								content: content.substring(1),
+								content: matchContent.substring(1),
 								start: matchIndex,
 								type: 0
 							};
@@ -95,18 +105,19 @@ class AceEditor extends Component {
 					return match;
 				},
 
-				getSuggestion: function(match, selectedSuggestion) {
-					const tag = instance.autocompleteTags.find(
-						tag => tag.name === selectedSuggestion
+				getSuggestion: (match, selectedSuggestion) => {
+					const tag = this.autocompleteTags.find(
+						_tag => _tag.name === selectedSuggestion
 					);
 
 					return tag ? tag.content.substring(1) : '';
 				}
-			});
+			}
+		);
 
 		const autocompleteProcessor = new FragmentAutocompleteProcessor(
 			{
-				directives: this.autocompleteTags.map((tag) => tag.name)
+				directives: this.autocompleteTags.map(tag => tag.name)
 			}
 		);
 
@@ -127,12 +138,12 @@ class AceEditor extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleDocumentChanged() {
 		const valid = this._editorSession.getAnnotations().reduce(
 			(acc, annotation) => {
 				return (!acc || (annotation.type === 'error')) ?
-					false : acc;
+					false :
+					acc;
 			},
 			true
 		);
@@ -141,7 +152,7 @@ class AceEditor extends Component {
 			'contentChanged',
 			{
 				content: this._editorDocument.getValue(),
-				valid: valid
+				valid
 			}
 		);
 	}
@@ -153,7 +164,6 @@ class AceEditor extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_overrideSetAnnotations(session) {
 		const setAnnotations = session.setAnnotations.bind(session);
 
@@ -163,6 +173,7 @@ class AceEditor extends Component {
 			);
 		};
 	}
+
 }
 
 /**
@@ -197,10 +208,13 @@ AceEditor.STATE = {
 	 */
 
 	autocompleteTags: Config.arrayOf(
-		Config.shapeOf({
-			name: Config.string(),
-			attributes: Config.arrayOf(Config.string())
-		})),
+		Config.shapeOf(
+			{
+				attributes: Config.arrayOf(Config.string()),
+				name: Config.string()
+			}
+		)
+	),
 
 	/**
 	 * Initial content sent to the editor

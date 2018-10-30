@@ -187,7 +187,7 @@ public class MainServlet extends ActionServlet {
 			_log.debug("Destroy");
 		}
 
-		callParentDestroy();
+		super.destroy();
 	}
 
 	@Override
@@ -200,7 +200,7 @@ public class MainServlet extends ActionServlet {
 
 		servletContext.setAttribute(MainServlet.class.getName(), Boolean.TRUE);
 
-		callParentInit();
+		super.init();
 
 		ModuleConfig moduleConfig = (ModuleConfig)servletContext.getAttribute(
 			Globals.MODULE_KEY);
@@ -570,7 +570,7 @@ public class MainServlet extends ActionServlet {
 				_log.debug("Call parent service");
 			}
 
-			callParentService(request, response);
+			super.service(request, response);
 		}
 		finally {
 			if (_log.isDebugEnabled()) {
@@ -579,21 +579,6 @@ public class MainServlet extends ActionServlet {
 
 			processServicePost(request, response);
 		}
-	}
-
-	protected void callParentDestroy() {
-		super.destroy();
-	}
-
-	protected void callParentInit() throws ServletException {
-		super.init();
-	}
-
-	protected void callParentService(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException, ServletException {
-
-		super.service(request, response);
 	}
 
 	protected void checkServletContext(HttpServletRequest request) {

@@ -35,7 +35,7 @@ public class URLCodecTest {
 	}
 
 	@Test
-	public void testDecodeURL() throws Exception {
+	public void testDecodeURL() {
 		for (int i = 0; i < _RAW_URLS.length; i++) {
 			Assert.assertEquals(
 				_RAW_URLS[i], URLCodec.decodeURL(_ENCODED_URLS[i]));
@@ -67,12 +67,12 @@ public class URLCodecTest {
 	}
 
 	@Test
-	public void testDecodeURLWithPercentageInURLParameters() throws Exception {
+	public void testDecodeURLWithPercentageInURLParameters() {
 		testDecodeURL("http://localhost:8080/?id=%'");
 	}
 
 	@Test
-	public void testEncodeURL() throws Exception {
+	public void testEncodeURL() {
 		for (int i = 0; i < _RAW_URLS.length; i++) {
 			Assert.assertEquals(
 				_ENCODED_URLS[i], URLCodec.encodeURL(_RAW_URLS[i]));

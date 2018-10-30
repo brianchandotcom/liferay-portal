@@ -13,14 +13,12 @@ import './SourceEditor.es';
  * the fragment and a <FragmentPreview /> component for the preview
  * @review
  */
-
 class FragmentEditor extends PortletBase {
 
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
-
 	shouldUpdate(changes) {
 		return changes._html ||
 			changes._js ||
@@ -38,21 +36,20 @@ class FragmentEditor extends PortletBase {
 	 * }}
 	 * @review
 	 */
-
 	getContent() {
 		return ({
 			css: this._css,
 			html: this._html,
 			js: this._js
 		});
-	};
+	}
 
 	/**
 	 * Returns true when HTML content is valid, false otherwise.
 	 * @public
+	 * @return {boolean} True if HTML is valid
 	 * @review
 	 */
-
 	isHtmlValid() {
 		return this._htmlValid;
 	}
@@ -62,7 +59,6 @@ class FragmentEditor extends PortletBase {
 	 * @private
 	 * @review
 	 */
-
 	_handleContentChanged() {
 		this.emit(
 			'contentChanged',
@@ -76,7 +72,6 @@ class FragmentEditor extends PortletBase {
 	 * @private
 	 * @review
 	 */
-
 	_handleCSSChanged(event) {
 		this._css = event.content;
 		this._handleContentChanged();
@@ -88,7 +83,6 @@ class FragmentEditor extends PortletBase {
 	 * @private
 	 * @review
 	 */
-
 	_handleHTMLChanged(event) {
 		this._html = event.content;
 		this._htmlValid = event.valid;
@@ -102,7 +96,6 @@ class FragmentEditor extends PortletBase {
 	 * @private
 	 * @review
 	 */
-
 	_handleJSChanged(event) {
 		this._js = event.content;
 		this._handleContentChanged();
@@ -114,7 +107,6 @@ class FragmentEditor extends PortletBase {
 	 * @private
 	 * @review
 	 */
-
 	_handleSaveButtonClick(event) {
 		const content = this.getContent();
 		const status = event.delegateTarget.value;
@@ -155,8 +147,8 @@ class FragmentEditor extends PortletBase {
 					Liferay.Util.navigate(redirectURL);
 				}
 			)
-			.catch (
-				(error) => {
+			.catch(
+				error => {
 					this._saving = false;
 
 					const message = typeof error === 'string' ?
@@ -173,6 +165,7 @@ class FragmentEditor extends PortletBase {
 				}
 			);
 	}
+
 }
 
 /**
@@ -181,7 +174,6 @@ class FragmentEditor extends PortletBase {
  * @static
  * @type {!Object}
  */
-
 FragmentEditor.STATE = {
 
 	/**
@@ -192,12 +184,14 @@ FragmentEditor.STATE = {
 	 * @review
 	 * @type Array
 	 */
-
 	autocompleteTags: Config.arrayOf(
-		Config.shapeOf({
-			content: Config.string(),
-			name: Config.string()
-		})),
+		Config.shapeOf(
+			{
+				content: Config.string(),
+				name: Config.string()
+			}
+		)
+	),
 
 	/**
 	 * Fragment collection id
@@ -207,7 +201,6 @@ FragmentEditor.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	fragmentCollectionId: Config.string().required(),
 
 	/**
@@ -218,7 +211,6 @@ FragmentEditor.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	fragmentEntryId: Config.string().required(),
 
 	/**
@@ -260,7 +252,6 @@ FragmentEditor.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-
 	_css: Config.string()
 		.internal()
 		.value(''),

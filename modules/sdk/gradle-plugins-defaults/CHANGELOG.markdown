@@ -4920,6 +4920,11 @@ version 1.3.9.
 - [LPS-86707]: Configure the `npmInstall` task to run `npm ci` instead of
 `npm install` on all branches after `7.0.x`.
 
+## 5.5.103 - 2018-10-29
+
+### Changed
+- [LPS-86549]: Update the [Liferay Gradle Plugins] dependency to version 3.13.8.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -5415,6 +5420,7 @@ version 1.3.9.
 [LPS-86477]: https://issues.liferay.com/browse/LPS-86477
 [LPS-86493]: https://issues.liferay.com/browse/LPS-86493
 [LPS-86500]: https://issues.liferay.com/browse/LPS-86500
+[LPS-86549]: https://issues.liferay.com/browse/LPS-86549
 [LPS-86556]: https://issues.liferay.com/browse/LPS-86556
 [LPS-86576]: https://issues.liferay.com/browse/LPS-86576
 [LPS-86581]: https://issues.liferay.com/browse/LPS-86581

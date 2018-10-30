@@ -395,6 +395,50 @@ portalArtifactsJar {
 	doLast {
 		println "Created jar " + archivePath
 	}
+
+	if (gradle.startParameter.taskNames.contains("portalArtifactsJar")) {
+		File dependenciesDir = new File(portalArtifactsDir, "dependencies")
+
+		delete dependenciesDir
+
+		dependenciesDir.mkdirs()
+
+		FileTree relengFileTree = fileTree(dir: file(".releng"), include: "**/*.properties")
+
+		relengFileTree.each {
+			File relengFile ->
+
+			Properties relengProperties = GUtil.loadProperties(relengFile)
+
+			String artifactURL = relengProperties.getProperty("artifact.url")
+
+			if (!artifactURL || !artifactURL.endsWith(".jar")) {
+				return
+			}
+
+			File cacheDir = new File(portalArtifactsDir, "cache")
+
+			if (!cacheDir.exists()) {
+				cacheDir.mkdirs()
+			}
+
+			File cacheJarFile = new File(cacheDir, artifactURL.substring(artifactURL.lastIndexOf("/") + 1))
+
+			project.download {
+				dest cacheDir
+				src artifactURL
+			}
+
+			File dependencyDir = new File(dependenciesDir, cacheJarFile.name[0 .. -5])
+
+			copy {
+				from zipTree(cacheJarFile)
+				into dependencyDir
+			}
+
+			dependencies.portalArtifacts files(dependencyDir)
+		}
+	}
 }
 
 prepareMajorIncrement {

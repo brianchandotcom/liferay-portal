@@ -842,13 +842,7 @@ public class MainServlet extends ActionServlet {
 	}
 
 	private void _initOther() throws ServletException {
-        String value;
-
-        value = getServletConfig().getInitParameter("config");
-
-        if (value != null) {
-            config = value;
-        }
+        config = getServletConfig().getInitParameter("config");
     }
 
 	private void _initCompanies() throws Exception {

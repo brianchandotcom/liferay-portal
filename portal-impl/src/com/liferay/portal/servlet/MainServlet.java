@@ -109,7 +109,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.MissingResourceException;
@@ -849,23 +848,20 @@ public class MainServlet extends ActionServlet {
 		}
 	}
 
-	private void _initChain()
-        throws ServletException {
-        try {
-            ConfigParser parser = new ConfigParser();
-            List urls = splitAndResolvePaths(chainConfig);
-            URL resource;
+	private void _initChain() throws ServletException {
+		try {
+			List<URL> urls = splitAndResolvePaths(chainConfig);
 
-            for (Iterator i = urls.iterator(); i.hasNext();) {
-                resource = (URL) i.next();
-                log.info("Loading chain catalog from " + resource);
-                parser.parse(resource);
-            }
-        } catch (Exception e) {
-            log.error("Exception loading resources", e);
-            throw new ServletException(e);
-        }
-    }
+			ConfigParser parser = new ConfigParser();
+
+			for (URL url : urls) {
+				parser.parse(url);
+			}
+		}
+		catch (Exception e) {
+			throw new ServletException(e);
+		}
+	}
 
 	private void _initCompanies() throws Exception {
 		if (_log.isDebugEnabled()) {

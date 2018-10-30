@@ -133,7 +133,7 @@ Liferay = window.Liferay || {};
 
 				var ioConfig = instance.parseIOConfig(args);
 
-				if (typeof payload === 'string')	{
+				if (typeof payload === 'string') {
 					payload = instance.parseStringPayload(args);
 
 					instance.parseIOFormConfig(ioConfig, args);

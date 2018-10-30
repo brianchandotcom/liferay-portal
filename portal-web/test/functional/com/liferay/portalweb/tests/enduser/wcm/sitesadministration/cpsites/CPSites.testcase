@@ -93,12 +93,12 @@
 			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="JSONGroup#addChildGroup">
+		<execute macro="JSONGroup#addChildSite">
 			<var name="groupName" value="Child SiteName" />
 			<var name="parentGroupName" value="Site Name" />
 		</execute>
 
-		<execute macro="JSONGroup#addChildGroup">
+		<execute macro="JSONGroup#addChildSite">
 			<var name="groupName" value="Child Child SiteName" />
 			<var name="parentGroupName" value="Child SiteName" />
 		</execute>
@@ -364,7 +364,7 @@
 			<var name="layoutName" value="Site Page" />
 		</execute>
 
-		<execute macro="JSONGroup#addChildGroup">
+		<execute macro="JSONGroup#addChildSite">
 			<var name="groupName" value="Child SiteName" />
 			<var name="parentGroupName" value="Site Name" />
 		</execute>
@@ -374,7 +374,7 @@
 			<var name="layoutName" value="Site Page" />
 		</execute>
 
-		<execute macro="JSONGroup#addChildGroup">
+		<execute macro="JSONGroup#addChildSite">
 			<var name="groupName" value="Child ChildSiteName" />
 			<var name="parentGroupName" value="Child SiteName" />
 		</execute>
@@ -431,7 +431,7 @@
 			<var name="layoutName" value="Site Page" />
 		</execute>
 
-		<execute macro="JSONGroup#addChildGroup">
+		<execute macro="JSONGroup#addChildSite">
 			<var name="groupName" value="Child Site1Name" />
 			<var name="parentGroupName" value="Site Name" />
 		</execute>
@@ -441,7 +441,7 @@
 			<var name="layoutName" value="Site Page" />
 		</execute>
 
-		<execute macro="JSONGroup#addChildGroup">
+		<execute macro="JSONGroup#addChildSite">
 			<var name="groupName" value="Child ChildSite1Name" />
 			<var name="parentGroupName" value="Child Site1Name" />
 		</execute>
@@ -451,7 +451,7 @@
 			<var name="layoutName" value="Site Page" />
 		</execute>
 
-		<execute macro="JSONGroup#addChildGroup">
+		<execute macro="JSONGroup#addChildSite">
 			<var name="groupName" value="Child ChildSite2Name" />
 			<var name="parentGroupName" value="Child Site1Name" />
 		</execute>
@@ -461,7 +461,7 @@
 			<var name="layoutName" value="Site Page" />
 		</execute>
 
-		<execute macro="JSONGroup#addChildGroup">
+		<execute macro="JSONGroup#addChildSite">
 			<var name="groupName" value="Child Site2Name" />
 			<var name="parentGroupName" value="Site Name" />
 		</execute>

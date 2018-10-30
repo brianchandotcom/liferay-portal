@@ -218,7 +218,7 @@
 		<var method="JSONCurlUtil#post('${curl}', '$')" name="temp" />
 	</command>
 
-	<command name="addChildGroup">
+	<command name="addChildSite" summary="Add a child site to a valid site.">
 		<if>
 			<not>
 				<isset var="groupName" />

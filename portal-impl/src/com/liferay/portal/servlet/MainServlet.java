@@ -102,6 +102,8 @@ import com.liferay.social.kernel.util.SocialConfigurationUtil;
 
 import java.io.IOException;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -127,6 +129,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.converters.BigDecimalConverter;
+import org.apache.commons.beanutils.converters.BigIntegerConverter;
+import org.apache.commons.beanutils.converters.BooleanConverter;
+import org.apache.commons.beanutils.converters.ByteConverter;
+import org.apache.commons.beanutils.converters.CharacterConverter;
+import org.apache.commons.beanutils.converters.DoubleConverter;
+import org.apache.commons.beanutils.converters.FloatConverter;
+import org.apache.commons.beanutils.converters.IntegerConverter;
+import org.apache.commons.beanutils.converters.LongConverter;
+import org.apache.commons.beanutils.converters.ShortConverter;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.RequestProcessor;
@@ -765,7 +778,7 @@ public class MainServlet extends ActionServlet {
 
 		try {
 			_initInternal();
-			initOther();
+			_initOther();
 			initServlet();
 			initChain();
 
@@ -827,6 +840,42 @@ public class MainServlet extends ActionServlet {
 			throw ue;
 		}
 	}
+
+	private void _initOther() throws ServletException {
+        String value;
+
+        value = getServletConfig().getInitParameter("config");
+
+        if (value != null) {
+            config = value;
+        }
+
+        // Backwards compatibility for form beans of Java wrapper classes
+        // Set to true for strict Struts 1.0 compatibility
+        value = getServletConfig().getInitParameter("convertNull");
+
+        if ("true".equalsIgnoreCase(value) || "yes".equalsIgnoreCase(value)
+            || "on".equalsIgnoreCase(value) || "y".equalsIgnoreCase(value)
+            || "1".equalsIgnoreCase(value)) {
+            convertNull = true;
+        }
+
+        if (convertNull) {
+            ConvertUtils.deregister();
+            ConvertUtils.register(new BigDecimalConverter(null),
+                BigDecimal.class);
+            ConvertUtils.register(new BigIntegerConverter(null),
+                BigInteger.class);
+            ConvertUtils.register(new BooleanConverter(null), Boolean.class);
+            ConvertUtils.register(new ByteConverter(null), Byte.class);
+            ConvertUtils.register(new CharacterConverter(null), Character.class);
+            ConvertUtils.register(new DoubleConverter(null), Double.class);
+            ConvertUtils.register(new FloatConverter(null), Float.class);
+            ConvertUtils.register(new IntegerConverter(null), Integer.class);
+            ConvertUtils.register(new LongConverter(null), Long.class);
+            ConvertUtils.register(new ShortConverter(null), Short.class);
+        }
+    }
 
 	private void _initCompanies() throws Exception {
 		if (_log.isDebugEnabled()) {

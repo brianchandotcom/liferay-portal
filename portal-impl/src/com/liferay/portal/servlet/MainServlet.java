@@ -849,32 +849,6 @@ public class MainServlet extends ActionServlet {
         if (value != null) {
             config = value;
         }
-
-        // Backwards compatibility for form beans of Java wrapper classes
-        // Set to true for strict Struts 1.0 compatibility
-        value = getServletConfig().getInitParameter("convertNull");
-
-        if ("true".equalsIgnoreCase(value) || "yes".equalsIgnoreCase(value)
-            || "on".equalsIgnoreCase(value) || "y".equalsIgnoreCase(value)
-            || "1".equalsIgnoreCase(value)) {
-            convertNull = true;
-        }
-
-        if (convertNull) {
-            ConvertUtils.deregister();
-            ConvertUtils.register(new BigDecimalConverter(null),
-                BigDecimal.class);
-            ConvertUtils.register(new BigIntegerConverter(null),
-                BigInteger.class);
-            ConvertUtils.register(new BooleanConverter(null), Boolean.class);
-            ConvertUtils.register(new ByteConverter(null), Byte.class);
-            ConvertUtils.register(new CharacterConverter(null), Character.class);
-            ConvertUtils.register(new DoubleConverter(null), Double.class);
-            ConvertUtils.register(new FloatConverter(null), Float.class);
-            ConvertUtils.register(new IntegerConverter(null), Integer.class);
-            ConvertUtils.register(new LongConverter(null), Long.class);
-            ConvertUtils.register(new ShortConverter(null), Short.class);
-        }
     }
 
 	private void _initCompanies() throws Exception {

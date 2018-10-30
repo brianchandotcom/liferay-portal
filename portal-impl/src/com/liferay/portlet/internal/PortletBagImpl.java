@@ -99,6 +99,8 @@ public class PortletBagImpl implements PortletBag {
 
 	@Override
 	public void destroy() {
+		_friendlyURLMapperTracker.close();
+
 		for (ServiceRegistration<?> serviceRegistration :
 				_serviceRegistrations) {
 

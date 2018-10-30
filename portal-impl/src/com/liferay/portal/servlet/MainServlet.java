@@ -108,6 +108,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.MissingResourceException;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TimeZone;
@@ -130,6 +131,7 @@ import org.apache.struts.Globals;
 import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.RequestProcessor;
 import org.apache.struts.config.ModuleConfig;
+import org.apache.struts.util.MessageResources;
 
 /**
  * @author Brian Wing Shun Chan
@@ -762,7 +764,7 @@ public class MainServlet extends ActionServlet {
 		int configPrefixLength = configPrefix.length() - 1;
 
 		try {
-			initInternal();
+			_initInternal();
 			initOther();
 			initServlet();
 			initChain();
@@ -825,6 +827,17 @@ public class MainServlet extends ActionServlet {
 			throw ue;
 		}
 	}
+
+	private void _initInternal() throws ServletException {
+        try {
+            internal = MessageResources.getMessageResources(internalName);
+        } catch (MissingResourceException e) {
+            log.error("Cannot load internal resources from '" + internalName
+                + "'", e);
+            throw new UnavailableException(
+                "Cannot load internal resources from '" + internalName + "'");
+        }
+    }
 
 	private void _initCompanies() throws Exception {
 		if (_log.isDebugEnabled()) {

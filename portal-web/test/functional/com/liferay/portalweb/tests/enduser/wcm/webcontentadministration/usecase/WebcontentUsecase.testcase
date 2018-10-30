@@ -886,6 +886,7 @@
 
 		<execute macro="WebContent#editDisplayPage">
 			<var name="pageName" value="Site Page Name" />
+			<var name="pageType" value="Public Pages" />
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 

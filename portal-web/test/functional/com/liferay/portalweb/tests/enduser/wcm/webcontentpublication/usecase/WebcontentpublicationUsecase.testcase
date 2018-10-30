@@ -2535,6 +2535,7 @@
 		<execute macro="WebContent#editDisplayPagePGViaAP">
 			<var name="assetTitle" value="WC WebContent Title" />
 			<var name="displayPageName" value="Asset Publisher Page 2" />
+			<var name="pageType" value="Public Pages" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

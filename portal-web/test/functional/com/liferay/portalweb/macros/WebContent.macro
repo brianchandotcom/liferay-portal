@@ -993,6 +993,7 @@
 
 		<execute macro="WebContent#editDisplayPage">
 			<var name="pageName" value="${displayPageName}" />
+			<var name="pageType" value="${pageType}" />
 		</execute>
 
 		<execute function="Pause" locator1="3000" />

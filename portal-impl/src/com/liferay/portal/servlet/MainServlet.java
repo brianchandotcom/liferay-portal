@@ -109,6 +109,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.MissingResourceException;
@@ -130,6 +131,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
+import org.apache.commons.chain.config.ConfigParser;
 import org.apache.commons.digester.Digester;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionServlet;
@@ -788,7 +790,7 @@ public class MainServlet extends ActionServlet {
 		try {
 			_initServlet();
 
-			initChain();
+			_initChain();
 
 			ServletContext servletContext = getServletContext();
 
@@ -846,6 +848,33 @@ public class MainServlet extends ActionServlet {
 			throw ue;
 		}
 	}
+
+	private void _initChain()
+        throws ServletException {
+        // Parse the configuration file specified by path or resource
+        try {
+            String value;
+
+            value = getServletConfig().getInitParameter("chainConfig");
+
+            if (value != null) {
+                chainConfig = value;
+            }
+
+            ConfigParser parser = new ConfigParser();
+            List urls = splitAndResolvePaths(chainConfig);
+            URL resource;
+
+            for (Iterator i = urls.iterator(); i.hasNext();) {
+                resource = (URL) i.next();
+                log.info("Loading chain catalog from " + resource);
+                parser.parse(resource);
+            }
+        } catch (Exception e) {
+            log.error("Exception loading resources", e);
+            throw new ServletException(e);
+        }
+    }
 
 	private void _initCompanies() throws Exception {
 		if (_log.isDebugEnabled()) {

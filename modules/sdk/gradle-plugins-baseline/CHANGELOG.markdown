@@ -159,7 +159,7 @@ warnings recursively:
 - [LPS-86583]: Improve performance of the configuration phase for the `baseline`
 task.
 
-## 1.3.10 - 2018-10-29
+## 2.0.0 - 2018-10-29
 
 ### Changed
 - [LPS-86583]: Add the property `baselineConfiguration` that has the

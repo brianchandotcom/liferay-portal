@@ -67,15 +67,15 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		String unformattedText = getUnformattedHeadingText(headingNode);
 
 		String markup = getHeadingMarkup(
-			_page.getTitle(), unformattedText, _headingMap);
+			_page.getTitle(), unformattedText, _headingCounts);
 
 		append(" id=\"");
 		append(markup);
 		append("\">");
 
-		int count = _headingMap.getOrDefault(unformattedText, 0);
+		int count = _headingCounts.getOrDefault(unformattedText, 0);
 
-		_headingMap.put(unformattedText, count + 1);
+		_headingCounts.put(unformattedText, count + 1);
 
 		traverse(headingNode.getChildASTNodes());
 
@@ -136,7 +136,7 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		TableOfContentsVisitor tableOfContentsVisitor =
 			new TableOfContentsVisitor();
 
-		_contentMap.clear();
+		_tableOfContentsHeadingCounts.clear();
 
 		TreeNode<HeadingNode> tableOfContents = tableOfContentsVisitor.compose(
 			_rootWikiPageNode);
@@ -220,14 +220,16 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 			}
 
 			append(StringPool.POUND);
-			append(getHeadingMarkup(_page.getTitle(), content, _contentMap));
+			append(
+				getHeadingMarkup(
+					_page.getTitle(), content, _tableOfContentsHeadingCounts));
 			append("\">");
 			append(content);
 			append("</a>");
 
-			int count = _contentMap.getOrDefault(content, 0);
+			int count = _tableOfContentsHeadingCounts.getOrDefault(content, 0);
 
-			_contentMap.put(content, count + 1);
+			_tableOfContentsHeadingCounts.put(content, count + 1);
 
 			appendTableOfContents(treeNode, depth + 1);
 
@@ -278,12 +280,12 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 	}
 
 	protected String getHeadingMarkup(
-		String prefix, String text, Map<String, Integer> map) {
+		String prefix, String text, Map<String, Integer> textCounts) {
 
 		String postfix = StringPool.BLANK;
 
-		if (map.containsKey(text)) {
-			postfix = StringPool.DASH + String.valueOf(map.get(text));
+		if (textCounts.containsKey(text)) {
+			postfix = StringPool.DASH + String.valueOf(textCounts.get(text));
 		}
 
 		return StringUtil.replace(
@@ -322,11 +324,12 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		XhtmlTranslator.class);
 
 	private String _attachmentURLPrefix;
-	private final Map<String, Integer> _contentMap = new HashMap<>();
 	private PortletURL _editPageURL;
-	private final Map<String, Integer> _headingMap = new HashMap<>();
+	private final Map<String, Integer> _headingCounts = new HashMap<>();
 	private WikiPage _page;
 	private WikiPageNode _rootWikiPageNode;
+	private final Map<String, Integer> _tableOfContentsHeadingCounts =
+		new HashMap<>();
 	private PortletURL _viewPageURL;
 
 }

@@ -15,6 +15,8 @@
 package com.liferay.bean.portlet.cdi.extension.internal.scope;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.Closeable;
 
@@ -26,31 +28,41 @@ import java.util.concurrent.ConcurrentLinkedDeque;
  */
 public class ScopedBeanManagerThreadLocal {
 
-	public static ScopedBeanManager getCurrentInstance() {
+	public static Deque<ScopedBeanManager> getCurrentStack() {
+		return _instance.get();
+	}
+
+	public static ScopedBeanManager getCurrentStackTop() {
 		Deque<ScopedBeanManager> scopedBeanManagers = _instance.get();
 
 		return scopedBeanManagers.peek();
 	}
 
 	public static Closeable install(ScopedBeanManager scopedBeanManager) {
-		Deque<ScopedBeanManager> scopedBeanManagers = _instance.get();
+		Deque<ScopedBeanManager> scopedBeanManagerStack = _instance.get();
 
-		scopedBeanManagers.push(scopedBeanManager);
+		scopedBeanManagerStack.push(scopedBeanManager);
 
 		return () -> {
-			Deque<ScopedBeanManager> closingScopedBeanManagers =
-				_instance.get();
+			if (scopedBeanManagerStack.isEmpty()) {
+				_log.error(
+					"Unable to destroy scoped beans when scopes are inactive");
+			}
+			else {
+				ScopedBeanManager closingScopedBeanManager =
+					scopedBeanManagerStack.pop();
 
-			ScopedBeanManager closingScopedBeanManager =
-				closingScopedBeanManagers.pop();
+				if (scopedBeanManagerStack.isEmpty()) {
+					closingScopedBeanManager.destroyScopedBeans();
 
-			if (closingScopedBeanManagers.isEmpty()) {
-				closingScopedBeanManager.destroyScopedBeans();
-
-				_instance.remove();
+					_instance.remove();
+				}
 			}
 		};
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ScopedBeanManagerThreadLocal.class);
 
 	private static final ThreadLocal<Deque<ScopedBeanManager>> _instance =
 		new CentralizedThreadLocal<>(

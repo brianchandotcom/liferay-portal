@@ -270,7 +270,7 @@ public class BeanPortletInvokerPortlet
 		}
 
 		ScopedBeanManager scopedBeanManager =
-			ScopedBeanManagerThreadLocal.getCurrentInstance();
+			ScopedBeanManagerThreadLocal.getCurrentStackTop();
 
 		if (scopedBeanManager == null) {
 			scopedBeanManager = new ScopedBeanManager(

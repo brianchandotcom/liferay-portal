@@ -32,7 +32,7 @@ public class RenderStateBeanContext extends BaseContextImpl {
 		Contextual<T> contextual, CreationalContext<T> creationalContext) {
 
 		ScopedBeanManager scopedBeanManager =
-			ScopedBeanManagerThreadLocal.getCurrentInstance();
+			ScopedBeanManagerThreadLocal.getCurrentStackTop();
 
 		return scopedBeanManager.getRenderStateScopedBean(
 			(Bean<T>)contextual, creationalContext);

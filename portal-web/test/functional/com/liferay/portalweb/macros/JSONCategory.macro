@@ -1,5 +1,5 @@
 <definition>
-	<command name="_addCategory">
+	<command name="_addCategory" summary="Directly calls the JSON WS API to add a category">
 		<execute macro="JSONCompany#getPortalURL">
 			<return name="portalURL" />
 		</execute>
@@ -30,7 +30,7 @@
 		</execute>
 	</command>
 
-	<command name="_addSubcategory">
+	<command name="_addSubcategory" summary="Directly calls the JSON WS API to add a subcategory">
 		<execute macro="JSONCompany#getPortalURL">
 			<return name="portalURL" />
 		</execute>
@@ -68,7 +68,7 @@
 		</execute>
 	</command>
 
-	<command name="_addVocabulary">
+	<command name="_addVocabulary" summary="Directly calls the JSON WS API to add a vocabulary">
 		<execute macro="JSONCompany#getPortalURL">
 			<return name="portalURL" />
 		</execute>
@@ -96,7 +96,7 @@
 		</execute>
 	</command>
 
-	<command name="addCategoryByGroupName">
+	<command name="addCategoryByGroupName" summary="Add a basic category">
 		<if>
 			<not>
 				<isset var="groupName" />
@@ -142,7 +142,7 @@
 		</execute>
 	</command>
 
-	<command name="addSubcategoryByGroupName">
+	<command name="addSubcategoryByGroupName" summary="Add a basic subcategory">
 		<if>
 			<not>
 				<isset var="categoryName" />
@@ -205,7 +205,7 @@
 		</execute>
 	</command>
 
-	<command name="addVocabularyByGroupName">
+	<command name="addVocabularyByGroupName" summary="Add a basic vocabulary">
 		<if>
 			<not>
 				<isset var="groupName" />
@@ -235,7 +235,7 @@
 		</execute>
 	</command>
 
-	<command name="getCategoryIdByName">
+	<command name="getCategoryIdByName" summary="Get the categoryId from any category by using categoryName, groupId, and vocabularyId">
 		<if>
 			<not>
 				<isset var="groupId" />
@@ -308,7 +308,7 @@
 		<return value="${categoryId}" />
 	</command>
 
-	<command name="getVocabularyIdByName">
+	<command name="getVocabularyIdByName" summary="Get the categoryId from any categoryby using groupId and vocabularyName">
 		<if>
 			<not>
 				<isset var="groupId" />

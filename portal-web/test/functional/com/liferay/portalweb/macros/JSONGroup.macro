@@ -1,5 +1,5 @@
 <definition>
-	<command name="_addGroup">
+	<command name="_addGroup" summary="Directly calls the JSON WS API to add a group">
 		<if>
 			<isset var="groupDescription" />
 			<then>
@@ -71,7 +71,7 @@
 		<var method="JSONCurlUtil#post('${curl}', '$[\'groupId\']')" name="groupId" />
 	</command>
 
-	<command name="_assignGroupRoleToUser">
+	<command name="_assignGroupRoleToUser" summary="Directly calls the JSON WS API to assign a user a role">
 		<if>
 			<not>
 				<isset var="groupId" />
@@ -137,7 +137,7 @@
 		<var method="JSONCurlUtil#post('${curl}', '$')" name="temp" />
 	</command>
 
-	<command name="_assignUserToGroup">
+	<command name="_assignUserToGroup" summary="Directly calls the JSON WS API to add a user to a group">
 		<if>
 			<not>
 				<isset var="groupId" />
@@ -186,7 +186,7 @@
 		<var method="JSONCurlUtil#post('${curl}', '$')" name="temp" />
 	</command>
 
-	<command name="_deleteGroup">
+	<command name="_deleteGroup" summary="Directly calls the JSON WS API to delete a group">
 		<if>
 			<not>
 				<isset var="groupId" />
@@ -244,7 +244,7 @@
 		</execute>
 	</command>
 
-	<command name="addGroup">
+	<command name="addGroup" summary="Add a basic site">
 		<if>
 			<not>
 				<isset var="groupName" />
@@ -345,7 +345,7 @@
 		</execute>
 	</command>
 
-	<command name="deleteGroupByName">
+	<command name="deleteGroupByName" summary="Delete a valid group using its groupName">
 		<if>
 			<not>
 				<isset var="groupName" />
@@ -365,7 +365,7 @@
 		</execute>
 	</command>
 
-	<command name="getGroupIdByGroupKey">
+	<command name="getGroupIdByGroupKey" summary="Get the groupId from any existing group by using groupKey">
 		<if>
 			<not>
 				<isset var="groupKey" />
@@ -418,7 +418,7 @@
 		<return value="${groupId}" />
 	</command>
 
-	<command name="getGroupIdByName">
+	<command name="getGroupIdByName" summary="Get the groupId from any existing site by using groupName">
 		<if>
 			<not>
 				<isset var="groupName" />
@@ -460,7 +460,7 @@
 		<return value="${groupId}" />
 	</command>
 
-	<command name="getGroupName">
+	<command name="getGroupName" summary="Get the groupName from any group by using groupId">
 		<if>
 			<not>
 				<isset var="groupId" />
@@ -488,7 +488,7 @@
 		<return value="${groupName}" />
 	</command>
 
-	<command name="getSiteIdByGroupName">
+	<command name="getSiteIdByGroupName" summary="Get the groupId from any existing parent or child site by using groupName">
 		<if>
 			<not>
 				<isset var="groupName" />

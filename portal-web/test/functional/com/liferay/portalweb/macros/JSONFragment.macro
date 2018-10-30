@@ -1,5 +1,5 @@
 <definition>
-	<command name="_addFragment">
+	<command name="_addFragment" summary="Directly calls the JSON WS API to add a fragment">
 		<execute macro="JSONCompany#getPortalURL">
 			<return name="portalURL" />
 		</execute>
@@ -21,7 +21,7 @@
 		</execute>
 	</command>
 
-	<command name="_addFragmentCollection">
+	<command name="_addFragmentCollection" summary="Directly calls the JSON WS API to add a fragment collection">
 		<execute macro="JSONCompany#getPortalURL">
 			<return name="portalURL" />
 		</execute>
@@ -39,7 +39,7 @@
 		</execute>
 	</command>
 
-	<command name="_getFragmentName">
+	<command name="_getFragmentName" summary="Get the fragmentName from a fragmentCollection by using fragmentName ">
 		<execute macro="JSONCompany#getPortalURL">
 			<return name="portalURL" />
 		</execute>
@@ -58,7 +58,7 @@
 		<return value="${fragmentNameResult}" />
 	</command>
 
-	<command name="addFragment">
+	<command name="addFragment" summary="Add a basic fragment to a fragment collection.">
 		<if>
 			<isset var="groupName" />
 			<then>
@@ -152,7 +152,7 @@
 		</execute>
 	</command>
 
-	<command name="addFragmentCollection">
+	<command name="addFragmentCollection" summary="Add a basic fragment collection.">
 		<if>
 			<isset var="groupName" />
 			<then>
@@ -206,7 +206,7 @@
 		</execute>
 	</command>
 
-	<command name="assertFragmentInGroup">
+	<command name="assertFragmentInGroup" summary="Assert that a fragment exists in a group given its fragmentName">
 		<if>
 			<not>
 				<isset var="collectionName" />
@@ -271,7 +271,7 @@
 		</if>
 	</command>
 
-	<command name="assertFragmentNotInGroup">
+	<command name="assertFragmentNotInGroup" summary="Assert that a fragment does not exist in a group given its fragmentName">
 		<if>
 			<not>
 				<isset var="collectionName" />
@@ -336,7 +336,7 @@
 		</if>
 	</command>
 
-	<command name="getCollectionIdByName">
+	<command name="getCollectionIdByName" summary="Get the collectionId from a collection by using collectionName and groupId">
 		<if>
 			<not>
 				<isset var="collectionName" />

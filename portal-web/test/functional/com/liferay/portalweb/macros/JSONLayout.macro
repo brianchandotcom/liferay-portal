@@ -1,5 +1,5 @@
 <definition>
-	<command name="_addLayout">
+	<command name="_addLayout" summary="Directly calls the JSON WS API to add a layout">
 		<if>
 			<isset var="parentLayoutName" />
 			<then>
@@ -47,7 +47,7 @@
 		<var method="JSONCurlUtil#post('${curl}', '$[\'layoutId\']')" name="layoutId" />
 	</command>
 
-	<command name="addPrivateLayout">
+	<command name="addPrivateLayout" summary="Add a private site page or private child site page to an existing site">
 		<if>
 			<not>
 				<isset var="groupName" />
@@ -79,7 +79,7 @@
 		</execute>
 	</command>
 
-	<command name="addPublicLayout">
+	<command name="addPublicLayout" summary="Add a public site page  or public child site page to an existing site">
 		<if>
 			<not>
 				<isset var="groupName" />
@@ -111,7 +111,7 @@
 		</execute>
 	</command>
 
-	<command name="getLayoutIdByName">
+	<command name="getLayoutIdByName" summary="Get the layoutId from a layout by using groupId and layoutName">
 		<if>
 			<not>
 				<isset var="groupId" />

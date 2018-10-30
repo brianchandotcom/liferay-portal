@@ -8911,10 +8911,53 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					src="${test.build.portal.war.url}"
 				/>
 
-				<unzip
-					dest="${app.server.portal.dir}"
-					src="dist/liferay-portal-${lp.version}.war"
-				/>
+				<if>
+					<equals arg1="${app.server.type}" arg2="websphere" />
+					<then>
+						<tstamp>
+							<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
+						</tstamp>
+
+						<mkdir dir="${tstamp.value}" />
+
+						<unzip
+							dest="${tstamp.value}"
+							src="dist/liferay-portal-${lp.version}.war"
+						/>
+
+						<if>
+							<available file="${tstamp.value}/WEB-INF/ibm-web-ext.xmi" />
+							<then>
+								<replace
+									file="${tstamp.value}/WEB-INF/ibm-web-ext.xmi"
+								>
+									<replacetoken><![CDATA[value="16"]]></replacetoken>
+									<replacevalue><![CDATA[value="18"]]></replacevalue>
+								</replace>
+
+								<print-file file.name="${tstamp.value}/WEB-INF/ibm-web-ext.xmi" />
+							</then>
+						</if>
+
+						<zip
+							basedir="${tstamp.value}"
+							destfile="dist/liferay-portal-${lp.version}.war"
+						/>
+
+						<delete dir="${tstamp.value}" />
+
+						<copy
+							file="dist/liferay-portal-${lp.version}.war"
+							tofile="${app.server.websphere.deploy.dir}/liferay-portal.war"
+						/>
+					</then>
+					<else>
+						<unzip
+							dest="${app.server.portal.dir}"
+							src="dist/liferay-portal-${lp.version}.war"
+						/>
+					</else>
+				</if>
 
 				<delete dir="dist" />
 
@@ -8935,6 +8978,15 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 						type="regexp"
 					/>
 				</unzip>
+
+				<if>
+					<equals arg1="${app.server.type}" arg2="websphere" />
+					<then>
+						<mkdir dir="${app.server.websphere.dir}/java_1.8_64/jre/lib/ext" />
+
+						<move file="${app.server.lib.global.dir}/portlet.jar" todir="${app.server.websphere.dir}/java_1.8_64/jre/lib/ext" />
+					</then>
+				</if>
 
 				<delete file="liferay-portal-dependencies.zip" />
 

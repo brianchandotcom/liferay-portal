@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.trash.TrashHelper;
 
 import javax.portlet.PortletRequest;
@@ -62,8 +63,13 @@ public class BookmarksFolderAssetRendererFactory
 			long classPK, int type)
 		throws PortalException {
 
-		BookmarksFolder folder = _bookmarksFolderLocalService.getFolder(
-			classPK);
+		BookmarksFolder folder =
+			_bookmarksFolderLocalService.fetchBookmarksFolder(classPK);
+
+		if (folder == null) {
+			return new BookmarksRootFolderAssetRenderer(
+				_groupLocalService.getGroup(classPK));
+		}
 
 		BookmarksFolderAssetRenderer bookmarksFolderAssetRenderer =
 			new BookmarksFolderAssetRenderer(
@@ -139,6 +145,9 @@ public class BookmarksFolderAssetRendererFactory
 	)
 	private ModelResourcePermission<BookmarksFolder>
 		_bookmarksFolderModelResourcePermission;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	private ServletContext _servletContext;
 

@@ -104,6 +104,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -118,6 +119,7 @@ import javax.portlet.PortletException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.UnavailableException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -202,7 +204,7 @@ public class MainServlet extends ActionServlet {
 
 		servletContext.setAttribute(MainServlet.class.getName(), Boolean.TRUE);
 
-		super.init();
+		_init();
 
 		ModuleConfig moduleConfig = (ModuleConfig)servletContext.getAttribute(
 			Globals.MODULE_KEY);
@@ -452,6 +454,73 @@ public class MainServlet extends ActionServlet {
 
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 	}
+
+	private void _init() throws ServletException {
+        final String configPrefix = "config/";
+        final int configPrefixLength = configPrefix.length() - 1;
+
+        // Wraps the entire initialization in a try/catch to better handle
+        // unexpected exceptions and errors to provide better feedback
+        // to the developer
+        try {
+            initInternal();
+            initOther();
+            initServlet();
+            initChain();
+
+            getServletContext().setAttribute(Globals.ACTION_SERVLET_KEY, this);
+            initModuleConfigFactory();
+
+            // Initialize modules as needed
+            ModuleConfig moduleConfig = initModuleConfig("", config);
+
+            initModuleMessageResources(moduleConfig);
+            initModulePlugIns(moduleConfig);
+            initModuleFormBeans(moduleConfig);
+            initModuleForwards(moduleConfig);
+            initModuleExceptionConfigs(moduleConfig);
+            initModuleActions(moduleConfig);
+            moduleConfig.freeze();
+
+            Enumeration names = getServletConfig().getInitParameterNames();
+
+            while (names.hasMoreElements()) {
+                String name = (String) names.nextElement();
+
+                if (!name.startsWith(configPrefix)) {
+                    continue;
+                }
+
+                String prefix = name.substring(configPrefixLength);
+
+                moduleConfig =
+                    initModuleConfig(prefix,
+                        getServletConfig().getInitParameter(name));
+                initModuleMessageResources(moduleConfig);
+                initModulePlugIns(moduleConfig);
+                initModuleFormBeans(moduleConfig);
+                initModuleForwards(moduleConfig);
+                initModuleExceptionConfigs(moduleConfig);
+                initModuleActions(moduleConfig);
+                moduleConfig.freeze();
+            }
+
+            this.initModulePrefixes(this.getServletContext());
+
+            this.destroyConfigDigester();
+        } catch (UnavailableException ex) {
+            throw ex;
+        } catch (Throwable t) {
+            // The follow error message is not retrieved from internal message
+            // resources as they may not have been able to have been
+            // initialized
+            log.error("Unable to initialize Struts ActionServlet due to an "
+                + "unexpected exception or error thrown, so marking the "
+                + "servlet as unavailable.  Most likely, this is due to an "
+                + "incorrect or missing library dependency.", t);
+            throw new UnavailableException(t.getMessage());
+        }
+    }
 
 	@Override
 	public void service(

@@ -60,9 +60,7 @@ public class DefaultScreenNameValidator implements ScreenNameValidator {
 
 	protected String getJSEscapedSpecialChars() {
 		if (_jsEscapedSpecialChars == null) {
-			_jsEscapedSpecialChars = getSpecialChars();
-
-			_jsEscapedSpecialChars = HtmlUtil.escapeJS(_jsEscapedSpecialChars);
+			_jsEscapedSpecialChars = HtmlUtil.escapeJS(getSpecialChars());
 		}
 
 		return _jsEscapedSpecialChars;

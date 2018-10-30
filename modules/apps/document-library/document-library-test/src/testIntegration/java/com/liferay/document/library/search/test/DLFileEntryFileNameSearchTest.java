@@ -22,11 +22,14 @@ import com.liferay.document.library.test.util.search.FileEntryBlueprint;
 import com.liferay.document.library.test.util.search.FileEntrySearchFixture;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngine;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -42,6 +45,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -95,6 +99,21 @@ public class DLFileEntryFileNameSearchTest {
 	}
 
 	@Test
+	public void testExtensionAloneSubstringMatchesExtensionAndPathFields()
+		throws Exception {
+
+		addFileEntriesWithTitleSameAsFileName("One.jpg", "Two.JPG");
+
+		if (isSearchEngine("Elasticsearch")) {
+			assertSearch("jp", Arrays.asList("One.jpg"));
+		}
+
+		if (isSearchEngine("Solr")) {
+			assertSearch("jp", Arrays.asList("One.jpg", "Two.JPG"));
+		}
+	}
+
+	@Test
 	public void testExtensionDoesNotSplitFromPlainBaseName() throws Exception {
 		addFileEntriesWithTitleSameAsFileName(
 			"Document_1.jpg", "Document_2.jpg", "Memorandum.jpg");
@@ -118,12 +137,14 @@ public class DLFileEntryFileNameSearchTest {
 	@Test
 	public void testLPS73013() throws Exception {
 		addFileEntriesWithTitleSameAsFileName(
-			"myfile.txt", "MyFile.txt", "MYFILE.txt");
+			"myfile.txt", "MyFile (1).txt", "MYFILE (2).txt");
 
 		assertSearch(
-			"myfile", Arrays.asList("myfile.txt", "MyFile.txt", "MYFILE.txt"));
+			"myfile",
+			Arrays.asList("myfile.txt", "MyFile (1).txt", "MYFILE (2).txt"));
 		assertSearch(
-			"my", Arrays.asList("myfile.txt", "MyFile.txt", "MYFILE.txt"));
+			"my",
+			Arrays.asList("myfile.txt", "MyFile (1).txt", "MYFILE (2).txt"));
 	}
 
 	@Test
@@ -138,6 +159,32 @@ public class DLFileEntryFileNameSearchTest {
 		assertSearch(
 			"Document_1.jpg",
 			Arrays.asList("Document_1.jpg", "Document_1.png"));
+	}
+
+	@Test
+	public void testLPS82588Relevance() throws Exception {
+		addFileEntriesWithTitleSameAsFileName(
+			"Document_1.jpg", "Document_1.png", "Document_2.jpeg",
+			"Document_3.png", "Document_3.jpg");
+
+		Indexer<DLFileEntry> indexer = indexerRegistry.getIndexer(
+			DLFileEntry.class);
+
+		String keyword = "Document_1.jpg";
+
+		SearchContext searchContext = getSearchContext(keyword);
+
+		Hits hits = indexer.search(searchContext);
+
+		Document[] docs = hits.getDocs();
+
+		Document topHit = docs[0];
+
+		String actualTitle = topHit.get(Field.TITLE);
+
+		Assert.assertEquals(
+			(String)searchContext.getAttribute("queryString"), keyword,
+			actualTitle);
 	}
 
 	@Test
@@ -191,8 +238,7 @@ public class DLFileEntryFileNameSearchTest {
 		Indexer<DLFileEntry> indexer = indexerRegistry.getIndexer(
 			DLFileEntry.class);
 
-		SearchContext searchContext = _userSearchFixture.getSearchContext(
-			keyword);
+		SearchContext searchContext = getSearchContext(keyword);
 
 		Hits hits = indexer.search(searchContext);
 
@@ -208,7 +254,23 @@ public class DLFileEntryFileNameSearchTest {
 	}
 
 	protected SearchContext getSearchContext(String keyword) throws Exception {
-		return _userSearchFixture.getSearchContext(keyword);
+		SearchContext searchContext = _userSearchFixture.getSearchContext(
+			keyword);
+
+		Group currentGroup = _groups.get(0);
+
+		searchContext.setGroupIds(new long[] {currentGroup.getGroupId()});
+
+		return searchContext;
+	}
+
+	protected boolean isSearchEngine(String engine) {
+		SearchEngine searchEngine = searchEngineHelper.getSearchEngine(
+			searchEngineHelper.getDefaultSearchEngineId());
+
+		String vendor = searchEngine.getVendor();
+
+		return vendor.equals(engine);
 	}
 
 	@Inject
@@ -216,6 +278,9 @@ public class DLFileEntryFileNameSearchTest {
 
 	@Inject
 	protected static IndexerRegistry indexerRegistry;
+
+	@Inject
+	protected static SearchEngineHelper searchEngineHelper;
 
 	@DeleteAfterTestRun
 	private List<AssetTag> _assetTags;

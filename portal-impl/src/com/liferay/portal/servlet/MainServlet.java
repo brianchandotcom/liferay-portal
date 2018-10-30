@@ -177,7 +177,9 @@ public class MainServlet extends ActionServlet {
 		}
 
 		try {
-			processGlobalShutdownEvents();
+			EventsProcessorUtil.process(
+				PropsKeys.GLOBAL_SHUTDOWN_EVENTS,
+				PropsValues.GLOBAL_SHUTDOWN_EVENTS);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -271,7 +273,9 @@ public class MainServlet extends ActionServlet {
 		}
 
 		try {
-			processStartupEvents();
+			StartupAction startupAction = new StartupAction();
+
+			startupAction.run(null);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -289,7 +293,8 @@ public class MainServlet extends ActionServlet {
 		PluginPackage pluginPackage = null;
 
 		try {
-			pluginPackage = initPluginPackage();
+			pluginPackage = PluginPackageUtil.readPluginPackageServletContext(
+				servletContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -320,7 +325,16 @@ public class MainServlet extends ActionServlet {
 		}
 
 		try {
-			initSocial(pluginPackage);
+			String[] xmls = {
+				HttpUtil.URLtoString(
+					servletContext.getResource("/WEB-INF/liferay-social.xml")),
+				HttpUtil.URLtoString(
+					servletContext.getResource(
+						"/WEB-INF/liferay-social-ext.xml"))
+			};
+
+			SocialConfigurationUtil.read(
+				PortalClassLoaderUtil.getClassLoader(), xmls);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -331,7 +345,19 @@ public class MainServlet extends ActionServlet {
 		}
 
 		try {
-			initThemes(pluginPackage, portlets);
+			String[] xmls = {
+				HttpUtil.URLtoString(
+					servletContext.getResource(
+						"/WEB-INF/liferay-look-and-feel.xml")),
+				HttpUtil.URLtoString(
+					servletContext.getResource(
+						"/WEB-INF/liferay-look-and-feel-ext.xml"))
+			};
+
+			List<Theme> themes = ThemeLocalServiceUtil.init(
+				servletContext, null, true, xmls, pluginPackage);
+
+			servletContext.setAttribute(WebKeys.PLUGIN_THEMES, themes);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -342,7 +368,10 @@ public class MainServlet extends ActionServlet {
 		}
 
 		try {
-			initWebSettings();
+			String xml = HttpUtil.URLtoString(
+				servletContext.getResource("/WEB-INF/web.xml"));
+
+			checkWebSettings(xml);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -353,7 +382,7 @@ public class MainServlet extends ActionServlet {
 		}
 
 		try {
-			initExt();
+			ExtRegistry.registerPortal(servletContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -364,7 +393,9 @@ public class MainServlet extends ActionServlet {
 		}
 
 		try {
-			processGlobalStartupEvents();
+			EventsProcessorUtil.process(
+				PropsKeys.GLOBAL_STARTUP_EVENTS,
+				PropsValues.GLOBAL_STARTUP_EVENTS);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -405,7 +436,9 @@ public class MainServlet extends ActionServlet {
 		}
 
 		try {
-			initPlugins();
+			HotDeployUtil.setCapturePrematureEvents(false);
+
+			PortalLifecycleUtil.flushInits();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -449,7 +482,7 @@ public class MainServlet extends ActionServlet {
 			_log.debug("Get company id");
 		}
 
-		long companyId = getCompanyId(request);
+		long companyId = PortalInstances.getCompanyId(request);
 
 		if (processCompanyInactiveRequest(request, response, companyId)) {
 			if (_log.isDebugEnabled()) {
@@ -483,13 +516,15 @@ public class MainServlet extends ActionServlet {
 			_log.debug("Set portal port");
 		}
 
-		setPortalInetSocketAddresses(request);
+		PortalUtil.setPortalInetSocketAddresses(request);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Check variables");
 		}
 
-		checkServletContext(request);
+		ServletContext servletContext = getServletContext();
+
+		request.setAttribute(WebKeys.CTX, servletContext);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Handle non-serializable request");
@@ -501,7 +536,7 @@ public class MainServlet extends ActionServlet {
 
 		request = encryptRequest(request, companyId);
 
-		long userId = getUserId(request);
+		long userId = PortalUtil.getUserId(request);
 
 		String remoteUser = getRemoteUser(request, userId);
 
@@ -542,7 +577,9 @@ public class MainServlet extends ActionServlet {
 			return;
 		}
 
-		if (hasAbsoluteRedirect(request)) {
+		if (request.getAttribute(AbsoluteRedirectsResponse.class.getName()) !=
+				null) {
+
 			if (_log.isDebugEnabled()) {
 				String currentURL = PortalUtil.getCurrentURL(request);
 
@@ -553,7 +590,7 @@ public class MainServlet extends ActionServlet {
 			return;
 		}
 
-		if (!hasThemeDisplay(request)) {
+		if (request.getAttribute(WebKeys.THEME_DISPLAY) == null) {
 			if (_log.isDebugEnabled()) {
 				String currentURL = PortalUtil.getCurrentURL(request);
 
@@ -577,14 +614,15 @@ public class MainServlet extends ActionServlet {
 				_log.debug("Process service post events");
 			}
 
-			processServicePost(request, response);
+			try {
+				EventsProcessorUtil.process(
+					PropsKeys.SERVLET_SERVICE_EVENTS_POST,
+					PropsValues.SERVLET_SERVICE_EVENTS_POST, request, response);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
 		}
-	}
-
-	protected void checkServletContext(HttpServletRequest request) {
-		ServletContext servletContext = getServletContext();
-
-		request.setAttribute(WebKeys.CTX, servletContext);
 	}
 
 	protected void checkWebSettings(String xml) throws DocumentException {
@@ -669,10 +707,6 @@ public class MainServlet extends ActionServlet {
 		return request;
 	}
 
-	protected long getCompanyId(HttpServletRequest request) {
-		return PortalInstances.getCompanyId(request);
-	}
-
 	protected String getRemoteUser(HttpServletRequest request, long userId) {
 		String remoteUser = request.getRemoteUser();
 
@@ -700,28 +734,6 @@ public class MainServlet extends ActionServlet {
 		return null;
 	}
 
-	protected long getUserId(HttpServletRequest request) {
-		return PortalUtil.getUserId(request);
-	}
-
-	protected boolean hasAbsoluteRedirect(HttpServletRequest request) {
-		if (request.getAttribute(AbsoluteRedirectsResponse.class.getName()) ==
-				null) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	protected boolean hasThemeDisplay(HttpServletRequest request) {
-		if (request.getAttribute(WebKeys.THEME_DISPLAY) == null) {
-			return false;
-		}
-
-		return true;
-	}
-
 	protected void initCompanies() throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize companies");
@@ -740,12 +752,6 @@ public class MainServlet extends ActionServlet {
 			CompanyThreadLocal.setCompanyId(
 				PortalInstances.getDefaultCompanyId());
 		}
-	}
-
-	protected void initExt() throws Exception {
-		ServletContext servletContext = getServletContext();
-
-		ExtRegistry.registerPortal(servletContext);
 	}
 
 	protected void initLayoutTemplates(final PluginPackage pluginPackage) {
@@ -826,19 +832,6 @@ public class MainServlet extends ActionServlet {
 		catch (Exception e) {
 			throw new ServletException(e);
 		}
-	}
-
-	protected PluginPackage initPluginPackage() throws Exception {
-		ServletContext servletContext = getServletContext();
-
-		return PluginPackageUtil.readPluginPackageServletContext(
-			servletContext);
-	}
-
-	protected void initPlugins() throws Exception {
-		HotDeployUtil.setCapturePrematureEvents(false);
-
-		PortalLifecycleUtil.flushInits();
 	}
 
 	protected void initPortletApp(
@@ -928,50 +921,6 @@ public class MainServlet extends ActionServlet {
 		}
 	}
 
-	protected void initSocial(PluginPackage pluginPackage) throws Exception {
-		ServletContext servletContext = getServletContext();
-
-		String[] xmls = {
-			HttpUtil.URLtoString(
-				servletContext.getResource("/WEB-INF/liferay-social.xml")),
-			HttpUtil.URLtoString(
-				servletContext.getResource("/WEB-INF/liferay-social-ext.xml"))
-		};
-
-		SocialConfigurationUtil.read(
-			PortalClassLoaderUtil.getClassLoader(), xmls);
-	}
-
-	protected void initThemes(
-			PluginPackage pluginPackage, List<Portlet> portlets)
-		throws Exception {
-
-		ServletContext servletContext = getServletContext();
-
-		String[] xmls = {
-			HttpUtil.URLtoString(
-				servletContext.getResource(
-					"/WEB-INF/liferay-look-and-feel.xml")),
-			HttpUtil.URLtoString(
-				servletContext.getResource(
-					"/WEB-INF/liferay-look-and-feel-ext.xml"))
-		};
-
-		List<Theme> themes = ThemeLocalServiceUtil.init(
-			servletContext, null, true, xmls, pluginPackage);
-
-		servletContext.setAttribute(WebKeys.PLUGIN_THEMES, themes);
-	}
-
-	protected void initWebSettings() throws Exception {
-		ServletContext servletContext = getServletContext();
-
-		String xml = HttpUtil.URLtoString(
-			servletContext.getResource("/WEB-INF/web.xml"));
-
-		checkWebSettings(xml);
-	}
-
 	protected long loginUser(
 			HttpServletRequest request, HttpServletResponse response,
 			long companyId, long userId, String remoteUser)
@@ -1044,17 +993,6 @@ public class MainServlet extends ActionServlet {
 		return true;
 	}
 
-	protected void processGlobalShutdownEvents() throws Exception {
-		EventsProcessorUtil.process(
-			PropsKeys.GLOBAL_SHUTDOWN_EVENTS,
-			PropsValues.GLOBAL_SHUTDOWN_EVENTS);
-	}
-
-	protected void processGlobalStartupEvents() throws Exception {
-		EventsProcessorUtil.process(
-			PropsKeys.GLOBAL_STARTUP_EVENTS, PropsValues.GLOBAL_STARTUP_EVENTS);
-	}
-
 	protected boolean processGroupInactiveRequest(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, PortalException {
@@ -1094,19 +1032,6 @@ public class MainServlet extends ActionServlet {
 		requestDispatcher.include(request, response);
 
 		return true;
-	}
-
-	protected void processServicePost(
-		HttpServletRequest request, HttpServletResponse response) {
-
-		try {
-			EventsProcessorUtil.process(
-				PropsKeys.SERVLET_SERVICE_EVENTS_POST,
-				PropsValues.SERVLET_SERVICE_EVENTS_POST, request, response);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
 	}
 
 	protected boolean processServicePre(
@@ -1242,12 +1167,6 @@ public class MainServlet extends ActionServlet {
 		return true;
 	}
 
-	protected void processStartupEvents() throws Exception {
-		StartupAction startupAction = new StartupAction();
-
-		startupAction.run(null);
-	}
-
 	protected void registerPortalInitialized() {
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -1300,10 +1219,6 @@ public class MainServlet extends ActionServlet {
 		dynamicRequest.setParameter("privateLayout", StringPool.BLANK);
 
 		PortalUtil.sendError(status, (Exception)t, dynamicRequest, response);
-	}
-
-	protected void setPortalInetSocketAddresses(HttpServletRequest request) {
-		PortalUtil.setPortalInetSocketAddresses(request);
 	}
 
 	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_DEFAULT =

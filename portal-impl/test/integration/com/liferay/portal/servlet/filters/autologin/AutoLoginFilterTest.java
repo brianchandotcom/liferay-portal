@@ -15,6 +15,7 @@
 package com.liferay.portal.servlet.filters.autologin;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
 import com.liferay.portal.util.test.AtomicState;
@@ -70,15 +71,14 @@ public class AutoLoginFilterTest {
 			""
 		);
 
-		HttpSession httpSession = Mockito.mock(HttpSession.class);
-
 		Mockito.when(
 			httpServletRequest.getSession()
 		).thenReturn(
-			httpSession
+			ProxyFactory.newDummyInstance(HttpSession.class)
 		);
 
-		FilterChain filterChain = Mockito.mock(FilterChain.class);
+		FilterChain filterChain = ProxyFactory.newDummyInstance(
+			FilterChain.class);
 
 		_atomicState.reset();
 

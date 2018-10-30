@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.portlet.toolbar.contributor.locator.PortletTool
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
 import com.liferay.registry.dependency.ServiceDependencyManager;
@@ -32,8 +33,6 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.mockito.Mockito;
 
 /**
  * @author Philip Jones
@@ -60,8 +59,9 @@ public class PortletToolbarTest {
 		serviceDependencyManager.waitForDependencies(1000);
 
 		List<Menu> menus = portletToolbar.getPortletTitleMenus(
-			RandomTestUtil.randomString(), Mockito.mock(PortletRequest.class),
-			Mockito.mock(PortletResponse.class));
+			RandomTestUtil.randomString(),
+			ProxyFactory.newDummyInstance(PortletRequest.class),
+			ProxyFactory.newDummyInstance(PortletResponse.class));
 
 		for (Menu menu : menus) {
 			String label = menu.getLabel();

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.sharepoint;
 
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.util.PropsUtil;
 
 import javax.servlet.FilterConfig;
@@ -22,7 +23,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import org.powermock.api.mockito.PowerMockito;
@@ -70,7 +70,7 @@ public class SharepointFilterTest {
 		Assert.assertTrue(sharepointFilter.isFilterEnabled());
 	}
 
-	@Mock
-	private FilterConfig _filterConfig;
+	private final FilterConfig _filterConfig = ProxyFactory.newDummyInstance(
+		FilterConfig.class);
 
 }

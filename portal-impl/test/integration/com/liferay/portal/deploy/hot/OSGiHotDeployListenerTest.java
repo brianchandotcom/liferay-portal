@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployException;
 import com.liferay.portal.kernel.deploy.hot.HotDeployListener;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
 import com.liferay.portal.util.test.AtomicState;
@@ -33,8 +34,6 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.mockito.Mockito;
 
 /**
  * @author Adolfo Pérez
@@ -91,7 +90,7 @@ public class OSGiHotDeployListenerTest {
 	private boolean _dependencyManagerEnabled;
 	private final HotDeployListener _hotDeployListener =
 		new OSGiHotDeployListener();
-	private final ServletContext _servletContext = Mockito.mock(
-		ServletContext.class);
+	private final ServletContext _servletContext =
+		ProxyFactory.newDummyInstance(ServletContext.class);
 
 }

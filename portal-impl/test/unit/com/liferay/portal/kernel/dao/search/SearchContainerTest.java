@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.dao.search;
 
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.util.PropsImpl;
 
 import javax.portlet.PortletRequest;
@@ -24,8 +25,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Roberto Díaz
@@ -138,13 +137,10 @@ public class SearchContainerTest {
 	}
 
 	protected void buildSearchContainer(int cur) {
-		PortletRequest portletRequest = PowerMockito.mock(PortletRequest.class);
-
-		PortletURL portletURL = PowerMockito.mock(PortletURL.class);
-
 		_searchContainer = new SearchContainer<>(
-			portletRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, cur,
-			_DEFAULT_DELTA, portletURL, null, null);
+			ProxyFactory.newDummyInstance(PortletRequest.class), null, null,
+			SearchContainer.DEFAULT_CUR_PARAM, cur, _DEFAULT_DELTA,
+			ProxyFactory.newDummyInstance(PortletURL.class), null, null);
 	}
 
 	private static final int _DEFAULT_DELTA = 20;

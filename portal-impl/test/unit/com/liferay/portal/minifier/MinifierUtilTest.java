@@ -14,6 +14,7 @@
 
 package com.liferay.portal.minifier;
 
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -46,12 +47,10 @@ public class MinifierUtilTest extends Mockito {
 			registry
 		);
 
-		ServiceTracker serviceTracker = mock(ServiceTracker.class);
-
 		when(
 			registry.trackServices(any(Class.class))
 		).thenReturn(
-			serviceTracker
+			ProxyFactory.newDummyInstance(ServiceTracker.class)
 		);
 
 		RegistryUtil.setRegistry(registry);

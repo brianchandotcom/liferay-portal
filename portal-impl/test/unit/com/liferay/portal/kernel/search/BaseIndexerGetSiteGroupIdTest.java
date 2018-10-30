@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -220,9 +221,7 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 	}
 
 	protected void setUpPropsUtil() {
-		Props props = mock(Props.class);
-
-		PropsUtil.setProps(props);
+		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
 	}
 
 	protected void setUpRegistryUtil() throws Exception {

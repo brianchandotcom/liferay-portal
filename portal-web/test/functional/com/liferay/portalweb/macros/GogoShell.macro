@@ -4,6 +4,8 @@
 			<var name="moduleName" value="${moduleName}" />
 		</execute>
 
+		<execute function="AssertElementPresent" locator1="GogoShell#OUTPUT_FIELD" />
+
 		<var method="selenium#getText('GogoShell#OUTPUT_FIELD')" name="moduleStatusOutput" />
 
 		<var method="StringUtil#stripBetween('${moduleStatusOutput}', 'START', 'Name   ')" name="partialModuleStatusOutput" />

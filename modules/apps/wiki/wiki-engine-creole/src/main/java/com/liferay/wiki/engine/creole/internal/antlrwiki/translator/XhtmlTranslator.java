@@ -73,14 +73,9 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		append(markup);
 		append("\">");
 
-		if (_headingMap.containsKey(unformattedText)) {
-			int count = _headingMap.get(unformattedText);
+		int count = _headingMap.getOrDefault(unformattedText, 0);
 
-			_headingMap.put(unformattedText, count + 1);
-		}
-		else {
-			_headingMap.put(unformattedText, 1);
-		}
+		_headingMap.put(unformattedText, count + 1);
 
 		traverse(headingNode.getChildASTNodes());
 
@@ -230,14 +225,9 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 			append(content);
 			append("</a>");
 
-			if (_contentMap.containsKey(content)) {
-				int count = _contentMap.get(content);
+			int count = _contentMap.getOrDefault(content, 0);
 
-				_contentMap.put(content, count + 1);
-			}
-			else {
-				_contentMap.put(content, 1);
-			}
+			_contentMap.put(content, count + 1);
 
 			appendTableOfContents(treeNode, depth + 1);
 
@@ -290,18 +280,16 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 	protected String getHeadingMarkup(
 		String prefix, String text, Map<String, Integer> map) {
 
-		if ((map == null) || map.isEmpty() || !map.containsKey(text)) {
-			return StringUtil.replace(
-				StringBundler.concat(
-					_HEADING_ANCHOR_PREFIX, prefix, StringPool.DASH,
-					text.trim()),
-				CharPool.SPACE, CharPool.PLUS);
+		String postfix = StringPool.BLANK;
+
+		if (map.containsKey(text)) {
+			postfix = StringPool.DASH + String.valueOf(map.get(text));
 		}
 
 		return StringUtil.replace(
 			StringBundler.concat(
 				_HEADING_ANCHOR_PREFIX, prefix, StringPool.DASH, text.trim(),
-				StringPool.DASH, map.get(text)),
+				postfix),
 			CharPool.SPACE, CharPool.PLUS);
 	}
 

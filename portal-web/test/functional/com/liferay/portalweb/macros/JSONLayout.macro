@@ -56,7 +56,7 @@
 		<var method="JSONCurlUtil#post('${curl}', '$[\'layoutId\']')" name="layoutId" />
 	</command>
 
-	<command name="addLayoutByGroupName">
+	<command name="addPrivateLayout">
 		<if>
 			<not>
 				<isset var="groupName" />
@@ -84,7 +84,39 @@
 			<var name="groupId" value="${groupId}" />
 			<var name="layoutName" value="${layoutName}" />
 			<var name="parentLayoutName" value="${parentLayoutName}" />
-			<var name="privateLayout" value="${privateLayout}" />
+			<var name="privateLayout" value="true" />
+		</execute>
+	</command>
+
+	<command name="addPublicLayout">
+		<if>
+			<not>
+				<isset var="groupName" />
+			</not>
+			<then>
+				<fail message="Please set 'groupName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="layoutName" />
+			</not>
+			<then>
+				<fail message="Please set 'layoutName'." />
+			</then>
+		</if>
+
+		<execute macro="JSONGroup#getSiteIdByGroupName">
+			<return name="groupId" />
+			<var name="groupName" value="${groupName}" />
+		</execute>
+
+		<execute macro="JSONLayout#_addLayout">
+			<var name="groupId" value="${groupId}" />
+			<var name="layoutName" value="${layoutName}" />
+			<var name="parentLayoutName" value="${parentLayoutName}" />
+			<var name="privateLayout" value="false" />
 		</execute>
 	</command>
 

@@ -146,7 +146,6 @@
 
 		<execute macro="JSONFragment#_addFragment">
 			<var name="collectionId" value="${collectionId}" />
-			<var name="fragmentFile" value="${fragmentFile}" />
 			<var name="groupId" value="${groupId}" />
 			<var name="name" value="${name}" />
 			<var name="status" value="${status}" />

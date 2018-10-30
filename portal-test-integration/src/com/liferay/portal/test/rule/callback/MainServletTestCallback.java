@@ -88,7 +88,7 @@ public class MainServletTestCallback extends BaseTestCallback<Void, Void> {
 			ServletContextPool.put(StringPool.BLANK, mockServletContext);
 
 			MockServletConfig mockServletConfig = new MockServletConfig(
-				mockServletContext);
+				mockServletContext, "Main Servlet");
 
 			_mainServlet = new MainServlet();
 

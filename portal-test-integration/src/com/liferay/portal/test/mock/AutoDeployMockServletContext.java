@@ -14,7 +14,13 @@
 
 package com.liferay.portal.test.mock;
 
+import com.liferay.portal.kernel.util.ProxyUtil;
+
 import java.io.File;
+
+import java.util.Collections;
+
+import javax.servlet.ServletRegistration;
 
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.mock.web.MockServletContext;
@@ -26,6 +32,24 @@ public class AutoDeployMockServletContext extends MockServletContext {
 
 	public AutoDeployMockServletContext(ResourceLoader resourceLoader) {
 		super(getResourceBasePath(), resourceLoader);
+	}
+
+	@Override
+	public ServletRegistration getServletRegistration(String servletName) {
+		if ("Main Servlet".equals(servletName)) {
+			return (ServletRegistration)ProxyUtil.newProxyInstance(
+				ServletRegistration.class.getClassLoader(),
+				new Class<?>[] {ServletRegistration.class},
+				(proxy, method, args) -> {
+					if ("getMappings".equals(method.getName())) {
+						return Collections.singleton("/c/*");
+					}
+
+					return null;
+				});
+		}
+
+		return null;
 	}
 
 	protected static String getResourceBasePath() {

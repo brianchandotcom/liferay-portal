@@ -313,53 +313,6 @@ class Layout extends Component {
 	}
 
 	/**
-	 * Method executed when a column is left empty after dragging.
-	 * Updates target item's status, removes empty columns if any
-	 * and returns a new columns array.
-	 *
-	 * @param {object} layoutColumns
-	 * @param {number} targetColumnIndex
-	 * @private
-	 * @return {object}
-	 * @review
-	 */
-	_handleEmptyColumn(
-		layoutColumns,
-		targetColumnIndex
-	) {
-		let nextLayoutColumns = layoutColumns;
-
-		if (
-			this._draggingItem.active &&
-			(this._draggingItemColumnIndex !== targetColumnIndex)
-		) {
-			this._draggingItem.active = false;
-
-			nextLayoutColumns = clearFollowingColumns(
-				nextLayoutColumns,
-				this._draggingItemColumnIndex
-			);
-		}
-
-		const previousColumn = nextLayoutColumns[this._draggingItemColumnIndex - 1];
-
-		const activeItem = getColumnActiveItem(
-			nextLayoutColumns,
-			this._draggingItemColumnIndex - 1
-		);
-
-		return setIn(
-			nextLayoutColumns,
-			[
-				this._draggingItemColumnIndex - 1,
-				previousColumn.indexOf(activeItem),
-				'hasChild'
-			],
-			false
-		);
-	}
-
-	/**
 	 * Handle layout column item check event
 	 * @param {!object} event
 	 * @param {string} event.delegateTarget.value

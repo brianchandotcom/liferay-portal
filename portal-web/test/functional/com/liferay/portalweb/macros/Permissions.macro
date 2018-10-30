@@ -230,7 +230,7 @@
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
-		<execute macro="JSONLayout#addPublicLayout">
+		<execute macro="JSONLayout#addPublicLayoutByGroupName">
 			<var name="groupName" value="${orgName}" />
 			<var name="layoutName" value="${pageName}" />
 		</execute>

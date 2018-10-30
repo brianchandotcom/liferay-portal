@@ -300,6 +300,9 @@
 			<then>
 				<fail message="FAIL. Cannot find category." />
 			</then>
+			<else>
+				<echo message="FOUND. Returning categoryId: ${categoryId}" />
+			</else>
 		</if>
 
 		<return value="${categoryId}" />
@@ -351,6 +354,9 @@
 			<then>
 				<fail message="FAIL. Cannot find vocabulary." />
 			</then>
+			<else>
+				<echo message="FOUND. Returning vocabularyId: ${vocabualryId}" />
+			</else>
 		</if>
 
 		<return value="${vocabularyId}" />

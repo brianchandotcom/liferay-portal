@@ -405,6 +405,16 @@
 
 		<var method="StringUtil#replace('${groupId}', '&quot;]', '')" name="groupId" />
 
+		<if>
+			<equals arg1="${groupId}" arg2="[]" />
+			<then>
+				<fail message="FAIL. Cannot find group." />
+			</then>
+			<else>
+				<echo message="FOUND. Returning groupId: ${groupId}" />
+			</else>
+		</if>
+
 		<return value="${groupId}" />
 	</command>
 
@@ -436,6 +446,16 @@
 		<var method="StringUtil#replace('${groupId}', '[&quot;', '')" name="groupId" />
 
 		<var method="StringUtil#replace('${groupId}', '&quot;]', '')" name="groupId" />
+
+		<if>
+			<equals arg1="${groupId}" arg2="[]" />
+			<then>
+				<fail message="FAIL. Cannot find group." />
+			</then>
+			<else>
+				<echo message="FOUND. Returning groupId: ${groupId}" />
+			</else>
+		</if>
 
 		<return value="${groupId}" />
 	</command>
@@ -503,7 +523,15 @@
 
 		<var method="StringUtil#replace('${groupId}', '&quot;]', '')" name="groupId" />
 
-		<echo message="## * Returning: ${groupId}" />
+		<if>
+			<equals arg1="${groupId}" arg2="[]" />
+			<then>
+				<fail message="FAIL. Cannot find group." />
+			</then>
+			<else>
+				<echo message="FOUND. Returning groupId: ${groupId}" />
+			</else>
+		</if>
 
 		<return value="${groupId}" />
 	</command>

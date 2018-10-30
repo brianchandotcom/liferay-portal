@@ -133,6 +133,16 @@
 
 		<var method="StringUtil#replace('${layoutId}', '&quot;]', '')" name="layoutId" />
 
+		<if>
+			<equals arg1="${layoutId}" arg2="[]" />
+			<then>
+				<fail message="FAIL. Cannot find layout." />
+			</then>
+			<else>
+				<echo message="FOUND. Returning layoutId: ${groupId}" />
+			</else>
+		</if>
+
 		<return value="${layoutId}" />
 	</command>
 </definition>

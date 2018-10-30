@@ -389,6 +389,16 @@
 
 		<var method="StringUtil#replace('${collectionId}', '&quot;]', '')" name="collectionId" />
 
+		<if>
+			<equals arg1="${collectionId}" arg2="[]" />
+			<then>
+				<fail message="FAIL. Cannot find collection." />
+			</then>
+			<else>
+				<echo message="FOUND. Returning collectionId: ${collectionId}" />
+			</else>
+		</if>
+
 		<return value="${collectionId}" />
 	</command>
 </definition>

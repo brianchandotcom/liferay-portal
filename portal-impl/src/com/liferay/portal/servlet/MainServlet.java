@@ -625,6 +625,33 @@ public class MainServlet extends ActionServlet {
 		}
 	}
 
+	@Override
+	protected synchronized RequestProcessor getRequestProcessor(
+		ModuleConfig moduleConfig) {
+
+		return null;
+	}
+
+	@Override
+	protected void initModulePlugIns(ModuleConfig moduleConfig)
+		throws ServletException {
+
+		try {
+			TilesUtil.loadDefinitions(getServletContext());
+		}
+		catch (Exception e) {
+			throw new ServletException(e);
+		}
+	}
+
+	@Override
+	protected void process(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException {
+
+		_portalRequestProcessor.process(request, response);
+	}
+
 	private void _checkWebSettings(String xml) throws DocumentException {
 		Document doc = UnsecureSAXReaderUtil.read(xml);
 
@@ -727,13 +754,6 @@ public class MainServlet extends ActionServlet {
 		return remoteUser;
 	}
 
-	@Override
-	protected synchronized RequestProcessor getRequestProcessor(
-		ModuleConfig moduleConfig) {
-
-		return null;
-	}
-
 	private void _initCompanies() throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize companies");
@@ -822,20 +842,7 @@ public class MainServlet extends ActionServlet {
 			filters.toArray(new Filter[0]));
 	}
 
-	@Override
-	protected void initModulePlugIns(ModuleConfig moduleConfig)
-		throws ServletException {
-
-		try {
-			TilesUtil.loadDefinitions(getServletContext());
-		}
-		catch (Exception e) {
-			throw new ServletException(e);
-		}
-	}
-
-	private void _initPortletApp(
-			Portlet portlet, ServletContext servletContext)
+	private void _initPortletApp(Portlet portlet, ServletContext servletContext)
 		throws PortletException {
 
 		PortletApp portletApp = portlet.getPortletApp();
@@ -897,9 +904,7 @@ public class MainServlet extends ActionServlet {
 		return portlets;
 	}
 
-	private void _initResourceActions(List<Portlet> portlets)
-		throws Exception {
-
+	private void _initResourceActions(List<Portlet> portlets) throws Exception {
 		for (Portlet portlet : portlets) {
 			List<String> portletActions =
 				ResourceActionsUtil.getPortletResourceActions(portlet);
@@ -967,14 +972,6 @@ public class MainServlet extends ActionServlet {
 		}
 
 		return userId;
-	}
-
-	@Override
-	protected void process(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException, ServletException {
-
-		_portalRequestProcessor.process(request, response);
 	}
 
 	private boolean _processCompanyInactiveRequest(

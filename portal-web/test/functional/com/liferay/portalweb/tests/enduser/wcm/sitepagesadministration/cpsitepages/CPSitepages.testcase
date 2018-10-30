@@ -268,9 +268,9 @@
 
 		<for list="Site Page 1,Site Page 2,Site Page 3" param="pageName">
 			<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Test Site Name" />
-			<var name="layoutName" value="${pageName}" />
-		</execute>
+				<var name="groupName" value="Test Site Name" />
+				<var name="layoutName" value="${pageName}" />
+			</execute>
 		</for>
 
 		<execute macro="SitePages#openPagesAdmin">

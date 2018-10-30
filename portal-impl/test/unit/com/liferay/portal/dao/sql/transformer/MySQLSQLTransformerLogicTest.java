@@ -71,7 +71,7 @@ public class MySQLSQLTransformerLogicTest
 	public void testReplaceSupportsStringCaseSensitiveQuery() {
 		String sql = "select * from foo";
 
-		MySQLDB mySQLDB = _getCaseSensitiveMySQLDB();
+		MySQLDB mySQLDB = new MySQLDB(5, 7);
 
 		SQLTransformer sqlTransformer = SQLTransformerFactory.getSQLTransformer(
 			mySQLDB);
@@ -123,12 +123,6 @@ public class MySQLSQLTransformerLogicTest
 
 		ReflectionTestUtil.setFieldValue(
 			mySQLDB, "_supportsStringCaseSensitiveQuery", false);
-
-		return mySQLDB;
-	}
-
-	private static MySQLDB _getCaseSensitiveMySQLDB() {
-		MySQLDB mySQLDB = new MySQLDB(5, 7);
 
 		return mySQLDB;
 	}

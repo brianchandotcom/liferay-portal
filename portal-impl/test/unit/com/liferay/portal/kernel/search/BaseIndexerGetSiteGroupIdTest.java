@@ -54,9 +54,14 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		setUpGroupLocalServiceUtil();
-		setUpPropsUtil();
-		setUpRegistryUtil();
+		ReflectionTestUtil.setFieldValue(
+			GroupLocalServiceUtil.class, "_service", _groupLocalService);
+
+		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
+
+		Registry registry = new BasicRegistryImpl();
+
+		RegistryUtil.setRegistry(registry);
 
 		_indexer = new TestIndexer();
 	}
@@ -148,11 +153,6 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 		return group;
 	}
 
-	protected void setUpGroupLocalServiceUtil() {
-		ReflectionTestUtil.setFieldValue(
-			GroupLocalServiceUtil.class, "_service", _groupLocalService);
-	}
-
 	protected Group setUpLayoutGroup(
 			long groupId, long parentGroupId, boolean stagingGroup)
 		throws PortalException {
@@ -218,16 +218,6 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 		).getGroup(
 			groupId
 		);
-	}
-
-	protected void setUpPropsUtil() {
-		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
-	}
-
-	protected void setUpRegistryUtil() throws Exception {
-		Registry registry = new BasicRegistryImpl();
-
-		RegistryUtil.setRegistry(registry);
 	}
 
 	@Mock

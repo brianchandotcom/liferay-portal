@@ -25,7 +25,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -33,15 +32,12 @@ import org.junit.Test;
  */
 public class ServiceContextTest {
 
-	@BeforeClass
-	public static void setUpClass() {
+	@Test
+	public void testJSONSerialization() {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-	}
 
-	@Test
-	public void testJSONSerialization() {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAttribute("TestName", "TestValue");

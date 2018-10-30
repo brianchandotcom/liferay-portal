@@ -23,6 +23,6 @@ public class JavaSimpleLambdaExpression extends JavaExpression {
 		_parameterValue = new JavaSimpleValue(parameterValue);
 	}
 
-	private final JavaExpression _parameterValue;
+	private final JavaSimpleValue _parameterValue;
 
 }

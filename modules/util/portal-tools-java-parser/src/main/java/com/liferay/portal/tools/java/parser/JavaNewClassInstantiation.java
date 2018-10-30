@@ -19,10 +19,10 @@ package com.liferay.portal.tools.java.parser;
  */
 public class JavaNewClassInstantiation extends JavaExpression {
 
-	public void setClassCall(JavaClassCall classCall) {
-		_classCall = classCall;
+	public void setJavaClassCall(JavaClassCall javaClassCall) {
+		_javaClassCall = javaClassCall;
 	}
 
-	private JavaClassCall _classCall;
+	private JavaClassCall _javaClassCall;
 
 }

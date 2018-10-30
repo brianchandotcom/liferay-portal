@@ -22,10 +22,11 @@ import java.util.List;
  */
 public class JavaArray extends JavaExpression {
 
-	public void addArrayValue(JavaExpression arrayValue) {
-		_arrayValues.add(arrayValue);
+	public void addValueJavaExpression(JavaExpression valueJavaExpression) {
+		_valueJavaExpressions.add(valueJavaExpression);
 	}
 
-	private final List<JavaExpression> _arrayValues = new ArrayList<>();
+	private final List<JavaExpression> _valueJavaExpressions =
+		new ArrayList<>();
 
 }

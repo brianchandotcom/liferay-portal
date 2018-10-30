@@ -19,15 +19,15 @@ package com.liferay.portal.tools.java.parser;
  */
 public class JavaInstanceofStatement extends JavaExpression {
 
-	public JavaInstanceofStatement(JavaType classType) {
-		_classType = classType;
+	public JavaInstanceofStatement(JavaType classJavaType) {
+		_classJavaType = classJavaType;
 	}
 
-	public void setValue(JavaExpression value) {
-		_value = value;
+	public void setValue(JavaExpression valueJavaExpression) {
+		_valueJavaExpression = valueJavaExpression;
 	}
 
-	private final JavaType _classType;
-	private JavaExpression _value;
+	private final JavaType _classJavaType;
+	private JavaExpression _valueJavaExpression;
 
 }

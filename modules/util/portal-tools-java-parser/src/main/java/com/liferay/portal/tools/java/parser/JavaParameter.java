@@ -25,21 +25,21 @@ public class JavaParameter extends BaseJavaTerm {
 		_name = new JavaSimpleValue(name);
 	}
 
-	public void setAnnotations(List<JavaAnnotation> annotations) {
-		_annotations = annotations;
+	public void setJavaAnnotations(List<JavaAnnotation> javaAnnotations) {
+		_javaAnnotations = javaAnnotations;
+	}
+
+	public void setJavaType(JavaType javaType) {
+		_javaType = javaType;
 	}
 
 	public void setModifiers(List<JavaSimpleValue> modifiers) {
 		_modifiers = modifiers;
 	}
 
-	public void setType(JavaType type) {
-		_type = type;
-	}
-
-	private List<JavaAnnotation> _annotations;
+	private List<JavaAnnotation> _javaAnnotations;
+	private JavaType _javaType;
 	private List<JavaSimpleValue> _modifiers;
 	private final JavaSimpleValue _name;
-	private JavaType _type;
 
 }

@@ -21,15 +21,17 @@ import java.util.List;
  */
 public class JavaArrayElement extends JavaExpression {
 
-	public JavaArrayElement(JavaExpression array) {
-		_array = array;
+	public JavaArrayElement(JavaExpression arrayJavaExpression) {
+		_arrayJavaExpression = arrayJavaExpression;
 	}
 
-	public void setIndexValues(List<JavaExpression> indexValues) {
-		_indexValues = indexValues;
+	public void setIndexValueJavaExpressions(
+		List<JavaExpression> indexValueJavaExpressions) {
+
+		_indexValueJavaExpressions = indexValueJavaExpressions;
 	}
 
-	private final JavaExpression _array;
-	private List<JavaExpression> _indexValues;
+	private final JavaExpression _arrayJavaExpression;
+	private List<JavaExpression> _indexValueJavaExpressions;
 
 }

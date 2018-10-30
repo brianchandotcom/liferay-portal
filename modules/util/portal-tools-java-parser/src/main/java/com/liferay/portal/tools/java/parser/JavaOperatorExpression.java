@@ -19,20 +19,24 @@ package com.liferay.portal.tools.java.parser;
  */
 public class JavaOperatorExpression extends JavaExpression {
 
-	public JavaOperatorExpression(JavaOperator operator) {
-		_operator = operator;
+	public JavaOperatorExpression(JavaOperator javaOperator) {
+		_javaOperator = javaOperator;
 	}
 
-	public void setLeftHandExpression(JavaExpression leftHandExpression) {
-		_leftHandExpression = leftHandExpression;
+	public void setLeftHandJavaExpression(
+		JavaExpression leftHandJavaExpression) {
+
+		_leftHandJavaExpression = leftHandJavaExpression;
 	}
 
-	public void setRightHandExpression(JavaExpression rightHandExpression) {
-		_rightHandExpression = rightHandExpression;
+	public void setRightHandJavaExpression(
+		JavaExpression rightHandJavaExpression) {
+
+		_rightHandJavaExpression = rightHandJavaExpression;
 	}
 
-	private JavaExpression _leftHandExpression;
-	private final JavaOperator _operator;
-	private JavaExpression _rightHandExpression;
+	private final JavaOperator _javaOperator;
+	private JavaExpression _leftHandJavaExpression;
+	private JavaExpression _rightHandJavaExpression;
 
 }

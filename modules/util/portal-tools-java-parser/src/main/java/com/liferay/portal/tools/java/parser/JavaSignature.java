@@ -29,36 +29,38 @@ public class JavaSignature extends BaseJavaTerm {
 		return _indent;
 	}
 
-	public void setExceptions(List<JavaExpression> exceptions) {
-		_exceptions = exceptions;
+	public void setExceptionJavaExpressions(
+		List<JavaExpression> exceptionJavaExpressions) {
+
+		_exceptionJavaExpressions = exceptionJavaExpressions;
 	}
 
-	public void setGenericTypes(List<JavaType> genericTypes) {
-		_genericTypes = genericTypes;
+	public void setGenericJavaTypes(List<JavaType> genericJavaTypes) {
+		_genericJavaTypes = genericJavaTypes;
 	}
 
 	public void setIndent(String indent) {
 		_indent = indent;
 	}
 
+	public void setJavaParameters(List<JavaParameter> javaParameters) {
+		_javaParameters = javaParameters;
+	}
+
 	public void setModifiers(List<JavaSimpleValue> modifiers) {
 		_modifiers = modifiers;
 	}
 
-	public void setParameters(List<JavaParameter> parameters) {
-		_parameters = parameters;
+	public void setReturnJavaType(JavaType returnJavaType) {
+		_returnJavaType = returnJavaType;
 	}
 
-	public void setReturnType(JavaType returnType) {
-		_returnType = returnType;
-	}
-
-	private List<JavaExpression> _exceptions;
-	private List<JavaType> _genericTypes;
+	private List<JavaExpression> _exceptionJavaExpressions;
+	private List<JavaType> _genericJavaTypes;
 	private String _indent;
+	private List<JavaParameter> _javaParameters;
 	private List<JavaSimpleValue> _modifiers;
 	private final JavaSimpleValue _objectName;
-	private List<JavaParameter> _parameters;
-	private JavaType _returnType;
+	private JavaType _returnJavaType;
 
 }

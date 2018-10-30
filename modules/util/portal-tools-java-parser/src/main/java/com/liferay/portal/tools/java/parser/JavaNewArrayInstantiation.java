@@ -19,15 +19,17 @@ package com.liferay.portal.tools.java.parser;
  */
 public class JavaNewArrayInstantiation extends JavaExpression {
 
-	public void setArrayDeclarator(JavaArrayDeclarator arrayDeclarator) {
-		_arrayDeclarator = arrayDeclarator;
+	public void setInitialJavaArray(JavaArray initialJavaArray) {
+		_initialJavaArray = initialJavaArray;
 	}
 
-	public void setInitialArray(JavaArray initialArray) {
-		_initialArray = initialArray;
+	public void setJavaArrayDeclarator(
+		JavaArrayDeclarator javaArrayDeclarator) {
+
+		_javaArrayDeclarator = javaArrayDeclarator;
 	}
 
-	private JavaArrayDeclarator _arrayDeclarator;
-	private JavaArray _initialArray;
+	private JavaArray _initialJavaArray;
+	private JavaArrayDeclarator _javaArrayDeclarator;
 
 }

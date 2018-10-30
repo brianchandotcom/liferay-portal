@@ -19,20 +19,26 @@ package com.liferay.portal.tools.java.parser;
  */
 public class JavaTernaryOperator extends JavaExpression {
 
-	public void setCondition(JavaExpression condition) {
-		_condition = condition;
+	public void setConditionJavaExpression(
+		JavaExpression conditionJavaExpression) {
+
+		_conditionJavaExpression = conditionJavaExpression;
 	}
 
-	public void setFalseValue(JavaExpression falseValue) {
-		_falseValue = falseValue;
+	public void setFalseValueJavaExpression(
+		JavaExpression falseValueJavaExpression) {
+
+		_falseValueJavaExpression = falseValueJavaExpression;
 	}
 
-	public void setTrueValue(JavaExpression trueValue) {
-		_trueValue = trueValue;
+	public void setTrueValueJavaExpression(
+		JavaExpression trueValueJavaExpression) {
+
+		_trueValueJavaExpression = trueValueJavaExpression;
 	}
 
-	private JavaExpression _condition;
-	private JavaExpression _falseValue;
-	private JavaExpression _trueValue;
+	private JavaExpression _conditionJavaExpression;
+	private JavaExpression _falseValueJavaExpression;
+	private JavaExpression _trueValueJavaExpression;
 
 }

@@ -23,11 +23,11 @@ public class JavaAnnotationMemberValuePair extends BaseJavaTerm {
 		_name = new JavaSimpleValue(name);
 	}
 
-	public void addValue(JavaExpression value) {
-		_value = value;
+	public void setValueJavaExpression(JavaExpression valueJavaExpression) {
+		_valueJavaExpression = valueJavaExpression;
 	}
 
 	private final JavaSimpleValue _name;
-	private JavaExpression _value;
+	private JavaExpression _valueJavaExpression;
 
 }

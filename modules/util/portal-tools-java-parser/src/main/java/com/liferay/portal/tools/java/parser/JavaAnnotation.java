@@ -25,18 +25,18 @@ public class JavaAnnotation extends JavaExpression {
 		_name = new JavaSimpleValue(name);
 	}
 
-	public void setAnnotationMemberValuePairs(
-		List<JavaAnnotationMemberValuePair> annotationMemberValuePairs) {
+	public void setJavaAnnotationMemberValuePairs(
+		List<JavaAnnotationMemberValuePair> javaAnnotationMemberValuePairs) {
 
-		_annotationMemberValuePairs = annotationMemberValuePairs;
+		_javaAnnotationMemberValuePairs = javaAnnotationMemberValuePairs;
 	}
 
-	public void setValue(JavaExpression value) {
-		_value = value;
+	public void setValueJavaExpression(JavaExpression valueJavaExpression) {
+		_valueJavaExpression = valueJavaExpression;
 	}
 
-	private List<JavaAnnotationMemberValuePair> _annotationMemberValuePairs;
+	private List<JavaAnnotationMemberValuePair> _javaAnnotationMemberValuePairs;
 	private final JavaSimpleValue _name;
-	private JavaExpression _value;
+	private JavaExpression _valueJavaExpression;
 
 }

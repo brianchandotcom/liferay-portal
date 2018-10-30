@@ -25,20 +25,20 @@ public class JavaMethod extends BaseJavaTerm {
 		return _hasBody;
 	}
 
-	public void setAnnotations(List<JavaAnnotation> annotations) {
-		_annotations = annotations;
-	}
-
 	public void setHasBody(boolean hasBody) {
 		_hasBody = hasBody;
 	}
 
-	public void setSignature(JavaSignature signature) {
-		_signature = signature;
+	public void setJavaAnnotations(List<JavaAnnotation> javaAnnotations) {
+		_javaAnnotations = javaAnnotations;
 	}
 
-	private List<JavaAnnotation> _annotations;
+	public void setJavaSignature(JavaSignature javaSignature) {
+		_javaSignature = javaSignature;
+	}
+
 	private boolean _hasBody;
-	private JavaSignature _signature;
+	private List<JavaAnnotation> _javaAnnotations;
+	private JavaSignature _javaSignature;
 
 }

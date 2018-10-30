@@ -23,11 +23,11 @@ public class JavaLambdaParameter extends BaseJavaTerm {
 		_name = new JavaSimpleValue(name);
 	}
 
-	public void setType(JavaType type) {
-		_type = type;
+	public void setJavaType(JavaType javaType) {
+		_javaType = javaType;
 	}
 
+	private JavaType _javaType;
 	private final JavaSimpleValue _name;
-	private JavaType _type;
 
 }

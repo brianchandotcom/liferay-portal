@@ -19,12 +19,14 @@ package com.liferay.portal.tools.java.parser;
  */
 public class JavaMethodReference extends JavaExpression {
 
-	public JavaMethodReference(String methodName, JavaExpression reference) {
+	public JavaMethodReference(
+		String methodName, JavaExpression referenceJavaExpression) {
+
 		_methodName = new JavaSimpleValue(methodName);
-		_reference = reference;
+		_referenceJavaExpression = referenceJavaExpression;
 	}
 
 	private final JavaSimpleValue _methodName;
-	private final JavaExpression _reference;
+	private final JavaExpression _referenceJavaExpression;
 
 }

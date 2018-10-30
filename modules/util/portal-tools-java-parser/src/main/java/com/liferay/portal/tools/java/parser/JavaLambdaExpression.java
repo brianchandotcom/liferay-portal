@@ -21,10 +21,12 @@ import java.util.List;
  */
 public class JavaLambdaExpression extends JavaExpression {
 
-	public JavaLambdaExpression(List<JavaLambdaParameter> parameters) {
-		_parameters = parameters;
+	public JavaLambdaExpression(
+		List<JavaLambdaParameter> javaLambdaParameters) {
+
+		_javaLambdaParameters = javaLambdaParameters;
 	}
 
-	private final List<JavaLambdaParameter> _parameters;
+	private final List<JavaLambdaParameter> _javaLambdaParameters;
 
 }

@@ -26,16 +26,16 @@ public class JavaType extends BaseJavaTerm {
 		_arrayDimension = arrayDimension;
 	}
 
-	public void setGenericTypes(List<JavaType> genericTypes) {
-		_genericTypes = genericTypes;
+	public void setGenericJavaTypes(List<JavaType> genericJavaTypes) {
+		_genericJavaTypes = genericJavaTypes;
 	}
 
-	public void setLowerBounds(List<JavaType> lowerBounds) {
-		_lowerBounds = lowerBounds;
+	public void setLowerBoundJavaTypes(List<JavaType> lowerBoundJavaTypes) {
+		_lowerBoundJavaTypes = lowerBoundJavaTypes;
 	}
 
-	public void setUpperBounds(List<JavaType> upperBounds) {
-		_upperBounds = upperBounds;
+	public void setUpperBoundJavaTypes(List<JavaType> upperBoundJavaTypes) {
+		_upperBoundJavaTypes = upperBoundJavaTypes;
 	}
 
 	public void setVarargs(boolean varargs) {
@@ -43,10 +43,10 @@ public class JavaType extends BaseJavaTerm {
 	}
 
 	private final int _arrayDimension;
-	private List<JavaType> _genericTypes;
-	private List<JavaType> _lowerBounds;
+	private List<JavaType> _genericJavaTypes;
+	private List<JavaType> _lowerBoundJavaTypes;
 	private final JavaSimpleValue _name;
-	private List<JavaType> _upperBounds;
+	private List<JavaType> _upperBoundJavaTypes;
 	private boolean _varargs;
 
 }

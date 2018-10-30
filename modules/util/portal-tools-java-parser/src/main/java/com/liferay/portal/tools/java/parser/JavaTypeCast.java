@@ -19,12 +19,12 @@ package com.liferay.portal.tools.java.parser;
  */
 public class JavaTypeCast extends JavaExpression {
 
-	public void setType(JavaType type) {
-		_type = type;
+	public void setJavaType(JavaType javaType) {
+		_javaType = javaType;
 	}
 
-	public void setValue(JavaExpression value) {
-		_value = value;
+	public void setValueJavaExpression(JavaExpression valueJavaExpression) {
+		_valueJavaExpression = valueJavaExpression;
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class JavaTypeCast extends JavaExpression {
 		return false;
 	}
 
-	private JavaType _type;
-	private JavaExpression _value;
+	private JavaType _javaType;
+	private JavaExpression _valueJavaExpression;
 
 }

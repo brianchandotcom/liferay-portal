@@ -19,12 +19,13 @@ package com.liferay.portal.tools.java.parser;
  */
 public abstract class JavaExpression extends BaseJavaTerm {
 
-	public void setChainedExpression(JavaExpression chainedExpression) {
-		if (_chainedExpression == null) {
-			_chainedExpression = chainedExpression;
+	public void setChainedJavaExpression(JavaExpression chainedJavaExpression) {
+		if (_chainedJavaExpression == null) {
+			_chainedJavaExpression = chainedJavaExpression;
 		}
 		else {
-			_chainedExpression.setChainedExpression(chainedExpression);
+			_chainedJavaExpression.setChainedJavaExpression(
+				chainedJavaExpression);
 		}
 	}
 
@@ -38,7 +39,7 @@ public abstract class JavaExpression extends BaseJavaTerm {
 		return true;
 	}
 
-	private JavaExpression _chainedExpression;
+	private JavaExpression _chainedJavaExpression;
 	private boolean _hasSurroundingParentheses;
 
 }

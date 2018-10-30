@@ -25,16 +25,18 @@ public class JavaClassCall extends JavaExpression {
 		_className = new JavaSimpleValue(className);
 	}
 
-	public void setGenericTypes(List<JavaType> genericTypes) {
-		_genericTypes = genericTypes;
+	public void setGenericJavaTypes(List<JavaType> genericJavaTypes) {
+		_genericJavaTypes = genericJavaTypes;
 	}
 
-	public void setParameterValues(List<JavaExpression> parameterValues) {
-		_parameterValues = parameterValues;
+	public void setParameterValueJavaExpressions(
+		List<JavaExpression> parameterValueJavaExpressions) {
+
+		_parameterValueJavaExpressions = parameterValueJavaExpressions;
 	}
 
 	private final JavaSimpleValue _className;
-	private List<JavaType> _genericTypes;
-	private List<JavaExpression> _parameterValues;
+	private List<JavaType> _genericJavaTypes;
+	private List<JavaExpression> _parameterValueJavaExpressions;
 
 }

@@ -19,10 +19,12 @@ package com.liferay.portal.tools.java.parser;
  */
 public class JavaIfStatement extends BaseJavaTerm {
 
-	public void setCondition(JavaExpression condition) {
-		_condition = condition;
+	public void setConditionJavaExpression(
+		JavaExpression conditionJavaExpression) {
+
+		_conditionJavaExpression = conditionJavaExpression;
 	}
 
-	private JavaExpression _condition;
+	private JavaExpression _conditionJavaExpression;
 
 }

@@ -21,15 +21,15 @@ import java.util.List;
  */
 public class JavaConstructor extends BaseJavaTerm {
 
-	public void setAnnotations(List<JavaAnnotation> annotations) {
-		_annotations = annotations;
+	public void setJavaAnnotations(List<JavaAnnotation> javaAnnotations) {
+		_javaAnnotations = javaAnnotations;
 	}
 
-	public void setSignature(JavaSignature signature) {
-		_signature = signature;
+	public void setJavaSignature(JavaSignature javaSignature) {
+		_javaSignature = javaSignature;
 	}
 
-	private List<JavaAnnotation> _annotations;
-	private JavaSignature _signature;
+	private List<JavaAnnotation> _javaAnnotations;
+	private JavaSignature _javaSignature;
 
 }

@@ -828,17 +828,6 @@ public class MainServlet extends ActionServlet {
 		}
 	}
 
-	private void _initInternal() throws ServletException {
-        try {
-            internal = MessageResources.getMessageResources(internalName);
-        } catch (MissingResourceException e) {
-            log.error("Cannot load internal resources from '" + internalName
-                + "'", e);
-            throw new UnavailableException(
-                "Cannot load internal resources from '" + internalName + "'");
-        }
-    }
-
 	private void _initCompanies() throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize companies");
@@ -856,6 +845,17 @@ public class MainServlet extends ActionServlet {
 		finally {
 			CompanyThreadLocal.setCompanyId(
 				PortalInstances.getDefaultCompanyId());
+		}
+	}
+
+	private void _initInternal() throws ServletException {
+		try {
+			internal = MessageResources.getMessageResources(internalName);
+		}
+		catch (MissingResourceException mre) {
+			throw new UnavailableException(
+				"Unable to load internal resources from \"" + internalName +
+					"\"");
 		}
 	}
 

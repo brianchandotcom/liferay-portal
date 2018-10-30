@@ -851,16 +851,7 @@ public class MainServlet extends ActionServlet {
 
 	private void _initChain()
         throws ServletException {
-        // Parse the configuration file specified by path or resource
         try {
-            String value;
-
-            value = getServletConfig().getInitParameter("chainConfig");
-
-            if (value != null) {
-                chainConfig = value;
-            }
-
             ConfigParser parser = new ConfigParser();
             List urls = splitAndResolvePaths(chainConfig);
             URL resource;

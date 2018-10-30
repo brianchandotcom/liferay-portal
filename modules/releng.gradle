@@ -427,6 +427,7 @@ portalArtifactsJar {
 			project.download {
 				dest cacheDir
 				overwrite false
+				quiet true
 				src artifactURL
 			}
 
@@ -450,6 +451,8 @@ portalArtifactsJar {
 			}
 
 			dependencies.portalArtifacts files(dependencyDir)
+
+			logger.lifecycle "Added {}", cacheJarFile.name[0 .. -5]
 		}
 	}
 }

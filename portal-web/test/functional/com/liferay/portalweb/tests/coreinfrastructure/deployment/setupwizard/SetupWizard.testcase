@@ -44,6 +44,23 @@
 		<execute macro="Smoke#runSmoke" />
 	</command>
 
+	<command name="HypersonicWithSpecialContent" priority="5">
+		<property name="database.types" value="hypersonic" />
+		<property name="portal.acceptance" value="false" />
+
+		<execute macro="SetupWizard#configurePGContentNull">
+			<var name="administratorEmail" value="" />
+			<var name="administratorFirstName" value="" />
+			<var name="administratorLastName" value="" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="SetupWizard#configurePGSpecialCharacters">
+			<var name="basicField" value="1234567890!@#$%^&amp;*()~`" />
+		</execute>
+	</command>
+
 	<command name="MySQLWithXSSContent" priority="5">
 		<property name="database.types" value="mysql" />
 

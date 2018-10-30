@@ -59,7 +59,6 @@
 			</then>
 		</if>
 
-
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${subfolderName}" />
 		</execute>

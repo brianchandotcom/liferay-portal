@@ -275,8 +275,8 @@ version 1.1.2.
 
 ## 1.10.9 - 2018-10-29
 
-### Fixed
-- [LPS-83922]: Update the [Liferay Gradle Plugins] dependency to version 3.13.8.
+### Changed
+- [LPS-86549]: Update the [Liferay Gradle Plugins] dependency to version 3.13.8.
 
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

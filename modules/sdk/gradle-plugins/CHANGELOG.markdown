@@ -5936,7 +5936,7 @@ to version 2.3.281.
 ## 3.13.8 - 2018-10-29
 
 ### Changed
-- [LPS-86556]: Use update rather than refresh strategy when watching OSGi
+- [LPS-86549]: Use update rather than refresh strategy when watching OSGi
 changes.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
@@ -6396,6 +6396,7 @@ changes.
 [LPS-86413]: https://issues.liferay.com/browse/LPS-86413
 [LPS-86447]: https://issues.liferay.com/browse/LPS-86447
 [LPS-86493]: https://issues.liferay.com/browse/LPS-86493
+[LPS-86549]: https://issues.liferay.com/browse/LPS-86549
 [LPS-86556]: https://issues.liferay.com/browse/LPS-86556
 [LPS-86576]: https://issues.liferay.com/browse/LPS-86576
 [LPS-86581]: https://issues.liferay.com/browse/LPS-86581

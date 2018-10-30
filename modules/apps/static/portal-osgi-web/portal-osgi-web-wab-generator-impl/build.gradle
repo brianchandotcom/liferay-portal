@@ -3,7 +3,7 @@ dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "4.1.0"
 	compileOnly group: "com.liferay", name: "com.liferay.ant.bnd", version: "3.0.6"
 	compileOnly group: "com.liferay", name: "com.liferay.whip", version: "1.0.1"
-	compileOnly group: "com.liferay", name: "org.apache.felix.fileinstall", version: "3.5.4.LIFERAY-PATCHED-3"
+	compileOnly group: "com.liferay", name: "org.apache.felix.fileinstall", version: "3.5.4.LIFERAY-PATCHED-4"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"

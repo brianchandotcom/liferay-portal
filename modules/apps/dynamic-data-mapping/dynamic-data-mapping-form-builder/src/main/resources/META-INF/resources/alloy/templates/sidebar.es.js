@@ -4,7 +4,7 @@ import Soy from 'metal-soy';
 import './field-options-toolbar.soy';
 import templates from './sidebar.soy';
 
-let SidebarTemplates = [];
+const SidebarTemplates = [];
 
 if (!window.DDMSidebar) {
 	window.DDMSidebar = {
@@ -12,14 +12,14 @@ if (!window.DDMSidebar) {
 	};
 }
 
-for (let template in templates) {
+for (const template in templates) {
 	if (template !== 'templates') {
-		class C extends Component {};
+		class C extends Component {}
 		Soy.register(C, templates, template);
 		SidebarTemplates.push(
 			{
-				key: template,
-				component: C
+				component: C,
+				key: template
 			}
 		);
 		window.DDMSidebar[template] = C;

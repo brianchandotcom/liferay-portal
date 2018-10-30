@@ -22,7 +22,7 @@
 	{@param rules: list<[conditions: list<[operandType: string, operandValue: string, strings: any, operator: string, operands: list<[type: string, label: string, value: string]>]>, actions: list<html>, logicOperator: string]>}
 	{@param strings: ?}
 
-	<div>
+	<div class="ddm-rule-list">
 		{if length($rules) > 0}
 			<ul class="ddm-form-body-content form-builder-rule-builder-rules-list tabular-list-group">
 			{foreach $rule in $rules}

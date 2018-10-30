@@ -3,7 +3,7 @@ import Soy from 'metal-soy';
 
 import templates from './rule.soy';
 
-let RuleTemplates = [];
+const RuleTemplates = [];
 
 if (!window.DDMRule) {
 	window.DDMRule = {
@@ -11,14 +11,14 @@ if (!window.DDMRule) {
 	};
 }
 
-for (let template in templates) {
+for (const template in templates) {
 	if (template !== 'templates') {
-		class C extends Component {};
+		class C extends Component {}
 		Soy.register(C, templates, template);
 		RuleTemplates.push(
 			{
-				key: template,
-				component: C
+				component: C,
+				key: template
 			}
 		);
 		window.DDMRule[template] = C;

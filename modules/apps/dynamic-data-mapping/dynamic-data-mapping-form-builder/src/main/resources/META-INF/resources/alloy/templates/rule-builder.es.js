@@ -3,7 +3,7 @@ import Soy from 'metal-soy';
 
 import templates from './rule-builder.soy';
 
-let RuleBuilderTemplates = [];
+const RuleBuilderTemplates = [];
 
 if (!window.DDMRuleBuilder) {
 	window.DDMRuleBuilder = {
@@ -11,7 +11,7 @@ if (!window.DDMRuleBuilder) {
 	};
 }
 
-for (let template in templates) {
+for (const template in templates) {
 	if (template !== 'templates') {
 		class C extends Component {}
 		Soy.register(C, templates, template);

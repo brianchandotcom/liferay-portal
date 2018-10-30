@@ -45,5 +45,5 @@
 {template .field_settings_toolbar_item}
 	{@param option: [buttonClass: string, handler: string, label: string]}
 
-	<a class="dropdown-item ddm-form-field-actions-item {$option.buttonClass or ''}" data-handler="{$option.handler}" href="javascript:;" title="{$option.label}">{$option.label}</a>
+	<a class="ddm-form-field-actions-item dropdown-item {$option.buttonClass or ''}" data-handler="{$option.handler}" href="javascript:;" title="{$option.label}">{$option.label}</a>
 {/template}

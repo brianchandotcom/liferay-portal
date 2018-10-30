@@ -12,7 +12,7 @@
 	{@param strings: ?}
 	{@param? logicalOperator: string}
 
-	<div>
+	<div class="ddm-rule">
 		<h2 class="form-builder-section-title text-default">{$strings.title}</h2>
 		<h4 class="text-default">{$strings.description}</h4>
 
@@ -82,7 +82,7 @@
 					<span class="form-builder-rule-settings-save-label">{$strings.save}</span>
 				</button>
 
-				<button class="btn btn-lg btn-cancel btn-secondary form-builder-rule-settings-cancel" type="button">
+				<button class="btn btn-cancel btn-lg btn-secondary form-builder-rule-settings-cancel" type="button">
 					<span class="lfr-btn-label">{$strings.cancel}</span>
 				</button>
 			</div>
@@ -149,7 +149,7 @@
 
 	<div class="addbutton-timeline-item">
 		<div class="add-condition timeline-increment-icon">
-			<a aria-role="button" class="btn-primary rounded-circle sticker sticker-primary form-builder-timeline-add-item {$cssClass or ''}" href="javascript:;">
+			<a aria-role="button" class="btn-primary form-builder-timeline-add-item rounded-circle sticker sticker-primary {$cssClass or ''}" href="javascript:;">
 				{$plusIcon}
 			</a>
 		</div>
@@ -185,7 +185,7 @@
 /**
  * Prints Logical Operator Dropdown
  */
-{template .logicalOperatorDropDown autoescape="strict" kind="html"}
+{template .logicalOperatorDropDown}
 	{@param strings: ?}
 	{@param? logicalOperator: string}
 

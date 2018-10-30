@@ -5,7 +5,7 @@
 		{
 			groups: {
 				'form-builder': {
-					base: MODULE_PATH + '/js/',
+					base: MODULE_PATH + '/alloy/js/',
 					combine: Liferay.AUI.getCombine(),
 					filter: LiferayAUI.getFilterConfig(),
 					modules: {
@@ -226,7 +226,7 @@
 							]
 						}
 					},
-					root: MODULE_PATH + '/js/'
+					root: MODULE_PATH + '/alloy/js/'
 				}
 			}
 		}

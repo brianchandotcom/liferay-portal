@@ -3,7 +3,7 @@ import Soy from 'metal-soy';
 
 import templates from './data-provider-parameter.soy';
 
-let DataProviderParameterTemplates = [];
+const DataProviderParameterTemplates = [];
 
 if (!window.DDMDataProviderParameter) {
 	window.DDMDataProviderParameter = {
@@ -11,14 +11,14 @@ if (!window.DDMDataProviderParameter) {
 	};
 }
 
-for (let template in templates) {
+for (const template in templates) {
 	if (template !== 'templates') {
-		class C extends Component {};
+		class C extends Component {}
 		Soy.register(C, templates, template);
 		DataProviderParameterTemplates.push(
 			{
-				key: template,
-				component: C
+				component: C,
+				key: template
 			}
 		);
 		window.DDMDataProviderParameter[template] = C;

@@ -3,7 +3,7 @@ import Soy from 'metal-soy';
 
 import templates from './field-types-sidebar.soy';
 
-let FieldTypesSidebarTemplates = [];
+const FieldTypesSidebarTemplates = [];
 
 if (!window.DDMFieldTypesSidebar) {
 	window.DDMFieldTypesSidebar = {
@@ -11,15 +11,17 @@ if (!window.DDMFieldTypesSidebar) {
 	};
 }
 
-for (let template in templates) {
+for (const template in templates) {
 	if (template !== 'templates') {
-		class C extends Component {};
+		class C extends Component {}
 		Soy.register(C, templates, template);
 		C.Soy = Soy;
-		FieldTypesSidebarTemplates.push({
-			key: template,
-			component: C
-		});
+		FieldTypesSidebarTemplates.push(
+			{
+				component: C,
+				key: template
+			}
+		);
 		window.DDMFieldTypesSidebar[template] = C;
 	}
 }

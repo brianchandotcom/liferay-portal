@@ -136,6 +136,7 @@ import org.apache.struts.Globals;
 import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.RequestProcessor;
 import org.apache.struts.config.ModuleConfig;
+import org.apache.struts.config.ModuleConfigFactory;
 import org.apache.struts.util.MessageResources;
 
 /**
@@ -795,7 +796,12 @@ public class MainServlet extends ActionServlet {
 
 			servletContext.setAttribute(Globals.ACTION_SERVLET_KEY, this);
 
-			initModuleConfigFactory();
+			String configFactory =
+				getServletConfig().getInitParameter("configFactory");
+
+			if (configFactory != null) {
+				ModuleConfigFactory.setFactoryClass(configFactory);
+			}
 
 			ModuleConfig moduleConfig = initModuleConfig("", config);
 

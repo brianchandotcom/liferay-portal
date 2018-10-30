@@ -396,6 +396,17 @@ portalArtifactsJar {
 		println "Created jar " + archivePath
 	}
 
+	onlyIf {
+		File relengDir = file(".releng")
+
+		if (relengDir.exists()) {
+			return true
+		}
+		else {
+			return false
+		}
+	}
+
 	if (gradle.startParameter.taskNames.contains("portalArtifactsJar")) {
 		File dependenciesDir = new File(portalArtifactsDir, "dependencies")
 

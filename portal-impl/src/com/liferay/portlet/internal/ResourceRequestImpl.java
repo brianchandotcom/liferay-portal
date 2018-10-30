@@ -224,7 +224,7 @@ public class ResourceRequestImpl
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IllegalStateException {
 
-		if (!isAsyncSupported()) {
+		if (!isAsyncSupported() || isAsyncStarted()) {
 			throw new IllegalStateException();
 		}
 

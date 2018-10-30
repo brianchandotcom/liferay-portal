@@ -1048,8 +1048,6 @@ public class MainServlet extends ActionServlet {
 		EventsProcessorUtil.process(
 			PropsKeys.GLOBAL_SHUTDOWN_EVENTS,
 			PropsValues.GLOBAL_SHUTDOWN_EVENTS);
-
-		super.destroy();
 	}
 
 	protected void processGlobalStartupEvents() throws Exception {

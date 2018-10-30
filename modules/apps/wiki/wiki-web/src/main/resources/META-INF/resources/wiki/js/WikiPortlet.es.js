@@ -115,7 +115,10 @@ class WikiPortlet extends PortletBase {
 		let deleteURL = link.getAttribute('data-url');
 
 		fetch(
-			deleteURL
+			deleteURL,
+			{
+				credentials: 'include'
+			}
 		).then(
 			() => {
 				let searchContainer = this.searchContainer_;

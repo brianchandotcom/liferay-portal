@@ -102,8 +102,6 @@ import com.liferay.social.kernel.util.SocialConfigurationUtil;
 
 import java.io.IOException;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -129,17 +127,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.commons.beanutils.converters.BigDecimalConverter;
-import org.apache.commons.beanutils.converters.BigIntegerConverter;
-import org.apache.commons.beanutils.converters.BooleanConverter;
-import org.apache.commons.beanutils.converters.ByteConverter;
-import org.apache.commons.beanutils.converters.CharacterConverter;
-import org.apache.commons.beanutils.converters.DoubleConverter;
-import org.apache.commons.beanutils.converters.FloatConverter;
-import org.apache.commons.beanutils.converters.IntegerConverter;
-import org.apache.commons.beanutils.converters.LongConverter;
-import org.apache.commons.beanutils.converters.ShortConverter;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.RequestProcessor;
@@ -772,13 +759,25 @@ public class MainServlet extends ActionServlet {
 	}
 
 	private void _init() throws ServletException {
+		try {
+			internal = MessageResources.getMessageResources(internalName);
+		}
+		catch (MissingResourceException mre) {
+			throw new UnavailableException(
+				StringBundler.concat(
+					"Unable to load internal resources from \"", internalName,
+					"\", due to :", mre.getMessage()));
+		}
+
+		ServletConfig servletConfig = getServletConfig();
+
+		config = servletConfig.getInitParameter("config");
+
 		String configPrefix = "config/";
 
 		int configPrefixLength = configPrefix.length() - 1;
 
 		try {
-			_initInternal();
-			_initOther();
 			initServlet();
 			initChain();
 
@@ -798,8 +797,6 @@ public class MainServlet extends ActionServlet {
 			initModuleActions(moduleConfig);
 
 			moduleConfig.freeze();
-
-			ServletConfig servletConfig = getServletConfig();
 
 			Enumeration<String> names = servletConfig.getInitParameterNames();
 
@@ -841,10 +838,6 @@ public class MainServlet extends ActionServlet {
 		}
 	}
 
-	private void _initOther() throws ServletException {
-        config = getServletConfig().getInitParameter("config");
-    }
-
 	private void _initCompanies() throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize companies");
@@ -862,17 +855,6 @@ public class MainServlet extends ActionServlet {
 		finally {
 			CompanyThreadLocal.setCompanyId(
 				PortalInstances.getDefaultCompanyId());
-		}
-	}
-
-	private void _initInternal() throws ServletException {
-		try {
-			internal = MessageResources.getMessageResources(internalName);
-		}
-		catch (MissingResourceException mre) {
-			throw new UnavailableException(
-				"Unable to load internal resources from \"" + internalName +
-					"\"");
 		}
 	}
 

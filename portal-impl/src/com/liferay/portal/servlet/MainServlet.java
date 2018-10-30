@@ -117,6 +117,7 @@ import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
@@ -455,73 +456,6 @@ public class MainServlet extends ActionServlet {
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 	}
 
-	private void _init() throws ServletException {
-        final String configPrefix = "config/";
-        final int configPrefixLength = configPrefix.length() - 1;
-
-        // Wraps the entire initialization in a try/catch to better handle
-        // unexpected exceptions and errors to provide better feedback
-        // to the developer
-        try {
-            initInternal();
-            initOther();
-            initServlet();
-            initChain();
-
-            getServletContext().setAttribute(Globals.ACTION_SERVLET_KEY, this);
-            initModuleConfigFactory();
-
-            // Initialize modules as needed
-            ModuleConfig moduleConfig = initModuleConfig("", config);
-
-            initModuleMessageResources(moduleConfig);
-            initModulePlugIns(moduleConfig);
-            initModuleFormBeans(moduleConfig);
-            initModuleForwards(moduleConfig);
-            initModuleExceptionConfigs(moduleConfig);
-            initModuleActions(moduleConfig);
-            moduleConfig.freeze();
-
-            Enumeration names = getServletConfig().getInitParameterNames();
-
-            while (names.hasMoreElements()) {
-                String name = (String) names.nextElement();
-
-                if (!name.startsWith(configPrefix)) {
-                    continue;
-                }
-
-                String prefix = name.substring(configPrefixLength);
-
-                moduleConfig =
-                    initModuleConfig(prefix,
-                        getServletConfig().getInitParameter(name));
-                initModuleMessageResources(moduleConfig);
-                initModulePlugIns(moduleConfig);
-                initModuleFormBeans(moduleConfig);
-                initModuleForwards(moduleConfig);
-                initModuleExceptionConfigs(moduleConfig);
-                initModuleActions(moduleConfig);
-                moduleConfig.freeze();
-            }
-
-            this.initModulePrefixes(this.getServletContext());
-
-            this.destroyConfigDigester();
-        } catch (UnavailableException ex) {
-            throw ex;
-        } catch (Throwable t) {
-            // The follow error message is not retrieved from internal message
-            // resources as they may not have been able to have been
-            // initialized
-            log.error("Unable to initialize Struts ActionServlet due to an "
-                + "unexpected exception or error thrown, so marking the "
-                + "servlet as unavailable.  Most likely, this is due to an "
-                + "incorrect or missing library dependency.", t);
-            throw new UnavailableException(t.getMessage());
-        }
-    }
-
 	@Override
 	public void service(
 			HttpServletRequest request, HttpServletResponse response)
@@ -820,6 +754,72 @@ public class MainServlet extends ActionServlet {
 		}
 
 		return remoteUser;
+	}
+
+	private void _init() throws ServletException {
+		String configPrefix = "config/";
+
+		int configPrefixLength = configPrefix.length() - 1;
+
+		try {
+			initInternal();
+			initOther();
+			initServlet();
+			initChain();
+
+			ServletContext servletContext = getServletContext();
+
+			servletContext.setAttribute(Globals.ACTION_SERVLET_KEY, this);
+
+			initModuleConfigFactory();
+
+			ModuleConfig moduleConfig = initModuleConfig("", config);
+
+			initModuleMessageResources(moduleConfig);
+			initModulePlugIns(moduleConfig);
+			initModuleFormBeans(moduleConfig);
+			initModuleForwards(moduleConfig);
+			initModuleExceptionConfigs(moduleConfig);
+			initModuleActions(moduleConfig);
+
+			moduleConfig.freeze();
+
+			ServletConfig servletConfig = getServletConfig();
+
+			Enumeration<String> names = servletConfig.getInitParameterNames();
+
+			while (names.hasMoreElements()) {
+				String name = names.nextElement();
+
+				if (!name.startsWith(configPrefix)) {
+					continue;
+				}
+
+				String prefix = name.substring(configPrefixLength);
+
+				moduleConfig = initModuleConfig(
+					prefix, servletConfig.getInitParameter(name));
+
+				initModuleMessageResources(moduleConfig);
+				initModulePlugIns(moduleConfig);
+				initModuleFormBeans(moduleConfig);
+				initModuleForwards(moduleConfig);
+				initModuleExceptionConfigs(moduleConfig);
+				initModuleActions(moduleConfig);
+
+				moduleConfig.freeze();
+			}
+
+			initModulePrefixes(servletContext);
+
+			destroyConfigDigester();
+		}
+		catch (UnavailableException ue) {
+			throw ue;
+		}
+		catch (Throwable t) {
+			throw new UnavailableException(t.getMessage());
+		}
 	}
 
 	private void _initCompanies() throws Exception {

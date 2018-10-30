@@ -102,6 +102,8 @@ import com.liferay.social.kernel.util.SocialConfigurationUtil;
 
 import java.io.IOException;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -127,11 +129,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
+import org.apache.commons.digester.Digester;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.RequestProcessor;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.util.MessageResources;
+import org.xml.sax.SAXException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -782,7 +786,7 @@ public class MainServlet extends ActionServlet {
 		int configPrefixLength = configPrefix.length() - 1;
 
 		try {
-			initServlet();
+			_initServlet();
 			initChain();
 
 			ServletContext servletContext = getServletContext();
@@ -841,6 +845,73 @@ public class MainServlet extends ActionServlet {
 			throw ue;
 		}
 	}
+
+	private void _initServlet()
+        throws ServletException {
+        // Remember our servlet name
+        this.servletName = getServletConfig().getServletName();
+
+        // Prepare a Digester to scan the web application deployment descriptor
+        Digester digester = new Digester();
+
+        digester.push(this);
+        digester.setNamespaceAware(true);
+        digester.setValidating(false);
+
+        // Register our local copy of the DTDs that we can find
+        for (int i = 0; i < registrations.length; i += 2) {
+            URL url = this.getClass().getResource(registrations[i + 1]);
+
+            if (url != null) {
+                digester.register(registrations[i], url.toString());
+            }
+        }
+
+        // Configure the processing rules that we need
+        digester.addCallMethod("web-app/servlet-mapping", "addServletMapping", 2);
+        digester.addCallParam("web-app/servlet-mapping/servlet-name", 0);
+        digester.addCallParam("web-app/servlet-mapping/url-pattern", 1);
+
+        // Process the web application deployment descriptor
+        if (log.isDebugEnabled()) {
+            log.debug("Scanning web.xml for controller servlet mapping");
+        }
+
+        InputStream input =
+            getServletContext().getResourceAsStream("/WEB-INF/web.xml");
+
+        if (input == null) {
+            log.error(internal.getMessage("configWebXml"));
+            throw new ServletException(internal.getMessage("configWebXml"));
+        }
+
+        try {
+            digester.parse(input);
+        } catch (IOException e) {
+            log.error(internal.getMessage("configWebXml"), e);
+            throw new ServletException(e);
+        } catch (SAXException e) {
+            log.error(internal.getMessage("configWebXml"), e);
+            throw new ServletException(e);
+        } finally {
+            try {
+                input.close();
+            } catch (IOException e) {
+                log.error(internal.getMessage("configWebXml"), e);
+                throw new ServletException(e);
+            }
+        }
+
+        // Record a servlet context attribute (if appropriate)
+        if (log.isDebugEnabled()) {
+            log.debug("Mapping for servlet '" + servletName + "' = '"
+                + servletMapping + "'");
+        }
+
+        if (servletMapping != null) {
+            getServletContext().setAttribute(Globals.SERVLET_KEY, servletMapping);
+        }
+    }
 
 	private void _initCompanies() throws Exception {
 		if (_log.isDebugEnabled()) {

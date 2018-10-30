@@ -8980,7 +8980,10 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 				</unzip>
 
 				<if>
-					<equals arg1="${app.server.type}" arg2="websphere" />
+					<and>
+						<equals arg1="${app.server.type}" arg2="websphere" />
+						<equals arg1="${app.server.websphere.version}" arg2="8.5.5.0" />
+					</and>
 					<then>
 						<mkdir dir="${app.server.websphere.dir}/java_1.8_64/jre/lib/ext" />
 

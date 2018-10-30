@@ -8,7 +8,7 @@
 			}
 			else
 		</#if>
-		if (${entityColumn.name}.equals("")) {
+		if (${entityColumn.name}.isEmpty()) {
 			query.append(_FINDER_COLUMN_${entityFinder.name?upper_case}_${entityColumn.name?upper_case}_3${finderFieldSuffix});
 		}
 	<#else>

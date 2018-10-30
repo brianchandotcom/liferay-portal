@@ -14,7 +14,7 @@
 	}
 	else
 </#if>
-if (${entityColumn.name}.equals("")) {
+if (${entityColumn.name}.isEmpty()) {
 	<#if hasConjunction>
 		query.append(_FINDER_COLUMN_${entityFinder.name?upper_case}_${entityColumn.name?upper_case}_6${finderFieldSuffix});
 	<#else>

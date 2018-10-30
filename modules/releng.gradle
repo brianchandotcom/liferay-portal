@@ -345,6 +345,8 @@ lockPrivateDependencyVersions {
 }
 
 portalArtifactsJar {
+	File portalArtifactsDir = new File(buildDir, "portalArtifacts")
+
 	baseName = "portal-artifacts"
 	classifier = null
 	configurations = [project.configurations.portalArtifacts]
@@ -360,11 +362,13 @@ portalArtifactsJar {
 		}
 
 		manifest {
-			FileTree portalArtifactsManifestFileTree = fileTree(portalArtifactsDir).matching {
+			File dependenciesDir = new File(portalArtifactsDir, "dependencies")
+
+			FileTree manifestFileTree = fileTree(dependenciesDir).matching {
 				include "**/META-INF/MANIFEST.MF"
 			}
 
-			portalArtifactsManifestFileTree.files.each {
+			manifestFileTree.files.each {
 				File portalArtifactsManifestFile ->
 
 				from (portalArtifactsManifestFile) {

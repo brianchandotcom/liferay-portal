@@ -187,7 +187,9 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 					status = WorkflowConstants.STATUS_INACTIVE;
 				}
 
-				_userService.updateStatus(deleteUserId, status, serviceContext);
+				_userService.updateStatus(
+					deleteUserId, status,
+					(ServiceContext)serviceContext.clone());
 			}
 			else {
 				_userService.deleteUser(deleteUserId);

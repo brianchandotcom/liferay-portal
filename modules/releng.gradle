@@ -437,6 +437,18 @@ portalArtifactsJar {
 				into dependencyDir
 			}
 
+			File manifestFile = new File(dependencyDir, "META-INF/MANIFEST.MF")
+
+			if (!manifestFile.exists()) {
+				return
+			}
+
+			String content = manifestFile.getText("UTF-8")
+
+			if (!content.contains("Export-Package:")) {
+				return
+			}
+
 			dependencies.portalArtifacts files(dependencyDir)
 		}
 	}

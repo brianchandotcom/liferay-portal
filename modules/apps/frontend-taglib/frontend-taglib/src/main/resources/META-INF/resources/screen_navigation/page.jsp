@@ -56,7 +56,7 @@ List<ScreenNavigationEntry> screenNavigationEntries = (List<ScreenNavigationEntr
 	</div>
 </c:if>
 
-<div class="container">
+<div class="container-fluid container-fluid-max-xl container-form-lg">
 	<div class="row">
 		<c:if test="<%= screenNavigationEntries.size() > 1 %>">
 			<div class="<%= navCssClass %>">

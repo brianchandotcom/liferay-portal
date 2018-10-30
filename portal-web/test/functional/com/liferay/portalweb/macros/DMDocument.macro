@@ -696,6 +696,8 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 
+		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+
 		<if>
 			<equals arg1="${dmRepositoryName}" arg2="true" />
 			<then>

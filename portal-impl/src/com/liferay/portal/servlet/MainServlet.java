@@ -596,25 +596,10 @@ public class MainServlet extends ActionServlet {
 		super.service(request, response);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected void checkPortletRequestProcessor(HttpServletRequest request)
-		throws ServletException {
-	}
-
 	protected void checkServletContext(HttpServletRequest request) {
 		ServletContext servletContext = getServletContext();
 
 		request.setAttribute(WebKeys.CTX, servletContext);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected void checkTilesDefinitionsFactory() {
 	}
 
 	protected void checkWebSettings(String xml) throws DocumentException {
@@ -958,13 +943,6 @@ public class MainServlet extends ActionServlet {
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected void initServerDetector() throws Exception {
-	}
-
 	protected void initSocial(PluginPackage pluginPackage) throws Exception {
 		ServletContext servletContext = getServletContext();
 
@@ -1117,16 +1095,6 @@ public class MainServlet extends ActionServlet {
 			"this-site-is-inactive-please-contact-the-administrator");
 
 		return true;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected void processInactiveRequest(
-			HttpServletRequest request, HttpServletResponse response,
-			String messageKey)
-		throws IOException {
 	}
 
 	protected boolean processMaintenanceRequest(

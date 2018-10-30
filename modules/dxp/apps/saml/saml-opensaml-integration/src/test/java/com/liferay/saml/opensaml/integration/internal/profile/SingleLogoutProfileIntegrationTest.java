@@ -40,6 +40,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -97,6 +98,7 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 		prepareServiceProvider(SP_ENTITY_ID);
 	}
 
+	@Ignore
 	@Test
 	public void testPerformIdpSpLogoutInvalidSloRequestInfo() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
@@ -118,6 +120,7 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 				(String)mockHttpServletRequest.getAttribute("tilesPopUp")));
 	}
 
+	@Ignore
 	@Test
 	public void testPerformIdpSpLogoutValidSloRequestInfo() throws Exception {
 		SamlIdpSpConnection samlIdpSpConnection = new SamlIdpSpConnectionImpl();

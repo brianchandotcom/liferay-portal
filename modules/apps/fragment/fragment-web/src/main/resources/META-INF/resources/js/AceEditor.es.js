@@ -24,6 +24,7 @@ class AceEditor extends Component {
 	 */
 	attached() {
 		this._editorDocument = null;
+		this._getAutocompleteSuggestion = this._getAutocompleteSuggestion.bind(this);
 		this._handleDocumentChanged = this._handleDocumentChanged.bind(this);
 
 		AUI().use(
@@ -85,33 +86,8 @@ class AceEditor extends Component {
 			A.AceEditor.TemplateProcessor,
 
 			{
-				getMatch: content => {
-					let match = null;
-					let matchContent = content;
-					let matchIndex = null;
-
-					if ((matchIndex = matchContent.lastIndexOf('<')) >= 0) {
-						matchContent = matchContent.substring(matchIndex);
-
-						if (/<lfr[\w]*[^<lfr]*$/.test(matchContent)) {
-							match = {
-								content: matchContent.substring(1),
-								start: matchIndex,
-								type: 0
-							};
-						}
-					}
-
-					return match;
-				},
-
-				getSuggestion: (match, selectedSuggestion) => {
-					const tag = this.autocompleteTags.find(
-						_tag => _tag.name === selectedSuggestion
-					);
-
-					return tag ? tag.content.substring(1) : '';
-				}
+				getMatch: this._getAutocompleteMatch,
+				getSuggestion: this._getAutocompleteSuggestion
 			}
 		);
 
@@ -130,6 +106,53 @@ class AceEditor extends Component {
 				zIndex: 10000
 			}
 		);
+	}
+
+	/**
+	 * Returns a match object (if any) for "lfr-" tags
+	 * inside the given content.
+	 * @param {string} content
+	 * @private
+	 * @return {object} Match result
+	 * @review
+	 */
+	_getAutocompleteMatch(content) {
+		let match = null;
+		let matchContent = content;
+		let matchIndex = null;
+
+		if (matchContent.lastIndexOf('<') >= 0) {
+			matchIndex = matchContent.lastIndexOf('<');
+
+			matchContent = matchContent.substring(matchIndex);
+
+			if (/<lfr[\w]*[^<lfr]*$/.test(matchContent)) {
+				match = {
+					content: matchContent.substring(1),
+					start: matchIndex,
+					type: 0
+				};
+			}
+		}
+
+		return match;
+	}
+
+	/**
+	 * Returns a tag completion suggestion for the given
+	 * match and selectedSuggestion.
+	 * @param {object} match
+	 * @param {string} selectedSuggestion
+	 * @private
+	 * @return {string}
+	 * @review
+	 */
+	_getAutocompleteSuggestion(match, selectedSuggestion) {
+		const tag = this.autocompleteTags.find(
+			_tag => _tag.name === selectedSuggestion
+		);
+
+		return tag ? tag.content.substring(1) : '';
 	}
 
 	/**

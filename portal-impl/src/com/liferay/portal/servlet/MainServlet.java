@@ -101,7 +101,6 @@ import com.liferay.registry.dependency.ServiceDependencyManager;
 import com.liferay.social.kernel.util.SocialConfigurationUtil;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.net.URL;
 
@@ -109,6 +108,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.MissingResourceException;
@@ -124,6 +124,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
 import javax.servlet.UnavailableException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -131,7 +132,6 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
 import org.apache.commons.chain.config.ConfigParser;
-import org.apache.commons.digester.Digester;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.RequestProcessor;
@@ -1038,42 +1038,20 @@ public class MainServlet extends ActionServlet {
 
 		servletName = servletConfig.getServletName();
 
-		Digester digester = new Digester();
-
-		digester.push(this);
-		digester.setNamespaceAware(true);
-		digester.setValidating(false);
-
-		for (int i = 0; i < registrations.length; i += 2) {
-			URL url = MainServlet.class.getResource(registrations[i + 1]);
-
-			if (url != null) {
-				digester.register(registrations[i], url.toString());
-			}
-		}
-
-		digester.addCallMethod(
-			"web-app/servlet-mapping", "addServletMapping", 2);
-
-		digester.addCallParam("web-app/servlet-mapping/servlet-name", 0);
-		digester.addCallParam("web-app/servlet-mapping/url-pattern", 1);
-
 		ServletContext servletContext = getServletContext();
 
-		try (InputStream inputStream =
-				servletContext.getResourceAsStream("/WEB-INF/web.xml")) {
+		ServletRegistration servletRegistration =
+			servletContext.getServletRegistration(servletName);
 
-			if (inputStream == null) {
-				throw new ServletException(internal.getMessage("configWebXml"));
-			}
+		Collection<String> mappings = servletRegistration.getMappings();
 
-			digester.parse(inputStream);
-		}
-		catch (Exception e) {
-			throw new ServletException(e);
-		}
+		Iterator<String> iterator = mappings.iterator();
 
-		if (servletMapping != null) {
+		if (iterator.hasNext()) {
+			String mapping = iterator.next();
+
+			servletMapping = mapping;
+
 			servletContext.setAttribute(Globals.SERVLET_KEY, servletMapping);
 		}
 	}

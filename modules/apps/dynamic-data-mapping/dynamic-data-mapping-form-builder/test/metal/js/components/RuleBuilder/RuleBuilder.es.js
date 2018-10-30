@@ -1,6 +1,6 @@
 import '../../components/RuleEditor/__fixtures__/RuleEditorMockField.es';
 import dom from 'metal-dom';
-import RuleBuilder from 'source/pages/RuleBuilder/RuleBuilder.es';
+import RuleBuilder from 'source/components/RuleBuilder/RuleBuilder.es';
 
 const spritemap = 'icons.svg';
 let component;

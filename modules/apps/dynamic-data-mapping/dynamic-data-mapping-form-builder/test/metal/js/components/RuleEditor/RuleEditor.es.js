@@ -11,23 +11,62 @@ const dataProviderInstanceParameterSettingsURL = '/o/dynamic-data-mapping-form-b
 
 const functionsMetadata = {
 	radio: [
-		{name: 'contains', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Contains'},
-		{name: 'equals-to', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Is equal to'},
-		{name: 'is-empty', parameterTypes: ['text'], returnType: 'boolean', value: 'Is empty'},
-		{name: 'not-contains', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Does not contain'},
-		{name: 'not-equals-to', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Is not equal to'},
-		{name: 'not-is-empty', parameterTypes: ['text'], returnType: 'boolean', value: 'Is not empty'}
+		{name: 'contains',
+			parameterTypes: ['text', 'text'],
+			returnType: 'boolean',
+			value: 'Contains'},
+		{name: 'equals-to',
+			parameterTypes: ['text', 'text'],
+			returnType: 'boolean',
+			value: 'Is equal to'},
+		{name: 'is-empty',
+			parameterTypes: ['text'],
+			returnType: 'boolean',
+			value: 'Is empty'},
+		{name: 'not-contains',
+			parameterTypes: ['text', 'text'],
+			returnType: 'boolean',
+			value: 'Does not contain'},
+		{name: 'not-equals-to',
+			parameterTypes: ['text', 'text'],
+			returnType: 'boolean',
+			value: 'Is not equal to'},
+		{name: 'not-is-empty',
+			parameterTypes: ['text'],
+			returnType: 'boolean',
+			value: 'Is not empty'}
 	],
 	text: [
-		{name: 'contains', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Contains'},
-		{name: 'equals-to', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Is equal to'},
-		{name: 'is-empty', parameterTypes: ['text'], returnType: 'boolean', value: 'Is empty'},
-		{name: 'not-contains', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Does not contain'},
-		{name: 'not-equals-to', parameterTypes: ['text', 'text'], returnType: 'boolean', value: 'Is not equal to'},
-		{name: 'not-is-empty', parameterTypes: ['text'], returnType: 'boolean', value: 'Is not empty'}
+		{name: 'contains',
+			parameterTypes: ['text', 'text'],
+			returnType: 'boolean',
+			value: 'Contains'},
+		{name: 'equals-to',
+			parameterTypes: ['text', 'text'],
+			returnType: 'boolean',
+			value: 'Is equal to'},
+		{name: 'is-empty',
+			parameterTypes: ['text'],
+			returnType: 'boolean',
+			value: 'Is empty'},
+		{name: 'not-contains',
+			parameterTypes: ['text', 'text'],
+			returnType: 'boolean',
+			value: 'Does not contain'},
+		{name: 'not-equals-to',
+			parameterTypes: ['text', 'text'],
+			returnType: 'boolean',
+			value: 'Is not equal to'},
+		{name: 'not-is-empty',
+			parameterTypes: ['text'],
+			returnType: 'boolean',
+			value: 'Is not empty'}
 	],
 	user: [
-		{name: 'belongs-to', parameterTypes: ['text'], returnType: 'boolean', value: 'Belongs to'}
+		{name: 'belongs-to',
+			parameterTypes: ['text'],
+			returnType: 'boolean',
+			value: 'Belongs to'}
 	]
 };
 

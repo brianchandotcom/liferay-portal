@@ -350,7 +350,15 @@ class LayoutProvider extends Component {
 		const {columnIndex, pageIndex, rowIndex} = focusedField;
 		let {pages} = this.state;
 
-		pages = this._setColumnFields(pages, {columnIndex, pageIndex, rowIndex}, [focusedField]);
+		pages = this._setColumnFields(
+			pages,
+			{
+				columnIndex,
+				pageIndex,
+				rowIndex
+			},
+			[focusedField]
+		);
 
 		this.setState(
 			{

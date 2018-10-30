@@ -10,7 +10,14 @@ const props = {
 	formInstanceId,
 	namespace,
 	published: true,
-	resolvePublishURL: () => new Promise(resolve => resolve({formInstanceId, publishURL: 'published/form'})),
+	resolvePublishURL: () => new Promise(
+		resolve => resolve(
+			{
+				formInstanceId,
+				publishURL: 'published/form'
+			}
+		)
+	),
 	spritemap,
 	url
 };
@@ -172,7 +179,12 @@ describe(
 				it(
 					'should be called when button is clicked',
 					() => {
-						component = new PublishButton({...props, published: true});
+						component = new PublishButton(
+							{
+								...props,
+								published: true
+							}
+						);
 
 						const toggleSpy = jest.spyOn(component, 'toggle');
 

@@ -257,7 +257,9 @@ class Builder extends Component {
 	_handleFieldEdited({fieldInstance, value}) {
 		const {focusedField, namespace} = this.props;
 		const {columnIndex, instanceId, pageIndex, rowIndex, settingsContext} = focusedField;
-		const properties = {columnIndex, pageIndex, rowIndex};
+		const properties = {columnIndex,
+			pageIndex,
+			rowIndex};
 		const {fieldName, initialConfig_: {locale}} = fieldInstance;
 
 		if (fieldName === 'name') {

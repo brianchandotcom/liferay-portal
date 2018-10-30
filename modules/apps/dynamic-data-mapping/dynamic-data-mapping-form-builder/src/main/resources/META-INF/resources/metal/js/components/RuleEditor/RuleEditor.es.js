@@ -668,7 +668,9 @@ class RuleEditor extends Component {
 
 	_handleActionAdded() {
 		const {actions} = this;
-		const newAction = {action: '', label: '', target: ''};
+		const newAction = {action: '',
+			label: '',
+			target: ''};
 
 		if (actions.length == 0) {
 			actions.push(newAction);
@@ -805,7 +807,8 @@ class RuleEditor extends Component {
 			const fieldName = value[0];
 			const type = this._getFieldTypeByFieldName(fieldName);
 
-			const firstOperand = {type, value: fieldName};
+			const firstOperand = {type,
+				value: fieldName};
 
 			if (conditions.length === 0) {
 				const operands = [firstOperand];

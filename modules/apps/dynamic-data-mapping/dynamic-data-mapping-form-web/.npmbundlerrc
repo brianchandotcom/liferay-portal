@@ -1,6 +1,9 @@
 {
 	"config": {
 		"imports": {
+			"dynamic-data-mapping-form-builder": {
+				"/": ">=2.0.0"
+			},
 			"frontend-taglib-clay": {
 				"clay-alert": ">=2.1.12",
 				"clay-management-toolbar": ">=2.1.12",

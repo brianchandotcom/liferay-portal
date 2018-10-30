@@ -1,4 +1,4 @@
-import Builder from 'source/pages/FormBuilder/FormBuilder.es';
+import Builder from 'source/components/FormBuilder/FormBuilder.es';
 import dom from 'metal-dom';
 import Pages from 'mock/mockPages.es';
 import SucessPageSettings from 'mock/mockSuccessPage.es';

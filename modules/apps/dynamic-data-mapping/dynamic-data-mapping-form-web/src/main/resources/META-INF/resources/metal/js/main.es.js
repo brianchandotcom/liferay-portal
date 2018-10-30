@@ -1,22 +1,22 @@
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
-import {isKeyInSet, isModifyingKey} from './util/dom.es';
-import {pageStructure} from './util/config.es';
-import {sub} from './util/strings.es';
+import {isKeyInSet, isModifyingKey} from 'dynamic-data-mapping-form-builder/metal/js/util/dom.es';
+import {pageStructure} from 'dynamic-data-mapping-form-builder/metal/js/util/config.es';
+import {sub} from 'dynamic-data-mapping-form-builder/metal/js/util/strings.es';
 import autobind from 'autobind-decorator';
 import AutoSave from './util/AutoSave.es';
-import Builder from './pages/FormBuilder/index.es';
 import ClayModal from 'clay-modal';
 import Component from 'metal-jsx';
-import dom from 'metal-dom';
 import core from 'metal';
-import LayoutProvider from './components/LayoutProvider/index.es';
-import loader from './components/FieldsLoader/index.es';
+import dom from 'metal-dom';
+import FormBuilder from 'dynamic-data-mapping-form-builder/metal/js/components/FormBuilder/index.es';
+import LayoutProvider from 'dynamic-data-mapping-form-builder/metal/js/components/LayoutProvider/index.es';
+import loader from 'dynamic-data-mapping-form-builder/metal/js/components/FieldsLoader/index.es';
 import PreviewButton from './components/PreviewButton/PreviewButton.es';
 import PublishButton from './components/PublishButton/PublishButton.es';
-import RuleBuilder from './pages/RuleBuilder/index.es';
-import StateSyncronizer from './util/StateSyncronizer.es';
+import RuleBuilder from 'dynamic-data-mapping-form-builder/metal/js/components/RuleBuilder/index.es';
 import ShareFormPopover from './components/ShareFormPopover/ShareFormPopover.es';
+import StateSyncronizer from './util/StateSyncronizer.es';
 
 /**
  * Form.
@@ -519,7 +519,7 @@ class Form extends Component {
 						spritemap={spritemap}
 						visible={showRuleBuilder}
 					/>
-					<Builder
+					<FormBuilder
 						namespace={this.props.namespace}
 						ref="builder"
 						visible={!showRuleBuilder}

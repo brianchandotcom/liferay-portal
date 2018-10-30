@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryRel;
@@ -80,12 +81,16 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 			if (Validator.isNotNull(segmentsEntry.getCriteria()) &&
 				(oDataRetriever != null)) {
 
-				String filterString = String.format(
-					"(%s) and (classPK eq '%s')", segmentsEntry.getCriteria(),
-					classPK);
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("(");
+				sb.append(segmentsEntry.getCriteria());
+				sb.append(") and (classPK eq '");
+				sb.append(classPK);
+				sb.append("')");
 
 				if (oDataRetriever.getResultsCount(
-						segmentsEntry.getCompanyId(), filterString,
+						segmentsEntry.getCompanyId(), sb.toString(),
 						Locale.getDefault()) == 0) {
 
 					continue;

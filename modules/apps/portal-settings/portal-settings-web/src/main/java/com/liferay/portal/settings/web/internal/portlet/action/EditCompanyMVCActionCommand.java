@@ -263,6 +263,7 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 
 		DynamicQuery dynamicQuery = _groupLocalService.dynamicQuery();
 
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("companyId", companyId));
 		dynamicQuery.add(disjunction);
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.like(

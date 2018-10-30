@@ -548,8 +548,7 @@ public class MainServlet extends ActionServlet {
 						" and remote user ", remoteUser));
 			}
 
-			userId = _loginUser(
-				request, response, companyId, userId, remoteUser);
+			userId = _loginUser(request, response, userId, remoteUser);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Authenticated user id " + userId);
@@ -928,7 +927,7 @@ public class MainServlet extends ActionServlet {
 
 	private long _loginUser(
 			HttpServletRequest request, HttpServletResponse response,
-			long companyId, long userId, String remoteUser)
+			long userId, String remoteUser)
 		throws PortalException {
 
 		if ((userId > 0) || (remoteUser == null)) {

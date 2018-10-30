@@ -60,7 +60,7 @@
 						<aui:option label="any" value="<%= classNameId == 0 %>" />
 
 						<%
-						List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeNameComparator(locale));
+						List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId(), true), new AssetRendererFactoryTypeNameComparator(locale));
 
 						for (AssetRendererFactory<?> assetRendererFactory : assetRendererFactories) {
 						%>

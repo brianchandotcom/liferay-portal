@@ -12,7 +12,7 @@
 			<var name="groupName" value="Test Site Name" />
 		</execute>
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Test Site Name" />
 			<var name="layoutName" value="Staging Test Page" />
 		</execute>

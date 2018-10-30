@@ -85,13 +85,13 @@
 	<command name="AddPageWithMultipleChildPagesToSite" priority="3">
 		<property name="testray.component.names" value="Site Pages Administration" />
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Test Site Name" />
 			<var name="layoutName" value="Site Page" />
 		</execute>
 
 		<for list="Site Child Page 1,Site Child Page 2,Site Child Page 3" param="childPageName">
-			<execute macro="JSONLayout#addLayoutByGroupName">
+			<execute macro="JSONLayout#addPublicLayout">
 				<var name="groupName" value="Test Site Name" />
 				<var name="layoutName" value="${childPageName}" />
 				<var name="parentLayoutName" value="Site Page" />
@@ -112,17 +112,15 @@
 
 		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPrivateLayout">
 			<var name="groupName" value="Test Site Name" />
 			<var name="layoutName" value="Site Page" />
-			<var name="privateLayout" value="true" />
 		</execute>
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPrivateLayout">
 			<var name="groupName" value="Test Site Name" />
 			<var name="layoutName" value="Site Child Page" />
 			<var name="parentLayoutName" value="Site Page" />
-			<var name="privateLayout" value="true" />
 		</execute>
 
 		<execute macro="Navigator#gotoSpecificURLPage">
@@ -142,10 +140,9 @@
 
 		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPrivateLayout">
 			<var name="groupName" value="Test Site Name" />
 			<var name="layoutName" value="Blogs Page" />
-			<var name="privateLayout" value="true" />
 		</execute>
 
 		<execute macro="Navigator#gotoSpecificURLPage">
@@ -167,7 +164,7 @@
 
 		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Test Site Name" />
 			<var name="layoutName" value="Site Page" />
 		</execute>
@@ -186,7 +183,7 @@
 	<command name="AddSitePublicPagePortlet" priority="4">
 		<property name="testray.component.names" value="Site Pages Administration" />
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Test Site Name" />
 			<var name="layoutName" value="Blogs Page" />
 		</execute>
@@ -204,7 +201,7 @@
 	<command name="ChangePageLayout" priority="5">
 		<property name="testray.component.names" value="Site Pages Administration,Training" />
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Test Site Name" />
 			<var name="layoutName" value="Site Page Name" />
 		</execute>
@@ -270,10 +267,10 @@
 		<property name="testray.component.names" value="Site Pages Administration" />
 
 		<for list="Site Page 1,Site Page 2,Site Page 3" param="pageName">
-			<execute macro="JSONLayout#addLayoutByGroupName">
-				<var name="groupName" value="Test Site Name" />
-				<var name="layoutName" value="${pageName}" />
-			</execute>
+			<execute macro="JSONLayout#addPublicLayout">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="${pageName}" />
+		</execute>
 		</for>
 
 		<execute macro="SitePages#openPagesAdmin">
@@ -289,7 +286,7 @@
 		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Site Pages Administration,Training" />
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Test Site Name" />
 			<var name="layoutName" value="Site Page" />
 		</execute>

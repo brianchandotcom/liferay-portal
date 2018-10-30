@@ -49,7 +49,7 @@
 			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Site Name" />
 			<var name="layoutName" value="Site Page" />
 		</execute>
@@ -121,7 +121,7 @@
 			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Site Name" />
 			<var name="layoutName" value="Site Page" />
 		</execute>
@@ -212,15 +212,14 @@
 			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Site Name" />
 			<var name="layoutName" value="Site Page" />
 		</execute>
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPrivateLayout">
 			<var name="groupName" value="Site Name" />
 			<var name="layoutName" value="Site Page" />
-			<var name="privateLayout" value="true" />
 		</execute>
 
 		<execute macro="Site#openSiteSettingsAdmin">
@@ -261,7 +260,7 @@
 			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Site Name" />
 			<var name="layoutName" value="Site Page" />
 		</execute>
@@ -323,7 +322,7 @@
 			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Site Name" />
 			<var name="layoutName" value="Site Page" />
 		</execute>
@@ -360,7 +359,7 @@
 			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Site Name" />
 			<var name="layoutName" value="Site Page" />
 		</execute>
@@ -370,7 +369,7 @@
 			<var name="parentGroupName" value="Site Name" />
 		</execute>
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Child SiteName" />
 			<var name="layoutName" value="Site Page" />
 		</execute>
@@ -380,7 +379,7 @@
 			<var name="parentGroupName" value="Child SiteName" />
 		</execute>
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Child ChildSiteName" />
 			<var name="layoutName" value="Site Page" />
 		</execute>
@@ -427,7 +426,7 @@
 			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Site Name" />
 			<var name="layoutName" value="Site Page" />
 		</execute>
@@ -437,7 +436,7 @@
 			<var name="parentGroupName" value="Site Name" />
 		</execute>
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Child Site1Name" />
 			<var name="layoutName" value="Site Page" />
 		</execute>
@@ -447,7 +446,7 @@
 			<var name="parentGroupName" value="Child Site1Name" />
 		</execute>
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Child ChildSite1Name" />
 			<var name="layoutName" value="Site Page" />
 		</execute>
@@ -457,7 +456,7 @@
 			<var name="parentGroupName" value="Child Site1Name" />
 		</execute>
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Child ChildSite2Name" />
 			<var name="layoutName" value="Site Page" />
 		</execute>
@@ -467,7 +466,7 @@
 			<var name="parentGroupName" value="Site Name" />
 		</execute>
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Child Site2Name" />
 			<var name="layoutName" value="Site Page" />
 		</execute>

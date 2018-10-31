@@ -84,8 +84,8 @@ JSONArray collaboratorsJSONArray = JSONFactoryUtil.createJSONArray();
 
 <div class="autofit-row sidebar-panel">
 	<clay:button
-		id='<%= liferayPortletResponse.getNamespace() + "manageCollaboratorsButton" %>'
 		elementClasses="manage-collaborators-btn"
+		id='<%= liferayPortletResponse.getNamespace() + "manageCollaboratorsButton" %>'
 		label='<%= LanguageUtil.get(resourceBundle, "manage-collaborators") %>'
 		size="sm"
 		style="link"

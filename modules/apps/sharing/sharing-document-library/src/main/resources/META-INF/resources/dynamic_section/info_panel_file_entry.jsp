@@ -20,7 +20,7 @@
 JSONArray collaboratorsJSONArray = JSONFactoryUtil.createJSONArray();
 %>
 
-<div class="autofit-row sidebar-panel widget-metadata">
+<div class="autofit-row widget-metadata">
 	<div class="autofit-col inline-item-before">
 
 		<%
@@ -82,12 +82,15 @@ JSONArray collaboratorsJSONArray = JSONFactoryUtil.createJSONArray();
 	</div>
 </div>
 
-<clay:button
-	id='<%= liferayPortletResponse.getNamespace() + "manageCollaboratorsButton" %>'
-	label='<%= LanguageUtil.get(resourceBundle, "manage-collaborators") %>'
-	size="sm"
-	style="link"
-/>
+<div class="autofit-row sidebar-panel">
+	<clay:button
+		id='<%= liferayPortletResponse.getNamespace() + "manageCollaboratorsButton" %>'
+		elementClasses="manage-collaborators-btn"
+		label='<%= LanguageUtil.get(resourceBundle, "manage-collaborators") %>'
+		size="sm"
+		style="link"
+	/>
+</div>
 
 <%
 PortletURL manageCollaboratorsRenderURL = PortletProviderUtil.getPortletURL(request, SharingEntry.class.getName(), PortletProvider.Action.MANAGE);

@@ -28,6 +28,6 @@ searchContext.setStart(searchContainer.getStart());
 
 BaseModelSearchResult<DDLRecord> baseModelSearchResult = DDLRecordLocalServiceUtil.searchDDLRecords(searchContext);
 
-searchContainer.setTotal(baseModelSearchResult.getLength());
 searchContainer.setResults(baseModelSearchResult.getBaseModels());
+searchContainer.setTotal(baseModelSearchResult.getLength());
 %>

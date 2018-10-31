@@ -57,9 +57,8 @@
 			<var name="site" value="false" />
 		</execute>
 
-		<execute macro="JSONFragment#assertFragmentNotInGroup">
+		<execute macro="JSONFragment#assertFragmentCollectionNotInGroup">
 			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Fragment Name" />
 			<var name="groupName" value="Test Site Name" />
 		</execute>
 
@@ -68,6 +67,11 @@
 		</execute>
 
 		<execute macro="Staging#publishCustomPublication" />
+
+		<execute macro="JSONFragment#assertFragmentCollectionInGroup">
+			<var name="collectionName" value="Collection Name" />
+			<var name="groupName" value="Test Site Name" />
+		</execute>
 
 		<execute macro="JSONFragment#assertFragmentInGroup">
 			<var name="collectionName" value="Collection Name" />

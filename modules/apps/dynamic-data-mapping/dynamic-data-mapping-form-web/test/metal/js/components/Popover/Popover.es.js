@@ -1,12 +1,11 @@
 import Popover from 'source/components/Popover/Popover.es';
 import {dom as MetalTestUtil} from 'metal-dom';
 
-const spritemap = 'spritemap';
 const props = {
-	content: "This content will be displayed when popover appears",
-	visible: false,
+	content: 'This content will be displayed when popover appears',
 	placement: 0,
-	title: "Liferay"
+	title: 'Liferay',
+	visible: false
 };
 
 let alignElement;
@@ -49,10 +48,12 @@ describe(
 		it(
 			'should render popover opened',
 			() => {
-				component = new Popover({
-					...props,
-					visible: true
-				});
+				component = new Popover(
+					{
+						...props,
+						visible: true
+					}
+				);
 
 				expect(component).toMatchSnapshot();
 			}
@@ -73,7 +74,7 @@ describe(
 							newVal: true
 						}
 					}
-				)
+				);
 
 				jest.runAllTimers();
 
@@ -89,7 +90,7 @@ describe(
 
 				jest.runAllTimers();
 
-				MetalTestUtil.triggerEvent(alignElement, 'click')
+				MetalTestUtil.triggerEvent(alignElement, 'click');
 
 				expect(component.state.displayed).toBeTruthy();
 				expect(component).toMatchSnapshot();
@@ -99,14 +100,16 @@ describe(
 		it(
 			'should close when it is already opened and the alignedElement is clicked',
 			() => {
-				component = new Popover({
-					...props,
-					visible: true
-				});
+				component = new Popover(
+					{
+						...props,
+						visible: true
+					}
+				);
 
 				jest.runAllTimers();
 
-				MetalTestUtil.triggerEvent(alignElement, 'click')
+				MetalTestUtil.triggerEvent(alignElement, 'click');
 
 				expect(component.state.displayed).toBeFalsy();
 				expect(component).toMatchSnapshot();
@@ -116,16 +119,18 @@ describe(
 		it(
 			'should close when document has mousedown event',
 			() => {
-				component = new Popover({
-					...props,
-					visible: true
-				});
+				component = new Popover(
+					{
+						...props,
+						visible: true
+					}
+				);
 
 				jest.runAllTimers();
 
 				jest.useFakeTimers();
 
-				MetalTestUtil.triggerEvent(document, 'mousedown')
+				MetalTestUtil.triggerEvent(document, 'mousedown');
 
 				jest.runAllTimers();
 

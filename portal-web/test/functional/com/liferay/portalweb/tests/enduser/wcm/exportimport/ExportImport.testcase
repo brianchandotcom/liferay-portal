@@ -333,32 +333,31 @@
 	</command>
 
 	<command name="ExportImportDeletions" priority="4">
-		<property name="test.name.skip.portal.instance" value="ExportImport#ExportImportDeletions" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Bookmarks" />
-		</execute>
-
-		<execute macro="Bookmark#addCP">
-			<var name="bookmarkDescription" value="This is a test bookmark!" />
-			<var name="bookmarkName" value="Test Bookmark" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Bookmarks" />
+			<var name="portlet" value="Web Content" />
 		</execute>
 
 		<execute macro="LAR#exportPortlet">
-			<var name="larFileName" value="ExportBookmark.lar" />
+			<var name="larFileName" value="ExportWebContent.lar" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -366,36 +365,26 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Bookmarks" />
+			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="Bookmark#moveToRecycleBinCP">
-			<var name="bookmarkDescription" value="This is a test bookmark!" />
-			<var name="bookmarkName" value="Test Bookmark" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
+		<execute macro="WebContent#deleteCP">
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="LAR#exportPortlet">
 			<var name="exportIndividualDeletions" value="true" />
-			<var name="larFileName" value="ExportBookmarkDeletion.lar" />
+			<var name="larFileName" value="ExportWebContentDeletion.lar" />
 		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Recycle Bin" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#emptyCP" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Bookmarks" />
+			<var name="portlet" value="Web Content" />
 		</execute>
 
 		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="ExportBookmark.lar" />
+			<var name="larFileName" value="ExportWebContent.lar" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -403,12 +392,11 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Bookmarks" />
+			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="Bookmark#viewBookmark">
-			<var name="bookmarkName" value="Test Bookmark" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -416,12 +404,12 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Bookmarks" />
+			<var name="portlet" value="Web Content" />
 		</execute>
 
 		<execute macro="LAR#importPortlet">
 			<var name="importDeletions" value="true" />
-			<var name="larFileName" value="ExportBookmarkDeletion.lar" />
+			<var name="larFileName" value="ExportWebContentDeletion.lar" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -429,12 +417,11 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Bookmarks" />
+			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="Bookmark#viewNoPG">
-			<var name="bookmarkName" value="Test Bookmark" />
-			<var name="bookmarkURL" value="https://www.liferay.com" />
+		<execute macro="WebContent#viewNotPresentCP">
+			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 	</command>
 

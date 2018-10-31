@@ -31,16 +31,7 @@ public class PluginMessagingConfigurator extends AbstractMessagingConfigurator {
 
 	@Override
 	protected ClassLoader getOperatingClassloader() {
-		ClassLoader classLoader = ClassLoaderPool.getClassLoader(
-			_servletContextName);
-
-		if (classLoader == null) {
-			Thread currentThread = Thread.currentThread();
-
-			classLoader = currentThread.getContextClassLoader();
-		}
-
-		return classLoader;
+		return ClassLoaderPool.getClassLoader(_servletContextName);
 	}
 
 	private String _servletContextName;

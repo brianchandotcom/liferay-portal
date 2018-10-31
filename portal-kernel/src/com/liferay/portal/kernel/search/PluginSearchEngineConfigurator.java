@@ -51,15 +51,7 @@ public class PluginSearchEngineConfigurator
 
 	@Override
 	protected ClassLoader getOperatingClassloader() {
-		ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader();
-
-		if (classLoader == null) {
-			Thread currentThread = Thread.currentThread();
-
-			classLoader = currentThread.getContextClassLoader();
-		}
-
-		return classLoader;
+		return PortletClassLoaderUtil.getClassLoader();
 	}
 
 	@Override

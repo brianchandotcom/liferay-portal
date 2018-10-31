@@ -1161,10 +1161,10 @@ app.server.type=@{app.server.type}]]></echo>
 					<if>
 						<and>
 							<or>
-								<matches pattern="https?://" string="@{test.portal.bundle.war.url}" />
-								<matches pattern="https?://" string="@{test.portal.bundle.zip.url}" />
+								<matches pattern="(file|https?)://" string="@{test.portal.bundle.war.url}" />
+								<matches pattern="(file|https?)://" string="@{test.portal.bundle.zip.url}" />
 							</or>
-							<matches pattern="https?://" string="@{test.sql.zip.url}" />
+							<matches pattern="(file|https?)://" string="@{test.sql.zip.url}" />
 						</and>
 						<then>
 							<propertycopy from="app.server.${app.server.type}.bin.dir" name="test.app.server.bin.dir" />
@@ -2202,10 +2202,10 @@ app.server.type=@{app.server.type}]]></echo>
 					<if>
 						<and>
 							<or>
-								<matches pattern="https?://" string="@{test.portal.bundle.war.url}" />
-								<matches pattern="https?://" string="@{test.portal.bundle.zip.url}" />
+								<matches pattern="(file|https?)://" string="@{test.portal.bundle.war.url}" />
+								<matches pattern="(file|https?)://" string="@{test.portal.bundle.zip.url}" />
 							</or>
-							<matches pattern="https?://" string="@{test.sql.zip.url}" />
+							<matches pattern="(file|https?)://" string="@{test.sql.zip.url}" />
 						</and>
 						<then>
 							<propertycopy from="app.server.${app.server.type}.bin.dir" name="test.app.server.bin.dir" />

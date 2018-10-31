@@ -53,6 +53,15 @@
 				<execute function="Select" locator1="WCEditWebContent#PERMISSIONS_VIEWABLE_BY_SELECT" value1="${viewableBy}" />
 			</then>
 		</if>
+
+		<if>
+			<isset var="webContentId" />
+			<then>
+				<execute function="Click" locator1="TextInput#WEB_CONTENT_ID" />
+
+				<execute function="Type" locator1="TextInput#WEB_CONTENT_ID" value1="${webContentId}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="addDraft">

@@ -43,7 +43,7 @@
 				-d ddmTemplateKey=BASIC-WEB-CONTENT
 		]]></var>
 
-		<execute macro="JSONGroup#getGroupName">
+		<execute macro="JSONGroup#_getGroupName">
 			<return name="groupName" />
 			<var name="groupId" value="${groupId}" />
 		</execute>
@@ -84,7 +84,7 @@
 		<if>
 			<isset var="groupName" />
 			<then>
-				<execute macro="JSONGroup#getGroupIdByName">
+				<execute macro="JSONGroup#_getGroupIdByName">
 					<return name="groupId" />
 					<var name="groupName" value="${groupName}" />
 				</execute>

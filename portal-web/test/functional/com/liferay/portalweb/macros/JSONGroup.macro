@@ -27,7 +27,7 @@
 		<if>
 			<isset var="parentGroupName" />
 			<then>
-				<execute macro="JSONGroup#getSiteIdByGroupName">
+				<execute macro="JSONGroup#_getSiteIdByGroupName">
 					<return name="parentGroupId" />
 					<var name="groupName" value="${parentGroupName}" />
 				</execute>
@@ -111,7 +111,7 @@
 				-d userIds=${userId}
 		]]></var>
 
-		<execute macro="JSONGroup#getGroupName">
+		<execute macro="JSONGroup#_getGroupName">
 			<return name="groupName" />
 			<var name="groupId" value="${groupId}" />
 		</execute>
@@ -167,7 +167,7 @@
 				-d userIds=${userId}
 		]]></var>
 
-		<execute macro="JSONGroup#getGroupName">
+		<execute macro="JSONGroup#_getGroupName">
 			<return name="groupName" />
 			<var name="groupId" value="${groupId}" />
 		</execute>
@@ -196,7 +196,7 @@
 			</then>
 		</if>
 
-		<execute macro="JSONGroup#getGroupName">
+		<execute macro="JSONGroup#_getGroupName">
 			<return name="groupName" />
 			<var name="groupId" value="${groupId}" />
 		</execute>
@@ -216,6 +216,177 @@
 		]]></var>
 
 		<var method="JSONCurlUtil#post('${curl}', '$')" name="temp" />
+	</command>
+
+	<command name="_getGroupIdByGroupKey" summary="Get the groupId from any existing group by using groupKey">
+		<if>
+			<not>
+				<isset var="groupKey" />
+			</not>
+			<then>
+				<fail message="Please set 'groupKey'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="site" />
+			</not>
+			<then>
+				<var name="site" value="true" />
+			</then>
+		</if>
+
+		<execute macro="JSONCompany#getCompanyId">
+			<return name="companyId" />
+		</execute>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return name="portalURL" />
+		</execute>
+
+		<var name="curl"><![CDATA[
+			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/${site} \
+				-u test@liferay.com:test
+		]]></var>
+
+		<echo message="${curl}', '$.[?(@[\'groupKey\'] == \'${groupKey}\')][\'groupId\']" />
+
+		<var method="JSONCurlUtil#get('${curl}', '$.[?(@[\'groupKey\'] == \'${groupKey}\')][\'groupId\']')" name="groupId" />
+
+		<var method="StringUtil#replace('${groupId}', '[&quot;', '')" name="groupId" />
+
+		<var method="StringUtil#replace('${groupId}', '&quot;]', '')" name="groupId" />
+
+		<if>
+			<equals arg1="${groupId}" arg2="[]" />
+			<then>
+				<fail message="FAIL. Cannot find group." />
+			</then>
+			<else>
+				<echo message="FOUND. Returning groupId: ${groupId}" />
+			</else>
+		</if>
+
+		<return value="${groupId}" />
+	</command>
+
+	<command name="_getGroupIdByName" summary="Get the groupId from any existing site by using groupName">
+		<if>
+			<not>
+				<isset var="groupName" />
+			</not>
+			<then>
+				<fail message="Please set 'groupName'." />
+			</then>
+		</if>
+
+		<execute macro="JSONCompany#getCompanyId">
+			<return name="companyId" />
+		</execute>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return name="portalURL" />
+		</execute>
+
+		<var name="curl"><![CDATA[
+			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/true \
+				-u test@liferay.com:test
+		]]></var>
+
+		<var method="JSONCurlUtil#get('${curl}', '$.[?(@[\'nameCurrentValue\'] == \'${groupName}\')][\'groupId\']')" name="groupId" />
+
+		<var method="StringUtil#replace('${groupId}', '[&quot;', '')" name="groupId" />
+
+		<var method="StringUtil#replace('${groupId}', '&quot;]', '')" name="groupId" />
+
+		<if>
+			<equals arg1="${groupId}" arg2="[]" />
+			<then>
+				<fail message="FAIL. Cannot find group." />
+			</then>
+			<else>
+				<echo message="FOUND. Returning groupId: ${groupId}" />
+			</else>
+		</if>
+
+		<return value="${groupId}" />
+	</command>
+
+	<command name="_getGroupName" summary="Get the groupName from any group by using groupId">
+		<if>
+			<not>
+				<isset var="groupId" />
+			</not>
+			<then>
+				<fail message="Please set 'groupId'." />
+			</then>
+		</if>
+
+		<execute macro="JSONCompany#getCompanyId">
+			<return name="companyId" />
+		</execute>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return name="portalURL" />
+		</execute>
+
+		<var name="curl"><![CDATA[
+			${portalURL}/api/jsonws/group/get-group/group-id/${groupId} \
+				-u test@liferay.com:test
+		]]></var>
+
+		<var method="JSONCurlUtil#get('${curl}', '$[\'nameCurrentValue\']')" name="groupName" />
+
+		<return value="${groupName}" />
+	</command>
+
+	<command name="_getSiteIdByGroupName" summary="Get the groupId from any existing parent or child site by using groupName">
+		<if>
+			<not>
+				<isset var="groupName" />
+			</not>
+			<then>
+				<fail message="Please set 'groupName'." />
+			</then>
+		</if>
+
+		<execute macro="JSONCompany#getCompanyId">
+			<return name="companyId" />
+		</execute>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return name="portalURL" />
+		</execute>
+
+		<var name="curl"><![CDATA[
+			${portalURL}/api/jsonws/group/get-group \
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d groupKey=${groupName}
+		]]></var>
+
+		<echo message="## Searching for a 'Group Id' with the following info using JSONWS:" />
+
+		<echo message="## * Group Name: ${groupName}" />
+
+		<var method="JSONCurlUtil#post('${curl}', '$.[?(@[\'groupKey\'] == \'${groupName}\')][\'groupId\']')" name="groupId" />
+
+		<var method="StringUtil#replace('${groupId}', '[&quot;', '')" name="groupId" />
+
+		<var method="StringUtil#replace('${groupId}', '&quot;]', '')" name="groupId" />
+
+		<if>
+			<equals arg1="${groupId}" arg2="[]" />
+			<then>
+				<fail message="FAIL. Cannot find group." />
+			</then>
+			<else>
+				<echo message="FOUND. Returning groupId: ${groupId}" />
+			</else>
+		</if>
+
+		<return value="${groupId}" />
 	</command>
 
 	<command name="addChildSite" summary="Add a child site to a valid site.">
@@ -288,7 +459,7 @@
 			</then>
 		</if>
 
-		<execute macro="JSONGroup#getGroupIdByName">
+		<execute macro="JSONGroup#_getGroupIdByName">
 			<return name="groupId" />
 			<var name="groupName" value="${groupName}" />
 		</execute>
@@ -329,7 +500,7 @@
 			</then>
 		</if>
 
-		<execute macro="JSONGroup#getGroupIdByName">
+		<execute macro="JSONGroup#_getGroupIdByName">
 			<return name="groupId" />
 			<var name="groupName" value="${groupName}" />
 		</execute>
@@ -355,7 +526,7 @@
 			</then>
 		</if>
 
-		<execute macro="JSONGroup#getGroupIdByName">
+		<execute macro="JSONGroup#_getGroupIdByName">
 			<return name="groupId" />
 			<var name="groupName" value="${groupName}" />
 		</execute>
@@ -363,176 +534,5 @@
 		<execute macro="JSONGroup#_deleteGroup">
 			<var name="groupId" value="${groupId}" />
 		</execute>
-	</command>
-
-	<command name="getGroupIdByGroupKey" summary="Get the groupId from any existing group by using groupKey">
-		<if>
-			<not>
-				<isset var="groupKey" />
-			</not>
-			<then>
-				<fail message="Please set 'groupKey'." />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset var="site" />
-			</not>
-			<then>
-				<var name="site" value="true" />
-			</then>
-		</if>
-
-		<execute macro="JSONCompany#getCompanyId">
-			<return name="companyId" />
-		</execute>
-
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
-
-		<var name="curl"><![CDATA[
-			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/${site} \
-				-u test@liferay.com:test
-		]]></var>
-
-		<echo message="${curl}', '$.[?(@[\'groupKey\'] == \'${groupKey}\')][\'groupId\']" />
-
-		<var method="JSONCurlUtil#get('${curl}', '$.[?(@[\'groupKey\'] == \'${groupKey}\')][\'groupId\']')" name="groupId" />
-
-		<var method="StringUtil#replace('${groupId}', '[&quot;', '')" name="groupId" />
-
-		<var method="StringUtil#replace('${groupId}', '&quot;]', '')" name="groupId" />
-
-		<if>
-			<equals arg1="${groupId}" arg2="[]" />
-			<then>
-				<fail message="FAIL. Cannot find group." />
-			</then>
-			<else>
-				<echo message="FOUND. Returning groupId: ${groupId}" />
-			</else>
-		</if>
-
-		<return value="${groupId}" />
-	</command>
-
-	<command name="getGroupIdByName" summary="Get the groupId from any existing site by using groupName">
-		<if>
-			<not>
-				<isset var="groupName" />
-			</not>
-			<then>
-				<fail message="Please set 'groupName'." />
-			</then>
-		</if>
-
-		<execute macro="JSONCompany#getCompanyId">
-			<return name="companyId" />
-		</execute>
-
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
-
-		<var name="curl"><![CDATA[
-			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/true \
-				-u test@liferay.com:test
-		]]></var>
-
-		<var method="JSONCurlUtil#get('${curl}', '$.[?(@[\'nameCurrentValue\'] == \'${groupName}\')][\'groupId\']')" name="groupId" />
-
-		<var method="StringUtil#replace('${groupId}', '[&quot;', '')" name="groupId" />
-
-		<var method="StringUtil#replace('${groupId}', '&quot;]', '')" name="groupId" />
-
-		<if>
-			<equals arg1="${groupId}" arg2="[]" />
-			<then>
-				<fail message="FAIL. Cannot find group." />
-			</then>
-			<else>
-				<echo message="FOUND. Returning groupId: ${groupId}" />
-			</else>
-		</if>
-
-		<return value="${groupId}" />
-	</command>
-
-	<command name="getGroupName" summary="Get the groupName from any group by using groupId">
-		<if>
-			<not>
-				<isset var="groupId" />
-			</not>
-			<then>
-				<fail message="Please set 'groupId'." />
-			</then>
-		</if>
-
-		<execute macro="JSONCompany#getCompanyId">
-			<return name="companyId" />
-		</execute>
-
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
-
-		<var name="curl"><![CDATA[
-			${portalURL}/api/jsonws/group/get-group/group-id/${groupId} \
-				-u test@liferay.com:test
-		]]></var>
-
-		<var method="JSONCurlUtil#get('${curl}', '$[\'nameCurrentValue\']')" name="groupName" />
-
-		<return value="${groupName}" />
-	</command>
-
-	<command name="getSiteIdByGroupName" summary="Get the groupId from any existing parent or child site by using groupName">
-		<if>
-			<not>
-				<isset var="groupName" />
-			</not>
-			<then>
-				<fail message="Please set 'groupName'." />
-			</then>
-		</if>
-
-		<execute macro="JSONCompany#getCompanyId">
-			<return name="companyId" />
-		</execute>
-
-		<execute macro="JSONCompany#getPortalURL">
-			<return name="portalURL" />
-		</execute>
-
-		<var name="curl"><![CDATA[
-			${portalURL}/api/jsonws/group/get-group \
-				-u test@liferay.com:test \
-				-d companyId=${companyId} \
-				-d groupKey=${groupName}
-		]]></var>
-
-		<echo message="## Searching for a 'Group Id' with the following info using JSONWS:" />
-
-		<echo message="## * Group Name: ${groupName}" />
-
-		<var method="JSONCurlUtil#post('${curl}', '$.[?(@[\'groupKey\'] == \'${groupName}\')][\'groupId\']')" name="groupId" />
-
-		<var method="StringUtil#replace('${groupId}', '[&quot;', '')" name="groupId" />
-
-		<var method="StringUtil#replace('${groupId}', '&quot;]', '')" name="groupId" />
-
-		<if>
-			<equals arg1="${groupId}" arg2="[]" />
-			<then>
-				<fail message="FAIL. Cannot find group." />
-			</then>
-			<else>
-				<echo message="FOUND. Returning groupId: ${groupId}" />
-			</else>
-		</if>
-
-		<return value="${groupId}" />
 	</command>
 </definition>

@@ -101,7 +101,7 @@
 			<return name="portalURL" />
 		</execute>
 
-		<execute macro="JSONGroup#getGroupName">
+		<execute macro="JSONGroup#_getGroupName">
 			<return name="groupName" />
 			<var name="groupId" value="${groupId}" />
 		</execute>
@@ -147,7 +147,7 @@
 		<if>
 			<isset var="groupName" />
 			<then>
-				<execute macro="JSONGroup#getGroupIdByName">
+				<execute macro="JSONGroup#_getGroupIdByName">
 					<return name="groupId" />
 					<var name="groupName" value="${groupName}" />
 				</execute>
@@ -157,7 +157,7 @@
 		<if>
 			<isset var="groupKey" />
 			<then>
-				<execute macro="JSONGroup#getGroupIdByGroupKey">
+				<execute macro="JSONGroup#_getGroupIdByGroupKey">
 					<return name="groupId" />
 					<var name="groupKey" value="${groupKey}" />
 					<var name="site" value="${site}" />
@@ -182,7 +182,7 @@
 				<fail message="Please set 'collectionName'." />
 			</then>
 			<else>
-				<execute macro="JSONFragment#getCollectionIdByName">
+				<execute macro="JSONFragment#_getCollectionIdByName">
 					<return name="collectionId" />
 					<var name="collectionName" value="${collectionName}" />
 					<var name="groupId" value="${groupId}" />
@@ -225,7 +225,19 @@
 
 		<echo message="## * Fragment Name: ${name}" />
 
-		<echo message="## * Group Name: ${groupName}" />
+		<if>
+			<isset var="groupName" />
+			<then>
+				<echo message="## * Group Name: ${groupName}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="groupKey" />
+			<then>
+				<echo message="## * Group Key: ${groupKey}" />
+			</then>
+		</if>
 
 		<echo message="## * Group Id: ${groupId}" />
 
@@ -241,7 +253,7 @@
 		<if>
 			<isset var="groupName" />
 			<then>
-				<execute macro="JSONGroup#getGroupIdByName">
+				<execute macro="JSONGroup#_getGroupIdByName">
 					<return name="groupId" />
 					<var name="groupName" value="${groupName}" />
 				</execute>
@@ -251,7 +263,7 @@
 		<if>
 			<isset var="groupKey" />
 			<then>
-				<execute macro="JSONGroup#getGroupIdByGroupKey">
+				<execute macro="JSONGroup#_getGroupIdByGroupKey">
 					<return name="groupId" />
 					<var name="groupKey" value="${groupKey}" />
 					<var name="site" value="${site}" />
@@ -291,7 +303,7 @@
 		</execute>
 	</command>
 
-	<command name="assertFragmentInGroup" summary="Assert that a fragment exists in a group given its fragmentName">
+	<command name="assertFragmentInGroup" summary="Assert that a fragment exists in a fragmentCollection given its collectionName, fragmentName, and groupName">
 		<if>
 			<not>
 				<isset var="collectionName" />
@@ -319,12 +331,12 @@
 			</then>
 		</if>
 
-		<execute macro="JSONGroup#getGroupIdByName">
+		<execute macro="JSONGroup#_getGroupIdByName">
 			<return name="groupId" />
 			<var name="groupName" value="${groupName}" />
 		</execute>
 
-		<execute macro="JSONFragment#getCollectionIdByName">
+		<execute macro="JSONFragment#_getCollectionIdByName">
 			<return name="fragmentCollectionId" />
 			<var name="collectionName" value="${collectionName}" />
 			<var name="groupId" value="${groupId}" />
@@ -375,7 +387,7 @@
 			</then>
 		</if>
 
-		<execute macro="JSONGroup#getGroupIdByName">
+		<execute macro="JSONGroup#_getGroupIdByName">
 			<return name="groupId" />
 			<var name="groupName" value="${groupName}" />
 		</execute>
@@ -422,7 +434,7 @@
 			</then>
 		</if>
 
-		<execute macro="JSONGroup#getGroupIdByName">
+		<execute macro="JSONGroup#_getGroupIdByName">
 			<return name="groupId" />
 			<var name="groupName" value="${groupName}" />
 		</execute>
@@ -478,7 +490,7 @@
 			</then>
 		</if>
 
-		<execute macro="JSONGroup#getGroupIdByName">
+		<execute macro="JSONGroup#_getGroupIdByName">
 			<return name="groupId" />
 			<var name="groupName" value="${groupName}" />
 		</execute>

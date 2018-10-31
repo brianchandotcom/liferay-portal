@@ -4,7 +4,7 @@
 			<return name="portalURL" />
 		</execute>
 
-		<execute macro="JSONGroup#getGroupName">
+		<execute macro="JSONGroup#_getGroupName">
 			<return name="groupName" />
 			<var name="groupId" value="${groupId}" />
 		</execute>
@@ -35,7 +35,7 @@
 			<return name="portalURL" />
 		</execute>
 
-		<execute macro="JSONGroup#getGroupName">
+		<execute macro="JSONGroup#_getGroupName">
 			<return name="groupName" />
 			<var name="groupId" value="${groupId}" />
 		</execute>
@@ -73,7 +73,7 @@
 			<return name="portalURL" />
 		</execute>
 
-		<execute macro="JSONGroup#getGroupName">
+		<execute macro="JSONGroup#_getGroupName">
 			<return name="groupName" />
 			<var name="groupId" value="${groupId}" />
 		</execute>
@@ -96,146 +96,7 @@
 		</execute>
 	</command>
 
-	<command name="addCategoryByGroupName" summary="Add a basic category">
-		<if>
-			<not>
-				<isset var="groupName" />
-			</not>
-			<then>
-				<fail message="Please set 'groupName'." />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset var="title" />
-			</not>
-			<then>
-				<fail message="Please set 'title'." />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset var="vocabularyName" />
-			</not>
-			<then>
-				<fail message="Please set 'vocabularyName'." />
-			</then>
-		</if>
-
-		<execute macro="JSONGroup#getGroupIdByName">
-			<return name="groupId" />
-			<var name="groupName" value="${groupName}" />
-		</execute>
-
-		<execute macro="JSONCategory#getVocabularyIdByName">
-			<return name="vocabularyId" />
-			<var name="groupId" value="${groupId}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
-		</execute>
-
-		<execute macro="JSONCategory#_addCategory">
-			<var name="groupId" value="${groupId}" />
-			<var name="title" value="${title}" />
-			<var name="vocabularyId" value="${vocabularyId}" />
-		</execute>
-	</command>
-
-	<command name="addSubcategoryByGroupName" summary="Add a basic subcategory">
-		<if>
-			<not>
-				<isset var="categoryName" />
-			</not>
-			<then>
-				<fail message="Please set 'categoryName'." />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset var="groupName" />
-			</not>
-			<then>
-				<fail message="Please set 'groupName'." />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset var="subcategoryName" />
-			</not>
-			<then>
-				<fail message="Please set 'subcategoryName'." />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset var="vocabularyName" />
-			</not>
-			<then>
-				<fail message="Please set 'vocabularyName'." />
-			</then>
-		</if>
-
-		<execute macro="JSONGroup#getGroupIdByName">
-			<return name="groupId" />
-			<var name="groupName" value="${groupName}" />
-		</execute>
-
-		<execute macro="JSONCategory#getVocabularyIdByName">
-			<return name="vocabularyId" />
-			<var name="groupId" value="${groupId}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
-		</execute>
-
-		<execute macro="JSONCategory#getCategoryIdByName">
-			<return name="categoryId" />
-			<var name="categoryName" value="${categoryName}" />
-			<var name="groupId" value="${groupId}" />
-			<var name="vocabularyId" value="${vocabularyId}" />
-		</execute>
-
-		<execute macro="JSONCategory#_addSubcategory">
-			<var name="categoryId" value="${categoryId}" />
-			<var name="groupId" value="${groupId}" />
-			<var name="subcategoryName" value="${subcategoryName}" />
-			<var name="vocabularyId" value="${vocabularyId}" />
-		</execute>
-	</command>
-
-	<command name="addVocabularyByGroupName" summary="Add a basic vocabulary">
-		<if>
-			<not>
-				<isset var="groupName" />
-			</not>
-			<then>
-				<fail message="Please set 'groupName'." />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset var="title" />
-			</not>
-			<then>
-				<fail message="Please set 'title'." />
-			</then>
-		</if>
-
-		<execute macro="JSONGroup#getGroupIdByName">
-			<return name="groupId" />
-			<var name="groupName" value="${groupName}" />
-		</execute>
-
-		<execute macro="JSONCategory#_addVocabulary">
-			<var name="groupId" value="${groupId}" />
-			<var name="title" value="${title}" />
-		</execute>
-	</command>
-
-	<command name="getCategoryIdByName" summary="Get the categoryId from any category by using categoryName, groupId, and vocabularyId">
+	<command name="_getCategoryIdByName" summary="Get the categoryId from any category by using categoryName, groupId, and vocabularyId">
 		<if>
 			<not>
 				<isset var="groupId" />
@@ -267,7 +128,7 @@
 			<return name="portalURL" />
 		</execute>
 
-		<execute macro="JSONGroup#getGroupName">
+		<execute macro="JSONGroup#_getGroupName">
 			<return name="groupName" />
 			<var name="groupId" value="${groupId}" />
 		</execute>
@@ -308,7 +169,7 @@
 		<return value="${categoryId}" />
 	</command>
 
-	<command name="getVocabularyIdByName" summary="Get the categoryId from any categoryby using groupId and vocabularyName">
+	<command name="_getVocabularyIdByName" summary="Get the categoryId from any categoryby using groupId and vocabularyName">
 		<if>
 			<not>
 				<isset var="groupId" />
@@ -360,5 +221,144 @@
 		</if>
 
 		<return value="${vocabularyId}" />
+	</command>
+
+	<command name="addCategoryByGroupName" summary="Add a basic category">
+		<if>
+			<not>
+				<isset var="groupName" />
+			</not>
+			<then>
+				<fail message="Please set 'groupName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="title" />
+			</not>
+			<then>
+				<fail message="Please set 'title'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="vocabularyName" />
+			</not>
+			<then>
+				<fail message="Please set 'vocabularyName'." />
+			</then>
+		</if>
+
+		<execute macro="JSONGroup#_getGroupIdByName">
+			<return name="groupId" />
+			<var name="groupName" value="${groupName}" />
+		</execute>
+
+		<execute macro="JSONCategory#_getVocabularyIdByName">
+			<return name="vocabularyId" />
+			<var name="groupId" value="${groupId}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="JSONCategory#_addCategory">
+			<var name="groupId" value="${groupId}" />
+			<var name="title" value="${title}" />
+			<var name="vocabularyId" value="${vocabularyId}" />
+		</execute>
+	</command>
+
+	<command name="addSubcategoryByGroupName" summary="Add a basic subcategory">
+		<if>
+			<not>
+				<isset var="categoryName" />
+			</not>
+			<then>
+				<fail message="Please set 'categoryName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="groupName" />
+			</not>
+			<then>
+				<fail message="Please set 'groupName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="subcategoryName" />
+			</not>
+			<then>
+				<fail message="Please set 'subcategoryName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="vocabularyName" />
+			</not>
+			<then>
+				<fail message="Please set 'vocabularyName'." />
+			</then>
+		</if>
+
+		<execute macro="JSONGroup#_getGroupIdByName">
+			<return name="groupId" />
+			<var name="groupName" value="${groupName}" />
+		</execute>
+
+		<execute macro="JSONCategory#_getVocabularyIdByName">
+			<return name="vocabularyId" />
+			<var name="groupId" value="${groupId}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="JSONCategory#_getCategoryIdByName">
+			<return name="categoryId" />
+			<var name="categoryName" value="${categoryName}" />
+			<var name="groupId" value="${groupId}" />
+			<var name="vocabularyId" value="${vocabularyId}" />
+		</execute>
+
+		<execute macro="JSONCategory#_addSubcategory">
+			<var name="categoryId" value="${categoryId}" />
+			<var name="groupId" value="${groupId}" />
+			<var name="subcategoryName" value="${subcategoryName}" />
+			<var name="vocabularyId" value="${vocabularyId}" />
+		</execute>
+	</command>
+
+	<command name="addVocabularyByGroupName" summary="Add a basic vocabulary">
+		<if>
+			<not>
+				<isset var="groupName" />
+			</not>
+			<then>
+				<fail message="Please set 'groupName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="title" />
+			</not>
+			<then>
+				<fail message="Please set 'title'." />
+			</then>
+		</if>
+
+		<execute macro="JSONGroup#_getGroupIdByName">
+			<return name="groupId" />
+			<var name="groupName" value="${groupName}" />
+		</execute>
+
+		<execute macro="JSONCategory#_addVocabulary">
+			<var name="groupId" value="${groupId}" />
+			<var name="title" value="${title}" />
+		</execute>
 	</command>
 </definition>

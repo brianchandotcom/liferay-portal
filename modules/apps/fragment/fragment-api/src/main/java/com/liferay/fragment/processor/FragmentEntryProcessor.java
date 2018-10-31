@@ -20,10 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.xml.Element;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 
 /**

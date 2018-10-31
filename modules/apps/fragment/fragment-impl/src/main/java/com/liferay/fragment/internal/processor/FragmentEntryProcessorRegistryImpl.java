@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.Collections;
 import java.util.Locale;
-import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;

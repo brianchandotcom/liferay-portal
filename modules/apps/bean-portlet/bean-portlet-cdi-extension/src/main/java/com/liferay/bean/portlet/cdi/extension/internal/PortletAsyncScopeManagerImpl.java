@@ -47,6 +47,11 @@ public class PortletAsyncScopeManagerImpl implements PortletAsyncScopeManager {
 
 	@Override
 	public void activateScopeContexts() {
+		if (_closeable != null) {
+			throw new IllegalStateException(
+				"Allready called activateScopeContexts()");
+		}
+
 		_closeable = ScopedBeanManagerThreadLocal.install(
 			new ScopedBeanManager(
 				_resourceRequest, _resourceResponse, _portletConfig));
@@ -54,6 +59,11 @@ public class PortletAsyncScopeManagerImpl implements PortletAsyncScopeManager {
 
 	@Override
 	public void deactivateScopeContexts() {
+		if (_closeable == null) {
+			throw new IllegalStateException(
+				"Call activateScopeContexts() first");
+		}
+
 		try {
 			_closeable.close();
 		}

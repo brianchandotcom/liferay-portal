@@ -9062,10 +9062,32 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 						<basename file="${bundle.zip.url}" property="bundle.file.name" />
 
-						<mirrors-get
-							dest="${java.io.tmpdir}/${bundle.file.name}"
-							src="${bundle.zip.url}"
-						/>
+						<trycatch>
+							<try>
+								<mirrors-get
+									dest="${java.io.tmpdir}/${bundle.file.name}"
+									src="${bundle.zip.url}"
+								/>
+							</try>
+							<catch>
+								<propertyregex
+									input="${bundle.zip.url}"
+									override="true"
+									property="bundle.zip.url"
+									regexp="7z"
+									replace="tar.gz"
+								/>
+
+								<var name="bundle.file.name" unset="true" />
+
+								<basename file="${bundle.zip.url}" property="bundle.file.name" />
+
+								<mirrors-get
+									dest="${java.io.tmpdir}/${bundle.file.name}"
+									src="${bundle.zip.url}"
+								/>
+							</catch>
+						</trycatch>
 					</catch>
 				</trycatch>
 

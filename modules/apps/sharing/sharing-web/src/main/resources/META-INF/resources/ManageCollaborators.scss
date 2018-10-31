@@ -5,6 +5,10 @@
 		margin: 0;
 	}
 
+	.autofit-col.no-padding {
+		padding: 0;
+	}
+
 	h4 {
 		margin-bottom: 0;
 	}
@@ -13,7 +17,7 @@
 		font-size: .875rem;
 		height: 2rem;
 		padding-top: .5em;
-		width: 170px;
+		width: 165px;
 	}
 
 	.list-group-item {

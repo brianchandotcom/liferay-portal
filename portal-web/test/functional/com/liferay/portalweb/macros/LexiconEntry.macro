@@ -184,4 +184,14 @@
 			<var name="key_rowEntry" value="${rowEntry}" />
 		</execute>
 	</command>
+
+	<command name="viewNoEntryMenuItem">
+		<execute macro="LexiconEntry#openEntryMenu">
+			<var name="rowEntry" value="${rowEntry}" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
+			<var name="key_menuItem" value="${menuItem}" />
+		</execute>
+	</command>
 </definition>

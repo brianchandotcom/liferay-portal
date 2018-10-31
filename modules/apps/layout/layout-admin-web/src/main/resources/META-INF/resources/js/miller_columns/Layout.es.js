@@ -15,7 +15,6 @@ import {
 	clearPath,
 	columnIsItemChild,
 	deleteEmptyColumns,
-	dropIsValid,
 	getColumnActiveItem,
 	getColumnLastItem,
 	getItem,
@@ -25,6 +24,7 @@ import {
 	setHomePage
 } from './utils/LayoutUtils.es';
 import {
+	dropIsValid,
 	dropItemInsideColumn,
 	dropItemInsideItem,
 	dropItemNextToItem

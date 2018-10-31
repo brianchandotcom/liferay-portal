@@ -1,12 +1,46 @@
 import {
 	appendItemToColumn,
+	columnIsItemChild,
 	getColumnActiveItem,
 	getItemColumn,
 	getItemColumnIndex,
 	moveItemInside,
 	removeItem
 } from './LayoutUtils.es';
-import {DRAG_POSITIONS} from './LayoutDragDrop.es';
+import {DRAG_POSITIONS, DROP_TARGET_TYPES} from './LayoutDragDrop.es';
+
+/**
+ * @param {object} sourceItem
+ * @param {string} sourceItemColumnIndex
+ * @param {string} targetId
+ * @param {string} targetType
+ * @return {boolean} Returns whether a drop is valid or not
+ * @review
+ */
+function dropIsValid(
+	sourceItem,
+	sourceItemColumnIndex,
+	targetId,
+	targetType
+) {
+	let targetColumnIsChild = false;
+	let targetEqualsSource = false;
+
+	if (targetType === DROP_TARGET_TYPES.column) {
+		targetColumnIsChild = columnIsItemChild(
+			targetId,
+			sourceItem,
+			sourceItemColumnIndex
+		);
+	}
+	else if (targetType === DROP_TARGET_TYPES.item) {
+		targetEqualsSource = (sourceItem.plid === targetId);
+	}
+
+	const targetExists = (targetId !== null);
+
+	return targetExists && !targetEqualsSource && !targetColumnIsChild;
+}
 
 /**
  * Append an item to a column and calculates newParentPlid and priority
@@ -123,6 +157,7 @@ function dropItemNextToItem(layoutColumns, sourceItem, dropPosition, targetItem)
 }
 
 export {
+	dropIsValid,
 	dropItemInsideColumn,
 	dropItemInsideItem,
 	dropItemNextToItem

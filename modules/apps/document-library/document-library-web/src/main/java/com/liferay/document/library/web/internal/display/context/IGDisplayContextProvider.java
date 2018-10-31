@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.image.gallery.display.kernel.display.context.IGDisplayContextFactory;
 import com.liferay.image.gallery.display.kernel.display.context.IGViewFileVersionDisplayContext;

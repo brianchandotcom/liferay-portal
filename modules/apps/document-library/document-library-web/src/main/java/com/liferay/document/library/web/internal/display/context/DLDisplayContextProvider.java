@@ -22,6 +22,7 @@ import com.liferay.document.library.display.context.DLViewFileVersionDisplayCont
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
+import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;

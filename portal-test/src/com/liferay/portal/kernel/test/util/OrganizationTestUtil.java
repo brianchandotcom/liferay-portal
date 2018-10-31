@@ -145,8 +145,7 @@ public class OrganizationTestUtil {
 
 	public static void updateAsset(
 		Organization organization, long[] assetCategoryIds,
-		String[] assetTagNames)
-			throws Exception {
+		String[] assetTagNames) throws Exception {
 
 		OrganizationLocalServiceUtil.updateAsset(
 			organization.getUserId(), organization, assetCategoryIds,

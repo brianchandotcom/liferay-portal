@@ -350,6 +350,9 @@ portalArtifactsJar {
 	baseName = "portal-artifacts"
 	classifier = null
 	configurations = [project.configurations.portalArtifacts]
+	exclude "*.*"
+	exclude "META-INF/**"
+	exclude "OSGI-INF/**"
 	version = _getReleaseInfoVersion()
 
 	doFirst {

@@ -124,9 +124,9 @@ public class JSONNamingCheck extends BaseCheck {
 	}
 
 	private String _getName(DetailAST detailAST) {
-		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
+		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
-		return nameAST.getText();
+		return nameDetailAST.getText();
 	}
 
 	private String _getTokenTypeName(DetailAST detailAST) {

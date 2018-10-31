@@ -99,39 +99,42 @@ public class ConstantNameCheck
 
 		String accessLevel = null;
 
-		DetailAST modifiersAST = detailAST.findFirstToken(TokenTypes.MODIFIERS);
+		DetailAST modifiersDetailAST = detailAST.findFirstToken(
+			TokenTypes.MODIFIERS);
 
-		if (modifiersAST.branchContains(TokenTypes.LITERAL_PRIVATE)) {
+		if (modifiersDetailAST.branchContains(TokenTypes.LITERAL_PRIVATE)) {
 			accessLevel = JavaTerm.ACCESS_MODIFIER_PRIVATE;
 
 			regex = StringUtil.replaceFirst(regex, '^', "^_");
 		}
-		else if (modifiersAST.branchContains(TokenTypes.LITERAL_PROTECTED)) {
+		else if (modifiersDetailAST.branchContains(
+					TokenTypes.LITERAL_PROTECTED)) {
+
 			accessLevel = JavaTerm.ACCESS_MODIFIER_PROTECTED;
 		}
-		else if (modifiersAST.branchContains(TokenTypes.LITERAL_PUBLIC)) {
+		else if (modifiersDetailAST.branchContains(TokenTypes.LITERAL_PUBLIC)) {
 			accessLevel = JavaTerm.ACCESS_MODIFIER_PUBLIC;
 		}
 		else {
 			return;
 		}
 
-		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
+		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
 		Pattern pattern = Pattern.compile(regex);
 
-		Matcher matcher = pattern.matcher(nameAST.getText());
+		Matcher matcher = pattern.matcher(nameDetailAST.getText());
 
 		if (!matcher.find()) {
 			if (typeName == null) {
 				log(
-					nameAST, _MSG_INVALID_CONSTANT_NAME, accessLevel,
-					nameAST.getText(), regex);
+					nameDetailAST, _MSG_INVALID_CONSTANT_NAME, accessLevel,
+					nameDetailAST.getText(), regex);
 			}
 			else {
 				log(
-					nameAST, _MSG_INVALID_CONSTANT_TYPE_NAME, accessLevel,
-					nameAST.getText(), typeName, regex);
+					nameDetailAST, _MSG_INVALID_CONSTANT_TYPE_NAME, accessLevel,
+					nameDetailAST.getText(), typeName, regex);
 			}
 		}
 	}

@@ -33,21 +33,24 @@ public class ExceptionMessageCheck extends MessageCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		DetailAST firstChildAST = detailAST.getFirstChild();
+		DetailAST firstChildDetailAST = detailAST.getFirstChild();
 
-		firstChildAST = firstChildAST.getFirstChild();
+		firstChildDetailAST = firstChildDetailAST.getFirstChild();
 
-		if (firstChildAST.getType() != TokenTypes.LITERAL_NEW) {
+		if (firstChildDetailAST.getType() != TokenTypes.LITERAL_NEW) {
 			return;
 		}
 
-		DetailAST elistAST = firstChildAST.findFirstToken(TokenTypes.ELIST);
+		DetailAST elistDetailAST = firstChildDetailAST.findFirstToken(
+			TokenTypes.ELIST);
 
-		List<DetailAST> exprASTList = DetailASTUtil.getAllChildTokens(
-			elistAST, false, TokenTypes.EXPR);
+		List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
+			elistDetailAST, false, TokenTypes.EXPR);
 
-		for (DetailAST exprAST : exprASTList) {
-			checkMessage(getLiteralStringValue(exprAST), exprAST.getLineNo());
+		for (DetailAST exprDetailAST : exprDetailASTList) {
+			checkMessage(
+				getLiteralStringValue(exprDetailAST),
+				exprDetailAST.getLineNo());
 		}
 	}
 

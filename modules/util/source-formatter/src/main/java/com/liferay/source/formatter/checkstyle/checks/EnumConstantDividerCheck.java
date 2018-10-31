@@ -27,20 +27,22 @@ public class EnumConstantDividerCheck extends BaseEnumConstantCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		DetailAST nextEnumConstantDefAST = getNextEnumConstantDefAST(detailAST);
+		DetailAST nextEnumConstantDefinitionDetailAST =
+			getNextEnumConstantDefinitionDetailAST(detailAST);
 
-		if (nextEnumConstantDefAST != null) {
-			_checkDivider(detailAST, nextEnumConstantDefAST);
+		if (nextEnumConstantDefinitionDetailAST != null) {
+			_checkDivider(detailAST, nextEnumConstantDefinitionDetailAST);
 		}
 	}
 
 	private void _checkDivider(
-		DetailAST enumConstantDefAST1, DetailAST enumConstantDefAST2) {
+		DetailAST enumConstantDefinitionDetailAST1,
+		DetailAST enumConstantDefinitionDetailAST2) {
 
 		int endLineNumberConstant1 = DetailASTUtil.getEndLineNumber(
-			enumConstantDefAST1);
+			enumConstantDefinitionDetailAST1);
 		int startLineNumberConstant2 = DetailASTUtil.getStartLineNumber(
-			enumConstantDefAST2);
+			enumConstantDefinitionDetailAST2);
 
 		if (endLineNumberConstant1 == startLineNumberConstant2) {
 			return;

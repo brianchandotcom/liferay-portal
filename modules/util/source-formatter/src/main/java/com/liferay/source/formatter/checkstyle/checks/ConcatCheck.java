@@ -36,65 +36,71 @@ public class ConcatCheck extends StringConcatenationCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		List<DetailAST> methodCallASTList = DetailASTUtil.getMethodCalls(
+		List<DetailAST> methodCallDetailASTList = DetailASTUtil.getMethodCalls(
 			detailAST, "StringBundler", "concat");
 
-		for (DetailAST methodCallAST : methodCallASTList) {
-			_checkConcatMethodCall(methodCallAST);
+		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
+			_checkConcatMethodCall(methodCallDetailAST);
 		}
 	}
 
-	private void _checkConcatMethodCall(DetailAST methodCallAST) {
-		DetailAST elistAST = methodCallAST.findFirstToken(TokenTypes.ELIST);
+	private void _checkConcatMethodCall(DetailAST methodCallDetailAST) {
+		DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
+			TokenTypes.ELIST);
 
-		DetailAST previousLiteralStringAST = null;
+		DetailAST previousLiteralStringDetailAST = null;
 
-		DetailAST childAST = elistAST.getFirstChild();
+		DetailAST childDetailAST = elistDetailAST.getFirstChild();
 
 		while (true) {
-			if (childAST == null) {
+			if (childDetailAST == null) {
 				break;
 			}
 
-			if (childAST.getType() == TokenTypes.EXPR) {
-				DetailAST grandChildAST = childAST.getFirstChild();
+			if (childDetailAST.getType() == TokenTypes.EXPR) {
+				DetailAST grandChildDetailAST = childDetailAST.getFirstChild();
 
-				if (grandChildAST.getType() != TokenTypes.STRING_LITERAL) {
-					previousLiteralStringAST = null;
+				if (grandChildDetailAST.getType() !=
+						TokenTypes.STRING_LITERAL) {
+
+					previousLiteralStringDetailAST = null;
 				}
 				else {
-					if (previousLiteralStringAST != null) {
+					if (previousLiteralStringDetailAST != null) {
 						_checkConcatMethodCallLiteralStrings(
-							previousLiteralStringAST, grandChildAST);
+							previousLiteralStringDetailAST,
+							grandChildDetailAST);
 					}
 
-					previousLiteralStringAST = grandChildAST;
+					previousLiteralStringDetailAST = grandChildDetailAST;
 				}
 			}
 
-			childAST = childAST.getNextSibling();
+			childDetailAST = childDetailAST.getNextSibling();
 		}
 	}
 
 	private void _checkConcatMethodCallLiteralStrings(
-		DetailAST literalStringAST1, DetailAST literalStringAST2) {
+		DetailAST literalStringDetailAST1, DetailAST literalStringDetailAST2) {
 
-		String literalStringValue1 = literalStringAST1.getText();
+		String literalStringValue1 = literalStringDetailAST1.getText();
 
 		literalStringValue1 = literalStringValue1.substring(
 			1, literalStringValue1.length() - 1);
 
-		String literalStringValue2 = literalStringAST2.getText();
+		String literalStringValue2 = literalStringDetailAST2.getText();
 
 		literalStringValue2 = literalStringValue2.substring(
 			1, literalStringValue2.length() - 1);
 
-		if (literalStringAST1.getLineNo() == literalStringAST2.getLineNo()) {
+		if (literalStringDetailAST1.getLineNo() ==
+				literalStringDetailAST2.getLineNo()) {
+
 			if (!literalStringValue1.endsWith("\\n") ||
 				literalStringValue2.equals("\\n")) {
 
 				log(
-					literalStringAST1, MSG_COMBINE_LITERAL_STRINGS,
+					literalStringDetailAST1, MSG_COMBINE_LITERAL_STRINGS,
 					literalStringValue1, literalStringValue2);
 			}
 
@@ -103,9 +109,9 @@ public class ConcatCheck extends StringConcatenationCheck {
 
 		checkLiteralStringStartAndEndCharacter(
 			literalStringValue1, literalStringValue2,
-			literalStringAST1.getLineNo());
+			literalStringDetailAST1.getLineNo());
 
-		String line = getLine(literalStringAST1.getLineNo() - 1);
+		String line = getLine(literalStringDetailAST1.getLineNo() - 1);
 
 		int lineLength = CommonUtil.lengthExpandedTabs(
 			line, line.length(), getTabWidth());
@@ -116,7 +122,7 @@ public class ConcatCheck extends StringConcatenationCheck {
 
 		if (pos != -1) {
 			log(
-				literalStringAST2, MSG_MOVE_LITERAL_STRING,
+				literalStringDetailAST2, MSG_MOVE_LITERAL_STRING,
 				literalStringValue2.substring(0, pos + 1));
 		}
 	}

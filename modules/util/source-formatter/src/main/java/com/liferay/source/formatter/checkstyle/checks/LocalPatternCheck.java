@@ -38,33 +38,35 @@ public class LocalPatternCheck extends BaseCheck {
 			return;
 		}
 
-		List<DetailAST> methodCallASTList = DetailASTUtil.getMethodCalls(
+		List<DetailAST> methodCallDetailASTList = DetailASTUtil.getMethodCalls(
 			detailAST, "Pattern", "compile");
 
-		if (methodCallASTList.isEmpty()) {
+		if (methodCallDetailASTList.isEmpty()) {
 			return;
 		}
 
-		DetailAST methodCallAST = methodCallASTList.get(0);
+		DetailAST methodCallDetailAST = methodCallDetailASTList.get(0);
 
-		DetailAST elistAST = methodCallAST.findFirstToken(TokenTypes.ELIST);
+		DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
+			TokenTypes.ELIST);
 
-		DetailAST expressionAST = elistAST.findFirstToken(TokenTypes.EXPR);
+		DetailAST expressionDetailAST = elistDetailAST.findFirstToken(
+			TokenTypes.EXPR);
 
-		List<DetailAST> childASTList = DetailASTUtil.getAllChildTokens(
-			expressionAST, true, DetailASTUtil.ALL_TYPES);
+		List<DetailAST> childDetailASTList = DetailASTUtil.getAllChildTokens(
+			expressionDetailAST, true, DetailASTUtil.ALL_TYPES);
 
-		for (DetailAST childAST : childASTList) {
-			if ((childAST.getType() != TokenTypes.PLUS) &&
-				(childAST.getType() != TokenTypes.STRING_LITERAL)) {
+		for (DetailAST childDetailAST : childDetailASTList) {
+			if ((childDetailAST.getType() != TokenTypes.PLUS) &&
+				(childDetailAST.getType() != TokenTypes.STRING_LITERAL)) {
 
 				return;
 			}
 		}
 
-		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
+		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
-		log(detailAST, _MSG_LOCAL_PATTERN, nameAST.getText());
+		log(detailAST, _MSG_LOCAL_PATTERN, nameDetailAST.getText());
 	}
 
 	private static final String _MSG_LOCAL_PATTERN = "pattern.local";

@@ -29,35 +29,39 @@ public class WhitespaceAfterParameterAnnotationCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		DetailAST modifiersAST = detailAST.findFirstToken(TokenTypes.MODIFIERS);
+		DetailAST modifiersDetailAST = detailAST.findFirstToken(
+			TokenTypes.MODIFIERS);
 
-		if (modifiersAST == null) {
+		if (modifiersDetailAST == null) {
 			return;
 		}
 
-		DetailAST annotationAST = modifiersAST.findFirstToken(
+		DetailAST annotationDetailAST = modifiersDetailAST.findFirstToken(
 			TokenTypes.ANNOTATION);
 
-		if (annotationAST == null) {
+		if (annotationDetailAST == null) {
 			return;
 		}
 
-		DetailAST rparenAST = annotationAST.findFirstToken(TokenTypes.RPAREN);
+		DetailAST rparenDetailAST = annotationDetailAST.findFirstToken(
+			TokenTypes.RPAREN);
 
-		if (rparenAST == null) {
+		if (rparenDetailAST == null) {
 			return;
 		}
 
-		String line = getLine(rparenAST.getLineNo() - 1);
+		String line = getLine(rparenDetailAST.getLineNo() - 1);
 
-		if ((rparenAST.getColumnNo() + 1) >= line.length()) {
+		if ((rparenDetailAST.getColumnNo() + 1) >= line.length()) {
 			return;
 		}
 
-		char c = line.charAt(rparenAST.getColumnNo() + 1);
+		char c = line.charAt(rparenDetailAST.getColumnNo() + 1);
 
 		if (!Character.isWhitespace(c)) {
-			log(rparenAST, _MSG_MISSING_WHITESPACE, rparenAST.getText());
+			log(
+				rparenDetailAST, _MSG_MISSING_WHITESPACE,
+				rparenDetailAST.getText());
 		}
 	}
 

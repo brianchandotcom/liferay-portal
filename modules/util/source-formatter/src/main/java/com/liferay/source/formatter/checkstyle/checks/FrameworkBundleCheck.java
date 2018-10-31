@@ -33,9 +33,9 @@ public class FrameworkBundleCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		DetailAST parentAST = detailAST.getParent();
+		DetailAST parentDetailAST = detailAST.getParent();
 
-		if (parentAST != null) {
+		if (parentDetailAST != null) {
 			return;
 		}
 
@@ -54,26 +54,28 @@ public class FrameworkBundleCheck extends BaseCheck {
 	}
 
 	private void _checkGetHeadersMethodCall(DetailAST detailAST) {
-		List<DetailAST> methodCallASTList = DetailASTUtil.getMethodCalls(
+		List<DetailAST> methodCallDetailASTList = DetailASTUtil.getMethodCalls(
 			detailAST, "getHeaders");
 
-		for (DetailAST methodCallAST : methodCallASTList) {
-			DetailAST elistAST = methodCallAST.findFirstToken(TokenTypes.ELIST);
+		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
+			DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
+				TokenTypes.ELIST);
 
-			List<DetailAST> exprASTList = DetailASTUtil.getAllChildTokens(
-				elistAST, false, TokenTypes.EXPR);
+			List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
+				elistDetailAST, false, TokenTypes.EXPR);
 
-			if (!exprASTList.isEmpty()) {
+			if (!exprDetailASTList.isEmpty()) {
 				continue;
 			}
 
-			String variableName = DetailASTUtil.getVariableName(methodCallAST);
+			String variableName = DetailASTUtil.getVariableName(
+				methodCallDetailAST);
 
 			String variableTypeName = DetailASTUtil.getVariableTypeName(
-				methodCallAST, variableName, false);
+				methodCallDetailAST, variableName, false);
 
 			if (variableTypeName.equals("Bundle")) {
-				log(methodCallAST, _MSG_USE_BUNDLE_GET_HEADERS);
+				log(methodCallDetailAST, _MSG_USE_BUNDLE_GET_HEADERS);
 			}
 		}
 	}

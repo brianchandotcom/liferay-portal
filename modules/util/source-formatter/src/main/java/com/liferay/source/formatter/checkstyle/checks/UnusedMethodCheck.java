@@ -43,97 +43,112 @@ public class UnusedMethodCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		DetailAST parentAST = detailAST.getParent();
+		DetailAST parentDetailAST = detailAST.getParent();
 
-		if (parentAST != null) {
+		if (parentDetailAST != null) {
 			return;
 		}
 
-		List<DetailAST> methodDefASTList = DetailASTUtil.getAllChildTokens(
-			detailAST, true, TokenTypes.METHOD_DEF);
+		List<DetailAST> methodDefinitionDetailASTList =
+			DetailASTUtil.getAllChildTokens(
+				detailAST, true, TokenTypes.METHOD_DEF);
 
-		if (methodDefASTList.isEmpty()) {
+		if (methodDefinitionDetailASTList.isEmpty()) {
 			return;
 		}
 
 		List<String> referencedMethodNames = _getReferencedMethodNames(
 			detailAST);
 
-		for (DetailAST methodDefAST : methodDefASTList) {
-			DetailAST modifiersAST = methodDefAST.findFirstToken(
-				TokenTypes.MODIFIERS);
+		for (DetailAST methodDefinitionDetailAST :
+				methodDefinitionDetailASTList) {
 
-			if (!modifiersAST.branchContains(TokenTypes.LITERAL_PRIVATE) ||
-				_hasSuppressUnusedWarningsAnnotation(methodDefAST)) {
+			DetailAST modifiersDetailAST =
+				methodDefinitionDetailAST.findFirstToken(TokenTypes.MODIFIERS);
+
+			if (!modifiersDetailAST.branchContains(
+					TokenTypes.LITERAL_PRIVATE) ||
+				_hasSuppressUnusedWarningsAnnotation(
+					methodDefinitionDetailAST)) {
 
 				continue;
 			}
 
-			DetailAST nameAST = methodDefAST.findFirstToken(TokenTypes.IDENT);
+			DetailAST nameDetailAST = methodDefinitionDetailAST.findFirstToken(
+				TokenTypes.IDENT);
 
-			String name = nameAST.getText();
+			String name = nameDetailAST.getText();
 
 			if (!ArrayUtil.contains(_allowedMethodNames, name) &&
-				!referencedMethodNames.contains(nameAST.getText())) {
+				!referencedMethodNames.contains(nameDetailAST.getText())) {
 
-				log(methodDefAST, _MSG_UNUSED_METHOD, name);
+				log(methodDefinitionDetailAST, _MSG_UNUSED_METHOD, name);
 			}
 		}
 	}
 
-	private List<String> _getReferencedMethodNames(DetailAST classDefAST) {
+	private List<String> _getReferencedMethodNames(
+		DetailAST classDefinitionDetailAST) {
+
 		List<String> referencedMethodNames = new ArrayList<>();
 
-		List<DetailAST> methodCallASTList = DetailASTUtil.getAllChildTokens(
-			classDefAST, true, TokenTypes.METHOD_CALL);
+		List<DetailAST> methodCallDetailASTList =
+			DetailASTUtil.getAllChildTokens(
+				classDefinitionDetailAST, true, TokenTypes.METHOD_CALL);
 
-		for (DetailAST methodCallAST : methodCallASTList) {
-			DetailAST nameAST = methodCallAST.getFirstChild();
+		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
+			DetailAST nameDetailAST = methodCallDetailAST.getFirstChild();
 
-			if (nameAST.getType() == TokenTypes.DOT) {
-				nameAST = nameAST.getLastChild();
+			if (nameDetailAST.getType() == TokenTypes.DOT) {
+				nameDetailAST = nameDetailAST.getLastChild();
 			}
 
-			referencedMethodNames.add(nameAST.getText());
+			referencedMethodNames.add(nameDetailAST.getText());
 		}
 
-		List<DetailAST> methodRefASTList = DetailASTUtil.getAllChildTokens(
-			classDefAST, true, TokenTypes.METHOD_REF);
+		List<DetailAST> methodReferenceDetailASTList =
+			DetailASTUtil.getAllChildTokens(
+				classDefinitionDetailAST, true, TokenTypes.METHOD_REF);
 
-		for (DetailAST methodRefAST : methodRefASTList) {
-			DetailAST lastChildAST = methodRefAST.getLastChild();
+		for (DetailAST methodReferenceDetailAST :
+				methodReferenceDetailASTList) {
 
-			referencedMethodNames.add(lastChildAST.getText());
+			DetailAST lastChildDetailAST =
+				methodReferenceDetailAST.getLastChild();
+
+			referencedMethodNames.add(lastChildDetailAST.getText());
 		}
 
-		List<DetailAST> literalNewASTList = DetailASTUtil.getAllChildTokens(
-			classDefAST, true, TokenTypes.LITERAL_NEW);
+		List<DetailAST> literalNewDetailASTList =
+			DetailASTUtil.getAllChildTokens(
+				classDefinitionDetailAST, true, TokenTypes.LITERAL_NEW);
 
-		for (DetailAST literalNewAST : literalNewASTList) {
-			DetailAST firstChildAST = literalNewAST.getFirstChild();
+		for (DetailAST literalNewDetailAST : literalNewDetailASTList) {
+			DetailAST firstChildDetailAST = literalNewDetailAST.getFirstChild();
 
-			if ((firstChildAST == null) ||
-				(firstChildAST.getType() != TokenTypes.IDENT) ||
-				!Objects.equals(firstChildAST.getText(), "MethodKey")) {
+			if ((firstChildDetailAST == null) ||
+				(firstChildDetailAST.getType() != TokenTypes.IDENT) ||
+				!Objects.equals(firstChildDetailAST.getText(), "MethodKey")) {
 
 				continue;
 			}
 
-			DetailAST elist = literalNewAST.findFirstToken(TokenTypes.ELIST);
+			DetailAST elistDetailAST = literalNewDetailAST.findFirstToken(
+				TokenTypes.ELIST);
 
-			List<DetailAST> exprASTList = DetailASTUtil.getAllChildTokens(
-				elist, false, TokenTypes.EXPR);
+			List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
+				elistDetailAST, false, TokenTypes.EXPR);
 
-			if (exprASTList.size() < 2) {
+			if (exprDetailASTList.size() < 2) {
 				continue;
 			}
 
-			DetailAST exprAST = exprASTList.get(1);
+			DetailAST exprDetailAST = exprDetailASTList.get(1);
 
-			firstChildAST = exprAST.getFirstChild();
+			firstChildDetailAST = exprDetailAST.getFirstChild();
 
-			if (firstChildAST.getType() == TokenTypes.STRING_LITERAL) {
-				String text = firstChildAST.getText();
+			if (firstChildDetailAST.getType() == TokenTypes.STRING_LITERAL) {
+				String text = firstChildDetailAST.getText();
 
 				referencedMethodNames.add(text.substring(1, text.length() - 1));
 			}
@@ -143,20 +158,21 @@ public class UnusedMethodCheck extends BaseCheck {
 	}
 
 	private boolean _hasSuppressUnusedWarningsAnnotation(
-		DetailAST methodDefAST) {
+		DetailAST methodDefinitionDetailAST) {
 
-		DetailAST annotationAST = AnnotationUtil.getAnnotation(
-			methodDefAST, "SuppressWarnings");
+		DetailAST annotationDetailAST = AnnotationUtil.getAnnotation(
+			methodDefinitionDetailAST, "SuppressWarnings");
 
-		if (annotationAST == null) {
+		if (annotationDetailAST == null) {
 			return false;
 		}
 
-		List<DetailAST> literalStringASTList = DetailASTUtil.getAllChildTokens(
-			annotationAST, true, TokenTypes.STRING_LITERAL);
+		List<DetailAST> literalStringDetailASTList =
+			DetailASTUtil.getAllChildTokens(
+				annotationDetailAST, true, TokenTypes.STRING_LITERAL);
 
-		for (DetailAST literalStringAST : literalStringASTList) {
-			String s = literalStringAST.getText();
+		for (DetailAST literalStringDetailAST : literalStringDetailASTList) {
+			String s = literalStringDetailAST.getText();
 
 			if (s.equals("\"unused\"")) {
 				return true;

@@ -42,32 +42,33 @@ public class VariableNameCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		DetailAST modifiersAST = detailAST.findFirstToken(TokenTypes.MODIFIERS);
+		DetailAST modifiersDetailAST = detailAST.findFirstToken(
+			TokenTypes.MODIFIERS);
 
-		if (modifiersAST.branchContains(TokenTypes.LITERAL_PROTECTED) ||
-			modifiersAST.branchContains(TokenTypes.LITERAL_PUBLIC)) {
+		if (modifiersDetailAST.branchContains(TokenTypes.LITERAL_PROTECTED) ||
+			modifiersDetailAST.branchContains(TokenTypes.LITERAL_PUBLIC)) {
 
 			return;
 		}
 
-		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
+		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
-		String name = nameAST.getText();
+		String name = nameDetailAST.getText();
 
 		_checkCaps(detailAST, name);
 		_checkIsVariableName(detailAST, name);
 
-		DetailAST typeAST = detailAST.findFirstToken(TokenTypes.TYPE);
+		DetailAST typeDetailAST = detailAST.findFirstToken(TokenTypes.TYPE);
 
-		DetailAST firstChildAST = typeAST.getFirstChild();
+		DetailAST firstChildDetailAST = typeDetailAST.getFirstChild();
 
-		if ((firstChildAST == null) ||
-			(firstChildAST.getType() != TokenTypes.IDENT)) {
+		if ((firstChildDetailAST == null) ||
+			(firstChildDetailAST.getType() != TokenTypes.IDENT)) {
 
 			return;
 		}
 
-		String typeName = firstChildAST.getText();
+		String typeName = firstChildDetailAST.getText();
 
 		_checkTypeNameEnding(detailAST, name, typeName, "DetailAST");
 		_checkTypo(detailAST, name, typeName);
@@ -261,39 +262,39 @@ public class VariableNameCheck extends BaseCheck {
 	private boolean _classHasVariableWithName(
 		DetailAST detailAST, String variableName) {
 
-		DetailAST parentAST = detailAST.getParent();
+		DetailAST parentDetailAST = detailAST.getParent();
 
-		List<DetailAST> definitionASTList = new ArrayList<>();
+		List<DetailAST> definitionDetailASTList = new ArrayList<>();
 
 		while (true) {
-			if (parentAST == null) {
+			if (parentDetailAST == null) {
 				break;
 			}
 
-			if (parentAST.getType() == TokenTypes.METHOD_DEF) {
-				definitionASTList.addAll(
+			if (parentDetailAST.getType() == TokenTypes.METHOD_DEF) {
+				definitionDetailASTList.addAll(
 					DetailASTUtil.getAllChildTokens(
-						parentAST, true, TokenTypes.PARAMETER_DEF,
+						parentDetailAST, true, TokenTypes.PARAMETER_DEF,
 						TokenTypes.VARIABLE_DEF));
 			}
 
-			if (parentAST.getType() == TokenTypes.CLASS_DEF) {
-				DetailAST objblockAST = parentAST.findFirstToken(
+			if (parentDetailAST.getType() == TokenTypes.CLASS_DEF) {
+				DetailAST objBlockDetailAST = parentDetailAST.findFirstToken(
 					TokenTypes.OBJBLOCK);
 
-				definitionASTList.addAll(
+				definitionDetailASTList.addAll(
 					DetailASTUtil.getAllChildTokens(
-						objblockAST, false, TokenTypes.VARIABLE_DEF));
+						objBlockDetailAST, false, TokenTypes.VARIABLE_DEF));
 			}
 
-			parentAST = parentAST.getParent();
+			parentDetailAST = parentDetailAST.getParent();
 		}
 
-		for (DetailAST definitionAST : definitionASTList) {
-			DetailAST definitionNameAST = definitionAST.findFirstToken(
-				TokenTypes.IDENT);
+		for (DetailAST definitionDetailAST : definitionDetailASTList) {
+			DetailAST definitionNameDetailAST =
+				definitionDetailAST.findFirstToken(TokenTypes.IDENT);
 
-			if (variableName.equals(definitionNameAST.getText())) {
+			if (variableName.equals(definitionNameDetailAST.getText())) {
 				return true;
 			}
 		}
@@ -370,19 +371,19 @@ public class VariableNameCheck extends BaseCheck {
 		return digits;
 	}
 
-	private boolean _isBooleanType(DetailAST typeAST) {
-		DetailAST childAST = typeAST.getFirstChild();
+	private boolean _isBooleanType(DetailAST typeDetailAST) {
+		DetailAST childDetailAST = typeDetailAST.getFirstChild();
 
-		if (childAST == null) {
+		if (childDetailAST == null) {
 			return false;
 		}
 
-		if (childAST.getType() == TokenTypes.LITERAL_BOOLEAN) {
+		if (childDetailAST.getType() == TokenTypes.LITERAL_BOOLEAN) {
 			return true;
 		}
 
-		if (childAST.getType() == TokenTypes.IDENT) {
-			String name = childAST.getText();
+		if (childDetailAST.getType() == TokenTypes.IDENT) {
+			String name = childDetailAST.getText();
 
 			if (name.equals("Boolean")) {
 				return true;

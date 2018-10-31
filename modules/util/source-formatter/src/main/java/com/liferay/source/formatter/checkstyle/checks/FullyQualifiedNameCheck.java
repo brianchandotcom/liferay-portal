@@ -36,19 +36,20 @@ public class FullyQualifiedNameCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		DetailAST parentAST = detailAST.getParent();
+		DetailAST parentDetailAST = detailAST.getParent();
 
-		if (parentAST != null) {
+		if (parentDetailAST != null) {
 			return;
 		}
 
-		List<DetailAST> nameASTList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> nameDetailASTList = DetailASTUtil.getAllChildTokens(
 			detailAST, true, TokenTypes.IDENT);
 
-		for (DetailAST nameAST : nameASTList) {
-			String name = nameAST.getText();
+		for (DetailAST nameDetailAST : nameDetailASTList) {
+			String name = nameDetailAST.getText();
 
-			String fullyQualifiedName = _getFullyQualifiedName(nameAST, name);
+			String fullyQualifiedName = _getFullyQualifiedName(
+				nameDetailAST, name);
 
 			if ((fullyQualifiedName == null) ||
 				fullyQualifiedName.matches(".*\\.upgrade\\.v[0-9_]+\\.\\w+")) {
@@ -57,42 +58,45 @@ public class FullyQualifiedNameCheck extends BaseCheck {
 			}
 
 			if (!_isFullyQualifiedNameRequired(
-					detailAST, fullyQualifiedName, name, nameASTList)) {
+					detailAST, fullyQualifiedName, name, nameDetailASTList)) {
 
-				log(nameAST, _MSG_USE_IMPORT_STATEMENT, fullyQualifiedName);
+				log(
+					nameDetailAST, _MSG_USE_IMPORT_STATEMENT,
+					fullyQualifiedName);
 			}
 		}
 	}
 
 	private boolean _containsImport(DetailAST rootDetailAST, String className) {
-		DetailAST siblingAST = rootDetailAST;
+		DetailAST siblingDetailAST = rootDetailAST;
 
 		while (true) {
-			siblingAST = siblingAST.getPreviousSibling();
+			siblingDetailAST = siblingDetailAST.getPreviousSibling();
 
-			if (siblingAST == null) {
+			if (siblingDetailAST == null) {
 				return false;
 			}
 
-			if ((siblingAST.getType() != TokenTypes.IMPORT) &&
-				(siblingAST.getType() != TokenTypes.STATIC_IMPORT)) {
+			if ((siblingDetailAST.getType() != TokenTypes.IMPORT) &&
+				(siblingDetailAST.getType() != TokenTypes.STATIC_IMPORT)) {
 
 				continue;
 			}
 
-			DetailAST dotAST = siblingAST.findFirstToken(TokenTypes.DOT);
+			DetailAST dotDetailAST = siblingDetailAST.findFirstToken(
+				TokenTypes.DOT);
 
-			if (dotAST == null) {
+			if (dotDetailAST == null) {
 				continue;
 			}
 
-			FullIdent fullIdent = FullIdent.createFullIdent(dotAST);
+			FullIdent fullIdent = FullIdent.createFullIdent(dotDetailAST);
 
 			String importName = fullIdent.getText();
 
-			if (((siblingAST.getType() == TokenTypes.IMPORT) &&
+			if (((siblingDetailAST.getType() == TokenTypes.IMPORT) &&
 				 importName.endsWith("." + className)) ||
-				((siblingAST.getType() == TokenTypes.STATIC_IMPORT) &&
+				((siblingDetailAST.getType() == TokenTypes.STATIC_IMPORT) &&
 				 importName.contains("." + className + "."))) {
 
 				return true;
@@ -100,18 +104,20 @@ public class FullyQualifiedNameCheck extends BaseCheck {
 		}
 	}
 
-	private String _getFullyQualifiedName(DetailAST nameAST, String name) {
+	private String _getFullyQualifiedName(
+		DetailAST nameDetailAST, String name) {
+
 		if (!name.matches("[A-Z][A-Za-z0-9]+")) {
 			return null;
 		}
 
-		DetailAST parentAST = nameAST.getParent();
+		DetailAST parentDetailAST = nameDetailAST.getParent();
 
-		if (parentAST.getType() != TokenTypes.DOT) {
+		if (parentDetailAST.getType() != TokenTypes.DOT) {
 			return null;
 		}
 
-		FullIdent fullIdent = FullIdent.createFullIdent(parentAST);
+		FullIdent fullIdent = FullIdent.createFullIdent(parentDetailAST);
 
 		String fullyQualifiedName = fullIdent.getText();
 
@@ -124,21 +130,21 @@ public class FullyQualifiedNameCheck extends BaseCheck {
 
 	private boolean _isFullyQualifiedNameRequired(
 		DetailAST rootDetailAST, String fullyQualifiedName, String className,
-		List<DetailAST> nameASTList) {
+		List<DetailAST> nameDetailASTList) {
 
 		if (_containsImport(rootDetailAST, className)) {
 			return true;
 		}
 
-		for (DetailAST nameAST : nameASTList) {
-			String name = nameAST.getText();
+		for (DetailAST nameDetailAST : nameDetailASTList) {
+			String name = nameDetailAST.getText();
 
 			if (!name.equals(className)) {
 				continue;
 			}
 
 			String curFullyQualifiedName = _getFullyQualifiedName(
-				nameAST, name);
+				nameDetailAST, name);
 
 			if ((curFullyQualifiedName == null) ||
 				!curFullyQualifiedName.equals(fullyQualifiedName)) {

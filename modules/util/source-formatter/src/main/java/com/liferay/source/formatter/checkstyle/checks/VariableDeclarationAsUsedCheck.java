@@ -35,74 +35,87 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		List<DetailAST> variableDefASTList = DetailASTUtil.getAllChildTokens(
-			detailAST, true, TokenTypes.VARIABLE_DEF);
+		List<DetailAST> variableDefinitionDetailASTList =
+			DetailASTUtil.getAllChildTokens(
+				detailAST, true, TokenTypes.VARIABLE_DEF);
 
-		if (variableDefASTList.isEmpty()) {
+		if (variableDefinitionDetailASTList.isEmpty()) {
 			return;
 		}
 
-		List<DetailAST> identASTList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> identDetailASTList = DetailASTUtil.getAllChildTokens(
 			detailAST, true, TokenTypes.IDENT);
 
-		for (DetailAST variableDefAST : variableDefASTList) {
-			_checkAsUsed(detailAST, variableDefAST, identASTList);
+		for (DetailAST variableDefinitionDetailAST :
+				variableDefinitionDetailASTList) {
+
+			_checkAsUsed(
+				detailAST, variableDefinitionDetailAST, identDetailASTList);
 		}
 	}
 
 	private void _checkAsUsed(
-		DetailAST detailAST, DetailAST variableDefAST,
-		List<DetailAST> identASTList) {
+		DetailAST detailAST, DetailAST variableDefinitionDetailAST,
+		List<DetailAST> identDetailASTList) {
 
-		List<String> identValues = _getIdentValues(variableDefAST);
+		List<String> identValues = _getIdentValues(variableDefinitionDetailAST);
 
 		if (DetailASTUtil.hasParentWithTokenType(
-				variableDefAST, TokenTypes.FOR_EACH_CLAUSE,
+				variableDefinitionDetailAST, TokenTypes.FOR_EACH_CLAUSE,
 				TokenTypes.FOR_INIT) ||
 			_containsMethodName(
-				variableDefAST,
+				variableDefinitionDetailAST,
 				"_?(add|channel|close|create|delete|execute|open|post|put|" +
 					"register|resolve|send|transform|unzip|update|zip)" +
 						"([A-Z].*)?",
 				"currentTimeMillis", "nextVersion", "toString") ||
-			_containsVariableType(variableDefAST, identValues, "File")) {
+			_containsVariableType(
+				variableDefinitionDetailAST, identValues, "File")) {
 
 			return;
 		}
 
-		DetailAST nameAST = variableDefAST.findFirstToken(TokenTypes.IDENT);
+		DetailAST nameDetailAST = variableDefinitionDetailAST.findFirstToken(
+			TokenTypes.IDENT);
 
-		String variableName = nameAST.getText();
+		String variableName = nameDetailAST.getText();
 
-		int endLineNumber = DetailASTUtil.getEndLineNumber(variableDefAST);
+		int endLineNumber = DetailASTUtil.getEndLineNumber(
+			variableDefinitionDetailAST);
 
-		DetailAST firstDependentIdentAST = _getFirstDependentIdentAST(
-			variableName, identValues, identASTList, endLineNumber + 1);
+		DetailAST firstDependentIdentDetailAST =
+			_getFirstDependentIdentDetailAST(
+				variableName, identValues, identDetailASTList,
+				endLineNumber + 1);
 
-		if (firstDependentIdentAST == null) {
+		if (firstDependentIdentDetailAST == null) {
 			return;
 		}
 
-		DetailAST lastBranchingStatementAST = _getLastBranchingStatementAST(
-			detailAST, endLineNumber,
-			_getClosestParentLineNumber(firstDependentIdentAST, endLineNumber));
+		DetailAST lastBranchingStatementDetailAST =
+			_getLastBranchingStatementDetailAST(
+				detailAST, endLineNumber,
+				_getClosestParentLineNumber(
+					firstDependentIdentDetailAST, endLineNumber));
 
-		if (lastBranchingStatementAST != null) {
+		if (lastBranchingStatementDetailAST != null) {
 			log(
-				variableDefAST, _MSG_DECLARE_VARIABLE_AS_USED, variableName,
-				lastBranchingStatementAST.getText(),
-				lastBranchingStatementAST.getLineNo());
+				variableDefinitionDetailAST, _MSG_DECLARE_VARIABLE_AS_USED,
+				variableName, lastBranchingStatementDetailAST.getText(),
+				lastBranchingStatementDetailAST.getLineNo());
 		}
 	}
 
 	private boolean _containsMethodName(
-		DetailAST variableDefAST, String... methodNameRegexArray) {
+		DetailAST variableDefinitionDetailAST, String... methodNameRegexArray) {
 
-		List<DetailAST> methodCallASTList = DetailASTUtil.getAllChildTokens(
-			variableDefAST, true, TokenTypes.METHOD_CALL);
+		List<DetailAST> methodCallDetailASTList =
+			DetailASTUtil.getAllChildTokens(
+				variableDefinitionDetailAST, true, TokenTypes.METHOD_CALL);
 
-		for (DetailAST methodCallAST : methodCallASTList) {
-			String methodName = DetailASTUtil.getMethodName(methodCallAST);
+		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
+			String methodName = DetailASTUtil.getMethodName(
+				methodCallDetailAST);
 
 			for (String methodNameRegex : methodNameRegexArray) {
 				if (methodName.matches(methodNameRegex)) {
@@ -115,14 +128,14 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 	}
 
 	private boolean _containsVariableType(
-		DetailAST variableDefAST, List<String> identValues,
+		DetailAST variableDefinitionDetailAST, List<String> identValues,
 		String... variableTypeNames) {
 
 		for (String name : identValues) {
 			if (ArrayUtil.contains(
 					variableTypeNames,
 					DetailASTUtil.getVariableTypeName(
-						variableDefAST, name, false))) {
+						variableDefinitionDetailAST, name, false))) {
 
 				return true;
 			}
@@ -132,36 +145,36 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 	}
 
 	private int _getClosestParentLineNumber(
-		DetailAST firstNameAST, int lineNumber) {
+		DetailAST firstNameDetailAST, int lineNumber) {
 
-		int closestLineNumber = firstNameAST.getLineNo();
+		int closestLineNumber = firstNameDetailAST.getLineNo();
 
-		DetailAST parentAST = firstNameAST.getParent();
+		DetailAST parentDetailAST = firstNameDetailAST.getParent();
 
 		while (true) {
-			if (parentAST.getLineNo() <= lineNumber) {
+			if (parentDetailAST.getLineNo() <= lineNumber) {
 				return closestLineNumber;
 			}
 
-			closestLineNumber = parentAST.getLineNo();
+			closestLineNumber = parentDetailAST.getLineNo();
 
-			parentAST = parentAST.getParent();
+			parentDetailAST = parentDetailAST.getParent();
 		}
 	}
 
-	private DetailAST _getFirstDependentIdentAST(
+	private DetailAST _getFirstDependentIdentDetailAST(
 		String variableName, List<String> identValues,
-		List<DetailAST> identASTList, int start) {
+		List<DetailAST> identDetailASTList, int start) {
 
-		for (DetailAST identAST : identASTList) {
-			if (identAST.getLineNo() < start) {
+		for (DetailAST identDetailAST : identDetailASTList) {
+			if (identDetailAST.getLineNo() < start) {
 				continue;
 			}
 
-			String curName = identAST.getText();
+			String curName = identDetailAST.getText();
 
 			if (curName.equals(variableName)) {
-				return identAST;
+				return identDetailAST;
 			}
 
 			if (curName.equals("actionRequest") ||
@@ -172,23 +185,24 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 				continue;
 			}
 
-			DetailAST parentAST = identAST.getParent();
+			DetailAST parentDetailAST = identDetailAST.getParent();
 
-			if (parentAST.getType() != TokenTypes.DOT) {
-				return identAST;
+			if (parentDetailAST.getType() != TokenTypes.DOT) {
+				return identDetailAST;
 			}
 
-			if (identAST.getPreviousSibling() != null) {
+			if (identDetailAST.getPreviousSibling() != null) {
 				continue;
 			}
 
-			DetailAST grandParentAST = parentAST.getParent();
+			DetailAST grandParentDetailAST = parentDetailAST.getParent();
 
-			if (grandParentAST.getType() == TokenTypes.METHOD_CALL) {
-				DetailAST nextSiblingAST = identAST.getNextSibling();
+			if (grandParentDetailAST.getType() == TokenTypes.METHOD_CALL) {
+				DetailAST nextSiblingDetailAST =
+					identDetailAST.getNextSibling();
 
-				if (nextSiblingAST.getType() == TokenTypes.IDENT) {
-					String methodName = nextSiblingAST.getText();
+				if (nextSiblingDetailAST.getType() == TokenTypes.IDENT) {
+					String methodName = nextSiblingDetailAST.getText();
 
 					if (methodName.matches("get[A-Z].*")) {
 						continue;
@@ -196,20 +210,22 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 				}
 			}
 
-			return identAST;
+			return identDetailAST;
 		}
 
 		return null;
 	}
 
-	private List<String> _getIdentValues(DetailAST variableDefAST) {
+	private List<String> _getIdentValues(
+		DetailAST variableDefinitionDetailAST) {
+
 		List<String> identValues = new ArrayList<>();
 
-		List<DetailAST> identASTList = DetailASTUtil.getAllChildTokens(
-			variableDefAST, true, TokenTypes.IDENT);
+		List<DetailAST> identDetailASTList = DetailASTUtil.getAllChildTokens(
+			variableDefinitionDetailAST, true, TokenTypes.IDENT);
 
-		for (DetailAST identAST : identASTList) {
-			String identValue = identAST.getText();
+		for (DetailAST identDetailAST : identDetailASTList) {
+			String identValue = identDetailAST.getText();
 
 			if (!Character.isUpperCase(identValue.charAt(0))) {
 				identValues.add(identValue);
@@ -219,50 +235,55 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 		return identValues;
 	}
 
-	private DetailAST _getLastBranchingStatementAST(
+	private DetailAST _getLastBranchingStatementDetailAST(
 		DetailAST detailAST, int start, int end) {
 
-		DetailAST lastBranchingStatementAST = null;
+		DetailAST lastBranchingStatementDetailAST = null;
 
-		List<DetailAST> branchingStatementASTList =
+		List<DetailAST> branchingStatementDetailASTList =
 			DetailASTUtil.getAllChildTokens(
 				detailAST, true, TokenTypes.LITERAL_BREAK,
 				TokenTypes.LITERAL_CONTINUE, TokenTypes.LITERAL_RETURN);
 
-		for (DetailAST branchingStatementAST : branchingStatementASTList) {
+		for (DetailAST branchingStatementDetailAST :
+				branchingStatementDetailASTList) {
+
 			int lineNumber = DetailASTUtil.getEndLineNumber(
-				branchingStatementAST);
+				branchingStatementDetailAST);
 
 			if ((start >= lineNumber) || (end <= lineNumber)) {
 				continue;
 			}
 
-			DetailAST branchedStatementAST = null;
+			DetailAST branchedStatementDetailAST = null;
 
-			if ((branchingStatementAST.getType() == TokenTypes.LITERAL_BREAK) ||
-				(branchingStatementAST.getType() ==
+			if ((branchingStatementDetailAST.getType() ==
+					TokenTypes.LITERAL_BREAK) ||
+				(branchingStatementDetailAST.getType() ==
 					TokenTypes.LITERAL_CONTINUE)) {
 
-				branchedStatementAST = DetailASTUtil.getParentWithTokenType(
-					branchingStatementAST, TokenTypes.LITERAL_DO,
-					TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_WHILE);
+				branchedStatementDetailAST =
+					DetailASTUtil.getParentWithTokenType(
+						branchingStatementDetailAST, TokenTypes.LITERAL_DO,
+						TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_WHILE);
 			}
 			else {
-				branchedStatementAST = DetailASTUtil.getParentWithTokenType(
-					branchingStatementAST, TokenTypes.CTOR_DEF,
-					TokenTypes.LAMBDA, TokenTypes.METHOD_DEF);
+				branchedStatementDetailAST =
+					DetailASTUtil.getParentWithTokenType(
+						branchingStatementDetailAST, TokenTypes.CTOR_DEF,
+						TokenTypes.LAMBDA, TokenTypes.METHOD_DEF);
 			}
 
-			if ((branchedStatementAST.getLineNo() < start) &&
-				((lastBranchingStatementAST == null) ||
-				 (branchingStatementAST.getLineNo() >
-					 lastBranchingStatementAST.getLineNo()))) {
+			if ((branchedStatementDetailAST.getLineNo() < start) &&
+				((lastBranchingStatementDetailAST == null) ||
+				 (branchingStatementDetailAST.getLineNo() >
+					 lastBranchingStatementDetailAST.getLineNo()))) {
 
-				lastBranchingStatementAST = branchingStatementAST;
+				lastBranchingStatementDetailAST = branchingStatementDetailAST;
 			}
 		}
 
-		return lastBranchingStatementAST;
+		return lastBranchingStatementDetailAST;
 	}
 
 	private static final String _MSG_DECLARE_VARIABLE_AS_USED =

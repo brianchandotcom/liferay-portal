@@ -26,33 +26,36 @@ public class EnumConstantOrderCheck extends BaseEnumConstantCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		DetailAST nextEnumConstantDefAST = getNextEnumConstantDefAST(detailAST);
+		DetailAST nextEnumConstantDefinitionDetailAST =
+			getNextEnumConstantDefinitionDetailAST(detailAST);
 
-		if (nextEnumConstantDefAST != null) {
-			_checkOrder(detailAST, nextEnumConstantDefAST);
+		if (nextEnumConstantDefinitionDetailAST != null) {
+			_checkOrder(detailAST, nextEnumConstantDefinitionDetailAST);
 		}
 	}
 
 	private void _checkOrder(
-		DetailAST enumConstantDefAST1, DetailAST enumConstantDefAST2) {
+		DetailAST enumConstantDefinitionDetailAST1,
+		DetailAST enumConstantDefinitionDetailAST2) {
 
 		NaturalOrderStringComparator comparator =
 			new NaturalOrderStringComparator();
 
-		String name1 = _getName(enumConstantDefAST1);
-		String name2 = _getName(enumConstantDefAST2);
+		String name1 = _getName(enumConstantDefinitionDetailAST1);
+		String name2 = _getName(enumConstantDefinitionDetailAST2);
 
 		if (comparator.compare(name1, name2) > 0) {
 			log(
-				enumConstantDefAST1, _MSG_ENUM_CONSTANT_ORDER_INCORRECT, name1,
-				name2);
+				enumConstantDefinitionDetailAST1,
+				_MSG_ENUM_CONSTANT_ORDER_INCORRECT, name1, name2);
 		}
 	}
 
-	private String _getName(DetailAST enumConstantDefAST) {
-		DetailAST nameAST = enumConstantDefAST.findFirstToken(TokenTypes.IDENT);
+	private String _getName(DetailAST enumConstantDefinitionDetailAST) {
+		DetailAST nameDetailAST =
+			enumConstantDefinitionDetailAST.findFirstToken(TokenTypes.IDENT);
 
-		return nameAST.getText();
+		return nameDetailAST.getText();
 	}
 
 	private static final String _MSG_ENUM_CONSTANT_ORDER_INCORRECT =

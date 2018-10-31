@@ -54,15 +54,16 @@ public class JavadocCheck extends BaseCheck {
 		javadoc = fileContents.getJavadocBefore(javadoc.getStartLineNo());
 
 		if (javadoc != null) {
-			DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
+			DetailAST nameDetailAST = detailAST.findFirstToken(
+				TokenTypes.IDENT);
 
 			Object[] arguments = null;
 
-			if (nameAST == null) {
+			if (nameDetailAST == null) {
 				arguments = new Object[] {_getClassName()};
 			}
 			else {
-				arguments = new Object[] {nameAST.getText()};
+				arguments = new Object[] {nameDetailAST.getText()};
 			}
 
 			log(detailAST, _MSG_MULTIPLE_JAVADOC, arguments);

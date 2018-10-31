@@ -42,48 +42,50 @@ public class ValidatorIsNullCheck extends BaseCheck {
 	private void _checkMethod(
 		DetailAST detailAST, String className, String methodName) {
 
-		List<DetailAST> methodCallASTList = DetailASTUtil.getMethodCalls(
+		List<DetailAST> methodCallDetailASTList = DetailASTUtil.getMethodCalls(
 			detailAST, className, methodName);
 
-		for (DetailAST methodCallAST : methodCallASTList) {
-			DetailAST elistAST = methodCallAST.findFirstToken(TokenTypes.ELIST);
+		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
+			DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
+				TokenTypes.ELIST);
 
-			DetailAST expressionAST = elistAST.findFirstToken(TokenTypes.EXPR);
+			DetailAST expressionDetailAST = elistDetailAST.findFirstToken(
+				TokenTypes.EXPR);
 
-			DetailAST childAST = expressionAST.getFirstChild();
+			DetailAST childDetailAST = expressionDetailAST.getFirstChild();
 
-			if (childAST.getType() == TokenTypes.NUM_INT) {
+			if (childDetailAST.getType() == TokenTypes.NUM_INT) {
 				log(
-					methodCallAST, _MSG_INVALID_METHOD_NAME,
+					methodCallDetailAST, _MSG_INVALID_METHOD_NAME,
 					StringBundler.concat(className, ".", methodName, "(long)"));
 
 				continue;
 			}
 
-			if (childAST.getType() != TokenTypes.IDENT) {
+			if (childDetailAST.getType() != TokenTypes.IDENT) {
 				continue;
 			}
 
-			DetailAST typeAST = DetailASTUtil.getVariableTypeAST(
-				methodCallAST, childAST.getText());
+			DetailAST typeDetailAST = DetailASTUtil.getVariableTypeDetailAST(
+				methodCallDetailAST, childDetailAST.getText());
 
-			if (typeAST == null) {
+			if (typeDetailAST == null) {
 				continue;
 			}
 
-			childAST = typeAST.getFirstChild();
+			childDetailAST = typeDetailAST.getFirstChild();
 
-			if ((childAST.getType() == TokenTypes.LITERAL_INT) ||
-				(childAST.getType() == TokenTypes.LITERAL_LONG)) {
+			if ((childDetailAST.getType() == TokenTypes.LITERAL_INT) ||
+				(childDetailAST.getType() == TokenTypes.LITERAL_LONG)) {
 
 				log(
-					methodCallAST, _MSG_INVALID_METHOD_NAME,
+					methodCallDetailAST, _MSG_INVALID_METHOD_NAME,
 					StringBundler.concat(className, ".", methodName, "(long)"));
 
 				continue;
 			}
 
-			String typeName = DetailASTUtil.getTypeName(typeAST, true);
+			String typeName = DetailASTUtil.getTypeName(typeDetailAST, true);
 
 			if (Validator.isNotNull(typeName) && !typeName.equals("Long") &&
 				!typeName.equals("Object") &&
@@ -91,7 +93,7 @@ public class ValidatorIsNullCheck extends BaseCheck {
 				!typeName.equals("String")) {
 
 				log(
-					methodCallAST, _MSG_RESERVED_METHOD,
+					methodCallDetailAST, _MSG_RESERVED_METHOD,
 					StringBundler.concat(className, ".", methodName));
 			}
 		}

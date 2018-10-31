@@ -38,18 +38,19 @@ public class MissingModifierCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST modifiersAST = detailAST.findFirstToken(TokenTypes.MODIFIERS);
+		DetailAST modifiersDetailAST = detailAST.findFirstToken(
+			TokenTypes.MODIFIERS);
 
-		if (modifiersAST.branchContains(TokenTypes.LITERAL_PRIVATE) ||
-			modifiersAST.branchContains(TokenTypes.LITERAL_PROTECTED) ||
-			modifiersAST.branchContains(TokenTypes.LITERAL_PUBLIC)) {
+		if (modifiersDetailAST.branchContains(TokenTypes.LITERAL_PRIVATE) ||
+			modifiersDetailAST.branchContains(TokenTypes.LITERAL_PROTECTED) ||
+			modifiersDetailAST.branchContains(TokenTypes.LITERAL_PUBLIC)) {
 
 			return;
 		}
 
-		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
+		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
-		log(detailAST, _MSG_MISSING_MODIFIER, nameAST.getText());
+		log(detailAST, _MSG_MISSING_MODIFIER, nameDetailAST.getText());
 	}
 
 	private static final String _MSG_MISSING_MODIFIER = "modifier.missing";

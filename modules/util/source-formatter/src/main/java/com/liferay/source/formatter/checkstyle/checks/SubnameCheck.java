@@ -33,9 +33,9 @@ public class SubnameCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
+		DetailAST nameDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
-		String name = nameAST.getText();
+		String name = nameDetailAST.getText();
 
 		if (detailAST.getType() == TokenTypes.METHOD_DEF) {
 			if (name.matches("(^_?sub|.*Sub)[A-Z].*") &&

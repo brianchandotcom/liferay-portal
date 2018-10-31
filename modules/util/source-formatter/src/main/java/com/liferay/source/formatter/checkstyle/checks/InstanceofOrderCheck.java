@@ -32,24 +32,26 @@ public class InstanceofOrderCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		DetailAST parentAST = detailAST.getParent();
+		DetailAST parentDetailAST = detailAST.getParent();
 
-		if ((parentAST.getType() != TokenTypes.LAND) &&
-			(parentAST.getType() != TokenTypes.LOR)) {
+		if ((parentDetailAST.getType() != TokenTypes.LAND) &&
+			(parentDetailAST.getType() != TokenTypes.LOR)) {
 
 			return;
 		}
 
-		DetailAST nextConditionAST = _getNextConditionAST(detailAST);
+		DetailAST nextConditionDetailAST = _getNextConditionDetailAST(
+			detailAST);
 
-		if ((nextConditionAST == null) ||
-			(nextConditionAST.getType() != TokenTypes.LITERAL_INSTANCEOF)) {
+		if ((nextConditionDetailAST == null) ||
+			(nextConditionDetailAST.getType() !=
+				TokenTypes.LITERAL_INSTANCEOF)) {
 
 			return;
 		}
 
 		String variableName1 = _getVariableName(detailAST);
-		String variableName2 = _getVariableName(nextConditionAST);
+		String variableName2 = _getVariableName(nextConditionDetailAST);
 
 		if ((variableName1 == null) || !variableName1.equals(variableName2)) {
 			return;
@@ -59,34 +61,37 @@ public class InstanceofOrderCheck extends BaseCheck {
 			new NaturalOrderStringComparator();
 
 		String typeName1 = DetailASTUtil.getTypeName(detailAST, false);
-		String typeName2 = DetailASTUtil.getTypeName(nextConditionAST, false);
+		String typeName2 = DetailASTUtil.getTypeName(
+			nextConditionDetailAST, false);
 
 		if (comparator.compare(typeName1, typeName2) > 0) {
-			log(nextConditionAST, _MSG_ORDER_INSTANCEOF, typeName2, typeName1);
+			log(
+				nextConditionDetailAST, _MSG_ORDER_INSTANCEOF, typeName2,
+				typeName1);
 		}
 	}
 
-	private DetailAST _getNextConditionAST(DetailAST detailAST) {
-		DetailAST nextSiblingAST = detailAST.getNextSibling();
+	private DetailAST _getNextConditionDetailAST(DetailAST detailAST) {
+		DetailAST nextSiblingDetailAST = detailAST.getNextSibling();
 
-		if (nextSiblingAST != null) {
-			return nextSiblingAST;
+		if (nextSiblingDetailAST != null) {
+			return nextSiblingDetailAST;
 		}
 
-		DetailAST parentAST = detailAST.getParent();
+		DetailAST parentDetailAST = detailAST.getParent();
 
-		return parentAST.getNextSibling();
+		return parentDetailAST.getNextSibling();
 	}
 
-	private String _getVariableName(DetailAST literalInstanceOfAST) {
-		DetailAST nameAST = literalInstanceOfAST.findFirstToken(
+	private String _getVariableName(DetailAST literalInstanceofDetailAST) {
+		DetailAST nameDetailAST = literalInstanceofDetailAST.findFirstToken(
 			TokenTypes.IDENT);
 
-		if (nameAST == null) {
+		if (nameDetailAST == null) {
 			return null;
 		}
 
-		return nameAST.getText();
+		return nameDetailAST.getText();
 	}
 
 	private static final String _MSG_ORDER_INSTANCEOF = "instanceof.order";

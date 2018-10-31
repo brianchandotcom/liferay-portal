@@ -43,18 +43,20 @@ public class LogMessageCheck extends MessageCheck {
 	private void _checkMethod(
 		DetailAST detailAST, String variableName, String methodName) {
 
-		List<DetailAST> methodCallASTList = DetailASTUtil.getMethodCalls(
+		List<DetailAST> methodCallDetailASTList = DetailASTUtil.getMethodCalls(
 			detailAST, variableName, methodName);
 
-		for (DetailAST methodCallAST : methodCallASTList) {
-			DetailAST elistAST = methodCallAST.findFirstToken(TokenTypes.ELIST);
+		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
+			DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
+				TokenTypes.ELIST);
 
-			List<DetailAST> exprASTList = DetailASTUtil.getAllChildTokens(
-				elistAST, false, TokenTypes.EXPR);
+			List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
+				elistDetailAST, false, TokenTypes.EXPR);
 
-			for (DetailAST exprAST : exprASTList) {
+			for (DetailAST exprDetailAST : exprDetailASTList) {
 				checkMessage(
-					getLiteralStringValue(exprAST), exprAST.getLineNo());
+					getLiteralStringValue(exprDetailAST),
+					exprDetailAST.getLineNo());
 			}
 		}
 	}

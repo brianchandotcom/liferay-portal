@@ -45,60 +45,61 @@ public abstract class MessageCheck extends BaseCheck {
 		}
 	}
 
-	protected String getLiteralStringValue(DetailAST exprAST) {
-		DetailAST firstChildAST = exprAST.getFirstChild();
+	protected String getLiteralStringValue(DetailAST exprDetailAST) {
+		DetailAST firstChildDetailAST = exprDetailAST.getFirstChild();
 
-		if (firstChildAST.getType() == TokenTypes.STRING_LITERAL) {
-			String s = firstChildAST.getText();
+		if (firstChildDetailAST.getType() == TokenTypes.STRING_LITERAL) {
+			String s = firstChildDetailAST.getText();
 
 			return s.substring(1, s.length() - 1);
 		}
 
 		StringBundler sb = new StringBundler();
 
-		if (firstChildAST.getType() == TokenTypes.PLUS) {
-			DetailAST childAST = firstChildAST.getFirstChild();
+		if (firstChildDetailAST.getType() == TokenTypes.PLUS) {
+			DetailAST childDetailAST = firstChildDetailAST.getFirstChild();
 
 			while (true) {
-				if (childAST.getType() != TokenTypes.STRING_LITERAL) {
+				if (childDetailAST.getType() != TokenTypes.STRING_LITERAL) {
 					return null;
 				}
 
-				String s = childAST.getText();
+				String s = childDetailAST.getText();
 
 				sb.append(s.substring(1, s.length() - 1));
 
-				childAST = childAST.getNextSibling();
+				childDetailAST = childDetailAST.getNextSibling();
 
-				if (childAST == null) {
+				if (childDetailAST == null) {
 					return sb.toString();
 				}
 			}
 		}
 
-		if (firstChildAST.getType() != TokenTypes.METHOD_CALL) {
+		if (firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) {
 			return null;
 		}
 
-		String methodName = DetailASTUtil.getMethodName(firstChildAST);
+		String methodName = DetailASTUtil.getMethodName(firstChildDetailAST);
 
 		if (!methodName.equals("concat")) {
 			return null;
 		}
 
-		DetailAST elistAST = firstChildAST.findFirstToken(TokenTypes.ELIST);
+		DetailAST elistDetailAST = firstChildDetailAST.findFirstToken(
+			TokenTypes.ELIST);
 
-		List<DetailAST> exprASTList = DetailASTUtil.getAllChildTokens(
-			elistAST, false, TokenTypes.EXPR);
+		List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
+			elistDetailAST, false, TokenTypes.EXPR);
 
-		for (DetailAST curExprAST : exprASTList) {
-			firstChildAST = curExprAST.getFirstChild();
+		for (DetailAST curExprDetailAST : exprDetailASTList) {
+			firstChildDetailAST = curExprDetailAST.getFirstChild();
 
-			if (firstChildAST.getType() != TokenTypes.STRING_LITERAL) {
+			if (firstChildDetailAST.getType() != TokenTypes.STRING_LITERAL) {
 				return null;
 			}
 
-			String s = firstChildAST.getText();
+			String s = firstChildDetailAST.getText();
 
 			sb.append(s.substring(1, s.length() - 1));
 		}

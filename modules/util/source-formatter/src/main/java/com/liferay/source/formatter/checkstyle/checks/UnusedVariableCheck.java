@@ -43,38 +43,46 @@ public class UnusedVariableCheck extends BaseCheck {
 			return;
 		}
 
-		List<DetailAST> variableDefASTList = DetailASTUtil.getAllChildTokens(
-			detailAST, true, TokenTypes.VARIABLE_DEF);
+		List<DetailAST> variableDefinitionDetailASTList =
+			DetailASTUtil.getAllChildTokens(
+				detailAST, true, TokenTypes.VARIABLE_DEF);
 
-		if (variableDefASTList.isEmpty()) {
+		if (variableDefinitionDetailASTList.isEmpty()) {
 			return;
 		}
 
 		List<String> tokenNames = _getTokenNames(detailAST);
 
-		for (DetailAST variableDefAST : variableDefASTList) {
-			DetailAST modifiersAST = variableDefAST.findFirstToken(
-				TokenTypes.MODIFIERS);
+		for (DetailAST variableDefinitionDetailAST :
+				variableDefinitionDetailASTList) {
+
+			DetailAST modifiersDetailAST =
+				variableDefinitionDetailAST.findFirstToken(
+					TokenTypes.MODIFIERS);
 
 			if (detailAST.getType() == TokenTypes.CLASS_DEF) {
-				if (modifiersAST.branchContains(TokenTypes.ANNOTATION) ||
-					!modifiersAST.branchContains(TokenTypes.LITERAL_PRIVATE)) {
+				if (modifiersDetailAST.branchContains(TokenTypes.ANNOTATION) ||
+					!modifiersDetailAST.branchContains(
+						TokenTypes.LITERAL_PRIVATE)) {
 
 					continue;
 				}
 			}
-			else if (modifiersAST.getChildCount() > 0) {
+			else if (modifiersDetailAST.getChildCount() > 0) {
 				continue;
 			}
 
-			DetailAST nameAST = variableDefAST.findFirstToken(TokenTypes.IDENT);
+			DetailAST nameDetailAST =
+				variableDefinitionDetailAST.findFirstToken(TokenTypes.IDENT);
 
-			String variableName = nameAST.getText();
+			String variableName = nameDetailAST.getText();
 
 			if (!variableName.equals("serialVersionUID") &&
 				(Collections.frequency(tokenNames, variableName) == 1)) {
 
-				log(variableDefAST, _MSG_UNUSED_VARIABLE, variableName);
+				log(
+					variableDefinitionDetailAST, _MSG_UNUSED_VARIABLE,
+					variableName);
 			}
 		}
 	}
@@ -82,11 +90,11 @@ public class UnusedVariableCheck extends BaseCheck {
 	private List<String> _getTokenNames(DetailAST detailAST) {
 		List<String> tokenNames = new ArrayList<>();
 
-		List<DetailAST> nameASTList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> nameDetailASTList = DetailASTUtil.getAllChildTokens(
 			detailAST, true, TokenTypes.IDENT);
 
-		for (DetailAST nameAST : nameASTList) {
-			tokenNames.add(nameAST.getText());
+		for (DetailAST nameDetailAST : nameDetailASTList) {
+			tokenNames.add(nameDetailAST.getText());
 		}
 
 		return tokenNames;

@@ -37,20 +37,20 @@ public class LineBreakBeforeGenericStartCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST nextSiblingAST = detailAST.getNextSibling();
+		DetailAST nextSiblingDetailAST = detailAST.getNextSibling();
 
 		while (true) {
-			if (nextSiblingAST == null) {
+			if (nextSiblingDetailAST == null) {
 				return;
 			}
 
-			if (nextSiblingAST.getType() != TokenTypes.GENERIC_END) {
-				nextSiblingAST = nextSiblingAST.getNextSibling();
+			if (nextSiblingDetailAST.getType() != TokenTypes.GENERIC_END) {
+				nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
 
 				continue;
 			}
 
-			if (detailAST.getLineNo() == nextSiblingAST.getLineNo()) {
+			if (detailAST.getLineNo() == nextSiblingDetailAST.getLineNo()) {
 				return;
 			}
 

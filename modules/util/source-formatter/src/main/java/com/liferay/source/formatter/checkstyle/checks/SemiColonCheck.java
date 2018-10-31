@@ -29,25 +29,27 @@ public class SemiColonCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		DetailAST previousSiblingAST = detailAST.getPreviousSibling();
+		DetailAST previousSiblingDetailAST = detailAST.getPreviousSibling();
 
-		if (previousSiblingAST == null) {
+		if (previousSiblingDetailAST == null) {
 			return;
 		}
 
-		if ((previousSiblingAST.getType() == TokenTypes.CLASS_DEF) ||
-			(previousSiblingAST.getType() == TokenTypes.CTOR_DEF) ||
-			(previousSiblingAST.getType() == TokenTypes.ENUM_DEF) ||
-			(previousSiblingAST.getType() == TokenTypes.INTERFACE_DEF) ||
-			(previousSiblingAST.getType() == TokenTypes.METHOD_DEF)) {
+		if ((previousSiblingDetailAST.getType() == TokenTypes.CLASS_DEF) ||
+			(previousSiblingDetailAST.getType() == TokenTypes.CTOR_DEF) ||
+			(previousSiblingDetailAST.getType() == TokenTypes.ENUM_DEF) ||
+			(previousSiblingDetailAST.getType() == TokenTypes.INTERFACE_DEF) ||
+			(previousSiblingDetailAST.getType() == TokenTypes.METHOD_DEF)) {
 
 			log(detailAST, _MSG_UNNECESSARY_SEMI_COLON);
 		}
-		else if (previousSiblingAST.getType() == TokenTypes.ENUM_CONSTANT_DEF) {
-			DetailAST nextSiblingAST = detailAST.getNextSibling();
+		else if (previousSiblingDetailAST.getType() ==
+					TokenTypes.ENUM_CONSTANT_DEF) {
 
-			if ((nextSiblingAST != null) &&
-				(nextSiblingAST.getType() == TokenTypes.RCURLY)) {
+			DetailAST nextSiblingDetailAST = detailAST.getNextSibling();
+
+			if ((nextSiblingDetailAST != null) &&
+				(nextSiblingDetailAST.getType() == TokenTypes.RCURLY)) {
 
 				log(detailAST, _MSG_UNNECESSARY_SEMI_COLON);
 			}

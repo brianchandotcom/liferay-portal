@@ -27,19 +27,20 @@ public abstract class BaseEnumConstantCheck extends BaseCheck {
 		return new int[] {TokenTypes.ENUM_CONSTANT_DEF};
 	}
 
-	protected DetailAST getNextEnumConstantDefAST(
-		DetailAST enumConstantDefAST) {
+	protected DetailAST getNextEnumConstantDefinitionDetailAST(
+		DetailAST enumConstantDefinitionDetailAST) {
 
-		DetailAST nextSiblingAST = enumConstantDefAST.getNextSibling();
+		DetailAST nextSiblingDetailAST =
+			enumConstantDefinitionDetailAST.getNextSibling();
 
-		if (nextSiblingAST.getType() != TokenTypes.COMMA) {
+		if (nextSiblingDetailAST.getType() != TokenTypes.COMMA) {
 			return null;
 		}
 
-		nextSiblingAST = nextSiblingAST.getNextSibling();
+		nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
 
-		if (nextSiblingAST.getType() == TokenTypes.ENUM_CONSTANT_DEF) {
-			return nextSiblingAST;
+		if (nextSiblingDetailAST.getType() == TokenTypes.ENUM_CONSTANT_DEF) {
+			return nextSiblingDetailAST;
 		}
 
 		return null;

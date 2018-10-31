@@ -57,15 +57,16 @@ import java.util.List;
 public class JavaParserUtil {
 
 	public static JavaConstructor parseJavaConstructor(
-		DetailAST constructorDefAST) {
+		DetailAST constructorDefinitionDetailAST) {
 
 		JavaConstructor javaConstructor = new JavaConstructor();
 
 		javaConstructor.setJavaAnnotations(
 			_parseJavaAnnotations(
-				constructorDefAST.findFirstToken(TokenTypes.MODIFIERS)));
+				constructorDefinitionDetailAST.findFirstToken(
+					TokenTypes.MODIFIERS)));
 		javaConstructor.setJavaSignature(
-			_parseJavaSignature(constructorDefAST));
+			_parseJavaSignature(constructorDefinitionDetailAST));
 
 		return javaConstructor;
 	}
@@ -117,16 +118,17 @@ public class JavaParserUtil {
 			javaExpression = _parseJavaInstanceofStatement(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.LITERAL_NEW) {
-			DetailAST arrayDeclaratorAST = detailAST.findFirstToken(
+			DetailAST arrayDeclaratorDetailAST = detailAST.findFirstToken(
 				TokenTypes.ARRAY_DECLARATOR);
 
-			if (arrayDeclaratorAST != null) {
+			if (arrayDeclaratorDetailAST != null) {
 				javaExpression = _parseJavaNewArrayInstantiation(detailAST);
 			}
 			else {
-				DetailAST elistAST = detailAST.findFirstToken(TokenTypes.ELIST);
+				DetailAST elistDetailAST = detailAST.findFirstToken(
+					TokenTypes.ELIST);
 
-				if (elistAST != null) {
+				if (elistDetailAST != null) {
 					javaExpression = _parseJavaNewClassInstantiation(detailAST);
 				}
 			}
@@ -164,28 +166,34 @@ public class JavaParserUtil {
 		return javaExpression;
 	}
 
-	public static JavaIfStatement parseJavaIfStatement(DetailAST literalIfAST) {
+	public static JavaIfStatement parseJavaIfStatement(
+		DetailAST literalIfDetailAST) {
+
 		JavaIfStatement javaIfStatement = new JavaIfStatement();
 
-		DetailAST firstChildAST = literalIfAST.getFirstChild();
+		DetailAST firstChildDetailAST = literalIfDetailAST.getFirstChild();
 
 		javaIfStatement.setConditionJavaExpression(
-			parseJavaExpression(firstChildAST.getNextSibling()));
+			parseJavaExpression(firstChildDetailAST.getNextSibling()));
 
 		return javaIfStatement;
 	}
 
-	public static JavaMethod parseJavaMethod(DetailAST methodDefAST) {
+	public static JavaMethod parseJavaMethod(
+		DetailAST methodDefinitionDetailAST) {
+
 		JavaMethod javaMethod = new JavaMethod();
 
 		javaMethod.setJavaAnnotations(
 			_parseJavaAnnotations(
-				methodDefAST.findFirstToken(TokenTypes.MODIFIERS)));
-		javaMethod.setJavaSignature(_parseJavaSignature(methodDefAST));
+				methodDefinitionDetailAST.findFirstToken(
+					TokenTypes.MODIFIERS)));
+		javaMethod.setJavaSignature(
+			_parseJavaSignature(methodDefinitionDetailAST));
 
-		DetailAST lastChildAST = methodDefAST.getLastChild();
+		DetailAST lastChildDetailAST = methodDefinitionDetailAST.getLastChild();
 
-		if (lastChildAST.getType() == TokenTypes.SLIST) {
+		if (lastChildDetailAST.getType() == TokenTypes.SLIST) {
 			javaMethod.setHasBody(true);
 		}
 
@@ -193,21 +201,21 @@ public class JavaParserUtil {
 	}
 
 	private static String _getName(DetailAST detailAST) {
-		DetailAST identAST = detailAST.findFirstToken(TokenTypes.IDENT);
+		DetailAST identDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
-		if (identAST != null) {
-			return identAST.getText();
+		if (identDetailAST != null) {
+			return identDetailAST.getText();
 		}
 
-		DetailAST firstChildAST = detailAST.getFirstChild();
+		DetailAST firstChildDetailAST = detailAST.getFirstChild();
 
-		if (ArrayUtil.contains(_SIMPLE_TYPES, firstChildAST.getType())) {
-			return firstChildAST.getText();
+		if (ArrayUtil.contains(_SIMPLE_TYPES, firstChildDetailAST.getType())) {
+			return firstChildDetailAST.getText();
 		}
 
-		DetailAST dotAST = detailAST.findFirstToken(TokenTypes.DOT);
+		DetailAST dotDetailAST = detailAST.findFirstToken(TokenTypes.DOT);
 
-		FullIdent fullIdent = FullIdent.createFullIdent(dotAST);
+		FullIdent fullIdent = FullIdent.createFullIdent(dotDetailAST);
 
 		return fullIdent.getText();
 	}
@@ -219,10 +227,10 @@ public class JavaParserUtil {
 
 		List<JavaExpression> arrayValueJavaExpressions = new ArrayList<>();
 
-		DetailAST firstChildAST = detailAST;
+		DetailAST firstChildDetailAST = detailAST;
 
 		while (true) {
-			if (firstChildAST.getType() != bracketType) {
+			if (firstChildDetailAST.getType() != bracketType) {
 				if (arrayValueJavaExpressions.size() > 1) {
 					Collections.reverse(arrayValueJavaExpressions);
 				}
@@ -230,47 +238,49 @@ public class JavaParserUtil {
 				return arrayValueJavaExpressions;
 			}
 
-			DetailAST closeBracketAST = firstChildAST.findFirstToken(
-				TokenTypes.RBRACK);
+			DetailAST closeBracketDetailAST =
+				firstChildDetailAST.findFirstToken(TokenTypes.RBRACK);
 
-			DetailAST previousSiblingAST = closeBracketAST.getPreviousSibling();
+			DetailAST previousSiblingDetailAST =
+				closeBracketDetailAST.getPreviousSibling();
 
-			if ((previousSiblingAST == null) ||
-				(previousSiblingAST.getType() == bracketType)) {
+			if ((previousSiblingDetailAST == null) ||
+				(previousSiblingDetailAST.getType() == bracketType)) {
 
 				arrayValueJavaExpressions.add(
 					new JavaSimpleValue(StringPool.BLANK));
 			}
 			else {
 				arrayValueJavaExpressions.add(
-					parseJavaExpression(previousSiblingAST));
+					parseJavaExpression(previousSiblingDetailAST));
 			}
 
-			firstChildAST = firstChildAST.getFirstChild();
+			firstChildDetailAST = firstChildDetailAST.getFirstChild();
 		}
 	}
 
 	private static List<JavaExpression> _parseExceptionJavaExpressions(
-		DetailAST throwsAST) {
+		DetailAST throwsDetailAST) {
 
 		List<JavaExpression> exceptionJavaExpressions = new ArrayList<>();
 
-		if (throwsAST == null) {
+		if (throwsDetailAST == null) {
 			return exceptionJavaExpressions;
 		}
 
-		DetailAST childAST = throwsAST.getFirstChild();
+		DetailAST childDetailAST = throwsDetailAST.getFirstChild();
 
 		while (true) {
-			if (childAST == null) {
+			if (childDetailAST == null) {
 				return exceptionJavaExpressions;
 			}
 
-			if (childAST.getType() != TokenTypes.COMMA) {
-				exceptionJavaExpressions.add(parseJavaExpression(childAST));
+			if (childDetailAST.getType() != TokenTypes.COMMA) {
+				exceptionJavaExpressions.add(
+					parseJavaExpression(childDetailAST));
 			}
 
-			childAST = childAST.getNextSibling();
+			childDetailAST = childDetailAST.getNextSibling();
 		}
 	}
 
@@ -279,21 +289,21 @@ public class JavaParserUtil {
 
 		JavaType genericBoundJavaType = new JavaType(fullIdent.getText(), 0);
 
-		DetailAST typeArgumentsAST = null;
+		DetailAST typeArgumentsDetailAST = null;
 
 		if (detailAST.getType() != TokenTypes.DOT) {
-			typeArgumentsAST = detailAST.getNextSibling();
+			typeArgumentsDetailAST = detailAST.getNextSibling();
 		}
 		else {
-			typeArgumentsAST = detailAST.getLastChild();
+			typeArgumentsDetailAST = detailAST.getLastChild();
 		}
 
-		if ((typeArgumentsAST != null) &&
-			(typeArgumentsAST.getType() == TokenTypes.TYPE_ARGUMENTS)) {
+		if ((typeArgumentsDetailAST != null) &&
+			(typeArgumentsDetailAST.getType() == TokenTypes.TYPE_ARGUMENTS)) {
 
 			genericBoundJavaType.setGenericJavaTypes(
 				_parseGenericJavaTypes(
-					typeArgumentsAST, TokenTypes.TYPE_ARGUMENT));
+					typeArgumentsDetailAST, TokenTypes.TYPE_ARGUMENT));
 		}
 
 		return genericBoundJavaType;
@@ -304,40 +314,41 @@ public class JavaParserUtil {
 
 		List<JavaType> genericBoundJavaTypes = new ArrayList<>();
 
-		DetailAST childAST = detailAST.getFirstChild();
+		DetailAST childDetailAST = detailAST.getFirstChild();
 
 		while (true) {
-			if (childAST == null) {
+			if (childDetailAST == null) {
 				return genericBoundJavaTypes;
 			}
 
-			if ((childAST.getType() != TokenTypes.TYPE_ARGUMENTS) &&
-				(childAST.getType() != TokenTypes.TYPE_EXTENSION_AND)) {
+			if ((childDetailAST.getType() != TokenTypes.TYPE_ARGUMENTS) &&
+				(childDetailAST.getType() != TokenTypes.TYPE_EXTENSION_AND)) {
 
-				genericBoundJavaTypes.add(_parseGenericBoundJavaType(childAST));
+				genericBoundJavaTypes.add(
+					_parseGenericBoundJavaType(childDetailAST));
 			}
 
-			childAST = childAST.getNextSibling();
+			childDetailAST = childDetailAST.getNextSibling();
 		}
 	}
 
 	private static List<JavaType> _parseGenericJavaTypes(
-		DetailAST groupAST, int type) {
+		DetailAST groupDetailAST, int type) {
 
-		if (groupAST == null) {
+		if (groupDetailAST == null) {
 			return null;
 		}
 
 		List<JavaType> genericJavaTypes = new ArrayList<>();
 
 		List<DetailAST> detailAstList = DetailASTUtil.getAllChildTokens(
-			groupAST, false, type);
+			groupDetailAST, false, type);
 
 		for (DetailAST currentDetailAST : detailAstList) {
-			DetailAST childAST = currentDetailAST.getFirstChild();
+			DetailAST childDetailAST = currentDetailAST.getFirstChild();
 
-			if (childAST.getType() == TokenTypes.TYPE) {
-				genericJavaTypes.add(_parseJavaType(childAST));
+			if (childDetailAST.getType() == TokenTypes.TYPE) {
+				genericJavaTypes.add(_parseJavaType(childDetailAST));
 			}
 			else {
 				genericJavaTypes.add(_parseJavaType(currentDetailAST));
@@ -348,19 +359,20 @@ public class JavaParserUtil {
 	}
 
 	private static JavaAnnotation _parseJavaAnnotation(
-		DetailAST annotationAST) {
+		DetailAST annotationDetailAST) {
 
 		JavaAnnotation javaAnnotation = new JavaAnnotation(
-			_getName(annotationAST));
+			_getName(annotationDetailAST));
 
-		DetailAST lparenAST = annotationAST.findFirstToken(TokenTypes.LPAREN);
+		DetailAST lparenDetailAST = annotationDetailAST.findFirstToken(
+			TokenTypes.LPAREN);
 
-		if (lparenAST == null) {
+		if (lparenDetailAST == null) {
 			return javaAnnotation;
 		}
 
 		List<JavaAnnotationMemberValuePair> javaAnnotationMemberValuePairs =
-			_parseJavaAnnotationMemberValuePairs(annotationAST);
+			_parseJavaAnnotationMemberValuePairs(annotationDetailAST);
 
 		if (!javaAnnotationMemberValuePairs.isEmpty()) {
 			javaAnnotation.setJavaAnnotationMemberValuePairs(
@@ -368,7 +380,7 @@ public class JavaParserUtil {
 		}
 		else {
 			javaAnnotation.setValueJavaExpression(
-				parseJavaExpression(lparenAST.getNextSibling()));
+				parseJavaExpression(lparenDetailAST.getNextSibling()));
 		}
 
 		return javaAnnotation;
@@ -376,23 +388,24 @@ public class JavaParserUtil {
 
 	private static JavaAnnotationMemberValuePair
 		_parseJavaAnnotationMemberValuePair(
-			DetailAST annotationMemberValuePairAST) {
+			DetailAST annotationMemberValuePairDetailAST) {
 
-		DetailAST identAST = annotationMemberValuePairAST.findFirstToken(
-			TokenTypes.IDENT);
+		DetailAST identDetailAST =
+			annotationMemberValuePairDetailAST.findFirstToken(TokenTypes.IDENT);
 
 		JavaAnnotationMemberValuePair javaAnnotationMemberValuePair =
-			new JavaAnnotationMemberValuePair(identAST.getText());
+			new JavaAnnotationMemberValuePair(identDetailAST.getText());
 
-		DetailAST lastChildAST = annotationMemberValuePairAST.getLastChild();
+		DetailAST lastChildDetailAST =
+			annotationMemberValuePairDetailAST.getLastChild();
 
 		JavaExpression valueExpression = null;
 
-		if (lastChildAST.getType() == TokenTypes.ANNOTATION_ARRAY_INIT) {
-			valueExpression = _parseJavaArray(lastChildAST);
+		if (lastChildDetailAST.getType() == TokenTypes.ANNOTATION_ARRAY_INIT) {
+			valueExpression = _parseJavaArray(lastChildDetailAST);
 		}
-		else if (lastChildAST.getType() == TokenTypes.EXPR) {
-			valueExpression = parseJavaExpression(lastChildAST);
+		else if (lastChildDetailAST.getType() == TokenTypes.EXPR) {
+			valueExpression = parseJavaExpression(lastChildDetailAST);
 		}
 
 		javaAnnotationMemberValuePair.setValueJavaExpression(valueExpression);
@@ -401,74 +414,77 @@ public class JavaParserUtil {
 	}
 
 	private static List<JavaAnnotationMemberValuePair>
-		_parseJavaAnnotationMemberValuePairs(DetailAST annotationAST) {
+		_parseJavaAnnotationMemberValuePairs(DetailAST annotationDetailAST) {
 
 		List<JavaAnnotationMemberValuePair> javaAnnotationMemberValuePairs =
 			new ArrayList<>();
 
-		List<DetailAST> annotationMemberValuePairASTList =
+		List<DetailAST> annotationMemberValuePairDetailASTList =
 			DetailASTUtil.getAllChildTokens(
-				annotationAST, false, TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR);
+				annotationDetailAST, false,
+				TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR);
 
-		for (DetailAST annotationMemberValuePairAST :
-				annotationMemberValuePairASTList) {
+		for (DetailAST annotationMemberValuePairDetailAST :
+				annotationMemberValuePairDetailASTList) {
 
 			javaAnnotationMemberValuePairs.add(
 				_parseJavaAnnotationMemberValuePair(
-					annotationMemberValuePairAST));
+					annotationMemberValuePairDetailAST));
 		}
 
 		return javaAnnotationMemberValuePairs;
 	}
 
 	private static List<JavaAnnotation> _parseJavaAnnotations(
-		DetailAST modifiersAST) {
+		DetailAST modifiersDetailAST) {
 
 		List<JavaAnnotation> javaAnnotations = new ArrayList<>();
 
-		List<DetailAST> annotationASTList = DetailASTUtil.getAllChildTokens(
-			modifiersAST, false, TokenTypes.ANNOTATION);
+		List<DetailAST> annotationDetailASTList =
+			DetailASTUtil.getAllChildTokens(
+				modifiersDetailAST, false, TokenTypes.ANNOTATION);
 
-		for (DetailAST annotationAST : annotationASTList) {
-			javaAnnotations.add(_parseJavaAnnotation(annotationAST));
+		for (DetailAST annotationDetailAST : annotationDetailASTList) {
+			javaAnnotations.add(_parseJavaAnnotation(annotationDetailAST));
 		}
 
 		return javaAnnotations;
 	}
 
-	private static JavaArray _parseJavaArray(DetailAST arrayAST) {
+	private static JavaArray _parseJavaArray(DetailAST arrayDetailAST) {
 		JavaArray javaArray = new JavaArray();
 
-		DetailAST childAST = arrayAST.getFirstChild();
+		DetailAST childDetailAST = arrayDetailAST.getFirstChild();
 
 		while (true) {
-			if ((childAST == null) ||
-				(childAST.getType() == TokenTypes.RCURLY)) {
+			if ((childDetailAST == null) ||
+				(childDetailAST.getType() == TokenTypes.RCURLY)) {
 
 				return javaArray;
 			}
 
-			javaArray.addValueJavaExpression(parseJavaExpression(childAST));
+			javaArray.addValueJavaExpression(
+				parseJavaExpression(childDetailAST));
 
-			childAST = childAST.getNextSibling();
-			childAST = childAST.getNextSibling();
+			childDetailAST = childDetailAST.getNextSibling();
+			childDetailAST = childDetailAST.getNextSibling();
 		}
 	}
 
 	private static JavaArrayDeclarator _parseJavaArrayDeclarator(
-		DetailAST arrayDeclaratorAST) {
+		DetailAST arrayDeclaratorDetailAST) {
 
 		List<JavaExpression> dimensionValueJavaExpressions = new ArrayList<>();
 
 		dimensionValueJavaExpressions.add(
 			new JavaSimpleValue(StringPool.BLANK));
 
-		DetailAST childAST = arrayDeclaratorAST.getFirstChild();
+		DetailAST childDetailAST = arrayDeclaratorDetailAST.getFirstChild();
 
 		while (true) {
-			if (childAST.getType() != TokenTypes.ARRAY_DECLARATOR) {
+			if (childDetailAST.getType() != TokenTypes.ARRAY_DECLARATOR) {
 				JavaArrayDeclarator javaArrayDeclarator =
-					new JavaArrayDeclarator(childAST.getText());
+					new JavaArrayDeclarator(childDetailAST.getText());
 
 				javaArrayDeclarator.setDimensionValueJavaExpressions(
 					dimensionValueJavaExpressions);
@@ -479,30 +495,30 @@ public class JavaParserUtil {
 			dimensionValueJavaExpressions.add(
 				new JavaSimpleValue(StringPool.BLANK));
 
-			childAST = childAST.getFirstChild();
+			childDetailAST = childDetailAST.getFirstChild();
 		}
 	}
 
 	private static JavaArrayElement _parseJavaArrayElement(
-		DetailAST indexOpAST) {
+		DetailAST indexOpDetailAST) {
 
 		JavaArrayElement javaArrayElement = null;
 
-		DetailAST firstChildAST = indexOpAST.getFirstChild();
+		DetailAST firstChildDetailAST = indexOpDetailAST.getFirstChild();
 
 		while (true) {
-			if (firstChildAST.getType() != TokenTypes.INDEX_OP) {
+			if (firstChildDetailAST.getType() != TokenTypes.INDEX_OP) {
 				javaArrayElement = new JavaArrayElement(
-					parseJavaExpression(firstChildAST));
+					parseJavaExpression(firstChildDetailAST));
 
 				break;
 			}
 
-			firstChildAST = firstChildAST.getFirstChild();
+			firstChildDetailAST = firstChildDetailAST.getFirstChild();
 		}
 
 		javaArrayElement.setIndexValueJavaExpressions(
-			_parseArrayValueJavaExpressions(indexOpAST));
+			_parseArrayValueJavaExpressions(indexOpDetailAST));
 
 		return javaArrayElement;
 	}
@@ -514,71 +530,76 @@ public class JavaParserUtil {
 			_parseParameterValueJavaExpressions(
 				detailAST.findFirstToken(TokenTypes.ELIST)));
 
-		DetailAST classInfoAST = detailAST;
+		DetailAST classInfoDetailAST = detailAST;
 
 		while (true) {
-			DetailAST firstChildAST = classInfoAST.getFirstChild();
+			DetailAST firstChildDetailAST = classInfoDetailAST.getFirstChild();
 
-			if (firstChildAST.getType() != TokenTypes.DOT) {
+			if (firstChildDetailAST.getType() != TokenTypes.DOT) {
 				break;
 			}
 
-			classInfoAST = firstChildAST;
+			classInfoDetailAST = firstChildDetailAST;
 		}
 
 		javaClassCall.setGenericJavaTypes(
 			_parseGenericJavaTypes(
-				classInfoAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS),
+				classInfoDetailAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS),
 				TokenTypes.TYPE_ARGUMENT));
 
 		return javaClassCall;
 	}
 
 	private static JavaInstanceofStatement _parseJavaInstanceofStatement(
-		DetailAST literalInstanceofAST) {
+		DetailAST literalInstanceofDetailAST) {
 
-		DetailAST typeAST = literalInstanceofAST.findFirstToken(
+		DetailAST typeDetailAST = literalInstanceofDetailAST.findFirstToken(
 			TokenTypes.TYPE);
 
 		JavaInstanceofStatement javaInstanceofStatement =
-			new JavaInstanceofStatement(_parseJavaType(typeAST));
+			new JavaInstanceofStatement(_parseJavaType(typeDetailAST));
 
 		javaInstanceofStatement.setValue(
-			parseJavaExpression(literalInstanceofAST.getFirstChild()));
+			parseJavaExpression(literalInstanceofDetailAST.getFirstChild()));
 
 		return javaInstanceofStatement;
 	}
 
 	private static JavaExpression _parseJavaLambdaExpression(
-		DetailAST lambdaAST) {
+		DetailAST lambdaDetailAST) {
 
-		DetailAST firstChildAST = lambdaAST.getFirstChild();
+		DetailAST firstChildDetailAST = lambdaDetailAST.getFirstChild();
 
-		if (firstChildAST.getType() == TokenTypes.IDENT) {
-			return new JavaSimpleLambdaExpression(firstChildAST.getText());
+		if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
+			return new JavaSimpleLambdaExpression(
+				firstChildDetailAST.getText());
 		}
 
 		return new JavaLambdaExpression(
 			_parseJavaLambdaParameters(
-				lambdaAST.findFirstToken(TokenTypes.PARAMETERS)));
+				lambdaDetailAST.findFirstToken(TokenTypes.PARAMETERS)));
 	}
 
 	private static List<JavaLambdaParameter> _parseJavaLambdaParameters(
-		DetailAST parametersAST) {
+		DetailAST parametersDetailAST) {
 
 		List<JavaLambdaParameter> javaLambdaParameters = new ArrayList<>();
 
-		List<DetailAST> parameterDefASTList = DetailASTUtil.getAllChildTokens(
-			parametersAST, false, TokenTypes.PARAMETER_DEF);
+		List<DetailAST> parameterDefinitionDetailASTList =
+			DetailASTUtil.getAllChildTokens(
+				parametersDetailAST, false, TokenTypes.PARAMETER_DEF);
 
-		for (DetailAST parameterDefAST : parameterDefASTList) {
+		for (DetailAST parameterDefinitionDetailAST :
+				parameterDefinitionDetailASTList) {
+
 			JavaLambdaParameter javaLambdaParameter = new JavaLambdaParameter(
-				_getName(parameterDefAST));
+				_getName(parameterDefinitionDetailAST));
 
-			DetailAST typeAST = parameterDefAST.findFirstToken(TokenTypes.TYPE);
+			DetailAST typeDetailAST =
+				parameterDefinitionDetailAST.findFirstToken(TokenTypes.TYPE);
 
-			if (typeAST.getFirstChild() != null) {
-				javaLambdaParameter.setJavaType(_parseJavaType(typeAST));
+			if (typeDetailAST.getFirstChild() != null) {
+				javaLambdaParameter.setJavaType(_parseJavaType(typeDetailAST));
 			}
 
 			javaLambdaParameters.add(javaLambdaParameter);
@@ -588,42 +609,45 @@ public class JavaParserUtil {
 	}
 
 	private static JavaExpression _parseJavaMethodCall(
-		DetailAST methodCallAST) {
+		DetailAST methodCallDetailAST) {
 
-		DetailAST identAST = methodCallAST.findFirstToken(TokenTypes.IDENT);
+		DetailAST identDetailAST = methodCallDetailAST.findFirstToken(
+			TokenTypes.IDENT);
 
-		if (identAST != null) {
+		if (identDetailAST != null) {
 			JavaMethodCall javaMethodCall = new JavaMethodCall(
-				identAST.getText());
+				identDetailAST.getText());
 
 			javaMethodCall.setGenericJavaTypes(
 				_parseGenericJavaTypes(
-					methodCallAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS),
+					methodCallDetailAST.findFirstToken(
+						TokenTypes.TYPE_ARGUMENTS),
 					TokenTypes.TYPE_ARGUMENT));
 			javaMethodCall.setParameterValueJavaExpressions(
 				_parseParameterValueJavaExpressions(
-					methodCallAST.findFirstToken(TokenTypes.ELIST)));
+					methodCallDetailAST.findFirstToken(TokenTypes.ELIST)));
 
 			return javaMethodCall;
 		}
 
-		DetailAST dotAST = methodCallAST.findFirstToken(TokenTypes.DOT);
+		DetailAST dotDetailAST = methodCallDetailAST.findFirstToken(
+			TokenTypes.DOT);
 
 		JavaExpression javaExpression = parseJavaExpression(
-			dotAST.getFirstChild());
+			dotDetailAST.getFirstChild());
 
-		DetailAST lastChildAST = dotAST.getLastChild();
+		DetailAST lastChildDetailAST = dotDetailAST.getLastChild();
 
 		JavaMethodCall javaMethodCall = new JavaMethodCall(
-			lastChildAST.getText());
+			lastChildDetailAST.getText());
 
 		javaMethodCall.setGenericJavaTypes(
 			_parseGenericJavaTypes(
-				dotAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS),
+				dotDetailAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS),
 				TokenTypes.TYPE_ARGUMENT));
 		javaMethodCall.setParameterValueJavaExpressions(
 			_parseParameterValueJavaExpressions(
-				methodCallAST.findFirstToken(TokenTypes.ELIST)));
+				methodCallDetailAST.findFirstToken(TokenTypes.ELIST)));
 
 		javaExpression.setChainedJavaExpression(javaMethodCall);
 
@@ -631,53 +655,54 @@ public class JavaParserUtil {
 	}
 
 	private static JavaMethodReference _parseJavaMethodReference(
-		DetailAST methodRefAST) {
+		DetailAST methodReferenceDetailAST) {
 
-		DetailAST lastChildAST = methodRefAST.getLastChild();
+		DetailAST lastChildDetailAST = methodReferenceDetailAST.getLastChild();
 
 		return new JavaMethodReference(
-			lastChildAST.getText(),
-			parseJavaExpression(methodRefAST.getFirstChild()));
+			lastChildDetailAST.getText(),
+			parseJavaExpression(methodReferenceDetailAST.getFirstChild()));
 	}
 
 	private static JavaNewArrayInstantiation _parseJavaNewArrayInstantiation(
-		DetailAST literalNewAST) {
+		DetailAST literalNewDetailAST) {
 
 		JavaNewArrayInstantiation javaNewArrayInstantiation =
 			new JavaNewArrayInstantiation();
 
 		JavaArrayDeclarator javaArrayDeclarator = new JavaArrayDeclarator(
-			_getName(literalNewAST));
+			_getName(literalNewDetailAST));
 
 		javaArrayDeclarator.setDimensionValueJavaExpressions(
 			_parseArrayValueJavaExpressions(
-				literalNewAST.findFirstToken(TokenTypes.ARRAY_DECLARATOR)));
+				literalNewDetailAST.findFirstToken(
+					TokenTypes.ARRAY_DECLARATOR)));
 		javaArrayDeclarator.setGenericJavaTypes(
 			_parseGenericJavaTypes(
-				literalNewAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS),
+				literalNewDetailAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS),
 				TokenTypes.TYPE_ARGUMENT));
 
 		javaNewArrayInstantiation.setJavaArrayDeclarator(javaArrayDeclarator);
 
-		DetailAST arrayInitAST = literalNewAST.findFirstToken(
+		DetailAST arrayInitDetailAST = literalNewDetailAST.findFirstToken(
 			TokenTypes.ARRAY_INIT);
 
-		if (arrayInitAST != null) {
+		if (arrayInitDetailAST != null) {
 			javaNewArrayInstantiation.setInitialJavaArray(
-				_parseJavaArray(arrayInitAST));
+				_parseJavaArray(arrayInitDetailAST));
 		}
 
 		return javaNewArrayInstantiation;
 	}
 
 	private static JavaNewClassInstantiation _parseJavaNewClassInstantiation(
-		DetailAST literalNewAST) {
+		DetailAST literalNewDetailAST) {
 
 		JavaNewClassInstantiation javaNewClassInstantiation =
 			new JavaNewClassInstantiation();
 
 		javaNewClassInstantiation.setJavaClassCall(
-			_parseJavaClassCall(literalNewAST));
+			_parseJavaClassCall(literalNewDetailAST));
 
 		return javaNewClassInstantiation;
 	}
@@ -702,25 +727,27 @@ public class JavaParserUtil {
 	}
 
 	private static JavaParameter _parseJavaParameter(
-		DetailAST parameterDefAST) {
+		DetailAST parameterDefinitionDetailAST) {
 
 		JavaParameter javaParameter = new JavaParameter(
-			_getName(parameterDefAST));
+			_getName(parameterDefinitionDetailAST));
 
-		DetailAST modifiersAST = parameterDefAST.findFirstToken(
-			TokenTypes.MODIFIERS);
+		DetailAST modifiersDetailAST =
+			parameterDefinitionDetailAST.findFirstToken(TokenTypes.MODIFIERS);
 
-		javaParameter.setJavaAnnotations(_parseJavaAnnotations(modifiersAST));
-		javaParameter.setModifiers(_parseModifiers(modifiersAST));
+		javaParameter.setJavaAnnotations(
+			_parseJavaAnnotations(modifiersDetailAST));
+		javaParameter.setModifiers(_parseModifiers(modifiersDetailAST));
 
-		DetailAST typeAST = parameterDefAST.findFirstToken(TokenTypes.TYPE);
+		DetailAST typeDetailAST = parameterDefinitionDetailAST.findFirstToken(
+			TokenTypes.TYPE);
 
-		JavaType javaType = _parseJavaType(typeAST);
+		JavaType javaType = _parseJavaType(typeDetailAST);
 
-		DetailAST ellipsisAST = parameterDefAST.findFirstToken(
-			TokenTypes.ELLIPSIS);
+		DetailAST ellipsisDetailAST =
+			parameterDefinitionDetailAST.findFirstToken(TokenTypes.ELLIPSIS);
 
-		if (ellipsisAST != null) {
+		if (ellipsisDetailAST != null) {
 			javaType.setVarargs(true);
 		}
 
@@ -730,24 +757,29 @@ public class JavaParserUtil {
 	}
 
 	private static List<JavaParameter> _parseJavaParameters(
-		DetailAST parametersAST) {
+		DetailAST parametersDetailAST) {
 
 		List<JavaParameter> javaParameters = new ArrayList<>();
 
-		List<DetailAST> parameterDefASTList = DetailASTUtil.getAllChildTokens(
-			parametersAST, false, TokenTypes.PARAMETER_DEF);
+		List<DetailAST> parameterDefinitionDetailASTList =
+			DetailASTUtil.getAllChildTokens(
+				parametersDetailAST, false, TokenTypes.PARAMETER_DEF);
 
-		for (DetailAST parameterDefAST : parameterDefASTList) {
-			javaParameters.add(_parseJavaParameter(parameterDefAST));
+		for (DetailAST parameterDefinitionDetailAST :
+				parameterDefinitionDetailASTList) {
+
+			javaParameters.add(
+				_parseJavaParameter(parameterDefinitionDetailAST));
 		}
 
 		return javaParameters;
 	}
 
 	private static JavaSignature _parseJavaSignature(DetailAST detailAST) {
-		DetailAST identAST = detailAST.findFirstToken(TokenTypes.IDENT);
+		DetailAST identDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
-		JavaSignature javaSignature = new JavaSignature(identAST.getText());
+		JavaSignature javaSignature = new JavaSignature(
+			identDetailAST.getText());
 
 		javaSignature.setExceptionJavaExpressions(
 			_parseExceptionJavaExpressions(
@@ -757,9 +789,10 @@ public class JavaParserUtil {
 				detailAST.findFirstToken(TokenTypes.TYPE_PARAMETERS),
 				TokenTypes.TYPE_PARAMETER));
 
-		DetailAST modifiersAST = detailAST.findFirstToken(TokenTypes.MODIFIERS);
+		DetailAST modifiersDetailAST = detailAST.findFirstToken(
+			TokenTypes.MODIFIERS);
 
-		javaSignature.setModifiers(_parseModifiers(modifiersAST));
+		javaSignature.setModifiers(_parseModifiers(modifiersDetailAST));
 
 		javaSignature.setJavaParameters(
 			_parseJavaParameters(
@@ -771,19 +804,20 @@ public class JavaParserUtil {
 	}
 
 	private static JavaTernaryOperator _parseJavaTernaryOperator(
-		DetailAST questionAST) {
+		DetailAST questionDetailAST) {
 
 		JavaTernaryOperator javaTernaryOperator = new JavaTernaryOperator();
 
 		javaTernaryOperator.setConditionJavaExpression(
-			parseJavaExpression(questionAST.getFirstChild()));
+			parseJavaExpression(questionDetailAST.getFirstChild()));
 
-		DetailAST colonAST = questionAST.findFirstToken(TokenTypes.COLON);
+		DetailAST colonDetailAST = questionDetailAST.findFirstToken(
+			TokenTypes.COLON);
 
 		javaTernaryOperator.setFalseValueJavaExpression(
-			parseJavaExpression(colonAST.getNextSibling()));
+			parseJavaExpression(colonDetailAST.getNextSibling()));
 		javaTernaryOperator.setTrueValueJavaExpression(
-			parseJavaExpression(colonAST.getPreviousSibling()));
+			parseJavaExpression(colonDetailAST.getPreviousSibling()));
 
 		return javaTernaryOperator;
 	}
@@ -793,102 +827,105 @@ public class JavaParserUtil {
 			return null;
 		}
 
-		DetailAST childAST = detailAST.getFirstChild();
+		DetailAST childDetailAST = detailAST.getFirstChild();
 
 		int arrayDimension = 0;
 
-		while (childAST.getType() == TokenTypes.ARRAY_DECLARATOR) {
+		while (childDetailAST.getType() == TokenTypes.ARRAY_DECLARATOR) {
 			arrayDimension++;
 
-			childAST = childAST.getFirstChild();
+			childDetailAST = childDetailAST.getFirstChild();
 		}
 
-		FullIdent typeIdent = FullIdent.createFullIdent(childAST);
+		FullIdent typeIdent = FullIdent.createFullIdent(childDetailAST);
 
 		JavaType javaType = new JavaType(typeIdent.getText(), arrayDimension);
 
-		DetailAST typeInfoAST = childAST;
+		DetailAST typeInfoDetailAST = childDetailAST;
 
-		if (childAST.getType() != TokenTypes.DOT) {
-			typeInfoAST = childAST.getParent();
+		if (childDetailAST.getType() != TokenTypes.DOT) {
+			typeInfoDetailAST = childDetailAST.getParent();
 		}
 
 		javaType.setGenericJavaTypes(
 			_parseGenericJavaTypes(
-				typeInfoAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS),
+				typeInfoDetailAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS),
 				TokenTypes.TYPE_ARGUMENT));
 
-		DetailAST typeLowerBoundsAST = typeInfoAST.findFirstToken(
+		DetailAST typeLowerBoundsDetailAST = typeInfoDetailAST.findFirstToken(
 			TokenTypes.TYPE_LOWER_BOUNDS);
 
-		if (typeLowerBoundsAST != null) {
+		if (typeLowerBoundsDetailAST != null) {
 			javaType.setLowerBoundJavaTypes(
-				_parseGenericBoundJavaTypes(typeLowerBoundsAST));
+				_parseGenericBoundJavaTypes(typeLowerBoundsDetailAST));
 		}
 
-		DetailAST typeUpperBoundsAST = typeInfoAST.findFirstToken(
+		DetailAST typeUpperBoundsDetailAST = typeInfoDetailAST.findFirstToken(
 			TokenTypes.TYPE_UPPER_BOUNDS);
 
-		if (typeUpperBoundsAST != null) {
+		if (typeUpperBoundsDetailAST != null) {
 			javaType.setUpperBoundJavaTypes(
-				_parseGenericBoundJavaTypes(typeUpperBoundsAST));
+				_parseGenericBoundJavaTypes(typeUpperBoundsDetailAST));
 		}
 
 		return javaType;
 	}
 
-	private static JavaTypeCast _parseJavaTypeCast(DetailAST typeCastAST) {
+	private static JavaTypeCast _parseJavaTypeCast(
+		DetailAST typeCastDetailAST) {
+
 		JavaTypeCast javaTypeCast = new JavaTypeCast();
 
 		javaTypeCast.setJavaType(
-			_parseJavaType(typeCastAST.findFirstToken(TokenTypes.TYPE)));
+			_parseJavaType(typeCastDetailAST.findFirstToken(TokenTypes.TYPE)));
 		javaTypeCast.setValueJavaExpression(
-			parseJavaExpression(typeCastAST.getLastChild()));
+			parseJavaExpression(typeCastDetailAST.getLastChild()));
 
 		return javaTypeCast;
 	}
 
 	private static List<JavaSimpleValue> _parseModifiers(
-		DetailAST modifiersAST) {
+		DetailAST modifiersDetailAST) {
 
 		List<JavaSimpleValue> modifiers = new ArrayList<>();
 
-		DetailAST childAST = modifiersAST.getFirstChild();
+		DetailAST childDetailAST = modifiersDetailAST.getFirstChild();
 
 		while (true) {
-			if (childAST == null) {
+			if (childDetailAST == null) {
 				return modifiers;
 			}
 
-			if (childAST.getType() != TokenTypes.ANNOTATION) {
-				modifiers.add(new JavaSimpleValue(childAST.getText()));
+			if (childDetailAST.getType() != TokenTypes.ANNOTATION) {
+				modifiers.add(new JavaSimpleValue(childDetailAST.getText()));
 			}
 
-			childAST = childAST.getNextSibling();
+			childDetailAST = childDetailAST.getNextSibling();
 		}
 	}
 
 	private static List<JavaExpression> _parseParameterValueJavaExpressions(
-		DetailAST elistAST) {
+		DetailAST elistDetailAST) {
 
 		List<JavaExpression> parameterValueJavaExpressions = new ArrayList<>();
 
-		DetailAST childAST = elistAST.getFirstChild();
+		DetailAST childDetailAST = elistDetailAST.getFirstChild();
 
-		if (childAST == null) {
+		if (childDetailAST == null) {
 			return parameterValueJavaExpressions;
 		}
 
 		while (true) {
-			parameterValueJavaExpressions.add(parseJavaExpression(childAST));
+			parameterValueJavaExpressions.add(
+				parseJavaExpression(childDetailAST));
 
-			childAST = childAST.getNextSibling();
+			childDetailAST = childDetailAST.getNextSibling();
 
-			if (childAST == null) {
+			if (childDetailAST == null) {
 				return parameterValueJavaExpressions;
 			}
 
-			childAST = childAST.getNextSibling();
+			childDetailAST = childDetailAST.getNextSibling();
 		}
 	}
 

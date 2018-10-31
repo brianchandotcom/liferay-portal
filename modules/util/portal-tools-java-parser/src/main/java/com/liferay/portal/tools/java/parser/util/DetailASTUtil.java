@@ -42,21 +42,21 @@ public class DetailASTUtil {
 			list = new ArrayList<>();
 		}
 
-		DetailAST childAST = detailAST.getFirstChild();
+		DetailAST childDetailAST = detailAST.getFirstChild();
 
-		while (childAST != null) {
-			if (ArrayUtil.contains(tokenTypes, childAST.getType()) ||
+		while (childDetailAST != null) {
+			if (ArrayUtil.contains(tokenTypes, childDetailAST.getType()) ||
 				ArrayUtil.contains(tokenTypes, ALL_TYPES)) {
 
-				list.add(childAST);
+				list.add(childDetailAST);
 			}
 
 			if (recursive) {
 				list = _getAllChildTokens(
-					childAST, recursive, list, tokenTypes);
+					childDetailAST, recursive, list, tokenTypes);
 			}
 
-			childAST = childAST.getNextSibling();
+			childDetailAST = childDetailAST.getNextSibling();
 		}
 
 		return list;

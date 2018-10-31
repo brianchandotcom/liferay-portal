@@ -990,9 +990,14 @@ public class PortletContainerImpl implements PortletContainer {
 			portletDisplay.setWebDAVEnabled(false);
 		}
 
-		LiferayResourceRequest liferayResourceRequest =
-			(LiferayResourceRequest)request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST);
+		LiferayResourceRequest liferayResourceRequest = null;
+
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		if (portletRequest instanceof LiferayResourceRequest) {
+			liferayResourceRequest = (LiferayResourceRequest)portletRequest;
+		}
 
 		LiferayResourceResponse liferayResourceResponse = null;
 

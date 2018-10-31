@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Michael Hashimoto
@@ -32,6 +33,7 @@ public abstract class BaseBatchBuildData
 		return getList("test_list");
 	}
 
+	@Override
 	public TopLevelBuildData getTopLevelBuildData() {
 		if (_topLevelBuildData != null) {
 			return _topLevelBuildData;
@@ -55,6 +57,13 @@ public abstract class BaseBatchBuildData
 		TopLevelBuildData topLevelBuildData = getTopLevelBuildData();
 
 		return topLevelBuildData.getBuildNumber();
+	}
+
+	@Override
+	public Map<String, String> getTopLevelBuildParameters() {
+		TopLevelBuildData topLevelBuildData = getTopLevelBuildData();
+
+		return topLevelBuildData.getBuildParameters();
 	}
 
 	@Override

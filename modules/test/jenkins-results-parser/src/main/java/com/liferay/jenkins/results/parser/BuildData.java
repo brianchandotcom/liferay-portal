@@ -16,6 +16,8 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 /**
@@ -39,6 +41,8 @@ public interface BuildData {
 	public String getBuildDurationString();
 
 	public Integer getBuildNumber();
+
+	public Map<String, String> getBuildParameters();
 
 	public String getBuildResult();
 
@@ -64,7 +68,11 @@ public interface BuildData {
 
 	public String getStartTimeString();
 
+	public TopLevelBuildData getTopLevelBuildData();
+
 	public Integer getTopLevelBuildNumber();
+
+	public Map<String, String> getTopLevelBuildParameters();
 
 	public String getTopLevelJobName();
 

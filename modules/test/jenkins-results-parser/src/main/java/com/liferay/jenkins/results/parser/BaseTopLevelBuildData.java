@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
@@ -83,8 +84,18 @@ public abstract class BaseTopLevelBuildData
 	}
 
 	@Override
+	public TopLevelBuildData getTopLevelBuildData() {
+		return this;
+	}
+
+	@Override
 	public Integer getTopLevelBuildNumber() {
 		return getBuildNumber();
+	}
+
+	@Override
+	public Map<String, String> getTopLevelBuildParameters() {
+		return getBuildParameters();
 	}
 
 	@Override

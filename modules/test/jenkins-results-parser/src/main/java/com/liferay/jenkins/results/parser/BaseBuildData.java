@@ -22,7 +22,9 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -71,6 +73,56 @@ public abstract class BaseBuildData implements BuildData {
 	@Override
 	public Integer getBuildNumber() {
 		return optInt("build_number");
+	}
+
+	@Override
+	public Map<String, String> getBuildParameters() {
+		JSONObject buildURLJSONObject = _getBuildURLJSONObject();
+
+		if (buildURLJSONObject == null) {
+			throw new RuntimeException("Please set the build URL");
+		}
+
+		if (!buildURLJSONObject.has("actions")) {
+			return null;
+		}
+
+		JSONArray actionsJSONArray = buildURLJSONObject.getJSONArray("actions");
+
+		for (int i = 0; i < actionsJSONArray.length(); i++) {
+			JSONObject actionsJSONObject = actionsJSONArray.getJSONObject(i);
+
+			if ((actionsJSONObject == null) ||
+				!actionsJSONObject.has("parameters")) {
+
+				continue;
+			}
+
+			JSONArray parametersJSONArray = actionsJSONObject.getJSONArray(
+				"parameters");
+
+			Map<String, String> buildParameters = new HashMap<>();
+
+			for (int j = 0; j < parametersJSONArray.length(); j++) {
+				JSONObject parameterJSONObject =
+					parametersJSONArray.getJSONObject(j);
+
+				if ((parameterJSONObject == null) ||
+					!parameterJSONObject.has("name") ||
+					!parameterJSONObject.has("value")) {
+
+					continue;
+				}
+
+				buildParameters.put(
+					parameterJSONObject.getString("name"),
+					parameterJSONObject.getString("value"));
+			}
+
+			return buildParameters;
+		}
+
+		return null;
 	}
 
 	@Override

@@ -59,8 +59,9 @@ public class PortletAsyncScopingListener extends PortletAsyncListenerAdapter {
 	}
 
 	private void _invokeCallback(
-		UnsafeRunnable<IOException> unsafeRunnable,
-		boolean deactivateScopeContexts) throws IOException {
+			UnsafeRunnable<IOException> unsafeRunnable,
+			boolean deactivateScopeContexts)
+		throws IOException {
 
 		_portletAsyncScopeManager.setAsyncProcessingStarted();
 

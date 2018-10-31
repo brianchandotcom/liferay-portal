@@ -240,22 +240,33 @@ function setHomePage(layoutColumns) {
 	const firstItem = nextLayoutColumns[1][0];
 
 	if (!firstItem.homePage) {
-		const currentHomeItem = getHomeItem(layoutColumns);
-		const currentHomeItemIndex = nextLayoutColumns[1].findIndex(
-			(item) => item.plid === currentHomeItem.plid
-		);
-
 		nextLayoutColumns = setIn(nextLayoutColumns, [1, 0, 'homePage'], true);
 
-		nextLayoutColumns = setIn(
-			nextLayoutColumns,
-			[
-				1,
-				currentHomeItemIndex,
-				'homePage'
-			],
-			false
-		);
+		const currentHomeItem = getHomeItem(layoutColumns);
+
+		if (currentHomeItem) {
+			const currentHomeItemColumn = getItemColumn(
+				nextLayoutColumns,
+				currentHomeItem.plid
+			);
+			const currentHomeItemColumnIndex = getItemColumnIndex(
+				nextLayoutColumns,
+				currentHomeItem.plid
+			);
+			const currentHomeItemIndex = currentHomeItemColumn.indexOf(
+				currentHomeItem
+			);
+
+			nextLayoutColumns = setIn(
+				nextLayoutColumns,
+				[
+					currentHomeItemColumnIndex,
+					currentHomeItemIndex,
+					'homePage'
+				],
+				false
+			);
+		}
 	}
 
 	return nextLayoutColumns;

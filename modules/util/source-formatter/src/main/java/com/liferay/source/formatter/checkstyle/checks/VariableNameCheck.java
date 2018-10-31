@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
@@ -55,7 +56,20 @@ public class VariableNameCheck extends BaseCheck {
 
 		_checkCaps(detailAST, name);
 		_checkIsVariableName(detailAST, name);
-		_checkTypo(detailAST, name);
+
+		DetailAST typeAST = detailAST.findFirstToken(TokenTypes.TYPE);
+
+		DetailAST firstChildAST = typeAST.getFirstChild();
+
+		if ((firstChildAST == null) ||
+			(firstChildAST.getType() != TokenTypes.IDENT)) {
+
+			return;
+		}
+
+		String typeName = firstChildAST.getText();
+
+		_checkTypo(detailAST, name, typeName);
 	}
 
 	private void _checkCaps(DetailAST detailAST, String name) {
@@ -121,35 +135,36 @@ public class VariableNameCheck extends BaseCheck {
 		}
 	}
 
-	private void _checkTypo(DetailAST detailAST, String name) {
-		if (StringUtil.isUpperCase(name)) {
+	private void _checkTypeNameEnding(
+		DetailAST detailAST, String variableName, String typeName,
+		String... typeNames) {
+
+		if (ArrayUtil.contains(typeNames, typeName) &&
+			!variableName.matches("(?i).*" + typeName)) {
+
+			log(
+				detailAST, _MSG_INCORRECT_ENDING_VARIABLE, typeName,
+				_getExpectedVariableName(typeName));
+		}
+	}
+
+	private void _checkTypo(
+		DetailAST detailAST, String variableName, String typeName) {
+
+		if (StringUtil.isUpperCase(variableName) ||
+			typeName.contains(StringPool.UNDERLINE)) {
+
 			return;
 		}
 
-		DetailAST typeAST = detailAST.findFirstToken(TokenTypes.TYPE);
-
-		DetailAST firstChildAST = typeAST.getFirstChild();
-
-		if ((firstChildAST == null) ||
-			(firstChildAST.getType() != TokenTypes.IDENT)) {
-
-			return;
-		}
-
-		String typeName = firstChildAST.getText();
-
-		if (typeName.contains(StringPool.UNDERLINE)) {
-			return;
-		}
-
-		String nameTrailingDigits = _getTrailingDigits(name);
+		String nameTrailingDigits = _getTrailingDigits(variableName);
 
 		String trimmedName = StringUtil.replaceLast(
-			name, nameTrailingDigits, StringPool.BLANK);
+			variableName, nameTrailingDigits, StringPool.BLANK);
 
 		String leadingUnderline = StringPool.BLANK;
 
-		if (name.startsWith(StringPool.UNDERLINE)) {
+		if (variableName.startsWith(StringPool.UNDERLINE)) {
 			leadingUnderline = StringPool.UNDERLINE;
 
 			trimmedName = trimmedName.substring(1);
@@ -186,7 +201,7 @@ public class VariableNameCheck extends BaseCheck {
 			}
 
 			log(
-				detailAST, _MSG_TYPO_VARIABLE, name,
+				detailAST, _MSG_TYPO_VARIABLE, variableName,
 				StringBundler.concat(
 					leadingUnderline, expectedName, nameTrailingDigits));
 
@@ -237,7 +252,7 @@ public class VariableNameCheck extends BaseCheck {
 		}
 
 		log(
-			detailAST, _MSG_TYPO_VARIABLE, name,
+			detailAST, _MSG_TYPO_VARIABLE, variableName,
 			_getExpectedVariableName(
 				typeName, leadingUnderline, nameTrailingDigits));
 	}
@@ -379,6 +394,9 @@ public class VariableNameCheck extends BaseCheck {
 	private static final String[][] _ALL_CAPS_STRINGS = {
 		{"DDL", "Ddl"}, {"DDM", "Ddm"}, {"DL", "Dl"}, {"PK", "Pk"}
 	};
+
+	private static final String _MSG_INCORRECT_ENDING_VARIABLE =
+		"variable.incorrect.ending";
 
 	private static final String _MSG_RENAME_VARIABLE = "variable.rename";
 

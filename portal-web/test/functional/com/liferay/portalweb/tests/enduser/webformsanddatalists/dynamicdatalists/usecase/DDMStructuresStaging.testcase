@@ -19,6 +19,16 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Staging Page" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Publishing" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Staging" />
@@ -53,8 +63,13 @@
 		</if>
 	</tear-down>
 
-	<command name="CreateWebContentStructureAndTemplate" priority="3">
-		<description message="This is a use case for LPS-68661." />
+	<command name="CreateWebContentStructureAndTemplate" priority="4">
+		<description message="This is a use case for LPS-68661 and LPS-77957." />
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Page" />
+			<var name="siteName" value="Staging Site Name" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
@@ -123,5 +138,48 @@
 			<var name="templateDescription" value="WC Template Description" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Page" />
+			<var name="siteName" value="Staging Site Name" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="ProductMenu#gotoLiveSite" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Structures" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Button#PLUS" />
+
+		<for list="Edit,Edit Default Values,Permissions,Copy" param="menuItem">
+			<execute macro="LexiconEntry#viewNoEntryMenuItem">
+				<var name="menuItem" value="${menuItem}" />
+				<var name="rowEntry" value="WC Structure Name" />
+			</execute>
+		</for>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Templates" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Button#PLUS" />
+
+		<for list="Edit,Permissions,Copy" param="menuItem">
+			<execute macro="LexiconEntry#viewNoEntryMenuItem">
+				<var name="menuItem" value="${menuItem}" />
+				<var name="rowEntry" value="WC Template Name" />
+			</execute>
+		</for>
 	</command>
 </definition>

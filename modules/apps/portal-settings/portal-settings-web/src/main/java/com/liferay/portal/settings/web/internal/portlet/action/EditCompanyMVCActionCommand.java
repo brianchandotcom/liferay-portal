@@ -253,6 +253,13 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 			return;
 		}
 
+		DynamicQuery dynamicQuery = _groupLocalService.dynamicQuery();
+
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("companyId", companyId));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.like(
+				"typeSettings", "%inheritLocales=false%"));
+
 		Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
 
 		for (String removedLanguageId : removedLanguageIds) {
@@ -261,13 +268,7 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 					"typeSettings", "%languageId=" + removedLanguageId + "%"));
 		}
 
-		DynamicQuery dynamicQuery = _groupLocalService.dynamicQuery();
-
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("companyId", companyId));
 		dynamicQuery.add(disjunction);
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.like(
-				"typeSettings", "%inheritLocales=false%"));
 
 		List<Group> groups = _groupLocalService.dynamicQuery(dynamicQuery);
 

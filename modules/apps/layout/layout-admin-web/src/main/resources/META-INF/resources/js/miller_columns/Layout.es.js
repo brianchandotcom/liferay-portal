@@ -15,7 +15,7 @@ import {
 	clearPath,
 	deleteEmptyColumns,
 	setHomePage
-} from './utils/LayoutUtils.es';
+} from './utils/LayoutUpdateUtils.es';
 import {
 	columnIsItemChild,
 	getColumnActiveItem,

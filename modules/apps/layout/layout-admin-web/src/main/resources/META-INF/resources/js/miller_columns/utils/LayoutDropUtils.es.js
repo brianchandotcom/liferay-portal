@@ -2,7 +2,7 @@ import {
 	appendItemToColumn,
 	moveItemInside,
 	removeItem
-} from './LayoutUtils.es';
+} from './LayoutUpdateUtils.es';
 import {
 	columnIsItemChild,
 	getColumnActiveItem,

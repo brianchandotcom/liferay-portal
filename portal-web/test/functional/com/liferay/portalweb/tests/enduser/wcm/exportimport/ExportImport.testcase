@@ -371,7 +371,7 @@
 		</execute>
 
 		<execute macro="WebContent#deleteCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="LAR#exportPortlet">
@@ -398,7 +398,7 @@
 		</execute>
 
 		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

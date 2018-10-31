@@ -1,24 +1,4 @@
 window.Liferay = {
-	component: (name) => {
-		let component;
-
-		if (name.endsWith('settingsDDMForm')) {
-			component = {
-				getField: () => {
-					return {
-						getValue: () => true
-					}
-				}
-			};
-		}
-		else if (name.endsWith('translationManager')) {
-			component = {
-				get: (arg) => 'en_US'
-			};
-		}
-
-		return component;
-	},
 	DDM: {
 		FormSettings: {
 			spritemap: '/lexicon/icons.svg',
@@ -29,17 +9,8 @@ window.Liferay = {
 			}
 		}
 	},
-	Language: {
-		get: key => key
-	},
 	Session: {
 		get: (arg) => 'active'
-	},
-	ThemeDisplay: {
-		getLanguageId: () => 'en_US'
-	},
-	Util: {
-		ns: (str, obj) => obj
 	}
 };
 

@@ -126,7 +126,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Ordering and Grouping" />
+			<var name="panel" value="Ordering" />
 		</execute>
 
 		<execute function="Select" locator1="APConfiguration#ORDERING_AND_GROUPING_ORDER_BY_SELECT" value1="${fieldNameOrder}" />

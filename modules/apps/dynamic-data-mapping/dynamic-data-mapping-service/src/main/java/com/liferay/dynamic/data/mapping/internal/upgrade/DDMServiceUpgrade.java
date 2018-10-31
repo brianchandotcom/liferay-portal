@@ -205,10 +205,12 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 				new Class<?>[] {
 					DDMContentTable.class, DDMDataProviderInstanceTable.class,
 					DDMFormInstanceRecordTable.class,
-					DDMFormInstanceRecordVersionTable.class, DDMFormInstanceTable.class,
-					DDMFormInstanceVersionTable.class, DDMStructureLayoutTable.class,
-					DDMStructureTable.class, DDMStructureVersionTable.class,
-					DDMTemplateTable.class, DDMTemplateVersionTable.class
+					DDMFormInstanceRecordVersionTable.class,
+					DDMFormInstanceTable.class,
+					DDMFormInstanceVersionTable.class,
+					DDMStructureLayoutTable.class, DDMStructureTable.class,
+					DDMStructureVersionTable.class, DDMTemplateTable.class,
+					DDMTemplateVersionTable.class
 				}));
 	}
 

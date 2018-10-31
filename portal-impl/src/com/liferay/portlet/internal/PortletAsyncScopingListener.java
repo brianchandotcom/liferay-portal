@@ -20,8 +20,6 @@ import com.liferay.portlet.PortletAsyncListenerAdapter;
 
 import java.io.IOException;
 
-import java.util.function.Supplier;
-
 import javax.portlet.PortletAsyncContext;
 
 import javax.servlet.AsyncEvent;
@@ -33,50 +31,49 @@ public class PortletAsyncScopingListener extends PortletAsyncListenerAdapter {
 
 	public PortletAsyncScopingListener(
 		PortletAsyncContext portletAsyncContext,
-		Supplier<PortletAsyncScopeManager> portletAsyncScopeManagerSupplier) {
+		PortletAsyncScopeManager portletAsyncScopeManager) {
 
 		super(portletAsyncContext);
 
-		_portletAsyncScopeManagerSupplier = portletAsyncScopeManagerSupplier;
+		_portletAsyncScopeManager = portletAsyncScopeManager;
 	}
 
 	@Override
 	public void onComplete(AsyncEvent asyncEvent) throws IOException {
-		_invokeCallback(() -> super.onComplete(asyncEvent));
+		_invokeCallback(() -> super.onComplete(asyncEvent), true);
 	}
 
 	@Override
 	public void onError(AsyncEvent asyncEvent) throws IOException {
-		_invokeCallback(() -> super.onError(asyncEvent));
+		_invokeCallback(() -> super.onError(asyncEvent), false);
 	}
 
 	@Override
 	public void onStartAsync(AsyncEvent asyncEvent) throws IOException {
-		_invokeCallback(() -> super.onStartAsync(asyncEvent));
+		_invokeCallback(() -> super.onStartAsync(asyncEvent), false);
 	}
 
 	@Override
 	public void onTimeout(AsyncEvent asyncEvent) throws IOException {
-		_invokeCallback(() -> super.onTimeout(asyncEvent));
+		_invokeCallback(() -> super.onTimeout(asyncEvent), false);
 	}
 
-	private void _invokeCallback(UnsafeRunnable<IOException> unsafeRunnable)
-		throws IOException {
+	private void _invokeCallback(
+		UnsafeRunnable<IOException> unsafeRunnable,
+		boolean deactivateScopeContexts) throws IOException {
 
-		PortletAsyncScopeManager portletAsyncScopeManager =
-			_portletAsyncScopeManagerSupplier.get();
-
-		portletAsyncScopeManager.activateScopeContexts();
+		_portletAsyncScopeManager.setAsyncProcessingStarted();
 
 		try {
 			unsafeRunnable.run();
 		}
 		finally {
-			portletAsyncScopeManager.deactivateScopeContexts();
+			if (deactivateScopeContexts) {
+				_portletAsyncScopeManager.deactivateScopeContexts();
+			}
 		}
 	}
 
-	private final Supplier<PortletAsyncScopeManager>
-		_portletAsyncScopeManagerSupplier;
+	private final PortletAsyncScopeManager _portletAsyncScopeManager;
 
 }

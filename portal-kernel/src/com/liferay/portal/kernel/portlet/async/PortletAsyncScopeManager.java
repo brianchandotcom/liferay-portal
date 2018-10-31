@@ -26,4 +26,6 @@ public interface PortletAsyncScopeManager {
 
 	public void deactivateScopeContexts();
 
+	public void setAsyncProcessingStarted();
+
 }

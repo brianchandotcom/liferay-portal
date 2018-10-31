@@ -51,6 +51,7 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -433,9 +434,12 @@ public class BeanPortletExtension implements Extension {
 			bundleContext.registerService(
 				PortletAsyncScopeManagerFactory.class,
 				(resourceRequest, resourceResponse, portletConfig) -> {
+					Deque<ScopedBeanManager> scopedBeanManagerStack =
+						ScopedBeanManagerThreadLocal.getCurrentStack();
 
 					return new PortletAsyncScopeManagerImpl(
-						resourceRequest, resourceResponse, portletConfig);
+						resourceRequest, resourceResponse, portletConfig,
+						scopedBeanManagerStack);
 				},
 				null));
 

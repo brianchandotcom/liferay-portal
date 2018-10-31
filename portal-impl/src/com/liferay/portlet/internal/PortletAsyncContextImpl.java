@@ -16,17 +16,13 @@ package com.liferay.portlet.internal;
 
 import com.liferay.portal.kernel.portlet.async.PortletAsyncListenerFactory;
 import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManager;
-import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManagerFactory;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portlet.AsyncPortletServletRequest;
 import com.liferay.portlet.PortletAsyncListenerAdapter;
 
-import java.util.function.Supplier;
-
 import javax.portlet.PortletAsyncContext;
 import javax.portlet.PortletAsyncListener;
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -177,6 +173,10 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 		_calledDispatch = true;
 	}
 
+	public PortletAsyncScopeManager getPortletAsyncScopeManager() {
+		return _portletAsyncScopeManager;
+	}
+
 	@Override
 	public ResourceRequest getResourceRequest() throws IllegalStateException {
 		if (_calledComplete ||
@@ -227,37 +227,27 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 		_asyncContext.start(
 			new PortletAsyncScopingRunnable(
 				runnable, _portletAsyncListenerAdapter,
-				_getPortletAsyncScopeManagerSupplier(
-					_resourceRequest, _resourceResponse, _portletConfig)));
+				_portletAsyncScopeManager));
 	}
 
 	protected void initialize(
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
-		PortletConfig portletConfig, AsyncContext asyncContext,
-		boolean hasOriginalRequestAndResponse) {
+		AsyncContext asyncContext, boolean hasOriginalRequestAndResponse,
+		PortletAsyncScopeManager portletAsyncScopeManager) {
 
 		_resourceRequest = resourceRequest;
 		_resourceResponse = resourceResponse;
-		_portletConfig = portletConfig;
 		_asyncContext = asyncContext;
 		_hasOriginalRequestAndResponse = hasOriginalRequestAndResponse;
+		_portletAsyncScopeManager = portletAsyncScopeManager;
 
 		_calledDispatch = false;
 		_calledComplete = false;
 		_returnedToContainer = false;
 
-		Supplier<PortletAsyncScopeManager> portletAsyncScopeManagerSupplier =
-			_getPortletAsyncScopeManagerSupplier(
-				resourceRequest, resourceResponse, portletConfig);
-
-		PortletAsyncScopeManager portletAsyncScopeManager =
-			portletAsyncScopeManagerSupplier.get();
-
-		portletAsyncScopeManager.activateScopeContexts();
-
 		if (_portletAsyncListenerAdapter == null) {
 			_portletAsyncListenerAdapter = new PortletAsyncScopingListener(
-				this, portletAsyncScopeManagerSupplier);
+				this, _portletAsyncScopeManager);
 
 			_asyncContext.addListener(_portletAsyncListenerAdapter);
 		}
@@ -266,27 +256,6 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 			_asyncPortletServletRequest =
 				(AsyncPortletServletRequest)_asyncContext.getRequest();
 		}
-	}
-
-	private static Supplier<PortletAsyncScopeManager>
-		_getPortletAsyncScopeManagerSupplier(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
-			PortletConfig portletConfig) {
-
-		PortletAsyncScopeManagerFactory portletAsyncScopeManagerFactory =
-			_portletAsyncScopeManagerFactory;
-
-		if (portletAsyncScopeManagerFactory == null) {
-			portletAsyncScopeManagerFactory =
-				_dummyPortletAsyncScopeManagerFactory;
-		}
-
-		PortletAsyncScopeManagerFactory finalPortletAsyncScopeManagerFactory =
-			portletAsyncScopeManagerFactory;
-
-		return () ->
-			finalPortletAsyncScopeManagerFactory.getPortletAsyncScopeManager(
-				resourceRequest, resourceResponse, portletConfig);
 	}
 
 	private ServletRequest _getOriginalServletRequest() {
@@ -302,33 +271,12 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 		return originalServletRequest;
 	}
 
-	private static final PortletAsyncScopeManagerFactory
-		_dummyPortletAsyncScopeManagerFactory =
-			(resourceRequest, resourceResponse, portletConfig) ->
-				new PortletAsyncScopeManager() {
-
-					@Override
-					public void activateScopeContexts() {
-					}
-
-					@Override
-					public void deactivateScopeContexts() {
-					}
-
-				};
-
 	private static volatile PortletAsyncListenerFactory
 		_portletAsyncListenerFactory =
 			ServiceProxyFactory.newServiceTrackedInstance(
 				PortletAsyncListenerFactory.class,
 				PortletAsyncContextImpl.class, "_portletAsyncListenerFactory",
 				false, true);
-	private static volatile PortletAsyncScopeManagerFactory
-		_portletAsyncScopeManagerFactory =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				PortletAsyncScopeManagerFactory.class,
-				PortletAsyncContextImpl.class,
-				"_portletAsyncScopeManagerFactory", false, true);
 
 	private AsyncContext _asyncContext;
 	private AsyncPortletServletRequest _asyncPortletServletRequest;
@@ -336,7 +284,7 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 	private boolean _calledDispatch;
 	private boolean _hasOriginalRequestAndResponse;
 	private PortletAsyncListenerAdapter _portletAsyncListenerAdapter;
-	private PortletConfig _portletConfig;
+	private PortletAsyncScopeManager _portletAsyncScopeManager;
 	private ResourceRequest _resourceRequest;
 	private ResourceResponse _resourceResponse;
 	private boolean _returnedToContainer;

@@ -21,8 +21,6 @@ import com.liferay.portlet.PortletAsyncListenerAdapter;
 
 import java.io.IOException;
 
-import java.util.function.Supplier;
-
 import javax.servlet.AsyncEvent;
 
 /**
@@ -33,19 +31,16 @@ public class PortletAsyncScopingRunnable implements Runnable {
 	public PortletAsyncScopingRunnable(
 		Runnable runnable,
 		PortletAsyncListenerAdapter portletAsyncListenerAdapter,
-		Supplier<PortletAsyncScopeManager> portletAsyncScopeManagerSupplier) {
+		PortletAsyncScopeManager portletAsyncScopeManager) {
 
 		_runnable = runnable;
 		_portletAsyncListenerAdapter = portletAsyncListenerAdapter;
-		_portletAsyncScopeManagerSupplier = portletAsyncScopeManagerSupplier;
+		_portletAsyncScopeManager = portletAsyncScopeManager;
 	}
 
 	@Override
 	public void run() {
-		PortletAsyncScopeManager portletAsyncScopeManager =
-			_portletAsyncScopeManagerSupplier.get();
-
-		portletAsyncScopeManager.activateScopeContexts();
+		_portletAsyncScopeManager.setAsyncProcessingStarted();
 
 		try {
 			_runnable.run();
@@ -58,17 +53,13 @@ public class PortletAsyncScopingRunnable implements Runnable {
 				_log.error(ioe, ioe);
 			}
 		}
-		finally {
-			portletAsyncScopeManager.deactivateScopeContexts();
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletAsyncScopingRunnable.class);
 
 	private final PortletAsyncListenerAdapter _portletAsyncListenerAdapter;
-	private final Supplier<PortletAsyncScopeManager>
-		_portletAsyncScopeManagerSupplier;
+	private final PortletAsyncScopeManager _portletAsyncScopeManager;
 	private final Runnable _runnable;
 
 }

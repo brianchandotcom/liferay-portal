@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.lang.reflect.Proxy;
+
 /**
  * @author Michael Hashimoto
  */
@@ -27,7 +29,7 @@ public abstract class WorkspaceFactory {
 			throw new RuntimeException("GitHub URL is null");
 		}
 
-		if (!PortalWorkspace.isPortalGitHubURL(gitHubURL)) {
+		if (!BasePortalWorkspace.isPortalGitHubURL(gitHubURL)) {
 			throw new RuntimeException("Unsupported GitHub URL " + gitHubURL);
 		}
 
@@ -35,19 +37,31 @@ public abstract class WorkspaceFactory {
 			batchName = "default";
 		}
 
+		BatchWorkspace batchWorkspace = null;
+
 		if (batchName.contains("functional")) {
-			return new FunctionalBatchPortalWorkspace(
+			batchWorkspace = new FunctionalBatchPortalWorkspace(
 				gitHubURL, upstreamBranchName, branchSHA);
 		}
 		else if (batchName.contains("integration") ||
 				 batchName.contains("unit")) {
 
-			return new JunitBatchPortalWorkspace(
+			batchWorkspace = new JunitBatchPortalWorkspace(
+				gitHubURL, upstreamBranchName, branchSHA);
+		}
+		else {
+			batchWorkspace = new BatchPortalWorkspace(
 				gitHubURL, upstreamBranchName, branchSHA);
 		}
 
-		return new BatchPortalWorkspace(
-			gitHubURL, upstreamBranchName, branchSHA);
+		if (batchWorkspace == null) {
+			throw new RuntimeException("Invalid workspace");
+		}
+
+		return (BatchWorkspace)Proxy.newProxyInstance(
+			BatchWorkspace.class.getClassLoader(),
+			new Class<?>[] {BatchWorkspace.class},
+			new MethodLogger(batchWorkspace));
 	}
 
 	public static TopLevelWorkspace newTopLevelWorkspace(
@@ -57,11 +71,17 @@ public abstract class WorkspaceFactory {
 			throw new RuntimeException("GitHub URL is null");
 		}
 
-		if (!PortalWorkspace.isPortalGitHubURL(gitHubURL)) {
+		if (!BasePortalWorkspace.isPortalGitHubURL(gitHubURL)) {
 			throw new RuntimeException("Unsupported GitHub URL " + gitHubURL);
 		}
 
-		return new TopLevelPortalWorkspace(gitHubURL, upstreamBranchName);
+		TopLevelWorkspace topLevelWorkspace = new TopLevelPortalWorkspace(
+			gitHubURL, upstreamBranchName);
+
+		return (TopLevelWorkspace)Proxy.newProxyInstance(
+			TopLevelWorkspace.class.getClassLoader(),
+			new Class<?>[] {TopLevelWorkspace.class},
+			new MethodLogger(topLevelWorkspace));
 	}
 
 }

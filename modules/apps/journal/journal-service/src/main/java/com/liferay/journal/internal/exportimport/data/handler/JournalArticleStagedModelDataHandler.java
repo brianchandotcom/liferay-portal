@@ -1020,13 +1020,16 @@ public class JournalArticleStagedModelDataHandler
 				fetchJournalArticleResourceByUuidAndGroupId(
 					articleResourceUuid, groupId);
 
-		if (journalArticleResource != null) {
-			return _journalArticleLocalService.fetchLatestArticle(
-				journalArticleResource.getResourcePrimKey());
+		if (journalArticleResource == null) {
+			return null;
 		}
 
-		if (!preloaded) {
-			return null;
+		JournalArticle existingLatestArticle =
+			_journalArticleLocalService.fetchLatestArticle(
+				journalArticleResource.getResourcePrimKey());
+
+		if (!preloaded && (existingLatestArticle != null)) {
+			return existingLatestArticle;
 		}
 
 		JournalArticle existingArticle = null;
@@ -1039,6 +1042,10 @@ public class JournalArticleStagedModelDataHandler
 		if ((existingArticle == null) && Validator.isNull(newArticleId)) {
 			existingArticle = _journalArticleLocalService.fetchArticle(
 				groupId, articleId);
+		}
+
+		if (existingArticle == null) {
+			existingArticle = existingLatestArticle;
 		}
 
 		return existingArticle;

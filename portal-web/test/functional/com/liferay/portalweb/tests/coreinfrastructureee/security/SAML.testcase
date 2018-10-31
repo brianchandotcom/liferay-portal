@@ -663,6 +663,7 @@
 		</execute>
 
 		<execute macro="SAML#configureLiferaySAMLAsSP">
+			<var name="nameIdentifierAttributeName" value="emailAddress" />
 			<var name="samlEntityID" value="samlsp2" />
 			<var name="spURL" value="http://www.baker.com:10080" />
 		</execute>

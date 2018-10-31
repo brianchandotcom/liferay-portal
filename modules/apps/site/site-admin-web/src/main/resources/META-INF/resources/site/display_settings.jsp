@@ -84,8 +84,8 @@ if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayo
 
 			for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
 				defaultLanguagesList.add(LanguageUtil.getLanguageId(availableLocale));
-
 			%>
+
 				<%= availableLocale.getDisplayName(locale) %>,
 
 			<%
@@ -93,7 +93,8 @@ if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayo
 			%>
 
 		</p>
-		<aui:input name="defaultLanguagesList" type="hidden" value="<%= String.join(",", defaultLanguagesList) %>" />
+
+		<aui:input name="defaultLanguagesList" type="hidden" value='<%= String.join(",", defaultLanguagesList) %>' />
 	</aui:fieldset>
 </aui:fieldset>
 

@@ -25,6 +25,8 @@
 	<requiredProperties>
 		<requiredProperty key="originalModuleName">
 		</requiredProperty>
+		<requiredProperty key="originalModuleVersion">
+		</requiredProperty>
 		<requiredProperty key="projectType">
 			<defaultValue>standalone</defaultValue>
 		</requiredProperty>

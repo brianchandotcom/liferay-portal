@@ -12,4 +12,12 @@
  * details.
  */
 
-throw new Exception("Modules Ext projects are not supported with Maven build. Please use Gradle build instead.");
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+
+Path projectPath = Paths.get(request.outputDirectory, request.artifactId)
+
+Path pomPath = projectPath.resolve("pom.xml")
+
+Files.deleteIfExists pomPath

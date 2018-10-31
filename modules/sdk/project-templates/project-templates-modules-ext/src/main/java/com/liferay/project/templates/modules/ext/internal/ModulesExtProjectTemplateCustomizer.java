@@ -56,6 +56,9 @@ public class ModulesExtProjectTemplateCustomizer
 
 			properties.put("originalModuleVersion", originalModuleVersion);
 		}
+		else {
+			properties.put("originalModuleVersion", "1.0.0");
+		}
 	}
 
 }

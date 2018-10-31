@@ -150,7 +150,6 @@
 			<var name="assetTitle" value="Web Content Title 1" />
 			<var name="assetType" value="Basic Web Content" />
 			<var name="siteName" value="Site Name" />
-			<var name="webContentTitle" value="Web Content Title 2" />
 		</execute>
 
 		<execute macro="Navigator#openStagingSiteURL">
@@ -382,8 +381,6 @@
 			<var name="assetTitle" value="Blogs Entry Title" />
 			<var name="assetType" value="Blogs Entry" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">

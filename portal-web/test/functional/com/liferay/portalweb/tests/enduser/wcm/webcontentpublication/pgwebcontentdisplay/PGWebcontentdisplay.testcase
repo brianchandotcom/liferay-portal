@@ -820,8 +820,7 @@
 		<execute macro="WebContent#addExistingRelatedAssetCP">
 			<var name="assetTitle" value="Web Content Title 2" />
 			<var name="assetType" value="Basic Web Content" />
-			<var name="siteName" value="Liferay" />
-			<var name="webContentTitle" value="Web Content Title 1" />
+			<var name="siteName" value="Test Site Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">

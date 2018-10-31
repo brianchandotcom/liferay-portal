@@ -363,36 +363,6 @@ portalArtifactsJar {
 
 			append("content/" + languagePropertiesFile.name)
 		}
-
-		manifest {
-			File dependenciesDir = new File(portalArtifactsDir, "dependencies")
-
-			FileTree manifestFileTree = fileTree(dependenciesDir).matching {
-				include "**/META-INF/MANIFEST.MF"
-			}
-
-			manifestFileTree.files.each {
-				File portalArtifactsManifestFile ->
-
-				from (portalArtifactsManifestFile) {
-					eachEntry {
-						ManifestMergeDetails manifestMergeDetails ->
-
-						if (manifestMergeDetails.key == "Manifest-Version") {
-							manifestMergeDetails.value = "1.0"
-						}
-						else if (manifestMergeDetails.key == "Export-Package") {
-							if (manifestMergeDetails.baseValue != null) {
-								manifestMergeDetails.value = manifestMergeDetails.baseValue + "," + manifestMergeDetails.mergeValue
-							}
-						}
-						else {
-							manifestMergeDetails.exclude()
-						}
-					}
-				}
-			}
-		}
 	}
 
 	doLast {

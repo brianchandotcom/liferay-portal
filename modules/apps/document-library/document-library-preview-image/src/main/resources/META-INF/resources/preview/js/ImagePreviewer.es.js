@@ -19,12 +19,18 @@ const ZOOM_LEVELS = [
 
 const ZOOM_LEVELS_REVERSED = ZOOM_LEVELS.slice().reverse();
 
+const MIN_ZOOM_RATIO_AUTOCENTER = 3;
+
 /**
- * ImagePreviewer
+ * Component that create an image preview to allow zoom
  * @review
  */
-
 class ImagePreviewer extends Component {
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
 	attached() {
 		this.imageNaturalWidth = this.refs.image.naturalWidth;
 		this.imageNaturalHeight = this.refs.image.naturalHeight;
@@ -32,16 +38,51 @@ class ImagePreviewer extends Component {
 		this._setDimensions();
 	}
 
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
 	rendered() {
 		if (this.zoomRatio) {
 			this._setScrollContainer();
 		}
+
+		if (this.reCalculateZoomActual) {
+			this.reCalculateZoomActual = false;
+
+			this._calculateZoomActual();
+		}
 	}
 
-	_caculateZoomActual(width) {
-		this._setZoom(width / this.imageNaturalWidth);
+	/**
+	 * Calculate actual zoom based in image rendered
+	 * @private
+	 * @review
+	 */
+	_calculateZoomActual() {
+		this.zoomActual = this.refs.image.width / this.imageNaturalWidth;
+
+		this._setToolbar();
 	}
 
+	/**
+	 * Clear zoom and allow the image fit the container in natural way
+	 * @private
+	 * @review
+	 */
+	_clearZoom() {
+		this.imageHeight = null;
+		this.imageWidth = null;
+		this.imageMargin = null;
+		this.reCalculateZoomActual = true;
+	}
+
+	/**
+	 * Event handler executed when zoom changed
+	 * @param {!Event} event
+	 * @private
+	 * @review
+	 */
 	_handleZoom(event) {
 		const value = event.currentTarget.value;
 
@@ -59,32 +100,65 @@ class ImagePreviewer extends Component {
 		case 'real':
 			zoomValue = 1;
 			break;
+		case 'fit':
+			this._clearZoom();
+		break;
 		}
 
-		this._setZoom(zoomValue);
+		if (zoomValue) {
+			this._setZoom(zoomValue);
+		}
 	}
 
+	/**
+	 * Calculate actual dimensions basen in container rendered
+	 * @private
+	 * @review
+	 */
 	_setDimensions() {
 		this.imageContainerWidth = this.refs.imageContainer.clientWidth;
 		this.imageContainerHeight = this.refs.imageContainer.clientHeight;
 
-		this._caculateZoomActual(this.refs.image.width);
+		this._calculateZoomActual();
 	}
 
+	/**
+	 * Move the scroll of the cointainer based in the actual position or center
+	 * @private
+	 * @review
+	 */
 	_setScrollContainer() {
-		this.refs.imageContainer.scrollLeft = this.refs.imageContainer.clientWidth * (this.zoomRatio - 1) / 2
-			+ this.refs.imageContainer.scrollLeft * this.zoomRatio;
-		this.refs.imageContainer.scrollTop = this.refs.imageContainer.clientHeight * (this.zoomRatio - 1) / 2
-			+ this.refs.imageContainer.scrollTop * this.zoomRatio;
+		if (this.zoomRatio < MIN_ZOOM_RATIO_AUTOCENTER) {
+			this.refs.imageContainer.scrollLeft = this.refs.imageContainer.clientWidth * (this.zoomRatio - 1) / 2
+				+ this.refs.imageContainer.scrollLeft * this.zoomRatio;
+			this.refs.imageContainer.scrollTop = this.refs.imageContainer.clientHeight * (this.zoomRatio - 1) / 2
+				+ this.refs.imageContainer.scrollTop * this.zoomRatio;
+		} else {
+			this.refs.imageContainer.scrollTop = (this.imageHeight - this.refs.imageContainer.clientHeight) / 2;
+			this.refs.imageContainer.scrollLeft = (this.imageWidth - this.refs.imageContainer.clientWidth) / 2;
+		}
 
 		this.zoomRatio = null;
 	}
 
-	_setZoom(zoomNumber) {
-		if (typeof zoomNumber == 'undefined') {
-			return;
-		}
+	/**
+	 * Set the toolbar buttons states based in actual state
+	 * @private
+	 * @review
+	 */
+	_setToolbar() {
+		this.zoomInDisabled = ZOOM_LEVELS_REVERSED[0] === this.zoomActual;
+		this.zoomOutDisabled = ZOOM_LEVELS[0] >= this.zoomActual;
+		this.zoomFitToggle = this.zoomActual === 1;
+	}
 
+	/**
+	 * Set the zoom based in multiplier
+	 * @param {number} zoomNumber
+	 * @private
+	 * @review
+	 */
+	_setZoom(zoomNumber) {
 		this.imageHeight = this.imageNaturalHeight * zoomNumber;
 		this.imageWidth = this.imageNaturalWidth * zoomNumber;
 		this.imageMargin = `${
@@ -95,8 +169,7 @@ class ImagePreviewer extends Component {
 		this.zoomRatio = zoomNumber / this.zoomActual;
 		this.zoomActual = zoomNumber;
 
-		this.zoomInDisabled = ZOOM_LEVELS_REVERSED[0] === this.zoomActual;
-		this.zoomOutDisabled = ZOOM_LEVELS[0] >= this.zoomActual;
+		this._setToolbar();
 	}
 }
 
@@ -115,6 +188,7 @@ ImagePreviewer.STATE = {
 	spritemap: Config.string().required(),
 	zoomActual: Config.number(),
 	zoomInDisabled: Config.bool(),
+	zoomFitToggle: Config.bool(),
 	zoomOutDisabled: Config.bool()
 };
 

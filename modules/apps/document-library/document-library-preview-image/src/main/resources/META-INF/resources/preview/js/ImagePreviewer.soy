@@ -14,6 +14,7 @@
 	{@param? imageWidth: number}
 	{@param? zoomActual: number}
 	{@param? zoomInDisabled: bool}
+	{@param? zoomFitToggle: bool}
 	{@param? zoomOutDisabled: bool}
 
 	<div class="preview-file" id="{$id}">
@@ -40,6 +41,7 @@
 			{param spritemap: $spritemap /}
 			{param zoomActual: $zoomActual /}
 			{param zoomInDisabled: $zoomInDisabled /}
+			{param zoomFitToggle: $zoomFitToggle /}
 			{param zoomOutDisabled: $zoomOutDisabled /}
 		{/call}
 	</div>
@@ -50,6 +52,7 @@
 	{@param? _handleZoom: any}
 	{@param? zoomActual: number}
 	{@param? zoomInDisabled: bool}
+	{@param? zoomFitToggle: bool}
 	{@param? zoomOutDisabled: bool}
 
 	{let $zoomLabel: round(($zoomActual ?: 0) * 100) /}
@@ -59,6 +62,10 @@
 		'spritemap': $spritemap,
 		'style': false
 	] /}
+	{let $zoomFitToggleValue: $zoomFitToggle
+		? 'fit'
+		: 'real'
+	/}
 
 	<div class="preview-toolbar-container">
 		<div class="btn-group" role="group">
@@ -70,7 +77,7 @@
 			{/call}
 			{call ClayButton.render data="$baseButtonsToolbar"}
 				{param label kind="text"}{$zoomLabel}%{/param}
-				{param value: 'real' /}
+				{param value: $zoomFitToggleValue /}
 			{/call}
 			{call ClayButton.render data="$baseButtonsToolbar"}
 				{param disabled: $zoomInDisabled /}

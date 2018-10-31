@@ -23,6 +23,16 @@ import java.util.regex.Pattern;
 public abstract class BasePortalWorkspace
 	extends BaseWorkspace implements PortalWorkspace {
 
+	public static boolean isPortalGitHubURL(String gitHubURL) {
+		Matcher matcher = _portalGitHubURLPattern.matcher(gitHubURL);
+
+		if (matcher.find()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Override
 	public WorkspaceGitRepository getCompanionPortalWorkspaceGitRepository() {
 		return _companionPortalWorkspaceGitRepository;
@@ -43,16 +53,6 @@ public abstract class BasePortalWorkspace
 		getPrimaryPortalWorkspaceGitRepository() {
 
 		return _primaryPortalWorkspaceGitRepository;
-	}
-
-	public static boolean isPortalGitHubURL(String gitHubURL) {
-		Matcher matcher = _portalGitHubURLPattern.matcher(gitHubURL);
-
-		if (matcher.find()) {
-			return true;
-		}
-
-		return false;
 	}
 
 	protected BasePortalWorkspace(
@@ -122,8 +122,30 @@ public abstract class BasePortalWorkspace
 	}
 
 	@Override
-	protected void setWorkspaceGitRepositoryJobProperties(Job job) {
-		_primaryPortalWorkspaceGitRepository.setPortalJobProperties(job);
+	protected void setWorkspaceBuildDataProperties(BuildData buildData) {
+	}
+
+	@Override
+	protected void setWorkspaceJobProperties(Job job) {
+		_primaryPortalWorkspaceGitRepository.setPortalAppServerProperties(
+			_primaryPortalWorkspaceGitRepository.getWorkspaceJobProperties(
+				"portal.app.server.properties", job));
+
+		_primaryPortalWorkspaceGitRepository.setPortalBuildProperties(
+			_primaryPortalWorkspaceGitRepository.getWorkspaceJobProperties(
+				"portal.build.properties", job));
+
+		_primaryPortalWorkspaceGitRepository.setPortalReleaseProperties(
+			_primaryPortalWorkspaceGitRepository.getWorkspaceJobProperties(
+				"portal.release.properties", job));
+
+		_primaryPortalWorkspaceGitRepository.setPortalSQLProperties(
+			_primaryPortalWorkspaceGitRepository.getWorkspaceJobProperties(
+				"portal.sql.properties", job));
+
+		_primaryPortalWorkspaceGitRepository.setPortalTestProperties(
+			_primaryPortalWorkspaceGitRepository.getWorkspaceJobProperties(
+				"portal.test.properties", job));
 	}
 
 	@Override

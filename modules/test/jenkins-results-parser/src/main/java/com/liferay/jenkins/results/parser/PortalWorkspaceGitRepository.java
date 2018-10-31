@@ -25,8 +25,6 @@ public interface PortalWorkspaceGitRepository extends WorkspaceGitRepository {
 
 	public void setPortalBuildProperties(Properties properties);
 
-	public void setPortalJobProperties(Job job);
-
 	public void setPortalReleaseProperties(Properties properties);
 
 	public void setPortalSQLProperties(Properties properties);

@@ -14,10 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.HashSet;
 import java.util.Properties;
-import java.util.Set;
-import java.util.Stack;
 
 import org.json.JSONObject;
 
@@ -35,24 +32,6 @@ public abstract class BasePortalWorkspaceGitRepository
 	@Override
 	public void setPortalBuildProperties(Properties properties) {
 		setProperties(_FILE_PATH_BUILD_PROPERTIES, properties);
-	}
-
-	@Override
-	public void setPortalJobProperties(Job job) {
-		setPortalAppServerProperties(
-			_getPortalJobProperties("portal.app.server.properties", job));
-
-		setPortalBuildProperties(
-			_getPortalJobProperties("portal.build.properties", job));
-
-		setPortalReleaseProperties(
-			_getPortalJobProperties("portal.release.properties", job));
-
-		setPortalSQLProperties(
-			_getPortalJobProperties("portal.sql.properties", job));
-
-		setPortalTestProperties(
-			_getPortalJobProperties("portal.test.properties", job));
 	}
 
 	@Override
@@ -107,96 +86,6 @@ public abstract class BasePortalWorkspaceGitRepository
 
 		return JenkinsResultsParserUtil.combine(
 			name.replace("-ee", ""), "-", upstreamBranchName);
-	}
-
-	private Properties _getPortalJobProperties(String propertyType, Job job) {
-		Properties jobProperties = job.getJobProperties();
-
-		Set<String> portalPropertyNames = new HashSet<>();
-
-		for (String jobPropertyName : jobProperties.stringPropertyNames()) {
-			if (!jobPropertyName.startsWith(propertyType)) {
-				continue;
-			}
-
-			String portalPropertyName = _getPortalPropertyName(jobPropertyName);
-
-			if (portalPropertyName == null) {
-				continue;
-			}
-
-			portalPropertyNames.add(portalPropertyName);
-		}
-
-		Properties portalProperties = new Properties();
-
-		for (String portalPropertyName : portalPropertyNames) {
-			String portalPropertyValue = JenkinsResultsParserUtil.getProperty(
-				jobProperties, propertyType, portalPropertyName,
-				getUpstreamBranchName());
-
-			if ((portalPropertyValue == null) &&
-				(job instanceof TestSuiteJob)) {
-
-				TestSuiteJob testSuiteJob = (TestSuiteJob)job;
-
-				portalPropertyValue = JenkinsResultsParserUtil.getProperty(
-					jobProperties, propertyType, portalPropertyName,
-					testSuiteJob.getTestSuiteName());
-			}
-
-			if ((portalPropertyValue == null) &&
-				JenkinsResultsParserUtil.isWindows()) {
-
-				portalPropertyValue = JenkinsResultsParserUtil.getProperty(
-					jobProperties, propertyType, portalPropertyName, "windows");
-			}
-
-			if (portalPropertyValue != null) {
-				portalProperties.put(portalPropertyName, portalPropertyValue);
-			}
-		}
-
-		return portalProperties;
-	}
-
-	private String _getPortalPropertyName(String jobPropertyName) {
-		Stack<Integer> stack = new Stack<>();
-
-		Integer start = null;
-		Integer end = null;
-
-		for (int i = 0; i < jobPropertyName.length(); i++) {
-			char c = jobPropertyName.charAt(i);
-
-			if (c == '[') {
-				stack.push(i);
-
-				if (start == null) {
-					start = i;
-				}
-			}
-
-			if (c == ']') {
-				if (start == null) {
-					continue;
-				}
-
-				stack.pop();
-
-				if (stack.isEmpty()) {
-					end = i;
-
-					break;
-				}
-			}
-		}
-
-		if ((start != null) && (end != null)) {
-			return jobPropertyName.substring(start + 1, end);
-		}
-
-		return null;
 	}
 
 	private void _setBasePortalAppServerProperties() {

@@ -19,9 +19,12 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
+import java.util.Stack;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -83,6 +86,64 @@ public abstract class BaseWorkspaceGitRepository
 		}
 
 		return _historicalCommits;
+	}
+
+	@Override
+	public Properties getWorkspaceJobProperties(String propertyType, Job job) {
+		Properties jobProperties = job.getJobProperties();
+
+		Set<String> workspaceJobPropertyNames = new HashSet<>();
+
+		for (String jobPropertyName : jobProperties.stringPropertyNames()) {
+			if (!jobPropertyName.startsWith(propertyType)) {
+				continue;
+			}
+
+			String workspaceJobPropertyName = _getWorkspaceJobPropertyName(
+				jobPropertyName);
+
+			if (workspaceJobPropertyName == null) {
+				continue;
+			}
+
+			workspaceJobPropertyNames.add(workspaceJobPropertyName);
+		}
+
+		Properties workspaceJobProperties = new Properties();
+
+		for (String workspaceJobPropertyName : workspaceJobPropertyNames) {
+			String workspaceJobPropertyValue =
+				JenkinsResultsParserUtil.getProperty(
+					jobProperties, propertyType, workspaceJobPropertyName,
+					getUpstreamBranchName());
+
+			if ((workspaceJobPropertyValue == null) &&
+				(job instanceof TestSuiteJob)) {
+
+				TestSuiteJob testSuiteJob = (TestSuiteJob)job;
+
+				workspaceJobPropertyValue =
+					JenkinsResultsParserUtil.getProperty(
+						jobProperties, propertyType, workspaceJobPropertyName,
+						testSuiteJob.getTestSuiteName());
+			}
+
+			if ((workspaceJobPropertyValue == null) &&
+				JenkinsResultsParserUtil.isWindows()) {
+
+				workspaceJobPropertyValue =
+					JenkinsResultsParserUtil.getProperty(
+						jobProperties, propertyType, workspaceJobPropertyName,
+						"windows");
+			}
+
+			if (workspaceJobPropertyValue != null) {
+				workspaceJobProperties.put(
+					workspaceJobPropertyName, workspaceJobPropertyValue);
+			}
+		}
+
+		return workspaceJobProperties;
 	}
 
 	@Override
@@ -327,6 +388,45 @@ public abstract class BaseWorkspaceGitRepository
 
 	private String _getBranchSHA() {
 		return optString("branch_sha");
+	}
+
+	private String _getWorkspaceJobPropertyName(String jobPropertyName) {
+		Stack<Integer> stack = new Stack<>();
+
+		Integer start = null;
+		Integer end = null;
+
+		for (int i = 0; i < jobPropertyName.length(); i++) {
+			char c = jobPropertyName.charAt(i);
+
+			if (c == '[') {
+				stack.push(i);
+
+				if (start == null) {
+					start = i;
+				}
+			}
+
+			if (c == ']') {
+				if (start == null) {
+					continue;
+				}
+
+				stack.pop();
+
+				if (stack.isEmpty()) {
+					end = i;
+
+					break;
+				}
+			}
+		}
+
+		if ((start != null) && (end != null)) {
+			return jobPropertyName.substring(start + 1, end);
+		}
+
+		return null;
 	}
 
 	private void _setBranchHeadSHA(String branchHeadSHA) {

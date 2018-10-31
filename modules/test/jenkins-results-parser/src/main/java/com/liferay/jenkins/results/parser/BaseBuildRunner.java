@@ -122,7 +122,11 @@ public abstract class BaseBuildRunner<T extends BuildData, S extends Workspace>
 			initWorkspace();
 		}
 
-		workspace.setUp(getJob());
+		workspace.setBuildData(getBuildData());
+
+		workspace.setJob(getJob());
+
+		workspace.setUp();
 	}
 
 	protected void tearDownWorkspace() {

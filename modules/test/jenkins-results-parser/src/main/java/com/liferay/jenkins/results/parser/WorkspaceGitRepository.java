@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.util.List;
+import java.util.Properties;
 
 /**
  * @author Michael Hashimoto
@@ -30,6 +31,8 @@ public interface WorkspaceGitRepository extends LocalGitRepository {
 	public List<Commit> getHistoricalCommits();
 
 	public String getType();
+
+	public Properties getWorkspaceJobProperties(String propertyType, Job job);
 
 	public void setBranchSHA(String branchSHA);
 

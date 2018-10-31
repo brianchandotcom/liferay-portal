@@ -32,8 +32,8 @@ class ImagePreviewer extends Component {
 		this._setDimensions();
 	}
 
-	rendered(isFirstRender) {
-		if (!isFirstRender) {
+	rendered() {
+		if (this.zoomRatio) {
 			this._setScrollContainer();
 		}
 	}
@@ -80,6 +80,8 @@ class ImagePreviewer extends Component {
 			+ this.refs.imageContainer.scrollLeft * this.zoomRatio;
 		this.refs.imageContainer.scrollTop = this.refs.imageContainer.clientHeight * (this.zoomRatio - 1) / 2
 			+ this.refs.imageContainer.scrollTop * this.zoomRatio;
+
+		this.zoomRatio = null;
 	}
 
 	_setZoom(zoomNumber) {

@@ -196,7 +196,13 @@ if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayo
 	function <portlet:namespace />saveLocales() {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		form.fm('<%= PropsKeys.LOCALES %>').val(Liferay.Util.listSelect(form.fm('currentLanguageIds')));
+		var radioButtons = document.getElementsByName('<portlet:namespace/>TypeSettingsProperties--inheritLocales--');
+
+		if (radioButtons[0].checked) {
+			form.fm('<%= PropsKeys.LOCALES %>').val(form.fm('defaultLanguagesList').val());
+		} else {
+			form.fm('<%= PropsKeys.LOCALES %>').val(Liferay.Util.listSelect(form.fm('currentLanguageIds')));
+		}
 	}
 </aui:script>
 

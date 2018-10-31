@@ -39,7 +39,7 @@ class ImagePreviewer extends Component {
 	}
 
 	_caculateZoomActual(width) {
-		this.zoomActual = width / this.imageNaturalWidth;
+		this._setZoom(width / this.imageNaturalWidth);
 	}
 
 	_handleZoom(event) {
@@ -61,10 +61,6 @@ class ImagePreviewer extends Component {
 			break;
 		}
 
-		this.zoomInDisabled = ZOOM_LEVELS_REVERSED[0] === zoomValue;
-		this.zoomOutDisabled = ZOOM_LEVELS[0] === zoomValue;
-
-		this.zoomRatio = zoomValue / this.zoomActual;
 		this._setZoom(zoomValue);
 	}
 
@@ -96,8 +92,11 @@ class ImagePreviewer extends Component {
 		} ${
 			this.imageWidth > this.imageContainerWidth ? 0 : 'auto'
 		}`;
-
+		this.zoomRatio = zoomNumber / this.zoomActual;
 		this.zoomActual = zoomNumber;
+
+		this.zoomInDisabled = ZOOM_LEVELS_REVERSED[0] === this.zoomActual;
+		this.zoomOutDisabled = ZOOM_LEVELS[0] >= this.zoomActual;
 	}
 }
 

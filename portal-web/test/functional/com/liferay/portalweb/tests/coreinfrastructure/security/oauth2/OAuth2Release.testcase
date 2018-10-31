@@ -1,4 +1,5 @@
 <definition component-name="portal-security">
+	<property name="osgi.app.includes" value="oauth2-provider" />
 	<property name="portal.release" value="true" />
 	<property name="testray.main.component.name" value="OAuth 2" />
 
@@ -26,7 +27,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="OAuth2 Administration" />
+			<var name="portlet" value="OAuth 2 Administration" />
 		</execute>
 
 		<execute macro="OAuth2#addApplication">
@@ -122,7 +123,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="OAuth2 Administration" />
+			<var name="portlet" value="OAuth 2 Administration" />
 		</execute>
 
 		<execute macro="OAuth2#addApplication">
@@ -187,7 +188,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="OAuth2 Administration" />
+			<var name="portlet" value="OAuth 2 Administration" />
 		</execute>
 
 		<execute macro="OAuth2#addApplication">
@@ -231,46 +232,16 @@
 			<arg value="${curl}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="OAuth2 Connected Applications" />
+		<execute macro="OAuth2#viewGrantedAuthViaUser">
+			<var name="applicationName" value="OAuth Application" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="OAuth2#USER_CONNECTED_APP_TABLE_NAME">
-			<var name="key_appName" value="OAuth Application" />
+		<execute macro="OAuth2#revokeGrantedAuthViaUser">
+			<var name="applicationName" value="OAuth Application" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="View" />
-			<var name="rowEntry" value="OAuth Application" />
+		<execute macro="OAuth2#viewGrantedAuthViaUser">
+			<var name="noAuthorizations" value="true" />
 		</execute>
-
-		<execute function="AssertTextEquals" locator1="OAuth2#USER_CONNECTED_APP_VIEW_NAME" value1="OAuth Application" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="OAuth2 Connected Applications" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="View" />
-			<var name="rowEntry" value="OAuth Application" />
-		</execute>
-
-		<execute function="AssertClickNoError" locator1="OAuth2#USER_CONNECTED_APP_REMOVE_ACCESS_BUTTON" value1="Remove Access" />
-
-		<execute function="AssertConfirm#waitForConfirmation" value1="OAuth Application will no longer have access to your account. Removed access cannot be recovered." />
-
-		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="OAuth2 Connected Applications" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No connected applications were found." />
 	</command>
 </definition>

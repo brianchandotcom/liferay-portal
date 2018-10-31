@@ -141,7 +141,7 @@ public class VariableNameCheck extends BaseCheck {
 		String... typeNames) {
 
 		if (ArrayUtil.contains(typeNames, typeName) &&
-			!variableName.matches("(?i).*" + typeName)) {
+			!variableName.matches("(?i).*" + typeName + "[0-9]*")) {
 
 			log(
 				detailAST, _MSG_INCORRECT_ENDING_VARIABLE, typeName,

@@ -24,79 +24,71 @@ public class CSSClassNamesTest {
 
 	@Test
 	public void testBasicOutput() {
+		Assert.assertEquals("hello", CSSClassNames.builder("hello").build());
 		Assert.assertEquals(
-			"hello", CSSClassNames.build(builder -> builder.add("hello")));
-		Assert.assertEquals(
-			"hello world",
-			CSSClassNames.build(builder -> builder.add("hello", "world")));
+			"hello world", CSSClassNames.builder("hello", "world").build());
 	}
 
 	@Test
 	public void testConditionalOutput() {
 		Assert.assertEquals(
 			"hello world",
-			CSSClassNames.build(
-				builder -> builder.add(
-					"hello"
-				).add(
-					"goodbye", false
-				).add(
-					"sad", false
-				).add(
-					"world", true
-				)));
+			CSSClassNames.builder(
+				"hello"
+			).add(
+				"goodbye", false
+			).add(
+				"sad", false
+			).add(
+				"world", true
+			).build());
 		Assert.assertEquals(
 			"foo hello world",
-			CSSClassNames.build(
-				builder -> builder.add(
-					"hello", "world"
-				).add(
-					"cruel", false
-				).add(
-					"foo", true
-				)));
+			CSSClassNames.builder(
+				"hello", "world"
+			).add(
+				"cruel", false
+			).add(
+				"foo", true
+			).build());
 	}
 
 	@Test
 	public void testDistinctOutput() {
 		Assert.assertEquals(
 			"hello world",
-			CSSClassNames.build(
-				builder -> builder.add(
-					"hello", "hello", "world", "world"
-				)));
+			CSSClassNames.builder(
+				"hello", "hello", "world", "world"
+			).build());
 		Assert.assertEquals(
 			"hello world",
-			CSSClassNames.build(
-				builder -> builder.add(
-					"hello"
-				).add(
-					"hello"
-				).add(
-					"world"
-				).add(
-					"world"
-				)));
+			CSSClassNames.builder(
+				"hello"
+			).add(
+				"hello"
+			).add(
+				"world"
+			).add(
+				"world"
+			).build());
 	}
 
 	@Test
 	public void testSortedOutput() {
 		Assert.assertEquals(
 			"hello world",
-			CSSClassNames.build(
-				builder -> builder.add(
-					"world", "hello"
-				)));
+			CSSClassNames.builder(
+				"world", "hello"
+			).build());
 		Assert.assertEquals(
 			"alpha beta gamma",
-			CSSClassNames.build(
-				builder -> builder.add(
-					"beta"
-				).add(
-					"gamma"
-				).add(
-					"alpha"
-				)));
+			CSSClassNames.builder(
+				"beta"
+			).add(
+				"gamma"
+			).add(
+				"alpha"
+			).build());
 	}
 
 }

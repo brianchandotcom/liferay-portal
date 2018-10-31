@@ -16,7 +16,6 @@ package com.liferay.users.admin.web.internal.util;
 
 import com.liferay.petra.string.StringPool;
 
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -25,12 +24,12 @@ import java.util.stream.Stream;
  */
 public class CSSClassNames {
 
-	public static String build(Consumer<Builder> builderConsumer) {
+	public static Builder builder(String... cssClassNames) {
 		Builder builder = new Builder();
 
-		builderConsumer.accept(builder);
+		builder.add(cssClassNames);
 
-		return builder._build();
+		return builder;
 	}
 
 	public static class Builder {
@@ -49,6 +48,10 @@ public class CSSClassNames {
 
 		public Builder add(String cssClassName, boolean condition) {
 			return _add(cssClassName, condition);
+		}
+
+		public String build() {
+			return _build();
 		}
 
 		private Builder() {

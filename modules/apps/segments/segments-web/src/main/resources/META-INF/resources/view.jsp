@@ -22,13 +22,18 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 
 <clay:management-toolbar
 	actionDropdownItems="<%= segmentsDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= segmentsDisplayContext.getClearResultsURL() %>"
 	componentId="segmentsEntriesManagementToolbar"
 	creationMenu="<%= segmentsDisplayContext.getCreationMenu() %>"
-	disabled="<%= segmentsDisplayContext.getTotalItems() == 0 %>"
+	disabled="<%= segmentsDisplayContext.isDisabledManagementBar() %>"
+	filterDropdownItems="<%= segmentsDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= segmentsDisplayContext.getTotalItems() %>"
+	searchActionURL="<%= segmentsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="segmentsEntries"
+	searchFormName="searchFm"
 	selectable="<%= true %>"
-	showSearch="<%= false %>"
+	sortingOrder="<%= segmentsDisplayContext.getOrderByType() %>"
+	sortingURL="<%= segmentsDisplayContext.getSortingURL() %>"
 />
 
 <portlet:actionURL name="deleteSegmentsEntry" var="deleteSegmentsEntryURL">
@@ -70,6 +75,12 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 				cssClass="table-cell-content"
 				name="active"
 				value='<%= LanguageUtil.get(request, segmentsEntry.isActive() ? "yes" : "no") %>'
+			/>
+
+			<liferay-ui:search-container-column-date
+				cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
+				name="modified-date"
+				value="<%= segmentsEntry.getModifiedDate() %>"
 			/>
 
 			<liferay-ui:search-container-column-jsp

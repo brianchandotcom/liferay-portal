@@ -1,12 +1,14 @@
 import {
 	appendItemToColumn,
-	columnIsItemChild,
-	getColumnActiveItem,
-	getItemColumn,
-	getItemColumnIndex,
 	moveItemInside,
 	removeItem
 } from './LayoutUtils.es';
+import {
+	columnIsItemChild,
+	getColumnActiveItem,
+	getItemColumn,
+	getItemColumnIndex
+} from './LayoutGetUtils.es';
 import {DRAG_POSITIONS, DROP_TARGET_TYPES} from './LayoutDragDrop.es';
 
 /**

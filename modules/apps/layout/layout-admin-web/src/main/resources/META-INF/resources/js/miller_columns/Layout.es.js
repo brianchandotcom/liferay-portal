@@ -13,16 +13,18 @@ import {
 import {
 	clearFollowingColumns,
 	clearPath,
-	columnIsItemChild,
 	deleteEmptyColumns,
+	setHomePage
+} from './utils/LayoutUtils.es';
+import {
+	columnIsItemChild,
 	getColumnActiveItem,
 	getColumnLastItem,
 	getItem,
 	getItemColumn,
 	getItemColumnIndex,
-	itemIsParent,
-	setHomePage
-} from './utils/LayoutUtils.es';
+	itemIsParent
+} from './utils/LayoutGetUtils.es';
 import {
 	dropIsValid,
 	dropItemInsideColumn,

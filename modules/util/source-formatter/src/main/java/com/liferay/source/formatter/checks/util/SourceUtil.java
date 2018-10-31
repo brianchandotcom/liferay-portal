@@ -221,6 +221,17 @@ public class SourceUtil {
 		return sb.toString();
 	}
 
+	public static boolean isXML(String content) {
+		try {
+			readXML(content);
+
+			return true;
+		}
+		catch (DocumentException de) {
+			return false;
+		}
+	}
+
 	public static Document readXML(File file) throws DocumentException {
 		SAXReader saxReader = SAXReaderFactory.getSAXReader(null, false, false);
 

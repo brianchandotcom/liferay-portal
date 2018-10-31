@@ -14,6 +14,9 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.source.formatter.checks.util.SourceUtil;
+
+import java.io.File;
 import java.io.IOException;
 
 import java.util.List;
@@ -25,13 +28,24 @@ public class FunctionSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<String> doGetFileNames() throws IOException {
-		return getFileNames(
-			new String[] {"**/src/testFunctional/*.function"}, getIncludes());
+		return getFileNames(new String[0], getIncludes());
 	}
 
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
+	}
+
+	@Override
+	protected File format(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
+
+		if (SourceUtil.isXML(content)) {
+			return file;
+		}
+
+		return super.format(file, fileName, absolutePath, content);
 	}
 
 	private static final String[] _INCLUDES = {"**/*.function"};

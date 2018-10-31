@@ -14,8 +14,10 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.checks.util.XMLSourceUtil;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.util.List;
@@ -42,6 +44,18 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
+	}
+
+	@Override
+	protected File format(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
+
+		if (fileName.endsWith(".function") && !SourceUtil.isXML(content)) {
+			return file;
+		}
+
+		return super.format(file, fileName, absolutePath, content);
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 import PublishButton from 'source/components/PublishButton/PublishButton.es';
-import * as util from 'source/util/fetch.es';
+import * as util from 'dynamic-data-mapping-form-builder/metal/js/util/fetch.es';
 
 const formInstanceId = '12345';
 const namespace = 'portlet_namespace';

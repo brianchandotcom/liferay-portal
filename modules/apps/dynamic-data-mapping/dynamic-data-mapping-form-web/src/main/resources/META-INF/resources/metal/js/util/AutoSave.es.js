@@ -2,7 +2,7 @@
 
 import {Config} from 'metal-state';
 import objectHash from 'object-hash';
-import {convertToSearchParams, makeFetch} from './fetch.es';
+import {convertToSearchParams, makeFetch} from 'dynamic-data-mapping-form-builder/metal/js/util/fetch.es';
 import Component from 'metal-jsx';
 
 class AutoSave extends Component {
@@ -46,13 +46,15 @@ class AutoSave extends Component {
 	}
 
 	saveIfNeeded() {
-		const {stateSyncronizer} = this.props;
+		if (!this.isDisposed()) {
+			const {stateSyncronizer} = this.props;
 
-		if (this._pendingRequest) {
-			this._pendingRequest.then(() => this.saveIfNeeded()).catch (() => {});
-		}
-		else if (this.hasUnsavedChanges() && !stateSyncronizer.isEmpty()) {
-			this.save();
+			if (this._pendingRequest) {
+				this._pendingRequest.then(() => this.saveIfNeeded()).catch (() => {});
+			}
+			else if (this.hasUnsavedChanges() && !stateSyncronizer.isEmpty()) {
+				this.save();
+			}
 		}
 	}
 

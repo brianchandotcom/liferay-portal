@@ -1,5 +1,5 @@
 import {Config} from 'metal-state';
-import {convertToSearchParams, makeFetch} from '../../util/fetch.es';
+import {convertToSearchParams, makeFetch} from 'dynamic-data-mapping-form-builder/metal/js/util/fetch.es';
 import ClayButton from 'clay-button';
 import Component from 'metal-jsx';
 import Notifications from '../../util/Notifications.es';
@@ -94,7 +94,7 @@ class PublishButton extends Component {
 				);
 			}
 		).catch(
-			err => {
+			() => {
 				Notifications.showError(strings['your-request-failed-to-complete']);
 			}
 		);

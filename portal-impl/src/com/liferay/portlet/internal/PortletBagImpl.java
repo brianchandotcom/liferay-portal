@@ -93,12 +93,15 @@ public class PortletBagImpl implements PortletBag {
 	public Object clone() {
 		return new PortletBagImpl(
 			getPortletName(), getServletContext(), getPortletInstance(),
-			getResourceBundleBaseName(), getFriendlyURLMapperTracker(),
-			_serviceRegistrations);
+			getResourceBundleBaseName(), getFriendlyURLMapperTracker(), null);
 	}
 
 	@Override
 	public void destroy() {
+		if (_serviceRegistrations == null) {
+			return;
+		}
+
 		_friendlyURLMapperTracker.close();
 
 		for (ServiceRegistration<?> serviceRegistration :

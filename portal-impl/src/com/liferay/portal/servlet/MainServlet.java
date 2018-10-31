@@ -818,7 +818,11 @@ public class MainServlet extends ActionServlet {
 			throw ue;
 		}
 		catch (Throwable t) {
-			throw new UnavailableException(t.getMessage());
+			UnavailableException ue = new UnavailableException(t.getMessage());
+
+			ue.addSuppressed(t);
+
+			throw ue;
 		}
 	}
 

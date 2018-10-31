@@ -53,6 +53,8 @@ public abstract class BaseWorkspace implements Workspace {
 	public void setUp() {
 		setUpWorkspaceGitRepositories();
 
+		setWorkspaceDefaultProperties();
+
 		if (_buildData != null) {
 			setWorkspaceBuildDataProperties(_buildData);
 		}
@@ -81,6 +83,8 @@ public abstract class BaseWorkspace implements Workspace {
 
 	protected abstract void setWorkspaceBuildDataProperties(
 		BuildData buildData);
+
+	protected abstract void setWorkspaceDefaultProperties();
 
 	protected abstract void setWorkspaceJobProperties(Job job);
 

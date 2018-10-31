@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -123,6 +124,29 @@ public abstract class BasePortalWorkspace
 
 	@Override
 	protected void setWorkspaceBuildDataProperties(BuildData buildData) {
+	}
+
+	@Override
+	protected void setWorkspaceDefaultProperties() {
+		Properties portalAppServerProperties = new Properties();
+
+		portalAppServerProperties.put(
+			"app.server.parent.dir",
+			_primaryPortalWorkspaceGitRepository.getDirectory() + "/bundles");
+
+		_primaryPortalWorkspaceGitRepository.setPortalAppServerProperties(
+			portalAppServerProperties);
+
+		Properties portalBuildProperties = new Properties();
+
+		portalBuildProperties.put("jsp.precompile", "off");
+		portalBuildProperties.put("jsp.precompile.parallel", "off");
+		portalBuildProperties.put(
+			"liferay.home",
+			_primaryPortalWorkspaceGitRepository.getDirectory() + "/bundles");
+
+		_primaryPortalWorkspaceGitRepository.setPortalBuildProperties(
+			portalBuildProperties);
 	}
 
 	@Override

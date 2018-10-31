@@ -51,27 +51,18 @@ public abstract class BasePortalWorkspaceGitRepository
 
 	protected BasePortalWorkspaceGitRepository(JSONObject jsonObject) {
 		super(jsonObject);
-
-		_setBasePortalAppServerProperties();
-		_setBasePortalBuildProperties();
 	}
 
 	protected BasePortalWorkspaceGitRepository(
 		PullRequest pullRequest, String upstreamBranchName) {
 
 		super(pullRequest, upstreamBranchName);
-
-		_setBasePortalAppServerProperties();
-		_setBasePortalBuildProperties();
 	}
 
 	protected BasePortalWorkspaceGitRepository(
 		RemoteGitRef remoteGitRef, String upstreamBranchName) {
 
 		super(remoteGitRef, upstreamBranchName);
-
-		_setBasePortalAppServerProperties();
-		_setBasePortalBuildProperties();
 	}
 
 	@Override
@@ -86,24 +77,6 @@ public abstract class BasePortalWorkspaceGitRepository
 
 		return JenkinsResultsParserUtil.combine(
 			name.replace("-ee", ""), "-", upstreamBranchName);
-	}
-
-	private void _setBasePortalAppServerProperties() {
-		Properties properties = new Properties();
-
-		properties.put("app.server.parent.dir", getDirectory() + "/bundles");
-
-		setPortalAppServerProperties(properties);
-	}
-
-	private void _setBasePortalBuildProperties() {
-		Properties properties = new Properties();
-
-		properties.put("jsp.precompile", "off");
-		properties.put("jsp.precompile.parallel", "off");
-		properties.put("liferay.home", getDirectory() + "/bundles");
-
-		setPortalBuildProperties(properties);
 	}
 
 	private static final String _FILE_PATH_APP_SERVER_PROPERTIES =

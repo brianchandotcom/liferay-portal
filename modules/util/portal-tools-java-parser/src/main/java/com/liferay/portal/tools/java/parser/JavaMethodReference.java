@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import java.util.List;
+
 /**
  * @author Hugo Huijser
  */
@@ -26,6 +28,11 @@ public class JavaMethodReference extends JavaExpression {
 		_referenceJavaExpression = referenceJavaExpression;
 	}
 
+	public void setGenericJavaTypes(List<JavaType> genericJavaTypes) {
+		_genericJavaTypes = genericJavaTypes;
+	}
+
+	private List<JavaType> _genericJavaTypes;
 	private final JavaSimpleValue _methodName;
 	private final JavaExpression _referenceJavaExpression;
 

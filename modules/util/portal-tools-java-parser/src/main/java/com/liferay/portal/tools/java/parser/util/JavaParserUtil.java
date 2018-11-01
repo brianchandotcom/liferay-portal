@@ -669,9 +669,17 @@ public class JavaParserUtil {
 
 		DetailAST lastChildDetailAST = methodReferenceDetailAST.getLastChild();
 
-		return new JavaMethodReference(
+		JavaMethodReference javaMethodReference = new JavaMethodReference(
 			lastChildDetailAST.getText(),
 			parseJavaExpression(methodReferenceDetailAST.getFirstChild()));
+
+		javaMethodReference.setGenericJavaTypes(
+			_parseGenericJavaTypes(
+				methodReferenceDetailAST.findFirstToken(
+					TokenTypes.TYPE_ARGUMENTS),
+				TokenTypes.TYPE_ARGUMENT));
+
+		return javaMethodReference;
 	}
 
 	private static JavaNewArrayInstantiation _parseJavaNewArrayInstantiation(

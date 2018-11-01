@@ -62,6 +62,8 @@ gradleTest {
 	dependsOn copyRepo
 	dependsOn jar
 
+	deprecationMessagesAreFailures = false
+
 	gradleArguments "--project-prop", "liferay.workspace.bundle.url=${bundleUrl}"
 	gradleArguments "--project-prop", "pluginClasspathDir=${uri(jar.destinationDir)}"
 

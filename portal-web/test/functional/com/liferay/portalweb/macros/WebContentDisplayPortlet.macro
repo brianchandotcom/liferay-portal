@@ -379,6 +379,16 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_3" value1="The web content article ${webContentTitle} was moved to the Recycle Bin. Do you want to Undo or Select Another Web Content?" />
 	</command>
 
+	<command name="viewDefaultMessage">
+		<execute macro="Alert#viewInfoMessageSpecific">
+			<var name="infoMessage" value="This application is not visible to users yet" />
+		</execute>
+
+		<execute macro="Alert#viewInfoMessageSpecific">
+			<var name="infoMessage" value="Select Web Content to make it visible" />
+		</execute>
+	</command>
+
 	<command name="viewEnabledFileTypesPGViaWCD">
 		<for list="${fileTypes}" param="fileType">
 			<var name="key_fileType" value="${fileType}" />

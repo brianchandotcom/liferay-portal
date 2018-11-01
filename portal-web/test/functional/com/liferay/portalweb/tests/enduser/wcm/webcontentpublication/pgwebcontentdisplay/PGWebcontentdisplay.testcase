@@ -204,7 +204,7 @@
 			<var name="siteName" value="Test Site Name" />
 		</execute>
 
-		<execute macro="WebContent#viewDefaultPGViaWCD" />
+		<execute macro="WebContentDisplayPortlet#viewDefaultMessage" />
 
 		<execute macro="WebContentDisplayPortlet#selectWebContent">
 			<var name="webContentTitle" value="WC WebContent Title" />
@@ -1113,7 +1113,7 @@
 			<var name="siteName" value="Test Site Name" />
 		</execute>
 
-		<execute macro="WebContent#viewDefaultPGViaWCD" />
+		<execute macro="WebContentDisplayPortlet#viewDefaultMessage" />
 
 		<execute macro="WebContentDisplayPortlet#selectWebContent">
 			<var name="webContentTitle" value="WC WebContent Title" />
@@ -1135,7 +1135,7 @@
 			<var name="siteName" value="Test Site Name" />
 		</execute>
 
-		<execute macro="WebContent#viewDefaultPGViaWCD" />
+		<execute macro="WebContentDisplayPortlet#viewDefaultMessage" />
 
 		<execute macro="WebContentDisplayPortlet#selectWebContent">
 			<var name="webContentTitle" value="WC WebContent Title" />

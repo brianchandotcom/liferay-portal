@@ -88,7 +88,7 @@ public class DateUtilTest extends PowerMockito {
 
 	@Test
 	public void testGetISOFormatAny() {
-		_testGetISOFormat(Mockito.anyString(), "yyyyMMddHHmmssz");
+		_testGetISOFormat("", "yyyyMMddHHmmssz");
 	}
 
 	@Test

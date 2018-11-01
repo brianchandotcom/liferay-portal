@@ -75,6 +75,8 @@
 
 		<execute macro="Navigator#openURL" />
 
+		<execute function="AssertConsoleTextNotPresent" value1="java.lang.IllegalStateException: Store is not available" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>

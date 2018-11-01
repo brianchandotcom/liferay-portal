@@ -79,8 +79,6 @@
 	</command>
 
 	<command name="configurePG" summary="Configure JDBC to ${databaseType} for Liferay with the Setup Wizard">
-		<execute macro="SetupWizard#viewDefaultPortalNamePG" />
-
 		<execute macro="SetupWizard#configureSampleDataPG">
 			<var name="addSampleData" value="${addSampleData}" />
 		</execute>

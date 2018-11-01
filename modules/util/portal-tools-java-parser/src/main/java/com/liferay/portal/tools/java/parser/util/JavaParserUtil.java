@@ -41,6 +41,7 @@ import com.liferay.portal.tools.java.parser.JavaSignature;
 import com.liferay.portal.tools.java.parser.JavaSimpleLambdaExpression;
 import com.liferay.portal.tools.java.parser.JavaSimpleValue;
 import com.liferay.portal.tools.java.parser.JavaTernaryOperator;
+import com.liferay.portal.tools.java.parser.JavaThrowStatement;
 import com.liferay.portal.tools.java.parser.JavaType;
 import com.liferay.portal.tools.java.parser.JavaTypeCast;
 
@@ -214,6 +215,13 @@ public class JavaParserUtil {
 		}
 
 		return javaReturnStatement;
+	}
+
+	public static JavaThrowStatement parseJavaThrowStatement(
+		DetailAST literalThrowDetailAST) {
+
+		return new JavaThrowStatement(
+			parseJavaExpression(literalThrowDetailAST.getFirstChild()));
 	}
 
 	private static String _getName(DetailAST detailAST) {

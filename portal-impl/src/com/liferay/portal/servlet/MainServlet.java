@@ -787,7 +787,6 @@ public class MainServlet extends ActionServlet {
 
 			ModuleConfig moduleConfig = initModuleConfig("", config);
 
-			initModuleMessageResources(moduleConfig);
 			initModulePlugIns(moduleConfig);
 			initModuleFormBeans(moduleConfig);
 			initModuleForwards(moduleConfig);

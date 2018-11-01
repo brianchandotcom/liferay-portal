@@ -54,7 +54,7 @@ public abstract class PortalBatchBuildRunner
 			throw new RuntimeException("Invalid workspace");
 		}
 
-		workspace = (S)batchWorkspace;
+		setWorkspace((S)batchWorkspace);
 	}
 
 	protected void publishArtifacts() {
@@ -69,7 +69,7 @@ public abstract class PortalBatchBuildRunner
 
 	protected void runTestBatch() {
 		TestBatch testBatch = TestBatchFactory.newTestBatch(
-			getBuildData(), workspace);
+			getBuildData(), getWorkspace());
 
 		testBatch.run();
 	}

@@ -204,6 +204,8 @@ public abstract class TopLevelBuildRunner
 
 	private String _getCachedJenkinsGitHubURL() {
 		if (JenkinsResultsParserUtil.isCINode()) {
+			Workspace workspace = getWorkspace();
+
 			WorkspaceGitRepository jenkinsWorkspaceGitRepository =
 				workspace.getJenkinsWorkspaceGitRepository();
 

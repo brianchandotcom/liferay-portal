@@ -31,6 +31,11 @@ public abstract class BaseBuildRunner<T extends BuildData, S extends Workspace>
 	}
 
 	@Override
+	public S getWorkspace() {
+		return _workspace;
+	}
+
+	@Override
 	public void run() {
 		updateBuildDescription();
 
@@ -118,23 +123,27 @@ public abstract class BaseBuildRunner<T extends BuildData, S extends Workspace>
 	}
 
 	protected void setUpWorkspace() {
-		if (workspace == null) {
+		if (_workspace == null) {
 			initWorkspace();
 		}
 
-		workspace.setBuildData(getBuildData());
+		_workspace.setBuildData(getBuildData());
 
-		workspace.setJob(getJob());
+		_workspace.setJob(getJob());
 
-		workspace.setUp();
+		_workspace.setUp();
+	}
+
+	protected void setWorkspace(S workspace) {
+		_workspace = workspace;
 	}
 
 	protected void tearDownWorkspace() {
-		if (workspace == null) {
+		if (_workspace == null) {
 			initWorkspace();
 		}
 
-		workspace.tearDown();
+		_workspace.tearDown();
 	}
 
 	protected void updateBuildDescription() {
@@ -161,9 +170,8 @@ public abstract class BaseBuildRunner<T extends BuildData, S extends Workspace>
 			_buildData.getMasterHostname(), "script=" + sb.toString());
 	}
 
-	protected S workspace;
-
 	private final T _buildData;
 	private final Job _job;
+	private S _workspace;
 
 }

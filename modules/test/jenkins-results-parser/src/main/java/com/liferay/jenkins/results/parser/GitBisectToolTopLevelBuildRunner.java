@@ -35,8 +35,9 @@ public class GitBisectToolTopLevelBuildRunner
 	@Override
 	protected Element getJenkinsReportElement() {
 		PortalTopLevelBuildData portalTopLevelBuildData = getBuildData();
+		PortalWorkspace portalWorkspace = getWorkspace();
 
-		if (workspace == null) {
+		if (portalWorkspace == null) {
 			return Dom4JUtil.getNewElement(
 				"html", null,
 				Dom4JUtil.getNewElement(
@@ -52,7 +53,7 @@ public class GitBisectToolTopLevelBuildRunner
 		gitBisectToolBuild.setDownstreamBuildDataList(
 			portalTopLevelBuildData.getDownstreamBuildDataList());
 		gitBisectToolBuild.setWorkspaceGitRepository(
-			workspace.getPrimaryPortalWorkspaceGitRepository());
+			portalWorkspace.getPrimaryPortalWorkspaceGitRepository());
 
 		return super.getJenkinsReportElement();
 	}
@@ -90,8 +91,10 @@ public class GitBisectToolTopLevelBuildRunner
 	protected void setUpWorkspace() {
 		super.setUpWorkspace();
 
+		PortalWorkspace portalWorkspace = getWorkspace();
+
 		WorkspaceGitRepository workspaceGitRepository =
-			workspace.getPrimaryPortalWorkspaceGitRepository();
+			portalWorkspace.getPrimaryPortalWorkspaceGitRepository();
 
 		workspaceGitRepository.storeCommitHistory(_getPortalBranchSHAs());
 	}

@@ -42,7 +42,7 @@ public abstract class PortalTopLevelBuildRunner
 				portalTopLevelBuildData.getJenkinsGitHubURL());
 		}
 
-		workspace = (S)topLevelWorkspace;
+		setWorkspace((S)topLevelWorkspace);
 	}
 
 }

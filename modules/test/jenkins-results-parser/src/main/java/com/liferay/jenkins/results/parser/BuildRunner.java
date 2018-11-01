@@ -21,6 +21,8 @@ public interface BuildRunner<T extends BuildData, S extends Workspace> {
 
 	public T getBuildData();
 
+	public S getWorkspace();
+
 	public void run();
 
 	public void setUp();

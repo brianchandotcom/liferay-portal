@@ -778,7 +778,6 @@ public class MainServlet extends ActionServlet {
 			TilesUtil.loadDefinitions(servletContext);
 
 			initModuleForwards(moduleConfig);
-			initModuleExceptionConfigs(moduleConfig);
 			initModuleActions(moduleConfig);
 
 			moduleConfig.freeze();

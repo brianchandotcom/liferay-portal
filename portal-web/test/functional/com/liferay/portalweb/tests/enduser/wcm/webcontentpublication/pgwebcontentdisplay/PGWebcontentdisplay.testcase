@@ -1113,9 +1113,7 @@
 			<var name="siteName" value="Test Site Name" />
 		</execute>
 
-		<execute macro="Alert#viewInfoMessage">
-			<var name="infoMessage" value="This application is not visible to users yet Select Web Content to make it visible" />
-		</execute>
+		<execute macro="WebContent#viewDefaultPGViaWCD" />
 
 		<execute macro="WebContentDisplayPortlet#selectWebContent">
 			<var name="webContentTitle" value="WC WebContent Title" />
@@ -1137,9 +1135,7 @@
 			<var name="siteName" value="Test Site Name" />
 		</execute>
 
-		<execute macro="Alert#viewInfoMessage">
-			<var name="infoMessage" value="This application is not visible to users yet Select Web Content to make it visible" />
-		</execute>
+		<execute macro="WebContent#viewDefaultPGViaWCD" />
 
 		<execute macro="WebContentDisplayPortlet#selectWebContent">
 			<var name="webContentTitle" value="WC WebContent Title" />

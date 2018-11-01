@@ -42,6 +42,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.http.context.ServletContextHelper;
 
 /**
@@ -79,9 +80,11 @@ public class CustomServletContextHelper
 		_servletContext = ServletContextDelegate.create(
 			servletContextEvent.getServletContext());
 
+		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
+
 		ServletContextClassLoaderPool.register(
 			_servletContext.getServletContextName(),
-			_servletContext.getClassLoader());
+			bundleWiring.getClassLoader());
 	}
 
 	@Override

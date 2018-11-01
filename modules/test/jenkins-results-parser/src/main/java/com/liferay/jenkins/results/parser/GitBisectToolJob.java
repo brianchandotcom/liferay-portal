@@ -43,6 +43,11 @@ public class GitBisectToolJob extends BaseJob implements PortalTestClassJob {
 			new File(
 				_jenkinsGitWorkingDirectory.getWorkingDirectory(),
 				"commands/dependencies/git-bisect-tool.properties"));
+
+		jobPropertiesFiles.add(
+			new File(
+				_portalGitWorkingDirectory.getWorkingDirectory(),
+				"test.properties"));
 	}
 
 	@Override

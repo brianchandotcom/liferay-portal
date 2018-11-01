@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -124,6 +125,35 @@ public abstract class BasePortalWorkspace
 
 	@Override
 	protected void setWorkspaceBuildDataProperties(BuildData buildData) {
+		Map<String, String> topLevelBuildParameters =
+			buildData.getTopLevelBuildParameters();
+
+		Properties portalTestProperties = new Properties();
+
+		if (topLevelBuildParameters.containsKey("PORTAL_BATCH_NAME") &&
+			topLevelBuildParameters.containsKey("PORTAL_BATCH_TEST_SELECTOR")) {
+
+			String portalBatchName = topLevelBuildParameters.get(
+				"PORTAL_BATCH_NAME");
+
+			if (portalBatchName.contains("integration") ||
+				portalBatchName.contains("unit")) {
+
+				portalTestProperties.setProperty(
+					JenkinsResultsParserUtil.combine(
+						"test.batch.axis.max.size[", portalBatchName, "]"),
+					String.valueOf(_TEST_BATCH_AXIS_MAX_SIZE));
+
+				portalTestProperties.setProperty(
+					JenkinsResultsParserUtil.combine(
+						"test.batch.class.names.includes[", portalBatchName,
+						"]"),
+					topLevelBuildParameters.get("PORTAL_BATCH_TEST_SELECTOR"));
+			}
+		}
+
+		_primaryPortalWorkspaceGitRepository.setPortalTestProperties(
+			portalTestProperties);
 	}
 
 	@Override
@@ -195,6 +225,8 @@ public abstract class BasePortalWorkspace
 
 		_pluginsWorkspaceGitRepository.writePropertiesFiles();
 	}
+
+	private static final Integer _TEST_BATCH_AXIS_MAX_SIZE = 1000000;
 
 	private static final Pattern _portalGitHubURLPattern = Pattern.compile(
 		"https://github.com/[^/]+/(?<gitRepositoryName>" +

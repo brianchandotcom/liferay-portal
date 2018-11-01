@@ -30,6 +30,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 /**
@@ -140,6 +141,26 @@ public class DirectRequestDispatcherFactoryImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		DirectRequestDispatcherFactoryImpl.class);
 
+	private static class DirectRequestDispatcherServletRequest
+		extends HttpServletRequestWrapper {
+
+		@Override
+		public ServletContext getServletContext() {
+			return _servletContext;
+		}
+
+		private DirectRequestDispatcherServletRequest(
+			ServletRequest request, ServletContext servletContext) {
+
+			super((HttpServletRequest)request);
+
+			_servletContext = servletContext;
+		}
+
+		private final ServletContext _servletContext;
+
+	}
+
 	/**
 	 * See LPS-79937. We need to protect against redispatch from the module
 	 * framework back to the portal, which means we have to unwrap the request.
@@ -157,7 +178,8 @@ public class DirectRequestDispatcherFactoryImpl
 				HttpServletRequestWrapper wrapper =
 					(HttpServletRequestWrapper)request;
 
-				request = wrapper.getRequest();
+				request = new DirectRequestDispatcherServletRequest(
+					wrapper.getRequest(), wrapper.getServletContext());
 			}
 
 			_requestDispatcher.forward(request, response);
@@ -173,7 +195,8 @@ public class DirectRequestDispatcherFactoryImpl
 				HttpServletRequestWrapper wrapper =
 					(HttpServletRequestWrapper)request;
 
-				request = wrapper.getRequest();
+				request = new DirectRequestDispatcherServletRequest(
+					wrapper.getRequest(), wrapper.getServletContext());
 			}
 
 			_requestDispatcher.include(request, response);

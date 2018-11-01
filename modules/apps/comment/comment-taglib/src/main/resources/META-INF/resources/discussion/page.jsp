@@ -321,15 +321,17 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 						}
 					);
 
-					Liferay.fire(
-						'messagePosted',
-						{
-							className: '<%= discussionTaglibHelper.getClassName() %>',
-							classPK: '<%= discussionTaglibHelper.getClassPK() %>',
-							commentId: response.commentId,
-							text: AUI.$('input[name^="<%= namespace %>body"]').val()
-						}
-					);
+					if (!!response.commentId) {
+						Liferay.fire(
+							'messagePosted',
+							{
+								className: '<%= discussionTaglibHelper.getClassName() %>',
+								classPK: '<%= discussionTaglibHelper.getClassPK() %>',
+								commentId: response.commentId,
+								text: AUI.$('input[name^="<%= namespace %>body"]').val()
+							}
+						);
+					}
 
 					if (refreshPage) {
 						window.location.reload();

@@ -763,10 +763,14 @@ public class MainServlet extends ActionServlet {
 			internal = MessageResources.getMessageResources(internalName);
 		}
 		catch (MissingResourceException mre) {
-			throw new UnavailableException(
+			UnavailableException ue = new UnavailableException(
 				StringBundler.concat(
 					"Unable to load internal resources from \"", internalName,
 					"\", due to :", mre.getMessage()));
+
+			ue.addSuppressed(mre);
+
+			throw ue;
 		}
 
 		ServletConfig servletConfig = getServletConfig();

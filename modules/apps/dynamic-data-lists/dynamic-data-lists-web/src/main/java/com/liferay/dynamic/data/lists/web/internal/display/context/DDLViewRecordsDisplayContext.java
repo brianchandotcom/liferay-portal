@@ -121,7 +121,7 @@ public class DDLViewRecordsDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.putData("action", "deleteRecords");
-						dropdownItem.setIcon("trash");
+						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
 							LanguageUtil.get(
 								_ddlRequestHelper.getRequest(), "delete"));

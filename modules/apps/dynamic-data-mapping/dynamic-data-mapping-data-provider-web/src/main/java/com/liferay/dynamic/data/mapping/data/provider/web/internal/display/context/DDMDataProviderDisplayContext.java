@@ -126,11 +126,11 @@ public class DDMDataProviderDisplayContext {
 					dropdownItem -> {
 						dropdownItem.putData(
 							"action", "deleteDataProviderInstances");
-						dropdownItem.setIcon("trash");
+						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
 							LanguageUtil.get(
 								_ddmDataProviderRequestHelper.getRequest(),
-								"recycle-bin"));
+								"delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}

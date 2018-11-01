@@ -119,11 +119,10 @@ public class DDMFormAdminFieldSetDisplayContext
 				add(
 					dropdownItem -> {
 						dropdownItem.putData("action", "deleteStructures");
-						dropdownItem.setIcon("trash");
+						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
 							LanguageUtil.get(
-								formAdminRequestHelper.getRequest(),
-								"recycle-bin"));
+								formAdminRequestHelper.getRequest(), "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}

@@ -168,7 +168,7 @@ public class DDMFormAdminDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.putData("action", "deleteFormInstances");
-						dropdownItem.setIcon("trash");
+						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
 							LanguageUtil.get(
 								formAdminRequestHelper.getRequest(), "delete"));

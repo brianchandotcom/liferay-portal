@@ -23,7 +23,6 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,11 +37,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @PrepareForTest(LanguageUtil.class)
 @RunWith(PowerMockRunner.class)
 public class LocaleUtilTest extends PowerMockito {
-
-	@After
-	public void tearDown() {
-		verifyStatic();
-	}
 
 	@Test
 	public void testFromLanguageId() {

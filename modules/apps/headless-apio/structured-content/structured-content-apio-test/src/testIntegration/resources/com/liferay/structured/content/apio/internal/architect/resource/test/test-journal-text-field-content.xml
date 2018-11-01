@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<root available-locales="en_US" default-locale="en_US">
-	<dynamic-element index-type="text" name="TextFieldName" type="string">
-		<dynamic-content language-id="en_US"><![CDATA[textfield]]></dynamic-content>
-	</dynamic-element>
-</root>

@@ -36,6 +36,7 @@ import com.liferay.portal.tools.java.parser.JavaNewClassInstantiation;
 import com.liferay.portal.tools.java.parser.JavaOperator;
 import com.liferay.portal.tools.java.parser.JavaOperatorExpression;
 import com.liferay.portal.tools.java.parser.JavaParameter;
+import com.liferay.portal.tools.java.parser.JavaReturnStatement;
 import com.liferay.portal.tools.java.parser.JavaSignature;
 import com.liferay.portal.tools.java.parser.JavaSimpleLambdaExpression;
 import com.liferay.portal.tools.java.parser.JavaSimpleValue;
@@ -198,6 +199,21 @@ public class JavaParserUtil {
 		}
 
 		return javaMethod;
+	}
+
+	public static JavaReturnStatement parseJavaReturnStatement(
+		DetailAST literalReturnDetailAST) {
+
+		JavaReturnStatement javaReturnStatement = new JavaReturnStatement();
+
+		DetailAST firstChildDetailAST = literalReturnDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() != TokenTypes.SEMI) {
+			javaReturnStatement.setReturnJavaExpression(
+				parseJavaExpression(firstChildDetailAST));
+		}
+
+		return javaReturnStatement;
 	}
 
 	private static String _getName(DetailAST detailAST) {

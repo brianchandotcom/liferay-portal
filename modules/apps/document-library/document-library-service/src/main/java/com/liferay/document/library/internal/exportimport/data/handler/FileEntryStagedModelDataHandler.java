@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -631,7 +632,15 @@ public class FileEntryStagedModelDataHandler
 				}
 
 				if (ExportImportThreadLocal.isStagingInProcess()) {
-					_overrideFileVersion(importedFileEntry, version);
+					ServiceContextThreadLocal.pushServiceContext(
+						serviceContext);
+
+					try {
+						_overrideFileVersion(importedFileEntry, version);
+					}
+					finally {
+						ServiceContextThreadLocal.popServiceContext();
+					}
 				}
 			}
 			else {

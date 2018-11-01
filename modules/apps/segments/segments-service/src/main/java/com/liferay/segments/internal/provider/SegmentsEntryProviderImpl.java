@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.internal.util;
+package com.liferay.segments.internal.provider;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;

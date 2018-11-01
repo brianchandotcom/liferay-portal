@@ -44,6 +44,7 @@ import com.liferay.portal.tools.java.parser.JavaTernaryOperator;
 import com.liferay.portal.tools.java.parser.JavaThrowStatement;
 import com.liferay.portal.tools.java.parser.JavaType;
 import com.liferay.portal.tools.java.parser.JavaTypeCast;
+import com.liferay.portal.tools.java.parser.JavaVariableDefinition;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
@@ -222,6 +223,35 @@ public class JavaParserUtil {
 
 		return new JavaThrowStatement(
 			parseJavaExpression(literalThrowDetailAST.getFirstChild()));
+	}
+
+	public static JavaVariableDefinition parseJavaVariableDefinition(
+		DetailAST variableDefinitionDetailAST) {
+
+		JavaVariableDefinition javaVariableDefinition =
+			new JavaVariableDefinition(_getName(variableDefinitionDetailAST));
+
+		DetailAST modifiersDetailAST =
+			variableDefinitionDetailAST.findFirstToken(TokenTypes.MODIFIERS);
+
+		javaVariableDefinition.setJavaAnnotations(
+			_parseJavaAnnotations(modifiersDetailAST));
+		javaVariableDefinition.setModifiers(
+			_parseModifiers(modifiersDetailAST));
+
+		javaVariableDefinition.setJavaType(
+			_parseJavaType(
+				variableDefinitionDetailAST.findFirstToken(TokenTypes.TYPE)));
+
+		DetailAST assignDetailAST = variableDefinitionDetailAST.findFirstToken(
+			TokenTypes.ASSIGN);
+
+		if (assignDetailAST != null) {
+			javaVariableDefinition.setAssignValueJavaExpression(
+				parseJavaExpression(assignDetailAST.getFirstChild()));
+		}
+
+		return javaVariableDefinition;
 	}
 
 	private static String _getName(DetailAST detailAST) {

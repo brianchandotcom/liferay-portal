@@ -122,6 +122,63 @@ public class StructuredContentApioTest {
 	}
 
 	@Test
+	public void testBooleanFieldInputControlIsDisplayed() throws Exception {
+		List<String> hrefs = JsonPath.read(
+			_toStringAsAdmin(
+				JsonPath.read(
+					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
+					"$._links.content-space.href")),
+			"$._embedded.ContentSpace[?(@.name == '" +
+				StructuredContentApioTestBundleActivator.SITE_NAME +
+					"')]._links.structuredContents.href");
+
+		Map<String, String> headers = _getHeaders();
+
+		headers.put("Accept-Language", "en-US");
+
+		List<String> inputControls = JsonPath.read(
+			_toStringAsGuest(
+				_getURLWithFilterByTitle(
+					hrefs.get(0),
+					StructuredContentApioTestBundleActivator.
+						TITLE_2_LOCALE_DEFAULT),
+				headers),
+			"$._embedded.StructuredContent[*]._embedded.values._embedded" +
+				"[?(@.name=='MyBoolean')].inputControl");
+
+		Assert.assertEquals(inputControls.toString(), 1, inputControls.size());
+		Assert.assertTrue(inputControls.contains("checkbox"));
+	}
+
+	@Test
+	public void testColorFieldInputControlIsNotDisplayed() throws Exception {
+		List<String> hrefs = JsonPath.read(
+			_toStringAsAdmin(
+				JsonPath.read(
+					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
+					"$._links.content-space.href")),
+			"$._embedded.ContentSpace[?(@.name == '" +
+				StructuredContentApioTestBundleActivator.SITE_NAME +
+					"')]._links.structuredContents.href");
+
+		Map<String, String> headers = _getHeaders();
+
+		headers.put("Accept-Language", "en-US");
+
+		List<String> inputControls = JsonPath.read(
+			_toStringAsGuest(
+				_getURLWithFilterByTitle(
+					hrefs.get(0),
+					StructuredContentApioTestBundleActivator.
+						TITLE_2_LOCALE_DEFAULT),
+				headers),
+			"$._embedded.StructuredContent[*]._embedded.values._embedded" +
+				"[?(@.name=='MyColor')].inputControl");
+
+		Assert.assertTrue(inputControls.toString(), inputControls.isEmpty());
+	}
+
+	@Test
 	public void testDefaultStructuredFieldLabelIsDisplayedWhenAcceptLanguageIsSpecifiedAndDoesNotMatch()
 		throws Exception {
 

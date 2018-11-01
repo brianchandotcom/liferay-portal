@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
@@ -88,21 +87,6 @@ public class SegmentsEntryIndexer extends BaseIndexer<SegmentsEntry> {
 				"active", Boolean.TRUE.toString());
 
 			contextBooleanFilter.add(termFilter, BooleanClauseOccur.MUST);
-		}
-	}
-
-	@Override
-	public void postProcessSearchQuery(
-			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
-			SearchContext searchContext)
-		throws Exception {
-
-		addSearchLocalizedTerm(
-			searchQuery, searchContext, Field.DESCRIPTION, true);
-		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, true);
-
-		if (searchContext.getUserId() > 0) {
-			addSearchUserId(fullQueryBooleanFilter, searchContext);
 		}
 	}
 

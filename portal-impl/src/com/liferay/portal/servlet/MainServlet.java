@@ -104,7 +104,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -779,10 +778,6 @@ public class MainServlet extends ActionServlet {
 
 		config = servletConfig.getInitParameter("config");
 
-		String configPrefix = "config/";
-
-		int configPrefixLength = configPrefix.length() - 1;
-
 		try {
 			_initServlet();
 
@@ -800,30 +795,6 @@ public class MainServlet extends ActionServlet {
 			initModuleActions(moduleConfig);
 
 			moduleConfig.freeze();
-
-			Enumeration<String> names = servletConfig.getInitParameterNames();
-
-			while (names.hasMoreElements()) {
-				String name = names.nextElement();
-
-				if (!name.startsWith(configPrefix)) {
-					continue;
-				}
-
-				String prefix = name.substring(configPrefixLength);
-
-				moduleConfig = initModuleConfig(
-					prefix, servletConfig.getInitParameter(name));
-
-				initModuleMessageResources(moduleConfig);
-				initModulePlugIns(moduleConfig);
-				initModuleFormBeans(moduleConfig);
-				initModuleForwards(moduleConfig);
-				initModuleExceptionConfigs(moduleConfig);
-				initModuleActions(moduleConfig);
-
-				moduleConfig.freeze();
-			}
 
 			initModulePrefixes(servletContext);
 

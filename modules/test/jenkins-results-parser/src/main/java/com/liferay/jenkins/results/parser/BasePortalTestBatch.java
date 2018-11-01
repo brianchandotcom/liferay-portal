@@ -40,6 +40,7 @@ public abstract class BasePortalTestBatch
 		buildParameters.put(
 			"axis.variable",
 			JenkinsResultsParserUtil.join(",", batchBuildData.getTestList()));
+		buildParameters.put("test.batch.name", batchBuildData.getBatchName());
 
 		String batchName = batchBuildData.getBatchName();
 

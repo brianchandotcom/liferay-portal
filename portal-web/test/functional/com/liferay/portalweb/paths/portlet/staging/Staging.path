@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STAGING_PUBLISH_PAGE_FIRST_MESSAGE</td>
+	<td>//div[@class='portlet-body']/div[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STAGING_PUBLISH_TO_LIVE_BUTTON</td>
 	<td>//button[contains(.,'Publish to Live')]</td>
 	<td></td>

@@ -483,8 +483,10 @@ public class JavaParserUtil {
 
 		while (true) {
 			if (childDetailAST.getType() != TokenTypes.ARRAY_DECLARATOR) {
+				FullIdent fullIdent = FullIdent.createFullIdent(childDetailAST);
+
 				JavaArrayDeclarator javaArrayDeclarator =
-					new JavaArrayDeclarator(childDetailAST.getText());
+					new JavaArrayDeclarator(fullIdent.getText());
 
 				javaArrayDeclarator.setDimensionValueJavaExpressions(
 					dimensionValueJavaExpressions);

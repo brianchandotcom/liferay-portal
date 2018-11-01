@@ -38,18 +38,16 @@ SearchContainer searchContainer = SelectOrganizationManagementToolbarDisplayCont
 renderResponse.setTitle(LanguageUtil.get(request, "organizations"));
 %>
 
-<clay:navigation-bar
-	navigationItems='<%= userDisplayContext.getNavigationItems("organizations") %>'
-/>
-
 <clay:management-toolbar
 	clearResultsURL="<%= SelectOrganizationManagementToolbarDisplayContext.getClearResultsURL() %>"
+	filterDropdownItems="<%= SelectOrganizationManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"
 	searchActionURL="<%= SelectOrganizationManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	showSearch="<%= true %>"
-	viewTypeItems="<%= SelectOrganizationManagementToolbarDisplayContext.getViewTypeItems() %>"
+	sortingOrder="<%= searchContainer.getOrderByType() %>"
+	sortingURL="<%= SelectOrganizationManagementToolbarDisplayContext.getSortingURL() %>"
 />
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectOrganizationFm">

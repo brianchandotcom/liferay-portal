@@ -97,7 +97,7 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Test Site Name" />
 			<var name="layoutName" value="Category Page Name" />
 		</execute>
@@ -174,7 +174,7 @@
 	<command name="AddCategorywithSiteRole" priority="4">
 		<property name="testray.component.names" value="Categories,Permissions,Roles" />
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Test Site Name" />
 			<var name="layoutName" value="Test Page Name" />
 		</execute>
@@ -319,7 +319,7 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Test Site Name" />
 			<var name="layoutName" value="Test Page Name" />
 		</execute>
@@ -577,7 +577,7 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Test Site Name" />
 			<var name="layoutName" value="Page Name" />
 		</execute>
@@ -999,7 +999,7 @@
 	<command name="ExportImportWCWithCategoryViaAP" priority="5">
 		<property name="testray.component.names" value="Training" />
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Test Site Name" />
 			<var name="layoutName" value="Test Page Name" />
 		</execute>
@@ -1345,7 +1345,7 @@
 			<var name="vocabularyName" value="Topic" />
 		</execute>
 
-		<execute macro="JSONLayout#addLayoutByGroupName">
+		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Test Site Name" />
 			<var name="layoutName" value="Search Page" />
 		</execute>

@@ -902,7 +902,12 @@ public class MainServlet extends ActionServlet {
 		for (URL url : urls) {
 			digester.push(moduleConfig);
 
-			parseModuleConfigFile(digester, url);
+			try {
+				digester.parse(url);
+			}
+			catch (Exception e) {
+				throw new ServletException(e);
+			}
 		}
 
 		ServletContext servletContext = getServletContext();

@@ -102,6 +102,7 @@ import com.liferay.social.kernel.util.SocialConfigurationUtil;
 
 import java.io.IOException;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -128,10 +129,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
+import org.apache.commons.digester.Digester;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.RequestProcessor;
 import org.apache.struts.config.ModuleConfig;
+import org.apache.struts.config.ModuleConfigFactory;
 import org.apache.struts.util.MessageResources;
 
 /**
@@ -773,7 +776,7 @@ public class MainServlet extends ActionServlet {
 
 			servletContext.setAttribute(Globals.ACTION_SERVLET_KEY, this);
 
-			ModuleConfig moduleConfig = initModuleConfig("", config);
+			ModuleConfig moduleConfig = _initModuleConfig("", config);
 
 			TilesUtil.loadDefinitions(servletContext);
 
@@ -797,6 +800,35 @@ public class MainServlet extends ActionServlet {
 			throw ue;
 		}
 	}
+
+	private ModuleConfig _initModuleConfig(String prefix, String paths)
+        throws ServletException {
+        if (log.isDebugEnabled()) {
+            log.debug("Initializing module path '" + prefix
+                + "' configuration from '" + paths + "'");
+        }
+
+        // Parse the configuration for this module
+        ModuleConfigFactory factoryObject = ModuleConfigFactory.createFactory();
+        ModuleConfig config = factoryObject.createModuleConfig(prefix);
+
+        // Configure the Digester instance we will use
+        Digester digester = initConfigDigester();
+
+        List urls = splitAndResolvePaths(paths);
+        URL url;
+
+        for (Iterator i = urls.iterator(); i.hasNext();) {
+            url = (URL) i.next();
+            digester.push(config);
+            this.parseModuleConfigFile(digester, url);
+        }
+
+        getServletContext().setAttribute(Globals.MODULE_KEY
+            + config.getPrefix(), config);
+
+        return config;
+    }
 
 	private void _initCompanies() throws Exception {
 		if (_log.isDebugEnabled()) {

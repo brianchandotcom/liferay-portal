@@ -1196,7 +1196,9 @@
 			<var name="siteName" value="Test Site Name" />
 		</execute>
 
-		<execute macro="WebContentDisplayPortlet#viewDeletedArticle" />
+		<execute macro="WebContentDisplayPortlet#viewDeletedArticle">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
 	</command>
 
 	<command name="ViewWithPaginationScript" priority="4">

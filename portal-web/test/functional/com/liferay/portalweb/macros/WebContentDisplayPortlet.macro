@@ -376,7 +376,7 @@
 	</command>
 
 	<command name="viewDeletedArticle">
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_3" value1="The selected web content no longer exists" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_3" value1="The web content article ${webContentTitle} was moved to the Recycle Bin. Do you want to Undo or Select Another Web Content?" />
 	</command>
 
 	<command name="viewEnabledFileTypesPGViaWCD">

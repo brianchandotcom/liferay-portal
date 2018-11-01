@@ -692,6 +692,36 @@
 		</execute>
 	</command>
 
+	<command name="importSiteFromTempFolder">
+		<execute function="AssertClick" locator1="Button#SELECT_FILE" value1="Select File" />
+
+		<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
+
+		<var method="PropsUtil#get('output.dir.name')" name="tempDir" />
+
+		<var method="StringUtil#split('**/Public_Pages-*.lar')" name="pattern" />
+
+		<var method="FileUtil#getIncludedResourceURLs('${pattern}', '${tempDir}')" name="fileName" />
+
+		<var method="StringUtil#valueOf('${fileName}')" name="fileName" />
+
+		<var method="RegexUtil#replace('${fileName}', '\[(.*)\]', '1')" name="fileName" />
+
+		<var method="FileUtil#getFileName('${fileName}')" name="shortFileName" />
+
+		<execute function="SikuliUploadTempFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${shortFileName}" />
+
+		<execute macro="Button#click">
+			<var name="button" value="Continue" />
+		</execute>
+
+		<execute macro="Button#click">
+			<var name="button" value="Import" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="SitePagesImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Successful" />
+	</command>
+
 	<command name="inactivateCP">
 		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="SitesEditSite#ACTIVE_LABEL" value1="Active" />

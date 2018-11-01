@@ -505,6 +505,7 @@
 	</command>
 
 	<command name="MoveDocumentToHome" priority="4">
+		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="CPSharepoint#MoveDocumentToHome" />
 
 		<execute macro="DMRepository#gotoCP">

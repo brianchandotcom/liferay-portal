@@ -14,13 +14,15 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import java.util.List;
+
 /**
  * @author Hugo Huijser
  */
 public class JavaTypeCast extends JavaExpression {
 
-	public void setJavaType(JavaType javaType) {
-		_javaType = javaType;
+	public void setJavaTypes(List<JavaType> javaTypes) {
+		_javaTypes = javaTypes;
 	}
 
 	public void setValueJavaExpression(JavaExpression valueJavaExpression) {
@@ -32,7 +34,7 @@ public class JavaTypeCast extends JavaExpression {
 		return false;
 	}
 
-	private JavaType _javaType;
+	private List<JavaType> _javaTypes;
 	private JavaExpression _valueJavaExpression;
 
 }

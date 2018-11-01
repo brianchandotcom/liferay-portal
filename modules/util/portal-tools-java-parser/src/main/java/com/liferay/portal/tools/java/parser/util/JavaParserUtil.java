@@ -948,8 +948,21 @@ public class JavaParserUtil {
 
 		JavaTypeCast javaTypeCast = new JavaTypeCast();
 
-		javaTypeCast.setJavaType(
-			_parseJavaType(typeCastDetailAST.findFirstToken(TokenTypes.TYPE)));
+		List<JavaType> javaTypes = new ArrayList<>();
+
+		DetailAST firstChildDetailAST = typeCastDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() == TokenTypes.TYPE) {
+			javaTypes.add(_parseJavaType(firstChildDetailAST));
+		}
+		else {
+			javaTypes.add(_parseJavaType(firstChildDetailAST.getFirstChild()));
+
+			javaTypes.add(_parseJavaType(firstChildDetailAST.getLastChild()));
+		}
+
+		javaTypeCast.setJavaTypes(javaTypes);
+
 		javaTypeCast.setValueJavaExpression(
 			parseJavaExpression(typeCastDetailAST.getLastChild()));
 

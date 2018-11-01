@@ -113,10 +113,6 @@
 		<servlet-name>Main Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.MainServlet</servlet-class>
 		<init-param>
-			<param-name>config</param-name>
-			<param-value>/WEB-INF/struts-config.xml,/WEB-INF/struts-config-ext.xml</param-value>
-		</init-param>
-		<init-param>
 			<param-name>debug</param-name>
 			<param-value>0</param-value>
 		</init-param>

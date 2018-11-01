@@ -761,10 +761,6 @@ public class MainServlet extends ActionServlet {
 			throw ue;
 		}
 
-		ServletConfig servletConfig = getServletConfig();
-
-		config = servletConfig.getInitParameter("config");
-
 		try {
 			_initServlet();
 
@@ -777,7 +773,7 @@ public class MainServlet extends ActionServlet {
 			servletContext.setAttribute(
 				Globals.MODULE_PREFIXES_KEY, StringPool.EMPTY_ARRAY);
 
-			return _initModuleConfig(config);
+			return _initModuleConfig();
 		}
 		catch (UnavailableException ue) {
 			throw ue;
@@ -879,63 +875,57 @@ public class MainServlet extends ActionServlet {
 			filters.toArray(new Filter[0]));
 	}
 
-	private ModuleConfig _initModuleConfig(String paths)
-		throws ServletException {
-
+	private ModuleConfig _initModuleConfig() throws ServletException {
 		ModuleConfig moduleConfig = new ModuleConfigImpl("");
 
 		ServletContext servletContext = getServletContext();
 
-		for (String path : StringUtil.split(paths)) {
-			try (InputStream inputStream = servletContext.getResourceAsStream(
-					path)) {
+		try (InputStream inputStream = servletContext.getResourceAsStream(
+				"/WEB-INF/struts-config.xml")) {
 
-				Document document = SAXReaderUtil.read(inputStream, false);
+			Document document = SAXReaderUtil.read(inputStream, false);
 
-				Element rootElement = document.getRootElement();
+			Element rootElement = document.getRootElement();
 
-				Element globalForwardsElement = rootElement.element(
-					"global-forwards");
+			Element globalForwardsElement = rootElement.element(
+				"global-forwards");
 
-				if (globalForwardsElement != null) {
-					for (Element forwardElement :
-							globalForwardsElement.elements("forward")) {
+			for (Element forwardElement :
+					globalForwardsElement.elements("forward")) {
 
-						moduleConfig.addForwardConfig(
-							new ActionForward(
-								forwardElement.attributeValue("name"),
-								forwardElement.attributeValue("path"), false));
-					}
+				moduleConfig.addForwardConfig(
+					new ActionForward(
+						forwardElement.attributeValue("name"),
+						forwardElement.attributeValue("path"), false));
+			}
+
+			Element actionMappingsElement = rootElement.element(
+				"action-mappings");
+
+			for (Element actionElement :
+					actionMappingsElement.elements("action")) {
+
+				ActionMapping actionMapping = new ActionMapping();
+
+				actionMapping.setForward(
+					actionElement.attributeValue("forward"));
+				actionMapping.setPath(actionElement.attributeValue("path"));
+				actionMapping.setType(actionElement.attributeValue("type"));
+
+				for (Element forwardElement :
+						actionElement.elements("forward")) {
+
+					actionMapping.addForwardConfig(
+						new ActionForward(
+							forwardElement.attributeValue("name"),
+							forwardElement.attributeValue("path"), false));
 				}
 
-				Element actionMappingsElement = rootElement.element(
-					"action-mappings");
-
-				for (Element actionElement :
-						actionMappingsElement.elements("action")) {
-
-					ActionMapping actionMapping = new ActionMapping();
-
-					actionMapping.setForward(
-						actionElement.attributeValue("forward"));
-					actionMapping.setPath(actionElement.attributeValue("path"));
-					actionMapping.setType(actionElement.attributeValue("type"));
-
-					for (Element forwardElement :
-							actionElement.elements("forward")) {
-
-						actionMapping.addForwardConfig(
-							new ActionForward(
-								forwardElement.attributeValue("name"),
-								forwardElement.attributeValue("path"), false));
-					}
-
-					moduleConfig.addActionConfig(actionMapping);
-				}
+				moduleConfig.addActionConfig(actionMapping);
 			}
-			catch (Exception e) {
-				throw new ServletException(e);
-			}
+		}
+		catch (Exception e) {
+			throw new ServletException(e);
 		}
 
 		moduleConfig.freeze();

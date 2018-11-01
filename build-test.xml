@@ -202,6 +202,7 @@ module.framework.properties.osgi.console=11312</echo>
 					<matches pattern=".*\.tar\.gz$" string="${archive.basename}" />
 					<then>
 						<untar
+							compression="gzip"
 							dest="@{dest}"
 							src="@{src}"
 						/>

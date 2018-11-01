@@ -54,7 +54,7 @@ public class AssetTagIndexer extends BaseIndexer<AssetTag> {
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.GROUP_ID, Field.UID);
 		setFilterSearch(true);
-		setPermissionAware(true);
+		setPermissionAware(false);
 	}
 
 	@Override

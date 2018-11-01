@@ -586,22 +586,21 @@ public class JavaParserUtil {
 			_parseParameterValueJavaExpressions(
 				detailAST.findFirstToken(TokenTypes.ELIST)));
 
-		DetailAST classInfoDetailAST = detailAST;
+		DetailAST typeArgumentDetailAST = detailAST.findFirstToken(
+			TokenTypes.TYPE_ARGUMENTS);
 
-		while (true) {
-			DetailAST firstChildDetailAST = classInfoDetailAST.getFirstChild();
+		if (typeArgumentDetailAST == null) {
+			DetailAST firstChildDetailAST = detailAST.getFirstChild();
 
-			if (firstChildDetailAST.getType() != TokenTypes.DOT) {
-				break;
+			if (firstChildDetailAST.getType() == TokenTypes.DOT) {
+				typeArgumentDetailAST = firstChildDetailAST.findFirstToken(
+					TokenTypes.TYPE_ARGUMENTS);
 			}
-
-			classInfoDetailAST = firstChildDetailAST;
 		}
 
 		javaClassCall.setGenericJavaTypes(
 			_parseGenericJavaTypes(
-				classInfoDetailAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS),
-				TokenTypes.TYPE_ARGUMENT));
+				typeArgumentDetailAST, TokenTypes.TYPE_ARGUMENT));
 
 		return javaClassCall;
 	}

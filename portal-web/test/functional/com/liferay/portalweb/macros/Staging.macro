@@ -818,6 +818,25 @@
 		<execute macro="IFrame#closeFrame" />
 	</command>
 
+	<command name="publishToLiveNowViaPortletPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="${portletName}" />
+			<var name="portletOption" value="Staging" />
+		</execute>
+
+		<execute macro="IFrame#selectConfigurationFrame" />
+
+		<execute function="AssertClickNoError" locator1="Staging#STAGING_PUBLISH_TO_LIVE_BUTTON" value1="Publish to Live" />
+
+		<execute function="AssertConfirm" value1="Are you sure you want to publish to live and update the existing application data?" />
+
+		<execute function="Pause" locator1="5000" />
+
+		<execute function="AssertTextEquals" locator1="Staging#STAGING_STATUS_PORTLET" value1="Successful" />
+
+		<execute macro="IFrame#closeFrame" />
+	</command>
+
 	<command name="publishToLivePublishTemplate">
 		<if>
 			<condition function="IsElementPresent" locator1="StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION" />

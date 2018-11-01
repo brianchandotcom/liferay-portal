@@ -144,7 +144,7 @@
 		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 
 		<execute macro="User#viewLoggedInPG">
-			<var name="userFirstName" value="Test" />
+			<var name="userFirstName" value="${administratorFirstName}" />
 		</execute>
 	</command>
 

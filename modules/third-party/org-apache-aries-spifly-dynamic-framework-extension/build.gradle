@@ -1,0 +1,35 @@
+task jarPatched(type: Zip)
+
+dependencies {
+	compileOnly group: "org.apache.aries.spifly", name: "org.apache.aries.spifly.dynamic.framework.extension", version: "1.0.14"
+}
+
+jar {
+	deleteAllActions()
+
+	dependsOn jarPatched
+}
+
+jarPatched {
+	archiveName = jar.archiveName
+	destinationDir = jar.destinationDir
+	duplicatesStrategy = "exclude"
+
+	from sourceSets.main.output
+
+	from {
+		zipTree(configurations.compileOnly.singleFile)
+	}
+}
+
+updateFileVersions {
+	replaceOnlyIf([{
+		String group, String replacement, String content, File contentFile ->
+
+		if (buildFile == contentFile) {
+			return false
+		}
+
+		return true
+	}])
+}

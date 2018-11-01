@@ -141,8 +141,8 @@ public abstract class BasePortalWorkspace
 
 				portalTestProperties.setProperty(
 					JenkinsResultsParserUtil.combine(
-						"test.batch.axis.max.size[", portalBatchName, "]"),
-					String.valueOf(_TEST_BATCH_AXIS_MAX_SIZE));
+						"test.batch.axis.count[", portalBatchName, "]"),
+					"1");
 
 				portalTestProperties.setProperty(
 					JenkinsResultsParserUtil.combine(
@@ -225,8 +225,6 @@ public abstract class BasePortalWorkspace
 
 		_pluginsWorkspaceGitRepository.writePropertiesFiles();
 	}
-
-	private static final Integer _TEST_BATCH_AXIS_MAX_SIZE = 1000000;
 
 	private static final Pattern _portalGitHubURLPattern = Pattern.compile(
 		"https://github.com/[^/]+/(?<gitRepositoryName>" +

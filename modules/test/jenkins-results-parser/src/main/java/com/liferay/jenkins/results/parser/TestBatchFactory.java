@@ -39,6 +39,12 @@ public class TestBatchFactory {
 				testBatch = new FunctionalPortalTestBatch(
 					portalBatchBuildData, portalWorkspace);
 			}
+			else if (batchName.contains("integration") ||
+					 batchName.contains("unit")) {
+
+				testBatch = new JunitPortalTestBatch(
+					portalBatchBuildData, portalWorkspace);
+			}
 			else {
 				testBatch = new DefaultPortalTestBatch(
 					portalBatchBuildData, portalWorkspace);

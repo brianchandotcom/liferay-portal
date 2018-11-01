@@ -18,6 +18,8 @@ import com.liferay.apio.architect.language.AcceptLanguage;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleWrapper;
 import com.liferay.portal.kernel.model.Company;
@@ -30,6 +32,7 @@ import com.liferay.portal.odata.sort.Sort;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -41,6 +44,35 @@ import java.util.Locale;
  * @author Julio Camarero
  */
 public abstract class BaseStructuredContentNestedCollectionResourceTestCase {
+
+	protected String getDDMFormFieldDataType(
+			DDMFormFieldValue ddmFormFieldValue, DDMStructure ddmStructure)
+		throws Exception {
+
+		NestedCollectionResource nestedCollectionResource =
+			_getNestedCollectionResource();
+
+		Class<? extends NestedCollectionResource> clazz =
+			nestedCollectionResource.getClass();
+
+		Class<?>[] declaredClasses = clazz.getDeclaredClasses();
+
+		Class<?> innerClass = declaredClasses[0];
+
+		Constructor constructor = innerClass.getDeclaredConstructor(
+			DDMFormFieldValue.class, DDMStructure.class);
+
+		constructor.setAccessible(true);
+
+		Object object = constructor.newInstance(
+			ddmFormFieldValue, ddmStructure);
+
+		Method method = innerClass.getMethod("getDDMFormFieldDataType");
+
+		method.setAccessible(true);
+
+		return (String)method.invoke(object);
+	}
 
 	protected JournalArticleWrapper getJournalArticleWrapper(
 			long journalArticleId, ThemeDisplay themeDisplay)

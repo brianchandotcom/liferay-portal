@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.service.impl.LayoutTemplateLocalServiceImpl;
@@ -101,8 +102,7 @@ import com.liferay.registry.dependency.ServiceDependencyManager;
 import com.liferay.social.kernel.util.SocialConfigurationUtil;
 
 import java.io.IOException;
-
-import java.net.URL;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -130,8 +130,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.commons.digester.Digester;
 import org.apache.struts.Globals;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.RequestProcessor;
 import org.apache.struts.config.ModuleConfig;
@@ -787,8 +788,6 @@ public class MainServlet extends ActionServlet {
 			moduleConfig.freeze();
 
 			initModulePrefixes(servletContext);
-
-			destroyConfigDigester();
 		}
 		catch (UnavailableException ue) {
 			throw ue;
@@ -895,22 +894,59 @@ public class MainServlet extends ActionServlet {
 
 		ModuleConfig moduleConfig = new ModuleConfigImpl("");
 
-		Digester digester = initConfigDigester();
+		ServletContext servletContext = getServletContext();
 
-		List<URL> urls = splitAndResolvePaths(paths);
+		for (String path : StringUtil.split(paths)) {
+			try (InputStream inputStream = servletContext.getResourceAsStream(
+					path)) {
 
-		for (URL url : urls) {
-			digester.push(moduleConfig);
+				Document document = SAXReaderUtil.read(inputStream, false);
 
-			try {
-				digester.parse(url);
+				Element rootElement = document.getRootElement();
+
+				Element globalForwardsElement = rootElement.element(
+					"global-forwards");
+
+				if (globalForwardsElement != null) {
+					for (Element forwardElement :
+							globalForwardsElement.elements("forward")) {
+
+						moduleConfig.addForwardConfig(
+							new ActionForward(
+								forwardElement.attributeValue("name"),
+								forwardElement.attributeValue("path"), false));
+					}
+				}
+
+				Element actionMappingsElement = rootElement.element(
+					"action-mappings");
+
+				for (Element actionElement :
+						actionMappingsElement.elements("action")) {
+
+					ActionMapping actionMapping = new ActionMapping();
+
+					actionMapping.setForward(
+						actionElement.attributeValue("forward"));
+					actionMapping.setPath(actionElement.attributeValue("path"));
+					actionMapping.setType(actionElement.attributeValue("type"));
+
+					for (Element forwardElement :
+							actionElement.elements("forward")) {
+
+						actionMapping.addForwardConfig(
+							new ActionForward(
+								forwardElement.attributeValue("name"),
+								forwardElement.attributeValue("path"), false));
+					}
+
+					moduleConfig.addActionConfig(actionMapping);
+				}
 			}
 			catch (Exception e) {
 				throw new ServletException(e);
 			}
 		}
-
-		ServletContext servletContext = getServletContext();
 
 		servletContext.setAttribute(Globals.MODULE_KEY, moduleConfig);
 

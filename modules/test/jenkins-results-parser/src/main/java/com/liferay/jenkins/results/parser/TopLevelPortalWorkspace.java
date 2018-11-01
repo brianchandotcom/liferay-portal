@@ -17,8 +17,7 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Peter Yoo
  */
-public class TopLevelPortalWorkspace
-	extends BasePortalWorkspace implements TopLevelWorkspace {
+public class TopLevelPortalWorkspace extends BasePortalWorkspace {
 
 	protected TopLevelPortalWorkspace(
 		String portalGitHubURL, String portalUpstreamBranchName) {

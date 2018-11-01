@@ -19,8 +19,9 @@ import java.io.File;
 /**
  * @author Michael Hashimoto
  */
-public abstract class PortalBatchBuildRunner<T extends PortalBatchBuildData>
-	extends BatchBuildRunner<T, BatchPortalWorkspace> {
+public abstract class PortalBatchBuildRunner
+	<T extends PortalBatchBuildData, S extends PortalWorkspace>
+		extends BatchBuildRunner<T, S> {
 
 	@Override
 	public void run() {
@@ -43,17 +44,17 @@ public abstract class PortalBatchBuildRunner<T extends PortalBatchBuildData>
 	protected void initWorkspace() {
 		PortalBatchBuildData portalBatchBuildData = getBuildData();
 
-		BatchWorkspace batchWorkspace = WorkspaceFactory.newBatchWorkspace(
+		Workspace batchWorkspace = WorkspaceFactory.newBatchWorkspace(
 			portalBatchBuildData.getPortalGitHubURL(),
 			portalBatchBuildData.getPortalUpstreamBranchName(),
 			portalBatchBuildData.getBatchName(),
 			portalBatchBuildData.getPortalBranchSHA());
 
-		if (!(batchWorkspace instanceof BatchPortalWorkspace)) {
+		if (!(batchWorkspace instanceof PortalWorkspace)) {
 			throw new RuntimeException("Invalid workspace");
 		}
 
-		workspace = (BatchPortalWorkspace)batchWorkspace;
+		workspace = (S)batchWorkspace;
 	}
 
 	protected void publishArtifacts() {

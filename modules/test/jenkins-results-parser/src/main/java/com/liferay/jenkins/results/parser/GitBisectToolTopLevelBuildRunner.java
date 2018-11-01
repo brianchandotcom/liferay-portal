@@ -23,7 +23,8 @@ import org.dom4j.Element;
  * @author Michael Hashimoto
  */
 public class GitBisectToolTopLevelBuildRunner
-	extends PortalTopLevelBuildRunner<PortalTopLevelBuildData> {
+	extends PortalTopLevelBuildRunner
+		<PortalTopLevelBuildData, PortalWorkspace> {
 
 	protected GitBisectToolTopLevelBuildRunner(
 		PortalTopLevelBuildData portalTopLevelBuildData) {

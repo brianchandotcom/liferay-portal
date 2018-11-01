@@ -17,8 +17,7 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Peter Yoo
  */
-public class BatchPortalWorkspace
-	extends BasePortalWorkspace implements BatchWorkspace {
+public class BatchPortalWorkspace extends BasePortalWorkspace {
 
 	protected BatchPortalWorkspace(
 		String portalGitHubURL, String portalUpstreamBranchName,

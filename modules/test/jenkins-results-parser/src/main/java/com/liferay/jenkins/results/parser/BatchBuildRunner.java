@@ -18,7 +18,7 @@ package com.liferay.jenkins.results.parser;
  * @author Michael Hashimoto
  */
 public abstract class BatchBuildRunner
-	<T extends BatchBuildData, S extends BatchWorkspace>
+	<T extends BatchBuildData, S extends Workspace>
 		extends BaseBuildRunner<T, S> {
 
 	protected BatchBuildRunner(T batchBuildData) {

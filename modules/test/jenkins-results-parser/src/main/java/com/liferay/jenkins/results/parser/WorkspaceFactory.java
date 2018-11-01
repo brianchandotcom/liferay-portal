@@ -21,7 +21,7 @@ import java.lang.reflect.Proxy;
  */
 public abstract class WorkspaceFactory {
 
-	public static BatchWorkspace newBatchWorkspace(
+	public static Workspace newBatchWorkspace(
 		String gitHubURL, String upstreamBranchName, String batchName,
 		String branchSHA) {
 
@@ -37,34 +37,40 @@ public abstract class WorkspaceFactory {
 			batchName = "default";
 		}
 
-		BatchWorkspace batchWorkspace = null;
+		Workspace workspace = null;
 
 		if (batchName.contains("functional")) {
-			batchWorkspace = new FunctionalBatchPortalWorkspace(
+			workspace = new FunctionalBatchPortalWorkspace(
 				gitHubURL, upstreamBranchName, branchSHA);
 		}
 		else if (batchName.contains("integration") ||
 				 batchName.contains("unit")) {
 
-			batchWorkspace = new JunitBatchPortalWorkspace(
+			workspace = new JunitBatchPortalWorkspace(
 				gitHubURL, upstreamBranchName, branchSHA);
 		}
 		else {
-			batchWorkspace = new BatchPortalWorkspace(
+			workspace = new BatchPortalWorkspace(
 				gitHubURL, upstreamBranchName, branchSHA);
 		}
 
-		if (batchWorkspace == null) {
+		if (workspace == null) {
 			throw new RuntimeException("Invalid workspace");
 		}
 
-		return (BatchWorkspace)Proxy.newProxyInstance(
-			BatchWorkspace.class.getClassLoader(),
-			new Class<?>[] {BatchWorkspace.class},
-			new MethodLogger(batchWorkspace));
+		if (workspace instanceof PortalWorkspace) {
+			return (PortalWorkspace)Proxy.newProxyInstance(
+				PortalWorkspace.class.getClassLoader(),
+				new Class<?>[] {PortalWorkspace.class},
+				new MethodLogger(workspace));
+		}
+
+		return (Workspace)Proxy.newProxyInstance(
+			Workspace.class.getClassLoader(), new Class<?>[] {Workspace.class},
+			new MethodLogger(workspace));
 	}
 
-	public static TopLevelWorkspace newTopLevelWorkspace(
+	public static Workspace newTopLevelWorkspace(
 		String gitHubURL, String upstreamBranchName) {
 
 		if (gitHubURL == null) {
@@ -75,13 +81,19 @@ public abstract class WorkspaceFactory {
 			throw new RuntimeException("Unsupported GitHub URL " + gitHubURL);
 		}
 
-		TopLevelWorkspace topLevelWorkspace = new TopLevelPortalWorkspace(
+		Workspace workspace = new TopLevelPortalWorkspace(
 			gitHubURL, upstreamBranchName);
 
-		return (TopLevelWorkspace)Proxy.newProxyInstance(
-			TopLevelWorkspace.class.getClassLoader(),
-			new Class<?>[] {TopLevelWorkspace.class},
-			new MethodLogger(topLevelWorkspace));
+		if (workspace instanceof PortalWorkspace) {
+			return (PortalWorkspace)Proxy.newProxyInstance(
+				PortalWorkspace.class.getClassLoader(),
+				new Class<?>[] {PortalWorkspace.class},
+				new MethodLogger(workspace));
+		}
+
+		return (Workspace)Proxy.newProxyInstance(
+			Workspace.class.getClassLoader(), new Class<?>[] {Workspace.class},
+			new MethodLogger(workspace));
 	}
 
 }

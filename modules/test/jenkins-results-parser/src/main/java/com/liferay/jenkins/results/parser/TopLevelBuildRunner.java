@@ -32,7 +32,7 @@ import org.dom4j.Element;
  * @author Michael Hashimoto
  */
 public abstract class TopLevelBuildRunner
-	<T extends TopLevelBuildData, S extends TopLevelWorkspace>
+	<T extends TopLevelBuildData, S extends Workspace>
 		extends BaseBuildRunner<T, S> {
 
 	@Override

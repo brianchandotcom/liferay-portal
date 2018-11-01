@@ -109,7 +109,7 @@ gradle.beforeProject {
 			}
 
 			configurations {
-					projectTemplatesMain
+				projectTemplatesMain
 			}
 
 			dependencies {

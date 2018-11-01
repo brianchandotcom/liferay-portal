@@ -21,6 +21,7 @@ patchedJar {
 	File tmpDir = new File (buildDir, "tmp/patchedJar")
 
 	duplicatesStrategy = "exclude"
+	exclude "org/objectweb/asm/Item.class"
 	exclude "module-info.class"
 	into tmpDir
 

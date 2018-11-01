@@ -18,11 +18,13 @@ package com.liferay.jenkins.results.parser;
  * @author Michael Hashimoto
  */
 public class DefaultPortalTestBatch
-	<T extends PortalBatchBuildData, S extends PortalWorkspace>
-		extends BasePortalTestBatch<T, S> {
+	extends BasePortalTestBatch<PortalBatchBuildData, PortalWorkspace> {
 
-	protected DefaultPortalTestBatch(T batchBuildData, S workspace) {
-		super(batchBuildData, workspace);
+	protected DefaultPortalTestBatch(
+		PortalBatchBuildData portalBatchBuildData,
+		PortalWorkspace portalWorkspace) {
+
+		super(portalBatchBuildData, portalWorkspace);
 	}
 
 }

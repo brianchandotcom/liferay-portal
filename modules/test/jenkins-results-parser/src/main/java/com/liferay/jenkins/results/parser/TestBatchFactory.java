@@ -21,10 +21,10 @@ import java.lang.reflect.Proxy;
  */
 public class TestBatchFactory {
 
-	public static TestBatch<?, ?> newTestBatch(
+	public static TestBatch newTestBatch(
 		BatchBuildData batchBuildData, Workspace workspace) {
 
-		TestBatch<?, ?> testBatch = null;
+		TestBatch testBatch = null;
 
 		if ((batchBuildData instanceof PortalBatchBuildData) &&
 			(workspace instanceof PortalWorkspace)) {
@@ -36,11 +36,11 @@ public class TestBatchFactory {
 			String batchName = batchBuildData.getBatchName();
 
 			if (batchName.contains("functional")) {
-				testBatch = new FunctionalPortalTestBatch<>(
+				testBatch = new FunctionalPortalTestBatch(
 					portalBatchBuildData, portalWorkspace);
 			}
 			else {
-				testBatch = new DefaultPortalTestBatch<>(
+				testBatch = new DefaultPortalTestBatch(
 					portalBatchBuildData, portalWorkspace);
 			}
 		}
@@ -49,7 +49,7 @@ public class TestBatchFactory {
 			throw new RuntimeException("Unsuppported batch");
 		}
 
-		return (TestBatch<?, ?>)Proxy.newProxyInstance(
+		return (TestBatch)Proxy.newProxyInstance(
 			TestBatch.class.getClassLoader(), new Class<?>[] {TestBatch.class},
 			new MethodLogger(testBatch));
 	}

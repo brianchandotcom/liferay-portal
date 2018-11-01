@@ -21,8 +21,7 @@ import java.io.IOException;
  * @author Michael Hashimoto
  */
 public class FunctionalPortalTestBatch
-	<T extends PortalBatchBuildData, S extends PortalWorkspace>
-		extends BasePortalTestBatch<T, S> {
+	extends BasePortalTestBatch<PortalBatchBuildData, PortalWorkspace> {
 
 	@Override
 	public void run() {
@@ -33,8 +32,11 @@ public class FunctionalPortalTestBatch
 		publishPoshiReport();
 	}
 
-	protected FunctionalPortalTestBatch(T batchBuildData, S workspace) {
-		super(batchBuildData, workspace);
+	protected FunctionalPortalTestBatch(
+		PortalBatchBuildData portalBatchBuildData,
+		PortalWorkspace portalWorkspace) {
+
+		super(portalBatchBuildData, portalWorkspace);
 	}
 
 	protected void publishPoshiReport() {

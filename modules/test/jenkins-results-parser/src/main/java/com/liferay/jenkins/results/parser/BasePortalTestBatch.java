@@ -73,11 +73,6 @@ public abstract class BasePortalTestBatch
 	}
 
 	@Override
-	protected S getWorkspace() {
-		return super.getWorkspace();
-	}
-
-	@Override
 	protected void publishResults() {
 		AntUtil.callTarget(
 			getPrimaryPortalWorkspaceDirectory(), "build-test.xml",

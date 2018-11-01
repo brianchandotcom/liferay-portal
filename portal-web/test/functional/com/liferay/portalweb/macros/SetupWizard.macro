@@ -85,6 +85,10 @@
 			<var name="addSampleData" value="${addSampleData}" />
 		</execute>
 
+		<execute macro="SetupWizard#configurePortalNamePG">
+			<var name="portalName" value="${portalName}" />
+		</execute>
+
 		<execute macro="SetupWizard#configureAdministratorUserPG">
 			<var name="administratorEmail" value="${administratorEmail}" />
 			<var name="administratorFirstName" value="${administratorFirstName}" />
@@ -142,6 +146,15 @@
 		<execute macro="User#viewLoggedInPG">
 			<var name="userFirstName" value="Test" />
 		</execute>
+	</command>
+
+	<command name="configurePortalNamePG">
+		<if>
+			<isset var="portalName" />
+			<then>
+				<execute function="Type" locator1="TextInput#PORTAL_NAME" value1="${portalName}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="configureSampleDataPG">

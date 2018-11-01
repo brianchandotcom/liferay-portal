@@ -28,11 +28,11 @@ runGradleTest {
 		for (String dirName : ["src/testIntegration/java", "src/testIntegration/javaBar", "src/testIntegration/javaFoo", "src/testIntegration/resources", "src/testIntegration/resourcesBar", "src/testIntegration/resourcesFoo"]) {
 			String expectedEclipseClasspathFragment = "<classpathentry path=\"${dirName}\" kind=\"src\"/>"
 
-			if (gradleVersionNumber >= new VersionNumber(3, 0, 0, null)) {
-				expectedEclipseClasspathFragment = "<classpathentry kind=\"src\" path=\"${dirName}\"/>"
-			}
-			else if (gradleVersionNumber >= new VersionNumber(4, 4, 0, null)) {
+			if (gradleVersionNumber >= new VersionNumber(4, 4, 0, null)) {
 				expectedEclipseClasspathFragment = "<classpathentry output=\"bin/testIntegration\" kind=\"src\" path=\"${dirName}\">"
+			}
+			else if (gradleVersionNumber >= new VersionNumber(3, 0, 0, null)) {
+				expectedEclipseClasspathFragment = "<classpathentry kind=\"src\" path=\"${dirName}\"/>"
 			}
 
 			assert eclipseClasspath.contains(expectedEclipseClasspathFragment)

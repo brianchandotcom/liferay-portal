@@ -35,13 +35,9 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = Indexer.class)
 public class DDMFormInstanceIndexer extends BaseIndexer<DDMFormInstance> {
 
 	public static final String CLASS_NAME = DDMFormInstance.class.getName();
@@ -144,13 +140,8 @@ public class DDMFormInstanceIndexer extends BaseIndexer<DDMFormInstance> {
 		indexer.reindex(ddmFormInstance.getFormInstanceRecords());
 	}
 
-	@Reference
 	protected DDMFormInstanceLocalService ddmFormInstanceLocalService;
-
-	@Reference
 	protected IndexerRegistry indexerRegistry;
-
-	@Reference
 	protected IndexWriterHelper indexWriterHelper;
 
 	private static final Log _log = LogFactoryUtil.getLog(

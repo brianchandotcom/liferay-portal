@@ -357,7 +357,7 @@
 		</execute>
 
 		<execute macro="NavigationMenusAdmin#configureMenuType">
-			<var name="currentPrimaryNavigationMenu" value="Primary Menu Name 1" />
+			<var name="currentPrimaryNavigationMenu" value="Primary Menu Name" />
 			<var name="menuType" value="Primary Navigation" />
 			<var name="navigationMenu" value="Primary Menu Name 2" />
 		</execute>

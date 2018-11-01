@@ -30,9 +30,10 @@ public abstract class JavaExpression extends BaseJavaTerm {
 	}
 
 	public void setHasSurroundingParentheses(
-		boolean hasSurroundingParentheses) {
+		boolean hasSurroundingParentheses, boolean parenthesesIncludeChain) {
 
 		_hasSurroundingParentheses = hasSurroundingParentheses;
+		_parenthesesIncludeChain = parenthesesIncludeChain;
 	}
 
 	protected boolean isSurroundChain() {
@@ -41,5 +42,6 @@ public abstract class JavaExpression extends BaseJavaTerm {
 
 	private JavaExpression _chainedJavaExpression;
 	private boolean _hasSurroundingParentheses;
+	private boolean _parenthesesIncludeChain;
 
 }

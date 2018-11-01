@@ -74,6 +74,35 @@ public abstract class BaseStructuredContentNestedCollectionResourceTestCase {
 		return (String)method.invoke(object);
 	}
 
+	protected String getDDMFormFieldInputControl(
+			DDMFormFieldValue ddmFormFieldValue, DDMStructure ddmStructure)
+		throws Exception {
+
+		NestedCollectionResource nestedCollectionResource =
+			_getNestedCollectionResource();
+
+		Class<? extends NestedCollectionResource> clazz =
+			nestedCollectionResource.getClass();
+
+		Class<?>[] declaredClasses = clazz.getDeclaredClasses();
+
+		Class<?> innerClass = declaredClasses[0];
+
+		Constructor constructor = innerClass.getDeclaredConstructor(
+			DDMFormFieldValue.class, DDMStructure.class);
+
+		constructor.setAccessible(true);
+
+		Object object = constructor.newInstance(
+			ddmFormFieldValue, ddmStructure);
+
+		Method method = innerClass.getMethod("getDDMFormFieldInputControl");
+
+		method.setAccessible(true);
+
+		return (String)method.invoke(object);
+	}
+
 	protected JournalArticleWrapper getJournalArticleWrapper(
 			long journalArticleId, ThemeDisplay themeDisplay)
 		throws Throwable {

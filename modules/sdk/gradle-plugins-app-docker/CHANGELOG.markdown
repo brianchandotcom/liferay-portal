@@ -31,6 +31,11 @@ building the app's Docker image.
 ### Changed
 - [LPS-86588]: Update the [Gradle Docker Plugin] dependency to version 3.6.1.
 
+## 1.0.7 - *(Unreleased)*
+
+### Changed
+- [LPS-86875]: Update the [Gradle Docker Plugin] dependency to version 3.6.2.
+
 [Gradle Docker Plugin]: https://github.com/bmuschko/gradle-docker-plugin
 [Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
 [LPS-74785]: https://issues.liferay.com/browse/LPS-74785
@@ -39,3 +44,4 @@ building the app's Docker image.
 [LPS-75704]: https://issues.liferay.com/browse/LPS-75704
 [LPS-84094]: https://issues.liferay.com/browse/LPS-84094
 [LPS-86588]: https://issues.liferay.com/browse/LPS-86588
+[LPS-86875]: https://issues.liferay.com/browse/LPS-86875

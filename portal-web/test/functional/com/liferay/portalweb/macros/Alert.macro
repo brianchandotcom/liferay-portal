@@ -29,7 +29,13 @@
 	</command>
 
 	<command name="viewInfoMessage">
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="${infoMessage}" />
+		<execute function="AssertTextEquals" locator1="Message#INFO_2" value1="${infoMessage}" />
+	</command>
+
+	<command name="viewInfoMessageSpecific">
+		<execute function="AssertElementPresent" locator1="Message#INFO_SPECIFIC">
+			<var name="key_infoMessage" value="${infoMessage}" />
+		</execute>
 	</command>
 
 	<command name="viewLocalizationMessage">

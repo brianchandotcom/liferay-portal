@@ -1680,8 +1680,13 @@
 	</command>
 
 	<command name="viewDefaultPGViaWCD">
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="This application is not visible to users yet" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="Select Web Content to make it visible" />
+		<execute macro="Alert#viewInfoMessageSpecific">
+			<var name="infoMessage" value="This application is not visible to users yet" />
+		</execute>
+
+		<execute macro="Alert#viewInfoMessageSpecific">
+			<var name="infoMessage" value="Select Web Content to make it visible" />
+		</execute>
 	</command>
 
 	<command name="viewDisplayStyleCP">

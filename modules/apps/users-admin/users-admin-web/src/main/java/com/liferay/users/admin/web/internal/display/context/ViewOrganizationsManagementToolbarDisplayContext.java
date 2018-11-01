@@ -154,7 +154,13 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 
 	public PortletURL getPortletURL() {
 		try {
-			return PortletURLUtil.clone(_currentURL, _renderResponse);
+			PortletURL portletURL = PortletURLUtil.clone(
+				_currentURL, _renderResponse);
+
+			portletURL.setParameter("orderByCol", getOrderByCol());
+			portletURL.setParameter("orderByType", getOrderByType());
+
+			return portletURL;
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

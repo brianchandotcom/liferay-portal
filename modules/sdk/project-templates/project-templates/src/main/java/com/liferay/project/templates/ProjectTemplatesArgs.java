@@ -23,6 +23,7 @@ import java.util.List;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Gregory Amerson
  */
 public class ProjectTemplatesArgs {
 
@@ -89,6 +90,10 @@ public class ProjectTemplatesArgs {
 
 	public String getTemplate() {
 		return _template;
+	}
+
+	public String getTemplateVersion() {
+		return _templateVersion;
 	}
 
 	public boolean isDependencyManagementEnabled() {
@@ -183,6 +188,10 @@ public class ProjectTemplatesArgs {
 
 	public void setTemplate(String template) {
 		_template = template;
+	}
+
+	public void setTemplateVersion(String templateVersion) {
+		_templateVersion = templateVersion;
 	}
 
 	protected boolean isHelp() {
@@ -316,5 +325,8 @@ public class ProjectTemplatesArgs {
 		names = "--template"
 	)
 	private String _template = "mvc-portlet";
+
+	@Parameter(hidden = true, names = "--template-version")
+	private String _templateVersion;
 
 }

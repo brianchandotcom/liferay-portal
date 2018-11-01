@@ -67,8 +67,8 @@ public class ArchetyperArchetypeArtifactManager
 			try {
 				if (archetypesFile.isDirectory()) {
 					Path archetypePath = FileUtil.getFile(
-						archetypesFile.toPath(), artifactId + "-*.jar",
-						".*-[0-9]+\\.[0-9]+\\.[0-9]+\\.jar");
+						archetypesFile.toPath(),
+						artifactId + "-" + version + ".jar");
 
 					if (archetypePath != null) {
 						archetypeFile = archetypePath.toFile();

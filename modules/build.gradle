@@ -108,9 +108,17 @@ gradle.beforeProject {
 				enabled = false
 			}
 
+			configurations {
+					projectTemplatesMain
+			}
+
+			dependencies {
+				projectTemplatesMain project.project(":sdk:project-templates:project-templates")
+			}
+
 			generateSampleProject {
-				args "--archetypes-dirs", jar.archivePath.parent, "--destination", "${buildDir}", "--template", project.name.replaceFirst("project-templates-", "")
-				classpath = sourceSets.main.runtimeClasspath + configurations.compileOnly
+				args "--archetypes-dirs", jar.archivePath.parent, "--destination", "${buildDir}", "--template", project.name.replaceFirst("project-templates-", ""), "--template-version", version
+				classpath = configurations.projectTemplatesMain
 				dependsOn jar
 				main = "com.liferay.project.templates.ProjectTemplates"
 			}

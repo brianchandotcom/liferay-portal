@@ -100,7 +100,8 @@ public class ProjectGenerator {
 			ProjectTemplates.TEMPLATE_BUNDLE_PREFIX +
 				template.replace('-', '.'));
 		archetypeGenerationRequest.setArchetypeGroupId("com.liferay");
-		archetypeGenerationRequest.setArchetypeVersion("0");
+		archetypeGenerationRequest.setArchetypeVersion(
+			FileUtil.getManifestProperty(templateFile, "Bundle-Version"));
 		archetypeGenerationRequest.setArtifactId(artifactId);
 		archetypeGenerationRequest.setGroupId(groupId);
 		archetypeGenerationRequest.setInteractiveMode(false);
@@ -167,6 +168,7 @@ public class ProjectGenerator {
 		throws Exception {
 
 		String template = projectTemplatesArgs.getTemplate();
+		String templateVersion = projectTemplatesArgs.getTemplateVersion();
 
 		for (File archetypesDir : projectTemplatesArgs.getArchetypesDirs()) {
 			if (!archetypesDir.isDirectory()) {
@@ -184,7 +186,22 @@ public class ProjectGenerator {
 						fileName);
 
 					if (templateName.equals(template)) {
-						return path.toFile();
+						File templateFile = path.toFile();
+
+						if (templateVersion != null) {
+							String bundleVersion = FileUtil.getManifestProperty(
+								templateFile, "Bundle-Version");
+
+							if (templateVersion.equals(bundleVersion)) {
+								return templateFile;
+							}
+							else {
+								continue;
+							}
+						}
+						else {
+							return templateFile;
+						}
 					}
 				}
 			}

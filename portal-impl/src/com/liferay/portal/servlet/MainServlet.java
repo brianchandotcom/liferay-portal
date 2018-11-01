@@ -784,7 +784,8 @@ public class MainServlet extends ActionServlet {
 
 			moduleConfig.freeze();
 
-			initModulePrefixes(servletContext);
+			servletContext.setAttribute(
+				Globals.MODULE_PREFIXES_KEY, StringPool.EMPTY_ARRAY);
 		}
 		catch (UnavailableException ue) {
 			throw ue;

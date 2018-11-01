@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -123,11 +124,11 @@ public class MirrorsGetTask extends Task {
 
 		System.out.println(sb.toString());
 
-		URL sourceFileURL = new URL("file:" + sourceFile.getAbsolutePath());
+		URI sourceFileURI = sourceFile.toURI();
 
 		long time = System.currentTimeMillis();
 
-		int size = toFile(sourceFileURL, targetFile);
+		int size = toFile(sourceFileURI.toURL(), targetFile);
 
 		if (_verbose) {
 			sb = new StringBuilder();

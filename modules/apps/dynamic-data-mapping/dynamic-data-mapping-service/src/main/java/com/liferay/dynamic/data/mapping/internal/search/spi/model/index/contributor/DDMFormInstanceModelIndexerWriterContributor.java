@@ -64,13 +64,14 @@ public class DDMFormInstanceModelIndexerWriterContributor
 
 	@Override
 	public void modelIndexed(DDMFormInstance ddmFormInstance) {
-		ddmFormInstanceBatchReindexer.reindex(
+		ddmFormInstanceRecordBatchReindexer.reindex(
 			ddmFormInstance.getFormInstanceId(),
 			ddmFormInstance.getCompanyId());
 	}
 
 	@Reference
-	protected DDMFormInstanceRecordBatchReindexer ddmFormInstanceBatchReindexer;
+	protected DDMFormInstanceRecordBatchReindexer
+		ddmFormInstanceRecordBatchReindexer;
 
 	@Reference
 	protected DDMFormInstanceLocalService ddmFormInstanceLocalService;

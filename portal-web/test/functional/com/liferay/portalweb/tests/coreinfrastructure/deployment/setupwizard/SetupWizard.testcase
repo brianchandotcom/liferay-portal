@@ -43,4 +43,28 @@
 
 		<execute macro="Smoke#runSmoke" />
 	</command>
+
+	<command name="MySQLWithXSSContent" priority="5">
+		<property name="database.types" value="mysql" />
+		
+		<execute macro="SetupWizard#configurePG">
+			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorFirstName"><![CDATA[<script>alert("xss")</script>]]></var>
+			<var name="administratorLastName"><![CDATA[<script>alert("xss")</script>]]></var>
+			<var name="databaseType" value="MySQL" />
+			<var name="portalName"><![CDATA[<script>alert("xss")</script>]]></var>
+			<var method="PropsUtil#get('database.mysql.password')" name="databasePassword" />
+			<var method="PropsUtil#get('database.mysql.username')" name="databaseUserName" />
+			<var method="PropsUtil#get('database.mysql.driver')" name="jdbcDriverClassName" />
+			<var method="PropsUtil#get('database.mysql.url')" name="jdbcURL" />
+		</execute>
+
+		<execute function="AssertAlertNotPresent" />
+
+		<var name="actualScript"><![CDATA[<script>alert("xss")</script>]]></var>
+		<var name="escapedScript"><![CDATA[\x3cscript\x3ealert("xss")\x3c/script\x3e]]></var>
+
+		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
+		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
+	</command>
 </definition>

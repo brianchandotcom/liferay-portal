@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterConfig;
 
 import org.junit.Assert;
@@ -47,8 +46,6 @@ public class FilterMappingTest extends PowerMockito {
 			_dispatchers.add(dispatcher.name());
 		}
 
-		_filter = mock(Filter.class);
-
 		_filterConfig = mock(FilterConfig.class);
 
 		when(
@@ -71,8 +68,7 @@ public class FilterMappingTest extends PowerMockito {
 		urlPatterns.add("/c/portal/login");
 
 		FilterMapping filterMapping = new FilterMapping(
-			StringPool.BLANK, _filter, _filterConfig, urlPatterns,
-			_dispatchers);
+			StringPool.BLANK, null, _filterConfig, urlPatterns, _dispatchers);
 
 		String uri = "/c/portal/login";
 
@@ -86,7 +82,6 @@ public class FilterMappingTest extends PowerMockito {
 	}
 
 	private List<String> _dispatchers;
-	private Filter _filter;
 	private FilterConfig _filterConfig;
 
 }

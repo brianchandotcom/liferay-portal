@@ -25,7 +25,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -147,7 +146,7 @@ public class DateUtilTest extends PowerMockito {
 		);
 
 		Assert.assertEquals(
-			expected, DateUtil.getDaysBetween(date1, date2, _timeZone));
+			expected, DateUtil.getDaysBetween(date1, date2, null));
 	}
 
 	private void _testGetISOFormat(String text, String pattern) {
@@ -191,9 +190,6 @@ public class DateUtilTest extends PowerMockito {
 
 		Assert.assertEquals(testSimpleDateFormat.getPattern(), pattern);
 	}
-
-	@Mock
-	private TimeZone _timeZone;
 
 	private static class TestSimpleDateFormat extends SimpleDateFormat {
 

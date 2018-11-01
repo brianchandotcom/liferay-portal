@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.dao.db;
 
 import com.liferay.portal.kernel.util.StringUtil;
 
-import com.mysql.jdbc.ResultSetMetaData;
-
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
@@ -150,12 +148,6 @@ public class DBInspectorUnitTest {
 		);
 
 		Mockito.when(
-			_resultSet.getMetaData()
-		).thenReturn(
-			_resultSetMetaData
-		);
-
-		Mockito.when(
 			_resultSet.next()
 		).thenReturn(
 			hasColumn
@@ -183,8 +175,5 @@ public class DBInspectorUnitTest {
 
 	@Mock
 	private ResultSet _resultSet;
-
-	@Mock
-	private ResultSetMetaData _resultSetMetaData;
 
 }

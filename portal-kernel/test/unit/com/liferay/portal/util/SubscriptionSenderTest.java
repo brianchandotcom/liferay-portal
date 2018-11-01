@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -108,10 +106,6 @@ public class SubscriptionSenderTest extends PowerMockito {
 		Portal portal = mock(Portal.class);
 
 		portalUtil.setPortal(portal);
-
-		Props props = mock(Props.class);
-
-		PropsUtil.setProps(props);
 	}
 
 	@After

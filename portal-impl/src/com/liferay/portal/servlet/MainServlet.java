@@ -213,13 +213,7 @@ public class MainServlet extends ActionServlet {
 
 		servletContext.setAttribute(MainServlet.class.getName(), Boolean.TRUE);
 
-		_init();
-
-		ModuleConfig moduleConfig = (ModuleConfig)servletContext.getAttribute(
-			Globals.MODULE_KEY);
-
-		_portalRequestProcessor = new PortalRequestProcessor(
-			this, moduleConfig);
+		_portalRequestProcessor = new PortalRequestProcessor(this, _init());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Verify patch levels");
@@ -752,7 +746,7 @@ public class MainServlet extends ActionServlet {
 		return remoteUser;
 	}
 
-	private void _init() throws ServletException {
+	private ModuleConfig _init() throws ServletException {
 		try {
 			internal = MessageResources.getMessageResources(internalName);
 		}
@@ -778,14 +772,12 @@ public class MainServlet extends ActionServlet {
 
 			servletContext.setAttribute(Globals.ACTION_SERVLET_KEY, this);
 
-			ModuleConfig moduleConfig = _initModuleConfig(config);
-
 			TilesUtil.loadDefinitions(servletContext);
-
-			moduleConfig.freeze();
 
 			servletContext.setAttribute(
 				Globals.MODULE_PREFIXES_KEY, StringPool.EMPTY_ARRAY);
+
+			return _initModuleConfig(config);
 		}
 		catch (UnavailableException ue) {
 			throw ue;
@@ -945,6 +937,8 @@ public class MainServlet extends ActionServlet {
 				throw new ServletException(e);
 			}
 		}
+
+		moduleConfig.freeze();
 
 		servletContext.setAttribute(Globals.MODULE_KEY, moduleConfig);
 

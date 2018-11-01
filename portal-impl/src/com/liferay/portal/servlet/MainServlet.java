@@ -638,18 +638,6 @@ public class MainServlet extends ActionServlet {
 	}
 
 	@Override
-	protected void initModulePlugIns(ModuleConfig moduleConfig)
-		throws ServletException {
-
-		try {
-			TilesUtil.loadDefinitions(getServletContext());
-		}
-		catch (Exception e) {
-			throw new ServletException(e);
-		}
-	}
-
-	@Override
 	protected void process(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
@@ -787,7 +775,8 @@ public class MainServlet extends ActionServlet {
 
 			ModuleConfig moduleConfig = initModuleConfig("", config);
 
-			initModulePlugIns(moduleConfig);
+			TilesUtil.loadDefinitions(servletContext);
+
 			initModuleFormBeans(moduleConfig);
 			initModuleForwards(moduleConfig);
 			initModuleExceptionConfigs(moduleConfig);

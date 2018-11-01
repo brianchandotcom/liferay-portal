@@ -667,6 +667,18 @@
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
+	<command name="openExportAdmin">
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ExportPortlet" />
+		</execute>
+	</command>
+
+	<command name="openImportAdmin">
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ImportPortlet" />
+		</execute>
+	</command>
+
 	<command name="saveExportTemplateCP">
 		<execute macro="Button#clickSave" />
 

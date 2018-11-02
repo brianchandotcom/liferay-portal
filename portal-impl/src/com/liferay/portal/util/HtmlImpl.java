@@ -244,6 +244,12 @@ public class HtmlImpl implements Html {
 						else if (c == CharPool.APOSTROPHE) {
 							replacement = "&#39;";
 						}
+						else if (c == CharPool.GREATER_THAN) {
+							replacement = "&gt;";
+						}
+						else if (c == CharPool.LESS_THAN) {
+							replacement = "&lt;";
+						}
 						else if (c == CharPool.QUOTE) {
 							replacement = "&quot;";
 						}

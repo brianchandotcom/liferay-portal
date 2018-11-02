@@ -376,7 +376,13 @@
 	</command>
 
 	<command name="viewDeletedArticle">
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_3" value1="The web content article ${webContentTitle} was moved to the Recycle Bin. Do you want to Undo or Select Another Web Content?" />
+		<execute macro="Alert#viewWarningSpecific">
+			<var name="warningMessage" value="The web content article ${webContentTitle} was moved to the Recycle Bin." />
+		</execute>
+
+		<execute macro="Alert#viewWarningSpecific">
+			<var name="warningMessage" value="Do you want to Undo or Select Another Web Content?" />
+		</execute>
 	</command>
 
 	<command name="viewDefaultMessage">

@@ -8,14 +8,8 @@
 
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Test Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -24,13 +18,15 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="SitePages#addPrivatePage">
-			<var name="pageName" value="Site Page Name" />
+		<execute macro="JSONLayout#addPrivateLayout">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Site Page Name" />
 		</execute>
 
-		<execute macro="SitePages#addPrivateChildPage">
-			<var name="childPageName" value="Child Page Name" />
-			<var name="parentPageName" value="Site Page Name" />
+		<execute macro="JSONLayout#addPrivateLayout">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Child Page Name" />
+			<var name="parentLayoutName" value="Site Page Name" />
 		</execute>
 	</set-up>
 
@@ -43,8 +39,8 @@
 				<execute macro="PortalInstances#tearDownCP" />
 			</then>
 			<else>
-				<execute macro="Site#tearDownCP">
-					<var name="siteName" value="Site Name" />
+				<execute macro="JSONGroup#deleteGroupByName">
+					<var name="groupName" value="Test Site Name" />
 				</execute>
 			</else>
 		</if>
@@ -53,7 +49,7 @@
 	<command name="DisplayPrivatePageWithChildPage" priority="4">
 		<execute macro="Navigator#gotoPrivateSitePage">
 			<var name="pageName" value="Child Page Name" />
-			<var name="siteName" value="Site Name" />
+			<var name="siteName" value="Test Site Name" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

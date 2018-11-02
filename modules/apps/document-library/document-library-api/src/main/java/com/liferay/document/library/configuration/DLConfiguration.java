@@ -114,4 +114,10 @@ public interface DLConfiguration {
 	)
 	public boolean versioningStrategyOverridable();
 
+	@Meta.AD(
+		deflt = "0", description = "maximum-number-of-versions-help",
+		name = "maximum-number-of-versions", required = false
+	)
+	public long maximumNumberOfVersions();
+
 }

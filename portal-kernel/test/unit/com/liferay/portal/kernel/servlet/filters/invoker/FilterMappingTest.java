@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.servlet.filters.invoker;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,18 +26,13 @@ import javax.servlet.FilterConfig;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Mika Koivisto
  */
-@RunWith(PowerMockRunner.class)
-public class FilterMappingTest extends PowerMockito {
+public class FilterMappingTest {
 
 	@Before
 	public void setUp() {
@@ -46,19 +42,7 @@ public class FilterMappingTest extends PowerMockito {
 			_dispatchers.add(dispatcher.name());
 		}
 
-		_filterConfig = mock(FilterConfig.class);
-
-		when(
-			_filterConfig.getInitParameter("url-regex-pattern")
-		).thenReturn(
-			StringPool.BLANK
-		);
-
-		when(
-			_filterConfig.getInitParameter("url-regex-ignore-pattern")
-		).thenReturn(
-			StringPool.BLANK
-		);
+		_filterConfig = ProxyFactory.newDummyInstance(FilterConfig.class);
 	}
 
 	@Test

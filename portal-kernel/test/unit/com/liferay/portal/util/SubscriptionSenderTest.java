@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
@@ -96,17 +97,13 @@ public class SubscriptionSenderTest extends PowerMockito {
 
 		PortalBeanLocatorUtil.setBeanLocator(_beanLocator);
 
-		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
+		ReflectionTestUtil.setFieldValue(
+			PortalUUIDUtil.class, "_portalUUID",
+			ProxyFactory.newDummyInstance(PortalUUID.class));
 
-		PortalUUID portalUUID = ProxyFactory.newDummyInstance(PortalUUID.class);
-
-		portalUUIDUtil.setPortalUUID(portalUUID);
-
-		PortalUtil portalUtil = new PortalUtil();
-
-		Portal portal = ProxyFactory.newDummyInstance(Portal.class);
-
-		portalUtil.setPortal(portal);
+		ReflectionTestUtil.setFieldValue(
+			PortalUtil.class, "_portal",
+			ProxyFactory.newDummyInstance(Portal.class));
 	}
 
 	@After

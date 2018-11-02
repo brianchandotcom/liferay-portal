@@ -557,10 +557,6 @@ public class PortalRequestProcessor {
 			return;
 		}
 
-		if (!_processInclude(request, response, actionMapping)) {
-			return;
-		}
-
 		Action action = _processActionCreate(actionMapping);
 
 		if (action == null) {
@@ -647,30 +643,6 @@ public class PortalRequestProcessor {
 		}
 
 		_internalModuleRelativeForward(forward, request, response);
-
-		return false;
-	}
-
-	private boolean _processInclude(
-			HttpServletRequest request, HttpServletResponse response,
-			ActionMapping actionMapping)
-		throws IOException, ServletException {
-
-		String include = actionMapping.getInclude();
-
-		if (include == null) {
-			return true;
-		}
-
-		String actionIdPath = RequestUtils.actionIdURL(
-			include, _moduleConfig, _actionServlet);
-
-		if (actionIdPath != null) {
-			include = actionIdPath;
-		}
-
-		StrutsUtil.include(
-			include, _actionServlet.getServletContext(), request, response);
 
 		return false;
 	}

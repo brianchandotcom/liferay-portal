@@ -24,8 +24,8 @@ if (rowChecker != null) {
 }
 %>
 
-<c:if test="<%= resultRows.isEmpty() && (emptyResultsMessage != null) %>">
-	<div class="main-content-body" id="<%= namespace + id %>EmptyResultsMessage">
+<c:if test="<%= emptyResultsMessage != null %>">
+	<div class="<%= resultRows.isEmpty() ? StringPool.BLANK : "hide" %> main-content-body" id="<%= namespace + id %>EmptyResultsMessage">
 		<liferay-ui:empty-result-message
 			compact="<%= compactEmptyResultsMessage %>"
 			cssClass="<%= emptyResultsMessageCssClass %>"

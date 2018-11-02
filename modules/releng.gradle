@@ -163,6 +163,7 @@ cleanVersionOverride {
 
 configurations {
 	portalArtifacts
+	portalJavadocs
 }
 
 lockDependencyVersion {
@@ -345,6 +346,8 @@ lockPrivateDependencyVersions {
 }
 
 portalArtifactsJar {
+	finalizedBy "portalJavadocsJar"
+
 	File portalArtifactsDir = new File(buildDir, "portalArtifacts")
 	File relengDir = file(".releng")
 
@@ -381,10 +384,12 @@ portalArtifactsJar {
 
 	if (gradle.startParameter.taskNames.contains("portalArtifactsJar")) {
 		File artifactsDir = new File(portalArtifactsDir, "artifacts")
+		File javadocsDir = new File(portalArtifactsDir, "javadocs")
 
-		delete artifactsDir
+		delete artifactsDir, javadocsDir
 
 		artifactsDir.mkdirs()
+		javadocsDir.mkdirs()
 
 		FileTree relengFileTree = fileTree(dir: relengDir, include: "**/*.properties")
 
@@ -436,6 +441,39 @@ portalArtifactsJar {
 			dependencies.portalArtifacts files(dir)
 
 			logger.lifecycle "Added {}", jarFile.name[0 .. -5]
+
+			String artifactJavadocURL = relengProperties.getProperty("artifact.javadoc.url")
+
+			if (artifactJavadocURL && artifactJavadocURL.endsWith(".jar")) {
+				project.download {
+					dest cacheDir
+					overwrite false
+					quiet true
+					src artifactJavadocURL
+				}
+
+				jarFile = new File(cacheDir, artifactJavadocURL.substring(artifactURL.lastIndexOf("/") + 1))
+
+				dir = new File(javadocsDir, jarFile.name[0 .. -5])
+
+				copy {
+					from zipTree(jarFile)
+					into dir
+				}
+
+				dependencies.portalJavadocs files(dir)
+			}
+		}
+
+		task portalJavadocsJar(type: ShadowJar) {
+			baseName = "portal-javadocs"
+			classifier = null
+			configurations = [project.configurations.portalJavadocs]
+			version = _getReleaseInfoVersion()
+
+			doLast {
+				println "Created jar " + archivePath
+			}
 		}
 	}
 }

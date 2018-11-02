@@ -687,7 +687,7 @@ public class Recurrence implements Serializable {
 	 */
 	protected static long getMonthNumber(Calendar cal) {
 		return ((cal.get(Calendar.YEAR) - 1970) * 12L) +
-			((cal.get(Calendar.MONTH) - Calendar.JANUARY));
+			(cal.get(Calendar.MONTH) - Calendar.JANUARY);
 	}
 
 	/**

@@ -495,6 +495,7 @@ portalArtifactsJar {
 			baseName = "portal-javadocs"
 			classifier = null
 			configurations = [project.configurations.portalJavadocs]
+			exclude "*.*"
 			version = _getReleaseInfoVersion()
 
 			doLast {
@@ -506,6 +507,12 @@ portalArtifactsJar {
 			baseName = "portal-sources"
 			classifier = null
 			configurations = [project.configurations.portalSources]
+			exclude "*.*"
+			exclude "**/.lfrbuild*"
+			exclude "**/packageinfo"
+			exclude "META-INF/**"
+			exclude "WEB-INF/**"
+			exclude "content/**"
 			version = _getReleaseInfoVersion()
 
 			doLast {

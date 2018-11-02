@@ -6,7 +6,21 @@ Import-Package:\
 	\
 	*
 -conditionalpackage:\
-	aQute.bnd.*,\
+	aQute.bnd.a*,\
+	aQute.bnd.b*,\
+	aQute.bnd.co*,\
+	aQute.bnd.d*,\
+	aQute.bnd.e*,\
+	aQute.bnd.h*,\
+	aQute.bnd.j*,\
+	aQute.bnd.m*,\
+	aQute.bnd.o*,\
+	aQute.bnd.p*,\
+	aQute.bnd.resource.repository,\
+	aQute.bnd.s*,\
+	aQute.bnd.u*,\
+	aQute.bnd.v*,\
+	aQute.bnd.x*,\
 	\
 	aQute.lib.*,\
 	\

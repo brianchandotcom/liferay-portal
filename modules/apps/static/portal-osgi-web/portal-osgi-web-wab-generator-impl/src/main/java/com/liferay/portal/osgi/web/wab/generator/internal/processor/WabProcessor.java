@@ -14,6 +14,7 @@
 
 package com.liferay.portal.osgi.web.wab.generator.internal.processor;
 
+import aQute.bnd.cdi.CDIAnnotations;
 import aQute.bnd.component.DSAnnotations;
 import aQute.bnd.header.Attrs;
 import aQute.bnd.header.Parameters;
@@ -361,54 +362,7 @@ public class WabProcessor {
 			return;
 		}
 
-		String cdiInstruction = analyzer.getProperty(Constants.CDIANNOTATIONS);
-
-		if (Validator.isNotNull(cdiInstruction)) {
-			return;
-		}
-
 		String finalBeansXMLFile = beansXMLFile;
-
-		Document document = readDocument(file);
-
-		cdiInstruction = "*;discover=all";
-
-		if (document.hasContent()) {
-			Element rootElement = document.getRootElement();
-
-			// bean-discovery-mode="all" version="1.1"
-
-			XPath xPath = SAXReaderUtil.createXPath(
-				"/cdi-beans:beans/@version", _xsds);
-
-			Node versionNode = xPath.selectSingleNode(rootElement);
-
-			if (versionNode != null) {
-				Version version = Version.valueOf(versionNode.getStringValue());
-
-				if (_CDI_ARCHIVE_VERSION.compareTo(version) <= 0) {
-					xPath = SAXReaderUtil.createXPath(
-						"/cdi-beans:beans/@bean-discovery-mode", _xsds);
-
-					Node beanDiscoveryModeNode = xPath.selectSingleNode(
-						rootElement);
-
-					if (beanDiscoveryModeNode == null) {
-						cdiInstruction = "*;discover=annotated";
-					}
-					else {
-						cdiInstruction =
-							"*;discover=" +
-								beanDiscoveryModeNode.getStringValue();
-					}
-				}
-			}
-		}
-
-		analyzer.setProperty(Constants.CDIANNOTATIONS, cdiInstruction);
-
-		appendProperty(
-			analyzer, Constants.REQUIRE_CAPABILITY, _CDI_REQUIREMENTS);
 
 		Set<Object> plugins = analyzer.getPlugins();
 
@@ -451,6 +405,61 @@ public class WabProcessor {
 				}
 
 			});
+
+		String cdiInstruction = analyzer.getProperty(Constants.CDIANNOTATIONS);
+
+		if (Validator.isNotNull(cdiInstruction)) {
+			return;
+		}
+
+		Document document = readDocument(file);
+
+		CDIAnnotations.Discover discover = _findDiscoveryMode(document);
+
+		cdiInstruction = "*;discover=" + discover;
+
+		// Filter out packages that don't come from bean archives
+
+		for (Jar jar : analyzer.getClasspath()) {
+			if ("classes".equals(jar.getName())) {
+				continue;
+			}
+
+			Resource resource = jar.getResource("META-INF/beans.xml");
+
+			discover = CDIAnnotations.Discover.none;
+
+			if (resource != null) {
+				try {
+					InputStream inputStream = resource.openInputStream();
+
+					document = readDocument(inputStream);
+
+					discover = _findDiscoveryMode(document);
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
+			if (discover == CDIAnnotations.Discover.none) {
+				for (String currentPackage : jar.getPackages()) {
+					if ("".equals(currentPackage) ||
+						currentPackage.startsWith("META-INF")) {
+
+						continue;
+					}
+
+					cdiInstruction = StringBundler.concat(
+						"!", currentPackage, ".*,", cdiInstruction);
+				}
+			}
+		}
+
+		analyzer.setProperty(Constants.CDIANNOTATIONS, cdiInstruction);
+
+		appendProperty(
+			analyzer, Constants.REQUIRE_CAPABILITY, _CDI_REQUIREMENTS);
 	}
 
 	protected void processBundleClasspath(
@@ -1160,6 +1169,15 @@ public class WabProcessor {
 		}
 	}
 
+	protected Document readDocument(InputStream inputStream) {
+		try {
+			return UnsecureSAXReaderUtil.read(inputStream);
+		}
+		catch (Exception de) {
+			return SAXReaderUtil.createDocument();
+		}
+	}
+
 	protected File transformToOSGiBundle(Jar jar) throws IOException {
 		Builder analyzer = new Builder();
 
@@ -1182,6 +1200,7 @@ public class WabProcessor {
 			plugins.remove(dsAnnotationsPlugin);
 		}
 
+		plugins.add(new CDIAnnotations());
 		plugins.add(new JspAnalyzerPlugin());
 
 		Properties pluginPackageProperties = getPluginPackageProperties();
@@ -1295,6 +1314,43 @@ public class WabProcessor {
 		sb.append(FileUtil.getExtension(name));
 
 		FileUtil.copyFile(file, new File(dir, sb.toString()));
+	}
+
+	private CDIAnnotations.Discover _findDiscoveryMode(Document document) {
+		if (!document.hasContent()) {
+			return CDIAnnotations.Discover.all;
+		}
+
+		Element rootElement = document.getRootElement();
+
+		// bean-discovery-mode="all" version="1.1"
+
+		XPath xPath = SAXReaderUtil.createXPath(
+			"/cdi-beans:beans/@version", _xsds);
+
+		Node versionNode = xPath.selectSingleNode(rootElement);
+
+		if (versionNode == null) {
+			return CDIAnnotations.Discover.all;
+		}
+
+		Version version = Version.valueOf(versionNode.getStringValue());
+
+		if (_CDI_ARCHIVE_VERSION.compareTo(version) <= 0) {
+			xPath = SAXReaderUtil.createXPath(
+				"/cdi-beans:beans/@bean-discovery-mode", _xsds);
+
+			Node beanDiscoveryModeNode = xPath.selectSingleNode(rootElement);
+
+			if (beanDiscoveryModeNode == null) {
+				return CDIAnnotations.Discover.annotated;
+			}
+
+			return CDIAnnotations.Discover.valueOf(
+				beanDiscoveryModeNode.getStringValue());
+		}
+
+		return CDIAnnotations.Discover.all;
 	}
 
 	private void _processExcludedJSPs(Analyzer analyzer) {

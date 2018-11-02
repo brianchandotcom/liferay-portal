@@ -130,7 +130,6 @@ import javax.servlet.jsp.PageContext;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.chain.CatalogFactory;
-import org.apache.commons.logging.LogFactory;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -203,44 +202,6 @@ public class MainServlet extends ActionServlet {
 
 		_destroy();
 	}
-
-    private void _destroy() {
-        if (log.isDebugEnabled()) {
-            log.debug(internal.getMessage("finalizing"));
-        }
-
-        destroyModules();
-        destroyInternal();
-        getServletContext().removeAttribute(Globals.ACTION_SERVLET_KEY);
-
-        CatalogFactory.clear();
-        PropertyUtils.clearDescriptors();
-
-        // Release our LogFactory and Log instances (if any)
-        ClassLoader classLoader =
-            Thread.currentThread().getContextClassLoader();
-
-        if (classLoader == null) {
-            classLoader = ActionServlet.class.getClassLoader();
-        }
-
-        try {
-            LogFactory.release(classLoader);
-        } catch (Throwable t) {
-            ; // Servlet container doesn't have the latest version
-
-            // of commons-logging-api.jar installed
-            // :FIXME: Why is this dependent on the container's version of
-            // commons-logging? Shouldn't this depend on the version packaged
-            // with Struts?
-
-            /*
-              Reason: LogFactory.release(classLoader); was added as
-              an attempt to investigate the OutOfMemory error reported on
-              Bugzilla #14042. It was committed for version 1.136 by craigmcc
-            */
-        }
-    }
 
 	@Override
 	public void init() throws ServletException {
@@ -706,6 +667,15 @@ public class MainServlet extends ActionServlet {
 		I18nServlet.setLanguageIds(root);
 
 		I18nFilter.setLanguageIds(I18nServlet.getLanguageIds());
+	}
+
+	private void _destroy() {
+		destroyModules();
+		destroyInternal();
+		getServletContext().removeAttribute(Globals.ACTION_SERVLET_KEY);
+
+		CatalogFactory.clear();
+		PropertyUtils.clearDescriptors();
 	}
 
 	private void _destroyCompanies() throws Exception {

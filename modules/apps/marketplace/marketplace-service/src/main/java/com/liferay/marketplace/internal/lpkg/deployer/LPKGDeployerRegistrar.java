@@ -15,8 +15,10 @@
 package com.liferay.marketplace.internal.lpkg.deployer;
 
 import com.liferay.marketplace.model.App;
+import com.liferay.marketplace.model.Module;
 import com.liferay.marketplace.service.AppLocalService;
 import com.liferay.marketplace.service.ModuleLocalService;
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -30,9 +32,13 @@ import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 
 import java.net.URL;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
+import java.util.Set;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -101,11 +107,35 @@ public class LPKGDeployerRegistrar {
 		boolean required = GetterUtil.getBoolean(
 			properties.getProperty("required"));
 
-		App app = _appLocalService.updateApp(
-			0, remoteAppId, title, description, category, iconURL, version,
-			required, null);
+		App app = _appLocalService.fetchRemoteApp(remoteAppId);
 
-		_moduleLocalService.deleteModules(app.getAppId());
+		if (app != null) {
+			if (!Objects.equals(title, app.getTitle()) ||
+				!Objects.equals(description, app.getDescription()) ||
+				!Objects.equals(category, app.getCategory()) ||
+				!Objects.equals(iconURL, app.getIconURL()) ||
+				(required != app.isRequired())) {
+
+				app = null;
+			}
+		}
+
+		if (app == null) {
+			app = _appLocalService.updateApp(
+				0, remoteAppId, title, description, category, iconURL, version,
+				required, null);
+		}
+
+		Set<Tuple> oldTuples = new HashSet<>();
+
+		for (Module module : _moduleLocalService.getModules(app.getAppId())) {
+			oldTuples.add(
+				new Tuple(
+					module.getModuleId(), module.getBundleSymbolicName(),
+					module.getBundleVersion(), module.getContextName()));
+		}
+
+		List<Tuple> newTuples = new ArrayList<>();
 
 		String[] bundleStrings = StringUtil.split(
 			properties.getProperty("bundles"));
@@ -114,20 +144,35 @@ public class LPKGDeployerRegistrar {
 			String[] bundleStringParts = StringUtil.split(
 				bundleString, CharPool.POUND);
 
-			String bundleSymbolicName = bundleStringParts[0];
-			String bundleVersion = bundleStringParts[1];
-			String contextName = bundleStringParts[2];
+			Tuple tuple = new Tuple(
+				0, bundleStringParts[0], bundleStringParts[1],
+				bundleStringParts[2]);
 
-			_moduleLocalService.addModule(
-				app.getAppId(), bundleSymbolicName, bundleVersion, contextName);
+			if (!oldTuples.remove(tuple)) {
+				newTuples.add(tuple);
+			}
 		}
 
 		String[] contextNames = StringUtil.split(
 			properties.getProperty("context-names"));
 
 		for (String contextName : contextNames) {
+			Tuple tuple = new Tuple(
+				0, contextName, StringPool.BLANK, contextName);
+
+			if (!oldTuples.remove(tuple)) {
+				newTuples.add(tuple);
+			}
+		}
+
+		for (Tuple tuple : oldTuples) {
+			_moduleLocalService.deleteModule(tuple._moduleId);
+		}
+
+		for (Tuple tuple : newTuples) {
 			_moduleLocalService.addModule(
-				app.getAppId(), contextName, StringPool.BLANK, contextName);
+				app.getAppId(), tuple._symbolicName, tuple._version,
+				tuple._contextName);
 		}
 	}
 
@@ -165,5 +210,47 @@ public class LPKGDeployerRegistrar {
 
 	@Reference
 	private ModuleLocalService _moduleLocalService;
+
+	private static class Tuple {
+
+		@Override
+		public boolean equals(Object obj) {
+			Tuple tuple = (Tuple)obj;
+
+			if (Objects.equals(_symbolicName, tuple._symbolicName) &&
+				Objects.equals(_version, tuple._version) &&
+				Objects.equals(_contextName, tuple._contextName)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		@Override
+		public int hashCode() {
+			int hash = HashUtil.hash(0, _symbolicName);
+
+			hash = HashUtil.hash(hash, _version);
+
+			return HashUtil.hash(hash, _contextName);
+		}
+
+		private Tuple(
+			long moduleId, String symbolicName, String version,
+			String contextName) {
+
+			_moduleId = moduleId;
+			_symbolicName = symbolicName;
+			_version = version;
+			_contextName = contextName;
+		}
+
+		private final String _contextName;
+		private final long _moduleId;
+		private final String _symbolicName;
+		private final String _version;
+
+	}
 
 }

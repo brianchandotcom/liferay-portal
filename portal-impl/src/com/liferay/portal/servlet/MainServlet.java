@@ -670,11 +670,10 @@ public class MainServlet extends ActionServlet {
 	private void _destroy() {
 		ServletContext servletContext = getServletContext();
 
-		destroyModules();
+		servletContext.removeAttribute(Globals.ACTION_SERVLET_KEY);
+		servletContext.removeAttribute(Globals.MODULE_KEY);
 
 		internal = null;
-
-		servletContext.removeAttribute(Globals.ACTION_SERVLET_KEY);
 	}
 
 	private void _destroyCompanies() throws Exception {

@@ -593,7 +593,9 @@ public class AutoCloseUtil {
 					failingInUpstreamJobDownstreamBuilds);
 
 				if (downstreamBuilds.isEmpty()) {
-					System.out.println(toString() + " has PASSED.");
+					if (debug) {
+						System.out.println(toString() + " has PASSED.");
+					}
 
 					return Collections.emptyList();
 				}

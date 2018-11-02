@@ -178,11 +178,9 @@
 			<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateNameTranslation}" />
 		</for>
 
-		<for list="${pageTemplateDescriptionList}" param="DescriptionTranslation">
-			<var name="key_pageTemplateDescription" value="${DescriptionTranslation}" />
-
-			<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_DESCRITPION" value1="${DescriptionTranslation}" />
-		</for>
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="${portletTitle}" />
+		</execute>
 	</command>
 
 	<command name="viewDefaultPortletPG">

@@ -463,8 +463,8 @@
 		</execute>
 
 		<execute macro="PageTemplatesAdminGlobalSite#viewDefaultLocalizedCP">
-			<var name="pageTemplateDescriptionList" value="edite y vea blogs desde esta página. Explore los temas usando etiquetas y conecte con otros miembros del blog.,edite y explore contenidos web de esta página. Busque contenido adicional, explore contenido relacionado con etiquetas y hojee las categorías del contenido.,Colabora con los miembros a través de la wiki en esta página. Descubre el contenido relacionado a través de etiquetas y navega rápida y fácilmente por las categorías." />
-			<var name="pageTemplateNameList" value="Blog,Seleccione una página de visualización,Wiki" />
+			<var name="pageTemplateNameList" value="Blog,Búsqueda,Wiki" />
+			<var name="portletTitle" value="Páginas del sitio web" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

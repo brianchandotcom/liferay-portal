@@ -203,6 +203,20 @@ public class MainServlet extends ActionServlet {
 	}
 
 	@Override
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException {
+
+		process(request, response);
+	}
+
+	@Override
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException {
+
+		process(request, response);
+	}
+
+	@Override
 	public void init() throws ServletException {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize");

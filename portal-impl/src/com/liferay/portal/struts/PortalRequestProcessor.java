@@ -275,9 +275,16 @@ public class PortalRequestProcessor {
 
 		MessageResources messageResources = _actionServlet.getInternal();
 
-		response.sendError(
-			HttpServletResponse.SC_NOT_FOUND,
-			messageResources.getMessage("processInvalid"));
+		String msg = messageResources.getMessage("processInvalid");
+
+		response.sendError(HttpServletResponse.SC_NOT_FOUND, msg);
+
+		_log.error("User ID " + request.getRemoteUser());
+		_log.error("Current URL " + PortalUtil.getCurrentURL(request));
+		_log.error("Referer " + request.getHeader("Referer"));
+		_log.error("Remote address " + request.getRemoteAddr());
+
+		_log.error(msg + " " + path);
 
 		return null;
 	}
@@ -680,22 +687,7 @@ public class PortalRequestProcessor {
 			return actionMapping;
 		}
 
-		ActionMapping actionMapping = _findMapping(request, response, path);
-
-		if (actionMapping == null) {
-			MessageResources messageResources = _actionServlet.getInternal();
-
-			String msg = messageResources.getMessage("processInvalid");
-
-			_log.error("User ID " + request.getRemoteUser());
-			_log.error("Current URL " + PortalUtil.getCurrentURL(request));
-			_log.error("Referer " + request.getHeader("Referer"));
-			_log.error("Remote address " + request.getRemoteAddr());
-
-			_log.error(msg + " " + path);
-		}
-
-		return actionMapping;
+		return _findMapping(request, response, path);
 	}
 
 	private String _processPath(

@@ -102,17 +102,18 @@ public class KaleoServiceUpgrade implements UpgradeStepRegistrator {
 			new BaseUpgradeSQLServerDatetime(
 				new Class<?>[] {
 					KaleoActionTable.class, KaleoConditionTable.class,
-					KaleoDefinitionTable.class, KaleoDefinitionVersionTable.class,
-					KaleoInstanceTable.class, KaleoInstanceTokenTable.class,
-					KaleoLogTable.class, KaleoNodeTable.class,
-					KaleoNotificationRecipientTable.class, KaleoNotificationTable.class,
+					KaleoDefinitionTable.class,
+					KaleoDefinitionVersionTable.class, KaleoInstanceTable.class,
+					KaleoInstanceTokenTable.class, KaleoLogTable.class,
+					KaleoNodeTable.class, KaleoNotificationRecipientTable.class,
+					KaleoNotificationTable.class,
 					KaleoTaskAssignmentInstanceTable.class,
-					KaleoTaskAssignmentTable.class, KaleoTaskFormInstanceTable.class,
-					KaleoTaskFormTable.class, KaleoTaskInstanceTokenTable.class,
-					KaleoTaskTable.class, KaleoTimerInstanceTokenTable.class,
-					KaleoTimerTable.class, KaleoTransitionTable.class
-				}
-			));
+					KaleoTaskAssignmentTable.class,
+					KaleoTaskFormInstanceTable.class, KaleoTaskFormTable.class,
+					KaleoTaskInstanceTokenTable.class, KaleoTaskTable.class,
+					KaleoTimerInstanceTokenTable.class, KaleoTimerTable.class,
+					KaleoTransitionTable.class
+				}));
 	}
 
 }

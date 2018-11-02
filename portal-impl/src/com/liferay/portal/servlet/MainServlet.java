@@ -128,8 +128,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.chain.CatalogFactory;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -673,9 +671,6 @@ public class MainServlet extends ActionServlet {
 		destroyModules();
 		destroyInternal();
 		getServletContext().removeAttribute(Globals.ACTION_SERVLET_KEY);
-
-		CatalogFactory.clear();
-		PropertyUtils.clearDescriptors();
 	}
 
 	private void _destroyCompanies() throws Exception {

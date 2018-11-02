@@ -1015,7 +1015,7 @@ public class SubscriptionSender implements Serializable {
 
 		String contextName = objectInputStream.readUTF();
 
-		if (!contextName.isEmpty()) {
+		if (!contextName.equals(StringPool.IS_NULL)) {
 			_classLoader = ClassLoaderPool.getClassLoader(contextName);
 		}
 	}
@@ -1025,7 +1025,7 @@ public class SubscriptionSender implements Serializable {
 
 		objectOutputStream.defaultWriteObject();
 
-		String contextName = StringPool.BLANK;
+		String contextName = StringPool.IS_NULL;
 
 		if (_classLoader != null) {
 			contextName = ClassLoaderPool.getContextName(_classLoader);

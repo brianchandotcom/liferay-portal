@@ -381,11 +381,11 @@ portalArtifactsJar {
 	}
 
 	if (gradle.startParameter.taskNames.contains("portalArtifactsJar")) {
-		File dependenciesDir = new File(portalArtifactsDir, "dependencies")
+		File artifactsDir = new File(portalArtifactsDir, "artifacts")
 
-		delete dependenciesDir
+		delete artifactsDir
 
-		dependenciesDir.mkdirs()
+		artifactsDir.mkdirs()
 
 		FileTree relengFileTree = fileTree(dir: file(".releng"), include: "**/*.properties")
 
@@ -415,7 +415,7 @@ portalArtifactsJar {
 				src artifactURL
 			}
 
-			File dependencyDir = new File(dependenciesDir, cacheJarFile.name[0 .. -5])
+			File dependencyDir = new File(artifactsDir, cacheJarFile.name[0 .. -5])
 
 			copy {
 				from zipTree(cacheJarFile)

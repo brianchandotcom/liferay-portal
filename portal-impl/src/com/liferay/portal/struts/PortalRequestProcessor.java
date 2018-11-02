@@ -103,7 +103,6 @@ import org.apache.struts.config.ActionConfig;
 import org.apache.struts.config.ForwardConfig;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.util.MessageResources;
-import org.apache.struts.util.RequestUtils;
 
 /**
  * @author Brian Wing Shun Chan
@@ -633,13 +632,6 @@ public class PortalRequestProcessor {
 
 		if (forward == null) {
 			return true;
-		}
-
-		String actionIdPath = RequestUtils.actionIdURL(
-			forward, _moduleConfig, _actionServlet);
-
-		if (actionIdPath != null) {
-			forward = actionIdPath;
 		}
 
 		_internalModuleRelativeForward(forward, request, response);

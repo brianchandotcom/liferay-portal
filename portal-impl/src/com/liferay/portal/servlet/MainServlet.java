@@ -669,7 +669,9 @@ public class MainServlet extends ActionServlet {
 
 	private void _destroy() {
 		destroyModules();
-		destroyInternal();
+
+		internal = null;
+
 		getServletContext().removeAttribute(Globals.ACTION_SERVLET_KEY);
 	}
 

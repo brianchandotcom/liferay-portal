@@ -17,7 +17,9 @@ package com.liferay.document.library.internal.repository.capabilities;
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.document.library.versioning.VersionPurger;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
@@ -25,7 +27,6 @@ import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.util.LocalRepositoryWrapper;
 import com.liferay.portal.repository.util.RepositoryWrapper;
 import com.liferay.portal.repository.util.RepositoryWrapperAware;
@@ -33,32 +34,23 @@ import com.liferay.portal.repository.util.RepositoryWrapperAware;
 import java.io.File;
 import java.io.InputStream;
 
-import java.util.List;
-import java.util.Map;
-
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Alejandro Tardín
  */
 @Component(
-	configurationPid = "com.liferay.document.library.configuration.DLConfiguration",
 	property = "repository.class.name=com.liferay.portal.repository.liferayrepository.LiferayRepository",
 	service = Capability.class
 )
 public class LiferayVersioningCapability
 	implements Capability, RepositoryWrapperAware {
-
-	@Activate
-	public void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		_dlConfiguration = ConfigurableUtil.createConfigurable(
-			DLConfiguration.class, properties);
-	}
 
 	@Override
 	public LocalRepository wrapLocalRepository(
@@ -140,29 +132,29 @@ public class LiferayVersioningCapability
 		};
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_versionPurgedListeners = ServiceTrackerListFactory.open(
+			bundleContext, VersionPurger.VersionPurgedListener.class);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_versionPurgedListeners.close();
+	}
+
 	private FileEntry _purgeVersions(FileEntry fileEntry)
 		throws PortalException {
 
-		long maximumNumberOfVersions =
-			_dlConfiguration.maximumNumberOfVersions();
+		if (_versionPurger != null) {
+			for (FileVersion fileVersion :
+					_versionPurger.getFileVersionsToPurge(fileEntry)) {
 
-		if (maximumNumberOfVersions == 0) {
-			return fileEntry;
-		}
+				for (VersionPurger.VersionPurgedListener versionPurgedListener :
+						_versionPurgedListeners) {
 
-		int status = WorkflowConstants.STATUS_ANY;
-
-		long numberOfVersions = fileEntry.getFileVersionsCount(status);
-
-		if (numberOfVersions > maximumNumberOfVersions) {
-			List<FileVersion> fileVersions = fileEntry.getFileVersions(status);
-
-			long numberOfVersionsToDelete =
-				numberOfVersions - maximumNumberOfVersions;
-
-			for (int i = 0; i < numberOfVersionsToDelete; i++) {
-				FileVersion fileVersion = fileVersions.get(
-					(int)(numberOfVersions - i - 1));
+					versionPurgedListener.versionPurged(fileVersion);
+				}
 
 				_dlAppService.deleteFileVersion(
 					fileEntry.getFileEntryId(), fileVersion.getVersion());
@@ -175,6 +167,17 @@ public class LiferayVersioningCapability
 	@Reference
 	private DLAppService _dlAppService;
 
+	@Reference
 	private DLConfiguration _dlConfiguration;
+
+	private ServiceTrackerList
+		<VersionPurger.VersionPurgedListener,
+		 VersionPurger.VersionPurgedListener> _versionPurgedListeners;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile VersionPurger _versionPurger;
 
 }

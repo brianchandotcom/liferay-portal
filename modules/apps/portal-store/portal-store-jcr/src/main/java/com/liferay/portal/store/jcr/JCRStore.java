@@ -72,7 +72,10 @@ import org.osgi.service.component.annotations.Modified;
 @Component(
 	configurationPid = "com.liferay.portal.store.jcr.configuration.JCRStoreConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
-	property = "store.type=com.liferay.portal.store.jcr.JCRStore",
+	property = {
+		"service.ranking:Integer=0",
+		"store.type=com.liferay.portal.store.jcr.JCRStore"
+	},
 	service = Store.class
 )
 @Deprecated

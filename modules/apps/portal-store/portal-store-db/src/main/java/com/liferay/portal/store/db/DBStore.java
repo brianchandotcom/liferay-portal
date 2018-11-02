@@ -60,7 +60,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "store.type=com.liferay.portal.store.db.DBStore",
+	property = {
+		"service.ranking:Integer=0",
+		"store.type=com.liferay.portal.store.db.DBStore"
+	},
 	service = Store.class
 )
 public class DBStore extends BaseStore {

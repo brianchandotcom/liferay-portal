@@ -62,7 +62,10 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = "com.liferay.portal.store.file.system.configuration.FileSystemStoreConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	property = "store.type=com.liferay.portal.store.file.system.FileSystemStore",
+	property = {
+		"service.ranking:Integer=0",
+		"store.type=com.liferay.portal.store.file.system.FileSystemStore"
+	},
 	service = Store.class
 )
 public class FileSystemStore extends BaseStore {

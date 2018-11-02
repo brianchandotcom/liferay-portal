@@ -15,30 +15,39 @@
 package com.liferay.portal.store.safe.file.name.wrapper.internal;
 
 import com.liferay.document.library.kernel.store.Store;
-import com.liferay.document.library.kernel.store.StoreWrapper;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Roberto Díaz
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "store.type=com.liferay.portal.store.file.system.AdvancedFileSystemStore",
-	service = StoreWrapper.class
+	property = {
+		"service.ranking:Integer=" + SafeFileNameStore.SERVICE_RANKING,
+		"store.type=com.liferay.portal.store.file.system.AdvancedFileSystemStore"
+	},
+	service = Store.class
 )
 public class SafeFileNameAdvancedFileSystemStoreWrapper
-	implements StoreWrapper {
-
-	@Override
-	public Store wrap(Store store) {
-		return new SafeFileNameStore(store);
-	}
+	extends SafeFileNameStore {
 
 	@Reference(
-		target = "(store.type=com.liferay.portal.store.file.system.AdvancedFileSystemStore)"
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(&(store.type=com.liferay.portal.store.file.system.AdvancedFileSystemStore)(service.ranking<=" + (SafeFileNameStore.SERVICE_RANKING - 1) + "))"
 	)
-	private Store _store;
+	protected void setStore(Store store) {
+		this.store = store;
+	}
+
+	protected void unsetStore(Store store) {
+		if (this.store == store) {
+			this.store = null;
+		}
+	}
 
 }

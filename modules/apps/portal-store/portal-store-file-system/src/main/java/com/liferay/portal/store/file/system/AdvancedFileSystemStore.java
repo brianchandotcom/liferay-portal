@@ -52,7 +52,10 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 @Component(
 	configurationPid = "com.liferay.portal.store.file.system.configuration.AdvancedFileSystemStoreConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
-	property = "store.type=com.liferay.portal.store.file.system.AdvancedFileSystemStore",
+	property = {
+		"service.ranking:Integer=0",
+		"store.type=com.liferay.portal.store.file.system.AdvancedFileSystemStore"
+	},
 	service = Store.class
 )
 public class AdvancedFileSystemStore extends FileSystemStore {

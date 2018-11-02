@@ -287,9 +287,9 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 
 		mockHttpServletResponse.setCharacterEncoding(StringPool.UTF8);
 
-		ServletResponseUtil.write(
-			_request, mockHttpServletResponse, "filename.txt", ranges,
-			inputStream, content.length, "text/plain");
+		ServletResponseUtil.sendFileWithRangeHeader(
+			_request, mockHttpServletResponse, "filename.txt", inputStream,
+			content.length, "text/plain");
 
 		String contentType = mockHttpServletResponse.getContentType();
 

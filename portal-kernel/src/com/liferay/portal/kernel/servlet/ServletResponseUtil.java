@@ -193,122 +193,25 @@ public class ServletResponseUtil {
 						request.getHeader(HttpHeaders.RANGE));
 			}
 
-			write(
+			_write(
 				request, response, fileName, ranges, inputStream, contentLength,
 				contentType);
 		}
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static void write(
 			HttpServletRequest request, HttpServletResponse response,
 			String fileName, List<Range> ranges, InputStream inputStream,
 			long fullLength, String contentType)
 		throws IOException {
 
-		try (OutputStream outputStream = response.getOutputStream()) {
-			Range fullRange = new Range(0, fullLength - 1, fullLength);
-
-			Range firstRange = null;
-
-			if (!ranges.isEmpty()) {
-				firstRange = ranges.get(0);
-			}
-
-			if ((firstRange == null) || firstRange.equals(fullRange)) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Writing full range");
-				}
-
-				response.setContentType(contentType);
-
-				setHeaders(
-					request, response, fileName, contentType, null, fullRange);
-
-				_copyRange(
-					inputStream, outputStream, fullRange.getStart(),
-					fullRange.getLength());
-			}
-			else if (ranges.size() == 1) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Attempting to write a single range");
-				}
-
-				Range range = ranges.get(0);
-
-				response.setContentType(contentType);
-
-				setHeaders(
-					request, response, fileName, contentType, null, range);
-
-				response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
-
-				_copyRange(
-					inputStream, outputStream, range.getStart(),
-					range.getLength());
-			}
-			else if (ranges.size() > 1) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Attempting to write multiple ranges");
-				}
-
-				ServletOutputStream servletOutputStream =
-					(ServletOutputStream)outputStream;
-
-				String boundary =
-					"liferay-multipart-boundary-" + System.currentTimeMillis();
-
-				String multipartContentType =
-					"multipart/byteranges; boundary=" + boundary;
-
-				response.setContentType(multipartContentType);
-
-				setHeaders(
-					request, response, fileName, multipartContentType, null);
-
-				response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
-
-				boolean sequentialRangeList = _isSequentialRangeList(ranges);
-
-				if (!sequentialRangeList) {
-					inputStream = _toRandomAccessInputStream(inputStream);
-				}
-
-				Range previousRange = null;
-
-				for (Range curRange : ranges) {
-					servletOutputStream.println();
-					servletOutputStream.println(
-						StringPool.DOUBLE_DASH + boundary);
-					servletOutputStream.println(
-						HttpHeaders.CONTENT_TYPE + ": " + contentType);
-					servletOutputStream.println(
-						HttpHeaders.CONTENT_RANGE + ": " +
-							curRange.getContentRange());
-					servletOutputStream.println();
-
-					long start = curRange.getStart();
-
-					if (sequentialRangeList) {
-						if (previousRange != null) {
-							start -= previousRange.getEnd() + 1;
-						}
-
-						previousRange = curRange;
-					}
-
-					_copyRange(
-						inputStream, servletOutputStream, start,
-						curRange.getLength());
-				}
-
-				servletOutputStream.println();
-				servletOutputStream.println(
-					StringPool.DOUBLE_DASH + boundary + StringPool.DOUBLE_DASH);
-			}
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
-		}
+		_write(
+			request, response, fileName, ranges, inputStream, fullLength,
+			contentType);
 	}
 
 	public static void write(
@@ -827,6 +730,118 @@ public class ServletResponseUtil {
 		}
 
 		return new RandomAccessInputStream(inputStream);
+	}
+
+	private static void _write(
+			HttpServletRequest request, HttpServletResponse response,
+			String fileName, List<Range> ranges, InputStream inputStream,
+			long fullLength, String contentType)
+		throws IOException {
+
+		try (OutputStream outputStream = response.getOutputStream()) {
+			Range fullRange = new Range(0, fullLength - 1, fullLength);
+
+			Range firstRange = null;
+
+			if (!ranges.isEmpty()) {
+				firstRange = ranges.get(0);
+			}
+
+			if ((firstRange == null) || firstRange.equals(fullRange)) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Writing full range");
+				}
+
+				response.setContentType(contentType);
+
+				setHeaders(
+					request, response, fileName, contentType, null, fullRange);
+
+				_copyRange(
+					inputStream, outputStream, fullRange.getStart(),
+					fullRange.getLength());
+			}
+			else if (ranges.size() == 1) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Attempting to write a single range");
+				}
+
+				Range range = ranges.get(0);
+
+				response.setContentType(contentType);
+
+				setHeaders(
+					request, response, fileName, contentType, null, range);
+
+				response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
+
+				_copyRange(
+					inputStream, outputStream, range.getStart(),
+					range.getLength());
+			}
+			else if (ranges.size() > 1) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Attempting to write multiple ranges");
+				}
+
+				ServletOutputStream servletOutputStream =
+					(ServletOutputStream)outputStream;
+
+				String boundary =
+					"liferay-multipart-boundary-" + System.currentTimeMillis();
+
+				String multipartContentType =
+					"multipart/byteranges; boundary=" + boundary;
+
+				response.setContentType(multipartContentType);
+
+				setHeaders(
+					request, response, fileName, multipartContentType, null);
+
+				response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
+
+				boolean sequentialRangeList = _isSequentialRangeList(ranges);
+
+				if (!sequentialRangeList) {
+					inputStream = _toRandomAccessInputStream(inputStream);
+				}
+
+				Range previousRange = null;
+
+				for (Range curRange : ranges) {
+					servletOutputStream.println();
+					servletOutputStream.println(
+						StringPool.DOUBLE_DASH + boundary);
+					servletOutputStream.println(
+						HttpHeaders.CONTENT_TYPE + ": " + contentType);
+					servletOutputStream.println(
+						HttpHeaders.CONTENT_RANGE + ": " +
+							curRange.getContentRange());
+					servletOutputStream.println();
+
+					long start = curRange.getStart();
+
+					if (sequentialRangeList) {
+						if (previousRange != null) {
+							start -= previousRange.getEnd() + 1;
+						}
+
+						previousRange = curRange;
+					}
+
+					_copyRange(
+						inputStream, servletOutputStream, start,
+						curRange.getLength());
+				}
+
+				servletOutputStream.println();
+				servletOutputStream.println(
+					StringPool.DOUBLE_DASH + boundary + StringPool.DOUBLE_DASH);
+			}
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
 	}
 
 	private static final String _CLIENT_ABORT_EXCEPTION =

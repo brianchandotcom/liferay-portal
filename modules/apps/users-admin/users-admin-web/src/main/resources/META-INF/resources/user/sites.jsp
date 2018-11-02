@@ -68,8 +68,10 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 <aui:input name="deleteGroupIds" type="hidden" />
 
 <liferay-ui:search-container
+	compactEmptyResultsMessage="<%= true %>"
 	cssClass="lfr-search-container-sites"
 	curParam="sitesCur"
+	emptyResultsMessage="this-user-does-not-belong-to-a-site"
 	headerNames="name,roles,null"
 	iteratorURL="<%= currentURLObj %>"
 	total="<%= groups.size() %>"
@@ -257,10 +259,8 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 	</aui:script>
 </c:if>
 
-<h4 class="sheet-tertiary-title"><liferay-ui:message key="inherited-sites" /></h4>
-
-<c:if test="<%= inheritedSites.isEmpty() %>">
-	<div class="sheet-text"><liferay-ui:message key="this-user-does-not-have-any-inherited-sites" /></div>
+<c:if test="<%= !inheritedSites.isEmpty() %>">
+	<h4 class="sheet-tertiary-title"><liferay-ui:message key="inherited-sites" /></h4>
 </c:if>
 
 <liferay-ui:search-container

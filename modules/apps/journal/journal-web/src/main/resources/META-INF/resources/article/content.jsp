@@ -27,8 +27,6 @@ String newArticleId = ParamUtil.getString(request, "newArticleId");
 
 DDMStructure ddmStructure = (DDMStructure)request.getAttribute("edit_article.jsp-structure");
 
-DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-template");
-
 String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");
 
 boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_article.jsp-changeStructure"));
@@ -150,41 +148,6 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 	<aui:input label="searchable" name="indexable" type="toggle-switch" value="<%= (article != null) ? article.isIndexable() : true %>" />
 </liferay-frontend:fieldset>
 
-<liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.EDIT) %>" var="editStructureURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcPath" value="/edit_structure.jsp" />
-	<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_STRUCTURE %>" />
-	<portlet:param name="closeRedirect" value="<%= currentURL %>" />
-	<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
-	<portlet:param name="refererPortletName" value="<%= JournalPortletKeys.JOURNAL %>" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
-	<portlet:param name="classPK" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
-</liferay-portlet:renderURL>
-
-<liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMTemplate.class.getName(), PortletProvider.Action.EDIT) %>" var="editTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcPath" value="/edit_template.jsp" />
-	<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_TEMPLATE %>" />
-	<portlet:param name="closeRedirect" value="<%= currentURL %>" />
-	<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
-	<portlet:param name="refererPortletName" value="<%= JournalPortletKeys.JOURNAL %>" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-	<portlet:param name="templateId" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK %>" />
-	<portlet:param name="showCacheableInput" value="<%= Boolean.TRUE.toString() %>" />
-</liferay-portlet:renderURL>
-
-<aui:script use="liferay-journal-content">
-	new Liferay.Portlet.JournalContent(
-		{
-			editStructure: '#<portlet:namespace />editDDMStructure',
-			editTemplate: '#<portlet:namespace />editDDMTemplate',
-			namespace: '<portlet:namespace />',
-			'strings.editStructure': '<liferay-ui:message key="editing-the-current-structure-deletes-all-unsaved-content" />',
-			'strings.editTemplate': '<liferay-ui:message key="editing-the-current-template-deletes-all-unsaved-content" />',
-			'urls.editStructure': '<%= editStructureURL %>',
-			'urls.editTemplate': '<%= editTemplateURL %>'
-		}
-	);
-
+<aui:script>
 	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoArticleId', '<portlet:namespace />newArticleId', true);
 </aui:script>

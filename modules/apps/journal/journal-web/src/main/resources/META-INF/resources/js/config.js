@@ -7,13 +7,6 @@
 					combine: Liferay.AUI.getCombine(),
 					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
-						'liferay-journal-content': {
-							path: 'content.js',
-							requires: [
-								'aui-base',
-								'liferay-portlet-base'
-							]
-						},
 						'liferay-journal-navigation': {
 							path: 'navigation.js',
 							requires: [

@@ -126,6 +126,34 @@ DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-te
 		}
 	);
 
+	$('#<portlet:namespace />editDDMStructure').on(
+		'click',
+		function(event) {
+			if (confirm('<%= UnicodeLanguageUtil.get(request, "editing-the-current-structure-deletes-all-unsaved-content") %>')) {
+				Liferay.Util.openWindow(
+					{
+						dialog: {
+							destroyOnHide: true
+						},
+						dialogIframe: {
+							bodyCssClass: 'dialog-with-footer'
+						},
+						id: '<portlet:namespace />editDDMStructure',
+						title: '<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>',
+
+						<portlet:renderURL var="editDDMStructureURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+							<portlet:param name="mvcPath" value="/edit_ddm_structure.jsp" />
+							<portlet:param name="closeRedirect" value="<%= currentURL %>" />
+							<portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
+						</portlet:renderURL>
+
+						uri: '<%= editDDMStructureURL %>'
+					}
+				);
+			}
+		}
+	);
+
 	$('#<portlet:namespace />selectTemplate').on(
 		'click',
 		function(event) {
@@ -156,6 +184,34 @@ DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-te
 					}
 				}
 			);
+		}
+	);
+
+	$('#<portlet:namespace />editDDMTemplate').on(
+		'click',
+		function(event) {
+			if (confirm('<%= UnicodeLanguageUtil.get(request, "editing-the-current-template-deletes-all-unsaved-content") %>')) {
+				Liferay.Util.openWindow(
+					{
+						dialog: {
+							destroyOnHide: true
+						},
+						dialogIframe: {
+							bodyCssClass: 'dialog-with-footer'
+						},
+						id: '<portlet:namespace />editDDMTemplate',
+						title: '<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>',
+
+						<portlet:renderURL var="editDDMTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+							<portlet:param name="mvcPath" value="/edit_ddm_template.jsp" />
+							<portlet:param name="closeRedirect" value="<%= currentURL %>" />
+							<portlet:param name="ddmTemplateId" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK %>" />
+						</portlet:renderURL>
+
+						uri: '<%= editDDMTemplateURL %>'
+					}
+				);
+			}
 		}
 	);
 </aui:script>

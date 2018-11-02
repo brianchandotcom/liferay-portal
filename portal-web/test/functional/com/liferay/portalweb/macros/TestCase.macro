@@ -10,6 +10,8 @@
 
 		<var method="RegexUtil#replace('${filePath}', '\[(.*)\]', '1')" name="filePath" />
 
+		<var method="StringUtil#replace('${filePath}', 'file:/', '')" name="filePath" />
+
 		<var method="FileUtil#getFileName('${filePath}')" name="fileName" />
 
 		<return value="${fileName}" />

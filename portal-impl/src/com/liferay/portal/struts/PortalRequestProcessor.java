@@ -579,12 +579,20 @@ public class PortalRequestProcessor {
 			return;
 		}
 
-		ActionForward actionForward = _processActionPerform(
-			request, response, action, actionMapping);
+		try {
+			ActionForward actionForward = action.execute(
+				actionMapping, null, request, response);
 
-		if (actionForward != null) {
-			_internalModuleRelativeForward(
-				actionForward.getPath(), request, response);
+			if (actionForward != null) {
+				_internalModuleRelativeForward(
+					actionForward.getPath(), request, response);
+			}
+		}
+		catch (IOException | ServletException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			throw new ServletException(e);
 		}
 	}
 
@@ -609,22 +617,6 @@ public class PortalRequestProcessor {
 		}
 
 		return _getOriginalAction(response, actionMapping);
-	}
-
-	private ActionForward _processActionPerform(
-			HttpServletRequest request, HttpServletResponse response,
-			Action action, ActionMapping actionMapping)
-		throws IOException, ServletException {
-
-		try {
-			return action.execute(actionMapping, null, request, response);
-		}
-		catch (IOException | ServletException e) {
-			throw e;
-		}
-		catch (Exception e) {
-			throw new ServletException(e);
-		}
 	}
 
 	private void _processCachedMessages(HttpServletRequest request) {

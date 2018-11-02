@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.internal.odata.model;
+package com.liferay.segments.internal.model.listener;
 
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
@@ -77,7 +77,7 @@ public class ExpandoColumnModelListener
 
 	@Deactivate
 	public void deactivate() {
-		_serviceRegistration.unregister();
+		_unregister(_serviceRegistration);
 	}
 
 	@Override
@@ -89,14 +89,16 @@ public class ExpandoColumnModelListener
 				return;
 			}
 
-			_getUserEntityField(
-				expandoColumn).ifPresent(entityField -> {
-				_userEntityFields.put(expandoColumn.getColumnId(), entityField);
+			_getUserEntityField(expandoColumn).ifPresent(
+				entityField -> {
+					_userEntityFields.put(
+						expandoColumn.getColumnId(), entityField);
 
-				_serviceRegistration = _updateRegistry(
-					_bundleContext, _serviceRegistration, _userEntityFields);
+					_serviceRegistration = _updateRegistry(
+						_bundleContext, _serviceRegistration,
+						_userEntityFields);
 
-			});
+				});
 		}
 		catch (PortalException pe) {
 			throw new ModelListenerException(pe);
@@ -128,6 +130,7 @@ public class ExpandoColumnModelListener
 		}
 
 		_userEntityFields.remove(expandoColumn.getColumnId());
+
 		onAfterCreate(expandoColumn);
 	}
 
@@ -181,11 +184,13 @@ public class ExpandoColumnModelListener
 			dynamicQuery -> {
 				Property tableProperty = PropertyFactoryUtil.forName("tableId");
 
+				long userClassNameId = _classNameLocalService.getClassNameId(
+					User.class.getName());
+
 				dynamicQuery.add(
 					tableProperty.in(
 						_getTableDynamicQuery(
-							_classNameLocalService.getClassNameId(
-								User.class.getName()),
+							userClassNameId,
 							ExpandoTableConstants.DEFAULT_TABLE_NAME)));
 			});
 

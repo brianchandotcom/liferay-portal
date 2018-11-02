@@ -164,6 +164,7 @@ cleanVersionOverride {
 configurations {
 	portalArtifacts
 	portalJavadocs
+	portalSources
 }
 
 lockDependencyVersion {
@@ -347,6 +348,7 @@ lockPrivateDependencyVersions {
 
 portalArtifactsJar {
 	finalizedBy "portalJavadocsJar"
+	finalizedBy "portalSourcesJar"
 
 	File portalArtifactsDir = new File(buildDir, "portalArtifacts")
 	File relengDir = file(".releng")
@@ -385,11 +387,13 @@ portalArtifactsJar {
 	if (gradle.startParameter.taskNames.contains("portalArtifactsJar")) {
 		File artifactsDir = new File(portalArtifactsDir, "artifacts")
 		File javadocsDir = new File(portalArtifactsDir, "javadocs")
+		File sourcesDir = new File(portalArtifactsDir, "sources")
 
-		delete artifactsDir, javadocsDir
+		delete artifactsDir, javadocsDir, sourcesDir
 
 		artifactsDir.mkdirs()
 		javadocsDir.mkdirs()
+		sourcesDir.mkdirs()
 
 		FileTree relengFileTree = fileTree(dir: relengDir, include: "**/*.properties")
 
@@ -463,12 +467,45 @@ portalArtifactsJar {
 
 				dependencies.portalJavadocs files(dir)
 			}
+
+			String artifactSourcesURL = relengProperties.getProperty("artifact.sources.url")
+
+			if (artifactSourcesURL && artifactSourcesURL.endsWith(".jar")) {
+				project.download {
+					dest cacheDir
+					overwrite false
+					quiet true
+					src artifactSourcesURL
+				}
+
+				jarFile = new File(cacheDir, artifactSourcesURL.substring(artifactURL.lastIndexOf("/") + 1))
+
+				dir = new File(sourcesDir, jarFile.name[0 .. -5])
+
+				copy {
+					from zipTree(jarFile)
+					into dir
+				}
+
+				dependencies.portalSources files(dir)
+			}
 		}
 
 		task portalJavadocsJar(type: ShadowJar) {
 			baseName = "portal-javadocs"
 			classifier = null
 			configurations = [project.configurations.portalJavadocs]
+			version = _getReleaseInfoVersion()
+
+			doLast {
+				println "Created jar " + archivePath
+			}
+		}
+
+		task portalSourcesJar(type: ShadowJar) {
+			baseName = "portal-sources"
+			classifier = null
+			configurations = [project.configurations.portalSources]
 			version = _getReleaseInfoVersion()
 
 			doLast {

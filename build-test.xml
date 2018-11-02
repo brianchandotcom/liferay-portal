@@ -8908,16 +8908,6 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					</else>
 				</if>
 
-				<if>
-					<equals arg1="${app.server.type}" arg2="websphere" />
-					<then>
-						<copy
-							file="dist/liferay-portal-${lp.version}.war"
-							tofile="${app.server.websphere.instance.dir}/wsadmin-deploy/liferay-portal.war"
-						/>
-					</then>
-				</if>
-
 				<delete dir="dist" />
 
 				<ant antfile="build.xml" inheritAll="false" target="update-app-server-scripts" />

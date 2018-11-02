@@ -1,4 +1,20 @@
 <definition>
+	<command name="getDownloadedTempFileName">
+		<var method="PropsUtil#get('output.dir.name')" name="tempDir" />
+
+		<var method="StringUtil#split('**/${fileNamePattern}')" name="pattern" />
+
+		<var method="FileUtil#getIncludedResourceURLs('${pattern}', '${tempDir}')" name="filePath" />
+
+		<var method="StringUtil#valueOf('${filePath}')" name="filePath" />
+
+		<var method="RegexUtil#replace('${filePath}', '\[(.*)\]', '1')" name="filePath" />
+
+		<var method="FileUtil#getFileName('${filePath}')" name="fileName" />
+
+		<return value="${fileName}" />
+	</command>
+
 	<command name="getFileContent">
 		<var method="PropsUtil#get('test.base.dir.name')" name="baseDir" />
 		<var method="PropsUtil#get('test.dependencies.dir.name')" name="dependenciesDir" />

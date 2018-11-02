@@ -697,19 +697,12 @@
 
 		<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
 
-		<var method="PropsUtil#get('output.dir.name')" name="tempDir" />
+		<execute macro="TestCase#getDownloadedTempFileName">
+			<return name="siteLARFileName" />
+			<var name="fileNamePattern" value="Public_Pages-*.lar" />
+		</execute>
 
-		<var method="StringUtil#split('**/Public_Pages-*.lar')" name="pattern" />
-
-		<var method="FileUtil#getIncludedResourceURLs('${pattern}', '${tempDir}')" name="fileName" />
-
-		<var method="StringUtil#valueOf('${fileName}')" name="fileName" />
-
-		<var method="RegexUtil#replace('${fileName}', '\[(.*)\]', '1')" name="fileName" />
-
-		<var method="FileUtil#getFileName('${fileName}')" name="shortFileName" />
-
-		<execute function="SikuliUploadTempFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${shortFileName}" />
+		<execute function="SikuliUploadTempFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${siteLARFileName}" />
 
 		<execute macro="Button#click">
 			<var name="button" value="Continue" />

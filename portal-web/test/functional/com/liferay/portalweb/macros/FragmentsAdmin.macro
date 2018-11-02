@@ -87,19 +87,12 @@
 	<command name="importCollectionFromTempFolder">
 		<execute macro="FragmentsAdmin#gotoImportCollection" />
 
-		<var method="PropsUtil#get('output.dir.name')" name="tempDir" />
+		<execute macro="TestCase#getDownloadedTempFileName">
+			<return name="collectionsZipFileName" />
+			<var name="fileNamePattern" value="collections-*.zip" />
+		</execute>
 
-		<var method="StringUtil#split('**/collections-*.zip')" name="pattern" />
-
-		<var method="FileUtil#getIncludedResourceURLs('${pattern}', '${tempDir}')" name="fileName" />
-
-		<var method="StringUtil#valueOf('${fileName}')" name="fileName" />
-
-		<var method="RegexUtil#replace('${fileName}', '\[(.*)\]', '1')" name="fileName" />
-
-		<var method="FileUtil#getFileName('${fileName}')" name="shortFileName" />
-
-		<execute function="UploadTempFile" locator1="TextInput#FILE" value1="${shortFileName}" />
+		<execute function="UploadTempFile" locator1="TextInput#FILE" value1="${collectionsZipFileName}" />
 
 		<execute macro="Button#click">
 			<var name="button" value="Import" />

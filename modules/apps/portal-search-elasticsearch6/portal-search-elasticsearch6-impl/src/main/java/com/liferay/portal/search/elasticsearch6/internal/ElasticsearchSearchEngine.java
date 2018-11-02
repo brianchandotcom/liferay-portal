@@ -35,19 +35,17 @@ import com.liferay.portal.search.elasticsearch6.internal.util.LogUtil;
 import java.util.List;
 import java.util.Map;
 
+import org.elasticsearch.action.ActionResponse;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.action.admin.cluster.repositories.get.GetRepositoriesRequestBuilder;
 import org.elasticsearch.action.admin.cluster.repositories.get.GetRepositoriesResponse;
 import org.elasticsearch.action.admin.cluster.repositories.put.PutRepositoryRequestBuilder;
-import org.elasticsearch.action.admin.cluster.repositories.put.PutRepositoryResponse;
 import org.elasticsearch.action.admin.cluster.snapshots.create.CreateSnapshotRequestBuilder;
 import org.elasticsearch.action.admin.cluster.snapshots.create.CreateSnapshotResponse;
 import org.elasticsearch.action.admin.cluster.snapshots.delete.DeleteSnapshotRequestBuilder;
-import org.elasticsearch.action.admin.cluster.snapshots.delete.DeleteSnapshotResponse;
 import org.elasticsearch.action.admin.cluster.snapshots.restore.RestoreSnapshotRequestBuilder;
 import org.elasticsearch.action.admin.cluster.snapshots.restore.RestoreSnapshotResponse;
 import org.elasticsearch.action.admin.indices.close.CloseIndexRequestBuilder;
-import org.elasticsearch.action.admin.indices.close.CloseIndexResponse;
 import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.ClusterAdminClient;
 import org.elasticsearch.client.IndicesAdminClient;
@@ -140,10 +138,9 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 				clusterAdminClient.prepareDeleteSnapshot(
 					_BACKUP_REPOSITORY_NAME, backupName);
 
-			DeleteSnapshotResponse deleteSnapshotResponse =
-				deleteSnapshotRequestBuilder.get();
+			ActionResponse actionResponse = deleteSnapshotRequestBuilder.get();
 
-			LogUtil.logActionResponse(_log, deleteSnapshotResponse);
+			LogUtil.logActionResponse(_log, actionResponse);
 		}
 		catch (Exception e) {
 			throw new SearchException(e);
@@ -185,10 +182,9 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 				indexNameBuilder.getIndexName(companyId));
 
 		try {
-			CloseIndexResponse closeIndexResponse =
-				closeIndexRequestBuilder.get();
+			ActionResponse actionResponse = closeIndexRequestBuilder.get();
 
-			LogUtil.logActionResponse(_log, closeIndexResponse);
+			LogUtil.logActionResponse(_log, actionResponse);
 		}
 		catch (Exception e) {
 			throw new SearchException(e);
@@ -263,10 +259,9 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 		putRepositoryRequestBuilder.setType("fs");
 
-		PutRepositoryResponse putRepositoryResponse =
-			putRepositoryRequestBuilder.get();
+		ActionResponse actionResponse = putRepositoryRequestBuilder.get();
 
-		LogUtil.logActionResponse(_log, putRepositoryResponse);
+		LogUtil.logActionResponse(_log, actionResponse);
 	}
 
 	protected boolean hasBackupRepository(ClusterAdminClient clusterAdminClient)

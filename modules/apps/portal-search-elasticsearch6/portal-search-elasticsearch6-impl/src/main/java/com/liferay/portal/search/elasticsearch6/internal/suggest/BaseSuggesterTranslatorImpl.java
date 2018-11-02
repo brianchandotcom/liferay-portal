@@ -67,10 +67,10 @@ public abstract class BaseSuggesterTranslatorImpl {
 			return TermSuggestionBuilder.StringDistanceImpl.DAMERAU_LEVENSHTEIN;
 		}
 		else if (stringDistance == Suggester.StringDistance.JAROWINKLER) {
-			return TermSuggestionBuilder.StringDistanceImpl.JAROWINKLER;
+			return TermSuggestionBuilder.StringDistanceImpl.JARO_WINKLER;
 		}
 		else if (stringDistance == Suggester.StringDistance.LEVENSTEIN) {
-			return TermSuggestionBuilder.StringDistanceImpl.LEVENSTEIN;
+			return TermSuggestionBuilder.StringDistanceImpl.LEVENSHTEIN;
 		}
 		else if (stringDistance == Suggester.StringDistance.NGRAM) {
 			return TermSuggestionBuilder.StringDistanceImpl.NGRAM;

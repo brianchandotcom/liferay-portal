@@ -21,6 +21,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.lucene.util.SetOnce;
+
+import org.elasticsearch.analysis.common.CommonAnalysisPlugin;
 import org.elasticsearch.common.logging.LogConfigurator;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.env.Environment;
@@ -40,7 +43,8 @@ public class EmbeddedElasticsearchNode extends Node {
 			settings, null);
 
 		List<Class<? extends Plugin>> classpathPlugins = Arrays.asList(
-			Netty4Plugin.class, ReindexPlugin.class);
+			CommonAnalysisPlugin.class, Netty4Plugin.class,
+			ReindexPlugin.class);
 
 		try {
 			LogConfigurator.configure(environment);
@@ -59,7 +63,19 @@ public class EmbeddedElasticsearchNode extends Node {
 		Environment environment,
 		Collection<Class<? extends Plugin>> classpathPlugins) {
 
-		super(environment, classpathPlugins);
+		super(environment, classpathPlugins, false);
+	}
+
+	@Override
+	protected void registerDerivedNodeNameWithLogger(String nodeName) {
+		try {
+			LogConfigurator.setNodeName(nodeName);
+		}
+		catch (SetOnce.AlreadySetException soase) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Node name has already been set");
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

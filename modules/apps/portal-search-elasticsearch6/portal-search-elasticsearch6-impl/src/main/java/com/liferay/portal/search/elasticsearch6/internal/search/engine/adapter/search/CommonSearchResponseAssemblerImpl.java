@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.common.Strings;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.ToXContent;
 import org.elasticsearch.common.xcontent.XContentBuilder;
@@ -85,7 +86,7 @@ public class CommonSearchResponseAssemblerImpl
 				}
 			});
 
-		return xContentBuilder.string();
+		return Strings.toString(xContentBuilder);
 	}
 
 	protected void setExecutionProfile(

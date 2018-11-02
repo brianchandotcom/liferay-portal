@@ -19,7 +19,7 @@ import com.liferay.portal.search.engine.adapter.index.PutMappingIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.PutMappingIndexResponse;
 
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequestBuilder;
-import org.elasticsearch.action.admin.indices.mapping.put.PutMappingResponse;
+import org.elasticsearch.action.support.master.AcknowledgedResponse;
 import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.common.xcontent.XContentType;
@@ -41,9 +41,11 @@ public class PutMappingIndexRequestExecutorImpl
 		PutMappingRequestBuilder putMappingRequestBuilder =
 			createPutMappingRequestBuilder(putMappingIndexRequest);
 
-		PutMappingResponse putMappingResponse = putMappingRequestBuilder.get();
+		AcknowledgedResponse acknowledgedResponse =
+			putMappingRequestBuilder.get();
 
-		return new PutMappingIndexResponse(putMappingResponse.isAcknowledged());
+		return new PutMappingIndexResponse(
+			acknowledgedResponse.isAcknowledged());
 	}
 
 	protected PutMappingRequestBuilder createPutMappingRequestBuilder(

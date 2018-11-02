@@ -12,7 +12,7 @@
 		'url: "{url}",' +
 		'width: {width}';
 
-	var IE = AUI.Env.UA.ie >= 9;
+	var IE9 = AUI.Env.UA.ie >= 9;
 
 	var defaultVideoHeight = 300;
 	var defaultVideoWidth = 400;
@@ -365,7 +365,7 @@
 
 				var ranges = selection.getRanges();
 
-				return selection.getType() === CKEDITOR.SELECTION_NONE || (ranges.length === 1 && (ranges[0].collapsed || IE));
+				return selection.getType() === CKEDITOR.SELECTION_NONE || (ranges.length === 1 && (ranges[0].collapsed || IE9));
 			},
 
 			_onSelectedAudioChange: function(editor, callback, event) {
@@ -407,7 +407,7 @@
 									editor.insertHtml('<img src="' + imageSrc + '">');
 
 									if (instance._isEmptySelection(editor)) {
-										if (IE) {
+										if (IE9) {
 											editor.insertHtml('<img src="' + imageSrc + '">' + ' <br /> ');
 										}
 										else {

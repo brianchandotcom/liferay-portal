@@ -62,6 +62,8 @@ AUI.add(
 							boundingBox.on('mouseleave', instance._onMouseLeave, instance)
 						];
 
+						boundingBox.attr('role', 'alert');
+
 						Alert.superclass.bindUI.call(this);
 					},
 

@@ -108,6 +108,11 @@
 </tr>
 <!--ENTRY_TABLE-->
 <tr>
+	<td>ENTRY_TABLE_ID</td>
+	<td>//tr[contains(@data-title,'${key_webContentTitle}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_TABLE_TITLE</td>
 	<td>//tr[contains(.,'${key_webContentTitle}')]//a</td>
 	<td></td>

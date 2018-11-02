@@ -24,6 +24,7 @@ import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -39,6 +40,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
 import java.util.Dictionary;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -108,6 +110,17 @@ public class LiferayVersioningCapabilityTest {
 					2,
 					fileEntry.getFileVersionsCount(
 						WorkflowConstants.STATUS_ANY));
+
+				List<FileVersion> fileVersions = fileEntry.getFileVersions(
+					WorkflowConstants.STATUS_ANY);
+
+				FileVersion fileVersion1 = fileVersions.get(0);
+
+				Assert.assertEquals("1.10", fileVersion1.getVersion());
+
+				FileVersion fileVersion2 = fileVersions.get(1);
+
+				Assert.assertEquals("1.9", fileVersion2.getVersion());
 			});
 	}
 

@@ -19,17 +19,16 @@ import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
-import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -44,10 +43,8 @@ import com.liferay.segments.odata.retriever.ODataRetriever;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.junit.After;
@@ -72,7 +69,10 @@ public class UserODataRetrieverCustomFieldsTest {
 			PermissionCheckerTestRule.INSTANCE);
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
+		_expandoTable = ExpandoTestUtil.addTable(
+			PortalUtil.getClassNameId(User.class), "CUSTOM_FIELDS");
+
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter(
@@ -93,21 +93,22 @@ public class UserODataRetrieverCustomFieldsTest {
 	public void testGetUsersFilterByCustomFieldWithEqualsAndStringKeywordType()
 		throws Exception {
 
-		String columnName = "keywordColumn";
-
-		_addExpandoColumn(
-			User.class, columnName, ExpandoColumnConstants.INDEX_TYPE_KEYWORD);
+		ExpandoColumn expandoColumn = _addExpandoColumn(
+			_expandoTable, "keywordColumn", ExpandoColumnConstants.STRING,
+			ExpandoColumnConstants.INDEX_TYPE_KEYWORD);
 
 		String columnValue = "Software Engineer";
 
-		User user = _addUser(columnName, columnValue);
+		User user1 = _addUser(expandoColumn.getName(), columnValue);
 
-		_addUser(columnName, RandomTestUtil.randomString());
+		User user2 = UserTestUtil.addUser();
 
-		_addUser();
+		_users.add(user1);
+		_users.add(user2);
 
 		String filterString =
-			"(customField/" + columnName + " eq '" + columnValue + "')";
+			"(customField/" + expandoColumn.getName() + " eq '" + columnValue +
+				"')";
 
 		int count = _getODataRetriever().getResultsCount(
 			TestPropsValues.getCompanyId(), filterString,
@@ -117,31 +118,18 @@ public class UserODataRetrieverCustomFieldsTest {
 
 		List<User> users = _getODataRetriever().getResults(
 			TestPropsValues.getCompanyId(), filterString,
-			LocaleUtil.getDefault(), 0, 5);
+			LocaleUtil.getDefault(), 0, 1);
 
-		Assert.assertEquals(user, users.get(0));
+		Assert.assertEquals(user1, users.get(0));
 	}
 
-	private void _addExpandoColumn(
-			Class<?> clazz, String columnName, int indexType)
+	private ExpandoColumn _addExpandoColumn(
+			ExpandoTable expandoTable, String columnName, int columnType,
+			int indexType)
 		throws Exception {
 
-		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
-			TestPropsValues.getCompanyId(),
-			_classNameLocalService.getClassNameId(clazz), "CUSTOM_FIELDS");
-
-		if (expandoTable == null) {
-			expandoTable = _expandoTableLocalService.addTable(
-				TestPropsValues.getCompanyId(),
-				_classNameLocalService.getClassNameId(clazz), "CUSTOM_FIELDS");
-
-			_expandoTables.add(expandoTable);
-		}
-
 		ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
-			expandoTable, columnName, ExpandoColumnConstants.STRING);
-
-		_expandoColumns.add(expandoColumn);
+			expandoTable, columnName, columnType);
 
 		UnicodeProperties unicodeProperties =
 			expandoColumn.getTypeSettingsProperties();
@@ -151,68 +139,10 @@ public class UserODataRetrieverCustomFieldsTest {
 
 		expandoColumn.setTypeSettingsProperties(unicodeProperties);
 
-		_expandoColumnLocalService.updateExpandoColumn(expandoColumn);
-	}
-
-	private User _addUser() throws Exception {
-		return _addUser(ServiceContextTestUtil.getServiceContext());
-	}
-
-	private User _addUser(ServiceContext serviceContext) throws Exception {
-		long creatorUserId = TestPropsValues.getUserId();
-		long companyId = TestPropsValues.getCompanyId();
-		boolean autoPassword = true;
-		String password1 = null;
-		String password2 = null;
-		boolean autoScreenName = false;
-		String screenName = RandomTestUtil.randomString();
-		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
-		long facebookId = 0;
-		String openId = null;
-		Locale locale = LocaleUtil.getDefault();
-		String firstName = RandomTestUtil.randomString();
-		String middleName = RandomTestUtil.randomString();
-		String lastName = RandomTestUtil.randomString();
-		long prefixId = 0;
-		long suffixId = 0;
-		boolean male = false;
-		int birthdayMonth = Calendar.JANUARY;
-		int birthdayDay = 1;
-		int birthdayYear = 1970;
-		String jobTitle = null;
-		long[] groupIds = {TestPropsValues.getGroupId()};
-		long[] organizationIds = null;
-		long[] roleIds = null;
-		long[] userGroupIds = null;
-		boolean sendMail = false;
-
-		User user = _userLocalService.addUser(
-			creatorUserId, companyId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, facebookId, openId,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds, sendMail, serviceContext);
-
-		_users.add(user);
-
-		return user;
+		return _expandoColumnLocalService.updateExpandoColumn(expandoColumn);
 	}
 
 	private User _addUser(String columnName, String columnValue)
-		throws Exception {
-
-		ServiceContext serviceContext = _getServiceContext(
-			columnName, columnValue);
-
-		return _addUser(serviceContext);
-	}
-
-	private ODataRetriever<User> _getODataRetriever() {
-		return _serviceTracker.getService();
-	}
-
-	private ServiceContext _getServiceContext(
-			String columnName, String columnValue)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -224,32 +154,30 @@ public class UserODataRetrieverCustomFieldsTest {
 
 		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
 
-		return serviceContext;
+		UserTestUtil.addUser();
+
+		return UserTestUtil.addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			serviceContext);
+	}
+
+	private ODataRetriever<User> _getODataRetriever() {
+		return _serviceTracker.getService();
 	}
 
 	@Inject
-	private static ClassNameLocalService _classNameLocalService;
-
-	@Inject
 	private static ExpandoColumnLocalService _expandoColumnLocalService;
-
-	@Inject
-	private static ExpandoTableLocalService _expandoTableLocalService;
 
 	private static ServiceTracker<ODataRetriever<User>, ODataRetriever<User>>
 		_serviceTracker;
 
 	@DeleteAfterTestRun
-	private final List<ExpandoColumn> _expandoColumns = new ArrayList<>();
-
-	@DeleteAfterTestRun
-	private final List<ExpandoTable> _expandoTables = new ArrayList<>();
+	private ExpandoTable _expandoTable;
 
 	@Inject(filter = "model.class.name=com.liferay.portal.kernel.model.User")
 	private ODataRetriever<User> _oDataRetriever;
-
-	@Inject
-	private UserLocalService _userLocalService;
 
 	@DeleteAfterTestRun
 	private final List<User> _users = new ArrayList<>();

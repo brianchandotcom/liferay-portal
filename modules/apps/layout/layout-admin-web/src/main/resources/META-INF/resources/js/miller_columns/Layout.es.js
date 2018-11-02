@@ -34,6 +34,12 @@ import {
 import {setIn} from '../utils/utils.es';
 import templates from './Layout.soy';
 
+/**
+ * Metal drag
+ * @param {number}
+ */
+const DRAG_SPEED = 20;
+
 const UPDATE_PATH_TIMEOUT = 1000;
 
 /**
@@ -48,6 +54,8 @@ class Layout extends Component {
 	 * @inheritDoc
 	 */
 	attached() {
+		this._handleLayoutColumnsScroll = this._handleLayoutColumnsScroll.bind(this);
+
 		const A = new AUI();
 
 		A.use(
@@ -85,6 +93,7 @@ class Layout extends Component {
 	 */
 	dispose() {
 		this._layoutDragDrop.dispose();
+		this._removeLayoutColumnsScrollListener();
 	}
 
 	/**
@@ -93,7 +102,14 @@ class Layout extends Component {
 	rendered(firstRendered) {
 		requestAnimationFrame(
 			() => {
-				this.refs.layoutColumns.scrollLeft = this.refs.layoutColumns.scrollWidth;
+				const {layoutColumns} = this.refs;
+
+				if (typeof this._layoutColumnsScrollLeft === 'number') {
+					layoutColumns.scrollLeft = this._layoutColumnsScrollLeft;
+				}
+				else {
+					layoutColumns.scrollLeft = layoutColumns.scrollWidth;
+				}
 
 				if (this._newPathItems) {
 					this._addLayoutDragDropTargets(this._newPathItems);
@@ -104,6 +120,24 @@ class Layout extends Component {
 
 		if (firstRendered) {
 			this._initializeLayoutDragDrop();
+		}
+	}
+
+	/**
+	 * Adds scroll listener to layout columns.
+	 * @private
+	 * @review
+	 */
+	_addLayoutColumnsScrollListener() {
+		const {layoutColumns} = this.refs;
+
+		if (layoutColumns) {
+			this._layoutColumnsScrollLeft = layoutColumns.scrollLeft;
+
+			layoutColumns.addEventListener(
+				'scroll',
+				this._handleLayoutColumnsScroll
+			);
 		}
 	}
 
@@ -201,6 +235,8 @@ class Layout extends Component {
 	 * @review
 	 */
 	_handleDropLayoutColumnItem(eventData) {
+		this._removeLayoutColumnsScrollListener();
+
 		let layoutColumns = this.layoutColumns.map(
 			(layoutColumn) => [...layoutColumn]
 		);
@@ -368,6 +404,27 @@ class Layout extends Component {
 	}
 
 	/**
+	 * Stores scroll distances when they are below DRAG_SPEED and
+	 * a drag and drop is being done.
+	 * @private
+	 * @review
+	 * @see DRAG_SPEED
+	 */
+	_handleLayoutColumnsScroll() {
+		const {layoutColumns} = this.refs;
+
+		if (layoutColumns) {
+			const delta = Math.abs(
+				this._layoutColumnsScrollLeft - layoutColumns.scrollLeft
+			);
+
+			if (delta <= DRAG_SPEED) {
+				this._layoutColumnsScrollLeft = layoutColumns.scrollLeft;
+			}
+		}
+	}
+
+	/**
 	 * @private
 	 * @review
 	 */
@@ -382,6 +439,8 @@ class Layout extends Component {
 	 * @review
 	 */
 	_handleStartMovingLayoutColumnItem(eventData) {
+		this._addLayoutColumnsScrollListener();
+
 		const sourceItemColumn = getItemColumn(
 			this.layoutColumns,
 			eventData.sourceItemPlid
@@ -502,6 +561,24 @@ class Layout extends Component {
 		this._draggingItemParentPlid = null;
 
 		return nextLayoutColumns;
+	}
+
+	/**
+	 * Removes scroll listener from layout columns.
+	 * @private
+	 * @review
+	 */
+	_removeLayoutColumnsScrollListener() {
+		const {layoutColumns} = this.refs;
+
+		if (layoutColumns) {
+			layoutColumns.removeEventListener(
+				'scroll',
+				this._handleLayoutColumnsScroll
+			);
+		}
+
+		this._layoutColumnsScrollLeft = null;
 	}
 
 	/**
@@ -839,6 +916,17 @@ Layout.STATE = {
 	 */
 
 	_hoveredLayoutColumnItemPlid: Config.string().internal(),
+
+	/**
+	 * Scroll left position stored while dragging elements
+	 * @default null
+	 * @instance
+	 * @memberOf Layout
+	 * @private
+	 * @review
+	 * @type {number}
+	 */
+	_layoutColumnsScrollLeft: Config.internal().value(null),
 
 	/**
 	 * Internal LayoutDragDrop instance

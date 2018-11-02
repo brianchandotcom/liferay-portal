@@ -20,7 +20,7 @@ User topUser = UserLocalServiceUtil.fetchUserById(statsUser.getUserId());
 
 <c:if test="<%= topUser != null %>">
 	<liferay-ui:search-container-column-text>
-		<liferay-ui:user-portrait
+		<liferay-frontend:user-portrait
 			userId="<%= statsUser.getUserId() %>"
 		/>
 	</liferay-ui:search-container-column-text>

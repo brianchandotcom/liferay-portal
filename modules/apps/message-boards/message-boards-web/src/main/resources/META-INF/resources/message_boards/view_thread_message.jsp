@@ -38,7 +38,7 @@ if (message.isAnonymous()) {
 		<div class="card-row card-row-padded">
 			<div class="card-col-field">
 				<div class="list-group-card-icon">
-					<liferay-ui:user-portrait
+					<liferay-frontend:user-portrait
 						userId="<%= !message.isAnonymous() ? message.getUserId() : 0 %>"
 					/>
 				</div>

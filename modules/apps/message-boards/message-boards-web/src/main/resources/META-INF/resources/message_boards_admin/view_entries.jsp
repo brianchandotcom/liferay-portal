@@ -171,7 +171,7 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 						</liferay-portlet:renderURL>
 
 						<liferay-ui:search-container-column-text>
-							<liferay-ui:user-portrait
+							<liferay-frontend:user-portrait
 								userId="<%= thread.getLastPostByUserId() %>"
 							/>
 						</liferay-ui:search-container-column-text>

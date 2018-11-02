@@ -8929,16 +8929,25 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 				</unzip>
 
 				<if>
-					<and>
-						<equals arg1="${app.server.type}" arg2="websphere" />
-						<equals arg1="${app.server.websphere.version}" arg2="8.5.5.0" />
-					</and>
+					<equals arg1="${app.server.type}" arg2="websphere" />
 					<then>
-						<mkdir dir="${app.server.websphere.dir}/java_1.8_64/jre/lib/ext" />
+						<local name="app.server.websphere.java.ext.dir" />
+
+						<if>
+							<equals arg1="${app.server.websphere.version}" arg2="8.5.5.0" />
+							<then>
+								<property name="app.server.websphere.java.ext.dir" value="${app.server.websphere.dir}/java_1.8_64/jre/lib/ext" />
+							</then>
+							<else>
+								<property name="app.server.websphere.java.ext.dir" value="${app.server.websphere.dir}/javaext" />
+							</else>
+						</if>
+
+						<mkdir dir="${app.server.websphere.java.ext.dir}" />
 
 						<move
 							file="${app.server.lib.global.dir}/portlet.jar"
-							todir="${app.server.websphere.dir}/java_1.8_64/jre/lib/ext"
+							todir="${app.server.websphere.java.ext.dir}"
 						/>
 
 						<if>
@@ -8947,17 +8956,17 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 								<replace
 									file="${app.server.portal.dir}/WEB-INF/ibm-web-ext.xml"
 								>
-									<replacetoken><![CDATA[<jsp-attribute name="reloadEnabled" value="true"/>]]></replacetoken>
-									<replacevalue><![CDATA[<jsp-attribute name="jdkSourceLevel" value="18" />
-<jsp-attribute name="reloadEnabled" value="true"/>]]></replacevalue>
+									<replacetoken><![CDATA[</web-ext>]]></replacetoken>
+									<replacevalue><![CDATA[  <jsp-attribute name="jdkSourceLevel" value="18" />
+</web-ext>]]></replacevalue>
 								</replace>
 
 								<replace
-									file="${app.server.dir}/profiles/liferay/config/cells/liferay-cell/applications/liferay-portal.ear/deployments/liferay-portal/liferay-portal.war/WEB-INF/ibm-web-ext.xml"
+									file="${app.server.websphere.instance.dir}/config/cells/liferay-cell/applications/liferay-portal.ear/deployments/liferay-portal/liferay-portal.war/WEB-INF/ibm-web-ext.xml"
 								>
-									<replacetoken><![CDATA[<jsp-attribute name="reloadEnabled" value="true"/>]]></replacetoken>
-									<replacevalue><![CDATA[<jsp-attribute name="jdkSourceLevel" value="18" />
-<jsp-attribute name="reloadEnabled" value="true"/>]]></replacevalue>
+									<replacetoken><![CDATA[</web-ext>]]></replacetoken>
+									<replacevalue><![CDATA[  <jsp-attribute name="jdkSourceLevel" value="18" />
+</web-ext>]]></replacevalue>
 								</replace>
 							</then>
 						</if>

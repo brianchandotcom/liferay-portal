@@ -199,7 +199,7 @@ if (parentOrganization != null) {
 						},
 						id: '<portlet:namespace />selectOrganization',
 						selectedData: [searchContainerData],
-						title: '<liferay-ui:message arguments="organization" key="select-x" />',
+						title: '<liferay-ui:message arguments="parent-organization" key="select-x" />',
 						uri: '<%= selectOrganizationRenderURL %>'
 					},
 					function(event) {

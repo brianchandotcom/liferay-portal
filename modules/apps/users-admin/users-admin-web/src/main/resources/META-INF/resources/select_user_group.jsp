@@ -31,10 +31,6 @@ SearchContainer userGroupSearch = SelectUserGroupManagementToolbarDisplayContext
 renderResponse.setTitle(LanguageUtil.get(request, "user-groups"));
 %>
 
-<clay:navigation-bar
-	navigationItems='<%= userDisplayContext.getNavigationItems("user-groups") %>'
-/>
-
 <clay:management-toolbar
 	clearResultsURL="<%= SelectUserGroupManagementToolbarDisplayContext.getClearResultsURL() %>"
 	itemsTotal="<%= userGroupSearch.getTotal() %>"

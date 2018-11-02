@@ -16,7 +16,6 @@ package com.liferay.users.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Contact;
@@ -138,20 +137,6 @@ public class UserDisplayContext {
 		inheritedSitesSet.addAll(_getOrganizationRelatedGroups());
 
 		return ListUtil.fromCollection(inheritedSitesSet);
-	}
-
-	public List<NavigationItem> getNavigationItems(final String label) {
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(StringPool.BLANK);
-						navigationItem.setLabel(
-							LanguageUtil.get(_request, label));
-					});
-			}
-		};
 	}
 
 	public List<UserGroupRole> getOrganizationRoles() throws PortalException {

@@ -43,10 +43,6 @@ SearchContainer userSearchContainer = selectOrganizationUsersManagementToolbarDi
 
 <liferay-ui:membership-policy-error />
 
-<clay:navigation-bar
-	navigationItems='<%= userDisplayContext.getNavigationItems("users") %>'
-/>
-
 <clay:management-toolbar
 	clearResultsURL="<%= selectOrganizationUsersManagementToolbarDisplayContext.getClearResultsURL() %>"
 	filterDropdownItems="<%= selectOrganizationUsersManagementToolbarDisplayContext.getFilterDropdownItems() %>"

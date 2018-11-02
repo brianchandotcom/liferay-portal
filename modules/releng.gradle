@@ -346,6 +346,7 @@ lockPrivateDependencyVersions {
 
 portalArtifactsJar {
 	File portalArtifactsDir = new File(buildDir, "portalArtifacts")
+	File relengDir = file(".releng")
 
 	baseName = "portal-artifacts"
 	classifier = null
@@ -370,8 +371,6 @@ portalArtifactsJar {
 	}
 
 	onlyIf {
-		File relengDir = file(".releng")
-
 		if (relengDir.exists()) {
 			return true
 		}
@@ -387,7 +386,7 @@ portalArtifactsJar {
 
 		artifactsDir.mkdirs()
 
-		FileTree relengFileTree = fileTree(dir: file(".releng"), include: "**/*.properties")
+		FileTree relengFileTree = fileTree(dir: relengDir, include: "**/*.properties")
 
 		relengFileTree.each {
 			File relengFile ->
@@ -406,8 +405,6 @@ portalArtifactsJar {
 				cacheDir.mkdirs()
 			}
 
-			File cacheJarFile = new File(cacheDir, artifactURL.substring(artifactURL.lastIndexOf("/") + 1))
-
 			project.download {
 				dest cacheDir
 				overwrite false
@@ -415,14 +412,16 @@ portalArtifactsJar {
 				src artifactURL
 			}
 
-			File dependencyDir = new File(artifactsDir, cacheJarFile.name[0 .. -5])
+			File jarFile = new File(cacheDir, artifactURL.substring(artifactURL.lastIndexOf("/") + 1))
+
+			File dir = new File(artifactsDir, jarFile.name[0 .. -5])
 
 			copy {
-				from zipTree(cacheJarFile)
-				into dependencyDir
+				from zipTree(jarFile)
+				into dir
 			}
 
-			File manifestFile = new File(dependencyDir, "META-INF/MANIFEST.MF")
+			File manifestFile = new File(dir, "META-INF/MANIFEST.MF")
 
 			if (!manifestFile.exists()) {
 				return
@@ -434,9 +433,9 @@ portalArtifactsJar {
 				return
 			}
 
-			dependencies.portalArtifacts files(dependencyDir)
+			dependencies.portalArtifacts files(dir)
 
-			logger.lifecycle "Added {}", cacheJarFile.name[0 .. -5]
+			logger.lifecycle "Added {}", jarFile.name[0 .. -5]
 		}
 	}
 }

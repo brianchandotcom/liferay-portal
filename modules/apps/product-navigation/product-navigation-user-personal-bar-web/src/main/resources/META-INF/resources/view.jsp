@@ -25,7 +25,7 @@
 				</c:if>
 
 				<span class="user-avatar-image">
-					<liferay-ui:user-portrait
+					<liferay-frontend:user-portrait
 						user="<%= user %>"
 					/>
 				</span>

@@ -16,8 +16,6 @@ package com.liferay.sharepoint.rest.oauth2.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -30,6 +28,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import com.liferay.sharepoint.rest.oauth2.exception.NoSuch2TokenEntryException;
@@ -163,6 +162,8 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	@Override
 	public SharepointOAuth2TokenEntry fetchByU_C(long userId,
 		String configurationPid, boolean retrieveFromCache) {
+		configurationPid = Objects.toString(configurationPid, "");
+
 		Object[] finderArgs = new Object[] { userId, configurationPid };
 
 		Object result = null;
@@ -191,10 +192,7 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 
 			boolean bindConfigurationPid = false;
 
-			if (configurationPid == null) {
-				query.append(_FINDER_COLUMN_U_C_CONFIGURATIONPID_1);
-			}
-			else if (configurationPid.equals("")) {
+			if (configurationPid.isEmpty()) {
 				query.append(_FINDER_COLUMN_U_C_CONFIGURATIONPID_3);
 			}
 			else {
@@ -277,6 +275,8 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	 */
 	@Override
 	public int countByU_C(long userId, String configurationPid) {
+		configurationPid = Objects.toString(configurationPid, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_U_C;
 
 		Object[] finderArgs = new Object[] { userId, configurationPid };
@@ -292,10 +292,7 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 
 			boolean bindConfigurationPid = false;
 
-			if (configurationPid == null) {
-				query.append(_FINDER_COLUMN_U_C_CONFIGURATIONPID_1);
-			}
-			else if (configurationPid.equals("")) {
+			if (configurationPid.isEmpty()) {
 				query.append(_FINDER_COLUMN_U_C_CONFIGURATIONPID_3);
 			}
 			else {

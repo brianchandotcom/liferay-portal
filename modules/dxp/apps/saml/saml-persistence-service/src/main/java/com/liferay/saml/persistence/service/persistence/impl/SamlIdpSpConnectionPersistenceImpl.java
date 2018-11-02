@@ -16,8 +16,6 @@ package com.liferay.saml.persistence.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -34,6 +32,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -676,6 +675,8 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 	@Override
 	public SamlIdpSpConnection fetchByC_SSEI(long companyId,
 		String samlSpEntityId, boolean retrieveFromCache) {
+		samlSpEntityId = Objects.toString(samlSpEntityId, "");
+
 		Object[] finderArgs = new Object[] { companyId, samlSpEntityId };
 
 		Object result = null;
@@ -704,10 +705,7 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 
 			boolean bindSamlSpEntityId = false;
 
-			if (samlSpEntityId == null) {
-				query.append(_FINDER_COLUMN_C_SSEI_SAMLSPENTITYID_1);
-			}
-			else if (samlSpEntityId.equals("")) {
+			if (samlSpEntityId.isEmpty()) {
 				query.append(_FINDER_COLUMN_C_SSEI_SAMLSPENTITYID_3);
 			}
 			else {
@@ -801,6 +799,8 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 	 */
 	@Override
 	public int countByC_SSEI(long companyId, String samlSpEntityId) {
+		samlSpEntityId = Objects.toString(samlSpEntityId, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_SSEI;
 
 		Object[] finderArgs = new Object[] { companyId, samlSpEntityId };
@@ -816,10 +816,7 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 
 			boolean bindSamlSpEntityId = false;
 
-			if (samlSpEntityId == null) {
-				query.append(_FINDER_COLUMN_C_SSEI_SAMLSPENTITYID_1);
-			}
-			else if (samlSpEntityId.equals("")) {
+			if (samlSpEntityId.isEmpty()) {
 				query.append(_FINDER_COLUMN_C_SSEI_SAMLSPENTITYID_3);
 			}
 			else {

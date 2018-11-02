@@ -16,8 +16,6 @@ package com.liferay.portal.workflow.kaleo.forms.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -30,6 +28,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink;
@@ -676,6 +675,8 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 	@Override
 	public KaleoProcessLink fetchByKPI_WTN(long kaleoProcessId,
 		String workflowTaskName, boolean retrieveFromCache) {
+		workflowTaskName = Objects.toString(workflowTaskName, "");
+
 		Object[] finderArgs = new Object[] { kaleoProcessId, workflowTaskName };
 
 		Object result = null;
@@ -704,10 +705,7 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 
 			boolean bindWorkflowTaskName = false;
 
-			if (workflowTaskName == null) {
-				query.append(_FINDER_COLUMN_KPI_WTN_WORKFLOWTASKNAME_1);
-			}
-			else if (workflowTaskName.equals("")) {
+			if (workflowTaskName.isEmpty()) {
 				query.append(_FINDER_COLUMN_KPI_WTN_WORKFLOWTASKNAME_3);
 			}
 			else {
@@ -791,6 +789,8 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 	 */
 	@Override
 	public int countByKPI_WTN(long kaleoProcessId, String workflowTaskName) {
+		workflowTaskName = Objects.toString(workflowTaskName, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_KPI_WTN;
 
 		Object[] finderArgs = new Object[] { kaleoProcessId, workflowTaskName };
@@ -806,10 +806,7 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 
 			boolean bindWorkflowTaskName = false;
 
-			if (workflowTaskName == null) {
-				query.append(_FINDER_COLUMN_KPI_WTN_WORKFLOWTASKNAME_1);
-			}
-			else if (workflowTaskName.equals("")) {
+			if (workflowTaskName.isEmpty()) {
 				query.append(_FINDER_COLUMN_KPI_WTN_WORKFLOWTASKNAME_3);
 			}
 			else {

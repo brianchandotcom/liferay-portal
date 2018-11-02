@@ -22,8 +22,6 @@ import com.liferay.oauth.model.impl.OAuthUserImpl;
 import com.liferay.oauth.model.impl.OAuthUserModelImpl;
 import com.liferay.oauth.service.persistence.OAuthUserPersistence;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -40,6 +38,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -1165,6 +1164,8 @@ public class OAuthUserPersistenceImpl extends BasePersistenceImpl<OAuthUser>
 	@Override
 	public OAuthUser fetchByAccessToken(String accessToken,
 		boolean retrieveFromCache) {
+		accessToken = Objects.toString(accessToken, "");
+
 		Object[] finderArgs = new Object[] { accessToken };
 
 		Object result = null;
@@ -1189,10 +1190,7 @@ public class OAuthUserPersistenceImpl extends BasePersistenceImpl<OAuthUser>
 
 			boolean bindAccessToken = false;
 
-			if (accessToken == null) {
-				query.append(_FINDER_COLUMN_ACCESSTOKEN_ACCESSTOKEN_1);
-			}
-			else if (accessToken.equals("")) {
+			if (accessToken.isEmpty()) {
 				query.append(_FINDER_COLUMN_ACCESSTOKEN_ACCESSTOKEN_3);
 			}
 			else {
@@ -1271,6 +1269,8 @@ public class OAuthUserPersistenceImpl extends BasePersistenceImpl<OAuthUser>
 	 */
 	@Override
 	public int countByAccessToken(String accessToken) {
+		accessToken = Objects.toString(accessToken, "");
+
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_ACCESSTOKEN;
 
 		Object[] finderArgs = new Object[] { accessToken };
@@ -1284,10 +1284,7 @@ public class OAuthUserPersistenceImpl extends BasePersistenceImpl<OAuthUser>
 
 			boolean bindAccessToken = false;
 
-			if (accessToken == null) {
-				query.append(_FINDER_COLUMN_ACCESSTOKEN_ACCESSTOKEN_1);
-			}
-			else if (accessToken.equals("")) {
+			if (accessToken.isEmpty()) {
 				query.append(_FINDER_COLUMN_ACCESSTOKEN_ACCESSTOKEN_3);
 			}
 			else {

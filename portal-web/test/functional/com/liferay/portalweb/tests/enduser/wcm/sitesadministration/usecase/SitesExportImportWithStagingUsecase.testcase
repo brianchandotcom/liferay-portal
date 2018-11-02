@@ -1,0 +1,390 @@
+<definition component-name="portal-wcm">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Site Administration" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Test Site Name 1" />
+		</execute>
+
+		<!-- Add two sites and activate staging on both. -->
+
+		<execute macro="Staging#openStagingAdmin">
+			<var name="siteURLKey" value="test-site-name-1" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Test Site Name 1" />
+		</execute>
+
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Test Site Name 2" />
+		</execute>
+
+		<execute macro="Staging#openStagingAdmin">
+			<var name="siteURLKey" value="test-site-name-2" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Test Site Name 2" />
+		</execute>
+
+		<!-- Add fragments. -->
+
+		<execute macro="FragmentsAdmin#openFragmentsAdmin">
+			<var name="siteURLKey" value="test-site-name-1-staging" />
+		</execute>
+
+		<execute macro="FragmentsAdmin#importCollectionFromDependenciesFolder">
+			<var name="collectionZipFile" value="fragment-collection.zip" />
+		</execute>
+
+		<!-- Add a content page template. -->
+
+		<execute macro="PageTemplatesAdmin#openPageTemplatesAdmin">
+			<var name="siteURLKey" value="test-site-name-1-staging" />
+		</execute>
+
+		<execute macro="PageTemplatesAdmin#addCollection">
+			<var name="collectionName" value="Page Template Collection" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Page Template Collection" />
+		</execute>
+
+		<execute macro="PageTemplatesAdmin#add">
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+
+		<execute macro="PageEditor#addFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Button" />
+		</execute>
+
+		<execute macro="Button#clickPublish" />
+
+		<!-- Add a content page from the page template. -->
+
+		<execute macro="SitePages#openPagesAdmin">
+			<var name="siteURLKey" value="test-site-name-1-staging" />
+		</execute>
+
+		<execute macro="ContentPages#addPage">
+			<var name="collectionName" value="Page Template Collection" />
+			<var name="pageName" value="Test Template Content Page" />
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+
+		<!-- Add a regular content page. -->
+
+		<execute macro="SitePages#openPagesAdmin">
+			<var name="siteURLKey" value="test-site-name-1-staging" />
+		</execute>
+
+		<execute macro="ContentPages#addPage">
+			<var name="pageName" value="Test Regular Content Page" />
+		</execute>
+
+		<execute macro="PageEditor#expandContentPageFragmentSidebar" />
+
+		<execute macro="PageEditor#addFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Title" />
+		</execute>
+
+		<!-- Add a navigation menu. -->
+
+		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
+			<var name="siteURLKey" value="test-site-name-1-staging" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#addMenu">
+			<var name="menuName" value="Test Navigation Menu Name" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#addItem">
+			<var name="item" value="Page" />
+			<var name="pageNames" value="Test Template Content Page,Test Regular Content Page" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#addItem">
+			<var name="item" value="URL" />
+			<var name="url" value="https://www.liferay.com/" />
+			<var name="urlName" value="Liferay" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name-1-staging" />
+		</execute>
+
+		<execute macro="NavigationMenusWidget#gotoNavigationMenuWidgetConfig" />
+
+		<execute macro="NavigationMenusWidget#chooseMenu">
+			<var name="menuName" value="Test Navigation Menu Name" />
+		</execute>
+
+		<execute macro="Portlet#saveAndCloseConfig" />
+
+		<!-- Add a display page. -->
+
+		<execute macro="DisplayPagesAdmin#openDisplayPagesAdmin">
+			<var name="siteURLKey" value="test-site-name-1-staging" />
+		</execute>
+
+		<execute macro="DisplayPagesAdmin#add">
+			<var name="displayPageName" value="Display Page Name" />
+		</execute>
+
+		<execute macro="PageEditor#addFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Title" />
+		</execute>
+
+		<execute macro="PageEditor#addFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Rich Text" />
+		</execute>
+
+		<execute macro="PageEditorMapping#selectAssetType">
+			<var name="assetType" value="Web Content Article" />
+			<var name="subType" value="Basic Web Content" />
+		</execute>
+
+		<execute macro="PageEditorMapping#mapEditableTextToAsset">
+			<var name="fragmentName" value="Title" />
+			<var name="id" value="title" />
+			<var name="itemName" value="Title" />
+		</execute>
+
+		<execute macro="PageEditorMapping#mapEditableTextToAsset">
+			<var name="fragmentName" value="Rich Text" />
+			<var name="id" value="rich-text" />
+			<var name="itemName" value="content" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<!-- Add a web content article that uses the display page. -->
+
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name-1-staging" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="Webcontent Content" />
+			<var name="webContentTitle" value="Webcontent Title" />
+		</execute>
+
+		<execute macro="WebContent#editDisplayPage">
+			<var name="pageName" value="Display Page Name" />
+			<var name="pageType" value="Display Pages" />
+		</execute>
+
+		<execute macro="Staging#openStagingAdmin">
+			<var name="siteURLKey" value="test-site-name-1-staging" />
+		</execute>
+
+		<!-- Publish everything to live. -->
+
+		<execute macro="Staging#publishCustomPublication" />
+	</set-up>
+
+	<tear-down>
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="JSONGroup#deleteGroupByName">
+					<var name="groupName" value="Test Site Name 1" />
+				</execute>
+
+				<execute macro="JSONGroup#deleteGroupByName">
+					<var name="groupName" value="Test Site Name 2" />
+				</execute>
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="ImportLiveSiteToStagingSite" priority="5">
+		<description message="Export a live site into a different staging site. This test is focused on modern site building features. The high level steps of this test are outlined in LRQA-44517." />
+
+		<!-- Export the live site. -->
+
+		<execute macro="LAR#openExportAdmin">
+			<var name="siteURLKey" value="test-site-name-1" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute macro="LAR#exportSuccess" />
+
+		<execute macro="LAR#downloadLar" />
+
+		<!-- Import to another staging site. -->
+
+		<execute macro="LAR#openImportAdmin">
+			<var name="siteURLKey" value="test-site-name-2-staging" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute macro="Site#importSiteFromTempFolder" />
+
+		<!-- Assert fragments. -->
+
+		<execute macro="FragmentsAdmin#openFragmentsAdmin">
+			<var name="siteURLKey" value="test-site-name-2-staging" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Card#SPECIFIC_LARGE_TEXT">
+			<var name="key_cardText" value="Content" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Card#SPECIFIC_LARGE_TEXT">
+			<var name="key_cardText" value="Image" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Card#SPECIFIC_LARGE_TEXT">
+			<var name="key_cardText" value="Button" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Card#SPECIFIC_LARGE_TEXT">
+			<var name="key_cardText" value="Multiple Editables" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Card#SPECIFIC_LARGE_TEXT">
+			<var name="key_cardText" value="Rich Text" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Card#SPECIFIC_LARGE_TEXT">
+			<var name="key_cardText" value="Title" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="Button" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="FragmentEditor#PREVIEW_IFRAME" />
+
+		<execute function="AssertElementPresent" locator1="Button#SUBMIT" />
+		<execute function="AssertElementPresent" locator1="Button#CANCEL" />
+
+		<execute function="AssertClickNoError" locator1="Button#SUBMIT" value1="Submit" />
+
+		<execute function="AssertConfirm" value1="Form submitted" />
+
+		<execute function="SelectFrameTop" />
+
+		<!-- Assert content page template. -->
+
+		<execute macro="PageTemplatesAdmin#openPageTemplatesAdmin">
+			<var name="siteURLKey" value="test-site-name-2-staging" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="Page Template Name" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
+			<var name="key_content" value="Submit" />
+			<var name="key_fragmentClass" value="footer" />
+			<var name="key_position" value="1" />
+		</execute>
+
+		<for list="Submit,Cancel" param="button">
+			<execute macro="Button#viewPresent">
+				<var name="button" value="${button}" />
+			</execute>
+		</for>
+
+		<!-- Assert content pages and navigation menu widget. -->
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name-2-staging" />
+		</execute>
+
+		<execute function="Click" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Template Content Page" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
+			<var name="key_content" value="Submit" />
+			<var name="key_fragmentClass" value="footer" />
+			<var name="key_position" value="1" />
+		</execute>
+
+		<for list="Submit,Cancel" param="button">
+			<execute macro="Button#viewPresent">
+				<var name="button" value="${button}" />
+			</execute>
+		</for>
+
+		<execute function="Click" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test Regular Content Page" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
+			<var name="key_content" value="Lorem ipsum dolor sit amet" />
+			<var name="key_fragmentClass" value="header" />
+			<var name="key_position" value="1" />
+		</execute>
+
+		<execute function="Click" locator1="Home#PAGE">
+			<var name="key_pageName" value="Liferay" />
+		</execute>
+
+		<execute function="AssertLocation" value1="https://www.liferay.com/" />
+
+		<!-- Assert navigation menu. -->
+
+		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
+			<var name="siteURLKey" value="test-site-name-2-staging" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK">
+			<var name="key_rowEntry" value="Test Navigation Menu Name" />
+		</execute>
+
+		<!-- Assert display page. -->
+
+		<execute macro="DisplayPagesAdmin#openDisplayPagesAdmin">
+			<var name="siteURLKey" value="test-site-name-2-staging" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Card#SPECIFIC_LARGE_TEXT">
+			<var name="key_cardText" value="Display Page Name" />
+		</execute>
+
+		<!-- Assert web content article. -->
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name-2-staging/-/webcontent-title" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
+			<var name="key_content" value="Webcontent Title" />
+			<var name="key_fragmentClass" value="header" />
+			<var name="key_position" value="1" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Fragment#FRAGMENT">
+			<var name="key_content" value="Webcontent Content" />
+			<var name="key_fragmentClass" value="rich-text" />
+			<var name="key_position" value="2" />
+		</execute>
+	</command>
+</definition>

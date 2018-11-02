@@ -266,6 +266,7 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 
 				if (viewableBy == '<%= RoleConstants.GUEST %>') {
 					checkGuestViewPermissions = true;
+					checkGroupViewPermissions = true;
 				}
 				else if (viewableBy == '<%= defaultGroupRole.getName() %>') {
 					checkGroupViewPermissions = true;

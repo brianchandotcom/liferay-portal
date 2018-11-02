@@ -29,10 +29,6 @@ PortletURL portletURL = SelectRoleManagementToolbarDisplayContext.getPortletURL(
 SearchContainer roleSearchContainer = SelectRoleManagementToolbarDisplayContext.getRoleSearchContainer(filterManageableRoles);
 %>
 
-<clay:navigation-bar
-	navigationItems='<%= roleDisplayContext.getSelectRoleNavigationItems("regular-roles") %>'
-/>
-
 <clay:management-toolbar
 	clearResultsURL="<%= SelectRoleManagementToolbarDisplayContext.getClearResultsURL() %>"
 	itemsTotal="<%= roleSearchContainer.getTotal() %>"

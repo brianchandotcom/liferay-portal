@@ -165,20 +165,6 @@ public class RoleDisplayContext {
 		};
 	}
 
-	public List<NavigationItem> getSelectRoleNavigationItems(String label) {
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(StringPool.BLANK);
-						navigationItem.setLabel(
-							LanguageUtil.get(_request, label));
-					});
-			}
-		};
-	}
-
 	public List<NavigationItem> getViewRoleNavigationItems(
 			LiferayPortletResponse liferayPortletResponse,
 			PortletURL portletURL)

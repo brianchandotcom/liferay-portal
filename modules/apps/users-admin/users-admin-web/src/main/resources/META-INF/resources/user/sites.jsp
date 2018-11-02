@@ -261,50 +261,50 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 
 <c:if test="<%= !inheritedSites.isEmpty() %>">
 	<h4 class="sheet-tertiary-title"><liferay-ui:message key="inherited-sites" /></h4>
-</c:if>
 
-<liferay-ui:search-container
-	cssClass="lfr-search-container-inherited-sites"
-	curParam="inheritedSitesCur"
-	headerNames="name,roles"
-	iteratorURL="<%= currentURLObj %>"
-	total="<%= inheritedSites.size() %>"
->
-	<liferay-ui:search-container-results
-		results="<%= inheritedSites.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-	/>
-
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.kernel.model.Group"
-		escapedModel="<%= true %>"
-		keyProperty="groupId"
-		modelVar="inheritedSite"
-		rowIdProperty="friendlyURL"
+	<liferay-ui:search-container
+		cssClass="lfr-search-container-inherited-sites"
+		curParam="inheritedSitesCur"
+		headerNames="name,roles"
+		iteratorURL="<%= currentURLObj %>"
+		total="<%= inheritedSites.size() %>"
 	>
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			name="name"
-			value="<%= HtmlUtil.escape(inheritedSite.getDescriptiveName(locale)) %>"
+		<liferay-ui:search-container-results
+			results="<%= inheritedSites.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
 		/>
 
-		<%
-		List<Role> inheritedRoles = new ArrayList<Role>();
-		int inheritedRolesCount = 0;
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.kernel.model.Group"
+			escapedModel="<%= true %>"
+			keyProperty="groupId"
+			modelVar="inheritedSite"
+			rowIdProperty="friendlyURL"
+		>
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="name"
+				value="<%= HtmlUtil.escape(inheritedSite.getDescriptiveName(locale)) %>"
+			/>
 
-		if (selUser != null) {
-			inheritedRoles = RoleLocalServiceUtil.getUserGroupGroupRoles(selUser.getUserId(), inheritedSite.getGroupId(), 0, 50);
-			inheritedRolesCount = RoleLocalServiceUtil.getUserGroupGroupRolesCount(selUser.getUserId(), inheritedSite.getGroupId());
-		}
-		%>
+			<%
+			List<Role> inheritedRoles = new ArrayList<Role>();
+			int inheritedRolesCount = 0;
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			name="roles"
-			value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, inheritedRoles, Role.TITLE_ACCESSOR, inheritedRolesCount)) %>"
+			if (selUser != null) {
+				inheritedRoles = RoleLocalServiceUtil.getUserGroupGroupRoles(selUser.getUserId(), inheritedSite.getGroupId(), 0, 50);
+				inheritedRolesCount = RoleLocalServiceUtil.getUserGroupGroupRolesCount(selUser.getUserId(), inheritedSite.getGroupId());
+			}
+			%>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="roles"
+				value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, inheritedRoles, Role.TITLE_ACCESSOR, inheritedRolesCount)) %>"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator
+			markupView="lexicon"
 		/>
-	</liferay-ui:search-container-row>
-
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-	/>
-</liferay-ui:search-container>
+	</liferay-ui:search-container>
+</c:if>

@@ -206,14 +206,14 @@ public class MainServlet extends ActionServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		process(request, response);
+		_portalRequestProcessor.process(request, response);
 	}
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		process(request, response);
+		_portalRequestProcessor.process(request, response);
 	}
 
 	@Override
@@ -647,14 +647,6 @@ public class MainServlet extends ActionServlet {
 		ModuleConfig moduleConfig) {
 
 		return null;
-	}
-
-	@Override
-	protected void process(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException, ServletException {
-
-		_portalRequestProcessor.process(request, response);
 	}
 
 	private void _checkWebSettings(String xml) throws DocumentException {

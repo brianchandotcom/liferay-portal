@@ -445,7 +445,7 @@ portalArtifactsJar {
 
 			dependencies.portalArtifacts files(dir)
 
-			logger.lifecycle "Added {}", jarFile.name[0 .. -5]
+			logger.lifecycle "Added {}", jarFile.name
 
 			String artifactJavadocURL = relengProperties.getProperty("artifact.javadoc.url")
 
@@ -467,6 +467,8 @@ portalArtifactsJar {
 				}
 
 				dependencies.portalJavadocs files(dir)
+
+				logger.lifecycle "Added {}", jarFile.name
 			}
 
 			String artifactSourcesURL = relengProperties.getProperty("artifact.sources.url")
@@ -489,6 +491,8 @@ portalArtifactsJar {
 				}
 
 				dependencies.portalSources files(dir)
+
+				logger.lifecycle "Added {}", jarFile.name
 			}
 		}
 

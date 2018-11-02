@@ -24,7 +24,6 @@ import java.util.List;
 import javax.servlet.FilterConfig;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -34,25 +33,22 @@ import org.springframework.mock.web.MockHttpServletRequest;
  */
 public class FilterMappingTest {
 
-	@Before
-	public void setUp() {
-		_dispatchers = new ArrayList<>();
-
-		for (Dispatcher dispatcher : Dispatcher.values()) {
-			_dispatchers.add(dispatcher.name());
-		}
-
-		_filterConfig = ProxyFactory.newDummyInstance(FilterConfig.class);
-	}
-
 	@Test
 	public void testIsMatchURLPattern() {
+		List<String> dispatchers = new ArrayList<>();
+
+		for (Dispatcher dispatcher : Dispatcher.values()) {
+			dispatchers.add(dispatcher.name());
+		}
+
 		List<String> urlPatterns = new ArrayList<>();
 
 		urlPatterns.add("/c/portal/login");
 
 		FilterMapping filterMapping = new FilterMapping(
-			StringPool.BLANK, null, _filterConfig, urlPatterns, _dispatchers);
+			StringPool.BLANK, null,
+			ProxyFactory.newDummyInstance(FilterConfig.class), urlPatterns,
+			dispatchers);
 
 		String uri = "/c/portal/login";
 
@@ -64,8 +60,5 @@ public class FilterMappingTest {
 			filterMapping.isMatch(
 				mockHttpServletRequest, Dispatcher.REQUEST, uri));
 	}
-
-	private List<String> _dispatchers;
-	private FilterConfig _filterConfig;
 
 }

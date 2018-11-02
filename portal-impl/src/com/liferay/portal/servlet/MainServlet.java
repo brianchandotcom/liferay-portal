@@ -110,7 +110,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.MissingResourceException;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TimeZone;
@@ -124,7 +123,6 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
-import javax.servlet.UnavailableException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -749,41 +747,22 @@ public class MainServlet extends ActionServlet {
 	private ModuleConfig _init() throws ServletException {
 		try {
 			internal = MessageResources.getMessageResources(internalName);
-		}
-		catch (MissingResourceException mre) {
-			UnavailableException ue = new UnavailableException(
-				StringBundler.concat(
-					"Unable to load internal resources from \"", internalName,
-					"\", due to :", mre.getMessage()));
 
-			ue.addSuppressed(mre);
-
-			throw ue;
-		}
-
-		try {
 			_initServlet();
 
 			ServletContext servletContext = getServletContext();
 
 			servletContext.setAttribute(Globals.ACTION_SERVLET_KEY, this);
 
-			TilesUtil.loadDefinitions(servletContext);
-
 			servletContext.setAttribute(
 				Globals.MODULE_PREFIXES_KEY, StringPool.EMPTY_ARRAY);
 
+			TilesUtil.loadDefinitions(servletContext);
+
 			return _initModuleConfig();
 		}
-		catch (UnavailableException ue) {
-			throw ue;
-		}
-		catch (Throwable t) {
-			UnavailableException ue = new UnavailableException(t.getMessage());
-
-			ue.addSuppressed(t);
-
-			throw ue;
+		catch (Exception e) {
+			throw new ServletException(e);
 		}
 	}
 
@@ -875,7 +854,7 @@ public class MainServlet extends ActionServlet {
 			filters.toArray(new Filter[0]));
 	}
 
-	private ModuleConfig _initModuleConfig() throws ServletException {
+	private ModuleConfig _initModuleConfig() throws Exception {
 		ModuleConfig moduleConfig = new ModuleConfigImpl("");
 
 		ServletContext servletContext = getServletContext();
@@ -923,9 +902,6 @@ public class MainServlet extends ActionServlet {
 
 				moduleConfig.addActionConfig(actionMapping);
 			}
-		}
-		catch (Exception e) {
-			throw new ServletException(e);
 		}
 
 		moduleConfig.freeze();
@@ -1019,7 +995,7 @@ public class MainServlet extends ActionServlet {
 		}
 	}
 
-	private void _initServlet() throws ServletException {
+	private void _initServlet() {
 		ServletConfig servletConfig = getServletConfig();
 
 		servletName = servletConfig.getServletName();

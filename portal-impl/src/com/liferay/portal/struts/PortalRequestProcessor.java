@@ -467,12 +467,17 @@ public class PortalRequestProcessor {
 	private Action _getOriginalAction(
 		HttpServletResponse response, ActionMapping actionMapping) {
 
+		ClassLoader classLoader = PortalRequestProcessor.class.getClassLoader();
+
 		return _actions.computeIfAbsent(
 			actionMapping.getType(),
 			classNameKey -> {
 				try {
-					Action action = (Action)RequestUtils.applicationInstance(
-						classNameKey);
+					Class<? extends Action> clazz =
+						(Class<? extends Action>)classLoader.loadClass(
+							classNameKey);
+
+					Action action = clazz.newInstance();
 
 					if (action.getServlet() == null) {
 						action.setServlet(_actionServlet);

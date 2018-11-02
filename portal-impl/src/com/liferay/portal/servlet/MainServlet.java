@@ -132,7 +132,6 @@ import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionServlet;
-import org.apache.struts.action.RequestProcessor;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.config.impl.ModuleConfigImpl;
 import org.apache.struts.util.MessageResources;
@@ -640,13 +639,6 @@ public class MainServlet extends ActionServlet {
 				_log.error(e, e);
 			}
 		}
-	}
-
-	@Override
-	protected synchronized RequestProcessor getRequestProcessor(
-		ModuleConfig moduleConfig) {
-
-		return null;
 	}
 
 	private void _checkWebSettings(String xml) throws DocumentException {

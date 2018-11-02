@@ -99,9 +99,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.ActionServlet;
-import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.config.ActionConfig;
-import org.apache.struts.config.ExceptionConfig;
 import org.apache.struts.config.ForwardConfig;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.util.MessageResources;
@@ -621,8 +619,11 @@ public class PortalRequestProcessor {
 		try {
 			return action.execute(actionMapping, null, request, response);
 		}
+		catch (IOException | ServletException e) {
+			throw e;
+		}
 		catch (Exception e) {
-			return _processException(request, response, e, actionMapping);
+			throw new ServletException(e);
 		}
 	}
 
@@ -645,40 +646,6 @@ public class PortalRequestProcessor {
 
 		if ((actionMessages != null) && actionMessages.isAccessed()) {
 			session.removeAttribute(Globals.ERROR_KEY);
-		}
-	}
-
-	private ActionForward _processException(
-			HttpServletRequest request, HttpServletResponse response,
-			Exception exception, ActionMapping actionMapping)
-		throws IOException, ServletException {
-
-		ExceptionConfig exceptionConfig = actionMapping.findException(
-			exception.getClass());
-
-		if (exceptionConfig == null) {
-			if (exception instanceof IOException) {
-				throw (IOException)exception;
-			}
-			else if (exception instanceof ServletException) {
-				throw (ServletException)exception;
-			}
-			else {
-				throw new ServletException(exception);
-			}
-		}
-
-		try {
-			ExceptionHandler exceptionHandler =
-				(ExceptionHandler)RequestUtils.applicationInstance(
-					exceptionConfig.getHandler());
-
-			return exceptionHandler.execute(
-				exception, exceptionConfig, actionMapping, null, request,
-				response);
-		}
-		catch (Exception e) {
-			throw new ServletException(e);
 		}
 	}
 

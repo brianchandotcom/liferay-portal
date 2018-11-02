@@ -57,9 +57,7 @@
 		<if>
 			<isset var="webContentId" />
 			<then>
-				<execute function="Click" locator1="TextInput#WEB_CONTENT_ID" />
-
-				<execute function="Type" locator1="TextInput#WEB_CONTENT_ID" value1="${webContentId}" />
+				<execute function="Type" locator1="WCEditWebContent#WEB_CONTENT_ID" value1="${webContentId}" />
 			</then>
 		</if>
 	</command>

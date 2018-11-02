@@ -194,11 +194,12 @@ public class MainServlet extends ActionServlet {
 			_log.error(e, e);
 		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Destroy");
-		}
+		ServletContext servletContext = getServletContext();
 
-		_destroy();
+		servletContext.removeAttribute(Globals.ACTION_SERVLET_KEY);
+		servletContext.removeAttribute(Globals.MODULE_KEY);
+
+		internal = null;
 	}
 
 	@Override
@@ -665,15 +666,6 @@ public class MainServlet extends ActionServlet {
 		I18nServlet.setLanguageIds(root);
 
 		I18nFilter.setLanguageIds(I18nServlet.getLanguageIds());
-	}
-
-	private void _destroy() {
-		ServletContext servletContext = getServletContext();
-
-		servletContext.removeAttribute(Globals.ACTION_SERVLET_KEY);
-		servletContext.removeAttribute(Globals.MODULE_KEY);
-
-		internal = null;
 	}
 
 	private void _destroyCompanies() throws Exception {

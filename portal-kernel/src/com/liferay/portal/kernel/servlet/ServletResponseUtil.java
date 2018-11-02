@@ -167,7 +167,7 @@ public class ServletResponseUtil {
 		List<Range> ranges = null;
 
 		try {
-			ranges = getRanges(request, response, contentLength);
+			ranges = _getRanges(request, contentLength);
 		}
 		catch (IOException ioe) {
 			_log.error("Unable to get ranges", ioe);

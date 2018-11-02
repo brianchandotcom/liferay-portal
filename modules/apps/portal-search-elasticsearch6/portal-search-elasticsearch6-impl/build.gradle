@@ -1,5 +1,5 @@
-String elasticsearchVersion = "6.1.3"
-String luceneVersion = "7.1.0"
+String elasticsearchVersion = "6.5.0"
+String luceneVersion = "7.5.0"
 
 configurations {
 	elasticsearchPlugins {
@@ -13,9 +13,12 @@ dependencies {
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-cbor", version: "2.8.10"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-smile", version: "2.8.10"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.8.10"
+	compileInclude group: "com.liferay", name: "org.elasticsearch.analysis.common", version: elasticsearchVersion
 	compileInclude group: "com.liferay", name: "org.elasticsearch.client.xpack.transport", version: elasticsearchVersion
+	compileInclude group: "com.liferay", name: "org.elasticsearch.plugin.classloader", version: elasticsearchVersion
 	compileInclude group: "com.liferay", name: "org.elasticsearch.plugin.cli", version: elasticsearchVersion
-	compileInclude group: "com.liferay", name: "org.elasticsearch.plugin.xpack.api", version: elasticsearchVersion
+	compileInclude group: "com.liferay", name: "org.elasticsearch.secure.sm", version: elasticsearchVersion
+	compileInclude group: "com.liferay", name: "org.elasticsearch.xpack.core", version: elasticsearchVersion
 	compileInclude group: "com.tdunning", name: "t-digest", version: "3.0"
 	compileInclude group: "com.twitter", name: "jsr166e", version: "1.1.0"
 	compileInclude group: "com.unboundid", name: "unboundid-ldapsdk", version: "4.0.2"
@@ -43,12 +46,16 @@ dependencies {
 	compileInclude group: "org.apache.lucene", name: "lucene-sandbox", version: luceneVersion
 	compileInclude group: "org.apache.lucene", name: "lucene-spatial", version: luceneVersion
 	compileInclude group: "org.apache.lucene", name: "lucene-suggest", version: luceneVersion
-	compileInclude group: "org.bouncycastle", name: "bcpkix-jdk15on", version: "1.49"
-	compileInclude group: "org.bouncycastle", name: "bcprov-jdk15on", version: "1.49"
+	compileInclude group: "org.bouncycastle", name: "bcpg-jdk15on", version: "1.59"
+	compileInclude group: "org.bouncycastle", name: "bcpkix-jdk15on", version: "1.59"
+	compileInclude group: "org.bouncycastle", name: "bcprov-jdk15on", version: "1.59"
 	compileInclude group: "org.elasticsearch", name: "elasticsearch", version: elasticsearchVersion
 	compileInclude group: "org.elasticsearch", name: "elasticsearch-cli", version: elasticsearchVersion
+	compileInclude group: "org.elasticsearch", name: "elasticsearch-core", version: elasticsearchVersion
+	compileInclude group: "org.elasticsearch", name: "elasticsearch-x-content", version: elasticsearchVersion
 	compileInclude group: "org.elasticsearch.client", name: "sniffer", version: "5.5.3"
 	compileInclude group: "org.elasticsearch.client", name: "transport", version: elasticsearchVersion
+	compileInclude group: "org.elasticsearch.plugin", name: "elasticsearch-scripting-painless-spi", version: elasticsearchVersion
 	compileInclude group: "org.elasticsearch.plugin", name: "lang-mustache-client", version: elasticsearchVersion
 	compileInclude group: "org.elasticsearch.plugin", name: "parent-join-client", version: elasticsearchVersion
 	compileInclude group: "org.elasticsearch.plugin", name: "percolator-client", version: elasticsearchVersion
@@ -59,7 +66,7 @@ dependencies {
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "1.17"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	compileOnly group: "com.ibm.icu", name: "icu4j", version: "54.1.1"
+	compileOnly group: "com.ibm.icu", name: "icu4j", version: "61.1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "commons-collections", name: "commons-collections", version: "3.1"

@@ -95,6 +95,8 @@ Import-Package:\
 	\
 	!org.junit.*,\
 	\
+	!org.locationtech.jts.geom.*,\
+	\
 	!org.noggit.*,\
 	\
 	!org.owasp.html.*,\
@@ -107,3 +109,4 @@ Import-Package:\
 	\
 	*
 -dsannotations-options: inherit
+-fixupmessages: Classes found in the wrong directory: ...;is:=ignore

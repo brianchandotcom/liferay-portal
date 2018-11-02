@@ -172,7 +172,7 @@ public class PortalRequestProcessor {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		String path = _findPath(request, response);
+		String path = _findPath(request);
 
 		ActionMapping actionMapping =
 			(ActionMapping)_moduleConfig.findActionConfig(path);
@@ -288,10 +288,7 @@ public class PortalRequestProcessor {
 		return null;
 	}
 
-	private String _findPath(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
-
+	private String _findPath(HttpServletRequest request) throws IOException {
 		String path = (String)request.getAttribute(INCLUDE_PATH_INFO);
 
 		if (path == null) {
@@ -307,20 +304,6 @@ public class PortalRequestProcessor {
 		if (path == null) {
 			path = request.getServletPath();
 		}
-
-		String prefix = _moduleConfig.getPrefix();
-
-		if (!path.startsWith(prefix)) {
-			MessageResources messageResources = _actionServlet.getInternal();
-
-			String message = messageResources.getMessage("processPath");
-
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, message);
-
-			return null;
-		}
-
-		path = path.substring(prefix.length());
 
 		int periodIndex = path.lastIndexOf(CharPool.PERIOD);
 		int slashIndex = path.lastIndexOf(CharPool.SLASH);
@@ -810,8 +793,7 @@ public class PortalRequestProcessor {
 		}
 
 		StrutsUtil.include(
-			_moduleConfig.getPrefix() + include,
-			_actionServlet.getServletContext(), request, response);
+			include, _actionServlet.getServletContext(), request, response);
 
 		return false;
 	}
@@ -879,7 +861,7 @@ public class PortalRequestProcessor {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		String path = GetterUtil.getString(_findPath(request, response));
+		String path = GetterUtil.getString(_findPath(request));
 
 		HttpSession session = request.getSession();
 

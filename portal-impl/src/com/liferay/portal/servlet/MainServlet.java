@@ -997,23 +997,18 @@ public class MainServlet extends ActionServlet {
 	private void _initServlet() {
 		ServletConfig servletConfig = getServletConfig();
 
-		servletName = servletConfig.getServletName();
-
 		ServletContext servletContext = getServletContext();
 
 		ServletRegistration servletRegistration =
-			servletContext.getServletRegistration(servletName);
+			servletContext.getServletRegistration(
+				servletConfig.getServletName());
 
 		Collection<String> mappings = servletRegistration.getMappings();
 
 		Iterator<String> iterator = mappings.iterator();
 
 		if (iterator.hasNext()) {
-			String mapping = iterator.next();
-
-			servletMapping = mapping;
-
-			servletContext.setAttribute(Globals.SERVLET_KEY, servletMapping);
+			servletContext.setAttribute(Globals.SERVLET_KEY, iterator.next());
 		}
 	}
 

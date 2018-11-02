@@ -81,15 +81,20 @@ public class JavaParserUtil {
 
 		boolean hasSurroundingParentheses = false;
 
-		if (detailAST.getType() == TokenTypes.LPAREN) {
-			detailAST = detailAST.getNextSibling();
+		while (true) {
+			if (detailAST.getType() == TokenTypes.LPAREN) {
+				detailAST = detailAST.getNextSibling();
 
-			hasSurroundingParentheses = true;
-		}
-		else if (detailAST.getType() == TokenTypes.RPAREN) {
-			detailAST = detailAST.getPreviousSibling();
+				hasSurroundingParentheses = true;
+			}
+			else if (detailAST.getType() == TokenTypes.RPAREN) {
+				detailAST = detailAST.getPreviousSibling();
 
-			hasSurroundingParentheses = true;
+				hasSurroundingParentheses = true;
+			}
+			else {
+				break;
+			}
 		}
 
 		JavaExpression javaExpression = null;

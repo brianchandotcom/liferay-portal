@@ -146,6 +146,10 @@ public class LiferayVersioningCapability
 		long maximumNumberOfVersions =
 			_dlConfiguration.maximumNumberOfVersions();
 
+		if (maximumNumberOfVersions == 0) {
+			return fileEntry;
+		}
+
 		int status = WorkflowConstants.STATUS_ANY;
 
 		long numberOfVersions = fileEntry.getFileVersionsCount(status);

@@ -66,6 +66,30 @@ public class LiferayVersioningCapabilityTest {
 	}
 
 	@Test
+	public void testDoesNotLimitTheNumberOfVersionsPerFileEntry()
+		throws Exception {
+
+		_withMaximumNumberOfVersionsConfigured(
+			0,
+			() -> {
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId());
+
+				FileEntry fileEntry = _addRandomFileEntry(serviceContext);
+
+				for (int i = 0; i < 10; i++) {
+					_generateNewVersion(fileEntry, serviceContext);
+				}
+
+				Assert.assertEquals(
+					11,
+					fileEntry.getFileVersionsCount(
+						WorkflowConstants.STATUS_ANY));
+			});
+	}
+
+	@Test
 	public void testLimitsTheNumberOfVersionsPerFileEntry() throws Exception {
 		_withMaximumNumberOfVersionsConfigured(
 			2,
@@ -76,19 +100,9 @@ public class LiferayVersioningCapabilityTest {
 
 				FileEntry fileEntry = _addRandomFileEntry(serviceContext);
 
-				Assert.assertEquals(
-					1,
-					fileEntry.getFileVersionsCount(
-						WorkflowConstants.STATUS_ANY));
-
-				_generateNewVersion(fileEntry, serviceContext);
-
-				Assert.assertEquals(
-					2,
-					fileEntry.getFileVersionsCount(
-						WorkflowConstants.STATUS_ANY));
-
-				_generateNewVersion(fileEntry, serviceContext);
+				for (int i = 0; i < 10; i++) {
+					_generateNewVersion(fileEntry, serviceContext);
+				}
 
 				Assert.assertEquals(
 					2,

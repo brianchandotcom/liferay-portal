@@ -92,8 +92,6 @@ import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -101,7 +99,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -953,17 +950,6 @@ public class JournalPortlet extends MVCPortlet {
 
 		sendEditArticleRedirect(
 			actionRequest, actionResponse, article, oldUrlTitle);
-
-		long ddmStructureClassNameId = _portal.getClassNameId(
-			DDMStructure.class);
-
-		if (article.getClassNameId() == ddmStructureClassNameId) {
-			String ddmPortletId = PortletProviderUtil.getPortletId(
-				DDMStructure.class.getName(), PortletProvider.Action.EDIT);
-
-			MultiSessionMessages.add(
-				actionRequest, ddmPortletId + "requestProcessed");
-		}
 
 		boolean hideDefaultSuccessMessage = ParamUtil.getBoolean(
 			actionRequest, "hideDefaultSuccessMessage");

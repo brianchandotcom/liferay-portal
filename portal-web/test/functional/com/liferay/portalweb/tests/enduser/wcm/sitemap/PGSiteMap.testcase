@@ -51,22 +51,6 @@
 	</tear-down>
 
 	<command name="DisplayPrivatePageWithChildPage" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Navigation Menus" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Default Private" />
-		</execute>
-
-		<execute macro="NavigationMenusAdmin#addItem">
-			<var name="item" value="Page" />
-			<var name="pageNames" value="Child Page Name" />
-			<var name="privacy" value="Private Pages" />
-		</execute>
-
 		<execute macro="Navigator#gotoPrivateSitePage">
 			<var name="pageName" value="Child Page Name" />
 			<var name="siteName" value="Site Name" />

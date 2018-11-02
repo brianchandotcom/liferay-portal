@@ -38,10 +38,6 @@ SearchContainer searchContainer = SelectOrganizationManagementToolbarDisplayCont
 renderResponse.setTitle(LanguageUtil.get(request, "organizations"));
 %>
 
-<clay:navigation-bar
-	navigationItems='<%= userDisplayContext.getNavigationItems("organizations") %>'
-/>
-
 <clay:management-toolbar
 	clearResultsURL="<%= SelectOrganizationManagementToolbarDisplayContext.getClearResultsURL() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"

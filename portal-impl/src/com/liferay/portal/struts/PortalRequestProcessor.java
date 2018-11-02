@@ -479,9 +479,7 @@ public class PortalRequestProcessor {
 
 					Action action = clazz.newInstance();
 
-					if (action.getServlet() == null) {
-						action.setServlet(_actionServlet);
-					}
+					action.setServlet(_actionServlet);
 
 					return action;
 				}

@@ -483,21 +483,8 @@ public class PortalRequestProcessor {
 
 					return action;
 				}
-				catch (Exception e) {
-					MessageResources messageResources =
-						_actionServlet.getInternal();
-
-					try {
-						response.sendError(
-							HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-							messageResources.getMessage(
-								"actionCreate", actionMapping.getPath()));
-					}
-					catch (IOException ioe) {
-						ReflectionUtil.throwException(ioe);
-					}
-
-					return null;
+				catch (ReflectiveOperationException roe) {
+					return ReflectionUtil.throwException(roe);
 				}
 			});
 	}

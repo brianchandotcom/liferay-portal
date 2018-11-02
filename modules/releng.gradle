@@ -359,6 +359,7 @@ portalArtifactsJar {
 	exclude "*.*"
 	exclude "META-INF/**"
 	exclude "OSGI-INF/**"
+	includeEmptyDirs = false
 	version = _getReleaseInfoVersion()
 
 	doFirst {
@@ -496,6 +497,7 @@ portalArtifactsJar {
 			classifier = null
 			configurations = [project.configurations.portalJavadocs]
 			exclude "*.*"
+			includeEmptyDirs = false
 			version = _getReleaseInfoVersion()
 
 			doLast {
@@ -513,6 +515,7 @@ portalArtifactsJar {
 			exclude "META-INF/**"
 			exclude "WEB-INF/**"
 			exclude "content/**"
+			includeEmptyDirs = false
 			version = _getReleaseInfoVersion()
 
 			doLast {

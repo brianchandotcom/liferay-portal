@@ -464,9 +464,7 @@ public class PortalRequestProcessor {
 		return lastPathSB.toString();
 	}
 
-	private Action _getOriginalAction(
-		HttpServletResponse response, ActionMapping actionMapping) {
-
+	private Action _getOriginalAction(ActionMapping actionMapping) {
 		ClassLoader classLoader = PortalRequestProcessor.class.getClassLoader();
 
 		return _actions.computeIfAbsent(
@@ -563,7 +561,7 @@ public class PortalRequestProcessor {
 			return;
 		}
 
-		Action action = _processActionCreate(response, actionMapping);
+		Action action = _processActionCreate(actionMapping);
 
 		if (action == null) {
 			return;
@@ -586,8 +584,7 @@ public class PortalRequestProcessor {
 		}
 	}
 
-	private Action _processActionCreate(
-			HttpServletResponse response, ActionMapping actionMapping)
+	private Action _processActionCreate(ActionMapping actionMapping)
 		throws IOException {
 
 		ActionAdapter actionAdapter =
@@ -600,13 +597,13 @@ public class PortalRequestProcessor {
 
 			if (actionConfig != null) {
 				actionAdapter.setOriginalAction(
-					_getOriginalAction(response, actionMapping));
+					_getOriginalAction(actionMapping));
 			}
 
 			return actionAdapter;
 		}
 
-		return _getOriginalAction(response, actionMapping);
+		return _getOriginalAction(actionMapping);
 	}
 
 	private void _processCachedMessages(HttpServletRequest request) {

@@ -209,30 +209,19 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 							<td class="table-column-text-center">
 								<label class="sr-only" for="<%= checkboxFieldId %>"><liferay-ui:message arguments="<%= new Object[] {ResourceActionsUtil.getAction(request, action), role.getTitle(themeDisplay.getLocale())} %>" key="give-x-permission-to-users-with-role-x" translateArguments="<%= false %>" /></label>
 
-								<c:choose>
-									<c:when test="<%= action.equals(ActionKeys.VIEW) %>">
-										<input
-											id='<%= checkboxFieldId + "_display_only" %>'
-											<%= checked ? "checked" : "" %>
-											disabled
-											name='<%= checkboxFieldName + "_display_only" %>'
-											title='<%= LanguageUtil.format(request, "give-x-permission-to-users-with-role-x", new Object[] {ResourceActionsUtil.getAction(request, action), role.getTitle(themeDisplay.getLocale())}, false) %>'
-											type="checkbox"
-										/>
+								<c:if test="<%= action.equals(ActionKeys.VIEW) %>">
+									<input <%= checked ? "checked" : "" %> class="hide-accessible" id="<%= checkboxFieldId %>" name='<%= checkboxFieldName %>' type="checkbox" value="<%= action %>" />
 
-										<input
-											<%= checked ? "checked" : "" %>
-											class="hide-accessible"
-											id="<%= checkboxFieldId %>"
-											name='<%= checkboxFieldName %>'
-											type="checkbox"
-											value="<%= action %>"
-										/>
-									</c:when>
-									<c:otherwise>
-										<input <%= checked ? "checked" : "" %> <%= disabled ? "disabled" : "" %> id="<%= checkboxFieldId %>" name="<%= checkboxFieldName %>" title='<%= LanguageUtil.format(request, "give-x-permission-to-users-with-role-x", new Object[] {ResourceActionsUtil.getAction(request, action), role.getTitle(themeDisplay.getLocale())}, false) %>' type="checkbox" value="<%= action %>" />
-									</c:otherwise>
-								</c:choose>
+									<%
+										disabled = true;
+
+										checkboxFieldId = checkboxFieldId + StringPool.UNDERLINE + "display";
+										checkboxFieldName = checkboxFieldName + StringPool.UNDERLINE + "display";
+									%>
+
+								</c:if>
+
+								<input <%= checked ? "checked" : "" %> <%= disabled ? "disabled" : "" %>  id="<%= checkboxFieldId %>" name="<%= checkboxFieldName %>" title='<%= LanguageUtil.format(request, "give-x-permission-to-users-with-role-x", new Object[] {ResourceActionsUtil.getAction(request, action), role.getTitle(themeDisplay.getLocale())}, false) %>' type="checkbox" value="<%= action %>" />
 							</td>
 
 						<%
@@ -288,7 +277,7 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 
 			function <%= uniqueNamespace %>doUpdateViewValue(id, checkPermission) {
 				$('#' + id).prop('checked', checkPermission);
-				$('#' + id + '_display_only').prop('checked', checkPermission);
+				$('#' + id + '_display').prop('checked', checkPermission);
 			}
 		</aui:script>
 	</c:otherwise>

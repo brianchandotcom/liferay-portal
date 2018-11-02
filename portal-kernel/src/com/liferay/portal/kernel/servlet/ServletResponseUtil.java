@@ -60,69 +60,16 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ServletResponseUtil {
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static List<Range> getRanges(
 			HttpServletRequest request, HttpServletResponse response,
 			long length)
 		throws IOException {
 
-		String rangeString = request.getHeader(HttpHeaders.RANGE);
-
-		if (Validator.isNull(rangeString)) {
-			return Collections.emptyList();
-		}
-
-		if (!rangeString.matches(_RANGE_REGEX)) {
-			throw new IOException(
-				"Range header does not match regular expression " +
-					rangeString);
-		}
-
-		List<Range> ranges = new ArrayList<>();
-
-		String[] rangeFields = StringUtil.split(rangeString.substring(6));
-
-		if (rangeFields.length > _MAX_RANGE_FIELDS) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append("Request range ");
-			sb.append(rangeString);
-			sb.append(" with ");
-			sb.append(rangeFields.length);
-			sb.append(" range fields has exceeded maximum allowance as ");
-			sb.append("specified by the property \"");
-			sb.append(PropsKeys.WEB_SERVER_SERVLET_MAX_RANGE_FIELDS);
-			sb.append("\"");
-
-			throw new IOException(sb.toString());
-		}
-
-		for (String rangeField : rangeFields) {
-			int index = rangeField.indexOf(StringPool.DASH);
-
-			long start = GetterUtil.getLong(rangeField.substring(0, index), -1);
-			long end = GetterUtil.getLong(rangeField.substring(index + 1), -1);
-
-			if (start == -1) {
-				start = length - end;
-				end = length - 1;
-			}
-			else if ((end == -1) || (end > (length - 1))) {
-				end = length - 1;
-			}
-
-			if (start > end) {
-				throw new IOException(
-					StringBundler.concat(
-						"Range start ", String.valueOf(start),
-						" is greater than end ", String.valueOf(end)));
-			}
-
-			Range range = new Range(start, end, length);
-
-			ranges.add(range);
-		}
-
-		return ranges;
+		return _getRanges(request, length);
 	}
 
 	public static boolean isClientAbortException(IOException ioe) {
@@ -778,6 +725,70 @@ public class ServletResponseUtil {
 			inputStream, outputStream, StreamUtil.BUFFER_SIZE, false, length);
 
 		return inputStream;
+	}
+
+	private static List<Range> _getRanges(
+			HttpServletRequest request, long length)
+		throws IOException {
+
+		String rangeString = request.getHeader(HttpHeaders.RANGE);
+
+		if (Validator.isNull(rangeString)) {
+			return Collections.emptyList();
+		}
+
+		if (!rangeString.matches(_RANGE_REGEX)) {
+			throw new IOException(
+				"Range header does not match regular expression " +
+					rangeString);
+		}
+
+		List<Range> ranges = new ArrayList<>();
+
+		String[] rangeFields = StringUtil.split(rangeString.substring(6));
+
+		if (rangeFields.length > _MAX_RANGE_FIELDS) {
+			StringBundler sb = new StringBundler(8);
+
+			sb.append("Request range ");
+			sb.append(rangeString);
+			sb.append(" with ");
+			sb.append(rangeFields.length);
+			sb.append(" range fields has exceeded maximum allowance as ");
+			sb.append("specified by the property \"");
+			sb.append(PropsKeys.WEB_SERVER_SERVLET_MAX_RANGE_FIELDS);
+			sb.append("\"");
+
+			throw new IOException(sb.toString());
+		}
+
+		for (String rangeField : rangeFields) {
+			int index = rangeField.indexOf(StringPool.DASH);
+
+			long start = GetterUtil.getLong(rangeField.substring(0, index), -1);
+			long end = GetterUtil.getLong(rangeField.substring(index + 1), -1);
+
+			if (start == -1) {
+				start = length - end;
+				end = length - 1;
+			}
+			else if ((end == -1) || (end > (length - 1))) {
+				end = length - 1;
+			}
+
+			if (start > end) {
+				throw new IOException(
+					StringBundler.concat(
+						"Range start ", String.valueOf(start),
+						" is greater than end ", String.valueOf(end)));
+			}
+
+			Range range = new Range(start, end, length);
+
+			ranges.add(range);
+		}
+
+		return ranges;
 	}
 
 	private static boolean _isRandomAccessSupported(InputStream inputStream) {

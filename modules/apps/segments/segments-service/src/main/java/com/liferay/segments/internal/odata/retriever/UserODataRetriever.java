@@ -15,6 +15,8 @@
 package com.liferay.segments.internal.odata.retriever;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -48,6 +50,8 @@ import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author David Arques
@@ -140,6 +144,50 @@ public class UserODataRetriever implements ODataRetriever<User> {
 		}
 	}
 
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(entity.model.name=" + UserEntityModel.NAME + ")",
+		unbind = "unbindFilterParser"
+	)
+	public void setFilterParser(FilterParser filterParser) {
+		if (_log.isInfoEnabled()) {
+			_log.info("Binding " + filterParser);
+		}
+
+		_filterParser = filterParser;
+	}
+
+	public void unbindFilterParser(FilterParser filterParser) {
+		if (_log.isInfoEnabled()) {
+			_log.info("Unbinding " + filterParser);
+		}
+
+		_filterParser = null;
+	}
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(entity.model.name=" + UserEntityModel.NAME + ")",
+		unbind = "unbindEntityModel"
+	)
+	protected void setEntityModel(EntityModel entityModel) {
+		if (_log.isInfoEnabled()) {
+			_log.info("Binding " + entityModel);
+		}
+
+		_entityModel = entityModel;
+	}
+
+	protected void unbindEntityModel(EntityModel entityModel) {
+		if (_log.isInfoEnabled()) {
+			_log.info("Unbinding " + entityModel);
+		}
+
+		_entityModel = null;
+	}
+
 	private SearchContext _createSearchContext(
 		long companyId, int start, int end) {
 
@@ -213,8 +261,10 @@ public class UserODataRetriever implements ODataRetriever<User> {
 		return users;
 	}
 
-	@Reference(target = "(entity.model.name=" + UserEntityModel.NAME + ")")
-	private EntityModel _entityModel;
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserODataRetriever.class);
+
+	private volatile EntityModel _entityModel;
 
 	@Reference(
 		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"
@@ -222,7 +272,6 @@ public class UserODataRetriever implements ODataRetriever<User> {
 	private ExpressionConvert<com.liferay.portal.kernel.search.filter.Filter>
 		_expressionConvert;
 
-	@Reference(target = "(entity.model.name=" + UserEntityModel.NAME + ")")
 	private FilterParser _filterParser;
 
 	@Reference

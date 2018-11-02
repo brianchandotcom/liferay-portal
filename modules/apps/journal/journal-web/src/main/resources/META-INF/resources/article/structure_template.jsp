@@ -68,7 +68,7 @@ DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-te
 	</span>
 
 	<div class="button-holder">
-		<aui:button id="selectTemplate" value="select" />
+		<aui:button id="selectDDMTemplate" value="select" />
 	</div>
 </div>
 
@@ -154,7 +154,7 @@ DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-te
 		}
 	);
 
-	$('#<portlet:namespace />selectTemplate').on(
+	$('#<portlet:namespace />selectDDMTemplate').on(
 		'click',
 		function(event) {
 			Liferay.Util.selectEntity(
@@ -163,8 +163,8 @@ DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-te
 						constrain: true,
 						modal: true
 					},
-					eventName: '<portlet:namespace />selectTemplate',
-					id: '<portlet:namespace />selectTemplate',
+					eventName: '<portlet:namespace />selectDDMTemplate',
+					id: '<portlet:namespace />selectDDMTemplate',
 					title: '<%= UnicodeLanguageUtil.get(request, "templates") %>',
 					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_template.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" /></portlet:renderURL>'
 				},

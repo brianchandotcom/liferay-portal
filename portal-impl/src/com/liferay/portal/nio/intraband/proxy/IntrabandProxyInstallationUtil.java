@@ -109,7 +109,7 @@ public class IntrabandProxyInstallationUtil {
 		@Override
 		public String[] call() throws ProcessException {
 			ClassLoader classLoader = ClassLoaderPool.getClassLoader(
-				_servletContextName);
+				_contextName);
 
 			try {
 				return installSkeleton(
@@ -125,14 +125,14 @@ public class IntrabandProxyInstallationUtil {
 			ClassLoader classLoader, Class<?> clazz,
 			TargetLocator targetLocator) {
 
-			_servletContextName = ClassLoaderPool.getContextName(classLoader);
+			_contextName = ClassLoaderPool.getContextName(classLoader);
 			_skeletonId = clazz.getName();
 			_targetLocator = targetLocator;
 		}
 
 		private static final long serialVersionUID = 1L;
 
-		private final String _servletContextName;
+		private final String _contextName;
 		private final String _skeletonId;
 		private final TargetLocator _targetLocator;
 

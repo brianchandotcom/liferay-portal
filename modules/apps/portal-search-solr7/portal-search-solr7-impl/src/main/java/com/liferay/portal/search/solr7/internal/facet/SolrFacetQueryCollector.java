@@ -85,7 +85,7 @@ public class SolrFacetQueryCollector implements FacetCollector {
 
 				map2.put(
 					bucket.substring(name.length() + 1),
-					(Integer)namedList.get("count"));
+					GetterUtil.getInteger(namedList.get("count")));
 			}
 		}
 

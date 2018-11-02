@@ -95,18 +95,15 @@ import javax.servlet.jsp.PageContext;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.ActionServlet;
 import org.apache.struts.action.ExceptionHandler;
-import org.apache.struts.action.InvalidCancelException;
 import org.apache.struts.config.ActionConfig;
 import org.apache.struts.config.ExceptionConfig;
 import org.apache.struts.config.ForwardConfig;
 import org.apache.struts.config.ModuleConfig;
-import org.apache.struts.upload.MultipartRequestHandler;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.RequestUtils;
 
@@ -570,48 +567,6 @@ public class PortalRequestProcessor {
 			return;
 		}
 
-		ActionForm actionForm = _processActionForm(request, actionMapping);
-
-		if (actionForm != null) {
-			actionForm.setServlet(_actionServlet);
-
-			actionForm.reset(actionMapping, request);
-
-			if (actionMapping.getMultipartClass() != null) {
-				request.setAttribute(
-					Globals.MULTIPART_KEY, actionMapping.getMultipartClass());
-			}
-
-			RequestUtils.populate(
-				actionForm, actionMapping.getPrefix(),
-				actionMapping.getSuffix(), request);
-		}
-
-		try {
-			if (!_processValidate(
-					request, response, actionForm, actionMapping)) {
-
-				return;
-			}
-		}
-		catch (InvalidCancelException ice) {
-			ActionForward actionForward = _processException(
-				request, response, ice, actionForm, actionMapping);
-
-			if (actionForward != null) {
-				_internalModuleRelativeForward(
-					actionForward.getPath(), request, response);
-			}
-
-			return;
-		}
-		catch (IOException ioe) {
-			throw ioe;
-		}
-		catch (ServletException se) {
-			throw se;
-		}
-
 		if (!_processForward(request, response, actionMapping)) {
 			return;
 		}
@@ -627,7 +582,7 @@ public class PortalRequestProcessor {
 		}
 
 		ActionForward actionForward = _processActionPerform(
-			request, response, action, actionForm, actionMapping);
+			request, response, action, actionMapping);
 
 		if (actionForward != null) {
 			_internalModuleRelativeForward(
@@ -658,39 +613,16 @@ public class PortalRequestProcessor {
 		return _getOriginalAction(response, actionMapping);
 	}
 
-	private ActionForm _processActionForm(
-		HttpServletRequest request, ActionMapping actionMapping) {
-
-		ActionForm actionForm = RequestUtils.createActionForm(
-			request, actionMapping, _moduleConfig, _actionServlet);
-
-		if (actionForm == null) {
-			return null;
-		}
-
-		if ("request".equals(actionMapping.getScope())) {
-			request.setAttribute(actionMapping.getAttribute(), actionForm);
-		}
-		else {
-			HttpSession session = request.getSession();
-
-			session.setAttribute(actionMapping.getAttribute(), actionForm);
-		}
-
-		return actionForm;
-	}
-
 	private ActionForward _processActionPerform(
 			HttpServletRequest request, HttpServletResponse response,
-			Action action, ActionForm actionForm, ActionMapping actionMapping)
+			Action action, ActionMapping actionMapping)
 		throws IOException, ServletException {
 
 		try {
-			return action.execute(actionMapping, actionForm, request, response);
+			return action.execute(actionMapping, null, request, response);
 		}
 		catch (Exception e) {
-			return _processException(
-				request, response, e, actionForm, actionMapping);
+			return _processException(request, response, e, actionMapping);
 		}
 	}
 
@@ -718,8 +650,7 @@ public class PortalRequestProcessor {
 
 	private ActionForward _processException(
 			HttpServletRequest request, HttpServletResponse response,
-			Exception exception, ActionForm actionForm,
-			ActionMapping actionMapping)
+			Exception exception, ActionMapping actionMapping)
 		throws IOException, ServletException {
 
 		ExceptionConfig exceptionConfig = actionMapping.findException(
@@ -743,7 +674,7 @@ public class PortalRequestProcessor {
 					exceptionConfig.getHandler());
 
 			return exceptionHandler.execute(
-				exception, exceptionConfig, actionMapping, actionForm, request,
+				exception, exceptionConfig, actionMapping, null, request,
 				response);
 		}
 		catch (Exception e) {
@@ -1255,53 +1186,6 @@ public class PortalRequestProcessor {
 		}
 
 		return true;
-	}
-
-	private boolean _processValidate(
-			HttpServletRequest request, HttpServletResponse response,
-			ActionForm actionForm, ActionMapping actionMapping)
-		throws InvalidCancelException, IOException, ServletException {
-
-		if (actionForm == null) {
-			return true;
-		}
-
-		if (!actionMapping.getValidate()) {
-			return true;
-		}
-
-		ActionMessages actionMessages = actionForm.validate(
-			actionMapping, request);
-
-		if ((actionMessages == null) || actionMessages.isEmpty()) {
-			return true;
-		}
-
-		MultipartRequestHandler multipartRequestHandler =
-			actionForm.getMultipartRequestHandler();
-
-		if (multipartRequestHandler != null) {
-			multipartRequestHandler.rollback();
-		}
-
-		String input = actionMapping.getInput();
-
-		if (input == null) {
-			MessageResources messageResources = _actionServlet.getInternal();
-
-			response.sendError(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-				messageResources.getMessage(
-					"noInput", actionMapping.getPath()));
-
-			return false;
-		}
-
-		request.setAttribute(Globals.ERROR_KEY, actionMessages);
-
-		_internalModuleRelativeForward(input, request, response);
-
-		return false;
 	}
 
 	private static final String _PATH_C = "/c";

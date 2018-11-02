@@ -18,14 +18,12 @@ import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.ItemResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
-import com.liferay.blog.apio.architect.identifier.BlogPostingIdentifier;
-import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
-import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.portal.apio.user.CurrentUser;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
@@ -36,6 +34,7 @@ import com.liferay.workflow.apio.internal.architect.route.AssignToMePostRoute;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -87,12 +86,15 @@ public class WorkflowTaskItemResource
 			"dateCreated", WorkflowTask::getCreateDate
 		).addDate(
 			"expires", WorkflowTask::getDueDate
-		).addLinkedModel(
-			"blogPost", BlogPostingIdentifier.class, this::_getLinkedModelId
-		).addLinkedModel(
-			"comment", CommentIdentifier.class, this::_getLinkedModelId
-		).addLinkedModel(
-			"document", MediaObjectIdentifier.class, this::_getLinkedModelId
+		).addNested(
+			"object", WorkflowTask::getOptionalAttributes,
+			nestedBuilder -> nestedBuilder.types(
+				"Object"
+			).addString(
+				"resourceType", this::_getResourceType
+			).addApplicationRelativeURL(
+				"identifier", this::_getResourceUrl
+			).build()
 		).addRelatedCollection(
 			"logs", WorkflowLogIdentifier.class
 		).addString(
@@ -123,15 +125,52 @@ public class WorkflowTaskItemResource
 		);
 	}
 
-	private Serializable _getEntryClassPK(WorkflowTask workflowTask) {
-		Map<String, Serializable> optionalAttributes =
-			workflowTask.getOptionalAttributes();
+	private String _getResourceType(
+		Map<String, Serializable> optionalAttributes) {
 
-		return optionalAttributes.get("entryClassPK");
+		Map<String, String> map = new HashMap<String, String>() {
+			{
+				put(BlogsEntry.class.getName(), "BlogPosting");
+				put(MBDiscussion.class.getName(), "Comment");
+			}
+		};
+
+		String type = map.get(optionalAttributes.get("entryClassName"));
+
+		if (type == null) {
+			return null;
+		}
+
+		return type;
 	}
 
-	private Long _getLinkedModelId(WorkflowTask workflowTask) {
-		return GetterUtil.getLong(_getEntryClassPK(workflowTask));
+	private String _getResourceUrl(
+		Map<String, Serializable> optionalAttributes) {
+
+		Map<String, String> map = new HashMap<String, String>() {
+			{
+				put(BlogsEntry.class.getName(), "blog-posting");
+				put(MBDiscussion.class.getName(), "comment");
+			}
+		};
+
+		String entryClassName = map.get(
+			optionalAttributes.get("entryClassName"));
+
+		if (entryClassName == null) {
+			return null;
+		}
+
+		String entryClassPK = (String)optionalAttributes.get("entryClassPK");
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("p/");
+		sb.append(entryClassName);
+		sb.append("/");
+		sb.append(entryClassPK);
+
+		return sb.toString();
 	}
 
 	private List<String> _getTaskTransitionsNames(WorkflowTask workflowTask) {

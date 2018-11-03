@@ -123,6 +123,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -131,7 +132,6 @@ import javax.servlet.jsp.PageContext;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionServlet;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.config.impl.ModuleConfigImpl;
 
@@ -140,7 +140,7 @@ import org.apache.struts.config.impl.ModuleConfigImpl;
  * @author Jorge Ferrer
  * @author Brian Myunghun Kim
  */
-public class MainServlet extends ActionServlet {
+public class MainServlet extends HttpServlet {
 
 	@Override
 	public void destroy() {

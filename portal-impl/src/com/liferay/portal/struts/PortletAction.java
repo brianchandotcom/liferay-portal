@@ -53,7 +53,6 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -63,7 +62,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.config.ModuleConfig;
-import org.apache.struts.util.MessageResources;
 
 /**
  * @author Brian Wing Shun Chan
@@ -230,22 +228,6 @@ public class PortletAction extends Action {
 
 	protected ModuleConfig getModuleConfig(PortletRequest portletRequest) {
 		return (ModuleConfig)portletRequest.getAttribute(Globals.MODULE_KEY);
-	}
-
-	protected MessageResources getResources() {
-		ServletContext servletContext = getServlet().getServletContext();
-
-		return (MessageResources)servletContext.getAttribute(
-			Globals.MESSAGES_KEY);
-	}
-
-	@Override
-	protected MessageResources getResources(HttpServletRequest request) {
-		return getResources();
-	}
-
-	protected MessageResources getResources(PortletRequest portletRequest) {
-		return getResources();
 	}
 
 	protected PortletPreferences getStrictPortletSetup(

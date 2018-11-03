@@ -56,6 +56,7 @@
 		<execute macro="LAR#importPortlet">
 			<var name="larFileName" value="organizations-7.0.lar" />
 			<var name="portletName" value="Users and Organizations" />
+			<var name="uploadFrom" value="dependencies" />
 		</execute>
 
 		<execute macro="Organization#viewCP">
@@ -88,6 +89,7 @@
 		<execute macro="LAR#importPortlet">
 			<var name="larFileName" value="class-site-template-7.0.lar" />
 			<var name="portletName" value="Site Templates" />
+			<var name="uploadFrom" value="dependencies" />
 		</execute>
 
 		<execute macro="SiteTemplates#viewCP">

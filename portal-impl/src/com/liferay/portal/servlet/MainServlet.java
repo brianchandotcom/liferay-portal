@@ -134,7 +134,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionServlet;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.config.impl.ModuleConfigImpl;
-import org.apache.struts.util.MessageResources;
 
 /**
  * @author Brian Wing Shun Chan
@@ -197,8 +196,6 @@ public class MainServlet extends ActionServlet {
 
 		servletContext.removeAttribute(Globals.ACTION_SERVLET_KEY);
 		servletContext.removeAttribute(Globals.MODULE_KEY);
-
-		internal = null;
 	}
 
 	@Override
@@ -745,8 +742,6 @@ public class MainServlet extends ActionServlet {
 
 	private ModuleConfig _init() throws ServletException {
 		try {
-			internal = MessageResources.getMessageResources(internalName);
-
 			_initServlet();
 
 			ServletContext servletContext = getServletContext();

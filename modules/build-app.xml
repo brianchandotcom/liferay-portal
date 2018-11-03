@@ -1041,6 +1041,10 @@
 	</target>
 
 	<target depends="get-lpkg-artifacts-list" name="write-lpkg-marketplace-properties" unless="module.dirs.null">
+		<tstamp>
+			<format pattern="yyMMddHHmmssSSS" property="remote.app.id" />
+		</tstamp>
+
 		<echo file="${lpkg.dir}/liferay-marketplace.properties" message="bundles=${lpkg.artifacts.list}" />
 
 		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="${line.separator}" />
@@ -1049,7 +1053,7 @@
 
 		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="${line.separator}" />
 
-		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="remote-app-id=${title}" />
+		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="remote-app-id=${remote.app.id}" />
 
 		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="${line.separator}" />
 

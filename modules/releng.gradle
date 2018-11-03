@@ -449,6 +449,10 @@ portalArtifactsJar {
 
 			String artifactJavadocURL = relengProperties.getProperty("artifact.javadoc.url")
 
+			if (!artifactJavadocURL && !relengFile.name.equals("artifact.properties")) {
+				artifactJavadocURL = artifactURL[0 .. -5] + "-javadoc.jar"
+			}
+
 			if (artifactJavadocURL && artifactJavadocURL.endsWith(".jar")) {
 				project.download {
 					dest cacheDir
@@ -472,6 +476,10 @@ portalArtifactsJar {
 			}
 
 			String artifactSourcesURL = relengProperties.getProperty("artifact.sources.url")
+
+			if (!artifactSourcesURL && !relengFile.name.equals("artifact.properties")) {
+				artifactSourcesURL = artifactURL[0 .. -5] + "-sources.jar"
+			}
 
 			if (artifactSourcesURL && artifactSourcesURL.endsWith(".jar")) {
 				project.download {

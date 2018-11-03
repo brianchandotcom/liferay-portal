@@ -130,7 +130,9 @@ public class PortletContainerUtil {
 			try {
 				PortletApp portletApp = portlet.getPortletApp();
 
-				if (portletApp.getSpecMajorVersion() >= 3) {
+				if ((portletApp.getSpecMajorVersion() >= 3) &&
+					portlet.isActionURLRedirect()) {
+
 					Layout layout = (Layout)request.getAttribute(
 						WebKeys.LAYOUT);
 

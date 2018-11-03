@@ -272,7 +272,8 @@ public class PortalRequestProcessor {
 			}
 		}
 
-		response.sendError(HttpServletResponse.SC_NOT_FOUND, "Invalid path was requested");
+		response.sendError(
+			HttpServletResponse.SC_NOT_FOUND, "Invalid path was requested");
 
 		_log.error("User ID " + request.getRemoteUser());
 		_log.error("Current URL " + PortalUtil.getCurrentURL(request));
@@ -476,11 +477,7 @@ public class PortalRequestProcessor {
 						(Class<? extends Action>)classLoader.loadClass(
 							classNameKey);
 
-					Action action = clazz.newInstance();
-
-					action.setServlet(_actionServlet);
-
-					return action;
+					return clazz.newInstance();
 				}
 				catch (ReflectiveOperationException roe) {
 					return ReflectionUtil.throwException(roe);

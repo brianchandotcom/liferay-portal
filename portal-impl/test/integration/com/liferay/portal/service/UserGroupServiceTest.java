@@ -85,32 +85,46 @@ public class UserGroupServiceTest {
 
 	@Test
 	public void testGetUserGroupsLikeName() throws Exception {
+		List<UserGroup> allUserGroups = new ArrayList<>();
+
+		allUserGroups.addAll(
+			UserGroupLocalServiceUtil.getUserGroups(
+				TestPropsValues.getCompanyId()));
+
+		List<UserGroup> likeNameUserGroups = new ArrayList<>();
+
 		String name = RandomTestUtil.randomString(10);
 
-		List<UserGroup> expectedUserGroups = new ArrayList<>();
-
 		for (int i = 0; i < 10; i++) {
-			UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+			UserGroup userGroup = addUserGroup();
 
 			userGroup.setName(name + i);
 
-			UserGroupLocalServiceUtil.updateUserGroup(userGroup);
+			userGroup = UserGroupLocalServiceUtil.updateUserGroup(userGroup);
 
-			expectedUserGroups.add(userGroup);
+			allUserGroups.add(userGroup);
+			likeNameUserGroups.add(userGroup);
 		}
 
-		_userGroups.addAll(expectedUserGroups);
-		_userGroups.add(UserGroupTestUtil.addUserGroup());
-		_userGroups.add(UserGroupTestUtil.addUserGroup());
-		_userGroups.add(UserGroupTestUtil.addUserGroup());
+		allUserGroups.add(addUserGroup());
+		allUserGroups.add(addUserGroup());
+		allUserGroups.add(addUserGroup());
 
-		assertExpectedUserGroups(expectedUserGroups, name + "%");
+		assertExpectedUserGroups(likeNameUserGroups, name + "%");
 		assertExpectedUserGroups(
-			expectedUserGroups, StringUtil.toLowerCase(name) + "%");
+			likeNameUserGroups, StringUtil.toLowerCase(name) + "%");
 		assertExpectedUserGroups(
-			expectedUserGroups, StringUtil.toUpperCase(name) + "%");
-		assertExpectedUserGroups(_userGroups, null);
-		assertExpectedUserGroups(_userGroups, "");
+			likeNameUserGroups, StringUtil.toUpperCase(name) + "%");
+		assertExpectedUserGroups(allUserGroups, null);
+		assertExpectedUserGroups(allUserGroups, "");
+	}
+
+	protected UserGroup addUserGroup() throws Exception {
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		_userGroups.add(userGroup);
+
+		return userGroup;
 	}
 
 	protected void assertExpectedUserGroups(

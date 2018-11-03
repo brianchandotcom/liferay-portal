@@ -102,7 +102,6 @@ import org.apache.struts.action.ActionServlet;
 import org.apache.struts.config.ActionConfig;
 import org.apache.struts.config.ForwardConfig;
 import org.apache.struts.config.ModuleConfig;
-import org.apache.struts.util.MessageResources;
 
 /**
  * @author Brian Wing Shun Chan
@@ -273,18 +272,14 @@ public class PortalRequestProcessor {
 			}
 		}
 
-		MessageResources messageResources = _actionServlet.getInternal();
-
-		String msg = messageResources.getMessage("processInvalid");
-
-		response.sendError(HttpServletResponse.SC_NOT_FOUND, msg);
+		response.sendError(HttpServletResponse.SC_NOT_FOUND, "Invalid path was requested");
 
 		_log.error("User ID " + request.getRemoteUser());
 		_log.error("Current URL " + PortalUtil.getCurrentURL(request));
 		_log.error("Referer " + request.getHeader("Referer"));
 		_log.error("Remote address " + request.getRemoteAddr());
 
-		_log.error(msg + " " + path);
+		_log.error("Invalid path was requested :" + path);
 
 		return null;
 	}

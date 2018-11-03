@@ -222,7 +222,8 @@ public class MainServlet extends ActionServlet {
 
 		servletContext.setAttribute(MainServlet.class.getName(), Boolean.TRUE);
 
-		_portalRequestProcessor = new PortalRequestProcessor(this, _init());
+		_portalRequestProcessor = new PortalRequestProcessor(
+			servletContext, _init());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Verify patch levels");

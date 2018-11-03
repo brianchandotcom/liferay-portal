@@ -98,7 +98,6 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
-import org.apache.struts.action.ActionServlet;
 import org.apache.struts.config.ActionConfig;
 import org.apache.struts.config.ForwardConfig;
 import org.apache.struts.config.ModuleConfig;
@@ -119,12 +118,10 @@ public class PortalRequestProcessor {
 		"javax.servlet.include.servlet_path";
 
 	public PortalRequestProcessor(
-		ActionServlet actionServlet, ModuleConfig moduleConfig) {
+		ServletContext servletContext, ModuleConfig moduleConfig) {
 
-		_actionServlet = actionServlet;
+		_servletContext = servletContext;
 		_moduleConfig = moduleConfig;
-
-		ServletContext servletContext = actionServlet.getServletContext();
 
 		_definitions = (Map<String, Definition>)
 			servletContext.getAttribute(TilesUtil.DEFINITIONS);
@@ -498,8 +495,7 @@ public class PortalRequestProcessor {
 			uri = definition.getPath();
 		}
 
-		StrutsUtil.forward(
-			uri, _actionServlet.getServletContext(), request, response);
+		StrutsUtil.forward(uri, _servletContext, request, response);
 	}
 
 	private boolean _isPortletPath(String path) {
@@ -1156,11 +1152,11 @@ public class PortalRequestProcessor {
 		PortalRequestProcessor.class);
 
 	private final Map<String, Action> _actions = new ConcurrentHashMap<>();
-	private final ActionServlet _actionServlet;
 	private final Map<String, Definition> _definitions;
 	private final Set<String> _lastPaths;
 	private final ModuleConfig _moduleConfig;
 	private final Set<String> _publicPaths;
+	private final ServletContext _servletContext;
 	private final Set<String> _trackerIgnorePaths;
 
 }

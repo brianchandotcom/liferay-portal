@@ -474,8 +474,6 @@ portalArtifactsJar {
 					into dir
 				}
 
-				dependencies.portalJavadocs files(dir)
-
 				logger.lifecycle "Added {}", jarFile.name
 			}
 
@@ -508,11 +506,12 @@ portalArtifactsJar {
 			}
 		}
 
+		dependencies.portalJavadocs files(javadocsDir)
+
 		task portalJavadocsJar(type: ShadowJar) {
 			baseName = "portal-javadocs"
 			classifier = null
 			configurations = [project.configurations.portalJavadocs]
-			exclude "*.*"
 			includeEmptyDirs = false
 			version = _getReleaseInfoVersion()
 

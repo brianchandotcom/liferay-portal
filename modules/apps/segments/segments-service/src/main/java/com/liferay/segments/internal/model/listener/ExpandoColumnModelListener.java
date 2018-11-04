@@ -89,7 +89,10 @@ public class ExpandoColumnModelListener
 				return;
 			}
 
-			_getUserEntityField(expandoColumn).ifPresent(
+			Optional<EntityField> userEntityFieldOptional =
+				_getUserEntityFieldOptional(expandoColumn);
+
+			userEntityFieldOptional.ifPresent(
 				entityField -> {
 					_userEntityFields.put(
 						expandoColumn.getColumnId(), entityField);
@@ -151,7 +154,7 @@ public class ExpandoColumnModelListener
 		return dynamicQuery;
 	}
 
-	private Optional<EntityField> _getUserEntityField(
+	private Optional<EntityField> _getUserEntityFieldOptional(
 		ExpandoColumn expandoColumn) {
 
 		UnicodeProperties unicodeProperties =
@@ -196,9 +199,14 @@ public class ExpandoColumnModelListener
 
 		columnActionableDynamicQuery.setPerformActionMethod(
 			(ActionableDynamicQuery.PerformActionMethod<ExpandoColumn>)
-				expandoColumn -> _getUserEntityField(expandoColumn).ifPresent(
-					entityField -> userEntityFieldsMap.put(
-						expandoColumn.getColumnId(), entityField)));
+				expandoColumn -> {
+					Optional<EntityField> userEntityFieldOptional =
+						_getUserEntityFieldOptional(expandoColumn);
+
+					userEntityFieldOptional.ifPresent(
+						entityField -> userEntityFieldsMap.put(
+							expandoColumn.getColumnId(), entityField));
+				});
 
 		columnActionableDynamicQuery.performActions();
 

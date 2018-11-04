@@ -525,13 +525,20 @@ portalArtifactsJar {
 			classifier = null
 			configurations = [project.configurations.portalSources]
 			exclude "*.*"
-			exclude "**/.lfrbuild*"
-			exclude "**/packageinfo"
 			exclude "META-INF/**"
-			exclude "WEB-INF/**"
-			exclude "content/**"
+			exclude "OSGI-INF/**"
 			includeEmptyDirs = false
 			version = _getReleaseInfoVersion()
+
+			doFirst {
+				FileTree languagePropertiesFileTree = fileTree(dir: projectDir.parentFile, include: "/portal-impl/src/content/Language*.properties")
+
+				languagePropertiesFileTree.each {
+					File languagePropertiesFile ->
+
+					append("content/" + languagePropertiesFile.name)
+				}
+			}
 
 			doLast {
 				println "Created jar " + archivePath

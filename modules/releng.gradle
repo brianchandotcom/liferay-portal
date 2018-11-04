@@ -434,12 +434,16 @@ portalArtifactsJar {
 			File manifestFile = new File(dir, "META-INF/MANIFEST.MF")
 
 			if (!manifestFile.exists()) {
+				delete dir
+
 				return
 			}
 
 			String content = manifestFile.getText("UTF-8")
 
 			if (!content.contains("Export-Package:")) {
+				delete dir
+
 				return
 			}
 

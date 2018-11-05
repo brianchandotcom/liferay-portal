@@ -18,6 +18,12 @@
 
 <%
 JournalDDMTemplateDisplayContext journalDDMTemplateDisplayContext = new JournalDDMTemplateDisplayContext(renderRequest, renderResponse);
+
+DDMStructure ddmStructure = journalDDMTemplateDisplayContext.getDDMStructure();
+
+if (ddmStructure != null) {
+	renderResponse.setTitle(LanguageUtil.format(request, "templates-for-structure-x", ddmStructure.getName(locale)));
+}
 %>
 
 <liferay-ui:error exception="<%= RequiredTemplateException.MustNotDeleteTemplateReferencedByTemplateLinks.class %>" message="the-template-cannot-be-deleted-because-it-is-required-by-one-or-more-template-links" />
@@ -99,16 +105,16 @@ JournalDDMTemplateDisplayContext journalDDMTemplateDisplayContext = new JournalD
 				</c:choose>
 			</liferay-ui:search-container-column-text>
 
-			<c:if test="<%= journalDDMTemplateDisplayContext.getDDMStructure() == null %>">
+			<c:if test="<%= journalDDMTemplateDisplayContext.getClassPK() <= 0 %>">
 
 				<%
 				String ddmStructureName = StringPool.BLANK;
 
 				if (ddmTemplate.getClassPK() > 0) {
-					DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchDDMStructure(ddmTemplate.getClassPK());
+					DDMStructure curDDMStructure = DDMStructureLocalServiceUtil.fetchDDMStructure(ddmTemplate.getClassPK());
 
-					if (ddmStructure != null) {
-						ddmStructureName = ddmStructure.getName(locale);
+					if (curDDMStructure != null) {
+						ddmStructureName = curDDMStructure.getName(locale);
 					}
 				}
 				%>

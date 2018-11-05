@@ -81,6 +81,16 @@ public class JournalDDMTemplateDisplayContext {
 		};
 	}
 
+	public long getClassPK() {
+		if (_classPK != null) {
+			return _classPK;
+		}
+
+		_classPK = ParamUtil.getLong(_request, "classPK");
+
+		return _classPK;
+	}
+
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = _getPortletURL();
 
@@ -105,7 +115,7 @@ public class JournalDDMTemplateDisplayContext {
 							"classNameId",
 							String.valueOf(
 								PortalUtil.getClassNameId(DDMStructure.class)),
-							"classPK", String.valueOf(_getClassPK()),
+							"classPK", String.valueOf(getClassPK()),
 							"resourceClassNameId",
 							String.valueOf(
 								PortalUtil.getClassNameId(
@@ -123,17 +133,12 @@ public class JournalDDMTemplateDisplayContext {
 			return _ddmStructure;
 		}
 
-		long structureClassNameId = PortalUtil.getClassNameId(
-			DDMStructure.class);
-
-		if ((_getClassPK() <= 0) ||
-			(structureClassNameId != _getClassNameId())) {
-
+		if (getClassPK() <= 0) {
 			return _ddmStructure;
 		}
 
 		_ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
-			_getClassPK());
+			getClassPK());
 
 		return _ddmStructure;
 	}
@@ -300,29 +305,9 @@ public class JournalDDMTemplateDisplayContext {
 		return false;
 	}
 
-	private long _getClassNameId() {
-		if (_classNameId != null) {
-			return _classNameId;
-		}
-
-		_classNameId = ParamUtil.getLong(_request, "classNameId");
-
-		return _classNameId;
-	}
-
-	private long _getClassPK() {
-		if (_classPK != null) {
-			return _classPK;
-		}
-
-		_classPK = ParamUtil.getLong(_request, "classPK");
-
-		return _classPK;
-	}
-
 	private long[] _getDDMTemplateClassPKs() {
-		if (_getClassPK() > 0) {
-			return new long[] {_getClassPK()};
+		if (getClassPK() > 0) {
+			return new long[] {getClassPK()};
 		}
 
 		return null;
@@ -404,7 +389,6 @@ public class JournalDDMTemplateDisplayContext {
 		return portletURL;
 	}
 
-	private Long _classNameId;
 	private Long _classPK;
 	private DDMStructure _ddmStructure;
 	private SearchContainer _ddmTemplateSearch;

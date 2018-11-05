@@ -118,6 +118,16 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		return types.size();
 	}
 
+	public String getRedirect() {
+		if (_redirect != null) {
+			return _redirect;
+		}
+
+		_redirect = ParamUtil.getString(_request, "redirect");
+
+		return _redirect;
+	}
+
 	public String getSelectedTab() {
 		if (_selectedTab != null) {
 			return _selectedTab;
@@ -187,6 +197,7 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 
 	private Long _layoutPageTemplateCollectionId;
 	private List<String> _primaryTypes;
+	private String _redirect;
 	private final HttpServletRequest _request;
 	private String _selectedTab;
 	private final ThemeDisplay _themeDisplay;

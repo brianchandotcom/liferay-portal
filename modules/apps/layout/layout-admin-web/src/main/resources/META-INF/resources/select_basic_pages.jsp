@@ -51,6 +51,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 											<span class="text-truncate-inline">
 												<portlet:renderURL var="addLayoutURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 													<portlet:param name="mvcRenderCommandName" value="/layout/add_layout" />
+													<portlet:param name="backURL" value="<%= selectLayoutPageTemplateEntryDisplayContext.getRedirect() %>" />
 													<portlet:param name="type" value="<%= primaryType %>" />
 												</portlet:renderURL>
 
@@ -109,6 +110,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 											<span class="text-truncate-inline">
 												<portlet:renderURL var="addLayoutURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 													<portlet:param name="mvcRenderCommandName" value="/layout/add_layout" />
+													<portlet:param name="backURL" value="<%= selectLayoutPageTemplateEntryDisplayContext.getRedirect() %>" />
 													<portlet:param name="type" value="<%= type %>" />
 												</portlet:renderURL>
 

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -58,12 +59,17 @@ public abstract class BaseAddLayoutMVCActionCommand
 		configureLayoutURL.setParameter(
 			"mvcRenderCommandName", "/layout/edit_layout");
 
-		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
+		String backURL = ParamUtil.getString(actionRequest, "backURL");
 
-		String redirect = HttpUtil.setParameter(
-			redirectURL.toString(), "p_p_state", WindowState.NORMAL.toString());
+		if (Validator.isNull(backURL)) {
+			PortletURL redirectURL = liferayPortletResponse.createRenderURL();
 
-		configureLayoutURL.setParameter("redirect", redirect);
+			backURL = HttpUtil.setParameter(
+				redirectURL.toString(), "p_p_state",
+				WindowState.NORMAL.toString());
+		}
+
+		configureLayoutURL.setParameter("redirect", backURL);
 
 		String portletResource = ParamUtil.getString(
 			actionRequest, "portletResource");

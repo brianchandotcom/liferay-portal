@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.util;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
+import com.liferay.portal.kernel.test.CaptureHandler;
+import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
@@ -29,6 +31,10 @@ import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CoderResult;
 import java.nio.charset.CodingErrorAction;
+
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -79,6 +85,9 @@ public class URLCodecTest {
 		testDecodeURL("%0" + (char)(CharPool.UPPER_CASE_F + 1));
 		testDecodeURL("%0" + (char)(CharPool.LOWER_CASE_A - 1));
 		testDecodeURL("%0" + (char)(CharPool.LOWER_CASE_F + 1));
+
+		_testCharacterCodingException(
+			charsetName -> URLCodec.decodeURL("%00", charsetName));
 	}
 
 	@Test
@@ -107,84 +116,9 @@ public class URLCodecTest {
 				_ESCAPE_SPACES_ENCODED_URLS[i],
 				URLCodec.encodeURL(_RAW_URLS[i], StringPool.UTF8, true));
 		}
-	}
 
-	@Test
-	public void testException() {
-		Object[] oldCache1 = ReflectionTestUtil.getFieldValue(
-			Charset.class, "cache1");
-
-		ReflectionTestUtil.setFieldValue(
-			Charset.class, "cache1",
-			new Object[] {
-				"test-charset",
-				new Charset("test-charset", null) {
-
-					@Override
-					public boolean contains(Charset charset) {
-						return true;
-					}
-
-					@Override
-					public CharsetDecoder newDecoder() {
-						return new CharsetDecoder(this, 1, 1) {
-
-							@Override
-							protected CoderResult decodeLoop(
-								ByteBuffer byteBuffer, CharBuffer charBuffer) {
-
-								return CoderResult.unmappableForLength(1);
-							}
-
-							@Override
-							protected void implOnUnmappableCharacter(
-								CodingErrorAction codingErrorAction) {
-
-								ReflectionTestUtil.setFieldValue(
-									this, "unmappableCharacterAction",
-									CodingErrorAction.REPORT);
-							}
-
-						};
-					}
-
-					@Override
-					public CharsetEncoder newEncoder() {
-						return new CharsetEncoder(this, 1, 1) {
-
-							@Override
-							public boolean isLegalReplacement(
-								byte[] replacement) {
-
-								return true;
-							}
-
-							@Override
-							protected CoderResult encodeLoop(
-								CharBuffer charBuffer, ByteBuffer byteBuffer) {
-
-								return CoderResult.unmappableForLength(1);
-							}
-
-							@Override
-							protected void implOnUnmappableCharacter(
-								CodingErrorAction codingErrorAction) {
-
-								ReflectionTestUtil.setFieldValue(
-									this, "unmappableCharacterAction",
-									CodingErrorAction.REPORT);
-							}
-
-						};
-					}
-
-				}
-			});
-
-		URLCodec.decodeURL("%00", "test-charset");
-		URLCodec.encodeURL("!", "test-charset", false);
-
-		ReflectionTestUtil.setFieldValue(Charset.class, "cache1", oldCache1);
+		_testCharacterCodingException(
+			charsetName -> URLCodec.encodeURL("!", charsetName, false));
 	}
 
 	@Test
@@ -232,6 +166,42 @@ public class URLCodecTest {
 		}
 	}
 
+	private void _testCharacterCodingException(
+		Function<String, String> codecFunction) {
+
+		Object[] oldCache1 = ReflectionTestUtil.getFieldValue(
+			Charset.class, "cache1");
+
+		ReflectionTestUtil.setFieldValue(
+			Charset.class, "cache1",
+			new Object[] {"test-charset", _testCharset});
+
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					URLCodec.class.getName(), Level.ALL)) {
+
+			Assert.assertEquals(
+				"URLCodec returns blank string when ChaesetEncoder/Decoder" +
+					"throws CharacterCodingException during encoding/decoding",
+				StringPool.BLANK, codecFunction.apply("test-charset"));
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"java.nio.charset.UnmappableCharacterException: Input length " +
+					"= 1",
+				logRecord.getMessage());
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				Charset.class, "cache1", oldCache1);
+		}
+	}
+
 	private static final String[] _ENCODED_URLS;
 
 	private static final String[] _ESCAPE_SPACES_ENCODED_URLS;
@@ -245,6 +215,67 @@ public class URLCodecTest {
 	private static final String[] _UNICODE_CATS_AND_DOGS = {
 		"1f408", "1f431", "1f415", "1f436"
 	};
+
+	private static final Charset _testCharset =
+		new Charset("test-charset", null) {
+
+			@Override
+			public boolean contains(Charset charset) {
+				return true;
+			}
+
+			@Override
+			public CharsetDecoder newDecoder() {
+				return new CharsetDecoder(this, 1, 1) {
+
+					@Override
+					protected CoderResult decodeLoop(
+						ByteBuffer byteBuffer, CharBuffer charBuffer) {
+
+						return CoderResult.unmappableForLength(1);
+					}
+
+					@Override
+					protected void implOnUnmappableCharacter(
+						CodingErrorAction codingErrorAction) {
+
+						ReflectionTestUtil.setFieldValue(
+							this, "unmappableCharacterAction",
+							CodingErrorAction.REPORT);
+					}
+
+				};
+			}
+
+			@Override
+			public CharsetEncoder newEncoder() {
+				return new CharsetEncoder(this, 1, 1) {
+
+					@Override
+					public boolean isLegalReplacement(byte[] replacement) {
+						return true;
+					}
+
+					@Override
+					protected CoderResult encodeLoop(
+						CharBuffer charBuffer, ByteBuffer byteBuffer) {
+
+						return CoderResult.unmappableForLength(1);
+					}
+
+					@Override
+					protected void implOnUnmappableCharacter(
+						CodingErrorAction codingErrorAction) {
+
+						ReflectionTestUtil.setFieldValue(
+							this, "unmappableCharacterAction",
+							CodingErrorAction.REPORT);
+					}
+
+				};
+			}
+
+		};
 
 	static {
 		_ENCODED_URLS = new String[_RAW_URLS.length];

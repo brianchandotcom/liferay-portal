@@ -256,6 +256,10 @@
 		<priority value="WARN" />
 	</category>
 
+	<category name="com.liferay.portal.internal.servlet.MainServlet">
+		<priority value="WARN" />
+	</category>
+
 	<category name="com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist">
 		<priority value="WARN" />
 	</category>
@@ -569,10 +573,6 @@
 	</category>
 
 	<category name="com.liferay.portal.servlet.LanguageServlet">
-		<priority value="WARN" />
-	</category>
-
-	<category name="com.liferay.portal.servlet.MainServlet">
 		<priority value="WARN" />
 	</category>
 

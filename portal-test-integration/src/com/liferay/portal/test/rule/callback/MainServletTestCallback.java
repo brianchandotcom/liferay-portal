@@ -15,6 +15,7 @@
 package com.liferay.portal.test.rule.callback;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.internal.servlet.MainServlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 import com.liferay.portal.service.test.ServiceTestUtil;
-import com.liferay.portal.servlet.MainServlet;
 import com.liferay.portal.test.mock.AutoDeployMockServletContext;
 
 import javax.servlet.ServletException;

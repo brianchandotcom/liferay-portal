@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet;
+package com.liferay.portal.internal.servlet;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
@@ -78,6 +78,8 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.service.impl.LayoutTemplateLocalServiceImpl;
+import com.liferay.portal.servlet.EncryptedServletRequest;
+import com.liferay.portal.servlet.I18nServlet;
 import com.liferay.portal.servlet.filters.absoluteredirects.AbsoluteRedirectsResponse;
 import com.liferay.portal.servlet.filters.i18n.I18nFilter;
 import com.liferay.portal.setup.SetupWizardSampleDataUtil;

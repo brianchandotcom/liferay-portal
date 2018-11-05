@@ -111,7 +111,7 @@
 	</listener>
 	<servlet>
 		<servlet-name>Main Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.servlet.MainServlet</servlet-class>
+		<servlet-class>com.liferay.portal.internal.servlet.MainServlet</servlet-class>
 		<init-param>
 			<param-name>debug</param-name>
 			<param-value>0</param-value>

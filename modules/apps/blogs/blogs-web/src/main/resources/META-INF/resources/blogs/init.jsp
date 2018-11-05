@@ -37,5 +37,3 @@ int pageAbstractLength = PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH;
 %>
 
 <%@ include file="/blogs/init-ext.jsp" %>
-
-<%@ taglib prefix="liferay-fronted" uri="http://liferay.com/tld/frontend" %>

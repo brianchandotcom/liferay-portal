@@ -465,7 +465,10 @@ public class DDMFormDisplayContext {
 		if (isPreview()) {
 			DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
-			ddmForm = ddmStructure.getDDMForm();
+			DDMStructureVersion latestStructureVersion =
+				ddmStructure.getLatestStructureVersion();
+
+			ddmForm = latestStructureVersion.getDDMForm();
 		}
 		else {
 			DDMFormInstanceVersion latestFormInstanceVersion =
@@ -502,7 +505,10 @@ public class DDMFormDisplayContext {
 		if (isPreview()) {
 			DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
-			ddmFormLayout = ddmStructure.getDDMFormLayout();
+			DDMStructureVersion latestStructureVersion =
+				ddmStructure.getLatestStructureVersion();
+
+			ddmFormLayout = latestStructureVersion.getDDMFormLayout();
 		}
 		else {
 			DDMFormInstanceVersion latestFormInstanceVersion =

@@ -182,6 +182,25 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 	}
 
 	@Test
+	public void testDecimalFieldValueRendererWithoutDefaultValue() {
+		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
+			"Decimal", createLocalizedValue("", "1,2", LocaleUtil.US));
+
+		DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
+			new DecimalDDMFormFieldValueRenderer();
+
+		String renderedValue = ddmFormFieldValueRenderer.render(
+			ddmFormFieldValue, LocaleUtil.US);
+
+		Assert.assertEquals("0", renderedValue);
+
+		renderedValue = ddmFormFieldValueRenderer.render(
+			ddmFormFieldValue, LocaleUtil.BRAZIL);
+
+		Assert.assertEquals("1,2", renderedValue);
+	}
+
+	@Test
 	public void testDocumentLibraryFieldValueRenderer() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

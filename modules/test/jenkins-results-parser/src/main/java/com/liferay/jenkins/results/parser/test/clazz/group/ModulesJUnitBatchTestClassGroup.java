@@ -255,19 +255,34 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 			String appSuiteTitle = _getAppSuiteTitle(appBndFile);
 
 			for (String bundledAppName : bundledAppNames) {
+				boolean releaseModuleAppDirFound = false;
+
 				if (bundledAppName.contains(appSuiteTitle + " -") &&
 					bundledAppName.contains(appTitle + " -")) {
 
-					releaseModuleAppDirs.add(moduleAppDir);
-
-					continue;
+					releaseModuleAppDirFound = true;
 				}
 
 				if (bundledAppName.contains(appTitle + ".lpkg")) {
-					releaseModuleAppDirs.add(moduleAppDir);
+					releaseModuleAppDirFound = true;
+				}
+
+				if (!releaseModuleAppDirFound) {
+					continue;
+				}
+
+				List<File> skipTestIntegrationCheckFiles =
+					JenkinsResultsParserUtil.findFiles(
+						moduleAppDir,
+						".lfrbuild-ci-skip-test-integration-check");
+
+				if (!skipTestIntegrationCheckFiles.isEmpty()) {
+					System.out.println("Ignoring " + moduleAppDir);
 
 					continue;
 				}
+
+				releaseModuleAppDirs.add(moduleAppDir);
 			}
 		}
 

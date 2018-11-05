@@ -5939,6 +5939,14 @@ to version 2.3.281.
 - [LPS-86549]: Use update rather than refresh strategy when watching OSGi
 changes.
 
+## 3.13.9 - 2018-11-02
+
+### Changed
+- [LPS-86835]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.1.62.
+- [LPS-86835]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.245.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -6400,4 +6408,5 @@ changes.
 [LPS-86556]: https://issues.liferay.com/browse/LPS-86556
 [LPS-86576]: https://issues.liferay.com/browse/LPS-86576
 [LPS-86581]: https://issues.liferay.com/browse/LPS-86581
+[LPS-86835]: https://issues.liferay.com/browse/LPS-86835
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

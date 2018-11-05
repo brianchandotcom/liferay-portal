@@ -833,13 +833,13 @@ public class JavaParserUtil {
 	}
 
 	private static List<JavaParameter> _parseJavaParameters(
-		DetailAST parametersDetailAST) {
+		DetailAST detailAST) {
 
 		List<JavaParameter> javaParameters = new ArrayList<>();
 
 		List<DetailAST> parameterDefinitionDetailASTList =
 			DetailASTUtil.getAllChildTokens(
-				parametersDetailAST, false, TokenTypes.PARAMETER_DEF);
+				detailAST, false, TokenTypes.PARAMETER_DEF);
 
 		for (DetailAST parameterDefinitionDetailAST :
 				parameterDefinitionDetailASTList) {

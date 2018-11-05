@@ -26,6 +26,7 @@ import com.liferay.portal.tools.java.parser.JavaCatchStatement;
 import com.liferay.portal.tools.java.parser.JavaClassCall;
 import com.liferay.portal.tools.java.parser.JavaConstructor;
 import com.liferay.portal.tools.java.parser.JavaConstructorCall;
+import com.liferay.portal.tools.java.parser.JavaContinueStatement;
 import com.liferay.portal.tools.java.parser.JavaElseStatement;
 import com.liferay.portal.tools.java.parser.JavaEnhancedForStatement;
 import com.liferay.portal.tools.java.parser.JavaExpression;
@@ -160,6 +161,23 @@ public class JavaParserUtil {
 				detailAST.findFirstToken(TokenTypes.ELIST)));
 
 		return javaConstructorCall;
+	}
+
+	public static JavaContinueStatement parseJavaContinueStatement(
+		DetailAST literalContinueDetailAST) {
+
+		JavaContinueStatement javaContinueStatement =
+			new JavaContinueStatement();
+
+		DetailAST firstChildDetailAST =
+			literalContinueDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
+			javaContinueStatement.setIdentifierName(
+				firstChildDetailAST.getText());
+		}
+
+		return javaContinueStatement;
 	}
 
 	public static JavaElseStatement parseJavaElseStatement(

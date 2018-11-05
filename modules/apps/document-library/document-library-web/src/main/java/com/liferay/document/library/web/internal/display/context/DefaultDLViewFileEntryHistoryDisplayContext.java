@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.display.context.DLViewFileEntryHistoryDisplayContext;
+import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.web.internal.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.logic.UIItemsBuilder;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
@@ -39,7 +40,8 @@ public class DefaultDLViewFileEntryHistoryDisplayContext
 
 	public DefaultDLViewFileEntryHistoryDisplayContext(
 		HttpServletRequest request, FileVersion fileVersion,
-		ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil) {
+		ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil,
+		VersioningStrategy versioningStrategy) {
 
 		_resourceBundle = resourceBundle;
 
@@ -49,7 +51,8 @@ public class DefaultDLViewFileEntryHistoryDisplayContext
 			dlRequestHelper);
 
 		_uiItemsBuilder = new UIItemsBuilder(
-			request, fileVersion, _resourceBundle, dlTrashUtil);
+			request, fileVersion, _resourceBundle, dlTrashUtil,
+			versioningStrategy);
 	}
 
 	@Override

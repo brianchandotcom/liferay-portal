@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
+import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
@@ -71,13 +72,14 @@ public class DefaultDLViewFileVersionDisplayContext
 			DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 			ResourceBundle resourceBundle, StorageEngine storageEngine,
 			DLTrashUtil dlTrashUtil,
-			DLPreviewRendererProvider dlPreviewRendererProvider)
+			DLPreviewRendererProvider dlPreviewRendererProvider,
+			VersioningStrategy versioningStrategy)
 		throws PortalException {
 
 		this(
 			request, fileShortcut.getFileVersion(), fileShortcut,
 			dlMimeTypeDisplayContext, resourceBundle, storageEngine,
-			dlTrashUtil, dlPreviewRendererProvider);
+			dlTrashUtil, dlPreviewRendererProvider, versioningStrategy);
 	}
 
 	public DefaultDLViewFileVersionDisplayContext(
@@ -86,12 +88,13 @@ public class DefaultDLViewFileVersionDisplayContext
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 		ResourceBundle resourceBundle, StorageEngine storageEngine,
 		DLTrashUtil dlTrashUtil,
-		DLPreviewRendererProvider dlPreviewRendererProvider) {
+		DLPreviewRendererProvider dlPreviewRendererProvider,
+		VersioningStrategy versioningStrategy) {
 
 		this(
 			request, fileVersion, null, dlMimeTypeDisplayContext,
 			resourceBundle, storageEngine, dlTrashUtil,
-			dlPreviewRendererProvider);
+			dlPreviewRendererProvider, versioningStrategy);
 	}
 
 	@Override
@@ -286,7 +289,8 @@ public class DefaultDLViewFileVersionDisplayContext
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 		ResourceBundle resourceBundle, StorageEngine storageEngine,
 		DLTrashUtil dlTrashUtil,
-		DLPreviewRendererProvider dlPreviewRendererProvider) {
+		DLPreviewRendererProvider dlPreviewRendererProvider,
+		VersioningStrategy versioningStrategy) {
 
 		try {
 			_fileVersion = fileVersion;
@@ -309,11 +313,13 @@ public class DefaultDLViewFileVersionDisplayContext
 
 			if (fileShortcut == null) {
 				_uiItemsBuilder = new UIItemsBuilder(
-					request, fileVersion, _resourceBundle, dlTrashUtil);
+					request, fileVersion, _resourceBundle, dlTrashUtil,
+					versioningStrategy);
 			}
 			else {
 				_uiItemsBuilder = new UIItemsBuilder(
-					request, fileShortcut, _resourceBundle, dlTrashUtil);
+					request, fileShortcut, _resourceBundle, dlTrashUtil,
+					versioningStrategy);
 			}
 		}
 		catch (PortalException pe) {

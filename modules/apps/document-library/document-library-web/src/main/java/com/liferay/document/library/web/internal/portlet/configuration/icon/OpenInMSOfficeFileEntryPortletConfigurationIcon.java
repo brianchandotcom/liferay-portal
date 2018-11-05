@@ -16,6 +16,7 @@ package com.liferay.document.library.web.internal.portlet.configuration.icon;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.web.internal.display.context.logic.UIItemsBuilder;
 import com.liferay.document.library.web.internal.portlet.action.ActionUtil;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
@@ -41,6 +42,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Roberto Díaz
@@ -131,7 +134,8 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 				OpenInMSOfficeFileEntryPortletConfigurationIcon.class);
 
 			UIItemsBuilder uiItemsBuilder = new UIItemsBuilder(
-				request, fileVersion, resourceBundle, _dlTrashUtil);
+				request, fileVersion, resourceBundle, _dlTrashUtil,
+				_versioningStrategy);
 
 			return uiItemsBuilder.isOpenInMsOfficeActionAvailable();
 		}
@@ -156,5 +160,11 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile VersioningStrategy _versioningStrategy;
 
 }

@@ -33,6 +33,7 @@ import com.liferay.portal.tools.java.parser.JavaExpression;
 import com.liferay.portal.tools.java.parser.JavaForStatement;
 import com.liferay.portal.tools.java.parser.JavaIfStatement;
 import com.liferay.portal.tools.java.parser.JavaInstanceofStatement;
+import com.liferay.portal.tools.java.parser.JavaLabeledStatement;
 import com.liferay.portal.tools.java.parser.JavaLambdaExpression;
 import com.liferay.portal.tools.java.parser.JavaLambdaParameter;
 import com.liferay.portal.tools.java.parser.JavaMethod;
@@ -320,6 +321,29 @@ public class JavaParserUtil {
 			parseJavaExpression(firstChildDetailAST.getNextSibling()));
 
 		return javaIfStatement;
+	}
+
+	public static JavaLabeledStatement parseJavaLabeledStatement(
+		DetailAST labeledStatementDetailAST) {
+
+		DetailAST firstChildDetailAST =
+			labeledStatementDetailAST.getFirstChild();
+
+		JavaLabeledStatement javaLabeledStatement = new JavaLabeledStatement(
+			firstChildDetailAST.getText());
+
+		DetailAST nextSiblingDetailAST = firstChildDetailAST.getNextSibling();
+
+		if (nextSiblingDetailAST.getType() == TokenTypes.LITERAL_FOR) {
+			javaLabeledStatement.setLoopJavaTerm(
+				parseJavaForStatement(nextSiblingDetailAST));
+		}
+		else if (nextSiblingDetailAST.getType() == TokenTypes.LITERAL_WHILE) {
+			javaLabeledStatement.setLoopJavaTerm(
+				parseJavaWhileStatement(nextSiblingDetailAST));
+		}
+
+		return javaLabeledStatement;
 	}
 
 	public static JavaMethod parseJavaMethod(

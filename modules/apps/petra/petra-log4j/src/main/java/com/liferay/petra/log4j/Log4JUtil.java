@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.LogFactory;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -265,7 +266,8 @@ public class Log4JUtil {
 	private static String _getURLContent(URL url) {
 		Map<String, String> variables = new HashMap<>();
 
-		variables.put("@liferay.home@", _getLiferayHome());
+		variables.put(
+			"@liferay.home@", HtmlUtil.escapeAttribute(_getLiferayHome()));
 
 		String spiId = System.getProperty("spi.id");
 

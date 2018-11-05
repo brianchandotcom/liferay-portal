@@ -1218,7 +1218,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 
 		stringMap2.put(LocaleUtil.getDefault(), "title2");
 
-		JournalTestUtil.addArticle(
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
@@ -1251,7 +1251,8 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		List<JournalArticle> journalArticles =
 			(List<JournalArticle>)pageItems.getItems();
 
-		Assert.assertEquals(journalArticle1, journalArticles.get(0));
+		Assert.assertTrue(journalArticles.contains(journalArticle1));
+		Assert.assertTrue(journalArticles.contains(journalArticle2));
 	}
 
 	@Test

@@ -175,7 +175,7 @@ create table KaleoNotification (
 	executionType VARCHAR(20) null,
 	template TEXT null,
 	templateLanguage VARCHAR(75) null,
-	notificationTypes VARCHAR(25) null
+	notificationTypes VARCHAR(255) null
 );
 
 create table KaleoNotificationRecipient (

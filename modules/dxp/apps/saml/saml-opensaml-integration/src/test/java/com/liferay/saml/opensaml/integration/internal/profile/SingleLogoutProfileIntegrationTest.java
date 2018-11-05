@@ -17,6 +17,8 @@ package com.liferay.saml.opensaml.integration.internal.profile;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.struts.Definition;
+import com.liferay.portal.struts.TilesUtil;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.SamlBinding;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
@@ -37,10 +39,10 @@ import com.liferay.saml.util.JspUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -98,7 +100,6 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 		prepareServiceProvider(SP_ENTITY_ID);
 	}
 
-	@Ignore
 	@Test
 	public void testPerformIdpSpLogoutInvalidSloRequestInfo() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
@@ -112,15 +113,20 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 			mockHttpServletRequest, new MockHttpServletResponse(),
 			samlSloContext);
 
+		Definition tilesDefinition =
+			(Definition)mockHttpServletRequest.getAttribute(
+				TilesUtil.DEFINITION);
+
+		Map<String, String> tilesDefinitionAttributes =
+			tilesDefinition.getAttributes();
+
 		Assert.assertEquals(
 			JspUtil.PATH_PORTAL_SAML_ERROR,
-			mockHttpServletRequest.getAttribute("tilesContent"));
+			tilesDefinitionAttributes.get("content"));
 		Assert.assertTrue(
-			Boolean.valueOf(
-				(String)mockHttpServletRequest.getAttribute("tilesPopUp")));
+			Boolean.valueOf(tilesDefinitionAttributes.get("pop_up")));
 	}
 
-	@Ignore
 	@Test
 	public void testPerformIdpSpLogoutValidSloRequestInfo() throws Exception {
 		SamlIdpSpConnection samlIdpSpConnection = new SamlIdpSpConnectionImpl();
@@ -170,12 +176,18 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 			mockHttpServletRequest, new MockHttpServletResponse(),
 			samlSloContext);
 
+		Definition tilesDefinition =
+			(Definition)mockHttpServletRequest.getAttribute(
+				TilesUtil.DEFINITION);
+
+		Map<String, String> tilesDefinitionAttributes =
+			tilesDefinition.getAttributes();
+
 		Assert.assertEquals(
 			JspUtil.PATH_PORTAL_SAML_SLO_SP_STATUS,
-			mockHttpServletRequest.getAttribute("tilesContent"));
+			tilesDefinitionAttributes.get("content"));
 		Assert.assertTrue(
-			Boolean.valueOf(
-				(String)mockHttpServletRequest.getAttribute("tilesPopUp")));
+			Boolean.valueOf(tilesDefinitionAttributes.get("pop_up")));
 
 		JSONObject jsonObject = (JSONObject)mockHttpServletRequest.getAttribute(
 			SamlWebKeys.SAML_SLO_REQUEST_INFO);

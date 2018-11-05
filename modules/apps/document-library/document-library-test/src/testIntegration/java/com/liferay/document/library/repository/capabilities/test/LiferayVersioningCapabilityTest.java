@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.versioning.VersionPurger;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,7 +39,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 
@@ -121,6 +126,41 @@ public class LiferayVersioningCapabilityTest {
 				FileVersion fileVersion2 = fileVersions.get(1);
 
 				Assert.assertEquals("1.9", fileVersion2.getVersion());
+			});
+	}
+
+	@Test
+	public void testNotifiesAboutEachFileVersionDeletion() throws Exception {
+		_withMaximumNumberOfVersionsConfigured(
+			2,
+			() -> {
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId());
+
+				FileEntry fileEntry = _addRandomFileEntry(serviceContext);
+
+				List<FileVersion> deletedFileVersions = new ArrayList<>();
+
+				Registry registry = RegistryUtil.getRegistry();
+
+				ServiceRegistration<VersionPurger.VersionPurgedListener>
+					capabilityServiceRegistration = registry.registerService(
+						VersionPurger.VersionPurgedListener.class,
+						deletedFileVersions::add);
+
+				try {
+					for (int i = 0; i < 10; i++) {
+						_generateNewVersion(fileEntry, serviceContext);
+					}
+
+					Assert.assertEquals(
+						deletedFileVersions.toString(), 9,
+						deletedFileVersions.size());
+				}
+				finally {
+					capabilityServiceRegistration.unregister();
+				}
 			});
 	}
 

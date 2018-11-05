@@ -16,16 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-FileEntry fileEntry = ActionUtil.getFileEntry(liferayPortletRequest);
-
-FileVersion fileVersion = ActionUtil.getFileVersion(liferayPortletRequest, fileEntry);
-
-UIItemsBuilder uiItemsBuilder = new UIItemsBuilder(request, fileVersion, resourceBundle, dlTrashUtil);
-
-JavaScriptMenuItem javaScriptMenuItem = uiItemsBuilder.getJavacriptCheckinMenuItem();
-%>
-
 <liferay-ui:menu-item
-	menuItem="<%= javaScriptMenuItem %>"
+	menuItem='<%= (MenuItem)request.getAttribute("checkin.jsp-menuItem") %>'
 />

@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.image.gallery.display.kernel.display.context.IGDisplayContextFactory;
 import com.liferay.image.gallery.display.kernel.display.context.IGViewFileVersionDisplayContext;
@@ -62,7 +63,7 @@ public class IGDisplayContextProvider {
 			IGViewFileVersionDisplayContext igViewFileVersionDisplayContext =
 				new DefaultIGViewFileVersionDisplayContext(
 					request, response, fileShortcut, resourceBundle,
-					_dlTrashUtil);
+					_dlTrashUtil, _versioningStrategy);
 
 			if (fileShortcut == null) {
 				return igViewFileVersionDisplayContext;
@@ -100,7 +101,7 @@ public class IGDisplayContextProvider {
 			IGViewFileVersionDisplayContext igViewFileVersionDisplayContext =
 				new DefaultIGViewFileVersionDisplayContext(
 					request, response, fileVersion, resourceBundle,
-					_dlTrashUtil);
+					_dlTrashUtil, _versioningStrategy);
 
 			if (fileVersion == null) {
 				return igViewFileVersionDisplayContext;
@@ -145,5 +146,11 @@ public class IGDisplayContextProvider {
 		target = "(bundle.symbolic.name=com.liferay.document.library.web)"
 	)
 	private volatile ResourceBundleLoader _resourceBundleLoader;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile VersioningStrategy _versioningStrategy;
 
 }

@@ -21,6 +21,7 @@ import com.liferay.document.library.display.context.DLViewFileEntryHistoryDispla
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.util.DLValidator;
+import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
@@ -113,7 +114,8 @@ public class DLDisplayContextProvider {
 		DLViewFileEntryHistoryDisplayContext
 			dlViewFileEntryHistoryDisplayContext =
 				new DefaultDLViewFileEntryHistoryDisplayContext(
-					request, fileVersion, resourceBundle, _dlTrashUtil);
+					request, fileVersion, resourceBundle, _dlTrashUtil,
+					_versioningStrategy);
 
 		if (fileVersion == null) {
 			return dlViewFileEntryHistoryDisplayContext;
@@ -153,7 +155,7 @@ public class DLDisplayContextProvider {
 				new DefaultDLViewFileVersionDisplayContext(
 					request, response, fileShortcut, _dlMimeTypeDisplayContext,
 					resourceBundle, _storageEngine, _dlTrashUtil,
-					dlPreviewRendererProvider);
+					dlPreviewRendererProvider, _versioningStrategy);
 
 			if (fileShortcut == null) {
 				return dlViewFileVersionDisplayContext;
@@ -192,7 +194,7 @@ public class DLDisplayContextProvider {
 			new DefaultDLViewFileVersionDisplayContext(
 				request, response, fileVersion, _dlMimeTypeDisplayContext,
 				resourceBundle, _storageEngine, _dlTrashUtil,
-				dlPreviewRendererProvider);
+				dlPreviewRendererProvider, _versioningStrategy);
 
 		if (fileVersion == null) {
 			return dlViewFileVersionDisplayContext;
@@ -260,5 +262,11 @@ public class DLDisplayContextProvider {
 	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 	private StorageEngine _storageEngine;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile VersioningStrategy _versioningStrategy;
 
 }

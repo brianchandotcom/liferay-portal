@@ -15,22 +15,36 @@
 package com.liferay.document.library.web.internal.portlet.configuration.icon;
 
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.web.internal.display.context.logic.FileEntryDisplayContextHelper;
+import com.liferay.document.library.web.internal.display.context.logic.UIItemsBuilder;
 import com.liferay.document.library.web.internal.portlet.action.ActionUtil;
+import com.liferay.document.library.web.internal.util.DLTrashUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Roberto Díaz
@@ -70,6 +84,34 @@ public class CheckinFileEntryPortletConfigurationIcon
 	}
 
 	@Override
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		try {
+			FileEntry fileEntry = ActionUtil.getFileEntry(request);
+
+			FileVersion fileVersion = ActionUtil.getFileVersion(
+				request, fileEntry);
+
+			UIItemsBuilder uiItemsBuilder = new UIItemsBuilder(
+				request, fileVersion,
+				_resourceBundleLoader.loadResourceBundle(
+					_portal.getLocale(request)),
+				_dlTrashUtil, _versioningStrategy);
+
+			request.setAttribute(
+				"checkin.jsp-menuItem",
+				uiItemsBuilder.getJavacriptCheckinMenuItem());
+
+			return super.include(request, response);
+		}
+		catch (PortalException pe) {
+			return ReflectionUtil.throwException(pe);
+		}
+	}
+
+	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			ThemeDisplay themeDisplay =
@@ -103,5 +145,22 @@ public class CheckinFileEntryPortletConfigurationIcon
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	@Reference
+	private DLTrashUtil _dlTrashUtil;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.document.library.web)"
+	)
+	private ResourceBundleLoader _resourceBundleLoader;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile VersioningStrategy _versioningStrategy;
 
 }

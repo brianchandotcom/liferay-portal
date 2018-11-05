@@ -847,22 +847,18 @@ public class StructuredContentNestedCollectionResource
 				String dataType = _ddmStructure.getFieldDataType(
 					_ddmFormFieldValue.getName());
 
-				String displayDataType = dataType;
-
 				if (Objects.equals(dataType, "document-library")) {
-					displayDataType = "document";
+					return "document";
 				}
 				else if (Objects.equals(dataType, "journal-article")) {
-					displayDataType = "structuredContent";
+					return "structuredContent";
 				}
 				else if (Objects.equals(dataType, "link-to-page")) {
-					displayDataType = "url";
+					return "url";
 				}
 				else if (Objects.equals(dataType, "radio")) {
-					displayDataType = "string";
+					return "string";
 				}
-
-				return displayDataType;
 			}
 			catch (PortalException pe) {
 				if (_log.isWarnEnabled()) {
@@ -871,9 +867,9 @@ public class StructuredContentNestedCollectionResource
 							_ddmFormFieldValue.getName(),
 						pe);
 				}
-
-				return null;
 			}
+
+			return null;
 		}
 
 		public String getDDMFormFieldInputControl() {

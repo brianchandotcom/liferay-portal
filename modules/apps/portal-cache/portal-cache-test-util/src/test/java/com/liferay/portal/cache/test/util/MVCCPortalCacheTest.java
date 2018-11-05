@@ -18,7 +18,6 @@ import com.liferay.portal.cache.LowLevelCache;
 import com.liferay.portal.cache.MVCCPortalCache;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
@@ -382,49 +381,5 @@ public class MVCCPortalCacheTest {
 		_testPortalCacheListener;
 	private TestPortalCacheReplicator<String, MockMVCCModel>
 		_testPortalCacheReplicator;
-
-	private static class MockMVCCModel implements MVCCModel, Serializable {
-
-		public MockMVCCModel(long version) {
-			_version = version;
-		}
-
-		@Override
-		public boolean equals(Object object) {
-			if (this == object) {
-				return true;
-			}
-
-			if (!(object instanceof MockMVCCModel)) {
-				return false;
-			}
-
-			MockMVCCModel mockMVCCModel = (MockMVCCModel)object;
-
-			if (_version == mockMVCCModel._version) {
-				return true;
-			}
-
-			return false;
-		}
-
-		@Override
-		public long getMvccVersion() {
-			return _version;
-		}
-
-		@Override
-		public int hashCode() {
-			return (int)_version;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-			_version = mvccVersion;
-		}
-
-		private long _version;
-
-	}
 
 }

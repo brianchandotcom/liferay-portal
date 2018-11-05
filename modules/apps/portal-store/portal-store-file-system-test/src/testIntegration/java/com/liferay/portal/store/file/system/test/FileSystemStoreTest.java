@@ -42,7 +42,7 @@ public class FileSystemStoreTest extends BaseStoreTestCase {
 	}
 
 	@Inject(
-		filter = "store.type=com.liferay.portal.store.file.system.FileSystemStore",
+		filter = "(&(store.type=com.liferay.portal.store.file.system.FileSystemStore)(service.ranking=0))",
 		type = Store.class
 	)
 	private Store _store;

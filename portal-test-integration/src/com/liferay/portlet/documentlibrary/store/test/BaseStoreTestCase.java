@@ -575,17 +575,17 @@ public abstract class BaseStoreTestCase {
 		byte[] firstVersionBytes = store.getFileAsBytes(
 			companyId, repositoryId, fileName, "1.0");
 
-		Assert.assertTrue(Arrays.equals(_DATA_VERSION_1, firstVersionBytes));
+		Assert.assertArrayEquals(_DATA_VERSION_1, firstVersionBytes);
 
 		byte[] secondVersionBytes = store.getFileAsBytes(
 			companyId, repositoryId, fileName, "1.1");
 
-		Assert.assertTrue(Arrays.equals(_DATA_VERSION_2, secondVersionBytes));
+		Assert.assertArrayEquals(_DATA_VERSION_2, secondVersionBytes);
 
 		byte[] currentVersionBytes = store.getFileAsBytes(
 			companyId, repositoryId, fileName);
 
-		Assert.assertTrue(Arrays.equals(_DATA_VERSION_2, currentVersionBytes));
+		Assert.assertArrayEquals(_DATA_VERSION_2, currentVersionBytes);
 	}
 
 	@Test
@@ -601,17 +601,17 @@ public abstract class BaseStoreTestCase {
 		byte[] firstVersionBytes = store.getFileAsBytes(
 			companyId, repositoryId, fileName, "1.0");
 
-		Assert.assertTrue(Arrays.equals(_DATA_VERSION_1, firstVersionBytes));
+		Assert.assertArrayEquals(_DATA_VERSION_1, firstVersionBytes);
 
 		byte[] secondVersionBytes = store.getFileAsBytes(
 			companyId, repositoryId, fileName, "1.1");
 
-		Assert.assertTrue(Arrays.equals(_DATA_VERSION_2, secondVersionBytes));
+		Assert.assertArrayEquals(_DATA_VERSION_2, secondVersionBytes);
 
 		byte[] currentVersionBytes = store.getFileAsBytes(
 			companyId, repositoryId, fileName);
 
-		Assert.assertTrue(Arrays.equals(_DATA_VERSION_2, currentVersionBytes));
+		Assert.assertArrayEquals(_DATA_VERSION_2, currentVersionBytes);
 	}
 
 	@Test
@@ -627,17 +627,17 @@ public abstract class BaseStoreTestCase {
 		byte[] firstVersionBytes = store.getFileAsBytes(
 			companyId, repositoryId, fileName, "1.0");
 
-		Assert.assertTrue(Arrays.equals(_DATA_VERSION_1, firstVersionBytes));
+		Assert.assertArrayEquals(_DATA_VERSION_1, firstVersionBytes);
 
 		byte[] secondVersionBytes = store.getFileAsBytes(
 			companyId, repositoryId, fileName, "1.1");
 
-		Assert.assertTrue(Arrays.equals(_DATA_VERSION_2, secondVersionBytes));
+		Assert.assertArrayEquals(_DATA_VERSION_2, secondVersionBytes);
 
 		byte[] currentVersionBytes = store.getFileAsBytes(
 			companyId, repositoryId, fileName);
 
-		Assert.assertTrue(Arrays.equals(_DATA_VERSION_2, currentVersionBytes));
+		Assert.assertArrayEquals(_DATA_VERSION_2, currentVersionBytes);
 	}
 
 	@Test

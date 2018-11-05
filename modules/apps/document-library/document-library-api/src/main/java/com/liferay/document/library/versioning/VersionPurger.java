@@ -24,7 +24,7 @@ import java.util.Collection;
  */
 public interface VersionPurger {
 
-	public Collection<FileVersion> getFileVersionsToPurge(FileEntry fileEntry);
+	public Collection<FileVersion> getToPurgeFileVersions(FileEntry fileEntry);
 
 	public interface VersionPurgedListener {
 

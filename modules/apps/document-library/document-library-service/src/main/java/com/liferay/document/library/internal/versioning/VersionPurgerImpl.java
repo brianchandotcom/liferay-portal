@@ -48,7 +48,7 @@ public class VersionPurgerImpl implements VersionPurger {
 	}
 
 	@Override
-	public Collection<FileVersion> getFileVersionsToPurge(FileEntry fileEntry) {
+	public Collection<FileVersion> getToPurgeFileVersions(FileEntry fileEntry) {
 		long maximumNumberOfVersions =
 			_dlConfiguration.maximumNumberOfVersions();
 
@@ -63,11 +63,11 @@ public class VersionPurgerImpl implements VersionPurger {
 		if (numberOfVersions > maximumNumberOfVersions) {
 			List<FileVersion> fileVersions = fileEntry.getFileVersions(status);
 
-			int numberOfVersionsToDelete =
+			int numberOfVersionsToPurge =
 				(int)(numberOfVersions - maximumNumberOfVersions);
 
 			return fileVersions.subList(
-				fileVersions.size() - numberOfVersionsToDelete,
+				fileVersions.size() - numberOfVersionsToPurge,
 				fileVersions.size());
 		}
 

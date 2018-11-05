@@ -154,7 +154,7 @@ public class LiferayVersioningCapability
 		TransactionCommitCallbackUtil.registerCallback(
 			(Callable<Void>)() -> {
 				for (FileVersion fileVersion :
-						_versionPurger.getFileVersionsToPurge(fileEntry)) {
+						_versionPurger.getToPurgeFileVersions(fileEntry)) {
 
 					for (VersionPurger.VersionPurgedListener
 							versionPurgedListener : _versionPurgedListeners) {

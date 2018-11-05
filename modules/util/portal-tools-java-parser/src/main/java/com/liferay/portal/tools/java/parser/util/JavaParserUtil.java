@@ -21,6 +21,7 @@ import com.liferay.portal.tools.java.parser.JavaAnnotationMemberValuePair;
 import com.liferay.portal.tools.java.parser.JavaArray;
 import com.liferay.portal.tools.java.parser.JavaArrayDeclarator;
 import com.liferay.portal.tools.java.parser.JavaArrayElement;
+import com.liferay.portal.tools.java.parser.JavaBreakStatement;
 import com.liferay.portal.tools.java.parser.JavaCatchStatement;
 import com.liferay.portal.tools.java.parser.JavaClassCall;
 import com.liferay.portal.tools.java.parser.JavaConstructor;
@@ -66,6 +67,20 @@ import java.util.List;
  * @author Hugo Huijser
  */
 public class JavaParserUtil {
+
+	public static JavaBreakStatement parseJavaBreakStatement(
+		DetailAST literalBreakDetailAST) {
+
+		JavaBreakStatement javaBreakStatement = new JavaBreakStatement();
+
+		DetailAST firstChildDetailAST = literalBreakDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
+			javaBreakStatement.setIdentifierName(firstChildDetailAST.getText());
+		}
+
+		return javaBreakStatement;
+	}
 
 	public static JavaCatchStatement parseJavaCatchStatement(
 		DetailAST literalCatchDetailAST) {
@@ -827,7 +842,8 @@ public class JavaParserUtil {
 				elistDetailAST, false, TokenTypes.EXPR);
 
 			for (DetailAST curExprDetailAST : exprDetailASTList) {
-				iteratorJavaExpressions.add(parseJavaExpression(curExprDetailAST));
+				iteratorJavaExpressions.add(
+					parseJavaExpression(curExprDetailAST));
 			}
 		}
 

@@ -59,13 +59,14 @@ public abstract class BaseStructuredContentNestedCollectionResourceTestCase {
 
 		Class<?> innerClass = declaredClasses[0];
 
-		Constructor constructor = innerClass.getDeclaredConstructor(
-			DDMFormFieldValue.class, DDMStructure.class);
+		Constructor<?>[] constructors = innerClass.getDeclaredConstructors();
+
+		Constructor constructor = constructors[0];
 
 		constructor.setAccessible(true);
 
 		Object object = constructor.newInstance(
-			ddmFormFieldValue, ddmStructure);
+			nestedCollectionResource, ddmFormFieldValue, ddmStructure);
 
 		Method method = innerClass.getMethod("getDDMFormFieldDataType");
 
@@ -88,13 +89,14 @@ public abstract class BaseStructuredContentNestedCollectionResourceTestCase {
 
 		Class<?> innerClass = declaredClasses[0];
 
-		Constructor constructor = innerClass.getDeclaredConstructor(
-			DDMFormFieldValue.class, DDMStructure.class);
+		Constructor<?>[] constructors = innerClass.getDeclaredConstructors();
+
+		Constructor constructor = constructors[0];
 
 		constructor.setAccessible(true);
 
 		Object object = constructor.newInstance(
-			ddmFormFieldValue, ddmStructure);
+			nestedCollectionResource, ddmFormFieldValue, ddmStructure);
 
 		Method method = innerClass.getMethod("getDDMFormFieldInputControl");
 

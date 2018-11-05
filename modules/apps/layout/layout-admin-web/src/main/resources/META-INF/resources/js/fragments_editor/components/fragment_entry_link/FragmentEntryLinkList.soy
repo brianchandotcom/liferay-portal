@@ -44,6 +44,7 @@
 		container-fluid
 		fragment-entry-link-drop-target
 		fragment-entry-link-list
+		layouts-drop-target
 
 		{if $highlightMapping}
 			{sp}mapping
@@ -115,7 +116,10 @@
 	]}
 	{@param? store: ?}
 
-	<section class="fragment-entry-link-list__row-section" data-layout-section>
+	<section
+		class="fragment-entry-link-list__row-section layouts-drop-target"
+		data-layout-section
+	>
 		<div class="container row-container">
 			<div class="row" data-row-id="{$rowId}">
 				{foreach $column in $columns}
@@ -257,7 +261,14 @@
  * No fragments message
  */
 {template .noFragmentsMessage}
-	<div class="fragment-entry-link-drop-target no-fragments-message taglib-empty-result-message">
+	{let $emptyListClasses kind="text"}
+		fragment-entry-link-drop-target
+		{sp}layouts-drop-target
+		{sp}no-fragments-message
+		{sp}taglib-empty-result-message
+	{/let}
+
+	<div class="{$emptyListClasses}">
 		<div class="taglib-empty-result-message-header"></div>
 
 		<div class="text-center text-muted">

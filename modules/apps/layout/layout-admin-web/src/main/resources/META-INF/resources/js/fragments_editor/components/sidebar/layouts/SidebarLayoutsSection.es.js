@@ -2,13 +2,44 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
+import SidebarLayoutsDragDrop from './utils/SidebarLayoutsDragDrop.es';
 import templates from './SidebarLayoutsSection.soy';
 
 /**
  * SidebarLayoutsSection
  */
 
-class SidebarLayoutsSection extends Component {}
+class SidebarLayoutsSection extends Component {
+
+	/**
+	 * @inheritDoc
+	 */
+	rendered(firstRendered) {
+		if (firstRendered) {
+			this._initializeSidebarLayoutsDragDrop();
+		}
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	dispose() {
+		this._sidebarLayoutsDragDrop.dispose();
+	}
+
+	/**
+	 * Initializes sidebarLayoutsDragDrop instance
+	 * @private
+	 * @review
+	 */
+	_initializeSidebarLayoutsDragDrop() {
+		if (this._sidebarLayoutsDragDrop) {
+			this._sidebarLayoutsDragDrop.dispose();
+		}
+
+		this._sidebarLayoutsDragDrop = new SidebarLayoutsDragDrop();
+	}
+}
 
 /**
  * State definition.
@@ -42,7 +73,18 @@ SidebarLayoutsSection.STATE = {
 			{columns: ['3', '6', '3']},
 			{columns: ['3', '3', '3', '3']}
 		]
-	)
+	),
+
+	/**
+	 * Internal SidebarLayoutsDragDrop instance
+	 * @default null
+	 * @instance
+	 * @memberOf SidebarLayoutsSection
+	 * @review
+	 * @type {object|null}
+	 */
+
+	_sidebarLayoutsDragDrop: Config.internal().value(null)
 };
 
 Soy.register(SidebarLayoutsSection, templates);

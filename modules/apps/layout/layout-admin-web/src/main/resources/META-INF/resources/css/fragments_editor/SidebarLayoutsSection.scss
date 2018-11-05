@@ -1,3 +1,5 @@
+$layoutDraggingHeight: 48px;
+$layoutDraggingWidth: 240px;
 $layoutPreviewBackgroundColor: #FFF;
 $layoutPreviewBorderColor: #AAA;
 $layoutPreviewColumnColor: #DDD;
@@ -16,6 +18,17 @@ $layoutPreviewSpacing: 4px;
 		height: $layoutPreviewHeight;
 		margin: $layoutPreviewSpacing 0;
 		padding: 0;
+
+		&.layouts-drag-section {
+			&.btn {
+				cursor: move;
+			}
+
+			&.dragging {
+				height: $layoutDraggingHeight;
+				width: $layoutDraggingWidth;
+			}
+		}
 
 		&__row {
 			border: solid $layoutPreviewBorderColor thin;

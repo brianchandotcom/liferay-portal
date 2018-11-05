@@ -113,7 +113,9 @@ public class KaleoServiceUpgrade implements UpgradeStepRegistrator {
 					KaleoTaskInstanceTokenTable.class, KaleoTaskTable.class,
 					KaleoTimerInstanceTokenTable.class, KaleoTimerTable.class,
 					KaleoTransitionTable.class
-				}));
+				}),
+			new com.liferay.portal.workflow.kaleo.internal.upgrade.v2_0_0.
+				UpgradeSchema());
 	}
 
 }

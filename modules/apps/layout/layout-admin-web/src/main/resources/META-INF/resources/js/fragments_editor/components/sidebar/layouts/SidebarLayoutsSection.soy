@@ -25,11 +25,27 @@
 {template .layoutPreview}
 	{@param columns: list<string>}
 
-	<button class="btn btn-unstyled container sidebar-layouts-section__layout-preview">
-		<div class="row sidebar-layouts-section__layout-preview__row" role="image">
+	{let $layoutsSectionClasses kind="text"}
+		btn
+		{sp}btn-unstyled
+		{sp}container
+		{sp}sidebar-layouts-section__layout-preview
+	{/let}
+
+	{let $layoutsSectionRowClasses kind="text"}
+		row
+		{sp}sidebar-layouts-section__layout-preview__row
+	{/let}
+
+	<button class="{$layoutsSectionClasses}">
+		<div class="{$layoutsSectionRowClasses}" role="image">
 			{foreach $column in $columns}
-				<div class="col-{$column} sidebar-layouts-section__layout-preview__column">
-				</div>
+				{let $sectionColumnClasses kind="text"}
+					col-{$column}
+					{sp}sidebar-layouts-section__layout-preview__column
+				{/let}
+
+				<div class="{$sectionColumnClasses}"></div>
 			{/foreach}
 		</div>
 	</button>

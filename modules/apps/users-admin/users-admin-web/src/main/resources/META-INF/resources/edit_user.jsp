@@ -35,7 +35,9 @@ if (selUser != null) {
 %>
 
 <liferay-frontend:screen-navigation
+	containerCssClass="col-lg-8"
 	context="<%= selUser %>"
 	key="<%= UserFormConstants.SCREEN_NAVIGATION_KEY_USERS %>"
+	navCssClass="col-lg-3"
 	portletURL="<%= portletURL %>"
 />

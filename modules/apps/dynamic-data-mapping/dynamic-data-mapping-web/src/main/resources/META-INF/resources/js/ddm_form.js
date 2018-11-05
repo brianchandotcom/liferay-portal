@@ -3119,14 +3119,14 @@ AUI.add(
 								ddPlugins.push(
 									{
 										cfg: {
-											constrain: '.lfr-form-content'
+											constrain: '.lfr-ddm-container'
 										},
 										fn: A.Plugin.DDConstrained
 									},
 									{
 										cfg: {
 											horizontal: false,
-											node: '.lfr-form-content'
+											node: '.lfr-ddm-container'
 										},
 										fn: A.Plugin.DDNodeScroll
 									}

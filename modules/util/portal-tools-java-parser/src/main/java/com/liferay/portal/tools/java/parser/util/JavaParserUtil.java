@@ -817,16 +817,18 @@ public class JavaParserUtil {
 		DetailAST forIteratorDetailAST = literalForDetailAST.findFirstToken(
 			TokenTypes.FOR_ITERATOR);
 
+		List<JavaExpression> iteratorJavaExpressions = new ArrayList<>();
+
 		DetailAST elistDetailAST = forIteratorDetailAST.findFirstToken(
 			TokenTypes.ELIST);
 
-		List<JavaExpression> iteratorJavaExpressions = new ArrayList<>();
+		if (elistDetailAST != null) {
+			List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
+				elistDetailAST, false, TokenTypes.EXPR);
 
-		List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
-			elistDetailAST, false, TokenTypes.EXPR);
-
-		for (DetailAST curExprDetailAST : exprDetailASTList) {
-			iteratorJavaExpressions.add(parseJavaExpression(curExprDetailAST));
+			for (DetailAST curExprDetailAST : exprDetailASTList) {
+				iteratorJavaExpressions.add(parseJavaExpression(curExprDetailAST));
+			}
 		}
 
 		javaForStatement.setIteratorJavaExpression(iteratorJavaExpressions);

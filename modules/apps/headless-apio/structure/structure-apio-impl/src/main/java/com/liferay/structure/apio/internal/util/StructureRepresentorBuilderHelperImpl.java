@@ -31,6 +31,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.structure.apio.architect.model.FormLayoutPage;
+import com.liferay.structure.apio.architect.util.StructureFieldConverter;
 import com.liferay.structure.apio.architect.util.StructureRepresentorBuilderHelper;
 import com.liferay.structure.apio.internal.model.FormLayoutPageImpl;
 
@@ -47,6 +48,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose structure resources through a
@@ -107,16 +109,20 @@ public class StructureRepresentorBuilderHelperImpl
 				DDMFormField::getDDMFormFieldOptions),
 			this::_buildFieldOptions
 		).addString(
-			"additionalType", DDMFormField::getType
-		).addString(
 			"dataSourceType",
 			getDDMFormFieldPropertyFunction(
 				String.class::cast, "dataSourceType")
 		).addString(
-			"dataType", DDMFormField::getDataType
+			"dataType",
+			ddmFormField -> _structureFieldConverter.getFieldDataType(
+				ddmFormField.getDataType())
 		).addString(
 			"displayStyle",
 			getDDMFormFieldPropertyFunction(String.class::cast, "displayStyle")
+		).addString(
+			"inputControl",
+			ddmFormField -> _structureFieldConverter.getFieldInputControl(
+				ddmFormField.getType())
 		).addString(
 			"name", DDMFormField::getName
 		).addString(
@@ -337,5 +343,8 @@ public class StructureRepresentorBuilderHelperImpl
 			"value", Map.Entry::getKey
 		).build();
 	}
+
+	@Reference
+	private StructureFieldConverter _structureFieldConverter;
 
 }

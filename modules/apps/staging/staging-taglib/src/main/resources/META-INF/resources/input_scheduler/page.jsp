@@ -18,6 +18,11 @@
 
 <ul class="hide options portlet-list select-options" id="<portlet:namespace />selectSchedule">
 	<li>
+		<liferay-ui:error
+			exception="<%= com.liferay.portal.kernel.scheduler.SchedulerException.class%>"
+			message="wrong-end-date-scheduler-will-never-fire"
+		/>
+
 		<aui:input name="jobName" type="hidden" />
 
 		<%

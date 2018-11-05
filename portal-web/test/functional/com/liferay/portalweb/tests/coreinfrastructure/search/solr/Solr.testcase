@@ -32,13 +32,6 @@
 			<then>
 				<execute macro="PortalInstances#tearDownCP" />
 			</then>
-			<else>
-				<execute macro="MessageboardsThread#tearDownCP" />
-
-				<execute macro="DMDocument#tearDownCP" />
-
-				<execute macro="Page#tearDownCP" />
-			</else>
 		</if>
 	</tear-down>
 
@@ -122,16 +115,16 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="SolrWithSolrCloudSmokeTest" priority="4">
+	<command name="SolrWithSolrCloudSmokeTest" priority="4">
 		<description message="This smoke test is to ensure that Liferay is successfully running on a remote SolrCloud with 2 nodes by asserting console logging for ZooKeeper and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal." />
 
 		<property name="dummy.socket.proxy.disabled" value="true" />
 		<property name="solr.solrcloud.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Solr#SolrWithSolrCloudSmokeTest" />
 
-		<!-- LRQA-42649 -->
+		<!-- LRQA-44617 -->
 
-		<execute macro="Solr#viewSolrwithSolrCloudEnabledInConsole" />
+		<!-- <execute macro="Solr#viewSolrwithSolrCloudEnabledInConsole" /> -->
 
 		<execute macro="Solr#viewLiferayCloudDashboard">
 			<var name="cloudCollectionName" value="liferay" />

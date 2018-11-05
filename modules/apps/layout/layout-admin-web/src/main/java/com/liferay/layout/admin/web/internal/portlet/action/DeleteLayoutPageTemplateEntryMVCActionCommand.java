@@ -16,6 +16,7 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -81,6 +82,10 @@ public class DeleteLayoutPageTemplateEntryMVCActionCommand
 				if (assetDisplayPageEntriesCount > 0) {
 					deleteLayoutPageTemplateIdsList.add(
 						deleteLayoutPageTemplateEntryId);
+
+					SessionErrors.add(
+						actionRequest,
+						RequiredLayoutPageTemplateEntryException.class);
 				}
 				else {
 					_layoutPageTemplateEntryService.

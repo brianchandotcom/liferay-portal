@@ -393,6 +393,16 @@ public class DDMExpressionImplTest extends PowerMockito {
 	}
 
 	@Test
+	public void testRegexExpression1() throws Exception {
+		createDDMExpression("'\\d{10}'");
+	}
+
+	@Test
+	public void testRegexExpression2() throws Exception {
+		createDDMExpression("'\\d+'");
+	}
+
+	@Test
 	public void testSubtraction1() throws Exception {
 		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
 			"-2 -3.55");

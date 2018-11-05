@@ -250,12 +250,6 @@ public class LDAPFilterValidatorImplTest {
 		Assert.assertFalse(isValidFilter("(>=value)"));
 		Assert.assertFalse(isValidFilter("(~=value)"));
 		Assert.assertFalse(isValidFilter("(~=value)(object=value)"));
-		Assert.assertFalse(isValidFilter("(object=)"));
-		Assert.assertFalse(isValidFilter("(object<=)"));
-		Assert.assertFalse(isValidFilter("(object>=)"));
-		Assert.assertFalse(isValidFilter("(object~=)"));
-		Assert.assertFalse(isValidFilter("(object=subobject=)"));
-		Assert.assertFalse(isValidFilter("(org=liferay)(object=subobject=)"));
 	}
 
 	@Test
@@ -360,12 +354,6 @@ public class LDAPFilterValidatorImplTest {
 		Assert.assertTrue(isValidFilter("(object=value)"));
 		Assert.assertTrue(isValidFilter("(object=*)"));
 		Assert.assertTrue(isValidFilter("(object=subobject=*)"));
-		Assert.assertFalse(isValidFilter("(object=)"));
-		Assert.assertFalse(isValidFilter("(object<=)"));
-		Assert.assertFalse(isValidFilter("(object>=)"));
-		Assert.assertFalse(isValidFilter("(object~=)"));
-		Assert.assertFalse(isValidFilter("(object=subobject=)"));
-		Assert.assertFalse(isValidFilter("(org=liferay)(object=subobject=)"));
 	}
 
 	@Test

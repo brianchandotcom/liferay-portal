@@ -25,6 +25,7 @@ import com.liferay.portal.tools.java.parser.JavaCatchStatement;
 import com.liferay.portal.tools.java.parser.JavaClassCall;
 import com.liferay.portal.tools.java.parser.JavaConstructor;
 import com.liferay.portal.tools.java.parser.JavaConstructorCall;
+import com.liferay.portal.tools.java.parser.JavaElseStatement;
 import com.liferay.portal.tools.java.parser.JavaExpression;
 import com.liferay.portal.tools.java.parser.JavaIfStatement;
 import com.liferay.portal.tools.java.parser.JavaInstanceofStatement;
@@ -139,6 +140,21 @@ public class JavaParserUtil {
 				detailAST.findFirstToken(TokenTypes.ELIST)));
 
 		return javaConstructorCall;
+	}
+
+	public static JavaElseStatement parseJavaElseStatement(
+		DetailAST literalElseDetailAST) {
+
+		JavaElseStatement javaElseStatement = new JavaElseStatement();
+
+		DetailAST firstChildDetailAST = literalElseDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() == TokenTypes.LITERAL_IF) {
+			javaElseStatement.setJavaIfStatement(
+				parseJavaIfStatement(firstChildDetailAST));
+		}
+
+		return javaElseStatement;
 	}
 
 	public static JavaExpression parseJavaExpression(DetailAST detailAST) {

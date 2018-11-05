@@ -156,7 +156,7 @@ public class OpenIdConnectFilter extends BaseFilter {
 		}
 
 		String renderURL = (String)session.getAttribute(
-			"OPEN_ID_CONNECT_RENDER_URL");
+			OpenIdConnectWebKeys.OPEN_ID_CONNECT_RENDER_URL);
 
 		String portletId = _http.getParameter(renderURL, "p_p_id", false);
 

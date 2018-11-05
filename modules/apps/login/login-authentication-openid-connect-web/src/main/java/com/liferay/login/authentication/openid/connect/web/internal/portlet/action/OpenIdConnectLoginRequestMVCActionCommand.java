@@ -91,7 +91,8 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 					"saveLastPath", Boolean.FALSE.toString());
 
 				session.setAttribute(
-					"OPEN_ID_CONNECT_RENDER_URL", renderURL.toString());
+					OpenIdConnectWebKeys.OPEN_ID_CONNECT_RENDER_URL,
+					renderURL.toString());
 			}
 
 			_openIdConnectServiceHandler.requestAuthentication(

@@ -75,6 +75,11 @@ public class URLCodecTest {
 					_ESCAPE_SPACES_ENCODED_URLS[i], StringPool.UTF8));
 		}
 
+		_testCharacterCodingException(
+			charsetName -> URLCodec.decodeURL("%00", charsetName));
+
+		// LPS-47334
+
 		testDecodeURL("%");
 		testDecodeURL("%0");
 		testDecodeURL("%00%");
@@ -86,12 +91,8 @@ public class URLCodecTest {
 		testDecodeURL("%0" + (char)(CharPool.LOWER_CASE_A - 1));
 		testDecodeURL("%0" + (char)(CharPool.LOWER_CASE_F + 1));
 
-		_testCharacterCodingException(
-			charsetName -> URLCodec.decodeURL("%00", charsetName));
-	}
+		// LPS-62628
 
-	@Test
-	public void testDecodeURLWithPercentageInURLParameters() {
 		testDecodeURL("http://localhost:8080/?id=%'");
 	}
 

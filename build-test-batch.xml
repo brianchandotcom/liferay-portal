@@ -459,6 +459,14 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						for (File testUtilModuleBuildGradleFile : testUtilModuleBuildGradleFiles) {
 							String testUtilModule = testUtilModuleBuildGradleFile.getParent();
 
+							File skipTestIntegrationCheckFile = new File(testUtilModule, ".lfrbuild-ci-skip-test-integration-check");
+
+							if (skipTestIntegrationCheckFile.exists()) {
+								System.out.println("Ignoring " + testUtilModule.replace(projectDir + "/", ""));
+
+								continue;
+							}
+
 							testUtilModule = testUtilModule.replace(projectDir + "/", "");
 
 							testUtilModules.add(testUtilModule);

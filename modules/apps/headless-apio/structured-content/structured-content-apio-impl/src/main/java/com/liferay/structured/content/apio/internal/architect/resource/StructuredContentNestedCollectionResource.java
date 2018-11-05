@@ -38,7 +38,6 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.Value;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
@@ -89,6 +88,7 @@ import com.liferay.portal.odata.filter.InvalidFilterException;
 import com.liferay.portal.odata.sort.Sort;
 import com.liferay.portal.odata.sort.SortField;
 import com.liferay.structure.apio.architect.identifier.ContentStructureIdentifier;
+import com.liferay.structure.apio.architect.util.StructureFieldConverter;
 import com.liferay.structured.content.apio.architect.identifier.StructuredContentIdentifier;
 import com.liferay.structured.content.apio.architect.util.StructuredContentUtil;
 import com.liferay.structured.content.apio.internal.architect.filter.StructuredContentEntityModel;
@@ -102,7 +102,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -833,7 +832,10 @@ public class StructuredContentNestedCollectionResource
 	private SearchResultPermissionFilterFactory
 		_searchResultPermissionFilterFactory;
 
-	private static class StructuredContentField {
+	@Reference
+	private StructureFieldConverter _structureFieldConverter;
+
+	private class StructuredContentField {
 
 		public StructuredContentField(
 			DDMFormFieldValue ddmFormFieldValue, DDMStructure ddmStructure) {
@@ -847,20 +849,7 @@ public class StructuredContentNestedCollectionResource
 				String dataType = _ddmStructure.getFieldDataType(
 					_ddmFormFieldValue.getName());
 
-				if (Objects.equals(dataType, "document-library")) {
-					return "document";
-				}
-				else if (Objects.equals(dataType, "journal-article")) {
-					return "structuredContent";
-				}
-				else if (Objects.equals(dataType, "link-to-page")) {
-					return "url";
-				}
-				else if (Objects.equals(dataType, "radio")) {
-					return "string";
-				}
-
-				return dataType;
+				return _structureFieldConverter.getFieldDataType(dataType);
 			}
 			catch (PortalException pe) {
 				if (_log.isWarnEnabled()) {
@@ -877,8 +866,9 @@ public class StructuredContentNestedCollectionResource
 		public String getDDMFormFieldInputControl() {
 			return Try.fromFallible(
 				() -> _ddmStructure.getFieldType(_ddmFormFieldValue.getName())
-			).filter(
-				this::_isDDMFormFieldInputControl
+			).map(
+				fieldType ->
+					_structureFieldConverter.getFieldInputControl(fieldType)
 			).recover(
 				pe -> {
 					if (_log.isWarnEnabled()) {
@@ -948,19 +938,6 @@ public class StructuredContentNestedCollectionResource
 			).collect(
 				Collectors.toList()
 			);
-		}
-
-		private boolean _isDDMFormFieldInputControl(String type) {
-			if (DDMFormFieldType.CHECKBOX.equals(type) ||
-				DDMFormFieldType.RADIO.equals(type) ||
-				DDMFormFieldType.SELECT.equals(type) ||
-				DDMFormFieldType.TEXT.equals(type) ||
-				DDMFormFieldType.TEXT_AREA.equals(type)) {
-
-				return true;
-			}
-
-			return false;
 		}
 
 		private final DDMFormFieldValue _ddmFormFieldValue;

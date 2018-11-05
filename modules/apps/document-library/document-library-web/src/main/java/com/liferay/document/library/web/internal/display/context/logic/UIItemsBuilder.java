@@ -158,7 +158,7 @@ public class UIItemsBuilder {
 			return;
 		}
 
-		menuItems.add(getJavacriptCheckinMenuItem());
+		menuItems.add(getCheckinMenuItem());
 	}
 
 	public void addCheckinToolbarItem(List<ToolbarItem> toolbarItems)
@@ -935,7 +935,7 @@ public class UIItemsBuilder {
 			"view[action]", portletURL.toString());
 	}
 
-	public MenuItem getJavacriptCheckinMenuItem() throws PortalException {
+	public MenuItem getCheckinMenuItem() throws PortalException {
 		PortletURL portletURL = _getActionURL(
 			"/document_library/edit_file_entry", Constants.CHECKIN);
 

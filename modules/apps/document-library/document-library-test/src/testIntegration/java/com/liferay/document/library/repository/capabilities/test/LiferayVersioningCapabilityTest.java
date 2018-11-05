@@ -130,6 +130,37 @@ public class LiferayVersioningCapabilityTest {
 	}
 
 	@Test
+	public void testLimitsTheNumberOfVersionsPerFileEntryToOne()
+		throws Exception {
+
+		_withMaximumNumberOfVersionsConfigured(
+			1,
+			() -> {
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId());
+
+				FileEntry fileEntry = _addRandomFileEntry(serviceContext);
+
+				for (int i = 0; i < 10; i++) {
+					_generateNewVersion(fileEntry, serviceContext);
+				}
+
+				Assert.assertEquals(
+					1,
+					fileEntry.getFileVersionsCount(
+						WorkflowConstants.STATUS_ANY));
+
+				List<FileVersion> fileVersions = fileEntry.getFileVersions(
+					WorkflowConstants.STATUS_ANY);
+
+				FileVersion fileVersion1 = fileVersions.get(0);
+
+				Assert.assertEquals("1.10", fileVersion1.getVersion());
+			});
+	}
+
+	@Test
 	public void testNotifiesAboutEachFileVersionDeletion() throws Exception {
 		_withMaximumNumberOfVersionsConfigured(
 			2,

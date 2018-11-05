@@ -27,12 +27,15 @@ import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.repository.util.LocalRepositoryWrapper;
 import com.liferay.portal.repository.util.RepositoryWrapper;
 import com.liferay.portal.repository.util.RepositoryWrapperAware;
 
 import java.io.File;
 import java.io.InputStream;
+
+import java.util.concurrent.Callable;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -143,23 +146,28 @@ public class LiferayVersioningCapability
 		_versionPurgedListeners.close();
 	}
 
-	private FileEntry _purgeVersions(FileEntry fileEntry)
-		throws PortalException {
+	private FileEntry _purgeVersions(FileEntry fileEntry) {
+		if (_versionPurger == null) {
+			return fileEntry;
+		}
 
-		if (_versionPurger != null) {
-			for (FileVersion fileVersion :
-					_versionPurger.getFileVersionsToPurge(fileEntry)) {
+		TransactionCommitCallbackUtil.registerCallback(
+			(Callable<Void>)() -> {
+				for (FileVersion fileVersion :
+						_versionPurger.getFileVersionsToPurge(fileEntry)) {
 
-				for (VersionPurger.VersionPurgedListener versionPurgedListener :
-						_versionPurgedListeners) {
+					for (VersionPurger.VersionPurgedListener
+							versionPurgedListener : _versionPurgedListeners) {
 
-					versionPurgedListener.versionPurged(fileVersion);
+						versionPurgedListener.versionPurged(fileVersion);
+					}
+
+					_dlAppService.deleteFileVersion(
+						fileEntry.getFileEntryId(), fileVersion.getVersion());
 				}
 
-				_dlAppService.deleteFileVersion(
-					fileEntry.getFileEntryId(), fileVersion.getVersion());
-			}
-		}
+				return null;
+			});
 
 		return fileEntry;
 	}

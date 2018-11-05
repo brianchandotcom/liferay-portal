@@ -21,6 +21,7 @@ import com.liferay.portal.tools.java.parser.JavaAnnotationMemberValuePair;
 import com.liferay.portal.tools.java.parser.JavaArray;
 import com.liferay.portal.tools.java.parser.JavaArrayDeclarator;
 import com.liferay.portal.tools.java.parser.JavaArrayElement;
+import com.liferay.portal.tools.java.parser.JavaCatchStatement;
 import com.liferay.portal.tools.java.parser.JavaClassCall;
 import com.liferay.portal.tools.java.parser.JavaConstructor;
 import com.liferay.portal.tools.java.parser.JavaExpression;
@@ -58,6 +59,58 @@ import java.util.List;
  * @author Hugo Huijser
  */
 public class JavaParserUtil {
+
+	public static JavaCatchStatement parseJavaCatchStatement(
+		DetailAST literalCatchDetailAST) {
+
+		JavaCatchStatement javaCatchStatement = new JavaCatchStatement();
+
+		DetailAST parameterDefinitionDetailAST =
+			literalCatchDetailAST.findFirstToken(TokenTypes.PARAMETER_DEF);
+
+		DetailAST identDetailAST = parameterDefinitionDetailAST.findFirstToken(
+			TokenTypes.IDENT);
+
+		javaCatchStatement.setParameterName(identDetailAST.getText());
+
+		List<JavaSimpleValue> parameterTypeNames = new ArrayList<>();
+
+		DetailAST typeDetailAST = parameterDefinitionDetailAST.findFirstToken(
+			TokenTypes.TYPE);
+
+		DetailAST childDetailAST = typeDetailAST.getFirstChild();
+
+		while (true) {
+			DetailAST nextSiblingDetailAST = childDetailAST.getNextSibling();
+
+			if (nextSiblingDetailAST != null) {
+				FullIdent fullIdent = FullIdent.createFullIdent(
+					nextSiblingDetailAST);
+
+				parameterTypeNames.add(
+					new JavaSimpleValue(fullIdent.getText()));
+			}
+
+			if (childDetailAST.getType() != TokenTypes.BOR) {
+				FullIdent fullIdent = FullIdent.createFullIdent(childDetailAST);
+
+				parameterTypeNames.add(
+					new JavaSimpleValue(fullIdent.getText()));
+
+				break;
+			}
+
+			childDetailAST = childDetailAST.getFirstChild();
+		}
+
+		if (parameterTypeNames.size() > 1) {
+			Collections.reverse(parameterTypeNames);
+		}
+
+		javaCatchStatement.setParameterTypeNames(parameterTypeNames);
+
+		return javaCatchStatement;
+	}
 
 	public static JavaConstructor parseJavaConstructor(
 		DetailAST constructorDefinitionDetailAST) {

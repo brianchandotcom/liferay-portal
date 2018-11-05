@@ -13,6 +13,7 @@
 			{foreach $layout in $_layouts}
 				{call .layoutPreview}
 					{param columns: $layout.columns /}
+					{param layoutIndex: index($layout) /}
 				{/call}
 			{/foreach}
 		{/if}
@@ -23,6 +24,7 @@
  * Layout preview
  */
 {template .layoutPreview}
+	{@param layoutIndex: number}
 	{@param columns: list<string>}
 
 	{let $layoutsSectionClasses kind="text"}
@@ -37,7 +39,7 @@
 		{sp}sidebar-layouts-section__layout-preview__row
 	{/let}
 
-	<button class="{$layoutsSectionClasses}">
+	<button class="{$layoutsSectionClasses}" data-layout-index="{$layoutIndex}">
 		<div class="{$layoutsSectionRowClasses}" role="image">
 			{foreach $column in $columns}
 				{let $sectionColumnClasses kind="text"}

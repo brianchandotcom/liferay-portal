@@ -132,13 +132,7 @@ public class MySQLSQLTransformerLogicTest
 	}
 
 	private static MySQLDB _getCaseSensitiveMySQLDB() {
-		MySQLDB mySQLDB = Mockito.spy(new MySQLDB(5, 7));
-
-		Mockito.when(
-			mySQLDB.isSupportsStringCaseSensitiveQuery()
-		).thenReturn(
-			true
-		);
+		MySQLDB mySQLDB = new MySQLDB(5, 7);
 
 		return mySQLDB;
 	}

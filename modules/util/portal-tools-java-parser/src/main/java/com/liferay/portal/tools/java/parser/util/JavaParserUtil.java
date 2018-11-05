@@ -24,6 +24,7 @@ import com.liferay.portal.tools.java.parser.JavaArrayElement;
 import com.liferay.portal.tools.java.parser.JavaCatchStatement;
 import com.liferay.portal.tools.java.parser.JavaClassCall;
 import com.liferay.portal.tools.java.parser.JavaConstructor;
+import com.liferay.portal.tools.java.parser.JavaConstructorCall;
 import com.liferay.portal.tools.java.parser.JavaExpression;
 import com.liferay.portal.tools.java.parser.JavaIfStatement;
 import com.liferay.portal.tools.java.parser.JavaInstanceofStatement;
@@ -125,6 +126,19 @@ public class JavaParserUtil {
 			_parseJavaSignature(constructorDefinitionDetailAST));
 
 		return javaConstructor;
+	}
+
+	public static JavaConstructorCall parseJavaConstructorCall(
+		DetailAST detailAST) {
+
+		JavaConstructorCall javaConstructorCall = new JavaConstructorCall(
+			detailAST.getType() == TokenTypes.SUPER_CTOR_CALL);
+
+		javaConstructorCall.setParameterValueJavaExpressions(
+			_parseParameterValueJavaExpressions(
+				detailAST.findFirstToken(TokenTypes.ELIST)));
+
+		return javaConstructorCall;
 	}
 
 	public static JavaExpression parseJavaExpression(DetailAST detailAST) {

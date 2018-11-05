@@ -3,6 +3,7 @@ import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import SidebarLayoutsDragDrop from './utils/SidebarLayoutsDragDrop.es';
+import {Store} from '../../../store/store.es';
 import templates from './SidebarLayoutsSection.soy';
 
 /**
@@ -49,6 +50,17 @@ class SidebarLayoutsSection extends Component {
  */
 
 SidebarLayoutsSection.STATE = {
+
+	/**
+	 * Store instance
+	 * @default undefined
+	 * @instance
+	 * @memberOf SidebarLayoutsSection
+	 * @review
+	 * @type {Store}
+	 */
+
+	store: Config.instanceOf(Store),
 
 	/**
 	 * List of layouts to be shown

@@ -427,7 +427,7 @@ if (portletTitleBasedNavigation) {
 					</c:if>
 				</aui:fieldset>
 
-				<c:if test="<%= (fileEntry != null) && !checkedOut %>">
+				<c:if test="<%= (fileEntry != null) && !checkedOut && dlAdminDisplayContext.isVersioningStrategyOverridable() %>">
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="versioning">
 						<aui:input label="customize-the-version-number-increment-and-describe-my-changes" name="updateVersionDetails" type="toggle-switch" value="<%= updateVersionDetails %>" />
 
@@ -531,7 +531,7 @@ if (portletTitleBasedNavigation) {
 	/>
 </div>
 
-<c:if test="<%= (fileEntry != null) && checkedOut %>">
+<c:if test="<%= (fileEntry != null) && checkedOut && dlAdminDisplayContext.isVersioningStrategyOverridable() %>">
 
 	<%
 	request.setAttribute("edit_file_entry.jsp-checkedOut", checkedOut);
@@ -558,7 +558,12 @@ if (portletTitleBasedNavigation) {
 
 		form.fm('<%= Constants.CMD %>').val('<%= Constants.UPDATE_AND_CHECKIN %>');
 
-		<portlet:namespace />showVersionDetailsDialog(form);
+		if (<%= dlAdminDisplayContext.isVersioningStrategyOverridable() %>) {
+			<portlet:namespace />showVersionDetailsDialog(form);
+		}
+		else {
+			submitForm(form);
+		}
 	}
 
 	function <portlet:namespace />checkOut() {
@@ -633,7 +638,7 @@ if (portletTitleBasedNavigation) {
 	}
 </aui:script>
 
-<c:if test="<%= (fileEntry != null) && !checkedOut %>">
+<c:if test="<%= (fileEntry != null) && !checkedOut && dlAdminDisplayContext.isVersioningStrategyOverridable() %>">
 	<aui:script use="aui-base">
 		$('#<portlet:namespace />updateVersionDetails').on(
 			'click',

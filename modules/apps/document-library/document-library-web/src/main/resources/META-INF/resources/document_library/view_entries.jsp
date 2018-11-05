@@ -526,7 +526,6 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 request.setAttribute("edit_file_entry.jsp-checkedOut", true);
 %>
 
-<liferay-util:include page="/document_library/version_details.jsp" servletContext="<%= application %>" />
-
-<%!
-%>
+<c:if test="<%= dlAdminDisplayContext.isVersioningStrategyOverridable() %>">
+	<liferay-util:include page="/document_library/version_details.jsp" servletContext="<%= application %>" />
+</c:if>

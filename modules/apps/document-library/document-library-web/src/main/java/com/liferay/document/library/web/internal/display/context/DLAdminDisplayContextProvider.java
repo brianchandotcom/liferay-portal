@@ -14,12 +14,16 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Adolfo Pérez
@@ -34,7 +38,7 @@ public class DLAdminDisplayContextProvider {
 
 		return new DLAdminDisplayContext(
 			dlRequestHelper.getLiferayPortletRequest(),
-			dlRequestHelper.getLiferayPortletResponse());
+			dlRequestHelper.getLiferayPortletResponse(), _versioningStrategy);
 	}
 
 	public DLAdminManagementToolbarDisplayContext
@@ -48,5 +52,11 @@ public class DLAdminDisplayContextProvider {
 			dlRequestHelper.getLiferayPortletResponse(), request,
 			getDLAdminDisplayContext(request, response));
 	}
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile VersioningStrategy _versioningStrategy;
 
 }

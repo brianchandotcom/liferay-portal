@@ -45,6 +45,7 @@ import com.liferay.portal.tools.java.parser.JavaReturnStatement;
 import com.liferay.portal.tools.java.parser.JavaSignature;
 import com.liferay.portal.tools.java.parser.JavaSimpleLambdaExpression;
 import com.liferay.portal.tools.java.parser.JavaSimpleValue;
+import com.liferay.portal.tools.java.parser.JavaSynchronizedStatement;
 import com.liferay.portal.tools.java.parser.JavaTerm;
 import com.liferay.portal.tools.java.parser.JavaTernaryOperator;
 import com.liferay.portal.tools.java.parser.JavaThrowStatement;
@@ -321,6 +322,21 @@ public class JavaParserUtil {
 		}
 
 		return javaReturnStatement;
+	}
+
+	public static JavaSynchronizedStatement parseJavaSynchronizedStatement(
+		DetailAST literalSynchronizedDetailAST) {
+
+		JavaSynchronizedStatement javaSynchronizedStatement =
+			new JavaSynchronizedStatement();
+
+		DetailAST firstChildDetailAST =
+			literalSynchronizedDetailAST.getFirstChild();
+
+		javaSynchronizedStatement.setSynchronizedJavaExpression(
+			parseJavaExpression(firstChildDetailAST.getNextSibling()));
+
+		return javaSynchronizedStatement;
 	}
 
 	public static JavaThrowStatement parseJavaThrowStatement(

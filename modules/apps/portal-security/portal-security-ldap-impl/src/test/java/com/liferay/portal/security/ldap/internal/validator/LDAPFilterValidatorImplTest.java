@@ -391,6 +391,39 @@ public class LDAPFilterValidatorImplTest {
 			isValidFilter("(object~=value>==subvalue<=subsubvalue)"));
 	}
 
+	@Test
+	public void testRFC4515() {
+		Assert.assertTrue(isValidFilter("(cn=Babs Jensen)"));
+		Assert.assertTrue(isValidFilter("(!(cn=Tim Howes))"));
+		Assert.assertTrue(
+			isValidFilter("(&(objectClass=Person)(|(sn=Jensen)(cn=Babs J*)))"));
+		Assert.assertTrue(isValidFilter("(o=univ*of*mich*)"));
+		Assert.assertTrue(isValidFilter("(seeAlso=)"));
+
+		Assert.assertTrue(
+			isValidFilter("(cn:caseExactMatch:=Fred Flintstone)"));
+		Assert.assertTrue(isValidFilter("(cn:=Betty Rubble)"));
+		Assert.assertTrue(isValidFilter("(sn:dn:2.4.6.8.10:=Barney Rubble)"));
+		Assert.assertTrue(isValidFilter("(o:dn:=Ace Industry)"));
+		Assert.assertTrue(isValidFilter("(:1.2.3:=Wilma Flintstone)"));
+
+		Assert.assertTrue(
+			isValidFilter(
+				"(o=Parens R Us \\28for all your parenthetical needs\\29)"));
+
+		Assert.assertTrue(isValidFilter("(cn=*\\2A*)"));
+		Assert.assertTrue(isValidFilter("(filename=C:\\5cMyFile)"));
+		Assert.assertTrue(isValidFilter("(bin=\\00\\00\\00\\04)"));
+		Assert.assertTrue(isValidFilter("(sn=Lu\\c4\\8di\\c4\\87)"));
+	}
+
+	@Test
+	public void testRFC4515UnsupportedFilters() {
+		Assert.assertFalse(isValidFilter("(:DN:2.4.6.8.10:=Dino)"));
+		Assert.assertFalse(
+			isValidFilter("(1.3.6.1.4.1.1466.0=\\04\\02\\48\\69)"));
+	}
+
 	protected boolean isValidFilter(String filter) {
 		return _ldapFilterValidator.isValid(filter);
 	}

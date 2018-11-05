@@ -101,8 +101,7 @@ public class CheckinFileEntryPortletConfigurationIcon
 				_dlTrashUtil, _versioningStrategy);
 
 			request.setAttribute(
-				"checkin.jsp-menuItem",
-				uiItemsBuilder.getJavacriptCheckinMenuItem());
+				"checkin.jsp-menuItem", uiItemsBuilder.getCheckinMenuItem());
 
 			return super.include(request, response);
 		}

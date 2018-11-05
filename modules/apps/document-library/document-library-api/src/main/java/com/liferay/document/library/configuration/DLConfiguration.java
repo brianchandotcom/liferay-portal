@@ -108,4 +108,10 @@ public interface DLConfiguration {
 	)
 	public String[] vectorialFileMimeTypes();
 
+	@Meta.AD(
+		deflt = "true", description = "versioning-strategy-overridable-help",
+		name = "versioning-strategy-overridable", required = false
+	)
+	public boolean versioningStrategyOverridable();
+
 }

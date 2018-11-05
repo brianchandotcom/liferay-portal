@@ -22,6 +22,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
@@ -92,19 +93,23 @@ public class UIItemsBuilder {
 
 	public UIItemsBuilder(
 			HttpServletRequest request, FileShortcut fileShortcut,
-			ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil)
+			ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil,
+			VersioningStrategy versioningStrategy)
 		throws PortalException {
 
 		this(
 			request, fileShortcut.getFileVersion(), fileShortcut,
-			resourceBundle, dlTrashUtil);
+			resourceBundle, dlTrashUtil, versioningStrategy);
 	}
 
 	public UIItemsBuilder(
 		HttpServletRequest request, FileVersion fileVersion,
-		ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil) {
+		ResourceBundle resourceBundle, DLTrashUtil dlTrashUtil,
+		VersioningStrategy versioningStrategy) {
 
-		this(request, fileVersion, null, resourceBundle, dlTrashUtil);
+		this(
+			request, fileVersion, null, resourceBundle, dlTrashUtil,
+			versioningStrategy);
 	}
 
 	public void addCancelCheckoutMenuItem(List<MenuItem> menuItems)
@@ -930,14 +935,22 @@ public class UIItemsBuilder {
 			"view[action]", portletURL.toString());
 	}
 
-	public JavaScriptMenuItem getJavacriptCheckinMenuItem()
-		throws PortalException {
-
+	public MenuItem getJavacriptCheckinMenuItem() throws PortalException {
 		PortletURL portletURL = _getActionURL(
 			"/document_library/edit_file_entry", Constants.CHECKIN);
 
 		portletURL.setParameter(
 			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+
+		if (!_versioningStrategy.isOverridable()) {
+			URLMenuItem urlMenuItem = new URLMenuItem();
+
+			urlMenuItem.setKey(DLUIItemKeys.CHECKIN);
+			urlMenuItem.setLabel("checkin");
+			urlMenuItem.setURL(portletURL.toString());
+
+			return urlMenuItem;
+		}
 
 		JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
 
@@ -1060,7 +1073,7 @@ public class UIItemsBuilder {
 	private UIItemsBuilder(
 		HttpServletRequest request, FileVersion fileVersion,
 		FileShortcut fileShortcut, ResourceBundle resourceBundle,
-		DLTrashUtil dlTrashUtil) {
+		DLTrashUtil dlTrashUtil, VersioningStrategy versioningStrategy) {
 
 		try {
 			_request = request;
@@ -1089,6 +1102,8 @@ public class UIItemsBuilder {
 
 			_fileVersionDisplayContextHelper =
 				new FileVersionDisplayContextHelper(fileVersion);
+
+			_versioningStrategy = versioningStrategy;
 		}
 		catch (PortalException pe) {
 			throw new SystemException(
@@ -1324,5 +1339,6 @@ public class UIItemsBuilder {
 	private final ResourceBundle _resourceBundle;
 	private final ThemeDisplay _themeDisplay;
 	private Boolean _trashEnabled;
+	private final VersioningStrategy _versioningStrategy;
 
 }

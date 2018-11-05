@@ -29,6 +29,7 @@ import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelModifiedDateComparator;
+import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.web.internal.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
@@ -89,7 +90,8 @@ public class DLAdminDisplayContext {
 
 	public DLAdminDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse,
+		VersioningStrategy versioningStrategy) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -111,6 +113,8 @@ public class DLAdminDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		_permissionChecker = _themeDisplay.getPermissionChecker();
+
+		_versioningStrategy = versioningStrategy;
 
 		_computeFolders();
 	}
@@ -259,6 +263,10 @@ public class DLAdminDisplayContext {
 			_request, "mvcRenderCommandName");
 
 		return mvcRenderCommandName.equals("/document_library/search");
+	}
+
+	public boolean isVersioningStrategyOverridable() {
+		return _versioningStrategy.isOverridable();
 	}
 
 	private void _computeFolders() {
@@ -683,5 +691,6 @@ public class DLAdminDisplayContext {
 	private String _rootFolderName;
 	private SearchContainer _searchContainer;
 	private final ThemeDisplay _themeDisplay;
+	private final VersioningStrategy _versioningStrategy;
 
 }

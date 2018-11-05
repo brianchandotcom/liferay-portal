@@ -319,7 +319,7 @@ if (portletTitleBasedNavigation) {
 	</div>
 </div>
 
-<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
+<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && dlAdminDisplayContext.isVersioningStrategyOverridable() %>">
 
 	<%
 	request.setAttribute("edit_file_entry.jsp-checkedOut", fileEntry.isCheckedOut());

@@ -99,6 +99,10 @@ public class GitBisectToolTopLevelBuildRunner
 		workspaceGitRepository.storeCommitHistory(_getPortalBranchSHAs());
 	}
 
+	@Override
+	protected void validateBuildParameters() {
+	}
+
 	private String _getBatchName() {
 		BuildData buildData = getBuildData();
 

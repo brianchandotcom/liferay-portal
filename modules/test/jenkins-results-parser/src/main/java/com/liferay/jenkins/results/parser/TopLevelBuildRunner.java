@@ -37,6 +37,8 @@ public abstract class TopLevelBuildRunner
 
 	@Override
 	public void run() {
+		validateBuildParameters();
+
 		publishJenkinsReport();
 
 		updateBuildDescription();
@@ -166,6 +168,8 @@ public abstract class TopLevelBuildRunner
 
 		publishJenkinsReport();
 	}
+
+	protected abstract void validateBuildParameters();
 
 	protected void waitForDownstreamBuildsToComplete() {
 		while (true) {

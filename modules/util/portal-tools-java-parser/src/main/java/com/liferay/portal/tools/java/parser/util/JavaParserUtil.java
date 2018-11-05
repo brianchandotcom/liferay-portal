@@ -52,6 +52,7 @@ import com.liferay.portal.tools.java.parser.JavaThrowStatement;
 import com.liferay.portal.tools.java.parser.JavaType;
 import com.liferay.portal.tools.java.parser.JavaTypeCast;
 import com.liferay.portal.tools.java.parser.JavaVariableDefinition;
+import com.liferay.portal.tools.java.parser.JavaWhileStatement;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
@@ -373,6 +374,25 @@ public class JavaParserUtil {
 		}
 
 		return javaVariableDefinition;
+	}
+
+	public static JavaWhileStatement parseJavaWhileStatement(
+		DetailAST literalWhileDetailAST) {
+
+		JavaWhileStatement javaWhileStatement = new JavaWhileStatement();
+
+		DetailAST firstChildDetailAST = literalWhileDetailAST.getFirstChild();
+
+		javaWhileStatement.setConditionJavaExpression(
+			parseJavaExpression(firstChildDetailAST.getNextSibling()));
+
+		DetailAST lastChildDetailAST = literalWhileDetailAST.getLastChild();
+
+		if (lastChildDetailAST.getType() == TokenTypes.SLIST) {
+			javaWhileStatement.setHasBody(true);
+		}
+
+		return javaWhileStatement;
 	}
 
 	private static String _getName(DetailAST detailAST) {

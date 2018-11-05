@@ -157,32 +157,6 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 		return relevantTestClassNameRelativeGlobs;
 	}
 
-	private String _getAppSuiteTitle(File appBndFile) {
-		Properties appBndProperties = JenkinsResultsParserUtil.getProperties(
-			appBndFile);
-
-		String appSuite = appBndProperties.getProperty("Liferay-Releng-Suite");
-
-		File appSuiteBndFile = new File(
-			portalGitWorkingDirectory.getWorkingDirectory(),
-			"modules/suites/" + appSuite + "/suite.bnd");
-
-		if (!appSuiteBndFile.exists()) {
-			return "";
-		}
-
-		Properties appSuiteProperties = JenkinsResultsParserUtil.getProperties(
-			appSuiteBndFile);
-
-		String appSuiteTitle = appSuiteProperties.getProperty(
-			"Liferay-Releng-Suite-Title");
-
-		appSuiteTitle = appSuiteTitle.replace(
-			"${liferay.releng.app.title.prefix}", _getAppTitlePrefix());
-
-		return appSuiteTitle;
-	}
-
 	private String _getAppTitle(File appBndFile) {
 		Properties appBndProperties = JenkinsResultsParserUtil.getProperties(
 			appBndFile);
@@ -252,22 +226,13 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 			File appBndFile = new File(moduleAppDir, "app.bnd");
 
 			String appTitle = _getAppTitle(appBndFile);
-			String appSuiteTitle = _getAppSuiteTitle(appBndFile);
 
 			for (String bundledAppName : bundledAppNames) {
-				boolean releaseModuleAppDirFound = false;
+				String regex = JenkinsResultsParserUtil.combine(
+					"(.* - ", Pattern.quote(appTitle), " -.*|",
+					Pattern.quote(appTitle), ")\\.lpkg");
 
-				if (bundledAppName.contains(appSuiteTitle + " -") &&
-					bundledAppName.contains(appTitle + " -")) {
-
-					releaseModuleAppDirFound = true;
-				}
-
-				if (bundledAppName.contains(appTitle + ".lpkg")) {
-					releaseModuleAppDirFound = true;
-				}
-
-				if (!releaseModuleAppDirFound) {
+				if (!bundledAppName.matches(regex)) {
 					continue;
 				}
 

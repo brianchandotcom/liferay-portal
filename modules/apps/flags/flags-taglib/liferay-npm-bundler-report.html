@@ -1,0 +1,3651 @@
+
+		<!DOCTYPE html>
+		<html>
+			<head>
+				<meta charset="utf-8" />
+				<title>Report of liferay-npm-bundler execution</title>
+				<style>
+					body, h1, h2, h3, p, li {
+						font-family: sans-serif;
+					}
+					
+					body, p, th, td, li {
+						font-size: 10pt;
+					}
+					
+					h1 {
+						font-size: 16pt;
+						margin: 1em 0 .5em 0;
+					}
+					
+					h2 {
+						font-size: 13pt;
+						margin: 1em 0 .5em 0;
+					}
+					
+					h3 {
+						font-size: 11pt;
+						margin: 1em 0 .5em 0;
+					}
+					
+					table {
+						margin: 0 0 .5em 0;
+					}
+					
+					tr:nth-child(odd) {
+						background-color: #F6F6F6;
+					}
+					
+					th {
+						background-color: #F0F0F0;
+						text-align: left;
+					}
+					
+					th, td {
+						padding: .1em 0;
+						vertical-align: top;
+					}
+					
+					td.info, td.warn, td.error {
+						background: green;
+						border-radius: 4px;
+						color: white;
+						text-align: center;
+						vertical-align: middle;
+						width: 1px;
+						white-space: nowrap;
+					}
+
+					td.warn {
+						background: orange;
+					}
+
+					td.error {
+						background: red;
+					}
+					
+					td.source {
+						white-space: nowrap;
+					}
+
+					ul {
+						padding-left: 1em;
+						margin: 0 0 .5em 0;
+					}
+					
+					p {
+						margin: 0 0 .5em 0;
+					}
+				</style>
+				<script id="report" type="application/json">
+					{"_executionDate":"2018-11-05T10:24:34.412Z","_versionsInfo":{"liferay-npm-bundler":"2.2.1","liferay-npm-bundler-preset-liferay-dev":"1.0.0","liferay-npm-bundler-plugin-resolve-linked-dependencies":"2.2.1","liferay-npm-bundler-plugin-namespace-packages":"2.2.1","liferay-npm-bundler-plugin-inject-imports-dependencies":"2.2.1","babel-preset-liferay-standard":"2.2.1","liferay-npm-bundler-plugin-replace-browser-modules":"2.2.1","liferay-npm-bundler-plugin-inject-peer-dependencies":"2.2.1"},"_packages":{"/":{"id":"/","process":{"copy":{},"pre":{"resolve-linked-dependencies":{"plugin":{"name":"resolve-linked-dependencies","config":{}},"logger":{"_msgs":[]}}},"babel":{"config":{"presets":["liferay-standard"],"babelrc":false,"only":"**/*","sourceMaps":true},"files":{"flags/Flags.es.js":{"logger":{"_msgs":[{"source":"normalize-requires","level":"info","things":["Normalized",6,"requires"]},{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:","'frontend-js-web/liferay/compat/modal/Modal.es', 'frontend-js-web/liferay/PortletBase.es', 'frontend-js-metal-web$metal-soy', './Flags.soy', 'frontend-js-metal-web$metal-state', 'frontend-taglib-clay$clay-button'"]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'flags-taglib@4.0.0/flags/Flags.es'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",0,"define() names,",2,"define() dependencies,","and",5,"require() names"]}]}},"flags/Flags.soy.js":{"logger":{"_msgs":[{"source":"normalize-requires","level":"info","things":["Normalized",2,"requires"]},{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:","'frontend-js-metal-web$metal-component', 'frontend-js-metal-web$metal-soy'"]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'flags-taglib@4.0.0/flags/Flags.soy'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",0,"define() names,",0,"define() dependencies,","and",2,"require() names"]}]}}}},"post":{"namespace-packages":{"plugin":{"name":"namespace-packages","config":{}},"logger":{"_msgs":[{"source":"namespace-packages","level":"info","things":["Namespaced",4,"dependencies"]}]}},"inject-imports-dependencies":{"plugin":{"name":"inject-imports-dependencies","config":{}},"logger":{"_msgs":[{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-affix@>=2.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-ajax@>=2.1.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-anim@>=2.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-aop@>=3.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-assertions@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-clipboard@>=2.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-component@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-debounce@>=2.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-dom@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-drag-drop@>=3.0.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-events@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-incremental-dom@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-jsx@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-key@>=1.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-keyboard-focus@>=2.0.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-multimap@>=2.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-pagination@>=2.0.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-path-parser@>=1.0.3"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-position@>=2.1.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-promise@>=2.0.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-router@>=3.6.3"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-scrollspy@>=2.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-soy@>=2.16.5","(however, note that the same dependency in package.json","has different constraints:","flags-taglib$metal-soy@^2.5.11)"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-soy-bundle@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-state@>=2.16.5","(however, note that the same dependency in package.json","has different constraints:","flags-taglib$metal-state@^2.13.2)"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-storage@>=1.1.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-structs@>=1.0.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-throttle@>=3.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-toggler@>=2.3.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-uri@>=2.4.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-useragent@>=3.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-web-component@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$assert@>=1.4.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$buffer@>=5.0.7"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$console-browserify@>=1.1.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$domain-browser@>=1.1.7"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$events@>=1.1.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$os-browserify@>=0.3.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$path-browserify@>=0.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$process@>=0.11.10"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$punycode@>=2.1.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$querystring-es3@>=0.2.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$setimmediate@>=1.0.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$string_decoder@>=1.0.3"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$timers-browserify@>=2.0.4"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$tty-browserify@>=0.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$url@>=0.11.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$util@>=0.10.3"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$vm-browserify@>=0.0.4"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-spa-web$senna@>=2.6.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-web@>=3.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib@>=4.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-alert@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-badge@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-button@>=2.3.2","(however, note that the same dependency in package.json","has different constraints:","flags-taglib$clay-button@2.2.0)"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-card@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-card-grid@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-checkbox@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-collapse@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-component@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-dataset-display@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-dropdown@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-icon@>=2.3.2","(however, note that the same dependency in package.json","has different constraints:","flags-taglib$clay-icon@2.2.0)"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-label@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-link@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-list@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-management-toolbar@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-modal@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-navigation-bar@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-pagination@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-pagination-bar@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-portal@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-progress-bar@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-radio@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-select@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-sticker@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-table@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-tooltip@>=2.3.2"]}]}}}},"name":"flags-taglib","version":"4.0.0"},"clay-button@2.2.0":{"id":"clay-button@2.2.0","process":{"copy":{"exclude-imports":{"plugin":{"name":"exclude-imports","config":{}},"logger":{"_msgs":[{"source":"exclude-imports","level":"info","things":["Excluding package","clay-button@2.2.0","from output as it is configured as an import."]}]}}},"pre":{},"babel":{"config":{},"files":{}},"post":{}},"name":"clay-button","version":"2.2.0","allFiles":["lib/ClayButton.js","lib/ClayButton.js.map","lib/ClayButton.soy.js","lib/ClayButton.soy.js.map","LICENSE.md","package.json","README.md","src/__tests__/__snapshots__/ClayButton.js.snap","src/__tests__/ClayButton.js","src/ClayButton.js","src/ClayButton.soy","src/ClayButton.soy.js"],"copiedFiles":[]},"clay-component@2.3.2":{"id":"clay-component@2.3.2","process":{"copy":{"exclude-imports":{"plugin":{"name":"exclude-imports","config":{}},"logger":{"_msgs":[{"source":"exclude-imports","level":"info","things":["Excluding package","clay-component@2.3.2","from output as it is configured as an import."]}]}}},"pre":{},"babel":{"config":{},"files":{}},"post":{}},"name":"clay-component","version":"2.3.2","allFiles":["lib/ClayComponent.js","lib/ClayComponent.js.map","LICENSE.md","package.json","README.md","src/__tests__/__snapshots__/ClayComponent.js.snap","src/__tests__/ClayComponent.js","src/__tests__/fixtures/MyComponent.soy","src/__tests__/fixtures/MyComponent.soy.js","src/ClayComponent.js"],"copiedFiles":[]},"metal@2.16.5":{"id":"metal@2.16.5","process":{"copy":{"exclude-imports":{"plugin":{"name":"exclude-imports","config":{}},"logger":{"_msgs":[{"source":"exclude-imports","level":"info","things":["Excluding package","metal@2.16.5","from output as it is configured as an import."]}]}}},"pre":{},"babel":{"config":{},"files":{}},"post":{}},"name":"metal","version":"2.16.5","allFiles":["lib/array/array.js","lib/async/async.js","lib/core.js","lib/coreNamed.js","lib/disposable/Disposable.js","lib/metal.js","lib/object/object.js","lib/string/string.js","LICENSE.md","package.json","README.md","src/array/array.js","src/async/async.js","src/core.js","src/coreNamed.js","src/disposable/Disposable.js","src/metal.js","src/object/object.js","src/string/string.js"],"copiedFiles":[]},"metal-component@2.16.5":{"id":"metal-component@2.16.5","process":{"copy":{"exclude-imports":{"plugin":{"name":"exclude-imports","config":{}},"logger":{"_msgs":[{"source":"exclude-imports","level":"info","things":["Excluding package","metal-component@2.16.5","from output as it is configured as an import."]}]}}},"pre":{},"babel":{"config":{},"files":{}},"post":{}},"name":"metal-component","version":"2.16.5","allFiles":["lib/all/component.js","lib/Component.js","lib/ComponentDataManager.js","lib/ComponentRegistry.js","lib/ComponentRenderer.js","lib/events/events.js","lib/sync/sync.js","LICENSE.md","package.json","README.md","src/all/component.js","src/Component.js","src/ComponentDataManager.js","src/ComponentRegistry.js","src/ComponentRenderer.js","src/events/events.js","src/sync/sync.js"],"copiedFiles":[]},"metal-dom@2.16.5":{"id":"metal-dom@2.16.5","process":{"copy":{"exclude-imports":{"plugin":{"name":"exclude-imports","config":{}},"logger":{"_msgs":[{"source":"exclude-imports","level":"info","things":["Excluding package","metal-dom@2.16.5","from output as it is configured as an import."]}]}}},"pre":{},"babel":{"config":{},"files":{}},"post":{}},"name":"metal-dom","version":"2.16.5","allFiles":["lib/all/dom.js","lib/dom.js","lib/domData.js","lib/DomDelegatedEventHandle.js","lib/DomEventEmitterProxy.js","lib/DomEventHandle.js","lib/domNamed.js","lib/events.js","lib/features.js","lib/globalEval.js","lib/globalEvalStyles.js","LICENSE.md","package.json","README.md","src/all/dom.js","src/dom.js","src/domData.js","src/DomDelegatedEventHandle.js","src/DomEventEmitterProxy.js","src/DomEventHandle.js","src/domNamed.js","src/events.js","src/features.js","src/globalEval.js","src/globalEvalStyles.js"],"copiedFiles":[]},"metal-events@2.16.5":{"id":"metal-events@2.16.5","process":{"copy":{"exclude-imports":{"plugin":{"name":"exclude-imports","config":{}},"logger":{"_msgs":[{"source":"exclude-imports","level":"info","things":["Excluding package","metal-events@2.16.5","from output as it is configured as an import."]}]}}},"pre":{},"babel":{"config":{},"files":{}},"post":{}},"name":"metal-events","version":"2.16.5","allFiles":["lib/EventEmitter.js","lib/EventEmitterProxy.js","lib/EventHandle.js","lib/EventHandler.js","lib/events.js","LICENSE.md","package.json","README.md","src/EventEmitter.js","src/EventEmitterProxy.js","src/EventHandle.js","src/EventHandler.js","src/events.js"],"copiedFiles":[]},"metal-state@2.16.5":{"id":"metal-state@2.16.5","process":{"copy":{"exclude-imports":{"plugin":{"name":"exclude-imports","config":{}},"logger":{"_msgs":[{"source":"exclude-imports","level":"info","things":["Excluding package","metal-state@2.16.5","from output as it is configured as an import."]}]}}},"pre":{},"babel":{"config":{},"files":{}},"post":{}},"name":"metal-state","version":"2.16.5","allFiles":["lib/all/state.js","lib/Config.js","lib/State.js","lib/validators.js","LICENSE.md","package.json","README.md","src/all/state.js","src/Config.js","src/State.js","src/validators.js"],"copiedFiles":[]},"clay-icon@2.2.0":{"id":"clay-icon@2.2.0","process":{"copy":{"exclude-imports":{"plugin":{"name":"exclude-imports","config":{}},"logger":{"_msgs":[{"source":"exclude-imports","level":"info","things":["Excluding package","clay-icon@2.2.0","from output as it is configured as an import."]}]}}},"pre":{},"babel":{"config":{},"files":{}},"post":{}},"name":"clay-icon","version":"2.2.0","allFiles":["lib/ClayIcon.js","lib/ClayIcon.js.map","lib/ClayIcon.soy.js","lib/ClayIcon.soy.js.map","LICENSE.md","package.json","README.md","src/__tests__/__snapshots__/ClayIcon.js.snap","src/__tests__/ClayIcon.js","src/ClayIcon.js","src/ClayIcon.soy","src/ClayIcon.soy.js"],"copiedFiles":[]},"metal-soy@2.16.5":{"id":"metal-soy@2.16.5","process":{"copy":{"exclude-imports":{"plugin":{"name":"exclude-imports","config":{}},"logger":{"_msgs":[{"source":"exclude-imports","level":"info","things":["Excluding package","metal-soy@2.16.5","from output as it is configured as an import."]}]}}},"pre":{},"babel":{"config":{},"files":{}},"post":{}},"name":"metal-soy","version":"2.16.5","allFiles":["lib/Soy.js","lib/SoyAop.js","LICENSE.md","package.json","README.md","src/Soy.js","src/SoyAop.js"],"copiedFiles":[]},"metal-incremental-dom@2.16.5":{"id":"metal-incremental-dom@2.16.5","process":{"copy":{"exclude-imports":{"plugin":{"name":"exclude-imports","config":{}},"logger":{"_msgs":[{"source":"exclude-imports","level":"info","things":["Excluding package","metal-incremental-dom@2.16.5","from output as it is configured as an import."]}]}}},"pre":{},"babel":{"config":{},"files":{}},"post":{}},"name":"metal-incremental-dom","version":"2.16.5","allFiles":["lib/all/incremental-dom.js","lib/callArgs.js","lib/changes.js","lib/children/children.js","lib/cleanup/unused.js","lib/data.js","lib/html/HTML2IncDom.js","lib/html/HTMLParser.js","lib/html/unescape.js","lib/incremental-dom-aop.js","lib/incremental-dom.js","lib/IncrementalDomRenderer.js","lib/intercept.js","lib/render/attributes.js","lib/render/patch.js","lib/render/render.js","LICENSE.md","package.json","README.md","src/all/incremental-dom.js","src/callArgs.js","src/changes.js","src/children/children.js","src/cleanup/unused.js","src/data.js","src/html/HTML2IncDom.js","src/html/HTMLParser.js","src/html/unescape.js","src/incremental-dom-aop.js","src/incremental-dom.js","src/IncrementalDomRenderer.js","src/intercept.js","src/render/attributes.js","src/render/patch.js","src/render/render.js"],"copiedFiles":[]},"incremental-dom@0.5.1":{"id":"incremental-dom@0.5.1","process":{"copy":{"exclude-imports":{"plugin":{"name":"exclude-imports","config":{}},"logger":{"_msgs":[]}}},"pre":{"replace-browser-modules":{"plugin":{"name":"replace-browser-modules","config":{}},"logger":{"_msgs":[{"source":"replace-browser-modules","level":"info","things":["No browser modules found"]}]}}},"babel":{"config":{"presets":["liferay-standard"],"babelrc":false,"only":"**/*","sourceMaps":true},"files":{"dist/incremental-dom-cjs.js":{"logger":{"_msgs":[{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:",""]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'incremental-dom@0.5.1/dist/incremental-dom-cjs'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",1,"define() names,",0,"define() dependencies,","and",0,"require() names"]}]}},"dist/incremental-dom-min.js":{"logger":{"_msgs":[{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:",""]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'incremental-dom@0.5.1/dist/incremental-dom-min'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",1,"define() names,",0,"define() dependencies,","and",0,"require() names"]}]}},"index.js":{"logger":{"_msgs":[{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:",""]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'incremental-dom@0.5.1/index'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",1,"define() names,",0,"define() dependencies,","and",0,"require() names"]}]}},"dist/incremental-dom.js":{"logger":{"_msgs":[{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:",""]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'incremental-dom@0.5.1/dist/incremental-dom'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",1,"define() names,",0,"define() dependencies,","and",0,"require() names"]}]}},"src/assertions.js":{"logger":{"_msgs":[{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:",""]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'incremental-dom@0.5.1/src/assertions'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",1,"define() names,",0,"define() dependencies,","and",0,"require() names"]}]}},"src/attributes.js":{"logger":{"_msgs":[{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:",""]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'incremental-dom@0.5.1/src/attributes'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",1,"define() names,",0,"define() dependencies,","and",0,"require() names"]}]}},"src/context.js":{"logger":{"_msgs":[{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:",""]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'incremental-dom@0.5.1/src/context'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",1,"define() names,",0,"define() dependencies,","and",0,"require() names"]}]}},"src/core.js":{"logger":{"_msgs":[{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:",""]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'incremental-dom@0.5.1/src/core'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",1,"define() names,",0,"define() dependencies,","and",0,"require() names"]}]}},"src/node_data.js":{"logger":{"_msgs":[{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:",""]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'incremental-dom@0.5.1/src/node_data'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",1,"define() names,",0,"define() dependencies,","and",0,"require() names"]}]}},"src/dom_util.js":{"logger":{"_msgs":[{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:",""]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'incremental-dom@0.5.1/src/dom_util'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",1,"define() names,",0,"define() dependencies,","and",0,"require() names"]}]}},"src/nodes.js":{"logger":{"_msgs":[{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:",""]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'incremental-dom@0.5.1/src/nodes'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",1,"define() names,",0,"define() dependencies,","and",0,"require() names"]}]}},"src/notifications.js":{"logger":{"_msgs":[{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:",""]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'incremental-dom@0.5.1/src/notifications'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",1,"define() names,",0,"define() dependencies,","and",0,"require() names"]}]}},"src/symbols.js":{"logger":{"_msgs":[{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:",""]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'incremental-dom@0.5.1/src/symbols'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",1,"define() names,",0,"define() dependencies,","and",0,"require() names"]}]}},"src/util.js":{"logger":{"_msgs":[{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:",""]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'incremental-dom@0.5.1/src/util'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",1,"define() names,",0,"define() dependencies,","and",0,"require() names"]}]}},"src/virtual_elements.js":{"logger":{"_msgs":[{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:",""]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'incremental-dom@0.5.1/src/virtual_elements'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",1,"define() names,",0,"define() dependencies,","and",0,"require() names"]}]}}}},"post":{"namespace-packages":{"plugin":{"name":"namespace-packages","config":{}},"logger":{"_msgs":[{"source":"namespace-packages","level":"info","things":["Namespaced package"]},{"source":"namespace-packages","level":"info","things":["Namespaced",0,"dependencies"]}]}},"inject-imports-dependencies":{"plugin":{"name":"inject-imports-dependencies","config":{}},"logger":{"_msgs":[{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-affix@>=2.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-ajax@>=2.1.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-anim@>=2.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-aop@>=3.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-assertions@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-clipboard@>=2.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-component@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-debounce@>=2.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-dom@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-drag-drop@>=3.0.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-events@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-incremental-dom@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-jsx@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-key@>=1.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-keyboard-focus@>=2.0.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-multimap@>=2.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-pagination@>=2.0.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-path-parser@>=1.0.3"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-position@>=2.1.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-promise@>=2.0.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-router@>=3.6.3"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-scrollspy@>=2.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-soy@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-soy-bundle@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-state@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-storage@>=1.1.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-structs@>=1.0.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-throttle@>=3.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-toggler@>=2.3.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-uri@>=2.4.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-useragent@>=3.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-web-component@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$assert@>=1.4.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$buffer@>=5.0.7"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$console-browserify@>=1.1.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$domain-browser@>=1.1.7"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$events@>=1.1.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$os-browserify@>=0.3.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$path-browserify@>=0.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$process@>=0.11.10"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$punycode@>=2.1.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$querystring-es3@>=0.2.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$setimmediate@>=1.0.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$string_decoder@>=1.0.3"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$timers-browserify@>=2.0.4"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$tty-browserify@>=0.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$url@>=0.11.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$util@>=0.10.3"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$vm-browserify@>=0.0.4"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-spa-web$senna@>=2.6.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-web@>=3.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib@>=4.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-alert@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-badge@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-button@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-card@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-card-grid@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-checkbox@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-collapse@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-component@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-dataset-display@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-dropdown@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-icon@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-label@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-link@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-list@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-management-toolbar@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-modal@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-navigation-bar@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-pagination@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-pagination-bar@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-portal@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-progress-bar@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-radio@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-select@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-sticker@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-table@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-tooltip@>=2.3.2"]}]}},"inject-peer-dependencies":{"plugin":{"name":"inject-peer-dependencies","config":{}},"logger":{"_msgs":[]}}}},"name":"incremental-dom","version":"0.5.1","allFiles":["CHANGELOG.md","dist/incremental-dom-cjs.js","dist/incremental-dom-cjs.js.map","dist/incremental-dom-min.js","dist/incremental-dom-min.js.map","dist/incremental-dom.js","dist/incremental-dom.js.map","index.js","LICENSE","package.json","README.md","src/assertions.js","src/attributes.js","src/context.js","src/core.js","src/dom_util.js","src/node_data.js","src/nodes.js","src/notifications.js","src/symbols.js","src/util.js","src/virtual_elements.js"],"copiedFiles":["CHANGELOG.md","dist/incremental-dom-cjs.js","dist/incremental-dom-cjs.js.map","dist/incremental-dom-min.js","dist/incremental-dom-min.js.map","dist/incremental-dom.js","dist/incremental-dom.js.map","index.js","LICENSE","package.json","README.md","src/assertions.js","src/attributes.js","src/context.js","src/core.js","src/dom_util.js","src/node_data.js","src/nodes.js","src/notifications.js","src/symbols.js","src/util.js","src/virtual_elements.js"]},"incremental-dom-string@0.0.2":{"id":"incremental-dom-string@0.0.2","process":{"copy":{"exclude-imports":{"plugin":{"name":"exclude-imports","config":{}},"logger":{"_msgs":[]}}},"pre":{"replace-browser-modules":{"plugin":{"name":"replace-browser-modules","config":{}},"logger":{"_msgs":[{"source":"replace-browser-modules","level":"info","things":["No browser modules found"]}]}}},"babel":{"config":{"presets":["liferay-standard"],"babelrc":false,"only":"**/*","sourceMaps":true},"files":{"dist/incremental-dom-string.js":{"logger":{"_msgs":[{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:",""]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'incremental-dom-string@0.0.2/dist/incremental-dom-string'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",1,"define() names,",0,"define() dependencies,","and",0,"require() names"]}]}},"index.js":{"logger":{"_msgs":[{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:",""]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'incremental-dom-string@0.0.2/index'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",1,"define() names,",0,"define() dependencies,","and",0,"require() names"]}]}},"src/attributes.js":{"logger":{"_msgs":[{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:",""]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'incremental-dom-string@0.0.2/src/attributes'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",1,"define() names,",0,"define() dependencies,","and",0,"require() names"]}]}},"src/core.js":{"logger":{"_msgs":[{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:",""]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'incremental-dom-string@0.0.2/src/core'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",1,"define() names,",0,"define() dependencies,","and",0,"require() names"]}]}},"src/symbols.js":{"logger":{"_msgs":[{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:",""]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'incremental-dom-string@0.0.2/src/symbols'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",1,"define() names,",0,"define() dependencies,","and",0,"require() names"]}]}},"src/virtual_elements.js":{"logger":{"_msgs":[{"source":"wrap-modules-amd","level":"info","things":["Detected dependencies:",""]},{"source":"name-amd-modules","level":"info","things":["Set module name to 'incremental-dom-string@0.0.2/src/virtual_elements'"]},{"source":"namespace-modules","level":"info","things":["Namespaced",1,"define() names,",0,"define() dependencies,","and",0,"require() names"]}]}}}},"post":{"namespace-packages":{"plugin":{"name":"namespace-packages","config":{}},"logger":{"_msgs":[{"source":"namespace-packages","level":"info","things":["Namespaced package"]},{"source":"namespace-packages","level":"info","things":["Namespaced",0,"dependencies"]}]}},"inject-imports-dependencies":{"plugin":{"name":"inject-imports-dependencies","config":{}},"logger":{"_msgs":[{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-affix@>=2.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-ajax@>=2.1.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-anim@>=2.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-aop@>=3.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-assertions@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-clipboard@>=2.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-component@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-debounce@>=2.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-dom@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-drag-drop@>=3.0.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-events@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-incremental-dom@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-jsx@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-key@>=1.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-keyboard-focus@>=2.0.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-multimap@>=2.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-pagination@>=2.0.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-path-parser@>=1.0.3"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-position@>=2.1.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-promise@>=2.0.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-router@>=3.6.3"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-scrollspy@>=2.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-soy@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-soy-bundle@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-state@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-storage@>=1.1.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-structs@>=1.0.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-throttle@>=3.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-toggler@>=2.3.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-uri@>=2.4.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-useragent@>=3.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-metal-web$metal-web-component@>=2.16.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$assert@>=1.4.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$buffer@>=5.0.7"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$console-browserify@>=1.1.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$domain-browser@>=1.1.7"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$events@>=1.1.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$os-browserify@>=0.3.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$path-browserify@>=0.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$process@>=0.11.10"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$punycode@>=2.1.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$querystring-es3@>=0.2.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$setimmediate@>=1.0.5"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$string_decoder@>=1.0.3"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$timers-browserify@>=2.0.4"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$tty-browserify@>=0.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$url@>=0.11.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$util@>=0.10.3"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-node-shims$vm-browserify@>=0.0.4"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-spa-web$senna@>=2.6.1"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-js-web@>=3.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib@>=4.0.0"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-alert@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-badge@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-button@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-card@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-card-grid@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-checkbox@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-collapse@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-component@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-dataset-display@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-dropdown@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-icon@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-label@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-link@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-list@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-management-toolbar@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-modal@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-navigation-bar@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-pagination@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-pagination-bar@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-portal@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-progress-bar@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-radio@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-select@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-sticker@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-table@>=2.3.2"]},{"source":"inject-imports-dependencies","level":"info","things":["Injected dependency","frontend-taglib-clay$clay-tooltip@>=2.3.2"]}]}},"inject-peer-dependencies":{"plugin":{"name":"inject-peer-dependencies","config":{}},"logger":{"_msgs":[]}}}},"name":"incremental-dom-string","version":"0.0.2","allFiles":["dist/incremental-dom-string.js","index.js","LICENSE.md","package.json","README.md","src/attributes.js","src/core.js","src/symbols.js","src/virtual_elements.js"],"copiedFiles":["dist/incremental-dom-string.js","index.js","LICENSE.md","package.json","README.md","src/attributes.js","src/core.js","src/symbols.js","src/virtual_elements.js"]},"metal-soy-bundle@2.16.5":{"id":"metal-soy-bundle@2.16.5","process":{"copy":{"exclude-imports":{"plugin":{"name":"exclude-imports","config":{}},"logger":{"_msgs":[{"source":"exclude-imports","level":"info","things":["Excluding package","metal-soy-bundle@2.16.5","from output as it is configured as an import."]}]}}},"pre":{},"babel":{"config":{},"files":{}},"post":{}},"name":"metal-soy-bundle","version":"2.16.5","allFiles":["build/bundle.js","lib/bundle.js","LICENSE","package.json","README.md"],"copiedFiles":[]},"metal-web-component@2.16.5":{"id":"metal-web-component@2.16.5","process":{"copy":{"exclude-imports":{"plugin":{"name":"exclude-imports","config":{}},"logger":{"_msgs":[{"source":"exclude-imports","level":"info","things":["Excluding package","metal-web-component@2.16.5","from output as it is configured as an import."]}]}}},"pre":{},"babel":{"config":{},"files":{}},"post":{}},"name":"metal-web-component","version":"2.16.5","allFiles":["lib/define_web_component.js","LICENSE.md","node_modules/metal-state/lib/all/state.js","node_modules/metal-state/lib/Config.js","node_modules/metal-state/lib/State.js","node_modules/metal-state/lib/validators.js","node_modules/metal-state/LICENSE.md","node_modules/metal-state/package.json","node_modules/metal-state/README.md","node_modules/metal-state/src/all/state.js","node_modules/metal-state/src/Config.js","node_modules/metal-state/src/State.js","node_modules/metal-state/src/validators.js","package.json","README.md","src/define_web_component.js"],"copiedFiles":[]},"metal-state@2.7.0":{"id":"metal-state@2.7.0","process":{"copy":{"exclude-imports":{"plugin":{"name":"exclude-imports","config":{}},"logger":{"_msgs":[{"source":"exclude-imports","level":"info","things":["Excluding package","metal-state@2.7.0","from output as it is configured as an import."]}]}}},"pre":{},"babel":{"config":{},"files":{}},"post":{}},"name":"metal-state","version":"2.7.0","allFiles":["lib/all/state.js","lib/Config.js","lib/State.js","lib/validators.js","LICENSE.md","package.json","README.md","src/all/state.js","src/Config.js","src/State.js","src/validators.js"],"copiedFiles":[]}},"_warnings":[],"_executionTime":[8,613376792]}
+				</script>
+				<script>
+					window.report = JSON.parse(
+						document.getElementById("report").innerHTML
+					);
+				</script>
+			</head>
+			<body>
+				<h1>Report of liferay-npm-bundler execution</h1>
+				
+			<table>
+				<tr><td>Executed at:</td><td>Mon, 05 Nov 2018 10:24:34 GMT</td></tr>
+<tr><td>Execution took:</td><td>9s</td></tr>
+			</table>
+		
+				
+				
+		<h2>Bundler environment versions</h2>
+		
+			<table>
+				<tr><th>Package</th>
+<th>Version</th></tr>
+				<tr>
+					<td>liferay-npm-bundler</td>
+					<td>2.2.1</td>
+				</tr>
+<tr>
+					<td>liferay-npm-bundler-preset-liferay-dev</td>
+					<td>1.0.0</td>
+				</tr>
+<tr>
+					<td>liferay-npm-bundler-plugin-resolve-linked-dependencies</td>
+					<td>2.2.1</td>
+				</tr>
+<tr>
+					<td>liferay-npm-bundler-plugin-namespace-packages</td>
+					<td>2.2.1</td>
+				</tr>
+<tr>
+					<td>liferay-npm-bundler-plugin-inject-imports-dependencies</td>
+					<td>2.2.1</td>
+				</tr>
+<tr>
+					<td>babel-preset-liferay-standard</td>
+					<td>2.2.1</td>
+				</tr>
+<tr>
+					<td>liferay-npm-bundler-plugin-replace-browser-modules</td>
+					<td>2.2.1</td>
+				</tr>
+<tr>
+					<td>liferay-npm-bundler-plugin-inject-peer-dependencies</td>
+					<td>2.2.1</td>
+				</tr>
+			</table>
+		
+	
+				
+		<h2>Bundled packages</h2>
+		
+			<table>
+				<tr><th>Package</th>
+<th>Version</th>
+<th>Copied files</th>
+<th>Excluded files</th>
+<th>Linked to</th></tr>
+				<tr>
+						<td>flags-taglib</td>
+						<td>4.0.0</td>
+						<td></td>
+						<td>
+							
+						</td>
+						<td></td>
+					</tr>
+<tr>
+						<td>clay-button</td>
+						<td>2.2.0</td>
+						<td>0</td>
+						<td>
+							12
+						</td>
+						<td></td>
+					</tr>
+<tr>
+						<td>clay-component</td>
+						<td>2.3.2</td>
+						<td>0</td>
+						<td>
+							10
+						</td>
+						<td></td>
+					</tr>
+<tr>
+						<td>clay-icon</td>
+						<td>2.2.0</td>
+						<td>0</td>
+						<td>
+							12
+						</td>
+						<td></td>
+					</tr>
+<tr>
+						<td>incremental-dom-string</td>
+						<td>0.0.2</td>
+						<td>9</td>
+						<td>
+							0
+						</td>
+						<td></td>
+					</tr>
+<tr>
+						<td>incremental-dom</td>
+						<td>0.5.1</td>
+						<td>22</td>
+						<td>
+							0
+						</td>
+						<td></td>
+					</tr>
+<tr>
+						<td>metal-component</td>
+						<td>2.16.5</td>
+						<td>0</td>
+						<td>
+							17
+						</td>
+						<td></td>
+					</tr>
+<tr>
+						<td>metal-dom</td>
+						<td>2.16.5</td>
+						<td>0</td>
+						<td>
+							25
+						</td>
+						<td></td>
+					</tr>
+<tr>
+						<td>metal-events</td>
+						<td>2.16.5</td>
+						<td>0</td>
+						<td>
+							13
+						</td>
+						<td></td>
+					</tr>
+<tr>
+						<td>metal-incremental-dom</td>
+						<td>2.16.5</td>
+						<td>0</td>
+						<td>
+							35
+						</td>
+						<td></td>
+					</tr>
+<tr>
+						<td>metal-soy-bundle</td>
+						<td>2.16.5</td>
+						<td>0</td>
+						<td>
+							5
+						</td>
+						<td></td>
+					</tr>
+<tr>
+						<td>metal-soy</td>
+						<td>2.16.5</td>
+						<td>0</td>
+						<td>
+							7
+						</td>
+						<td></td>
+					</tr>
+<tr>
+						<td>metal-state</td>
+						<td>2.16.5</td>
+						<td>0</td>
+						<td>
+							11
+						</td>
+						<td></td>
+					</tr>
+<tr>
+						<td>metal-state</td>
+						<td>2.7.0</td>
+						<td>0</td>
+						<td>
+							11
+						</td>
+						<td></td>
+					</tr>
+<tr>
+						<td>metal-web-component</td>
+						<td>2.16.5</td>
+						<td>0</td>
+						<td>
+							16
+						</td>
+						<td></td>
+					</tr>
+<tr>
+						<td>metal</td>
+						<td>2.16.5</td>
+						<td>0</td>
+						<td>
+							19
+						</td>
+						<td></td>
+					</tr>
+			</table>
+		
+	
+				
+		<h2>Summary of package transformations</h2>
+		
+			<table>
+				<tr><th>Package</th>
+<th>Version</th>
+<th>Copy phase</th>
+<th>Pre-babel phase</th>
+<th>Babel phase</th>
+<th>Post-babel phase</th></tr>
+				<tr>
+						<td>flags-taglib</td>
+						<td>4.0.0</td>
+						<td>
+							<a href="#/-bundler">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#/-bundler">
+								1 plugins applied
+							</a>
+						</td>
+						<td>
+							<a href="#/-babel">
+								2 files processed
+							</a>
+						</td>
+						<td>
+							<a href="#/-bundler">
+								2 plugins applied
+							</a>
+						</td>
+					</tr>
+<tr>
+						<td>clay-button</td>
+						<td>2.2.0</td>
+						<td>
+							<a href="#clay-button@2.2.0-bundler">
+								1 plugins applied
+							</a>
+						</td>
+						<td>
+							<a href="#clay-button@2.2.0-bundler">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#clay-button@2.2.0-babel">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#clay-button@2.2.0-bundler">
+								
+							</a>
+						</td>
+					</tr>
+<tr>
+						<td>clay-component</td>
+						<td>2.3.2</td>
+						<td>
+							<a href="#clay-component@2.3.2-bundler">
+								1 plugins applied
+							</a>
+						</td>
+						<td>
+							<a href="#clay-component@2.3.2-bundler">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#clay-component@2.3.2-babel">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#clay-component@2.3.2-bundler">
+								
+							</a>
+						</td>
+					</tr>
+<tr>
+						<td>clay-icon</td>
+						<td>2.2.0</td>
+						<td>
+							<a href="#clay-icon@2.2.0-bundler">
+								1 plugins applied
+							</a>
+						</td>
+						<td>
+							<a href="#clay-icon@2.2.0-bundler">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#clay-icon@2.2.0-babel">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#clay-icon@2.2.0-bundler">
+								
+							</a>
+						</td>
+					</tr>
+<tr>
+						<td>incremental-dom-string</td>
+						<td>0.0.2</td>
+						<td>
+							<a href="#incremental-dom-string@0.0.2-bundler">
+								1 plugins applied
+							</a>
+						</td>
+						<td>
+							<a href="#incremental-dom-string@0.0.2-bundler">
+								1 plugins applied
+							</a>
+						</td>
+						<td>
+							<a href="#incremental-dom-string@0.0.2-babel">
+								6 files processed
+							</a>
+						</td>
+						<td>
+							<a href="#incremental-dom-string@0.0.2-bundler">
+								3 plugins applied
+							</a>
+						</td>
+					</tr>
+<tr>
+						<td>incremental-dom</td>
+						<td>0.5.1</td>
+						<td>
+							<a href="#incremental-dom@0.5.1-bundler">
+								1 plugins applied
+							</a>
+						</td>
+						<td>
+							<a href="#incremental-dom@0.5.1-bundler">
+								1 plugins applied
+							</a>
+						</td>
+						<td>
+							<a href="#incremental-dom@0.5.1-babel">
+								15 files processed
+							</a>
+						</td>
+						<td>
+							<a href="#incremental-dom@0.5.1-bundler">
+								3 plugins applied
+							</a>
+						</td>
+					</tr>
+<tr>
+						<td>metal-component</td>
+						<td>2.16.5</td>
+						<td>
+							<a href="#metal-component@2.16.5-bundler">
+								1 plugins applied
+							</a>
+						</td>
+						<td>
+							<a href="#metal-component@2.16.5-bundler">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#metal-component@2.16.5-babel">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#metal-component@2.16.5-bundler">
+								
+							</a>
+						</td>
+					</tr>
+<tr>
+						<td>metal-dom</td>
+						<td>2.16.5</td>
+						<td>
+							<a href="#metal-dom@2.16.5-bundler">
+								1 plugins applied
+							</a>
+						</td>
+						<td>
+							<a href="#metal-dom@2.16.5-bundler">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#metal-dom@2.16.5-babel">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#metal-dom@2.16.5-bundler">
+								
+							</a>
+						</td>
+					</tr>
+<tr>
+						<td>metal-events</td>
+						<td>2.16.5</td>
+						<td>
+							<a href="#metal-events@2.16.5-bundler">
+								1 plugins applied
+							</a>
+						</td>
+						<td>
+							<a href="#metal-events@2.16.5-bundler">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#metal-events@2.16.5-babel">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#metal-events@2.16.5-bundler">
+								
+							</a>
+						</td>
+					</tr>
+<tr>
+						<td>metal-incremental-dom</td>
+						<td>2.16.5</td>
+						<td>
+							<a href="#metal-incremental-dom@2.16.5-bundler">
+								1 plugins applied
+							</a>
+						</td>
+						<td>
+							<a href="#metal-incremental-dom@2.16.5-bundler">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#metal-incremental-dom@2.16.5-babel">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#metal-incremental-dom@2.16.5-bundler">
+								
+							</a>
+						</td>
+					</tr>
+<tr>
+						<td>metal-soy-bundle</td>
+						<td>2.16.5</td>
+						<td>
+							<a href="#metal-soy-bundle@2.16.5-bundler">
+								1 plugins applied
+							</a>
+						</td>
+						<td>
+							<a href="#metal-soy-bundle@2.16.5-bundler">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#metal-soy-bundle@2.16.5-babel">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#metal-soy-bundle@2.16.5-bundler">
+								
+							</a>
+						</td>
+					</tr>
+<tr>
+						<td>metal-soy</td>
+						<td>2.16.5</td>
+						<td>
+							<a href="#metal-soy@2.16.5-bundler">
+								1 plugins applied
+							</a>
+						</td>
+						<td>
+							<a href="#metal-soy@2.16.5-bundler">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#metal-soy@2.16.5-babel">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#metal-soy@2.16.5-bundler">
+								
+							</a>
+						</td>
+					</tr>
+<tr>
+						<td>metal-state</td>
+						<td>2.16.5</td>
+						<td>
+							<a href="#metal-state@2.16.5-bundler">
+								1 plugins applied
+							</a>
+						</td>
+						<td>
+							<a href="#metal-state@2.16.5-bundler">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#metal-state@2.16.5-babel">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#metal-state@2.16.5-bundler">
+								
+							</a>
+						</td>
+					</tr>
+<tr>
+						<td>metal-state</td>
+						<td>2.7.0</td>
+						<td>
+							<a href="#metal-state@2.7.0-bundler">
+								1 plugins applied
+							</a>
+						</td>
+						<td>
+							<a href="#metal-state@2.7.0-bundler">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#metal-state@2.7.0-babel">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#metal-state@2.7.0-bundler">
+								
+							</a>
+						</td>
+					</tr>
+<tr>
+						<td>metal-web-component</td>
+						<td>2.16.5</td>
+						<td>
+							<a href="#metal-web-component@2.16.5-bundler">
+								1 plugins applied
+							</a>
+						</td>
+						<td>
+							<a href="#metal-web-component@2.16.5-bundler">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#metal-web-component@2.16.5-babel">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#metal-web-component@2.16.5-bundler">
+								
+							</a>
+						</td>
+					</tr>
+<tr>
+						<td>metal</td>
+						<td>2.16.5</td>
+						<td>
+							<a href="#metal@2.16.5-bundler">
+								1 plugins applied
+							</a>
+						</td>
+						<td>
+							<a href="#metal@2.16.5-bundler">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#metal@2.16.5-babel">
+								
+							</a>
+						</td>
+						<td>
+							<a href="#metal@2.16.5-bundler">
+								
+							</a>
+						</td>
+					</tr>
+			</table>
+		
+	
+				
+		<h2>Details of bundler transformations</h2>
+		
+		<h3>
+							<a name="/-bundler">
+								flags-taglib@4.0.0
+							</a>
+						</h3>
+		
+			<table>
+				<tr><th>Pre-phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>resolve-linked-dependencies</td> <td>{}</td>
+					
+					<td></td>
+				</tr>
+			</table>
+		
+
+			<table>
+				<tr><th>Post-phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>inject-imports-dependencies</td> <td>{}</td>
+					
+					<td class="info">INFO</td>
+					<td>Injected dependency frontend-js-metal-web$metal@>=2.16.5</td>
+				</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-affix@>=2.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-ajax@>=2.1.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-anim@>=2.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-aop@>=3.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-assertions@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-clipboard@>=2.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-component@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-debounce@>=2.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-dom@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-drag-drop@>=3.0.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-events@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-incremental-dom@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-jsx@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-key@>=1.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-keyboard-focus@>=2.0.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-multimap@>=2.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-pagination@>=2.0.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-path-parser@>=1.0.3</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-position@>=2.1.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-promise@>=2.0.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-router@>=3.6.3</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-scrollspy@>=2.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-soy@>=2.16.5 (however, note that the same dependency in package.json has different constraints: flags-taglib$metal-soy@^2.5.11)</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-soy-bundle@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-state@>=2.16.5 (however, note that the same dependency in package.json has different constraints: flags-taglib$metal-state@^2.13.2)</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-storage@>=1.1.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-structs@>=1.0.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-throttle@>=3.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-toggler@>=2.3.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-uri@>=2.4.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-useragent@>=3.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-web-component@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$assert@>=1.4.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$buffer@>=5.0.7</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$console-browserify@>=1.1.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$domain-browser@>=1.1.7</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$events@>=1.1.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$os-browserify@>=0.3.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$path-browserify@>=0.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$process@>=0.11.10</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$punycode@>=2.1.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$querystring-es3@>=0.2.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$setimmediate@>=1.0.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$string_decoder@>=1.0.3</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$timers-browserify@>=2.0.4</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$tty-browserify@>=0.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$url@>=0.11.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$util@>=0.10.3</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$vm-browserify@>=0.0.4</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-spa-web$senna@>=2.6.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-web@>=3.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib@>=4.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-alert@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-badge@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-button@>=2.3.2 (however, note that the same dependency in package.json has different constraints: flags-taglib$clay-button@2.2.0)</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-card@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-card-grid@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-checkbox@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-collapse@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-component@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-dataset-display@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-dropdown@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-icon@>=2.3.2 (however, note that the same dependency in package.json has different constraints: flags-taglib$clay-icon@2.2.0)</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-label@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-link@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-list@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-management-toolbar@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-modal@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-navigation-bar@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-pagination@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-pagination-bar@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-portal@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-progress-bar@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-radio@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-select@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-sticker@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-table@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-tooltip@>=2.3.2</td>
+					</tr>
+			</table>
+		
+
+			<table>
+				<tr><th>Post-phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>namespace-packages</td> <td>{}</td>
+					
+					<td class="info">INFO</td>
+					<td>Namespaced 4 dependencies</td>
+				</tr>
+			</table>
+		
+	
+
+		<h3>
+							<a name="clay-button@2.2.0-bundler">
+								clay-button@2.2.0
+							</a>
+						</h3>
+		
+			<table>
+				<tr><th>Copy phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>exclude-imports</td> <td>{}</td>
+					
+					<td class="info">INFO</td>
+					<td>Excluding package clay-button@2.2.0 from output as it is configured as an import.</td>
+				</tr>
+			</table>
+		
+	
+
+		<h3>
+							<a name="clay-component@2.3.2-bundler">
+								clay-component@2.3.2
+							</a>
+						</h3>
+		
+			<table>
+				<tr><th>Copy phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>exclude-imports</td> <td>{}</td>
+					
+					<td class="info">INFO</td>
+					<td>Excluding package clay-component@2.3.2 from output as it is configured as an import.</td>
+				</tr>
+			</table>
+		
+	
+
+		<h3>
+							<a name="clay-icon@2.2.0-bundler">
+								clay-icon@2.2.0
+							</a>
+						</h3>
+		
+			<table>
+				<tr><th>Copy phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>exclude-imports</td> <td>{}</td>
+					
+					<td class="info">INFO</td>
+					<td>Excluding package clay-icon@2.2.0 from output as it is configured as an import.</td>
+				</tr>
+			</table>
+		
+	
+
+		<h3>
+							<a name="incremental-dom-string@0.0.2-bundler">
+								incremental-dom-string@0.0.2
+							</a>
+						</h3>
+		
+			<table>
+				<tr><th>Copy phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>exclude-imports</td> <td>{}</td>
+					
+					<td></td>
+				</tr>
+			</table>
+		
+
+			<table>
+				<tr><th>Pre-phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>replace-browser-modules</td> <td>{}</td>
+					
+					<td class="info">INFO</td>
+					<td>No browser modules found</td>
+				</tr>
+			</table>
+		
+
+			<table>
+				<tr><th>Post-phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>inject-imports-dependencies</td> <td>{}</td>
+					
+					<td class="info">INFO</td>
+					<td>Injected dependency frontend-js-metal-web$metal@>=2.16.5</td>
+				</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-affix@>=2.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-ajax@>=2.1.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-anim@>=2.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-aop@>=3.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-assertions@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-clipboard@>=2.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-component@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-debounce@>=2.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-dom@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-drag-drop@>=3.0.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-events@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-incremental-dom@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-jsx@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-key@>=1.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-keyboard-focus@>=2.0.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-multimap@>=2.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-pagination@>=2.0.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-path-parser@>=1.0.3</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-position@>=2.1.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-promise@>=2.0.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-router@>=3.6.3</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-scrollspy@>=2.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-soy@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-soy-bundle@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-state@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-storage@>=1.1.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-structs@>=1.0.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-throttle@>=3.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-toggler@>=2.3.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-uri@>=2.4.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-useragent@>=3.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-web-component@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$assert@>=1.4.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$buffer@>=5.0.7</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$console-browserify@>=1.1.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$domain-browser@>=1.1.7</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$events@>=1.1.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$os-browserify@>=0.3.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$path-browserify@>=0.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$process@>=0.11.10</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$punycode@>=2.1.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$querystring-es3@>=0.2.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$setimmediate@>=1.0.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$string_decoder@>=1.0.3</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$timers-browserify@>=2.0.4</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$tty-browserify@>=0.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$url@>=0.11.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$util@>=0.10.3</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$vm-browserify@>=0.0.4</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-spa-web$senna@>=2.6.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-web@>=3.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib@>=4.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-alert@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-badge@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-button@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-card@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-card-grid@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-checkbox@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-collapse@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-component@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-dataset-display@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-dropdown@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-icon@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-label@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-link@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-list@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-management-toolbar@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-modal@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-navigation-bar@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-pagination@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-pagination-bar@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-portal@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-progress-bar@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-radio@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-select@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-sticker@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-table@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-tooltip@>=2.3.2</td>
+					</tr>
+			</table>
+		
+
+			<table>
+				<tr><th>Post-phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>inject-peer-dependencies</td> <td>{}</td>
+					
+					<td></td>
+				</tr>
+			</table>
+		
+
+			<table>
+				<tr><th>Post-phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>namespace-packages</td> <td>{}</td>
+					
+					<td class="info">INFO</td>
+					<td>Namespaced package</td>
+				</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 0 dependencies</td>
+					</tr>
+			</table>
+		
+	
+
+		<h3>
+							<a name="incremental-dom@0.5.1-bundler">
+								incremental-dom@0.5.1
+							</a>
+						</h3>
+		
+			<table>
+				<tr><th>Copy phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>exclude-imports</td> <td>{}</td>
+					
+					<td></td>
+				</tr>
+			</table>
+		
+
+			<table>
+				<tr><th>Pre-phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>replace-browser-modules</td> <td>{}</td>
+					
+					<td class="info">INFO</td>
+					<td>No browser modules found</td>
+				</tr>
+			</table>
+		
+
+			<table>
+				<tr><th>Post-phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>inject-imports-dependencies</td> <td>{}</td>
+					
+					<td class="info">INFO</td>
+					<td>Injected dependency frontend-js-metal-web$metal@>=2.16.5</td>
+				</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-affix@>=2.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-ajax@>=2.1.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-anim@>=2.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-aop@>=3.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-assertions@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-clipboard@>=2.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-component@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-debounce@>=2.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-dom@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-drag-drop@>=3.0.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-events@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-incremental-dom@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-jsx@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-key@>=1.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-keyboard-focus@>=2.0.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-multimap@>=2.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-pagination@>=2.0.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-path-parser@>=1.0.3</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-position@>=2.1.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-promise@>=2.0.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-router@>=3.6.3</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-scrollspy@>=2.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-soy@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-soy-bundle@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-state@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-storage@>=1.1.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-structs@>=1.0.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-throttle@>=3.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-toggler@>=2.3.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-uri@>=2.4.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-useragent@>=3.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-metal-web$metal-web-component@>=2.16.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$assert@>=1.4.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$buffer@>=5.0.7</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$console-browserify@>=1.1.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$domain-browser@>=1.1.7</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$events@>=1.1.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$os-browserify@>=0.3.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$path-browserify@>=0.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$process@>=0.11.10</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$punycode@>=2.1.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$querystring-es3@>=0.2.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$setimmediate@>=1.0.5</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$string_decoder@>=1.0.3</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$timers-browserify@>=2.0.4</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$tty-browserify@>=0.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$url@>=0.11.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$util@>=0.10.3</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-node-shims$vm-browserify@>=0.0.4</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-spa-web$senna@>=2.6.1</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-js-web@>=3.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib@>=4.0.0</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-alert@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-badge@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-button@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-card@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-card-grid@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-checkbox@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-collapse@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-component@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-dataset-display@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-dropdown@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-icon@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-label@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-link@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-list@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-management-toolbar@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-modal@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-navigation-bar@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-pagination@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-pagination-bar@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-portal@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-progress-bar@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-radio@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-select@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-sticker@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-table@>=2.3.2</td>
+					</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Injected dependency frontend-taglib-clay$clay-tooltip@>=2.3.2</td>
+					</tr>
+			</table>
+		
+
+			<table>
+				<tr><th>Post-phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>inject-peer-dependencies</td> <td>{}</td>
+					
+					<td></td>
+				</tr>
+			</table>
+		
+
+			<table>
+				<tr><th>Post-phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>namespace-packages</td> <td>{}</td>
+					
+					<td class="info">INFO</td>
+					<td>Namespaced package</td>
+				</tr>
+<tr>
+						<td></td> <td></td>
+						
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 0 dependencies</td>
+					</tr>
+			</table>
+		
+	
+
+		<h3>
+							<a name="metal-component@2.16.5-bundler">
+								metal-component@2.16.5
+							</a>
+						</h3>
+		
+			<table>
+				<tr><th>Copy phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>exclude-imports</td> <td>{}</td>
+					
+					<td class="info">INFO</td>
+					<td>Excluding package metal-component@2.16.5 from output as it is configured as an import.</td>
+				</tr>
+			</table>
+		
+	
+
+		<h3>
+							<a name="metal-dom@2.16.5-bundler">
+								metal-dom@2.16.5
+							</a>
+						</h3>
+		
+			<table>
+				<tr><th>Copy phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>exclude-imports</td> <td>{}</td>
+					
+					<td class="info">INFO</td>
+					<td>Excluding package metal-dom@2.16.5 from output as it is configured as an import.</td>
+				</tr>
+			</table>
+		
+	
+
+		<h3>
+							<a name="metal-events@2.16.5-bundler">
+								metal-events@2.16.5
+							</a>
+						</h3>
+		
+			<table>
+				<tr><th>Copy phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>exclude-imports</td> <td>{}</td>
+					
+					<td class="info">INFO</td>
+					<td>Excluding package metal-events@2.16.5 from output as it is configured as an import.</td>
+				</tr>
+			</table>
+		
+	
+
+		<h3>
+							<a name="metal-incremental-dom@2.16.5-bundler">
+								metal-incremental-dom@2.16.5
+							</a>
+						</h3>
+		
+			<table>
+				<tr><th>Copy phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>exclude-imports</td> <td>{}</td>
+					
+					<td class="info">INFO</td>
+					<td>Excluding package metal-incremental-dom@2.16.5 from output as it is configured as an import.</td>
+				</tr>
+			</table>
+		
+	
+
+		<h3>
+							<a name="metal-soy-bundle@2.16.5-bundler">
+								metal-soy-bundle@2.16.5
+							</a>
+						</h3>
+		
+			<table>
+				<tr><th>Copy phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>exclude-imports</td> <td>{}</td>
+					
+					<td class="info">INFO</td>
+					<td>Excluding package metal-soy-bundle@2.16.5 from output as it is configured as an import.</td>
+				</tr>
+			</table>
+		
+	
+
+		<h3>
+							<a name="metal-soy@2.16.5-bundler">
+								metal-soy@2.16.5
+							</a>
+						</h3>
+		
+			<table>
+				<tr><th>Copy phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>exclude-imports</td> <td>{}</td>
+					
+					<td class="info">INFO</td>
+					<td>Excluding package metal-soy@2.16.5 from output as it is configured as an import.</td>
+				</tr>
+			</table>
+		
+	
+
+		<h3>
+							<a name="metal-state@2.16.5-bundler">
+								metal-state@2.16.5
+							</a>
+						</h3>
+		
+			<table>
+				<tr><th>Copy phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>exclude-imports</td> <td>{}</td>
+					
+					<td class="info">INFO</td>
+					<td>Excluding package metal-state@2.16.5 from output as it is configured as an import.</td>
+				</tr>
+			</table>
+		
+	
+
+		<h3>
+							<a name="metal-state@2.7.0-bundler">
+								metal-state@2.7.0
+							</a>
+						</h3>
+		
+			<table>
+				<tr><th>Copy phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>exclude-imports</td> <td>{}</td>
+					
+					<td class="info">INFO</td>
+					<td>Excluding package metal-state@2.7.0 from output as it is configured as an import.</td>
+				</tr>
+			</table>
+		
+	
+
+		<h3>
+							<a name="metal-web-component@2.16.5-bundler">
+								metal-web-component@2.16.5
+							</a>
+						</h3>
+		
+			<table>
+				<tr><th>Copy phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>exclude-imports</td> <td>{}</td>
+					
+					<td class="info">INFO</td>
+					<td>Excluding package metal-web-component@2.16.5 from output as it is configured as an import.</td>
+				</tr>
+			</table>
+		
+	
+
+		<h3>
+							<a name="metal@2.16.5-bundler">
+								metal@2.16.5
+							</a>
+						</h3>
+		
+			<table>
+				<tr><th>Copy phase plugin</th>
+<th>Config</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>exclude-imports</td> <td>{}</td>
+					
+					<td class="info">INFO</td>
+					<td>Excluding package metal@2.16.5 from output as it is configured as an import.</td>
+				</tr>
+			</table>
+		
+	
+	
+				
+		<h2>Details of Babel transformations</h2>
+		
+		<h3>
+							<a name="/-babel">
+								flags-taglib@4.0.0
+							</a>
+						</h3>
+		<p>
+							Configuration: 
+							{"presets":["liferay-standard"],"babelrc":false,"only":"**/*","sourceMaps":true}
+						</p>
+
+			<table>
+				<tr><th>File</th>
+<th>Log source</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>flags/Flags.es.js</td>
+					<td class="source">normalize-requires</td>
+					<td class="info">INFO</td>
+					<td>Normalized 6 requires</td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">wrap-modules-amd</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Detected dependencies: 'frontend-js-web/liferay/compat/modal/Modal.es', 'frontend-js-web/liferay/PortletBase.es', 'frontend-js-metal-web$metal-soy', './Flags.soy', 'frontend-js-metal-web$metal-state', 'frontend-taglib-clay$clay-button'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'flags-taglib@4.0.0/flags/Flags.es'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 0 define() names, 2 define() dependencies, and 5 require() names</td>
+					</tr>
+<tr>
+					<td>flags/Flags.soy.js</td>
+					<td class="source">normalize-requires</td>
+					<td class="info">INFO</td>
+					<td>Normalized 2 requires</td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">wrap-modules-amd</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Detected dependencies: 'frontend-js-metal-web$metal-component', 'frontend-js-metal-web$metal-soy'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'flags-taglib@4.0.0/flags/Flags.soy'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 0 define() names, 0 define() dependencies, and 2 require() names</td>
+					</tr>
+			</table>
+		
+	
+
+
+
+
+		<h3>
+							<a name="incremental-dom-string@0.0.2-babel">
+								incremental-dom-string@0.0.2
+							</a>
+						</h3>
+		<p>
+							Configuration: 
+							{"presets":["liferay-standard"],"babelrc":false,"only":"**/*","sourceMaps":true}
+						</p>
+
+			<table>
+				<tr><th>File</th>
+<th>Log source</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>dist/incremental-dom-string.js</td>
+					<td class="source">wrap-modules-amd</td>
+					<td class="info">INFO</td>
+					<td>Detected dependencies: </td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'incremental-dom-string@0.0.2/dist/incremental-dom-string'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 1 define() names, 0 define() dependencies, and 0 require() names</td>
+					</tr>
+<tr>
+					<td>index.js</td>
+					<td class="source">wrap-modules-amd</td>
+					<td class="info">INFO</td>
+					<td>Detected dependencies: </td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'incremental-dom-string@0.0.2/index'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 1 define() names, 0 define() dependencies, and 0 require() names</td>
+					</tr>
+<tr>
+					<td>src/attributes.js</td>
+					<td class="source">wrap-modules-amd</td>
+					<td class="info">INFO</td>
+					<td>Detected dependencies: </td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'incremental-dom-string@0.0.2/src/attributes'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 1 define() names, 0 define() dependencies, and 0 require() names</td>
+					</tr>
+<tr>
+					<td>src/core.js</td>
+					<td class="source">wrap-modules-amd</td>
+					<td class="info">INFO</td>
+					<td>Detected dependencies: </td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'incremental-dom-string@0.0.2/src/core'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 1 define() names, 0 define() dependencies, and 0 require() names</td>
+					</tr>
+<tr>
+					<td>src/symbols.js</td>
+					<td class="source">wrap-modules-amd</td>
+					<td class="info">INFO</td>
+					<td>Detected dependencies: </td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'incremental-dom-string@0.0.2/src/symbols'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 1 define() names, 0 define() dependencies, and 0 require() names</td>
+					</tr>
+<tr>
+					<td>src/virtual_elements.js</td>
+					<td class="source">wrap-modules-amd</td>
+					<td class="info">INFO</td>
+					<td>Detected dependencies: </td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'incremental-dom-string@0.0.2/src/virtual_elements'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 1 define() names, 0 define() dependencies, and 0 require() names</td>
+					</tr>
+			</table>
+		
+	
+
+		<h3>
+							<a name="incremental-dom@0.5.1-babel">
+								incremental-dom@0.5.1
+							</a>
+						</h3>
+		<p>
+							Configuration: 
+							{"presets":["liferay-standard"],"babelrc":false,"only":"**/*","sourceMaps":true}
+						</p>
+
+			<table>
+				<tr><th>File</th>
+<th>Log source</th>
+<th>Message</th>
+<th></th></tr>
+				<tr>
+					<td>dist/incremental-dom-cjs.js</td>
+					<td class="source">wrap-modules-amd</td>
+					<td class="info">INFO</td>
+					<td>Detected dependencies: </td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'incremental-dom@0.5.1/dist/incremental-dom-cjs'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 1 define() names, 0 define() dependencies, and 0 require() names</td>
+					</tr>
+<tr>
+					<td>dist/incremental-dom-min.js</td>
+					<td class="source">wrap-modules-amd</td>
+					<td class="info">INFO</td>
+					<td>Detected dependencies: </td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'incremental-dom@0.5.1/dist/incremental-dom-min'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 1 define() names, 0 define() dependencies, and 0 require() names</td>
+					</tr>
+<tr>
+					<td>dist/incremental-dom.js</td>
+					<td class="source">wrap-modules-amd</td>
+					<td class="info">INFO</td>
+					<td>Detected dependencies: </td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'incremental-dom@0.5.1/dist/incremental-dom'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 1 define() names, 0 define() dependencies, and 0 require() names</td>
+					</tr>
+<tr>
+					<td>index.js</td>
+					<td class="source">wrap-modules-amd</td>
+					<td class="info">INFO</td>
+					<td>Detected dependencies: </td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'incremental-dom@0.5.1/index'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 1 define() names, 0 define() dependencies, and 0 require() names</td>
+					</tr>
+<tr>
+					<td>src/assertions.js</td>
+					<td class="source">wrap-modules-amd</td>
+					<td class="info">INFO</td>
+					<td>Detected dependencies: </td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'incremental-dom@0.5.1/src/assertions'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 1 define() names, 0 define() dependencies, and 0 require() names</td>
+					</tr>
+<tr>
+					<td>src/attributes.js</td>
+					<td class="source">wrap-modules-amd</td>
+					<td class="info">INFO</td>
+					<td>Detected dependencies: </td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'incremental-dom@0.5.1/src/attributes'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 1 define() names, 0 define() dependencies, and 0 require() names</td>
+					</tr>
+<tr>
+					<td>src/context.js</td>
+					<td class="source">wrap-modules-amd</td>
+					<td class="info">INFO</td>
+					<td>Detected dependencies: </td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'incremental-dom@0.5.1/src/context'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 1 define() names, 0 define() dependencies, and 0 require() names</td>
+					</tr>
+<tr>
+					<td>src/core.js</td>
+					<td class="source">wrap-modules-amd</td>
+					<td class="info">INFO</td>
+					<td>Detected dependencies: </td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'incremental-dom@0.5.1/src/core'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 1 define() names, 0 define() dependencies, and 0 require() names</td>
+					</tr>
+<tr>
+					<td>src/dom_util.js</td>
+					<td class="source">wrap-modules-amd</td>
+					<td class="info">INFO</td>
+					<td>Detected dependencies: </td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'incremental-dom@0.5.1/src/dom_util'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 1 define() names, 0 define() dependencies, and 0 require() names</td>
+					</tr>
+<tr>
+					<td>src/node_data.js</td>
+					<td class="source">wrap-modules-amd</td>
+					<td class="info">INFO</td>
+					<td>Detected dependencies: </td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'incremental-dom@0.5.1/src/node_data'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 1 define() names, 0 define() dependencies, and 0 require() names</td>
+					</tr>
+<tr>
+					<td>src/nodes.js</td>
+					<td class="source">wrap-modules-amd</td>
+					<td class="info">INFO</td>
+					<td>Detected dependencies: </td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'incremental-dom@0.5.1/src/nodes'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 1 define() names, 0 define() dependencies, and 0 require() names</td>
+					</tr>
+<tr>
+					<td>src/notifications.js</td>
+					<td class="source">wrap-modules-amd</td>
+					<td class="info">INFO</td>
+					<td>Detected dependencies: </td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'incremental-dom@0.5.1/src/notifications'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 1 define() names, 0 define() dependencies, and 0 require() names</td>
+					</tr>
+<tr>
+					<td>src/symbols.js</td>
+					<td class="source">wrap-modules-amd</td>
+					<td class="info">INFO</td>
+					<td>Detected dependencies: </td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'incremental-dom@0.5.1/src/symbols'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 1 define() names, 0 define() dependencies, and 0 require() names</td>
+					</tr>
+<tr>
+					<td>src/util.js</td>
+					<td class="source">wrap-modules-amd</td>
+					<td class="info">INFO</td>
+					<td>Detected dependencies: </td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'incremental-dom@0.5.1/src/util'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 1 define() names, 0 define() dependencies, and 0 require() names</td>
+					</tr>
+<tr>
+					<td>src/virtual_elements.js</td>
+					<td class="source">wrap-modules-amd</td>
+					<td class="info">INFO</td>
+					<td>Detected dependencies: </td>
+				</tr>
+<tr>
+						<td></td>
+						<td class="source">name-amd-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Set module name to 'incremental-dom@0.5.1/src/virtual_elements'</td>
+					</tr>
+<tr>
+						<td></td>
+						<td class="source">namespace-modules</td>
+						<td class="info">
+							INFO
+						</td>
+						<td>Namespaced 1 define() names, 0 define() dependencies, and 0 require() names</td>
+					</tr>
+			</table>
+		
+	
+
+
+
+
+
+
+
+
+
+
+	
+			</body>
+		</html>
+	

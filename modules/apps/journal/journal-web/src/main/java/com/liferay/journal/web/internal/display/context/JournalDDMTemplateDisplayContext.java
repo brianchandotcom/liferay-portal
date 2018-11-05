@@ -175,7 +175,8 @@ public class JournalDDMTemplateDisplayContext {
 
 		int total = DDMTemplateServiceUtil.searchCount(
 			themeDisplay.getCompanyId(), groupIds,
-			new long[] {PortalUtil.getClassNameId(DDMStructure.class)}, null,
+			new long[] {PortalUtil.getClassNameId(DDMStructure.class)},
+			_getDDMTemplateClassPKs(),
 			PortalUtil.getClassNameId(JournalArticle.class), _getKeywords(),
 			StringPool.BLANK, StringPool.BLANK, WorkflowConstants.STATUS_ANY);
 
@@ -183,7 +184,8 @@ public class JournalDDMTemplateDisplayContext {
 
 		List<DDMTemplate> results = DDMTemplateServiceUtil.search(
 			themeDisplay.getCompanyId(), groupIds,
-			new long[] {PortalUtil.getClassNameId(DDMStructure.class)}, null,
+			new long[] {PortalUtil.getClassNameId(DDMStructure.class)},
+			_getDDMTemplateClassPKs(),
 			PortalUtil.getClassNameId(JournalArticle.class), _getKeywords(),
 			StringPool.BLANK, StringPool.BLANK, WorkflowConstants.STATUS_ANY,
 			ddmTemplateSearch.getStart(), ddmTemplateSearch.getEnd(),
@@ -316,6 +318,14 @@ public class JournalDDMTemplateDisplayContext {
 		_classPK = ParamUtil.getLong(_request, "classPK");
 
 		return _classPK;
+	}
+
+	private long[] _getDDMTemplateClassPKs() {
+		if (_getClassPK() > 0) {
+			return new long[] {_getClassPK()};
+		}
+
+		return null;
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {

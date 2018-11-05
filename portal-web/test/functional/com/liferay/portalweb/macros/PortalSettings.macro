@@ -499,6 +499,12 @@
 		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="${userScreenName}" />
 	</command>
 
+	<command name="openInstanceSettingsAdmin">
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/control_panel/manage?p_p_id=com_liferay_portal_settings_web_portlet_PortalSettingsPortlet" />
+		</execute>
+	</command>
+
 	<command name="tearDownAuthenticationCP">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />

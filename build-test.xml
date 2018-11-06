@@ -1412,8 +1412,13 @@ war.path=${app.server.portal.dir}/</echo>
 
 			<get-testcase-property property.name="cluster.enabled" />
 
+			<get-testcase-property property.name="test.run.environment" />
+
 			<if>
-				<equals arg1="${cluster.enabled}" arg2="true" />
+				<and>
+					<equals arg1="${cluster.enabled}" arg2="true" />
+					<equals arg1="${test.run.environment}" arg2="CE" />
+				</and>
 				<then>
 					<var name="blacklistBundleSymbolicNames" value="${blacklistBundleSymbolicNames},com.liferay.portal.cache.single,com.liferay.portal.cluster.single,com.liferay.portal.scheduler.single" />
 				</then>

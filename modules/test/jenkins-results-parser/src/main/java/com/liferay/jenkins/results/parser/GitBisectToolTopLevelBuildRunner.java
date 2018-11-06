@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -149,16 +150,28 @@ public class GitBisectToolTopLevelBuildRunner
 	}
 
 	private List<String> _getPortalBranchSHAs() {
-		String portalGitCommits = getBuildParameter(_PORTAL_BRANCH_SHAS);
+		String portalBranchSHAs = getBuildParameter(_PORTAL_BRANCH_SHAS);
 
-		return Arrays.asList(portalGitCommits.split(","));
+		List<String> list = new ArrayList<>();
+
+		for (String portalBranchSHA : portalBranchSHAs.split(",")) {
+			list.add(portalBranchSHA.trim());
+		}
+
+		return list;
 	}
 
 	private List<String> _getTestList() {
 		String portalBatchTestSelector = getBuildParameter(
 			_PORTAL_BATCH_TEST_SELECTOR);
 
-		return Arrays.asList(portalBatchTestSelector.split(","));
+		List<String> list = new ArrayList<>();
+
+		for (String portalBatchTest : portalBatchTestSelector.split(",")) {
+			list.add(portalBatchTest.trim());
+		}
+
+		return list;
 	}
 
 	private void _validateBuildParameterJenkinsGitHubURL() {
@@ -209,10 +222,22 @@ public class GitBisectToolTopLevelBuildRunner
 			allowedPortalBatchNames.split(","));
 
 		if (!allowedPortalBatchNamesList.contains(portalBatchName)) {
-			reportFailureMessageToBuildDescription(
-				JenkinsResultsParserUtil.combine(
-					_PORTAL_BATCH_NAME, " must match one of the following: ",
-					allowedPortalBatchNames));
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(_PORTAL_BATCH_NAME);
+			sb.append(" must match one of the following: ");
+
+			sb.append("<ul>");
+
+			for (String allowedPortalBatchName : allowedPortalBatchNamesList) {
+				sb.append("<li>");
+				sb.append(allowedPortalBatchName);
+				sb.append("</li>");
+			}
+
+			sb.append("</ul>");
+
+			reportFailureMessageToBuildDescription(sb.toString());
 		}
 	}
 
@@ -311,11 +336,24 @@ public class GitBisectToolTopLevelBuildRunner
 		if (!allowedPortalUpstreamBranchNamesList.contains(
 				portalUpstreamBranchName)) {
 
-			reportFailureMessageToBuildDescription(
-				JenkinsResultsParserUtil.combine(
-					_PORTAL_UPSTREAM_BRANCH_NAME,
-					" must match one of the following: ",
-					allowedPortalUpstreamBranchNames));
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(_PORTAL_UPSTREAM_BRANCH_NAME);
+			sb.append(" must match one of the following: ");
+
+			sb.append("<ul>");
+
+			for (String allowedPortalUpstreamBranchName :
+					allowedPortalUpstreamBranchNamesList) {
+
+				sb.append("<li>");
+				sb.append(allowedPortalUpstreamBranchName);
+				sb.append("</li>");
+			}
+
+			sb.append("</ul>");
+
+			reportFailureMessageToBuildDescription(sb.toString());
 		}
 	}
 

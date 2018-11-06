@@ -187,7 +187,9 @@ public class UnicodePropertiesTest {
 		String[] expectedValues, String[] keys,
 		UnicodeProperties unicodeProperties) {
 
-		Assert.assertEquals(expectedValues.length, unicodeProperties.size());
+		Assert.assertEquals(
+			MapUtil.toString(unicodeProperties), expectedValues.length,
+			unicodeProperties.size());
 
 		for (int i = 0; i < keys.length; i++) {
 			Assert.assertEquals(

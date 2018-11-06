@@ -432,6 +432,11 @@ public class BeanPortletExtension implements Extension {
 					servletContext.getServletContextName()));
 		}
 
+		properties = new HashMapDictionary<>();
+
+		properties.put(
+			"servlet.context.name", servletContext.getServletContextName());
+
 		_serviceRegistrations.add(
 			bundleContext.registerService(
 				PortletAsyncScopeManagerFactory.class,
@@ -443,7 +448,7 @@ public class BeanPortletExtension implements Extension {
 						resourceRequest, resourceResponse, portletConfig,
 						scopedBeanManagerStack);
 				},
-				null));
+				properties));
 
 		_serviceRegistrations.add(
 			bundleContext.registerService(
@@ -469,7 +474,7 @@ public class BeanPortletExtension implements Extension {
 					}
 
 				},
-				null));
+				properties));
 	}
 
 	public void step5SessionScopeBeforeDestroyed(

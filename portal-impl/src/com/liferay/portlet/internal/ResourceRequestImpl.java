@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayResourceRequest;
-import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManager;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -251,21 +250,6 @@ public class ResourceRequestImpl
 				httpServletRequest);
 		}
 
-		PortletAsyncScopeManager portletAsyncScopeManager =
-			PortletAsyncScopeManagerUtil.getPortletAsyncScopeManager(
-				this, resourceResponse, _portletConfig);
-
-		// Activate scope contexts in the main thread so that
-		// @PortletRequestScoped beans will not get destroyed when
-		// ResourceRequest processing completes. Deactivatation takes place in
-		// the async thread via the PortletAsyncScopingListener so that the
-		// beans will be destroyed when async processing completes. If
-		// dispatch() is called, then deactivation takes place in
-		// PortletContainerImpl.serveResource(request,response,portlet)
-		// during the subsequent dispatch request.
-
-		portletAsyncScopeManager.activateScopeContexts();
-
 		AsyncContext asyncContext = httpServletRequest.startAsync(
 			httpServletRequest, httpServletResponse);
 
@@ -278,8 +262,8 @@ public class ResourceRequestImpl
 		}
 
 		_portletAsyncContextImpl.initialize(
-			resourceRequest, resourceResponse, asyncContext,
-			hasOriginalRequestAndResponse, portletAsyncScopeManager);
+			resourceRequest, resourceResponse, _portletConfig, asyncContext,
+			hasOriginalRequestAndResponse);
 
 		// The portletConfig is already set by PortletRequestImpl.defineObjects
 

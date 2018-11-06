@@ -16,13 +16,17 @@ package com.liferay.portlet.internal;
 
 import com.liferay.portal.kernel.portlet.async.PortletAsyncListenerFactory;
 import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManager;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManagerFactory;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portlet.AsyncPortletServletRequest;
 import com.liferay.portlet.PortletAsyncListenerAdapter;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
 
 import javax.portlet.PortletAsyncContext;
 import javax.portlet.PortletAsyncListener;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -90,10 +94,7 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 				nsme);
 		}
 
-		PortletAsyncListenerFactory portletAsyncListenerFactory =
-			_portletAsyncListenerFactory;
-
-		if (portletAsyncListenerFactory == null) {
+		if (_portletAsyncListenerFactory == null) {
 			try {
 				return listenerClass.newInstance();
 			}
@@ -104,7 +105,7 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 
 		try {
 			T portletAsyncListener =
-				portletAsyncListenerFactory.getPortletAsyncListener(
+				_portletAsyncListenerFactory.getPortletAsyncListener(
 					listenerClass);
 
 			if (portletAsyncListener == null) {
@@ -232,14 +233,43 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 
 	protected void initialize(
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
-		AsyncContext asyncContext, boolean hasOriginalRequestAndResponse,
-		PortletAsyncScopeManager portletAsyncScopeManager) {
+		PortletConfig portletConfig, AsyncContext asyncContext,
+		boolean hasOriginalRequestAndResponse) {
 
 		_resourceRequest = resourceRequest;
 		_resourceResponse = resourceResponse;
 		_asyncContext = asyncContext;
 		_hasOriginalRequestAndResponse = hasOriginalRequestAndResponse;
-		_portletAsyncScopeManager = portletAsyncScopeManager;
+
+		PortletContext portletContext = portletConfig.getPortletContext();
+
+		_servletContextName = portletContext.getPortletContextName();
+
+		PortletAsyncScopeManagerFactory portletAsyncScopeManagerFactory =
+			_portletAsyncScopeManagerFactories.getService(_servletContextName);
+
+		if (portletAsyncScopeManagerFactory == null) {
+			portletAsyncScopeManagerFactory =
+				_dummyPortletAsyncScopeManagerFactory;
+		}
+
+		_portletAsyncScopeManager =
+			portletAsyncScopeManagerFactory.getPortletAsyncScopeManager(
+				resourceRequest, resourceResponse, portletConfig);
+
+		// Activate scope contexts in the main thread so that
+		// @PortletRequestScoped beans will not get destroyed when
+		// ResourceRequest processing completes. Deactivatation takes place in
+		// the async thread via the PortletAsyncScopingListener so that the
+		// beans will be destroyed when async processing completes. If
+		// dispatch() is called, then deactivation takes place in
+		// PortletContainerImpl.serveResource(request,response,portlet)
+		// during the subsequent dispatch request.
+
+		_portletAsyncScopeManager.activateScopeContexts();
+
+		_portletAsyncListenerFactory =
+			_portletAsyncListenerFactories.getService(_servletContextName);
 
 		_calledDispatch = false;
 		_calledComplete = false;
@@ -271,12 +301,35 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 		return originalServletRequest;
 	}
 
-	private static volatile PortletAsyncListenerFactory
-		_portletAsyncListenerFactory =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				PortletAsyncListenerFactory.class,
-				PortletAsyncContextImpl.class, "_portletAsyncListenerFactory",
-				false, true);
+	private static final PortletAsyncScopeManagerFactory
+		_dummyPortletAsyncScopeManagerFactory =
+			(resourceRequest, resourceResponse, portletConfig) ->
+				new PortletAsyncScopeManager() {
+
+					@Override
+					public void activateScopeContexts() {
+					}
+
+					@Override
+					public void deactivateScopeContexts() {
+					}
+
+					@Override
+					public void setAsyncProcessingStarted() {
+					}
+
+				};
+
+	private static final ServiceTrackerMap<String, PortletAsyncListenerFactory>
+		_portletAsyncListenerFactories =
+			ServiceTrackerCollections.openSingleValueMap(
+				PortletAsyncListenerFactory.class, "servlet.context.name");
+	private static final
+		ServiceTrackerMap<String, PortletAsyncScopeManagerFactory>
+			_portletAsyncScopeManagerFactories =
+				ServiceTrackerCollections.openSingleValueMap(
+					PortletAsyncScopeManagerFactory.class,
+					"servlet.context.name");
 
 	private AsyncContext _asyncContext;
 	private AsyncPortletServletRequest _asyncPortletServletRequest;
@@ -284,9 +337,11 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 	private boolean _calledDispatch;
 	private boolean _hasOriginalRequestAndResponse;
 	private PortletAsyncListenerAdapter _portletAsyncListenerAdapter;
+	private PortletAsyncListenerFactory _portletAsyncListenerFactory;
 	private PortletAsyncScopeManager _portletAsyncScopeManager;
 	private ResourceRequest _resourceRequest;
 	private ResourceResponse _resourceResponse;
 	private boolean _returnedToContainer;
+	private String _servletContextName;
 
 }

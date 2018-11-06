@@ -89,7 +89,7 @@
 			<div class="card card-horizontal">
 				<div class="card-row card-row-padded">
 					<div class="card-col-field">
-						<liferay-ui:user-portrait
+						<liferay-frontend:user-portrait
 							userId="<%= activityDescriptor.getUserId() %>"
 						/>
 					</div>

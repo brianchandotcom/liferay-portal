@@ -239,9 +239,27 @@ public class PortletRequestDispatcherImpl
 			}
 
 			if (servletPath == null) {
+				int extensionIndex = pathNoQueryString.lastIndexOf(
+					CharPool.PERIOD);
+
+				if (extensionIndex >= 0) {
+					for (String urlPattern : servletURLPatterns) {
+						if (urlPattern.startsWith("*.") &&
+							pathNoQueryString.regionMatches(
+								extensionIndex, urlPattern, 1,
+								urlPattern.length() - 1)) {
+
+							servletPath = pathNoQueryString;
+
+							break;
+						}
+					}
+				}
+			}
+
+			if (servletPath == null) {
 				if (!include &&
-					!(pathNoQueryString.endsWith(".jsp") ||
-					  pathNoQueryString.endsWith(".jspx"))) {
+					!servletURLPatterns.contains(pathNoQueryString)) {
 
 					pathInfo = pathNoQueryString;
 				}

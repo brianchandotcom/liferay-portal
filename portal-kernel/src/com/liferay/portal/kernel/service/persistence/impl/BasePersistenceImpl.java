@@ -471,7 +471,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			petraSB, entityAlias, orderByComparator, sqlQuery);
 
 		for (int i = index; i < petraSB.index(); i++) {
-			sb.append(petraSB.stringAt(index));
+			sb.append(petraSB.stringAt(i));
 		}
 	}
 

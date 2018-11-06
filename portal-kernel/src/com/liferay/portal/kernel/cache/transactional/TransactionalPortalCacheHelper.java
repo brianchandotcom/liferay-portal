@@ -331,7 +331,7 @@ public class TransactionalPortalCacheHelper {
 					}
 
 					if (!readOnly || !commitByRemove) {
-						doCommit();
+						doCommit(false);
 					}
 
 					if (readOnly) {
@@ -369,7 +369,7 @@ public class TransactionalPortalCacheHelper {
 				return;
 			}
 
-			doCommit();
+			doCommit(true);
 		}
 
 		public ValueEntry get(Serializable key) {
@@ -400,7 +400,7 @@ public class TransactionalPortalCacheHelper {
 			}
 		}
 
-		protected void doCommit() {
+		protected void doCommit(boolean commitRemove) {
 			if (_removeAll) {
 				if (_skipReplicator) {
 					PortalCacheHelperUtil.removeAllWithoutReplicator(
@@ -420,7 +420,8 @@ public class TransactionalPortalCacheHelper {
 					valueEntry.commitToByRemove(_portalCache, entry.getKey());
 				}
 				else {
-					valueEntry.commitTo(_portalCache, entry.getKey());
+					valueEntry.commitTo(
+						_portalCache, entry.getKey(), commitRemove);
 				}
 			}
 		}
@@ -474,7 +475,8 @@ public class TransactionalPortalCacheHelper {
 		}
 
 		public void commitTo(
-			PortalCache<Serializable, Object> portalCache, Serializable key) {
+			PortalCache<Serializable, Object> portalCache, Serializable key,
+			boolean commitRemove) {
 
 			if (_value == _NULL_HOLDER) {
 				if (_skipReplicator) {
@@ -486,6 +488,16 @@ public class TransactionalPortalCacheHelper {
 				}
 			}
 			else {
+				if (commitRemove && _removed) {
+					if (_skipReplicator) {
+						PortalCacheHelperUtil.removeWithoutReplicator(
+							portalCache, key);
+					}
+					else {
+						portalCache.remove(key);
+					}
+				}
+
 				if (_skipReplicator) {
 					PortalCacheHelperUtil.putWithoutReplicator(
 						portalCache, key, _value, _ttl);
@@ -519,8 +531,13 @@ public class TransactionalPortalCacheHelper {
 			if (!_skipReplicator) {
 				valueEntry._skipReplicator = false;
 			}
+
+			if (_value == _NULL_HOLDER) {
+				valueEntry._removed = true;
+			}
 		}
 
+		private boolean _removed;
 		private boolean _skipReplicator;
 		private final int _ttl;
 		private final Object _value;

@@ -76,7 +76,18 @@ public abstract class BaseBuildData implements BuildData {
 	}
 
 	@Override
+	public String getBuildParameter(String key) {
+		Map<String, String> buildParameters = getBuildParameters();
+
+		return buildParameters.get(key);
+	}
+
+	@Override
 	public Map<String, String> getBuildParameters() {
+		if (_buildParameters != null) {
+			return _buildParameters;
+		}
+
 		JSONObject buildURLJSONObject = _getBuildURLJSONObject();
 
 		if (buildURLJSONObject == null) {
@@ -101,7 +112,7 @@ public abstract class BaseBuildData implements BuildData {
 			JSONArray parametersJSONArray = actionsJSONObject.getJSONArray(
 				"parameters");
 
-			Map<String, String> buildParameters = new HashMap<>();
+			_buildParameters = new HashMap<>();
 
 			for (int j = 0; j < parametersJSONArray.length(); j++) {
 				JSONObject parameterJSONObject =
@@ -114,12 +125,12 @@ public abstract class BaseBuildData implements BuildData {
 					continue;
 				}
 
-				buildParameters.put(
+				_buildParameters.put(
 					parameterJSONObject.getString("name"),
 					parameterJSONObject.getString("value"));
 			}
 
-			return buildParameters;
+			return _buildParameters;
 		}
 
 		return null;
@@ -460,6 +471,7 @@ public abstract class BaseBuildData implements BuildData {
 			"(\\.liferay\\.com)?/job/(?<jobName>[^/]+)/(.*/)?",
 			"(?<buildNumber>\\d+)/?"));
 
+	private Map<String, String> _buildParameters;
 	private final JSONObject _jsonObject;
 
 }

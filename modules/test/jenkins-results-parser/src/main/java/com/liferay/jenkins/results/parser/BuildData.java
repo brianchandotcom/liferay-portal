@@ -42,6 +42,8 @@ public interface BuildData {
 
 	public Integer getBuildNumber();
 
+	public String getBuildParameter(String key);
+
 	public Map<String, String> getBuildParameters();
 
 	public String getBuildResult();

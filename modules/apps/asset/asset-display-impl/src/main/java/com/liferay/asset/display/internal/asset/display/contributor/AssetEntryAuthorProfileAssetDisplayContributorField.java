@@ -45,7 +45,7 @@ public class AssetEntryAuthorProfileAssetDisplayContributorField
 
 	@Override
 	public String getKey() {
-		return "authorProfile";
+		return "authorProfileImage";
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class AssetEntryAuthorProfileAssetDisplayContributorField
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "author-profile");
+		return LanguageUtil.get(resourceBundle, "author-profile-image");
 	}
 
 	@Override

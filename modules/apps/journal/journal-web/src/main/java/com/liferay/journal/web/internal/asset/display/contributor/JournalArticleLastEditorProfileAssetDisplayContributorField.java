@@ -45,7 +45,7 @@ public class JournalArticleLastEditorProfileAssetDisplayContributorField
 
 	@Override
 	public String getKey() {
-		return "lastEditorProfile";
+		return "lastEditorProfileImage";
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class JournalArticleLastEditorProfileAssetDisplayContributorField
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, "com.liferay.journal.lang");
 
-		return LanguageUtil.get(resourceBundle, "last-editor-profile");
+		return LanguageUtil.get(resourceBundle, "last-editor-profile-image");
 	}
 
 	@Override

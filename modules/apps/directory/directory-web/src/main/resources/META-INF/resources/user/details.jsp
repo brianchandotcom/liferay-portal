@@ -35,7 +35,7 @@ for (int i = 1; i<organizations.size(); i++) {
 <h2><%= selUser.getFullName() %></h2>
 
 <div class="details">
-	<liferay-ui:user-portrait
+	<liferay-frontend:user-portrait
 		user="<%= selUser %>"
 	/>
 

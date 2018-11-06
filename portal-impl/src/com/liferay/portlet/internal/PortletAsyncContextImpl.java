@@ -84,15 +84,6 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 				"listenerClass is not of type PortletAsyncListener");
 		}
 
-		if (_portletAsyncListenerFactory == null) {
-			try {
-				return listenerClass.newInstance();
-			}
-			catch (ReflectiveOperationException roe) {
-				throw new PortletException(roe);
-			}
-		}
-
 		return _portletAsyncListenerFactory.getPortletAsyncListener(
 			listenerClass);
 	}
@@ -245,6 +236,10 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 		_portletAsyncListenerFactory =
 			_portletAsyncListenerFactories.getService(_servletContextName);
 
+		if (_portletAsyncListenerFactory == null) {
+			_portletAsyncListenerFactory = _dummyPortletAsyncListenerFactory;
+		}
+
 		_calledDispatch = false;
 		_calledComplete = false;
 		_returnedToContainer = false;
@@ -274,6 +269,24 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 
 		return originalServletRequest;
 	}
+
+	private static final PortletAsyncListenerFactory
+		_dummyPortletAsyncListenerFactory = new PortletAsyncListenerFactory() {
+
+			@Override
+			public <T extends PortletAsyncListener> T getPortletAsyncListener(
+					Class<T> clazz)
+				throws PortletException {
+
+				try {
+					return clazz.newInstance();
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new PortletException(roe);
+				}
+			}
+
+		};
 
 	private static final PortletAsyncScopeManagerFactory
 		_dummyPortletAsyncScopeManagerFactory =

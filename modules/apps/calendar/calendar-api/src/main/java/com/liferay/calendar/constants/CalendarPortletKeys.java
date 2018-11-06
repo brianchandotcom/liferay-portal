@@ -23,4 +23,7 @@ public class CalendarPortletKeys {
 	public static final String CALENDAR =
 		"com_liferay_calendar_web_portlet_CalendarPortlet";
 
+	public static final String CALENDAR_ADMIN =
+		"com_liferay_calendar_web_portlet_CalendarAdminPortlet";
+
 }

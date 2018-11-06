@@ -2054,7 +2054,8 @@ public class CalendarBookingLocalServiceImpl
 			return false;
 		}
 
-		return stagingGroup.isInStagingPortlet(CalendarPortletKeys.CALENDAR);
+		return stagingGroup.isInStagingPortlet(
+			CalendarPortletKeys.CALENDAR_ADMIN);
 	}
 
 	protected boolean isCustomCalendarResource(

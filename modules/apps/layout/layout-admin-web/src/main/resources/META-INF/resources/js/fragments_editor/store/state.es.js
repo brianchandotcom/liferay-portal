@@ -106,7 +106,7 @@ const INITIAL_STATE = {
 	 * @type {string}
 	 */
 
-	hoveredFragmentEntryLinkBorder: Config
+	hoveredElementBorder: Config
 		.oneOf(Object.values(DRAG_POSITIONS))
 		.value(null),
 

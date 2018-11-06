@@ -25,7 +25,7 @@
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
 	{@param? highlightMapping: bool}
-	{@param? hoveredFragmentEntryLinkBorder: string}
+	{@param? hoveredElementBorder: string}
 	{@param? hoveredFragmentEntryLinkId: string}
 	{@param? mappingFieldsURL: string}
 	{@param? selectedMappingTypes: [
@@ -63,7 +63,7 @@
 					{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 					{param defaultLanguageId: $defaultLanguageId /}
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
-					{param hoveredFragmentEntryLinkBorder: $hoveredFragmentEntryLinkBorder /}
+					{param hoveredElementBorder: $hoveredElementBorder /}
 					{param hoveredFragmentEntryLinkId: $hoveredFragmentEntryLinkId /}
 					{param imageSelectorURL: $imageSelectorURL /}
 					{param key: $row.rowId /}
@@ -100,7 +100,7 @@
 	{@param rowId: number}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
-	{@param? hoveredFragmentEntryLinkBorder: string}
+	{@param? hoveredElementBorder: string}
 	{@param? hoveredFragmentEntryLinkId: string}
 	{@param? mappingFieldsURL: string}
 	{@param? selectedMappingTypes: [
@@ -126,7 +126,7 @@
 						{param defaultLanguageId: $defaultLanguageId /}
 						{param fragmentEntryLinkIds: $column.fragmentEntryLinkIds /}
 						{param fragmentEntryLinks: $fragmentEntryLinks /}
-						{param hoveredFragmentEntryLinkBorder: $hoveredFragmentEntryLinkBorder /}
+						{param hoveredElementBorder: $hoveredElementBorder /}
 						{param hoveredFragmentEntryLinkId: $hoveredFragmentEntryLinkId /}
 						{param imageSelectorURL: $imageSelectorURL /}
 						{param key: $column.columnId /}
@@ -159,7 +159,7 @@
 	{@param size: number}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
-	{@param? hoveredFragmentEntryLinkBorder: string}
+	{@param? hoveredElementBorder: string}
 	{@param? hoveredFragmentEntryLinkId: string}
 	{@param? mappingFieldsURL: string}
 	{@param? selectedMappingTypes: [
@@ -185,7 +185,7 @@
 					{param defaultLanguageId: $defaultLanguageId /}
 					{param editableValues: $fragmentEntryLink.editableValues /}
 					{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
-					{param hoveredFragmentEntryLinkBorder: $hoveredFragmentEntryLinkBorder /}
+					{param hoveredElementBorder: $hoveredElementBorder /}
 					{param hoveredFragmentEntryLinkId: $hoveredFragmentEntryLinkId /}
 					{param imageSelectorURL: $imageSelectorURL /}
 					{param key: $fragmentEntryLink.fragmentEntryLinkId /}
@@ -212,7 +212,7 @@
 	{@param editableValues: ?}
 	{@param fragmentEntryLinkId: string}
 	{@param imageSelectorURL: ?}
-	{@param hoveredFragmentEntryLinkBorder: ?}
+	{@param hoveredElementBorder: ?}
 	{@param hoveredFragmentEntryLinkId: ?}
 	{@param languageId: ?}
 	{@param mappingFieldsURL: ?}
@@ -226,7 +226,7 @@
 
 	{let $styleModifier kind="text"}
 		{if $hoveredFragmentEntryLinkId == $fragmentEntryLinkId}
-			{$hoveredFragmentEntryLinkBorder}
+			{$hoveredElementBorder}
 		{/if}
 	{/let}
 

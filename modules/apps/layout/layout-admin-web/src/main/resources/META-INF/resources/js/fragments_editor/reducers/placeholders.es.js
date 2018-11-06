@@ -19,7 +19,7 @@ const DRAG_POSITIONS = {
  * @param {!object} state
  * @param {!string} actionType
  * @param {!object} payload
- * @param {!string} payload.hoveredFragmentEntryLinkBorder
+ * @param {!string} payload.hoveredElementBorder
  * @param {!string} payload.hoveredFragmentEntryLinkId
  * @return {object}
  * @review
@@ -29,11 +29,11 @@ function updateDragTargetReducer(state, actionType, payload) {
 	let nextState = Object.assign({}, state);
 
 	if (actionType === CLEAR_DRAG_TARGET) {
-		nextState.hoveredFragmentEntryLinkBorder = null;
+		nextState.hoveredElementBorder = null;
 		nextState.hoveredFragmentEntryLinkId = null;
 	}
 	else if (actionType === UPDATE_DRAG_TARGET) {
-		nextState.hoveredFragmentEntryLinkBorder = payload.hoveredFragmentEntryLinkBorder;
+		nextState.hoveredElementBorder = payload.hoveredElementBorder;
 		nextState.hoveredFragmentEntryLinkId = payload.hoveredFragmentEntryLinkId;
 	}
 

@@ -45,7 +45,7 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 							const position = _getDropFragmentPosition(
 								state.layoutData.structure,
 								state.hoveredFragmentEntryLinkId,
-								state.hoveredFragmentEntryLinkBorder
+								state.hoveredElementBorder
 							);
 
 							nextData = _addSingleFragmentRow(

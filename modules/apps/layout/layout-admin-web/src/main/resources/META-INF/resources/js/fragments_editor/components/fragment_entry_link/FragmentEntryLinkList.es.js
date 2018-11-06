@@ -87,7 +87,7 @@ class FragmentEntryLinkList extends Component {
 			this.store.dispatchAction(
 				UPDATE_DRAG_TARGET,
 				{
-					hoveredFragmentEntryLinkBorder: this._targetBorder,
+					hoveredElementBorder: this._targetBorder,
 					hoveredFragmentEntryLinkId: targetItem.dataset.fragmentEntryLinkId
 				}
 			);
@@ -280,7 +280,7 @@ FragmentEntryLinkList.STATE = {
 	 * @type {!string}
 	 */
 
-	hoveredFragmentEntryLinkBorder: Config.string(),
+	hoveredElementBorder: Config.string(),
 
 	/**
 	 * Id of the hovered fragment entry link when dragging.

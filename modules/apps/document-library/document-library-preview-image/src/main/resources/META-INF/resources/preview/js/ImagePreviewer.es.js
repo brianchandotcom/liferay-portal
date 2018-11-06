@@ -29,18 +29,26 @@ class ImagePreviewer extends Component {
 
 	/**
 	 * @inheritDoc
-	 * @review
 	 */
 	attached() {
 		this.imageNaturalWidth = this.refs.image.naturalWidth;
 		this.imageNaturalHeight = this.refs.image.naturalHeight;
 
-		this._setDimensions();
+		this._updateDimensions();
+		this._updateDimensions = this._updateDimensions.bind(this);
+
+		window.addEventListener('resize', this._updateDimensions);
 	}
 
 	/**
 	 * @inheritDoc
-	 * @review
+	 */
+	detached() {
+		window.removeEventListener('resize', this._updateDimensions);
+	}
+
+	/**
+	 * @inheritDoc
 	 */
 	rendered() {
 		if (this.zoomRatio) {
@@ -115,7 +123,7 @@ class ImagePreviewer extends Component {
 	 * @private
 	 * @review
 	 */
-	_setDimensions() {
+	_updateDimensions() {
 		this.imageContainerWidth = this.refs.imageContainer.clientWidth;
 		this.imageContainerHeight = this.refs.imageContainer.clientHeight;
 

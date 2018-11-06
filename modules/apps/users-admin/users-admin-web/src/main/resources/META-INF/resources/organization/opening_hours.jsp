@@ -65,6 +65,8 @@ List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 	</div>
 </c:if>
 
+<aui:input name="classPK" type="hidden" value="<%= String.valueOf(organizationId) %>" />
+
 <div
 	class="<%=
 		CSSClassNames.builder(

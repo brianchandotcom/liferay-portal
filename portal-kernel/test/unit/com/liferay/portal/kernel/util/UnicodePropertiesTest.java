@@ -38,7 +38,6 @@ public class UnicodePropertiesTest {
 		_testLoad(
 			(props, unicodeProperties) -> unicodeProperties.fastLoad(props),
 			false);
-
 		_testLoad(
 			(props, unicodeProperties) -> unicodeProperties.fastLoad(props),
 			true);
@@ -74,20 +73,22 @@ public class UnicodePropertiesTest {
 		UnicodeProperties unicodeProperties1 = new UnicodeProperties();
 
 		Assert.assertFalse(
-			"If you create an instance with new UnicodeProperties(), _safe " +
-				"will be set to false, then isSafe() should return false",
+			"isSafe() should return false if UnicodeProperties is " +
+				"instantiated by \"new UnicodeProperties()\"",
 			unicodeProperties1.isSafe());
 
 		UnicodeProperties unicodeProperties2 = new UnicodeProperties(false);
 
 		Assert.assertFalse(
-			"isSafe() should return false if _safe was set false",
+			"isSafe() should return false if UnicodeProperties is " +
+				"instantiated by \"new UnicodeProperties(false)\"",
 			unicodeProperties2.isSafe());
 
 		UnicodeProperties unicodeProperties3 = new UnicodeProperties(true);
 
 		Assert.assertTrue(
-			"isSafe() should return false if _safe was set true",
+			"isSafe() should return true if UnicodeProperties is " +
+				"instantiated by \"new UnicodeProperties(true)\"",
 			unicodeProperties3.isSafe());
 	}
 
@@ -95,7 +96,6 @@ public class UnicodePropertiesTest {
 	public void testLoad() throws Exception {
 		_testLoad(
 			(props, unicodeProperties) -> unicodeProperties.load(props), false);
-
 		_testLoad(
 			(props, unicodeProperties) -> unicodeProperties.load(props), true);
 	}
@@ -207,7 +207,7 @@ public class UnicodePropertiesTest {
 		loadMethod.load(null, unicodeProperties);
 
 		Assert.assertTrue(
-			"nothing will be put in if props is null",
+			"nothing will be loaded in if props is null",
 			unicodeProperties.isEmpty());
 
 		loadMethod.load(_TEST_LINE_1, unicodeProperties);
@@ -259,17 +259,13 @@ public class UnicodePropertiesTest {
 				JDKLoggerTestUtil.configureJDKLogger(
 					UnicodeProperties.class.getName(), Level.ALL)) {
 
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
-
-			Assert.assertEquals(logRecords.toString(), 0, logRecords.size());
-
-			// line without EQUAL(=)
-
 			unicodeProperties.put(_TEST_KEY_1);
 
 			Assert.assertTrue(
-				"nothing will be put in if line without \"=\"",
+				"nothing will be put in if the line contains no \"=\"",
 				unicodeProperties.isEmpty());
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
@@ -280,31 +276,23 @@ public class UnicodePropertiesTest {
 				logRecord.getMessage());
 		}
 
-		// line with empty
-
 		unicodeProperties.put("");
 
 		Assert.assertTrue(
-			"nothing will be put in if call put(\"\")",
+			"nothing will be put in if called with empty string (\"\")",
 			unicodeProperties.isEmpty());
 
-		// line with POUND(#)
-
-		unicodeProperties.put("#");
+		unicodeProperties.put("# " + _TEST_LINE_1);
 
 		Assert.assertTrue(
-			"nothing will be put in happen if call put(\"#\")",
+			"nothing will be put in if the line is started with #",
 			unicodeProperties.isEmpty());
-
-		// line with _TEST_LINE_1(testKey1=testValue1)
 
 		unicodeProperties.put(_TEST_LINE_1);
 
 		_assertUnicodeProperties(
 			new String[] {_TEST_VALUE_1}, new String[] {_TEST_KEY_1},
 			unicodeProperties);
-
-		// safe is true
 
 		unicodeProperties.put(_TEST_LINE_1 + _SAFE_NEWLINE_CHARACTER);
 

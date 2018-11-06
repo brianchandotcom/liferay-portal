@@ -63,7 +63,6 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
-		setUpBrowserSniffer();
 		setUpFileUtil();
 		setUpPropsUtil();
 	}
@@ -198,18 +197,6 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 		Assert.assertEquals(range.getStart(), start);
 		Assert.assertEquals(range.getEnd(), end);
 		Assert.assertEquals(range.getLength(), length);
-	}
-
-	protected void setUpBrowserSniffer() {
-		BrowserSnifferUtil browserSnifferUtil = new BrowserSnifferUtil();
-
-		browserSnifferUtil.setBrowserSniffer(_browserSniffer);
-
-		when(
-			_browserSniffer.isIe(Matchers.any(HttpServletRequest.class))
-		).thenReturn(
-			false
-		);
 	}
 
 	protected void setUpFileUtil() {

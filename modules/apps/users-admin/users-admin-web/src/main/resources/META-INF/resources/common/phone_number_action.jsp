@@ -17,9 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayContext = (OrganizationScreenNavigationDisplayContext)request.getAttribute(UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT);
-
-long organizationId = organizationScreenNavigationDisplayContext.getOrganizationId();
+long classPK = ParamUtil.getLong(request, "classPK");
+String mvcActionPath = ParamUtil.getString(request, "mvcActionPath");
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
@@ -49,11 +48,11 @@ long phoneId = phone.getPhoneId();
 		url="javascript:;"
 	/>
 
-	<portlet:actionURL name="/users_admin/update_organization_contact_information" var="makePrimaryURL">
+	<portlet:actionURL name="<%= mvcActionPath %>" var="makePrimaryURL">
 		<portlet:param name="<%= Constants.CMD %>" value="makePrimary" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="listType" value="<%= ListTypeConstants.PHONE %>" />
-		<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
+		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 		<portlet:param name="primaryKey" value="<%= String.valueOf(phoneId) %>" />
 	</portlet:actionURL>
 
@@ -62,11 +61,11 @@ long phoneId = phone.getPhoneId();
 		url="<%= makePrimaryURL %>"
 	/>
 
-	<portlet:actionURL name="/users_admin/update_organization_contact_information" var="removePhoneURL">
+	<portlet:actionURL name="<%= mvcActionPath %>" var="removePhoneURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="listType" value="<%= ListTypeConstants.PHONE %>" />
-		<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
+		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 		<portlet:param name="primaryKey" value="<%= String.valueOf(phoneId) %>" />
 	</portlet:actionURL>
 

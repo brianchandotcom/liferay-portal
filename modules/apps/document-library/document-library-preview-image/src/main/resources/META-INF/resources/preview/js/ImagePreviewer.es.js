@@ -45,6 +45,7 @@ class ImagePreviewer extends Component {
 	attached() {
 		this.imageNaturalWidth = this.refs.image.naturalWidth;
 		this.imageNaturalHeight = this.refs.image.naturalHeight;
+		this.isPreviewFit = true;
 
 		this._updateDimensions();
 		this._updateDimensions = this._updateDimensions.bind(this);
@@ -95,6 +96,7 @@ class ImagePreviewer extends Component {
 		this.imageWidth = null;
 		this.imageMargin = null;
 		this.reCalculateZoomActual = true;
+		this.isPreviewFit = true;
 	}
 
 	/**
@@ -136,10 +138,15 @@ class ImagePreviewer extends Component {
 	 * @review
 	 */
 	_updateDimensions() {
-		this.imageContainerWidth = this.refs.imageContainer.clientWidth;
-		this.imageContainerHeight = this.refs.imageContainer.clientHeight;
+		this.imageMargin = `${
+			this.imageHeight > this.refs.imageContainer.clientHeight ? 0 : 'auto'
+		} ${
+			this.imageWidth > this.refs.imageContainer.clientWidth ? 0 : 'auto'
+		}`;
 
-		this._calculateZoomActual();
+		if (this.isPreviewFit) {
+			this._calculateZoomActual();
+		}
 	}
 
 	/**
@@ -181,14 +188,11 @@ class ImagePreviewer extends Component {
 	_setZoom(zoomNumber) {
 		this.imageHeight = this.imageNaturalHeight * zoomNumber;
 		this.imageWidth = this.imageNaturalWidth * zoomNumber;
-		this.imageMargin = `${
-			this.imageHeight > this.imageContainerHeight ? 0 : 'auto'
-		} ${
-			this.imageWidth > this.imageContainerWidth ? 0 : 'auto'
-		}`;
 		this.zoomRatio = zoomNumber / this.zoomActual;
 		this.zoomActual = zoomNumber;
+		this.isPreviewFit = false;
 
+		this._updateDimensions();
 		this._setToolbar();
 	}
 }

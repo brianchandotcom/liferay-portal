@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.portlet.async;
 import aQute.bnd.annotation.ProviderType;
 
 import javax.portlet.PortletAsyncListener;
+import javax.portlet.PortletException;
 
 /**
  * @author Shuyang Zhou
@@ -26,6 +27,7 @@ import javax.portlet.PortletAsyncListener;
 public interface PortletAsyncListenerFactory {
 
 	public <T extends PortletAsyncListener> T getPortletAsyncListener(
-		Class<T> clazz);
+			Class<T> clazz)
+		throws PortletException;
 
 }

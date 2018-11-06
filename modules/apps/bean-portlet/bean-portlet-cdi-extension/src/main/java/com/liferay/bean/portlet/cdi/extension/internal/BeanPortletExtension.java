@@ -80,6 +80,7 @@ import javax.enterprise.inject.spi.ProcessAnnotatedType;
 import javax.portlet.Portlet;
 import javax.portlet.PortletAsyncListener;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.annotations.ContextPath;
@@ -446,20 +447,31 @@ public class BeanPortletExtension implements Extension {
 
 					@Override
 					public <T extends PortletAsyncListener> T
-						getPortletAsyncListener(Class<T> clazz) {
+						getPortletAsyncListener(Class<T> clazz)
+						throws PortletException {
 
 						Set<Bean<?>> beans = beanManager.getBeans(clazz);
 
 						Bean<?> bean = beanManager.resolve(beans);
 
 						if (bean == null) {
-							return null;
+							throw new PortletException(
+								"Unable to create an instance of " +
+									clazz.getName());
 						}
 
-						return clazz.cast(
-							beanManager.getReference(
-								bean, bean.getBeanClass(),
-								beanManager.createCreationalContext(bean)));
+						try {
+							return clazz.cast(
+								beanManager.getReference(
+									bean, bean.getBeanClass(),
+									beanManager.createCreationalContext(bean)));
+						}
+						catch (Exception e) {
+							throw new PortletException(
+								"Unable to create an instance of " +
+									clazz.getName(),
+								e);
+						}
 					}
 
 				},

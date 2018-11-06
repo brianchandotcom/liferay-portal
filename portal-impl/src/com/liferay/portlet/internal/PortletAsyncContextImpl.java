@@ -93,24 +93,8 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 			}
 		}
 
-		try {
-			T portletAsyncListener =
-				_portletAsyncListenerFactory.getPortletAsyncListener(
-					listenerClass);
-
-			if (portletAsyncListener == null) {
-				throw new PortletException(
-					"Unable to create an instance of " +
-						listenerClass.getName());
-			}
-
-			return portletAsyncListener;
-		}
-		catch (Exception e) {
-			throw new PortletException(
-				"Unable to create an instance of " + listenerClass.getName(),
-				e);
-		}
+		return _portletAsyncListenerFactory.getPortletAsyncListener(
+			listenerClass);
 	}
 
 	@Override

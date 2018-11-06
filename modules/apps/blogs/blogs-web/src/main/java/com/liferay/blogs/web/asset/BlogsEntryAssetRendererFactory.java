@@ -21,7 +21,6 @@ import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
-import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -89,7 +88,7 @@ public class BlogsEntryAssetRendererFactory
 			long groupId, String urlTitle)
 		throws PortalException {
 
-		BlogsEntry entry = _blogsEntryService.getEntry(groupId, urlTitle);
+		BlogsEntry entry = _blogsEntryLocalService.getEntry(groupId, urlTitle);
 
 		BlogsEntryAssetRenderer blogsEntryAssetRenderer =
 			new BlogsEntryAssetRenderer(
@@ -182,18 +181,11 @@ public class BlogsEntryAssetRendererFactory
 		_blogsEntryLocalService = blogsEntryLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setBlogsEntryService(BlogsEntryService blogsEntryService) {
-		_blogsEntryService = blogsEntryService;
-	}
-
 	private BlogsEntryLocalService _blogsEntryLocalService;
 
 	@Reference(target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)")
 	private ModelResourcePermission<BlogsEntry>
 		_blogsEntryModelResourcePermission;
-
-	private BlogsEntryService _blogsEntryService;
 
 	@Reference
 	private Portal _portal;

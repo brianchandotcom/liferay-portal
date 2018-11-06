@@ -28,7 +28,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
-import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -136,8 +135,8 @@ public class JournalArticleAssetRendererFactory
 			long groupId, String urlTitle)
 		throws PortalException {
 
-		JournalArticle article = _journalArticleService.getArticleByUrlTitle(
-			groupId, urlTitle);
+		JournalArticle article =
+			_journalArticleLocalService.getArticleByUrlTitle(groupId, urlTitle);
 
 		return getJournalArticleAssetRenderer(article);
 	}
@@ -304,13 +303,6 @@ public class JournalArticleAssetRendererFactory
 	}
 
 	@Reference(unbind = "-")
-	protected void setJournalArticleService(
-		JournalArticleService journalArticleService) {
-
-		_journalArticleService = journalArticleService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setJournalContent(JournalContent journalContent) {
 		_journalContent = journalContent;
 	}
@@ -339,7 +331,6 @@ public class JournalArticleAssetRendererFactory
 
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
-	private JournalArticleService _journalArticleService;
 	private JournalContent _journalContent;
 	private JournalConverter _journalConverter;
 

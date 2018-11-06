@@ -83,6 +83,18 @@
 			<var name="addSampleData" value="${addSampleData}" />
 		</execute>
 
+		<if>
+			<isset var="portalName" />
+			<then>
+				<execute macro="SetupWizard#configurePortalNamePG">
+					<var name="portalName" value="${portalName}" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="SetupWizard#viewDefaultPortalNamePG" />
+			</else>
+		</if>
+
 		<execute macro="SetupWizard#configurePortalNamePG">
 			<var name="portalName" value="${portalName}" />
 		</execute>
@@ -147,12 +159,7 @@
 	</command>
 
 	<command name="configurePortalNamePG">
-		<if>
-			<isset var="portalName" />
-			<then>
-				<execute function="Type" locator1="TextInput#PORTAL_NAME" value1="${portalName}" />
-			</then>
-		</if>
+		<execute function="Type" locator1="TextInput#PORTAL_NAME" value1="${portalName}" />
 	</command>
 
 	<command name="configureSampleDataPG">

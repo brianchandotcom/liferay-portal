@@ -88,8 +88,8 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 			try {
 				return listenerClass.newInstance();
 			}
-			catch (Throwable e) {
-				throw new PortletException(e);
+			catch (ReflectiveOperationException roe) {
+				throw new PortletException(roe);
 			}
 		}
 

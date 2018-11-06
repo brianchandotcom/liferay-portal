@@ -50,6 +50,67 @@
 		</execute>
 	</set-up>
 
+	<command name="PublishFolderWithWorkflow" priority="5">
+		<description message="This test covers LPS-82539." />
+
+		<execute macro="DMFolder#addCP">
+			<var name="dmFolderDescription" value="DM Folder Description" />
+			<var name="dmFolderName" value="DM Folder 1" />
+		</execute>
+
+		<execute macro="DMFolder#configureWorkflowCP">
+			<var name="dmFolderName" value="DM Folder 1" />
+			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowRestriction" value="Default Workflow" />
+		</execute>
+
+		<execute macro="DMFolder#viewCP">
+			<var name="dmFolderName" value="DM Folder 1" />
+		</execute>
+
+		<execute macro="DMDocument#addWithWorkflowCP">
+			<var name="dmDocumentDescription" value="DM Document in Folder 1" />
+			<var name="dmDocumentFile" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="DM Document in Folder 1" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_DOCUMENT_WORKFLOW_STATUS" value1="Pending">
+			<var name="key_dmDocumentTitle" value="DM Document in Folder 1" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMFolder#publishFolderViaSAP">
+			<var name="dmFolderName" value="DM Folder 1" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoLiveSite" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE" value1="DM Folder 1">
+			<var name="key_dmFolderName" value="DM Folder 1" />
+		</execute>
+
+		<execute macro="DMFolder#viewCP">
+			<var name="dmFolderName" value="DM Folder 1" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no documents or media files in this folder." />
+	</command>
+
 	<command name="PublishSubfolderWithDocumentsViaSAP" priority="5">
 		<description message="This test covers LPS-82532. It ensures documents inside the subfolder that's being published to live are also published." />
 

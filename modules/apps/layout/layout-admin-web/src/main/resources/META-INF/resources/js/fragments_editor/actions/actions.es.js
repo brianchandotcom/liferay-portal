@@ -7,6 +7,14 @@
 const ADD_FRAGMENT_ENTRY_LINK = 'addFragmentEntryLink';
 
 /**
+ * Add section action type
+ * @review
+ * @type {string}
+ */
+
+const ADD_SECTION = 'addSection';
+
+/**
  * Change languageId action type
  * @review
  * @type {string}
@@ -144,6 +152,7 @@ const UPDATE_TRANSLATION_STATUS = 'updateTranslationStatus';
 
 export {
 	ADD_FRAGMENT_ENTRY_LINK,
+	ADD_SECTION,
 	CHANGE_LANGUAGE_ID,
 	CLEAR_DRAG_TARGET,
 	HIDE_SIDEBAR,

@@ -3,6 +3,7 @@ import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import {
+	ADD_SECTION,
 	CLEAR_DRAG_TARGET,
 	UPDATE_DRAG_TARGET
 } from '../../../actions/actions.es';
@@ -50,6 +51,31 @@ class SidebarLayoutsSection extends Component {
 		);
 	}
 
+	/** Handles dropLayout event and dispatches action to add a section
+	 * @param {!object} eventData
+	 * @param {!number} eventData.layoutIndex
+	 * @private
+	 * @review
+	 */
+	_handleDropLayout(eventData) {
+		const layoutColumns = this._layouts[eventData.layoutIndex].columns;
+
+		this.store.dispatchAction(
+			ADD_SECTION,
+			{
+				layoutColumns
+			}
+		).dispatchAction(
+			CLEAR_DRAG_TARGET
+		);
+
+		requestAnimationFrame(
+			() => {
+				this._initializeSidebarLayoutsDragDrop();
+			}
+		);
+	}
+
 	/**
 	 * Handles leaveLayoutTarget event and dispatches
 	 * action to clear drag target
@@ -77,6 +103,11 @@ class SidebarLayoutsSection extends Component {
 		this._sidebarLayoutsDragDrop.on(
 			'dragLayout',
 			this._handleDragLayout.bind(this)
+		);
+
+		this._sidebarLayoutsDragDrop.on(
+			'dropLayout',
+			this._handleDropLayout.bind(this)
 		);
 
 		this._sidebarLayoutsDragDrop.on(

@@ -1,46 +1,4 @@
 <definition>
-	<command name="gotoControlPanelConfiguration" summary="Navigate to Product Menu > Control Panel > Configuration > ${portlet}">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Control Panel" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Configuration" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#gotoPortlet">
-			<var name="portlet" value="${portlet}" />
-		</execute>
-	</command>
-
-	<command name="gotoControlPanelSites" summary="Navigate to Product Menu > Control Panel > Sites > ${portlet}">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Control Panel" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Sites" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#gotoPortlet">
-			<var name="portlet" value="${portlet}" />
-		</execute>
-	</command>
-
-	<command name="gotoControlPanelUsers" summary="Navigate to Product Menu > Control Panel > Users > ${portlet}">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Control Panel" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Users" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#gotoPortlet">
-			<var name="portlet" value="${portlet}" />
-		</execute>
-	</command>
-
 	<command name="gotoLiveSite" summary="Navigate to the Live site">
 		<execute macro="ProductMenuHelper#expandPanel">
 			<var name="panel" value="Site Administration" />
@@ -129,48 +87,6 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME" value1="${site}" />
 	</command>
 
-	<command name="gotoSitesConfiguration" summary="Navigate to Product Menu > Sites > Configuration > ${portlet}">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Site Administration" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Configuration" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#gotoPortlet">
-			<var name="portlet" value="${portlet}" />
-		</execute>
-	</command>
-
-	<command name="gotoSitesContent" summary="Navigate to Product Menu > Sites > Content > ${portlet}">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Site Administration" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Content" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#gotoPortlet">
-			<var name="portlet" value="${portlet}" />
-		</execute>
-	</command>
-
-	<command name="gotoSitesMembers" summary="Navigate to Product Menu > Sites > Members > ${portlet}">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="Site Administration" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Members" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#gotoPortlet">
-			<var name="portlet" value="${portlet}" />
-		</execute>
-	</command>
-
 	<command name="gotoSiteViaLink" summary="Navigate to ${site} via the 'Go to Site' link">
 		<execute macro="ProductMenuHelper#expandPanel">
 			<var name="panel" value="Site Administration" />
@@ -192,20 +108,6 @@
 		</if>
 
 		<execute function="AssertVisible" locator1="ProductMenu#STAGING_SELECTED" />
-	</command>
-
-	<command name="gotoUserMyAccount" summary="Navigate to Product Menu > User > My Account > ${portlet}">
-		<execute macro="ProductMenuHelper#expandPanel">
-			<var name="panel" value="User" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="My Account" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#gotoPortlet">
-			<var name="portlet" value="${portlet}" />
-		</execute>
 	</command>
 
 	<command name="viewNoSite" summary="View ${site} is not available in the product menu.">

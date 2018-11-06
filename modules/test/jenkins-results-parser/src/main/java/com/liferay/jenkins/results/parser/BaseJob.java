@@ -40,6 +40,11 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
+	public String getJobProperty(String key) {
+		return _jobProperties.getProperty(key);
+	}
+
+	@Override
 	public void readJobProperties() {
 		_jobProperties.clear();
 

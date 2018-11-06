@@ -30,6 +30,8 @@ public interface Job {
 
 	public Properties getJobProperties();
 
+	public String getJobProperty(String key);
+
 	public void readJobProperties();
 
 }

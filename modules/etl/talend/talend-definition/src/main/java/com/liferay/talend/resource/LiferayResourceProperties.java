@@ -240,6 +240,8 @@ public class LiferayResourceProperties
 
 		resourceProperty.setHost(
 			liferayConnectionProperties.endpoint.getValue());
+		liferayConnectionProperties.webSiteProperty.setHost(
+			liferayConnectionProperties.endpoint.getValue());
 
 		if (liferayConnectionProperties.siteFilter.getValue()) {
 			resourceProperty.setUriPrefix(

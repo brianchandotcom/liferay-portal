@@ -77,6 +77,7 @@ public class FileWatcher implements Closeable {
 
 		_consumer = consumer;
 		_scheduledExecutorService = scheduledExecutorService;
+		_notificationsExecutorService = notificationsExecutorService;
 
 		_paths = Arrays.asList(paths);
 
@@ -163,10 +164,13 @@ public class FileWatcher implements Closeable {
 		catch (IOException ioe) {
 		}
 
+		_notificationsExecutorService.shutdown();
+
 		_scheduledExecutorService.shutdownNow();
 	}
 
 	private final Consumer<WatchEvent<Path>> _consumer;
+	private final ExecutorService _notificationsExecutorService;
 	private final List<Path> _paths;
 	private final ScheduledExecutorService _scheduledExecutorService;
 	private final WatchService _watchService;

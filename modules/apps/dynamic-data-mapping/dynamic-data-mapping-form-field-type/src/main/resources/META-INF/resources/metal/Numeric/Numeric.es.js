@@ -12,6 +12,15 @@ class Numeric extends Component {
 	static STATE = {
 
 		/**
+		 * @default 'integer'
+		 * @instance
+		 * @memberof Numeric
+		 * @type {string}
+		 */
+
+		dataType: Config.string().value('integer'),
+
+		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof Numeric
@@ -46,15 +55,6 @@ class Numeric extends Component {
 		 */
 
 		name: Config.string().required(),
-
-		/**
-		 * @default 'integer'
-		 * @instance
-		 * @memberof Numeric
-		 * @type {string}
-		 */
-
-		dataType: Config.string().value('integer'),
 
 		/**
 		 * @default undefined

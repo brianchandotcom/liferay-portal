@@ -229,7 +229,7 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 			for (String bundledAppName : bundledAppNames) {
 				String regex = JenkinsResultsParserUtil.combine(
-					"(.* - ", Pattern.quote(appTitle), " -.*|",
+					"((.* - )?", Pattern.quote(appTitle), " -.*|",
 					Pattern.quote(appTitle), ")\\.lpkg");
 
 				if (!bundledAppName.matches(regex)) {

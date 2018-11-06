@@ -28,6 +28,8 @@
 	<command name="EscapeUrlRedirectWithGroovyScript" priority="5">
 		<description message="This is a use case for LPS-69372." />
 
+		<property name="test.name.skip.portal.instance" value="SecurityUsecase#EscapeUrlRedirectWithGroovyScript" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />

@@ -112,14 +112,6 @@
 	<servlet>
 		<servlet-name>Main Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.internal.servlet.MainServlet</servlet-class>
-		<init-param>
-			<param-name>debug</param-name>
-			<param-value>0</param-value>
-		</init-param>
-		<init-param>
-			<param-name>detail</param-name>
-			<param-value>0</param-value>
-		</init-param>
 		<load-on-startup>0</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>

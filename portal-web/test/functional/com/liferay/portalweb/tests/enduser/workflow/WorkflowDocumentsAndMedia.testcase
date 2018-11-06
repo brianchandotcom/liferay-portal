@@ -63,7 +63,9 @@
 			<var name="orgName" value="Space Program Academy of Continuing Education" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelSites">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Sites" />
 		</execute>
 
@@ -297,7 +299,9 @@
 		</execute>
 
 		<for list="1,2,3" param="entryCount">
-			<execute macro="ProductMenu#gotoSitesContent">
+			<execute macro="ProductMenu#gotoPortlet">
+				<var name="category" value="Content" />
+				<var name="panel" value="Site Administration" />
 				<var name="portlet" value="Documents and Media" />
 			</execute>
 

@@ -25,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -32,6 +33,12 @@ import org.junit.Test;
  * @author Xiangyue Cai
  */
 public class UnicodePropertiesTest {
+
+	@BeforeClass
+	public static void setUpClass() {
+		_safeNewLineCharacter = ReflectionTestUtil.getFieldValue(
+			UnicodeProperties.class, "_SAFE_NEWLINE_CHARACTER");
+	}
 
 	@Test
 	public void testFastLoad() throws Exception {
@@ -224,9 +231,9 @@ public class UnicodePropertiesTest {
 			unicodeProperties);
 
 		loadMethod.load(
-			_TEST_LINE_1 + _SAFE_NEWLINE_CHARACTER + StringPool.NEW_LINE +
-				_TEST_LINE_2 + _SAFE_NEWLINE_CHARACTER + StringPool.NEW_LINE +
-					_TEST_LINE_3 + _SAFE_NEWLINE_CHARACTER +
+			_TEST_LINE_1 + _safeNewLineCharacter + StringPool.NEW_LINE +
+				_TEST_LINE_2 + _safeNewLineCharacter + StringPool.NEW_LINE +
+					_TEST_LINE_3 + _safeNewLineCharacter +
 						StringPool.NEW_LINE,
 			unicodeProperties);
 
@@ -243,9 +250,9 @@ public class UnicodePropertiesTest {
 		else {
 			_assertUnicodeProperties(
 				new String[] {
-					_TEST_VALUE_1 + _SAFE_NEWLINE_CHARACTER,
-					_TEST_VALUE_2 + _SAFE_NEWLINE_CHARACTER,
-					_TEST_VALUE_3 + _SAFE_NEWLINE_CHARACTER
+					_TEST_VALUE_1 + _safeNewLineCharacter,
+					_TEST_VALUE_2 + _safeNewLineCharacter,
+					_TEST_VALUE_3 + _safeNewLineCharacter
 				},
 				new String[] {_TEST_KEY_1, _TEST_KEY_2, _TEST_KEY_3},
 				unicodeProperties);
@@ -294,7 +301,7 @@ public class UnicodePropertiesTest {
 			new String[] {_TEST_VALUE_1}, new String[] {_TEST_KEY_1},
 			unicodeProperties);
 
-		unicodeProperties.put(_TEST_LINE_1 + _SAFE_NEWLINE_CHARACTER);
+		unicodeProperties.put(_TEST_LINE_1 + _safeNewLineCharacter);
 
 		if (safe) {
 			_assertUnicodeProperties(
@@ -303,7 +310,7 @@ public class UnicodePropertiesTest {
 		}
 		else {
 			_assertUnicodeProperties(
-				new String[] {_TEST_VALUE_1 + _SAFE_NEWLINE_CHARACTER},
+				new String[] {_TEST_VALUE_1 + _safeNewLineCharacter},
 				new String[] {_TEST_KEY_1}, unicodeProperties);
 		}
 	}
@@ -339,7 +346,7 @@ public class UnicodePropertiesTest {
 		if (safe) {
 			_assertToString(
 				_TEST_LINE_2 + StringPool.NEW_LINE + _TEST_LINE_3 +
-					_SAFE_NEWLINE_CHARACTER + StringPool.NEW_LINE,
+					_safeNewLineCharacter + StringPool.NEW_LINE,
 				unicodeProperties.toString(),
 				unicodeProperties.toSortedString());
 		}
@@ -351,10 +358,6 @@ public class UnicodePropertiesTest {
 				unicodeProperties.toSortedString());
 		}
 	}
-
-	private static final String _SAFE_NEWLINE_CHARACTER =
-		ReflectionTestUtil.getFieldValue(
-			UnicodeProperties.class, "_SAFE_NEWLINE_CHARACTER");
 
 	private static final String _TEST_KEY_1 = "testKey1";
 
@@ -375,6 +378,8 @@ public class UnicodePropertiesTest {
 	private static final String _TEST_VALUE_2 = "testValue2";
 
 	private static final String _TEST_VALUE_3 = "testValue3";
+
+	private static String _safeNewLineCharacter;
 
 	static {
 		_TEST_LINE_1 = _TEST_KEY_1 + StringPool.EQUAL + _TEST_VALUE_1;

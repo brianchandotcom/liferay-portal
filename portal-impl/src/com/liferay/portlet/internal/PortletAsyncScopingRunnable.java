@@ -40,7 +40,7 @@ public class PortletAsyncScopingRunnable implements Runnable {
 
 	@Override
 	public void run() {
-		_portletAsyncScopeManager.setAsyncProcessingStarted();
+		_portletAsyncScopeManager.activateScopeContexts();
 
 		try {
 			_runnable.run();

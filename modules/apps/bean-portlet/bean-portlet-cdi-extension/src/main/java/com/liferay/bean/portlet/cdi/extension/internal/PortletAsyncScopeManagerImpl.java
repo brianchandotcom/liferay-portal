@@ -40,6 +40,11 @@ public class PortletAsyncScopeManagerImpl implements PortletAsyncScopeManager {
 	}
 
 	@Override
+	public void activateScopeContexts() {
+		ScopedBeanManagerThreadLocal.setCurrentStack(_scopedBeanManagerStack);
+	}
+
+	@Override
 	public void activateScopeContexts(
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
 		PortletConfig portletConfig) {
@@ -67,11 +72,6 @@ public class PortletAsyncScopeManagerImpl implements PortletAsyncScopeManager {
 		catch (IOException ioe) {
 			_log.error(ioe, ioe);
 		}
-	}
-
-	@Override
-	public void setAsyncProcessingStarted() {
-		ScopedBeanManagerThreadLocal.setCurrentStack(_scopedBeanManagerStack);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

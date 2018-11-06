@@ -63,7 +63,7 @@ public class PortletAsyncScopingListener extends PortletAsyncListenerAdapter {
 			boolean deactivateScopeContexts)
 		throws IOException {
 
-		_portletAsyncScopeManager.setAsyncProcessingStarted();
+		_portletAsyncScopeManager.activateScopeContexts();
 
 		try {
 			unsafeRunnable.run();

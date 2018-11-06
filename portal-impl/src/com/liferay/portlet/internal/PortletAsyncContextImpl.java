@@ -306,6 +306,10 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 			() -> new PortletAsyncScopeManager() {
 
 				@Override
+				public void activateScopeContexts() {
+				}
+
+				@Override
 				public void activateScopeContexts(
 					ResourceRequest resourceRequest,
 					ResourceResponse resourceResponse,
@@ -314,10 +318,6 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 
 				@Override
 				public void deactivateScopeContexts() {
-				}
-
-				@Override
-				public void setAsyncProcessingStarted() {
 				}
 
 			};

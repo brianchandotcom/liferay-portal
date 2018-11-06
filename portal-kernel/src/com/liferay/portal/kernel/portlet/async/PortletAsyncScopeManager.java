@@ -26,12 +26,12 @@ import javax.portlet.ResourceResponse;
 @ProviderType
 public interface PortletAsyncScopeManager {
 
+	public void activateScopeContexts();
+
 	public void activateScopeContexts(
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
 		PortletConfig portletConfig);
 
 	public void deactivateScopeContexts();
-
-	public void setAsyncProcessingStarted();
 
 }

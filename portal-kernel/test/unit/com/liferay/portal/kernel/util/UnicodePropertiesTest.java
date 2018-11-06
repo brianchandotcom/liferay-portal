@@ -138,10 +138,9 @@ public class UnicodePropertiesTest {
 
 		Assert.assertEquals(
 			_TEST_VALUE_1, unicodeProperties.remove(_TEST_KEY_1));
-
-		Assert.assertEquals(0, unicodeProperties.size());
-
-		Assert.assertNull(unicodeProperties.get(_TEST_KEY_1));
+		Assert.assertTrue(
+			"unicodeProperties should be empty after removing testKey1",
+			unicodeProperties.isEmpty());
 	}
 
 	@Test

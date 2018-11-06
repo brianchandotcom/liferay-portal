@@ -1572,7 +1572,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsEntryAsPublishedAferFutureDisplayDateEditing" priority="4">
+	<command name="ViewBlogsEntryAsPublishedAfterFutureDisplayDateEditing" priority="4">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>

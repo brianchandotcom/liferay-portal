@@ -49,7 +49,7 @@ long orgLaborId = ParamUtil.getLong(request, "orgLaborId");
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="listType" value="<%= ListTypeConstants.ORGANIZATION_SERVICE %>" />
-		<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
+		<portlet:param name="classPK" value="<%= String.valueOf(organizationId) %>" />
 		<portlet:param name="primaryKey" value="<%= String.valueOf(orgLaborId) %>" />
 	</portlet:actionURL>
 

@@ -16,6 +16,10 @@ package com.liferay.jenkins.results.parser;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.commons.lang.StringUtils;
 
 import org.dom4j.Element;
 
@@ -101,6 +105,12 @@ public class GitBisectToolTopLevelBuildRunner
 
 	@Override
 	protected void validateBuildParameters() {
+		_validateBuildParameterJenkinsGitHubURL();
+		_validateBuildParameterPortalBatchName();
+		_validateBuildParameterPortalBatchTestSelector();
+		_validateBuildParameterPortalBranchSHAs();
+		_validateBuildParameterPortalGitHubURL();
+		_validateBuildParameterPortalUpstreamBranchName();
 	}
 
 	private String _getBatchName() {
@@ -139,23 +149,191 @@ public class GitBisectToolTopLevelBuildRunner
 	}
 
 	private List<String> _getPortalBranchSHAs() {
-		PortalTopLevelBuildData portalTopLevelBuildData = getBuildData();
-
-		String portalGitCommits = JenkinsResultsParserUtil.getBuildParameter(
-			portalTopLevelBuildData.getBuildURL(), "PORTAL_BRANCH_SHAS");
+		String portalGitCommits = getBuildParameter(_PORTAL_BRANCH_SHAS);
 
 		return Arrays.asList(portalGitCommits.split(","));
 	}
 
 	private List<String> _getTestList() {
-		PortalTopLevelBuildData portalTopLevelBuildData = getBuildData();
-
-		String portalBatchTestSelector =
-			JenkinsResultsParserUtil.getBuildParameter(
-				portalTopLevelBuildData.getBuildURL(),
-				"PORTAL_BATCH_TEST_SELECTOR");
+		String portalBatchTestSelector = getBuildParameter(
+			_PORTAL_BATCH_TEST_SELECTOR);
 
 		return Arrays.asList(portalBatchTestSelector.split(","));
 	}
+
+	private void _validateBuildParameterJenkinsGitHubURL() {
+		String jenkinsGitHubURL = getBuildParameter(_JENKINS_GITHUB_URL);
+
+		if ((jenkinsGitHubURL == null) || jenkinsGitHubURL.isEmpty()) {
+			return;
+		}
+
+		String failureMessage = JenkinsResultsParserUtil.combine(
+			_JENKINS_GITHUB_URL,
+			" has an invalid Jenkins GitHub URL <a href=\"", jenkinsGitHubURL,
+			"\">", jenkinsGitHubURL, "</a>");
+
+		Matcher matcher = _pattern.matcher(jenkinsGitHubURL);
+
+		if (!matcher.find()) {
+			reportFailureMessageToBuildDescription(failureMessage);
+		}
+
+		String repositoryName = matcher.group("repositoryName");
+
+		if (!repositoryName.equals("liferay-jenkins-ee")) {
+			reportFailureMessageToBuildDescription(failureMessage);
+		}
+	}
+
+	private void _validateBuildParameterPortalBatchName() {
+		String portalBatchName = getBuildParameter(_PORTAL_BATCH_NAME);
+
+		if ((portalBatchName == null) || portalBatchName.isEmpty()) {
+			reportFailureMessageToBuildDescription(
+				_PORTAL_BATCH_NAME + " is null");
+		}
+
+		String allowedPortalBatchNames = getJobProperty(
+			JenkinsResultsParserUtil.combine(
+				"allowed.portal.batch.names[",
+				getBuildParameter(_PORTAL_UPSTREAM_BRANCH_NAME), "]"));
+
+		if ((allowedPortalBatchNames == null) ||
+			allowedPortalBatchNames.isEmpty()) {
+
+			return;
+		}
+
+		List<String> allowedPortalBatchNamesList = Arrays.asList(
+			allowedPortalBatchNames.split(","));
+
+		if (!allowedPortalBatchNamesList.contains(portalBatchName)) {
+			reportFailureMessageToBuildDescription(
+				JenkinsResultsParserUtil.combine(
+					_PORTAL_BATCH_NAME, " must match one of the following: ",
+					allowedPortalBatchNames));
+		}
+	}
+
+	private void _validateBuildParameterPortalBatchTestSelector() {
+		String portalBatchTestSelector = getBuildParameter(
+			_PORTAL_BATCH_TEST_SELECTOR);
+
+		if ((portalBatchTestSelector == null) ||
+			portalBatchTestSelector.isEmpty()) {
+
+			reportFailureMessageToBuildDescription(
+				_PORTAL_BATCH_TEST_SELECTOR + " is null");
+		}
+	}
+
+	private void _validateBuildParameterPortalBranchSHAs() {
+		String portalBranchSHAs = getBuildParameter(_PORTAL_BRANCH_SHAS);
+
+		if ((portalBranchSHAs == null) || portalBranchSHAs.isEmpty()) {
+			reportFailureMessageToBuildDescription(
+				_PORTAL_BRANCH_SHAS + " is null");
+		}
+
+		String allowedPortalBranchSHAs = getJobProperty(
+			"allowed.portal.branch.shas");
+
+		if ((allowedPortalBranchSHAs == null) ||
+			allowedPortalBranchSHAs.isEmpty()) {
+
+			return;
+		}
+
+		Integer portalBranchSHACount = StringUtils.countMatches(
+			portalBranchSHAs, ",") + 1;
+
+		if (portalBranchSHACount >
+				Integer.valueOf(allowedPortalBranchSHAs)) {
+
+			reportFailureMessageToBuildDescription(
+				JenkinsResultsParserUtil.combine(
+					_PORTAL_BRANCH_SHAS, " can only reference ",
+					allowedPortalBranchSHAs, " portal branch SHAs"));
+		}
+	}
+
+	private void _validateBuildParameterPortalGitHubURL() {
+		String portalGitHubURL = getBuildParameter(_PORTAL_GITHUB_URL);
+
+		if ((portalGitHubURL == null) || portalGitHubURL.isEmpty()) {
+			reportFailureMessageToBuildDescription(
+				_PORTAL_GITHUB_URL + " is null");
+		}
+
+		String failureMessage = JenkinsResultsParserUtil.combine(
+			_PORTAL_GITHUB_URL, " has an invalid Portal GitHub URL <a href=\"",
+			portalGitHubURL, "\">", portalGitHubURL, "</a>");
+
+		Matcher matcher = _pattern.matcher(portalGitHubURL);
+
+		if (!matcher.find()) {
+			reportFailureMessageToBuildDescription(failureMessage);
+		}
+
+		String repositoryName = matcher.group("repositoryName");
+
+		if (!repositoryName.equals("liferay-portal") &&
+			!repositoryName.equals("liferay-portal-ee")) {
+
+			reportFailureMessageToBuildDescription(failureMessage);
+		}
+	}
+
+	private void _validateBuildParameterPortalUpstreamBranchName() {
+		String portalUpstreamBranchName = getBuildParameter(
+			_PORTAL_UPSTREAM_BRANCH_NAME);
+
+		if ((portalUpstreamBranchName == null) ||
+			portalUpstreamBranchName.isEmpty()) {
+
+			reportFailureMessageToBuildDescription(
+				_PORTAL_UPSTREAM_BRANCH_NAME + " is null");
+		}
+
+		String allowedPortalUpstreamBranchNames = getJobProperty(
+			"allowed.portal.upstream.branch.names");
+
+		if ((allowedPortalUpstreamBranchNames == null) ||
+			allowedPortalUpstreamBranchNames.isEmpty()) {
+
+			return;
+		}
+
+		List<String> allowedPortalUpstreamBranchNamesList = Arrays.asList(
+			allowedPortalUpstreamBranchNames.split(","));
+
+		if (!allowedPortalUpstreamBranchNamesList.contains(
+				portalUpstreamBranchName)) {
+
+			reportFailureMessageToBuildDescription(
+				JenkinsResultsParserUtil.combine(
+					_PORTAL_UPSTREAM_BRANCH_NAME,
+					" must match one of the following: ",
+					allowedPortalUpstreamBranchNames));
+		}
+	}
+
+	private static final String _JENKINS_GITHUB_URL = "JENKINS_GITHUB_URL";
+
+	private static final String _PORTAL_BATCH_NAME = "PORTAL_BATCH_NAME";
+
+	private static final String _PORTAL_BATCH_TEST_SELECTOR =
+		"PORTAL_BATCH_TEST_SELECTOR";
+
+	private static final String _PORTAL_BRANCH_SHAS = "PORTAL_BRANCH_SHAS";
+
+	private static final String _PORTAL_GITHUB_URL = "PORTAL_GITHUB_URL";
+
+	private static final String _PORTAL_UPSTREAM_BRANCH_NAME =
+		"PORTAL_UPSTREAM_BRANCH_NAME";
+
+	private static final Pattern _pattern = Pattern.compile(
+		"https://github.com/[^/]+/(?<repositoryName>[^/]+)/tree/.+");
 
 }

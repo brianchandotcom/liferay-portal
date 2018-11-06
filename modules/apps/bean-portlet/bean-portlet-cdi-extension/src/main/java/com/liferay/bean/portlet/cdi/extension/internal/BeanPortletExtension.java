@@ -440,12 +440,11 @@ public class BeanPortletExtension implements Extension {
 		_serviceRegistrations.add(
 			bundleContext.registerService(
 				PortletAsyncScopeManagerFactory.class,
-				(resourceRequest, resourceResponse, portletConfig) -> {
+				() -> {
 					Deque<ScopedBeanManager> scopedBeanManagerStack =
 						ScopedBeanManagerThreadLocal.getCurrentStack();
 
 					return new PortletAsyncScopeManagerImpl(
-						resourceRequest, resourceResponse, portletConfig,
 						scopedBeanManagerStack);
 				},
 				properties));

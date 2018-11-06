@@ -16,13 +16,19 @@ package com.liferay.portal.kernel.portlet.async;
 
 import aQute.bnd.annotation.ProviderType;
 
+import javax.portlet.PortletConfig;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+
 /**
  * @author Neil Griffin
  */
 @ProviderType
 public interface PortletAsyncScopeManager {
 
-	public void activateScopeContexts();
+	public void activateScopeContexts(
+		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+		PortletConfig portletConfig);
 
 	public void deactivateScopeContexts();
 

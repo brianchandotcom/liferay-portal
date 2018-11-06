@@ -35,18 +35,16 @@ import javax.portlet.ResourceResponse;
 public class PortletAsyncScopeManagerImpl implements PortletAsyncScopeManager {
 
 	public PortletAsyncScopeManagerImpl(
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
-		PortletConfig portletConfig,
 		Deque<ScopedBeanManager> scopedBeanManagerStack) {
 
-		_resourceRequest = resourceRequest;
-		_resourceResponse = resourceResponse;
-		_portletConfig = portletConfig;
 		_scopedBeanManagerStack = scopedBeanManagerStack;
 	}
 
 	@Override
-	public void activateScopeContexts() {
+	public void activateScopeContexts(
+		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+		PortletConfig portletConfig) {
+
 		if (_closeable != null) {
 			throw new IllegalStateException(
 				"Allready called activateScopeContexts()");
@@ -54,7 +52,7 @@ public class PortletAsyncScopeManagerImpl implements PortletAsyncScopeManager {
 
 		_closeable = ScopedBeanManagerThreadLocal.install(
 			new ScopedBeanManager(
-				_resourceRequest, _resourceResponse, _portletConfig));
+				resourceRequest, resourceResponse, portletConfig));
 	}
 
 	@Override
@@ -81,9 +79,6 @@ public class PortletAsyncScopeManagerImpl implements PortletAsyncScopeManager {
 		PortletAsyncScopeManagerImpl.class);
 
 	private Closeable _closeable;
-	private final PortletConfig _portletConfig;
-	private final ResourceRequest _resourceRequest;
-	private final ResourceResponse _resourceResponse;
 	private final Deque<ScopedBeanManager> _scopedBeanManagerStack;
 
 }

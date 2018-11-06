@@ -254,8 +254,7 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 		}
 
 		_portletAsyncScopeManager =
-			portletAsyncScopeManagerFactory.getPortletAsyncScopeManager(
-				resourceRequest, resourceResponse, portletConfig);
+			portletAsyncScopeManagerFactory.getPortletAsyncScopeManager();
 
 		// Activate scope contexts in the main thread so that
 		// @PortletRequestScoped beans will not get destroyed when
@@ -266,7 +265,8 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 		// PortletContainerImpl.serveResource(request,response,portlet)
 		// during the subsequent dispatch request.
 
-		_portletAsyncScopeManager.activateScopeContexts();
+		_portletAsyncScopeManager.activateScopeContexts(
+			resourceRequest, resourceResponse, portletConfig);
 
 		_portletAsyncListenerFactory =
 			_portletAsyncListenerFactories.getService(_servletContextName);
@@ -303,22 +303,24 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 
 	private static final PortletAsyncScopeManagerFactory
 		_dummyPortletAsyncScopeManagerFactory =
-			(resourceRequest, resourceResponse, portletConfig) ->
-				new PortletAsyncScopeManager() {
+			() -> new PortletAsyncScopeManager() {
 
-					@Override
-					public void activateScopeContexts() {
-					}
+				@Override
+				public void activateScopeContexts(
+					ResourceRequest resourceRequest,
+					ResourceResponse resourceResponse,
+					PortletConfig portletConfig) {
+				}
 
-					@Override
-					public void deactivateScopeContexts() {
-					}
+				@Override
+				public void deactivateScopeContexts() {
+				}
 
-					@Override
-					public void setAsyncProcessingStarted() {
-					}
+				@Override
+				public void setAsyncProcessingStarted() {
+				}
 
-				};
+			};
 
 	private static final ServiceTrackerMap<String, PortletAsyncListenerFactory>
 		_portletAsyncListenerFactories =

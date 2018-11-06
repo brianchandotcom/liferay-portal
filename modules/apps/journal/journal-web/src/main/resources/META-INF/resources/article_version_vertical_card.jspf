@@ -15,8 +15,8 @@
 --%>
 
 <liferay-frontend:vertical-card-sticker-bottom>
-	<liferay-ui:user-portrait
-		cssClass="sticker sticker-bottom"
+	<liferay-frontend:user-portrait
+		position="bottom"
 		userId="<%= articleVersion.getUserId() %>"
 	/>
 </liferay-frontend:vertical-card-sticker-bottom>

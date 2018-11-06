@@ -38,7 +38,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 		<c:choose>
 			<c:when test='<%= displayStyle.equals("descriptive") %>'>
 				<liferay-ui:search-container-column-text>
-					<liferay-ui:user-portrait
+					<liferay-frontend:user-portrait
 						userId="<%= articleVersion.getUserId() %>"
 					/>
 				</liferay-ui:search-container-column-text>

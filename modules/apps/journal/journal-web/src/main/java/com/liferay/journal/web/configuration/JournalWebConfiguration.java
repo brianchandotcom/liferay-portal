@@ -76,7 +76,7 @@ public interface JournalWebConfiguration {
 	public boolean journalArticlesSearchWithIndex();
 
 	@Meta.AD(
-		deflt = "false",
+		deflt = "true",
 		description = "journal-browse-by-structures-sorted-by-name-help",
 		name = "journal-browse-by-structures-sorted-by-name", required = false
 	)

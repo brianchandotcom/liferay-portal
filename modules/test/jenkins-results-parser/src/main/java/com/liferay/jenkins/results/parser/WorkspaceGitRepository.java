@@ -22,6 +22,8 @@ import java.util.Properties;
  */
 public interface WorkspaceGitRepository extends LocalGitRepository {
 
+	public static final Integer MAX_COMMIT_HISTORY = 5000;
+
 	public String getFileContent(String filePath);
 
 	public String getGitHubDevBranchName();

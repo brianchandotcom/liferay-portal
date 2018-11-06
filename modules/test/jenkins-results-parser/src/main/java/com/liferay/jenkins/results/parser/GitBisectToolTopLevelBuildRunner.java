@@ -101,7 +101,21 @@ public class GitBisectToolTopLevelBuildRunner
 		WorkspaceGitRepository workspaceGitRepository =
 			portalWorkspace.getPrimaryPortalWorkspaceGitRepository();
 
-		workspaceGitRepository.storeCommitHistory(_getPortalBranchSHAs());
+		try {
+			workspaceGitRepository.storeCommitHistory(_getPortalBranchSHAs());
+		}
+		catch (Exception e) {
+			String portalGitHubURL = getBuildParameter(_PORTAL_GITHUB_URL);
+
+			reportFailureMessageToBuildDescription(
+				JenkinsResultsParserUtil.combine(
+					_PORTAL_BRANCH_SHAS,
+					" has SHAs that are not be found within the latest ",
+					String.valueOf(WorkspaceGitRepository.MAX_COMMIT_HISTORY),
+					" commits of <a href=\"", portalGitHubURL, "\">",
+					portalGitHubURL, "</a>"),
+				e);
+		}
 	}
 
 	@Override

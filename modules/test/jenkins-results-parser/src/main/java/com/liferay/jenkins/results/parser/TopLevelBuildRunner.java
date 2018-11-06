@@ -154,13 +154,23 @@ public abstract class TopLevelBuildRunner
 	}
 
 	protected void reportFailureMessageToBuildDescription(String message) {
+		reportFailureMessageToBuildDescription(message, null);
+	}
+
+	protected void reportFailureMessageToBuildDescription(
+		String message, Exception exception) {
+
 		TopLevelBuildData topLevelBuildData = getBuildData();
 
 		topLevelBuildData.setBuildDescription("<b>ERROR:</b> " + message);
 
 		updateBuildDescription();
 
-		throw new RuntimeException(message);
+		if (exception == null) {
+			throw new RuntimeException(message);
+		}
+
+		throw new RuntimeException(message, exception);
 	}
 
 	protected void updateJenkinsReport() {

@@ -76,8 +76,8 @@ public class FileWatcher implements Closeable {
 		throws IOException {
 
 		_consumer = consumer;
-		_notificationsExecutorService = notificationsExecutorService;
 		_scheduledExecutorService = scheduledExecutorService;
+		_notificationsExecutorService = notificationsExecutorService;
 
 		_paths = Arrays.asList(paths);
 

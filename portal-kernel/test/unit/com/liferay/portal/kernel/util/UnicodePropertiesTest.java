@@ -132,9 +132,9 @@ public class UnicodePropertiesTest {
 		unicodeProperties.put(_TEST_KEY_1, _TEST_VALUE_1);
 
 		Assert.assertNull(unicodeProperties.remove(null));
-
-		Assert.assertEquals(1, unicodeProperties.size());
-		Assert.assertEquals(_TEST_VALUE_1, unicodeProperties.get(_TEST_KEY_1));
+		_assertUnicodeProperties(
+			new String[] {_TEST_VALUE_1}, new String[] {_TEST_KEY_1},
+			unicodeProperties);
 
 		Assert.assertEquals(
 			_TEST_VALUE_1, unicodeProperties.remove(_TEST_KEY_1));
@@ -159,7 +159,9 @@ public class UnicodePropertiesTest {
 
 		Assert.assertNull(
 			unicodeProperties.setProperty(_TEST_KEY_1, _TEST_VALUE_1));
-		Assert.assertEquals(_TEST_VALUE_1, unicodeProperties.get(_TEST_KEY_1));
+		_assertUnicodeProperties(
+			new String[] {_TEST_VALUE_1}, new String[] {_TEST_KEY_1},
+			unicodeProperties);
 
 		Assert.assertEquals(
 			_TEST_VALUE_1, unicodeProperties.setProperty(_TEST_KEY_1, null));
@@ -296,21 +298,23 @@ public class UnicodePropertiesTest {
 
 		unicodeProperties.put(_TEST_LINE_1);
 
-		Assert.assertEquals(_TEST_VALUE_1, unicodeProperties.get(_TEST_KEY_1));
+		_assertUnicodeProperties(
+			new String[] {_TEST_VALUE_1}, new String[] {_TEST_KEY_1},
+			unicodeProperties);
 
 		// safe is true
 
 		unicodeProperties.put(_TEST_LINE_1 + _SAFE_NEWLINE_CHARACTER);
 
 		if (safe) {
-			Assert.assertEquals(
-				_TEST_VALUE_1 + StringPool.NEW_LINE,
-				unicodeProperties.get(_TEST_KEY_1));
+			_assertUnicodeProperties(
+				new String[] {_TEST_VALUE_1 + StringPool.NEW_LINE},
+				new String[] {_TEST_KEY_1}, unicodeProperties);
 		}
 		else {
-			Assert.assertEquals(
-				_TEST_VALUE_1 + _SAFE_NEWLINE_CHARACTER,
-				unicodeProperties.get(_TEST_KEY_1));
+			_assertUnicodeProperties(
+				new String[] {_TEST_VALUE_1 + _SAFE_NEWLINE_CHARACTER},
+				new String[] {_TEST_KEY_1}, unicodeProperties);
 		}
 	}
 

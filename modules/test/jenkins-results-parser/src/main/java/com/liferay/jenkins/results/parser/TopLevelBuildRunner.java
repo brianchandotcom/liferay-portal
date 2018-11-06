@@ -83,8 +83,20 @@ public abstract class TopLevelBuildRunner
 		_downstreamBuildDataList.add(buildData);
 	}
 
+	protected String getBuildParameter(String key) {
+		TopLevelBuildData topLevelBuildData = getBuildData();
+
+		return topLevelBuildData.getBuildParameter(key);
+	}
+
 	protected Element getJenkinsReportElement() {
 		return _topLevelBuild.getJenkinsReportElement();
+	}
+
+	protected String getJobProperty(String key) {
+		Job job = getJob();
+
+		return job.getJobProperty(key);
 	}
 
 	protected TopLevelBuild getTopLevelBuild() {

@@ -84,7 +84,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
 						<liferay-ui:search-container-column-text>
-							<liferay-ui:user-portrait
+							<liferay-frontend:user-portrait
 								userId="<%= curArticle.getUserId() %>"
 							/>
 						</liferay-ui:search-container-column-text>

@@ -8,7 +8,8 @@ import {DRAG_POSITIONS} from './placeholders.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLink.es';
 import {
 	getFragmentRowIndex,
-	setIn
+	setIn,
+	updateLayoutData
 } from '../utils/utils.es';
 
 /**
@@ -54,7 +55,7 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 								position
 							);
 
-							return _updateData(
+							return updateLayoutData(
 								state.updateLayoutPageTemplateDataURL,
 								state.portletNamespace,
 								state.classNameId,
@@ -506,45 +507,6 @@ function _removeFragmentEntryLink(
 
 	return fetch(
 		deleteFragmentEntryLinkURL,
-		{
-			body: formData,
-			credentials: 'include',
-			method: 'POST'
-		}
-	);
-}
-
-/**
- * Update layoutData
- * @param {!string} updateLayoutPageTemplateDataURL
- * @param {!string} portletNamespace
- * @param {!string} classNameId
- * @param {!string} classPK
- * @param {!object} data
- * @private
- * @return {Promise}
- * @review
- */
-
-function _updateData(
-	updateLayoutPageTemplateDataURL,
-	portletNamespace,
-	classNameId,
-	classPK,
-	data
-) {
-	const formData = new FormData();
-
-	formData.append(`${portletNamespace}classNameId`, classNameId);
-	formData.append(`${portletNamespace}classPK`, classPK);
-
-	formData.append(
-		`${portletNamespace}data`,
-		JSON.stringify(data)
-	);
-
-	return fetch(
-		updateLayoutPageTemplateDataURL,
 		{
 			body: formData,
 			credentials: 'include',

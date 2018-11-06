@@ -56,7 +56,45 @@ function setIn(object, keyPath, value) {
 	return target;
 }
 
+/**
+ * Update layoutData on backend
+ * @param {!string} updateLayoutPageTemplateDataURL
+ * @param {!string} portletNamespace
+ * @param {!string} classNameId
+ * @param {!string} classPK
+ * @param {!object} data
+ * @return {Promise}
+ * @review
+ */
+function updateLayoutData(
+	updateLayoutPageTemplateDataURL,
+	portletNamespace,
+	classNameId,
+	classPK,
+	data
+) {
+	const formData = new FormData();
+
+	formData.append(`${portletNamespace}classNameId`, classNameId);
+	formData.append(`${portletNamespace}classPK`, classPK);
+
+	formData.append(
+		`${portletNamespace}data`,
+		JSON.stringify(data)
+	);
+
+	return fetch(
+		updateLayoutPageTemplateDataURL,
+		{
+			body: formData,
+			credentials: 'include',
+			method: 'POST'
+		}
+	);
+}
+
 export {
 	getFragmentRowIndex,
-	setIn
+	setIn,
+	updateLayoutData
 };

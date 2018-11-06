@@ -198,32 +198,32 @@ public class UnicodePropertiesTest {
 	}
 
 	private void _testLoad(
-			UnsafeBiConsumer<String, UnicodeProperties, Exception> load,
+			LoadMethod<String, UnicodeProperties, Exception> loadMethod,
 			boolean safe)
 		throws Exception {
 
 		UnicodeProperties unicodeProperties = new UnicodeProperties(safe);
 
-		load.accept(null, unicodeProperties);
+		loadMethod.load(null, unicodeProperties);
 
 		Assert.assertTrue(
 			"nothing will be put in if props is null",
 			unicodeProperties.isEmpty());
 
-		load.accept(_TEST_LINE_1, unicodeProperties);
+		loadMethod.load(_TEST_LINE_1, unicodeProperties);
 
 		_assertUnicodeProperties(
 			new String[] {_TEST_VALUE_1}, new String[] {_TEST_KEY_1},
 			unicodeProperties);
 
-		load.accept(_TEST_PROPS, unicodeProperties);
+		loadMethod.load(_TEST_PROPS, unicodeProperties);
 
 		_assertUnicodeProperties(
 			new String[] {_TEST_VALUE_1, _TEST_VALUE_2, _TEST_VALUE_3},
 			new String[] {_TEST_KEY_1, _TEST_KEY_2, _TEST_KEY_3},
 			unicodeProperties);
 
-		load.accept(
+		loadMethod.load(
 			_TEST_LINE_1 + _SAFE_NEWLINE_CHARACTER + StringPool.NEW_LINE +
 				_TEST_LINE_2 + _SAFE_NEWLINE_CHARACTER + StringPool.NEW_LINE +
 					_TEST_LINE_3 + _SAFE_NEWLINE_CHARACTER +
@@ -393,9 +393,9 @@ public class UnicodePropertiesTest {
 				StringPool.NEW_LINE + _TEST_LINE_3;
 	}
 
-	private interface UnsafeBiConsumer<E, U, T extends Throwable> {
+	private interface LoadMethod<E, U, T extends Throwable> {
 
-		public void accept(E e, U u) throws T;
+		public void load(E e, U u) throws T;
 
 	}
 

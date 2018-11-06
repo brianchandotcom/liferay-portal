@@ -9,6 +9,10 @@
 		<execute macro="TestCase#setUpPortalInstance" />
 
 		<execute macro="User#firstLoginPG" />
+
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Test Site Name" />
+		</execute>
 	</set-up>
 
 	<tear-down>
@@ -20,19 +24,13 @@
 				<execute macro="PortalInstances#tearDownCP" />
 			</then>
 			<else>
-				<execute macro="User#firstLoginPG" />
-
-				<execute macro="WebContent#tearDownCP" />
-
-				<execute macro="WebContentTemplates#tearDownCP" />
-
-				<execute macro="WebContentStructures#tearDownCP" />
+				<execute macro="JSONGroup#deleteGroupByName">
+					<var name="groupName" value="Test Site Name" />
+				</execute>
 
 				<execute macro="WebContentStructures#tearDownCP">
 					<var name="siteScopeName" value="${globalSiteName}" />
 				</execute>
-
-				<execute macro="Page#tearDownCP" />
 			</else>
 		</if>
 	</tear-down>

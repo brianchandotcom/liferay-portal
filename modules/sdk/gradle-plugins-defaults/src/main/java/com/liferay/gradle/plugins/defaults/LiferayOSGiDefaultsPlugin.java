@@ -145,12 +145,14 @@ import org.gradle.api.artifacts.DependencySubstitutions;
 import org.gradle.api.artifacts.ExcludeRule;
 import org.gradle.api.artifacts.ExternalDependency;
 import org.gradle.api.artifacts.ExternalModuleDependency;
+import org.gradle.api.artifacts.LenientConfiguration;
 import org.gradle.api.artifacts.ModuleDependency;
 import org.gradle.api.artifacts.ModuleVersionSelector;
 import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.ResolvableDependencies;
 import org.gradle.api.artifacts.ResolveException;
+import org.gradle.api.artifacts.ResolvedConfiguration;
 import org.gradle.api.artifacts.component.ComponentSelector;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
@@ -191,6 +193,7 @@ import org.gradle.api.reporting.SingleFileReport;
 import org.gradle.api.resources.ResourceHandler;
 import org.gradle.api.resources.TextResourceFactory;
 import org.gradle.api.specs.Spec;
+import org.gradle.api.specs.Specs;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
@@ -3687,7 +3690,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			configurationContainer.detachedConfiguration(
 				dependencies.toArray(new Dependency[dependencies.size()]));
 
-		for (File file : detachedConfiguration.resolve()) {
+		ResolvedConfiguration resolvedConfiguration =
+			detachedConfiguration.getResolvedConfiguration();
+
+		LenientConfiguration lenientConfiguration =
+			resolvedConfiguration.getLenientConfiguration();
+
+		for (File file : lenientConfiguration.getFiles(Specs.satisfyAll())) {
 			project.copy(
 				new Action<CopySpec>() {
 

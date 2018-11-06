@@ -34,10 +34,9 @@ import javax.portlet.ResourceResponse;
  */
 public class PortletAsyncScopeManagerImpl implements PortletAsyncScopeManager {
 
-	public PortletAsyncScopeManagerImpl(
-		Deque<ScopedBeanManager> scopedBeanManagerStack) {
-
-		_scopedBeanManagerStack = scopedBeanManagerStack;
+	public PortletAsyncScopeManagerImpl() {
+		_scopedBeanManagerStack =
+			ScopedBeanManagerThreadLocal.getCurrentStack();
 	}
 
 	@Override

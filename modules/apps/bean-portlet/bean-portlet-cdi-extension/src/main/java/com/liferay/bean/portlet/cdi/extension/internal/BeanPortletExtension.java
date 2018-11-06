@@ -22,8 +22,6 @@ import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletRequestBeanC
 import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletSessionBeanContext;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.RenderStateBeanContext;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBean;
-import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBeanManager;
-import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBeanManagerThreadLocal;
 import com.liferay.bean.portlet.cdi.extension.internal.util.BeanMethodIndexUtil;
 import com.liferay.bean.portlet.cdi.extension.internal.util.PortletScannerUtil;
 import com.liferay.bean.portlet.cdi.extension.internal.xml.DisplayDescriptorParser;
@@ -53,7 +51,6 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Deque;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -440,14 +437,7 @@ public class BeanPortletExtension implements Extension {
 		_serviceRegistrations.add(
 			bundleContext.registerService(
 				PortletAsyncScopeManagerFactory.class,
-				() -> {
-					Deque<ScopedBeanManager> scopedBeanManagerStack =
-						ScopedBeanManagerThreadLocal.getCurrentStack();
-
-					return new PortletAsyncScopeManagerImpl(
-						scopedBeanManagerStack);
-				},
-				properties));
+				PortletAsyncScopeManagerImpl::new, properties));
 
 		_serviceRegistrations.add(
 			bundleContext.registerService(

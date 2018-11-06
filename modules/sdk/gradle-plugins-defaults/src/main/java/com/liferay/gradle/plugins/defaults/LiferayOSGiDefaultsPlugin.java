@@ -126,6 +126,8 @@ import javax.xml.parsers.DocumentBuilder;
 
 import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
 
+import org.apache.commons.io.FileUtils;
+
 import org.gradle.StartParameter;
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
@@ -1194,6 +1196,29 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		Project project, String taskName, boolean testProject) {
 
 		Jar jar = GradleUtil.addTask(project, taskName, Jar.class);
+
+		final File compileIncludeSourcesDir = new File(
+			project.getBuildDir(), "compile-include-sources");
+
+		Action<Task> copyCompileIncludeSourcesAction = new Action<Task>() {
+
+			@Override
+			public void execute(Task task) {
+				try {
+					FileUtils.deleteDirectory(compileIncludeSourcesDir);
+				}
+				catch (IOException ioe) {
+					throw new UncheckedIOException(ioe);
+				}
+
+				_copyCompileIncludeSources(project, compileIncludeSourcesDir);
+			}
+
+		};
+
+		jar.doFirst(copyCompileIncludeSourcesAction);
+
+		jar.from(compileIncludeSourcesDir);
 
 		jar.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
 		jar.setGroup(BasePlugin.BUILD_GROUP);
@@ -3627,6 +3652,55 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, TestIntegrationTomcatExtension.class);
 
 		testIntegrationTomcatExtension.setOverwriteCopyTestModules(false);
+	}
+
+	private void _copyCompileIncludeSources(Project project, File outputDir) {
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		Set<Dependency> dependencies = new HashSet<>();
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, LiferayOSGiPlugin.COMPILE_INCLUDE_CONFIGURATION_NAME);
+
+		DependencySet dependencySet = configuration.getDependencies();
+
+		Iterator<Dependency> iterator = dependencySet.iterator();
+
+		while (iterator.hasNext()) {
+			Dependency dependency = iterator.next();
+
+			Map<String, Object> args = new HashMap<>();
+
+			args.put("classifier", "sources");
+			args.put("group", dependency.getGroup());
+			args.put("name", dependency.getName());
+			args.put("transitive", false);
+			args.put("version", dependency.getVersion());
+
+			DependencyHandler dependencyHandler = project.getDependencies();
+
+			dependencies.add(dependencyHandler.create(args));
+		}
+
+		Configuration detachedConfiguration =
+			configurationContainer.detachedConfiguration(
+				dependencies.toArray(new Dependency[dependencies.size()]));
+
+		for (File file : detachedConfiguration.resolve()) {
+			project.copy(
+				new Action<CopySpec>() {
+
+					@Override
+					public void execute(CopySpec copySpec) {
+						copySpec.from(project.zipTree(file));
+						copySpec.include("**/*.java");
+						copySpec.into(outputDir);
+						copySpec.setIncludeEmptyDirs(false);
+					}
+
+				});
+		}
 	}
 
 	private void _forceProjectDependenciesEvaluation(Project project) {

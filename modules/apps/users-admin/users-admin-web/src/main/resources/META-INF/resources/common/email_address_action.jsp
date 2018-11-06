@@ -22,9 +22,9 @@ String mvcActionPath = ParamUtil.getString(request, "mvcActionPath");
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-Phone phone = (Phone)row.getObject();
+EmailAddress emailAddress = (EmailAddress)row.getObject();
 
-long phoneId = phone.getPhoneId();
+long emailAddressId = emailAddress.getEmailAddressId();
 %>
 
 <liferay-ui:icon-menu
@@ -35,12 +35,12 @@ long phoneId = phone.getPhoneId();
 	showWhenSingleIcon="<%= true %>"
 >
 	<liferay-ui:icon
-		cssClass="modify-phone-number-link"
+		cssClass="modify-email-address-link"
 		data="<%=
 			new HashMap<String, Object>() {
 				{
-					put("title", LanguageUtil.get(request, "edit-phone-number"));
-					put("primary-key", String.valueOf(phoneId));
+					put("title", LanguageUtil.get(request, "edit-email-address"));
+					put("primary-key", String.valueOf(emailAddressId));
 				}
 			}
 		%>"
@@ -53,8 +53,8 @@ long phoneId = phone.getPhoneId();
 
 	portletURL.setParameter(ActionRequest.ACTION_NAME, mvcActionPath);
 	portletURL.setParameter("classPK", String.valueOf(classPK));
-	portletURL.setParameter("listType", ListTypeConstants.PHONE);
-	portletURL.setParameter("primaryKey", String.valueOf(phoneId));
+	portletURL.setParameter("listType", ListTypeConstants.EMAIL_ADDRESS);
+	portletURL.setParameter("primaryKey", String.valueOf(emailAddressId));
 	portletURL.setParameter("redirect", currentURL);
 
 	PortletURL makePrimaryURL = PortletURLUtil.clone(portletURL, renderResponse);
@@ -68,13 +68,13 @@ long phoneId = phone.getPhoneId();
 	/>
 
 	<%
-	PortletURL removePhoneURL = PortletURLUtil.clone(portletURL, renderResponse);
+	PortletURL removeEmailAddressURL = PortletURLUtil.clone(portletURL, renderResponse);
 
-	removePhoneURL.setParameter(Constants.CMD, Constants.DELETE);
+	removeEmailAddressURL.setParameter(Constants.CMD, Constants.DELETE);
 	%>
 
 	<liferay-ui:icon
 		message="remove"
-		url="<%= removePhoneURL.toString() %>"
+		url="<%= removeEmailAddressURL.toString() %>"
 	/>
 </liferay-ui:icon-menu>

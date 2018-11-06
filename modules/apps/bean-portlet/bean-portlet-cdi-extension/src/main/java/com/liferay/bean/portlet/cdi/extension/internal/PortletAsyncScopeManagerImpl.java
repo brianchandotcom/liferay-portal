@@ -60,7 +60,13 @@ public class PortletAsyncScopeManagerImpl implements PortletAsyncScopeManager {
 	}
 
 	@Override
-	public void deactivateScopeContexts() {
+	public void deactivateScopeContexts(boolean close) {
+		if (!close) {
+			ScopedBeanManagerThreadLocal.remove();
+
+			return;
+		}
+
 		if (_closeable == null) {
 			throw new IllegalStateException(
 				"Call activateScopeContexts() first");

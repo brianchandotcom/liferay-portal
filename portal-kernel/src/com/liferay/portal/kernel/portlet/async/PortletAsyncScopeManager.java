@@ -32,6 +32,6 @@ public interface PortletAsyncScopeManager {
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
 		PortletConfig portletConfig);
 
-	public void deactivateScopeContexts();
+	public void deactivateScopeContexts(boolean close);
 
 }

@@ -317,7 +317,7 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 				}
 
 				@Override
-				public void deactivateScopeContexts() {
+				public void deactivateScopeContexts(boolean close) {
 				}
 
 			};

@@ -61,6 +61,10 @@ public class ScopedBeanManagerThreadLocal {
 		};
 	}
 
+	public static void remove() {
+		_instance.remove();
+	}
+
 	public static void setCurrentStack(
 		Deque<ScopedBeanManager> scopedBeanManagerStack) {
 

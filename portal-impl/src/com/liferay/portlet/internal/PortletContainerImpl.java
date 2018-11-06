@@ -1049,7 +1049,7 @@ public class PortletContainerImpl implements PortletContainer {
 					PortletAsyncScopeManager portletAsyncScopeManager =
 						portletAsyncContextImpl.getPortletAsyncScopeManager();
 
-					portletAsyncScopeManager.deactivateScopeContexts();
+					portletAsyncScopeManager.deactivateScopeContexts(true);
 				}
 
 				portletAsyncContextImpl.setReturnedToContainer();

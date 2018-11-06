@@ -53,6 +53,9 @@ public class PortletAsyncScopingRunnable implements Runnable {
 				_log.error(ioe, ioe);
 			}
 		}
+		finally {
+			_portletAsyncScopeManager.deactivateScopeContexts(false);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -132,10 +132,8 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoStructures" />
@@ -165,10 +163,8 @@
 
 		<execute macro="IFrame#closeFrame" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoTemplates" />
@@ -268,10 +264,8 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoStructures" />
@@ -281,10 +275,8 @@
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentTemplates#viewCP">
@@ -304,20 +296,16 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoStructures" />
 
 		<execute function="AssertTextNotPresent" value1="WC Structure Name" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoTemplates" />
@@ -344,10 +332,8 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
@@ -375,10 +361,8 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentFolder#addCP">
@@ -397,10 +381,8 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -416,10 +398,8 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentFolder#addSubfolderCP">
@@ -470,10 +450,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -528,10 +506,8 @@
 
 		<property name="testray.component.names" value="Training" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoStructures" />
@@ -559,10 +535,8 @@
 			<var name="structureName" value="Content List" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="LAR#importPortlet">
@@ -587,10 +561,8 @@
 		</for>
 
 		<for list="Carousel Display,Thumbnail Display,Content List Display" param="templateName">
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Web Content" />
+			<execute macro="WebContent#openWebContentAdmin">
+				<var name="siteURLKey" value="test-site-name" />
 			</execute>
 
 			<execute macro="WebContentTemplates#viewCP">
@@ -629,10 +601,8 @@
 			<var name="site" value="Test Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoStructures" />
@@ -656,10 +626,8 @@
 			<var name="site" value="Test Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoTemplates" />
@@ -731,10 +699,8 @@
 			<var name="site" value="Test Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoStructures" />
@@ -758,10 +724,8 @@
 			<var name="site" value="Test Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoTemplates" />
@@ -849,10 +813,8 @@
 			<var name="siteName" value="Blank Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -872,10 +834,8 @@
 			<var name="siteName" value="Blank Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -913,10 +873,8 @@
 			<var name="pageName" value="Web Content Image Page" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -1123,10 +1081,8 @@
 
 		<var method="selenium#getElementValue('//input[contains(@id,\'url\')]')" name="dmDocumentURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -1191,10 +1147,8 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="LAR#importPortlet">
@@ -1216,10 +1170,8 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="LAR#importPortlet">
@@ -1233,10 +1185,8 @@
 				<var name="templateName" value="${templateName}" />
 			</execute>
 
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Web Content" />
+			<execute macro="WebContent#openWebContentAdmin">
+				<var name="siteURLKey" value="test-site-name" />
 			</execute>
 		</for>
 
@@ -1293,10 +1243,8 @@
 
 		<execute macro="SystemSettings#saveConfiguration" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -1375,14 +1323,8 @@
 	<command name="AddWebContentViaWCDWithGlobalStructureAndLocalTemplate" priority="4">
 		<property name="testray.component.names" value="Web Content Administration" />
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="global" />
 		</execute>
 
 		<execute macro="NavItem#gotoStructures" />
@@ -1404,10 +1346,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoTemplates" />
@@ -1456,14 +1396,8 @@
 	<command name="AddWebContentWithGlobalStructureAndEditedDefaultValues" priority="3">
 		<property name="testray.component.names" value="Web Content Administration" />
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="global" />
 		</execute>
 
 		<execute macro="NavItem#gotoStructures" />
@@ -1486,14 +1420,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="global" />
 		</execute>
 
 		<execute macro="NavItem#gotoTemplates" />
@@ -1512,14 +1440,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="global" />
 		</execute>
 
 		<execute macro="NavItem#gotoStructures" />
@@ -1585,10 +1507,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
@@ -1612,10 +1532,8 @@
 	<command name="AddWebContentWithPortletURL" priority="5">
 		<description message="This is a use case for LPS-70386." />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -1660,10 +1578,8 @@
 	<command name="DeleteTemplateAndStructureWithReferencedWebContent" priority="4">
 		<property name="testray.component.names" value="Web Content Administration" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoStructures" />
@@ -1683,10 +1599,8 @@
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoTemplates" />
@@ -1700,10 +1614,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
@@ -1725,10 +1637,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentStructures#deleteCP">
@@ -1738,10 +1648,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentTemplates#deleteCP">
@@ -1751,10 +1659,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentStructures#deleteCP">
@@ -1766,14 +1672,8 @@
 	<command name="EditArticleMadeFromGlobalStructure" priority="4">
 		<property name="testray.component.names" value="Web Content Administration" />
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="global" />
 		</execute>
 
 		<execute macro="NavItem#gotoStructures" />
@@ -1793,14 +1693,8 @@
 			<var name="structureName" value="Global WC Structure Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="global" />
 		</execute>
 
 		<execute macro="NavItem#gotoTemplates" />
@@ -1866,10 +1760,8 @@
 	<command name="EditContentWithTitleAndAllFieldsNull" priority="5">
 		<property name="testray.component.names" value="Training,Web Content Administration" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoStructures" />
@@ -1891,10 +1783,8 @@
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoTemplates" />
@@ -1908,10 +1798,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
@@ -1932,10 +1820,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -1951,14 +1837,8 @@
 	<command name="EditGlobalWebContentTemplate" priority="4">
 		<property name="testray.component.names" value="Web Content Administration" />
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="global" />
 		</execute>
 
 		<execute macro="NavItem#gotoStructures" />
@@ -1978,14 +1858,8 @@
 			<var name="structureName" value="Global WC Structure Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="global" />
 		</execute>
 
 		<execute macro="NavItem#gotoTemplates" />
@@ -2044,10 +1918,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -2063,10 +1935,8 @@
 	<command name="EditWebContentTemplate" priority="4">
 		<property name="testray.component.names" value="Web Content Administration" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoStructures" />
@@ -2086,10 +1956,8 @@
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoTemplates" />
@@ -2103,10 +1971,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoTemplates" />
@@ -2120,10 +1986,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
@@ -2143,10 +2007,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -2162,10 +2024,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -2183,10 +2043,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -2238,10 +2096,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContent#expireSpecificVersionCP">
@@ -2260,17 +2116,13 @@
 	<command name="ExpireMultipleWebContent" priority="4">
 		<property name="testray.component.names" value="Web Content Administration" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<for list="1,2,3" param="i">
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Web Content" />
+			<execute macro="WebContent#openWebContentAdmin">
+				<var name="siteURLKey" value="test-site-name" />
 			</execute>
 
 			<execute macro="WebContentNavigator#gotoAddCP" />
@@ -2283,10 +2135,8 @@
 			<execute macro="PortletEntry#publish" />
 		</for>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContent#expireCP">
@@ -2294,10 +2144,8 @@
 		</execute>
 
 		<for list="1,2,3" param="i">
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Web Content" />
+			<execute macro="WebContent#openWebContentAdmin">
+				<var name="siteURLKey" value="test-site-name" />
 			</execute>
 
 			<execute macro="WebContentNavigator#gotoEditCP">
@@ -2319,14 +2167,8 @@
 			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="global" />
 		</execute>
 
 		<execute macro="LAR#importPortlet">
@@ -2338,10 +2180,8 @@
 			<var name="urlAppend" value="web/site-name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
@@ -2392,10 +2232,8 @@
 			<var name="pageName" value="Test Page Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentFolder#addCP">
@@ -2417,10 +2255,8 @@
 			<var name="siteName" value="S.P.A.C.E." />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<for list="When It All Began...,Stravinksy in Space?,Student Spotlight,Upcoming Press Conference,New Student Orientation,Fall Special Speaker Series" param="webContentTitle">
@@ -2439,10 +2275,8 @@
 			<var name="webContentArticlesList" value="Upcoming Press Conference,New Student Orientation,Fall Special Speaker Series" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentFolder#gotoCP">
@@ -2456,10 +2290,8 @@
 			</execute>
 		</for>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentFolder#gotoCP">
@@ -2477,10 +2309,8 @@
 	<command name="MoveMultipleWebContentToFolder" priority="4">
 		<property name="testray.component.names" value="Web Content Administration" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentFolder#addCP">
@@ -2489,10 +2319,8 @@
 		</execute>
 
 		<for list="WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3" param="webContentTitle">
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Content" />
-				<var name="panel" value="Site Administration" />
-				<var name="portlet" value="Web Content" />
+			<execute macro="WebContent#openWebContentAdmin">
+				<var name="siteURLKey" value="test-site-name" />
 			</execute>
 
 			<execute macro="WebContentNavigator#gotoAddCP" />
@@ -2505,10 +2333,8 @@
 			<execute macro="PortletEntry#publish" />
 		</for>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContent#moveMultipleToFolderCP">
@@ -2516,10 +2342,8 @@
 			<var name="rowEntryCheckList" value="WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentFolder#gotoCP">
@@ -2539,10 +2363,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -2560,10 +2382,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentFolder#addCP">
@@ -2573,10 +2393,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContent#moveToFolderCP">
@@ -2586,10 +2404,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentFolder#gotoCP">
@@ -2674,10 +2490,8 @@
 
 		<execute macro="ProductMenu#gotoStagingSite" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContent#expireSpecificVersionCP">
@@ -2711,10 +2525,8 @@
 
 		<execute macro="ProductMenu#gotoStagingSite" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -2857,10 +2669,8 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoStructures" />
@@ -2881,10 +2691,8 @@
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoTemplates" />
@@ -2900,10 +2708,8 @@
 			<var name="site" value="Child SiteName" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoStructures" />
@@ -2913,10 +2719,8 @@
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoTemplates" />
@@ -2926,10 +2730,8 @@
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
@@ -2957,14 +2759,8 @@
 	<command name="ViewGlobalStructureViaAddMenuInLiferaySite" priority="3">
 		<property name="testray.component.names" value="Web Content Administration" />
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="global" />
 		</execute>
 
 		<execute macro="NavItem#gotoStructures" />
@@ -2986,10 +2782,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContent#viewStructureViaAddMenuCP">
@@ -3037,10 +2831,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -3063,10 +2855,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -3102,10 +2892,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -3122,10 +2910,8 @@
 	<command name="ViewSourceContainsNoGarbageData" priority="4">
 		<property name="testray.component.names" value="Web Content Administration" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoStructures" />
@@ -3151,10 +2937,8 @@
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoTemplates" />
@@ -3166,10 +2950,8 @@
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
@@ -3257,10 +3039,8 @@
 
 		<execute macro="PortletEntry#publish" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -3279,10 +3059,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -3293,10 +3071,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -3314,10 +3090,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -3332,10 +3106,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -3350,30 +3122,24 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentTemplates#addNullCP" />
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentTemplates#addNullCP" />
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoStructures" />
@@ -3413,10 +3179,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoStructures" />
@@ -3452,10 +3216,8 @@
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoTemplates" />
@@ -3481,10 +3243,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
@@ -3616,10 +3376,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -3702,10 +3460,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContent#viewTitle">
@@ -3725,10 +3481,8 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -3781,10 +3535,8 @@
 	<command name="WebcontentAdministrationTemplateValidation" priority="4">
 		<property name="testray.component.names" value="Web Content Administration" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
+		<execute macro="WebContent#openWebContentAdmin">
+			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
 		<execute macro="NavItem#gotoStructures" />

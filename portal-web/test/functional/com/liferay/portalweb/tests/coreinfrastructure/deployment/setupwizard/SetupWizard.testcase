@@ -46,17 +46,17 @@
 
 	<command name="MySQLWithXSSContent" priority="5">
 		<property name="database.types" value="mysql" />
-		
+
 		<execute macro="SetupWizard#configurePG">
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName"><![CDATA[<script>alert("xss")</script>]]></var>
 			<var name="administratorLastName"><![CDATA[<script>alert("xss")</script>]]></var>
-			<var name="databaseType" value="MySQL" />
-			<var name="portalName"><![CDATA[<script>alert("xss")</script>]]></var>
 			<var method="PropsUtil#get('database.mysql.password')" name="databasePassword" />
+			<var name="databaseType" value="MySQL" />
 			<var method="PropsUtil#get('database.mysql.username')" name="databaseUserName" />
 			<var method="PropsUtil#get('database.mysql.driver')" name="jdbcDriverClassName" />
 			<var method="PropsUtil#get('database.mysql.url')" name="jdbcURL" />
+			<var name="portalName"><![CDATA[<script>alert("xss")</script>]]></var>
 		</execute>
 
 		<execute function="AssertAlertNotPresent" />

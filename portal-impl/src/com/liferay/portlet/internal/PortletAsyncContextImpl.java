@@ -84,16 +84,6 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 				"listenerClass is not of type PortletAsyncListener");
 		}
 
-		try {
-			listenerClass.getConstructor();
-		}
-		catch (NoSuchMethodException nsme) {
-			throw new PortletException(
-				listenerClass.getName() +
-					" does not have a zero-arg constructor",
-				nsme);
-		}
-
 		if (_portletAsyncListenerFactory == null) {
 			try {
 				return listenerClass.newInstance();

@@ -113,18 +113,15 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 			mockHttpServletRequest, new MockHttpServletResponse(),
 			samlSloContext);
 
-		Definition tilesDefinition =
-			(Definition)mockHttpServletRequest.getAttribute(
-				TilesUtil.DEFINITION);
+		Definition definition = (Definition)mockHttpServletRequest.getAttribute(
+			TilesUtil.DEFINITION);
 
-		Map<String, String> tilesDefinitionAttributes =
-			tilesDefinition.getAttributes();
+		Map<String, String> definitionAttributes = definition.getAttributes();
 
 		Assert.assertEquals(
 			JspUtil.PATH_PORTAL_SAML_ERROR,
-			tilesDefinitionAttributes.get("content"));
-		Assert.assertTrue(
-			Boolean.valueOf(tilesDefinitionAttributes.get("pop_up")));
+			definitionAttributes.get("content"));
+		Assert.assertTrue(Boolean.valueOf(definitionAttributes.get("pop_up")));
 	}
 
 	@Test
@@ -176,18 +173,15 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 			mockHttpServletRequest, new MockHttpServletResponse(),
 			samlSloContext);
 
-		Definition tilesDefinition =
-			(Definition)mockHttpServletRequest.getAttribute(
-				TilesUtil.DEFINITION);
+		Definition definition = (Definition)mockHttpServletRequest.getAttribute(
+			TilesUtil.DEFINITION);
 
-		Map<String, String> tilesDefinitionAttributes =
-			tilesDefinition.getAttributes();
+		Map<String, String> definitionAttributes = definition.getAttributes();
 
 		Assert.assertEquals(
 			JspUtil.PATH_PORTAL_SAML_SLO_SP_STATUS,
-			tilesDefinitionAttributes.get("content"));
-		Assert.assertTrue(
-			Boolean.valueOf(tilesDefinitionAttributes.get("pop_up")));
+			definitionAttributes.get("content"));
+		Assert.assertTrue(Boolean.valueOf(definitionAttributes.get("pop_up")));
 
 		JSONObject jsonObject = (JSONObject)mockHttpServletRequest.getAttribute(
 			SamlWebKeys.SAML_SLO_REQUEST_INFO);

@@ -141,6 +141,16 @@ public abstract class TopLevelBuildRunner
 		}
 	}
 
+	protected void reportFailureMessageToBuildDescription(String message) {
+		TopLevelBuildData topLevelBuildData = getBuildData();
+
+		topLevelBuildData.setBuildDescription("<b>ERROR:</b> " + message);
+
+		updateBuildDescription();
+
+		throw new RuntimeException(message);
+	}
+
 	protected void updateJenkinsReport() {
 		if (!_allBuildsAreRunning()) {
 			_lastGeneratedReportTime = -1;

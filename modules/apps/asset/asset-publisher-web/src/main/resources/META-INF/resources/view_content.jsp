@@ -50,7 +50,7 @@ else {
 %>
 
 <c:choose>
-	<c:when test="<%= assetEntry.isVisible() || (assetRenderer.hasViewPermission(permissionChecker) && assetRenderer.isDisplayable()) %>">
+	<c:when test="<%= (assetEntry.isVisible() && !assetPublisherDisplayContext.isEnablePermissions()) || (assetRenderer.hasViewPermission(permissionChecker) && assetRenderer.isDisplayable()) %>">
 
 		<%
 		String title = assetRenderer.getTitle(locale);
@@ -84,7 +84,12 @@ else {
 	<c:otherwise>
 
 		<%
-		SessionErrors.add(renderRequest, NoSuchModelException.class.getName());
+		if (!assetEntry.isVisible()) {
+			SessionErrors.add(renderRequest, NoSuchModelException.class.getName());
+		}
+		else {
+			SessionErrors.add(renderRequest, PrincipalException.MustHavePermission.class.getName());
+		}
 		%>
 
 		<liferay-util:include page="/error.jsp" servletContext="<%= application %>" />

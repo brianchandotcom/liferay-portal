@@ -4,6 +4,10 @@ import Soy from 'metal-soy';
 
 import templates from './ImagePreviewer.soy';
 
+/**
+ * Available zoom sizes
+ * @type {Array<number>}
+ */
 const ZOOM_LEVELS = [
 	0.1,
 	0.2,
@@ -17,8 +21,16 @@ const ZOOM_LEVELS = [
 	1
 ];
 
+/**
+ * Available reversed zoom sizes
+ * @type {Array<number>}
+ */
 const ZOOM_LEVELS_REVERSED = ZOOM_LEVELS.slice().reverse();
 
+/**
+ * Zoom ratio limit that fire the autocenter
+ * @type {number}
+ */
 const MIN_ZOOM_RATIO_AUTOCENTER = 3;
 
 /**

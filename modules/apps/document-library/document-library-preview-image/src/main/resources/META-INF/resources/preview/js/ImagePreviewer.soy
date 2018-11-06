@@ -66,6 +66,14 @@
 		? 'fit'
 		: 'real'
 	/}
+	{let $zoomFitToggletitle kind="text"}
+		{if $zoomFitToggle}
+			{msg desc=""}fit-to-screen{/msg}
+		{else}
+			{msg desc=""}real-size{/msg}
+		{/if}
+	{/let}
+
 
 	<div class="preview-toolbar-container">
 		<div class="btn-group" role="group">
@@ -78,6 +86,7 @@
 			{call ClayButton.render data="$baseButtonsToolbar"}
 				{param label kind="text"}{$zoomLabel}%{/param}
 				{param value: $zoomFitToggleValue /}
+				{param title: $zoomFitToggletitle /}
 			{/call}
 			{call ClayButton.render data="$baseButtonsToolbar"}
 				{param disabled: $zoomInDisabled /}

@@ -73,12 +73,6 @@ public class AutoLoginFilterTest {
 		HttpSession httpSession = Mockito.mock(HttpSession.class);
 
 		Mockito.when(
-			httpSession.getAttribute("j_username")
-		).thenReturn(
-			null
-		);
-
-		Mockito.when(
 			httpServletRequest.getSession()
 		).thenReturn(
 			httpSession

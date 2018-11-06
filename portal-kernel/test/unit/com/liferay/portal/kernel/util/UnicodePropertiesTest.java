@@ -176,6 +176,13 @@ public class UnicodePropertiesTest {
 		_testToString(true);
 	}
 
+	private void _assertToString(
+		String expectedToString, String toString, String toSortedString) {
+
+		Assert.assertEquals(expectedToString, toString);
+		Assert.assertEquals(expectedToString, toSortedString);
+	}
+
 	private void _assertUnicodeProperties(
 		String[] expectedValues, String[] keys,
 		UnicodeProperties unicodeProperties) {
@@ -316,55 +323,43 @@ public class UnicodePropertiesTest {
 	private void _testToString(boolean safe) {
 		UnicodeProperties unicodeProperties = new UnicodeProperties(safe);
 
-		Assert.assertEquals(StringPool.BLANK, unicodeProperties.toString());
-		Assert.assertEquals(
-			StringPool.BLANK, unicodeProperties.toSortedString());
+		_assertToString(
+			StringPool.BLANK, unicodeProperties.toString(),
+			unicodeProperties.toSortedString());
 
 		unicodeProperties.put(_TEST_KEY_1, StringPool.BLANK);
 
-		Assert.assertEquals(StringPool.BLANK, unicodeProperties.toString());
-		Assert.assertEquals(
-			StringPool.BLANK, unicodeProperties.toSortedString());
+		_assertToString(
+			StringPool.BLANK, unicodeProperties.toString(),
+			unicodeProperties.toSortedString());
 
 		unicodeProperties.put(_TEST_LINE_2);
 
-		Assert.assertEquals(
-			_TEST_LINE_2 + StringPool.NEW_LINE, unicodeProperties.toString());
-		Assert.assertEquals(
-			_TEST_LINE_2 + StringPool.NEW_LINE,
+		_assertToString(
+			_TEST_LINE_2 + StringPool.NEW_LINE, unicodeProperties.toString(),
 			unicodeProperties.toSortedString());
 
 		unicodeProperties.put(_TEST_LINE_3);
 
-		Assert.assertEquals(
+		_assertToString(
 			_TEST_LINE_2 + StringPool.NEW_LINE + _TEST_LINE_3 +
 				StringPool.NEW_LINE,
-			unicodeProperties.toString());
-		Assert.assertEquals(
-			_TEST_LINE_2 + StringPool.NEW_LINE + _TEST_LINE_3 +
-				StringPool.NEW_LINE,
-			unicodeProperties.toSortedString());
+			unicodeProperties.toString(), unicodeProperties.toSortedString());
 
 		unicodeProperties.put(_TEST_KEY_3, _TEST_VALUE_3 + StringPool.NEW_LINE);
 
 		if (safe) {
-			Assert.assertEquals(
+			_assertToString(
 				_TEST_LINE_2 + StringPool.NEW_LINE + _TEST_LINE_3 +
 					_SAFE_NEWLINE_CHARACTER + StringPool.NEW_LINE,
-				unicodeProperties.toString());
-			Assert.assertEquals(
-				_TEST_LINE_2 + StringPool.NEW_LINE + _TEST_LINE_3 +
-					_SAFE_NEWLINE_CHARACTER + StringPool.NEW_LINE,
+				unicodeProperties.toString(),
 				unicodeProperties.toSortedString());
 		}
 		else {
-			Assert.assertEquals(
+			_assertToString(
 				_TEST_LINE_2 + StringPool.NEW_LINE + _TEST_LINE_3 +
 					StringPool.NEW_LINE + StringPool.NEW_LINE,
-				unicodeProperties.toString());
-			Assert.assertEquals(
-				_TEST_LINE_2 + StringPool.NEW_LINE + _TEST_LINE_3 +
-					StringPool.NEW_LINE + StringPool.NEW_LINE,
+				unicodeProperties.toString(),
 				unicodeProperties.toSortedString());
 		}
 	}

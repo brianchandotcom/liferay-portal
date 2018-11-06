@@ -1411,7 +1411,6 @@ war.path=${app.server.portal.dir}/</echo>
 			<var name="blacklistBundleSymbolicNames" value="com.liferay.portal.mobile.device.detection.fiftyonedegrees.api,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise.test.data,com.liferay.portal.mobile.device.detection.fiftyonedegrees" />
 
 			<get-testcase-property property.name="cluster.enabled" />
-
 			<get-testcase-property property.name="test.run.environment" />
 
 			<if>

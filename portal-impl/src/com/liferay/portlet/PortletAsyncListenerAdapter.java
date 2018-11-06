@@ -99,22 +99,17 @@ public class PortletAsyncListenerAdapter implements AsyncListener {
 	public void onComplete(AsyncEvent asyncEvent) throws IOException {
 		_firedOnComplete = true;
 
-		try {
-			for (PortletAsyncListenerAdapterEntry asyncListenerAdapterEntry :
-					_portletAsyncListenerAdapterEntries) {
+		for (PortletAsyncListenerAdapterEntry asyncListenerAdapterEntry :
+				_portletAsyncListenerAdapterEntries) {
 
-				PortletAsyncListener portletAsyncListener =
-					asyncListenerAdapterEntry.getPortletAsyncListener();
+			PortletAsyncListener portletAsyncListener =
+				asyncListenerAdapterEntry.getPortletAsyncListener();
 
-				portletAsyncListener.onComplete(
-					new PortletAsyncEvent(
-						_portletAsyncContext,
-						asyncListenerAdapterEntry.getResourceRequest(),
-						asyncListenerAdapterEntry.getResourceResponse()));
-			}
-		}
-		catch (Exception e) {
-			throw new IOException(e);
+			portletAsyncListener.onComplete(
+				new PortletAsyncEvent(
+					_portletAsyncContext,
+					asyncListenerAdapterEntry.getResourceRequest(),
+					asyncListenerAdapterEntry.getResourceResponse()));
 		}
 	}
 
@@ -141,9 +136,6 @@ public class PortletAsyncListenerAdapter implements AsyncListener {
 						asyncListenerAdapterEntry.getResourceRequest(),
 						asyncListenerAdapterEntry.getResourceResponse(), t));
 			}
-		}
-		catch (Exception e) {
-			throw new IOException(e);
 		}
 		finally {
 			try {
@@ -180,9 +172,6 @@ public class PortletAsyncListenerAdapter implements AsyncListener {
 						asyncListenerAdapterEntry.getResourceResponse()));
 			}
 		}
-		catch (Exception e) {
-			throw new IOException(e);
-		}
 		finally {
 
 			// Ensure the adapter is still registered when the AsyncContext is
@@ -211,9 +200,6 @@ public class PortletAsyncListenerAdapter implements AsyncListener {
 						asyncListenerAdapterEntry.getResourceRequest(),
 						asyncListenerAdapterEntry.getResourceResponse()));
 			}
-		}
-		catch (Exception e) {
-			throw new IOException(e);
 		}
 		finally {
 			try {

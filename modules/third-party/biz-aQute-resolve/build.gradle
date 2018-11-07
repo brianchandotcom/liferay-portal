@@ -1,0 +1,17 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+dependencies {
+	compile group: "biz.aQute.bnd", name: "biz.aQute.resolve", version: "4.1.0"
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	originalLibModuleName = "biz.aQute.resolve"
+}

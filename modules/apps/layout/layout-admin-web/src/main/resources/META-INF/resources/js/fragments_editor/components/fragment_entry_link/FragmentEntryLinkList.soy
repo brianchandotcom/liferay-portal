@@ -27,6 +27,7 @@
 	{@param? highlightMapping: bool}
 	{@param? hoveredElementBorder: string}
 	{@param? hoveredFragmentEntryLinkId: string}
+	{@param? hoveredSectionId: string}
 	{@param? mappingFieldsURL: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
@@ -66,6 +67,7 @@
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
 					{param hoveredElementBorder: $hoveredElementBorder /}
 					{param hoveredFragmentEntryLinkId: $hoveredFragmentEntryLinkId /}
+					{param hoveredSectionId: $hoveredSectionId /}
 					{param imageSelectorURL: $imageSelectorURL /}
 					{param key: $row.rowId /}
 					{param languageId: $languageId /}
@@ -103,6 +105,7 @@
 	{@param? _handleFragmentMove: any}
 	{@param? hoveredElementBorder: string}
 	{@param? hoveredFragmentEntryLinkId: string}
+	{@param? hoveredSectionId: string}
 	{@param? mappingFieldsURL: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
@@ -116,8 +119,20 @@
 	]}
 	{@param? store: ?}
 
+	{let $styleModifier kind="text"}
+		{if $hoveredSectionId == $rowId}
+			{$hoveredElementBorder}
+		{/if}
+	{/let}
+
+	{let $sectionClasses kind="text"}
+		fragment-entry-link-list__row-section
+		{sp}layouts-drop-target
+		{sp}{$styleModifier}
+	{/let}
+
 	<section
-		class="fragment-entry-link-list__row-section layouts-drop-target"
+		class="{$sectionClasses}"
 		data-layout-section
 	>
 		<div class="container row-container">

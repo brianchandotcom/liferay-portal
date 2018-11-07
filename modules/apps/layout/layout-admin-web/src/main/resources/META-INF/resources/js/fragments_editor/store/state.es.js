@@ -123,6 +123,18 @@ const INITIAL_STATE = {
 		.value(null),
 
 	/**
+	 * SectionId where a fragment is being dragged over
+	 * @default null
+	 * @instance
+	 * @review
+	 * @type {string}
+	 */
+
+	hoveredSectionId: Config
+		.string()
+		.value(null),
+
+	/**
 	 * Currently selected language id.
 	 * @default undefined
 	 * @instance

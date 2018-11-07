@@ -24,8 +24,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.Matchers;
-
 import org.powermock.api.mockito.PowerMockito;
 
 /**
@@ -100,21 +98,16 @@ public class LocationVariableResolverTest extends PowerMockito {
 
 	@Test
 	public void testResolveVariableWithServerProperty() {
-		Settings mockSettings = mock(Settings.class);
-
 		final String expectedValue = "test@liferay.com";
 
-		when(
-			mockSettings.getValue(
-				Matchers.eq("admin.email.from.address"), Matchers.anyString())
-		).thenReturn(
-			expectedValue
-		);
+		MemorySettings memorySettings = new MemorySettings();
+
+		memorySettings.setValue("admin.email.from.address", expectedValue);
 
 		when(
 			_mockSettingsLocatorHelper.getServerSettings("com.liferay.portal")
 		).thenReturn(
-			mockSettings
+			memorySettings
 		);
 
 		Assert.assertEquals(

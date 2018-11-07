@@ -481,12 +481,6 @@ public class TransactionalPortalCacheHelper {
 
 	private static class ValueEntry {
 
-		public ValueEntry(Object value, int ttl, boolean skipReplicator) {
-			_value = value;
-			_ttl = ttl;
-			_skipReplicator = skipReplicator;
-		}
-
 		public void commitTo(
 			PortalCache<Serializable, Object> portalCache, Serializable key) {
 
@@ -536,6 +530,12 @@ public class TransactionalPortalCacheHelper {
 			if (!_skipReplicator) {
 				valueEntry._skipReplicator = false;
 			}
+		}
+
+		private ValueEntry(Object value, int ttl, boolean skipReplicator) {
+			_value = value;
+			_ttl = ttl;
+			_skipReplicator = skipReplicator;
 		}
 
 		private boolean _removed;

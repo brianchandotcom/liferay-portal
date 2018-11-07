@@ -67,11 +67,6 @@ public class PortletAsyncScopeManagerImpl implements PortletAsyncScopeManager {
 			return;
 		}
 
-		if (_closeable == null) {
-			throw new IllegalStateException(
-				"Call activateScopeContexts() first");
-		}
-
 		try {
 			_closeable.close();
 		}

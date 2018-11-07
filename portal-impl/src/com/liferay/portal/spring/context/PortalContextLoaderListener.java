@@ -273,19 +273,23 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			SchedulerEngineHelper.class,
 			SingleDestinationMessageSenderFactory.class);
 
-		FutureTask<Void> springInitTask = new FutureTask<>(
-			() -> {
-				super.contextInitialized(servletContextEvent);
+		FutureTask<Void> springInitTask = null;
 
-				return null;
-			});
+		if (PropsValues.MODULE_FRAMEWORK_CONCURRENT_STARTUP_ENABLED) {
+			springInitTask = new FutureTask<>(
+				() -> {
+					super.contextInitialized(servletContextEvent);
 
-		Thread springInitThread = new Thread(
-			springInitTask, "Portal Spring Init Thread");
+					return null;
+				});
 
-		springInitThread.setDaemon(true);
+			Thread springInitThread = new Thread(
+				springInitTask, "Portal Spring Init Thread");
 
-		springInitThread.start();
+			springInitThread.setDaemon(true);
+
+			springInitThread.start();
+		}
 
 		try {
 			ModuleFrameworkUtilAdapter.registerContext(
@@ -299,11 +303,16 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			throw new RuntimeException(e);
 		}
 
-		try {
-			springInitTask.get();
+		if (springInitTask == null) {
+			super.contextInitialized(servletContextEvent);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		else {
+			try {
+				springInitTask.get();
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		}
 
 		InitUtil.registerSpringInitialized();

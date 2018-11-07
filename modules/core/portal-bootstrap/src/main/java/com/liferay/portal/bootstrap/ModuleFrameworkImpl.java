@@ -1528,49 +1528,63 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			ReflectionUtil.throwException(frameworkEvent.getThrowable());
 		}
 
-		Runtime runtime = Runtime.getRuntime();
-
-		ExecutorService executorService = Executors.newFixedThreadPool(
-			runtime.availableProcessors(),
-			new NamedThreadFactory(
-				"ModuleFramework-Static-Bundles", Thread.NORM_PRIORITY,
-				ModuleFrameworkImpl.class.getClassLoader()));
-
-		List<Future<Void>> futures = new ArrayList<>();
-
 		FrameworkWiring frameworkWiring = _framework.adapt(
 			FrameworkWiring.class);
 
 		frameworkWiring.resolveBundles(bundles.values());
 
-		for (final Bundle bundle : bundles.values()) {
-			if (!_isFragmentBundle(bundle)) {
-				futures.add(
-					executorService.submit(
-						new Callable<Void>() {
+		if (PropsValues.MODULE_FRAMEWORK_CONCURRENT_STARTUP_ENABLED) {
+			Runtime runtime = Runtime.getRuntime();
 
-							@Override
-							public Void call() throws BundleException {
-								bundle.start();
+			ExecutorService executorService = Executors.newFixedThreadPool(
+				runtime.availableProcessors(),
+				new NamedThreadFactory(
+					"ModuleFramework-Static-Bundles", Thread.NORM_PRIORITY,
+					ModuleFrameworkImpl.class.getClassLoader()));
 
-								return null;
-							}
+			List<Future<Void>> futures = new ArrayList<>(bundles.size());
 
-						}));
+			for (final Bundle bundle : bundles.values()) {
+				if (!_isFragmentBundle(bundle)) {
+					futures.add(
+						executorService.submit(
+							new Callable<Void>() {
+
+								@Override
+								public Void call() throws BundleException {
+									bundle.start();
+
+									return null;
+								}
+
+							}));
+				}
+			}
+
+			executorService.shutdown();
+
+			for (Future<Void> future : futures) {
+				try {
+					future.get();
+				}
+				catch (ExecutionException ee) {
+					throwableCollector.collect(ee.getCause());
+				}
+				catch (InterruptedException ie) {
+					throwableCollector.collect(ie);
+				}
 			}
 		}
-
-		executorService.shutdown();
-
-		for (Future<Void> future : futures) {
-			try {
-				future.get();
-			}
-			catch (ExecutionException ee) {
-				throwableCollector.collect(ee.getCause());
-			}
-			catch (InterruptedException ie) {
-				throwableCollector.collect(ie);
+		else {
+			for (Bundle bundle : bundles.values()) {
+				if (!_isFragmentBundle(bundle)) {
+					try {
+						bundle.start();
+					}
+					catch (BundleException be) {
+						throwableCollector.collect(be);
+					}
+				}
 			}
 		}
 

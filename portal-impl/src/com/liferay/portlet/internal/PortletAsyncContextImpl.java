@@ -77,13 +77,6 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 			Class<T> listenerClass)
 		throws PortletException {
 
-		if ((listenerClass == null) ||
-			!PortletAsyncListener.class.isAssignableFrom(listenerClass)) {
-
-			throw new PortletException(
-				"listenerClass is not of type PortletAsyncListener");
-		}
-
 		return _portletAsyncListenerFactory.getPortletAsyncListener(
 			listenerClass);
 	}

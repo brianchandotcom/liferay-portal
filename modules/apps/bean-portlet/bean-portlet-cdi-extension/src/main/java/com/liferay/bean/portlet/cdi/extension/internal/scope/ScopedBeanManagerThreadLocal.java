@@ -14,9 +14,11 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal.scope;
 
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Supplier;
 
 import java.io.Closeable;
 
@@ -61,6 +63,29 @@ public class ScopedBeanManagerThreadLocal {
 				}
 			}
 		};
+	}
+
+	public static <T extends Throwable> void invokeWithScopedBeanManager(
+			UnsafeRunnable<T> unsafeRunnable,
+			Supplier<ScopedBeanManager> supplier)
+		throws T {
+
+		Deque<ScopedBeanManager> scopedBeanManagers = _instance.get();
+
+		boolean empty = scopedBeanManagers.isEmpty();
+
+		if (empty) {
+			scopedBeanManagers.push(supplier.get());
+		}
+
+		try {
+			unsafeRunnable.run();
+		}
+		finally {
+			if (empty) {
+				scopedBeanManagers.pop();
+			}
+		}
 	}
 
 	public static void remove() {

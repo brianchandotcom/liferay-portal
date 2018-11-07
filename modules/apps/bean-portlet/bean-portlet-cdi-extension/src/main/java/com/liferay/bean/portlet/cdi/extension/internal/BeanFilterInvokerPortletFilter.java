@@ -19,7 +19,6 @@ import com.liferay.bean.portlet.cdi.extension.internal.scope.ScopedBeanManagerTh
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.io.Closeable;
 import java.io.IOException;
 
 import java.lang.reflect.InvocationTargetException;
@@ -189,23 +188,10 @@ public class BeanFilterInvokerPortletFilter
 			PortletResponse portletResponse, Object filterChain)
 		throws PortletException {
 
-		if (ScopedBeanManagerThreadLocal.getCurrentScopedBeanManager() ==
-				null) {
-
-			try (Closeable closable = ScopedBeanManagerThreadLocal.install(
-					new ScopedBeanManager(
-						portletRequest, portletResponse, null))) {
-
-				_invokeMethod(
-					method, portletRequest, portletResponse, filterChain);
-			}
-			catch (IOException ioe) {
-				throw new PortletException(ioe);
-			}
-		}
-		else {
-			_invokeMethod(method, portletRequest, portletResponse, filterChain);
-		}
+		ScopedBeanManagerThreadLocal.invokeWithScopedBeanManager(
+			() -> _invokeMethod(
+				method, portletRequest, portletResponse, filterChain),
+			() -> new ScopedBeanManager(portletRequest, portletResponse, null));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

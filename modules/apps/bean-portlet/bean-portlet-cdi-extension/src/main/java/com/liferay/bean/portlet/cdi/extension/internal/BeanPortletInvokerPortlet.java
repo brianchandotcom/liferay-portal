@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -269,23 +268,11 @@ public class BeanPortletInvokerPortlet
 			return;
 		}
 
-		if (ScopedBeanManagerThreadLocal.getCurrentScopedBeanManager() ==
-				null) {
-
-			try (Closeable closable = ScopedBeanManagerThreadLocal.install(
-					new ScopedBeanManager(
-						portletRequest, portletResponse, _portletConfig))) {
-
-				_invokeBeanMethods(
-					beanMethods, portletRequest, portletResponse);
-			}
-			catch (IOException ioe) {
-				throw new PortletException(ioe);
-			}
-		}
-		else {
-			_invokeBeanMethods(beanMethods, portletRequest, portletResponse);
-		}
+		ScopedBeanManagerThreadLocal.invokeWithScopedBeanManager(
+			() -> _invokeBeanMethods(
+				beanMethods, portletRequest, portletResponse),
+			() -> new ScopedBeanManager(
+				portletRequest, portletResponse, _portletConfig));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -2,6 +2,7 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
+import {UPDATE_DRAG_TARGET} from '../../../actions/actions.es';
 import SidebarLayoutsDragDrop from './utils/SidebarLayoutsDragDrop.es';
 import {Store} from '../../../store/store.es';
 import templates from './SidebarLayoutsSection.soy';
@@ -29,6 +30,24 @@ class SidebarLayoutsSection extends Component {
 	}
 
 	/**
+	 * Handles dragLayout event and dispatches action to update drag target
+	 * @param {object} eventData
+	 * @param {string} eventData.hoveredSectionBorder
+	 * @param {string} eventData.hoveredSectionId
+	 */
+	_handleDragLayout(eventData) {
+		const {hoveredSectionBorder, hoveredSectionId} = eventData;
+
+		this.store.dispatchAction(
+			UPDATE_DRAG_TARGET,
+			{
+				hoveredElementBorder: hoveredSectionBorder,
+				hoveredSectionId
+			}
+		);
+	}
+
+	/**
 	 * Initializes sidebarLayoutsDragDrop instance
 	 * @private
 	 * @review
@@ -39,6 +58,11 @@ class SidebarLayoutsSection extends Component {
 		}
 
 		this._sidebarLayoutsDragDrop = new SidebarLayoutsDragDrop();
+
+		this._sidebarLayoutsDragDrop.on(
+			'dragLayout',
+			this._handleDragLayout.bind(this)
+		);
 	}
 }
 

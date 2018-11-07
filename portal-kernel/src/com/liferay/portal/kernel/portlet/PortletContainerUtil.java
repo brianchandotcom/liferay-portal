@@ -33,6 +33,9 @@ import com.liferay.portal.kernel.xml.QName;
 
 import java.io.IOException;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -136,11 +139,40 @@ public class PortletContainerUtil {
 					Layout layout = (Layout)request.getAttribute(
 						WebKeys.LAYOUT);
 
-					LiferayPortletURL renderURL = PortletURLFactoryUtil.create(
-						request, portlet, layout, PortletRequest.RENDER_PHASE,
-						MimeResponse.Copy.ALL);
+					LiferayPortletURL liferayPortletURL =
+						PortletURLFactoryUtil.create(
+							request, portlet, layout,
+							PortletRequest.RENDER_PHASE, MimeResponse.Copy.ALL);
 
-					location = renderURL.toString();
+					try {
+						URL locationURL = new URL(location);
+
+						URL renderURL = new URL(liferayPortletURL.toString());
+
+						String protocol = locationURL.getProtocol();
+						String host = locationURL.getHost();
+						int port = locationURL.getPort();
+
+						if (protocol.equals(renderURL.getProtocol()) &&
+							host.equals(renderURL.getHost()) &&
+							(port == renderURL.getPort())) {
+
+							String portletId = _getPortletIdParameter(
+								locationURL.getQuery());
+
+							if (portletId != null) {
+								if (portletId.equals(
+										_getPortletIdParameter(
+											renderURL.getQuery()))) {
+
+									location = liferayPortletURL.toString();
+								}
+							}
+						}
+					}
+					catch (MalformedURLException murle) {
+						throw new PortletContainerException(murle);
+					}
 				}
 
 				response.sendRedirect(location);
@@ -283,6 +315,26 @@ public class PortletContainerUtil {
 
 	public void setPortletContainer(PortletContainer portletContainer) {
 		_portletContainer = portletContainer;
+	}
+
+	private static String _getPortletIdParameter(String query) {
+		if (query != null) {
+			int pos = query.indexOf("p_p_id=");
+
+			if (pos >= 0) {
+				String portletId = query.substring(pos + 7);
+
+				pos = portletId.indexOf("&");
+
+				if (pos > 0) {
+					portletId = portletId.substring(0, pos);
+				}
+
+				return portletId;
+			}
+		}
+
+		return null;
 	}
 
 	private static void _processEvents(

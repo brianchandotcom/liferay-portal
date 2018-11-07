@@ -111,15 +111,12 @@ public class SubscriptionSenderTest {
 
 		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
 
-		PortalUUID portalUUID = ProxyFactory.newDummyInstance(PortalUUID.class);
-
-		portalUUIDUtil.setPortalUUID(portalUUID);
+		portalUUIDUtil.setPortalUUID(
+			ProxyFactory.newDummyInstance(PortalUUID.class));
 
 		PortalUtil portalUtil = new PortalUtil();
 
-		Portal portal = ProxyFactory.newDummyInstance(Portal.class);
-
-		portalUtil.setPortal(portal);
+		portalUtil.setPortal(ProxyFactory.newDummyInstance(Portal.class));
 	}
 
 	@Test

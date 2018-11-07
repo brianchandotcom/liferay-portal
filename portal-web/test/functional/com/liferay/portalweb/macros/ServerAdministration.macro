@@ -144,6 +144,12 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
+	<command name="openServerAdmin">
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/control_panel/manage?p_p_id=com_liferay_server_admin_web_portlet_ServerAdminPortlet" />
+		</execute>
+	</command>
+
 	<command name="tearDownDMFileUploadSettings">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />

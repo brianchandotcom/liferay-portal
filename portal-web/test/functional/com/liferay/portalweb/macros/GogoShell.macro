@@ -21,6 +21,12 @@
 		<execute function="AssertClick" locator1="GogoShell#EXECUTE_BUTTON" value1="Execute" />
 	</command>
 
+	<command name="openGogoShellAdmin">
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/control_panel/manage?p_p_id=com_liferay_gogo_shell_web_internal_portlet_GogoShellPortlet" />
+		</execute>
+	</command>
+
 	<command name="startModule">
 		<execute function="Type" locator1="GogoShell#COMMAND_FIELD" value1="start ${moduleID}" />
 

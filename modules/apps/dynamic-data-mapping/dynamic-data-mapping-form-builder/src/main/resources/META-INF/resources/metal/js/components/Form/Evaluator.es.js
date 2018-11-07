@@ -92,7 +92,13 @@ const WithEvaluator = ChildComponent => {
 
 					return {
 						...field,
-						...currentField
+						dataType: currentField.dataType,
+						errorMessage: currentField.errorMessage,
+						options: currentField.options,
+						readOnly: currentField.readOnly,
+						required: currentField.required,
+						valid: currentField.valid,
+						visible: currentField.visible
 					};
 				}
 			);

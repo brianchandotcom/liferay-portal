@@ -107,7 +107,7 @@ public class GitBisectToolTopLevelBuildRunner
 		catch (Exception e) {
 			String portalGitHubURL = getBuildParameter(_PORTAL_GITHUB_URL);
 
-			reportFailureMessageToBuildDescription(
+			failBuildRunner(
 				JenkinsResultsParserUtil.combine(
 					_PORTAL_BRANCH_SHAS,
 					" has SHAs that are not be found within the latest ",
@@ -203,13 +203,13 @@ public class GitBisectToolTopLevelBuildRunner
 		Matcher matcher = _pattern.matcher(jenkinsGitHubURL);
 
 		if (!matcher.find()) {
-			reportFailureMessageToBuildDescription(failureMessage);
+			failBuildRunner(failureMessage);
 		}
 
 		String repositoryName = matcher.group("repositoryName");
 
 		if (!repositoryName.equals("liferay-jenkins-ee")) {
-			reportFailureMessageToBuildDescription(failureMessage);
+			failBuildRunner(failureMessage);
 		}
 	}
 
@@ -217,8 +217,7 @@ public class GitBisectToolTopLevelBuildRunner
 		String portalBatchName = getBuildParameter(_PORTAL_BATCH_NAME);
 
 		if ((portalBatchName == null) || portalBatchName.isEmpty()) {
-			reportFailureMessageToBuildDescription(
-				_PORTAL_BATCH_NAME + " is null");
+			failBuildRunner(_PORTAL_BATCH_NAME + " is null");
 		}
 
 		String allowedPortalBatchNames = getJobProperty(
@@ -251,7 +250,7 @@ public class GitBisectToolTopLevelBuildRunner
 
 			sb.append("</ul>");
 
-			reportFailureMessageToBuildDescription(sb.toString());
+			failBuildRunner(sb.toString());
 		}
 	}
 
@@ -262,8 +261,7 @@ public class GitBisectToolTopLevelBuildRunner
 		if ((portalBatchTestSelector == null) ||
 			portalBatchTestSelector.isEmpty()) {
 
-			reportFailureMessageToBuildDescription(
-				_PORTAL_BATCH_TEST_SELECTOR + " is null");
+			failBuildRunner(_PORTAL_BATCH_TEST_SELECTOR + " is null");
 		}
 	}
 
@@ -271,8 +269,7 @@ public class GitBisectToolTopLevelBuildRunner
 		String portalBranchSHAs = getBuildParameter(_PORTAL_BRANCH_SHAS);
 
 		if ((portalBranchSHAs == null) || portalBranchSHAs.isEmpty()) {
-			reportFailureMessageToBuildDescription(
-				_PORTAL_BRANCH_SHAS + " is null");
+			failBuildRunner(_PORTAL_BRANCH_SHAS + " is null");
 		}
 
 		String allowedPortalBranchSHAs = getJobProperty(
@@ -290,7 +287,7 @@ public class GitBisectToolTopLevelBuildRunner
 		if (portalBranchSHACount >
 				Integer.valueOf(allowedPortalBranchSHAs)) {
 
-			reportFailureMessageToBuildDescription(
+			failBuildRunner(
 				JenkinsResultsParserUtil.combine(
 					_PORTAL_BRANCH_SHAS, " can only reference ",
 					allowedPortalBranchSHAs, " portal branch SHAs"));
@@ -301,8 +298,7 @@ public class GitBisectToolTopLevelBuildRunner
 		String portalGitHubURL = getBuildParameter(_PORTAL_GITHUB_URL);
 
 		if ((portalGitHubURL == null) || portalGitHubURL.isEmpty()) {
-			reportFailureMessageToBuildDescription(
-				_PORTAL_GITHUB_URL + " is null");
+			failBuildRunner(_PORTAL_GITHUB_URL + " is null");
 		}
 
 		String failureMessage = JenkinsResultsParserUtil.combine(
@@ -312,7 +308,7 @@ public class GitBisectToolTopLevelBuildRunner
 		Matcher matcher = _pattern.matcher(portalGitHubURL);
 
 		if (!matcher.find()) {
-			reportFailureMessageToBuildDescription(failureMessage);
+			failBuildRunner(failureMessage);
 		}
 
 		String repositoryName = matcher.group("repositoryName");
@@ -320,7 +316,7 @@ public class GitBisectToolTopLevelBuildRunner
 		if (!repositoryName.equals("liferay-portal") &&
 			!repositoryName.equals("liferay-portal-ee")) {
 
-			reportFailureMessageToBuildDescription(failureMessage);
+			failBuildRunner(failureMessage);
 		}
 	}
 
@@ -331,8 +327,7 @@ public class GitBisectToolTopLevelBuildRunner
 		if ((portalUpstreamBranchName == null) ||
 			portalUpstreamBranchName.isEmpty()) {
 
-			reportFailureMessageToBuildDescription(
-				_PORTAL_UPSTREAM_BRANCH_NAME + " is null");
+			failBuildRunner(_PORTAL_UPSTREAM_BRANCH_NAME + " is null");
 		}
 
 		String allowedPortalUpstreamBranchNames = getJobProperty(
@@ -367,7 +362,7 @@ public class GitBisectToolTopLevelBuildRunner
 
 			sb.append("</ul>");
 
-			reportFailureMessageToBuildDescription(sb.toString());
+			failBuildRunner(sb.toString());
 		}
 	}
 

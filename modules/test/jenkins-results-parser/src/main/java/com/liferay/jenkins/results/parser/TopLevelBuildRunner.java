@@ -83,6 +83,24 @@ public abstract class TopLevelBuildRunner
 		_downstreamBuildDataList.add(buildData);
 	}
 
+	protected void failBuildRunner(String message) {
+		failBuildRunner(message, null);
+	}
+
+	protected void failBuildRunner(String message, Exception exception) {
+		TopLevelBuildData topLevelBuildData = getBuildData();
+
+		topLevelBuildData.setBuildDescription("<b>ERROR:</b> " + message);
+
+		updateBuildDescription();
+
+		if (exception == null) {
+			throw new RuntimeException(message);
+		}
+
+		throw new RuntimeException(message, exception);
+	}
+
 	protected String getBuildParameter(String key) {
 		TopLevelBuildData topLevelBuildData = getBuildData();
 
@@ -151,26 +169,6 @@ public abstract class TopLevelBuildRunner
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
-	}
-
-	protected void reportFailureMessageToBuildDescription(String message) {
-		reportFailureMessageToBuildDescription(message, null);
-	}
-
-	protected void reportFailureMessageToBuildDescription(
-		String message, Exception exception) {
-
-		TopLevelBuildData topLevelBuildData = getBuildData();
-
-		topLevelBuildData.setBuildDescription("<b>ERROR:</b> " + message);
-
-		updateBuildDescription();
-
-		if (exception == null) {
-			throw new RuntimeException(message);
-		}
-
-		throw new RuntimeException(message, exception);
 	}
 
 	protected void updateJenkinsReport() {

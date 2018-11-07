@@ -66,6 +66,8 @@ public class LocationVariableResolverTest extends PowerMockito {
 		try (OutputStream outputStream = new FileOutputStream(file)) {
 			outputStream.write(expectedValue.getBytes());
 
+			outputStream.flush();
+
 			String value = _locationVariableResolver.resolve(
 				"${file://" + file.getAbsolutePath() + "}");
 

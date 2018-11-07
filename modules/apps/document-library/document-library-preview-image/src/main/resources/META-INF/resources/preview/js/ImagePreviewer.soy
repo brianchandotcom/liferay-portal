@@ -7,7 +7,7 @@
 {template .render}
 	{@param imageURL: string}
 	{@param spritemap: string}
-	{@param? _handleZoom: any}
+	{@param? _handleToolbarClick: any}
 	{@param? id: string}
 	{@param? imageMargin: string}
 	{@param? imageHeight: number}
@@ -37,7 +37,7 @@
 			/>
 		</div>
 		{call .toolbar}
-			{param _handleZoom: $_handleZoom /}
+			{param _handleToolbarClick: $_handleToolbarClick /}
 			{param spritemap: $spritemap /}
 			{param zoomActual: $zoomActual /}
 			{param zoomInDisabled: $zoomInDisabled /}
@@ -49,7 +49,7 @@
 
 {template .toolbar}
 	{@param spritemap: string}
-	{@param? _handleZoom: any}
+	{@param? _handleToolbarClick: any}
 	{@param? zoomActual: number}
 	{@param? zoomInDisabled: bool}
 	{@param? zoomFitToggle: bool}
@@ -58,7 +58,7 @@
 	{let $zoomLabel: round(($zoomActual ?: 0) * 100) /}
 	{let $baseButtonsToolbar:[
 		'elementClasses': 'btn-dark',
-		'events': [ 'click': $_handleZoom ],
+		'events': [ 'click': $_handleToolbarClick],
 		'spritemap': $spritemap,
 		'style': false
 	] /}

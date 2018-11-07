@@ -42,9 +42,9 @@ class ImagePreviewer extends Component {
 	 * @inheritDoc
 	 */
 	attached() {
-		this.imageNaturalWidth = this.refs.image.naturalWidth;
-		this.imageNaturalHeight = this.refs.image.naturalHeight;
-		this.isPreviewFit = true;
+		this._imageNaturalWidth = this.refs.image.naturalWidth;
+		this._imageNaturalHeight = this.refs.image.naturalHeight;
+		this._isPreviewFit = true;
 
 		this._updateDimensions();
 
@@ -63,12 +63,12 @@ class ImagePreviewer extends Component {
 	 * @inheritDoc
 	 */
 	rendered() {
-		if (this.zoomRatio) {
+		if (this._zoomRatio) {
 			this._setScrollContainer();
 		}
 
-		if (this.reCalculateZoomActual) {
-			this.reCalculateZoomActual = false;
+		if (this._reCalculateZoomActual) {
+			this._reCalculateZoomActual = false;
 
 			this._calculateZoomActual();
 		}
@@ -80,9 +80,9 @@ class ImagePreviewer extends Component {
 	 * @review
 	 */
 	_calculateZoomActual() {
-		this.zoomActual = this.refs.image.width / this.imageNaturalWidth;
+		this.zoomActual = this.refs.image.width / this._imageNaturalWidth;
 
-		this._setToolbar();
+		this._updateToolbarButtons();
 	}
 
 	/**
@@ -94,8 +94,8 @@ class ImagePreviewer extends Component {
 		this.imageHeight = null;
 		this.imageWidth = null;
 		this.imageMargin = null;
-		this.reCalculateZoomActual = true;
-		this.isPreviewFit = true;
+		this._isPreviewFit = true;
+		this._reCalculateZoomActual = true;
 	}
 
 	/**
@@ -104,7 +104,7 @@ class ImagePreviewer extends Component {
 	 * @private
 	 * @review
 	 */
-	_handleZoom(event) {
+	_handleToolbarClick(event) {
 		const value = event.currentTarget.value;
 
 		let zoomValue;
@@ -127,12 +127,12 @@ class ImagePreviewer extends Component {
 		}
 
 		if (zoomValue) {
-			this._setZoom(zoomValue);
+			this._applyZoom(zoomValue);
 		}
 	}
 
 	/**
-	 * Calculate actual dimensions basen in container rendered
+	 * Calculate actual dimensions based in container rendered
 	 * @private
 	 * @review
 	 */
@@ -143,7 +143,7 @@ class ImagePreviewer extends Component {
 			this.imageWidth > this.refs.imageContainer.clientWidth ? 0 : 'auto'
 		}`;
 
-		if (this.isPreviewFit) {
+		if (this._isPreviewFit) {
 			this._calculateZoomActual();
 		}
 	}
@@ -158,9 +158,9 @@ class ImagePreviewer extends Component {
 		let scrollLeft;
 		let scrollTop;
 
-		if (this.zoomRatio < MIN_ZOOM_RATIO_AUTOCENTER) {
-			scrollLeft = imageContainer.clientWidth * (this.zoomRatio - 1) / 2 + imageContainer.scrollLeft * this.zoomRatio;
-			scrollTop = imageContainer.clientHeight * (this.zoomRatio - 1) / 2 + imageContainer.scrollTop * this.zoomRatio;
+		if (this._zoomRatio < MIN_ZOOM_RATIO_AUTOCENTER) {
+			scrollLeft = imageContainer.clientWidth * (this._zoomRatio - 1) / 2 + imageContainer.scrollLeft * this._zoomRatio;
+			scrollTop = imageContainer.clientHeight * (this._zoomRatio - 1) / 2 + imageContainer.scrollTop * this._zoomRatio;
 		}
 		else {
 			scrollTop = (this.imageHeight - imageContainer.clientHeight) / 2;
@@ -170,7 +170,7 @@ class ImagePreviewer extends Component {
 		imageContainer.scrollLeft = scrollLeft;
 		imageContainer.scrollTop = scrollTop;
 
-		this.zoomRatio = null;
+		this._zoomRatio = null;
 	}
 
 	/**
@@ -178,7 +178,7 @@ class ImagePreviewer extends Component {
 	 * @private
 	 * @review
 	 */
-	_setToolbar() {
+	_updateToolbarButtons() {
 		this.zoomInDisabled = ZOOM_LEVELS_REVERSED[0] === this.zoomActual;
 		this.zoomOutDisabled = ZOOM_LEVELS[0] >= this.zoomActual;
 		this.zoomFitToggle = this.zoomActual === 1;
@@ -190,15 +190,15 @@ class ImagePreviewer extends Component {
 	 * @private
 	 * @review
 	 */
-	_setZoom(zoomNumber) {
-		this.imageHeight = this.imageNaturalHeight * zoomNumber;
-		this.imageWidth = this.imageNaturalWidth * zoomNumber;
-		this.zoomRatio = zoomNumber / this.zoomActual;
+	_applyZoom(zoomNumber) {
+		this.imageHeight = this._imageNaturalHeight * zoomNumber;
+		this.imageWidth = this._imageNaturalWidth * zoomNumber;
 		this.zoomActual = zoomNumber;
-		this.isPreviewFit = false;
+		this._zoomRatio = zoomNumber / this.zoomActual;
+		this._isPreviewFit = false;
 
 		this._updateDimensions();
-		this._setToolbar();
+		this._updateToolbarButtons();
 	}
 }
 

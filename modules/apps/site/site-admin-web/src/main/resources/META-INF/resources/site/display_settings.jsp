@@ -47,16 +47,6 @@ boolean disabledLocaleInput = false;
 if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayoutSetPrototypeLinkEnabled()) {
 	disabledLocaleInput = true;
 }
-
-Set<Locale> companyAvailableLocales = LanguageUtil.getAvailableLocales();
-
-List<Locale> siteAvailableLocales = new ArrayList<>();
-
-for (Locale siteAvailableLocale : LanguageUtil.getAvailableLocales(liveGroup.getGroupId())) {
-	if (companyAvailableLocales.contains(siteAvailableLocale)) {
-		siteAvailableLocales.add(siteAvailableLocale);
-	}
-}
 %>
 
 <c:if test="<%= disabledLocaleInput %>">
@@ -90,7 +80,10 @@ for (Locale siteAvailableLocale : LanguageUtil.getAvailableLocales(liveGroup.get
 		<p class="text-muted">
 
 			<%
-			for (Locale availableLocale : companyAvailableLocales) {
+			List<String> defaultLanguagesList = new ArrayList<>();
+
+			for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
+				defaultLanguagesList.add(LanguageUtil.getLanguageId(availableLocale));
 			%>
 
 				<%= availableLocale.getDisplayName(locale) %>,
@@ -100,6 +93,8 @@ for (Locale siteAvailableLocale : LanguageUtil.getAvailableLocales(liveGroup.get
 			%>
 
 		</p>
+
+		<aui:input name="defaultLanguagesList" type="hidden" value='<%= String.join(",", defaultLanguagesList) %>' />
 	</aui:fieldset>
 </aui:fieldset>
 
@@ -119,6 +114,10 @@ for (Locale siteAvailableLocale : LanguageUtil.getAvailableLocales(liveGroup.get
 			</c:when>
 		</c:choose>
 	</liferay-ui:error>
+
+	<%
+	Set<Locale> siteAvailableLocales = LanguageUtil.getAvailableLocales(liveGroup.getGroupId());
+	%>
 
 	<aui:fieldset cssClass="default-language">
 		<h4 class="text-default"><liferay-ui:message key="default-language" /></h4>
@@ -155,11 +154,9 @@ for (Locale siteAvailableLocale : LanguageUtil.getAvailableLocales(liveGroup.get
 
 		String groupLanguageIds = typeSettingsProperties.getProperty(PropsKeys.LOCALES);
 
-		if ((groupLanguageIds != null) && !inheritLocales) {
+		if (groupLanguageIds != null) {
 			for (Locale currentLocale : LocaleUtil.fromLanguageIds(StringUtil.split(groupLanguageIds))) {
-				if (companyAvailableLocales.contains(currentLocale)) {
-					leftList.add(new KeyValuePair(LanguageUtil.getLanguageId(currentLocale), currentLocale.getDisplayName(locale)));
-				}
+				leftList.add(new KeyValuePair(LanguageUtil.getLanguageId(currentLocale), currentLocale.getDisplayName(locale)));
 			}
 		}
 		else {
@@ -172,7 +169,7 @@ for (Locale siteAvailableLocale : LanguageUtil.getAvailableLocales(liveGroup.get
 
 		List rightList = new ArrayList();
 
-		for (Locale availableLocale : companyAvailableLocales) {
+		for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
 			if (!siteAvailableLocales.contains(availableLocale)) {
 				rightList.add(new KeyValuePair(LocaleUtil.toLanguageId(availableLocale), availableLocale.getDisplayName(locale)));
 			}
@@ -200,7 +197,13 @@ for (Locale siteAvailableLocale : LanguageUtil.getAvailableLocales(liveGroup.get
 	function <portlet:namespace />saveLocales() {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		form.fm('<%= PropsKeys.LOCALES %>').val(Liferay.Util.listSelect(form.fm('currentLanguageIds')));
+		var radioButtons = document.getElementsByName('<portlet:namespace/>TypeSettingsProperties--inheritLocales--');
+
+		if (radioButtons[0].checked) {
+			form.fm('<%= PropsKeys.LOCALES %>').val(form.fm('defaultLanguagesList').val());
+		} else {
+			form.fm('<%= PropsKeys.LOCALES %>').val(Liferay.Util.listSelect(form.fm('currentLanguageIds')));
+		}
 	}
 </aui:script>
 

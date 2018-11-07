@@ -17,11 +17,11 @@ package com.liferay.portlet.internal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManager;
-import com.liferay.portlet.PortletAsyncListenerAdapter;
 
 import java.io.IOException;
 
 import javax.servlet.AsyncEvent;
+import javax.servlet.AsyncListener;
 
 /**
  * @author Neil Griffin
@@ -29,12 +29,11 @@ import javax.servlet.AsyncEvent;
 public class PortletAsyncScopingRunnable implements Runnable {
 
 	public PortletAsyncScopingRunnable(
-		Runnable runnable,
-		PortletAsyncListenerAdapter portletAsyncListenerAdapter,
+		Runnable runnable, AsyncListener asyncListener,
 		PortletAsyncScopeManager portletAsyncScopeManager) {
 
 		_runnable = runnable;
-		_portletAsyncListenerAdapter = portletAsyncListenerAdapter;
+		_asyncListener = asyncListener;
 		_portletAsyncScopeManager = portletAsyncScopeManager;
 	}
 
@@ -47,7 +46,7 @@ public class PortletAsyncScopingRunnable implements Runnable {
 		}
 		catch (Throwable t) {
 			try {
-				_portletAsyncListenerAdapter.onError(new AsyncEvent(null, t));
+				_asyncListener.onError(new AsyncEvent(null, t));
 			}
 			catch (IOException ioe) {
 				_log.error(ioe, ioe);
@@ -61,7 +60,7 @@ public class PortletAsyncScopingRunnable implements Runnable {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletAsyncScopingRunnable.class);
 
-	private final PortletAsyncListenerAdapter _portletAsyncListenerAdapter;
+	private final AsyncListener _asyncListener;
 	private final PortletAsyncScopeManager _portletAsyncScopeManager;
 	private final Runnable _runnable;
 

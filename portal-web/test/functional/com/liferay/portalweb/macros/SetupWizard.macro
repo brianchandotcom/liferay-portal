@@ -95,10 +95,6 @@
 			</else>
 		</if>
 
-		<execute macro="SetupWizard#configurePortalNamePG">
-			<var name="portalName" value="${portalName}" />
-		</execute>
-
 		<execute macro="SetupWizard#configureAdministratorUserPG">
 			<var name="administratorEmail" value="${administratorEmail}" />
 			<var name="administratorFirstName" value="${administratorFirstName}" />

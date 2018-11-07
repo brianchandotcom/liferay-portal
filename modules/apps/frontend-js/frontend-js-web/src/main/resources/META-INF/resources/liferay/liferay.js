@@ -13,7 +13,25 @@ Liferay = window.Liferay || {};
 
 	var STR_MULTIPART = 'multipart/form-data';
 
-	Liferay.namespace = _.namespace;
+	Liferay.namespace = function namespace(obj, path) {
+		if (path === undefined) {
+			path = obj;
+			obj = this;
+		}
+
+		var parts = path.split('.');
+
+		for (var part; parts.length && (part = parts.shift());) {
+			if (obj[part] && obj[part] !== Object.prototype[part]) {
+				obj = obj[part];
+			}
+			else {
+				obj = obj[part] = {};
+			}
+		}
+
+		return obj;
+	};
 
 	$.ajaxSetup(
 		{
@@ -85,128 +103,120 @@ Liferay = window.Liferay || {};
 	var Service = function() {
 		var instance = this;
 
-		var args = Service.parseInvokeArgs(arguments);
+		var args = Service.parseInvokeArgs(Array.prototype.slice.call(arguments, 0));
 
 		return Service.invoke.apply(Service, args);
 	};
 
-	_.assign(
-		Service,
-		{
-			URL_INVOKE: themeDisplay.getPathContext() + '/api/jsonws/invoke',
+	Service.URL_INVOKE = themeDisplay.getPathContext() + '/api/jsonws/invoke';
 
-			bind: function() {
-				var instance = this;
+	Service.bind = function() {
+		var args = Array.prototype.slice.call(arguments, 0);
 
-				var args = _.toArray(arguments);
+		return function () {
+			var newArgs = Array.prototype.slice.call(arguments, 0);
 
-				args.unshift(Liferay.Service, Liferay);
+			return Service.apply(Service, args.concat(newArgs));
+		};
+	};
 
-				return _.bind.apply(_, args);
-			},
+	Service.parseInvokeArgs = function(args) {
+		var instance = this;
 
-			parseInvokeArgs: function(args) {
-				var instance = this;
+		var payload = args[0];
 
-				var payload = args[0];
+		var ioConfig = instance.parseIOConfig(args);
 
-				var ioConfig = instance.parseIOConfig(args);
+		if (typeof payload === 'string') {
+			payload = instance.parseStringPayload(args);
 
-				if (_.isString(payload)) {
-					payload = instance.parseStringPayload(args);
+			instance.parseIOFormConfig(ioConfig, args);
 
-					instance.parseIOFormConfig(ioConfig, args);
+			var lastArg = args[args.length - 1];
 
-					var lastArg = args[args.length - 1];
-
-					if (_.isObject(lastArg) && lastArg.method) {
-						ioConfig.method = lastArg.method;
-					}
-				}
-
-				return [payload, ioConfig];
-			},
-
-			parseIOConfig: function(args) {
-				var instance = this;
-
-				var payload = args[0];
-
-				var ioConfig = payload.io || {};
-
-				delete payload.io;
-
-				if (!ioConfig.success) {
-					var callbacks = _.filter(args, isFunction);
-
-					var callbackException = callbacks[1];
-					var callbackSuccess = callbacks[0];
-
-					if (!callbackException) {
-						callbackException = callbackSuccess;
-					}
-
-					ioConfig.complete = function(xhr) {
-						var response = xhr.responseJSON;
-
-						if ((response !== null) && !_.has(response, 'exception')) {
-							if (callbackSuccess) {
-								callbackSuccess.call(this, response);
-							}
-						}
-						else if (callbackException) {
-							var exception = response ? response.exception : 'The server returned an empty response';
-
-							callbackException.call(this, exception, response);
-						}
-					};
-				}
-
-				if (!_.has(ioConfig, 'cache') && REGEX_METHOD_GET.test(ioConfig.type)) {
-					ioConfig.cache = false;
-				}
-
-				if (Liferay.PropsValues.NTLM_AUTH_ENABLED && Liferay.Browser.isIe()) {
-					ioConfig.type = 'GET';
-				}
-
-				return ioConfig;
-			},
-
-			parseIOFormConfig: function(ioConfig, args) {
-				var instance = this;
-
-				var form = args[1];
-
-				if (isNode(form)) {
-					ioConfig.form = form;
-
-					if (ioConfig.form.enctype == STR_MULTIPART) {
-						ioConfig.contentType = false;
-						ioConfig.processData = false;
-					}
-				}
-			},
-
-			parseStringPayload: function(args) {
-				var instance = this;
-
-				var params = {};
-				var payload = {};
-
-				var config = args[1];
-
-				if (!isFunction(config) && !isNode(config)) {
-					params = config;
-				}
-
-				payload[args[0]] = params;
-
-				return payload;
+			if (typeof lastArg === 'object' && lastArg.method) {
+				ioConfig.method = lastArg.method;
 			}
-		},
-		true
-	);
+		}
+
+		return [payload, ioConfig];
+	};
+
+	Service.parseIOConfig = function (args) {
+		var instance = this;
+
+		var payload = args[0];
+
+		var ioConfig = payload.io || {};
+
+		delete payload.io;
+
+		if (!ioConfig.success) {
+			var callbacks = args.filter(isFunction);
+
+			var callbackException = callbacks[1];
+			var callbackSuccess = callbacks[0];
+
+			if (!callbackException) {
+				callbackException = callbackSuccess;
+			}
+
+			ioConfig.complete = function (xhr) {
+				var response = xhr.responseJSON;
+
+				if ((response !== null) && !response.hasOwnProperty('exception')) {
+					if (callbackSuccess) {
+						callbackSuccess.call(this, response);
+					}
+				}
+				else if (callbackException) {
+					var exception = response ? response.exception : 'The server returned an empty response';
+
+					callbackException.call(this, exception, response);
+				}
+			};
+		}
+
+		if (!ioConfig.hasOwnProperty('cache') && REGEX_METHOD_GET.test(ioConfig.type)) {
+			ioConfig.cache = false;
+		}
+
+		if (Liferay.PropsValues.NTLM_AUTH_ENABLED && Liferay.Browser.isIe()) {
+			ioConfig.type = 'GET';
+		}
+
+		return ioConfig;
+	};
+
+	Service.parseIOFormConfig = function(ioConfig, args) {
+		var instance = this;
+
+		var form = args[1];
+
+		if (isNode(form)) {
+			ioConfig.form = form;
+
+			if (ioConfig.form.enctype == STR_MULTIPART) {
+				ioConfig.contentType = false;
+				ioConfig.processData = false;
+			}
+		}
+	};
+
+	Service.parseStringPayload = function(args) {
+		var params = {};
+		var payload = {};
+
+		var config = args[1];
+
+		if (!isFunction(config) && !isNode(config)) {
+			params = config;
+		}
+
+		payload[args[0]] = params;
+
+		return payload;
+	};
 
 	Service.invoke = function(payload, ioConfig) {
 		var instance = this;
@@ -214,15 +224,15 @@ Liferay = window.Liferay || {};
 		var cmd = JSON.stringify(payload);
 		var p_auth = Liferay.authToken;
 
-		_.defaults(
-			ioConfig,
+		ioConfig = Object.assign(
 			{
 				data: {
 					cmd: cmd,
 					p_auth: p_auth
 				},
 				dataType: 'JSON'
-			}
+			},
+			ioConfig
 		);
 
 		if (ioConfig.form) {
@@ -233,9 +243,8 @@ Liferay = window.Liferay || {};
 				ioConfig.data.append('p_auth', p_auth);
 			}
 			else {
-				_.forEach(
-					$(ioConfig.form).serializeArray(),
-					function(item, index) {
+				$(ioConfig.form).serializeArray().forEach(
+					function (item) {
 						ioConfig.data[item.name] = item.value;
 					}
 				);
@@ -250,22 +259,23 @@ Liferay = window.Liferay || {};
 		);
 	};
 
-	_.forEach(
-		['get', 'delete', 'post', 'put', 'update'],
-		function(item, index) {
+	['get', 'delete', 'post', 'put', 'update'].forEach(
+		function(item) {
 			var methodName = item;
 
 			if (item === 'delete') {
 				methodName = 'del';
 			}
 
-			Service[methodName] = _.bindKeyRight(
-				Liferay,
-				'Service',
-				{
-					method: item
-				}
-			);
+			Service[methodName] = function() {
+				var args = Array.prototype.slice.call(arguments, 0);
+
+				var method = {method: item};
+
+					args.push(method);
+
+				return Service.apply(Service, args);
+			};
 		}
 	);
 

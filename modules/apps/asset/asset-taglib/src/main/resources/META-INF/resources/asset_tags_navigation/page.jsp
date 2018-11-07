@@ -82,19 +82,12 @@ private String _buildTagsNavigation(long scopeGroupId, String selectedTagName, P
 
 	sb.append("<ul class=\"tag-items ");
 
-	if (displayStyle.equals("cloud")) {
-		sb.append("tag-cloud");
-	}
-	else {
-		sb.append("tag-list");
-	}
-
-	sb.append("\">");
-
 	int maxCount = 1;
 	int minCount = 1;
 
-	if (showAssetCount && displayStyle.equals("cloud")) {
+	if (displayStyle.equals("cloud")) {
+		sb.append("tag-cloud");
+
 		for (AssetTag tag : tags) {
 			String tagName = tag.getName();
 
@@ -115,6 +108,11 @@ private String _buildTagsNavigation(long scopeGroupId, String selectedTagName, P
 			minCount = Math.min(minCount, count);
 		}
 	}
+	else {
+		sb.append("tag-list");
+	}
+
+	sb.append("\">");
 
 	double multiplier = 1;
 

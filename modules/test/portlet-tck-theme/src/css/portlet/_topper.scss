@@ -1,0 +1,113 @@
+.portlet {
+	margin-bottom: 10px;
+	position: relative;
+
+	> .portlet-content-editable {
+		border-color: transparent;
+	}
+
+	> .portlet-topper {
+		width: 100%;
+	}
+}
+
+.portlet {
+	&:hover, &.focus {
+		> .portlet-content-editable {
+			@include media-query(sm) {
+				border-color: $portlet-topper-border;
+				border-top-left-radius: 0;
+				border-top-right-radius: 0;
+			}
+		}
+	}
+}
+
+.portlet-content-editable {
+	border-color: $portlet-topper-border;
+	border-radius: $portlet-content-border-radius;
+	border-style: solid;
+	border-width: $portlet-content-border-width;
+	padding: 10px;
+}
+
+/* ---------- Portlet topper ---------- */
+
+.portlet-actions {
+	float: right;
+}
+
+.portlet-options {
+	display: inline-block;
+}
+
+.portlet-title-default {
+	@include flex(1 1 auto);
+	@include text-overflow;
+
+	line-height: 2;
+}
+
+.portlet-title-menu {
+	@include flex(0 1 auto);
+
+	> span > a {
+		display: inline-block;
+		text-decoration: none;
+	}
+}
+
+.portlet-topper {
+	background-color: $portlet-topper-bg;
+	border-color: $portlet-topper-border;
+	border-radius: $portlet-topper-border-radius;
+	border-style: solid;
+	border-width: $portlet-topper-border-width;
+	color: $portlet-topper-color;
+
+	@include display(flex);
+
+	padding-left: 10px;
+	padding-right: 10px;
+	position: relative;
+}
+
+.portlet-topper-toolbar {
+	margin-bottom: 0;
+	margin-top: 0;
+	padding-left: 0;
+
+	&:last-of-type {
+		margin-right: -10px;
+	}
+
+	> a, > span > a, .lfr-icon-menu > a {
+		color: $portlet-topper-link-color;
+	}
+
+	> a {
+		&:focus, &:hover {
+			text-decoration: none;
+		}
+	}
+}
+
+/* ---------- Portlet controls in mobile ---------- */
+
+.controls-visible {
+	.portlet-content-editable {
+		@include media-query(null, $screen-xs-max) {
+			border-color: $portlet-topper-border;
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+		}
+	}
+
+	.portlet-topper {
+		@include display(flex);
+	}
+
+	.portlet-topper-toolbar {
+		display: block;
+	}
+}

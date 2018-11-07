@@ -1,0 +1,19 @@
+/* ---------- These inject tags are used for dynamically creating imports for themelet styles, you can place them where ever you like in this file. ---------- */
+
+.affix, .control-menu {
+	position: initial !important;
+	left: 0;
+	right: 0;
+	top: 0;
+}
+
+/*
+ * overrides display: none!important in
+ * frontend-theme-styled/src/main/resources/META-INF/resources/_styled/css/clay.scss
+ */
+.hide { display: block!important; }
+
+/* ---------- inject:imports ---------- */
+/* ---------- endinject ---------- */
+
+/* ---------- This file allows you to override default styles in one central location for easier upgrade and maintenance. ---------- */

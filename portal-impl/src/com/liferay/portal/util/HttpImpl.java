@@ -61,6 +61,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.net.ssl.SSLSocketFactory;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.RenderRequest;
 
@@ -89,7 +91,14 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.config.ConnectionConfig;
+import org.apache.http.config.Registry;
+import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.routing.HttpRoute;
+import org.apache.http.conn.socket.ConnectionSocketFactory;
+import org.apache.http.conn.socket.PlainConnectionSocketFactory;
+import org.apache.http.conn.ssl.DefaultHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.util.PublicSuffixMatcherLoader;
 import org.apache.http.cookie.ClientCookie;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
@@ -137,7 +146,7 @@ public class HttpImpl implements Http {
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
 		_poolingHttpClientConnectionManager =
-			new PoolingHttpClientConnectionManager();
+			_initPoolingHttpClientConnectionManager();
 
 		_poolingHttpClientConnectionManager.setDefaultMaxPerRoute(
 			_MAX_CONNECTIONS_PER_HOST);
@@ -1996,6 +2005,39 @@ public class HttpImpl implements Http {
 		}
 
 		return pos;
+	}
+
+	private PoolingHttpClientConnectionManager
+		_initPoolingHttpClientConnectionManager() {
+
+		String[] supportedProtocols = StringUtil.split(
+			System.getProperty("https.protocols"));
+
+		if (supportedProtocols.length == 0) {
+			supportedProtocols = null;
+		}
+
+		String[] supportedCipherSuites = StringUtil.split(
+			System.getProperty("https.cipherSuites"));
+
+		if (supportedCipherSuites.length == 0) {
+			supportedCipherSuites = null;
+		}
+
+		Registry<ConnectionSocketFactory> registry =
+			RegistryBuilder.<ConnectionSocketFactory>create(
+			).register(
+				Http.HTTP, PlainConnectionSocketFactory.getSocketFactory()
+			).register(
+				Http.HTTPS,
+				new SSLConnectionSocketFactory(
+					(SSLSocketFactory)SSLSocketFactory.getDefault(),
+					supportedProtocols, supportedCipherSuites,
+					new DefaultHostnameVerifier(
+						PublicSuffixMatcherLoader.getDefault()))
+			).build();
+
+		return new PoolingHttpClientConnectionManager(registry);
 	}
 
 	private String _shortenURL(

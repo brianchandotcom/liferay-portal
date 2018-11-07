@@ -114,17 +114,21 @@ public class InvokerFilterContainerImplTest {
 		List<ActionFilter> actionFilters =
 			_invokerFilterContainerImpl.getActionFilters();
 
+		boolean found = false;
+
 		for (ActionFilter actionFilter : actionFilters) {
 			Class<?> clazz = actionFilter.getClass();
 
 			String className = clazz.getName();
 
 			if (className.equals(TestActionFilter.class.getName())) {
-				return;
+				found = true;
+
+				break;
 			}
 		}
 
-		Assert.fail();
+		Assert.assertTrue("Not found " + TestActionFilter.class, found);
 	}
 
 	@Test
@@ -132,17 +136,21 @@ public class InvokerFilterContainerImplTest {
 		List<EventFilter> eventFilters =
 			_invokerFilterContainerImpl.getEventFilters();
 
+		boolean found = false;
+
 		for (EventFilter eventFilter : eventFilters) {
 			Class<?> clazz = eventFilter.getClass();
 
 			String className = clazz.getName();
 
 			if (className.equals(TestEventFilter.class.getName())) {
-				return;
+				found = true;
+
+				break;
 			}
 		}
 
-		Assert.fail();
+		Assert.assertTrue("Not found " + TestEventFilter.class, found);
 	}
 
 	@Test
@@ -150,17 +158,21 @@ public class InvokerFilterContainerImplTest {
 		List<RenderFilter> renderFilters =
 			_invokerFilterContainerImpl.getRenderFilters();
 
+		boolean found = false;
+
 		for (RenderFilter renderFilter : renderFilters) {
 			Class<?> clazz = renderFilter.getClass();
 
 			String className = clazz.getName();
 
 			if (className.equals(TestRenderFilter.class.getName())) {
-				return;
+				found = true;
+
+				break;
 			}
 		}
 
-		Assert.fail();
+		Assert.assertTrue("Not found " + TestRenderFilter.class, found);
 	}
 
 	@Test
@@ -168,17 +180,21 @@ public class InvokerFilterContainerImplTest {
 		List<ResourceFilter> resourceFilters =
 			_invokerFilterContainerImpl.getResourceFilters();
 
+		boolean found = false;
+
 		for (ResourceFilter resourceFilter : resourceFilters) {
 			Class<?> clazz = resourceFilter.getClass();
 
 			String className = clazz.getName();
 
 			if (className.equals(TestResourceFilter.class.getName())) {
-				return;
+				found = true;
+
+				break;
 			}
 		}
 
-		Assert.fail();
+		Assert.assertTrue("Not found " + TestResourceFilter.class, found);
 	}
 
 	@Test

@@ -210,14 +210,59 @@ class ImagePreviewer extends Component {
  */
 
 ImagePreviewer.STATE = {
+
+	/**
+	 * The height of the <img> element.
+	 * @type {Number}
+	 */
 	imageHeight: Config.number(),
+
+	/**
+	 * The margin of the <img> element
+	 * @type {String}
+	 */
 	imageMargin: Config.string(),
+
+	/**
+	 * The "src" attribute of the <img> element
+	 * @type {String}
+	 */
 	imageURL: Config.string().required(),
+
+	/**
+	 * The width of the <img> element.
+	 * @type {Number}
+	 */
 	imageWidth: Config.number(),
+
+	/**
+	 * Path to icon images.
+	 * @type {String}
+	 */
 	spritemap: Config.string().required(),
+
+	/**
+	 * The current zoom value that is shown in the toolbar.
+	 * @type {Number}
+	 */
 	zoomActual: Config.number(),
+
+	/**
+	 * Flag that indicate if 'zoom in' is disabled. TODO
+	 * @type {Boolean}
+	 */
 	zoomFitToggle: Config.bool(),
+
+	/**
+	 * Flag that indicate if 'zoom in' is disabled.
+	 * @type {Boolean}
+	 */
 	zoomInDisabled: Config.bool(),
+
+	/**
+	 * Flag that indicate if 'zoom out' is disabled.
+	 * @type {Boolean}
+	 */
 	zoomOutDisabled: Config.bool()
 };
 

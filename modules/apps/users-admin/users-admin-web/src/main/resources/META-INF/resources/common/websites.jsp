@@ -17,9 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String className = ParamUtil.getString(request, "className");
-long classPK = ParamUtil.getLong(request, "classPK");
-String contactInformationRequireJS = ParamUtil.getString(request, "contactInformationRequireJS");
+String className = (String)request.getAttribute("contact_information.jsp-className");
+long classPK = (long)request.getAttribute("contact_information.jsp-classPK");
+String contactInformationRequireJS = (String)request.getAttribute("contact_information.jsp-contactInformationRequireJS");
+
 String emptyResultsMessage = ParamUtil.getString(request, "emptyResultsMessage");
 
 List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
@@ -121,6 +122,7 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 
 <portlet:renderURL var="editWebsiteRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/common/edit_website.jsp" />
+	<portlet:param name="className" value="<%= className %>" />
 </portlet:renderURL>
 
 <aui:script require="<%= contactInformationRequireJS %>">

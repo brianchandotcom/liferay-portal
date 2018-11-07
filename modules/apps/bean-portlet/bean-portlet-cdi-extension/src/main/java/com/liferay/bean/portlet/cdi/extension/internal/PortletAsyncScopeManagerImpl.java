@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManager;
 import java.io.Closeable;
 import java.io.IOException;
 
-import java.util.Deque;
-
 import javax.portlet.PortletConfig;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -35,13 +33,13 @@ import javax.portlet.ResourceResponse;
 public class PortletAsyncScopeManagerImpl implements PortletAsyncScopeManager {
 
 	public PortletAsyncScopeManagerImpl() {
-		_scopedBeanManagerStack =
-			ScopedBeanManagerThreadLocal.getCurrentStack();
+		_scopedBeanManagersInstallRunnable =
+			ScopedBeanManagerThreadLocal.captureScopedBeanManagers();
 	}
 
 	@Override
 	public void activateScopeContexts() {
-		ScopedBeanManagerThreadLocal.setCurrentStack(_scopedBeanManagerStack);
+		_scopedBeanManagersInstallRunnable.run();
 	}
 
 	@Override
@@ -79,6 +77,6 @@ public class PortletAsyncScopeManagerImpl implements PortletAsyncScopeManager {
 		PortletAsyncScopeManagerImpl.class);
 
 	private Closeable _closeable;
-	private final Deque<ScopedBeanManager> _scopedBeanManagerStack;
+	private final Runnable _scopedBeanManagersInstallRunnable;
 
 }

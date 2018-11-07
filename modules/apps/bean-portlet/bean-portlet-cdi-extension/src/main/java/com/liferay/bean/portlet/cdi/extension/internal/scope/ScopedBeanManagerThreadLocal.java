@@ -28,8 +28,10 @@ import java.util.concurrent.ConcurrentLinkedDeque;
  */
 public class ScopedBeanManagerThreadLocal {
 
-	public static Deque<ScopedBeanManager> getCurrentStack() {
-		return _instance.get();
+	public static Runnable captureScopedBeanManagers() {
+		Deque<ScopedBeanManager> scopedBeanManagers = _instance.get();
+
+		return () -> _instance.set(scopedBeanManagers);
 	}
 
 	public static ScopedBeanManager getCurrentStackTop() {
@@ -63,12 +65,6 @@ public class ScopedBeanManagerThreadLocal {
 
 	public static void remove() {
 		_instance.remove();
-	}
-
-	public static void setCurrentStack(
-		Deque<ScopedBeanManager> scopedBeanManagerStack) {
-
-		_instance.set(scopedBeanManagerStack);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

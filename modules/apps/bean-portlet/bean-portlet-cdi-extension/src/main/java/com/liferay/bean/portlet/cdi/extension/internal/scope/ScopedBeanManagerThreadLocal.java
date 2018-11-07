@@ -68,10 +68,6 @@ public class ScopedBeanManagerThreadLocal {
 	public static void setCurrentStack(
 		Deque<ScopedBeanManager> scopedBeanManagerStack) {
 
-		if (_instance.get() != null) {
-			_instance.remove();
-		}
-
 		_instance.set(scopedBeanManagerStack);
 	}
 

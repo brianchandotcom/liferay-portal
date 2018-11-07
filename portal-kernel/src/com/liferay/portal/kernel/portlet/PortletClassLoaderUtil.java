@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.portlet;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
-import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 
 import javax.servlet.ServletContext;
 
@@ -28,7 +28,18 @@ import javax.servlet.ServletContext;
 public class PortletClassLoaderUtil {
 
 	public static ClassLoader getClassLoader() {
-		return ClassLoaderPool.getClassLoader(getServletContextName());
+		String servletContextName = getServletContextName();
+
+		ClassLoader classLoader = ServletContextClassLoaderPool.getClassLoader(
+			servletContextName);
+
+		if (classLoader == null) {
+			throw new IllegalStateException(
+				"Unable to find the class loader for servlet context " +
+					servletContextName);
+		}
+
+		return classLoader;
 	}
 
 	/**

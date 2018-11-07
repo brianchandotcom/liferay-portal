@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.messaging.config;
 
-import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
+import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 
 /**
  * @author Michael C. Han
@@ -31,7 +31,16 @@ public class PluginMessagingConfigurator extends AbstractMessagingConfigurator {
 
 	@Override
 	protected ClassLoader getOperatingClassloader() {
-		return ClassLoaderPool.getClassLoader(_servletContextName);
+		ClassLoader classLoader = ServletContextClassLoaderPool.getClassLoader(
+			_servletContextName);
+
+		if (classLoader == null) {
+			throw new IllegalStateException(
+				"Unable to find the class loader for servlet context " +
+					_servletContextName);
+		}
+
+		return classLoader;
 	}
 
 	private String _servletContextName;

@@ -1578,12 +1578,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		else {
 			for (Bundle bundle : bundles.values()) {
 				if (!_isFragmentBundle(bundle)) {
-					try {
-						bundle.start();
-					}
-					catch (BundleException be) {
-						throwableCollector.collect(be);
-					}
+					bundle.start();
 				}
 			}
 		}

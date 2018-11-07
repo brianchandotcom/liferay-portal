@@ -23,12 +23,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Iván Zaera
  */
-public class PropertiesSettingsTest extends PowerMockito {
+public class PropertiesSettingsTest {
 
 	@Before
 	public void setUp() {
@@ -37,10 +35,9 @@ public class PropertiesSettingsTest extends PowerMockito {
 		properties.put(_SINGLE_KEY, _SINGLE_VALUE);
 		properties.put(_MULTIPLE_KEY, _MULTIPLE_VALUES);
 
-		_mockLocationVariableResolver = mock(LocationVariableResolver.class);
-
 		_propertiesSettings = new PropertiesSettings(
-			_mockLocationVariableResolver, properties);
+			new LocationVariableResolver(null, (SettingsLocatorHelper)null),
+			properties);
 
 		_properties = ReflectionTestUtil.getFieldValue(
 			_propertiesSettings, "_properties");
@@ -70,27 +67,21 @@ public class PropertiesSettingsTest extends PowerMockito {
 
 	@Test
 	public void testGetValuesWithResourceValue() {
-		_properties.put(_MULTIPLE_KEY, _RESOURCE_MULTIPLE_VALUES);
-
-		when(
-			_mockLocationVariableResolver.isLocationVariable(
-				_RESOURCE_MULTIPLE_VALUES)
-		).thenReturn(
-			true
-		);
-
 		final String expectedValue =
 			"resourceValue0,resourceValue1,resourceValue2";
 
-		when(
-			_mockLocationVariableResolver.resolve(_RESOURCE_MULTIPLE_VALUES)
-		).thenReturn(
-			expectedValue
-		);
+		Properties properties = new Properties();
+
+		properties.put(_MULTIPLE_KEY, _RESOURCE_MULTIPLE_VALUES);
+
+		PropertiesSettings propertiesSettings = new PropertiesSettings(
+			_createLocationVariableResolver(
+				_RESOURCE_MULTIPLE_VALUES, expectedValue),
+			properties);
 
 		Assert.assertArrayEquals(
 			expectedValue.split(","),
-			_propertiesSettings.getValues(_MULTIPLE_KEY, null));
+			propertiesSettings.getValues(_MULTIPLE_KEY, null));
 	}
 
 	@Test
@@ -113,25 +104,45 @@ public class PropertiesSettingsTest extends PowerMockito {
 
 	@Test
 	public void testGetValueWithResourceValue() {
-		_properties.put(_SINGLE_KEY, _RESOURCE_SINGLE_VALUE);
-
-		when(
-			_mockLocationVariableResolver.isLocationVariable(
-				_RESOURCE_SINGLE_VALUE)
-		).thenReturn(
-			true
-		);
-
 		final String expectedValue = "resourceValue";
 
-		when(
-			_mockLocationVariableResolver.resolve(_RESOURCE_SINGLE_VALUE)
-		).thenReturn(
-			expectedValue
-		);
+		Properties properties = new Properties();
+
+		properties.put(_SINGLE_KEY, _RESOURCE_SINGLE_VALUE);
+
+		PropertiesSettings propertiesSettings = new PropertiesSettings(
+			_createLocationVariableResolver(
+				_RESOURCE_SINGLE_VALUE, expectedValue),
+			properties);
 
 		Assert.assertEquals(
-			expectedValue, _propertiesSettings.getValue(_SINGLE_KEY, null));
+			expectedValue, propertiesSettings.getValue(_SINGLE_KEY, null));
+	}
+
+	private LocationVariableResolver _createLocationVariableResolver(
+		String resolveString, String expectedValue) {
+
+		return new LocationVariableResolver(null, (SettingsLocatorHelper)null) {
+
+			@Override
+			public boolean isLocationVariable(String value) {
+				if (value.equals(resolveString)) {
+					return true;
+				}
+
+				return false;
+			}
+
+			@Override
+			public String resolve(String value) {
+				if (value.equals(resolveString)) {
+					return expectedValue;
+				}
+
+				return null;
+			}
+
+		};
 	}
 
 	private static final String _MULTIPLE_KEY = "multipleKey";
@@ -148,7 +159,6 @@ public class PropertiesSettingsTest extends PowerMockito {
 
 	private static final String _SINGLE_VALUE = "value";
 
-	private LocationVariableResolver _mockLocationVariableResolver;
 	private Map<String, String> _properties;
 	private PropertiesSettings _propertiesSettings;
 

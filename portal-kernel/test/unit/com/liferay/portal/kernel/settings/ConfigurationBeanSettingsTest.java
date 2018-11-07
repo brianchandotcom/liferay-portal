@@ -18,21 +18,20 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Iván Zaera
  */
-public class ConfigurationBeanSettingsTest extends PowerMockito {
+public class ConfigurationBeanSettingsTest {
 
 	@Before
 	public void setUp() {
 		_configurationBean = new ConfigurationBean();
 
-		_mockLocationVariableResolver = mock(LocationVariableResolver.class);
+		_locationVariableResolver = new LocationVariableResolver(
+			null, (SettingsLocatorHelper)null);
 
 		_configurationBeanSettings = new ConfigurationBeanSettings(
-			_mockLocationVariableResolver, _configurationBean, null);
+			_locationVariableResolver, _configurationBean, null);
 	}
 
 	@Test
@@ -79,25 +78,42 @@ public class ConfigurationBeanSettingsTest extends PowerMockito {
 
 	@Test
 	public void testGetValueWithLocationVariable() {
-		when(
-			_mockLocationVariableResolver.isLocationVariable(
-				_configurationBean.locationVariableValue())
-		).thenReturn(
-			true
-		);
-
 		String expectedValue = "Once upon a time...";
 
-		when(
-			_mockLocationVariableResolver.resolve(
-				_configurationBean.locationVariableValue())
-		).thenReturn(
-			expectedValue
-		);
+		LocationVariableResolver locationVariableResolver =
+			new LocationVariableResolver(null, (SettingsLocatorHelper)null) {
+
+				@Override
+				public boolean isLocationVariable(String value) {
+					if (value.equals(
+							_configurationBean.locationVariableValue())) {
+
+						return true;
+					}
+
+					return false;
+				}
+
+				@Override
+				public String resolve(String value) {
+					if (value.equals(
+							_configurationBean.locationVariableValue())) {
+
+						return expectedValue;
+					}
+
+					return null;
+				}
+
+			};
+
+		ConfigurationBeanSettings configurationBeanSettings =
+			new ConfigurationBeanSettings(
+				locationVariableResolver, _configurationBean, null);
 
 		Assert.assertEquals(
 			expectedValue,
-			_configurationBeanSettings.getValue(
+			configurationBeanSettings.getValue(
 				"locationVariableValue", "defaultValue"));
 	}
 
@@ -112,7 +128,7 @@ public class ConfigurationBeanSettingsTest extends PowerMockito {
 	public void testGetValueWithNullConfigurationBean() {
 		try {
 			_configurationBeanSettings = new ConfigurationBeanSettings(
-				_mockLocationVariableResolver, null, null);
+				_locationVariableResolver, null, null);
 
 			Assert.fail();
 		}
@@ -137,7 +153,7 @@ public class ConfigurationBeanSettingsTest extends PowerMockito {
 
 	private ConfigurationBean _configurationBean;
 	private ConfigurationBeanSettings _configurationBeanSettings;
-	private LocationVariableResolver _mockLocationVariableResolver;
+	private LocationVariableResolver _locationVariableResolver;
 
 	private static class ConfigurationBean {
 

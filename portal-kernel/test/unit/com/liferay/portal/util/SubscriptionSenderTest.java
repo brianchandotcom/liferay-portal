@@ -31,9 +31,8 @@ import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -41,8 +40,8 @@ import org.junit.Test;
  */
 public class SubscriptionSenderTest {
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		ReflectionTestUtil.setFieldValue(
 			CompanyLocalServiceUtil.class, "_service",
 			new CompanyLocalServiceWrapper(null) {
@@ -117,14 +116,6 @@ public class SubscriptionSenderTest {
 		ReflectionTestUtil.setFieldValue(
 			PortalUtil.class, "_portal",
 			ProxyFactory.newDummyInstance(Portal.class));
-	}
-
-	@After
-	public void tearDown() {
-		ReflectionTestUtil.setFieldValue(
-			CompanyLocalServiceUtil.class, "_service", null);
-		ReflectionTestUtil.setFieldValue(
-			GroupLocalServiceUtil.class, "_service", null);
 	}
 
 	@Test

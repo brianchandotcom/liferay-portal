@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -50,8 +50,8 @@ import org.springframework.mock.web.MockHttpServletRequest;
 @RunWith(PowerMockRunner.class)
 public class ModelPermissionsFactoryTest extends PowerMockito {
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		ReflectionTestUtil.setFieldValue(
 			RoleLocalServiceUtil.class, "_service",
 			new RoleLocalServiceWrapper(null) {

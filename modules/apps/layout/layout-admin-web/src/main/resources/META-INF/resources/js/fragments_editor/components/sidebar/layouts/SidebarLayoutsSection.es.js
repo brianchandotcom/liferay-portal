@@ -2,7 +2,10 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
-import {UPDATE_DRAG_TARGET} from '../../../actions/actions.es';
+import {
+	CLEAR_DRAG_TARGET,
+	UPDATE_DRAG_TARGET
+} from '../../../actions/actions.es';
 import SidebarLayoutsDragDrop from './utils/SidebarLayoutsDragDrop.es';
 import {Store} from '../../../store/store.es';
 import templates from './SidebarLayoutsSection.soy';
@@ -48,6 +51,18 @@ class SidebarLayoutsSection extends Component {
 	}
 
 	/**
+	 * Handles leaveLayoutTarget event and dispatches
+	 * action to clear drag target
+	 * @private
+	 * @review
+	 */
+	_handleLeaveLayoutTarget() {
+		this.store.dispatchAction(
+			CLEAR_DRAG_TARGET
+		);
+	}
+
+	/**
 	 * Initializes sidebarLayoutsDragDrop instance
 	 * @private
 	 * @review
@@ -62,6 +77,11 @@ class SidebarLayoutsSection extends Component {
 		this._sidebarLayoutsDragDrop.on(
 			'dragLayout',
 			this._handleDragLayout.bind(this)
+		);
+
+		this._sidebarLayoutsDragDrop.on(
+			'leaveLayoutTarget',
+			this._handleLeaveLayoutTarget.bind(this)
 		);
 	}
 }

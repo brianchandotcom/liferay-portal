@@ -31,6 +31,7 @@ function updateDragTargetReducer(state, actionType, payload) {
 	if (actionType === CLEAR_DRAG_TARGET) {
 		nextState.hoveredElementBorder = null;
 		nextState.hoveredFragmentEntryLinkId = null;
+		nextState.hoveredSectionId = null;
 	}
 	else if (actionType === UPDATE_DRAG_TARGET) {
 		if (payload.hoveredSectionId) {

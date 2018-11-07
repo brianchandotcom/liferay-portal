@@ -11,6 +11,14 @@
 		border: $fragmentEntryLinkSectionBorder;
 		padding: $fragmentEntryLinkSpacing 0;
 
+		&.drag-bottom {
+			border-bottom: 5px solid #80ACFF;
+		}
+
+		&.drag-top {
+			border-top: 5px solid #80ACFF;
+		}
+
 		&:hover {
 			border: $fragmentEntryLinkSectionHoverBorder;
 		}

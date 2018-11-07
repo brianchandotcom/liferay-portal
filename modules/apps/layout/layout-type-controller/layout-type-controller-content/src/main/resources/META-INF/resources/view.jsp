@@ -39,7 +39,7 @@ FragmentsEditorDisplayContext fragmentsEditorDisplayContext = new FragmentsEdito
 JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 %>
 
-<aui:script require="layout-admin-web/js/fragments_editor/components/edit_mode/DisabledAreaMask.es as DisabledAreaMaskModule, layout-admin-web/js/fragments_editor/reducers/changes.es as ChangesReducerModule, layout-admin-web/js/fragments_editor/reducers/fragments.es as FragmentsReducerModule, layout-admin-web/js/fragments_editor/reducers/placeholders.es as PlaceholdersReducerModule, layout-admin-web/js/fragments_editor/reducers/translations.es as TranslationsReducerModule, layout-admin-web/js/fragments_editor/reducers/sidebar.es as SidebarReducerModule, layout-admin-web/js/fragments_editor/store/store.es as StoreModule, layout-admin-web/js/fragments_editor/reducers/dialogs.es as DialogsReducerModule">
+<aui:script require="layout-admin-web/js/fragments_editor/components/edit_mode/DisabledAreaMask.es as DisabledAreaMaskModule, layout-admin-web/js/fragments_editor/reducers/changes.es as ChangesReducerModule, layout-admin-web/js/fragments_editor/reducers/fragments.es as FragmentsReducerModule, layout-admin-web/js/fragments_editor/reducers/placeholders.es as PlaceholdersReducerModule, layout-admin-web/js/fragments_editor/reducers/translations.es as TranslationsReducerModule, layout-admin-web/js/fragments_editor/reducers/sidebar.es as SidebarReducerModule, layout-admin-web/js/fragments_editor/store/store.es as StoreModule, layout-admin-web/js/fragments_editor/reducers/dialogs.es as DialogsReducerModule, layout-admin-web/js/fragments_editor/reducers/sections.es as SectionsReducerModule">
 	StoreModule.createStore(
 		<%= jsonSerializer.serializeDeep(fragmentsEditorDisplayContext.getEditorContext()) %>,
 		[
@@ -57,6 +57,7 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 			PlaceholdersReducerModule.updateHighlightMappingReducer,
 			SidebarReducerModule.hideFragmentsEditorSidebarReducer,
 			SidebarReducerModule.toggleFragmentsEditorSidebarReducer,
+			SectionsReducerModule.addSectionReducer,
 			TranslationsReducerModule.languageIdReducer,
 			TranslationsReducerModule.translationStatusReducer
 		],

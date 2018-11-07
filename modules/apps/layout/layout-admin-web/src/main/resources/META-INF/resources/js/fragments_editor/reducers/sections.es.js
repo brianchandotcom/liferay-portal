@@ -1,4 +1,61 @@
-import {setIn} from '../utils/utils.es';
+import {ADD_SECTION} from '../actions/actions.es';
+import {DRAG_POSITIONS} from './placeholders.es';
+import {setIn, updateLayoutData} from '../utils/utils.es';
+
+/**
+ * @param {!object} state
+ * @param {!string} actionType
+ * @param {!object} payload
+ * @param {!Array} payload.layoutColumns
+ * @return {object}
+ * @review
+ */
+function addSectionReducer(state, actionType, payload) {
+	let nextState = state;
+
+	return new Promise(
+		resolve => {
+			if (actionType === ADD_SECTION) {
+				const position = _getDropSectionPosition(
+					state.layoutData.structure,
+					state.hoveredSectionId,
+					state.hoveredElementBorder
+				);
+
+				let nextData = _addSection(
+					payload.layoutColumns,
+					state.layoutData,
+					position
+				);
+
+				updateLayoutData(
+					state.updateLayoutPageTemplateDataURL,
+					state.portletNamespace,
+					state.classNameId,
+					state.classPK,
+					nextData
+				).then(
+					() => {
+						nextState = setIn(
+							nextState,
+							['layoutData'],
+							nextData
+						);
+
+						resolve(nextState);
+					}
+				).catch(
+					() => {
+						resolve(nextState);
+					}
+				);
+			}
+			else {
+				resolve(nextState);
+			}
+		}
+	);
+}
 
 /**
  * Returns a new layoutData with the given columns inserted as a new section
@@ -46,3 +103,35 @@ function _addSection(layoutColumns, layoutData, position) {
 
 	return nextData;
 }
+
+/**
+ * Returns the position in the structure of the given section
+ * @param {object} structure
+ * @param {number} targetSectionId
+ * @param {string} targetBorder
+ * @return {number}
+ */
+function _getDropSectionPosition(
+	structure,
+	targetSectionId,
+	targetBorder
+) {
+	let position = structure.length;
+
+	const targetPosition = structure.findIndex(
+		section => section.rowId === targetSectionId
+	);
+
+	if (targetPosition > -1 && targetBorder) {
+		if (targetBorder === DRAG_POSITIONS.top) {
+			position = targetPosition;
+		}
+		else {
+			position = targetPosition + 1;
+		}
+	}
+
+	return position;
+}
+
+export {addSectionReducer};

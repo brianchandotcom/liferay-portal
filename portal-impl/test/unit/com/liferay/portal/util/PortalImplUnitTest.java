@@ -473,8 +473,6 @@ public class PortalImplUnitTest extends PowerMockito {
 			"/web/group",
 			_portalImpl.updateRedirect(
 				"/web/group/layout", "/group/layout", "/group"));
-
-		verifyStatic();
 	}
 
 	protected void setPropsValuesValue(String fieldName, Object value)

@@ -478,7 +478,7 @@ public class TransactionalPortalCacheHelper {
 			PortalCache<Serializable, Object> portalCache, Serializable key,
 			boolean commitRemove) {
 
-			if (_value == _NULL_HOLDER) {
+			if (isRemove()) {
 				if (_skipReplicator) {
 					PortalCacheHelperUtil.removeWithoutReplicator(
 						portalCache, key);
@@ -532,7 +532,7 @@ public class TransactionalPortalCacheHelper {
 				valueEntry._skipReplicator = false;
 			}
 
-			if (_value == _NULL_HOLDER) {
+			if (isRemove()) {
 				valueEntry._removed = true;
 			}
 		}

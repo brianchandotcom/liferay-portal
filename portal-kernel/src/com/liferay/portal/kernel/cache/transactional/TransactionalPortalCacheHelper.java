@@ -331,7 +331,7 @@ public class TransactionalPortalCacheHelper {
 					}
 
 					if (!readOnly || !commitByRemove) {
-						doCommit(false);
+						doCommit();
 					}
 
 					if (readOnly) {
@@ -340,6 +340,16 @@ public class TransactionalPortalCacheHelper {
 
 					return null;
 				});
+		}
+
+		@Override
+		public void put(Serializable key, ValueEntry valueEntry) {
+			ValueEntry oldValueEntry = super._uncommittedMap.put(
+				key, valueEntry);
+
+			if (oldValueEntry != null) {
+				oldValueEntry.merge(valueEntry);
+			}
 		}
 
 		private MarkerUncommittedBuffer(
@@ -369,7 +379,7 @@ public class TransactionalPortalCacheHelper {
 				return;
 			}
 
-			doCommit(true);
+			doCommit();
 		}
 
 		public ValueEntry get(Serializable key) {
@@ -387,6 +397,10 @@ public class TransactionalPortalCacheHelper {
 
 			if (oldValueEntry != null) {
 				oldValueEntry.merge(valueEntry);
+
+				if (oldValueEntry.isRemove()) {
+					valueEntry._removed = true;
+				}
 			}
 		}
 
@@ -400,7 +414,7 @@ public class TransactionalPortalCacheHelper {
 			}
 		}
 
-		protected void doCommit(boolean commitRemove) {
+		protected void doCommit() {
 			if (_removeAll) {
 				if (_skipReplicator) {
 					PortalCacheHelperUtil.removeAllWithoutReplicator(
@@ -420,8 +434,7 @@ public class TransactionalPortalCacheHelper {
 					valueEntry.commitToByRemove(_portalCache, entry.getKey());
 				}
 				else {
-					valueEntry.commitTo(
-						_portalCache, entry.getKey(), commitRemove);
+					valueEntry.commitTo(_portalCache, entry.getKey());
 				}
 			}
 		}
@@ -475,8 +488,7 @@ public class TransactionalPortalCacheHelper {
 		}
 
 		public void commitTo(
-			PortalCache<Serializable, Object> portalCache, Serializable key,
-			boolean commitRemove) {
+			PortalCache<Serializable, Object> portalCache, Serializable key) {
 
 			if (isRemove()) {
 				if (_skipReplicator) {
@@ -488,7 +500,7 @@ public class TransactionalPortalCacheHelper {
 				}
 			}
 			else {
-				if (commitRemove && _removed) {
+				if (_removed) {
 					if (_skipReplicator) {
 						PortalCacheHelperUtil.removeWithoutReplicator(
 							portalCache, key);
@@ -530,10 +542,6 @@ public class TransactionalPortalCacheHelper {
 		public void merge(ValueEntry valueEntry) {
 			if (!_skipReplicator) {
 				valueEntry._skipReplicator = false;
-			}
-
-			if (isRemove()) {
-				valueEntry._removed = true;
 			}
 		}
 

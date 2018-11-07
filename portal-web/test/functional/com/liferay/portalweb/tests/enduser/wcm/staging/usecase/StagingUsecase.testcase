@@ -1078,6 +1078,7 @@
 		</execute>
 
 		<execute function="AssertHTMLSourceTextPresent" value1="Web Content Image Description" />
+		<execute function="AssertConsoleTextNotPresent" value1="DuplicateFileEntryException" />
 	</command>
 
 	<command name="StagingWithPublishTemplateSmoke" priority="4">

@@ -2326,9 +2326,9 @@
 
 		<execute macro="SystemSettings#saveConfiguration" />
 
-		<execute macro="Site#addBlankCP">
-			<var name="parentSiteName" value="Test Site Name" />
-			<var name="siteName" value="Child SiteName" />
+		<execute macro="JSONGroup#addChildSite">
+			<var name="groupName" value="Child SiteName" />
+			<var name="parentGroupName" value="Test Site Name" />
 		</execute>
 
 		<execute macro="WebContent#openWebContentAdmin">
@@ -2450,26 +2450,16 @@
 	<command name="ViewMultipleCategoriesViaWebContent" priority="4">
 		<property name="testray.component.names" value="Categories,Web Content Administration" />
 
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
+		<execute macro="JSONCategory#addVocabularyByGroupName">
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Category#openCategoriesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<for list="Category Name 1,Category Name 2,Category Name 3,Category Name 4,Category Name 5" param="categoryName">
-			<execute macro="Category#addCP">
-				<var name="categoryName" value="${categoryName}" />
+		<for list="1,2,3,4,5" param="index">
+			<execute macro="JSONCategory#addCategoryByGroupName">
+				<var name="groupName" value="Test Site Name" />
+				<var name="title" value="Category Name ${index}" />
 				<var name="vocabularyName" value="Vocabulary Name" />
-			</execute>
-
-			<execute macro="Category#openCategoriesAdmin">
-				<var name="siteURLKey" value="test-site-name" />
 			</execute>
 		</for>
 
@@ -2511,18 +2501,16 @@
 	<command name="ViewMultipleVocabulariesViaAddWebContent" priority="4">
 		<property name="testray.component.names" value="Categories,Web Content Administration" />
 
-		<for list="Vocabulary Name 1,Vocabulary Name 2,Vocabulary Name 3,Vocabulary Name 4,Vocabulary Name 5" param="vocabularyName">
-			<execute macro="Category#openCategoriesAdmin">
-				<var name="siteURLKey" value="test-site-name" />
+		<for list="1,2,3,4,5" param="index">
+			<execute macro="JSONCategory#addVocabularyByGroupName">
+				<var name="groupName" value="Test Site Name" />
+				<var name="title" value="Vocabulary Name ${index}" />
 			</execute>
 
-			<execute macro="Vocabulary#addCP">
-				<var name="vocabularyName" value="${vocabularyName}" />
-			</execute>
-
-			<execute macro="Category#addCP">
-				<var name="categoryName" value="Category Name" />
-				<var name="vocabularyName" value="${vocabularyName}" />
+			<execute macro="JSONCategory#addCategoryByGroupName">
+				<var name="groupName" value="Test Site Name" />
+				<var name="title" value="Category Name" />
+				<var name="vocabularyName" value="Vocabulary Name ${index}" />
 			</execute>
 		</for>
 

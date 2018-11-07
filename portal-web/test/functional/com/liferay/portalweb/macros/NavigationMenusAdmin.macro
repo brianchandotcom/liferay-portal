@@ -70,19 +70,9 @@
 	</command>
 
 	<command name="addItem">
-		<if>
-			<condition function="IsElementNotPresent" locator1="Button#PLUS" />
-			<then>
-				<execute function="AssertClick" locator1="SiteNavigationMenu#ITEM_LINK" value1="${item}">
-					<var name="key_item" value="${item}" />
-				</execute>
-			</then>
-			<else>
-				<execute macro="LexiconEntry#gotoAddMenuItem">
-					<var name="menuItem" value="${item}" />
-				</execute>
-			</else>
-		</if>
+		<execute macro="LexiconEntry#gotoAddMenuItem">
+			<var name="menuItem" value="${item}" />
+		</execute>
 
 		<execute macro="IFrame#selectConfigurationFrame" />
 

@@ -105,7 +105,7 @@ public class ServiceWrapperRegistry {
 
 		private <T> ServiceBag<?> _getServiceBag(
 				ServiceWrapper<T> serviceWrapper)
-			throws Throwable {
+			throws NoSuchMethodException {
 
 			Class<?> clazz = serviceWrapper.getClass();
 

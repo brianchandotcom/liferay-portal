@@ -95,7 +95,7 @@ public class JournalArticleServiceTest {
 		new LiferayIntegrationTestRule();
 
 	@BeforeClass
-	public static void setUpClass() throws Exception {
+	public static void setUpClass() {
 		AdvisedSupport advisedSupport = AdvisedSupportUtil.getAdvisedSupport(
 			_journalArticleLocalService);
 

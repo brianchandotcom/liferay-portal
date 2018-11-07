@@ -75,7 +75,7 @@ public class ResourcePermissionLocalServiceConcurrentTest {
 		new LiferayIntegrationTestRule();
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws NoSuchMethodException {
 		Assume.assumeTrue(PropsValues.RETRY_ADVICE_MAX_RETRIES != 0);
 
 		_threadCount = ServiceTestUtil.THREAD_COUNT;

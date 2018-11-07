@@ -1772,7 +1772,7 @@ public class HookHotDeployListener
 			String servletContextName, ClassLoader portletClassLoader,
 			String serviceType, Class<?> serviceTypeClass,
 			Constructor<?> serviceImplConstructor, Object serviceProxy)
-		throws Exception {
+		throws ReflectiveOperationException {
 
 		AdvisedSupport advisedSupport = AdvisedSupportUtil.getAdvisedSupport(
 			serviceProxy);
@@ -2227,7 +2227,7 @@ public class HookHotDeployListener
 	private void _initServices(
 			String servletContextName, Constructor<?> serviceImplConstructor,
 			Object serviceProxy)
-		throws Exception {
+		throws ReflectiveOperationException {
 
 		Class<?> proxyClass = serviceProxy.getClass();
 

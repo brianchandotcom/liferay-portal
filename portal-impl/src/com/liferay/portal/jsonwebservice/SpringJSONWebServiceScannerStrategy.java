@@ -40,14 +40,7 @@ public class SpringJSONWebServiceScannerStrategy
 
 	@Override
 	public MethodDescriptor[] scan(Object service) {
-		Class<?> clazz = null;
-
-		try {
-			clazz = getTargetClass(service);
-		}
-		catch (Exception e) {
-			return new MethodDescriptor[0];
-		}
+		Class<?> clazz = getTargetClass(service);
 
 		Method[] methods = clazz.getMethods();
 
@@ -72,7 +65,7 @@ public class SpringJSONWebServiceScannerStrategy
 	 * @see com.liferay.portal.remote.json.web.service.extender.internal.ServiceJSONWebServiceScannerStrategy#getTargetClass(
 	 *      Object)
 	 */
-	protected Class<?> getTargetClass(Object service) throws Exception {
+	protected Class<?> getTargetClass(Object service) {
 		while (ProxyUtil.isProxyClass(service.getClass())) {
 			InvocationHandler invocationHandler =
 				ProxyUtil.getInvocationHandler(service);

@@ -46,7 +46,7 @@ import org.springframework.beans.factory.BeanFactoryAware;
  */
 public class LayoutSetLocalServiceStagingAdvice implements BeanFactoryAware {
 
-	public void afterPropertiesSet() throws Exception {
+	public void afterPropertiesSet() {
 		AdvisedSupport advisedSupport = AdvisedSupportUtil.getAdvisedSupport(
 			_beanFactory.getBean(LayoutSetLocalService.class.getName()));
 

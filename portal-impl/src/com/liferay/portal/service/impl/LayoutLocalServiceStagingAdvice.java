@@ -82,7 +82,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 		}
 	}
 
-	public void afterPropertiesSet() throws Exception {
+	public void afterPropertiesSet() throws BeansException {
 		AdvisedSupport advisedSupport = AdvisedSupportUtil.getAdvisedSupport(
 			_beanFactory.getBean(LayoutLocalService.class.getName()));
 

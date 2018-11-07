@@ -1496,7 +1496,7 @@ public class PortletPreferencesLocalServiceTest {
 		assertValues(portletPreferencesImpl, name, values);
 	}
 
-	protected void replaceService() throws Exception {
+	protected void replaceService() {
 		AdvisedSupport advisedSupport = AdvisedSupportUtil.getAdvisedSupport(
 			PortletPreferencesLocalServiceUtil.getService());
 

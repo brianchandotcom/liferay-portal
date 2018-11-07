@@ -27,9 +27,7 @@ import java.lang.reflect.InvocationHandler;
 @ProviderType
 public class AdvisedSupportUtil {
 
-	public static AdvisedSupport getAdvisedSupport(Object proxy)
-		throws Exception {
-
+	public static AdvisedSupport getAdvisedSupport(Object proxy) {
 		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
 			proxy);
 

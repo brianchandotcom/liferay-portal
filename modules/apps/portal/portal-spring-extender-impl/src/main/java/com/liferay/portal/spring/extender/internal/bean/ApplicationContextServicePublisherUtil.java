@@ -109,29 +109,21 @@ public class ApplicationContextServicePublisherUtil {
 	private static ServiceRegistration<?> _registerService(
 		BundleContext bundleContext, String beanName, Object bean) {
 
-		OSGiBeanProperties osgiBeanProperties = null;
+		Class<?> clazz = bean.getClass();
 
-		try {
-			Class<?> clazz = bean.getClass();
+		if (ProxyUtil.isProxyClass(clazz)) {
+			AdvisedSupport advisedSupport =
+				AdvisedSupportUtil.getAdvisedSupport(bean);
 
-			if (ProxyUtil.isProxyClass(clazz)) {
-				AdvisedSupport advisedSupport =
-					AdvisedSupportUtil.getAdvisedSupport(bean);
+			if (advisedSupport != null) {
+				Object target = advisedSupport.getTarget();
 
-				if (advisedSupport != null) {
-					Object target = advisedSupport.getTarget();
-
-					clazz = target.getClass();
-				}
+				clazz = target.getClass();
 			}
+		}
 
-			osgiBeanProperties = AnnotationUtils.findAnnotation(
-				clazz, OSGiBeanProperties.class);
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to unwrap service during registration " + bean, e);
-		}
+		OSGiBeanProperties osgiBeanProperties = AnnotationUtils.findAnnotation(
+			clazz, OSGiBeanProperties.class);
 
 		Set<String> names = OSGiBeanProperties.Service.interfaceNames(
 			bean, osgiBeanProperties,

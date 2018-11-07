@@ -56,6 +56,7 @@
 	<command name="previewPG">
 		<execute function="Click" locator1="ControlMenu#SIMULATION" />
 
+		<execute function="Pause" locator1="2000" />
 		<execute function="AssertElementNotPresent" locator1="IFrame#LOADING_MESSAGE" />
 
 		<var name="key_deviceType" value="${deviceType}" />

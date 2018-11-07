@@ -269,21 +269,22 @@ public class BeanPortletInvokerPortlet
 			return;
 		}
 
-		ScopedBeanManager scopedBeanManager =
-			ScopedBeanManagerThreadLocal.getCurrentScopedBeanManager();
+		if (ScopedBeanManagerThreadLocal.getCurrentScopedBeanManager() ==
+				null) {
 
-		if (scopedBeanManager == null) {
-			scopedBeanManager = new ScopedBeanManager(
-				portletRequest, portletResponse, _portletConfig);
+			try (Closeable closable = ScopedBeanManagerThreadLocal.install(
+					new ScopedBeanManager(
+						portletRequest, portletResponse, _portletConfig))) {
+
+				_invokeBeanMethods(
+					beanMethods, portletRequest, portletResponse);
+			}
+			catch (IOException ioe) {
+				throw new PortletException(ioe);
+			}
 		}
-
-		try (Closeable closable = ScopedBeanManagerThreadLocal.install(
-				scopedBeanManager)) {
-
+		else {
 			_invokeBeanMethods(beanMethods, portletRequest, portletResponse);
-		}
-		catch (IOException ioe) {
-			throw new PortletException(ioe);
 		}
 	}
 

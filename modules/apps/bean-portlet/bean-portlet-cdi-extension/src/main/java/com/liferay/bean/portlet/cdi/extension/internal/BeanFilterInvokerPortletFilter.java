@@ -189,21 +189,22 @@ public class BeanFilterInvokerPortletFilter
 			PortletResponse portletResponse, Object filterChain)
 		throws PortletException {
 
-		ScopedBeanManager scopedBeanManager =
-			ScopedBeanManagerThreadLocal.getCurrentScopedBeanManager();
+		if (ScopedBeanManagerThreadLocal.getCurrentScopedBeanManager() ==
+				null) {
 
-		if (scopedBeanManager == null) {
-			scopedBeanManager = new ScopedBeanManager(
-				portletRequest, portletResponse, null);
+			try (Closeable closable = ScopedBeanManagerThreadLocal.install(
+					new ScopedBeanManager(
+						portletRequest, portletResponse, null))) {
+
+				_invokeMethod(
+					method, portletRequest, portletResponse, filterChain);
+			}
+			catch (IOException ioe) {
+				throw new PortletException(ioe);
+			}
 		}
-
-		try (Closeable closable = ScopedBeanManagerThreadLocal.install(
-				scopedBeanManager)) {
-
+		else {
 			_invokeMethod(method, portletRequest, portletResponse, filterChain);
-		}
-		catch (IOException ioe) {
-			throw new PortletException(ioe);
 		}
 	}
 

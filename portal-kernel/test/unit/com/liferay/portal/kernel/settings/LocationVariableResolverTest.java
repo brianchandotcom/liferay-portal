@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.settings;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import java.util.List;
 
@@ -62,8 +63,8 @@ public class LocationVariableResolverTest extends PowerMockito {
 
 		File file = File.createTempFile("testResolveVariableForFile", "txt");
 
-		try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-			fileOutputStream.write(expectedValue.getBytes());
+		try (OutputStream outputStream = new FileOutputStream(file)) {
+			outputStream.write(expectedValue.getBytes());
 
 			String value = _locationVariableResolver.resolve(
 				"${file://" + file.getAbsolutePath() + "}");

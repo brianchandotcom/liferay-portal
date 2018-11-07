@@ -323,6 +323,14 @@
 			<var name="siteName" value="Test Site Name" />
 		</execute>
 
+		<execute macro="NavigationMenusWidget#gotoNavigationMenuWidgetConfig" />
+
+		<execute macro="NavigationMenusWidget#chooseMenu">
+			<var name="menuName" value="Test Navigation Menu Name" />
+		</execute>
+
+		<execute macro="Portlet#saveAndCloseConfig" />
+
 		<execute function="AssertClick" locator1="Home#PAGE" value1="Liferay">
 			<var name="key_pageName" value="Liferay" />
 		</execute>

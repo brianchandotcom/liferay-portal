@@ -158,55 +158,6 @@
 		</execute>
 	</command>
 
-	<command name="configurePGContentNull">
-		<execute function="Type" locator1="TextInput#PORTAL_NAME" value1="" />
-
-		<execute macro="SetupWizard#configureAdministratorUserPG">
-			<var name="administratorEmail" value="${administratorEmail}" />
-			<var name="administratorFirstName" value="${administratorFirstName}" />
-			<var name="administratorLastName" value="${administratorLastName}" />
-		</execute>
-
-		<execute function="Click" locator1="TextInput#PORTAL_NAME" />
-
-		<if>
-			<condition function="IsElementNotPresent" locator1="SetupWizard#DATABASE_CHANGE_USE_CONFIGURED_DATABASE_LINK" />
-			<then>
-				<execute function="AssertClick" locator1="SetupWizard#DATABASE_CHANGE_LINK" value1="(Change)" />
-			</then>
-		</if>
-
-		<execute function="Type" locator1="SetupWizard#DATABASE_CHANGE_JDBC_URL_FIELD" value1="" />
-		<execute function="Type" locator1="SetupWizard#DATABASE_CHANGE_JDBC_DRIVER_CLASS_NAME_FIELD" value1="" />
-		<execute function="Type" locator1="SetupWizard#DATABASE_CHANGE_USER_NAME_FIELD" value1="" />
-		<execute function="Type" locator1="SetupWizard#DATABASE_CHANGE_PASSWORD_FIELD" value1="" />
-
-		<execute macro="SetupWizard#finishConfigurationPG" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#REQUIRED_ALERT_SETUP_WIZARD_PORTAL_NAME" value1="This field is required." />
-		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#REQUIRED_ALERT_SETUP_WIZARD_FIRST_NAME" value1="This field is required." />
-		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#REQUIRED_ALERT_SETUP_WIZARD_LAST_NAME" value1="This field is required." />
-		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#REQUIRED_ALERT_SETUP_WIZARD_EMAIL" value1="This field is required." />
-		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#REQUIRED_ALERT_SETUP_WIZARD_DATABASE_JDBC_URL" value1="This field is required." />
-		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#REQUIRED_ALERT_SETUP_WIZARD_DATABASE_CLASS_NAME" value1="This field is required." />
-		<execute function="AssertTextEquals" locator1="SetupWizard#DATABASE_CHANGE_USER_NAME_FIELD" value1="" />
-		<execute function="AssertTextEquals" locator1="SetupWizard#DATABASE_CHANGE_PASSWORD_FIELD" value1="" />
-	</command>
-
-	<command name="configurePGSpecialCharacters">
-		<execute function="Type" locator1="TextInput#PORTAL_NAME" value1="${basicField}" />
-
-		<execute macro="SetupWizard#configureAdministratorUserPG">
-			<var name="administratorEmail" value="${basicField}" />
-			<var name="administratorFirstName" value="${basicField}" />
-			<var name="administratorLastName" value="${basicField}" />
-		</execute>
-
-		<execute function="Click" locator1="TextInput#PORTAL_NAME" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_ENTER_A_VALID_EMAIL_ADDRESS" value1="Please enter a valid email address." />
-	</command>
-
 	<command name="configurePortalNamePG">
 		<execute function="Type" locator1="TextInput#PORTAL_NAME" value1="${portalName}" />
 	</command>

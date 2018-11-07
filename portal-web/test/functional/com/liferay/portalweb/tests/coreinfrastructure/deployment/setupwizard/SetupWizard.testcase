@@ -48,17 +48,55 @@
 		<property name="database.types" value="hypersonic" />
 		<property name="portal.acceptance" value="false" />
 
-		<execute macro="SetupWizard#configurePGContentNull">
+		<execute macro="SetupWizard#configurePortalNamePG">
+			<var name="portalName" value="" />
+		</execute>
+
+		<execute macro="SetupWizard#configureAdministratorUserPG">
 			<var name="administratorEmail" value="" />
 			<var name="administratorFirstName" value="" />
 			<var name="administratorLastName" value="" />
 		</execute>
 
+		<execute function="Click" locator1="TextInput#PORTAL_NAME" />
+
+		<execute macro="SetupWizard#configureDatabasePG">
+			<var name="databasePassword" value="" />
+			<var name="databaseType" value="Hypersonic" />
+			<var name="databaseUserName" value="" />
+			<var name="jdbcDriverClassName" value="" />
+			<var name="jdbcURL" value="" />
+		</execute>
+
+		<execute macro="SetupWizard#finishConfigurationPG" />
+
+		<for list="Portal Name,First Name,Last Name,Email,JDBC URL,JDBC Driver Class Name" param="filedName">
+			<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#REQUIRED_ALERT" value1="This field is required.">
+				<var name="key_filedName" value="${filedName}" />
+			</execute>
+		</for>
+
+		<execute function="AssertTextEquals" locator1="SetupWizard#DATABASE_CHANGE_USER_NAME_FIELD" value1="" />
+		<execute function="AssertTextEquals" locator1="SetupWizard#DATABASE_CHANGE_PASSWORD_FIELD" value1="" />
+
 		<execute function="Refresh" />
 
-		<execute macro="SetupWizard#configurePGSpecialCharacters">
-			<var name="basicField" value="1234567890!@#$%^&amp;*()~`" />
+		<execute macro="SetupWizard#configurePortalNamePG">
+			<var name="portalName" value="1234567890!@#$%^&amp;*()~`" />
 		</execute>
+
+		<execute macro="SetupWizard#configureAdministratorUserPG">
+			<var name="administratorEmail" value="1234567890!@#$%^&amp;*()~`" />
+			<var name="administratorFirstName" value="1234567890!@#$%^&amp;*()~`" />
+			<var name="administratorLastName" value="1234567890!@#$%^&amp;*()~`" />
+		</execute>
+
+		<execute function="Click" locator1="TextInput#PORTAL_NAME" />
+
+		<execute function="AssertTextEquals#assertValue" locator1="TextInput#FIRST_NAME" value1="1234567890!@#$%^&amp;*()~`" />
+		<execute function="AssertTextEquals#assertValue" locator1="TextInput#LAST_NAME" value1="1234567890!@#$%^&amp;*()~`" />
+		<execute function="AssertTextEquals#assertValue" locator1="TextInput#PORTAL_NAME" value1="1234567890!@#$%^&amp;*()~`" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_ENTER_A_VALID_EMAIL_ADDRESS" value1="Please enter a valid email address." />
 	</command>
 
 	<command name="MySQLWithXSSContent" priority="5">

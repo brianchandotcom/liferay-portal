@@ -14,10 +14,8 @@
 
 package com.liferay.portal.kernel.settings;
 
-import com.liferay.portal.kernel.util.FileUtil;
-//import com.liferay.portal.util.FileImpl;
-
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.util.List;
@@ -37,10 +35,6 @@ public class LocationVariableResolverTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		FileUtil fileUtil = new FileUtil();
-
-		fileUtil.setFile(new MockFile());
-
 		_mockResourceManager = new MockResourceManager(
 			"En un lugar de la Mancha...");
 
@@ -70,14 +64,17 @@ public class LocationVariableResolverTest extends PowerMockito {
 
 		File file = File.createTempFile("testResolveVariableForFile", "txt");
 
-		file.deleteOnExit();
+		try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+			fileOutputStream.write(expectedValue.getBytes());
 
-		FileUtil.write(file, expectedValue.getBytes());
+			String value = _locationVariableResolver.resolve(
+				"${file://" + file.getAbsolutePath() + "}");
 
-		String value = _locationVariableResolver.resolve(
-			"${file://" + file.getAbsolutePath() + "}");
-
-		Assert.assertEquals(expectedValue, value);
+			Assert.assertEquals(expectedValue, value);
+		}
+		finally {
+			file.delete();
+		}
 	}
 
 	@Test(expected = IllegalArgumentException.class)

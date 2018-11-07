@@ -19,6 +19,15 @@ import com.liferay.portal.kernel.dao.orm.ObjectNotFoundException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import org.hibernate.Session;
 import org.hibernate.StaleObjectStateException;
@@ -45,17 +54,44 @@ public class ExceptionTranslator {
 			Object currentObject = session.get(
 				object.getClass(), baseModel.getPrimaryKeyObj());
 
-			JSONSerializer jsonSerializer =
-				JSONFactoryUtil.createJSONSerializer();
+			try {
+				User admin = _getAdmin();
 
-			String objStr = jsonSerializer.serialize(object);
-			String currObjStr = jsonSerializer.serialize(currentObject);
+				PermissionChecker permissionChecker =
+					PermissionCheckerFactoryUtil.create(admin);
 
-			return new ORMException(
-				objStr + " is stale in comparison to " + currObjStr, e);
+				PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+				JSONSerializer jsonSerializer =
+					JSONFactoryUtil.createJSONSerializer();
+
+				String objStr = jsonSerializer.serialize(object);
+				String currObjStr = jsonSerializer.serialize(currentObject);
+
+				return new ORMException(
+					objStr + " is stale in comparison to " + currObjStr, e);
+			}
+			catch (Exception e1) {
+				return new ORMException(e1);
+			}
 		}
 
 		return new ORMException(e);
+	}
+
+	private static User _getAdmin() throws Exception {
+		final long companyId = PortalUtil.getDefaultCompanyId();
+		Role role = null;
+
+		role = RoleLocalServiceUtil.getRole(companyId,
+			RoleConstants.ADMINISTRATOR);
+		long roleId = role.getRoleId();
+
+		for (User admin : UserLocalServiceUtil.getRoleUsers(roleId)) {
+			return admin;
+		}
+
+		return null;
 	}
 
 }

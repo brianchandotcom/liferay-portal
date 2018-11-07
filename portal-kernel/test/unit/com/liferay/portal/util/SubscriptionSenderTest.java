@@ -109,13 +109,17 @@ public class SubscriptionSenderTest {
 
 			});
 
-		ReflectionTestUtil.setFieldValue(
-			PortalUUIDUtil.class, "_portalUUID",
-			ProxyFactory.newDummyInstance(PortalUUID.class));
+		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
 
-		ReflectionTestUtil.setFieldValue(
-			PortalUtil.class, "_portal",
-			ProxyFactory.newDummyInstance(Portal.class));
+		PortalUUID portalUUID = ProxyFactory.newDummyInstance(PortalUUID.class);
+
+		portalUUIDUtil.setPortalUUID(portalUUID);
+
+		PortalUtil portalUtil = new PortalUtil();
+
+		Portal portal = ProxyFactory.newDummyInstance(Portal.class);
+
+		portalUtil.setPortal(portal);
 	}
 
 	@Test

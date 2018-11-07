@@ -1,8 +1,7 @@
 import Component from 'metal-component';
-import {Config} from 'metal-state';
 import Soy from 'metal-soy';
-
 import templates from './ImagePreviewer.soy';
+import {Config} from 'metal-state';
 
 /**
  * Available zoom sizes
@@ -48,16 +47,16 @@ class ImagePreviewer extends Component {
 		this.isPreviewFit = true;
 
 		this._updateDimensions();
-		this._updateDimensions = this._updateDimensions.bind(this);
 
-		window.addEventListener('resize', this._updateDimensions);
+		this._updateDimensionsFn = this._updateDimensions.bind(this);
+		window.addEventListener('resize', this._updateDimensionsFn);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	detached() {
-		window.removeEventListener('resize', this._updateDimensions);
+		window.removeEventListener('resize', this._updateDimensionsFn);
 	}
 
 	/**
@@ -124,7 +123,7 @@ class ImagePreviewer extends Component {
 			break;
 		case 'fit':
 			this._clearZoom();
-		break;
+			break;
 		}
 
 		if (zoomValue) {
@@ -155,15 +154,21 @@ class ImagePreviewer extends Component {
 	 * @review
 	 */
 	_setScrollContainer() {
+		let imageContainer = this.refs.imageContainer;
+		let scrollLeft;
+		let scrollTop;
+
 		if (this.zoomRatio < MIN_ZOOM_RATIO_AUTOCENTER) {
-			this.refs.imageContainer.scrollLeft = this.refs.imageContainer.clientWidth * (this.zoomRatio - 1) / 2
-				+ this.refs.imageContainer.scrollLeft * this.zoomRatio;
-			this.refs.imageContainer.scrollTop = this.refs.imageContainer.clientHeight * (this.zoomRatio - 1) / 2
-				+ this.refs.imageContainer.scrollTop * this.zoomRatio;
-		} else {
-			this.refs.imageContainer.scrollTop = (this.imageHeight - this.refs.imageContainer.clientHeight) / 2;
-			this.refs.imageContainer.scrollLeft = (this.imageWidth - this.refs.imageContainer.clientWidth) / 2;
+			scrollLeft = imageContainer.clientWidth * (this.zoomRatio - 1) / 2 + imageContainer.scrollLeft * this.zoomRatio;
+			scrollTop = imageContainer.clientHeight * (this.zoomRatio - 1) / 2 + imageContainer.scrollTop * this.zoomRatio;
 		}
+		else {
+			scrollTop = (this.imageHeight - imageContainer.clientHeight) / 2;
+			scrollLeft = (this.imageWidth - imageContainer.clientWidth) / 2;
+		}
+
+		imageContainer.scrollLeft = scrollLeft;
+		imageContainer.scrollTop = scrollTop;
 
 		this.zoomRatio = null;
 	}
@@ -211,8 +216,8 @@ ImagePreviewer.STATE = {
 	imageWidth: Config.number(),
 	spritemap: Config.string().required(),
 	zoomActual: Config.number(),
-	zoomInDisabled: Config.bool(),
 	zoomFitToggle: Config.bool(),
+	zoomInDisabled: Config.bool(),
 	zoomOutDisabled: Config.bool()
 };
 

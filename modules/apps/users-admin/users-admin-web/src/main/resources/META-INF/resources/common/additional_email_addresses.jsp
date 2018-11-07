@@ -17,9 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String className = ParamUtil.getString(request, "className");
-long classPK = ParamUtil.getLong(request, "classPK");
-String contactInformationRequireJS = ParamUtil.getString(request, "contactInformationRequireJS");
+String className = (String)request.getAttribute("contact_information.jsp-className");
+long classPK = (long)request.getAttribute("contact_information.jsp-classPK");
+String contactInformationRequireJS = (String)request.getAttribute("contact_information.jsp-contactInformationRequireJS");
+
 String emptyResultsMessage = ParamUtil.getString(request, "emptyResultsMessage");
 
 List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(className, classPK);

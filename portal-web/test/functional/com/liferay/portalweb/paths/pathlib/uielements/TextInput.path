@@ -295,37 +295,7 @@
 </tr>
 <tr>
 	<td>REQUIRED_ALERT</td>
-	<td>//div[contains(@class,'has-error')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REQUIRED_ALERT_SETUP_WIZARD_PORTAL_NAME</td>
-	<td>//div[contains(@class,'has-error') and contains(.,'Portal Name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REQUIRED_ALERT_SETUP_WIZARD_FIRST_NAME</td>
-	<td>//div[contains(@class,'has-error') and contains(.,'First Name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REQUIRED_ALERT_SETUP_WIZARD_LAST_NAME</td>
-	<td>//div[contains(@class,'has-error') and contains(.,'Last Name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REQUIRED_ALERT_SETUP_WIZARD_EMAIL</td>
-	<td>//div[contains(@class,'has-error') and contains(.,'Email')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REQUIRED_ALERT_SETUP_WIZARD_DATABASE_JDBC_URL</td>
-	<td>//div[contains(@class,'has-error') and contains(.,'JDBC URL')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REQUIRED_ALERT_SETUP_WIZARD_DATABASE_CLASS_NAME</td>
-	<td>//div[contains(@class,'has-error') and contains(.,'JDBC Driver Class Name')]</td>
+	<td>//div[contains(@class,'has-error')] | //div[contains(@class,'has-error') and contains(.,'key_filedName')]</td>
 	<td></td>
 </tr>
 <tr>

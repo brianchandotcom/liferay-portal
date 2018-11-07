@@ -16,6 +16,8 @@ package com.liferay.portal.dao.orm.hibernate;
 
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.ObjectNotFoundException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.model.BaseModel;
 
 import org.hibernate.Session;
@@ -43,8 +45,14 @@ public class ExceptionTranslator {
 			Object currentObject = session.get(
 				object.getClass(), baseModel.getPrimaryKeyObj());
 
+			JSONSerializer jsonSerializer =
+				JSONFactoryUtil.createJSONSerializer();
+
+			String objStr = jsonSerializer.serialize(object);
+			String currObjStr = jsonSerializer.serialize(currentObject);
+
 			return new ORMException(
-				object + " is stale in comparison to " + currentObject, e);
+				objStr + " is stale in comparison to " + currObjStr, e);
 		}
 
 		return new ORMException(e);

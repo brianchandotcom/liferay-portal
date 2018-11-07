@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.ObjectNotFoundException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
@@ -28,6 +30,8 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.StaleObjectStateException;
@@ -54,44 +58,46 @@ public class ExceptionTranslator {
 			Object currentObject = session.get(
 				object.getClass(), baseModel.getPrimaryKeyObj());
 
-			try {
-				User admin = _getAdmin();
+			_initPermissionChecker();
 
-				PermissionChecker permissionChecker =
-					PermissionCheckerFactoryUtil.create(admin);
+			JSONSerializer jsonSerializer =
+				JSONFactoryUtil.createJSONSerializer();
 
-				PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			String objStr = jsonSerializer.serialize(object);
+			String currObjStr = jsonSerializer.serialize(currentObject);
 
-				JSONSerializer jsonSerializer =
-					JSONFactoryUtil.createJSONSerializer();
-
-				String objStr = jsonSerializer.serialize(object);
-				String currObjStr = jsonSerializer.serialize(currentObject);
-
-				return new ORMException(
-					objStr + " is stale in comparison to " + currObjStr, e);
-			}
-			catch (Exception e1) {
-				return new ORMException(e1);
-			}
+			return new ORMException(
+				objStr + " is stale in comparison to " + currObjStr, e);
 		}
 
 		return new ORMException(e);
 	}
 
-	private static User _getAdmin() throws Exception {
+	private static void _initPermissionChecker() {
 		final long companyId = PortalUtil.getDefaultCompanyId();
 		Role role = null;
 
-		role = RoleLocalServiceUtil.getRole(companyId,
-			RoleConstants.ADMINISTRATOR);
-		long roleId = role.getRoleId();
+		try {
+			role = RoleLocalServiceUtil.getRole(
+				companyId, RoleConstants.ADMINISTRATOR);
 
-		for (User admin : UserLocalServiceUtil.getRoleUsers(roleId)) {
-			return admin;
+			long roleId = role.getRoleId();
+
+			List<User> admins = UserLocalServiceUtil.getRoleUsers(roleId, 0, 1);
+
+			User admin = admins.get(0);
+
+			PermissionChecker permissionChecker =
+				PermissionCheckerFactoryUtil.create(admin);
+
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 		}
-
-		return null;
+		catch (Exception e1) {
+			_log.error("Unable to initiate admin PermissionChecker ", e1);
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ExceptionTranslator.class);
 
 }

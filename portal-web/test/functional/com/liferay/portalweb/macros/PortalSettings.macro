@@ -682,7 +682,7 @@
 		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_EMAIL_ADDRESS_ATTRIBUTE_HEADER" value1="Email Address Attribute" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_EMAIL_ADDRESS_ATTRIBUTE_FIELD" value1="mail" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_FIRST_NAME_ATTRIBUTE_HEADER" value1="First Name Attribute" />
-		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_FIRST_NAME_ATTRIBUTE_FIELD" value1="givenname" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_FIRST_NAME_ATTRIBUTE_FIELD" value1="givenName" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LAST_NAME_ATTRIBUTE_HEADER" value1="Last Name Attribute" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LAST_NAME_ATTRIBUTE_FIELD" value1="sn" />
 		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_TEST_OPEN_SSO_CONFIGURATION_BUTTON" />

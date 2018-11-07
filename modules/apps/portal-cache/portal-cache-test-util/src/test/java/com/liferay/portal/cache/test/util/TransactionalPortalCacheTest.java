@@ -542,7 +542,7 @@ public class TransactionalPortalCacheTest {
 
 		TransactionalPortalCache<String, MVCCModel> transactionalPortalCache =
 			new TransactionalPortalCache<>(
-				new MVCCPortalCache(
+				new MVCCPortalCache<>(
 					new TestPortalCache<>("Test MVCC Portal Cache")),
 				true);
 

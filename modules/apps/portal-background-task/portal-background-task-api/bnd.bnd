@@ -4,6 +4,7 @@ Bundle-Version: 4.0.0
 Export-Package:\
 	com.liferay.portal.background.task.constants,\
 	com.liferay.portal.background.task.exception,\
+	com.liferay.portal.background.task.executor.permission,\
 	com.liferay.portal.background.task.model,\
 	com.liferay.portal.background.task.service,\
 	com.liferay.portal.background.task.service.persistence

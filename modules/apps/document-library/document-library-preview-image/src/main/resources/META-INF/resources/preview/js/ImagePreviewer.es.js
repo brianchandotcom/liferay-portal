@@ -75,6 +75,23 @@ class ImagePreviewer extends Component {
 	}
 
 	/**
+	 * Set the zoom based in multiplier
+	 * @param {number} zoomNumber
+	 * @private
+	 * @review
+	 */
+	_applyZoom(zoomNumber) {
+		this.imageHeight = this._imageNaturalHeight * zoomNumber;
+		this.imageWidth = this._imageNaturalWidth * zoomNumber;
+		this.zoomActual = zoomNumber;
+		this._zoomRatio = zoomNumber / this.zoomActual;
+		this._isPreviewFit = false;
+
+		this._updateDimensions();
+		this._updateToolbarButtons();
+	}
+
+	/**
 	 * Calculate actual zoom based in image rendered
 	 * @private
 	 * @review
@@ -132,23 +149,6 @@ class ImagePreviewer extends Component {
 	}
 
 	/**
-	 * Calculate actual dimensions based in container rendered
-	 * @private
-	 * @review
-	 */
-	_updateDimensions() {
-		this.imageMargin = `${
-			this.imageHeight > this.refs.imageContainer.clientHeight ? 0 : 'auto'
-		} ${
-			this.imageWidth > this.refs.imageContainer.clientWidth ? 0 : 'auto'
-		}`;
-
-		if (this._isPreviewFit) {
-			this._calculateZoomActual();
-		}
-	}
-
-	/**
 	 * Move the scroll of the cointainer based in the actual position or center
 	 * @private
 	 * @review
@@ -174,6 +174,23 @@ class ImagePreviewer extends Component {
 	}
 
 	/**
+	 * Calculate actual dimensions based in container rendered
+	 * @private
+	 * @review
+	 */
+	_updateDimensions() {
+		this.imageMargin = `${
+			this.imageHeight > this.refs.imageContainer.clientHeight ? 0 : 'auto'
+		} ${
+			this.imageWidth > this.refs.imageContainer.clientWidth ? 0 : 'auto'
+		}`;
+
+		if (this._isPreviewFit) {
+			this._calculateZoomActual();
+		}
+	}
+
+	/**
 	 * Set the toolbar buttons states based in actual state
 	 * @private
 	 * @review
@@ -182,23 +199,6 @@ class ImagePreviewer extends Component {
 		this.zoomInDisabled = ZOOM_LEVELS_REVERSED[0] === this.zoomActual;
 		this.zoomOutDisabled = ZOOM_LEVELS[0] >= this.zoomActual;
 		this.zoomFitToggle = this.zoomActual === 1;
-	}
-
-	/**
-	 * Set the zoom based in multiplier
-	 * @param {number} zoomNumber
-	 * @private
-	 * @review
-	 */
-	_applyZoom(zoomNumber) {
-		this.imageHeight = this._imageNaturalHeight * zoomNumber;
-		this.imageWidth = this._imageNaturalWidth * zoomNumber;
-		this.zoomActual = zoomNumber;
-		this._zoomRatio = zoomNumber / this.zoomActual;
-		this._isPreviewFit = false;
-
-		this._updateDimensions();
-		this._updateToolbarButtons();
 	}
 }
 

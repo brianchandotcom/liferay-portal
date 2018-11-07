@@ -34,7 +34,7 @@ public class ScopedBeanManagerThreadLocal {
 		return () -> _instance.set(scopedBeanManagers);
 	}
 
-	public static ScopedBeanManager getCurrentStackTop() {
+	public static ScopedBeanManager getCurrentScopedBeanManager() {
 		Deque<ScopedBeanManager> scopedBeanManagers = _instance.get();
 
 		return scopedBeanManagers.peek();

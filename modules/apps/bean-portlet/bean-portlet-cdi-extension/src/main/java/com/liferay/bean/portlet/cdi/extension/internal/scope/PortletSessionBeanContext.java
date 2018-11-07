@@ -33,7 +33,7 @@ public class PortletSessionBeanContext extends BaseContextImpl {
 		Contextual<T> contextual, CreationalContext<T> creationalContext) {
 
 		ScopedBeanManager scopedBeanManager =
-			ScopedBeanManagerThreadLocal.getCurrentStackTop();
+			ScopedBeanManagerThreadLocal.getCurrentScopedBeanManager();
 
 		Bean<T> bean = (Bean<T>)contextual;
 

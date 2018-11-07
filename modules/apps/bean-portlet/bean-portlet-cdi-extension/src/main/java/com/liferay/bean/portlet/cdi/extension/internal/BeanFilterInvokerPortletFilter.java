@@ -190,7 +190,7 @@ public class BeanFilterInvokerPortletFilter
 		throws PortletException {
 
 		ScopedBeanManager scopedBeanManager =
-			ScopedBeanManagerThreadLocal.getCurrentStackTop();
+			ScopedBeanManagerThreadLocal.getCurrentScopedBeanManager();
 
 		if (scopedBeanManager == null) {
 			scopedBeanManager = new ScopedBeanManager(

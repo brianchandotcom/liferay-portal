@@ -279,7 +279,7 @@ public class JSR362BeanProducer {
 	@Produces
 	public PortletConfig getPortletConfig() {
 		ScopedBeanManager scopedBeanManager =
-			ScopedBeanManagerThreadLocal.getCurrentStackTop();
+			ScopedBeanManagerThreadLocal.getCurrentScopedBeanManager();
 
 		if (scopedBeanManager == null) {
 			return null;
@@ -350,7 +350,7 @@ public class JSR362BeanProducer {
 	@Produces
 	public PortletRequest getPortletRequest() {
 		ScopedBeanManager scopedBeanManager =
-			ScopedBeanManagerThreadLocal.getCurrentStackTop();
+			ScopedBeanManagerThreadLocal.getCurrentScopedBeanManager();
 
 		if (scopedBeanManager == null) {
 			return null;
@@ -364,7 +364,7 @@ public class JSR362BeanProducer {
 	@Produces
 	public PortletResponse getPortletResponse() {
 		ScopedBeanManager scopedBeanManager =
-			ScopedBeanManagerThreadLocal.getCurrentStackTop();
+			ScopedBeanManagerThreadLocal.getCurrentScopedBeanManager();
 
 		if (scopedBeanManager == null) {
 			return null;

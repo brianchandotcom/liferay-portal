@@ -950,6 +950,155 @@
 		</execute>
 	</command>
 
+	<command name="StagingPublishWCWithImageFieldEdit" priority="5">
+		<description message="This is a use case for LPS-77769." />
+
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Publishing" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="pageVersioningEnabled" value="true" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="NavItem#gotoStructures" />
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="WC Structure Description" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Image" />
+			<var name="fieldFieldLabel" value="Image" />
+			<var name="fieldName" value="Image" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="NavItem#gotoTemplates" />
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateDescription" value="WC Template Description" />
+			<var name="templateFieldNames" value="Image" />
+			<var name="templateName" value="WC Template Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="WebContent#addWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateName" value="WC Template Name" />
+			<var name="webContentImage" value="Document_2.jpeg" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#selectWebContent">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#viewImageFieldViaWCD" />
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#viewImageFieldViaWCD" />
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="FormFields#editTextAlt">
+			<var name="fieldName" value="Image" />
+			<var name="fieldValue" value="Web Content Image Description" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute function="AssertHTMLSourceTextPresent" value1="Web Content Image Description" />
+	</command>
+
 	<command name="StagingWithPublishTemplateSmoke" priority="4">
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Staging Test Page" />

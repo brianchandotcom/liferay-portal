@@ -970,7 +970,7 @@ public class PortalImpl implements Portal {
 
 			url = null;
 		}
-		else if (securityMode.equals("ip")) {
+		else {
 			String[] allowedIps = PropsValues.REDIRECT_URL_IPS_ALLOWED;
 
 			if (allowedIps.length == 0) {

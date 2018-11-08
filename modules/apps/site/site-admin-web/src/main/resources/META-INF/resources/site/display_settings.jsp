@@ -93,8 +93,6 @@ if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayo
 			%>
 
 		</p>
-
-		<aui:input name="defaultLanguagesList" type="hidden" value='<%= String.join(",", defaultLanguagesList) %>' />
 	</aui:fieldset>
 </aui:fieldset>
 
@@ -197,13 +195,7 @@ if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayo
 	function <portlet:namespace />saveLocales() {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		var radioButtons = document.getElementsByName('<portlet:namespace/>TypeSettingsProperties--inheritLocales--');
-
-		if (radioButtons[0].checked) {
-			form.fm('<%= PropsKeys.LOCALES %>').val(form.fm('defaultLanguagesList').val());
-		} else {
-			form.fm('<%= PropsKeys.LOCALES %>').val(Liferay.Util.listSelect(form.fm('currentLanguageIds')));
-		}
+		form.fm('<%= PropsKeys.LOCALES %>').val(Liferay.Util.listSelect(form.fm('currentLanguageIds')));
 	}
 </aui:script>
 

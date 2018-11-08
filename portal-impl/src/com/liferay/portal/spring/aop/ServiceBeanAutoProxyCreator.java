@@ -64,14 +64,7 @@ public class ServiceBeanAutoProxyCreator
 
 		proxyFactory.copyFrom(this);
 
-		if (!proxyFactory.isProxyTargetClass()) {
-			if (shouldProxyTargetClass(beanClass, beanName)) {
-				proxyFactory.setProxyTargetClass(true);
-			}
-			else {
-				evaluateProxyInterfaces(beanClass, proxyFactory);
-			}
-		}
+		evaluateProxyInterfaces(beanClass, proxyFactory);
 
 		Advisor[] advisors = buildAdvisors(beanName, specificInterceptors);
 

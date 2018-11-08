@@ -24,17 +24,6 @@ import java.util.List;
  */
 public class LegacyDataArchive {
 
-	public Commit getCommit() {
-		if (_legacyDataArchiveFile.exists()) {
-			List<Commit> commits = _legacyGitWorkingDirectory.log(
-				1, _legacyDataArchiveFile);
-
-			return commits.get(0);
-		}
-
-		return null;
-	}
-
 	public String getDataArchiveType() {
 		return _dataArchiveType;
 	}
@@ -51,19 +40,32 @@ public class LegacyDataArchive {
 		return _legacyGitWorkingDirectory;
 	}
 
-	public boolean isUpdated() {
-		Commit commit = getCommit();
+	public LocalGitCommit getLocalGitCommit() {
+		if (_legacyDataArchiveFile.exists()) {
+			List<LocalGitCommit> localGitCommits =
+				_legacyGitWorkingDirectory.log(1, _legacyDataArchiveFile);
 
-		if (commit == null) {
+			return localGitCommits.get(0);
+		}
+
+		return null;
+	}
+
+	public boolean isUpdated() {
+		LocalGitCommit localGitCommit = getLocalGitCommit();
+
+		if (localGitCommit == null) {
 			return false;
 		}
 
-		Commit latestTestCommit =
-			_legacyDataArchivePortalVersion.getLatestTestCommit();
+		LocalGitCommit latestTestLocalGitCommit =
+			_legacyDataArchivePortalVersion.getLatestTestLocalGitCommit();
 
-		String commitMessage = commit.getMessage();
+		String gitCommitMessage = localGitCommit.getMessage();
 
-		if (commitMessage.contains(latestTestCommit.getAbbreviatedSHA())) {
+		if (gitCommitMessage.contains(
+				latestTestLocalGitCommit.getAbbreviatedSHA())) {
+
 			return true;
 		}
 

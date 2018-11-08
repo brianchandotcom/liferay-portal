@@ -55,7 +55,7 @@ public class LegacyDataArchivePortalVersion {
 
 		_dataArchiveTypes = _getDataArchiveTypes();
 		_databaseNames = _getDatabaseNames();
-		_latestTestCommit = _getLatestTestCommit();
+		_latestTestLocalGitCommit = _getLatestTestLocalGitCommit();
 
 		_legacyDataArchiveGroups = _getLegacyDataArchiveGroups();
 	}
@@ -64,8 +64,8 @@ public class LegacyDataArchivePortalVersion {
 		return _databaseNames;
 	}
 
-	public Commit getLatestTestCommit() {
-		return _latestTestCommit;
+	public LocalGitCommit getLatestTestLocalGitCommit() {
+		return _latestTestLocalGitCommit;
 	}
 
 	public List<LegacyDataArchiveGroup> getLegacyDataArchiveGroups() {
@@ -135,16 +135,16 @@ public class LegacyDataArchivePortalVersion {
 		return databaseNames;
 	}
 
-	private Commit _getLatestTestCommit() {
-		List<Commit> commits = _legacyGitWorkingDirectory.log(
+	private LocalGitCommit _getLatestTestLocalGitCommit() {
+		List<LocalGitCommit> localGitCommits = _legacyGitWorkingDirectory.log(
 			50, _portalVersionTestDirectory);
 
-		for (Commit commit : commits) {
-			if (commit.getType() != Commit.Type.MANUAL) {
+		for (LocalGitCommit localGitCommit : localGitCommits) {
+			if (localGitCommit.getType() != LocalGitCommit.Type.MANUAL) {
 				continue;
 			}
 
-			return commit;
+			return localGitCommit;
 		}
 
 		return null;
@@ -199,7 +199,7 @@ public class LegacyDataArchivePortalVersion {
 
 	private final List<String> _dataArchiveTypes;
 	private final List<String> _databaseNames;
-	private final Commit _latestTestCommit;
+	private final LocalGitCommit _latestTestLocalGitCommit;
 	private final List<LegacyDataArchiveGroup> _legacyDataArchiveGroups;
 	private final LegacyDataArchiveUtil _legacyDataArchiveUtil;
 	private final GitWorkingDirectory _legacyGitWorkingDirectory;

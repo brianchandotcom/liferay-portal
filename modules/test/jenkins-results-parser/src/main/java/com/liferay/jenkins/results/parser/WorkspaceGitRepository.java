@@ -22,7 +22,7 @@ import java.util.Properties;
  */
 public interface WorkspaceGitRepository extends LocalGitRepository {
 
-	public static final Integer MAX_COMMIT_HISTORY = 5000;
+	public static final Integer MAX_COMMIT_HISTORY = 25000;
 
 	public String getFileContent(String filePath);
 
@@ -30,7 +30,7 @@ public interface WorkspaceGitRepository extends LocalGitRepository {
 
 	public String getGitHubURL();
 
-	public List<Commit> getHistoricalCommits();
+	public List<LocalGitCommit> getHistoricalLocalGitCommits();
 
 	public String getType();
 

@@ -52,8 +52,8 @@ public class LegacyDataArchiveGroup {
 		if (!status.contains("nothing to commit") &&
 			!status.contains("nothing added to commit")) {
 
-			Commit latestTestCommit =
-				_legacyDataArchivePortalVersion.getLatestTestCommit();
+			LocalGitCommit latestTestLocalGitCommit =
+				_legacyDataArchivePortalVersion.getLatestTestLocalGitCommit();
 			String portalVersion =
 				_legacyDataArchivePortalVersion.getPortalVersion();
 
@@ -61,7 +61,7 @@ public class LegacyDataArchiveGroup {
 				JenkinsResultsParserUtil.combine(
 					"archive:ignore Update '", _dataArchiveType, "' for '",
 					portalVersion, "' at ",
-					latestTestCommit.getAbbreviatedSHA(), "."));
+					latestTestLocalGitCommit.getAbbreviatedSHA(), "."));
 		}
 	}
 

@@ -60,16 +60,16 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	@Override
-	public List<Commit> getHistoricalCommits() {
-		if (_historicalCommits != null) {
-			return _historicalCommits;
+	public List<LocalGitCommit> getHistoricalLocalGitCommits() {
+		if (_historicalLocalGitCommits != null) {
+			return _historicalLocalGitCommits;
 		}
 
 		if (!has("commits")) {
 			return new ArrayList<>();
 		}
 
-		_historicalCommits = new ArrayList<>();
+		_historicalLocalGitCommits = new ArrayList<>();
 
 		JSONArray commitsJSONArray = getJSONArray("commits");
 
@@ -82,10 +82,11 @@ public abstract class BaseWorkspaceGitRepository
 				commitJSONObject.getString("sha"), " ",
 				commitJSONObject.getString("message"));
 
-			_historicalCommits.add(gitWorkingDirectory.getCommit(gitLogEntity));
+			_historicalLocalGitCommits.add(
+				gitWorkingDirectory.getLocalGitCommit(gitLogEntity));
 		}
 
-		return _historicalCommits;
+		return _historicalLocalGitCommits;
 	}
 
 	@Override
@@ -192,7 +193,7 @@ public abstract class BaseWorkspaceGitRepository
 
 	@Override
 	public void storeCommitHistory(List<String> commitSHAs) {
-		_historicalCommits = getHistoricalCommits();
+		_historicalLocalGitCommits = getHistoricalLocalGitCommits();
 
 		List<String> requiredCommitSHAs = new ArrayList<>();
 
@@ -212,15 +213,15 @@ public abstract class BaseWorkspaceGitRepository
 					MAX_COMMIT_HISTORY % _COMMIT_HISTORY_GROUP_SIZE;
 			}
 
-			List<Commit> commits = gitWorkingDirectory.log(
+			List<LocalGitCommit> localGitCommits = gitWorkingDirectory.log(
 				index, currentGroupSize);
 
-			for (Commit commit : commits) {
-				_historicalCommits.add(commit);
+			for (LocalGitCommit localGitCommit : localGitCommits) {
+				_historicalLocalGitCommits.add(localGitCommit);
 
-				commitsJSONArray.put(commit.toJSONObject());
+				commitsJSONArray.put(localGitCommit.toJSONObject());
 
-				String sha = commit.getSHA();
+				String sha = localGitCommit.getSHA();
 
 				if (requiredCommitSHAs.contains(sha)) {
 					requiredCommitSHAs.remove(sha);
@@ -479,7 +480,7 @@ public abstract class BaseWorkspaceGitRepository
 
 	private static final String _SHA_REGEX = "[0-9a-f]{7,40}";
 
-	private List<Commit> _historicalCommits;
+	private List<LocalGitCommit> _historicalLocalGitCommits;
 	private final Map<String, Properties> _propertiesFilesMap = new HashMap<>();
 
 }

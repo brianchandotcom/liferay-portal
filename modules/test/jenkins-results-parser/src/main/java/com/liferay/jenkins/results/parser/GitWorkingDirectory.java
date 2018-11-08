@@ -174,9 +174,9 @@ public class GitWorkingDirectory {
 		}
 	}
 
-	public void cherryPick(Commit commit) {
+	public void cherryPick(LocalGitCommit localGitCommit) {
 		String cherryPickCommand = JenkinsResultsParserUtil.combine(
-			"git cherry-pick " + commit.getSHA());
+			"git cherry-pick " + localGitCommit.getSHA());
 
 		GitUtil.ExecutionResult executionResult = executeBashCommands(
 			GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, GitUtil.TIMEOUT,
@@ -185,8 +185,8 @@ public class GitWorkingDirectory {
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to cherry pick commit ", commit.getSHA(), "\n",
-					executionResult.getStandardError()));
+					"Unable to cherry pick commit ", localGitCommit.getSHA(),
+					"\n", executionResult.getStandardError()));
 		}
 	}
 
@@ -1454,20 +1454,20 @@ public class GitWorkingDirectory {
 		return false;
 	}
 
-	public List<Commit> log(int num) {
+	public List<LocalGitCommit> log(int num) {
 		return log(num, null);
 	}
 
-	public List<Commit> log(int num, File file) {
+	public List<LocalGitCommit> log(int num, File file) {
 		return log(0, num, file);
 	}
 
-	public List<Commit> log(int start, int num) {
+	public List<LocalGitCommit> log(int start, int num) {
 		return log(start, num, null);
 	}
 
-	public List<Commit> log(int start, int num, File file) {
-		List<Commit> commits = new ArrayList<>(num);
+	public List<LocalGitCommit> log(int start, int num, File file) {
+		List<LocalGitCommit> localGitCommits = new ArrayList<>(num);
 
 		String gitLog = _log(start, num, file, "%H %s");
 
@@ -1476,10 +1476,10 @@ public class GitWorkingDirectory {
 		String[] gitLogEntities = gitLog.split("\n");
 
 		for (String gitLogEntity : gitLogEntities) {
-			commits.add(getCommit(gitLogEntity));
+			localGitCommits.add(getLocalGitCommit(gitLogEntity));
 		}
 
-		return commits;
+		return localGitCommits;
 	}
 
 	public RemoteGitBranch pushToRemoteGitRepository(
@@ -1759,22 +1759,6 @@ public class GitWorkingDirectory {
 			maxRetries, retryDelay, timeout, _workingDirectory, commands);
 	}
 
-	protected Commit getCommit(String gitLogEntity) {
-		Matcher matcher = _gitLogEntityPattern.matcher(gitLogEntity);
-
-		if (!matcher.matches()) {
-			throw new IllegalArgumentException("Unable to find Git SHA");
-		}
-
-		String gitHubUserName = getGitHubUserName(getGitRemote("upstream"));
-		String message = matcher.group("message");
-		String gitRepositoryName = getGitRepositoryName();
-		String sha = matcher.group("sha");
-
-		return CommitFactory.newCommit(
-			gitHubUserName, message, gitRepositoryName, sha);
-	}
-
 	protected List<String> getLocalGitBranchNames() {
 		GitUtil.ExecutionResult executionResult = executeBashCommands(
 			GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, GitUtil.TIMEOUT,
@@ -1790,6 +1774,17 @@ public class GitWorkingDirectory {
 		String standardOut = executionResult.getStandardOut();
 
 		return toShortNameList(Arrays.asList(standardOut.split("\n")));
+	}
+
+	protected LocalGitCommit getLocalGitCommit(String gitLogEntity) {
+		Matcher matcher = _gitLogEntityPattern.matcher(gitLogEntity);
+
+		if (!matcher.matches()) {
+			throw new IllegalArgumentException("Unable to find Git SHA");
+		}
+
+		return GitCommitFactory.newLocalGitCommit(
+			this, matcher.group("message"), matcher.group("sha"));
 	}
 
 	protected File getRealGitDirectory(File gitFile) {

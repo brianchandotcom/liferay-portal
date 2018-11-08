@@ -67,19 +67,19 @@ class ImagePreviewer extends Component {
 			this._setScrollContainer();
 		}
 
-		if (this._reCalculateZoomActual) {
-			this._reCalculateZoomActual = false;
+		if (this._reCalculateCurrentZoom) {
+			this._reCalculateCurrentZoom = false;
 
-			this._calculateZoomActual();
+			this._calculateCurrentZoom();
 		}
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	syncZoomActual() {
-		this.zoomInDisabled = ZOOM_LEVELS_REVERSED[0] === this.zoomActual;
-		this.zoomOutDisabled = ZOOM_LEVELS[0] >= this.zoomActual;
+	syncCurrentZoom() {
+		this.zoomInDisabled = ZOOM_LEVELS_REVERSED[0] === this.currentZoom;
+		this.zoomOutDisabled = ZOOM_LEVELS[0] >= this.currentZoom;
 	}
 
 	/**
@@ -91,8 +91,8 @@ class ImagePreviewer extends Component {
 	_applyZoom(zoomNumber) {
 		this.imageHeight = this._imageNaturalHeight * zoomNumber;
 		this.imageWidth = this._imageNaturalWidth * zoomNumber;
-		this.zoomActual = zoomNumber;
-		this._zoomRatio = zoomNumber / this.zoomActual;
+		this.currentZoom = zoomNumber;
+		this._zoomRatio = zoomNumber / this.currentZoom;
 		this._isPreviewFit = false;
 
 		this._updateDimensions();
@@ -103,8 +103,8 @@ class ImagePreviewer extends Component {
 	 * @private
 	 * @review
 	 */
-	_calculateZoomActual() {
-		this.zoomActual = this.refs.image.width / this._imageNaturalWidth;
+	_calculateCurrentZoom() {
+		this.currentZoom = this.refs.image.width / this._imageNaturalWidth;
 	}
 
 	/**
@@ -117,7 +117,7 @@ class ImagePreviewer extends Component {
 		this.imageWidth = null;
 		this.imageMargin = null;
 		this._isPreviewFit = true;
-		this._reCalculateZoomActual = true;
+		this._reCalculateCurrentZoom = true;
 	}
 
 	/**
@@ -134,11 +134,11 @@ class ImagePreviewer extends Component {
 		switch (value) {
 		case 'in':
 			zoomValue = ZOOM_LEVELS
-				.find((zoom) => zoom > this.zoomActual);
+				.find((zoom) => zoom > this.currentZoom);
 			break;
 		case 'out':
 			zoomValue = ZOOM_LEVELS_REVERSED
-				.find((zoom) => zoom < this.zoomActual);
+				.find((zoom) => zoom < this.currentZoom);
 			break;
 		case 'real':
 			zoomValue = 1;
@@ -191,7 +191,7 @@ class ImagePreviewer extends Component {
 		}`;
 
 		if (this._isPreviewFit) {
-			this._calculateZoomActual();
+			this._calculateCurrentZoom();
 		}
 	}
 }
@@ -204,6 +204,12 @@ class ImagePreviewer extends Component {
  */
 
 ImagePreviewer.STATE = {
+
+	/**
+	 * The current zoom value that is shown in the toolbar.
+	 * @type {Number}
+	 */
+	currentZoom: Config.number(),
 
 	/**
 	 * The height of the <img> element.
@@ -234,12 +240,6 @@ ImagePreviewer.STATE = {
 	 * @type {String}
 	 */
 	spritemap: Config.string().required(),
-
-	/**
-	 * The current zoom value that is shown in the toolbar.
-	 * @type {Number}
-	 */
-	zoomActual: Config.number(),
 
 	/**
 	 * Flag that indicate if 'zoom in' is disabled.

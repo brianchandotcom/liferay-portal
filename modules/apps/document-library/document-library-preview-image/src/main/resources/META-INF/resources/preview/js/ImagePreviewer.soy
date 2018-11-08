@@ -12,7 +12,7 @@
 	{@param? imageMargin: string}
 	{@param? imageHeight: number}
 	{@param? imageWidth: number}
-	{@param? zoomActual: number}
+	{@param? currentZoom: number}
 	{@param? zoomInDisabled: bool}
 	{@param? zoomOutDisabled: bool}
 
@@ -38,7 +38,7 @@
 		{call .toolbar}
 			{param _handleToolbarClick: $_handleToolbarClick /}
 			{param spritemap: $spritemap /}
-			{param zoomActual: $zoomActual /}
+			{param currentZoom: $currentZoom /}
 			{param zoomInDisabled: $zoomInDisabled /}
 			{param zoomOutDisabled: $zoomOutDisabled /}
 		{/call}
@@ -48,7 +48,7 @@
 {template .toolbar}
 	{@param spritemap: string}
 	{@param? _handleToolbarClick: any}
-	{@param? zoomActual: number}
+	{@param? currentZoom: number}
 	{@param? zoomInDisabled: bool}
 	{@param? zoomOutDisabled: bool}
 
@@ -59,9 +59,9 @@
 		'style': false
 	] /}
 
-	{let $zoomLabel: round(($zoomActual ?: 0) * 100) /}
+	{let $zoomLabel: round(($currentZoom ?: 0) * 100) /}
 
-	{let $zoomFit: $zoomActual == 1 /}
+	{let $zoomFit: $currentZoom == 1 /}
 
 	{let $zoomBtnValue: $zoomFit ? 'fit' : 'real'/}
 

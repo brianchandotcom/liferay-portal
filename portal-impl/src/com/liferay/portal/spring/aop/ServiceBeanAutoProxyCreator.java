@@ -16,6 +16,7 @@ package com.liferay.portal.spring.aop;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
+import com.liferay.portal.kernel.util.ProxyUtil;
 
 import org.aopalliance.intercept.MethodInterceptor;
 
@@ -64,11 +65,14 @@ public class ServiceBeanAutoProxyCreator
 			return bean;
 		}
 
+		Class<?>[] interfaces = ReflectionUtil.getInterfaces(bean);
+
 		ServiceBeanAopProxy serviceBeanAopProxy = new ServiceBeanAopProxy(
-			new AdvisedSupportImpl(ReflectionUtil.getInterfaces(bean), bean),
+			new AdvisedSupportImpl(interfaces, bean),
 			_serviceBeanAopCacheManager);
 
-		return serviceBeanAopProxy.getProxy(getProxyClassLoader());
+		return ProxyUtil.newProxyInstance(
+			getProxyClassLoader(), interfaces, serviceBeanAopProxy);
 	}
 
 	private BeanMatcher _beanMatcher;

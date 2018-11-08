@@ -15,7 +15,6 @@
 package com.liferay.portal.spring.aop;
 
 import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.transaction.TransactionsUtil;
 
 import java.lang.reflect.InvocationHandler;
@@ -91,11 +90,6 @@ public class ServiceBeanAopProxy
 			}
 
 		};
-	}
-
-	public Object getProxy(ClassLoader classLoader) {
-		return ProxyUtil.newProxyInstance(
-			classLoader, _advisedSupport.getProxiedInterfaces(), this);
 	}
 
 	@Override

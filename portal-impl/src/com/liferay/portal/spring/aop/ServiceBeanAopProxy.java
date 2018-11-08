@@ -29,10 +29,9 @@ public class ServiceBeanAopProxy
 	implements AdvisedSupportProxy, InvocationHandler {
 
 	public ServiceBeanAopProxy(
-		AdvisedSupport advisedSupport,
-		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
+		Object bean, ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
 
-		_advisedSupport = advisedSupport;
+		_advisedSupport = new AdvisedSupportImpl(bean);
 		_serviceBeanAopCacheManager = serviceBeanAopCacheManager;
 	}
 
@@ -81,5 +80,25 @@ public class ServiceBeanAopProxy
 
 	private final AdvisedSupport _advisedSupport;
 	private final ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
+
+	private class AdvisedSupportImpl implements AdvisedSupport {
+
+		@Override
+		public Object getTarget() {
+			return _target;
+		}
+
+		@Override
+		public void setTarget(Object target) {
+			_target = target;
+		}
+
+		private AdvisedSupportImpl(Object target) {
+			_target = target;
+		}
+
+		private Object _target;
+
+	}
 
 }

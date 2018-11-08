@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -319,18 +320,18 @@ public class PortletContainerUtil {
 
 	private static String _getPortletIdParameter(String query) {
 		if (query != null) {
-			int pos = query.indexOf("p_p_id=");
+			int x = query.indexOf("p_p_id=");
 
-			if (pos >= 0) {
-				String portletId = query.substring(pos + 7);
+			if (x >= 0) {
+				x += 7;
 
-				pos = portletId.indexOf("&");
+				int y = query.indexOf(CharPool.AMPERSAND, x);
 
-				if (pos > 0) {
-					portletId = portletId.substring(0, pos);
+				if (y < 0) {
+					y = query.length();
 				}
 
-				return portletId;
+				return query.substring(x, y);
 			}
 		}
 

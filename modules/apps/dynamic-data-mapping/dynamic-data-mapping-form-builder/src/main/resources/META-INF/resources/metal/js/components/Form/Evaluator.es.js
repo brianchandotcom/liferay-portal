@@ -79,12 +79,12 @@ const WithEvaluator = ChildComponent => {
 		 * @private
 		 */
 
-		_mergePages(sourcePages, targetPages) {
+		_mergePages(sourcePages, newPages) {
 			const visitor = new PagesVisitor(sourcePages);
 
 			return visitor.mapFields(
 				(field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
-					const currentField = targetPages[pageIndex].rows[rowIndex].columns[columnIndex].fields[fieldIndex];
+					const currentField = newPages[pageIndex].rows[rowIndex].columns[columnIndex].fields[fieldIndex];
 
 					if (currentField.fieldName === 'name') {
 						currentField.visible = true;
@@ -92,6 +92,7 @@ const WithEvaluator = ChildComponent => {
 
 					return {
 						...field,
+						dataType: currentField.dataType,
 						errorMessage: currentField.errorMessage,
 						options: currentField.options,
 						readOnly: currentField.readOnly,

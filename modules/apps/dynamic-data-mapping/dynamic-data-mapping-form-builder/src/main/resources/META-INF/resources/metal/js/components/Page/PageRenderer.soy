@@ -355,7 +355,7 @@
 					{let $fieldType: $field.type /}
 
 					{delcall PageRenderer.RegisterFieldType variant="$fieldType" data="$field" allowemptydefault="true"}
-						{param editable: $editable /}
+						{param readOnly: true  /}
 						{param events: [
 							'visibleChanged': $_handleFieldEdited,
 							'fieldEdited': $_handleFieldEdited

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.resiliency.service;
 
-import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.portal.internal.resiliency.service.ServiceMethodProcessCallable;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceInvokerUtil;
 import com.liferay.portal.kernel.nio.intraband.rpc.IntrabandRPCUtil;
@@ -23,6 +22,7 @@ import com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControl;
 import com.liferay.portal.kernel.security.access.control.AccessControlThreadLocal;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
+import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 import com.liferay.portal.util.PropsValues;
 
@@ -58,10 +58,7 @@ public class PortalResiliencyAdvice
 
 		Class<?> targetClass = targetObject.getClass();
 
-		String servletContextName = ClassLoaderPool.getContextName(
-			targetClass.getClassLoader());
-
-		SPI spi = SPIRegistryUtil.getServletContextSPI(servletContextName);
+		SPI spi = _getSPI(targetClass);
 
 		if (spi == null) {
 			return null;
@@ -104,16 +101,25 @@ public class PortalResiliencyAdvice
 			return false;
 		}
 
-		String servletContextName = ClassLoaderPool.getContextName(
-			targetClass.getClassLoader());
-
-		SPI spi = SPIRegistryUtil.getServletContextSPI(servletContextName);
+		SPI spi = _getSPI(targetClass);
 
 		if (spi == null) {
 			return false;
 		}
 
 		return true;
+	}
+
+	private SPI _getSPI(Class<?> targetClass) {
+		String servletContextName =
+			ServletContextClassLoaderPool.getServletContextName(
+				targetClass.getClassLoader());
+
+		if (servletContextName == null) {
+			return null;
+		}
+
+		return SPIRegistryUtil.getServletContextSPI(servletContextName);
 	}
 
 }

@@ -37,21 +37,7 @@ public class ServiceBeanAopProxy
 
 	@Override
 	public AdvisedSupport getAdvisedSupport() {
-		return new AdvisedSupport() {
-
-			@Override
-			public Object getTarget() {
-				return _advisedSupport.getTarget();
-			}
-
-			@Override
-			public void setTarget(Object target) {
-				_advisedSupport.setTarget(target);
-
-				_serviceBeanAopCacheManager.reset();
-			}
-
-		};
+		return _advisedSupport;
 	}
 
 	@Override
@@ -91,6 +77,8 @@ public class ServiceBeanAopProxy
 		@Override
 		public void setTarget(Object target) {
 			_target = target;
+
+			_serviceBeanAopCacheManager.reset();
 		}
 
 		private AdvisedSupportImpl(Object target) {

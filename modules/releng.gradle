@@ -391,7 +391,9 @@ portalJavadoc {
 	options.encoding = "ISO-8859-1"
 	options.stylesheetFile = file("../tools/styles/javadoc.css")
 	source {
-		zipTree(portalSourcesJar.archivePath)
+		zipTree(portalSourcesJar.archivePath).matching {
+			include _getPortalJavadocIncludes()
+		}
 	}
 	title = "Portal " + _getReleaseInfoVersion()
 
@@ -1305,6 +1307,62 @@ private List<Dependency> _getPortalJavadocDependencies() {
 	}
 
 	return dependencies
+}
+
+private List<String> _getPortalJavadocIncludes() {
+	File cacheDir = new File(buildDir, "releng/portalCache")
+
+	List<String> includes = new ArrayList<>()
+
+	for (File artifactPropertiesFile : _getRelengPropertiesFiles(cacheDir)) {
+		Properties artifactProperties = GUtil.loadProperties(artifactPropertiesFile)
+
+		String artifactURL = artifactProperties.getProperty("artifact.url")
+
+		File jarFile = new File(cacheDir, artifactURL.substring(artifactURL.lastIndexOf("/") + 1))
+
+		aQute.bnd.osgi.Jar jar = new aQute.bnd.osgi.Jar(jarFile)
+
+		Resource resource = jar.getResource("META-INF/MANIFEST.MF")
+
+		if (resource == null) {
+			continue
+		}
+
+		Manifest manifest = new Manifest(resource.openInputStream())
+
+		Attributes attributes = manifest.getMainAttributes()
+
+		String exportPackageValue = attributes.getValue(Constants.EXPORT_PACKAGE)
+
+		if (exportPackageValue == null) {
+			continue
+		}
+
+		for (String pattern : exportPackageValue.split(",")) {
+			pattern = pattern.trim()
+
+			if (pattern.startsWith("!")) {
+				continue
+			}
+
+			pattern = pattern.substring(0, pattern.length())
+
+			if (pattern.contains(";")) {
+				pattern = pattern.substring(0, pattern.indexOf(';'))
+			}
+
+			pattern = "**/" + pattern.replace('.', '/')
+
+			if (!pattern.endsWith("/*")) {
+				pattern += "/*"
+			}
+
+			includes.add(pattern + ".java")
+		}
+	}
+
+	return includes
 }
 
 private List<File> _getPortalSourcesDependencies() {

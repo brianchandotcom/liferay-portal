@@ -42,8 +42,7 @@ public class GitBisectToolBuild extends TopLevelBuild {
 
 		return Dom4JUtil.getNewElement(
 			"html", null, getJenkinsReportHeadElement(),
-			getJenkinsReportBodyElement(
-				_workspaceGitRepository, _downstreamBuildDataList));
+			getJenkinsReportBodyElement());
 	}
 
 	public void setDownstreamBuildDataList(
@@ -66,10 +65,7 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		super(url, topLevelBuild);
 	}
 
-	protected Element getJenkinsReportBodyElement(
-		WorkspaceGitRepository workspaceGitRepository,
-		List<BuildData> downstreamBuildDataList) {
-
+	protected Element getJenkinsReportBodyElement() {
 		String buildURL = getBuildURL();
 
 		Element headingElement = Dom4JUtil.getNewElement(
@@ -97,8 +93,7 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		return Dom4JUtil.getNewElement(
 			"body", null, headingElement, subheadingElement,
 			getJenkinsReportSummaryElement(), getJenkinsReportTimelineElement(),
-			getJenkinsReportTableElement(
-				workspaceGitRepository, downstreamBuildDataList),
+			getJenkinsReportTableElement(),
 			Dom4JUtil.getNewElement(
 				"p", null,
 				Dom4JUtil.getNewElement(
@@ -209,14 +204,11 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		return Dom4JUtil.getNewElement("style", null, sb.toString());
 	}
 
-	protected Element getJenkinsReportTableBodyElement(
-		WorkspaceGitRepository workspaceGitRepository,
-		List<BuildData> downstreamBuildDataList) {
-
+	protected Element getJenkinsReportTableBodyElement() {
 		Element tableBodyElement = Dom4JUtil.getNewElement("tbody");
 
 		List<Commit> historicalCommits =
-			workspaceGitRepository.getHistoricalCommits();
+			_workspaceGitRepository.getHistoricalCommits();
 
 		boolean first = true;
 
@@ -227,7 +219,7 @@ public class GitBisectToolBuild extends TopLevelBuild {
 
 		for (Commit commit : historicalCommits) {
 			PortalBuildData portalBuildData = _getPortalBuildDataBySHA(
-				commit.getSHA(), downstreamBuildDataList);
+				commit.getSHA(), _downstreamBuildDataList);
 
 			if (first || (portalBuildData != null)) {
 				tableRowContainerElement = Dom4JUtil.getNewElement(
@@ -271,7 +263,7 @@ public class GitBisectToolBuild extends TopLevelBuild {
 				abbreviatedSHA = "*" + abbreviatedSHA;
 			}
 
-			String gitHubCommitURL = workspaceGitRepository.getGitHubURL();
+			String gitHubCommitURL = _workspaceGitRepository.getGitHubURL();
 
 			gitHubCommitURL = gitHubCommitURL.replaceAll("/tree/.+", "");
 
@@ -299,7 +291,7 @@ public class GitBisectToolBuild extends TopLevelBuild {
 			}
 			else {
 				String gitHubCommitDiffURL =
-					workspaceGitRepository.getGitHubURL();
+					_workspaceGitRepository.getGitHubURL();
 
 				gitHubCommitDiffURL = gitHubCommitDiffURL.replaceAll(
 					"/tree/.+", "");
@@ -405,13 +397,10 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		return tableColumnHeaderElement;
 	}
 
-	protected Element getJenkinsReportTableElement(
-		WorkspaceGitRepository workspaceGitRepository,
-		List<BuildData> downstreamBuildDataList) {
-
+	protected Element getJenkinsReportTableElement() {
 		Element topLevelTableElement = Dom4JUtil.getNewElement("table");
 
-		String gitHubCommitsURL = workspaceGitRepository.getGitHubURL();
+		String gitHubCommitsURL = _workspaceGitRepository.getGitHubURL();
 
 		gitHubCommitsURL = gitHubCommitsURL.replace("/tree/", "/commits/");
 
@@ -424,8 +413,7 @@ public class GitBisectToolBuild extends TopLevelBuild {
 
 		Dom4JUtil.addToElement(
 			topLevelTableElement, getJenkinsReportTableColumnHeadersElement(),
-			getJenkinsReportTableBodyElement(
-				workspaceGitRepository, downstreamBuildDataList));
+			getJenkinsReportTableBodyElement());
 
 		return topLevelTableElement;
 	}

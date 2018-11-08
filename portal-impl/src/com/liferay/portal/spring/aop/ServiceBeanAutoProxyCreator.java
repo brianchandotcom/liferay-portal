@@ -16,7 +16,6 @@ package com.liferay.portal.spring.aop;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
-import com.liferay.portal.kernel.spring.aop.AopProxy;
 import com.liferay.portal.kernel.spring.aop.AopProxyFactory;
 
 import org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator;
@@ -61,10 +60,9 @@ public class ServiceBeanAutoProxyCreator
 			return bean;
 		}
 
-		AopProxy aopProxy = _aopProxyFactory.getAopProxy(
-			new AdvisedSupportImpl(ReflectionUtil.getInterfaces(bean), bean));
-
-		return aopProxy.getProxy(getProxyClassLoader());
+		return _aopProxyFactory.getAopProxy(
+			new AdvisedSupportImpl(ReflectionUtil.getInterfaces(bean), bean),
+			getProxyClassLoader());
 	}
 
 	private AopProxyFactory _aopProxyFactory;

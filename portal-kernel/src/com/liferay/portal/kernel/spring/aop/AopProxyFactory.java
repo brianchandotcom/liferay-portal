@@ -19,6 +19,7 @@ package com.liferay.portal.kernel.spring.aop;
  */
 public interface AopProxyFactory {
 
-	public AopProxy getAopProxy(AdvisedSupport advisedSupport);
+	public Object getAopProxy(
+		AdvisedSupport advisedSupport, ClassLoader classLoader);
 
 }

@@ -15,7 +15,6 @@
 package com.liferay.portal.spring.aop;
 
 import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
-import com.liferay.portal.kernel.spring.aop.AopProxy;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.transaction.TransactionsUtil;
 
@@ -28,7 +27,7 @@ import org.aopalliance.intercept.MethodInterceptor;
  * @author Shuyang Zhou
  */
 public class ServiceBeanAopProxy
-	implements AdvisedSupportProxy, AopProxy, InvocationHandler {
+	implements AdvisedSupportProxy, InvocationHandler {
 
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link AdvisedSupportUtil#
@@ -94,7 +93,6 @@ public class ServiceBeanAopProxy
 		};
 	}
 
-	@Override
 	public Object getProxy(ClassLoader classLoader) {
 		return ProxyUtil.newProxyInstance(
 			classLoader, _advisedSupport.getProxiedInterfaces(), this);

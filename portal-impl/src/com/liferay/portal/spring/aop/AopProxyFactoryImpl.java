@@ -15,7 +15,6 @@
 package com.liferay.portal.spring.aop;
 
 import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
-import com.liferay.portal.kernel.spring.aop.AopProxy;
 import com.liferay.portal.kernel.spring.aop.AopProxyFactory;
 
 import java.util.Map;
@@ -54,9 +53,13 @@ public class AopProxyFactoryImpl implements AopProxyFactory, BeanFactoryAware {
 	}
 
 	@Override
-	public AopProxy getAopProxy(AdvisedSupport advisedSupport) {
-		return new ServiceBeanAopProxy(
+	public Object getAopProxy(
+		AdvisedSupport advisedSupport, ClassLoader classLoader) {
+
+		ServiceBeanAopProxy serviceBeanAopProxy = new ServiceBeanAopProxy(
 			advisedSupport, _serviceBeanAopCacheManager);
+
+		return serviceBeanAopProxy.getProxy(classLoader);
 	}
 
 	@Override

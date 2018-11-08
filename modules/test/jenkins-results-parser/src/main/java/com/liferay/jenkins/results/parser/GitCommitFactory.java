@@ -1,0 +1,85 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.jenkins.results.parser;
+
+import java.io.IOException;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONObject;
+
+/**
+ * @author Michael Hashimoto
+ */
+public class GitCommitFactory {
+
+	public static LocalGitCommit newLocalGitCommit(
+		GitWorkingDirectory gitWorkingDirectory, String message, String sha) {
+
+		return new DefaultLocalGitCommit(
+			gitWorkingDirectory, message, sha, _getGitCommitType(message));
+	}
+
+	public static RemoteGitCommit newRemoteGitCommit(
+		String gitHubUsername, String gitRepositoryName, String sha) {
+
+		String gitCommitURL = _getGitCommitURL(
+			gitHubUsername, gitRepositoryName, sha);
+
+		if (_remoteGitCommits.containsKey(gitCommitURL)) {
+			return _remoteGitCommits.get(gitCommitURL);
+		}
+
+		try {
+			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				gitCommitURL);
+
+			JSONObject commitJSONObject = jsonObject.getJSONObject("commit");
+
+			String message = commitJSONObject.getString("message");
+
+			RemoteGitCommit remoteGitCommit = new GitHubRemoteGitCommit(
+				gitHubUsername, gitRepositoryName, message, sha,
+				_getGitCommitType(message));
+
+			_remoteGitCommits.put(gitCommitURL, remoteGitCommit);
+
+			return remoteGitCommit;
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get commit details", ioe);
+		}
+	}
+
+	private static GitCommit.Type _getGitCommitType(String message) {
+		if (message.startsWith("archive:ignore")) {
+			return GitCommit.Type.LEGACY_ARCHIVE;
+		}
+
+		return GitCommit.Type.MANUAL;
+	}
+
+	private static String _getGitCommitURL(
+		String gitHubUsername, String gitRepositoryName, String sha) {
+
+		return JenkinsResultsParserUtil.getGitHubApiUrl(
+			gitRepositoryName, gitHubUsername, "commits/" + sha);
+	}
+
+	private static final Map<String, RemoteGitCommit> _remoteGitCommits =
+		new HashMap<>();
+
+}

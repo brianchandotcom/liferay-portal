@@ -69,6 +69,7 @@ task cleanVersionOverride
 task lockDependencyVersion
 task lockPrivateDependencyVersions
 task portalArtifactsJar(type: ShadowJar)
+task portalSourcesJar(type: ShadowJar)
 task prepareMajorIncrement
 task syncGitRepoReleases
 task tagAppReleases
@@ -358,6 +359,42 @@ portalArtifactsJar {
 		ConfigurationContainer configurationContainer = project.getConfigurations();
 
 		Configuration detachedConfiguration = configurationContainer.detachedConfiguration(_getPortalArtifactsDependencies() as Dependency[])
+
+		detachedConfiguration.resolve()
+
+		configurations = [detachedConfiguration]
+
+		fileTree(dir: projectDir.parentFile, include: "/portal-impl/src/content/Language*.properties").each {
+			append("content/" + it.name)
+		}
+	}
+
+	doLast {
+		println "Created jar " + archivePath
+	}
+
+	onlyIf {
+		return file(".releng").exists()
+	}
+
+	outputs.upToDateWhen {
+		return false
+	}
+}
+
+portalSourcesJar {
+	baseName = "portal"
+	classifier = "sources"
+	exclude "*.*"
+	exclude "META-INF/**"
+	exclude "OSGI-INF/**"
+	includeEmptyDirs = false
+	version = _getReleaseInfoVersion()
+
+	doFirst {
+		ConfigurationContainer configurationContainer = project.getConfigurations();
+
+		Configuration detachedConfiguration = configurationContainer.detachedConfiguration(_getPortalSourcesDependencies() as Dependency[])
 
 		detachedConfiguration.resolve()
 
@@ -1177,6 +1214,53 @@ private List<Dependency> _getPortalArtifactsDependencies() {
 		dependencies.add(dependencyHandler.create(files(dir)))
 
 		logger.lifecycle "Added {}", jarFile.name
+	}
+
+	return dependencies
+}
+
+private List<File> _getPortalSourcesDependencies() {
+	File cacheDir = new File(buildDir, "releng/portalCache")
+	File portalSourcesDir = new File(buildDir, "releng/portalSources")
+
+	delete portalSourcesDir
+
+	List<Dependency> dependencies = new ArrayList<>()
+
+	for (File artifactPropertiesFile : _getRelengPropertiesFiles(cacheDir)) {
+		Properties artifactProperties = GUtil.loadProperties(artifactPropertiesFile)
+
+		String artifactSourcesURL = artifactProperties.getProperty("artifact.sources.url")
+
+		if (!artifactSourcesURL && !artifactPropertiesFile.name.equals("artifact.properties")) {
+			String artifactURL = artifactProperties.getProperty("artifact.url")
+
+			artifactSourcesURL = artifactURL[0 .. -5] + "-sources.jar"
+		}
+
+		if (artifactSourcesURL && artifactSourcesURL.endsWith(".jar")) {
+			project.download {
+				dest cacheDir
+				onlyIfModified true
+				quiet true
+				src artifactSourcesURL
+			}
+
+			File jarFile = new File(cacheDir, artifactSourcesURL.substring(artifactSourcesURL.lastIndexOf("/") + 1))
+
+			File dir = new File(portalSourcesDir, jarFile.name[0 .. -5])
+
+			copy {
+				from zipTree(jarFile)
+				into dir
+			}
+
+			DependencyHandler dependencyHandler = project.getDependencies()
+
+			dependencies.add(dependencyHandler.create(files(dir)))
+
+			logger.lifecycle "Added {}", jarFile.name
+		}
 	}
 
 	return dependencies

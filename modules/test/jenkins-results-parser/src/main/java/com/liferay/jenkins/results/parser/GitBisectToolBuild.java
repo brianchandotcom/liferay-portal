@@ -222,6 +222,9 @@ public class GitBisectToolBuild extends TopLevelBuild {
 
 		Element tableRowContainerElement = null;
 
+		Commit previousCommit = null;
+		Integer previousCommitCount = 0;
+
 		for (Commit commit : historicalCommits) {
 			PortalBuildData portalBuildData = _getPortalBuildDataBySHA(
 				commit.getSHA(), downstreamBuildDataList);
@@ -282,8 +285,54 @@ public class GitBisectToolBuild extends TopLevelBuild {
 				"td", tableRowElement,
 				StringEscapeUtils.escapeXml(commit.getMessage()));
 
-			if (portalBuildData == null) {
+			if (previousCommit == null) {
+				previousCommit = commit;
+
+				previousCommitCount++;
+
 				Dom4JUtil.getNewElement("td", tableRowElement, "");
+			}
+			else if (portalBuildData == null) {
+				previousCommitCount++;
+
+				Dom4JUtil.getNewElement("td", tableRowElement, "");
+			}
+			else {
+				String gitHubCommitDiffURL =
+					workspaceGitRepository.getGitHubURL();
+
+				gitHubCommitDiffURL = gitHubCommitDiffURL.replaceAll(
+					"/tree/.+", "");
+
+				gitHubCommitDiffURL = JenkinsResultsParserUtil.combine(
+					gitHubCommitDiffURL, "/compare/", commit.getSHA(), "...",
+					previousCommit.getSHA());
+
+				String gitHubCommitDiffString =
+					JenkinsResultsParserUtil.combine(
+						commit.getAbbreviatedSHA(), "...",
+						previousCommit.getAbbreviatedSHA());
+
+				String commitCountString = JenkinsResultsParserUtil.combine(
+					"(", String.valueOf(previousCommitCount), " commits)");
+
+				if (previousCommitCount == 1) {
+					commitCountString = JenkinsResultsParserUtil.combine(
+						"(", String.valueOf(previousCommitCount), " commit)");
+				}
+
+				Dom4JUtil.getNewElement(
+					"td", tableRowElement,
+					Dom4JUtil.getNewAnchorElement(
+						gitHubCommitDiffURL, gitHubCommitDiffString),
+					Dom4JUtil.getNewElement("span", null, commitCountString));
+
+				previousCommit = commit;
+
+				previousCommitCount = 1;
+			}
+
+			if (portalBuildData == null) {
 				Dom4JUtil.getNewElement("td", tableRowElement, "");
 				Dom4JUtil.getNewElement("td", tableRowElement, "");
 				Dom4JUtil.getNewElement("td", tableRowElement, "");
@@ -302,9 +351,6 @@ public class GitBisectToolBuild extends TopLevelBuild {
 				"td", tableRowElement,
 				Dom4JUtil.getNewAnchorElement(
 					portalBuildData.getBuildURL(), "build"));
-
-			Dom4JUtil.getNewElement(
-				"td", tableRowElement, portalBuildData.getStartTimeString());
 
 			Dom4JUtil.getNewElement(
 				"td", tableRowElement,
@@ -334,23 +380,26 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		Element shaElement = Dom4JUtil.getNewElement(
 			"th", null, "Commit Message");
 
-		Element buildElement = Dom4JUtil.getNewElement("th", null, "Build");
+		Element commitDiffElement = Dom4JUtil.getNewElement(
+			"th", null, "Commit Diffs");
 
-		Element startTimeElement = Dom4JUtil.getNewElement(
-			"th", null, "Start Time");
+		Element buildElement = Dom4JUtil.getNewElement(
+			"th", null, "Build Link");
 
 		Element buildTimeElement = Dom4JUtil.getNewElement(
 			"th", null, "Build Time");
 
-		Element statusElement = Dom4JUtil.getNewElement("th", null, "Status");
+		Element statusElement = Dom4JUtil.getNewElement(
+			"th", null, "Build Status");
 
-		Element resultElement = Dom4JUtil.getNewElement("th", null, "Result");
+		Element resultElement = Dom4JUtil.getNewElement(
+			"th", null, "Build Result");
 
 		Element tableColumnHeaderElement = Dom4JUtil.getNewElement("tr");
 
 		Dom4JUtil.addToElement(
 			tableColumnHeaderElement, toggleElement, commitElement, shaElement,
-			buildElement, startTimeElement, buildTimeElement, statusElement,
+			commitDiffElement, buildElement, buildTimeElement, statusElement,
 			resultElement);
 
 		return tableColumnHeaderElement;

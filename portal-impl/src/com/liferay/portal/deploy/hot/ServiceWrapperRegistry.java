@@ -19,15 +19,15 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.aop.AdvisedSupportUtil;
+import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 /**
@@ -147,13 +147,17 @@ public class ServiceWrapperRegistry {
 			ClassLoader classLoader = clazz.getClassLoader();
 
 			try {
-				AdvisedSupport advisedSupport =
-					AdvisedSupportUtil.getAdvisedSupport(serviceProxy);
+				InvocationHandler invocationHandler =
+					ProxyUtil.getInvocationHandler(serviceProxy);
 
-				serviceWrapper.setWrappedService((T)advisedSupport.getTarget());
+				ServiceBeanAopProxy serviceBeanAopProxy =
+					(ServiceBeanAopProxy)invocationHandler;
+
+				serviceWrapper.setWrappedService(
+					(T)serviceBeanAopProxy.getTarget());
 
 				return new ServiceBag<>(
-					classLoader, advisedSupport, serviceTypeClass,
+					classLoader, serviceBeanAopProxy, serviceTypeClass,
 					serviceWrapper);
 			}
 			finally {

@@ -28,10 +28,8 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceScannerStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.aop.AdvisedSupportProxy;
-import com.liferay.portal.spring.aop.AdvisedSupportUtil;
+import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.InvocationHandler;
@@ -160,11 +158,11 @@ public class DefaultJSONWebServiceRegistrator
 			InvocationHandler invocationHandler =
 				ProxyUtil.getInvocationHandler(service);
 
-			if (invocationHandler instanceof AdvisedSupportProxy) {
-				AdvisedSupport advisedSupport =
-					AdvisedSupportUtil.getAdvisedSupport(service);
+			if (invocationHandler instanceof ServiceBeanAopProxy) {
+				ServiceBeanAopProxy serviceBeanAopProxy =
+					(ServiceBeanAopProxy)invocationHandler;
 
-				service = advisedSupport.getTarget();
+				service = serviceBeanAopProxy.getTarget();
 			}
 			else if (invocationHandler instanceof ClassLoaderBeanHandler) {
 				ClassLoaderBeanHandler classLoaderBeanHandler =

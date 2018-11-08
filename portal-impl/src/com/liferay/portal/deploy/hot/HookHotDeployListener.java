@@ -86,7 +86,6 @@ import com.liferay.portal.kernel.servlet.WrapHttpServletRequestFilter;
 import com.liferay.portal.kernel.servlet.WrapHttpServletResponseFilter;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.struts.StrutsPortletAction;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -118,7 +117,7 @@ import com.liferay.portal.repository.util.ExternalRepositoryFactoryImpl;
 import com.liferay.portal.security.auth.AuthVerifierPipeline;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.servlet.taglib.ui.DeprecatedFormNavigatorEntry;
-import com.liferay.portal.spring.aop.AdvisedSupportUtil;
+import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.util.JavaScriptBundleUtil;
 import com.liferay.portal.util.PortalInstances;
@@ -134,6 +133,7 @@ import java.io.InputStream;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.net.URL;
 
@@ -1774,10 +1774,13 @@ public class HookHotDeployListener
 			Constructor<?> serviceImplConstructor, Object serviceProxy)
 		throws ReflectiveOperationException {
 
-		AdvisedSupport advisedSupport = AdvisedSupportUtil.getAdvisedSupport(
+		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
 			serviceProxy);
 
-		Object previousService = advisedSupport.getTarget();
+		ServiceBeanAopProxy serviceBeanAopProxy =
+			(ServiceBeanAopProxy)invocationHandler;
+
+		Object previousService = serviceBeanAopProxy.getTarget();
 
 		ServiceWrapper<?> serviceWrapper =
 			(ServiceWrapper<?>)serviceImplConstructor.newInstance(
@@ -2232,10 +2235,13 @@ public class HookHotDeployListener
 		Class<?> proxyClass = serviceProxy.getClass();
 
 		if (ProxyUtil.isProxyClass(proxyClass)) {
-			AdvisedSupport advisedSupport =
-				AdvisedSupportUtil.getAdvisedSupport(serviceProxy);
+			InvocationHandler invocationHandler =
+				ProxyUtil.getInvocationHandler(serviceProxy);
 
-			Object previousService = advisedSupport.getTarget();
+			ServiceBeanAopProxy serviceBeanAopProxy =
+				(ServiceBeanAopProxy)invocationHandler;
+
+			Object previousService = serviceBeanAopProxy.getTarget();
 
 			ServiceWrapper<?> serviceWrapper =
 				(ServiceWrapper<?>)serviceImplConstructor.newInstance(

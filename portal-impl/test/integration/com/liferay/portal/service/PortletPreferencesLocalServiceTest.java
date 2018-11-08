@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceWrapper;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -36,11 +35,13 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.service.util.test.PortletPreferencesImplTestUtil;
 import com.liferay.portal.service.util.test.PortletPreferencesTestUtil;
-import com.liferay.portal.spring.aop.AdvisedSupportUtil;
+import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.StrictPortletPreferencesImpl;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -1497,17 +1498,20 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	protected void replaceService() {
-		AdvisedSupport advisedSupport = AdvisedSupportUtil.getAdvisedSupport(
+		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
 			PortletPreferencesLocalServiceUtil.getService());
 
-		Object previousService = advisedSupport.getTarget();
+		ServiceBeanAopProxy serviceBeanAopProxy =
+			(ServiceBeanAopProxy)invocationHandler;
+
+		Object previousService = serviceBeanAopProxy.getTarget();
 
 		ServiceWrapper<PortletPreferencesLocalService> serviceWrapper =
 			new TestPortletPreferencesLocalServiceWrapper(
 				(PortletPreferencesLocalService)previousService);
 
 		_serviceBag = new ServiceBag<>(
-			PortalClassLoaderUtil.getClassLoader(), advisedSupport,
+			PortalClassLoaderUtil.getClassLoader(), serviceBeanAopProxy,
 			PortletPreferencesLocalService.class, serviceWrapper);
 	}
 

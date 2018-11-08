@@ -14,7 +14,6 @@
 
 package com.liferay.portal.spring.aop;
 
-import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.transaction.TransactionsUtil;
 
 import java.lang.reflect.InvocationHandler;
@@ -25,19 +24,17 @@ import org.aopalliance.intercept.MethodInterceptor;
 /**
  * @author Shuyang Zhou
  */
-public class ServiceBeanAopProxy
-	implements AdvisedSupportProxy, InvocationHandler {
+public class ServiceBeanAopProxy implements InvocationHandler {
 
 	public ServiceBeanAopProxy(
 		Object bean, ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
 
-		_advisedSupport = new AdvisedSupportImpl(bean);
+		_target = bean;
 		_serviceBeanAopCacheManager = serviceBeanAopCacheManager;
 	}
 
-	@Override
-	public AdvisedSupport getAdvisedSupport() {
-		return _advisedSupport;
+	public Object getTarget() {
+		return _target;
 	}
 
 	@Override
@@ -45,8 +42,7 @@ public class ServiceBeanAopProxy
 		throws Throwable {
 
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			new ServiceBeanMethodInvocation(
-				_advisedSupport.getTarget(), method, arguments);
+			new ServiceBeanMethodInvocation(_target, method, arguments);
 
 		if (TransactionsUtil.isEnabled()) {
 			serviceBeanMethodInvocation.setMethodInterceptors(
@@ -61,32 +57,16 @@ public class ServiceBeanAopProxy
 		return serviceBeanMethodInvocation.proceed();
 	}
 
+	public void setTarget(Object target) {
+		_target = target;
+
+		_serviceBeanAopCacheManager.reset();
+	}
+
 	private static final MethodInterceptor[] _emptyMethodInterceptors =
 		new MethodInterceptor[0];
 
-	private final AdvisedSupport _advisedSupport;
 	private final ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
-
-	private class AdvisedSupportImpl implements AdvisedSupport {
-
-		@Override
-		public Object getTarget() {
-			return _target;
-		}
-
-		@Override
-		public void setTarget(Object target) {
-			_target = target;
-
-			_serviceBeanAopCacheManager.reset();
-		}
-
-		private AdvisedSupportImpl(Object target) {
-			_target = target;
-		}
-
-		private Object _target;
-
-	}
+	private volatile Object _target;
 
 }

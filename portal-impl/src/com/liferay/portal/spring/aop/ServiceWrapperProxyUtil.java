@@ -15,7 +15,6 @@
 package com.liferay.portal.spring.aop;
 
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -24,6 +23,7 @@ import java.io.IOException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 /**
  * @author Shuyang Zhou
@@ -39,10 +39,18 @@ public class ServiceWrapperProxyUtil {
 				springServiceProxy + " is not a Spring service proxy");
 		}
 
-		AdvisedSupport advisedSupport = AdvisedSupportUtil.getAdvisedSupport(
+		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
 			springServiceProxy);
 
-		final Object targetService = advisedSupport.getTarget();
+		if (!(invocationHandler instanceof ServiceBeanAopProxy)) {
+			throw new IllegalArgumentException(
+				springServiceProxy + " is not a Spring service proxy");
+		}
+
+		ServiceBeanAopProxy serviceBeanAopProxy =
+			(ServiceBeanAopProxy)invocationHandler;
+
+		final Object targetService = serviceBeanAopProxy.getTarget();
 
 		Class<?> clazz = targetService.getClass();
 

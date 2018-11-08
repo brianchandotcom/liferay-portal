@@ -16,12 +16,13 @@ package com.liferay.portal.spring.extender.internal.bean;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.aop.AdvisedSupportUtil;
+import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.util.PropsValues;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -112,11 +113,14 @@ public class ApplicationContextServicePublisherUtil {
 		Class<?> clazz = bean.getClass();
 
 		if (ProxyUtil.isProxyClass(clazz)) {
-			AdvisedSupport advisedSupport =
-				AdvisedSupportUtil.getAdvisedSupport(bean);
+			InvocationHandler invocationHandler =
+				ProxyUtil.getInvocationHandler(bean);
 
-			if (advisedSupport != null) {
-				Object target = advisedSupport.getTarget();
+			if (invocationHandler instanceof ServiceBeanAopProxy) {
+				ServiceBeanAopProxy serviceBeanAopProxy =
+					(ServiceBeanAopProxy)invocationHandler;
+
+				Object target = serviceBeanAopProxy.getTarget();
 
 				clazz = target.getClass();
 			}

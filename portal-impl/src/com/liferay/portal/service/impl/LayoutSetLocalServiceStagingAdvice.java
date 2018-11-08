@@ -22,10 +22,9 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetStagingHandler;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
-import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.aop.AdvisedSupportUtil;
+import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 
 import java.lang.reflect.InvocationHandler;
@@ -47,15 +46,18 @@ import org.springframework.beans.factory.BeanFactoryAware;
 public class LayoutSetLocalServiceStagingAdvice implements BeanFactoryAware {
 
 	public void afterPropertiesSet() {
-		AdvisedSupport advisedSupport = AdvisedSupportUtil.getAdvisedSupport(
+		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
 			_beanFactory.getBean(LayoutSetLocalService.class.getName()));
 
-		advisedSupport.setTarget(
+		ServiceBeanAopProxy serviceBeanAopProxy =
+			(ServiceBeanAopProxy)invocationHandler;
+
+		serviceBeanAopProxy.setTarget(
 			ProxyUtil.newProxyInstance(
 				LayoutSetLocalServiceStagingAdvice.class.getClassLoader(),
 				new Class<?>[] {LayoutSetLocalService.class},
 				new LayoutSetLocalServiceStagingInvocationHandler(
-					advisedSupport.getTarget())));
+					serviceBeanAopProxy.getTarget())));
 	}
 
 	@Override

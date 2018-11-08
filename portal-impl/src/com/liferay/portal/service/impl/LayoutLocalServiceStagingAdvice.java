@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutRevisionUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutUtil;
-import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntry;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -49,7 +48,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.aop.AdvisedSupportUtil;
+import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portlet.exportimport.staging.ProxiedLayoutsThreadLocal;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 
@@ -83,15 +82,18 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 	}
 
 	public void afterPropertiesSet() throws BeansException {
-		AdvisedSupport advisedSupport = AdvisedSupportUtil.getAdvisedSupport(
+		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
 			_beanFactory.getBean(LayoutLocalService.class.getName()));
 
-		advisedSupport.setTarget(
+		ServiceBeanAopProxy serviceBeanAopProxy =
+			(ServiceBeanAopProxy)invocationHandler;
+
+		serviceBeanAopProxy.setTarget(
 			ProxyUtil.newProxyInstance(
 				LayoutLocalServiceStagingAdvice.class.getClassLoader(),
 				new Class<?>[] {LayoutLocalService.class},
 				new LayoutLocalServiceStagingInvocationHandler(
-					this, advisedSupport.getTarget())));
+					this, serviceBeanAopProxy.getTarget())));
 
 		layoutLocalServiceHelper =
 			(LayoutLocalServiceHelper)_beanFactory.getBean(

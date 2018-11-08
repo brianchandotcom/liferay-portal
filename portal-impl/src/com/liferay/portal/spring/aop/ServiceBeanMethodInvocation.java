@@ -15,13 +15,13 @@
 package com.liferay.portal.spring.aop;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
 import java.lang.reflect.AccessibleObject;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -129,11 +129,14 @@ public class ServiceBeanMethodInvocation
 			}
 
 			if (ProxyUtil.isProxyClass(argument.getClass())) {
-				AdvisedSupport advisedSupport =
-					AdvisedSupportUtil.getAdvisedSupport(argument);
+				InvocationHandler invocationHandler =
+					ProxyUtil.getInvocationHandler(argument);
 
-				if (advisedSupport != null) {
-					argument = advisedSupport.getTarget();
+				if (invocationHandler instanceof ServiceBeanAopProxy) {
+					ServiceBeanAopProxy serviceBeanAopProxy =
+						(ServiceBeanAopProxy)invocationHandler;
+
+					argument = serviceBeanAopProxy.getTarget();
 				}
 			}
 

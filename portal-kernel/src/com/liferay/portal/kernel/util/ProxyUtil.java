@@ -32,6 +32,28 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class ProxyUtil {
 
+	public static <T extends InvocationHandler> T fetchInvocationHandler(
+		Object proxy, Class<T> clazz) {
+
+		if (!isProxyClass(proxy.getClass())) {
+			return null;
+		}
+
+		try {
+			InvocationHandler invocationHandler =
+				(InvocationHandler)_invocationHandlerField.get(proxy);
+
+			if (clazz.isInstance(invocationHandler)) {
+				return clazz.cast(invocationHandler);
+			}
+
+			return null;
+		}
+		catch (IllegalAccessException iae) {
+			throw new IllegalArgumentException(iae);
+		}
+	}
+
 	public static InvocationHandler getInvocationHandler(Object proxy) {
 		if (!isProxyClass(proxy.getClass())) {
 			throw new IllegalArgumentException("Not a proxy instance");
@@ -40,8 +62,8 @@ public class ProxyUtil {
 		try {
 			return (InvocationHandler)_invocationHandlerField.get(proxy);
 		}
-		catch (Exception e) {
-			throw new IllegalArgumentException(e);
+		catch (IllegalAccessException iae) {
+			throw new IllegalArgumentException(iae);
 		}
 	}
 

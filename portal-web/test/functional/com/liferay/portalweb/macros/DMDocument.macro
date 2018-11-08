@@ -174,7 +174,15 @@
 			</then>
 		</if>
 
-		<execute macro="PortletEntry#publish" />
+		<if>
+			<equals arg1="${dmFile}" arg2="Invalid" />
+			<then>
+				<execute macro="Button#clickPublish" />
+			</then>
+			<else>
+				<execute macro="PortletEntry#publish" />
+			</else>
+		</if>
 	</command>
 
 	<command name="addDMMarketingBannerCP">

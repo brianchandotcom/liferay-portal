@@ -223,16 +223,16 @@ public class GitBisectToolBuild extends TopLevelBuild {
 
 		Element topLevelTableElement = Dom4JUtil.getNewElement("table");
 
-		topLevelTableElement.addAttribute("border", "1");
+		String gitHubCommitsURL = workspaceGitRepository.getGitHubURL();
 
-		String gitHubURL = workspaceGitRepository.getGitHubURL();
+		gitHubCommitsURL = gitHubCommitsURL.replace("/tree/", "/commits/");
 
 		Element captionElement = Dom4JUtil.getNewElement(
 			"caption", topLevelTableElement);
 
 		Dom4JUtil.getNewElement(
 			"h2", captionElement, "Commit history of ",
-			Dom4JUtil.getNewAnchorElement(gitHubURL, gitHubURL));
+			Dom4JUtil.getNewAnchorElement(gitHubCommitsURL, gitHubCommitsURL));
 
 		Dom4JUtil.addToElement(
 			topLevelTableElement, getJenkinsReportTableColumnHeadersElement(),

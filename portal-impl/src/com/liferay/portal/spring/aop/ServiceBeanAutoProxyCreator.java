@@ -38,6 +38,13 @@ public class ServiceBeanAutoProxyCreator
 		}
 	}
 
+	@Override
+	public Object postProcessBeforeInstantiation(
+		Class<?> beanClass, String beanName) {
+
+		return null;
+	}
+
 	public void setAopProxyFactory(AopProxyFactory aopProxyFactory) {
 		_aopProxyFactory = aopProxyFactory;
 	}

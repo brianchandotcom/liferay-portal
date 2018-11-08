@@ -177,6 +177,14 @@ public abstract class BasePortalWorkspace
 
 		_primaryPortalWorkspaceGitRepository.setPortalBuildProperties(
 			portalBuildProperties);
+
+		Properties portalTestProperties = new Properties();
+
+		portalTestProperties.put(
+			"test.url", "http://" + System.getenv("HOSTNAME") + ":8080");
+
+		_primaryPortalWorkspaceGitRepository.setPortalTestProperties(
+			portalTestProperties);
 	}
 
 	@Override

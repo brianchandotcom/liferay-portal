@@ -163,8 +163,6 @@ cleanVersionOverride {
 
 configurations {
 	portalArtifacts
-	portalJavadocs
-	portalSources
 }
 
 lockDependencyVersion {
@@ -347,9 +345,6 @@ lockPrivateDependencyVersions {
 }
 
 portalArtifactsJar {
-	finalizedBy "portalJavadocsJar"
-	finalizedBy "portalSourcesJar"
-
 	File portalArtifactsDir = new File(buildDir, "portalArtifacts")
 	File relengDir = file(".releng")
 
@@ -387,14 +382,10 @@ portalArtifactsJar {
 
 	if (gradle.startParameter.taskNames.contains("portalArtifactsJar")) {
 		File artifactsDir = new File(portalArtifactsDir, "artifacts")
-		File javadocsDir = new File(portalArtifactsDir, "javadocs")
-		File sourcesDir = new File(portalArtifactsDir, "sources")
 
-		delete artifactsDir, javadocsDir, sourcesDir
+		delete artifactsDir
 
 		artifactsDir.mkdirs()
-		javadocsDir.mkdirs()
-		sourcesDir.mkdirs()
 
 		FileTree relengFileTree = fileTree(dir: relengDir, include: "**/*.properties")
 
@@ -446,93 +437,6 @@ portalArtifactsJar {
 			dependencies.portalArtifacts files(dir)
 
 			logger.lifecycle "Added {}", jarFile.name
-
-			String artifactJavadocURL = relengProperties.getProperty("artifact.javadoc.url")
-
-			if (!artifactJavadocURL && !relengFile.name.equals("artifact.properties")) {
-				artifactJavadocURL = artifactURL[0 .. -5] + "-javadoc.jar"
-			}
-
-			if (artifactJavadocURL && artifactJavadocURL.endsWith(".jar")) {
-				project.download {
-					dest cacheDir
-					overwrite false
-					quiet true
-					src artifactJavadocURL
-				}
-
-				jarFile = new File(cacheDir, artifactJavadocURL.substring(artifactURL.lastIndexOf("/") + 1))
-
-				dir = new File(javadocsDir, jarFile.name[0 .. -5])
-
-				copy {
-					from zipTree(jarFile)
-					into dir
-				}
-
-				dependencies.portalJavadocs files(dir)
-
-				logger.lifecycle "Added {}", jarFile.name
-			}
-
-			String artifactSourcesURL = relengProperties.getProperty("artifact.sources.url")
-
-			if (!artifactSourcesURL && !relengFile.name.equals("artifact.properties")) {
-				artifactSourcesURL = artifactURL[0 .. -5] + "-sources.jar"
-			}
-
-			if (artifactSourcesURL && artifactSourcesURL.endsWith(".jar")) {
-				project.download {
-					dest cacheDir
-					overwrite false
-					quiet true
-					src artifactSourcesURL
-				}
-
-				jarFile = new File(cacheDir, artifactSourcesURL.substring(artifactURL.lastIndexOf("/") + 1))
-
-				dir = new File(sourcesDir, jarFile.name[0 .. -5])
-
-				copy {
-					from zipTree(jarFile)
-					into dir
-				}
-
-				dependencies.portalSources files(dir)
-
-				logger.lifecycle "Added {}", jarFile.name
-			}
-		}
-
-		task portalJavadocsJar(type: ShadowJar) {
-			baseName = "portal-javadocs"
-			classifier = null
-			configurations = [project.configurations.portalJavadocs]
-			exclude "*.*"
-			includeEmptyDirs = false
-			version = _getReleaseInfoVersion()
-
-			doLast {
-				println "Created jar " + archivePath
-			}
-		}
-
-		task portalSourcesJar(type: ShadowJar) {
-			baseName = "portal-sources"
-			classifier = null
-			configurations = [project.configurations.portalSources]
-			exclude "*.*"
-			exclude "**/.lfrbuild*"
-			exclude "**/packageinfo"
-			exclude "META-INF/**"
-			exclude "WEB-INF/**"
-			exclude "content/**"
-			includeEmptyDirs = false
-			version = _getReleaseInfoVersion()
-
-			doLast {
-				println "Created jar " + archivePath
-			}
 		}
 	}
 }

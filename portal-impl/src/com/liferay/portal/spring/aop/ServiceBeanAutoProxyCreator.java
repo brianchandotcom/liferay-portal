@@ -68,8 +68,7 @@ public class ServiceBeanAutoProxyCreator
 		Class<?>[] interfaces = ReflectionUtil.getInterfaces(bean);
 
 		ServiceBeanAopProxy serviceBeanAopProxy = new ServiceBeanAopProxy(
-			new AdvisedSupportImpl(interfaces, bean),
-			_serviceBeanAopCacheManager);
+			new AdvisedSupportImpl(bean), _serviceBeanAopCacheManager);
 
 		return ProxyUtil.newProxyInstance(
 			getProxyClassLoader(), interfaces, serviceBeanAopProxy);
@@ -82,11 +81,6 @@ public class ServiceBeanAutoProxyCreator
 	private static class AdvisedSupportImpl implements AdvisedSupport {
 
 		@Override
-		public Class<?>[] getProxiedInterfaces() {
-			return _interfaces;
-		}
-
-		@Override
 		public Object getTarget() {
 			return _target;
 		}
@@ -96,12 +90,10 @@ public class ServiceBeanAutoProxyCreator
 			_target = target;
 		}
 
-		private AdvisedSupportImpl(Class<?>[] interfaces, Object target) {
-			_interfaces = interfaces;
+		private AdvisedSupportImpl(Object target) {
 			_target = target;
 		}
 
-		private final Class<?>[] _interfaces;
 		private Object _target;
 
 	}

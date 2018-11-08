@@ -19,8 +19,6 @@ package com.liferay.portal.kernel.spring.aop;
  */
 public interface AdvisedSupport {
 
-	public Class<?>[] getProxiedInterfaces();
-
 	public Object getTarget();
 
 	public void setTarget(Object target);

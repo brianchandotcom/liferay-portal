@@ -41,11 +41,6 @@ public class ServiceBeanAopProxy
 		return new AdvisedSupport() {
 
 			@Override
-			public Class<?>[] getProxiedInterfaces() {
-				return _advisedSupport.getProxiedInterfaces();
-			}
-
-			@Override
 			public Object getTarget() {
 				return _advisedSupport.getTarget();
 			}

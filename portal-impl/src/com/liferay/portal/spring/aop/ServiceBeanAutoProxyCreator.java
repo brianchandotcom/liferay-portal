@@ -71,10 +71,6 @@ public class ServiceBeanAutoProxyCreator
 
 		proxyFactory.setFrozen(isFrozen());
 
-		if (advisorsPreFiltered()) {
-			proxyFactory.setPreFiltered(true);
-		}
-
 		return proxyFactory.getProxy(getProxyClassLoader());
 	}
 

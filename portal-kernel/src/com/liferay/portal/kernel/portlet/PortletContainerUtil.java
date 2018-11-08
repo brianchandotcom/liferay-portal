@@ -156,18 +156,11 @@ public class PortletContainerUtil {
 
 						if (protocol.equals(renderURL.getProtocol()) &&
 							host.equals(renderURL.getHost()) &&
-							(port == renderURL.getPort())) {
+							(port == renderURL.getPort()) &&
+							_samePortletIdParameter(
+								locationURL.getQuery(), renderURL.getQuery())) {
 
-							String portletId = _getPortletIdParameter(
-								locationURL.getQuery());
-
-							if ((portletId != null) &&
-								portletId.equals(
-									_getPortletIdParameter(
-										renderURL.getQuery()))) {
-
-								location = liferayPortletURL.toString();
-							}
+							location = liferayPortletURL.toString();
 						}
 					}
 					catch (MalformedURLException murle) {
@@ -317,26 +310,6 @@ public class PortletContainerUtil {
 		_portletContainer = portletContainer;
 	}
 
-	private static String _getPortletIdParameter(String query) {
-		if (query != null) {
-			int x = query.indexOf("p_p_id=");
-
-			if (x >= 0) {
-				x += 7;
-
-				int y = query.indexOf(CharPool.AMPERSAND, x);
-
-				if (y < 0) {
-					y = query.length();
-				}
-
-				return query.substring(x, y);
-			}
-		}
-
-		return null;
-	}
-
 	private static void _processEvents(
 			HttpServletRequest request, HttpServletResponse response,
 			List<Event> events)
@@ -374,6 +347,55 @@ public class PortletContainerUtil {
 				}
 			}
 		}
+	}
+
+	private static boolean _samePortletIdParameter(
+		String query1, String query2) {
+
+		if ((query1 == null) || (query2 == null)) {
+			return false;
+		}
+
+		int x1 = query1.indexOf("p_p_id=");
+
+		if (x1 < 0) {
+			return false;
+		}
+
+		int x2 = query2.indexOf("p_p_id=");
+
+		if (x2 < 0) {
+			return false;
+		}
+
+		x1 += 7;
+		x2 += 7;
+
+		int y1 = query1.indexOf(CharPool.AMPERSAND, x1);
+
+		if (y1 < 0) {
+			y1 = query1.length();
+		}
+
+		int length = y1 - x1;
+
+		int y2 = length + x2;
+
+		if (y2 > query2.length()) {
+			return false;
+		}
+
+		if ((y2 != query2.length()) &&
+			(query2.charAt(y2) != CharPool.AMPERSAND)) {
+
+			return false;
+		}
+
+		if (query1.regionMatches(x1, query2, x2, length)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final boolean _LAYOUT_PARALLEL_RENDER_ENABLE = false;

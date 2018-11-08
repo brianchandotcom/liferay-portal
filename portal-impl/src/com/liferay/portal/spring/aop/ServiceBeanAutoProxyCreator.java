@@ -65,13 +65,6 @@ public class ServiceBeanAutoProxyCreator
 
 		proxyFactory.setTargetSource(targetSource);
 
-		customizeProxyFactory(proxyFactory);
-
-		return proxyFactory.getProxy(getProxyClassLoader());
-	}
-
-	@Override
-	protected void customizeProxyFactory(ProxyFactory proxyFactory) {
 		proxyFactory.setAopProxyFactory(
 			new org.springframework.aop.framework.AopProxyFactory() {
 
@@ -85,6 +78,8 @@ public class ServiceBeanAutoProxyCreator
 				}
 
 			});
+
+		return proxyFactory.getProxy(getProxyClassLoader());
 	}
 
 	@Override

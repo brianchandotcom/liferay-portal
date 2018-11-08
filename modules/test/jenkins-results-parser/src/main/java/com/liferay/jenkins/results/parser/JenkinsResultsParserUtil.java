@@ -1609,9 +1609,10 @@ public class JenkinsResultsParserUtil {
 
 		String durationString = sb.toString();
 
-		if (durationString.endsWith(" ")) {
-			durationString = durationString.substring(
-				0, durationString.length() - 1);
+		durationString = durationString.trim();
+
+		if (durationString.equals("")) {
+			durationString = "0 ms";
 		}
 
 		return durationString;

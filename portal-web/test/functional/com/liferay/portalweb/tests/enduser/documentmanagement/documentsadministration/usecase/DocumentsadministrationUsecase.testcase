@@ -816,6 +816,82 @@
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="APPROVED" />
 	</command>
 
+	<command name="CheckValidationForFileEntries" priority="5">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Documents and Media" />
+			<var name="configurationName" value="Service" />
+			<var name="configurationScope" value="System Scope" />
+		</execute>
+
+		<execute function="ScrollWebElementIntoView" locator1="TextArea#ANY">
+			<var name="key_text" value="fileExtensions" />
+		</execute>
+
+		<execute function="Type" locator1="TextArea#ANY" value1=".doc">
+			<var name="key_text" value="fileExtensions" />
+		</execute>
+
+		<execute function="ScrollWebElementIntoView" locator1="Button#UPDATE" />
+
+		<execute function="AssertClick" locator1="Button#UPDATE" value1="Update" />
+
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentCP">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#viewCP">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<for list="Document_1.docx,Document_1.jpeg,Document_1.jpg,Document_1.mp4,Document_1.pdf,Document_1.png,Document_1.ppt,Document_1.pptx,Document_1.txt,Document_1.xls,Document_1.xlsx" param="dmDocumentTitle">
+			<execute macro="ProductMenu#gotoPortlet">
+				<var name="category" value="Content" />
+				<var name="panel" value="Site Administration" />
+				<var name="portlet" value="Documents and Media" />
+			</execute>
+
+			<execute macro="DMDocument#addCP">
+				<var name="dmDocumentFile" value="${dmDocumentTitle}" />
+				<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+				<var name="dmFile" value="Invalid" />
+			</execute>
+
+			<execute function="AssertTextEquals" locator1="Message#ERROR_FORM_VALIDATION" value1="Please enter a file with a valid extension (.doc)." />
+		</for>
+	</command>
+
 	<command name="Comments" priority="4">
 		<execute macro="Navigator#openURL" />
 

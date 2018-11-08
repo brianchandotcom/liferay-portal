@@ -134,8 +134,8 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 					 e instanceof RemoteAuthException ||
 					 e instanceof RemoteExportException ||
 					 e instanceof RemoteOptionsException ||
-					 e instanceof SystemException ||
-					 e instanceof SchedulerException) {
+					 e instanceof SchedulerException ||
+					 e instanceof SystemException) {
 
 				if (e instanceof RemoteAuthException) {
 					SessionErrors.add(actionRequest, AuthException.class, e);

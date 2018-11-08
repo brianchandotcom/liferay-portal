@@ -385,6 +385,7 @@ portalArtifactsJar {
 }
 
 portalJavadoc {
+	dependsOn portalArtifactsJar
 	dependsOn portalSourcesJar
 
 	destinationDir = new File(buildDir, "releng/portalJavadoc")

@@ -1186,6 +1186,10 @@
 				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
 			</then>
 			<else>
+				<execute macro="Navigator#gotoPage">
+					<var name="pageName" value="Document" />
+				</execute>
+
 				<execute function="Click" locator1="Icon#CURRENT_DISPLAY_STYLE" />
 
 				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />

@@ -16,7 +16,6 @@ package com.liferay.portal.spring.aop;
 
 import com.liferay.portal.kernel.spring.aop.AopProxyFactory;
 
-import org.springframework.aop.Advisor;
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.aop.framework.AopConfigException;
@@ -65,12 +64,6 @@ public class ServiceBeanAutoProxyCreator
 		proxyFactory.copyFrom(this);
 
 		evaluateProxyInterfaces(beanClass, proxyFactory);
-
-		Advisor[] advisors = buildAdvisors(beanName, specificInterceptors);
-
-		for (Advisor advisor : advisors) {
-			proxyFactory.addAdvisor(advisor);
-		}
 
 		proxyFactory.setTargetSource(targetSource);
 

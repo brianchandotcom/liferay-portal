@@ -408,7 +408,7 @@ portalArtifactsJar {
 
 			project.download {
 				dest cacheDir
-				overwrite false
+				onlyIfModified true
 				quiet true
 				src artifactURL
 			}

@@ -61,15 +61,11 @@ public class ServiceBeanAutoProxyCreator
 
 		ProxyFactory proxyFactory = new ProxyFactory();
 
-		proxyFactory.copyFrom(this);
-
 		evaluateProxyInterfaces(beanClass, proxyFactory);
 
 		proxyFactory.setTargetSource(targetSource);
 
 		customizeProxyFactory(proxyFactory);
-
-		proxyFactory.setFrozen(isFrozen());
 
 		return proxyFactory.getProxy(getProxyClassLoader());
 	}

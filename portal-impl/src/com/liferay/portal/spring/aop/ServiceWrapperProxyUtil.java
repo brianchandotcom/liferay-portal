@@ -33,16 +33,17 @@ public class ServiceWrapperProxyUtil {
 			Object springServiceProxy, String fieldName, Class<?> wrapperClass)
 		throws Exception {
 
-		ServiceBeanAopProxy serviceBeanAopProxy =
+		ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler =
 			ProxyUtil.fetchInvocationHandler(
-				springServiceProxy, ServiceBeanAopProxy.class);
+				springServiceProxy, ServiceBeanAopInvocationHandler.class);
 
-		if (serviceBeanAopProxy == null) {
+		if (serviceBeanAopInvocationHandler == null) {
 			throw new IllegalArgumentException(
 				springServiceProxy + " is not a Spring service proxy");
 		}
 
-		final Object targetService = serviceBeanAopProxy.getTarget();
+		final Object targetService =
+			serviceBeanAopInvocationHandler.getTarget();
 
 		Class<?> clazz = targetService.getClass();
 

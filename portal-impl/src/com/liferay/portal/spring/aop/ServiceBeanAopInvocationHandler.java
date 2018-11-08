@@ -24,9 +24,9 @@ import org.aopalliance.intercept.MethodInterceptor;
 /**
  * @author Shuyang Zhou
  */
-public class ServiceBeanAopProxy implements InvocationHandler {
+public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 
-	public ServiceBeanAopProxy(
+	public ServiceBeanAopInvocationHandler(
 		Object bean, ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
 
 		_target = bean;

@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
+import com.liferay.portal.spring.aop.ServiceBeanAopInvocationHandler;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -146,16 +146,18 @@ public class ServiceWrapperRegistry {
 			ClassLoader classLoader = clazz.getClassLoader();
 
 			try {
-				ServiceBeanAopProxy serviceBeanAopProxy =
-					ProxyUtil.fetchInvocationHandler(
-						serviceProxy, ServiceBeanAopProxy.class);
+				ServiceBeanAopInvocationHandler
+					serviceBeanAopInvocationHandler =
+						ProxyUtil.fetchInvocationHandler(
+							serviceProxy,
+							ServiceBeanAopInvocationHandler.class);
 
 				serviceWrapper.setWrappedService(
-					(T)serviceBeanAopProxy.getTarget());
+					(T)serviceBeanAopInvocationHandler.getTarget());
 
 				return new ServiceBag<>(
-					classLoader, serviceBeanAopProxy, serviceTypeClass,
-					serviceWrapper);
+					classLoader, serviceBeanAopInvocationHandler,
+					serviceTypeClass, serviceWrapper);
 			}
 			finally {
 				if (serviceReference != null) {

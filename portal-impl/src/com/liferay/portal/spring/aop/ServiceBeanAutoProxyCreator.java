@@ -64,13 +64,10 @@ public class ServiceBeanAutoProxyCreator
 			return bean;
 		}
 
-		Class<?>[] interfaces = ReflectionUtil.getInterfaces(bean);
-
-		ServiceBeanAopProxy serviceBeanAopProxy = new ServiceBeanAopProxy(
-			bean, _serviceBeanAopCacheManager);
-
 		return ProxyUtil.newProxyInstance(
-			getProxyClassLoader(), interfaces, serviceBeanAopProxy);
+			getProxyClassLoader(), ReflectionUtil.getInterfaces(bean),
+			new ServiceBeanAopInvocationHandler(
+				bean, _serviceBeanAopCacheManager));
 	}
 
 	private BeanMatcher _beanMatcher;

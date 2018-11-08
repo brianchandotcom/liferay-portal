@@ -61,7 +61,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.test.ServiceTestUtil;
-import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
+import com.liferay.portal.spring.aop.ServiceBeanAopInvocationHandler;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -96,12 +96,13 @@ public class JournalArticleServiceTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		ServiceBeanAopProxy serviceBeanAopProxy =
+		ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler =
 			ProxyUtil.fetchInvocationHandler(
-				_journalArticleLocalService, ServiceBeanAopProxy.class);
+				_journalArticleLocalService,
+				ServiceBeanAopInvocationHandler.class);
 
 		_journalArticleLocalServiceImplInstance =
-			serviceBeanAopProxy.getTarget();
+			serviceBeanAopInvocationHandler.getTarget();
 	}
 
 	@Before

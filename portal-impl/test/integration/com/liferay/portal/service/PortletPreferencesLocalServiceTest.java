@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.service.util.test.PortletPreferencesImplTestUtil;
 import com.liferay.portal.service.util.test.PortletPreferencesTestUtil;
-import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
+import com.liferay.portal.spring.aop.ServiceBeanAopInvocationHandler;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
@@ -1496,19 +1496,20 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	protected void replaceService() {
-		ServiceBeanAopProxy serviceBeanAopProxy =
+		ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler =
 			ProxyUtil.fetchInvocationHandler(
 				PortletPreferencesLocalServiceUtil.getService(),
-				ServiceBeanAopProxy.class);
+				ServiceBeanAopInvocationHandler.class);
 
-		Object previousService = serviceBeanAopProxy.getTarget();
+		Object previousService = serviceBeanAopInvocationHandler.getTarget();
 
 		ServiceWrapper<PortletPreferencesLocalService> serviceWrapper =
 			new TestPortletPreferencesLocalServiceWrapper(
 				(PortletPreferencesLocalService)previousService);
 
 		_serviceBag = new ServiceBag<>(
-			PortalClassLoaderUtil.getClassLoader(), serviceBeanAopProxy,
+			PortalClassLoaderUtil.getClassLoader(),
+			serviceBeanAopInvocationHandler,
 			PortletPreferencesLocalService.class, serviceWrapper);
 	}
 

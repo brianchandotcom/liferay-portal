@@ -161,13 +161,12 @@ public class PortletContainerUtil {
 							String portletId = _getPortletIdParameter(
 								locationURL.getQuery());
 
-							if (portletId != null) {
-								if (portletId.equals(
-										_getPortletIdParameter(
-											renderURL.getQuery()))) {
+							if ((portletId != null) &&
+								portletId.equals(
+									_getPortletIdParameter(
+										renderURL.getQuery()))) {
 
-									location = liferayPortletURL.toString();
-								}
+								location = liferayPortletURL.toString();
 							}
 						}
 					}

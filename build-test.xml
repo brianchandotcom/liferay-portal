@@ -8881,8 +8881,6 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 									<replacetoken><![CDATA[value="16"]]></replacetoken>
 									<replacevalue><![CDATA[value="18"]]></replacevalue>
 								</replace>
-
-								<print-file file.name="${tstamp.value}/WEB-INF/ibm-web-ext.xmi" />
 							</then>
 						</if>
 

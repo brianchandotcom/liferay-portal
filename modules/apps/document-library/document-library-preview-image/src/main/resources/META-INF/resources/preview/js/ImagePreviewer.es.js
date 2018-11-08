@@ -75,6 +75,14 @@ class ImagePreviewer extends Component {
 	}
 
 	/**
+	 * @inheritDoc
+	 */
+	syncZoomActual() {
+		this.zoomInDisabled = ZOOM_LEVELS_REVERSED[0] === this.zoomActual;
+		this.zoomOutDisabled = ZOOM_LEVELS[0] >= this.zoomActual;
+	}
+
+	/**
 	 * Set the zoom based in multiplier
 	 * @param {number} zoomNumber
 	 * @private
@@ -88,7 +96,6 @@ class ImagePreviewer extends Component {
 		this._isPreviewFit = false;
 
 		this._updateDimensions();
-		this._updateToolbarButtons();
 	}
 
 	/**
@@ -98,8 +105,6 @@ class ImagePreviewer extends Component {
 	 */
 	_calculateZoomActual() {
 		this.zoomActual = this.refs.image.width / this._imageNaturalWidth;
-
-		this._updateToolbarButtons();
 	}
 
 	/**
@@ -189,17 +194,6 @@ class ImagePreviewer extends Component {
 			this._calculateZoomActual();
 		}
 	}
-
-	/**
-	 * Set the toolbar buttons states based in actual state
-	 * @private
-	 * @review
-	 */
-	_updateToolbarButtons() {
-		this.zoomInDisabled = ZOOM_LEVELS_REVERSED[0] === this.zoomActual;
-		this.zoomOutDisabled = ZOOM_LEVELS[0] >= this.zoomActual;
-		this.zoomFitToggle = this.zoomActual === 1;
-	}
 }
 
 /**
@@ -246,12 +240,6 @@ ImagePreviewer.STATE = {
 	 * @type {Number}
 	 */
 	zoomActual: Config.number(),
-
-	/**
-	 * Flag that indicate if 'zoom in' is disabled. TODO
-	 * @type {Boolean}
-	 */
-	zoomFitToggle: Config.bool(),
 
 	/**
 	 * Flag that indicate if 'zoom in' is disabled.

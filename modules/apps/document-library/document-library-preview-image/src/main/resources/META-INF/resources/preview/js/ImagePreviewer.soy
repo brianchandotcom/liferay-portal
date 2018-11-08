@@ -14,7 +14,6 @@
 	{@param? imageWidth: number}
 	{@param? zoomActual: number}
 	{@param? zoomInDisabled: bool}
-	{@param? zoomFitToggle: bool}
 	{@param? zoomOutDisabled: bool}
 
 	<div class="preview-file" id="{$id}">
@@ -41,7 +40,6 @@
 			{param spritemap: $spritemap /}
 			{param zoomActual: $zoomActual /}
 			{param zoomInDisabled: $zoomInDisabled /}
-			{param zoomFitToggle: $zoomFitToggle /}
 			{param zoomOutDisabled: $zoomOutDisabled /}
 		{/call}
 	</div>
@@ -52,22 +50,23 @@
 	{@param? _handleToolbarClick: any}
 	{@param? zoomActual: number}
 	{@param? zoomInDisabled: bool}
-	{@param? zoomFitToggle: bool}
 	{@param? zoomOutDisabled: bool}
 
-	{let $zoomLabel: round(($zoomActual ?: 0) * 100) /}
 	{let $baseButtonsToolbar:[
 		'elementClasses': 'btn-dark',
 		'events': [ 'click': $_handleToolbarClick],
 		'spritemap': $spritemap,
 		'style': false
 	] /}
-	{let $zoomFitToggleValue: $zoomFitToggle
-		? 'fit'
-		: 'real'
-	/}
-	{let $zoomFitToggleTitle kind="text"}
-		{if $zoomFitToggle}
+
+	{let $zoomLabel: round(($zoomActual ?: 0) * 100) /}
+
+	{let $zoomFit: $zoomActual == 1 /}
+
+	{let $zoomBtnValue: $zoomFit ? 'fit' : 'real'/}
+
+	{let $zoomBtnTitle kind="text"}
+		{if $zoomFit}
 			{msg desc=""}fit-to-screen{/msg}
 		{else}
 			{msg desc=""}real-size{/msg}
@@ -84,8 +83,8 @@
 			{/call}
 			{call ClayButton.render data="$baseButtonsToolbar"}
 				{param label kind="text"}{$zoomLabel}%{/param}
-				{param value: $zoomFitToggleValue /}
-				{param title: $zoomFitToggleTitle /}
+				{param value: $zoomBtnValue /}
+				{param title: $zoomBtnTitle /}
 			{/call}
 			{call ClayButton.render data="$baseButtonsToolbar"}
 				{param disabled: $zoomInDisabled /}

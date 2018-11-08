@@ -2088,13 +2088,6 @@ tell application "Safari" to quit
 			<if>
 				<equals arg1="${app.server.type}" arg2="weblogic" />
 				<then>
-					<replaceregexp
-						file="${app.server.weblogic.bin.dir}/stopWebLogic.sh"
-						flags="g"
-						match="(t3:\/\/)[^\:]*(\:\d+)"
-						replace="\1${env.HOSTNAME}\2"
-					/>
-
 					<chmod
 						perm="a+x"
 					>

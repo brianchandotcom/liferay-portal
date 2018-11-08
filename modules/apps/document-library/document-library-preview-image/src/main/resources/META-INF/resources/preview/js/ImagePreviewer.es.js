@@ -91,10 +91,10 @@ class ImagePreviewer extends Component {
 	_applyZoom(zoomNumber) {
 		this.imageHeight = this._imageNaturalHeight * zoomNumber;
 		this.imageWidth = this._imageNaturalWidth * zoomNumber;
-		this.currentZoom = zoomNumber;
 		this._zoomRatio = zoomNumber / this.currentZoom;
 		this._isPreviewFit = false;
 
+		this.currentZoom = zoomNumber;
 		this._updateDimensions();
 	}
 

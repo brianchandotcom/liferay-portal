@@ -21,6 +21,7 @@ import com.sforce.soap.partner.DescribeGlobalResult;
 import com.sforce.soap.partner.DescribeSObjectResult;
 import com.sforce.soap.partner.GetDeletedResult;
 import com.sforce.soap.partner.GetUpdatedResult;
+import com.sforce.soap.partner.GetUserInfoResult;
 import com.sforce.soap.partner.LoginResult;
 import com.sforce.soap.partner.PartnerConnection;
 import com.sforce.soap.partner.QueryResult;
@@ -37,6 +38,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  * @author Peter Shin
+ * @author Rachael Koestartyo
  */
 public class SalesforcePartnerClientImpl
 	extends BaseSalesforceClientImpl implements SalesforcePartnerClient {
@@ -131,6 +133,13 @@ public class SalesforcePartnerClientImpl
 				typeName, startCalendar, endCalendar,
 				getRetryCount(retryCount, ce));
 		}
+	}
+
+	@Override
+	public GetUserInfoResult getUserInfo() throws ConnectionException {
+		PartnerConnection partnerConnection = getPartnerConnection();
+
+		return partnerConnection.getUserInfo();
 	}
 
 	@Override

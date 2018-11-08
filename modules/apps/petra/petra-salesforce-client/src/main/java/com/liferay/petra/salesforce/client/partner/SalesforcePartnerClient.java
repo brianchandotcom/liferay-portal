@@ -21,6 +21,7 @@ import com.sforce.soap.partner.DescribeGlobalResult;
 import com.sforce.soap.partner.DescribeSObjectResult;
 import com.sforce.soap.partner.GetDeletedResult;
 import com.sforce.soap.partner.GetUpdatedResult;
+import com.sforce.soap.partner.GetUserInfoResult;
 import com.sforce.soap.partner.LoginResult;
 import com.sforce.soap.partner.QueryResult;
 import com.sforce.soap.partner.SaveResult;
@@ -59,6 +60,8 @@ public interface SalesforcePartnerClient extends SalesforceClient {
 			String typeName, Calendar startCalendar, Calendar endCalendar,
 			int retryCount)
 		throws ConnectionException;
+
+	public GetUserInfoResult getUserInfo() throws ConnectionException;
 
 	public LoginResult login(String username, String password, int retryCount)
 		throws ConnectionException;

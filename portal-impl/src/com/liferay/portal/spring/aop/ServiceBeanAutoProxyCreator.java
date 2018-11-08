@@ -15,11 +15,11 @@
 package com.liferay.portal.spring.aop;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
+import com.liferay.portal.kernel.spring.aop.AopProxy;
 import com.liferay.portal.kernel.spring.aop.AopProxyFactory;
 
-import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator;
-import org.springframework.aop.target.SingletonTargetSource;
 
 /**
  * @author Shuyang Zhou
@@ -61,20 +61,49 @@ public class ServiceBeanAutoProxyCreator
 			return bean;
 		}
 
-		ProxyFactory proxyFactory = new ProxyFactory();
+		AopProxy aopProxy = _aopProxyFactory.getAopProxy(
+			new AdvisedSupportImpl(ReflectionUtil.getInterfaces(bean), bean));
 
-		proxyFactory.setInterfaces(ReflectionUtil.getInterfaces(bean));
-		proxyFactory.setTargetSource(new SingletonTargetSource(bean));
-
-		proxyFactory.setAopProxyFactory(
-			advisedSupport -> new AopProxyAdapter(
-				_aopProxyFactory.getAopProxy(
-					new AdvisedSupportAdapter(advisedSupport))));
-
-		return proxyFactory.getProxy(getProxyClassLoader());
+		return aopProxy.getProxy(getProxyClassLoader());
 	}
 
 	private AopProxyFactory _aopProxyFactory;
 	private BeanMatcher _beanMatcher;
+
+	private static class AdvisedSupportImpl implements AdvisedSupport {
+
+		@Override
+		public Class<?>[] getProxiedInterfaces() {
+			return _interfaces;
+		}
+
+		@Override
+		public Object getTarget() {
+			return _target;
+		}
+
+		@Override
+		public void setTarget(Object target) {
+			_target = target;
+		}
+
+		/**
+		 * @deprecated As of Judson (7.1.x), with no direct replacement
+		 */
+		@Deprecated
+		@Override
+		public void setTarget(Object target, Class<?> targetClass) {
+			setTarget(target);
+		}
+
+		private AdvisedSupportImpl(Class<?>[] interfaces, Object target) {
+			_interfaces = interfaces;
+			_target = target;
+		}
+
+		private final Class<?>[] _interfaces;
+		private Object _target;
+
+	}
 
 }

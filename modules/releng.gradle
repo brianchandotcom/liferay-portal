@@ -1,3 +1,6 @@
+import aQute.bnd.osgi.Constants
+import aQute.bnd.osgi.Resource
+
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import com.github.jengelman.gradle.plugins.shadow.transformers.AppendingTransformer
 
@@ -12,6 +15,8 @@ import groovy.json.JsonSlurper
 
 import java.nio.file.Path
 
+import java.util.jar.Attributes
+import java.util.jar.Manifest
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -415,23 +420,29 @@ portalArtifactsJar {
 
 			File jarFile = new File(cacheDir, artifactURL.substring(artifactURL.lastIndexOf("/") + 1))
 
+			aQute.bnd.osgi.Jar jar = new aQute.bnd.osgi.Jar(jarFile)
+
+			Resource resource = jar.getResource("META-INF/MANIFEST.MF")
+
+			if (resource == null) {
+				return
+			}
+
+			Manifest manifest = new Manifest(resource.openInputStream())
+
+			Attributes attributes = manifest.getMainAttributes()
+
+			String exportPackageValue = attributes.getValue(Constants.EXPORT_PACKAGE)
+
+			if (exportPackageValue == null) {
+				return
+			}
+
 			File dir = new File(artifactsDir, jarFile.name[0 .. -5])
 
 			copy {
 				from zipTree(jarFile)
 				into dir
-			}
-
-			File manifestFile = new File(dir, "META-INF/MANIFEST.MF")
-
-			if (!manifestFile.exists()) {
-				return
-			}
-
-			String content = manifestFile.getText("UTF-8")
-
-			if (!content.contains("Export-Package:")) {
-				return
 			}
 
 			dependencies.portalArtifacts files(dir)

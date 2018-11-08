@@ -387,11 +387,11 @@
 
 	<command name="viewDeletedArticle">
 		<execute macro="Alert#viewWarningSpecific">
-			<var name="warningMessage" value="The web content article ${webContentTitle} was moved to the Recycle Bin." />
+			<var name="warningMessage" value="The selected web content no longer exists." />
 		</execute>
 
 		<execute macro="Alert#viewWarningSpecific">
-			<var name="warningMessage" value="Do you want to Undo or Select Another Web Content?" />
+			<var name="warningMessage" value="Do you want to Select Another Web Content?" />
 		</execute>
 	</command>
 

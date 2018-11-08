@@ -44,7 +44,7 @@ JournalDDMStructuresDisplayContext journalDDMStructuresDisplayContext = new Jour
 />
 
 <portlet:actionURL name="/journal/delete_ddm_structure" var="deleteDDMStructureURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="mvcPath" value="/view_ddm_structures.jsp" />
 </portlet:actionURL>
 
 <aui:form action="<%= deleteDDMStructureURL %>" cssClass="container-fluid-1280" method="post" name="fm">

@@ -49,7 +49,7 @@ if (ddmStructure != null) {
 />
 
 <portlet:actionURL name="/journal/delete_ddm_template" var="deleteDDMTemplateURL">
-	<portlet:param name="mvcPath" value="/view_ddm_template.jsp" />
+	<portlet:param name="mvcPath" value="/view_ddm_templates.jsp" />
 </portlet:actionURL>
 
 <aui:form action="<%= deleteDDMTemplateURL %>" cssClass="container-fluid-1280" method="post" name="fm">

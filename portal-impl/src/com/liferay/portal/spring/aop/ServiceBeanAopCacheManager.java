@@ -38,39 +38,6 @@ import org.aopalliance.intercept.MethodInvocation;
  */
 public class ServiceBeanAopCacheManager {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #findAnnotation(MethodInvocation, Class, Object)}
-	 */
-	@Deprecated
-	public static <T> T getAnnotation(
-		MethodInvocation methodInvocation,
-		Class<? extends Annotation> annotationType, T defaultValue) {
-
-		return _findAnnotation(
-			_annotations, methodInvocation, annotationType, defaultValue);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static void putAnnotations(
-		MethodInvocation methodInvocation, Annotation[] annotations) {
-
-		_setAnnotations(_annotations, methodInvocation, annotations);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #ServiceBeanAopCacheManager(MethodInterceptor)}
-	 */
-	@Deprecated
-	public ServiceBeanAopCacheManager() {
-		_classLevelMethodInterceptors = new MethodInterceptor[0];
-		_fullMethodInterceptors = new MethodInterceptor[0];
-	}
-
 	public ServiceBeanAopCacheManager(MethodInterceptor methodInterceptor) {
 		List<MethodInterceptor> classLevelMethodInterceptors =
 			new ArrayList<>();
@@ -187,79 +154,12 @@ public class ServiceBeanAopCacheManager {
 		return methodInterceptors;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getMethodInterceptors(MethodInvocation)}
-	 */
-	@Deprecated
-	public MethodInterceptorsBag getMethodInterceptorsBag(
-		MethodInvocation methodInvocation) {
-
-		MethodInterceptor[] methodInterceptors = getMethodInterceptors(
-			methodInvocation);
-
-		return new MethodInterceptorsBag(
-			Arrays.asList(_classLevelMethodInterceptors),
-			Arrays.asList(methodInterceptors));
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public Map
-		<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>[]>
-			getRegisteredAnnotationChainableMethodAdvices() {
-
-		return _annotationChainableMethodAdvices;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public boolean isRegisteredAnnotationClass(
-		Class<? extends Annotation> annotationClass) {
-
-		return _annotationChainableMethodAdvices.containsKey(annotationClass);
-	}
-
 	public void putMethodInterceptors(
 		MethodInvocation methodInvocation,
 		MethodInterceptor[] methodInterceptors) {
 
 		_methodInterceptors.put(
 			methodInvocation.getMethod(), methodInterceptors);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #putMethodInterceptors(MethodInvocation, MethodInterceptor[])}
-	 */
-	@Deprecated
-	public void putMethodInterceptorsBag(
-		MethodInvocation methodInvocation,
-		MethodInterceptorsBag methodInterceptorsBag) {
-
-		List<MethodInterceptor> methodInterceptors =
-			methodInterceptorsBag.getMergedMethodInterceptors();
-
-		putMethodInterceptors(
-			methodInvocation,
-			methodInterceptors.toArray(
-				new MethodInterceptor[methodInterceptors.size()]));
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void registerAnnotationChainableMethodAdvice(
-		Class<? extends Annotation> annotationClass,
-		AnnotationChainableMethodAdvice<?> annotationChainableMethodAdvice) {
-
-		_registerAnnotationChainableMethodAdvice(
-			annotationClass, annotationChainableMethodAdvice);
 	}
 
 	public void removeMethodInterceptor(
@@ -317,16 +217,6 @@ public class ServiceBeanAopCacheManager {
 	public void reset() {
 		_annotations.clear();
 		_methodInterceptors.clear();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setAnnotations(
-		MethodInvocation methodInvocation, Annotation[] annotations) {
-
-		_setAnnotations(_methodAnnotations, methodInvocation, annotations);
 	}
 
 	private static <T> T _findAnnotation(

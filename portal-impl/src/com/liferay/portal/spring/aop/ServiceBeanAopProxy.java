@@ -28,29 +28,6 @@ import org.aopalliance.intercept.MethodInterceptor;
 public class ServiceBeanAopProxy
 	implements AdvisedSupportProxy, InvocationHandler {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link AdvisedSupportUtil#
-	 *             getAdvisedSupport(Object)}
-	 */
-	@Deprecated
-	public static AdvisedSupport getAdvisedSupport(Object proxy)
-		throws Exception {
-
-		return AdvisedSupportUtil.getAdvisedSupport(proxy);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #ServiceBeanAopProxy(
-	 *             AdvisedSupport, ServiceBeanAopCacheManager)}
-	 */
-	@Deprecated
-	public ServiceBeanAopProxy(
-		AdvisedSupport advisedSupport, MethodInterceptor methodInterceptor,
-		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
-
-		this(advisedSupport, new ServiceBeanAopCacheManager(methodInterceptor));
-	}
-
 	public ServiceBeanAopProxy(
 		AdvisedSupport advisedSupport,
 		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
@@ -78,15 +55,6 @@ public class ServiceBeanAopProxy
 				_advisedSupport.setTarget(target);
 
 				_serviceBeanAopCacheManager.reset();
-			}
-
-			/**
-			 * @deprecated As of Judson (7.1.x), with no direct replacement
-			 */
-			@Deprecated
-			@Override
-			public void setTarget(Object target, Class<?> targetClass) {
-				setTarget(target);
 			}
 
 		};
@@ -117,17 +85,6 @@ public class ServiceBeanAopProxy
 		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
 
 		_serviceBeanAopCacheManager = serviceBeanAopCacheManager;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public interface PACL {
-
-		public InvocationHandler getInvocationHandler(
-			InvocationHandler invocationHandler, AdvisedSupport advisedSupport);
-
 	}
 
 	private static final MethodInterceptor[] _emptyMethodInterceptors =

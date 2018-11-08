@@ -25,7 +25,6 @@ import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import java.util.List;
 import java.util.Objects;
 
 import org.aopalliance.intercept.MethodInterceptor;
@@ -37,18 +36,6 @@ import org.aopalliance.intercept.MethodInvocation;
 public class ServiceBeanMethodInvocation
 	implements MethodInvocation, Serializable {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #ServiceBeanMethodInvocation(Object, Method, Object[])}
-	 */
-	@Deprecated
-	public ServiceBeanMethodInvocation(
-		Object target, Class<?> targetClass, Method method,
-		Object[] arguments) {
-
-		this(target, method, arguments);
-	}
-
 	public ServiceBeanMethodInvocation(
 		Object target, Method method, Object[] arguments) {
 
@@ -58,13 +45,17 @@ public class ServiceBeanMethodInvocation
 
 		_method.setAccessible(true);
 
+		boolean equalsMethod = false;
+
 		if (_method.getDeclaringClass() == Object.class) {
 			String methodName = _method.getName();
 
 			if (methodName.equals("equals")) {
-				_equalsMethod = true;
+				equalsMethod = true;
 			}
 		}
+
+		_equalsMethod = equalsMethod;
 	}
 
 	@Override
@@ -161,34 +152,8 @@ public class ServiceBeanMethodInvocation
 		_index = _markIndex;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setMethodInterceptors(
-		List<MethodInterceptor> methodInterceptors) {
-
-		setMethodInterceptors(
-			methodInterceptors.toArray(
-				new MethodInterceptor[methodInterceptors.size()]));
-	}
-
 	public void setMethodInterceptors(MethodInterceptor[] methodInterceptors) {
 		_methodInterceptors = methodInterceptors;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public ServiceBeanMethodInvocation toCacheKeyModel() {
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			new ServiceBeanMethodInvocation(null, _method, null);
-
-		serviceBeanMethodInvocation._equalsMethod = _equalsMethod;
-		serviceBeanMethodInvocation._hashCode = _hashCode;
-
-		return serviceBeanMethodInvocation;
 	}
 
 	@Override
@@ -233,7 +198,7 @@ public class ServiceBeanMethodInvocation
 	}
 
 	private final Object[] _arguments;
-	private boolean _equalsMethod;
+	private final boolean _equalsMethod;
 	private int _hashCode;
 	private int _index;
 	private int _markIndex;

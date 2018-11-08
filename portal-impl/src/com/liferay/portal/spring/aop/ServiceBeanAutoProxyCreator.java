@@ -96,15 +96,6 @@ public class ServiceBeanAutoProxyCreator
 			_target = target;
 		}
 
-		/**
-		 * @deprecated As of Judson (7.1.x), with no direct replacement
-		 */
-		@Deprecated
-		@Override
-		public void setTarget(Object target, Class<?> targetClass) {
-			setTarget(target);
-		}
-
 		private AdvisedSupportImpl(Class<?>[] interfaces, Object target) {
 			_interfaces = interfaces;
 			_target = target;

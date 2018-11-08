@@ -346,7 +346,7 @@ lockPrivateDependencyVersions {
 }
 
 portalArtifactsJar {
-	baseName = "portal-artifacts"
+	baseName = "portal"
 	classifier = null
 	exclude "*.*"
 	exclude "META-INF/**"

@@ -890,10 +890,17 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			uploadPortletRequest, "description");
 		String changeLog = ParamUtil.getString(
 			uploadPortletRequest, "changeLog");
+
+		boolean updateVersionDetails = ParamUtil.getBoolean(
+			uploadPortletRequest, "updateVersionDetails");
 		DLVersionNumberIncrease dlVersionNumberIncrease =
 			DLVersionNumberIncrease.valueOf(
 				ParamUtil.getString(uploadPortletRequest, "versionIncrease"),
 				DLVersionNumberIncrease.AUTOMATIC);
+
+		if (!updateVersionDetails) {
+			dlVersionNumberIncrease = DLVersionNumberIncrease.AUTOMATIC;
+		}
 
 		if (cmd.equals(Constants.ADD_DYNAMIC)) {
 			title = uploadPortletRequest.getFileName("file");

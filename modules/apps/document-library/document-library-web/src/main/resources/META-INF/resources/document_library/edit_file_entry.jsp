@@ -638,14 +638,6 @@ if (portletTitleBasedNavigation) {
 		$('#<portlet:namespace />updateVersionDetails').on(
 			'click',
 			function(event) {
-				var inputValue = "<%= dlVersionNumberIncrease %>";
-
-				if (<%= dlVersionNumberIncrease == DLVersionNumberIncrease.AUTOMATIC %>) {
-					inputValue = "<%= DLVersionNumberIncrease.NONE %>";
-				}
-
-				$('input[value=' + inputValue + ']')[0].checked = true;
-
 				$('#<portlet:namespace />versionDetails').toggle();
 			}
 		);

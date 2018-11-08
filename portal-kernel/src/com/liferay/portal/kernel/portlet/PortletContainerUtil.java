@@ -130,49 +130,49 @@ public class PortletContainerUtil {
 			}
 		}
 
-		if (Validator.isNotNull(location)) {
+		if (Validator.isNull(location)) {
+			return;
+		}
+
+		PortletApp portletApp = portlet.getPortletApp();
+
+		if ((portletApp.getSpecMajorVersion() >= 3) &&
+			portlet.isActionURLRedirect()) {
+
+			Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+
+			LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
+				request, portlet, layout, PortletRequest.RENDER_PHASE,
+				MimeResponse.Copy.ALL);
+
 			try {
-				PortletApp portletApp = portlet.getPortletApp();
+				URL locationURL = new URL(location);
 
-				if ((portletApp.getSpecMajorVersion() >= 3) &&
-					portlet.isActionURLRedirect()) {
+				URL renderURL = new URL(liferayPortletURL.toString());
 
-					Layout layout = (Layout)request.getAttribute(
-						WebKeys.LAYOUT);
+				String protocol = locationURL.getProtocol();
+				String host = locationURL.getHost();
+				int port = locationURL.getPort();
 
-					LiferayPortletURL liferayPortletURL =
-						PortletURLFactoryUtil.create(
-							request, portlet, layout,
-							PortletRequest.RENDER_PHASE, MimeResponse.Copy.ALL);
+				if (protocol.equals(renderURL.getProtocol()) &&
+					host.equals(renderURL.getHost()) &&
+					(port == renderURL.getPort()) &&
+					_samePortletIdParameter(
+						locationURL.getQuery(), renderURL.getQuery())) {
 
-					try {
-						URL locationURL = new URL(location);
-
-						URL renderURL = new URL(liferayPortletURL.toString());
-
-						String protocol = locationURL.getProtocol();
-						String host = locationURL.getHost();
-						int port = locationURL.getPort();
-
-						if (protocol.equals(renderURL.getProtocol()) &&
-							host.equals(renderURL.getHost()) &&
-							(port == renderURL.getPort()) &&
-							_samePortletIdParameter(
-								locationURL.getQuery(), renderURL.getQuery())) {
-
-							location = liferayPortletURL.toString();
-						}
-					}
-					catch (MalformedURLException murle) {
-						throw new PortletContainerException(murle);
-					}
+					location = liferayPortletURL.toString();
 				}
+			}
+			catch (MalformedURLException murle) {
+				throw new PortletContainerException(murle);
+			}
+		}
 
-				response.sendRedirect(location);
-			}
-			catch (IOException ioe) {
-				throw new PortletContainerException(ioe);
-			}
+		try {
+			response.sendRedirect(location);
+		}
+		catch (IOException ioe) {
+			throw new PortletContainerException(ioe);
 		}
 	}
 

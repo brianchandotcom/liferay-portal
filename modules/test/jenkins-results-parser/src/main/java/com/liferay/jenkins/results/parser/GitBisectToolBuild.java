@@ -14,7 +14,12 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.google.common.collect.Lists;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -63,6 +68,162 @@ public class GitBisectToolBuild extends TopLevelBuild {
 
 	protected GitBisectToolBuild(String url, TopLevelBuild topLevelBuild) {
 		super(url, topLevelBuild);
+	}
+
+	protected Element getBuildDurationCell(PortalBuildData portalBuildData) {
+		return Dom4JUtil.getNewElement(
+			"td", null,
+			JenkinsResultsParserUtil.toDurationString(
+				portalBuildData.getBuildDuration()));
+	}
+
+	protected Element getBuildLinkCell(PortalBuildData portalBuildData) {
+		return Dom4JUtil.getNewElement(
+			"td", null,
+			Dom4JUtil.getNewAnchorElement(
+				portalBuildData.getBuildURL(), "build"));
+	}
+
+	protected Element getBuildResultCell(PortalBuildData portalBuildData) {
+		return Dom4JUtil.getNewElement(
+			"td", null, portalBuildData.getBuildResult());
+	}
+
+	protected Element getBuildStatusCell(PortalBuildData portalBuildData) {
+		return Dom4JUtil.getNewElement(
+			"td", null, portalBuildData.getBuildStatus());
+	}
+
+	protected Element getCommitLinkCellElement(Commit commit, boolean header) {
+		String prefix = "";
+
+		if (header) {
+			prefix = "*";
+		}
+
+		return Dom4JUtil.getNewElement(
+			"td", null,
+			Dom4JUtil.getNewAnchorElement(
+				commit.getGitHubCommitURL(),
+				prefix + commit.getAbbreviatedSHA()));
+	}
+
+	protected Element getCommitMessageCellElement(Commit commit) {
+		return Dom4JUtil.getNewElement(
+			"td", null, StringEscapeUtils.escapeXml(commit.getMessage()));
+	}
+
+	protected Element getDiffLinkCellElement(
+		Commit commit, List<Commit> previousGroupedCommits) {
+
+		if ((previousGroupedCommits == null) ||
+			previousGroupedCommits.isEmpty()) {
+
+			return getEmptyCell();
+		}
+
+		Commit previousFirstCommit = previousGroupedCommits.get(0);
+
+		return Dom4JUtil.getNewElement(
+			"td", null,
+			Dom4JUtil.getNewAnchorElement(
+				commit.getGitHubCommitDiffURL(previousFirstCommit),
+				JenkinsResultsParserUtil.combine(
+					commit.getAbbreviatedSHA(), "...",
+					previousFirstCommit.getAbbreviatedSHA())),
+			Dom4JUtil.getNewElement(
+				"span", null,
+				JenkinsResultsParserUtil.combine(
+					"(", String.valueOf(previousGroupedCommits.size()),
+					" commits)")));
+	}
+
+	protected Element getEmptyCell() {
+		return Dom4JUtil.getNewElement("td");
+	}
+
+	protected Element getGroupedCommitHeaderToggleCellElement(Commit commit) {
+		Element labelElement = Dom4JUtil.getNewElement("label", null, "+");
+
+		labelElement.addAttribute("for", commit.getSHA());
+
+		Element inputElement = Dom4JUtil.getNewElement("input", null);
+
+		inputElement.addAttribute("data-toggle", "toggle");
+		inputElement.addAttribute("id", commit.getSHA());
+		inputElement.addAttribute("name", commit.getSHA());
+		inputElement.addAttribute("type", "checkbox");
+
+		return Dom4JUtil.getNewElement("td", null, labelElement, inputElement);
+	}
+
+	protected LinkedHashMap<List<Commit>, PortalBuildData>
+		getGroupedCommitPortalBuildDataMap() {
+
+		List<BuildData> buildDataList = Lists.newArrayList(
+			_downstreamBuildDataList);
+
+		LinkedHashMap<List<Commit>, PortalBuildData>
+			groupedCommitsPortalBuildDataMap = new LinkedHashMap<>(
+				_downstreamBuildDataList.size());
+
+		List<Commit> groupedCommitsList = null;
+
+		for (Commit commit : _workspaceGitRepository.getHistoricalCommits()) {
+			String sha = commit.getSHA();
+
+			PortalBuildData portalBuildData = null;
+
+			for (BuildData buildData : buildDataList) {
+				if (buildData instanceof PortalBuildData) {
+					PortalBuildData currentPortalBuildData =
+						(PortalBuildData)buildData;
+
+					if (sha.equals(
+							currentPortalBuildData.getPortalBranchSHA())) {
+
+						portalBuildData = currentPortalBuildData;
+
+						break;
+					}
+				}
+			}
+
+			if ((portalBuildData != null) || (groupedCommitsList == null)) {
+				buildDataList.remove(portalBuildData);
+
+				groupedCommitsList = new ArrayList<>();
+
+				groupedCommitsPortalBuildDataMap.put(
+					groupedCommitsList, portalBuildData);
+			}
+
+			groupedCommitsList.add(commit);
+		}
+
+		return groupedCommitsPortalBuildDataMap;
+	}
+
+	protected Element getGroupedCommitsHeaderRowElement(
+		Commit commit, PortalBuildData portalBuildData,
+		List<Commit> previousGroupedCommits) {
+
+		return Dom4JUtil.getNewElement(
+			"tr", null, getGroupedCommitHeaderToggleCellElement(commit),
+			getCommitLinkCellElement(commit, true),
+			getCommitMessageCellElement(commit),
+			getDiffLinkCellElement(commit, previousGroupedCommits),
+			getBuildLinkCell(portalBuildData),
+			getBuildStatusCell(portalBuildData),
+			getBuildResultCell(portalBuildData));
+	}
+
+	protected Element getGroupedCommitsRowElement(Commit commit) {
+		return Dom4JUtil.getNewElement(
+			"tr", null, getGroupedCommitHeaderToggleCellElement(commit),
+			getCommitLinkCellElement(commit, true),
+			getCommitMessageCellElement(commit), getEmptyCell(), getEmptyCell(),
+			getEmptyCell(), getEmptyCell());
 	}
 
 	protected Element getJenkinsReportBodyElement() {
@@ -207,156 +368,42 @@ public class GitBisectToolBuild extends TopLevelBuild {
 	protected Element getJenkinsReportTableBodyElement() {
 		Element tableBodyElement = Dom4JUtil.getNewElement("tbody");
 
-		List<Commit> historicalCommits =
-			_workspaceGitRepository.getHistoricalCommits();
+		LinkedHashMap<List<Commit>, PortalBuildData>
+			groupedCommitsPortalBuildDataMap =
+				getGroupedCommitPortalBuildDataMap();
 
-		Element tableRowContainerElement = null;
+		List<Commit> previousGroupedCommits = null;
 
-		Commit previousCommit = null;
-		Integer previousCommitCount = 0;
+		for (Map.Entry<List<Commit>, PortalBuildData> entry :
+				groupedCommitsPortalBuildDataMap.entrySet()) {
 
-		for (Commit commit : historicalCommits) {
-			boolean first = false;
+			List<Commit> commits = entry.getKey();
+			PortalBuildData portalBuildData = entry.getValue();
 
-			if (historicalCommits.indexOf(commit) == 0) {
-				first = true;
-			}
+			Element groupedCommitsHeaderElement = Dom4JUtil.getNewElement(
+				"tbody", tableBodyElement);
 
-			PortalBuildData portalBuildData = _getPortalBuildDataBySHA(
-				commit.getSHA(), _downstreamBuildDataList);
+			groupedCommitsHeaderElement.addAttribute("class", "result-row");
 
-			if (first || (portalBuildData != null)) {
-				tableRowContainerElement = Dom4JUtil.getNewElement(
+			Dom4JUtil.addToElement(
+				groupedCommitsHeaderElement,
+				getGroupedCommitsHeaderRowElement(
+					commits.get(0), portalBuildData, previousGroupedCommits));
+
+			previousGroupedCommits = commits;
+
+			if (commits.size() > 1) {
+				Element groupedCommitsElement = Dom4JUtil.getNewElement(
 					"tbody", tableBodyElement);
 
-				tableRowContainerElement.addAttribute("class", "result-row");
-			}
-			else if (tableRowContainerElement == null) {
-				tableRowContainerElement = Dom4JUtil.getNewElement(
-					"tbody", tableBodyElement);
+				groupedCommitsHeaderElement.addAttribute("class", "hidden-row");
 
-				tableRowContainerElement.addAttribute("class", "hidden-row");
-			}
-
-			Element tableRowElement = Dom4JUtil.getNewElement(
-				"tr", tableRowContainerElement);
-
-			if (first || (portalBuildData != null)) {
-				Element labelElement = Dom4JUtil.getNewElement(
-					"label", null, "+");
-
-				labelElement.addAttribute("for", commit.getSHA());
-
-				Element inputElement = Dom4JUtil.getNewElement("input", null);
-
-				inputElement.addAttribute("data-toggle", "toggle");
-				inputElement.addAttribute("id", commit.getSHA());
-				inputElement.addAttribute("name", commit.getSHA());
-				inputElement.addAttribute("type", "checkbox");
-
-				Dom4JUtil.getNewElement(
-					"td", tableRowElement, labelElement, inputElement);
-			}
-			else {
-				Dom4JUtil.getNewElement("td", tableRowElement, "");
-			}
-
-			String abbreviatedSHA = commit.getAbbreviatedSHA();
-
-			if (first) {
-				abbreviatedSHA = "*" + abbreviatedSHA;
-			}
-
-			String gitHubCommitURL = _workspaceGitRepository.getGitHubURL();
-
-			gitHubCommitURL = gitHubCommitURL.replaceAll("/tree/.+", "");
-
-			gitHubCommitURL += "/commit/" + commit.getSHA();
-
-			Dom4JUtil.getNewElement(
-				"td", tableRowElement,
-				Dom4JUtil.getNewAnchorElement(gitHubCommitURL, abbreviatedSHA));
-
-			Dom4JUtil.getNewElement(
-				"td", tableRowElement,
-				StringEscapeUtils.escapeXml(commit.getMessage()));
-
-			if (previousCommit == null) {
-				previousCommit = commit;
-
-				previousCommitCount++;
-
-				Dom4JUtil.getNewElement("td", tableRowElement, "");
-			}
-			else if (portalBuildData == null) {
-				previousCommitCount++;
-
-				Dom4JUtil.getNewElement("td", tableRowElement, "");
-			}
-			else {
-				String gitHubCommitDiffURL =
-					_workspaceGitRepository.getGitHubURL();
-
-				gitHubCommitDiffURL = gitHubCommitDiffURL.replaceAll(
-					"/tree/.+", "");
-
-				gitHubCommitDiffURL = JenkinsResultsParserUtil.combine(
-					gitHubCommitDiffURL, "/compare/", commit.getSHA(), "...",
-					previousCommit.getSHA());
-
-				String gitHubCommitDiffString =
-					JenkinsResultsParserUtil.combine(
-						commit.getAbbreviatedSHA(), "...",
-						previousCommit.getAbbreviatedSHA());
-
-				String commitCountString = JenkinsResultsParserUtil.combine(
-					"(", String.valueOf(previousCommitCount), " commits)");
-
-				if (previousCommitCount == 1) {
-					commitCountString = JenkinsResultsParserUtil.combine(
-						"(", String.valueOf(previousCommitCount), " commit)");
+				for (int i = 1; i < commits.size(); i++) {
+					Dom4JUtil.addToElement(
+						groupedCommitsElement,
+						getGroupedCommitsRowElement(commits.get(i)));
 				}
-
-				Dom4JUtil.getNewElement(
-					"td", tableRowElement,
-					Dom4JUtil.getNewAnchorElement(
-						gitHubCommitDiffURL, gitHubCommitDiffString),
-					Dom4JUtil.getNewElement("span", null, commitCountString));
-
-				previousCommit = commit;
-
-				previousCommitCount = 1;
 			}
-
-			if (portalBuildData == null) {
-				Dom4JUtil.getNewElement("td", tableRowElement, "");
-				Dom4JUtil.getNewElement("td", tableRowElement, "");
-				Dom4JUtil.getNewElement("td", tableRowElement, "");
-				Dom4JUtil.getNewElement("td", tableRowElement, "");
-
-				if (first) {
-					tableRowContainerElement = null;
-				}
-
-				continue;
-			}
-
-			Dom4JUtil.getNewElement(
-				"td", tableRowElement,
-				Dom4JUtil.getNewAnchorElement(
-					portalBuildData.getBuildURL(), "build"));
-
-			Dom4JUtil.getNewElement(
-				"td", tableRowElement,
-				portalBuildData.getBuildDurationString());
-
-			Dom4JUtil.getNewElement(
-				"td", tableRowElement, portalBuildData.getBuildStatus());
-
-			Dom4JUtil.getNewElement(
-				"td", tableRowElement, portalBuildData.getBuildResult());
-
-			tableRowContainerElement = null;
 		}
 
 		return tableBodyElement;
@@ -416,20 +463,6 @@ public class GitBisectToolBuild extends TopLevelBuild {
 			getJenkinsReportTableBodyElement());
 
 		return topLevelTableElement;
-	}
-
-	private PortalBuildData _getPortalBuildDataBySHA(
-		String sha, List<BuildData> downstreamBuildDataList) {
-
-		for (BuildData buildData : downstreamBuildDataList) {
-			PortalBuildData portalBuildData = (PortalBuildData)buildData;
-
-			if (sha.equals(portalBuildData.getPortalBranchSHA())) {
-				return portalBuildData;
-			}
-		}
-
-		return null;
 	}
 
 	private static final String _JQUERY_URL =

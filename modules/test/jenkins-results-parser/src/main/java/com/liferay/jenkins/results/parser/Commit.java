@@ -26,6 +26,8 @@ public interface Commit {
 
 	public String getAbbreviatedSHA();
 
+	public String getGitHubCommitDiffURL(Commit commit);
+
 	public String getGitHubCommitURL();
 
 	public String getMessage();

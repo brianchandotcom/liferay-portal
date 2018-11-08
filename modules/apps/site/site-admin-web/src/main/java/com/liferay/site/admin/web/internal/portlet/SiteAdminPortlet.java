@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.exception.RequiredGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -870,6 +871,16 @@ public class SiteAdminPortlet extends MVCPortlet {
 		UnicodeProperties formTypeSettingsProperties =
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");
+
+		if (GetterUtil.getBoolean(
+				formTypeSettingsProperties.getProperty("inheritLocales"))) {
+
+			formTypeSettingsProperties.setProperty(
+				PropsKeys.LOCALES,
+				StringUtil.merge(
+					LocaleUtil.toLanguageIds(
+						LanguageUtil.getAvailableLocales())));
+		}
 
 		typeSettingsProperties.putAll(formTypeSettingsProperties);
 

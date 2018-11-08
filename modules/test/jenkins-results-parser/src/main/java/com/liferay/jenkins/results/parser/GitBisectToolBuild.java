@@ -232,10 +232,10 @@ public class GitBisectToolBuild extends TopLevelBuild {
 				Dom4JUtil.getNewElement("td", null, shaText),
 				Dom4JUtil.getNewElement("td", null, commit.getMessage()));
 
-			BuildData buildData = _getBuildDataBySHA(
+			PortalBuildData portalBuildData = _getPortalBuildDataBySHA(
 				commit.getSHA(), downstreamBuildDataList);
 
-			if (buildData == null) {
+			if (portalBuildData == null) {
 				Dom4JUtil.getNewElement("td", tableRowElement, "");
 				Dom4JUtil.getNewElement("td", tableRowElement, "");
 				Dom4JUtil.getNewElement("td", tableRowElement, "");
@@ -248,19 +248,20 @@ public class GitBisectToolBuild extends TopLevelBuild {
 			Dom4JUtil.getNewElement(
 				"td", tableRowElement,
 				Dom4JUtil.getNewAnchorElement(
-					buildData.getBuildURL(), "build"));
+					portalBuildData.getBuildURL(), "build"));
 
 			Dom4JUtil.getNewElement(
-				"td", tableRowElement, buildData.getStartTimeString());
+				"td", tableRowElement, portalBuildData.getStartTimeString());
 
 			Dom4JUtil.getNewElement(
-				"td", tableRowElement, buildData.getBuildDurationString());
+				"td", tableRowElement,
+				portalBuildData.getBuildDurationString());
 
 			Dom4JUtil.getNewElement(
-				"td", tableRowElement, buildData.getBuildStatus());
+				"td", tableRowElement, portalBuildData.getBuildStatus());
 
 			Dom4JUtil.getNewElement(
-				"td", tableRowElement, buildData.getBuildResult());
+				"td", tableRowElement, portalBuildData.getBuildResult());
 		}
 
 		return tableBodyElement;
@@ -318,7 +319,7 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		return topLevelTableElement;
 	}
 
-	private BuildData _getBuildDataBySHA(
+	private PortalBuildData _getPortalBuildDataBySHA(
 		String sha, List<BuildData> downstreamBuildDataList) {
 
 		for (BuildData buildData : downstreamBuildDataList) {

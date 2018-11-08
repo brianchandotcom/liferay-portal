@@ -68,18 +68,11 @@ public class ServiceBeanAutoProxyCreator
 	protected Object[] getAdvicesAndAdvisorsForBean(
 		Class beanClass, String beanName, TargetSource targetSource) {
 
-		Object[] advices = DO_NOT_PROXY;
-
 		if (_beanMatcher.match(beanClass, beanName)) {
-			advices = super.getAdvicesAndAdvisorsForBean(
-				beanClass, beanName, targetSource);
-
-			if (advices == DO_NOT_PROXY) {
-				advices = PROXY_WITHOUT_ADDITIONAL_INTERCEPTORS;
-			}
+			return PROXY_WITHOUT_ADDITIONAL_INTERCEPTORS;
 		}
 
-		return advices;
+		return DO_NOT_PROXY;
 	}
 
 	private AopProxyFactory _aopProxyFactory;

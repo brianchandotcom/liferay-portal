@@ -88,6 +88,12 @@ public class KaleoTaskInstanceTokenKeywordQueryContributor
 			return;
 		}
 
+		SearchContext searchContext =
+			keywordQueryContributorHelper.getSearchContext();
+
+		searchContext.setAttribute(
+			KaleoTaskInstanceTokenField.TASK_NAME, taskName);
+
 		queryHelper.addSearchTerm(
 			booleanQuery, keywordQueryContributorHelper.getSearchContext(),
 			KaleoTaskInstanceTokenField.TASK_NAME, false);

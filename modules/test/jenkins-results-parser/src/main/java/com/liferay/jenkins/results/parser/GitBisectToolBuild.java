@@ -104,31 +104,107 @@ public class GitBisectToolBuild extends TopLevelBuild {
 	}
 
 	protected Element getJenkinsReportHeadElement() {
-		Element headElement = Dom4JUtil.getNewElement("head");
+		return Dom4JUtil.getNewElement(
+			"head", null, getJenkinsReportHeadJQueryElement(),
+			getJenkinsReportHeadScriptElement(),
+			getJenkinsReportHeadStyleElement());
+	}
+
+	protected Element getJenkinsReportHeadJQueryElement() {
+		Element jqueryElement = Dom4JUtil.getNewElement("script");
+
+		jqueryElement.addAttribute("src", _JQUERY_URL);
+		jqueryElement.addAttribute("type", "text/javascript");
+		jqueryElement.addText("");
+
+		return jqueryElement;
+	}
+
+	protected Element getJenkinsReportHeadScriptElement() {
+		Element scriptElement = Dom4JUtil.getNewElement("script");
+
+		scriptElement.addAttribute("type", "text/javascript");
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("caption, td, th {\n");
-		sb.append("padding: .5em;\n");
-		sb.append("text-align: left;\n");
-		sb.append("}\n\n");
+		sb.append("$(document).ready(function() {\n");
+		sb.append("$('[data-toggle=\"toggle\"]').change(function(){\n");
+		sb.append("$(this).parents().next('.hidden-row').toggle();\n");
+		sb.append("var label = $(this).parent('td').find('label');\n");
+		sb.append("var text = label.text();\n");
+		sb.append("if (text == '+') { text = '-' }\n");
+		sb.append("else { text = '+' }\n");
+		sb.append("label.text(text);\n");
+		sb.append("});\n");
+		sb.append("});\n");
 
-		sb.append("td {\n");
-		sb.append("max-width:500px;\n");
-		sb.append("overflow: hidden;\n");
-		sb.append("text-overflow:ellipsis;\n");
-		sb.append("white-space: nowrap;\n");
-		sb.append("}\n\n");
+		scriptElement.addText(sb.toString());
+
+		return scriptElement;
+	}
+
+	protected Element getJenkinsReportHeadStyleElement() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("body {\n");
+		sb.append("font-family: sans-serif;\n");
+		sb.append("}\n");
 
 		sb.append("canvas {\n");
 		sb.append("display: block;\n");
 		sb.append("height: 300px;\n");
 		sb.append("width: 1900px;\n");
-		sb.append("}");
+		sb.append("}\n");
 
-		Dom4JUtil.getNewElement("style", headElement, sb.toString());
+		sb.append("table {\n");
+		sb.append("width: 1200px;\n");
+		sb.append("}\n");
 
-		return headElement;
+		sb.append("table > caption, td, th {\n");
+		sb.append("padding: 3px;\n");
+		sb.append("text-align: left;\n");
+		sb.append("}\n");
+
+		sb.append("th {\n");
+		sb.append("background-color: #CCCCCC;\n");
+		sb.append("font-weight: bold;\n");
+		sb.append("}\n");
+
+		sb.append("td {\n");
+		sb.append("background-color: #EEEEEE;\n");
+		sb.append("max-width: 250px;\n");
+		sb.append("overflow: hidden;\n");
+		sb.append("text-overflow: ellipsis;\n");
+		sb.append("white-space: nowrap;\n");
+		sb.append("}\n");
+
+		sb.append("td:nth-child(1) {\n");
+		sb.append("text-align: center;\n");
+		sb.append("width: 20px;\n");
+		sb.append("}\n");
+
+		sb.append("td:nth-child(3) {\n");
+		sb.append("width: 250px;\n");
+		sb.append("}\n");
+
+		sb.append(".hidden-row {\n");
+		sb.append("display: none;\n");
+		sb.append("}\n");
+
+		sb.append(".result-row tr td {\n");
+		sb.append("background-color: #DDDDDD;\n");
+		sb.append("}\n");
+
+		sb.append(".result-row tr td label {\n");
+		sb.append("cursor: pointer;\n");
+		sb.append("display: block;\n");
+		sb.append("}\n");
+
+		sb.append("[data-toggle=\"toggle\"] {\n");
+		sb.append("display: none;\n");
+		sb.append("}\n");
+
+		return Dom4JUtil.getNewElement("style", null, sb.toString());
 	}
 
 	protected Element getJenkinsReportTableBodyElement(
@@ -255,6 +331,9 @@ public class GitBisectToolBuild extends TopLevelBuild {
 
 		return null;
 	}
+
+	private static final String _JQUERY_URL =
+		"https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js";
 
 	private List<BuildData> _downstreamBuildDataList;
 	private WorkspaceGitRepository _workspaceGitRepository;

@@ -1,0 +1,73 @@
+diff --git a/biz/aQute/resolve/ResolverValidator.java b/biz/aQute/resolve/ResolverValidator.java
+index cad653c..3a44b8e 100644
+--- a/biz/aQute/resolve/ResolverValidator.java
++++ b/biz/aQute/resolve/ResolverValidator.java
+@@ -39,6 +39,8 @@ import aQute.lib.strings.Strings;
+ public class ResolverValidator extends Processor {
+ 	private final static Logger	logger			= LoggerFactory.getLogger(ResolverValidator.class);
+ 
++	private BndrunResolveContext _bndrunResolveContext;
++
+ 	LogReporter					reporter		= new LogReporter(this);
+ 	Resolver					resolver		= new BndResolver(reporter);
+ 	List<URI>					repositories	= new ArrayList<>();
+@@ -124,13 +126,34 @@ public class ResolverValidator extends Processor {
+ 		return resources;
+ 	}
+ 
+-	private BndrunResolveContext getResolveContext() throws Exception {
+-		BndrunResolveContext context = new BndrunResolveContext(this, null, this, reporter) {
+-			@Override
+-			void loadFramework(ResourceBuilder systemBuilder) throws Exception {
+-				systemBuilder.addCapabilities(system.getCapabilities(null));
+-			}
+-		};
++	private BndrunResolveContext getResolveContext(Repository repository)
++		throws Exception {
++
++		BndrunResolveContext context = _bndrunResolveContext;
++
++		if (context == null) {
++			context = new BndrunResolveContext(this, null, this, reporter) {
++
++				@Override
++				void loadFramework(ResourceBuilder systemBuilder)
++					throws Exception {
++
++					systemBuilder.addCapabilities(
++						system.getCapabilities(null));
++				}
++
++			};
++
++			context.addRepository(repository);
++			context.init();
++
++			_bndrunResolveContext = context;
++		}
++		else {
++			context.setInputResource(context.constructInputRequirements());
++		}
++
++
+ 		return context;
+ 	}
+ 
+@@ -145,10 +168,7 @@ public class ResolverValidator extends Processor {
+ 		Requirement identity = getIdentity(resource);
+ 		setProperty("-runrequires", ResourceUtils.toRequireCapability(identity));
+ 
+-		BndrunResolveContext context = getResolveContext();
+-
+-		context.addRepository(repository);
+-		context.init();
++		BndrunResolveContext context = getResolveContext(repository);
+ 
+ 		resolution.resource = resource;
+ 
+@@ -211,3 +231,4 @@ public class ResolverValidator extends Processor {
+ 		return resolution;
+ 	}
+ }
++/* @generated */
+\ No newline at end of file

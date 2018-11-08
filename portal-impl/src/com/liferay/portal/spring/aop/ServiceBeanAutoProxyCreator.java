@@ -16,12 +16,12 @@ package com.liferay.portal.spring.aop;
 
 import com.liferay.portal.kernel.spring.aop.AopProxyFactory;
 
-import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.aop.framework.AopConfigException;
 import org.springframework.aop.framework.AopProxy;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator;
+import org.springframework.aop.target.SingletonTargetSource;
 
 /**
  * @author Shuyang Zhou
@@ -71,15 +71,18 @@ public class ServiceBeanAutoProxyCreator
 	}
 
 	@Override
-	@SuppressWarnings("rawtypes")
-	protected Object[] getAdvicesAndAdvisorsForBean(
-		Class beanClass, String beanName, TargetSource targetSource) {
+	protected Object wrapIfNecessary(
+		Object bean, String beanName, Object cacheKey) {
+
+		Class<?> beanClass = bean.getClass();
 
 		if (_beanMatcher.match(beanClass, beanName)) {
-			return PROXY_WITHOUT_ADDITIONAL_INTERCEPTORS;
+			return createProxy(
+				beanClass, beanName, new Object[0],
+				new SingletonTargetSource(bean));
 		}
 
-		return DO_NOT_PROXY;
+		return bean;
 	}
 
 	private AopProxyFactory _aopProxyFactory;

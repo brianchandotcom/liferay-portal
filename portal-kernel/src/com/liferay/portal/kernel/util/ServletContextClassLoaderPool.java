@@ -43,14 +43,6 @@ public class ServletContextClassLoaderPool {
 		_contextNames.put(classLoader, contextName);
 	}
 
-	public static void unregister(ClassLoader classLoader) {
-		String contextName = _contextNames.remove(classLoader);
-
-		if (contextName != null) {
-			_classLoaders.remove(contextName);
-		}
-	}
-
 	public static void unregister(String contextName) {
 		ClassLoader classLoader = _classLoaders.remove(contextName);
 

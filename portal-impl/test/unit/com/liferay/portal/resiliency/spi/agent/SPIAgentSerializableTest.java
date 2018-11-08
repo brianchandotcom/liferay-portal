@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.DistributedRegistry;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.MatchType;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -98,6 +99,8 @@ public class SPIAgentSerializableTest {
 		_classLoader = new URLClassLoader(
 			new URL[0], currentThread.getContextClassLoader());
 
+		ServletContextClassLoaderPool.register(
+			_SERVLET_CONTEXT_NAME, _classLoader);
 		ClassLoaderPool.register(_SERVLET_CONTEXT_NAME, _classLoader);
 
 		ClassLoaderPool.unregister(ClassLoaderPool.class.getClassLoader());
@@ -630,11 +633,18 @@ public class SPIAgentSerializableTest {
 		ClassLoader oldClassLoader = ClassLoaderPool.getClassLoader(
 			_SERVLET_CONTEXT_NAME);
 
-		ClassLoaderPool.register(_SERVLET_CONTEXT_NAME, incapableClassLoader);
+		ServletContextClassLoaderPool.unregister(_SERVLET_CONTEXT_NAME);
+		ClassLoaderPool.unregister(_SERVLET_CONTEXT_NAME);
 
 		byte[] receiptData = new byte[8];
 
 		BigEndianCodec.putLong(receiptData, 0, actualReceipt);
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		currentThread.setContextClassLoader(incapableClassLoader);
 
 		try {
 			SPIAgentSerializable.readFrom(
@@ -650,6 +660,10 @@ public class SPIAgentSerializableTest {
 		}
 		finally {
 			ClassLoaderPool.register(_SERVLET_CONTEXT_NAME, oldClassLoader);
+			ServletContextClassLoaderPool.register(
+				_SERVLET_CONTEXT_NAME, oldClassLoader);
+
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 
 		// Successfully receive

@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.internal.servlet.MainServlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
+import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.test.rule.ArquillianUtil;
 import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
@@ -69,6 +70,13 @@ public class MainServletTestCallback extends BaseTestCallback<Void, Void> {
 			final MockServletContext mockServletContext =
 				new AutoDeployMockServletContext(
 					new FileSystemResourceLoader());
+
+			mockServletContext.setServletContextName(StringPool.BLANK);
+
+			Thread currentThread = Thread.currentThread();
+
+			ServletContextClassLoaderPool.register(
+				StringPool.BLANK, currentThread.getContextClassLoader());
 
 			PortalLifecycleUtil.register(
 				new PortalLifecycle() {

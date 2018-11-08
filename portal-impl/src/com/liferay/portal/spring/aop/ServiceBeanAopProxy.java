@@ -17,11 +17,11 @@ package com.liferay.portal.spring.aop;
 import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.spring.aop.AopProxy;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.transaction.TransactionsUtil;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-import com.liferay.portal.transaction.TransactionsUtil;
 import org.aopalliance.intercept.MethodInterceptor;
 
 /**

@@ -811,6 +811,8 @@
 	</command>
 
 	<command name="PublishWCIncludingTextsAndImages" priority="3">
+		<description message="This is a use case for LPS-80367." />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -900,6 +902,20 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Web Content Display" />
 		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="ProductMenu#gotoLiveSite" />
+
+		<var name="key_portletTitleName" value="Web Content Display" />
+
+		<execute function="AssertElementPresent" locator1="Portlet#SPECIFIC_TITLE" />
+
+		<execute macro="Navigator#gotoStagedView" />
+
+		<execute function="AssertElementPresent" locator1="Portlet#SPECIFIC_TITLE" />
 
 		<execute macro="WebContentDisplayPortlet#selectWebContent">
 			<var name="portletName" value="Web Content Display" />

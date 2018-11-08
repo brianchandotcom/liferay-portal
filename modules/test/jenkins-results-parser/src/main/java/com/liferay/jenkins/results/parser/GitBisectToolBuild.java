@@ -210,14 +210,18 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		List<Commit> historicalCommits =
 			_workspaceGitRepository.getHistoricalCommits();
 
-		boolean first = true;
-
 		Element tableRowContainerElement = null;
 
 		Commit previousCommit = null;
 		Integer previousCommitCount = 0;
 
 		for (Commit commit : historicalCommits) {
+			boolean first = false;
+
+			if (historicalCommits.indexOf(commit) == 0) {
+				first = true;
+			}
+
 			PortalBuildData portalBuildData = _getPortalBuildDataBySHA(
 				commit.getSHA(), _downstreamBuildDataList);
 
@@ -331,8 +335,6 @@ public class GitBisectToolBuild extends TopLevelBuild {
 				Dom4JUtil.getNewElement("td", tableRowElement, "");
 
 				if (first) {
-					first = false;
-
 					tableRowContainerElement = null;
 				}
 
@@ -353,8 +355,6 @@ public class GitBisectToolBuild extends TopLevelBuild {
 
 			Dom4JUtil.getNewElement(
 				"td", tableRowElement, portalBuildData.getBuildResult());
-
-			first = false;
 
 			tableRowContainerElement = null;
 		}

@@ -1549,10 +1549,10 @@ public class PortletURLImpl
 						_request, plid, _portlet.getPortletId());
 
 				if (privateRenderParameterMap == null) {
-					mutableRenderParameterMap = new HashMap<>();
+					mutableRenderParameterMap = new LinkedHashMap<>();
 				}
 				else {
-					mutableRenderParameterMap = new HashMap<>(
+					mutableRenderParameterMap = new LinkedHashMap<>(
 						privateRenderParameterMap);
 				}
 

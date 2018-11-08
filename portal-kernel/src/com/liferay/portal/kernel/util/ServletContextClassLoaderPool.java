@@ -22,38 +22,40 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ServletContextClassLoaderPool {
 
-	public static ClassLoader getClassLoader(String contextName) {
-		if (contextName == null) {
+	public static ClassLoader getClassLoader(String servletContextName) {
+		if (servletContextName == null) {
 			return null;
 		}
 
-		return _classLoaders.get(contextName);
+		return _classLoaders.get(servletContextName);
 	}
 
-	public static String getContextName(ClassLoader classLoader) {
+	public static String getServletContextName(ClassLoader classLoader) {
 		if (classLoader == null) {
 			return null;
 		}
 
-		return _contextNames.get(classLoader);
+		return _servletContextNames.get(classLoader);
 	}
 
-	public static void register(String contextName, ClassLoader classLoader) {
-		_classLoaders.put(contextName, classLoader);
-		_contextNames.put(classLoader, contextName);
+	public static void register(
+		String servletContextName, ClassLoader classLoader) {
+
+		_classLoaders.put(servletContextName, classLoader);
+		_servletContextNames.put(classLoader, servletContextName);
 	}
 
-	public static void unregister(String contextName) {
-		ClassLoader classLoader = _classLoaders.remove(contextName);
+	public static void unregister(String servletContextName) {
+		ClassLoader classLoader = _classLoaders.remove(servletContextName);
 
 		if (classLoader != null) {
-			_contextNames.remove(classLoader);
+			_servletContextNames.remove(classLoader);
 		}
 	}
 
 	private static final Map<String, ClassLoader> _classLoaders =
 		new ConcurrentHashMap<>();
-	private static final Map<ClassLoader, String> _contextNames =
+	private static final Map<ClassLoader, String> _servletContextNames =
 		new ConcurrentHashMap<>();
 
 }

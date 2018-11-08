@@ -16,6 +16,8 @@ package com.liferay.jenkins.results.parser;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
@@ -218,22 +220,67 @@ public class GitBisectToolBuild extends TopLevelBuild {
 
 		boolean first = true;
 
+		Element tableRowContainerElement = null;
+
 		for (Commit commit : historicalCommits) {
-			String shaText = commit.getSHA();
+			PortalBuildData portalBuildData = _getPortalBuildDataBySHA(
+				commit.getSHA(), downstreamBuildDataList);
 
-			if (first) {
-				shaText = "*" + shaText;
+			if (first || (portalBuildData != null)) {
+				tableRowContainerElement = Dom4JUtil.getNewElement(
+					"tbody", tableBodyElement);
 
-				first = false;
+				tableRowContainerElement.addAttribute("class", "result-row");
+			}
+			else if (tableRowContainerElement == null) {
+				tableRowContainerElement = Dom4JUtil.getNewElement(
+					"tbody", tableBodyElement);
+
+				tableRowContainerElement.addAttribute("class", "hidden-row");
 			}
 
 			Element tableRowElement = Dom4JUtil.getNewElement(
-				"tr", tableBodyElement,
-				Dom4JUtil.getNewElement("td", null, shaText),
-				Dom4JUtil.getNewElement("td", null, commit.getMessage()));
+				"tr", tableRowContainerElement);
 
-			PortalBuildData portalBuildData = _getPortalBuildDataBySHA(
-				commit.getSHA(), downstreamBuildDataList);
+			if (first || (portalBuildData != null)) {
+				Element labelElement = Dom4JUtil.getNewElement(
+					"label", null, "+");
+
+				labelElement.addAttribute("for", commit.getSHA());
+
+				Element inputElement = Dom4JUtil.getNewElement("input", null);
+
+				inputElement.addAttribute("data-toggle", "toggle");
+				inputElement.addAttribute("id", commit.getSHA());
+				inputElement.addAttribute("name", commit.getSHA());
+				inputElement.addAttribute("type", "checkbox");
+
+				Dom4JUtil.getNewElement(
+					"td", tableRowElement, labelElement, inputElement);
+			}
+			else {
+				Dom4JUtil.getNewElement("td", tableRowElement, "");
+			}
+
+			String abbreviatedSHA = commit.getAbbreviatedSHA();
+
+			if (first) {
+				abbreviatedSHA = "*" + abbreviatedSHA;
+			}
+
+			String gitHubCommitURL = workspaceGitRepository.getGitHubURL();
+
+			gitHubCommitURL = gitHubCommitURL.replaceAll("/tree/.+", "");
+
+			gitHubCommitURL += "/commit/" + commit.getSHA();
+
+			Dom4JUtil.getNewElement(
+				"td", tableRowElement,
+				Dom4JUtil.getNewAnchorElement(gitHubCommitURL, abbreviatedSHA));
+
+			Dom4JUtil.getNewElement(
+				"td", tableRowElement,
+				StringEscapeUtils.escapeXml(commit.getMessage()));
 
 			if (portalBuildData == null) {
 				Dom4JUtil.getNewElement("td", tableRowElement, "");
@@ -241,6 +288,12 @@ public class GitBisectToolBuild extends TopLevelBuild {
 				Dom4JUtil.getNewElement("td", tableRowElement, "");
 				Dom4JUtil.getNewElement("td", tableRowElement, "");
 				Dom4JUtil.getNewElement("td", tableRowElement, "");
+
+				if (first) {
+					first = false;
+
+					tableRowContainerElement = null;
+				}
 
 				continue;
 			}
@@ -262,6 +315,10 @@ public class GitBisectToolBuild extends TopLevelBuild {
 
 			Dom4JUtil.getNewElement(
 				"td", tableRowElement, portalBuildData.getBuildResult());
+
+			first = false;
+
+			tableRowContainerElement = null;
 		}
 
 		return tableBodyElement;
@@ -269,9 +326,13 @@ public class GitBisectToolBuild extends TopLevelBuild {
 
 	@Override
 	protected Element getJenkinsReportTableColumnHeadersElement() {
-		Element commitElement = Dom4JUtil.getNewElement("th", null, "Commit");
+		Element toggleElement = Dom4JUtil.getNewElement("th", null, "");
 
-		Element shaElement = Dom4JUtil.getNewElement("th", null, "SHA");
+		Element commitElement = Dom4JUtil.getNewElement(
+			"th", null, "Commit SHA");
+
+		Element shaElement = Dom4JUtil.getNewElement(
+			"th", null, "Commit Message");
 
 		Element buildElement = Dom4JUtil.getNewElement("th", null, "Build");
 
@@ -288,8 +349,9 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		Element tableColumnHeaderElement = Dom4JUtil.getNewElement("tr");
 
 		Dom4JUtil.addToElement(
-			tableColumnHeaderElement, commitElement, shaElement, buildElement,
-			startTimeElement, buildTimeElement, statusElement, resultElement);
+			tableColumnHeaderElement, toggleElement, commitElement, shaElement,
+			buildElement, startTimeElement, buildTimeElement, statusElement,
+			resultElement);
 
 		return tableColumnHeaderElement;
 	}

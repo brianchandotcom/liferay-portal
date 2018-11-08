@@ -1335,6 +1335,11 @@
 	<command name="AddWebContentWithPortletURL" priority="5">
 		<description message="This is a use case for LPS-70386." />
 
+		<execute macro="JSONLayout#addPublicLayout">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Site Page Name" />
+		</execute>
+
 		<execute macro="WebContent#openWebContentAdmin">
 			<var name="siteURLKey" value="test-site-name" />
 		</execute>
@@ -1348,7 +1353,7 @@
 		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="AlloyEditor#addSourceContent">
-			<var name="content"><![CDATA[<p><span><a href="${portalURL}/web/guest/home/-/testportlet">text</a></span></p>]]></var>
+			<var name="content"><![CDATA[<p><span><a href="${portalURL}/web/test-site-name/site-page-name/-/testportlet">text</a></span></p>]]></var>
 		</execute>
 
 		<execute macro="PortletEntry#publish" />
@@ -1357,12 +1362,22 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Test Site Name" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#selectWebContent">
 			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Test Site Name" />
 		</execute>
 
 		<execute function="Click" locator1="WCD#WEB_CONTENT_TEXT_LINK_URL">
@@ -1922,10 +1937,6 @@
 
 	<command name="ImportAndUseGlobalStructureAndTemplate" priority="5">
 		<property name="testray.component.names" value="Training" />
-
-		<execute macro="JSONGroup#addGroup">
-			<var name="groupName" value="Test Site Name" />
-		</execute>
 
 		<execute macro="WebContent#openWebContentAdmin">
 			<var name="siteURLKey" value="global" />

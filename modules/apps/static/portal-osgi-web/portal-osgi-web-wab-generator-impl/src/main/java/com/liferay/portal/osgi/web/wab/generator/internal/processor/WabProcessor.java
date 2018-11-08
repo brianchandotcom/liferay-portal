@@ -221,6 +221,8 @@ public class WabProcessor {
 		autoDeploymentContext.setFile(_file);
 
 		if (_file.isDirectory()) {
+			autoDeploymentContext.setDestDir(_file.getAbsolutePath());
+
 			return autoDeploymentContext;
 		}
 

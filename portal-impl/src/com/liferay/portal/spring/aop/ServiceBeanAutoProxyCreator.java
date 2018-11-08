@@ -14,6 +14,7 @@
 
 package com.liferay.portal.spring.aop;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.spring.aop.AopProxyFactory;
 
 import org.springframework.aop.framework.ProxyFactory;
@@ -62,8 +63,7 @@ public class ServiceBeanAutoProxyCreator
 
 		ProxyFactory proxyFactory = new ProxyFactory();
 
-		evaluateProxyInterfaces(beanClass, proxyFactory);
-
+		proxyFactory.setInterfaces(ReflectionUtil.getInterfaces(bean));
 		proxyFactory.setTargetSource(new SingletonTargetSource(bean));
 
 		proxyFactory.setAopProxyFactory(

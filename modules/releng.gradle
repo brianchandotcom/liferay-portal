@@ -69,6 +69,7 @@ task cleanVersionOverride
 task lockDependencyVersion
 task lockPrivateDependencyVersions
 task portalArtifactsJar(type: ShadowJar)
+task portalJavadoc(type: Javadoc)
 task portalSourcesJar(type: ShadowJar)
 task prepareMajorIncrement
 task syncGitRepoReleases
@@ -371,6 +372,43 @@ portalArtifactsJar {
 
 	doLast {
 		println "Created jar " + archivePath
+	}
+
+	onlyIf {
+		return file(".releng").exists()
+	}
+
+	outputs.upToDateWhen {
+		return false
+	}
+}
+
+portalJavadoc {
+	dependsOn portalSourcesJar
+
+	destinationDir = new File(buildDir, "releng/portalJavadoc")
+	options.addStringOption("Xdoclint:none", "-quiet")
+	options.encoding = "ISO-8859-1"
+	options.stylesheetFile = file("../tools/styles/javadoc.css")
+	source {
+		zipTree(portalSourcesJar.archivePath)
+	}
+	title = "Portal " + _getReleaseInfoVersion()
+
+	doFirst {
+		ConfigurationContainer configurationContainer = project.getConfigurations();
+
+		Configuration detachedConfiguration = configurationContainer.detachedConfiguration(_getPortalJavadocDependencies() as Dependency[])
+
+		detachedConfiguration.setTransitive(false)
+
+		detachedConfiguration.resolve()
+
+		classpath = fileTree(dir: portalArtifactsJar.archivePath) + detachedConfiguration
+	}
+
+	doLast {
+		println "Created Javadoc " + destinationDir
 	}
 
 	onlyIf {
@@ -696,6 +734,12 @@ prepareMajorIncrement {
 	}
 
 	group = "releng"
+}
+
+repositories {
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
 }
 
 syncGitRepoReleases {
@@ -1214,6 +1258,50 @@ private List<Dependency> _getPortalArtifactsDependencies() {
 		dependencies.add(dependencyHandler.create(files(dir)))
 
 		logger.lifecycle "Added {}", jarFile.name
+	}
+
+	return dependencies
+}
+
+private List<Dependency> _getPortalJavadocDependencies() {
+	List<String> dependencyNotations = new ArrayList<>()
+
+	FileTree libDependenciesFileTree = fileTree(dir: "../lib", include: "**/dependencies.properties")
+
+	libDependenciesFileTree.each {
+		File libDependencies ->
+
+		Properties properties = GUtil.loadProperties(libDependencies)
+
+		dependencyNotations.addAll(properties.values())
+	}
+
+	FileTree buildGradleFileTree = fileTree(dir: "apps/static", include: "**/build.gradle")
+
+	buildGradleFileTree.each {
+		File buildGradleFile ->
+
+		buildGradleFile.getText("UTF-8").eachLine {
+			String line ->
+
+			if (!line.startsWith("	compileOnly group:")) {
+				return
+			}
+
+			Map<String, String> map = evaluate("[" + line.substring(13, line.length()) + "]")
+
+			if (!map.group.startsWith("com.liferay") || !map.version.matches("[0-9.]*")) {
+				dependencyNotations.add(map.group + ":" + map.name + ":" + map.version)
+			}
+		}
+	}
+
+	List<Dependency> dependencies = new ArrayList<>()
+
+	for (String dependencyNotation : dependencyNotations) {
+		DependencyHandler dependencyHandler = project.getDependencies()
+
+		dependencies.add(dependencyHandler.create(dependencyNotation))
 	}
 
 	return dependencies

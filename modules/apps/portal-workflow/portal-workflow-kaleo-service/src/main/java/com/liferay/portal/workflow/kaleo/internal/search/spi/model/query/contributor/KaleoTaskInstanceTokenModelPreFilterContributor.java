@@ -288,58 +288,36 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 
 			BooleanFilter searchByRolesBooleanFilter = new BooleanFilter();
 
-			TermFilter rolesClassNameTermFilter = new TermFilter(
+			TermFilter rolesClassNameIdTermFilter = new TermFilter(
 				KaleoTaskInstanceTokenField.ASSIGNEE_CLASS_NAME_IDS,
 				String.valueOf(portal.getClassNameId(Role.class)));
 
 			searchByRolesBooleanFilter.add(
-				rolesClassNameTermFilter, BooleanClauseOccur.MUST);
+				rolesClassNameIdTermFilter, BooleanClauseOccur.MUST);
 
-			for (Long roleId : roleIds) {
-				searchByRolesBooleanFilter.add(
-					new TermFilter(
-						KaleoTaskInstanceTokenField.ASSIGNEE_CLASS_PKS,
-						String.valueOf(roleId)));
-			}
+			BooleanFilter innerSearchByRolesBooleanFilter = new BooleanFilter();
+
+			searchByRolesBooleanFilter.add(
+				innerSearchByRolesBooleanFilter, BooleanClauseOccur.MUST);
+
+			innerSearchByRolesBooleanFilter.add(
+				createRoleAssigneeClassPKBooleanFilter(roleIds));
 
 			if (!roleIdGroupIdsMap.isEmpty()) {
 				BooleanFilter roleIdGroupIdsMapBooleanFilter =
-					new BooleanFilter();
+					createRoleIdGroupIdsMapBooleanFilter(roleIdGroupIdsMap);
 
-				for (Map.Entry<Long, Set<Long>> entry :
-						roleIdGroupIdsMap.entrySet()) {
+				BooleanClauseOccur roleIdGroupIdsMapBooleanClauseOccur =
+					BooleanClauseOccur.SHOULD;
 
-					BooleanFilter roleIdGroupIdsBooleanFilter =
-						new BooleanFilter();
-
-					roleIdGroupIdsBooleanFilter.add(
-						new TermFilter(
-							KaleoTaskInstanceTokenField.ASSIGNEE_CLASS_PKS,
-							String.valueOf(entry.getKey())),
-						BooleanClauseOccur.MUST);
-
-					for (Long assigneeGroupId : entry.getValue()) {
-						roleIdGroupIdsBooleanFilter.add(
-							new TermFilter(
-								KaleoTaskInstanceTokenField.ASSIGNEE_GROUP_IDS,
-								String.valueOf(assigneeGroupId)));
-					}
-
-					roleIdGroupIdsMapBooleanFilter.add(
-						roleIdGroupIdsBooleanFilter, BooleanClauseOccur.SHOULD);
-
-					BooleanClauseOccur roleIdGroupIdsMapBooleanClauseOccur =
-						BooleanClauseOccur.SHOULD;
-
-					if (roleIds.isEmpty()) {
-						roleIdGroupIdsMapBooleanClauseOccur =
-							BooleanClauseOccur.MUST;
-					}
-
-					booleanFilter.add(
-						roleIdGroupIdsMapBooleanFilter,
-						roleIdGroupIdsMapBooleanClauseOccur);
+				if (roleIds.isEmpty()) {
+					roleIdGroupIdsMapBooleanClauseOccur =
+						BooleanClauseOccur.MUST;
 				}
+
+				innerSearchByRolesBooleanFilter.add(
+					roleIdGroupIdsMapBooleanFilter,
+					roleIdGroupIdsMapBooleanClauseOccur);
 			}
 
 			booleanFilter.add(
@@ -384,6 +362,54 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 		}
 
 		return false;
+	}
+
+	protected BooleanFilter createRoleAssigneeClassPKBooleanFilter(
+		List<Long> roleIds) {
+
+		BooleanFilter roleClassPKBooleanFilter = new BooleanFilter();
+
+		for (Long roleId : roleIds) {
+			roleClassPKBooleanFilter.add(
+				new TermFilter(
+					KaleoTaskInstanceTokenField.ASSIGNEE_CLASS_PKS,
+					String.valueOf(roleId)));
+		}
+
+		return roleClassPKBooleanFilter;
+	}
+
+	protected BooleanFilter createRoleIdGroupIdsMapBooleanFilter(
+		Map<Long, Set<Long>> roleIdGroupIdsMap) {
+
+		BooleanFilter roleIdGroupIdsMapBooleanFilter = new BooleanFilter();
+
+		for (Map.Entry<Long, Set<Long>> entry : roleIdGroupIdsMap.entrySet()) {
+			BooleanFilter roleIdGroupIdsBooleanFilter = new BooleanFilter();
+
+			roleIdGroupIdsBooleanFilter.add(
+				new TermFilter(
+					KaleoTaskInstanceTokenField.ASSIGNEE_CLASS_PKS,
+					String.valueOf(entry.getKey())),
+				BooleanClauseOccur.MUST);
+
+			BooleanFilter assigneeGroupIdsBooleanFilter = new BooleanFilter();
+
+			for (Long assigneeGroupId : entry.getValue()) {
+				assigneeGroupIdsBooleanFilter.add(
+					new TermFilter(
+						KaleoTaskInstanceTokenField.ASSIGNEE_GROUP_IDS,
+						String.valueOf(assigneeGroupId)));
+			}
+
+			roleIdGroupIdsBooleanFilter.add(
+				assigneeGroupIdsBooleanFilter, BooleanClauseOccur.MUST);
+
+			roleIdGroupIdsMapBooleanFilter.add(
+				roleIdGroupIdsBooleanFilter, BooleanClauseOccur.SHOULD);
+		}
+
+		return roleIdGroupIdsMapBooleanFilter;
 	}
 
 	protected Map<Long, Set<Long>> getRoleIdGroupIdsMap(

@@ -17,6 +17,7 @@ package com.liferay.portal.store.cmis.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
@@ -27,23 +28,29 @@ import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
-import com.liferay.portal.store.cmis.test.activator.configuration.ConfigurationAdminBundleActivator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.store.test.BaseStoreTestCase;
 
 import java.util.Calendar;
+import java.util.Dictionary;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
+
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Preston Crary
@@ -69,6 +76,30 @@ public class CMISStoreTest extends BaseStoreTestCase {
 			dlStoreImpl.equals(cmisStoreClassName));
 	}
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_configuration = _configurationAdmin.getConfiguration(
+			"com.liferay.portal.store.cmis.configuration." +
+				"CMISStoreConfiguration",
+			StringPool.QUESTION);
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("credentialsPassword", "test");
+		properties.put("credentialsUsername", "test");
+		properties.put(
+			"repositoryUrl",
+			"http://alfresco.liferay.org.es/alfresco/service/api/cmis");
+		properties.put("systemRootDir", "testStore");
+
+		ConfigurationTestUtil.saveConfiguration(_configuration, properties);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		ConfigurationTestUtil.deleteConfiguration(_configuration);
+	}
+
 	@Before
 	@Override
 	public void setUp() throws Exception {
@@ -87,24 +118,19 @@ public class CMISStoreTest extends BaseStoreTestCase {
 
 	protected User getCMISAdminUser() throws Exception {
 		User user = UserLocalServiceUtil.fetchUserByScreenName(
-			TestPropsValues.getCompanyId(),
-			ConfigurationAdminBundleActivator.CREDENTIALS_USERNAME);
+			TestPropsValues.getCompanyId(), "test");
 
 		if (user != null) {
 			return user;
 		}
 
-		String password =
-			ConfigurationAdminBundleActivator.CREDENTIALS_PASSWORD;
-		String emailAddress =
-			ConfigurationAdminBundleActivator.CREDENTIALS_USERNAME +
-				"@liferay.com";
+		String password = "test";
+		String emailAddress = "test@liferay.com";
 
 		user = UserLocalServiceUtil.addUser(
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), false,
-			password, password, false,
-			ConfigurationAdminBundleActivator.CREDENTIALS_USERNAME,
-			emailAddress, 0, StringPool.BLANK, LocaleUtil.getDefault(),
+			password, password, false, "test", emailAddress, 0,
+			StringPool.BLANK, LocaleUtil.getDefault(),
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			RandomTestUtil.randomString(), 0, 0, true, Calendar.JANUARY, 1,
 			1970, StringPool.BLANK, new long[] {repositoryId}, null, null, null,
@@ -122,6 +148,11 @@ public class CMISStoreTest extends BaseStoreTestCase {
 	protected Store getStore() {
 		return _store;
 	}
+
+	private static Configuration _configuration;
+
+	@Inject
+	private static ConfigurationAdmin _configurationAdmin;
 
 	@Inject(
 		filter = "store.type=com.liferay.portal.store.cmis.CMISStore",

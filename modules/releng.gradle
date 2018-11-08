@@ -70,6 +70,7 @@ task lockDependencyVersion
 task lockPrivateDependencyVersions
 task portalArtifactsJar(type: ShadowJar)
 task portalJavadoc(type: Javadoc)
+task portalJavadocJar(type: Jar)
 task portalSourcesJar(type: ShadowJar)
 task prepareMajorIncrement
 task syncGitRepoReleases
@@ -411,6 +412,28 @@ portalJavadoc {
 
 	doLast {
 		println "Created Javadoc " + destinationDir
+	}
+
+	onlyIf {
+		return file(".releng").exists()
+	}
+
+	outputs.upToDateWhen {
+		return false
+	}
+}
+
+portalJavadocJar {
+	dependsOn portalJavadoc
+
+	baseName = "portal"
+	classifier = "javadoc"
+	from portalJavadoc
+	includeEmptyDirs = false
+	version = _getReleaseInfoVersion()
+
+	doLast {
+		println "Created jar " + archivePath
 	}
 
 	onlyIf {

@@ -16,6 +16,8 @@ package com.liferay.portal.spring.aop;
 
 import com.liferay.portal.kernel.spring.aop.AopProxyFactory;
 
+import org.springframework.aop.Advisor;
+import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.aop.framework.AopConfigException;
 import org.springframework.aop.framework.AopProxy;
@@ -51,6 +53,43 @@ public class ServiceBeanAutoProxyCreator
 
 	public void setBeanMatcher(BeanMatcher beanMatcher) {
 		_beanMatcher = beanMatcher;
+	}
+
+	@Override
+	protected Object createProxy(
+		Class<?> beanClass, String beanName, Object[] specificInterceptors,
+		TargetSource targetSource) {
+
+		ProxyFactory proxyFactory = new ProxyFactory();
+
+		proxyFactory.copyFrom(this);
+
+		if (!proxyFactory.isProxyTargetClass()) {
+			if (shouldProxyTargetClass(beanClass, beanName)) {
+				proxyFactory.setProxyTargetClass(true);
+			}
+			else {
+				evaluateProxyInterfaces(beanClass, proxyFactory);
+			}
+		}
+
+		Advisor[] advisors = buildAdvisors(beanName, specificInterceptors);
+
+		for (Advisor advisor : advisors) {
+			proxyFactory.addAdvisor(advisor);
+		}
+
+		proxyFactory.setTargetSource(targetSource);
+
+		customizeProxyFactory(proxyFactory);
+
+		proxyFactory.setFrozen(isFrozen());
+
+		if (advisorsPreFiltered()) {
+			proxyFactory.setPreFiltered(true);
+		}
+
+		return proxyFactory.getProxy(getProxyClassLoader());
 	}
 
 	@Override

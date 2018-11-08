@@ -81,16 +81,10 @@ public class ServiceBeanAopProxy
 		return serviceBeanMethodInvocation.proceed();
 	}
 
-	public void setServiceBeanAopCacheManager(
-		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
-
-		_serviceBeanAopCacheManager = serviceBeanAopCacheManager;
-	}
-
 	private static final MethodInterceptor[] _emptyMethodInterceptors =
 		new MethodInterceptor[0];
 
 	private final AdvisedSupport _advisedSupport;
-	private volatile ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
+	private final ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
 
 }

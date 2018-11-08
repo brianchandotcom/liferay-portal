@@ -363,12 +363,8 @@ portalArtifactsJar {
 
 		configurations = [detachedConfiguration]
 
-		FileTree languagePropertiesFileTree = fileTree(dir: projectDir.parentFile, include: "/portal-impl/src/content/Language*.properties")
-
-		languagePropertiesFileTree.each {
-			File languagePropertiesFile ->
-
-			append("content/" + languagePropertiesFile.name)
+		fileTree(dir: projectDir.parentFile, include: "/portal-impl/src/content/Language*.properties").each {
+			append("content/" + it.name)
 		}
 	}
 
@@ -377,12 +373,7 @@ portalArtifactsJar {
 	}
 
 	onlyIf {
-		if (relengDir.exists()) {
-			return true
-		}
-		else {
-			return false
-		}
+		return file(".releng").exists()
 	}
 
 	outputs.upToDateWhen {

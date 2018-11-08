@@ -2001,11 +2001,11 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page" />
+			<var name="pageName" value="Web Content Staging Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
+			<var name="pageName" value="Web Content Staging Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 
@@ -2024,7 +2024,7 @@
 		<execute function="AssertElementNotPresent" locator1="Staging#STAGING_PUBLISH_TO_LIVE_BUTTON" />
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
+			<var name="pageName" value="Web Content Staging Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 
@@ -2033,7 +2033,7 @@
 		<execute macro="Staging#publishToLive" />
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
+			<var name="pageName" value="Web Content Staging Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 
@@ -2043,14 +2043,14 @@
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
+			<var name="pageName" value="Web Content Staging Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Staging#publishToLiveNowViaPortletPG" />
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Test Page" />
+			<var name="pageName" value="Web Content Staging Page" />
 			<var name="siteName" value="Remote Site" />
 		</execute>
 

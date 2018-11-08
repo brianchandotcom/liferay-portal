@@ -113,7 +113,7 @@ Liferay = window.Liferay || {};
 	Service.bind = function() {
 		var args = Array.prototype.slice.call(arguments, 0);
 
-		return function () {
+		return function() {
 			var newArgs = Array.prototype.slice.call(arguments, 0);
 
 			return Service.apply(Service, args.concat(newArgs));
@@ -142,7 +142,7 @@ Liferay = window.Liferay || {};
 		return [payload, ioConfig];
 	};
 
-	Service.parseIOConfig = function (args) {
+	Service.parseIOConfig = function(args) {
 		var instance = this;
 
 		var payload = args[0];
@@ -161,7 +161,7 @@ Liferay = window.Liferay || {};
 				callbackException = callbackSuccess;
 			}
 
-			ioConfig.complete = function (xhr) {
+			ioConfig.complete = function(xhr) {
 				var response = xhr.responseJSON;
 
 				if ((response !== null) && !response.hasOwnProperty('exception')) {
@@ -244,7 +244,7 @@ Liferay = window.Liferay || {};
 			}
 			else {
 				$(ioConfig.form).serializeArray().forEach(
-					function (item) {
+					function(item) {
 						ioConfig.data[item.name] = item.value;
 					}
 				);
@@ -272,7 +272,7 @@ Liferay = window.Liferay || {};
 
 				var method = {method: item};
 
-					args.push(method);
+				args.push(method);
 
 				return Service.apply(Service, args);
 			};

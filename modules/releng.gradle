@@ -166,10 +166,6 @@ cleanVersionOverride {
 	group = "releng"
 }
 
-configurations {
-	portalArtifacts
-}
-
 lockDependencyVersion {
 	description = "Replaces 'default' or project dependencies in all 'apps' and 'core' modules with a specific version, if compilation completes successfully. Required properties: '-PdependencyName', '-PdependencyVersion'."
 
@@ -350,12 +346,8 @@ lockPrivateDependencyVersions {
 }
 
 portalArtifactsJar {
-	File portalArtifactsDir = new File(buildDir, "portalArtifacts")
-	File relengDir = file(".releng")
-
 	baseName = "portal-artifacts"
 	classifier = null
-	configurations = [project.configurations.portalArtifacts]
 	exclude "*.*"
 	exclude "META-INF/**"
 	exclude "OSGI-INF/**"
@@ -363,6 +355,14 @@ portalArtifactsJar {
 	version = _getReleaseInfoVersion()
 
 	doFirst {
+		ConfigurationContainer configurationContainer = project.getConfigurations();
+
+		Configuration detachedConfiguration = configurationContainer.detachedConfiguration(_getPortalArtifactsDependencies() as Dependency[])
+
+		detachedConfiguration.resolve()
+
+		configurations = [detachedConfiguration]
+
 		FileTree languagePropertiesFileTree = fileTree(dir: projectDir.parentFile, include: "/portal-impl/src/content/Language*.properties")
 
 		languagePropertiesFileTree.each {
@@ -385,70 +385,8 @@ portalArtifactsJar {
 		}
 	}
 
-	if (gradle.startParameter.taskNames.contains("portalArtifactsJar")) {
-		File artifactsDir = new File(portalArtifactsDir, "artifacts")
-
-		delete artifactsDir
-
-		artifactsDir.mkdirs()
-
-		FileTree relengFileTree = fileTree(dir: relengDir, include: "**/*.properties")
-
-		relengFileTree.each {
-			File relengFile ->
-
-			Properties relengProperties = GUtil.loadProperties(relengFile)
-
-			String artifactURL = relengProperties.getProperty("artifact.url")
-
-			if (!artifactURL || !artifactURL.endsWith(".jar")) {
-				return
-			}
-
-			File cacheDir = new File(portalArtifactsDir, "cache")
-
-			if (!cacheDir.exists()) {
-				cacheDir.mkdirs()
-			}
-
-			project.download {
-				dest cacheDir
-				onlyIfModified true
-				quiet true
-				src artifactURL
-			}
-
-			File jarFile = new File(cacheDir, artifactURL.substring(artifactURL.lastIndexOf("/") + 1))
-
-			aQute.bnd.osgi.Jar jar = new aQute.bnd.osgi.Jar(jarFile)
-
-			Resource resource = jar.getResource("META-INF/MANIFEST.MF")
-
-			if (resource == null) {
-				return
-			}
-
-			Manifest manifest = new Manifest(resource.openInputStream())
-
-			Attributes attributes = manifest.getMainAttributes()
-
-			String exportPackageValue = attributes.getValue(Constants.EXPORT_PACKAGE)
-
-			if (exportPackageValue == null) {
-				return
-			}
-
-			File dir = new File(artifactsDir, jarFile.name[0 .. -5])
-
-			copy {
-				from zipTree(jarFile)
-				into dir
-			}
-
-			dependencies.portalArtifacts files(dir)
-
-			logger.lifecycle "Added {}", jarFile.name
-		}
+	outputs.upToDateWhen {
+		return false
 	}
 }
 
@@ -1221,12 +1159,94 @@ private String _getModuleTaskPrefix(File moduleDir) {
 	":" + moduleTaskPrefix.replace(File.separatorChar, ':' as char) + ":"
 }
 
+private List<Dependency> _getPortalArtifactsDependencies() {
+	File cacheDir = new File(buildDir, "releng/portalCache")
+	File portalArtifactsDir = new File(buildDir, "releng/portalArtifacts")
+
+	delete portalArtifactsDir
+
+	List<Dependency> dependencies = new ArrayList<>()
+
+	for (File artifactPropertiesFile : _getRelengPropertiesFiles(cacheDir)) {
+		Properties artifactProperties = GUtil.loadProperties(artifactPropertiesFile)
+
+		String artifactURL = artifactProperties.getProperty("artifact.url")
+
+		File jarFile = new File(cacheDir, artifactURL.substring(artifactURL.lastIndexOf("/") + 1))
+
+		File dir = new File(portalArtifactsDir, jarFile.name[0 .. -5])
+
+		copy {
+			from zipTree(jarFile)
+			into dir
+		}
+
+		DependencyHandler dependencyHandler = project.getDependencies()
+
+		dependencies.add(dependencyHandler.create(files(dir)))
+
+		logger.lifecycle "Added {}", jarFile.name
+	}
+
+	return dependencies
+}
+
 private String _getReleaseInfoVersion() {
 	File releaseInfoFile = file("../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
 
 	Matcher matcher = (releaseInfoFile.text =~ /private static final String _VERSION = "(.+)";/)
 
 	return matcher[0][1]
+}
+
+private List<File> _getRelengPropertiesFiles(File outputDir) {
+	List<File> artifactPropertiesFiles = new ArrayList<>()
+
+	if (!outputDir.exists()) {
+		outputDir.mkdirs()
+	}
+
+	fileTree(dir: file(".releng"), exclude: "**/test/**", include: "**/*.properties").each {
+		File relengFile ->
+
+		Properties relengProperties = GUtil.loadProperties(relengFile)
+
+		String artifactURL = relengProperties.getProperty("artifact.url")
+
+		if (!artifactURL || !artifactURL.endsWith(".jar")) {
+			return
+		}
+
+		project.download {
+			dest outputDir
+			onlyIfModified true
+			src artifactURL
+		}
+
+		File jarFile = new File(outputDir, artifactURL.substring(artifactURL.lastIndexOf("/") + 1))
+
+		aQute.bnd.osgi.Jar jar = new aQute.bnd.osgi.Jar(jarFile)
+
+		Resource resource = jar.getResource("META-INF/MANIFEST.MF")
+
+		if (resource == null) {
+			return
+		}
+
+		Manifest manifest = new Manifest(resource.openInputStream())
+
+		Attributes attributes = manifest.getMainAttributes()
+
+		String exportPackageValue = attributes.getValue(Constants.EXPORT_PACKAGE)
+
+		if (exportPackageValue == null) {
+			return
+		}
+
+		artifactPropertiesFiles.add(relengFile)
+	}
+
+	return artifactPropertiesFiles
 }
 
 private RevCommit _getRevCommit(String commitId) {

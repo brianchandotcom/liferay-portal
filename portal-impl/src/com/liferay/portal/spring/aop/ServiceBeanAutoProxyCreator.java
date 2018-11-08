@@ -16,10 +16,6 @@ package com.liferay.portal.spring.aop;
 
 import com.liferay.portal.kernel.spring.aop.AopProxyFactory;
 
-import org.springframework.aop.TargetSource;
-import org.springframework.aop.framework.AdvisedSupport;
-import org.springframework.aop.framework.AopConfigException;
-import org.springframework.aop.framework.AopProxy;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator;
 import org.springframework.aop.target.SingletonTargetSource;
@@ -55,46 +51,27 @@ public class ServiceBeanAutoProxyCreator
 	}
 
 	@Override
-	protected Object createProxy(
-		Class<?> beanClass, String beanName, Object[] specificInterceptors,
-		TargetSource targetSource) {
-
-		ProxyFactory proxyFactory = new ProxyFactory();
-
-		evaluateProxyInterfaces(beanClass, proxyFactory);
-
-		proxyFactory.setTargetSource(targetSource);
-
-		proxyFactory.setAopProxyFactory(
-			new org.springframework.aop.framework.AopProxyFactory() {
-
-				@Override
-				public AopProxy createAopProxy(AdvisedSupport advisedSupport)
-					throws AopConfigException {
-
-					return new AopProxyAdapter(
-						_aopProxyFactory.getAopProxy(
-							new AdvisedSupportAdapter(advisedSupport)));
-				}
-
-			});
-
-		return proxyFactory.getProxy(getProxyClassLoader());
-	}
-
-	@Override
 	protected Object wrapIfNecessary(
 		Object bean, String beanName, Object cacheKey) {
 
 		Class<?> beanClass = bean.getClass();
 
-		if (_beanMatcher.match(beanClass, beanName)) {
-			return createProxy(
-				beanClass, beanName, new Object[0],
-				new SingletonTargetSource(bean));
+		if (!_beanMatcher.match(beanClass, beanName)) {
+			return bean;
 		}
 
-		return bean;
+		ProxyFactory proxyFactory = new ProxyFactory();
+
+		evaluateProxyInterfaces(beanClass, proxyFactory);
+
+		proxyFactory.setTargetSource(new SingletonTargetSource(bean));
+
+		proxyFactory.setAopProxyFactory(
+			advisedSupport -> new AopProxyAdapter(
+				_aopProxyFactory.getAopProxy(
+					new AdvisedSupportAdapter(advisedSupport))));
+
+		return proxyFactory.getProxy(getProxyClassLoader());
 	}
 
 	private AopProxyFactory _aopProxyFactory;

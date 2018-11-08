@@ -51,6 +51,7 @@ import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -76,12 +77,14 @@ import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestDataConstants;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -120,10 +123,15 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		group = GroupTestUtil.addGroup();
+		company = CompanyTestUtil.addCompany();
+
+		companyAdminUser = UserTestUtil.addCompanyAdminUser(company);
+
+		group = GroupTestUtil.addGroup(
+			company.getCompanyId(), companyAdminUser.getUserId(), 0);
 
 		serviceContext = ServiceContextTestUtil.getServiceContext(
-			group.getGroupId());
+			group, companyAdminUser.getUserId());
 
 		setUpPermissionThreadLocal();
 		setUpPrincipalThreadLocal();
@@ -161,9 +169,8 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 		throws PortalException {
 
 		WorkflowDefinitionLinkLocalServiceUtil.updateWorkflowDefinitionLink(
-			adminUser.getUserId(), TestPropsValues.getCompanyId(), groupId,
-			className, classPK, typePK, workflowDefinitionName,
-			workflowDefinitionVersion);
+			adminUser.getUserId(), company.getCompanyId(), groupId, className,
+			classPK, typePK, workflowDefinitionName, workflowDefinitionVersion);
 	}
 
 	protected void activateWorkflow(
@@ -466,6 +473,10 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 		}
 	}
 
+	protected User createContentReviewerUser(String roleName) throws Exception {
+		return createUser(roleName, group, false);
+	}
+
 	protected DDMFormValues createDDMFormValues(DDMForm ddmForm) {
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
@@ -537,23 +548,38 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 	}
 
 	protected User createUser(String roleName) throws Exception {
-		return createUser(roleName, group);
+		return createUser(roleName, group, true);
 	}
 
 	protected User createUser(String roleName, Group group) throws Exception {
-		User user = UserTestUtil.addUser(group.getGroupId());
+		return createUser(roleName, group, true);
+	}
+
+	protected User createUser(
+			String roleName, Group group, boolean addUserToRole)
+		throws Exception {
+
+		User user = UserTestUtil.addUser(
+			company.getCompanyId(), companyAdminUser.getUserId(),
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				UniqueStringRandomizerBumper.INSTANCE),
+			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new long[] {group.getGroupId()},
+			ServiceContextTestUtil.getServiceContext());
 
 		_users.add(user);
 
 		Role role = RoleLocalServiceUtil.getRole(
-			TestPropsValues.getCompanyId(), roleName);
+			company.getCompanyId(), roleName);
 
-		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
-
-		long[] userIds = {user.getUserId()};
+		if (addUserToRole) {
+			UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
+		}
 
 		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
-			userIds, group.getGroupId(), role.getRoleId());
+			new long[] {user.getUserId()}, group.getGroupId(),
+			role.getRoleId());
 
 		return user;
 	}
@@ -563,8 +589,8 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 		throws PortalException {
 
 		WorkflowDefinitionLinkLocalServiceUtil.updateWorkflowDefinitionLink(
-			adminUser.getUserId(), TestPropsValues.getCompanyId(), groupId,
-			className, classPK, typePK, null);
+			adminUser.getUserId(), company.getCompanyId(), groupId, className,
+			classPK, typePK, null);
 	}
 
 	protected void deactivateWorkflow(
@@ -692,6 +718,11 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 			false, true);
 	}
 
+	protected int searchCountByUserRoles(User user) throws Exception {
+		return WorkflowTaskManagerUtil.searchCount(
+			user.getCompanyId(), user.getUserId(), null, null, false, true);
+	}
+
 	protected void setUpPermissionThreadLocal() throws Exception {
 		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
 
@@ -699,7 +730,7 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 			new SimplePermissionChecker() {
 
 				{
-					init(TestPropsValues.getUser());
+					init(companyAdminUser);
 				}
 
 				@Override
@@ -716,7 +747,7 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 	protected void setUpPrincipalThreadLocal() throws Exception {
 		_name = PrincipalThreadLocal.getName();
 
-		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+		PrincipalThreadLocal.setName(companyAdminUser.getUserId());
 	}
 
 	protected void setUpUsers() throws Exception {
@@ -726,6 +757,9 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 			RoleConstants.PORTAL_CONTENT_REVIEWER);
 
 		siteAdminUser = createUser(RoleConstants.SITE_ADMINISTRATOR);
+
+		siteContentReviewerUser = createContentReviewerUser(
+			RoleConstants.SITE_CONTENT_REVIEWER);
 	}
 
 	protected void setUpWorkflow() throws Exception {
@@ -804,11 +838,14 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 	protected User adminUser;
 
 	@DeleteAfterTestRun
-	protected Group group;
+	protected Company company;
 
+	protected User companyAdminUser;
+	protected Group group;
 	protected User portalContentReviewerUser;
 	protected ServiceContext serviceContext;
 	protected User siteAdminUser;
+	protected User siteContentReviewerUser;
 
 	private static final String _MAIL_ENGINE_CLASS_NAME =
 		"com.liferay.util.mail.MailEngine";

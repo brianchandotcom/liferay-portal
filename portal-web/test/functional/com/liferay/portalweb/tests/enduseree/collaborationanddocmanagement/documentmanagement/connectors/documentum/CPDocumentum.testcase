@@ -3,8 +3,8 @@
 	<property name="custom.properties" value="session.store.password=true${line.separator}company.security.auth.type=screenName" />
 	<property name="dummy.socket.proxy.disabled" value="true" />
 	<property name="osgi.app.includes" value="documentum" />
-	<property name="portal.release" value="true" />
-	<property name="portal.upstream" value="true" />
+	<property name="portal.release" value="false" />
+	<property name="portal.upstream" value="false" />
 	<property name="test.run.environment" value="EE" />
 	<property name="testray.main.component.name" value="Documents Management" />
 

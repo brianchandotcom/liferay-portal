@@ -78,20 +78,7 @@ if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayo
 		<h4 class="text-muted"><liferay-ui:message key="available-languages" /></h4>
 
 		<p class="text-muted">
-
-			<%
-			List<String> defaultLanguagesList = new ArrayList<>();
-
-			for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
-				defaultLanguagesList.add(LanguageUtil.getLanguageId(availableLocale));
-			%>
-
-				<%= availableLocale.getDisplayName(locale) %>,
-
-			<%
-			}
-			%>
-
+			<%= StringUtil.merge(LocaleUtil.toDisplayNames(LanguageUtil.getAvailableLocales(), locale), StringPool.COMMA_AND_SPACE) %>
 		</p>
 	</aui:fieldset>
 </aui:fieldset>

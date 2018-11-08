@@ -16,7 +16,8 @@ package com.liferay.portal.spring.aop;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
-import com.liferay.portal.kernel.spring.aop.AopProxyFactory;
+
+import org.aopalliance.intercept.MethodInterceptor;
 
 import org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator;
 
@@ -33,6 +34,9 @@ public class ServiceBeanAutoProxyCreator
 		if (_beanMatcher == null) {
 			_beanMatcher = new ServiceBeanMatcher();
 		}
+
+		_serviceBeanAopCacheManager = new ServiceBeanAopCacheManager(
+			_methodInterceptor);
 	}
 
 	@Override
@@ -42,12 +46,12 @@ public class ServiceBeanAutoProxyCreator
 		return null;
 	}
 
-	public void setAopProxyFactory(AopProxyFactory aopProxyFactory) {
-		_aopProxyFactory = aopProxyFactory;
-	}
-
 	public void setBeanMatcher(BeanMatcher beanMatcher) {
 		_beanMatcher = beanMatcher;
+	}
+
+	public void setMethodInterceptor(MethodInterceptor methodInterceptor) {
+		_methodInterceptor = methodInterceptor;
 	}
 
 	@Override
@@ -60,13 +64,16 @@ public class ServiceBeanAutoProxyCreator
 			return bean;
 		}
 
-		return _aopProxyFactory.getAopProxy(
+		ServiceBeanAopProxy serviceBeanAopProxy = new ServiceBeanAopProxy(
 			new AdvisedSupportImpl(ReflectionUtil.getInterfaces(bean), bean),
-			getProxyClassLoader());
+			_serviceBeanAopCacheManager);
+
+		return serviceBeanAopProxy.getProxy(getProxyClassLoader());
 	}
 
-	private AopProxyFactory _aopProxyFactory;
 	private BeanMatcher _beanMatcher;
+	private MethodInterceptor _methodInterceptor;
+	private ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
 
 	private static class AdvisedSupportImpl implements AdvisedSupport {
 

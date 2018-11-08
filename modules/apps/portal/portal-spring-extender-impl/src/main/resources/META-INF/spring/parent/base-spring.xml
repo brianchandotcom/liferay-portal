@@ -43,18 +43,15 @@
 	<bean class="com.liferay.portal.service.ServiceContextAdvice" id="serviceContextAdvice">
 		<property name="nextMethodInterceptor" ref="retryAdvice" />
 	</bean>
-	<bean class="com.liferay.portal.spring.aop.AopProxyFactoryImpl" depends-on="chainableMethodAdviceAssembler" id="aopProxyFactory">
-		<property name="methodInterceptor" ref="serviceAdvice" />
-	</bean>
 	<bean class="com.liferay.portal.spring.aop.ChainableMethodAdviceAssembler" id="chainableMethodAdviceAssembler" />
 	<bean class="com.liferay.portal.spring.aop.RetryAdvice" id="retryAdvice">
 		<property name="nextMethodInterceptor" ref="transactionAdvice" />
 	</bean>
-	<bean class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator">
-		<property name="aopProxyFactory" ref="aopProxyFactory" />
+	<bean class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator" depends-on="chainableMethodAdviceAssembler">
 		<property name="beanMatcher">
 			<bean class="com.liferay.portal.spring.aop.ServiceBeanMatcher" />
 		</property>
+		<property name="methodInterceptor" ref="serviceAdvice" />
 	</bean>
 	<bean class="com.liferay.portal.spring.aop.SkipAdvice" id="serviceAdvice">
 		<property name="nextMethodInterceptor" ref="accessControlAdvice" />

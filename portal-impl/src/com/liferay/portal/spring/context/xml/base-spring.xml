@@ -45,9 +45,10 @@
 	<bean class="com.liferay.portal.service.ServiceContextAdvice" id="serviceContextAdvice">
 		<property name="nextMethodInterceptor" ref="retryAdvice" />
 	</bean>
-	<bean class="com.liferay.portal.spring.aop.AopProxyFactoryImpl" id="aopProxyFactory">
+	<bean class="com.liferay.portal.spring.aop.AopProxyFactoryImpl" depends-on="chainableMethodAdviceAssembler" id="aopProxyFactory">
 		<property name="methodInterceptor" ref="serviceAdvice" />
 	</bean>
+	<bean class="com.liferay.portal.spring.aop.ChainableMethodAdviceAssembler" id="chainableMethodAdviceAssembler" />
 	<bean class="com.liferay.portal.spring.aop.RetryAdvice" id="retryAdvice">
 		<property name="nextMethodInterceptor" ref="transactionAdvice" />
 	</bean>

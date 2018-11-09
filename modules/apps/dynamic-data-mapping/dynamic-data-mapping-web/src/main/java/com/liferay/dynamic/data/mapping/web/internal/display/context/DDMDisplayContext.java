@@ -1086,10 +1086,11 @@ public class DDMDisplayContext {
 
 		List<DDMTemplate> results = _ddmTemplateService.search(
 			_ddmWebRequestHelper.getCompanyId(), groupIds,
-			getTemplateClassNameIds(), null, getResourceClassNameId(),
-			searchTerms.getKeywords(), searchTerms.getType(), getTemplateMode(),
-			searchTerms.getStatus(), templateSearch.getStart(),
-			templateSearch.getEnd(), templateSearch.getOrderByComparator());
+			getTemplateClassNameIds(), _getDDMTemplateClassPKs(),
+			getResourceClassNameId(), searchTerms.getKeywords(),
+			searchTerms.getType(), getTemplateMode(), searchTerms.getStatus(),
+			templateSearch.getStart(), templateSearch.getEnd(),
+			templateSearch.getOrderByComparator());
 
 		templateSearch.setResults(results);
 	}
@@ -1110,15 +1111,23 @@ public class DDMDisplayContext {
 
 		int total = _ddmTemplateService.searchCount(
 			_ddmWebRequestHelper.getCompanyId(), groupIds,
-			getTemplateClassNameIds(), null, getResourceClassNameId(),
-			searchTerms.getKeywords(), searchTerms.getType(), getTemplateMode(),
-			searchTerms.getStatus());
+			getTemplateClassNameIds(), _getDDMTemplateClassPKs(),
+			getResourceClassNameId(), searchTerms.getKeywords(),
+			searchTerms.getType(), getTemplateMode(), searchTerms.getStatus());
 
 		templateSearch.setTotal(total);
 	}
 
 	protected boolean showAncestorScopes() {
 		return ParamUtil.getBoolean(_renderRequest, "showAncestorScopes");
+	}
+
+	private long[] _getDDMTemplateClassPKs() {
+		if (getClassPK() > 0) {
+			return new long[] {getClassPK()};
+		}
+
+		return null;
 	}
 
 	private final DDMDisplayRegistry _ddmDisplayRegistry;

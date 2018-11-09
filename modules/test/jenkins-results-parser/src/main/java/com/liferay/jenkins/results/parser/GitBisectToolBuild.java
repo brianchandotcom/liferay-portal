@@ -108,6 +108,23 @@ public class GitBisectToolBuild extends TopLevelBuild {
 			"td", null, portalBuildData.getBuildStatus());
 	}
 
+	protected Element getCommitGroupHeaderRowElement(
+		Commit commit, PortalBuildData portalBuildData,
+		CommitGroup currentCommitGroup, CommitGroup nextCommitGroup,
+		boolean firstCommit) {
+
+		return Dom4JUtil.getNewElement(
+			"tr", null,
+			getCommitGroupHeaderToggleCellElement(commit, currentCommitGroup),
+			getCommitLinkCellElement(commit, firstCommit),
+			getCommitMessageCellElement(commit),
+			getDiffLinkCellElement(commit, currentCommitGroup, nextCommitGroup),
+			getBuildDurationCell(portalBuildData),
+			getBuildLinkCell(portalBuildData),
+			getBuildStatusCell(portalBuildData),
+			getBuildResultCell(portalBuildData));
+	}
+
 	protected Element getCommitGroupHeaderToggleCellElement(
 		Commit commit, CommitGroup currentCommitGroup) {
 
@@ -127,6 +144,14 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		inputElement.addAttribute("type", "checkbox");
 
 		return Dom4JUtil.getNewElement("td", null, labelElement, inputElement);
+	}
+
+	protected Element getCommitGroupRowElement(Commit commit) {
+		return Dom4JUtil.getNewElement(
+			"tr", null, getCommitGroupHeaderToggleCellElement(commit, null),
+			getCommitLinkCellElement(commit, false),
+			getCommitMessageCellElement(commit), getEmptyCell(), getEmptyCell(),
+			getEmptyCell(), getEmptyCell(), getEmptyCell());
 	}
 
 	protected List<CommitGroup> getCommitGroups() {
@@ -179,31 +204,6 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		}
 
 		return commitGroups;
-	}
-
-	protected Element getCommitGroupsHeaderRowElement(
-		Commit commit, PortalBuildData portalBuildData,
-		CommitGroup currentCommitGroup, CommitGroup nextCommitGroup,
-		boolean firstCommit) {
-
-		return Dom4JUtil.getNewElement(
-			"tr", null,
-			getCommitGroupHeaderToggleCellElement(commit, currentCommitGroup),
-			getCommitLinkCellElement(commit, firstCommit),
-			getCommitMessageCellElement(commit),
-			getDiffLinkCellElement(commit, currentCommitGroup, nextCommitGroup),
-			getBuildDurationCell(portalBuildData),
-			getBuildLinkCell(portalBuildData),
-			getBuildStatusCell(portalBuildData),
-			getBuildResultCell(portalBuildData));
-	}
-
-	protected Element getCommitGroupsRowElement(Commit commit) {
-		return Dom4JUtil.getNewElement(
-			"tr", null, getCommitGroupHeaderToggleCellElement(commit, null),
-			getCommitLinkCellElement(commit, false),
-			getCommitMessageCellElement(commit), getEmptyCell(), getEmptyCell(),
-			getEmptyCell(), getEmptyCell(), getEmptyCell());
 	}
 
 	protected Element getCommitLinkCellElement(Commit commit, boolean header) {
@@ -409,10 +409,10 @@ public class GitBisectToolBuild extends TopLevelBuild {
 
 			PortalBuildData portalBuildData = commitGroup.getPortalBuildData();
 
-			Element commitGroupsHeaderElement = Dom4JUtil.getNewElement(
+			Element commitGroupHeaderElement = Dom4JUtil.getNewElement(
 				"tbody", tableBodyElement);
 
-			commitGroupsHeaderElement.addAttribute("class", "result-row");
+			commitGroupHeaderElement.addAttribute("class", "result-row");
 
 			CommitGroup nextCommitGroup = null;
 
@@ -427,21 +427,21 @@ public class GitBisectToolBuild extends TopLevelBuild {
 			}
 
 			Dom4JUtil.addToElement(
-				commitGroupsHeaderElement,
-				getCommitGroupsHeaderRowElement(
+				commitGroupHeaderElement,
+				getCommitGroupHeaderRowElement(
 					commitGroup.get(0), portalBuildData, commitGroup,
 					nextCommitGroup, firstCommit));
 
 			if (commitGroup.size() > 1) {
-				Element commitGroupsElement = Dom4JUtil.getNewElement(
+				Element commitGroupElement = Dom4JUtil.getNewElement(
 					"tbody", tableBodyElement);
 
-				commitGroupsElement.addAttribute("class", "hidden-row");
+				commitGroupElement.addAttribute("class", "hidden-row");
 
 				for (int j = 1; j < commitGroup.size(); j++) {
 					Dom4JUtil.addToElement(
-						commitGroupsElement,
-						getCommitGroupsRowElement(commitGroup.get(j)));
+						commitGroupElement,
+						getCommitGroupRowElement(commitGroup.get(j)));
 				}
 			}
 		}

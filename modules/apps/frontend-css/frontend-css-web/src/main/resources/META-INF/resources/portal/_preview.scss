@@ -154,6 +154,8 @@
 }
 
 .lfr-preview-file-image-overlay-controls {
+	pointer-events: all;
+
 	.image-viewer-control.carousel-control {
 		&.left {
 			left: 15px;

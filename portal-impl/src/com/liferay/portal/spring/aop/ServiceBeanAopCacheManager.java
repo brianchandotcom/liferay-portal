@@ -107,10 +107,12 @@ public class ServiceBeanAopCacheManager {
 		if (annotation == null) {
 			annotation = defaultValue;
 
+			Method method = methodInvocation.getMethod();
+
 			Object target = methodInvocation.getThis();
 
 			List<Annotation> annotations = AnnotationLocator.locate(
-				methodInvocation.getMethod(), target.getClass());
+				method, target.getClass());
 
 			Iterator<Annotation> iterator = annotations.iterator();
 
@@ -131,12 +133,11 @@ public class ServiceBeanAopCacheManager {
 			}
 
 			if (annotations.isEmpty()) {
-				_methodAnnotations.put(
-					methodInvocation.getMethod(), _nullAnnotations);
+				_methodAnnotations.put(method, _nullAnnotations);
 			}
 			else {
 				_methodAnnotations.put(
-					methodInvocation.getMethod(),
+					method,
 					annotations.toArray(new Annotation[annotations.size()]));
 			}
 		}

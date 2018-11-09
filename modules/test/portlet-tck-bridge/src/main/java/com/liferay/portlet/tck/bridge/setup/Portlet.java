@@ -12,25 +12,35 @@
  * details.
  */
 
-package com.liferay.portlet.tck.bridge.configuration;
-
-import aQute.bnd.annotation.metatype.Meta;
-
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+package com.liferay.portlet.tck.bridge.setup;
 
 /**
- * @author Shuyang Zhou
  * @author Vernon Singleton
  */
-@ExtendedObjectClassDefinition(category = "infrastructure")
-@Meta.OCD(
-	id = "com.liferay.portlet.tck.bridge.configuration.PortletTCKBridgeConfiguration",
-	localization = "content/Language",
-	name = "portlet-tck-bridge-configuration-name"
-)
-public interface PortletTCKBridgeConfiguration {
+public class Portlet {
 
-	@Meta.AD(deflt = "", required = false)
-	public String tckDeployFilesDir();
+	public Portlet(
+		String context, String portletName, String bundleName) {
+
+		_context = context;
+		_portletName = portletName;
+		_bundleName = bundleName;
+	}
+
+	public String getBundleName() {
+		return _bundleName;
+	}
+
+	public String getContext() {
+		return _context;
+	}
+
+	public String getPortletName() {
+		return _portletName;
+	}
+
+	private final String _context;
+	private final String _bundleName;
+	private final String _portletName;
 
 }

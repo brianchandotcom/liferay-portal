@@ -56,7 +56,7 @@ public class PortletTCKAutoLoginFilter extends BasePortalFilter {
 
 		HttpSession httpSession = request.getSession();
 
-		if (httpSession.getAttribute(_TCK_SKIP_LOGIN) == Boolean.TRUE) {
+		if (Boolean.TRUE.equals(httpSession.getAttribute(_TCK_SKIP_LOGIN))) {
 			processFilter(
 				PortletTCKAutoLoginFilter.class.getName(), request, response,
 				filterChain);

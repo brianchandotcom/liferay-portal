@@ -1,0 +1,21 @@
+diff --git a/portlet-tck_3.0/V3PortletHubTests/src/main/java/javax/portlet/tck/portlets/PortletHubTests_SPEC_23_JS.java b/portlet-tck_3.0/V3PortletHubTests/src/main/java/javax/portlet/tck/portlets/PortletHubTests_SPEC_23_JS.java
+index 2bb4a8b29..ed9993e79 100644
+--- a/portlet-tck_3.0/V3PortletHubTests/src/main/java/javax/portlet/tck/portlets/PortletHubTests_SPEC_23_JS.java
++++ b/portlet-tck_3.0/V3PortletHubTests/src/main/java/javax/portlet/tck/portlets/PortletHubTests_SPEC_23_JS.java
+@@ -60,6 +60,7 @@ import javax.portlet.PortletConfig;
+ import javax.portlet.PortletException;
+ import javax.portlet.RenderRequest;
+ import javax.portlet.RenderResponse;
++import javax.portlet.annotations.Dependency;
+ import javax.portlet.annotations.PortletConfiguration;
+ import javax.portlet.tck.beans.TestResultAsync;
+ import javax.portlet.tck.util.ModuleTestCaseDetails;
+@@ -72,7 +73,7 @@ import javax.portlet.tck.util.ModuleTestCaseDetails;
+  *
+  */
+ 
+-@PortletConfiguration(portletName = "PortletHubTests_SPEC_23_JS")
++@PortletConfiguration(portletName = "PortletHubTests_SPEC_23_JS",dependencies = @Dependency(name="PortletHub", scope="javax.portlet", version="3.0.0"))
+ public class PortletHubTests_SPEC_23_JS implements Portlet {
+    
+    private PortletConfig portletConfig = null;

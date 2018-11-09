@@ -6499,7 +6499,9 @@ ${output.content}</echo>
 			<test-action>
 				<database-test-run-test database.type="mysql" stop.app.server="true">
 					<test-action>
-						<ant antfile="build-test-tck.xml" target="record-test-tck-package-names">
+						<ant antfile="build-test-tck.xml" target="prepare-tck" />
+
+						<ant antfile="build-test-tck.xml" target="record-test-tck-class-groups">
 							<property name="test.class.groups.size" value="${test.batch.size}" />
 						</ant>
 

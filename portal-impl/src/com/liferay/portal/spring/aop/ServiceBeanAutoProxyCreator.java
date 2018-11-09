@@ -60,20 +60,34 @@ public class ServiceBeanAutoProxyCreator
 
 	@Override
 	public Object getEarlyBeanReference(Object bean, String beanName) {
-		_earlyProxyReferences.add(new CacheKey(bean.getClass(), beanName));
+		Class<?> beanClass = bean.getClass();
 
-		return _wrapIfNecessary(bean, beanName);
+		if (!_beanMatcher.match(beanClass, beanName)) {
+			return bean;
+		}
+
+		_earlyProxyReferences.add(new CacheKey(beanClass, beanName));
+
+		return ProxyUtil.newProxyInstance(
+			_classLoader, ReflectionUtil.getInterfaces(bean),
+			new ServiceBeanAopInvocationHandler(
+				bean, _serviceBeanAopCacheManager));
 	}
 
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) {
-		if (!_earlyProxyReferences.contains(
-				new CacheKey(bean.getClass(), beanName))) {
+		Class<?> beanClass = bean.getClass();
 
-			return _wrapIfNecessary(bean, beanName);
+		if (!_beanMatcher.match(beanClass, beanName) ||
+			_earlyProxyReferences.contains(new CacheKey(beanClass, beanName))) {
+
+			return bean;
 		}
 
-		return bean;
+		return ProxyUtil.newProxyInstance(
+			_classLoader, ReflectionUtil.getInterfaces(bean),
+			new ServiceBeanAopInvocationHandler(
+				bean, _serviceBeanAopCacheManager));
 	}
 
 	@Override
@@ -119,19 +133,6 @@ public class ServiceBeanAutoProxyCreator
 
 	public void setMethodInterceptor(MethodInterceptor methodInterceptor) {
 		_methodInterceptor = methodInterceptor;
-	}
-
-	private Object _wrapIfNecessary(Object bean, String beanName) {
-		Class<?> beanClass = bean.getClass();
-
-		if (!_beanMatcher.match(beanClass, beanName)) {
-			return bean;
-		}
-
-		return ProxyUtil.newProxyInstance(
-			_classLoader, ReflectionUtil.getInterfaces(bean),
-			new ServiceBeanAopInvocationHandler(
-				bean, _serviceBeanAopCacheManager));
 	}
 
 	private BeanMatcher _beanMatcher;

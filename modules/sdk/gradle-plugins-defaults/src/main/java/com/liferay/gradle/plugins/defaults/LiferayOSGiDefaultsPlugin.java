@@ -3658,6 +3658,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _copyCompileIncludeSources(Project project, File outputDir) {
+		Logger logger = project.getLogger();
+
 		ConfigurationContainer configurationContainer =
 			project.getConfigurations();
 
@@ -3697,18 +3699,28 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			resolvedConfiguration.getLenientConfiguration();
 
 		for (File file : lenientConfiguration.getFiles(Specs.satisfyAll())) {
-			project.copy(
-				new Action<CopySpec>() {
+			final FileTree fileTree = project.zipTree(file);
 
-					@Override
-					public void execute(CopySpec copySpec) {
-						copySpec.from(project.zipTree(file));
-						copySpec.include("**/*.java");
-						copySpec.into(outputDir);
-						copySpec.setIncludeEmptyDirs(false);
-					}
+			Action<CopySpec> copySpec = new Action<CopySpec>() {
 
-				});
+				@Override
+				public void execute(CopySpec copySpec) {
+					copySpec.from(fileTree);
+					copySpec.include("**/*.java");
+					copySpec.into(outputDir);
+					copySpec.setIncludeEmptyDirs(false);
+				}
+
+			};
+
+			try {
+				project.copy(copySpec);
+			}
+			catch (RuntimeException re) {
+				if (logger.isInfoEnabled()) {
+					logger.info("Unable to copy {}", file);
+				}
+			}
 		}
 	}
 

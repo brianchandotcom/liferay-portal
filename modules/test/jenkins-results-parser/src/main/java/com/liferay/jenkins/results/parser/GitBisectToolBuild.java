@@ -114,6 +114,37 @@ public class GitBisectToolBuild extends TopLevelBuild {
 			"td", null, portalBuildData.getBuildStatus());
 	}
 
+	protected Element getCommitDateCellElement(LocalGitCommit localGitCommit) {
+		return Dom4JUtil.getNewElement(
+			"td", null,
+			StringEscapeUtils.escapeXml(localGitCommit.getCommitDate()));
+	}
+
+	protected Element getCommitDiffLinkCellElement(
+		LocalGitCommit localGitCommit, GitCommitGroup currentGitCommitGroup,
+		GitCommitGroup nextGitCommitGroup) {
+
+		if (nextGitCommitGroup == null) {
+			return getEmptyCellElement();
+		}
+
+		LocalGitCommit firstNextLocalGitCommit = nextGitCommitGroup.get(0);
+
+		String gitHubCommitDiffURL = _workspaceGitRepository.getGitHubURL();
+
+		gitHubCommitDiffURL = gitHubCommitDiffURL.replaceAll(
+			"/tree/.+", "/compare/");
+
+		return Dom4JUtil.getNewElement(
+			"td", null,
+			Dom4JUtil.getNewAnchorElement(
+				JenkinsResultsParserUtil.combine(
+					gitHubCommitDiffURL, firstNextLocalGitCommit.getSHA(),
+					"...", localGitCommit.getSHA()),
+				JenkinsResultsParserUtil.combine(
+					String.valueOf(currentGitCommitGroup.size()), " commits")));
+	}
+
 	protected Element getCommitGroupHeaderRowElement(
 		LocalGitCommit localGitCommit, PortalBuildData portalBuildData,
 		GitCommitGroup currentGitCommitGroup, GitCommitGroup nextGitCommitGroup,
@@ -124,8 +155,9 @@ public class GitBisectToolBuild extends TopLevelBuild {
 			getCommitGroupHeaderToggleCellElement(
 				localGitCommit, currentGitCommitGroup),
 			getCommitLinkCellElement(localGitCommit, firstCommit),
+			getCommitDateCellElement(localGitCommit),
 			getCommitMessageCellElement(localGitCommit),
-			getDiffLinkCellElement(
+			getCommitDiffLinkCellElement(
 				localGitCommit, currentGitCommitGroup, nextGitCommitGroup),
 			getBuildLinkCellElement(portalBuildData),
 			getBuildDurationCellElement(portalBuildData),
@@ -161,6 +193,7 @@ public class GitBisectToolBuild extends TopLevelBuild {
 			"tr", null,
 			getCommitGroupHeaderToggleCellElement(localGitCommit, null),
 			getCommitLinkCellElement(localGitCommit, false),
+			getCommitDateCellElement(localGitCommit),
 			getCommitMessageCellElement(localGitCommit), getEmptyCellElement(),
 			getEmptyCellElement(), getEmptyCellElement(), getEmptyCellElement(),
 			getEmptyCellElement());
@@ -245,31 +278,6 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		return Dom4JUtil.getNewElement(
 			"td", null,
 			StringEscapeUtils.escapeXml(localGitCommit.getMessage()));
-	}
-
-	protected Element getDiffLinkCellElement(
-		LocalGitCommit localGitCommit, GitCommitGroup currentGitCommitGroup,
-		GitCommitGroup nextGitCommitGroup) {
-
-		if (nextGitCommitGroup == null) {
-			return getEmptyCellElement();
-		}
-
-		LocalGitCommit firstNextLocalGitCommit = nextGitCommitGroup.get(0);
-
-		String gitHubCommitDiffURL = _workspaceGitRepository.getGitHubURL();
-
-		gitHubCommitDiffURL = gitHubCommitDiffURL.replaceAll(
-			"/tree/.+", "/compare/");
-
-		return Dom4JUtil.getNewElement(
-			"td", null,
-			Dom4JUtil.getNewAnchorElement(
-				JenkinsResultsParserUtil.combine(
-					gitHubCommitDiffURL, firstNextLocalGitCommit.getSHA(),
-					"...", localGitCommit.getSHA()),
-				JenkinsResultsParserUtil.combine(
-					String.valueOf(currentGitCommitGroup.size()), " commits")));
 	}
 
 	protected Element getEmptyCellElement() {
@@ -365,7 +373,7 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		sb.append("}\n");
 
 		sb.append("table {\n");
-		sb.append("width: 1200px;\n");
+		sb.append("width: 1500px;\n");
 		sb.append("}\n");
 
 		sb.append("table > caption, td, th {\n");
@@ -470,33 +478,37 @@ public class GitBisectToolBuild extends TopLevelBuild {
 	protected Element getJenkinsReportTableColumnHeadersElement() {
 		Element toggleElement = Dom4JUtil.getNewElement("th", null, "");
 
-		Element commitElement = Dom4JUtil.getNewElement(
+		Element commitSHAElement = Dom4JUtil.getNewElement(
 			"th", null, "Commit SHA");
 
-		Element shaElement = Dom4JUtil.getNewElement(
+		Element commitDateElement = Dom4JUtil.getNewElement(
+			"th", null, "Commit Date");
+
+		Element commitMessageElement = Dom4JUtil.getNewElement(
 			"th", null, "Commit Message");
 
 		Element commitDiffElement = Dom4JUtil.getNewElement(
 			"th", null, "Commit Diffs");
 
-		Element buildElement = Dom4JUtil.getNewElement(
+		Element buildLinkElement = Dom4JUtil.getNewElement(
 			"th", null, "Build Link");
 
 		Element buildTimeElement = Dom4JUtil.getNewElement(
 			"th", null, "Build Time");
 
-		Element statusElement = Dom4JUtil.getNewElement(
+		Element buildStatusElement = Dom4JUtil.getNewElement(
 			"th", null, "Build Status");
 
-		Element resultElement = Dom4JUtil.getNewElement(
+		Element buildResultElement = Dom4JUtil.getNewElement(
 			"th", null, "Build Result");
 
 		Element tableColumnHeaderElement = Dom4JUtil.getNewElement("tr");
 
 		Dom4JUtil.addToElement(
-			tableColumnHeaderElement, toggleElement, commitElement, shaElement,
-			commitDiffElement, buildElement, buildTimeElement, statusElement,
-			resultElement);
+			tableColumnHeaderElement, toggleElement, commitSHAElement,
+			commitDateElement, commitMessageElement, commitDiffElement,
+			buildLinkElement, buildTimeElement, buildStatusElement,
+			buildResultElement);
 
 		return tableColumnHeaderElement;
 	}

@@ -16,6 +16,10 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,9 +58,10 @@ public class GitCommitFactory {
 				Date date = simpleDateFormat.parse(
 					committerJSONObject.getString("date"));
 
-				GitHubRemoteGitCommit remoteGitCommit = new GitHubRemoteGitCommit(
-					gitHubUsername, gitRepositoryName, message, sha,
-					_getGitCommitType(message), date.getTime());
+				GitHubRemoteGitCommit remoteGitCommit =
+					new GitHubRemoteGitCommit(
+						gitHubUsername, gitRepositoryName, message, sha,
+						_getGitCommitType(message), date.getTime());
 
 				_gitHubRemoteGitCommits.put(gitHubCommitURL, remoteGitCommit);
 
@@ -72,10 +77,12 @@ public class GitCommitFactory {
 	}
 
 	public static LocalGitCommit newLocalGitCommit(
-		GitWorkingDirectory gitWorkingDirectory, String message, String sha) {
+		GitWorkingDirectory gitWorkingDirectory, String message, String sha,
+		long commitTime) {
 
 		return new DefaultLocalGitCommit(
-			gitWorkingDirectory, message, sha, _getGitCommitType(message));
+			gitWorkingDirectory, message, sha, _getGitCommitType(message),
+			commitTime);
 	}
 
 	private static GitCommit.Type _getGitCommitType(String message) {

@@ -26,6 +26,15 @@
 			</then>
 		</if>
 
+		<if>
+			<not>
+				<isset var="serviceContext" />
+			</not>
+			<then>
+				<var name="serviceContext" value="{}" />
+			</then>
+		</if>
+
 		<execute macro="JSONWebcontent#_convertToXML">
 			<var name="content" value="${content}" />
 			<return name="contentXML" />
@@ -40,7 +49,8 @@
 				-d descriptionMap=${descriptionMap} \
 				-d content=${contentXML} \
 				-d ddmStructureKey=BASIC-WEB-CONTENT \
-				-d ddmTemplateKey=BASIC-WEB-CONTENT
+				-d ddmTemplateKey=BASIC-WEB-CONTENT \
+				-d serviceContext=${serviceContext}
 		]]></var>
 
 		<execute macro="JSONGroup#_getGroupName">
@@ -108,6 +118,7 @@
 			<var name="description" value="${description}" />
 			<var name="folderId" value="${folderId}" />
 			<var name="groupId" value="${groupId}" />
+			<var name="serviceContext" value="${serviceContext}" />
 			<var name="title" value="${title}" />
 		</execute>
 	</command>

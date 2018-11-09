@@ -194,7 +194,11 @@ AUI.add(
 							}
 						).filter(
 							function(item) {
-								const itemActions = item.getData('actions');
+								var itemActions;
+
+								if (item) {
+									itemActions = item.getData('actions');
+								}
 
 								return itemActions !== undefined && itemActions !== STR_ACTIONS_WILDCARD;
 

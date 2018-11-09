@@ -128,6 +128,10 @@ public class GitBisectToolBuild extends TopLevelBuild {
 			return getEmptyCellElement();
 		}
 
+		if (currentGitCommitGroup.size() <= 1) {
+			return getEmptyCell();
+		}
+
 		LocalGitCommit firstNextLocalGitCommit = nextGitCommitGroup.get(0);
 
 		String gitHubCommitDiffURL = _workspaceGitRepository.getGitHubURL();

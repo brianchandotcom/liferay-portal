@@ -17,13 +17,20 @@ package com.liferay.portal.upgrade;
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.counter.kernel.service.persistence.CounterFinder;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.spring.aop.ServiceWrapperProxyUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.spring.aop.ServiceBeanAopInvocationHandler;
 
 import java.io.Closeable;
+import java.io.IOException;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 
 import java.util.List;
 
@@ -34,7 +41,7 @@ public abstract class Pre7UpgradeProcess extends UpgradeProcess {
 
 	@Override
 	public void upgrade() throws UpgradeException {
-		try (Closeable closeable = ServiceWrapperProxyUtil.injectFieldProxy(
+		try (Closeable closeable = _injectFieldProxy(
 				PortalBeanLocatorUtil.locate(
 					CounterLocalService.class.getName()),
 				"counterFinder", Pre7CounterFinderImpl.class)) {
@@ -47,6 +54,71 @@ public abstract class Pre7UpgradeProcess extends UpgradeProcess {
 		catch (Exception e) {
 			throw new UpgradeException(e);
 		}
+	}
+
+	private static Closeable _injectFieldProxy(
+			Object springServiceProxy, String fieldName, Class<?> wrapperClass)
+		throws Exception {
+
+		ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler =
+			ProxyUtil.fetchInvocationHandler(
+				springServiceProxy, ServiceBeanAopInvocationHandler.class);
+
+		if (serviceBeanAopInvocationHandler == null) {
+			throw new IllegalArgumentException(
+				springServiceProxy + " is not a Spring service proxy");
+		}
+
+		final Object targetService =
+			serviceBeanAopInvocationHandler.getTarget();
+
+		Class<?> clazz = targetService.getClass();
+
+		Field field = null;
+
+		while (clazz != null) {
+			try {
+				field = ReflectionUtil.getDeclaredField(clazz, fieldName);
+
+				break;
+			}
+			catch (NoSuchFieldException nsfe) {
+				clazz = clazz.getSuperclass();
+			}
+		}
+
+		if (field == null) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"Unable to locate field ", fieldName, " in ",
+					String.valueOf(targetService)));
+		}
+
+		final Field finalField = field;
+
+		final Object previousValue = finalField.get(targetService);
+
+		Constructor<?>[] constructors = wrapperClass.getDeclaredConstructors();
+
+		Constructor<?> constructor = constructors[0];
+
+		constructor.setAccessible(true);
+
+		finalField.set(targetService, constructor.newInstance(previousValue));
+
+		return new Closeable() {
+
+			@Override
+			public void close() throws IOException {
+				try {
+					finalField.set(targetService, previousValue);
+				}
+				catch (ReflectiveOperationException roe) {
+					throw new IOException(roe);
+				}
+			}
+
+		};
 	}
 
 	private static class Pre7CounterFinderImpl implements CounterFinder {

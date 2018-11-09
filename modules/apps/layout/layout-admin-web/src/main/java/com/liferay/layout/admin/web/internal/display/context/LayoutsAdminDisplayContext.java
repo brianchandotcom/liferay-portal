@@ -1265,10 +1265,9 @@ public class LayoutsAdminDisplayContext {
 			layoutColumnsJSONArray.put(layoutSetBranchesJSONArray);
 		}
 
-		JSONArray pagesJSONArray = getLayoutsJSONArray(0, isPrivateLayout());
-
 		if (selLayout == null) {
-			layoutColumnsJSONArray.put(pagesJSONArray);
+			layoutColumnsJSONArray.put(
+				getLayoutsJSONArray(0, isPrivateLayout()));
 
 			return layoutColumnsJSONArray;
 		}

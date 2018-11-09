@@ -42,11 +42,11 @@ public abstract class BasePortalTestBatch
 			JenkinsResultsParserUtil.join(",", batchBuildData.getTestList()));
 		buildParameters.put("test.batch.name", batchBuildData.getBatchName());
 
-		String batchName = batchBuildData.getBatchName();
-
 		Map<String, String> environmentVariables = new HashMap<>();
 
 		if (JenkinsResultsParserUtil.isCINode()) {
+			String batchName = batchBuildData.getBatchName();
+
 			environmentVariables.put("ANT_OPTS", getAntOpts(batchName));
 			environmentVariables.put("JAVA_HOME", getJavaHome(batchName));
 			environmentVariables.put("PATH", getPath(batchName));

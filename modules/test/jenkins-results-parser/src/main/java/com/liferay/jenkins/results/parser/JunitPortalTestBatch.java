@@ -41,14 +41,15 @@ public class JunitPortalTestBatch
 			"test.batch.name", portalBatchBuildData.getBatchName());
 		buildParameters.put("test.batch.size", "1");
 
-		String batchName = portalBatchBuildData.getBatchName();
-
 		Map<String, String> environmentVariables = new HashMap<>();
 
 		if (JenkinsResultsParserUtil.isCINode()) {
+			String batchName = portalBatchBuildData.getBatchName();
+
 			environmentVariables.put("ANT_OPTS", getAntOpts(batchName));
 			environmentVariables.put("JAVA_HOME", getJavaHome(batchName));
 			environmentVariables.put("PATH", getPath(batchName));
+
 			environmentVariables.put(
 				"TOP_LEVEL_JOB_NAME",
 				portalBatchBuildData.getTopLevelJobName());

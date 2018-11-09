@@ -149,13 +149,11 @@ public class LayoutIndexer extends BaseIndexer<Layout> {
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
-		Locale defaultLocale = LocaleUtil.fromLanguageId(
-			document.get(Field.DEFAULT_LANGUAGE_ID));
-
 		String localizedFieldName = Field.getLocalizedName(locale, Field.NAME);
 
 		if (Validator.isNull(document.getField(localizedFieldName))) {
-			locale = defaultLocale;
+			locale = LocaleUtil.fromLanguageId(
+				document.get(Field.DEFAULT_LANGUAGE_ID));
 		}
 
 		String name = document.get(locale, Field.NAME);

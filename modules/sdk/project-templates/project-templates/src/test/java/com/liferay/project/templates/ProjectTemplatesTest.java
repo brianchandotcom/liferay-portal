@@ -4179,12 +4179,13 @@ public class ProjectTemplatesTest {
 								"\"" + repositoryUrl + "\"");
 						}
 
-						String mavenRepoString = System.getProperty(
-							"maven.repo.local");
-
-						Path m2tmpPath = Paths.get(mavenRepoString + "-tmp");
-
 						if (!content.contains("mavenLocal()")) {
+							String mavenRepoString = System.getProperty(
+								"maven.repo.local");
+
+							Path m2tmpPath = Paths.get(
+								mavenRepoString + "-tmp");
+
 							if (Files.exists(m2tmpPath)) {
 								content = content.replace(
 									"repositories {",

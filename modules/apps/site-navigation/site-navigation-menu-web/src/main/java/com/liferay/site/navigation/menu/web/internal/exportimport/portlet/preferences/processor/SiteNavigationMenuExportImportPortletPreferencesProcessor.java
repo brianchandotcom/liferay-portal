@@ -82,8 +82,6 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 					siteNavigationMenuId);
 
 			if (siteNavigationMenu != null) {
-				String portletId = portletDataContext.getPortletId();
-
 				String siteNavigationMenuUuid = siteNavigationMenu.getUuid();
 
 				long scopeGroupId = portletDataContext.getScopeGroupId();
@@ -95,7 +93,7 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 
 				if (siteNavigationMenuToExport != null) {
 					StagedModelDataHandlerUtil.exportReferenceStagedModel(
-						portletDataContext, portletId,
+						portletDataContext, portletDataContext.getPortletId(),
 						siteNavigationMenuToExport);
 				}
 			}

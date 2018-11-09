@@ -65,10 +65,6 @@ public class ServiceBeanAutoProxyCreator
 
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) {
-		if (bean == null) {
-			return null;
-		}
-
 		Object cacheKey = _getCacheKey(bean.getClass(), beanName);
 
 		if (!_earlyProxyReferences.contains(cacheKey)) {

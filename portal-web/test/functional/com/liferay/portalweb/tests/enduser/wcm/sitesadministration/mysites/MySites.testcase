@@ -7,6 +7,15 @@
 		<execute macro="TestCase#setUpPortalInstance" />
 
 		<execute macro="User#firstLoginPG" />
+
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Home Site" />
+		</execute>
+
+		<execute macro="JSONLayout#addPublicLayout">
+			<var name="groupName" value="Home Site" />
+			<var name="layoutName" value="Site Page" />
+		</execute>
 	</set-up>
 
 	<tear-down>
@@ -28,40 +37,24 @@
 	<command name="DisplayMySitesPagination" priority="3">
 		<property name="testray.component.names" value="Site Administration" />
 
-		<for list="01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24" param="number">
-			<execute macro="ProductMenu#gotoPortlet">
-				<var name="category" value="Sites" />
-				<var name="panel" value="Control Panel" />
-				<var name="portlet" value="Sites" />
-			</execute>
-
-			<execute macro="Site#addBlankCP">
-				<var name="siteName" value="Site Name ${number}" />
+		<for list="01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24" param="index">
+			<execute macro="JSONGroup#addGroup">
+				<var name="groupName" value="Site Name ${index}" />
 			</execute>
 		</for>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Home Site" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="My Sites" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Home Site" />
 		</execute>
 
 		<execute macro="Pagination#viewResults">
@@ -80,14 +73,8 @@
 	<command name="JoinSiteOpen" priority="4">
 		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -306,14 +293,8 @@
 		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -370,52 +351,37 @@
 	<command name="SearchSite" priority="4">
 		<property name="testray.component.names" value="Site Administration" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page" />
+		<execute macro="JSONLayout#addPublicLayout">
+			<var name="groupName" value="Site Name" />
+			<var name="layoutName" value="Test Page" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
+			<var name="siteName" value="Home Site" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="My Sites" />
 		</execute>
 
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Home Site" />
+		</execute>
+
 		<execute macro="Search#searchPG">
 			<var name="portletName" value="My Sites" />
-			<var name="searchTerm" value="Site Name" />
+			<var name="searchTerm" value="Site Name Search" />
 		</execute>
 
 		<execute macro="Site#viewMySitesViaMySitesPG">
 			<var name="memberCount" value="1" />
-			<var name="siteName" value="Site Name" />
+			<var name="siteName" value="Site Name Search" />
 		</execute>
 	</command>
 
@@ -469,24 +435,13 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Public Page" />
+		<execute macro="JSONLayout#addPublicLayout">
+			<var name="groupName" value="Site Name" />
+			<var name="layoutName" value="Public Page" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -500,20 +455,9 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Home Site" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -525,8 +469,9 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Home Site" />
 		</execute>
 
 		<execute macro="Site#viewMySitesViaMySitesPG">
@@ -538,14 +483,8 @@
 	<command name="ViewNoInactiveSite" priority="3">
 		<property name="testray.component.names" value="Site Administration" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -558,20 +497,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Home Site" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -638,44 +566,22 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Public Page" />
+		<execute macro="JSONLayout#addPublicLayout">
+			<var name="groupName" value="Site Name" />
+			<var name="layoutName" value="Public Page" />
 		</execute>
 
 		<execute macro="Site#manageMembershipOptions">
 			<var name="allowManualMembershipManagement" value="false" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Home Site" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -687,8 +593,9 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Home Site" />
 		</execute>
 
 		<execute macro="MySites#viewNoOptions">
@@ -700,44 +607,22 @@
 	<command name="ViewNoLeaveOption" priority="3">
 		<property name="testray.component.names" value="Site Administration" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Public Page" />
+		<execute macro="JSONLayout#addPublicLayout">
+			<var name="groupName" value="Site Name" />
+			<var name="layoutName" value="Site Page" />
 		</execute>
 
 		<execute macro="Site#manageMembershipOptions">
 			<var name="allowManualMembershipManagement" value="false" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Home Site" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -758,42 +643,23 @@
 	<command name="ViewSitePages" priority="3">
 		<property name="testray.component.names" value="Site Administration" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page" />
+		<execute macro="JSONLayout#addPublicLayout">
+			<var name="groupName" value="Site Name" />
+			<var name="layoutName" value="Public Page" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
+		<execute macro="JSONLayout#addPrivateLayout">
+			<var name="groupName" value="Site Name" />
+			<var name="layoutName" value="Private Page" />
 		</execute>
 
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Public Page" />
-		</execute>
-
-		<execute macro="SitePages#addPrivatePage">
-			<var name="pageName" value="Private Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Home Site" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -806,8 +672,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Home Site" />
 		</execute>
 
 		<execute macro="MySites#gotoPagesPG">
@@ -820,14 +687,8 @@
 	<command name="ViewSiteWithTags" priority="4">
 		<property name="testray.component.names" value="Site Administration,Tags" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -842,20 +703,9 @@
 			</execute>
 		</for>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Home Site" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

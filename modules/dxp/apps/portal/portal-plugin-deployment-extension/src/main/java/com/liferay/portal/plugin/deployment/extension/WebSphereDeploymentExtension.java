@@ -168,9 +168,9 @@ public class WebSphereDeploymentExtension implements DeploymentExtension {
 
 		processBuilder.redirectErrorStream(true);
 
-		Process process = processBuilder.start();
-
 		if (_log.isInfoEnabled()) {
+			Process process = processBuilder.start();
+
 			InputStream inputStream = process.getInputStream();
 
 			String output = StringUtil.read(inputStream);

@@ -31,13 +31,12 @@ public class DnCorrectingGrammar<E extends LiferayLdapMessageContainer>
 		GrammarTransition<E> grammarTransition = _abstractGrammar.getTransition(
 			state, tag);
 
-		Enum<?> previousState = grammarTransition.getPreviousState();
 		Enum<?> currentState = grammarTransition.getCurrentState();
 
 		if (currentState == LdapStatesEnum.NAME_STATE) {
 			grammarTransition = new GrammarTransition<>(
-				previousState, currentState, UniversalTag.OCTET_STRING,
-				_dnCorrectingStoreName);
+				grammarTransition.getPreviousState(), currentState,
+				UniversalTag.OCTET_STRING, _dnCorrectingStoreName);
 		}
 
 		return grammarTransition;

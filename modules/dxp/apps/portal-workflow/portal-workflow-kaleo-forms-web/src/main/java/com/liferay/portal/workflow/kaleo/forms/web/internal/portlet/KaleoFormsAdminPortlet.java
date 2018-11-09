@@ -904,18 +904,19 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String name = ParamUtil.getString(resourceRequest, "name");
 		String version = ParamUtil.getString(resourceRequest, "version");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			resourceRequest);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		if (Validator.isNotNull(name) && Validator.isNotNull(version)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)resourceRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				resourceRequest);
+
 			KaleoDefinitionVersion kaleoDefinitionVersion =
 				_kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
 					serviceContext.getCompanyId(), name, version);

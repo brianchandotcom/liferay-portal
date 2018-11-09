@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringPool;
@@ -89,17 +88,14 @@ public class PermissionPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			(KaleoDefinitionVersion)portletRequest.getAttribute(
 				KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
 
 		if (kaleoDefinitionVersion != null) {
 			return KaleoDefinitionVersionPermission.contains(
-				permissionChecker, kaleoDefinitionVersion,
-				ActionKeys.PERMISSIONS);
+				PermissionThreadLocal.getPermissionChecker(),
+				kaleoDefinitionVersion, ActionKeys.PERMISSIONS);
 		}
 
 		return false;

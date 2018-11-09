@@ -164,9 +164,6 @@ public class UserBuilder extends DirectoryBuilder {
 				continue;
 			}
 
-			String firstName = filterConstraint.getValue("givenName");
-			String lastName = filterConstraint.getValue("sn");
-
 			String screenName = filterConstraint.getValue("cn");
 
 			if (screenName == null) {
@@ -181,9 +178,6 @@ public class UserBuilder extends DirectoryBuilder {
 
 			String uidNumber = filterConstraint.getValue("uidNumber");
 			String sambaSID = filterConstraint.getValue("sambaSID");
-
-			int status = GetterUtil.getInteger(
-				filterConstraint.getValue("status"));
 
 			List<User> searchUsers = null;
 
@@ -233,6 +227,11 @@ public class UserBuilder extends DirectoryBuilder {
 				searchUsers.add(user);
 			}
 			else {
+				String firstName = filterConstraint.getValue("givenName");
+				String lastName = filterConstraint.getValue("sn");
+				int status = GetterUtil.getInteger(
+					filterConstraint.getValue("status"));
+
 				searchUsers = UserLocalServiceUtil.search(
 					company.getCompanyId(), firstName, null, lastName,
 					screenName, emailAddress, status, filterConstraintParams,

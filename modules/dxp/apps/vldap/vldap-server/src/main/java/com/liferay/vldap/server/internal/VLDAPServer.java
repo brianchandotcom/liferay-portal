@@ -123,10 +123,10 @@ public class VLDAPServer {
 	}
 
 	protected void initLogging(NioSocketAcceptor nioSocketAcceptor) {
-		DefaultIoFilterChainBuilder defaultIoFilterChainBuilder =
-			nioSocketAcceptor.getFilterChain();
-
 		if (_log.isDebugEnabled()) {
+			DefaultIoFilterChainBuilder defaultIoFilterChainBuilder =
+				nioSocketAcceptor.getFilterChain();
+
 			defaultIoFilterChainBuilder.addLast("logger", new LoggingFilter());
 		}
 	}

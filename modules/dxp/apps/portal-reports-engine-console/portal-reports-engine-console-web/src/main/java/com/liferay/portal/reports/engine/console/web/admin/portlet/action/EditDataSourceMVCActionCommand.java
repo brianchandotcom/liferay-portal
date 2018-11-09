@@ -53,9 +53,6 @@ public class EditDataSourceMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long sourceId = ParamUtil.getLong(actionRequest, "sourceId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
@@ -72,6 +69,9 @@ public class EditDataSourceMVCActionCommand extends BaseMVCActionCommand {
 			Source.class.getName(), actionRequest);
 
 		if (sourceId <= 0) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
 			_sourceService.addSource(
 				themeDisplay.getScopeGroupId(), nameMap, driverClassName,
 				driverUrl, driverUserName, driverPassword, serviceContext);

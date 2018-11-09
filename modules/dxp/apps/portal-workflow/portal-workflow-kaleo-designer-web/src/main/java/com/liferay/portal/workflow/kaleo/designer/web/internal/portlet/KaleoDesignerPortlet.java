@@ -225,31 +225,33 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long companyId = themeDisplay.getCompanyId();
-
 		String name = ParamUtil.getString(resourceRequest, "name");
-		String draftVersion = ParamUtil.getString(
-			resourceRequest, "draftVersion");
-		String position = ParamUtil.getString(resourceRequest, "position");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		if (Validator.isNotNull(name)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)resourceRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			String position = ParamUtil.getString(resourceRequest, "position");
+
 			KaleoDefinitionVersion kaleoDefinitionVersion = null;
 
 			if (position.equals("latest")) {
 				kaleoDefinitionVersion =
 					_kaleoDefinitionVersionLocalService.
-						getLatestKaleoDefinitionVersion(companyId, name);
+						getLatestKaleoDefinitionVersion(
+							themeDisplay.getCompanyId(), name);
 			}
 			else {
+				String draftVersion = ParamUtil.getString(
+					resourceRequest, "draftVersion");
+
 				KaleoDefinitionVersion[] kaleoDefinitionVersions =
 					_kaleoDefinitionVersionLocalService.
 						getKaleoDefinitionVersionsPrevAndNext(
-							companyId, name, draftVersion);
+							themeDisplay.getCompanyId(), name, draftVersion);
 
 				if (position.equals("prev")) {
 					kaleoDefinitionVersion = kaleoDefinitionVersions[0];

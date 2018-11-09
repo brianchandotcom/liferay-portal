@@ -52,9 +52,6 @@ public class ReportsEngineConsoleUtil {
 		PortletRequest portletRequest, String paramPrefix,
 		boolean timeZoneSensitive) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		int dateMonth = ParamUtil.getInteger(
 			portletRequest, paramPrefix + "Month");
 		int dateDay = ParamUtil.getInteger(portletRequest, paramPrefix + "Day");
@@ -75,6 +72,10 @@ public class ReportsEngineConsoleUtil {
 		TimeZone timeZone = null;
 
 		if (timeZoneSensitive) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			locale = themeDisplay.getLocale();
 			timeZone = themeDisplay.getTimeZone();
 		}

@@ -240,10 +240,9 @@ public class BindLdapHandler extends BaseLdapHandler {
 
 	protected String getValue(Dn dn, String normType) {
 		for (Rdn rdn : dn) {
-			String rdnNormType = rdn.getNormType();
-			Value<?> rdnNormValue = rdn.getNormValue();
+			if (StringUtil.equalsIgnoreCase(rdn.getNormType(), normType)) {
+				Value<?> rdnNormValue = rdn.getNormValue();
 
-			if (StringUtil.equalsIgnoreCase(rdnNormType, normType)) {
 				return GetterUtil.getString(rdnNormValue.getString());
 			}
 		}

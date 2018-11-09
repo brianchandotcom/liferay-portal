@@ -83,11 +83,9 @@ public class KaleoFormsDDMDisplay extends BaseDDMDisplay {
 	public String getEditTemplateTitle(
 		DDMStructure structure, DDMTemplate template, Locale locale) {
 
-		ResourceBundle resourceBundle = getResourceBundle(locale);
-
 		if ((structure != null) && (template == null)) {
 			return LanguageUtil.format(
-				resourceBundle, "new-form-for-field-set-x",
+				getResourceBundle(locale), "new-form-for-field-set-x",
 				structure.getName(locale), false);
 		}
 

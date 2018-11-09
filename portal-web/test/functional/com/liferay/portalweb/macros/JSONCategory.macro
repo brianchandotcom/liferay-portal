@@ -96,7 +96,7 @@
 		</execute>
 	</command>
 
-	<command name="_getCategoryIdByName" summary="Get the categoryId from any category by using categoryName, groupId, and vocabularyId">
+	<command name="_getCategoryIdByName" summary="Directly calls the JSON WS API to get categoryId">
 		<if>
 			<not>
 				<isset var="groupId" />
@@ -360,5 +360,55 @@
 			<var name="groupId" value="${groupId}" />
 			<var name="title" value="${title}" />
 		</execute>
+	</command>
+
+	<command name="getCategoryId" summary="Get the categoryId from any category by using categoryName, groupId, and vocabularyId">
+		<if>
+			<not>
+				<isset var="categoryName" />
+			</not>
+			<then>
+				<fail message="Please set 'categoryName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="groupName" />
+			</not>
+			<then>
+				<fail message="Please set 'groupName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="vocabularyName" />
+			</not>
+			<then>
+				<fail message="Please set 'vocabularyName'." />
+			>
+			</then>
+		</if>
+
+		<execute macro="JSONGroup#_getGroupIdByName">
+			<return name="groupId" />
+			<var name="groupName" value="${groupName}" />
+		</execute>
+
+		<execute macro="JSONCategory#_getVocabularyIdByName">
+			<return name="vocabularyId" />
+			<var name="groupId" value="${groupId}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="JSONCategory#_getCategoryIdByName">
+			<return name="categoryId" />
+			<var name="categoryName" value="${categoryName}" />
+			<var name="groupId" value="${groupId}" />
+			<var name="vocabularyId" value="${vocabularyId}" />
+		</execute>
+
+		<return value="${categoryId}" />
 	</command>
 </definition>

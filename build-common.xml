@@ -1767,6 +1767,7 @@ rerun your task.
 					<propertyref name="liferay.releng.product.display.name" />
 					<propertyref name="liferay.releng.public" />
 					<propertyref name="liferay.releng.supported" />
+					<propertyref name="org.gradle.console" />
 					<propertyref name="org.gradle.daemon" />
 					<propertyref name="org.gradle.internal.launcher.welcomeMessageEnabled" />
 					<propertyref name="org.gradle.warning.mode" />

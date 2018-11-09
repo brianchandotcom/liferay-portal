@@ -336,8 +336,7 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 	private SortedSet<ComparableVersion> _getModuleVersions(
 		File moduleDir, boolean excludeSnapshots) {
 
-		SortedSet<ComparableVersion> moduleVersions =
-			new TreeSet<ComparableVersion>();
+		SortedSet<ComparableVersion> moduleVersions = new TreeSet<>();
 
 		String[] versions = moduleDir.list(DirectoryFileFilter.DIRECTORY);
 

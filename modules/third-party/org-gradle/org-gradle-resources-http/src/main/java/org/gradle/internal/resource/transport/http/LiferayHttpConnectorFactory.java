@@ -33,10 +33,15 @@ public class LiferayHttpConnectorFactory extends HttpConnectorFactory {
 	public ExternalResourceConnector createResourceConnector(
 		ResourceConnectorSpecification resourceConnectorSpecification) {
 
-		HttpClientHelper httpClientHelper = new HttpClientHelper(
-			new DefaultHttpSettings(
-				resourceConnectorSpecification.getAuthentications(),
-				_sslContextFactory));
+		DefaultHttpSettings.Builder builder = DefaultHttpSettings.builder();
+
+		builder.withAuthenticationSettings(
+			resourceConnectorSpecification.getAuthentications());
+		builder.withSslContextFactory(_sslContextFactory);
+
+		HttpSettings httpSettings = builder.build();
+
+		HttpClientHelper httpClientHelper = new HttpClientHelper(httpSettings);
 
 		HttpResourceAccessor httpResourceAccessor =
 			new LiferayHttpResourceAccessor(httpClientHelper);

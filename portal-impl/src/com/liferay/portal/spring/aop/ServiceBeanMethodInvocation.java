@@ -92,10 +92,6 @@ public class ServiceBeanMethodInvocation
 		return _method;
 	}
 
-	public Class<?> getTargetClass() {
-		return _target.getClass();
-	}
-
 	@Override
 	public Object getThis() {
 		return _target;

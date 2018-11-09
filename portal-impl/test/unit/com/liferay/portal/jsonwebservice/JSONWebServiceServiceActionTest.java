@@ -20,10 +20,8 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.PortalImpl;
-import com.liferay.portal.util.PropsImpl;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -58,8 +56,6 @@ public class JSONWebServiceServiceActionTest
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(new PortalImpl());
-
-		PropsUtil.setProps(new PropsImpl());
 
 		_jsonWebServiceServiceAction = new JSONWebServiceServiceAction();
 	}

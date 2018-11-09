@@ -1769,6 +1769,7 @@ rerun your task.
 					<propertyref name="liferay.releng.supported" />
 					<propertyref name="org.gradle.daemon" />
 					<propertyref name="org.gradle.internal.launcher.welcomeMessageEnabled" />
+					<propertyref name="org.gradle.warning.mode" />
 					<propertyref name="project.templates.test.builds" />
 					<propertyref name="release.versions.test.other.dir" />
 					<propertyref name="sass.compiler.class.name" />

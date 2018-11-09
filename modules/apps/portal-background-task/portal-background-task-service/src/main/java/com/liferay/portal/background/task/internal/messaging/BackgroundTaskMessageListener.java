@@ -14,7 +14,6 @@
 
 package com.liferay.portal.background.task.internal.messaging;
 
-import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.background.task.internal.SerialBackgroundTaskExecutor;
 import com.liferay.portal.background.task.internal.ThreadLocalAwareBackgroundTaskExecutor;
@@ -39,12 +38,16 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Michael C. Han
@@ -295,15 +298,26 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 		String[] servletContextNames = StringUtil.split(
 			servletContextNamesString);
 
-		ClassLoader[] classLoaders =
-			new ClassLoader[servletContextNames.length];
+		List<ClassLoader> classLoaders = new ArrayList<>(
+			servletContextNames.length);
 
-		for (int i = 0; i < servletContextNames.length; i++) {
-			classLoaders[i] = ClassLoaderPool.getClassLoader(
-				servletContextNames[i]);
+		for (String servletContextName : servletContextNames) {
+			ClassLoader classLoader =
+				ServletContextClassLoaderPool.getClassLoader(
+					servletContextName);
+
+			if (classLoader == null) {
+				_log.error(
+					"Unable to find class loader for servlet context " +
+						servletContextName);
+			}
+			else {
+				classLoaders.add(classLoader);
+			}
 		}
 
-		return AggregateClassLoader.getAggregateClassLoader(classLoaders);
+		return AggregateClassLoader.getAggregateClassLoader(
+			classLoaders.toArray(new ClassLoader[classLoaders.size()]));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

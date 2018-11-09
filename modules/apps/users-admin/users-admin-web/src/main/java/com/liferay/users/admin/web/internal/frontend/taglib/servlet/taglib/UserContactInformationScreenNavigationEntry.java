@@ -18,6 +18,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.users.admin.constants.UserFormConstants;
+import com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys;
 
 import java.io.IOException;
 
@@ -74,7 +75,7 @@ public class UserContactInformationScreenNavigationEntry
 			"users-admin-web/js/contact-information.es");
 
 		request.setAttribute(
-			"contactInformationRequireJS",
+			UsersAdminWebKeys.CONTACT_INFORMATION_REQUIRE_JS,
 			jsModuleName + " as ContactInformation");
 
 		super.render(request, response);

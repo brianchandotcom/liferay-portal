@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.FilterConfig;
 

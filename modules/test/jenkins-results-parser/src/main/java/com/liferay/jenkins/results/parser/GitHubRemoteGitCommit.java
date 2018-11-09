@@ -23,20 +23,16 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class GitHubRemoteGitCommit
-	extends BaseGitCommit implements RemoteGitCommit {
+public class GitHubRemoteGitCommit extends BaseGitCommit {
 
-	@Override
 	public String getGitHubCommitURL() {
 		return JenkinsResultsParserUtil.combine(
 			"https://github.com/", _gitHubUsername, "/", getGitRepositoryName(),
 			"/commit/", getSHA());
 	}
 
-	@Override
 	public void setStatus(
-		RemoteGitCommit.Status status, String context, String description,
-		String targetURL) {
+		Status status, String context, String description, String targetURL) {
 
 		JSONObject jsonObject = new JSONObject();
 
@@ -61,6 +57,12 @@ public class GitHubRemoteGitCommit
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
+	}
+
+	public enum Status {
+
+		ERROR, FAILURE, PENDING, SUCCESS
+
 	}
 
 	protected GitHubRemoteGitCommit(

@@ -26,42 +26,42 @@ import org.json.JSONObject;
  */
 public class GitCommitFactory {
 
-	public static LocalGitCommit newLocalGitCommit(
-		GitWorkingDirectory gitWorkingDirectory, String message, String sha) {
-
-		return new DefaultLocalGitCommit(
-			gitWorkingDirectory, message, sha, _getGitCommitType(message));
-	}
-
-	public static RemoteGitCommit newRemoteGitCommit(
+	public static GitHubRemoteGitCommit newGitHubRemoteGitCommit(
 		String gitHubUsername, String gitRepositoryName, String sha) {
 
-		String gitCommitURL = _getGitCommitURL(
+		String gitHubCommitURL = _getGitHubCommitURL(
 			gitHubUsername, gitRepositoryName, sha);
 
-		if (_remoteGitCommits.containsKey(gitCommitURL)) {
-			return _remoteGitCommits.get(gitCommitURL);
+		if (_gitHubRemoteGitCommits.containsKey(gitHubCommitURL)) {
+			return _gitHubRemoteGitCommits.get(gitHubCommitURL);
 		}
 
 		try {
 			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				gitCommitURL);
+				gitHubCommitURL);
 
 			JSONObject commitJSONObject = jsonObject.getJSONObject("commit");
 
 			String message = commitJSONObject.getString("message");
 
-			RemoteGitCommit remoteGitCommit = new GitHubRemoteGitCommit(
+			GitHubRemoteGitCommit remoteGitCommit = new GitHubRemoteGitCommit(
 				gitHubUsername, gitRepositoryName, message, sha,
 				_getGitCommitType(message));
 
-			_remoteGitCommits.put(gitCommitURL, remoteGitCommit);
+			_gitHubRemoteGitCommits.put(gitHubCommitURL, remoteGitCommit);
 
 			return remoteGitCommit;
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException("Unable to get commit details", ioe);
 		}
+	}
+
+	public static LocalGitCommit newLocalGitCommit(
+		GitWorkingDirectory gitWorkingDirectory, String message, String sha) {
+
+		return new DefaultLocalGitCommit(
+			gitWorkingDirectory, message, sha, _getGitCommitType(message));
 	}
 
 	private static GitCommit.Type _getGitCommitType(String message) {
@@ -72,14 +72,14 @@ public class GitCommitFactory {
 		return GitCommit.Type.MANUAL;
 	}
 
-	private static String _getGitCommitURL(
+	private static String _getGitHubCommitURL(
 		String gitHubUsername, String gitRepositoryName, String sha) {
 
 		return JenkinsResultsParserUtil.getGitHubApiUrl(
 			gitRepositoryName, gitHubUsername, "commits/" + sha);
 	}
 
-	private static final Map<String, RemoteGitCommit> _remoteGitCommits =
-		new HashMap<>();
+	private static final Map<String, GitHubRemoteGitCommit>
+		_gitHubRemoteGitCommits = new HashMap<>();
 
 }

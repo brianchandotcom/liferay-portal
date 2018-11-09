@@ -188,6 +188,12 @@ public class PullRequest {
 		return comments;
 	}
 
+	public GitHubRemoteGitCommit getGitHubRemoteGitCommit() {
+		return GitCommitFactory.newGitHubRemoteGitCommit(
+			getOwnerUsername(), getGitHubRemoteGitRepositoryName(),
+			getSenderSHA());
+	}
+
 	public GitHubRemoteGitRepository getGitHubRemoteGitRepository() {
 		if (_gitHubRemoteGitRepository == null) {
 			_gitHubRemoteGitRepository =
@@ -259,12 +265,6 @@ public class PullRequest {
 		JSONObject userJSONObject = baseJSONObject.getJSONObject("user");
 
 		return userJSONObject.getString("login");
-	}
-
-	public RemoteGitCommit getRemoteGitCommit() {
-		return GitCommitFactory.newRemoteGitCommit(
-			getOwnerUsername(), getGitHubRemoteGitRepositoryName(),
-			getSenderSHA());
 	}
 
 	public String getSenderBranchName() {
@@ -462,10 +462,11 @@ public class PullRequest {
 			return;
 		}
 
-		RemoteGitCommit remoteGitCommit = getRemoteGitCommit();
+		GitHubRemoteGitCommit gitHubRemoteGitCommit =
+			getGitHubRemoteGitCommit();
 
-		RemoteGitCommit.Status status = RemoteGitCommit.Status.valueOf(
-			testSuiteStatus.toString());
+		GitHubRemoteGitCommit.Status status =
+			GitHubRemoteGitCommit.Status.valueOf(testSuiteStatus.toString());
 
 		String context = _TEST_SUITE_NAME_DEFAULT;
 
@@ -496,7 +497,8 @@ public class PullRequest {
 			sb.append(" has PASSED.");
 		}
 
-		remoteGitCommit.setStatus(status, context, sb.toString(), targetURL);
+		gitHubRemoteGitCommit.setStatus(
+			status, context, sb.toString(), targetURL);
 	}
 
 	public static class Comment {

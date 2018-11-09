@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
+import com.liferay.portal.kernel.util.ServletContextClassLoaderPool;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextAttributeEvent;
@@ -108,6 +109,11 @@ public class PluginContextListener
 	@Override
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
 		portalDestroy();
+
+		if (_classLoaderRegistered) {
+			ServletContextClassLoaderPool.unregister(
+				servletContext.getServletContextName());
+		}
 	}
 
 	@Override
@@ -118,10 +124,20 @@ public class PluginContextListener
 
 		pluginClassLoader = currentThread.getContextClassLoader();
 
+		String servletContextName = servletContext.getServletContextName();
+
+		if (ServletContextClassLoaderPool.getClassLoader(servletContextName) ==
+				null) {
+
+			ServletContextClassLoaderPool.register(
+				servletContextName, pluginClassLoader);
+
+			_classLoaderRegistered = true;
+		}
+
 		servletContext.setAttribute(PLUGIN_CLASS_LOADER, pluginClassLoader);
 
-		ServletContextPool.put(
-			servletContext.getServletContextName(), servletContext);
+		ServletContextPool.put(servletContextName, servletContext);
 
 		registerPortalLifecycle();
 	}
@@ -187,5 +203,6 @@ public class PluginContextListener
 		PluginContextListener.class);
 
 	private boolean _addedPluginClassLoader;
+	private boolean _classLoaderRegistered;
 
 }

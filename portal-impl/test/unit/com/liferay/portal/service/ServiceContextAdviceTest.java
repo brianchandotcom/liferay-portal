@@ -173,8 +173,7 @@ public class ServiceContextAdviceTest {
 
 		@Override
 		public void removeMethodInterceptor(
-			MethodInvocation methodInvocation,
-			MethodInterceptor methodInterceptor) {
+			Method method, MethodInterceptor methodInterceptor) {
 
 			_removedMethodInterceptor = true;
 		}

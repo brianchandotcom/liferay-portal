@@ -32,7 +32,7 @@ public class SkipAdvice extends AnnotationChainableMethodAdvice<Skip> {
 
 		if (skip != _nullSkip) {
 			serviceBeanAopCacheManager.putMethodInterceptors(
-				methodInvocation, _emptyMethodInterceptors);
+				methodInvocation.getMethod(), _emptyMethodInterceptors);
 
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation =
 				(ServiceBeanMethodInvocation)methodInvocation;

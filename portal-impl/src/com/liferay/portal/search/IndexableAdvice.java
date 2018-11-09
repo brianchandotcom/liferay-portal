@@ -85,7 +85,7 @@ public class IndexableAdvice
 
 		if (indexer == null) {
 			serviceBeanAopCacheManager.removeMethodInterceptor(
-				methodInvocation, this);
+				methodInvocation.getMethod(), this);
 
 			return;
 		}

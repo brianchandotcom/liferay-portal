@@ -78,7 +78,7 @@ public class ServiceMonitorAdvice
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
 		if (!_monitorServiceRequest) {
 			serviceBeanAopCacheManager.removeMethodInterceptor(
-				methodInvocation, this);
+				methodInvocation.getMethod(), this);
 
 			return null;
 		}

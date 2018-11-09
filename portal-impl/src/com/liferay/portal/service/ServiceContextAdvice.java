@@ -34,7 +34,7 @@ public class ServiceContextAdvice extends ChainableMethodAdvice {
 
 		if (index < 0) {
 			serviceBeanAopCacheManager.removeMethodInterceptor(
-				methodInvocation, this);
+				methodInvocation.getMethod(), this);
 
 			return methodInvocation.proceed();
 		}

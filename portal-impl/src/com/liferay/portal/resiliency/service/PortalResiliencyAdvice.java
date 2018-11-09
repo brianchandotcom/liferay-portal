@@ -64,7 +64,7 @@ public class PortalResiliencyAdvice
 
 		if (spi == null) {
 			serviceBeanAopCacheManager.removeMethodInterceptor(
-				methodInvocation, this);
+				methodInvocation.getMethod(), this);
 
 			return null;
 		}

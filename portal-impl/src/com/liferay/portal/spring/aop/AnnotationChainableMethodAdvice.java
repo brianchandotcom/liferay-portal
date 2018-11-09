@@ -43,7 +43,7 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 
 		if (annotation == _nullAnnotation) {
 			serviceBeanAopCacheManager.removeMethodInterceptor(
-				methodInvocation, this);
+				methodInvocation.getMethod(), this);
 		}
 
 		return annotation;

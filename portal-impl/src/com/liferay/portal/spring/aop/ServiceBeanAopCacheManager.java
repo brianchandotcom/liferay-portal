@@ -101,13 +101,13 @@ public class ServiceBeanAopCacheManager {
 		MethodInvocation methodInvocation,
 		Class<? extends Annotation> annotationType, T defaultValue) {
 
+		Method method = methodInvocation.getMethod();
+
 		T annotation = _findAnnotation(
-			_methodAnnotations, methodInvocation, annotationType, defaultValue);
+			_methodAnnotations, method, annotationType, defaultValue);
 
 		if (annotation == null) {
 			annotation = defaultValue;
-
-			Method method = methodInvocation.getMethod();
 
 			Object target = methodInvocation.getThis();
 
@@ -145,35 +145,27 @@ public class ServiceBeanAopCacheManager {
 		return annotation;
 	}
 
-	public MethodInterceptor[] getMethodInterceptors(
-		MethodInvocation methodInvocation) {
-
+	public MethodInterceptor[] getMethodInterceptors(Method method) {
 		MethodInterceptor[] methodInterceptors = _methodInterceptors.get(
-			methodInvocation.getMethod());
+			method);
 
 		if (methodInterceptors == null) {
 			methodInterceptors = _fullMethodInterceptors;
 
-			_methodInterceptors.put(
-				methodInvocation.getMethod(), methodInterceptors);
+			_methodInterceptors.put(method, methodInterceptors);
 		}
 
 		return methodInterceptors;
 	}
 
 	public void putMethodInterceptors(
-		MethodInvocation methodInvocation,
-		MethodInterceptor[] methodInterceptors) {
+		Method method, MethodInterceptor[] methodInterceptors) {
 
-		_methodInterceptors.put(
-			methodInvocation.getMethod(), methodInterceptors);
+		_methodInterceptors.put(method, methodInterceptors);
 	}
 
 	public void removeMethodInterceptor(
-		MethodInvocation methodInvocation,
-		MethodInterceptor methodInterceptor) {
-
-		Method method = methodInvocation.getMethod();
+		Method method, MethodInterceptor methodInterceptor) {
 
 		MethodInterceptor[] methodInterceptors = _methodInterceptors.get(
 			method);
@@ -227,12 +219,10 @@ public class ServiceBeanAopCacheManager {
 	}
 
 	private static <T> T _findAnnotation(
-		Map<Method, Annotation[]> methodAnnotations,
-		MethodInvocation methodInvocation,
+		Map<Method, Annotation[]> methodAnnotations, Method method,
 		Class<? extends Annotation> annotationType, T defaultValue) {
 
-		Annotation[] annotations = methodAnnotations.get(
-			methodInvocation.getMethod());
+		Annotation[] annotations = methodAnnotations.get(method);
 
 		if (annotations == _nullAnnotations) {
 			return defaultValue;

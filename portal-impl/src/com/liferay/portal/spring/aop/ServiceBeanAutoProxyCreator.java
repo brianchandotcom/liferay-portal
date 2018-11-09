@@ -17,15 +17,25 @@ package com.liferay.portal.spring.aop;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
+import java.beans.PropertyDescriptor;
+
+import java.lang.reflect.Constructor;
+
+import java.util.Collections;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.aopalliance.intercept.MethodInterceptor;
 
-import org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator;
+import org.springframework.beans.PropertyValues;
+import org.springframework.beans.factory.BeanClassLoaderAware;
+import org.springframework.beans.factory.config.SmartInstantiationAwareBeanPostProcessor;
 
 /**
  * @author Shuyang Zhou
  */
 public class ServiceBeanAutoProxyCreator
-	extends AbstractAdvisorAutoProxyCreator {
+	implements BeanClassLoaderAware, SmartInstantiationAwareBeanPostProcessor {
 
 	public void afterPropertiesSet() {
 
@@ -40,10 +50,69 @@ public class ServiceBeanAutoProxyCreator
 	}
 
 	@Override
+	public Constructor<?>[] determineCandidateConstructors(
+		Class<?> beanClass, String beanName) {
+
+		return null;
+	}
+
+	@Override
+	public Object getEarlyBeanReference(Object bean, String beanName) {
+		_earlyProxyReferences.add(_getCacheKey(bean.getClass(), beanName));
+
+		return _wrapIfNecessary(bean, beanName);
+	}
+
+	@Override
+	public Object postProcessAfterInitialization(Object bean, String beanName) {
+		if (bean == null) {
+			return null;
+		}
+
+		Object cacheKey = _getCacheKey(bean.getClass(), beanName);
+
+		if (!_earlyProxyReferences.contains(cacheKey)) {
+			return _wrapIfNecessary(bean, beanName);
+		}
+
+		return bean;
+	}
+
+	@Override
+	public boolean postProcessAfterInstantiation(Object bean, String beanName) {
+		return true;
+	}
+
+	@Override
+	public Object postProcessBeforeInitialization(
+		Object bean, String beanName) {
+
+		return bean;
+	}
+
+	@Override
 	public Object postProcessBeforeInstantiation(
 		Class<?> beanClass, String beanName) {
 
 		return null;
+	}
+
+	@Override
+	public PropertyValues postProcessPropertyValues(
+		PropertyValues propertyValues, PropertyDescriptor[] propertyDescriptors,
+		Object bean, String beanName) {
+
+		return propertyValues;
+	}
+
+	@Override
+	public Class<?> predictBeanType(Class<?> beanClass, String beanName) {
+		return null;
+	}
+
+	@Override
+	public void setBeanClassLoader(ClassLoader classLoader) {
+		_classLoader = classLoader;
 	}
 
 	public void setBeanMatcher(BeanMatcher beanMatcher) {
@@ -54,10 +123,11 @@ public class ServiceBeanAutoProxyCreator
 		_methodInterceptor = methodInterceptor;
 	}
 
-	@Override
-	protected Object wrapIfNecessary(
-		Object bean, String beanName, Object cacheKey) {
+	private Object _getCacheKey(Class<?> beanClass, String beanName) {
+		return beanClass.getName() + "_" + beanName;
+	}
 
+	private Object _wrapIfNecessary(Object bean, String beanName) {
 		Class<?> beanClass = bean.getClass();
 
 		if (!_beanMatcher.match(beanClass, beanName)) {
@@ -65,12 +135,15 @@ public class ServiceBeanAutoProxyCreator
 		}
 
 		return ProxyUtil.newProxyInstance(
-			getProxyClassLoader(), ReflectionUtil.getInterfaces(bean),
+			_classLoader, ReflectionUtil.getInterfaces(bean),
 			new ServiceBeanAopInvocationHandler(
 				bean, _serviceBeanAopCacheManager));
 	}
 
 	private BeanMatcher _beanMatcher;
+	private ClassLoader _classLoader;
+	private final Set<Object> _earlyProxyReferences = Collections.newSetFromMap(
+		new ConcurrentHashMap<>(16));
 	private MethodInterceptor _methodInterceptor;
 	private ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.spring.aop;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
@@ -22,6 +23,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Constructor;
 
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -58,16 +60,16 @@ public class ServiceBeanAutoProxyCreator
 
 	@Override
 	public Object getEarlyBeanReference(Object bean, String beanName) {
-		_earlyProxyReferences.add(_getCacheKey(bean.getClass(), beanName));
+		_earlyProxyReferences.add(new CacheKey(bean.getClass(), beanName));
 
 		return _wrapIfNecessary(bean, beanName);
 	}
 
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) {
-		Object cacheKey = _getCacheKey(bean.getClass(), beanName);
+		if (!_earlyProxyReferences.contains(
+				new CacheKey(bean.getClass(), beanName))) {
 
-		if (!_earlyProxyReferences.contains(cacheKey)) {
 			return _wrapIfNecessary(bean, beanName);
 		}
 
@@ -119,10 +121,6 @@ public class ServiceBeanAutoProxyCreator
 		_methodInterceptor = methodInterceptor;
 	}
 
-	private Object _getCacheKey(Class<?> beanClass, String beanName) {
-		return beanClass.getName() + "_" + beanName;
-	}
-
 	private Object _wrapIfNecessary(Object bean, String beanName) {
 		Class<?> beanClass = bean.getClass();
 
@@ -138,9 +136,41 @@ public class ServiceBeanAutoProxyCreator
 
 	private BeanMatcher _beanMatcher;
 	private ClassLoader _classLoader;
-	private final Set<Object> _earlyProxyReferences = Collections.newSetFromMap(
-		new ConcurrentHashMap<>(16));
+	private final Set<CacheKey> _earlyProxyReferences =
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 	private MethodInterceptor _methodInterceptor;
 	private ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
+
+	private static class CacheKey {
+
+		@Override
+		public boolean equals(Object obj) {
+			CacheKey cacheKey = (CacheKey)obj;
+
+			if (_clazz.equals(cacheKey._clazz) &&
+				Objects.equals(_beanName, cacheKey._beanName)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		@Override
+		public int hashCode() {
+			int hash = HashUtil.hash(0, _clazz);
+
+			return HashUtil.hash(hash, _beanName);
+		}
+
+		private CacheKey(Class<?> clazz, String beanName) {
+			_clazz = clazz;
+			_beanName = beanName;
+		}
+
+		private final String _beanName;
+		private final Class<?> _clazz;
+
+	}
 
 }

@@ -44,9 +44,6 @@ public class SafeFileNameFileSystemStoreWrapper extends SafeFileNameStore {
 	}
 
 	protected void unsetStore(Store store) {
-		if (this.store == store) {
-			this.store = null;
-		}
 	}
 
 }

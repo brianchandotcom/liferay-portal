@@ -35,10 +35,8 @@ public class IgnoreFilter extends BasePortalFilter {
 			FilterChain filterChain)
 		throws Exception {
 
-		String currentURL = PortalUtil.getCurrentURL(request);
-
 		if (_log.isDebugEnabled()) {
-			_log.debug("Ignore " + currentURL);
+			_log.debug("Ignore " + PortalUtil.getCurrentURL(request));
 		}
 
 		PortalUtil.sendError(

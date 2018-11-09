@@ -419,10 +419,6 @@ public class AuthenticatedSessionManagerImpl
 			String authType)
 		throws PortalException {
 
-		long userId = GetterUtil.getLong(login);
-
-		Company company = PortalUtil.getCompany(request);
-
 		String requestURI = request.getRequestURI();
 
 		String contextPath = PortalUtil.getPathContext();
@@ -430,69 +426,69 @@ public class AuthenticatedSessionManagerImpl
 		if (requestURI.startsWith(contextPath.concat("/api/liferay"))) {
 			throw new AuthException();
 		}
-		else {
-			Map<String, String[]> headerMap = new HashMap<>();
 
-			Enumeration<String> enu1 = request.getHeaderNames();
+		Company company = PortalUtil.getCompany(request);
 
-			while (enu1.hasMoreElements()) {
-				String name = enu1.nextElement();
+		Map<String, String[]> headerMap = new HashMap<>();
 
-				Enumeration<String> enu2 = request.getHeaders(name);
+		Enumeration<String> enu1 = request.getHeaderNames();
 
-				List<String> headers = new ArrayList<>();
+		while (enu1.hasMoreElements()) {
+			String name = enu1.nextElement();
 
-				while (enu2.hasMoreElements()) {
-					String value = enu2.nextElement();
+			Enumeration<String> enu2 = request.getHeaders(name);
 
-					headers.add(value);
-				}
+			List<String> headers = new ArrayList<>();
 
-				headerMap.put(
-					name, headers.toArray(new String[headers.size()]));
+			while (enu2.hasMoreElements()) {
+				String value = enu2.nextElement();
+
+				headers.add(value);
 			}
 
-			Map<String, String[]> parameterMap = request.getParameterMap();
-			Map<String, Object> resultsMap = new HashMap<>();
-
-			if (Validator.isNull(authType)) {
-				authType = company.getAuthType();
-			}
-
-			int authResult = Authenticator.FAILURE;
-
-			if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
-				authResult = UserLocalServiceUtil.authenticateByEmailAddress(
-					company.getCompanyId(), login, password, headerMap,
-					parameterMap, resultsMap);
-			}
-			else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-				authResult = UserLocalServiceUtil.authenticateByScreenName(
-					company.getCompanyId(), login, password, headerMap,
-					parameterMap, resultsMap);
-			}
-			else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-				authResult = UserLocalServiceUtil.authenticateByUserId(
-					company.getCompanyId(), userId, password, headerMap,
-					parameterMap, resultsMap);
-			}
-
-			User user = (User)resultsMap.get("user");
-
-			if (authResult != Authenticator.SUCCESS) {
-				if (user != null) {
-					user = UserLocalServiceUtil.fetchUser(user.getUserId());
-				}
-
-				if (user != null) {
-					UserLocalServiceUtil.checkLockout(user);
-				}
-
-				throw new AuthException();
-			}
-
-			return user;
+			headerMap.put(name, headers.toArray(new String[headers.size()]));
 		}
+
+		Map<String, String[]> parameterMap = request.getParameterMap();
+		Map<String, Object> resultsMap = new HashMap<>();
+
+		if (Validator.isNull(authType)) {
+			authType = company.getAuthType();
+		}
+
+		int authResult = Authenticator.FAILURE;
+
+		if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
+			authResult = UserLocalServiceUtil.authenticateByEmailAddress(
+				company.getCompanyId(), login, password, headerMap,
+				parameterMap, resultsMap);
+		}
+		else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
+			authResult = UserLocalServiceUtil.authenticateByScreenName(
+				company.getCompanyId(), login, password, headerMap,
+				parameterMap, resultsMap);
+		}
+		else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
+			authResult = UserLocalServiceUtil.authenticateByUserId(
+				company.getCompanyId(), GetterUtil.getLong(login), password,
+				headerMap, parameterMap, resultsMap);
+		}
+
+		User user = (User)resultsMap.get("user");
+
+		if (authResult != Authenticator.SUCCESS) {
+			if (user != null) {
+				user = UserLocalServiceUtil.fetchUser(user.getUserId());
+			}
+
+			if (user != null) {
+				UserLocalServiceUtil.checkLockout(user);
+			}
+
+			throw new AuthException();
+		}
+
+		return user;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

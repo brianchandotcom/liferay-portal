@@ -82,12 +82,12 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 		String strutsAction = request.getParameter(
 			namespace.concat("struts_action"));
 
-		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
-
 		if (Validator.isNotNull(strutsAction)) {
 			if (_portletCSRFWhitelist.contains(strutsAction) &&
 				isValidStrutsAction(
-					portlet.getCompanyId(), rootPortletId, strutsAction)) {
+					portlet.getCompanyId(),
+					PortletIdCodec.decodePortletName(portletId),
+					strutsAction)) {
 
 				return true;
 			}

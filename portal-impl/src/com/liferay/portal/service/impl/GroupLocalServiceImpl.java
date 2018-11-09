@@ -3891,9 +3891,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
 
-		UnicodeProperties oldTypeSettingsProperties =
-			group.getTypeSettingsProperties();
-
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
 
 		typeSettingsProperties.fastLoad(typeSettings);
@@ -3902,6 +3899,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			PropsKeys.LOCALES);
 
 		if (Validator.isNotNull(newLanguageIds)) {
+			UnicodeProperties oldTypeSettingsProperties =
+				group.getTypeSettingsProperties();
+
 			String oldLanguageIds = oldTypeSettingsProperties.getProperty(
 				PropsKeys.LOCALES, StringPool.BLANK);
 
@@ -5154,9 +5154,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			}
 		}
 
-		Group parentGroup = groupPersistence.findByPrimaryKey(parentGroupId);
-
 		if (group.isStagingGroup()) {
+			Group parentGroup = groupPersistence.findByPrimaryKey(
+				parentGroupId);
+
 			Group staginGroup = parentGroup.getStagingGroup();
 
 			long stagingGroupId = staginGroup.getGroupId();

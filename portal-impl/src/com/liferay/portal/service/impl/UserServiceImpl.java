@@ -1937,12 +1937,12 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		// Group membership policy
 
-		long[] oldGroupIds = user.getGroupIds();
-
 		List<Long> addGroupIds = new ArrayList<>();
 		List<Long> removeGroupIds = Collections.emptyList();
 
 		if (groupIds != null) {
+			long[] oldGroupIds = user.getGroupIds();
+
 			removeGroupIds = ListUtil.toList(oldGroupIds);
 
 			groupIds = checkGroups(userId, groupIds);
@@ -1965,12 +1965,12 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		// Organization membership policy
 
-		long[] oldOrganizationIds = user.getOrganizationIds();
-
 		List<Long> addOrganizationIds = new ArrayList<>();
 		List<Long> removeOrganizationIds = Collections.emptyList();
 
 		if (organizationIds != null) {
+			long[] oldOrganizationIds = user.getOrganizationIds();
+
 			removeOrganizationIds = ListUtil.toList(oldOrganizationIds);
 
 			organizationIds = checkOrganizations(userId, organizationIds);
@@ -1996,12 +1996,12 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		// Role membership policy
 
-		long[] oldRoleIds = user.getRoleIds();
-
 		List<Long> addRoleIds = new ArrayList<>();
 		List<Long> removeRoleIds = Collections.emptyList();
 
 		if (roleIds != null) {
+			long[] oldRoleIds = user.getRoleIds();
+
 			removeRoleIds = ListUtil.toList(oldRoleIds);
 
 			roleIds = checkRoles(userId, roleIds);
@@ -2091,12 +2091,12 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		// User group membership policy
 
-		long[] oldUserGroupIds = user.getUserGroupIds();
-
 		List<Long> addUserGroupIds = new ArrayList<>();
 		List<Long> removeUserGroupIds = Collections.emptyList();
 
 		if (userGroupIds != null) {
+			long[] oldUserGroupIds = user.getUserGroupIds();
+
 			removeUserGroupIds = ListUtil.toList(oldUserGroupIds);
 
 			userGroupIds = checkUserGroupIds(userId, userGroupIds);
@@ -2405,15 +2405,13 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		User user = null;
-
 		if (userId != CompanyConstants.SYSTEM) {
 
 			// Add back any mandatory groups or groups that the administrator
 			// does not have the rights to remove and check that he has the
 			// permission to add a new group
 
-			user = userPersistence.findByPrimaryKey(userId);
+			User user = userPersistence.findByPrimaryKey(userId);
 
 			List<Group> oldGroups = groupLocalService.getUserGroups(userId);
 

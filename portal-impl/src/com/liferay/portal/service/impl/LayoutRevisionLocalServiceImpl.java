@@ -447,10 +447,8 @@ public class LayoutRevisionLocalServiceImpl
 
 		// Layout revision
 
-		User user = userPersistence.findByPrimaryKey(userId);
 		LayoutRevision oldLayoutRevision =
 			layoutRevisionPersistence.findByPrimaryKey(layoutRevisionId);
-		Date now = new Date();
 
 		LayoutRevision layoutRevision = null;
 
@@ -479,6 +477,8 @@ public class LayoutRevisionLocalServiceImpl
 		if (!MergeLayoutPrototypesThreadLocal.isInProgress() &&
 			(workflowAction != WorkflowConstants.ACTION_PUBLISH) &&
 			(layoutRevision == null) && !revisionInProgress) {
+
+			User user = userPersistence.findByPrimaryKey(userId);
 
 			long newLayoutRevisionId = counterLocalService.increment();
 
@@ -509,7 +509,8 @@ public class LayoutRevisionLocalServiceImpl
 			layoutRevision.setColorSchemeId(colorSchemeId);
 			layoutRevision.setCss(css);
 			layoutRevision.setStatus(WorkflowConstants.STATUS_DRAFT);
-			layoutRevision.setStatusDate(serviceContext.getModifiedDate(now));
+			layoutRevision.setStatusDate(
+				serviceContext.getModifiedDate(new Date()));
 
 			layoutRevisionPersistence.update(layoutRevision);
 

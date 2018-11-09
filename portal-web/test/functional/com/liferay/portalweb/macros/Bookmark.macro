@@ -331,11 +331,18 @@
 
 		<execute macro="PortletEntry#save" />
 
-		<execute macro="Bookmark#viewBookmark">
-			<var name="bookmarkName" value="${bookmarkName}" />
-			<var name="bookmarkURL" value="${bookmarkURL}" />
-			<var name="key_assetName" value="${bookmarkName}" />
-		</execute>
+		<if>
+			<not>
+				<isset var="skipViewBookmark" />
+			</not>
+			<then>
+				<execute macro="Bookmark#viewBookmark">
+					<var name="bookmarkName" value="${bookmarkName}" />
+					<var name="bookmarkURL" value="${bookmarkURL}" />
+					<var name="key_assetName" value="${bookmarkName}" />
+				</execute>
+			</then>
+		</if>
 	</command>
 
 	<command name="deletePG">

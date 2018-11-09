@@ -1,9 +1,11 @@
 <#assign percentage = backgroundTaskDisplay.getPercentage() />
 
 <div class="background-task-status-in-progress">
-	<div class="active progress progress-lg progress-striped reindex-progress">
-		<div class="progress-bar" style="width:${percentage}%">
-			<span class="progress-percentage">${percentage}%</span>
+	<div class="progress-group">
+		<div class="progress">
+			<div aria-valuenow="${percentage}" aria-valuemin="0" aria-valuemax="100" class="progress-bar" role="progressbar" style="width: ${percentage}%;"></div>
 		</div>
+
+		<div class="progress-group-addon">${percentage}%</div>
 	</div>
 </div>

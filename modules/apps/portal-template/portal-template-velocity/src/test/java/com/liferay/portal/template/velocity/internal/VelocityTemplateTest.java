@@ -78,22 +78,22 @@ public class VelocityTemplateTest {
 
 		fileUtil.setFile(new FileImpl());
 
-		_templateResourceLoader = new MockTemplateResourceLoader();
-
-		_templateResourceLoader.activate(
-			Collections.<String, Object>emptyMap());
-
 		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceRegistrations.add(
-			registry.registerService(
-				TemplateResourceLoader.class, _templateResourceLoader));
 
 		_serviceRegistrations.add(
 			registry.registerService(
 				TemplateResourceParser.class, new ClassLoaderResourceParser(),
 				Collections.<String, Object>singletonMap(
 					"lang.type", TemplateConstants.LANG_TYPE_VM)));
+
+		_templateResourceLoader = new MockTemplateResourceLoader();
+
+		_templateResourceLoader.activate(
+			Collections.<String, Object>emptyMap());
+
+		_serviceRegistrations.add(
+			registry.registerService(
+				TemplateResourceLoader.class, _templateResourceLoader));
 
 		_serviceReference = registry.getServiceReference(SingleVMPool.class);
 
@@ -499,6 +499,9 @@ public class VelocityTemplateTest {
 				registry.callService(MultiVMPool.class, Function.identity()));
 			setSingleVMPool(
 				registry.callService(SingleVMPool.class, Function.identity()));
+			setTemplateResourceParser(
+				registry.callService(
+					TemplateResourceParser.class, Function.identity()));
 
 			super.activate(properties);
 		}

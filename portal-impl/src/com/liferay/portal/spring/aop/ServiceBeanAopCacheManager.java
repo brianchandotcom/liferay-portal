@@ -31,7 +31,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.aopalliance.intercept.MethodInterceptor;
-import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * @author Shuyang Zhou
@@ -98,10 +97,8 @@ public class ServiceBeanAopCacheManager {
 	}
 
 	public <T> T findAnnotation(
-		MethodInvocation methodInvocation,
+		Class<?> targetClass, Method method,
 		Class<? extends Annotation> annotationType, T defaultValue) {
-
-		Method method = methodInvocation.getMethod();
 
 		T annotation = _findAnnotation(
 			_methodAnnotations, method, annotationType, defaultValue);
@@ -109,10 +106,8 @@ public class ServiceBeanAopCacheManager {
 		if (annotation == null) {
 			annotation = defaultValue;
 
-			Object target = methodInvocation.getThis();
-
 			List<Annotation> annotations = AnnotationLocator.locate(
-				method, target.getClass());
+				method, targetClass);
 
 			Iterator<Annotation> iterator = annotations.iterator();
 

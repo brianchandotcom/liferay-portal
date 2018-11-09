@@ -15,6 +15,7 @@
 package com.liferay.portal.spring.aop;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -38,12 +39,15 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 	public abstract T getNullAnnotation();
 
 	protected T findAnnotation(MethodInvocation methodInvocation) {
+		Object target = methodInvocation.getThis();
+
+		Method method = methodInvocation.getMethod();
+
 		T annotation = serviceBeanAopCacheManager.findAnnotation(
-			methodInvocation, _annotationClass, _nullAnnotation);
+			target.getClass(), method, _annotationClass, _nullAnnotation);
 
 		if (annotation == _nullAnnotation) {
-			serviceBeanAopCacheManager.removeMethodInterceptor(
-				methodInvocation.getMethod(), this);
+			serviceBeanAopCacheManager.removeMethodInterceptor(method, this);
 		}
 
 		return annotation;

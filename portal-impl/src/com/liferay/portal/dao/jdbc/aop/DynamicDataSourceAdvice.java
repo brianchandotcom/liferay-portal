@@ -107,8 +107,11 @@ public class DynamicDataSourceAdvice
 	protected MasterDataSource findAnnotation(
 		MethodInvocation methodInvocation) {
 
+		Object target = methodInvocation.getThis();
+
 		return serviceBeanAopCacheManager.findAnnotation(
-			methodInvocation, MasterDataSource.class, _nullMasterDataSource);
+			target.getClass(), methodInvocation.getMethod(),
+			MasterDataSource.class, _nullMasterDataSource);
 	}
 
 	@Override

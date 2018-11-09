@@ -35,6 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matthew Tambara
  * @author Vernon Singleton
+ * @author Kyle Stiemann
  */
 @Component(
 	configurationPid = "com.liferay.portlet.tck.bridge.configuration.PortletTCKBridgeConfiguration",

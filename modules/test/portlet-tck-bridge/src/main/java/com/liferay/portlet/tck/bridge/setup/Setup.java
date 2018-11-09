@@ -58,6 +58,7 @@ import org.osgi.framework.Bundle;
 
 /**
  * @author Vernon Singleton
+ * @author Kyle Stiemann
  */
 public class Setup {
 

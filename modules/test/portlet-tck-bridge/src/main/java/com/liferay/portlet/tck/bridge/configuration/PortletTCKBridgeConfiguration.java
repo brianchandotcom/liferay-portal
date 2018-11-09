@@ -21,6 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Shuyang Zhou
  * @author Vernon Singleton
+ * @author Kyle Stiemann
  */
 @ExtendedObjectClassDefinition(category = "infrastructure")
 @Meta.OCD(

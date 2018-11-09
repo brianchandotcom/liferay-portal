@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.portal.kernel.servlet;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

@@ -1460,6 +1460,10 @@
 			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Templates" />
+		</execute>
+
 		<execute macro="WebContentTemplates#deleteCP">
 			<var name="templateName" value="WC Template Name" />
 			<var name="webContentHasReference" value="true" />
@@ -2749,10 +2753,18 @@
 			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Templates" />
+		</execute>
+
 		<execute macro="WebContentTemplates#addNullCP" />
 
 		<execute macro="WebContent#openWebContentAdmin">
 			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Templates" />
 		</execute>
 
 		<execute macro="WebContentTemplates#addNullCP" />

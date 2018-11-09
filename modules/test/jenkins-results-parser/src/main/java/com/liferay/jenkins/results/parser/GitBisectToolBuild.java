@@ -68,9 +68,11 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		super(url, topLevelBuild);
 	}
 
-	protected Element getBuildDurationCell(PortalBuildData portalBuildData) {
+	protected Element getBuildDurationCellElement(
+		PortalBuildData portalBuildData) {
+
 		if (portalBuildData == null) {
-			return getEmptyCell();
+			return getEmptyCellElement();
 		}
 
 		return Dom4JUtil.getNewElement(
@@ -79,9 +81,9 @@ public class GitBisectToolBuild extends TopLevelBuild {
 				portalBuildData.getBuildDuration()));
 	}
 
-	protected Element getBuildLinkCell(PortalBuildData portalBuildData) {
+	protected Element getBuildLinkCellElement(PortalBuildData portalBuildData) {
 		if (portalBuildData == null) {
-			return getEmptyCell();
+			return getEmptyCellElement();
 		}
 
 		return Dom4JUtil.getNewElement(
@@ -90,18 +92,22 @@ public class GitBisectToolBuild extends TopLevelBuild {
 				portalBuildData.getBuildURL(), "build"));
 	}
 
-	protected Element getBuildResultCell(PortalBuildData portalBuildData) {
+	protected Element getBuildResultCellElement(
+		PortalBuildData portalBuildData) {
+
 		if (portalBuildData == null) {
-			return getEmptyCell();
+			return getEmptyCellElement();
 		}
 
 		return Dom4JUtil.getNewElement(
 			"td", null, portalBuildData.getBuildResult());
 	}
 
-	protected Element getBuildStatusCell(PortalBuildData portalBuildData) {
+	protected Element getBuildStatusCellElement(
+		PortalBuildData portalBuildData) {
+
 		if (portalBuildData == null) {
-			return getEmptyCell();
+			return getEmptyCellElement();
 		}
 
 		return Dom4JUtil.getNewElement(
@@ -121,10 +127,10 @@ public class GitBisectToolBuild extends TopLevelBuild {
 			getCommitMessageCellElement(localGitCommit),
 			getDiffLinkCellElement(
 				localGitCommit, currentGitCommitGroup, nextGitCommitGroup),
-			getBuildLinkCell(portalBuildData),
-			getBuildDurationCell(portalBuildData),
-			getBuildStatusCell(portalBuildData),
-			getBuildResultCell(portalBuildData));
+			getBuildLinkCellElement(portalBuildData),
+			getBuildDurationCellElement(portalBuildData),
+			getBuildStatusCellElement(portalBuildData),
+			getBuildResultCellElement(portalBuildData));
 	}
 
 	protected Element getCommitGroupHeaderToggleCellElement(
@@ -133,7 +139,7 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		if ((currentGitCommitGroup == null) ||
 			(currentGitCommitGroup.size() <= 1)) {
 
-			return getEmptyCell();
+			return getEmptyCellElement();
 		}
 
 		Element labelElement = Dom4JUtil.getNewElement("label", null, "+");
@@ -155,8 +161,9 @@ public class GitBisectToolBuild extends TopLevelBuild {
 			"tr", null,
 			getCommitGroupHeaderToggleCellElement(localGitCommit, null),
 			getCommitLinkCellElement(localGitCommit, false),
-			getCommitMessageCellElement(localGitCommit), getEmptyCell(),
-			getEmptyCell(), getEmptyCell(), getEmptyCell(), getEmptyCell());
+			getCommitMessageCellElement(localGitCommit), getEmptyCellElement(),
+			getEmptyCellElement(), getEmptyCellElement(), getEmptyCellElement(),
+			getEmptyCellElement());
 	}
 
 	protected List<GitCommitGroup> getCommitGroups() {
@@ -245,7 +252,7 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		GitCommitGroup nextGitCommitGroup) {
 
 		if (nextGitCommitGroup == null) {
-			return getEmptyCell();
+			return getEmptyCellElement();
 		}
 
 		LocalGitCommit firstNextLocalGitCommit = nextGitCommitGroup.get(0);
@@ -265,7 +272,7 @@ public class GitBisectToolBuild extends TopLevelBuild {
 					String.valueOf(currentGitCommitGroup.size()), " commits")));
 	}
 
-	protected Element getEmptyCell() {
+	protected Element getEmptyCellElement() {
 		return Dom4JUtil.getNewElement("td");
 	}
 

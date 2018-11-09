@@ -35,6 +35,8 @@
 	</tear-down>
 
 	<command name="DisplayMySitesPagination" priority="3">
+		<description message="Assert that pagination is working for the MySites widget" />
+
 		<property name="testray.component.names" value="Site Administration" />
 
 		<for list="01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24" param="index">
@@ -71,6 +73,8 @@
 	</command>
 
 	<command name="JoinSiteOpen" priority="4">
+		<description message="Assert a default user can join a normal open site" />
+
 		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
 
 		<execute macro="JSONGroup#addGroup">
@@ -113,6 +117,8 @@
 	</command>
 
 	<command name="JoinSitePrivateNo" priority="5">
+		<description message="Assert a default user cannot join a normal private site" />
+
 		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
 
@@ -160,6 +166,8 @@
 	</command>
 
 	<command name="JoinSiteRestricted" priority="5">
+		<description message="Assert joining a restricted site requires admin approval" />
+
 		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
 
 		<execute macro="Site#openSitesAdmin" />
@@ -250,6 +258,8 @@
 	</command>
 
 	<command name="LeaveSite" priority="5">
+		<description message="Assert a default user can join leave a site" />
+
 		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
 
@@ -299,6 +309,8 @@
 	</command>
 
 	<command name="SearchSite" priority="4">
+		<description message="Search for a site using MySites widget" />
+
 		<property name="testray.component.names" value="Site Administration" />
 
 		<execute macro="JSONGroup#addGroup">
@@ -336,6 +348,8 @@
 	</command>
 
 	<command name="ViewMembershipAssignViaSiteCP" priority="3">
+		<description message="Asssign site membership to a user in multiple ways via CP" />
+
 		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
 
 		<execute macro="JSONUser#addUser">
@@ -409,6 +423,8 @@
 	</command>
 
 	<command name="ViewNoInactiveSite" priority="3">
+		<description message="Assert inactive sites are not searchable" />
+
 		<property name="testray.component.names" value="Site Administration" />
 
 		<execute macro="JSONGroup#addGroup">
@@ -443,6 +459,8 @@
 	</command>
 
 	<command name="ViewNoJoinOption" priority="3">
+		<description message="Assert a user cannot join a site with manual membership management disabled" />
+
 		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
 
 		<execute macro="JSONUser#addUser">
@@ -513,6 +531,8 @@
 	</command>
 
 	<command name="ViewNoLeaveOption" priority="3">
+		<description message="Assert a user cannot leave a site with manual membership management disabled" />
+
 		<property name="testray.component.names" value="Site Administration" />
 
 		<execute macro="JSONGroup#addGroup">
@@ -549,6 +569,8 @@
 	</command>
 
 	<command name="ViewSitePages" priority="3">
+		<description message="Assert a user can navigate to a Site's public or private pages via MySites widget" />
+
 		<property name="testray.component.names" value="Site Administration" />
 
 		<execute macro="JSONGroup#addGroup">
@@ -593,6 +615,8 @@
 	</command>
 
 	<command name="ViewSiteWithTags" priority="4">
+		<description message="Assert that site tags appear in MySites widget" />
+
 		<property name="testray.component.names" value="Site Administration,Tags" />
 
 		<execute macro="JSONGroup#addGroup">

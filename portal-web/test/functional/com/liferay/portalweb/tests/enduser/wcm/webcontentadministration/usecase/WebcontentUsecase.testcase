@@ -2836,9 +2836,7 @@
 
 		<execute macro="NavItem#gotoTemplates" />
 
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="WebContentTemplates#inputTemplateAddScreenFields">
+		<execute macro="WebContentTemplates#addCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
 			<var name="templateFieldNames" value="Text" />

@@ -77,9 +77,7 @@
 			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="User#openUsersAdmin" />
-
-		<execute macro="User#addCP">
+		<execute macro="JSONUser#addUser">
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
@@ -125,9 +123,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="User#openUsersAdmin" />
-
-		<execute macro="User#addCP">
+		<execute macro="JSONUser#addUser">
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
@@ -173,9 +169,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="User#openUsersAdmin" />
-
-		<execute macro="User#addCP">
+		<execute macro="JSONUser#addUser">
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
@@ -263,9 +257,7 @@
 			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="User#openUsersAdmin" />
-
-		<execute macro="User#addCP">
+		<execute macro="JSONUser#addUser">
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
@@ -346,9 +338,7 @@
 	<command name="ViewMembershipAssignViaSiteCP" priority="3">
 		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
 
-		<execute macro="User#openUsersAdmin" />
-
-		<execute macro="User#addCP">
+		<execute macro="JSONUser#addUser">
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
@@ -363,7 +353,7 @@
 		</execute>
 
 		<execute macro="Site#openSiteMembershipsAdmin">
-			<var name="siteURLKey" value="site-name" />
+			<var name="siteURLKey" value="home-site" />
 		</execute>
 
 		<execute macro="Site#assignUserAsMemberCP">
@@ -372,11 +362,9 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="User#openUsersAdmin" />
-
-		<execute macro="User#assignRegularRoleCP">
+		<execute macro="JSONRole#assignRoleToUser">
 			<var name="roleTitle" value="Power User" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
 		<execute macro="JSONGroup#addGroup">
@@ -457,9 +445,7 @@
 	<command name="ViewNoJoinOption" priority="3">
 		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
 
-		<execute macro="User#openUsersAdmin" />
-
-		<execute macro="User#addCP">
+		<execute macro="JSONUser#addUser">
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
@@ -483,11 +469,9 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="User#openUsersAdmin" />
-
-		<execute macro="User#assignRegularRoleCP">
+		<execute macro="JSONRole#assignRoleToUser">
 			<var name="roleTitle" value="Administrator" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
 		<execute macro="JSONGroup#addGroup">

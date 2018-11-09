@@ -977,6 +977,23 @@
 		</execute>
 	</command>
 
+	<command name="viewMBThreadVisualStatePG">
+		<if>
+			<isset var="unReadMBthread" />
+			<then>
+				<var name="key_threadSubject" value="${threadSubject}" />
+
+				<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_LIST_THREAD_UNREAD" value1="${threadSubject}" />
+			</then>
+			<else>
+				<var name="key_threadSubject" value="${threadSubject}" />
+
+				<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
+				<execute function="AssertElementNotPresent" locator1="MessageBoards#THREAD_LIST_THREAD_UNREAD" />
+			</else>
+		</if>
+	</command>
+
 	<command name="viewNoAnonymousPostingCheckboxCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 

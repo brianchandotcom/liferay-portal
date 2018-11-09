@@ -30,6 +30,12 @@
 				<outputType>com.liferay.dynamic.data.mapping.storage.DDMFormValues</outputType>
 			</attribute>
 			<attribute>
+				<name>defaultEditLocale</name>
+				<inputType>java.util.Locale</inputType>
+				<outputType>java.util.Locale</outputType>
+				<required>false</required>
+			</attribute>
+			<attribute>
 				<name>documentLibrarySelectorURL</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>

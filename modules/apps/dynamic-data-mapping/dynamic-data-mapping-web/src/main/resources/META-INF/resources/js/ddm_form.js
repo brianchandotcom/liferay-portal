@@ -277,6 +277,12 @@ AUI.add(
 					displayLocale = instance.getDefaultLocale();
 				}
 
+				var defaultEditLocale = instance.get('defaultEditLocale');
+
+				if (defaultEditLocale) {
+					displayLocale = defaultEditLocale;
+				}
+
 				return displayLocale;
 			},
 
@@ -2969,6 +2975,9 @@ AUI.add(
 
 					ddmFormValuesInput: {
 						setter: A.one
+					},
+
+					defaultEditLocale :{
 					},
 
 					documentLibrarySelectorURL: {

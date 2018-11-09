@@ -129,6 +129,7 @@
 					{
 						container: '#<%= randomNamespace %>',
 						ddmFormValuesInput: '#<portlet:namespace /><%= HtmlUtil.getAUICompatibleId(ddmFormValuesInputName) %>',
+						defaultEditLocale: '<%= (defaultEditLocale == null) ? StringPool.BLANK : HtmlUtil.escapeJS(defaultEditLocale.toString()) %>',
 						documentLibrarySelectorURL: '<%= documentLibrarySelectorURL %>',
 						definition: <%= DDMUtil.getDDMFormJSONString(ddmForm) %>,
 						doAsGroupId: <%= scopeGroupId %>,

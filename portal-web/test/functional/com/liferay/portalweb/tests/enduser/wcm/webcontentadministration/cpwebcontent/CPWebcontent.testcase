@@ -636,6 +636,10 @@
 			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Templates" />
+		</execute>
+
 		<execute macro="WebContentTemplates#viewCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
@@ -662,6 +666,10 @@
 
 		<execute macro="WebContent#openWebContentAdmin">
 			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Templates" />
 		</execute>
 
 		<execute macro="WebContentTemplates#viewCP">
@@ -1302,6 +1310,10 @@
 			<var name="siteURLKey" value="global" />
 		</execute>
 
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Templates" />
+		</execute>
+
 		<execute macro="WebContentTemplates#viewCP">
 			<var name="structureName" value="Basic Web Content Edit" />
 			<var name="templateDescription" value="Basic Web Content Description" />
@@ -1822,6 +1834,10 @@
 
 		<execute macro="WebContent#openWebContentAdmin">
 			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Templates" />
 		</execute>
 
 		<execute macro="WebContentTemplates#viewCP">

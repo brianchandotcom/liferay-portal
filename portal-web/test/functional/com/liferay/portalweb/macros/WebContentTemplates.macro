@@ -332,11 +332,7 @@
 		</execute>
 	</command>
 
-	<command name="viewCP">
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Templates" />
-		</execute>
-
+	<command name="viewCP" summary="Assert that certain template attributes are present">
 		<var name="key_ddlTemplateName" value="${templateName}" />
 
 		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" value1="${templateName}" />

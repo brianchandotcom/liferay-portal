@@ -238,6 +238,10 @@
 			<var name="siteURLKey" value="test-site-name" />
 		</execute>
 
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Templates" />
+		</execute>
+
 		<execute macro="WebContentTemplates#viewCP">
 			<var name="templateDescription" value="WC Template Description" />
 			<var name="templateName" value="WC Template Name" />
@@ -486,6 +490,10 @@
 		<for list="Carousel Display,Thumbnail Display,Content List Display" param="templateName">
 			<execute macro="WebContent#openWebContentAdmin">
 				<var name="siteURLKey" value="test-site-name" />
+			</execute>
+
+			<execute macro="Navigator#gotoNavItem">
+				<var name="navItem" value="Templates" />
 			</execute>
 
 			<execute macro="WebContentTemplates#viewCP">
@@ -1018,6 +1026,10 @@
 		</execute>
 
 		<for list="3 Columns with Images Template,Footer Content Template,1 Column Banner Template,News,Events" param="templateName">
+			<execute macro="Navigator#gotoNavItem">
+				<var name="navItem" value="Templates" />
+			</execute>
+
 			<execute macro="WebContentTemplates#viewCP">
 				<var name="templateDescription" value="" />
 				<var name="templateName" value="${templateName}" />

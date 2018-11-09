@@ -108,6 +108,33 @@ public class GitBisectToolBuild extends TopLevelBuild {
 			"td", null, portalBuildData.getBuildStatus());
 	}
 
+	protected Element getCommitGroupHeaderToggleCellElement(
+		Commit commit, CommitGroup currentCommitGroup) {
+
+		if (currentCommitGroup == null) {
+			return getEmptyCell();
+		}
+
+		List<Commit> currentCommits = currentCommitGroup.getCommits();
+
+		if (currentCommits.size() <= 1) {
+			return getEmptyCell();
+		}
+
+		Element labelElement = Dom4JUtil.getNewElement("label", null, "+");
+
+		labelElement.addAttribute("for", commit.getSHA());
+
+		Element inputElement = Dom4JUtil.getNewElement("input", null);
+
+		inputElement.addAttribute("data-toggle", "toggle");
+		inputElement.addAttribute("id", commit.getSHA());
+		inputElement.addAttribute("name", commit.getSHA());
+		inputElement.addAttribute("type", "checkbox");
+
+		return Dom4JUtil.getNewElement("td", null, labelElement, inputElement);
+	}
+
 	protected List<CommitGroup> getCommitGroups() {
 		List<BuildData> buildDataList = Lists.newArrayList(
 			_downstreamBuildDataList);
@@ -158,6 +185,31 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		}
 
 		return commitGroups;
+	}
+
+	protected Element getCommitGroupsHeaderRowElement(
+		Commit commit, PortalBuildData portalBuildData,
+		CommitGroup currentCommitGroup, CommitGroup nextCommitGroup,
+		boolean firstCommit) {
+
+		return Dom4JUtil.getNewElement(
+			"tr", null,
+			getCommitGroupHeaderToggleCellElement(commit, currentCommitGroup),
+			getCommitLinkCellElement(commit, firstCommit),
+			getCommitMessageCellElement(commit),
+			getDiffLinkCellElement(commit, currentCommitGroup, nextCommitGroup),
+			getBuildDurationCell(portalBuildData),
+			getBuildLinkCell(portalBuildData),
+			getBuildStatusCell(portalBuildData),
+			getBuildResultCell(portalBuildData));
+	}
+
+	protected Element getCommitGroupsRowElement(Commit commit) {
+		return Dom4JUtil.getNewElement(
+			"tr", null, getCommitGroupHeaderToggleCellElement(commit, null),
+			getCommitLinkCellElement(commit, false),
+			getCommitMessageCellElement(commit), getEmptyCell(), getEmptyCell(),
+			getEmptyCell(), getEmptyCell(), getEmptyCell());
 	}
 
 	protected Element getCommitLinkCellElement(Commit commit, boolean header) {
@@ -215,58 +267,6 @@ public class GitBisectToolBuild extends TopLevelBuild {
 
 	protected Element getEmptyCell() {
 		return Dom4JUtil.getNewElement("td");
-	}
-
-	protected Element getGroupedCommitHeaderToggleCellElement(
-		Commit commit, CommitGroup currentCommitGroup) {
-
-		if (currentCommitGroup == null) {
-			return getEmptyCell();
-		}
-
-		List<Commit> currentCommits = currentCommitGroup.getCommits();
-
-		if (currentCommits.size() <= 1) {
-			return getEmptyCell();
-		}
-
-		Element labelElement = Dom4JUtil.getNewElement("label", null, "+");
-
-		labelElement.addAttribute("for", commit.getSHA());
-
-		Element inputElement = Dom4JUtil.getNewElement("input", null);
-
-		inputElement.addAttribute("data-toggle", "toggle");
-		inputElement.addAttribute("id", commit.getSHA());
-		inputElement.addAttribute("name", commit.getSHA());
-		inputElement.addAttribute("type", "checkbox");
-
-		return Dom4JUtil.getNewElement("td", null, labelElement, inputElement);
-	}
-
-	protected Element getGroupedCommitsHeaderRowElement(
-		Commit commit, PortalBuildData portalBuildData,
-		CommitGroup currentCommitGroup, CommitGroup nextCommitGroup,
-		boolean firstCommit) {
-
-		return Dom4JUtil.getNewElement(
-			"tr", null,
-			getGroupedCommitHeaderToggleCellElement(commit, currentCommitGroup),
-			getCommitLinkCellElement(commit, firstCommit),
-			getCommitMessageCellElement(commit),
-			getDiffLinkCellElement(commit, currentCommitGroup, nextCommitGroup),
-			getBuildDurationCell(portalBuildData),
-			getBuildLinkCell(portalBuildData),
-			getBuildStatusCell(portalBuildData),
-			getBuildResultCell(portalBuildData));
-	}
-
-	protected Element getGroupedCommitsRowElement(Commit commit) {
-		return Dom4JUtil.getNewElement(
-			"tr", null, getGroupedCommitHeaderToggleCellElement(commit, null),
-			getCommitLinkCellElement(commit, false),
-			getCommitMessageCellElement(commit), getEmptyCell(), getEmptyCell(),
-			getEmptyCell(), getEmptyCell(), getEmptyCell());
 	}
 
 	protected Element getJenkinsReportBodyElement() {
@@ -419,10 +419,10 @@ public class GitBisectToolBuild extends TopLevelBuild {
 			List<Commit> commits = commitGroup.getCommits();
 			PortalBuildData portalBuildData = commitGroup.getPortalBuildData();
 
-			Element groupedCommitsHeaderElement = Dom4JUtil.getNewElement(
+			Element commitGroupsHeaderElement = Dom4JUtil.getNewElement(
 				"tbody", tableBodyElement);
 
-			groupedCommitsHeaderElement.addAttribute("class", "result-row");
+			commitGroupsHeaderElement.addAttribute("class", "result-row");
 
 			CommitGroup nextCommitGroup = null;
 
@@ -437,21 +437,21 @@ public class GitBisectToolBuild extends TopLevelBuild {
 			}
 
 			Dom4JUtil.addToElement(
-				groupedCommitsHeaderElement,
-				getGroupedCommitsHeaderRowElement(
+				commitGroupsHeaderElement,
+				getCommitGroupsHeaderRowElement(
 					commits.get(0), portalBuildData, commitGroup,
 					nextCommitGroup, firstCommit));
 
 			if (commits.size() > 1) {
-				Element groupedCommitsElement = Dom4JUtil.getNewElement(
+				Element commitGroupsElement = Dom4JUtil.getNewElement(
 					"tbody", tableBodyElement);
 
-				groupedCommitsElement.addAttribute("class", "hidden-row");
+				commitGroupsElement.addAttribute("class", "hidden-row");
 
 				for (int j = 1; j < commits.size(); j++) {
 					Dom4JUtil.addToElement(
-						groupedCommitsElement,
-						getGroupedCommitsRowElement(commits.get(j)));
+						commitGroupsElement,
+						getCommitGroupsRowElement(commits.get(j)));
 				}
 			}
 		}

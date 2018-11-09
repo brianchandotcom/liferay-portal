@@ -49,6 +49,10 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		return _ddmFormValues;
 	}
 
+	public java.util.Locale getDefaultEditLocale() {
+		return _defaultEditLocale;
+	}
+
 	public java.lang.String getDocumentLibrarySelectorURL() {
 		return _documentLibrarySelectorURL;
 	}
@@ -103,6 +107,10 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 
 	public void setDdmFormValues(com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues) {
 		_ddmFormValues = ddmFormValues;
+	}
+
+	public void setDefaultEditLocale(java.util.Locale defaultEditLocale) {
+		_defaultEditLocale = defaultEditLocale;
 	}
 
 	public void setDocumentLibrarySelectorURL(java.lang.String documentLibrarySelectorURL) {
@@ -160,6 +168,7 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		_classNameId = 0;
 		_classPK = 0;
 		_ddmFormValues = null;
+		_defaultEditLocale = null;
 		_documentLibrarySelectorURL = null;
 		_fieldsNamespace = null;
 		_ignoreRequestValue = false;
@@ -183,6 +192,7 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "classNameId", _classNameId);
 		setNamespacedAttribute(request, "classPK", _classPK);
 		setNamespacedAttribute(request, "ddmFormValues", _ddmFormValues);
+		setNamespacedAttribute(request, "defaultEditLocale", _defaultEditLocale);
 		setNamespacedAttribute(request, "documentLibrarySelectorURL", _documentLibrarySelectorURL);
 		setNamespacedAttribute(request, "fieldsNamespace", _fieldsNamespace);
 		setNamespacedAttribute(request, "ignoreRequestValue", _ignoreRequestValue);
@@ -204,6 +214,7 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 	private long _classNameId = 0;
 	private long _classPK = 0;
 	private com.liferay.dynamic.data.mapping.storage.DDMFormValues _ddmFormValues = null;
+	private java.util.Locale _defaultEditLocale = null;
 	private java.lang.String _documentLibrarySelectorURL = null;
 	private java.lang.String _fieldsNamespace = null;
 	private boolean _ignoreRequestValue = false;

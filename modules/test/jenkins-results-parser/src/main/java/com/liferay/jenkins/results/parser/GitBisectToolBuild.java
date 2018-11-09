@@ -121,8 +121,8 @@ public class GitBisectToolBuild extends TopLevelBuild {
 			getCommitMessageCellElement(localGitCommit),
 			getDiffLinkCellElement(
 				localGitCommit, currentGitCommitGroup, nextGitCommitGroup),
-			getBuildDurationCell(portalBuildData),
 			getBuildLinkCell(portalBuildData),
+			getBuildDurationCell(portalBuildData),
 			getBuildStatusCell(portalBuildData),
 			getBuildResultCell(portalBuildData));
 	}
@@ -262,13 +262,7 @@ public class GitBisectToolBuild extends TopLevelBuild {
 					gitHubCommitDiffURL, firstNextLocalGitCommit.getSHA(),
 					"...", localGitCommit.getSHA()),
 				JenkinsResultsParserUtil.combine(
-					firstNextLocalGitCommit.getAbbreviatedSHA(), "...",
-					localGitCommit.getAbbreviatedSHA())),
-			Dom4JUtil.getNewElement(
-				"span", null,
-				JenkinsResultsParserUtil.combine(
-					"(", String.valueOf(currentGitCommitGroup.size()),
-					" commits)")));
+					String.valueOf(currentGitCommitGroup.size()), " commits")));
 	}
 
 	protected Element getEmptyCell() {

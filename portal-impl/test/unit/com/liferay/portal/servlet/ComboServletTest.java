@@ -17,8 +17,10 @@ package com.liferay.portal.servlet;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
+import com.liferay.portal.kernel.model.PortletWrapper;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletLocalServiceWrapper;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -49,13 +51,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.internal.stubbing.answers.CallsRealMethods;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
@@ -99,32 +98,24 @@ public class ComboServletTest extends PowerMockito {
 	public void setUp() throws ServletException {
 		MockitoAnnotations.initMocks(this);
 
-		when(
-			_portletLocalService.getPortletById(Matchers.anyString())
-		).thenAnswer(
-			new Answer<Portlet>() {
+		_portletLocalService = new PortletLocalServiceWrapper(null) {
 
-				@Override
-				public Portlet answer(InvocationOnMock invocation)
-					throws Throwable {
-
-					Object[] args = invocation.getArguments();
-
-					if (Objects.equals(_TEST_PORTLET_ID, args[0])) {
-						return _testPortlet;
-					}
-					else if (Objects.equals(PortletKeys.PORTAL, args[0])) {
-						return _portalPortlet;
-					}
-					else if (Objects.equals(_NONEXISTING_PORTLET_ID, args[0])) {
-						return null;
-					}
-
-					return _portletUndeployed;
+			@Override
+			public Portlet getPortletById(String portletId) {
+				if (Objects.equals(_TEST_PORTLET_ID, portletId)) {
+					return _testPortlet;
+				}
+				else if (Objects.equals(PortletKeys.PORTAL, portletId)) {
+					return _portalPortlet;
+				}
+				else if (Objects.equals(_NONEXISTING_PORTLET_ID, portletId)) {
+					return null;
 				}
 
+				return _portletUndeployed;
 			}
-		);
+
+		};
 
 		mockStatic(PortletLocalServiceUtil.class, new CallsRealMethods());
 
@@ -144,11 +135,14 @@ public class ComboServletTest extends PowerMockito {
 
 		setUpTestPortlet();
 
-		when(
-			_portletUndeployed.isUndeployedPortlet()
-		).thenReturn(
-			true
-		);
+		_portletUndeployed = new PortletWrapper(null) {
+
+			@Override
+			public boolean isUndeployedPortlet() {
+				return true;
+			}
+
+		};
 
 		mockStatic(PrefsPropsUtil.class);
 
@@ -298,28 +292,34 @@ public class ComboServletTest extends PowerMockito {
 
 	protected void setUpPortalPortlet() {
 		when(
-			_portalPortlet.getContextPath()
-		).thenReturn(
-			"portal"
-		);
-
-		when(
 			_portalPortletApp.getServletContext()
 		).thenReturn(
 			_portalServletContext
 		);
 
-		when(
-			_portalPortlet.getPortletApp()
-		).thenReturn(
-			_portalPortletApp
-		);
+		_portalPortlet = new PortletWrapper(null) {
 
-		when(
-			_portalPortlet.getRootPortletId()
-		).thenReturn(
-			PortletKeys.PORTAL
-		);
+			@Override
+			public String getContextPath() {
+				return "portal";
+			}
+
+			@Override
+			public PortletApp getPortletApp() {
+				return _portalPortletApp;
+			}
+
+			@Override
+			public String getRootPortletId() {
+				return PortletKeys.PORTAL;
+			}
+
+			@Override
+			public boolean isUndeployedPortlet() {
+				return false;
+			}
+
+		};
 	}
 
 	protected void setUpPortalServletContext() {
@@ -335,17 +335,24 @@ public class ComboServletTest extends PowerMockito {
 			_pluginServletContext
 		);
 
-		when(
-			_testPortlet.getPortletApp()
-		).thenReturn(
-			_testPortletApp
-		);
+		_testPortlet = new PortletWrapper(null) {
 
-		when(
-			_testPortlet.getRootPortletId()
-		).thenReturn(
-			_TEST_PORTLET_ID
-		);
+			@Override
+			public PortletApp getPortletApp() {
+				return _testPortletApp;
+			}
+
+			@Override
+			public String getRootPortletId() {
+				return _TEST_PORTLET_ID;
+			}
+
+			@Override
+			public boolean isUndeployedPortlet() {
+				return false;
+			}
+
+		};
 	}
 
 	private static final String _NONEXISTING_PORTLET_ID = "2345678";
@@ -361,22 +368,14 @@ public class ComboServletTest extends PowerMockito {
 	private MockHttpServletRequest _mockHttpServletRequest;
 	private MockHttpServletResponse _mockHttpServletResponse;
 	private MockServletContext _pluginServletContext;
-
-	@Mock
 	private Portlet _portalPortlet;
 
 	@Mock
 	private PortletApp _portalPortletApp;
 
 	private MockServletContext _portalServletContext;
-
-	@Mock
 	private PortletLocalService _portletLocalService;
-
-	@Mock
 	private Portlet _portletUndeployed;
-
-	@Mock
 	private Portlet _testPortlet;
 
 	@Mock

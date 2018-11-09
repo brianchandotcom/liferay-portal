@@ -40,13 +40,6 @@ public abstract class BaseCommit implements Commit {
 	}
 
 	@Override
-	public String getGitHubCommitDiffURL(Commit previousCommit) {
-		return JenkinsResultsParserUtil.combine(
-			"https://github.com/", _gitHubUserName, "/", _gitRepositoryName,
-			"/", getSHA(), "...", previousCommit.getSHA());
-	}
-
-	@Override
 	public String getGitHubCommitURL() {
 		return JenkinsResultsParserUtil.combine(
 			"https://github.com/", _gitHubUserName, "/", _gitRepositoryName,

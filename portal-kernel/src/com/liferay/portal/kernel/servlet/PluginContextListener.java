@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.servlet;
 
-import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -108,10 +107,6 @@ public class PluginContextListener
 
 	@Override
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
-		ServletContext servletContext = servletContextEvent.getServletContext();
-
-		ClassLoaderPool.unregister(servletContext.getServletContextName());
-
 		portalDestroy();
 	}
 
@@ -122,9 +117,6 @@ public class PluginContextListener
 		Thread currentThread = Thread.currentThread();
 
 		pluginClassLoader = currentThread.getContextClassLoader();
-
-		ClassLoaderPool.register(
-			servletContext.getServletContextName(), pluginClassLoader);
 
 		servletContext.setAttribute(PLUGIN_CLASS_LOADER, pluginClassLoader);
 

@@ -231,6 +231,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>THREAD_LIST_THREAD_UNREAD</td>
+	<td>//*[@data-qa-id='rowItemContent']/h4/a/strong[contains(.,'${key_threadSubject}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>THREAD_LIST_VIEWS</td>
 	<td>//li[contains(.,'${key_threadSubject}')]/div/span[2]</td>
 	<td></td>

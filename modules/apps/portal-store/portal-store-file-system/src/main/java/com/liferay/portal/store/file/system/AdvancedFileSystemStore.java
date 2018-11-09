@@ -38,6 +38,7 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * <p>
@@ -100,6 +101,7 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 	}
 
 	@Activate
+	@Modified
 	@Override
 	protected void activate(Map<String, Object> properties) {
 		_advancedFileSystemStoreConfiguration =

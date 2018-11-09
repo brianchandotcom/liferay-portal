@@ -67,7 +67,7 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 	public void testGetSiteGroupId() throws Exception {
 		long groupId = RandomTestUtil.randomLong();
 
-		setUpGroup(groupId);
+		setUpGroup(groupId, false);
 
 		Assert.assertEquals(groupId, _indexer.getSiteGroupId(groupId));
 	}
@@ -77,7 +77,7 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 		long groupId = RandomTestUtil.randomLong();
 		long parentGroupId = RandomTestUtil.randomLong();
 
-		setUpLayoutGroup(groupId, parentGroupId);
+		setUpLayoutGroup(groupId, parentGroupId, false);
 
 		Assert.assertEquals(parentGroupId, _indexer.getSiteGroupId(groupId));
 	}
@@ -95,13 +95,7 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 	public void testIsStagingGroup() throws Exception {
 		long groupId = RandomTestUtil.randomLong();
 
-		Group group = setUpGroup(groupId);
-
-		Mockito.when(
-			group.isStagingGroup()
-		).thenReturn(
-			true
-		);
+		setUpGroup(groupId, true);
 
 		Assert.assertEquals(true, _indexer.isStagingGroup(groupId));
 	}
@@ -111,13 +105,7 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 		long groupId = RandomTestUtil.randomLong();
 		long parentGroupId = RandomTestUtil.randomLong();
 
-		Group parentGroup = setUpLayoutGroup(groupId, parentGroupId);
-
-		Mockito.when(
-			parentGroup.isStagingGroup()
-		).thenReturn(
-			true
-		);
+		setUpLayoutGroup(groupId, parentGroupId, true);
 
 		Assert.assertEquals(true, _indexer.isStagingGroup(groupId));
 	}
@@ -131,13 +119,21 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 		Assert.assertEquals(false, _indexer.isStagingGroup(groupId));
 	}
 
-	protected Group setUpGroup(long groupId) throws Exception {
+	protected Group setUpGroup(long groupId, boolean stagingGroup)
+		throws Exception {
+
 		Group group = Mockito.mock(Group.class);
 
 		Mockito.when(
 			group.getGroupId()
 		).thenReturn(
 			groupId
+		);
+
+		Mockito.when(
+			group.isStagingGroup()
+		).thenReturn(
+			stagingGroup
 		);
 
 		Mockito.when(
@@ -159,7 +155,8 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 		);
 	}
 
-	protected Group setUpLayoutGroup(long groupId, long parentGroupId)
+	protected Group setUpLayoutGroup(
+			long groupId, long parentGroupId, boolean stagingGroup)
 		throws PortalException {
 
 		Group group = Mockito.mock(Group.class);
@@ -170,6 +167,12 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 			parentGroup.getGroupId()
 		).thenReturn(
 			parentGroupId
+		);
+
+		Mockito.when(
+			parentGroup.isStagingGroup()
+		).thenReturn(
+			stagingGroup
 		);
 
 		Mockito.when(

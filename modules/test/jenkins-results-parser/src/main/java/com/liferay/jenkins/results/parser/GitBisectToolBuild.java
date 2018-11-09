@@ -17,9 +17,7 @@ package com.liferay.jenkins.results.parser;
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -94,6 +92,49 @@ public class GitBisectToolBuild extends TopLevelBuild {
 			"td", null, portalBuildData.getBuildStatus());
 	}
 
+	protected List<CommitGroup> getCommitGroups() {
+		List<BuildData> buildDataList = Lists.newArrayList(
+			_downstreamBuildDataList);
+
+		List<CommitGroup> commitGroups = new ArrayList<>(
+			_downstreamBuildDataList.size());
+
+		CommitGroup commitGroup = null;
+
+		for (Commit commit : _workspaceGitRepository.getHistoricalCommits()) {
+			String sha = commit.getSHA();
+
+			PortalBuildData portalBuildData = null;
+
+			for (BuildData buildData : buildDataList) {
+				if (buildData instanceof PortalBuildData) {
+					PortalBuildData currentPortalBuildData =
+						(PortalBuildData)buildData;
+
+					if (sha.equals(
+							currentPortalBuildData.getPortalBranchSHA())) {
+
+						portalBuildData = currentPortalBuildData;
+
+						break;
+					}
+				}
+			}
+
+			if (portalBuildData != null) {
+				buildDataList.remove(portalBuildData);
+
+				commitGroup = new CommitGroup(portalBuildData);
+
+				commitGroups.add(commitGroup);
+			}
+
+			commitGroup.addCommit(commit);
+		}
+
+		return commitGroups;
+	}
+
 	protected Element getCommitLinkCellElement(Commit commit, boolean header) {
 		String prefix = "";
 
@@ -155,53 +196,6 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		inputElement.addAttribute("type", "checkbox");
 
 		return Dom4JUtil.getNewElement("td", null, labelElement, inputElement);
-	}
-
-	protected LinkedHashMap<List<Commit>, PortalBuildData>
-		getGroupedCommitPortalBuildDataMap() {
-
-		List<BuildData> buildDataList = Lists.newArrayList(
-			_downstreamBuildDataList);
-
-		LinkedHashMap<List<Commit>, PortalBuildData>
-			groupedCommitsPortalBuildDataMap = new LinkedHashMap<>(
-				_downstreamBuildDataList.size());
-
-		List<Commit> groupedCommitsList = null;
-
-		for (Commit commit : _workspaceGitRepository.getHistoricalCommits()) {
-			String sha = commit.getSHA();
-
-			PortalBuildData portalBuildData = null;
-
-			for (BuildData buildData : buildDataList) {
-				if (buildData instanceof PortalBuildData) {
-					PortalBuildData currentPortalBuildData =
-						(PortalBuildData)buildData;
-
-					if (sha.equals(
-							currentPortalBuildData.getPortalBranchSHA())) {
-
-						portalBuildData = currentPortalBuildData;
-
-						break;
-					}
-				}
-			}
-
-			if ((portalBuildData != null) || (groupedCommitsList == null)) {
-				buildDataList.remove(portalBuildData);
-
-				groupedCommitsList = new ArrayList<>();
-
-				groupedCommitsPortalBuildDataMap.put(
-					groupedCommitsList, portalBuildData);
-			}
-
-			groupedCommitsList.add(commit);
-		}
-
-		return groupedCommitsPortalBuildDataMap;
 	}
 
 	protected Element getGroupedCommitsHeaderRowElement(
@@ -368,17 +362,13 @@ public class GitBisectToolBuild extends TopLevelBuild {
 	protected Element getJenkinsReportTableBodyElement() {
 		Element tableBodyElement = Dom4JUtil.getNewElement("tbody");
 
-		LinkedHashMap<List<Commit>, PortalBuildData>
-			groupedCommitsPortalBuildDataMap =
-				getGroupedCommitPortalBuildDataMap();
+		List<CommitGroup> commitGroups = getCommitGroups();
 
 		List<Commit> previousGroupedCommits = null;
 
-		for (Map.Entry<List<Commit>, PortalBuildData> entry :
-				groupedCommitsPortalBuildDataMap.entrySet()) {
-
-			List<Commit> commits = entry.getKey();
-			PortalBuildData portalBuildData = entry.getValue();
+		for (CommitGroup commitGroup : commitGroups) {
+			List<Commit> commits = commitGroup.getCommits();
+			PortalBuildData portalBuildData = commitGroup.getPortalBuildData();
 
 			Element groupedCommitsHeaderElement = Dom4JUtil.getNewElement(
 				"tbody", tableBodyElement);
@@ -463,6 +453,31 @@ public class GitBisectToolBuild extends TopLevelBuild {
 			getJenkinsReportTableBodyElement());
 
 		return topLevelTableElement;
+	}
+
+	protected static class CommitGroup {
+
+		public CommitGroup(PortalBuildData portalBuildData) {
+			this.portalBuildData = portalBuildData;
+
+			commits = new ArrayList<>();
+		}
+
+		public void addCommit(Commit commit) {
+			commits.add(commit);
+		}
+
+		public List<Commit> getCommits() {
+			return commits;
+		}
+
+		public PortalBuildData getPortalBuildData() {
+			return portalBuildData;
+		}
+
+		protected List<Commit> commits;
+		protected PortalBuildData portalBuildData;
+
 	}
 
 	private static final String _JQUERY_URL =

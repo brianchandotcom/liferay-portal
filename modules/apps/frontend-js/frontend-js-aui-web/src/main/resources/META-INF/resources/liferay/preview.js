@@ -29,9 +29,9 @@ AUI.add(
 
 		var TPL_LOADING_INDICATOR = '<div class="lfr-preview-file-loading-indicator hide">{0}&nbsp;</div>';
 
-		var TPL_MAX_ARROW_LEFT = '<a href="javascript:;" class="image-viewer-control carousel-control left lfr-preview-file-arrow">' + Liferay.Util.getLexiconIconTpl('angle-left') + '</a>';
+		var TPL_MAX_ARROW_LEFT = '<a href="javascript:;" class="image-viewer-control carousel-control carousel-control-prev left lfr-preview-file-arrow">' + Liferay.Util.getLexiconIconTpl('angle-left') + '</a>';
 
-		var TPL_MAX_ARROW_RIGHT = '<a href="javascript:;" class="image-viewer-control carousel-control right lfr-preview-file-arrow">' + Liferay.Util.getLexiconIconTpl('angle-right') + '</a>';
+		var TPL_MAX_ARROW_RIGHT = '<a href="javascript:;" class="image-viewer-control carousel-control carousel-control-next right lfr-preview-file-arrow">' + Liferay.Util.getLexiconIconTpl('angle-right') + '</a>';
 
 		var TPL_MAX_CONTROLS = '<span class="lfr-preview-file-image-overlay-controls"></span>';
 

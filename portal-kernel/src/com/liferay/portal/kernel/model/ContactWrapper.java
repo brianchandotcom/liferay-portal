@@ -73,7 +73,6 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 		attributes.put("lastName", getLastName());
 		attributes.put("prefixId", getPrefixId());
 		attributes.put("suffixId", getSuffixId());
-		attributes.put("male", isMale());
 		attributes.put("birthday", getBirthday());
 		attributes.put("smsSn", getSmsSn());
 		attributes.put("facebookSn", getFacebookSn());
@@ -191,12 +190,6 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 
 		if (suffixId != null) {
 			setSuffixId(suffixId);
-		}
-
-		Boolean male = (Boolean)attributes.get("male");
-
-		if (male != null) {
-			setMale(male);
 		}
 
 		Date birthday = (Date)attributes.get("birthday");
@@ -467,16 +460,6 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	}
 
 	/**
-	* Returns the male of this contact.
-	*
-	* @return the male of this contact
-	*/
-	@Override
-	public boolean getMale() {
-		return _contact.getMale();
-	}
-
-	/**
 	* Returns the middle name of this contact.
 	*
 	* @return the middle name of this contact
@@ -624,16 +607,6 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	@Override
 	public boolean isEscapedModel() {
 		return _contact.isEscapedModel();
-	}
-
-	/**
-	* Returns <code>true</code> if this contact is male.
-	*
-	* @return <code>true</code> if this contact is male; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isMale() {
-		return _contact.isMale();
 	}
 
 	@Override
@@ -844,16 +817,6 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	@Override
 	public void setLastName(String lastName) {
 		_contact.setLastName(lastName);
-	}
-
-	/**
-	* Sets whether this contact is male.
-	*
-	* @param male the male of this contact
-	*/
-	@Override
-	public void setMale(boolean male) {
-		_contact.setMale(male);
 	}
 
 	/**

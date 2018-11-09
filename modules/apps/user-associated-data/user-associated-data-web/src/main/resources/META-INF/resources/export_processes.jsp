@@ -51,7 +51,11 @@ UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportPro
 			cssClass="lfr-create-date-column table-cell-expand"
 		>
 			<%= LanguageUtil.get(request, "create-date") + ": " + dateFormat.format(backgroundTask.getCreateDate()) %>
+		</liferay-ui:search-container-column-text>
 
+		<liferay-ui:search-container-column-text
+			cssClass="lfr-completion-date-column table-cell-expand"
+		>
 			<c:if test="<%= backgroundTask.isInProgress() %>">
 
 				<%
@@ -62,15 +66,11 @@ UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportPro
 					<liferay-util:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 				</liferay-util:include>
 			</c:if>
-		</liferay-ui:search-container-column-text>
 
-		<c:if test="<%= backgroundTask.isCompleted() %>">
-			<liferay-ui:search-container-column-text
-				cssClass="lfr-completion-date-column table-cell-expand"
-			>
+			<c:if test="<%= backgroundTask.isCompleted() %>">
 				<%= LanguageUtil.get(request, "completion-date") + ": " + dateFormat.format(backgroundTask.getCompletionDate()) %>
-			</liferay-ui:search-container-column-text>
-		</c:if>
+			</c:if>
+		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-jsp
 			cssClass="entry-action-column"

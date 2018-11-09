@@ -460,6 +460,16 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	}
 
 	/**
+	* Always returns true, since this information is no longer stored in the database
+	*
+	* @deprecated As of Judson (7.1.x)
+	*/
+	@Override
+	public boolean getMale() {
+		return _contact.getMale();
+	}
+
+	/**
 	* Returns the middle name of this contact.
 	*
 	* @return the middle name of this contact
@@ -607,6 +617,16 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	@Override
 	public boolean isEscapedModel() {
 		return _contact.isEscapedModel();
+	}
+
+	/**
+	* Always returns true, since this information is no longer stored in the database
+	*
+	* @deprecated As of Judson (7.1.x)
+	*/
+	@Override
+	public boolean isMale() {
+		return _contact.isMale();
 	}
 
 	@Override
@@ -817,6 +837,16 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	@Override
 	public void setLastName(String lastName) {
 		_contact.setLastName(lastName);
+	}
+
+	/**
+	* Does nothing, since this information is no longer stored in the database
+	*
+	* @deprecated As of Judson (7.1.x)
+	*/
+	@Override
+	public void setMale(boolean male) {
+		_contact.setMale(male);
 	}
 
 	/**

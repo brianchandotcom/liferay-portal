@@ -56,4 +56,25 @@ public interface Contact extends ContactModel, PersistedModel {
 	public String getFullName();
 
 	public boolean isUser();
+
+	/**
+	* Always returns true, since this information is no longer stored in the database
+	*
+	* @deprecated As of Judson (7.1.x)
+	*/
+	public boolean getMale();
+
+	/**
+	* Always returns true, since this information is no longer stored in the database
+	*
+	* @deprecated As of Judson (7.1.x)
+	*/
+	public boolean isMale();
+
+	/**
+	* Does nothing, since this information is no longer stored in the database
+	*
+	* @deprecated As of Judson (7.1.x)
+	*/
+	public void setMale(boolean male);
 }

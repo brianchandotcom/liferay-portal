@@ -111,13 +111,7 @@ public class GitBisectToolBuild extends TopLevelBuild {
 	protected Element getCommitGroupHeaderToggleCellElement(
 		Commit commit, CommitGroup currentCommitGroup) {
 
-		if (currentCommitGroup == null) {
-			return getEmptyCell();
-		}
-
-		List<Commit> currentCommits = currentCommitGroup.getCommits();
-
-		if (currentCommits.size() <= 1) {
+		if ((currentCommitGroup == null) || (currentCommitGroup.size() <= 1)) {
 			return getEmptyCell();
 		}
 
@@ -181,7 +175,7 @@ public class GitBisectToolBuild extends TopLevelBuild {
 				commitGroups.add(commitGroup);
 			}
 
-			commitGroup.addCommit(commit);
+			commitGroup.add(commit);
 		}
 
 		return commitGroups;
@@ -239,11 +233,7 @@ public class GitBisectToolBuild extends TopLevelBuild {
 			return getEmptyCell();
 		}
 
-		List<Commit> currentCommits = currentCommitGroup.getCommits();
-
-		List<Commit> nextCommits = nextCommitGroup.getCommits();
-
-		Commit firstNextCommit = nextCommits.get(0);
+		Commit firstNextCommit = nextCommitGroup.get(0);
 
 		String gitHubCommitDiffURL = _workspaceGitRepository.getGitHubURL();
 
@@ -262,7 +252,8 @@ public class GitBisectToolBuild extends TopLevelBuild {
 			Dom4JUtil.getNewElement(
 				"span", null,
 				JenkinsResultsParserUtil.combine(
-					"(", String.valueOf(currentCommits.size()), " commits)")));
+					"(", String.valueOf(currentCommitGroup.size()),
+					" commits)")));
 	}
 
 	protected Element getEmptyCell() {
@@ -416,7 +407,6 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		for (int i = 0; i < commitGroups.size(); i++) {
 			CommitGroup commitGroup = commitGroups.get(i);
 
-			List<Commit> commits = commitGroup.getCommits();
 			PortalBuildData portalBuildData = commitGroup.getPortalBuildData();
 
 			Element commitGroupsHeaderElement = Dom4JUtil.getNewElement(
@@ -439,19 +429,19 @@ public class GitBisectToolBuild extends TopLevelBuild {
 			Dom4JUtil.addToElement(
 				commitGroupsHeaderElement,
 				getCommitGroupsHeaderRowElement(
-					commits.get(0), portalBuildData, commitGroup,
+					commitGroup.get(0), portalBuildData, commitGroup,
 					nextCommitGroup, firstCommit));
 
-			if (commits.size() > 1) {
+			if (commitGroup.size() > 1) {
 				Element commitGroupsElement = Dom4JUtil.getNewElement(
 					"tbody", tableBodyElement);
 
 				commitGroupsElement.addAttribute("class", "hidden-row");
 
-				for (int j = 1; j < commits.size(); j++) {
+				for (int j = 1; j < commitGroup.size(); j++) {
 					Dom4JUtil.addToElement(
 						commitGroupsElement,
-						getCommitGroupsRowElement(commits.get(j)));
+						getCommitGroupsRowElement(commitGroup.get(j)));
 				}
 			}
 		}
@@ -515,27 +505,16 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		return topLevelTableElement;
 	}
 
-	protected static class CommitGroup {
+	protected static class CommitGroup extends ArrayList<Commit> {
 
 		public CommitGroup(PortalBuildData portalBuildData) {
 			this.portalBuildData = portalBuildData;
-
-			commits = new ArrayList<>();
-		}
-
-		public void addCommit(Commit commit) {
-			commits.add(commit);
-		}
-
-		public List<Commit> getCommits() {
-			return commits;
 		}
 
 		public PortalBuildData getPortalBuildData() {
 			return portalBuildData;
 		}
 
-		protected List<Commit> commits;
 		protected PortalBuildData portalBuildData;
 
 	}

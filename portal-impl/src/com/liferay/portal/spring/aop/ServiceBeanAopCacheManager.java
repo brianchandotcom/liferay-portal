@@ -130,9 +130,15 @@ public class ServiceBeanAopCacheManager {
 				}
 			}
 
-			_setAnnotations(
-				_methodAnnotations, methodInvocation,
-				annotations.toArray(new Annotation[annotations.size()]));
+			if (annotations.isEmpty()) {
+				_methodAnnotations.put(
+					methodInvocation.getMethod(), _nullAnnotations);
+			}
+			else {
+				_methodAnnotations.put(
+					methodInvocation.getMethod(),
+					annotations.toArray(new Annotation[annotations.size()]));
+			}
 		}
 
 		return annotation;
@@ -242,17 +248,6 @@ public class ServiceBeanAopCacheManager {
 		}
 
 		return defaultValue;
-	}
-
-	private static void _setAnnotations(
-		Map<Method, Annotation[]> methodAnnotations,
-		MethodInvocation methodInvocation, Annotation[] annotations) {
-
-		if (ArrayUtil.isEmpty(annotations)) {
-			annotations = _nullAnnotations;
-		}
-
-		methodAnnotations.put(methodInvocation.getMethod(), annotations);
 	}
 
 	private void _registerAnnotationChainableMethodAdvice(

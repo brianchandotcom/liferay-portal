@@ -44,13 +44,27 @@ public class GitCommitFactory {
 
 			String message = commitJSONObject.getString("message");
 
-			GitHubRemoteGitCommit remoteGitCommit = new GitHubRemoteGitCommit(
-				gitHubUsername, gitRepositoryName, message, sha,
-				_getGitCommitType(message));
+			JSONObject committerJSONObject = commitJSONObject.getJSONObject(
+				"committer");
 
-			_gitHubRemoteGitCommits.put(gitHubCommitURL, remoteGitCommit);
+			try {
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+					"yyyy-MM-dd'T'HH:mm:ss");
 
-			return remoteGitCommit;
+				Date date = simpleDateFormat.parse(
+					committerJSONObject.getString("date"));
+
+				GitHubRemoteGitCommit remoteGitCommit = new GitHubRemoteGitCommit(
+					gitHubUsername, gitRepositoryName, message, sha,
+					_getGitCommitType(message), date.getTime());
+
+				_gitHubRemoteGitCommits.put(gitHubCommitURL, remoteGitCommit);
+
+				return remoteGitCommit;
+			}
+			catch (ParseException pe) {
+				throw new RuntimeException(pe);
+			}
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException("Unable to get commit details", ioe);

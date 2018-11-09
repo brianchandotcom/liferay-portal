@@ -14,6 +14,11 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
+import java.util.TimeZone;
+
 import org.json.JSONObject;
 
 /**
@@ -33,6 +38,16 @@ public abstract class BaseGitCommit implements GitCommit {
 	@Override
 	public String getAbbreviatedSHA() {
 		return _sha.substring(0, 7);
+	}
+
+	@Override
+	public String getCommitDate() {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd h:mm:ss aa z");
+
+		simpleDateFormat.setTimeZone(TimeZone.getTimeZone("PST"));
+
+		return simpleDateFormat.format(new Date(_commitTime));
 	}
 
 	@Override
@@ -68,6 +83,7 @@ public abstract class BaseGitCommit implements GitCommit {
 	public JSONObject toJSONObject() {
 		JSONObject jsonObject = new JSONObject();
 
+		jsonObject.put("commitTime", _commitTime);
 		jsonObject.put("message", _message);
 		jsonObject.put("sha", _sha);
 
@@ -76,14 +92,16 @@ public abstract class BaseGitCommit implements GitCommit {
 
 	protected BaseGitCommit(
 		String gitRepositoryName, String message, String sha,
-		GitCommit.Type type) {
+		GitCommit.Type type, long commitTime) {
 
 		_gitRepositoryName = gitRepositoryName;
 		_message = message;
 		_sha = sha;
 		_type = type;
+		_commitTime = commitTime;
 	}
 
+	private final long _commitTime;
 	private final String _gitRepositoryName;
 	private final String _message;
 	private final String _sha;

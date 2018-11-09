@@ -21,9 +21,9 @@ public class DefaultLocalGitCommit extends BaseLocalGitCommit {
 
 	protected DefaultLocalGitCommit(
 		GitWorkingDirectory gitWorkingDirectory, String message, String sha,
-		GitCommit.Type type) {
+		GitCommit.Type type, long commitTime) {
 
-		super(gitWorkingDirectory, message, sha, type);
+		super(gitWorkingDirectory, message, sha, type, commitTime);
 	}
 
 }

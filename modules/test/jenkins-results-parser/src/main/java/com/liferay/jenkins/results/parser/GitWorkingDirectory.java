@@ -1469,7 +1469,7 @@ public class GitWorkingDirectory {
 	public List<LocalGitCommit> log(int start, int num, File file) {
 		List<LocalGitCommit> localGitCommits = new ArrayList<>(num);
 
-		String gitLog = _log(start, num, file, "%H %s");
+		String gitLog = _log(start, num, file, "%H %ct %s");
 
 		gitLog = gitLog.replaceAll("Finished executing Bash commands.", "");
 
@@ -1783,8 +1783,13 @@ public class GitWorkingDirectory {
 			throw new IllegalArgumentException("Unable to find Git SHA");
 		}
 
+		int unixTimestamp = Integer.valueOf(matcher.group("commitTime"));
+
+		long epochTimestamp = (long)unixTimestamp * 1000;
+
 		return GitCommitFactory.newLocalGitCommit(
-			this, matcher.group("message"), matcher.group("sha"));
+			this, matcher.group("message"), matcher.group("sha"),
+			epochTimestamp);
 	}
 
 	protected File getRealGitDirectory(File gitFile) {
@@ -2112,7 +2117,7 @@ public class GitWorkingDirectory {
 	private static final Pattern _gitDirectoryPathPattern = Pattern.compile(
 		"gitdir\\: (.*)\\s*");
 	private static final Pattern _gitLogEntityPattern = Pattern.compile(
-		"(?<sha>[0-9a-f]{40}) (?<message>.*)");
+		"(?<sha>[0-9a-f]{40}) (?<commitTime>\\d+) (?<message>.*)");
 	private static final List<String> _privateOnlyGitRepositoryNames =
 		_getBuildPropertyAsList(
 			"git.working.directory.private.only.repository.names");

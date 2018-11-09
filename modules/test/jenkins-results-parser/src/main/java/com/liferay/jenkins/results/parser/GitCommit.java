@@ -26,6 +26,8 @@ public interface GitCommit {
 
 	public String getAbbreviatedSHA();
 
+	public String getCommitDate();
+
 	public String getGitRepositoryName();
 
 	public String getMessage();

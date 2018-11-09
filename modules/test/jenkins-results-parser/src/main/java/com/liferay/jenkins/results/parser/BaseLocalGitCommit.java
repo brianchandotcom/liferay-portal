@@ -27,9 +27,11 @@ public abstract class BaseLocalGitCommit
 
 	protected BaseLocalGitCommit(
 		GitWorkingDirectory gitWorkingDirectory, String message, String sha,
-		GitCommit.Type type) {
+		GitCommit.Type type, long commitTime) {
 
-		super(gitWorkingDirectory.getGitRepositoryName(), message, sha, type);
+		super(
+			gitWorkingDirectory.getGitRepositoryName(), message, sha, type,
+			commitTime);
 
 		_gitWorkingDirectory = gitWorkingDirectory;
 	}

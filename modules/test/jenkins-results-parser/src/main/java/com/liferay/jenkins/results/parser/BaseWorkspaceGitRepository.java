@@ -78,12 +78,11 @@ public abstract class BaseWorkspaceGitRepository
 		for (int i = 0; i < commitsJSONArray.length(); i++) {
 			JSONObject commitJSONObject = commitsJSONArray.getJSONObject(i);
 
-			String gitLogEntity = JenkinsResultsParserUtil.combine(
-				commitJSONObject.getString("sha"), " ",
-				commitJSONObject.getString("message"));
-
 			_historicalLocalGitCommits.add(
-				gitWorkingDirectory.getLocalGitCommit(gitLogEntity));
+				GitCommitFactory.newLocalGitCommit(
+					gitWorkingDirectory, commitJSONObject.getString("message"),
+					commitJSONObject.getString("sha"),
+					commitJSONObject.getLong("commitTime")));
 		}
 
 		return _historicalLocalGitCommits;

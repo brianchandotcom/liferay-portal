@@ -32,12 +32,9 @@
 	<command name="AddNavigationMenuEntriesAllTypes" priority="5">
 		<property name="portal.acceptance" value="true" />
 
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page Name" />
+		<execute macro="JSONLayout#addPublicLayout">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Test Page Name" />
 		</execute>
 
 		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
@@ -86,13 +83,10 @@
 	</command>
 
 	<command name="AddNavigationMenuEntriesNestItems" priority="5">
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<for list="1,2" param="index">
-			<execute macro="SitePages#addPublicPage">
-				<var name="pageName" value="Test Page Name ${index}" />
+			<execute macro="JSONLayout#addPublicLayout">
+				<var name="groupName" value="Test Site Name" />
+				<var name="layoutName" value="Test Page Name ${index}" />
 			</execute>
 		</for>
 
@@ -139,13 +133,10 @@
 	</command>
 
 	<command name="AddNavigationMenuEntriesSortViewOrder" priority="5">
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<for list="1,2,3,4" param="index">
-			<execute macro="SitePages#addPublicPage">
-				<var name="pageName" value="Test Page Name ${index}" />
+		<for list="1,2" param="index">
+			<execute macro="JSONLayout#addPublicLayout">
+				<var name="groupName" value="Test Site Name" />
+				<var name="layoutName" value="Test Page Name ${index}" />
 			</execute>
 		</for>
 
@@ -434,13 +425,10 @@
 		<description message="This is a usecase for LPS-76658" />
 		<property name="portal.acceptance" value="true" />
 
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
 		<for list="1,2" param="index">
-			<execute macro="SitePages#addPublicPage">
-				<var name="pageName" value="Site Page Name ${index}" />
+			<execute macro="JSONLayout#addPublicLayout">
+				<var name="groupName" value="Test Site Name" />
+				<var name="layoutName" value="Test Page Name ${index}" />
 			</execute>
 		</for>
 

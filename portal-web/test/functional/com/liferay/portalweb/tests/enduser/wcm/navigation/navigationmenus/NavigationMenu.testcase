@@ -193,41 +193,6 @@
 		</execute>
 	</command>
 
-	<command name="AddPageToNavigationMenuUponCreation" priority="3">
-		<execute macro="SitePages#openPagesAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page Name" />
-		</execute>
-
-		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavigationMenusAdmin#addMenu">
-			<var name="menuName" value="Primary Menu Name 1" />
-		</execute>
-
-		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
-			<var name="siteURLKey" value="test-site-name" />
-		</execute>
-
-		<execute macro="NavigationMenusAdmin#addMenu">
-			<var name="menuName" value="Primary Menu Name 2" />
-		</execute>
-
-		<execute macro="NavigationMenusAdmin#addItem">
-			<var name="item" value="Page" />
-			<var name="pageNames" value="Test Page Name" />
-		</execute>
-
-		<execute macro="NavigationMenusAdmin#viewItem">
-			<var name="itemName" value="Test Page Name" />
-		</execute>
-	</command>
-
 	<command name="AddSubmenuNavigationMenu" priority="5">
 		<description message="This is a use case for LPS-75061" />
 

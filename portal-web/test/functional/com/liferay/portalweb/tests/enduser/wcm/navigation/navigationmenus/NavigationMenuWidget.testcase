@@ -1,0 +1,177 @@
+<definition component-name="portal-wcm">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Navigation" />
+
+	<command name="AddURLNavigationMenu" priority="4">
+		<description message="This is a use case for LPS-75059." />
+
+		<execute macro="JSONLayout#addPublicLayout">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#addMenu">
+			<var name="menuName" value="Test Navigation Menu Name" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#addItem">
+			<var name="item" value="URL" />
+			<var name="url" value="https://www.liferay.com/" />
+			<var name="urlName" value="Liferay" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#viewItem">
+			<var name="itemName" value="Liferay" />
+		</execute>
+
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Test Site Name" />
+		</execute>
+
+		<execute macro="NavigationMenusWidget#gotoNavigationMenuWidgetConfig" />
+
+		<execute macro="NavigationMenusWidget#chooseMenu">
+			<var name="menuName" value="Test Navigation Menu Name" />
+		</execute>
+
+		<execute macro="Portlet#saveAndCloseConfig" />
+
+		<execute function="AssertClick" locator1="Home#PAGE" value1="Liferay">
+			<var name="key_pageName" value="Liferay" />
+		</execute>
+
+		<execute function="AssertLocation" value1="https://www.liferay.com/" />
+	</command>
+
+	<command name="AddSubmenuNavigationMenu" priority="5">
+		<description message="This is a use case for LPS-75061" />
+
+		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#addMenu">
+			<var name="menuName" value="Primary Menu Name 1" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Primary Menu Name 1" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#addItem">
+			<var name="item" value="Submenu" />
+			<var name="submenuName" value="Test Submenu" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#viewItem">
+			<var name="itemName" value="Test Submenu" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#addItem">
+			<var name="item" value="URL" />
+			<var name="url" value="https://www.liferay.com/" />
+			<var name="urlName" value="Liferay" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#viewItem">
+			<var name="itemName" value="Liferay" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#moveItem">
+			<var name="direction" value="up" />
+			<var name="itemName" value="Liferay" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#moveItem">
+			<var name="direction" value="in" />
+			<var name="itemName" value="Liferay" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#viewItemNested">
+			<var name="itemName" value="Liferay" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Test Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoChildPagePG">
+			<var name="childPageName" value="Liferay" />
+			<var name="pageName" value="Test Submenu" />
+		</execute>
+	</command>
+
+	<command name="EditNavigationMenuPageItemName" priority="5">
+		<description message="This is a usecase for LPS-76658" />
+		<property name="portal.acceptance" value="true" />
+
+		<for list="1,2" param="index">
+			<execute macro="JSONLayout#addPublicLayout">
+				<var name="groupName" value="Test Site Name" />
+				<var name="layoutName" value="Test Page Name ${index}" />
+			</execute>
+		</for>
+
+		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#addMenu">
+			<var name="menuName" value="Test Navigation Menu Name" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#addItem">
+			<var name="item" value="Page" />
+			<var name="pageNames" value="Site Page Name 1,Site Page Name 2" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Test Navigation Menu Name" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#editItem">
+			<var name="item" value="Page" />
+			<var name="itemName" value="Site Page Name 2" />
+			<var name="name" value="Site Page Name 3" />
+		</execute>
+
+		<execute macro="NavigationMenusAdmin#viewItem">
+			<var name="itemName" value="Site Page Name 3" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page Name 1" />
+			<var name="siteName" value="Test Site Name" />
+		</execute>
+
+		<execute macro="NavigationMenusWidget#gotoNavigationMenuWidgetConfig" />
+
+		<execute macro="NavigationMenusWidget#selectNavigation">
+			<var name="menuType" value="Primary Navigation" />
+		</execute>
+
+		<execute macro="Portlet#saveAndCloseConfig" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page Name 3" />
+			<var name="siteName" value="Test Site Name" />
+		</execute>
+
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute function="AssertLocation" value1="${portalURL}/web/test-site-name/site-page-name-2" />
+	</command>
+</definition>

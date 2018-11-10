@@ -371,6 +371,28 @@
 		<execute macro="Page#tearDownCP" />
 	</command>
 
+	<command name="toggleShowInPagesHierarchyMenu">
+		<if>
+			<equals arg1="${toggleValue}" arg2="enable" />
+			<then>
+				<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#ANY_TOGGLE_SWITCH">
+					<var name="key_toggleSwitchLabel" value="Pages Hierarchy Menu" />
+				</execute>
+			</then>
+			<elseif>
+				<equals arg1="${toggleValue}" arg2="disable" />
+				<then>
+					<execute function="Uncheck#uncheckToggleSwitch" locator1="ToggleSwitch#ANY_TOGGLE_SWITCH">
+						<var name="key_toggleSwitchLabel" value="Pages Hierarchy Menu" />
+					</execute>
+				</then>
+			</elseif>
+			<else>
+				<fail message="Failed. Please set ${toggleValue} to enable or disable." />
+			</else>
+		</if>
+	</command>
+
 	<command name="togglePageTemplateInheritChanges">
 		<if>
 			<equals arg1="${toggleValue}" arg2="enable" />

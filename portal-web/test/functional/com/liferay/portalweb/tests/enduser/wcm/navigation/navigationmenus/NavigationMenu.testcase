@@ -184,6 +184,30 @@
 		</execute>
 	</command>
 
+	<command name="AssertNavigationMenuNotCreatedByDefault" priority="3">
+		<description message="This is a use case for LPS-87134. We assert that navigation menus are not automatically created, even if a page is created." />
+
+		<!-- Create a public and private page -->
+
+		<execute macro="JSONLayout#addPublicLayout">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="JSONLayout#addPrivateLayout">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Test Page Name" />
+		</execute>
+
+		<!-- Assert navigation menu not created -->
+
+		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#EMPTY_INFO" value1="There are no navigation menus." />
+	</command>
+
 	<command name="ConfigurePrimaryNavigationMenu" priority="4">
 		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
 			<var name="siteURLKey" value="test-site-name" />

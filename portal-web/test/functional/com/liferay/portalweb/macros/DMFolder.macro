@@ -270,7 +270,9 @@
 
 					<execute function="Select" locator1="DocumentsAndMediaEditFolder#WORKFLOW_SPECIFIC_RESTRICTIONS_TYPE_WORKFLOW_SELECT" value1="${workflowDefinition}" />
 
-					<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
+					<execute function="AssertClickNoError" locator1="Button#ANY" value1="Save">
+						<var name="key_text" value="Save" />
+					</execute>
 
 					<execute function="AssertConfirm" value1="You are making changes to the document types. If a document in this folder or its subfolders is currently in draft or pending workflow states, you may lose some or all of its metadata. A new version will be created for all other documents. Are you sure you wish to continue?" />
 				</then>

@@ -16,22 +16,39 @@ package com.liferay.portal.search.engine.adapter.search;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.search.suggest.Suggester;
+
 /**
  * @author Michael C. Han
  */
 @ProviderType
-public interface SearchRequestExecutor {
+public class SuggestSearchRequest
+	implements SearchRequest<SuggestSearchResponse> {
 
-	public CountSearchResponse executeSearchRequest(
-		CountSearchRequest countSearchRequest);
+	public SuggestSearchRequest(String... indexNames) {
+		_indexNames = indexNames;
+	}
 
-	public MultisearchSearchResponse executeSearchRequest(
-		MultisearchSearchRequest multisearchSearchRequest);
+	@Override
+	public SuggestSearchResponse accept(
+		SearchRequestExecutor searchRequestExecutor) {
 
-	public SearchSearchResponse executeSearchRequest(
-		SearchSearchRequest searchSearchRequest);
+		return searchRequestExecutor.executeSearchRequest(this);
+	}
 
-	public SuggestSearchResponse executeSearchRequest(
-		SuggestSearchRequest suggestSearchRequest);
+	public String[] getIndexNames() {
+		return _indexNames;
+	}
+
+	public Suggester getSuggester() {
+		return _suggester;
+	}
+
+	public void setSuggester(Suggester suggester) {
+		_suggester = suggester;
+	}
+
+	private final String[] _indexNames;
+	private Suggester _suggester;
 
 }

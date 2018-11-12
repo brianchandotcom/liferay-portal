@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-MDRActionDisplayContext mdrActionDisplayContext = new MDRActionDisplayContext(renderRequest, renderResponse);
+MDRActionDisplayContext mdrActionDisplayContext = new MDRActionDisplayContext(renderRequest, renderResponse, resourceBundle);
 %>
 
 <clay:navigation-bar

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -44,10 +45,12 @@ import javax.portlet.RenderResponse;
 public class MDRActionDisplayContext {
 
 	public MDRActionDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		ResourceBundle resourceBundle) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+		_resourceBundle = resourceBundle;
 	}
 
 	public List<NavigationItem> getActionNavigationItems()
@@ -70,7 +73,7 @@ public class MDRActionDisplayContext {
 						navigationItem.setHref(StringPool.BLANK);
 						navigationItem.setLabel(
 							LanguageUtil.format(
-								themeDisplay.getLocale(), "actions-for-x",
+								_resourceBundle, "actions-for-x",
 								ruleGroup.getName(themeDisplay.getLocale()),
 								false));
 					});
@@ -187,6 +190,7 @@ public class MDRActionDisplayContext {
 	private PortletURL _portletURL;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private final ResourceBundle _resourceBundle;
 	private SearchContainer _ruleActionSearchContainer;
 	private Long _ruleGroupInstanceId;
 

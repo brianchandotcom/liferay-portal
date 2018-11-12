@@ -23,6 +23,8 @@
 	</tear-down>
 
 	<command name="addAndEditApplication">
+		<property name="app.server.types" value="jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly" />
+		<property name="database.types" value="db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
 		<property name="environment.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -186,6 +188,8 @@
 	</command>
 
 	<command name="viewAndRevokeGrantedAuthorizations">
+		<property name="app.server.types" value="jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly" />
+		<property name="database.types" value="db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
 		<property name="environment.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoPortlet">

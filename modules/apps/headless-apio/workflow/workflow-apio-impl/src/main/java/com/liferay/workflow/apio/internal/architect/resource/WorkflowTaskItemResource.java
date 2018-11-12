@@ -30,7 +30,9 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.workflow.apio.architect.identifier.WorkflowLogIdentifier;
 import com.liferay.workflow.apio.architect.identifier.WorkflowTaskIdentifier;
 import com.liferay.workflow.apio.internal.architect.form.AssignToMeForm;
+import com.liferay.workflow.apio.internal.architect.form.AssignToUserForm;
 import com.liferay.workflow.apio.internal.architect.route.AssignToMePostRoute;
+import com.liferay.workflow.apio.internal.architect.route.AssignToUserPostRoute;
 
 import java.io.Serializable;
 
@@ -67,6 +69,10 @@ public class WorkflowTaskItemResource
 			new AssignToMePostRoute(), this::_assignToMe, CurrentUser.class,
 			WorkflowTaskIdentifier.class, (credentials, id) -> true,
 			AssignToMeForm::buildForm
+		).addCustomRoute(
+			new AssignToUserPostRoute(), this::_assignToUser, Company.class,
+			CurrentUser.class, WorkflowTaskIdentifier.class,
+			(credentials, id) -> true, AssignToUserForm::buildForm
 		).build();
 	}
 
@@ -120,6 +126,17 @@ public class WorkflowTaskItemResource
 				currentUser.getCompanyId(), currentUser.getUserId(),
 				workflowTask.getWorkflowTaskId(), currentUser.getUserId(), "",
 				null, null)
+
+	private WorkflowTask _assignToUser(
+		Long workflowTaskId, AssignToUserForm assignToMeForm, Company company,
+		CurrentUser currentUser) {
+
+		long assigneeUserId = assignToMeForm.getUserId();
+
+		return Try.fromFallible(
+			() -> _workflowTaskManager.assignWorkflowTaskToUser(
+				company.getCompanyId(), currentUser.getUserId(), workflowTaskId,
+				assigneeUserId, "", null, null)
 		).orElse(
 			null
 		);

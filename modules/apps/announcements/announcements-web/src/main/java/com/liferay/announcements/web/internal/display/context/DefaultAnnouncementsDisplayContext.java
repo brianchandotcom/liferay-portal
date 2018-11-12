@@ -28,11 +28,16 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
+import com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -131,18 +136,24 @@ public class DefaultAnnouncementsDisplayContext
 				_announcementsRequestHelper.getThemeDisplay());
 		}
 
-		List<Group> selectedOrganizations = new ArrayList<>();
+		List<Group> selectedGroups = new ArrayList<>();
 
 		String[] selectedScopeGroupIds = StringUtil.split(
 			getSelectedScopeGroupIds());
 
 		for (String selectedScopeGroupId : selectedScopeGroupIds) {
-			selectedOrganizations.add(
-				GroupLocalServiceUtil.getGroup(
-					Long.valueOf(selectedScopeGroupId)));
+			if (GroupPermissionUtil.contains(
+					_announcementsRequestHelper.getPermissionChecker(),
+					Long.valueOf(selectedScopeGroupId),
+					ActionKeys.MANAGE_ANNOUNCEMENTS)) {
+
+				selectedGroups.add(
+					GroupLocalServiceUtil.getGroup(
+						Long.valueOf(selectedScopeGroupId)));
+			}
 		}
 
-		return selectedOrganizations;
+		return selectedGroups;
 	}
 
 	@Override
@@ -160,9 +171,15 @@ public class DefaultAnnouncementsDisplayContext
 		for (String selectedScopeOrganizationId :
 				selectedScopeOrganizationIds) {
 
-			selectedOrganizations.add(
-				OrganizationLocalServiceUtil.getOrganization(
-					Long.valueOf(selectedScopeOrganizationId)));
+			if (OrganizationPermissionUtil.contains(
+					_announcementsRequestHelper.getPermissionChecker(),
+					Long.valueOf(selectedScopeOrganizationId),
+					ActionKeys.MANAGE_ANNOUNCEMENTS)) {
+
+				selectedOrganizations.add(
+					OrganizationLocalServiceUtil.getOrganization(
+						Long.valueOf(selectedScopeOrganizationId)));
+			}
 		}
 
 		return selectedOrganizations;
@@ -191,9 +208,15 @@ public class DefaultAnnouncementsDisplayContext
 			getSelectedScopeRoleIds());
 
 		for (String selectedScopeRoleId : selectedScopeRoleIds) {
-			selectedRoles.add(
-				RoleLocalServiceUtil.getRole(
-					Long.valueOf(selectedScopeRoleId)));
+			if (RolePermissionUtil.contains(
+					_announcementsRequestHelper.getPermissionChecker(),
+					Long.valueOf(selectedScopeRoleId),
+					ActionKeys.MANAGE_ANNOUNCEMENTS)) {
+
+				selectedRoles.add(
+					RoleLocalServiceUtil.getRole(
+						Long.valueOf(selectedScopeRoleId)));
+			}
 		}
 
 		return selectedRoles;
@@ -230,9 +253,15 @@ public class DefaultAnnouncementsDisplayContext
 			getSelectedScopeUserGroupIds());
 
 		for (String selectedScopeUserGroupId : selectedScopeUserGroupIds) {
-			selectedUserGroups.add(
-				UserGroupLocalServiceUtil.getUserGroup(
-					Long.valueOf(selectedScopeUserGroupId)));
+			if (UserGroupPermissionUtil.contains(
+					_announcementsRequestHelper.getPermissionChecker(),
+					Long.valueOf(selectedScopeUserGroupId),
+					ActionKeys.MANAGE_ANNOUNCEMENTS)) {
+
+				selectedUserGroups.add(
+					UserGroupLocalServiceUtil.getUserGroup(
+						Long.valueOf(selectedScopeUserGroupId)));
+			}
 		}
 
 		return selectedUserGroups;

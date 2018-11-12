@@ -17,6 +17,7 @@ package com.liferay.document.library.asset.auto.tagger.google.cloud.vision.inter
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.constants.GoogleCloudVisionAssetAutoTagProviderConstants;
+import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.util.GoogleCloudVisionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -29,11 +30,8 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -75,7 +73,7 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 			JSONObject responseJSONObject = _queryGoogleCloudVisionJSONObject(
 				googleCloudVisionAssetAutoTagProviderCompanyConfiguration.
 					apiKey(),
-				_getPayloadJSON(fileEntry));
+				GoogleCloudVisionUtil.getAnnotateImagePayload(fileEntry));
 
 			JSONArray responsesJSONArray = responseJSONObject.getJSONArray(
 				"responses");
@@ -108,31 +106,6 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 			new CompanyServiceSettingsLocator(
 				fileEntry.getCompanyId(),
 				GoogleCloudVisionAssetAutoTagProviderConstants.SERVICE_NAME));
-	}
-
-	private String _getPayloadJSON(FileEntry fileEntry) throws Exception {
-		FileVersion fileVersion = fileEntry.getFileVersion();
-
-		JSONObject jsonObject = JSONUtil.put(
-			"requests",
-			JSONUtil.put(
-				JSONUtil.put(
-					"features",
-					JSONUtil.put(
-						JSONUtil.put("type", "LABEL_DETECTION")
-					)
-				).put(
-					"image",
-					JSONUtil.put(
-						"content",
-						Base64.encode(
-							FileUtil.getBytes(
-								fileVersion.getContentStream(false))))
-				)
-			)
-		);
-
-		return jsonObject.toString();
 	}
 
 	private boolean _isSupportedFormat(FileEntry fileEntry) {

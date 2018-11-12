@@ -26,6 +26,19 @@ import com.liferay.portal.kernel.exception.PortalException;
 public interface SegmentsEntryProvider {
 
 	/**
+	 * Clears the cache of all {@link SegmentsEntry} objects.
+	 */
+	public void clearCache();
+
+	/**
+	 * Clears the cache {@link SegmentsEntry} objects related with the entity.
+	 *
+	 * @param className the class name of the entity
+	 * @param classPK the primary key of the entity
+	 */
+	public void clearCache(String className, long classPK);
+
+	/**
 	 * Returns the primary keys of the entities related with the segment.
 	 *
 	 * @param  segmentsEntryId the ID of the segment

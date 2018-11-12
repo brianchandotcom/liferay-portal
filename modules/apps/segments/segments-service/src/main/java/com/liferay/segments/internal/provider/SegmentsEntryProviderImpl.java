@@ -16,6 +16,8 @@ package com.liferay.segments.internal.provider;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -52,6 +54,16 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 			bundleContext, ODataRetriever.class, "model.class.name");
 	}
 
+	@Override
+	public void clearCache() {
+		_portalCache.removeAll();
+	}
+
+	@Override
+	public void clearCache(String className, long classPK) {
+		_portalCache.remove(_getCacheKey(className, classPK));
+	}
+
 	@Deactivate
 	public void deactivate() {
 		_serviceTrackerMap.close();
@@ -71,6 +83,10 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 		if (Validator.isNotNull(segmentsEntry.getCriteria())) {
 			ODataRetriever oDataRetriever = _serviceTrackerMap.getService(
 				segmentsEntry.getType());
+
+			if (oDataRetriever == null) {
+				return new long[0];
+			}
 
 			List<BaseModel<?>> results = oDataRetriever.getResults(
 				segmentsEntry.getCompanyId(), segmentsEntry.getCriteria(),
@@ -98,6 +114,14 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 	@Override
 	public long[] getSegmentsEntryIds(String className, long classPK)
 		throws PortalException {
+
+		String cacheKey = _getCacheKey(className, classPK);
+
+		long[] segmentEntryIds = _portalCache.get(cacheKey);
+
+		if (segmentEntryIds != null) {
+			return segmentEntryIds;
+		}
 
 		List<SegmentsEntry> segmentsEntries =
 			_segmentsEntryLocalService.getSegmentsEntries(
@@ -143,10 +167,28 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 
 		Stream<SegmentsEntry> stream = allSegmentsEntries.stream();
 
-		return stream.mapToLong(
+		segmentEntryIds = stream.mapToLong(
 			SegmentsEntry::getSegmentsEntryId
 		).toArray();
+
+		_portalCache.put(cacheKey, segmentEntryIds);
+
+		return segmentEntryIds;
 	}
+
+	@Reference(unbind = "-")
+	protected void setMultiVMPool(MultiVMPool multiVMPool) {
+		_portalCache =
+			(PortalCache<String, long[]>)
+				multiVMPool.getPortalCache(
+					SegmentsEntryProvider.class.getName());
+	}
+
+	private String _getCacheKey(String className, long classPK) {
+		return _portal.getClassNameId(className) + "_" + classPK;
+	}
+
+	private static PortalCache<String, long[]> _portalCache;
 
 	@Reference
 	private Portal _portal;

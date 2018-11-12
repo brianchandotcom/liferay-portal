@@ -4,7 +4,7 @@
 	<property name="portal.release" value="false" />
 	<property name="portal.upstream" value="true" />
 	<property name="test.run.environment" value="EE" />
-	<property name="testray.main.component.name" value="Upgrades FW" />
+	<property name="testray.main.component.name" value="Upgrades Forms and Workflow" />
 
 	<set-up>
 		<execute macro="SignIn#signIn" />

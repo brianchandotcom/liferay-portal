@@ -216,6 +216,15 @@ public class SegmentsEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByA_T() throws Exception {
+		_persistence.countByA_T(RandomTestUtil.randomBoolean(), "");
+
+		_persistence.countByA_T(RandomTestUtil.randomBoolean(), "null");
+
+		_persistence.countByA_T(RandomTestUtil.randomBoolean(), (String)null);
+	}
+
+	@Test
 	public void testCountByG_A_T() throws Exception {
 		_persistence.countByG_A_T(RandomTestUtil.nextLong(),
 			RandomTestUtil.randomBoolean(), "");

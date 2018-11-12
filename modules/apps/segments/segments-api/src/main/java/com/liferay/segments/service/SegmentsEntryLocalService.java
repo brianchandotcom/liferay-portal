@@ -213,6 +213,10 @@ public interface SegmentsEntryLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsEntry> getSegmentsEntries(boolean active, String type,
+		int start, int end, OrderByComparator<SegmentsEntry> orderByComparator);
+
 	/**
 	* Returns a range of all the segments entries.
 	*

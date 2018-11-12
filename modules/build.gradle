@@ -6,6 +6,12 @@ import java.util.concurrent.ConcurrentSkipListSet
 
 import org.apache.tools.ant.filters.ReplaceTokens
 
+import org.gradle.plugins.ide.api.XmlFileContentMerger
+import org.gradle.plugins.ide.eclipse.model.Classpath
+import org.gradle.plugins.ide.eclipse.model.ClasspathEntry
+import org.gradle.plugins.ide.eclipse.model.EclipseClasspath
+import org.gradle.plugins.ide.eclipse.model.EclipseModel
+
 buildscript {
 	apply from: rootProject.file("build-buildscript.gradle"), to: buildscript
 }
@@ -109,6 +115,19 @@ gradle.beforeProject {
 			if (forcedUpdateVersion && tasks.findByName("updateVersion")) {
 				updateVersion {
 					replacement = forcedUpdateVersion
+				}
+			}
+
+			pluginManager.withPlugin("eclipse") {
+				if (tasks.eclipse.ext.has("gradleVersion")) {
+					String gradleVersion = tasks.eclipse.ext.get("gradleVersion")
+
+					tasks.eclipse {
+						dependsOn compileJava
+						dependsOn rootProject.tasks.getByName("extractGradleSources" + gradleVersion.replace(".", ""))
+
+						_updateGradleSourcePaths(gradleVersion, project.extensions.getByType(EclipseModel.class))
+					}
 				}
 			}
 		}
@@ -396,4 +415,48 @@ private boolean _hasTestClasses(Task task, String testClassesDirName) {
 	}
 
 	return true
+}
+
+private void _updateGradleSourcePaths(String gradleVersion, EclipseModel eclipseModel) {
+	EclipseClasspath eclipseClasspath = eclipseModel.getClasspath()
+
+	XmlFileContentMerger xmlFileContentMerger = eclipseClasspath.getFile()
+
+	xmlFileContentMerger.whenMerged({
+		Classpath classpath ->
+
+		for (ClasspathEntry classpathEntry : classpath.getEntries()) {
+			if (classpathEntry.hasProperty("sourcepath")) {
+				continue
+			}
+
+			String kind = classpathEntry.getKind()
+
+			if (!kind.equals("lib")) {
+				continue
+			}
+
+			String path = classpathEntry.getPath()
+
+			if (!path.contains("/gradle-" + gradleVersion + "/lib/")) {
+				continue
+			}
+
+			String fileName = path.substring(path.lastIndexOf("/") + 1)
+
+			if (!fileName.startsWith("gradle-")) {
+				continue
+			}
+
+			String dirName = fileName.substring(7, fileName.length() - (gradleVersion.length() + 5))
+
+			File sourcesDir = new File(rootProject.buildDir, "gradle-" + gradleVersion + "-sources/" + dirName)
+
+			if (sourcesDir.exists()) {
+				classpathEntry.putAt("sourcePath", fileReference(sourcesDir))
+
+				logger.info "Added sourcePath {}", sourcesDir
+			}
+		}
+	})
 }

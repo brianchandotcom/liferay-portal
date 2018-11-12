@@ -16,6 +16,7 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -94,6 +95,11 @@ public class OrganizationServiceTest {
 		Organization parentOrganziation =
 			OrganizationTestUtil.addOrganization();
 
+		List<Organization> allOrganizations = new ArrayList<>(
+			OrganizationLocalServiceUtil.getOrganizations(
+				TestPropsValues.getCompanyId(),
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID));
+
 		try {
 			String name = RandomTestUtil.randomString(10);
 
@@ -123,6 +129,8 @@ public class OrganizationServiceTest {
 					parentOrganizationId, RandomTestUtil.randomString(10),
 					false));
 
+			allOrganizations.addAll(allChildOrganizations);
+
 			assertExpectedOrganizations(
 				likeNameChildOrganizations, parentOrganizationId, name + "%");
 			assertExpectedOrganizations(
@@ -132,9 +140,16 @@ public class OrganizationServiceTest {
 				likeNameChildOrganizations, parentOrganizationId,
 				StringUtil.toUpperCase(name) + "%");
 			assertExpectedOrganizations(
+				likeNameChildOrganizations,
+				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
+				StringUtil.toUpperCase(name) + "%");
+			assertExpectedOrganizations(
 				allChildOrganizations, parentOrganizationId, null);
 			assertExpectedOrganizations(
 				allChildOrganizations, parentOrganizationId, "");
+			assertExpectedOrganizations(
+				allOrganizations,
+				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, "");
 		}
 		finally {
 			for (Organization childOrganization : allChildOrganizations) {

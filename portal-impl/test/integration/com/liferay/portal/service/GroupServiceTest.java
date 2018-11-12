@@ -16,6 +16,7 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -52,6 +53,11 @@ public class GroupServiceTest {
 		List<Group> allChildGroups = new ArrayList<>();
 		Group parentGroup = GroupTestUtil.addGroup();
 
+		List<Group> allGroups = new ArrayList<>(
+			GroupLocalServiceUtil.getGroups(
+				TestPropsValues.getCompanyId(),
+				GroupConstants.DEFAULT_PARENT_GROUP_ID, true));
+
 		try {
 			String name = RandomTestUtil.randomString(10);
 
@@ -74,6 +80,8 @@ public class GroupServiceTest {
 			allChildGroups.add(GroupTestUtil.addGroup(parentGroupId));
 			allChildGroups.add(GroupTestUtil.addGroup(parentGroupId));
 
+			allGroups.addAll(allChildGroups);
+
 			assertExpectedGroups(
 				likeNameChildGroups, parentGroupId, name + "%");
 			assertExpectedGroups(
@@ -82,8 +90,13 @@ public class GroupServiceTest {
 			assertExpectedGroups(
 				likeNameChildGroups, parentGroupId,
 				StringUtil.toUpperCase(name) + "%");
+			assertExpectedGroups(
+				likeNameChildGroups, GroupConstants.ANY_PARENT_GROUP_ID,
+				name + "%");
 			assertExpectedGroups(allChildGroups, parentGroupId, null);
 			assertExpectedGroups(allChildGroups, parentGroupId, "");
+			assertExpectedGroups(
+				allGroups, GroupConstants.ANY_PARENT_GROUP_ID, "");
 		}
 		finally {
 			for (Group childGroup : allChildGroups) {

@@ -39,7 +39,6 @@ import com.liferay.portlet.PortletServletResponse;
 import java.io.IOException;
 
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -220,11 +219,7 @@ public class PortletRequestDispatcherImpl
 
 			PortletApp portletApp = portlet.getPortletApp();
 
-			Set<String> servletURLPatterns = new LinkedHashSet<>(
-				portletApp.getServletURLPatterns());
-
-			servletURLPatterns.add("*.jsp");
-			servletURLPatterns.add("*.jspx");
+			Set<String> servletURLPatterns = portletApp.getServletURLPatterns();
 
 			for (String urlPattern : servletURLPatterns) {
 				if (urlPattern.endsWith("/*")) {
@@ -258,6 +253,13 @@ public class PortletRequestDispatcherImpl
 
 							break;
 						}
+					}
+
+					if ((servletPath == null) &&
+						(pathNoQueryString.endsWith(".jsp") ||
+						 pathNoQueryString.endsWith(".jspx"))) {
+
+						servletPath = pathNoQueryString;
 					}
 				}
 			}

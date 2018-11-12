@@ -1,4 +1,14 @@
 <definition>
+	<command name="changeCurrentTheme">
+		<execute function="Click" locator1="Radio#SPECIFIC_LOOK" />
+
+		<execute function="Click" locator1="Button#CHANGE_CURRENT_THEME" />
+
+		<execute function="Click" locator1="Theme#THEME_ENTRY_CARD" />
+
+		<execute function="Click" locator1="Button#SAVE" />
+	</command>
+
 	<command name="configureLookAndFeelShowHeaderSearch">
 		<if>
 			<equals arg1="${showHeaderSearch}" arg2="true" />

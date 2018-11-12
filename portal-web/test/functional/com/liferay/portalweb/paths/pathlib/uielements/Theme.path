@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>Theme</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Theme</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>THEME_ENTRY_CARD</td>
+	<td>//span[@title='${key_cardTitleText}']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

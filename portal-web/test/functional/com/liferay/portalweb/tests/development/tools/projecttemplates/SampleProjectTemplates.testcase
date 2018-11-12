@@ -1,0 +1,76 @@
+<definition component-name="portal-project-template">
+	<property name="portal.acceptance" value="true" />
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Blade Template" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Templates Page" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+		</if>
+	</tear-down>
+
+	<command name="MvcPortletTemplateSmoke" priority="4">
+		<property name="project.templates" value="mvc-portlet" />
+		<property name="test.name.skip.portal.instance" value="SampleProjectTemplates#MvcPortletTemplateSmoke" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Templates Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Samplemvc" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletBody" value="Hello from Samplemvc!" />
+			<var name="portletName" value="SAMPLEMVC" />
+		</execute>
+	</command>
+
+	<command name="ThemeTemplateSmoke" priority="4">
+		<property name="project.templates" value="theme" />
+		<property name="test.name.skip.portal.instance" value="SampleProjectTemplates#ThemeTemplateSmoke" />
+		<var name="themeName" value="sampletheme" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Templates Page" />
+		</execute>
+
+		<execute macro="SitePages#gotoPageMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="pageName" value="Templates Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Look and Feel" />
+		</execute>
+
+		<execute macro="Theme#changeCurrentTheme">
+			<var name="key_cardTitleText" value="${themeName}" />
+		</execute>
+
+		<execute function="AssertHTMLSourceTextPresent" value1="themeId=${themeName}" />
+	</command>
+</definition>

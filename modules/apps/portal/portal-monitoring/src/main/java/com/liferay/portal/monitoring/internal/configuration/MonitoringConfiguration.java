@@ -69,7 +69,9 @@ public interface MonitoringConfiguration {
 	)
 	public boolean monitorPortletResourceRequest();
 
-	@Meta.AD(deflt = "true", name = "monitor-service-request", required = false)
+	@Meta.AD(
+		deflt = "false", name = "monitor-service-request", required = false
+	)
 	public boolean monitorServiceRequest();
 
 	@Meta.AD(

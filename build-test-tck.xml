@@ -86,13 +86,44 @@
 						<gradle-execute dir="modules/test/portlet-tck-bridge" task="deploy" />
 						<wait-for-app-server-log-message log.message="Portlet TCK Bridge is ready" />
 
+						<tempfile
+							createfile="true"
+							deleteonexit="true"
+							destDir="tck"
+							prefix="tck-tests_"
+							property="tck.tests.xml"
+							suffix=".xml"
+						/>
+						<basename file="${tck.tests.xml}" property="tck.tests.xml.file.name" />
+						<dirname file="${tck.tests.xml}" property="tck.tests.xml.parent.dir" />
+
+						<copy
+							file="${tck.home}/driver/target/classes/generated-resources/xml/final/test.xml"
+							tofile="${tck.tests.xml}"
+							overwrite="true"
+						/>
+
+						<xmltask preserveType="true" source="tck/htmlunit-tests.xml">
+							<call path="//*[local-name()='entry'][@key]">
+								<param name="key" path="@key" />
+								<actions>
+									<replaceregexp
+										file="${tck.tests.xml}"
+										flags="im"
+										match="&lt;entry[^&gt;]+key=&quot;@{key}&quot;[^&gt;]*&gt;[^&lt;]*&lt;/entry&gt;"
+										replace=""
+									/>
+								</actions>
+							</call>
+						</xmltask>
+
 						<var
-							name="test.properties"
-							value="-Dtest.context.base='${test.context.base[tck]}' -Dtest.server.login.url='${test.server.login.url[tck]}' -Dtest.server.username.id='${test.server.username.id[tck]}' -Dtest.server.username='${test.server.username[tck]}' -Dtest.server.password.id='${test.server.password.id[tck]}' -Dtest.server.password='${test.server.password[tck]}' -Dtest.timeout='${test.timeout[tck]}'"
+							name="tck.properties"
+							value="-Dtest.context.base='${test.context.base[tck]}' -Dtest.server.login.url='${test.server.login.url[tck]}' -Dtest.server.username.id='${test.server.username.id[tck]}' -Dtest.server.username='${test.server.username[tck]}' -Dtest.server.password.id='${test.server.password.id[tck]}' -Dtest.server.password='${test.server.password[tck]}' -Dtest.timeout='${test.timeout[tck]}' -Dtest.ignore.list.file=tck/ignoredTestCases.xml"
 						/>
 
 						<execute dir="${tck.home}">
-							echo mvn -Pliferay,run-tck -Djava.awt.headless=true ${test.properties} -Dtest.browser=htmlUnit -Dtest.browser.binary= -Dtest.browser.webDriver= -Dtest.ignore.list.file=TODO test
+							echo mvn -Pliferay,run-tck -Djava.awt.headless=true ${tck.properties} -Dtest.browser=htmlunit -Dtest.browser.binary= -Dtest.browser.webDriver= -Dtest.list.dir=tck -Dtest.list.name=htmlunit-tests.xml test
 						</execute>
 
 						<if>
@@ -104,7 +135,7 @@
 
 								<copy
 									file="${tck.home}/driver/target/surefire-reports/TEST-javax.portlet.tck.driver.TCKLiferayTestDriver.xml"
-									tofile="${project.dir}/tck/test-results/TEST-javax.portlet.tck.driver.TCKLiferayTestDriver-htmlUnit.xml"
+									tofile="${project.dir}/tck/test-results/TEST-javax.portlet.tck.driver.TCKLiferayTestDriver-htmlunit.xml"
 								/>
 							</then>
 							<else>
@@ -125,7 +156,7 @@
 						/>
 
 						<execute dir="${tck.home}">
-							echo mvn -Pliferay,run-tck -Djava.awt.headless=true ${test.properties} -Dtest.browser=${browser.type[tck]} -Dtest.browser.binary='${browser.bin.file}' -Dtest.browser.webDriver=${selenium.executable.dir.name}${selenium.tck.browser.driver.executable} -Dtest.ignore.list.file=TODO test
+							echo mvn -Pliferay,run-tck -Djava.awt.headless=true ${tck.properties} -Dtest.browser=${browser.type[tck]} -Dtest.browser.binary='${browser.bin.file}' -Dtest.browser.webDriver=${selenium.executable.dir.name}${selenium.tck.browser.driver.executable} -Dtest.list.dir=${tck.tests.xml.parent.dir} -Dtest.list.name=${tck.tests.xml.file.name} test
 						</execute>
 
 						<if>
@@ -144,7 +175,7 @@
 								<fail message="No TCK tests were run with ${browser.type[tck]}." />
 							</else>
 						</if>
-						
+
 					</test-action>
 				</database-test-run-test>
 			</test-action>

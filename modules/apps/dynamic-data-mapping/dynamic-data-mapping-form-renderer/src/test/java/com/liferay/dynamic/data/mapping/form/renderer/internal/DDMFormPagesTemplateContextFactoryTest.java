@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.util.HtmlImpl;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
@@ -98,12 +99,13 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		setUpDDMFormFieldTypeServicesTracker();
 		setUpHtmlUtil();
+		setUpHttpServletRequest();
+		setUpLanguageResources();
 		setUpLanguageUtil();
 		setUpPortalUtil();
+		setUpResourceBundle();
 		setUpResourceBundleLoaderUtil();
 		setUpResourceBundleUtil();
-
-		setUpHttpServletRequest();
 	}
 
 	@Test
@@ -1019,6 +1021,12 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		);
 	}
 
+	protected void setUpLanguageResources() {
+		LanguageResources languageResources = new LanguageResources();
+
+		languageResources.setConfig(StringPool.BLANK);
+	}
+
 	protected void setUpLanguageUtil() {
 		Language language = mock(Language.class);
 
@@ -1036,6 +1044,8 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		Portal portal = mock(Portal.class);
 
+		ResourceBundle resourceBundle = mock(ResourceBundle.class);
+
 		when(
 			portal.getCompanyId(Matchers.any(PortletRequest.class))
 		).thenReturn(
@@ -1048,7 +1058,25 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			1L
 		);
 
+		when(
+			portal.getResourceBundle(Matchers.any(Locale.class))
+		).thenReturn(
+			resourceBundle
+		);
+
 		portalUtil.setPortal(portal);
+	}
+
+	protected void setUpResourceBundle() {
+		Portal portal = mock(Portal.class);
+
+		ResourceBundle resourceBundle = mock(ResourceBundle.class);
+
+		when(
+			portal.getResourceBundle(Matchers.any(Locale.class))
+		).thenReturn(
+			resourceBundle
+		);
 	}
 
 	protected void setUpResourceBundleLoaderUtil() {

@@ -21,10 +21,13 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -48,6 +51,7 @@ public class DDMRESTDataProviderSettingsTest {
 	@Before
 	public void setUp() {
 		setUpLanguageUtil();
+		setUpPortalUtil();
 		setUpResourceBundleUtil();
 	}
 
@@ -373,6 +377,21 @@ public class DDMRESTDataProviderSettingsTest {
 		Language language = PowerMockito.mock(Language.class);
 
 		languageUtil.setLanguage(language);
+	}
+
+	protected void setUpPortalUtil() {
+		PortalUtil portalUtil = new PortalUtil();
+
+		Portal portal = PowerMockito.mock(Portal.class);
+		ResourceBundle resourceBundle = PowerMockito.mock(ResourceBundle.class);
+
+		PowerMockito.when(
+			portal.getResourceBundle(Matchers.any(Locale.class))
+		).thenReturn(
+			resourceBundle
+		);
+
+		portalUtil.setPortal(portal);
 	}
 
 	protected void setUpResourceBundleUtil() {

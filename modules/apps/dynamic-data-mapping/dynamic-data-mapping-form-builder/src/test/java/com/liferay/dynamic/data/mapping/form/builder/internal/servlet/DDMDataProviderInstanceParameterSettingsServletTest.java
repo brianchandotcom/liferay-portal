@@ -30,7 +30,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalImpl;
@@ -39,6 +41,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -61,7 +64,8 @@ import org.skyscreamer.jsonassert.JSONAssert;
  */
 @PrepareForTest(ResourceBundleUtil.class)
 @RunWith(PowerMockRunner.class)
-public class DDMDataProviderInstanceParameterSettingsServletTest {
+public class DDMDataProviderInstanceParameterSettingsServletTest
+	extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
@@ -70,6 +74,7 @@ public class DDMDataProviderInstanceParameterSettingsServletTest {
 		setUpGetDataProviderParametersSettingsMVCResourceCommand();
 		setUpJSONFactoryUtil();
 		setUpLanguageUtil();
+		setUpPortalUtil();
 		setUpResourceBundleUtil();
 	}
 
@@ -212,6 +217,22 @@ public class DDMDataProviderInstanceParameterSettingsServletTest {
 
 	protected void setUpPortalClassLoaderUtil() {
 		PortalClassLoaderUtil.setClassLoader(PortalImpl.class.getClassLoader());
+	}
+
+	protected void setUpPortalUtil() {
+		PortalUtil portalUtil = new PortalUtil();
+
+		Portal portal = mock(Portal.class);
+
+		ResourceBundle resourceBundle = mock(ResourceBundle.class);
+
+		when(
+			portal.getResourceBundle(Matchers.any(Locale.class))
+		).thenReturn(
+			resourceBundle
+		);
+
+		portalUtil.setPortal(portal);
 	}
 
 	protected void setUpResourceBundleUtil() {

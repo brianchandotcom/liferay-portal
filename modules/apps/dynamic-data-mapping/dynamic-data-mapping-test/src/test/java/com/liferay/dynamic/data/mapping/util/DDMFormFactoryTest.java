@@ -22,11 +22,14 @@ import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -52,6 +55,7 @@ public class DDMFormFactoryTest {
 	@Before
 	public void setUp() {
 		setUpLanguageUtil();
+		setUpPortalUtil();
 		setUpResourceBundleUtil();
 	}
 
@@ -244,6 +248,22 @@ public class DDMFormFactoryTest {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(_language);
+	}
+
+	protected void setUpPortalUtil() {
+		PortalUtil portalUtil = new PortalUtil();
+
+		Portal portal = PowerMockito.mock(Portal.class);
+
+		ResourceBundle resourceBundle = PowerMockito.mock(ResourceBundle.class);
+
+		PowerMockito.when(
+			portal.getResourceBundle(Matchers.any(Locale.class))
+		).thenReturn(
+			resourceBundle
+		);
+
+		portalUtil.setPortal(portal);
 	}
 
 	protected void setUpResourceBundleUtil() {

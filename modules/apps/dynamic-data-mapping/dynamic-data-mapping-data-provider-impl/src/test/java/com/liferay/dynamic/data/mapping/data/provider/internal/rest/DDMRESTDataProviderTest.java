@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.Serializable;
@@ -49,6 +51,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 import jodd.http.HttpException;
 import jodd.http.HttpRequest;
@@ -78,6 +81,7 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 	public void setUp() throws Exception {
 		_setUpJSONFactoryUtil();
 		_setUpLanguageUtil();
+		_setUpPortalUtil();
 		_setUpResourceBundleUtil();
 
 		_ddmRESTDataProvider = new DDMRESTDataProvider();
@@ -995,6 +999,22 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 		Language language = PowerMockito.mock(Language.class);
 
 		languageUtil.setLanguage(language);
+	}
+
+	private void _setUpPortalUtil() {
+		PortalUtil portalUtil = new PortalUtil();
+
+		Portal portal = mock(Portal.class);
+
+		ResourceBundle resourceBundle = mock(ResourceBundle.class);
+
+		when(
+			portal.getResourceBundle(Matchers.any(Locale.class))
+		).thenReturn(
+			resourceBundle
+		);
+
+		portalUtil.setPortal(portal);
 	}
 
 	private void _setUpResourceBundleUtil() {

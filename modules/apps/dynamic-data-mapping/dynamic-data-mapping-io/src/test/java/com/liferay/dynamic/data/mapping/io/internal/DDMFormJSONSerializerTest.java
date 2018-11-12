@@ -28,6 +28,8 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormFieldTypeSettingsTestUt
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.lang.reflect.Field;
 
@@ -35,7 +37,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -58,6 +62,7 @@ public class DDMFormJSONSerializerTest extends BaseDDMFormSerializerTestCase {
 		super.setUp();
 
 		setUpDDMFormJSONSerializer();
+		setUpPortalUtil();
 	}
 
 	@Test
@@ -193,6 +198,22 @@ public class DDMFormJSONSerializerTest extends BaseDDMFormSerializerTestCase {
 
 			}
 		);
+	}
+
+	protected void setUpPortalUtil() {
+		PortalUtil portalUtil = new PortalUtil();
+
+		Portal portal = mock(Portal.class);
+
+		ResourceBundle resourceBundle = mock(ResourceBundle.class);
+
+		when(
+			portal.getResourceBundle(Matchers.any(Locale.class))
+		).thenReturn(
+			resourceBundle
+		);
+
+		portalUtil.setPortal(portal);
 	}
 
 	private final DDMFormJSONSerializer _ddmFormJSONSerializer =

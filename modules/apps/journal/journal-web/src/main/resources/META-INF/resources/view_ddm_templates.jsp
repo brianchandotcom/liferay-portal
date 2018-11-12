@@ -26,8 +26,6 @@ if (ddmStructure != null) {
 }
 %>
 
-<liferay-ui:error exception="<%= RequiredTemplateException.MustNotDeleteTemplateReferencedByTemplateLinks.class %>" message="the-template-cannot-be-deleted-because-it-is-required-by-one-or-more-template-links" />
-
 <clay:navigation-bar
 	inverted="<%= true %>"
 	navigationItems='<%= journalDisplayContext.getNavigationBarItems("templates") %>'
@@ -54,6 +52,8 @@ if (ddmStructure != null) {
 
 <aui:form action="<%= deleteDDMTemplateURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+
+	<liferay-ui:error exception="<%= RequiredTemplateException.MustNotDeleteTemplateReferencedByTemplateLinks.class %>" message="the-template-cannot-be-deleted-because-it-is-required-by-one-or-more-template-links" />
 
 	<liferay-ui:search-container
 		id="ddmTemplates"

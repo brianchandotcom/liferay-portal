@@ -48,8 +48,10 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
@@ -61,10 +63,7 @@ import com.liferay.portal.settings.constants.PortalSettingsPortletKeys;
 import com.liferay.portal.settings.web.internal.exception.RequiredLocaleException;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -229,22 +228,13 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 
 		long companyId = _portal.getCompanyId(actionRequest);
 
-		Set<Locale> availableLocales = LanguageUtil.getCompanyAvailableLocales(
-			companyId);
+		String[] removedLanguageIds = ArrayUtil.filter(
+			LocaleUtil.toLanguageIds(
+				LanguageUtil.getCompanyAvailableLocales(companyId)),
+			languageId -> !StringUtil.contains(
+				newLanguageIds, languageId, StringPool.COMMA));
 
-		List<String> removedLanguageIds = new ArrayList<>();
-
-		for (Locale availableLocale : availableLocales) {
-			String oldLanguageId = availableLocale.toString();
-
-			if (!StringUtil.contains(
-					newLanguageIds, oldLanguageId, StringPool.COMMA)) {
-
-				removedLanguageIds.add(oldLanguageId);
-			}
-		}
-
-		if (removedLanguageIds.isEmpty()) {
+		if (ArrayUtil.isEmpty(removedLanguageIds)) {
 			return;
 		}
 

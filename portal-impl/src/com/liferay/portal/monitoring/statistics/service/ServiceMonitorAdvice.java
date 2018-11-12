@@ -77,9 +77,6 @@ public class ServiceMonitorAdvice
 	@Override
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
 		if (!_monitorServiceRequest) {
-			serviceBeanAopCacheManager.removeMethodInterceptor(
-				methodInvocation.getMethod(), this);
-
 			return null;
 		}
 
@@ -124,6 +121,11 @@ public class ServiceMonitorAdvice
 	@Override
 	public Set<MethodSignature> getServiceClassMethods() {
 		return Collections.unmodifiableSet(_serviceClassMethods);
+	}
+
+	@Override
+	public boolean isEnabled(Class<?> targetClass, Method method) {
+		return _monitorServiceRequest;
 	}
 
 	@Override

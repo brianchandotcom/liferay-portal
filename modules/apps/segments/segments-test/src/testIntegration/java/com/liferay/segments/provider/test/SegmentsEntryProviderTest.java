@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -31,8 +32,6 @@ import com.liferay.segments.provider.SegmentsEntryProvider;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
-
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -55,37 +54,6 @@ public class SegmentsEntryProviderTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-	}
-
-	@Test
-	public void testGetSegmentsEntries() throws Exception {
-		_user1 = UserTestUtil.addUser(_group.getGroupId());
-		_user2 = UserTestUtil.addUser(_group.getGroupId());
-
-		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user1.getUserId());
-
-		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(),
-			String.format("(firstName eq '%s')", _user1.getFirstName()),
-			User.class.getName());
-
-		SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), User.class.getName(), _user2.getUserId());
-
-		SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(),
-			String.format("(firstName eq '%s')", _user2.getFirstName()),
-			User.class.getName());
-
-		List<SegmentsEntry> segmentsEntries =
-			_segmentsEntryProvider.getSegmentsEntries(
-				_group.getGroupId(), User.class.getName(), _user1.getUserId());
-
-		Assert.assertEquals(
-			segmentsEntries.toString(), 2, segmentsEntries.size());
-		Assert.assertTrue(segmentsEntries.contains(segmentsEntry1));
-		Assert.assertTrue(segmentsEntries.contains(segmentsEntry2));
 	}
 
 	@Test
@@ -125,6 +93,38 @@ public class SegmentsEntryProviderTest {
 
 		Assert.assertArrayEquals(
 			new long[] {_user1.getUserId()}, segmentsEntryClassPKs);
+	}
+
+	@Test
+	public void testGetSegmentsEntryIds() throws Exception {
+		_user1 = UserTestUtil.addUser(_group.getGroupId());
+		_user2 = UserTestUtil.addUser(_group.getGroupId());
+
+		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+
+		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(),
+			String.format("(firstName eq '%s')", _user1.getFirstName()),
+			User.class.getName());
+
+		SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), User.class.getName(), _user2.getUserId());
+
+		SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(),
+			String.format("(firstName eq '%s')", _user2.getFirstName()),
+			User.class.getName());
+
+		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
+			User.class.getName(), _user1.getUserId());
+
+		Assert.assertEquals(
+			segmentsEntryIds.toString(), 2, segmentsEntryIds.length);
+		ArrayUtil.contains(
+			segmentsEntryIds, segmentsEntry1.getSegmentsEntryId());
+		ArrayUtil.contains(
+			segmentsEntryIds, segmentsEntry2.getSegmentsEntryId());
 	}
 
 	@DeleteAfterTestRun

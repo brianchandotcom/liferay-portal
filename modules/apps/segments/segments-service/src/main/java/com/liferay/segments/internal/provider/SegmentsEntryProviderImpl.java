@@ -30,7 +30,6 @@ import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Stream;
@@ -56,56 +55,6 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 	@Deactivate
 	public void deactivate() {
 		_serviceTrackerMap.close();
-	}
-
-	@Override
-	public List<SegmentsEntry> getSegmentsEntries(
-			String className, long classPK)
-		throws PortalException {
-
-		List<SegmentsEntry> segmentsEntries =
-			_segmentsEntryLocalService.getSegmentsEntries(
-				true, className, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		if (segmentsEntries.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		ODataRetriever oDataRetriever = _serviceTrackerMap.getService(
-			className);
-
-		List<SegmentsEntry> allSegmentsEntries = new ArrayList();
-
-		for (SegmentsEntry segmentsEntry : segmentsEntries) {
-			if (Validator.isNotNull(segmentsEntry.getCriteria()) &&
-				(oDataRetriever != null)) {
-
-				StringBundler sb = new StringBundler(5);
-
-				sb.append("(");
-				sb.append(segmentsEntry.getCriteria());
-				sb.append(") and (classPK eq '");
-				sb.append(classPK);
-				sb.append("')");
-
-				if (oDataRetriever.getResultsCount(
-						segmentsEntry.getCompanyId(), sb.toString(),
-						Locale.getDefault()) == 0) {
-
-					continue;
-				}
-			}
-			else if (!_segmentsEntryRelLocalService.hasSegmentsEntryRel(
-						segmentsEntry.getSegmentsEntryId(),
-						_portal.getClassNameId(className), classPK)) {
-
-				continue;
-			}
-
-			allSegmentsEntries.add(segmentsEntry);
-		}
-
-		return allSegmentsEntries;
 	}
 
 	@Override
@@ -144,6 +93,59 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 				SegmentsEntryRel::getClassPK
 			).toArray();
 		}
+	}
+
+	@Override
+	public long[] getSegmentsEntryIds(String className, long classPK)
+		throws PortalException {
+
+		List<SegmentsEntry> segmentsEntries =
+			_segmentsEntryLocalService.getSegmentsEntries(
+				true, className, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		if (segmentsEntries.isEmpty()) {
+			return new long[0];
+		}
+
+		ODataRetriever oDataRetriever = _serviceTrackerMap.getService(
+			className);
+
+		List<SegmentsEntry> allSegmentsEntries = new ArrayList();
+
+		for (SegmentsEntry segmentsEntry : segmentsEntries) {
+			if (Validator.isNotNull(segmentsEntry.getCriteria()) &&
+				(oDataRetriever != null)) {
+
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("(");
+				sb.append(segmentsEntry.getCriteria());
+				sb.append(") and (classPK eq '");
+				sb.append(classPK);
+				sb.append("')");
+
+				if (oDataRetriever.getResultsCount(
+						segmentsEntry.getCompanyId(), sb.toString(),
+						Locale.getDefault()) == 0) {
+
+					continue;
+				}
+			}
+			else if (!_segmentsEntryRelLocalService.hasSegmentsEntryRel(
+						segmentsEntry.getSegmentsEntryId(),
+						_portal.getClassNameId(className), classPK)) {
+
+				continue;
+			}
+
+			allSegmentsEntries.add(segmentsEntry);
+		}
+
+		Stream<SegmentsEntry> stream = allSegmentsEntries.stream();
+
+		return stream.mapToLong(
+			SegmentsEntry::getSegmentsEntryId
+		).toArray();
 	}
 
 	@Reference

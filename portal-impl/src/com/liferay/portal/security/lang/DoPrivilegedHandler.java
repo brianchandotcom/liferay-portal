@@ -14,9 +14,9 @@
 
 package com.liferay.portal.security.lang;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.security.pacl.NotPrivileged;
 import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
-import com.liferay.portal.kernel.util.HashUtil;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;

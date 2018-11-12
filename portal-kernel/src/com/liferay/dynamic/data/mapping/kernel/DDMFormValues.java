@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.kernel;
 
-import com.liferay.portal.kernel.util.HashUtil;
+import com.liferay.petra.lang.HashUtil;
 
 import java.io.Serializable;
 

@@ -14,9 +14,9 @@
 
 package com.liferay.aspectj.hibernate.stale.object.state;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
-import com.liferay.portal.kernel.util.HashUtil;
 
 import java.io.Serializable;
 

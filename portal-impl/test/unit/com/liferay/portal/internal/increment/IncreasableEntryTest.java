@@ -14,8 +14,8 @@
 
 package com.liferay.portal.internal.increment;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import org.junit.Assert;

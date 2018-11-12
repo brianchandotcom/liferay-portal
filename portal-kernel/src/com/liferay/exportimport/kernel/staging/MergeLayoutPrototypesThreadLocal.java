@@ -17,7 +17,7 @@ package com.liferay.exportimport.kernel.staging;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
-import com.liferay.portal.kernel.util.HashUtil;
+import com.liferay.petra.lang.HashUtil;
 
 import java.lang.reflect.Method;
 

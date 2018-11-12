@@ -18,8 +18,8 @@ import com.liferay.dynamic.data.mapping.form.builder.internal.converter.model.DD
 import com.liferay.dynamic.data.mapping.form.builder.internal.converter.serializer.AutoFillDDMFormRuleActionSerializer;
 import com.liferay.dynamic.data.mapping.form.builder.internal.converter.serializer.DDMFormRuleActionSerializer;
 import com.liferay.dynamic.data.mapping.form.builder.internal.converter.serializer.DDMFormRuleSerializerContext;
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSON;
-import com.liferay.portal.kernel.util.HashUtil;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

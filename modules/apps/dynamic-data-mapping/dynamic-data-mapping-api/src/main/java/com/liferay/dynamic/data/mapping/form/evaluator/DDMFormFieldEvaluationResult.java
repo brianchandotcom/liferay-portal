@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSON;
-import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.ArrayList;

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.transaction;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Arrays;

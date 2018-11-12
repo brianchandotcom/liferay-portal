@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.form.builder.internal.converter.model;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSON;
-import com.liferay.portal.kernel.util.HashUtil;
 
 import java.util.ArrayList;
 import java.util.List;

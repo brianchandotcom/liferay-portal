@@ -14,9 +14,9 @@
 
 package com.liferay.portal.xsl;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;

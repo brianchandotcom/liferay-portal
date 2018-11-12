@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.HashUtil;
 
 import java.util.ArrayList;
 import java.util.List;

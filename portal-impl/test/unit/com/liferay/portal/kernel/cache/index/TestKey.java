@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.cache.index;
 
-import com.liferay.portal.kernel.util.HashUtil;
+import com.liferay.petra.lang.HashUtil;
 
 import java.io.Serializable;
 

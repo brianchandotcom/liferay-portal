@@ -48,7 +48,7 @@ public class ServiceBeanAutoProxyCreator
 		}
 
 		_serviceBeanAopCacheManager = new ServiceBeanAopCacheManager(
-			_methodInterceptor);
+			_chainableMethodAdvice);
 	}
 
 	@Override
@@ -132,14 +132,14 @@ public class ServiceBeanAutoProxyCreator
 	}
 
 	public void setMethodInterceptor(MethodInterceptor methodInterceptor) {
-		_methodInterceptor = methodInterceptor;
+		_chainableMethodAdvice = (ChainableMethodAdvice)methodInterceptor;
 	}
 
 	private BeanMatcher _beanMatcher;
+	private ChainableMethodAdvice _chainableMethodAdvice;
 	private ClassLoader _classLoader;
 	private final Set<CacheKey> _earlyProxyReferences =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());
-	private MethodInterceptor _methodInterceptor;
 	private ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
 
 	private static class CacheKey {

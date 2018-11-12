@@ -17,12 +17,12 @@ package com.liferay.portal.service;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Method;
 
-import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
 import org.junit.Assert;
@@ -173,7 +173,7 @@ public class ServiceContextAdviceTest {
 
 		@Override
 		public void removeMethodInterceptor(
-			Method method, MethodInterceptor methodInterceptor) {
+			Method method, ChainableMethodAdvice chainableMethodAdvice) {
 
 			_removedMethodInterceptor = true;
 		}

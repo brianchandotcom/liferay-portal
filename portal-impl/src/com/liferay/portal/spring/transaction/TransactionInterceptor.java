@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.reflect.AnnotationLocator;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 
 import java.lang.reflect.Method;
 
@@ -25,7 +26,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
 import org.springframework.transaction.PlatformTransactionManager;
@@ -37,7 +37,7 @@ import org.springframework.transaction.interceptor.TransactionAttributeSource;
  * @author Shuyang Zhou
  */
 @ProviderType
-public class TransactionInterceptor implements MethodInterceptor {
+public class TransactionInterceptor extends ChainableMethodAdvice {
 
 	public TransactionAttribute getTransactionAttribute(
 		MethodInvocation methodInvocation) {

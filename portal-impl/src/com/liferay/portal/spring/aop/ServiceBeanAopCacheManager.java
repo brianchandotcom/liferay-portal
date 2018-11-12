@@ -30,35 +30,29 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.aopalliance.intercept.MethodInterceptor;
-
 /**
  * @author Shuyang Zhou
  */
 public class ServiceBeanAopCacheManager {
 
-	public ServiceBeanAopCacheManager(MethodInterceptor methodInterceptor) {
-		List<MethodInterceptor> classLevelMethodInterceptors =
+	public ServiceBeanAopCacheManager(
+		ChainableMethodAdvice chainableMethodAdvice) {
+
+		List<ChainableMethodAdvice> classLevelChainableMethodAdvices =
 			new ArrayList<>();
-		List<MethodInterceptor> fullMethodInterceptors = new ArrayList<>();
+		List<ChainableMethodAdvice> fullChainableMethodAdvices =
+			new ArrayList<>();
 
-		while (true) {
-			if (!(methodInterceptor instanceof ChainableMethodAdvice)) {
-				classLevelMethodInterceptors.add(methodInterceptor);
-				fullMethodInterceptors.add(methodInterceptor);
-
-				break;
-			}
-
-			ChainableMethodAdvice chainableMethodAdvice =
-				(ChainableMethodAdvice)methodInterceptor;
-
+		while (chainableMethodAdvice != null) {
 			chainableMethodAdvice.setServiceBeanAopCacheManager(this);
 
-			if (methodInterceptor instanceof AnnotationChainableMethodAdvice) {
+			if (chainableMethodAdvice instanceof
+					AnnotationChainableMethodAdvice) {
+
 				AnnotationChainableMethodAdvice<?>
 					annotationChainableMethodAdvice =
-						(AnnotationChainableMethodAdvice<?>)methodInterceptor;
+						(AnnotationChainableMethodAdvice<?>)
+							chainableMethodAdvice;
 
 				Class<? extends Annotation> annotationClass =
 					annotationChainableMethodAdvice.getAnnotationClass();
@@ -66,12 +60,13 @@ public class ServiceBeanAopCacheManager {
 				Target target = annotationClass.getAnnotation(Target.class);
 
 				if (target == null) {
-					classLevelMethodInterceptors.add(methodInterceptor);
+					classLevelChainableMethodAdvices.add(chainableMethodAdvice);
 				}
 				else {
 					for (ElementType elementType : target.value()) {
 						if (elementType == ElementType.TYPE) {
-							classLevelMethodInterceptors.add(methodInterceptor);
+							classLevelChainableMethodAdvices.add(
+								chainableMethodAdvice);
 
 							break;
 						}
@@ -82,18 +77,21 @@ public class ServiceBeanAopCacheManager {
 					annotationClass, annotationChainableMethodAdvice);
 			}
 			else {
-				classLevelMethodInterceptors.add(methodInterceptor);
+				classLevelChainableMethodAdvices.add(chainableMethodAdvice);
 			}
 
-			fullMethodInterceptors.add(methodInterceptor);
+			fullChainableMethodAdvices.add(chainableMethodAdvice);
 
-			methodInterceptor = chainableMethodAdvice.nextMethodInterceptor;
+			chainableMethodAdvice = (ChainableMethodAdvice)
+				chainableMethodAdvice.nextMethodInterceptor;
 		}
 
-		_classLevelMethodInterceptors = classLevelMethodInterceptors.toArray(
-			new MethodInterceptor[classLevelMethodInterceptors.size()]);
-		_fullMethodInterceptors = fullMethodInterceptors.toArray(
-			new MethodInterceptor[fullMethodInterceptors.size()]);
+		_classLevelChainableMethodAdvices =
+			classLevelChainableMethodAdvices.toArray(
+				new ChainableMethodAdvice[
+					classLevelChainableMethodAdvices.size()]);
+		_fullChainableMethodAdvices = fullChainableMethodAdvices.toArray(
+			new ChainableMethodAdvice[fullChainableMethodAdvices.size()]);
 	}
 
 	public <T> T findAnnotation(
@@ -140,39 +138,39 @@ public class ServiceBeanAopCacheManager {
 		return annotation;
 	}
 
-	public MethodInterceptor[] getMethodInterceptors(Method method) {
-		MethodInterceptor[] methodInterceptors = _methodInterceptors.get(
-			method);
+	public ChainableMethodAdvice[] getMethodInterceptors(Method method) {
+		ChainableMethodAdvice[] chainableMethodAdvices =
+			_chainableMethodAdvices.get(method);
 
-		if (methodInterceptors == null) {
-			methodInterceptors = _fullMethodInterceptors;
+		if (chainableMethodAdvices == null) {
+			chainableMethodAdvices = _fullChainableMethodAdvices;
 
-			_methodInterceptors.put(method, methodInterceptors);
+			_chainableMethodAdvices.put(method, chainableMethodAdvices);
 		}
 
-		return methodInterceptors;
+		return chainableMethodAdvices;
 	}
 
 	public void putMethodInterceptors(
-		Method method, MethodInterceptor[] methodInterceptors) {
+		Method method, ChainableMethodAdvice[] chainableMethodAdvices) {
 
-		_methodInterceptors.put(method, methodInterceptors);
+		_chainableMethodAdvices.put(method, chainableMethodAdvices);
 	}
 
 	public void removeMethodInterceptor(
-		Method method, MethodInterceptor methodInterceptor) {
+		Method method, ChainableMethodAdvice chainableMethodAdvice) {
 
-		MethodInterceptor[] methodInterceptors = _methodInterceptors.get(
-			method);
+		ChainableMethodAdvice[] chainableMethodAdvices =
+			_chainableMethodAdvices.get(method);
 
-		if (methodInterceptors == null) {
+		if (chainableMethodAdvices == null) {
 			return;
 		}
 
 		int index = -1;
 
-		for (int i = 0; i < methodInterceptors.length; i++) {
-			if (methodInterceptors[i].equals(methodInterceptor)) {
+		for (int i = 0; i < chainableMethodAdvices.length; i++) {
+			if (chainableMethodAdvices[i].equals(chainableMethodAdvice)) {
 				index = i;
 
 				break;
@@ -183,34 +181,34 @@ public class ServiceBeanAopCacheManager {
 			return;
 		}
 
-		int newLength = methodInterceptors.length - 1;
+		int newLength = chainableMethodAdvices.length - 1;
 
-		MethodInterceptor[] newMethodInterceptors =
-			new MethodInterceptor[newLength];
+		ChainableMethodAdvice[] newChainableMethodAdvices =
+			new ChainableMethodAdvice[newLength];
 
 		if (index > 0) {
 			System.arraycopy(
-				methodInterceptors, 0, newMethodInterceptors, 0, index);
+				chainableMethodAdvices, 0, newChainableMethodAdvices, 0, index);
 		}
 
 		if (index < newLength) {
 			System.arraycopy(
-				methodInterceptors, index + 1, newMethodInterceptors, index,
-				newLength - index);
+				chainableMethodAdvices, index + 1, newChainableMethodAdvices,
+				index, newLength - index);
 		}
 
 		if (Arrays.equals(
-				newMethodInterceptors, _classLevelMethodInterceptors)) {
+				newChainableMethodAdvices, _classLevelChainableMethodAdvices)) {
 
-			newMethodInterceptors = _classLevelMethodInterceptors;
+			newChainableMethodAdvices = _classLevelChainableMethodAdvices;
 		}
 
-		_methodInterceptors.put(method, newMethodInterceptors);
+		_chainableMethodAdvices.put(method, newChainableMethodAdvices);
 	}
 
 	public void reset() {
 		_annotations.clear();
-		_methodInterceptors.clear();
+		_chainableMethodAdvices.clear();
 	}
 
 	private static <T> T _findAnnotation(
@@ -264,14 +262,14 @@ public class ServiceBeanAopCacheManager {
 		new ConcurrentHashMap<>();
 	private static final Annotation[] _nullAnnotations = new Annotation[0];
 
-	private final Map
-		<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>[]>
+	private final
+		Map<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>[]>
 			_annotationChainableMethodAdvices = new HashMap<>();
-	private final MethodInterceptor[] _classLevelMethodInterceptors;
-	private final MethodInterceptor[] _fullMethodInterceptors;
-	private final Map<Method, Annotation[]> _methodAnnotations =
+	private final Map<Method, ChainableMethodAdvice[]> _chainableMethodAdvices =
 		new ConcurrentHashMap<>();
-	private final Map<Method, MethodInterceptor[]> _methodInterceptors =
+	private final ChainableMethodAdvice[] _classLevelChainableMethodAdvices;
+	private final ChainableMethodAdvice[] _fullChainableMethodAdvices;
+	private final Map<Method, Annotation[]> _methodAnnotations =
 		new ConcurrentHashMap<>();
 
 }

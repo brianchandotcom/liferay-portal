@@ -2,7 +2,7 @@
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
 	<property name="testray.component.names" value="Theme" />
-	<property name="testray.main.component.name" value="User Interface" />
+	<property name="testray.main.component.name" value="Theme" />
 
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />

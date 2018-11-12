@@ -1,4 +1,13 @@
 dependencies {
+	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.8.3"
+	compileInclude group: "com.liferay", name: "com.liferay.portal.odata.api", version: "1.4.0"
+	compileInclude group: "com.liferay", name: "com.liferay.portal.odata.impl", version: "1.0.5"
+	compileInclude group: "org.apache.olingo", name: "odata-commons-api", version: "4.4.0"
+	compileInclude group: "org.apache.olingo", name: "odata-commons-core", version: "4.4.0"
+	compileInclude group: "org.apache.olingo", name: "odata-server-api", version: "4.4.0"
+	compileInclude group: "org.apache.olingo", name: "odata-server-core", version: "4.4.0"
+	compileInclude group: "org.apache.olingo", name: "odata-server-core-ext", version: "4.4.0"
+
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
@@ -16,7 +25,6 @@ dependencies {
 	compileOnly project(":apps:headless-apio:structure:structure-apio-api")
 	compileOnly project(":apps:headless-apio:structured-content:structured-content-apio-api")
 	compileOnly project(":apps:journal:journal-api")
-	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":core:petra:petra-string")
 
 	testCompile group: "org.apache.cxf", name: "cxf-rt-frontend-jaxrs", version: "3.2.4"

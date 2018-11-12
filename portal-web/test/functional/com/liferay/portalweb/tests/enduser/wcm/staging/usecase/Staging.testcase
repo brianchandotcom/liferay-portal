@@ -2672,4 +2672,73 @@
 			</execute>
 		</for>
 	</command>
+
+	<command name="ViewSimplePublicationAfterDeleteDocumentInGlobal" priority="4">
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_2.jpg" />
+			<var name="dmDocumentTitle" value="Document_2.jpg" />
+		</execute>
+
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithDocumentCP">
+			<var name="dmDocumentTitle" value="Document_2.jpg" />
+			<var name="titleSiteName" value="Global" />
+			<var name="webContentTitle" value="Document_2.jpg" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Publishing" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#deleteCP">
+			<var name="dmDocumentTitle" value="Document_2.jpg" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute function="AssertElementNotPresent" locator1="StagingPublishToLive#SIMPLE_PUBLICATION_DELETION" />
+	</command>
 </definition>

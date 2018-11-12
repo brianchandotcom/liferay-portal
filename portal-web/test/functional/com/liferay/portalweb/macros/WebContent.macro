@@ -380,6 +380,17 @@
 
 		<execute function="Pause" locator1="1000" />
 
+		<if>
+			<isset var="titleSiteName" />
+			<then>
+				<execute function="Click" locator1="ItemSelector#SITES_NAVIGATION" />
+
+				<execute function="AssertClick" locator1="ItemSelector#TITLE_SITE_NAME" value1="${titleSiteName}">
+					<var name="key_titleSiteName" value="${titleSiteName}" />
+				</execute>
+			</then>
+		</if>
+
 		<execute function="Click" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />

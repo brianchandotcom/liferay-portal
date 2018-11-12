@@ -35,6 +35,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITES_NAVIGATION</td>
+	<td>//ul[contains(@aria-label,'Document Selector')]//a[contains(.,'sites')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_SITE_NAME</td>
+	<td>//div[contains(@class,'card-col-content')]/span[contains(@class,'lfr-card-title-text')]/a[contains(@title,'${key_titleSiteName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

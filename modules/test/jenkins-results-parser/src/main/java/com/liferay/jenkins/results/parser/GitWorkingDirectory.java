@@ -1459,27 +1459,11 @@ public class GitWorkingDirectory {
 	}
 
 	public List<LocalGitCommit> log(int num, File file) {
-		return log(0, num, file);
+		return _log(0, num, file);
 	}
 
 	public List<LocalGitCommit> log(int start, int num) {
-		return log(start, num, null);
-	}
-
-	public List<LocalGitCommit> log(int start, int num, File file) {
-		List<LocalGitCommit> localGitCommits = new ArrayList<>(num);
-
-		String gitLog = _log(start, num, file, "%H %s");
-
-		gitLog = gitLog.replaceAll("Finished executing Bash commands.", "");
-
-		String[] gitLogEntities = gitLog.split("\n");
-
-		for (String gitLogEntity : gitLogEntities) {
-			localGitCommits.add(getLocalGitCommit(gitLogEntity));
-		}
-
-		return localGitCommits;
+		return _log(start, num, null);
 	}
 
 	public RemoteGitBranch pushToRemoteGitRepository(
@@ -2061,13 +2045,24 @@ public class GitWorkingDirectory {
 		return executionResult.getStandardOut();
 	}
 
+	private List<LocalGitCommit> _log(int start, int num, File file) {
+		List<LocalGitCommit> localGitCommits = new ArrayList<>(num);
+
+		String gitLog = _log(start, num, file, "%H %s");
+
+		gitLog = gitLog.replaceAll("Finished executing Bash commands.", "");
+
+		String[] gitLogEntities = gitLog.split("\n");
+
+		for (String gitLogEntity : gitLogEntities) {
+			localGitCommits.add(getLocalGitCommit(gitLogEntity));
+		}
+
+		return localGitCommits;
+	}
+
 	private String _log(int start, int num, File file, String format) {
 		StringBuilder sb = new StringBuilder();
-
-		if ((start > 0) && (file != null)) {
-			throw new RuntimeException(
-				"The start & file parameters can not be set simultaneously");
-		}
 
 		sb.append("git log ");
 

@@ -1063,6 +1063,260 @@ public class OrganizationUtil {
 	}
 
 	/**
+	* Returns all the organizations where companyId = &#63; and name LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @return the matching organizations
+	*/
+	public static List<Organization> findByC_LikeN(long companyId, String name) {
+		return getPersistence().findByC_LikeN(companyId, name);
+	}
+
+	/**
+	* Returns a range of all the organizations where companyId = &#63; and name LIKE &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OrganizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @param start the lower bound of the range of organizations
+	* @param end the upper bound of the range of organizations (not inclusive)
+	* @return the range of matching organizations
+	*/
+	public static List<Organization> findByC_LikeN(long companyId, String name,
+		int start, int end) {
+		return getPersistence().findByC_LikeN(companyId, name, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the organizations where companyId = &#63; and name LIKE &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OrganizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @param start the lower bound of the range of organizations
+	* @param end the upper bound of the range of organizations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching organizations
+	*/
+	public static List<Organization> findByC_LikeN(long companyId, String name,
+		int start, int end, OrderByComparator<Organization> orderByComparator) {
+		return getPersistence()
+				   .findByC_LikeN(companyId, name, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the organizations where companyId = &#63; and name LIKE &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OrganizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @param start the lower bound of the range of organizations
+	* @param end the upper bound of the range of organizations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching organizations
+	*/
+	public static List<Organization> findByC_LikeN(long companyId, String name,
+		int start, int end, OrderByComparator<Organization> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC_LikeN(companyId, name, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first organization in the ordered set where companyId = &#63; and name LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching organization
+	* @throws NoSuchOrganizationException if a matching organization could not be found
+	*/
+	public static Organization findByC_LikeN_First(long companyId, String name,
+		OrderByComparator<Organization> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
+		return getPersistence()
+				   .findByC_LikeN_First(companyId, name, orderByComparator);
+	}
+
+	/**
+	* Returns the first organization in the ordered set where companyId = &#63; and name LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching organization, or <code>null</code> if a matching organization could not be found
+	*/
+	public static Organization fetchByC_LikeN_First(long companyId,
+		String name, OrderByComparator<Organization> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_LikeN_First(companyId, name, orderByComparator);
+	}
+
+	/**
+	* Returns the last organization in the ordered set where companyId = &#63; and name LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching organization
+	* @throws NoSuchOrganizationException if a matching organization could not be found
+	*/
+	public static Organization findByC_LikeN_Last(long companyId, String name,
+		OrderByComparator<Organization> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
+		return getPersistence()
+				   .findByC_LikeN_Last(companyId, name, orderByComparator);
+	}
+
+	/**
+	* Returns the last organization in the ordered set where companyId = &#63; and name LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching organization, or <code>null</code> if a matching organization could not be found
+	*/
+	public static Organization fetchByC_LikeN_Last(long companyId, String name,
+		OrderByComparator<Organization> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_LikeN_Last(companyId, name, orderByComparator);
+	}
+
+	/**
+	* Returns the organizations before and after the current organization in the ordered set where companyId = &#63; and name LIKE &#63;.
+	*
+	* @param organizationId the primary key of the current organization
+	* @param companyId the company ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next organization
+	* @throws NoSuchOrganizationException if a organization with the primary key could not be found
+	*/
+	public static Organization[] findByC_LikeN_PrevAndNext(
+		long organizationId, long companyId, String name,
+		OrderByComparator<Organization> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
+		return getPersistence()
+				   .findByC_LikeN_PrevAndNext(organizationId, companyId, name,
+			orderByComparator);
+	}
+
+	/**
+	* Returns all the organizations that the user has permission to view where companyId = &#63; and name LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @return the matching organizations that the user has permission to view
+	*/
+	public static List<Organization> filterFindByC_LikeN(long companyId,
+		String name) {
+		return getPersistence().filterFindByC_LikeN(companyId, name);
+	}
+
+	/**
+	* Returns a range of all the organizations that the user has permission to view where companyId = &#63; and name LIKE &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OrganizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @param start the lower bound of the range of organizations
+	* @param end the upper bound of the range of organizations (not inclusive)
+	* @return the range of matching organizations that the user has permission to view
+	*/
+	public static List<Organization> filterFindByC_LikeN(long companyId,
+		String name, int start, int end) {
+		return getPersistence().filterFindByC_LikeN(companyId, name, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the organizations that the user has permissions to view where companyId = &#63; and name LIKE &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OrganizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @param start the lower bound of the range of organizations
+	* @param end the upper bound of the range of organizations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching organizations that the user has permission to view
+	*/
+	public static List<Organization> filterFindByC_LikeN(long companyId,
+		String name, int start, int end,
+		OrderByComparator<Organization> orderByComparator) {
+		return getPersistence()
+				   .filterFindByC_LikeN(companyId, name, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the organizations before and after the current organization in the ordered set of organizations that the user has permission to view where companyId = &#63; and name LIKE &#63;.
+	*
+	* @param organizationId the primary key of the current organization
+	* @param companyId the company ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next organization
+	* @throws NoSuchOrganizationException if a organization with the primary key could not be found
+	*/
+	public static Organization[] filterFindByC_LikeN_PrevAndNext(
+		long organizationId, long companyId, String name,
+		OrderByComparator<Organization> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchOrganizationException {
+		return getPersistence()
+				   .filterFindByC_LikeN_PrevAndNext(organizationId, companyId,
+			name, orderByComparator);
+	}
+
+	/**
+	* Removes all the organizations where companyId = &#63; and name LIKE &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param name the name
+	*/
+	public static void removeByC_LikeN(long companyId, String name) {
+		getPersistence().removeByC_LikeN(companyId, name);
+	}
+
+	/**
+	* Returns the number of organizations where companyId = &#63; and name LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @return the number of matching organizations
+	*/
+	public static int countByC_LikeN(long companyId, String name) {
+		return getPersistence().countByC_LikeN(companyId, name);
+	}
+
+	/**
+	* Returns the number of organizations that the user has permission to view where companyId = &#63; and name LIKE &#63;.
+	*
+	* @param companyId the company ID
+	* @param name the name
+	* @return the number of matching organizations that the user has permission to view
+	*/
+	public static int filterCountByC_LikeN(long companyId, String name) {
+		return getPersistence().filterCountByC_LikeN(companyId, name);
+	}
+
+	/**
 	* Returns all the organizations where companyId = &#63; and parentOrganizationId = &#63;.
 	*
 	* @param companyId the company ID

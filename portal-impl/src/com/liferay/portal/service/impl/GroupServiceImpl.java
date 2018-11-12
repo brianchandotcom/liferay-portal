@@ -412,12 +412,12 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	public int getGroupsCount(long companyId, long parentGroupId, boolean site)
 		throws PortalException {
 
-		if (parentGroupId <= 0) {
-			GroupPermissionUtil.check(getPermissionChecker(), ActionKeys.VIEW);
-		}
-		else {
+		if (parentGroupId > 0) {
 			GroupPermissionUtil.check(
 				getPermissionChecker(), parentGroupId, ActionKeys.VIEW);
+		}
+		else {
+			GroupPermissionUtil.check(getPermissionChecker(), ActionKeys.VIEW);
 		}
 
 		return groupLocalService.getGroupsCount(companyId, parentGroupId, site);
@@ -428,12 +428,12 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			long companyId, long parentGroupId, String name, boolean site)
 		throws PortalException {
 
-		if (parentGroupId <= 0) {
-			GroupPermissionUtil.check(getPermissionChecker(), ActionKeys.VIEW);
-		}
-		else {
+		if (parentGroupId > 0) {
 			GroupPermissionUtil.check(
 				getPermissionChecker(), parentGroupId, ActionKeys.VIEW);
+		}
+		else {
+			GroupPermissionUtil.check(getPermissionChecker(), ActionKeys.VIEW);
 		}
 
 		return groupLocalService.getGroupsCount(
@@ -454,12 +454,12 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			long companyId, String className, long parentGroupId)
 		throws PortalException {
 
-		if (parentGroupId <= 0) {
-			GroupPermissionUtil.check(getPermissionChecker(), ActionKeys.VIEW);
-		}
-		else {
+		if (parentGroupId > 0) {
 			GroupPermissionUtil.check(
 				getPermissionChecker(), parentGroupId, ActionKeys.VIEW);
+		}
+		else {
+			GroupPermissionUtil.check(getPermissionChecker(), ActionKeys.VIEW);
 		}
 
 		return groupLocalService.getGroupsCount(

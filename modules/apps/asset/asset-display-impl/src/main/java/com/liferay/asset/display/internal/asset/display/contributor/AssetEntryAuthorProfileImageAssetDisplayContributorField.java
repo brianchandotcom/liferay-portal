@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.journal.web.internal.asset.display.contributor;
+package com.liferay.asset.display.internal.asset.display.contributor;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributorField;
-import com.liferay.journal.model.JournalArticle;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -37,23 +37,23 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(
-	property = "model.class.name=com.liferay.journal.model.JournalArticle",
+	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
 	service = AssetDisplayContributorField.class
 )
-public class JournalArticleLastEditorProfileAssetDisplayContributorField
-	implements AssetDisplayContributorField<JournalArticle> {
+public class AssetEntryAuthorProfileImageAssetDisplayContributorField
+	implements AssetDisplayContributorField<AssetEntry> {
 
 	@Override
 	public String getKey() {
-		return "lastEditorProfileImage";
+		return "authorProfileImage";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, "com.liferay.journal.lang");
+			locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "last-editor-profile-image");
+		return LanguageUtil.get(resourceBundle, "author-profile-image");
 	}
 
 	@Override
@@ -62,8 +62,8 @@ public class JournalArticleLastEditorProfileAssetDisplayContributorField
 	}
 
 	@Override
-	public String getValue(JournalArticle article, Locale locale) {
-		User user = _userLocalService.fetchUser(article.getUserId());
+	public String getValue(AssetEntry assetEntry, Locale locale) {
+		User user = _userLocalService.fetchUser(assetEntry.getUserId());
 
 		if (user != null) {
 			ServiceContext serviceContext =
@@ -83,7 +83,7 @@ public class JournalArticleLastEditorProfileAssetDisplayContributorField
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		JournalArticleLastEditorProfileAssetDisplayContributorField.class);
+		AssetEntryAuthorProfileImageAssetDisplayContributorField.class);
 
 	@Reference
 	private UserLocalService _userLocalService;

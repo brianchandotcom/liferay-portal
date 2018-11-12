@@ -476,6 +476,11 @@
 			<finder-column comparator="LIKE" name="treePath" />
 			<finder-column name="site" />
 		</finder>
+		<finder db-index="false" name="C_LikeN_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
+			<finder-column name="site" />
+		</finder>
 		<finder name="C_S_A" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="site" />
@@ -1301,6 +1306,10 @@
 		<finder name="C_N" return-type="Organization" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="name" />
+		</finder>
+		<finder name="C_LikeN" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
 		</finder>
 		<finder db-index="false" name="O_C_P" return-type="Collection">
 			<finder-column comparator="&gt;" name="organizationId" />

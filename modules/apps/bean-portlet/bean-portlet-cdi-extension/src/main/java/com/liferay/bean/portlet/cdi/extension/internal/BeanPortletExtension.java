@@ -447,7 +447,7 @@ public class BeanPortletExtension implements Extension {
 
 					@Override
 					public <T extends PortletAsyncListener> T
-						getPortletAsyncListener(Class<T> clazz)
+							getPortletAsyncListener(Class<T> clazz)
 						throws PortletException {
 
 						Set<Bean<?>> beans = beanManager.getBeans(clazz);

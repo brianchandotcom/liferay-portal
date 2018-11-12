@@ -129,7 +129,7 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		}
 
 		if (currentGitCommitGroup.size() <= 1) {
-			return getEmptyCell();
+			return getEmptyCellElement();
 		}
 
 		LocalGitCommit firstNextLocalGitCommit = nextGitCommitGroup.get(0);

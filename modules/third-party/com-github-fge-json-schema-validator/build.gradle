@@ -6,6 +6,7 @@ classes {
 
 copyLibClasses {
 	exclude "META-INF/MANIFEST.MF"
+	exclude "javax/activation/"
 	exclude "javax/mail/"
 
 	from {

@@ -1149,7 +1149,6 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 				excludes="${snapshot.bundle.excludes}"
 			/>
 		</un7z>
->
 
 		<move
 			file="${liferay.home}/liferay-portal-${git.working.branch.name}"

@@ -1,4 +1,4 @@
-<definition component-name="portal-business-productivity-ee">
+<definition component-name="portal-forms-and-workflow-ee">
 	<property name="portal.release" value="false" />
 	<property name="portal.upstream" value="true" />
 	<property name="test.run.environment" value="EE" />

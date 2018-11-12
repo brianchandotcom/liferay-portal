@@ -4955,6 +4955,12 @@ version 2.0.0.
 include `compileInclude` configuration dependencies sources in the respective
 JAR files.
 
+## 5.5.109 - 2018-11-09
+
+### Fixed
+- [LPS-87006]: Skip copying `compileInclude` configuration dependencies sources
+if the sources JAR contains invalid entries.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

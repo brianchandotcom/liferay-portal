@@ -324,7 +324,7 @@ public class ModifiableServletContextAdapter
 				modifiableServletContext.getWrappedServletContext();
 		}
 
-		return servletContext.equals(_servletContext);
+		return _servletContext.equals(servletContext);
 	}
 
 	@Override

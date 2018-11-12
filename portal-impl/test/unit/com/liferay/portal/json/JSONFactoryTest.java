@@ -17,14 +17,11 @@ package com.liferay.portal.json;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -252,13 +249,6 @@ public class JSONFactoryTest {
 		Assert.assertNotNull(json);
 
 		checkJSONPrimitiveArrays(json);
-	}
-
-	@Test
-	public void testSerializeArraysWithObjects() {
-		JSONArray jsonArray = JSONUtil.put(JSONFactoryUtil.createJSONObject());
-
-		Assert.assertEquals("[{}]", jsonArray.toString());
 	}
 
 	@Test

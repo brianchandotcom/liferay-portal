@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -193,9 +193,7 @@ public class DDMFormFactoryHelper {
 				List<ResourceBundle> resourceBundles = new ArrayList<>();
 
 				ResourceBundle portalResourceBundle =
-					ResourceBundleUtil.getBundle(
-						"content.Language", locale,
-						PortalClassLoaderUtil.getClassLoader());
+					PortalUtil.getResourceBundle(locale);
 
 				resourceBundles.add(portalResourceBundle);
 

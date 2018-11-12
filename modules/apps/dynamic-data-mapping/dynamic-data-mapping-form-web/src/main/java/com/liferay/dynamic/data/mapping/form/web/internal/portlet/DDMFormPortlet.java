@@ -223,7 +223,7 @@ public class DDMFormPortlet extends MVCPortlet {
 			_ddmFormInstanceRecordVersionLocalService, _ddmFormInstanceService,
 			_ddmFormInstanceVersionLocalService, _ddmFormRenderer,
 			_ddmFormValuesFactory, _ddmFormValuesMerger, _groupLocalService,
-			_workflowDefinitionLinkLocalService);
+			_workflowDefinitionLinkLocalService, _portal);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, ddmFormDisplayContext);

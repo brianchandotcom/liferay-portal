@@ -56,10 +56,9 @@ import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SessionParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -98,7 +97,8 @@ public class DDMFormDisplayContext {
 			DDMFormValuesMerger ddmFormValuesMerger,
 			GroupLocalService groupLocalService,
 			WorkflowDefinitionLinkLocalService
-				workflowDefinitionLinkLocalService)
+				workflowDefinitionLinkLocalService,
+			Portal portal)
 		throws PortalException {
 
 		_renderRequest = renderRequest;
@@ -115,6 +115,7 @@ public class DDMFormDisplayContext {
 		_groupLocalService = groupLocalService;
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
+		_portal = portal;
 
 		_containerId = StringUtil.randomString();
 
@@ -593,11 +594,7 @@ public class DDMFormDisplayContext {
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
-		ResourceBundleLoader portalResourceBundleLoader =
-			ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
-
-		ResourceBundle portalResourceBundle =
-			portalResourceBundleLoader.loadResourceBundle(locale);
+		ResourceBundle portalResourceBundle = _portal.getResourceBundle(locale);
 
 		ResourceBundle moduleResourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
@@ -738,6 +735,7 @@ public class DDMFormDisplayContext {
 	private final GroupLocalService _groupLocalService;
 	private Boolean _hasAddFormInstanceRecordPermission;
 	private Boolean _hasViewPermission;
+	private final Portal _portal;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private Boolean _showConfigurationIcon;

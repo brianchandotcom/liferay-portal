@@ -212,12 +212,12 @@
 		function(managementToolbar) {
 			managementToolbar.on(
 				'actionItemClicked',
-					function(event) {
-						var itemData = event.data.item.data;
+				function(event) {
+					var itemData = event.data.item.data;
 
-						if (itemData && itemData.action && ACTIONS[itemData.action]) {
-							ACTIONS[itemData.action]();
-						}
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
 				}
 			);
 		}

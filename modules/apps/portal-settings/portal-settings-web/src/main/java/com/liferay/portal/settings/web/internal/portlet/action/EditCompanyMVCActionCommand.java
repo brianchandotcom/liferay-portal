@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.exception.PhoneNumberException;
 import com.liferay.portal.kernel.exception.PhoneNumberExtensionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.WebsiteURLException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Group;
@@ -58,16 +59,15 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.constants.PortalSettingsPortletKeys;
 import com.liferay.portal.settings.web.internal.exception.RequiredLocaleException;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Locale;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -229,19 +229,14 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 
 		long companyId = _portal.getCompanyId(actionRequest);
 
-		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
+		Set<Locale> availableLocales = LanguageUtil.getCompanyAvailableLocales(
 			companyId);
-
-		String oldLanguageIds = portletPreferences.getValue(
-			PropsKeys.LOCALES, StringPool.BLANK);
-
-		if (Objects.equals(oldLanguageIds, newLanguageIds)) {
-			return;
-		}
 
 		List<String> removedLanguageIds = new ArrayList<>();
 
-		for (String oldLanguageId : oldLanguageIds.split(StringPool.COMMA)) {
+		for (Locale availableLocale : availableLocales) {
+			String oldLanguageId = availableLocale.toString();
+
 			if (!StringUtil.contains(
 					newLanguageIds, oldLanguageId, StringPool.COMMA)) {
 

@@ -810,7 +810,7 @@
 		</execute>
 	</command>
 
-	<command name="PublishWCIncludingTextsAndImages" priority="3">
+	<command name="PublishWCIncludingTextsAndImages" priority="5">
 		<description message="This is a use case for LPS-80367." />
 
 		<execute macro="Navigator#openURL" />

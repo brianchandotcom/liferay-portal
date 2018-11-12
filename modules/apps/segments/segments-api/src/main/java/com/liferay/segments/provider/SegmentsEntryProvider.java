@@ -32,7 +32,6 @@ public interface SegmentsEntryProvider {
 	 * Returns the list of active {@link SegmentsEntry} objects related with the
 	 * entity.
 	 *
-	 * @param  groupId the primary key of the segment's group
 	 * @param  className the class name of the entity
 	 * @param  classPK the primary key of the entity
 	 * @return the list of active {@link SegmentsEntry} objects related to the
@@ -41,7 +40,7 @@ public interface SegmentsEntryProvider {
 	 * @review
 	 */
 	public List<SegmentsEntry> getSegmentsEntries(
-			long groupId, String className, long classPK)
+			String className, long classPK)
 		throws PortalException;
 
 	/**

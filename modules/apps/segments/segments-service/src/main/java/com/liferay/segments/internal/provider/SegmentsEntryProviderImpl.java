@@ -60,13 +60,12 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 
 	@Override
 	public List<SegmentsEntry> getSegmentsEntries(
-			long groupId, String className, long classPK)
+			String className, long classPK)
 		throws PortalException {
 
 		List<SegmentsEntry> segmentsEntries =
 			_segmentsEntryLocalService.getSegmentsEntries(
-				groupId, true, className, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				null);
+				true, className, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		if (segmentsEntries.isEmpty()) {
 			return Collections.emptyList();

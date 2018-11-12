@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
-import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -59,6 +58,7 @@ import javax.portlet.PortletURL;
 
 /**
  * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
 public class DefaultAnnouncementsDisplayContext
 	implements AnnouncementsDisplayContext {
@@ -131,7 +131,11 @@ public class DefaultAnnouncementsDisplayContext
 
 	@Override
 	public List<Group> getGroups() throws PortalException {
-		if (!isCustomizeAnnouncementsDisplayed()) {
+		if (!isCustomizeAnnouncementsDisplayed() ||
+			StringUtil.equals(
+				_announcementsRequestHelper.getPortletId(),
+				AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN)) {
+
 			return AnnouncementsUtil.getGroups(
 				_announcementsRequestHelper.getThemeDisplay());
 		}
@@ -158,7 +162,11 @@ public class DefaultAnnouncementsDisplayContext
 
 	@Override
 	public List<Organization> getOrganizations() throws PortalException {
-		if (!isCustomizeAnnouncementsDisplayed()) {
+		if (!isCustomizeAnnouncementsDisplayed() ||
+			StringUtil.equals(
+				_announcementsRequestHelper.getPortletId(),
+				AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN)) {
+
 			return AnnouncementsUtil.getOrganizations(
 				_announcementsRequestHelper.getThemeDisplay());
 		}
@@ -197,7 +205,11 @@ public class DefaultAnnouncementsDisplayContext
 
 	@Override
 	public List<Role> getRoles() throws PortalException {
-		if (!isCustomizeAnnouncementsDisplayed()) {
+		if (!isCustomizeAnnouncementsDisplayed() ||
+			StringUtil.equals(
+				_announcementsRequestHelper.getPortletId(),
+				AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN)) {
+
 			return AnnouncementsUtil.getRoles(
 				_announcementsRequestHelper.getThemeDisplay());
 		}
@@ -208,14 +220,13 @@ public class DefaultAnnouncementsDisplayContext
 			getSelectedScopeRoleIds());
 
 		for (String selectedScopeRoleId : selectedScopeRoleIds) {
-			if (RolePermissionUtil.contains(
-					_announcementsRequestHelper.getPermissionChecker(),
-					Long.valueOf(selectedScopeRoleId),
-					ActionKeys.MANAGE_ANNOUNCEMENTS)) {
+			Role role = RoleLocalServiceUtil.getRole(
+				Long.valueOf(selectedScopeRoleId));
 
-				selectedRoles.add(
-					RoleLocalServiceUtil.getRole(
-						Long.valueOf(selectedScopeRoleId)));
+			if (AnnouncementsUtil.hasManageAnnouncementsPermission(
+					role, _announcementsRequestHelper.getPermissionChecker())) {
+
+				selectedRoles.add(role);
 			}
 		}
 
@@ -242,7 +253,11 @@ public class DefaultAnnouncementsDisplayContext
 
 	@Override
 	public List<UserGroup> getUserGroups() throws PortalException {
-		if (!isCustomizeAnnouncementsDisplayed()) {
+		if (!isCustomizeAnnouncementsDisplayed() ||
+			StringUtil.equals(
+				_announcementsRequestHelper.getPortletId(),
+				AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN)) {
+
 			return AnnouncementsUtil.getUserGroups(
 				_announcementsRequestHelper.getThemeDisplay());
 		}

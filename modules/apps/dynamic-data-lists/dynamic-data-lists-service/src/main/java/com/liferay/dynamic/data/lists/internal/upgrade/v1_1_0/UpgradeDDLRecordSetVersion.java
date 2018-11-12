@@ -32,11 +32,9 @@ import java.sql.ResultSet;
 public class UpgradeDDLRecordSetVersion extends UpgradeProcess {
 
 	public UpgradeDDLRecordSetVersion(
-		CounterLocalService counterLocalService,
-		UserLocalService userLocalService) {
+		CounterLocalService counterLocalService) {
 
 		_counterLocalService = counterLocalService;
-		_userLocalService = userLocalService;
 	}
 
 	@Override
@@ -94,6 +92,5 @@ public class UpgradeDDLRecordSetVersion extends UpgradeProcess {
 	}
 
 	private final CounterLocalService _counterLocalService;
-	private final UserLocalService _userLocalService;
 
 }

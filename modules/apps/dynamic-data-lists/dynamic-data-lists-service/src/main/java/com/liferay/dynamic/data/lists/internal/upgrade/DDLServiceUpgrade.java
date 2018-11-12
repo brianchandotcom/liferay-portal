@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.lists.internal.upgrade.v2_0_0.util.DDLRecordSetT
 import com.liferay.dynamic.data.lists.internal.upgrade.v2_0_0.util.DDLRecordSetVersionTable;
 import com.liferay.dynamic.data.lists.internal.upgrade.v2_0_0.util.DDLRecordTable;
 import com.liferay.dynamic.data.lists.internal.upgrade.v2_0_0.util.DDLRecordVersionTable;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -62,7 +61,7 @@ public class DDLServiceUpgrade implements UpgradeStepRegistrator {
 				UpgradeDDLRecordSet(),
 			new com.liferay.dynamic.data.lists.internal.upgrade.v1_1_0.
 				UpgradeDDLRecordSetVersion(
-					_counterLocalService, _userLocalService));
+					_counterLocalService));
 
 		registry.register(
 			"1.1.0", "2.0.0",
@@ -75,8 +74,5 @@ public class DDLServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private CounterLocalService _counterLocalService;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

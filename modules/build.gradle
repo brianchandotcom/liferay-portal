@@ -422,41 +422,42 @@ private void _updateGradleSourcePaths(String gradleVersion, EclipseModel eclipse
 
 	XmlFileContentMerger xmlFileContentMerger = eclipseClasspath.getFile()
 
-	xmlFileContentMerger.whenMerged({
-		Classpath classpath ->
+	xmlFileContentMerger.whenMerged(
+		{
+			Classpath classpath ->
 
-		for (ClasspathEntry classpathEntry : classpath.getEntries()) {
-			if (classpathEntry.hasProperty("sourcepath")) {
-				continue
+			for (ClasspathEntry classpathEntry : classpath.getEntries()) {
+				if (classpathEntry.hasProperty("sourcepath")) {
+					continue
+				}
+
+				String kind = classpathEntry.getKind()
+
+				if (!kind.equals("lib")) {
+					continue
+				}
+
+				String path = classpathEntry.getPath()
+
+				if (!path.contains("/gradle-" + gradleVersion + "/lib/")) {
+					continue
+				}
+
+				String fileName = path.substring(path.lastIndexOf("/") + 1)
+
+				if (!fileName.startsWith("gradle-")) {
+					continue
+				}
+
+				String dirName = fileName.substring(7, fileName.length() - (gradleVersion.length() + 5))
+
+				File sourcesDir = new File(rootProject.buildDir, "gradle-" + gradleVersion + "-sources/" + dirName)
+
+				if (sourcesDir.exists()) {
+					classpathEntry.putAt("sourcePath", fileReference(sourcesDir))
+
+					logger.info "Added sourcePath {}", sourcesDir
+				}
 			}
-
-			String kind = classpathEntry.getKind()
-
-			if (!kind.equals("lib")) {
-				continue
-			}
-
-			String path = classpathEntry.getPath()
-
-			if (!path.contains("/gradle-" + gradleVersion + "/lib/")) {
-				continue
-			}
-
-			String fileName = path.substring(path.lastIndexOf("/") + 1)
-
-			if (!fileName.startsWith("gradle-")) {
-				continue
-			}
-
-			String dirName = fileName.substring(7, fileName.length() - (gradleVersion.length() + 5))
-
-			File sourcesDir = new File(rootProject.buildDir, "gradle-" + gradleVersion + "-sources/" + dirName)
-
-			if (sourcesDir.exists()) {
-				classpathEntry.putAt("sourcePath", fileReference(sourcesDir))
-
-				logger.info "Added sourcePath {}", sourcesDir
-			}
-		}
-	})
+		})
 }

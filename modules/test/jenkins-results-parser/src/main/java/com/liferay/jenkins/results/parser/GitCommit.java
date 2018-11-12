@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.Date;
+
 import org.json.JSONObject;
 
 /**
@@ -26,7 +28,7 @@ public interface GitCommit {
 
 	public String getAbbreviatedSHA();
 
-	public String getCommitDate();
+	public Date getCommitDate();
 
 	public String getGitRepositoryName();
 

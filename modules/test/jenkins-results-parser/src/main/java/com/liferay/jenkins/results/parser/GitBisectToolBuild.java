@@ -117,7 +117,10 @@ public class GitBisectToolBuild extends TopLevelBuild {
 	protected Element getCommitDateCellElement(LocalGitCommit localGitCommit) {
 		return Dom4JUtil.getNewElement(
 			"td", null,
-			StringEscapeUtils.escapeXml(localGitCommit.getCommitDate()));
+			StringEscapeUtils.escapeXml(
+				JenkinsResultsParserUtil.toDateString(
+					localGitCommit.getCommitDate(), _COMMIT_DATE_FORMAT,
+					"PST")));
 	}
 
 	protected Element getCommitDiffLinkCellElement(
@@ -551,6 +554,8 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		protected PortalBuildData portalBuildData;
 
 	}
+
+	private static final String _COMMIT_DATE_FORMAT = "yyyy-MM-dd h:mm:ss aa z";
 
 	private static final String _JQUERY_URL =
 		"https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js";

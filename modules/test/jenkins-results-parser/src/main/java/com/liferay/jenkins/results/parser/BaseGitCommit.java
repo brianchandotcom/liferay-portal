@@ -14,10 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.text.SimpleDateFormat;
-
 import java.util.Date;
-import java.util.TimeZone;
 
 import org.json.JSONObject;
 
@@ -41,13 +38,8 @@ public abstract class BaseGitCommit implements GitCommit {
 	}
 
 	@Override
-	public String getCommitDate() {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd h:mm:ss aa z");
-
-		simpleDateFormat.setTimeZone(TimeZone.getTimeZone("PST"));
-
-		return simpleDateFormat.format(new Date(_commitTime));
+	public Date getCommitDate() {
+		return new Date(_commitTime);
 	}
 
 	@Override

@@ -200,6 +200,12 @@ public class SiteNavigationMenuItemStagedModelDataHandler
 			siteNavigationMenuItem, importedSiteNavigationMenuItem);
 	}
 
+	protected StagedModelRepository<SiteNavigationMenuItem>
+		getStagedModelRepository() {
+
+		return _stagedModelRepository;
+	}
+
 	@Reference
 	private SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;

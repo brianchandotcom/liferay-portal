@@ -63,6 +63,15 @@ public class SegmentsEntryServiceWrapper implements SegmentsEntryService,
 
 	@Override
 	public java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntries(
+		long groupId, boolean active, String type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntry> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _segmentsEntryService.getSegmentsEntries(groupId, active, type,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntries(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntry> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {

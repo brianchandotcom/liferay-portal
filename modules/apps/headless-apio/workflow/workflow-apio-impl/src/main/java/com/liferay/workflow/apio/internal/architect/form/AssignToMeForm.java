@@ -57,10 +57,6 @@ public class AssignToMeForm {
 	}
 
 	public Date getDueDate() {
-		if (_dueDate == null) {
-			return null;
-		}
-
 		return _dueDate;
 	}
 

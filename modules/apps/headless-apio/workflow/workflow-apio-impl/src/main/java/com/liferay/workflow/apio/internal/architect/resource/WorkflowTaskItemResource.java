@@ -119,13 +119,13 @@ public class WorkflowTaskItemResource
 		CurrentUser currentUser) {
 
 		return Try.fromFallible(
-			() -> _workflowTaskManager.getWorkflowTask(
-				currentUser.getCompanyId(), workflowTaskId)
-		).map(
-			workflowTask -> _workflowTaskManager.assignWorkflowTaskToUser(
+			() -> _workflowTaskManager.assignWorkflowTaskToUser(
 				currentUser.getCompanyId(), currentUser.getUserId(),
-				workflowTask.getWorkflowTaskId(), currentUser.getUserId(), "",
-				null, null)
+				workflowTaskId, currentUser.getUserId(), "", null, null)
+		).orElse(
+			null
+		);
+	}
 
 	private WorkflowTask _assignToUser(
 		Long workflowTaskId, AssignToUserForm assignToMeForm, Company company,

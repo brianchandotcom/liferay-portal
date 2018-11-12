@@ -4936,7 +4936,7 @@ version 2.0.0.
 ### Changed
 - [LPS-86835]: Update the [Liferay Gradle Plugins] dependency to version 3.13.9.
 
-## 5.5.106 - 2018-11-07
+## 5.5.108 - 2018-11-08
 
 ### Changed
 - [LPS-87006]: Update the `jarSources` and `jarSourcesCommercial` tasks to

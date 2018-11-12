@@ -20,6 +20,8 @@ import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 
 import java.lang.reflect.Method;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import org.aopalliance.intercept.MethodInvocation;
 
 /**
@@ -29,13 +31,9 @@ public class ServiceContextAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
-		int index = _getServiceContextParameterIndex(
-			methodInvocation.getMethod());
+		Integer index = _indexCache.get(methodInvocation.getMethod());
 
-		if (index < 0) {
-			serviceBeanAopCacheManager.removeMethodInterceptor(
-				methodInvocation.getMethod(), this);
-
+		if (index == null) {
 			return methodInvocation.proceed();
 		}
 
@@ -56,6 +54,22 @@ public class ServiceContextAdvice extends ChainableMethodAdvice {
 			}
 		}
 	}
+
+	@Override
+	public boolean isEnabled(Class<?> targetClass, Method method) {
+		int index = _getServiceContextParameterIndex(method);
+
+		if (index == -1) {
+			return false;
+		}
+
+		_indexCache.put(method, index);
+
+		return true;
+	}
+
+	private final Map<Method, Integer> _indexCache = new ConcurrentHashMap<>();
+
 
 	/**
 	 * @deprecated As of Judson (7.1.x), with no direct replacement

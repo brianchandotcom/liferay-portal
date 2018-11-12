@@ -15,9 +15,6 @@
 package com.liferay.segments.provider;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.segments.model.SegmentsEntry;
-
-import java.util.List;
 
 /**
  * Provides methods for obtaining {@link SegmentsEntry} objects and their
@@ -29,21 +26,6 @@ import java.util.List;
 public interface SegmentsEntryProvider {
 
 	/**
-	 * Returns the list of active {@link SegmentsEntry} objects related with the
-	 * entity.
-	 *
-	 * @param  className the class name of the entity
-	 * @param  classPK the primary key of the entity
-	 * @return the list of active {@link SegmentsEntry} objects related to the
-	 *         entity
-	 * @throws PortalException
-	 * @review
-	 */
-	public List<SegmentsEntry> getSegmentsEntries(
-			String className, long classPK)
-		throws PortalException;
-
-	/**
 	 * Returns the primary keys of the entities related with the segment.
 	 *
 	 * @param  segmentsEntryId the ID of the segment
@@ -52,6 +34,20 @@ public interface SegmentsEntryProvider {
 	 * @review
 	 */
 	public long[] getSegmentsEntryClassPKs(long segmentsEntryId)
+		throws PortalException;
+
+	/**
+	 * Returns ids of the active {@link SegmentsEntry} objects related with the
+	 * entity.
+	 *
+	 * @param  className the class name of the entity
+	 * @param  classPK the primary key of the entity
+	 * @return the ids the of active {@link SegmentsEntry} objects related to
+	 *         the entity
+	 * @throws PortalException
+	 * @review
+	 */
+	public long[] getSegmentsEntryIds(String className, long classPK)
 		throws PortalException;
 
 }

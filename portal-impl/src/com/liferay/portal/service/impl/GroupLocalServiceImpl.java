@@ -1720,8 +1720,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		int start, int end) {
 
 		if (Validator.isNull(name)) {
-			return groupPersistence.findByC_P_S(
+			return getGroups(
 				companyId, parentGroupId, site, start, end);
+		}
+
+		if (parentGroupId == GroupConstants.ANY_PARENT_GROUP_ID) {
+			return
+				groupPersistence.findByC_LikeN_S(
+					companyId, name, site, start, end);
 		}
 
 		return groupPersistence.findByC_P_LikeN_S(
@@ -1822,8 +1828,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		long companyId, long parentGroupId, String name, boolean site) {
 
 		if (Validator.isNull(name)) {
-			return groupPersistence.countByC_P_S(
-				companyId, parentGroupId, site);
+			return getGroupsCount(companyId, parentGroupId, site);
+		}
+
+		if (parentGroupId == GroupConstants.ANY_PARENT_GROUP_ID) {
+			return groupPersistence.countByC_LikeN_S(companyId, name, site);
 		}
 
 		return groupPersistence.countByC_P_LikeN_S(

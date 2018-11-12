@@ -393,8 +393,15 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 		int end) {
 
 		if (Validator.isNull(name)) {
-			return organizationPersistence.filterFindByC_P(
-				companyId, parentOrganizationId, start, end);
+			return
+				getOrganizations(companyId, parentOrganizationId, start, end);
+		}
+
+		if (parentOrganizationId ==
+				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID) {
+
+			return organizationPersistence.filterFindByC_LikeN(
+				companyId, name);
 		}
 
 		return organizationPersistence.filterFindByC_P_LikeN(
@@ -429,8 +436,14 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
-			return organizationPersistence.filterCountByC_P(
-				companyId, parentOrganizationId);
+			return getOrganizationsCount(companyId, parentOrganizationId);
+		}
+
+		if (parentOrganizationId ==
+				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID) {
+
+			return organizationPersistence.filterCountByC_LikeN(
+				companyId, name);
 		}
 
 		return organizationPersistence.filterCountByC_P_LikeN(

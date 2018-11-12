@@ -1,5 +1,6 @@
 import com.liferay.gradle.util.copy.ReplaceLeadingPathAction
 
+String gradleVersion = "2.14"
 String pluginsSDKVersion = project.properties["plugins.sdk.version"]
 
 configurations {
@@ -26,7 +27,7 @@ dependencies {
 	compile group: "org.apache.aries.jmx", name: "org.apache.aries.jmx.api", version: "1.1.0"
 	compile group: "org.springframework.boot", name: "spring-boot-gradle-plugin", version: "1.5.7.RELEASE"
 
-	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi214], dir: new File(rootProject.buildDir, "gradle-2.14"))
+	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
 
 	pluginsSDK group: "com.liferay.portal", name: "com.liferay.portal.plugins.sdk", version: pluginsSDKVersion
 }

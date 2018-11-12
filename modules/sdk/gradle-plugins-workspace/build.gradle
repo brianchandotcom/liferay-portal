@@ -11,6 +11,7 @@ task copyRepo(type: Copy)
 task downloadPluginsSdk(type: Download)
 
 String bundleUrl = "https://releases-cdn.liferay.com/portal/7.1.0-ga1/liferay-ce-portal-tomcat-7.1.0-ga1-20180703012531655.zip"
+String gradleVersion = "2.14"
 String pluginsSdkUrl = "https://repository-cdn.liferay.com/nexus/service/local/repositories/liferay-public-releases/content/com/liferay/portal/com.liferay.portal.plugins.sdk/1.0.19/com.liferay.portal.plugins.sdk-1.0.19-withdependencies.zip"
 
 if (System.properties["http.proxyHost"] == "squid.lax.liferay.com") {
@@ -48,7 +49,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.2.6"
 	compile group: "de.undercouch", name: "gradle-download-task", version: "3.2.0"
 
-	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi214], dir: new File(rootProject.buildDir, "gradle-2.14"))
+	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
 }
 
 downloadPluginsSdk {

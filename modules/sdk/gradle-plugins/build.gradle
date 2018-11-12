@@ -11,6 +11,7 @@ task copyGradleTestDependencies(type: Copy)
 task downloadBundle(type: Download)
 
 String bundleUrl = "https://releases-cdn.liferay.com/portal/7.1.0-ga1/liferay-ce-portal-tomcat-7.1.0-ga1-20180703012531655.zip"
+String gradleVersion = "2.14"
 
 if (System.properties["http.proxyHost"] == "squid.lax.liferay.com") {
 	bundleUrl = "http://mirrors.liferay.com/releases.liferay.com/portal/7.1.0-ga1/liferay-ce-portal-tomcat-7.1.0-ga1-20180703012531655.zip"
@@ -62,7 +63,7 @@ dependencies {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bndlib"
 	}
 
-	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi214], dir: new File(rootProject.buildDir, "gradle-2.14"))
+	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
 }
 
 downloadBundle {

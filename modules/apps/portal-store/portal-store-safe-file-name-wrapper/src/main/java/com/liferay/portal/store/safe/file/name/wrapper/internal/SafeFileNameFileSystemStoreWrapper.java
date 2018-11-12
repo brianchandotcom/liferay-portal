@@ -37,7 +37,7 @@ public class SafeFileNameFileSystemStoreWrapper extends SafeFileNameStore {
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(&(service.ranking<=" + (SafeFileNameStore.SERVICE_RANKING - 1) + ")(store.type=com.liferay.portal.store.file.system.FileSystemStore))"
+		target = "(&(service.ranking<=" + (SafeFileNameStore.SERVICE_RANKING - 1) + ")(store.type=com.liferay.portal.store.file.system.FileSystemStore)(!(current.store=*)))"
 	)
 	protected void setStore(Store store) {
 		this.store = store;

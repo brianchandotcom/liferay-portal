@@ -1,3 +1,4 @@
+create index IX_5BFEEA84 on SegmentsEntry (active_, type_[$COLUMN_LENGTH:75$]);
 create index IX_755F267E on SegmentsEntry (groupId, active_, type_[$COLUMN_LENGTH:75$]);
 create unique index IX_E72E3826 on SegmentsEntry (groupId, key_[$COLUMN_LENGTH:75$]);
 create index IX_7BB6BCA6 on SegmentsEntry (groupId, type_[$COLUMN_LENGTH:75$], active_);

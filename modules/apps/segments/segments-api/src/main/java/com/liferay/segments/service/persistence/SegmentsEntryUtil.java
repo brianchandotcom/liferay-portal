@@ -812,6 +812,174 @@ public class SegmentsEntryUtil {
 	}
 
 	/**
+	* Returns all the segments entries where active = &#63; and type = &#63;.
+	*
+	* @param active the active
+	* @param type the type
+	* @return the matching segments entries
+	*/
+	public static List<SegmentsEntry> findByA_T(boolean active, String type) {
+		return getPersistence().findByA_T(active, type);
+	}
+
+	/**
+	* Returns a range of all the segments entries where active = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SegmentsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param active the active
+	* @param type the type
+	* @param start the lower bound of the range of segments entries
+	* @param end the upper bound of the range of segments entries (not inclusive)
+	* @return the range of matching segments entries
+	*/
+	public static List<SegmentsEntry> findByA_T(boolean active, String type,
+		int start, int end) {
+		return getPersistence().findByA_T(active, type, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the segments entries where active = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SegmentsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param active the active
+	* @param type the type
+	* @param start the lower bound of the range of segments entries
+	* @param end the upper bound of the range of segments entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching segments entries
+	*/
+	public static List<SegmentsEntry> findByA_T(boolean active, String type,
+		int start, int end, OrderByComparator<SegmentsEntry> orderByComparator) {
+		return getPersistence()
+				   .findByA_T(active, type, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the segments entries where active = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SegmentsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param active the active
+	* @param type the type
+	* @param start the lower bound of the range of segments entries
+	* @param end the upper bound of the range of segments entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching segments entries
+	*/
+	public static List<SegmentsEntry> findByA_T(boolean active, String type,
+		int start, int end, OrderByComparator<SegmentsEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByA_T(active, type, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first segments entry in the ordered set where active = &#63; and type = &#63;.
+	*
+	* @param active the active
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching segments entry
+	* @throws NoSuchEntryException if a matching segments entry could not be found
+	*/
+	public static SegmentsEntry findByA_T_First(boolean active, String type,
+		OrderByComparator<SegmentsEntry> orderByComparator)
+		throws com.liferay.segments.exception.NoSuchEntryException {
+		return getPersistence().findByA_T_First(active, type, orderByComparator);
+	}
+
+	/**
+	* Returns the first segments entry in the ordered set where active = &#63; and type = &#63;.
+	*
+	* @param active the active
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching segments entry, or <code>null</code> if a matching segments entry could not be found
+	*/
+	public static SegmentsEntry fetchByA_T_First(boolean active, String type,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+		return getPersistence().fetchByA_T_First(active, type, orderByComparator);
+	}
+
+	/**
+	* Returns the last segments entry in the ordered set where active = &#63; and type = &#63;.
+	*
+	* @param active the active
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching segments entry
+	* @throws NoSuchEntryException if a matching segments entry could not be found
+	*/
+	public static SegmentsEntry findByA_T_Last(boolean active, String type,
+		OrderByComparator<SegmentsEntry> orderByComparator)
+		throws com.liferay.segments.exception.NoSuchEntryException {
+		return getPersistence().findByA_T_Last(active, type, orderByComparator);
+	}
+
+	/**
+	* Returns the last segments entry in the ordered set where active = &#63; and type = &#63;.
+	*
+	* @param active the active
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching segments entry, or <code>null</code> if a matching segments entry could not be found
+	*/
+	public static SegmentsEntry fetchByA_T_Last(boolean active, String type,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+		return getPersistence().fetchByA_T_Last(active, type, orderByComparator);
+	}
+
+	/**
+	* Returns the segments entries before and after the current segments entry in the ordered set where active = &#63; and type = &#63;.
+	*
+	* @param segmentsEntryId the primary key of the current segments entry
+	* @param active the active
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next segments entry
+	* @throws NoSuchEntryException if a segments entry with the primary key could not be found
+	*/
+	public static SegmentsEntry[] findByA_T_PrevAndNext(long segmentsEntryId,
+		boolean active, String type,
+		OrderByComparator<SegmentsEntry> orderByComparator)
+		throws com.liferay.segments.exception.NoSuchEntryException {
+		return getPersistence()
+				   .findByA_T_PrevAndNext(segmentsEntryId, active, type,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the segments entries where active = &#63; and type = &#63; from the database.
+	*
+	* @param active the active
+	* @param type the type
+	*/
+	public static void removeByA_T(boolean active, String type) {
+		getPersistence().removeByA_T(active, type);
+	}
+
+	/**
+	* Returns the number of segments entries where active = &#63; and type = &#63;.
+	*
+	* @param active the active
+	* @param type the type
+	* @return the number of matching segments entries
+	*/
+	public static int countByA_T(boolean active, String type) {
+		return getPersistence().countByA_T(active, type);
+	}
+
+	/**
 	* Returns all the segments entries where groupId = &#63; and active = &#63; and type = &#63;.
 	*
 	* @param groupId the group ID

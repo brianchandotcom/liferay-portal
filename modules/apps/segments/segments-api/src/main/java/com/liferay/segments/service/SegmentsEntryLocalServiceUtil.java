@@ -226,6 +226,14 @@ public class SegmentsEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntries(
+		boolean active, String type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntry> orderByComparator) {
+		return getService()
+				   .getSegmentsEntries(active, type, start, end,
+			orderByComparator);
+	}
+
 	/**
 	* Returns a range of all the segments entries.
 	*

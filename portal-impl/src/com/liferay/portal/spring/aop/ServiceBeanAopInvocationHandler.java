@@ -46,7 +46,8 @@ public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 
 		if (TransactionsUtil.isEnabled()) {
 			serviceBeanMethodInvocation.setMethodInterceptors(
-				_serviceBeanAopCacheManager.getMethodInterceptors(method));
+				_serviceBeanAopCacheManager.getMethodInterceptors(
+					_target.getClass(), method));
 		}
 		else {
 			serviceBeanMethodInvocation.setMethodInterceptors(

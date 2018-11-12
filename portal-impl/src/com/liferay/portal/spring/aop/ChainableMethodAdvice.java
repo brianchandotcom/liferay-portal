@@ -14,6 +14,8 @@
 
 package com.liferay.portal.spring.aop;
 
+import java.lang.reflect.Method;
+
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -66,6 +68,10 @@ public abstract class ChainableMethodAdvice implements MethodInterceptor {
 		}
 
 		return returnValue;
+	}
+
+	public boolean isEnabled(Class<?> targetClass, Method method) {
+		return true;
 	}
 
 	public void setNextMethodInterceptor(

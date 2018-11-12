@@ -138,12 +138,27 @@ public class ServiceBeanAopCacheManager {
 		return annotation;
 	}
 
-	public ChainableMethodAdvice[] getMethodInterceptors(Method method) {
+	public ChainableMethodAdvice[] getMethodInterceptors(
+		Class<?> targetClass, Method method) {
+
 		ChainableMethodAdvice[] chainableMethodAdvices =
 			_chainableMethodAdvices.get(method);
 
 		if (chainableMethodAdvices == null) {
-			chainableMethodAdvices = _fullChainableMethodAdvices;
+			List<ChainableMethodAdvice> filteredChainableMethodAdvices =
+				new ArrayList<>();
+
+			for (ChainableMethodAdvice chainableMethodAdvice :
+					_fullChainableMethodAdvices) {
+
+				if (chainableMethodAdvice.isEnabled(targetClass, method)) {
+					filteredChainableMethodAdvices.add(chainableMethodAdvice);
+				}
+			}
+
+			chainableMethodAdvices = filteredChainableMethodAdvices.toArray(
+				new ChainableMethodAdvice[
+					filteredChainableMethodAdvices.size()]);
 
 			_chainableMethodAdvices.put(method, chainableMethodAdvices);
 		}

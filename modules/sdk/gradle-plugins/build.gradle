@@ -17,6 +17,10 @@ if (System.properties["http.proxyHost"] == "squid.lax.liferay.com") {
 	bundleUrl = "http://mirrors.liferay.com/releases.liferay.com/portal/7.1.0-ga1/liferay-ce-portal-tomcat-7.1.0-ga1-20180703012531655.zip"
 }
 
+tasks.eclipse {
+	ext.gradleVersion = gradleVersion
+}
+
 copyBundle {
 	dependsOn downloadBundle
 	eachFile new StripPathSegmentsAction(1)

@@ -2,6 +2,10 @@ apply plugin: "com.gradle.plugin-publish"
 
 String gradleVersion = "2.5"
 
+tasks.eclipse {
+	ext.gradleVersion = gradleVersion
+}
+
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.31"
 	compile group: "org.eclipse.jgit", name: "org.eclipse.jgit", version: "4.1.1.201511131810-r"

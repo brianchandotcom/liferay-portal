@@ -8,6 +8,10 @@ task updateReadme(type: ReplaceRegexTask)
 
 String gradleVersion = "2.5"
 
+tasks.eclipse {
+	ext.gradleVersion = gradleVersion
+}
+
 copyGradleTestDependencies {
 	from configurations.compile
 	into jar.destinationDir

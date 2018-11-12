@@ -19,6 +19,10 @@ if (System.properties["http.proxyHost"] == "squid.lax.liferay.com") {
 	pluginsSdkUrl = "https://repository-cdn.liferay.com/nexus/service/local/repositories/liferay-public-releases/content/com/liferay/portal/com.liferay.portal.plugins.sdk/1.0.19/com.liferay.portal.plugins.sdk-1.0.19-withdependencies.zip"
 }
 
+tasks.eclipse {
+	ext.gradleVersion = gradleVersion
+}
+
 copyDistBundleZipPluginsSdk {
 	dependsOn downloadPluginsSdk
 	eachFile new StripPathSegmentsAction(1)

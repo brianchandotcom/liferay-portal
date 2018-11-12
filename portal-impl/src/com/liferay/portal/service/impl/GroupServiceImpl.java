@@ -412,7 +412,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	public int getGroupsCount(long companyId, long parentGroupId, boolean site)
 		throws PortalException {
 
-		if (parentGroupId == 0) {
+		if (parentGroupId <= 0) {
 			GroupPermissionUtil.check(getPermissionChecker(), ActionKeys.VIEW);
 		}
 		else {
@@ -428,7 +428,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			long companyId, long parentGroupId, String name, boolean site)
 		throws PortalException {
 
-		if (parentGroupId == 0) {
+		if (parentGroupId <= 0) {
 			GroupPermissionUtil.check(getPermissionChecker(), ActionKeys.VIEW);
 		}
 		else {
@@ -454,7 +454,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			long companyId, String className, long parentGroupId)
 		throws PortalException {
 
-		if (parentGroupId == 0) {
+		if (parentGroupId <= 0) {
 			GroupPermissionUtil.check(getPermissionChecker(), ActionKeys.VIEW);
 		}
 		else {

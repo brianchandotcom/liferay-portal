@@ -2064,11 +2064,25 @@ public class GitWorkingDirectory {
 	private String _log(int start, int num, File file, String format) {
 		StringBuilder sb = new StringBuilder();
 
+		if ((start > 0) && (file != null)) {
+			throw new RuntimeException(
+				"The start & file parameters can not be set simultaneously");
+		}
+
 		sb.append("git log ");
-		sb.append("HEAD~");
-		sb.append(start + num);
-		sb.append("..HEAD~");
-		sb.append(start);
+
+		if (file != null) {
+			sb.append("-n ");
+			sb.append(num);
+			sb.append(" ");
+		}
+		else {
+			sb.append("HEAD~");
+			sb.append(start + num);
+			sb.append("..HEAD~");
+			sb.append(start);
+		}
+
 		sb.append(" --pretty=format:'");
 		sb.append(format);
 		sb.append("'");

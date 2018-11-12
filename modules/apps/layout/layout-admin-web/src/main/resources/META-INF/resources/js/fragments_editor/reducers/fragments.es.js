@@ -445,12 +445,12 @@ function _addSingleFragmentRow(layoutData, fragmentEntryLinkId, position) {
 		{
 			columns: [
 				{
-					columnId: nextColumnId,
+					columnId: `${nextColumnId}`,
 					fragmentEntryLinkIds: [fragmentEntryLinkId],
-					size: 12
+					size: '12'
 				}
 			],
-			rowId: nextRowId
+			rowId: `${nextRowId}`
 		}
 	);
 

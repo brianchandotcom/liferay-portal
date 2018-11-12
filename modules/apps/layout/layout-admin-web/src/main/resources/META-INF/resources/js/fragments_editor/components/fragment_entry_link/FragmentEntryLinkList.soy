@@ -14,11 +14,11 @@
 		nextRowId: number,
 		structure: list<[
 			columns: list<[
-				columnId: number,
+				columnId: string,
 				fragmentEntryLinkIds: list<string>,
-				size: number
+				size: string
 			]>,
-			rowId: number
+			rowId: string
 		]>
 	]}
 	{@param portletNamespace: string}
@@ -87,9 +87,9 @@
  */
 {template .row}
 	{@param columns: list<[
-		columnId: number,
+		columnId: string,
 		fragmentEntryLinkIds: list<string>,
-		size: number
+		size: string
 	]>}
 	{@param defaultEditorConfigurations: ?}
 	{@param defaultLanguageId: string}
@@ -97,7 +97,7 @@
 	{@param imageSelectorURL: string}
 	{@param languageId: string}
 	{@param portletNamespace: string}
-	{@param rowId: number}
+	{@param rowId: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
 	{@param? hoveredElementBorder: string}
@@ -148,7 +148,7 @@
  * Column
  */
 {template .column}
-	{@param columnId: number}
+	{@param columnId: string}
 	{@param defaultEditorConfigurations: ?}
 	{@param defaultLanguageId: string}
 	{@param fragmentEntryLinkIds: list<string>}
@@ -156,7 +156,7 @@
 	{@param imageSelectorURL: string}
 	{@param languageId: string}
 	{@param portletNamespace: string}
-	{@param size: number}
+	{@param size: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
 	{@param? hoveredElementBorder: string}

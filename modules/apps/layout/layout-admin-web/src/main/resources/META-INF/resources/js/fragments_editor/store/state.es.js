@@ -163,15 +163,15 @@ const INITIAL_STATE = {
 							columns: Config.arrayOf(
 								Config.shapeOf(
 									{
-										columnId: Config.number(),
+										columnId: Config.string(),
 										fragmentEntryLinkIds: Config.arrayOf(
 											Config.string()
 										),
-										size: Config.number()
+										size: Config.string()
 									}
 								)
 							),
-							rowId: Config.number()
+							rowId: Config.string()
 						}
 					)
 				)

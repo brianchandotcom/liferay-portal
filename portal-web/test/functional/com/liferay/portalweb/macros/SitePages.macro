@@ -7,6 +7,11 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
+		<execute macro="SitePages#_addPageToNavigationMenu">
+			<var name="navigationMenus" value="${navigationMenus}" />
+			<var name="assertCheckboxMissing" value="${assertCheckboxMissing}" />
+		</execute>
+
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${pageName}" />
 		</execute>
@@ -38,6 +43,33 @@
 		</execute>
 
 		<execute function="WaitForSPARefresh" />
+	</command>
+
+	<command name="_addPageToNavigationMenu" summary="Add newly created pages to specified navigation menus or assert that the option to add the pages to navigation menus is missing.">
+		<if>
+			<isset var="navigationMenus" />
+			<then>
+				<for list="${navigationMenus}" param="navigationMenu">
+					<if>
+						<equals arg1="${assertCheckboxMissing}" arg2="true" />
+						<then>
+							<execute function="AssertElementNotPresent" locator1="Checkbox#ANY_CHECKBOX">
+								<var name="checkboxName" value="${navigationMenu}" />
+							</execute>
+						</then>
+						<else>
+							<execute function="Check" locator1="Checkbox#ANY_CHECKBOX">
+								<var name="checkboxName" value="${navigationMenu}" />
+							</execute>
+
+							<execute function="AssertChecked" locator1="Checkbox#ANY_CHECKBOX">
+								<var name="checkboxName" value="${navigationMenu}" />
+							</execute>
+						</else>
+					</if>
+				</for>
+			</then>
+		</if>
 	</command>
 
 	<command name="_configurePage">
@@ -124,6 +156,8 @@
 		</execute>
 
 		<execute macro="SitePages#_addPage">
+			<var name="assertCheckboxMissing" value="${assertCheckboxMissing}" />
+			<var name="navigationMenus" value="${navigationMenus}" />
 			<var name="pageName" value="${childPageName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 			<var name="sitePageType" value="${sitePageType}" />
@@ -136,7 +170,9 @@
 		</execute>
 
 		<execute macro="SitePages#addChildPage">
+			<var name="assertCheckboxMissing" value="${assertCheckboxMissing}" />
 			<var name="childPageName" value="${childPageName}" />
+			<var name="navigationMenus" value="${navigationMenus}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 			<var name="parentPageName" value="${parentPageName}" />
 			<var name="sitePageType" value="${sitePageType}" />
@@ -157,6 +193,8 @@
 		</if>
 
 		<execute macro="SitePages#_addPage">
+			<var name="assertCheckboxMissing" value="${assertCheckboxMissing}" />
+			<var name="navigationMenus" value="${navigationMenus}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 			<var name="sitePageType" value="${sitePageType}" />
@@ -169,7 +207,9 @@
 		</execute>
 
 		<execute macro="SitePages#addChildPage">
+			<var name="assertCheckboxMissing" value="${assertCheckboxMissing}" />
 			<var name="childPageName" value="${childPageName}" />
+			<var name="navigationMenus" value="${navigationMenus}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 			<var name="parentPageName" value="${parentPageName}" />
 			<var name="sitePageType" value="${sitePageType}" />
@@ -182,7 +222,9 @@
 		</execute>
 
 		<execute macro="SitePages#_addPage">
+			<var name="assertCheckboxMissing" value="${assertCheckboxMissing}" />
 			<var name="inheritChanges" value="${inheritChanges}" />
+			<var name="navigationMenus" value="${navigationMenus}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 			<var name="pageTypeURL" value="${pageTypeURL}" />

@@ -195,6 +195,12 @@ public class ExpandoColumnModelListener
 				locale -> Field.getSortableFieldName(encodedIndexedFieldName),
 				locale -> encodedIndexedFieldName);
 		}
+		else if (expandoColumnType == ExpandoColumnConstants.STRING_LOCALIZED) {
+			entityField = new StringEntityField(
+				encodedName,
+				locale -> Field.getLocalizedName(
+					locale, encodedIndexedFieldName));
+		}
 		else {
 			entityField = new StringEntityField(
 				encodedName, locale -> encodedIndexedFieldName);

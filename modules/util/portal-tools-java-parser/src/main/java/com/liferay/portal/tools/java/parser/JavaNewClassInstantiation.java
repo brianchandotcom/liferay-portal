@@ -19,6 +19,15 @@ package com.liferay.portal.tools.java.parser;
  */
 public class JavaNewClassInstantiation extends JavaExpression {
 
+	@Override
+	public String getString(
+		String indent, String prefix, String suffix, int maxLineLength,
+		boolean forceLineBreak) {
+
+		return _javaClassCall.toString(
+			indent, prefix + "new ", suffix, maxLineLength);
+	}
+
 	public void setJavaClassCall(JavaClassCall javaClassCall) {
 		_javaClassCall = javaClassCall;
 	}

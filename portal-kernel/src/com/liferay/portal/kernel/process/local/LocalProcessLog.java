@@ -26,7 +26,7 @@ import java.util.Objects;
 class LocalProcessLog implements ProcessLog {
 
 	LocalProcessLog(
-	ProcessLog.Level level, String message, Throwable throwable) {
+		ProcessLog.Level level, String message, Throwable throwable) {
 
 		_level = level;
 		_message = message;

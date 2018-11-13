@@ -6501,13 +6501,9 @@ ${output.content}</echo>
 					<test-action>
 						<ant antfile="build-test-tck.xml" target="prepare-tck" />
 
-						<ant antfile="build-test-tck.xml" target="record-test-tck-class-groups">
-							<property name="test.class.groups.size" value="${test.batch.size}" />
-						</ant>
+						<ant antfile="build-test-tck.xml" target="run-tck-tests" />
 
-						<ant antfile="build-test-tck.xml" target="test-class-group">
-							<property name="test.class.group.index" value="${axis.variable}" />
-						</ant>
+						<ant antfile="build-test-tck.xml" target="cleanup-tck" />
 					</test-action>
 				</database-test-run-test>
 			</test-action>

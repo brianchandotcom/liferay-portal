@@ -31,6 +31,7 @@ import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CoderResult;
 import java.nio.charset.CodingErrorAction;
+import java.nio.charset.StandardCharsets;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -123,7 +124,7 @@ public class URLCodecTest {
 	}
 
 	@Test
-	public void testHandlingFourBytesUTFWithSurrogates() throws Exception {
+	public void testHandlingFourBytesUTFWithSurrogates() {
 		StringBundler sb = new StringBundler(
 			_UNICODE_CATS_AND_DOGS.length * 4 * 2);
 
@@ -135,7 +136,9 @@ public class URLCodecTest {
 
 		String animalsString = new String(animalsInts, 0, animalsInts.length);
 
-		for (byte animalsByte : animalsString.getBytes(StringPool.UTF8)) {
+		for (byte animalsByte :
+				animalsString.getBytes(StandardCharsets.UTF_8)) {
+
 			sb.append(StringPool.PERCENT);
 			sb.append(Integer.toHexString(0xFF & animalsByte));
 		}

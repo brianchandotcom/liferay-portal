@@ -106,7 +106,6 @@ public class ExpandoColumnModelListener
 					_serviceRegistration = _updateRegistry(
 						_bundleContext, _serviceRegistration,
 						_userEntityFields);
-
 				});
 		}
 		catch (PortalException pe) {
@@ -186,16 +185,17 @@ public class ExpandoColumnModelListener
 			ExpandoBridgeIndexerUtil.encodeFieldName(
 				expandoColumn.getName(), indexType);
 
-		int expandoColumnType = expandoColumn.getType();
 		EntityField entityField;
 
-		if (expandoColumnType == ExpandoColumnConstants.DATE) {
+		if (expandoColumn.getType() == ExpandoColumnConstants.DATE) {
 			entityField = new DateEntityField(
 				encodedName,
 				locale -> Field.getSortableFieldName(encodedIndexedFieldName),
 				locale -> encodedIndexedFieldName);
 		}
-		else if (expandoColumnType == ExpandoColumnConstants.STRING_LOCALIZED) {
+		else if (expandoColumn.getType() ==
+					ExpandoColumnConstants.STRING_LOCALIZED) {
+
 			entityField = new StringEntityField(
 				encodedName,
 				locale -> Field.getLocalizedName(
@@ -230,7 +230,6 @@ public class ExpandoColumnModelListener
 							userClassNameId,
 							ExpandoTableConstants.DEFAULT_TABLE_NAME)));
 			});
-
 		columnActionableDynamicQuery.setPerformActionMethod(
 			(ActionableDynamicQuery.PerformActionMethod<ExpandoColumn>)
 				expandoColumn -> {

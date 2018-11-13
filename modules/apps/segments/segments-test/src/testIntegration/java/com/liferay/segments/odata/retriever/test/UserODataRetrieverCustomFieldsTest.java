@@ -356,7 +356,6 @@ public class UserODataRetrieverCustomFieldsTest {
 			new Class<?>[] {ExpandoColumn.class}, expandoColumn);
 	}
 
-	@SuppressWarnings("unchecked")
 	private ModelListener<ExpandoColumn> _getExpandoColumnModelListener()
 		throws Exception {
 
@@ -384,9 +383,6 @@ public class UserODataRetrieverCustomFieldsTest {
 
 	@DeleteAfterTestRun
 	private ExpandoTable _expandoTable;
-
-	@Inject(filter = "model.class.name=com.liferay.portal.kernel.model.User")
-	private ODataRetriever<User> _oDataRetriever;
 
 	@DeleteAfterTestRun
 	private final List<User> _users = new ArrayList<>();

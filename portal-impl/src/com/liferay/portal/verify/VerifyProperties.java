@@ -49,14 +49,6 @@ public class VerifyProperties extends VerifyProcess {
 	protected InputStream getPropertiesResourceAsStream(String resourceName)
 		throws FileNotFoundException {
 
-		if (resourceName.contains("${") && resourceName.contains("}")) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Skip getting resource " + resourceName);
-			}
-
-			return null;
-		}
-
 		File propertyFile = new File(resourceName);
 
 		if (propertyFile.exists()) {
@@ -86,6 +78,12 @@ public class VerifyProperties extends VerifyProcess {
 		propertiesResourceNames.add(0, "portal.properties");
 
 		for (String propertyResourceName : propertiesResourceNames) {
+			if (propertyResourceName.contains("${") &&
+				propertyResourceName.contains("}")) {
+
+				continue;
+			}
+
 			try (InputStream inputStream = getPropertiesResourceAsStream(
 					propertyResourceName)) {
 

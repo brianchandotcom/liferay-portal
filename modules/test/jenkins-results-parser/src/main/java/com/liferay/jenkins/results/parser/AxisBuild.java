@@ -529,6 +529,7 @@ public class AxisBuild extends BaseBuild {
 		{
 			new ModulesCompilationFailureMessageGenerator(),
 
+			new CIFailureMessageGenerator(),
 			new CompileFailureMessageGenerator(),
 			new IntegrationTestTimeoutFailureMessageGenerator(),
 			new LocalGitMirrorFailureMessageGenerator(),
@@ -538,7 +539,6 @@ public class AxisBuild extends BaseBuild {
 			new SourceFormatFailureMessageGenerator(),
 			new StartupFailureMessageGenerator(),
 
-			new CIFailureMessageGenerator(),
 			new GenericFailureMessageGenerator()
 		};
 

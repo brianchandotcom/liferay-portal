@@ -1335,13 +1335,13 @@ public class TopLevelBuild extends BaseBuild {
 
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{
+			new CIFailureMessageGenerator(),
 			new PoshiTestFailureMessageGenerator(),
 			new PoshiValidationFailureMessageGenerator(),
 			new RebaseFailureMessageGenerator(),
 
 			new DownstreamFailureMessageGenerator(),
 
-			new CIFailureMessageGenerator(),
 			new GenericFailureMessageGenerator()
 		};
 

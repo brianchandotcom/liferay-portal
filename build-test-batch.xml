@@ -2910,17 +2910,9 @@ log.sanitizer.enabled=false</echo>
 			</test-action>
 
 			<test-set-up>
-				<if>
-					<isset property="env.DIST_PATH" />
-					<then>
-						<prepare-test-environment />
-					</then>
-					<else>
-						<ant target="compile" />
+				<ant target="compile" />
 
-						<ant target="install-portal-snapshots" />
-					</else>
-				</if>
+				<ant target="install-portal-snapshots" />
 			</test-set-up>
 		</run-batch-test>
 	</target>

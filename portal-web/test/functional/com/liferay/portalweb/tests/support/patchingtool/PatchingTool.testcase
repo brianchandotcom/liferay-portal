@@ -3,7 +3,6 @@
 	<property name="portal.fixpack.release" value="true" />
 	<property name="test.ignore.tomcat.ext.environment" value="true" />
 	<property name="testray.main.component.name" value="Patching Tool" />
-	<property name="custom.properties" value="module.framework.properties.initial.system.check.enabled=true" />
 
 	<var method="PropsUtil#get('test.build.fix.pack.zip.url')" name="testBuildFixPackZipURL" />
 	<var method="PropsUtil#get('test.build.fix.pack.zip.url.previous')" name="testBuildFixPackZipURLPrevious" />
@@ -15,6 +14,7 @@
 	<command name="RevertFixPack" priority="5">
 		<description message="Ensures that a fix pack can be reverted." />
 
+		<property name="custom.properties" value="module.framework.properties.initial.system.check.enabled=true" />
 		<property name="skip.install-patch" value="true" />
 		<property name="test.name.skip.portal.instance" value="PatchingTool#RevertFixPack" />
 

@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class JavaMethod extends BaseJavaTerm {
+public class JavaMethodDefinition extends BaseJavaTerm {
 
 	public boolean hasBody() {
 		return _hasBody;

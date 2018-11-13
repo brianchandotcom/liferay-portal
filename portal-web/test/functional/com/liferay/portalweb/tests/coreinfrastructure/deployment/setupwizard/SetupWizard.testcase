@@ -126,4 +126,39 @@
 		<execute function="AssertHTMLSourceTextNotPresent" value1="${actualScript}" />
 		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
 	</command>
+
+	<command name="ViewConfigedSetupWizardValue" priority="5">
+		<property name="database.types" value="mysql" />
+
+		<execute macro="SetupWizard#configurePG">
+			<var name="administratorEmail" value="user@liferay.com" />
+			<var name="administratorFirstName" value="User" />
+			<var name="administratorLastName" value="User" />
+			<var method="PropsUtil#get('database.mysql.password')" name="databasePassword" />
+			<var name="databaseType" value="MySQL" />
+			<var method="PropsUtil#get('database.mysql.username')" name="databaseUserName" />
+			<var method="PropsUtil#get('database.mysql.driver')" name="jdbcDriverClassName" />
+			<var method="PropsUtil#get('database.mysql.url')" name="jdbcURL" />
+		</execute>
+
+		<var method="PropsUtil#get('liferay.home.dir.name')" name="liferayHome" />
+
+		<var method="FileUtil#read('${liferayHome}/portal-setup-wizard.properties')" name="fileContent" />
+
+		<if>
+			<and>
+				<contains string="${fileContent}" substring="admin.email.from.address=user@liferay.com" />
+				<contains string="${fileContent}" substring="admin.email.from.name=User User" />
+				<contains string="${fileContent}" substring="default.admin.email.address.prefix=user" />
+				<contains string="${fileContent}" substring="default.admin.first.name=User" />
+				<contains string="${fileContent}" substring="default.admin.last.name=User" />
+			</and>
+			<then>
+				<echo message="Save the configuration in portal file portal-setup-wizard.properties successfully" />
+			</then>
+			<else>
+				<fail message="Fail to save the configuration in portal file portal-setup-wizard.properties" />
+			</else>
+		</if>
+	</command>
 </definition>

@@ -313,7 +313,7 @@ public class DetailASTUtil {
 
 			sb.append(typeArgumenIdent.getText());
 
-			sb.append(CharPool.COMMA);
+			sb.append(StringPool.COMMA_AND_SPACE);
 		}
 
 		sb.setIndex(sb.index() - 1);

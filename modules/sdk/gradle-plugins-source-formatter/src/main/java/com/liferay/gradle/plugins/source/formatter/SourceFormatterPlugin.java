@@ -90,9 +90,6 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 	}
 
 	private FormatSourceTask _addTaskCheckSourceFormatting(Project project) {
-		final ByteArrayOutputStream byteArrayOutputStream =
-			new ByteArrayOutputStream();
-
 		FormatSourceTask formatSourceTask = GradleUtil.addTask(
 			project, CHECK_SOURCE_FORMATTING_TASK_NAME, FormatSourceTask.class);
 
@@ -103,26 +100,12 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 		formatSourceTask.setGroup(LifecycleBasePlugin.VERIFICATION_GROUP);
 		formatSourceTask.setPrintErrors(true);
 		formatSourceTask.setShowStatusUpdates(false);
-		formatSourceTask.setStandardOutput(byteArrayOutputStream);
 		formatSourceTask.setThrowException(true);
-
-		formatSourceTask.doLast(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					_prettyPrint(byteArrayOutputStream);
-				}
-
-			});
 
 		return formatSourceTask;
 	}
 
 	private FormatSourceTask _addTaskFormatSource(Project project) {
-		final ByteArrayOutputStream byteArrayOutputStream =
-			new ByteArrayOutputStream();
-
 		FormatSourceTask formatSourceTask = GradleUtil.addTask(
 			project, FORMAT_SOURCE_TASK_NAME, FormatSourceTask.class);
 
@@ -131,17 +114,6 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 			"Runs Liferay Source Formatter to format the project files.");
 		formatSourceTask.setGroup("formatting");
 		formatSourceTask.setShowStatusUpdates(true);
-		formatSourceTask.setStandardOutput(byteArrayOutputStream);
-
-		formatSourceTask.doLast(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					_prettyPrint(byteArrayOutputStream);
-				}
-
-			});
 
 		return formatSourceTask;
 	}
@@ -188,6 +160,21 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 			formatSourceTask.setFormatLocalChanges(
 				Boolean.parseBoolean(formatLocalChanges));
 		}
+
+		final ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		formatSourceTask.setStandardOutput(byteArrayOutputStream);
+
+		formatSourceTask.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					_prettyPrint(byteArrayOutputStream);
+				}
+
+			});
 	}
 
 	private void _configureTasksFormatSource(

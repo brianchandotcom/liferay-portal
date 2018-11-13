@@ -803,9 +803,15 @@ public class ModulesStructureTest {
 			GradleDependency gradleDependency, Path dirPath)
 		throws IOException {
 
-		if (!_masterBranch || dirPath.equals(_modulesDirPath) ||
+		if (dirPath.equals(_modulesDirPath) ||
 			gradleDependency.isProjectDependency()) {
 
+			return false;
+		}
+
+		String dirName = String.valueOf(dirPath.getFileName());
+
+		if (!dirName.equals("portal-bootstrap") && !_masterBranch) {
 			return false;
 		}
 

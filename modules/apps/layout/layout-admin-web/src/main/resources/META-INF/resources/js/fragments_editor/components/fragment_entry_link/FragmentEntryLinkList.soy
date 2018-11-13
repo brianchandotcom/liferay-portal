@@ -18,6 +18,7 @@
 				fragmentEntryLinkIds: list<string>,
 				size: string
 			]>,
+			emptySection: bool,
 			rowId: string
 		]>
 	]}
@@ -64,6 +65,7 @@
 					{param columns: $row.columns /}
 					{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 					{param defaultLanguageId: $defaultLanguageId /}
+					{param emptySection: $row.emptySection /}
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
 					{param hoveredElementBorder: $hoveredElementBorder /}
 					{param hoveredFragmentEntryLinkId: $hoveredFragmentEntryLinkId /}
@@ -103,6 +105,7 @@
 	{@param rowId: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
+	{@param? emptySection: bool}
 	{@param? hoveredElementBorder: string}
 	{@param? hoveredFragmentEntryLinkId: string}
 	{@param? hoveredSectionId: string}
@@ -129,6 +132,10 @@
 		fragment-entry-link-list__row-section
 		{sp}layouts-drop-target
 		{sp}{$styleModifier}
+
+		{if $emptySection}
+			{sp}empty-section
+		{/if}
 	{/let}
 
 	<section

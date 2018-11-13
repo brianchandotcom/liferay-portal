@@ -14,6 +14,7 @@ import {
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../actions/actions.es';
 import {DRAG_POSITIONS} from '../../reducers/placeholders.es';
+import {setIn} from '../../utils/utils.es';
 import state from '../../store/state.es';
 import templates from './FragmentEntryLinkList.soy';
 
@@ -42,6 +43,16 @@ class FragmentEntryLinkList extends Component {
 
 	dispose() {
 		this._dragDrop.dispose();
+	}
+
+	/**
+	 * @inheritDoc
+	 * @private
+	 * @review
+	 */
+
+	prepareStateForRender(state) {
+		return this._setEmptySections(state);
 	}
 
 	/**
@@ -258,6 +269,42 @@ class FragmentEntryLinkList extends Component {
 		this._dragDrop.on(
 			DragDrop.Events.TARGET_LEAVE,
 			this._handleDragEnd.bind(this)
+		);
+	}
+
+	/**
+	 * Checks wether a section is empty or not, sets emptySection parameter
+	 * and returns a new state
+	 * @param {Object} state
+	 * @private
+	 * @return {Object}
+	 */
+	_setEmptySections(state) {
+		const nextStructure = [...state.layoutData.structure];
+
+		Object.keys(nextStructure).forEach(
+			sectionKey => {
+				const section = nextStructure[sectionKey];
+
+				section.emptySection = true;
+
+				section.columns.forEach(
+					column => {
+						if (column.fragmentEntryLinkIds.length > 0) {
+							section.emptySection = false;
+						}
+					}
+				);
+			}
+		);
+
+		return setIn(
+			state,
+			[
+				'layoutData',
+				'structure'
+			],
+			nextStructure
 		);
 	}
 }

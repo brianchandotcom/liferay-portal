@@ -183,6 +183,7 @@ const INITIAL_STATE = {
 									}
 								)
 							),
+							emptySection: Config.bool(),
 							rowId: Config.string()
 						}
 					)

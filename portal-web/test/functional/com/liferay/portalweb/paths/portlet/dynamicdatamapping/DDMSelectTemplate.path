@@ -50,6 +50,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TEMPLATE_TABLE_DESCRIPTION_SMALL_IMAGE</td>
+	<td>//img[contains(@class,'small-image') and contains(@alt,'${key_ddlTemplateName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEMPLATE_TABLE_MODE</td>
 	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[5])[1]</td>
 	<td></td>

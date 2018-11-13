@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.spring.aop.Property;
 import com.liferay.portal.kernel.spring.aop.Retry;
-import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -208,8 +207,7 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public javax.portlet.PortletPreferences getDefaultPreferences(
 		long companyId, String portletId);
 

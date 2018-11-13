@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -242,8 +241,7 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	public DDMStructureVersion getStructureVersion(long structureId,
 		String version) throws PortalException;
 
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public DDMForm getStructureVersionDDMForm(
 		DDMStructureVersion structureVersion) throws PortalException;
 

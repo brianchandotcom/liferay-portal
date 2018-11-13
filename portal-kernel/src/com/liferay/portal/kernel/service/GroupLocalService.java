@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -361,8 +360,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the group with the group key and associated company, or
 	<code>null</code> if a matching group could not be found
 	*/
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public Group fetchGroup(long companyId, String groupKey);
 
 	/**
@@ -543,8 +541,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the group with the group key
 	* @throws PortalException if a portal exception occurred
 	*/
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public Group getGroup(long companyId, String groupKey)
 		throws PortalException;
 
@@ -1211,8 +1208,7 @@ public interface GroupLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserGroups(long userId);
 
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public boolean isLiveGroupActive(Group group);
 
 	/**

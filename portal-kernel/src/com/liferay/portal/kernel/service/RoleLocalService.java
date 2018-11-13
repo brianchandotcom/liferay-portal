@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -306,8 +305,7 @@ public interface RoleLocalService extends BaseLocalService,
 	* @return Returns the role with the name or <code>null</code> if a role
 	with the name could not be found in the company
 	*/
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public Role fetchRole(long companyId, String name);
 
 	/**
@@ -462,8 +460,7 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param name the role's name
 	* @return the role with the name
 	*/
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public Role getRole(long companyId, String name) throws PortalException;
 
 	/**

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -885,8 +884,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @param companyId the primary key of the company
 	* @return the default user for the company
 	*/
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public User getDefaultUser(long companyId) throws PortalException;
 
 	/**
@@ -895,8 +893,7 @@ public interface UserLocalService extends BaseLocalService,
 	* @param companyId the primary key of the company
 	* @return the primary key of the default user for the company
 	*/
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public long getDefaultUserId(long companyId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

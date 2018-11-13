@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -79,14 +78,14 @@ public interface PortletLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Portlet addPortlet(Portlet portlet);
 
-	@Skip
+	@Transactional(enabled = false)
 	public void addPortletCategory(long companyId, String categoryName);
 
 	public void checkPortlet(Portlet portlet) throws PortalException;
 
 	public void checkPortlets(long companyId) throws PortalException;
 
-	@Skip
+	@Transactional(enabled = false)
 	public void clearCache();
 
 	/**
@@ -102,7 +101,7 @@ public interface PortletLocalService extends BaseLocalService,
 	@Transactional(enabled = false)
 	public void clearPortletsMap();
 
-	@Skip
+	@Transactional(enabled = false)
 	public Portlet clonePortlet(String portletId);
 
 	/**
@@ -146,7 +145,7 @@ public interface PortletLocalService extends BaseLocalService,
 	public void deletePortlets(long companyId, String[] portletIds, long plid)
 		throws PortalException;
 
-	@Skip
+	@Transactional(enabled = false)
 	public void deployPortlet(Portlet portlet) throws Exception;
 
 	public Portlet deployRemotePortlet(Portlet portlet, String categoryName)
@@ -158,10 +157,10 @@ public interface PortletLocalService extends BaseLocalService,
 	public Portlet deployRemotePortlet(Portlet portlet, String[] categoryNames,
 		boolean eagerDestroy) throws PortalException;
 
-	@Skip
+	@Transactional(enabled = false)
 	public void destroyPortlet(Portlet portlet);
 
-	@Skip
+	@Transactional(enabled = false)
 	public void destroyRemotePortlet(Portlet portlet);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -232,27 +231,22 @@ public interface PortletLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Portlet fetchPortlet(long id);
 
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public Portlet fetchPortletById(long companyId, String portletId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public List<CustomAttributesDisplay> getCustomAttributesDisplays();
 
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public PortletCategory getEARDisplay(String xml);
 
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public List<Portlet> getFriendlyURLMapperPortlets();
 
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public List<FriendlyURLMapper> getFriendlyURLMappers();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -280,24 +274,19 @@ public interface PortletLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Portlet getPortlet(long id) throws PortalException;
 
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public PortletApp getPortletApp(String servletContextName);
 
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public Portlet getPortletById(long companyId, String portletId);
 
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public Portlet getPortletById(String portletId);
 
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public Portlet getPortletByStrutsPath(long companyId, String strutsPath);
 
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public List<Portlet> getPortlets();
 
 	/**
@@ -314,12 +303,10 @@ public interface PortletLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Portlet> getPortlets(int start, int end);
 
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public List<Portlet> getPortlets(long companyId);
 
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public List<Portlet> getPortlets(long companyId, boolean showSystem,
 		boolean showPortal);
 
@@ -334,23 +321,20 @@ public interface PortletLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPortletsCount(long companyId);
 
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public List<Portlet> getScopablePortlets();
 
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public PortletCategory getWARDisplay(String servletContextName, String xml);
 
-	@Skip
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(enabled = false)
 	public boolean hasPortlet(long companyId, String portletId);
 
-	@Skip
+	@Transactional(enabled = false)
 	public void initEAR(ServletContext servletContext, String[] xmls,
 		PluginPackage pluginPackage);
 
-	@Skip
+	@Transactional(enabled = false)
 	public List<Portlet> initWAR(String servletContextName,
 		ServletContext servletContext, String[] xmls,
 		PluginPackage pluginPackage);
@@ -382,6 +366,6 @@ public interface PortletLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Portlet updatePortlet(Portlet portlet);
 
-	@Skip
+	@Transactional(enabled = false)
 	public void visitPortlets(long companyId, Consumer<Portlet> consumer);
 }

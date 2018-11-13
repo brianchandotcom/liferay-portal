@@ -80,20 +80,20 @@ public class URLCodecTest {
 
 		// LPS-47334
 
-		testDecodeURL("%", false);
-		testDecodeURL("%0", false);
-		testDecodeURL("%00%", false);
-		testDecodeURL("%00%0", false);
-		testDecodeURL("%0" + (char)(CharPool.NUMBER_0 - 1), true);
-		testDecodeURL("%0" + (char)(CharPool.NUMBER_9 + 1), true);
-		testDecodeURL("%0" + (char)(CharPool.UPPER_CASE_A - 1), true);
-		testDecodeURL("%0" + (char)(CharPool.UPPER_CASE_F + 1), true);
-		testDecodeURL("%0" + (char)(CharPool.LOWER_CASE_A - 1), true);
-		testDecodeURL("%0" + (char)(CharPool.LOWER_CASE_F + 1), true);
+		_testDecodeURL("%", false);
+		_testDecodeURL("%0", false);
+		_testDecodeURL("%00%", false);
+		_testDecodeURL("%00%0", false);
+		_testDecodeURL("%0" + (char)(CharPool.NUMBER_0 - 1), true);
+		_testDecodeURL("%0" + (char)(CharPool.NUMBER_9 + 1), true);
+		_testDecodeURL("%0" + (char)(CharPool.UPPER_CASE_A - 1), true);
+		_testDecodeURL("%0" + (char)(CharPool.UPPER_CASE_F + 1), true);
+		_testDecodeURL("%0" + (char)(CharPool.LOWER_CASE_A - 1), true);
+		_testDecodeURL("%0" + (char)(CharPool.LOWER_CASE_F + 1), true);
 
 		// LPS-62628
 
-		testDecodeURL("http://localhost:8080/?id=%'", false);
+		_testDecodeURL("http://localhost:8080/?id=%'", false);
 	}
 
 	@Test
@@ -157,7 +157,7 @@ public class URLCodecTest {
 			"%3Fx", URLCodec.encodeURL(animalsString.substring(0, 1) + "x"));
 	}
 
-	protected void testDecodeURL(
+	private void _testDecodeURL(
 		String encodedURLString, boolean invalidHexChar) {
 
 		try {

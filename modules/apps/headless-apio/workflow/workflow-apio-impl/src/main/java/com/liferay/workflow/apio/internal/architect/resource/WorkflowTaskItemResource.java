@@ -31,8 +31,10 @@ import com.liferay.workflow.apio.architect.identifier.WorkflowLogIdentifier;
 import com.liferay.workflow.apio.architect.identifier.WorkflowTaskIdentifier;
 import com.liferay.workflow.apio.internal.architect.form.AssignToMeForm;
 import com.liferay.workflow.apio.internal.architect.form.AssignToUserForm;
+import com.liferay.workflow.apio.internal.architect.form.ChangeTransitionForm;
 import com.liferay.workflow.apio.internal.architect.route.AssignToMePostRoute;
 import com.liferay.workflow.apio.internal.architect.route.AssignToUserPostRoute;
+import com.liferay.workflow.apio.internal.architect.route.ChangeTransitionPostRoute;
 
 import java.io.Serializable;
 
@@ -73,6 +75,10 @@ public class WorkflowTaskItemResource
 			new AssignToUserPostRoute(), this::_assignToUser, Company.class,
 			CurrentUser.class, WorkflowTaskIdentifier.class,
 			(credentials, id) -> true, AssignToUserForm::buildForm
+		).addCustomRoute(
+			new ChangeTransitionPostRoute(), this::_changeTransition,
+			CurrentUser.class, WorkflowTaskIdentifier.class,
+			(credentials, id) -> true, ChangeTransitionForm::buildForm
 		).build();
 	}
 
@@ -137,6 +143,21 @@ public class WorkflowTaskItemResource
 			() -> _workflowTaskManager.assignWorkflowTaskToUser(
 				company.getCompanyId(), currentUser.getUserId(), workflowTaskId,
 				assigneeId, "", null, null)
+		).orElse(
+			null
+		);
+	}
+
+	private WorkflowTask _changeTransition(
+		Long workflowTaskId, ChangeTransitionForm changeTransitionForm,
+		CurrentUser currentUser) {
+
+		String transitionName = changeTransitionForm.getTransition();
+
+		return Try.fromFallible(
+			() -> _workflowTaskManager.completeWorkflowTask(
+				currentUser.getCompanyId(), currentUser.getUserId(),
+				workflowTaskId, transitionName, "", null)
 		).orElse(
 			null
 		);

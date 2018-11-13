@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 /**
  * @author Roberto Díaz
  */
-public interface BackgroundTaskExecutorPermissionChecker {
+public interface BackgroundTaskExecutorPermission {
 
 	public void checkPermission(
 			PermissionChecker permissionChecker, long groupId, long primaryKey,

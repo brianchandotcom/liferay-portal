@@ -14,12 +14,31 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 import java.util.List;
 
 /**
  * @author Hugo Huijser
  */
 public class JavaTypeCast extends JavaExpression {
+
+	@Override
+	public String getString(
+		String indent, String prefix, String suffix, int maxLineLength,
+		boolean forceLineBreak) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(indent);
+		sb.append(prefix);
+
+		append(sb, _javaTypes, " & ", indent, "(", ")", maxLineLength);
+		append(
+			sb, _valueJavaExpression, indent, "", suffix, maxLineLength, false);
+
+		return sb.toString();
+	}
 
 	public void setJavaTypes(List<JavaType> javaTypes) {
 		_javaTypes = javaTypes;

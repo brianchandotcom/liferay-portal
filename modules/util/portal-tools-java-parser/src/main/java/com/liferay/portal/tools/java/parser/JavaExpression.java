@@ -14,10 +14,16 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 /**
  * @author Hugo Huijser
  */
 public abstract class JavaExpression extends BaseJavaTerm {
+
+	public abstract String getString(
+		String indent, String prefix, String suffix, int maxLineLength,
+		boolean forceLineBreak);
 
 	public void setChainedJavaExpression(JavaExpression chainedJavaExpression) {
 		if (_chainedJavaExpression == null) {
@@ -34,6 +40,64 @@ public abstract class JavaExpression extends BaseJavaTerm {
 
 		_hasSurroundingParentheses = hasSurroundingParentheses;
 		_parenthesesIncludeChain = parenthesesIncludeChain;
+	}
+
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		return toString(indent, prefix, suffix, maxLineLength, false);
+	}
+
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength,
+		boolean forceLineBreak) {
+
+		if (_chainedJavaExpression == null) {
+			if (!_hasSurroundingParentheses) {
+				return getString(
+					indent, prefix, suffix, maxLineLength, forceLineBreak);
+			}
+
+			return getString(
+				indent, prefix + "(", ")" + suffix, maxLineLength,
+				forceLineBreak);
+		}
+
+		StringBundler sb = new StringBundler();
+
+		if (_hasSurroundingParentheses) {
+			if (!_parenthesesIncludeChain) {
+				sb.append(
+					getString(
+						indent, prefix + "(", ").", maxLineLength,
+						forceLineBreak));
+			}
+			else {
+				sb.append(
+					getString(
+						indent, prefix + "(", ".", maxLineLength,
+						forceLineBreak));
+			}
+		}
+		else {
+			sb.append(
+				getString(indent, prefix, ".", maxLineLength, forceLineBreak));
+		}
+
+		if (_hasSurroundingParentheses && _parenthesesIncludeChain) {
+			append(
+				sb, _chainedJavaExpression, indent, "", ")" + suffix,
+				maxLineLength, false);
+		}
+		else {
+			append(
+				sb, _chainedJavaExpression, indent, "", suffix, maxLineLength,
+				false);
+		}
+
+		return sb.toString();
 	}
 
 	private JavaExpression _chainedJavaExpression;

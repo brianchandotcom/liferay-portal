@@ -60,6 +60,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_SMALL_IMAGE</td>
+	<td>//label[contains(@for,'smallImage')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_SMALL_IMAGE_URL</td>
+	<td>//label[contains(@class,'radio-inline')]/input[@type='radio']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_SMALL_IMAGE_URL_INPUT</td>
+	<td>//div[contains(@class,'input-String-wrapper')]/input[contains(@id,'URL')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS_STRUCTURE</td>
 	<td>//input[contains(@id,'structure') and contains(@type,'text')]</td>
 	<td></td>

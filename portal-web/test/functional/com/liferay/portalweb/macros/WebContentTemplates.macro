@@ -10,6 +10,7 @@
 			<var name="templateLanguage" value="${templateLanguage}" />
 			<var name="templateName" value="${templateName}" />
 			<var name="templateScript" value="${templateScript}" />
+			<var name="templateSmallImageURL" value="${templateSmallImageURL}" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#save" />
@@ -112,6 +113,33 @@
 		</if>
 	</command>
 
+	<command name="inputSmallImage">
+		<execute macro="Panel#expandPanel">
+			<var name="panel" value="Details" />
+		</execute>
+
+		<if>
+			<isset var="templateSmallImageURL" />
+			<then>
+				<if>
+					<condition function="IsElementNotPresent" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE_URL" />
+					<then>
+						<execute function="Check" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE" />
+					</then>
+					<else>
+						<execute function="Click" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE" />
+
+						<execute function="Check" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE" />
+					</else>
+				</if>
+			</then>
+		</if>
+
+		<execute function="Check" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE_URL" />
+
+		<execute function="Type" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE_URL_INPUT" value1="${templateSmallImageURL}" />
+	</command>
+
 	<command name="inputStructure">
 		<if>
 			<isset var="structureName" />
@@ -152,6 +180,10 @@
 
 		<execute macro="WebContentTemplates#inputTemplateLanguage">
 			<var name="templateLanguage" value="${templateLanguage}" />
+		</execute>
+
+		<execute macro="WebContentTemplates#inputSmallImage">
+			<var name="templateSmallImageURL" value="${templateSmallImageURL}" />
 		</execute>
 
 		<execute macro="WebContentTemplates#inputScript">

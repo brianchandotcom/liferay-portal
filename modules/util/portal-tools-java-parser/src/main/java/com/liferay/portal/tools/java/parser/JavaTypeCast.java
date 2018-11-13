@@ -29,11 +29,6 @@ public class JavaTypeCast extends JavaExpression {
 		_valueJavaExpression = valueJavaExpression;
 	}
 
-	@Override
-	protected boolean isSurroundChain() {
-		return false;
-	}
-
 	private List<JavaType> _javaTypes;
 	private JavaExpression _valueJavaExpression;
 

@@ -36,10 +36,6 @@ public abstract class JavaExpression extends BaseJavaTerm {
 		_parenthesesIncludeChain = parenthesesIncludeChain;
 	}
 
-	protected boolean isSurroundChain() {
-		return true;
-	}
-
 	private JavaExpression _chainedJavaExpression;
 	private boolean _hasSurroundingParentheses;
 	private boolean _parenthesesIncludeChain;

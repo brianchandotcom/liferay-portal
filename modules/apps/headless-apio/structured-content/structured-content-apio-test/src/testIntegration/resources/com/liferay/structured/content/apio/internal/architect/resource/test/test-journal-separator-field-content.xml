@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root available-locales="en_US,es_ES" default-locale="en_US">
+	<request/>
+	<dynamic-element fieldNamespace="ddm" indexType="keyword" localizable="true" name="Separator6279" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-separator" width="">
+		<meta-data locale="en_US">
+			<entry name="label"><![CDATA[Separator]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="style"><![CDATA[]]></entry>
+			<entry name="tip"><![CDATA[]]></entry>
+		</meta-data>
+		<meta-data locale="es_ES">
+			<entry name="label"><![CDATA[Separator]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="style"><![CDATA[]]></entry>
+			<entry name="tip"><![CDATA[]]></entry>
+		</meta-data>
+	</dynamic-element>
+</root>

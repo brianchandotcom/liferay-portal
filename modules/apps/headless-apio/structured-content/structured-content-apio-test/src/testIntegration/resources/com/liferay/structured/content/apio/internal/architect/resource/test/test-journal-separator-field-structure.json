@@ -1,0 +1,38 @@
+{
+	"availableLanguageIds": [
+		"en_US",
+		"es_ES"
+	],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Separator",
+				"es_ES": "Separador"
+			},
+			"localizable": true,
+			"multiple": false,
+			"name": "Separator6279",
+			"predefinedValue": {
+				"en_US": "",
+				"es_ES": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"style": {
+				"en_US": "",
+				"es_ES": ""
+			},
+			"tip": {
+				"en_US": "",
+				"es_ES": ""
+			},
+			"type": "ddm-separator",
+			"visibilityExpression": "true"
+		}
+	]
+}

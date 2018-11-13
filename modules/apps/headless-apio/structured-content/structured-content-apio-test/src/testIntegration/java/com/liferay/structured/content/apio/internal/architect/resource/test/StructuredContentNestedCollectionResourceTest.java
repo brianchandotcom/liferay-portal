@@ -687,6 +687,54 @@ public class StructuredContentNestedCollectionResourceTest
 		Assert.assertTrue("The field MyText was not found", found);
 	}
 
+	@Test
+	public void testGetStructuredContentFieldsWithSeparator() throws Throwable {
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(JournalArticle.class), _group);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			deserialize(
+				_ddmFormDeserializerTracker,
+				read("test-journal-separator-field-structure.json")),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM,
+			read("test-journal-separator-field-template.xsl"), LocaleUtil.US);
+
+		String content = read("test-journal-separator-field-content.xml");
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		Map<Locale, String> titleMap = new HashMap<>();
+
+		titleMap.put(LocaleUtil.US, RandomTestUtil.randomString());
+
+		JournalArticle journalArticle = _journalArticleLocalService.addArticle(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			ClassNameLocalServiceUtil.getClassNameId(DDMStructure.class),
+			ddmStructure.getStructureId(), StringPool.BLANK, true, 0, titleMap,
+			null, content, ddmStructure.getStructureKey(),
+			ddmTemplate.getTemplateKey(), null, 1, 1, 1965, 0, 0, 0, 0, 0, 0, 0,
+			true, 0, 0, 0, 0, 0, true, true, false, null, null, null, null,
+			serviceContext);
+
+		List<StructuredContentField> structuredContentFields =
+			getStructuredContentFields(
+				new JournalArticleWrapper(journalArticle));
+
+		Assert.assertEquals(
+			structuredContentFields.toString(), 1,
+			structuredContentFields.size());
+	}
+
 	private static final AcceptLanguage _acceptLanguage =
 		() -> LocaleUtil.getDefault();
 

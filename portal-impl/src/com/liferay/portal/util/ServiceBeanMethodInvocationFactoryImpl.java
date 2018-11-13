@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ServiceBeanMethodInvocationFactory;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.spring.aop.AopMethod;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
@@ -52,13 +53,11 @@ public class ServiceBeanMethodInvocationFactoryImpl
 		}
 
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			new ServiceBeanMethodInvocation(target, method, arguments);
-
-		ChainableMethodAdvice[] chainableMethodAdvices =
-			_getChainableMethodAdvices(methodInterceptorBeanIds);
-
-		serviceBeanMethodInvocation.setChainableMethodAdvices(
-			chainableMethodAdvices);
+			new ServiceBeanMethodInvocation(
+				new AopMethod(
+					target, method,
+					_getChainableMethodAdvices(methodInterceptorBeanIds)),
+				arguments);
 
 		try {
 			return serviceBeanMethodInvocation.proceed();
@@ -80,7 +79,9 @@ public class ServiceBeanMethodInvocationFactoryImpl
 		Object target, Class<?> targetClass, Method method,
 		Object[] arguments) {
 
-		return new ServiceBeanMethodInvocation(target, method, arguments);
+		return new ServiceBeanMethodInvocation(
+			new AopMethod(target, method, new ChainableMethodAdvice[0]),
+			arguments);
 	}
 
 	/**

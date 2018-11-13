@@ -72,7 +72,7 @@ public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
 			(ServiceBeanMethodInvocation)methodInvocation;
 
-		serviceBeanMethodInvocation.mark();
+		int index = serviceBeanMethodInvocation.getIndex();
 
 		Object returnValue = null;
 		Throwable throwable = null;
@@ -122,7 +122,7 @@ public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
 				}
 			}
 
-			serviceBeanMethodInvocation.reset();
+			serviceBeanMethodInvocation.setIndex(index);
 		}
 
 		if (throwable != null) {

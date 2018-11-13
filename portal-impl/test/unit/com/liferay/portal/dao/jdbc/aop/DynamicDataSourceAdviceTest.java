@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.AopMethod;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
@@ -147,19 +148,20 @@ public class DynamicDataSourceAdviceTest {
 
 		Method method = TestClass.class.getMethod(methodName);
 
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			new ServiceBeanMethodInvocation(testClass, method, new Object[0]);
+		ChainableMethodAdvice[] chainableMethodAdvices =
+			new ChainableMethodAdvice[0];
 
 		if (_dynamicDataSourceAdvice.isEnabled(TestClass.class, method) &&
 			_transactionInterceptor.isEnabled(TestClass.class, method)) {
 
-			serviceBeanMethodInvocation.setChainableMethodAdvices(
-				new ChainableMethodAdvice[] {_dynamicDataSourceAdvice});
+			chainableMethodAdvices =
+				new ChainableMethodAdvice[] {_dynamicDataSourceAdvice};
 		}
-		else {
-			serviceBeanMethodInvocation.setChainableMethodAdvices(
-				new ChainableMethodAdvice[0]);
-		}
+
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
+			new ServiceBeanMethodInvocation(
+				new AopMethod(testClass, method, chainableMethodAdvices),
+				new Object[0]);
 
 		return serviceBeanMethodInvocation;
 	}

@@ -39,18 +39,19 @@ public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			new ServiceBeanMethodInvocation(_target, method, arguments);
+		ChainableMethodAdvice[] chainableMethodAdvices =
+			_emptyChainableMethodAdvices;
 
 		if (TransactionsUtil.isEnabled()) {
-			serviceBeanMethodInvocation.setChainableMethodAdvices(
+			chainableMethodAdvices =
 				_serviceBeanAopCacheManager.getMethodInterceptors(
-					_target.getClass(), method));
+					_target.getClass(), method);
 		}
-		else {
-			serviceBeanMethodInvocation.setChainableMethodAdvices(
-				_emptyChainableMethodAdvices);
-		}
+
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
+			new ServiceBeanMethodInvocation(
+				new AopMethod(_target, method, chainableMethodAdvices),
+				arguments);
 
 		return serviceBeanMethodInvocation.proceed();
 	}

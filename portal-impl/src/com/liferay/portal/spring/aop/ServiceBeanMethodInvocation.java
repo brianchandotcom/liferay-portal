@@ -14,12 +14,7 @@
 
 package com.liferay.portal.spring.aop;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-
 import java.lang.reflect.AccessibleObject;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Objects;
@@ -32,25 +27,10 @@ import org.aopalliance.intercept.MethodInvocation;
 public class ServiceBeanMethodInvocation implements MethodInvocation {
 
 	public ServiceBeanMethodInvocation(
-		Object target, Method method, Object[] arguments) {
+		AopMethod aopMethod, Object[] arguments) {
 
-		_target = target;
-		_method = method;
+		_aopMethod = aopMethod;
 		_arguments = arguments;
-
-		_method.setAccessible(true);
-
-		boolean equalsMethod = false;
-
-		if (_method.getDeclaringClass() == Object.class) {
-			String methodName = _method.getName();
-
-			if (methodName.equals("equals")) {
-				equalsMethod = true;
-			}
-		}
-
-		_equalsMethod = equalsMethod;
 	}
 
 	@Override
@@ -66,7 +46,9 @@ public class ServiceBeanMethodInvocation implements MethodInvocation {
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
 			(ServiceBeanMethodInvocation)obj;
 
-		if (Objects.equals(_method, serviceBeanMethodInvocation._method)) {
+		if (Objects.equals(
+				_aopMethod, serviceBeanMethodInvocation._aopMethod)) {
+
 			return true;
 		}
 
@@ -78,125 +60,53 @@ public class ServiceBeanMethodInvocation implements MethodInvocation {
 		return _arguments;
 	}
 
+	public int getIndex() {
+		return _index;
+	}
+
 	@Override
 	public Method getMethod() {
-		return _method;
+		return _aopMethod.getMethod();
 	}
 
 	@Override
 	public AccessibleObject getStaticPart() {
-		return _method;
+		return _aopMethod.getMethod();
 	}
 
 	@Override
 	public Object getThis() {
-		return _target;
+		return _aopMethod.getTarget();
 	}
 
 	@Override
 	public int hashCode() {
-		if (_hashCode == 0) {
-			_hashCode = _method.hashCode();
-		}
-
-		return _hashCode;
-	}
-
-	public void mark() {
-		_markIndex = _index;
+		return _aopMethod.hashCode();
 	}
 
 	@Override
 	public Object proceed() throws Throwable {
-		if (_index < _chainableMethodAdvices.length) {
-			return _chainableMethodAdvices[_index++].invoke(this);
+		ChainableMethodAdvice[] chainableMethodAdvices =
+			_aopMethod.getChainableMethodAdvices();
+
+		if (_index < chainableMethodAdvices.length) {
+			return chainableMethodAdvices[_index++].invoke(this);
 		}
 
-		if (_equalsMethod) {
-			Object argument = _arguments[0];
-
-			if (argument == null) {
-				return false;
-			}
-
-			ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler =
-				ProxyUtil.fetchInvocationHandler(
-					argument, ServiceBeanAopInvocationHandler.class);
-
-			if (serviceBeanAopInvocationHandler != null) {
-				argument = serviceBeanAopInvocationHandler.getTarget();
-			}
-
-			return _target.equals(argument);
-		}
-
-		try {
-			return _method.invoke(_target, _arguments);
-		}
-		catch (InvocationTargetException ite) {
-			throw ite.getTargetException();
-		}
+		return _aopMethod.invoke(_arguments);
 	}
 
-	public void reset() {
-		_index = _markIndex;
-	}
-
-	public void setChainableMethodAdvices(
-		ChainableMethodAdvice[] chainableMethodAdvices) {
-
-		_chainableMethodAdvices = chainableMethodAdvices;
+	public void setIndex(int index) {
+		_index = index;
 	}
 
 	@Override
 	public String toString() {
-		if (_toString != null) {
-			return _toString;
-		}
-
-		Class<?>[] parameterTypes = _method.getParameterTypes();
-
-		StringBundler sb = new StringBundler(parameterTypes.length * 2 + 6);
-
-		Class<?> declaringClass = _method.getDeclaringClass();
-
-		sb.append(declaringClass.getName());
-
-		sb.append(StringPool.PERIOD);
-		sb.append(_method.getName());
-		sb.append(StringPool.OPEN_PARENTHESIS);
-
-		for (Class<?> parameterType : parameterTypes) {
-			sb.append(parameterType.getName());
-
-			sb.append(StringPool.COMMA);
-		}
-
-		if (parameterTypes.length > 0) {
-			sb.setIndex(sb.index() - 1);
-		}
-
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
-		sb.append(StringPool.AT);
-
-		Class<?> targetClass = _target.getClass();
-
-		sb.append(targetClass.getName());
-
-		_toString = sb.toString();
-
-		return _toString;
+		return _aopMethod.toString();
 	}
 
+	private final AopMethod _aopMethod;
 	private final Object[] _arguments;
-	private ChainableMethodAdvice[] _chainableMethodAdvices;
-	private final boolean _equalsMethod;
-	private int _hashCode;
 	private int _index;
-	private int _markIndex;
-	private final Method _method;
-	private final Object _target;
-	private String _toString;
 
 }

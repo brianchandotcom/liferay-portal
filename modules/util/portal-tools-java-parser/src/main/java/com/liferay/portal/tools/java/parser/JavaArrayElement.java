@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 import java.util.List;
 
 /**
@@ -23,6 +25,30 @@ public class JavaArrayElement extends JavaExpression {
 
 	public JavaArrayElement(JavaExpression arrayJavaExpression) {
 		_arrayJavaExpression = arrayJavaExpression;
+	}
+
+	@Override
+	public String getString(
+		String indent, String prefix, String suffix, int maxLineLength,
+		boolean forceLineBreak) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(indent);
+		sb.append(prefix);
+
+		append(sb, _arrayJavaExpression, indent, maxLineLength);
+
+		for (JavaExpression indexValueJavaExpression :
+				_indexValueJavaExpressions) {
+
+			append(
+				sb, indexValueJavaExpression, indent, "[", "]", maxLineLength);
+		}
+
+		sb.append(suffix);
+
+		return sb.toString();
 	}
 
 	public void setIndexValueJavaExpressions(

@@ -1,4 +1,4 @@
-(function(_, Liferay) {
+(function(Liferay) {
 	Liferay.lazyLoad = function() {
 		var failureCallback;
 
@@ -9,7 +9,7 @@
 		var modules;
 		var successCallback;
 
-		if (_.isArray(arguments[0])) {
+		if (Array.isArray(arguments[0])) {
 			modules = arguments[0];
 
 			successCallback = isFunction(arguments[1]) ? arguments[1] : null;
@@ -19,7 +19,7 @@
 			modules = [];
 
 			for (var i = 0; i < arguments.length; ++i) {
-				if (_.isString(arguments[i])) {
+				if (typeof arguments[i] === 'string') {
 					modules[i] = arguments[i];
 				}
 				else if (isFunction(arguments[i])) {
@@ -50,4 +50,4 @@
 			);
 		};
 	};
-})(AUI._, Liferay);
+})(Liferay);

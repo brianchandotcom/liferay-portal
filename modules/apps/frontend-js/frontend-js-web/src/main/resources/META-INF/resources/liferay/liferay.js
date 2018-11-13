@@ -1,6 +1,6 @@
 Liferay = window.Liferay || {};
 
-(function($, _, Liferay) {
+(function($, Liferay) {
 	var isFunction = function(val) {
 		return typeof val === 'function';
 	};
@@ -476,7 +476,7 @@ Liferay = window.Liferay || {};
 	Liferay.Template = {
 		PORTLET: '<div class="portlet"><div class="portlet-topper"><div class="portlet-title"></div></div><div class="portlet-content"></div><div class="forbidden-action"></div></div>'
 	};
-})(AUI.$, AUI._, Liferay);
+})(AUI.$, Liferay);
 
 (function(A, Liferay) {
 	A.mix(

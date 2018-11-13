@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletWrapper;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceWrapper;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceWrapper;
@@ -39,8 +40,11 @@ import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsImpl;
+import com.liferay.portlet.PortalPreferencesWrapper;
 
 import java.util.Objects;
+
+import javax.portlet.PortletPreferences;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -52,15 +56,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -71,9 +71,6 @@ import org.springframework.mock.web.MockServletContext;
  * @author Carlos Sierra Andrés
  * @author Raymond Augé
  */
-@PowerMockIgnore("javax.net.ssl.*")
-@PrepareForTest(PrefsPropsUtil.class)
-@RunWith(PowerMockRunner.class)
 public class ComboServletTest extends PowerMockito {
 
 	@BeforeClass
@@ -140,15 +137,31 @@ public class ComboServletTest extends PowerMockito {
 
 		};
 
-		mockStatic(PrefsPropsUtil.class);
+		ReflectionTestUtil.setFieldValue(
+			PrefsPropsUtil.class, "_portalPreferencesLocalService",
+			new PortalPreferencesLocalServiceWrapper(null) {
 
-		when(
-			PrefsPropsUtil.getStringArray(
-				Mockito.eq(PropsKeys.COMBO_ALLOWED_FILE_EXTENSIONS),
-				Mockito.anyString())
-		).thenReturn(
-			new String[] {".css", ".js"}
-		);
+				@Override
+				public PortletPreferences getPreferences(
+					long ownerId, int ownerType) {
+
+					return new PortalPreferencesWrapper(null) {
+
+						@Override
+						public String getValue(String key, String def) {
+							if (PropsKeys.COMBO_ALLOWED_FILE_EXTENSIONS.equals(
+									key)) {
+
+								return ".css,.js";
+							}
+
+							return null;
+						}
+
+					};
+				}
+
+			});
 
 		_mockHttpServletRequest = new MockHttpServletRequest();
 

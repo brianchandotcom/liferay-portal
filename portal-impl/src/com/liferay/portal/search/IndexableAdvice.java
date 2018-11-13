@@ -84,9 +84,6 @@ public class IndexableAdvice
 			returnType.getName());
 
 		if (indexer == null) {
-			serviceBeanAopCacheManager.removeMethodInterceptor(
-				methodInvocation.getMethod(), this);
-
 			return;
 		}
 
@@ -125,6 +122,24 @@ public class IndexableAdvice
 	@Override
 	public Indexable getNullAnnotation() {
 		return _nullIndexable;
+	}
+
+	@Override
+	public boolean isEnabled(Class<?> targetClass, Method method) {
+		if (!super.isEnabled(targetClass, method)) {
+			return false;
+		}
+
+		Class<?> returnType = method.getReturnType();
+
+		Indexer<Object> indexer = IndexerRegistryUtil.getIndexer(
+			returnType.getName());
+
+		if (indexer == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

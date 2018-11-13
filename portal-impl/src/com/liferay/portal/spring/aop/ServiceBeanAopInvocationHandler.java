@@ -19,8 +19,6 @@ import com.liferay.portal.transaction.TransactionsUtil;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-import org.aopalliance.intercept.MethodInterceptor;
-
 /**
  * @author Shuyang Zhou
  */
@@ -45,13 +43,13 @@ public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 			new ServiceBeanMethodInvocation(_target, method, arguments);
 
 		if (TransactionsUtil.isEnabled()) {
-			serviceBeanMethodInvocation.setMethodInterceptors(
+			serviceBeanMethodInvocation.setChainableMethodAdvices(
 				_serviceBeanAopCacheManager.getMethodInterceptors(
 					_target.getClass(), method));
 		}
 		else {
-			serviceBeanMethodInvocation.setMethodInterceptors(
-				_emptyMethodInterceptors);
+			serviceBeanMethodInvocation.setChainableMethodAdvices(
+				_emptyChainableMethodAdvices);
 		}
 
 		return serviceBeanMethodInvocation.proceed();
@@ -63,8 +61,8 @@ public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 		_serviceBeanAopCacheManager.reset();
 	}
 
-	private static final MethodInterceptor[] _emptyMethodInterceptors =
-		new MethodInterceptor[0];
+	private static final ChainableMethodAdvice[] _emptyChainableMethodAdvices =
+		new ChainableMethodAdvice[0];
 
 	private final ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
 	private volatile Object _target;

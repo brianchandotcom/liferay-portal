@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 import com.liferay.portal.spring.transaction.TransactionInterceptor;
@@ -35,7 +36,6 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
 import org.junit.Assert;
@@ -153,12 +153,12 @@ public class DynamicDataSourceAdviceTest {
 		if (_dynamicDataSourceAdvice.isEnabled(TestClass.class, method) &&
 			_transactionInterceptor.isEnabled(TestClass.class, method)) {
 
-			serviceBeanMethodInvocation.setMethodInterceptors(
-				new MethodInterceptor[] {_dynamicDataSourceAdvice});
+			serviceBeanMethodInvocation.setChainableMethodAdvices(
+				new ChainableMethodAdvice[] {_dynamicDataSourceAdvice});
 		}
 		else {
-			serviceBeanMethodInvocation.setMethodInterceptors(
-				new MethodInterceptor[0]);
+			serviceBeanMethodInvocation.setChainableMethodAdvices(
+				new ChainableMethodAdvice[0]);
 		}
 
 		return serviceBeanMethodInvocation;

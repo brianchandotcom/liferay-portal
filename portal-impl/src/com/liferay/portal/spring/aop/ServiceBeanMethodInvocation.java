@@ -24,7 +24,6 @@ import java.lang.reflect.Method;
 
 import java.util.Objects;
 
-import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
 /**
@@ -109,8 +108,8 @@ public class ServiceBeanMethodInvocation implements MethodInvocation {
 
 	@Override
 	public Object proceed() throws Throwable {
-		if (_index < _methodInterceptors.length) {
-			return _methodInterceptors[_index++].invoke(this);
+		if (_index < _chainableMethodAdvices.length) {
+			return _chainableMethodAdvices[_index++].invoke(this);
 		}
 
 		if (_equalsMethod) {
@@ -143,8 +142,10 @@ public class ServiceBeanMethodInvocation implements MethodInvocation {
 		_index = _markIndex;
 	}
 
-	public void setMethodInterceptors(MethodInterceptor[] methodInterceptors) {
-		_methodInterceptors = methodInterceptors;
+	public void setChainableMethodAdvices(
+		ChainableMethodAdvice[] chainableMethodAdvices) {
+
+		_chainableMethodAdvices = chainableMethodAdvices;
 	}
 
 	@Override
@@ -189,12 +190,12 @@ public class ServiceBeanMethodInvocation implements MethodInvocation {
 	}
 
 	private final Object[] _arguments;
+	private ChainableMethodAdvice[] _chainableMethodAdvices;
 	private final boolean _equalsMethod;
 	private int _hashCode;
 	private int _index;
 	private int _markIndex;
 	private final Method _method;
-	private MethodInterceptor[] _methodInterceptors;
 	private final Object _target;
 	private String _toString;
 

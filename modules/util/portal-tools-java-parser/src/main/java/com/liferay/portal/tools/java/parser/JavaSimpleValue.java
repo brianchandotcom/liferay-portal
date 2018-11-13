@@ -14,6 +14,9 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+
 /**
  * @author Hugo Huijser
  */
@@ -21,6 +24,37 @@ public class JavaSimpleValue extends JavaExpression {
 
 	public JavaSimpleValue(String name) {
 		_name = name;
+	}
+
+	@Override
+	public String getString(
+		String indent, String prefix, String suffix, int maxLineLength,
+		boolean forceLineBreak) {
+
+		prefix = StringUtil.trimLeading(prefix);
+
+		String s = StringBundler.concat(indent, prefix, _name, suffix);
+
+		if ((maxLineLength == -1) || (getLineLength(s) <= maxLineLength)) {
+			return s;
+		}
+
+		int x = _name.length() + 1;
+
+		while (true) {
+			x = _name.lastIndexOf(".", x - 1);
+
+			if (x == -1) {
+				return StringBundler.concat(indent, prefix, _name, suffix);
+			}
+
+			s = StringBundler.concat(indent, prefix, _name.substring(0, x + 1));
+
+			if (getLineLength(s) <= maxLineLength) {
+				return StringBundler.concat(
+					s, "\n", indent, "\t", _name.substring(x + 1), suffix);
+			}
+		}
 	}
 
 	private final String _name;

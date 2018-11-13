@@ -2776,6 +2776,15 @@ another task with the same name is being executed in a parent project.
 - [LPS-86556]: Update the [Liferay Source Formatter] dependency to version
 1.0.755.
 
+## 2.3.282 - 2018-11-13
+
+### Added
+- [LPS-87293]: Add the option to pretty print the output from the
+`checkSourceFormatting` and `formatSource` task. This can be enabled via command
+line argument:
+	- `./gradlew checkSourceFormatting -DcheckSourceFormatting.pretty.print=true`
+	- `./gradlew formatSource -DformatSource.pretty.print=true`
+
 [Liferay Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/source-formatter
 [LPS-52675]: https://issues.liferay.com/browse/LPS-52675
 [LPS-62970]: https://issues.liferay.com/browse/LPS-62970
@@ -2944,3 +2953,4 @@ another task with the same name is being executed in a parent project.
 [LPS-86413]: https://issues.liferay.com/browse/LPS-86413
 [LPS-86493]: https://issues.liferay.com/browse/LPS-86493
 [LPS-86556]: https://issues.liferay.com/browse/LPS-86556
+[LPS-87293]: https://issues.liferay.com/browse/LPS-87293

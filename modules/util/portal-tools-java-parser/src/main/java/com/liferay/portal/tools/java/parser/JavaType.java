@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 import java.util.List;
 
 /**
@@ -40,6 +42,83 @@ public class JavaType extends BaseJavaTerm {
 
 	public void setVarargs(boolean varargs) {
 		_varargs = varargs;
+	}
+
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		return toString(indent, prefix, suffix, maxLineLength, false);
+	}
+
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength,
+		boolean forceLineBreak) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(indent);
+		sb.append(prefix);
+
+		int appendType = append(
+			sb, _name, indent, maxLineLength, !forceLineBreak);
+
+		if (_genericJavaTypes != null) {
+			if (forceLineBreak && (appendType != APPENDED_NEW_LINE)) {
+				sb.append("\n");
+				sb.append(indent);
+				sb.append("\t");
+			}
+
+			append(sb, _genericJavaTypes, indent, "<", ">", maxLineLength);
+		}
+
+		if (_lowerBoundJavaTypes != null) {
+			if (_lowerBoundJavaTypes.size() == 1) {
+				append(
+					sb, _lowerBoundJavaTypes.get(0), indent, " super ", "",
+					maxLineLength, false);
+			}
+			else {
+				append(
+					sb, _lowerBoundJavaTypes, " & ", indent, " super ", "",
+					maxLineLength);
+			}
+		}
+
+		if (_upperBoundJavaTypes != null) {
+			if (_upperBoundJavaTypes.size() == 1) {
+				append(
+					sb, _upperBoundJavaTypes.get(0), indent, " extends ", "",
+					maxLineLength, false);
+			}
+			else {
+				append(
+					sb, _upperBoundJavaTypes, " & ", indent, " extends ", "",
+					maxLineLength);
+			}
+		}
+
+		for (int i = 0; i < _arrayDimension; i++) {
+			sb.append("[]");
+		}
+
+		if (_varargs) {
+			sb.append("...");
+		}
+
+		sb.append(suffix);
+
+		String s = sb.toString();
+
+		if (!forceLineBreak && (getLineLength(s) > maxLineLength) &&
+			(maxLineLength != -1)) {
+
+			return toString(indent, prefix, suffix, maxLineLength, true);
+		}
+
+		return s;
 	}
 
 	private final int _arrayDimension;

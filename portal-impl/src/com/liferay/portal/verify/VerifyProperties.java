@@ -62,11 +62,7 @@ public class VerifyProperties extends VerifyProcess {
 		}
 		catch (RuntimeException re) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get resource " + resourceName);
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(re, re);
+				_log.warn("Unable to get resource " + resourceName, re);
 			}
 
 			return null;

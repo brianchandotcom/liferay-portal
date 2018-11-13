@@ -201,11 +201,10 @@ AUI.add(
 								}
 
 								return itemActions !== undefined && itemActions !== STR_ACTIONS_WILDCARD;
-
 							}
 						).map(
 							function(item) {
-								return item.getData('actions').split(',')
+								return item.getData('actions').split(',');
 							}
 						);
 
@@ -254,7 +253,7 @@ AUI.add(
 
 						var allSelectedElements = instance.getAllSelectedElements();
 
-						var payload =  {
+						var payload = {
 							actions: instance._getActions(allSelectedElements),
 							elements: {
 								allElements: instance._getAllElements(),

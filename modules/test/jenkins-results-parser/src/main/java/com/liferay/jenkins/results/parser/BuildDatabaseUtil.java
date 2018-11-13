@@ -75,7 +75,7 @@ public class BuildDatabaseUtil {
 			return;
 		}
 
-		int maxRetries = 3;
+		int maxRetries = 5;
 		int retries = 0;
 
 		while (retries < maxRetries) {
@@ -93,11 +93,19 @@ public class BuildDatabaseUtil {
 				command = command.replaceAll("\\(", "\\\\(");
 				command = command.replaceAll("\\)", "\\\\)");
 
-				JenkinsResultsParserUtil.executeBashCommands(command);
+				Process process = JenkinsResultsParserUtil.executeBashCommands(
+					true, command);
+
+				if (process.exitValue() != 0) {
+					throw new RuntimeException(
+						JenkinsResultsParserUtil.combine(
+							"Failed to download ",
+							BuildDatabase.BUILD_DATABASE_FILE_NAME));
+				}
 
 				break;
 			}
-			catch (IOException | TimeoutException e) {
+			catch (IOException | RuntimeException | TimeoutException e) {
 				if (retries == maxRetries) {
 					throw new RuntimeException(
 						JenkinsResultsParserUtil.combine(

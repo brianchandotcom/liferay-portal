@@ -1131,7 +1131,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewMBThreadReadAndUnread" priority="5">
+	<command name="ViewVisualStateOfReadMBThread" priority="5">
 		<description message="This is a use case for LPS-77263." />
 
 		<execute macro="Navigator#gotoPage">

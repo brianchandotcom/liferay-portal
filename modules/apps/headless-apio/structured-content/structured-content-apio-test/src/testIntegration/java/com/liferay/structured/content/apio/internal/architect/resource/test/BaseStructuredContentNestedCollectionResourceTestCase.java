@@ -18,7 +18,12 @@ import com.liferay.apio.architect.language.AcceptLanguage;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleWrapper;
@@ -27,10 +32,13 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.filter.Filter;
 import com.liferay.portal.odata.sort.Sort;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+
+import java.io.InputStream;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -45,7 +53,23 @@ import java.util.Locale;
  */
 public abstract class BaseStructuredContentNestedCollectionResourceTestCase {
 
-	protected String getDDMFormFieldDataType(
+	protected DDMForm deserialize(
+		DDMFormDeserializerTracker ddmFormDeserializerTracker, String content) {
+
+		DDMFormDeserializer ddmFormDeserializer =
+			ddmFormDeserializerTracker.getDDMFormDeserializer("json");
+
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				ddmFormDeserializer.deserialize(builder.build());
+
+		return ddmFormDeserializerDeserializeResponse.getDDMForm();
+	}
+
+	protected String getDataType(
 			DDMFormFieldValue ddmFormFieldValue, DDMStructure ddmStructure)
 		throws Exception {
 
@@ -68,14 +92,14 @@ public abstract class BaseStructuredContentNestedCollectionResourceTestCase {
 		Object object = constructor.newInstance(
 			nestedCollectionResource, ddmFormFieldValue, ddmStructure);
 
-		Method method = innerClass.getMethod("getDDMFormFieldDataType");
+		Method method = innerClass.getMethod("getDataType");
 
 		method.setAccessible(true);
 
 		return (String)method.invoke(object);
 	}
 
-	protected String getDDMFormFieldInputControl(
+	protected String getInputControl(
 			DDMFormFieldValue ddmFormFieldValue, DDMStructure ddmStructure)
 		throws Exception {
 
@@ -98,7 +122,7 @@ public abstract class BaseStructuredContentNestedCollectionResourceTestCase {
 		Object object = constructor.newInstance(
 			nestedCollectionResource, ddmFormFieldValue, ddmStructure);
 
-		Method method = innerClass.getMethod("getDDMFormFieldInputControl");
+		Method method = innerClass.getMethod("getInputControl");
 
 		method.setAccessible(true);
 
@@ -187,6 +211,18 @@ public abstract class BaseStructuredContentNestedCollectionResourceTestCase {
 		themeDisplay.setScopeGroupId(group.getGroupId());
 
 		return themeDisplay;
+	}
+
+	protected String read(String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"/com/liferay/structured/content/apio/internal/architect/reso" +
+				"urce/test/" + fileName);
+
+		return StringUtil.read(inputStream);
 	}
 
 	private NestedCollectionResource _getNestedCollectionResource()

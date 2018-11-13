@@ -161,20 +161,26 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 				Boolean.parseBoolean(formatLocalChanges));
 		}
 
-		final ByteArrayOutputStream byteArrayOutputStream =
-			new ByteArrayOutputStream();
+		String prettyPrint = GradleUtil.getTaskPrefixedProperty(
+			formatSourceTask, "pretty.print");
 
-		formatSourceTask.setStandardOutput(byteArrayOutputStream);
+		if (Boolean.parseBoolean(prettyPrint)) {
+			final ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream();
 
-		formatSourceTask.doLast(
-			new Action<Task>() {
+			formatSourceTask.setStandardOutput(byteArrayOutputStream);
+
+			Action<Task> taskAction = new Action<Task>() {
 
 				@Override
 				public void execute(Task task) {
 					_prettyPrint(byteArrayOutputStream);
 				}
 
-			});
+			};
+
+			formatSourceTask.doLast(taskAction);
+		}
 	}
 
 	private void _configureTasksFormatSource(

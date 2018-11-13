@@ -49,6 +49,10 @@ public class FilePropagator {
 		return _threadsDurationTotal / _threadsCompletedCount;
 	}
 
+	public List<String> getErrorSlaves() {
+		return _errorSlaves;
+	}
+
 	public void setCleanUpCommand(String cleanUpCommand) {
 		_cleanUpCommand = cleanUpCommand;
 	}

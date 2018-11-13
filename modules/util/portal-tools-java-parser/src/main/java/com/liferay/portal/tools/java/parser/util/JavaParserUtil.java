@@ -16,6 +16,8 @@ package com.liferay.portal.tools.java.parser.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.java.parser.JavaAnnotation;
 import com.liferay.portal.tools.java.parser.JavaAnnotationMemberValuePair;
 import com.liferay.portal.tools.java.parser.JavaArray;
@@ -233,10 +235,18 @@ public class JavaParserUtil {
 			javaExpression = _parseJavaArrayDeclarator(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.DOT) {
-			javaExpression = parseJavaExpression(detailAST.getFirstChild());
+			Tuple chainTuple = _getChainTuple(detailAST);
 
-			javaExpression.setChainedJavaExpression(
-				parseJavaExpression(detailAST.getLastChild()));
+			javaExpression = (JavaExpression)chainTuple.getObject(1);
+
+			if (javaExpression != null) {
+				javaExpression.setChainedJavaExpression(
+					new JavaSimpleValue((String)chainTuple.getObject(0)));
+			}
+			else {
+				javaExpression = new JavaSimpleValue(
+					(String)chainTuple.getObject(0));
+			}
 		}
 		else if (detailAST.getType() == TokenTypes.INDEX_OP) {
 			javaExpression = _parseJavaArrayElement(detailAST);
@@ -450,6 +460,40 @@ public class JavaParserUtil {
 		}
 
 		return javaWhileStatement;
+	}
+
+	private static Tuple _getChainTuple(DetailAST dotDetailAST) {
+		String name = StringPool.BLANK;
+
+		DetailAST detailAST = dotDetailAST;
+
+		while (true) {
+			if (detailAST.getType() == TokenTypes.DOT) {
+				DetailAST lastChildDetailAST = detailAST.getLastChild();
+
+				if (Validator.isNull(name)) {
+					name = lastChildDetailAST.getText();
+				}
+				else {
+					name = lastChildDetailAST.getText() + "." + name;
+				}
+
+				detailAST = detailAST.getFirstChild();
+
+				continue;
+			}
+
+			JavaExpression javaExpression = null;
+
+			if (ArrayUtil.contains(_SIMPLE_TYPES, detailAST.getType())) {
+				name = detailAST.getText() + "." + name;
+			}
+			else {
+				javaExpression = parseJavaExpression(detailAST);
+			}
+
+			return new Tuple(name, javaExpression);
+		}
 	}
 
 	private static String _getName(DetailAST detailAST) {
@@ -955,47 +999,61 @@ public class JavaParserUtil {
 	private static JavaExpression _parseJavaMethodCall(
 		DetailAST methodCallDetailAST, boolean hasSurroundingParentheses) {
 
-		DetailAST identDetailAST = methodCallDetailAST.findFirstToken(
-			TokenTypes.IDENT);
+		JavaExpression javaExpression = null;
+		JavaMethodCall javaMethodCall = null;
 
-		if (identDetailAST != null) {
-			JavaMethodCall javaMethodCall = new JavaMethodCall(
-				identDetailAST.getText());
+		DetailAST firstChildDetailAST = methodCallDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
+			javaMethodCall = new JavaMethodCall(firstChildDetailAST.getText());
 
 			javaMethodCall.setGenericJavaTypes(
 				_parseGenericJavaTypes(
 					methodCallDetailAST.findFirstToken(
 						TokenTypes.TYPE_ARGUMENTS),
 					TokenTypes.TYPE_ARGUMENT));
-			javaMethodCall.setParameterValueJavaExpressions(
-				_parseParameterValueJavaExpressions(
-					methodCallDetailAST.findFirstToken(TokenTypes.ELIST)));
+		}
+		else {
+			Tuple chainTuple = _getChainTuple(firstChildDetailAST);
 
-			if (hasSurroundingParentheses) {
-				javaMethodCall.setHasSurroundingParentheses(true, false);
+			String name = (String)chainTuple.getObject(0);
+
+			javaExpression = (JavaExpression)chainTuple.getObject(1);
+
+			if (javaExpression != null) {
+				javaMethodCall = new JavaMethodCall(name);
+			}
+			else {
+				int i = name.lastIndexOf(StringPool.PERIOD);
+
+				if (i == -1) {
+					javaMethodCall = new JavaMethodCall(name);
+				}
+				else {
+					javaMethodCall = new JavaMethodCall(name.substring(i + 1));
+
+					javaExpression = new JavaSimpleValue(name.substring(0, i));
+				}
 			}
 
-			return javaMethodCall;
+			javaMethodCall.setGenericJavaTypes(
+				_parseGenericJavaTypes(
+					firstChildDetailAST.findFirstToken(
+						TokenTypes.TYPE_ARGUMENTS),
+					TokenTypes.TYPE_ARGUMENT));
 		}
 
-		DetailAST dotDetailAST = methodCallDetailAST.findFirstToken(
-			TokenTypes.DOT);
-
-		JavaExpression javaExpression = parseJavaExpression(
-			dotDetailAST.getFirstChild());
-
-		DetailAST lastChildDetailAST = dotDetailAST.getLastChild();
-
-		JavaMethodCall javaMethodCall = new JavaMethodCall(
-			lastChildDetailAST.getText());
-
-		javaMethodCall.setGenericJavaTypes(
-			_parseGenericJavaTypes(
-				dotDetailAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS),
-				TokenTypes.TYPE_ARGUMENT));
 		javaMethodCall.setParameterValueJavaExpressions(
 			_parseParameterValueJavaExpressions(
 				methodCallDetailAST.findFirstToken(TokenTypes.ELIST)));
+
+		if (hasSurroundingParentheses) {
+			javaMethodCall.setHasSurroundingParentheses(true, false);
+		}
+
+		if (javaExpression == null) {
+			return javaMethodCall;
+		}
 
 		javaExpression.setChainedJavaExpression(javaMethodCall);
 

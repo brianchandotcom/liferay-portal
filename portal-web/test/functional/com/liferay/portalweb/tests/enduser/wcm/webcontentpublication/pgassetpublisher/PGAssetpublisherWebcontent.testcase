@@ -831,4 +831,101 @@
 			<var name="assetTitle" value="WC WebContent Title" />
 		</execute>
 	</command>
+
+	<command name="ViewWebContentViaAPDeleteCategory" priority="5">
+		<description message="This is a use case for LPS-80445." />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Categorization" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureCategoriesFilterPG">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithCategoryCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="Web Content Content" />
+			<var name="assetTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Categorization" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#deleteByMenuCP">
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="Web Content Content" />
+			<var name="assetTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panel" value="Filter" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="APConfiguration#FILTER_CATEGORIZATION_SELECT" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#gotoEditAssetPG">
+			<var name="assetTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panel" value="Metadata" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="AssetCategorization#VOCABULARY" />
+	</command>
 </definition>

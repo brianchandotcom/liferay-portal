@@ -31,6 +31,13 @@ public class JavaConstructorCall extends BaseJavaTerm {
 		_parameterValueJavaExpressions = parameterValueJavaExpressions;
 	}
 
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		return "TODO";
+	}
+
 	private List<JavaExpression> _parameterValueJavaExpressions;
 	private final boolean _superCall;
 

@@ -18,4 +18,12 @@ package com.liferay.portal.tools.java.parser;
  * @author Hugo Huijser
  */
 public class JavaTryStatement extends BaseJavaTerm {
+
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		return "TODO";
+	}
+
 }

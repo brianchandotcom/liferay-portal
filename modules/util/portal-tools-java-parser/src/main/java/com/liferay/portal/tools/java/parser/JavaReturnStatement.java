@@ -23,6 +23,13 @@ public class JavaReturnStatement extends BaseJavaTerm {
 		_returnJavaExpression = returnJavaExpression;
 	}
 
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		return "TODO";
+	}
+
 	private JavaExpression _returnJavaExpression;
 
 }

@@ -23,6 +23,13 @@ public class JavaContinueStatement extends BaseJavaTerm {
 		_identifierName = new JavaSimpleValue(identifierName);
 	}
 
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		return "TODO";
+	}
+
 	private JavaSimpleValue _identifierName;
 
 }

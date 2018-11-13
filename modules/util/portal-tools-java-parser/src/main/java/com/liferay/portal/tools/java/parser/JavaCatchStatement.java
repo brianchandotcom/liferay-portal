@@ -31,6 +31,13 @@ public class JavaCatchStatement extends BaseJavaTerm {
 		_parameterTypeNames = parameterTypeNames;
 	}
 
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		return "TODO";
+	}
+
 	private JavaSimpleValue _parameterName;
 	private List<JavaSimpleValue> _parameterTypeNames;
 

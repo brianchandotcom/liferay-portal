@@ -23,6 +23,14 @@ public class JavaSimpleLambdaExpression extends JavaExpression {
 		_parameterValue = new JavaSimpleValue(parameterValue);
 	}
 
+	@Override
+	public String getString(
+		String indent, String prefix, String suffix, int maxLineLength,
+		boolean forceLineBreak) {
+
+		return "TODO";
+	}
+
 	private final JavaSimpleValue _parameterValue;
 
 }

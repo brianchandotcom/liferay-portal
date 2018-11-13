@@ -23,6 +23,13 @@ public class JavaAnnotationValuePair extends BaseJavaTerm {
 		_name = new JavaSimpleValue(name);
 	}
 
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		return "TODO";
+	}
+
 	private final JavaSimpleValue _name;
 
 }

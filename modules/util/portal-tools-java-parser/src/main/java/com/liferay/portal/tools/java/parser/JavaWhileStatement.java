@@ -29,6 +29,13 @@ public class JavaWhileStatement extends BaseJavaTerm {
 		_hasBody = hasBody;
 	}
 
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		return "TODO";
+	}
+
 	private JavaExpression _conditionJavaExpression;
 	private boolean _hasBody;
 

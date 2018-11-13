@@ -23,6 +23,13 @@ public class JavaThrowStatement extends BaseJavaTerm {
 		_throwJavaExpression = throwJavaExpression;
 	}
 
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		return "TODO";
+	}
+
 	private final JavaExpression _throwJavaExpression;
 
 }

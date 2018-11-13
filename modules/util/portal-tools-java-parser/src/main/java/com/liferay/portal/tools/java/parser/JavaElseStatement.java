@@ -23,6 +23,13 @@ public class JavaElseStatement extends BaseJavaTerm {
 		_javaIfStatement = javaIfStatement;
 	}
 
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		return "TODO";
+	}
+
 	private JavaIfStatement _javaIfStatement;
 
 }

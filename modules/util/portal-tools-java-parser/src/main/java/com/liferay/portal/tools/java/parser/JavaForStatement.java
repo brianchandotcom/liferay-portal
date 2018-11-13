@@ -39,6 +39,13 @@ public class JavaForStatement extends BaseJavaTerm {
 		_iteratorJavaExpressions = iteratorJavaExpressions;
 	}
 
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		return "TODO";
+	}
+
 	private JavaExpression _conditionJavaExpression;
 	private List<JavaTerm> _initializationJavaTerms;
 	private List<JavaExpression> _iteratorJavaExpressions;

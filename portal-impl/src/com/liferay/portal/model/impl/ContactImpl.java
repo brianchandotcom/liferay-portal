@@ -47,6 +47,7 @@ public class ContactImpl extends ContactBaseImpl {
 	 *
 	 * @deprecated As of Judson (7.1.x)
 	 */
+	@Deprecated
 	public boolean isMale() {
 		return true;
 	}
@@ -65,6 +66,7 @@ public class ContactImpl extends ContactBaseImpl {
 	 *
 	 * @deprecated As of Judson (7.1.x)
 	 */
+	@Deprecated
 	public void setMale(boolean male) {
 	}
 

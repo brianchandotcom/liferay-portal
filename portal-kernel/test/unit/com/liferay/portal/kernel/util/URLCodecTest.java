@@ -80,20 +80,20 @@ public class URLCodecTest {
 
 		// LPS-47334
 
-		testDecodeURL("%");
-		testDecodeURL("%0");
-		testDecodeURL("%00%");
-		testDecodeURL("%00%0");
-		testDecodeURL("%0" + (char)(CharPool.NUMBER_0 - 1));
-		testDecodeURL("%0" + (char)(CharPool.NUMBER_9 + 1));
-		testDecodeURL("%0" + (char)(CharPool.UPPER_CASE_A - 1));
-		testDecodeURL("%0" + (char)(CharPool.UPPER_CASE_F + 1));
-		testDecodeURL("%0" + (char)(CharPool.LOWER_CASE_A - 1));
-		testDecodeURL("%0" + (char)(CharPool.LOWER_CASE_F + 1));
+		testDecodeURL("%", false);
+		testDecodeURL("%0", false);
+		testDecodeURL("%00%", false);
+		testDecodeURL("%00%0", false);
+		testDecodeURL("%0" + (char)(CharPool.NUMBER_0 - 1), true);
+		testDecodeURL("%0" + (char)(CharPool.NUMBER_9 + 1), true);
+		testDecodeURL("%0" + (char)(CharPool.UPPER_CASE_A - 1), true);
+		testDecodeURL("%0" + (char)(CharPool.UPPER_CASE_F + 1), true);
+		testDecodeURL("%0" + (char)(CharPool.LOWER_CASE_A - 1), true);
+		testDecodeURL("%0" + (char)(CharPool.LOWER_CASE_F + 1), true);
 
 		// LPS-62628
 
-		testDecodeURL("http://localhost:8080/?id=%'");
+		testDecodeURL("http://localhost:8080/?id=%'", false);
 	}
 
 	@Test
@@ -157,13 +157,25 @@ public class URLCodecTest {
 			"%3Fx", URLCodec.encodeURL(animalsString.substring(0, 1) + "x"));
 	}
 
-	protected void testDecodeURL(String encodedURLString) {
+	protected void testDecodeURL(
+		String encodedURLString, boolean invalidHexChar) {
+
 		try {
 			URLCodec.decodeURL(encodedURLString, StringPool.UTF8);
 
 			Assert.fail(encodedURLString);
 		}
 		catch (IllegalArgumentException iae) {
+			String message = iae.getMessage();
+
+			if (invalidHexChar) {
+				Assert.assertTrue(
+					encodedURLString, message.endsWith(" is not a hex char"));
+			}
+			else {
+				Assert.assertEquals(
+					"Invalid URL encoding " + encodedURLString, message);
+			}
 		}
 	}
 

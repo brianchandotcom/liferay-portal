@@ -47,8 +47,7 @@ public class GoogleCloudVisionUtil {
 							FileUtil.getBytes(
 								fileVersion.getContentStream(false))))
 				)
-			)
-		);
+			));
 
 		return jsonObject.toString();
 	}

@@ -809,9 +809,12 @@ public class ModulesStructureTest {
 			return false;
 		}
 
-		String dirName = String.valueOf(dirPath.getFileName());
+		Path lfrbuildRelengSkipUpdateFileVersionsPath = dirPath.resolve(
+			".lfrbuild-releng-skip-update-file-versions");
 
-		if (!dirName.equals("portal-bootstrap") && !_masterBranch) {
+		if (!Files.exists(lfrbuildRelengSkipUpdateFileVersionsPath) &&
+			!_masterBranch) {
+
 			return false;
 		}
 

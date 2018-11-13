@@ -14,7 +14,6 @@
 
 package com.liferay.portal.dao.jdbc.aop;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.aop.DynamicDataSourceTargetSource;
 import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
 import com.liferay.portal.kernel.dao.jdbc.aop.Operation;
@@ -33,7 +32,6 @@ import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Stack;
 
 import javax.sql.DataSource;
 
@@ -112,7 +110,7 @@ public class DynamicDataSourceAdviceTest {
 				MasterDataSource.class));
 
 		_dynamicDataSourceAdvice.setTransactionInterceptor(
-			new TransactionInterceptor());
+			_transactionInterceptor);
 	}
 
 	@Test
@@ -152,8 +150,16 @@ public class DynamicDataSourceAdviceTest {
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
 			new ServiceBeanMethodInvocation(testClass, method, new Object[0]);
 
-		serviceBeanMethodInvocation.setMethodInterceptors(
-			new MethodInterceptor[] {_dynamicDataSourceAdvice});
+		if (_dynamicDataSourceAdvice.isEnabled(TestClass.class, method) &&
+			_transactionInterceptor.isEnabled(TestClass.class, method)) {
+
+			serviceBeanMethodInvocation.setMethodInterceptors(
+				new MethodInterceptor[] {_dynamicDataSourceAdvice});
+		}
+		else {
+			serviceBeanMethodInvocation.setMethodInterceptors(
+				new MethodInterceptor[0]);
+		}
 
 		return serviceBeanMethodInvocation;
 	}
@@ -162,6 +168,8 @@ public class DynamicDataSourceAdviceTest {
 	private DynamicDataSourceTargetSource _dynamicDataSourceTargetSource;
 	private DataSource _readDataSource;
 	private ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
+	private final TransactionInterceptor _transactionInterceptor =
+		new TransactionInterceptor();
 	private DataSource _writeDataSource;
 
 	private class TestClass {
@@ -177,13 +185,24 @@ public class DynamicDataSourceAdviceTest {
 
 		@SuppressWarnings("unused")
 		public void method1() throws Exception {
-			Assert.assertEquals(
-				Operation.WRITE, _dynamicDataSourceTargetSource.getOperation());
-			Assert.assertSame(
-				_writeDataSource, _dynamicDataSourceTargetSource.getTarget());
-			Assert.assertEquals(
-				TestClass.class.getName() + StringPool.PERIOD + "method1",
-				_getCurrentMethod());
+			Operation operation = _callerOperation.get();
+
+			if (operation == Operation.READ) {
+				Assert.assertEquals(
+					Operation.READ,
+					_dynamicDataSourceTargetSource.getOperation());
+				Assert.assertSame(
+					_readDataSource,
+					_dynamicDataSourceTargetSource.getTarget());
+			}
+			else {
+				Assert.assertEquals(
+					Operation.WRITE,
+					_dynamicDataSourceTargetSource.getOperation());
+				Assert.assertSame(
+					_writeDataSource,
+					_dynamicDataSourceTargetSource.getTarget());
+			}
 
 			_testMethod1 = true;
 		}
@@ -194,9 +213,6 @@ public class DynamicDataSourceAdviceTest {
 				Operation.WRITE, _dynamicDataSourceTargetSource.getOperation());
 			Assert.assertSame(
 				_writeDataSource, _dynamicDataSourceTargetSource.getTarget());
-			Assert.assertEquals(
-				TestClass.class.getName() + StringPool.PERIOD + "method2",
-				_getCurrentMethod());
 
 			_testMethod2 = true;
 		}
@@ -207,9 +223,6 @@ public class DynamicDataSourceAdviceTest {
 				Operation.READ, _dynamicDataSourceTargetSource.getOperation());
 			Assert.assertSame(
 				_readDataSource, _dynamicDataSourceTargetSource.getTarget());
-			Assert.assertEquals(
-				TestClass.class.getName() + StringPool.PERIOD + "method3",
-				_getCurrentMethod());
 
 			_testMethod3 = true;
 		}
@@ -221,9 +234,6 @@ public class DynamicDataSourceAdviceTest {
 				Operation.WRITE, _dynamicDataSourceTargetSource.getOperation());
 			Assert.assertSame(
 				_writeDataSource, _dynamicDataSourceTargetSource.getTarget());
-			Assert.assertEquals(
-				TestClass.class.getName() + StringPool.PERIOD + "method4",
-				_getCurrentMethod());
 
 			_testMethod4 = true;
 		}
@@ -235,9 +245,6 @@ public class DynamicDataSourceAdviceTest {
 				Operation.WRITE, _dynamicDataSourceTargetSource.getOperation());
 			Assert.assertSame(
 				_writeDataSource, _dynamicDataSourceTargetSource.getTarget());
-			Assert.assertEquals(
-				TestClass.class.getName() + StringPool.PERIOD + "method5",
-				_getCurrentMethod());
 
 			_testMethod5 = true;
 		}
@@ -253,32 +260,43 @@ public class DynamicDataSourceAdviceTest {
 				Operation.READ, _dynamicDataSourceTargetSource.getOperation());
 			Assert.assertSame(
 				_readDataSource, _dynamicDataSourceTargetSource.getTarget());
-			Assert.assertEquals(
-				TestClass.class.getName() + StringPool.PERIOD + "method6",
-				_getCurrentMethod());
 
 			methodInvocation = createMethodInvocation(this, "method1");
+
+			_callerOperation.set(Operation.READ);
+
+			methodInvocation.proceed();
+
+			_callerOperation.remove();
+
+			Assert.assertEquals(
+				Operation.READ, _dynamicDataSourceTargetSource.getOperation());
+			Assert.assertSame(
+				_readDataSource, _dynamicDataSourceTargetSource.getTarget());
+
+			methodInvocation = createMethodInvocation(this, "method2");
 
 			methodInvocation.proceed();
 
 			Assert.assertEquals(
-				Operation.WRITE, _dynamicDataSourceTargetSource.getOperation());
+				Operation.READ, _dynamicDataSourceTargetSource.getOperation());
 			Assert.assertSame(
-				_writeDataSource, _dynamicDataSourceTargetSource.getTarget());
+				_readDataSource, _dynamicDataSourceTargetSource.getTarget());
+
+			methodInvocation = createMethodInvocation(this, "method4");
+
+			methodInvocation.proceed();
+
 			Assert.assertEquals(
-				TestClass.class.getName() + StringPool.PERIOD + "method6",
-				_getCurrentMethod());
+				Operation.READ, _dynamicDataSourceTargetSource.getOperation());
+			Assert.assertSame(
+				_readDataSource, _dynamicDataSourceTargetSource.getTarget());
 
 			_testMethod6 = true;
 		}
 
-		private String _getCurrentMethod() {
-			Stack<String> stack =
-				_dynamicDataSourceTargetSource.getMethodStack();
-
-			return stack.peek();
-		}
-
+		private final ThreadLocal<Operation> _callerOperation =
+			new ThreadLocal<>();
 		private boolean _testMethod1;
 		private boolean _testMethod2;
 		private boolean _testMethod3;

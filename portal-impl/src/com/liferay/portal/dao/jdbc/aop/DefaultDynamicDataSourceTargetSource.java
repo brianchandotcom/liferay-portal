@@ -14,11 +14,14 @@
 
 package com.liferay.portal.dao.jdbc.aop;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.dao.jdbc.aop.DynamicDataSourceTargetSource;
 import com.liferay.portal.kernel.dao.jdbc.aop.Operation;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.Stack;
 
 import javax.sql.DataSource;
@@ -31,27 +34,23 @@ import org.springframework.aop.TargetSource;
 public class DefaultDynamicDataSourceTargetSource
 	implements DynamicDataSourceTargetSource, TargetSource {
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public Stack<String> getMethodStack() {
-		Stack<String> methodStack = _methodStack.get();
-
-		if (methodStack == null) {
-			methodStack = new Stack<>();
-
-			_methodStack.set(methodStack);
-		}
-
-		return methodStack;
+		return new Stack<>();
 	}
 
 	@Override
 	public Operation getOperation() {
-		Operation operation = _operationType.get();
+		Deque<Operation> operations = _operations.get();
+
+		Operation operation = operations.peek();
 
 		if (operation == null) {
 			operation = Operation.WRITE;
-
-			_operationType.set(operation);
 		}
 
 		return operation;
@@ -96,39 +95,47 @@ public class DefaultDynamicDataSourceTargetSource
 		return false;
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String popMethod() {
-		Stack<String> methodStack = getMethodStack();
-
-		String method = methodStack.pop();
-
-		if (methodStack.isEmpty()) {
-			_operationType.remove();
-		}
-
-		return method;
+		return null;
 	}
 
 	@Override
-	public void pushMethod(String method) {
-		Stack<String> methodStack = getMethodStack();
+	public Operation popOperation() {
+		Deque<Operation> operations = _operations.get();
 
-		methodStack.push(method);
+		return operations.pop();
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
+	@Override
+	public void pushMethod(String method) {
+	}
+
+	@Override
+	public void pushOperation(Operation operation) {
+		Deque<Operation> operations = _operations.get();
+
+		operations.push(operation);
 	}
 
 	@Override
 	public void releaseTarget(Object target) throws Exception {
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void setOperation(Operation operation) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Method stack " + getMethodStack());
-		}
-
-		if (!inOperation() || (operation == Operation.WRITE)) {
-			_operationType.set(operation);
-		}
 	}
 
 	@Override
@@ -141,19 +148,21 @@ public class DefaultDynamicDataSourceTargetSource
 		_writeDataSource = writeDataSource;
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	protected boolean inOperation() {
-		Stack<String> methodStack = getMethodStack();
-
-		return !methodStack.empty();
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultDynamicDataSourceTargetSource.class);
 
-	private static final ThreadLocal<Stack<String>> _methodStack =
-		new ThreadLocal<>();
-	private static final ThreadLocal<Operation> _operationType =
-		new ThreadLocal<>();
+	private static final ThreadLocal<Deque<Operation>> _operations =
+		new CentralizedThreadLocal<>(
+			DefaultDynamicDataSourceTargetSource.class + "._operations",
+			LinkedList::new);
 
 	private DataSource _readDataSource;
 	private DataSource _writeDataSource;

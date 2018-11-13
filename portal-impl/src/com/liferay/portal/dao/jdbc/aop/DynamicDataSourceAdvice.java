@@ -15,7 +15,6 @@
 package com.liferay.portal.dao.jdbc.aop;
 
 import com.liferay.petra.reflect.AnnotationLocator;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.aop.DynamicDataSourceTargetSource;
 import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
 import com.liferay.portal.kernel.dao.jdbc.aop.Operation;
@@ -43,12 +42,6 @@ public class DynamicDataSourceAdvice
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
 		Operation operation = Operation.WRITE;
 
-		Object targetBean = methodInvocation.getThis();
-
-		Class<?> targetClass = targetBean.getClass();
-
-		Method targetMethod = methodInvocation.getMethod();
-
 		MasterDataSource masterDataSource = findAnnotation(methodInvocation);
 
 		if (masterDataSource == _nullMasterDataSource) {
@@ -61,20 +54,14 @@ public class DynamicDataSourceAdvice
 			}
 		}
 
-		_dynamicDataSourceTargetSource.setOperation(operation);
-
-		String targetClassName = targetClass.getName();
-
-		_dynamicDataSourceTargetSource.pushMethod(
-			targetClassName.concat(StringPool.PERIOD).concat(
-				targetMethod.getName()));
+		_dynamicDataSourceTargetSource.pushOperation(operation);
 
 		return null;
 	}
 
 	@Override
 	public void duringFinally(MethodInvocation methodInvocation) {
-		_dynamicDataSourceTargetSource.popMethod();
+		_dynamicDataSourceTargetSource.popOperation();
 	}
 
 	@Override

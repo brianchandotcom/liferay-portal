@@ -157,28 +157,6 @@ public class URLCodecTest {
 			"%3Fx", URLCodec.encodeURL(animalsString.substring(0, 1) + "x"));
 	}
 
-	private void _testDecodeURL(
-		String encodedURLString, boolean invalidHexChar) {
-
-		try {
-			URLCodec.decodeURL(encodedURLString, StringPool.UTF8);
-
-			Assert.fail(encodedURLString);
-		}
-		catch (IllegalArgumentException iae) {
-			String message = iae.getMessage();
-
-			if (invalidHexChar) {
-				Assert.assertTrue(
-					encodedURLString, message.endsWith(" is not a hex char"));
-			}
-			else {
-				Assert.assertEquals(
-					"Invalid URL encoding " + encodedURLString, message);
-			}
-		}
-	}
-
 	private void _testCharacterCodingException(
 		Function<String, String> codecFunction) {
 
@@ -212,6 +190,28 @@ public class URLCodecTest {
 		finally {
 			ReflectionTestUtil.setFieldValue(
 				Charset.class, "cache1", oldCache1);
+		}
+	}
+
+	private void _testDecodeURL(
+		String encodedURLString, boolean invalidHexChar) {
+
+		try {
+			URLCodec.decodeURL(encodedURLString, StringPool.UTF8);
+
+			Assert.fail(encodedURLString);
+		}
+		catch (IllegalArgumentException iae) {
+			String message = iae.getMessage();
+
+			if (invalidHexChar) {
+				Assert.assertTrue(
+					encodedURLString, message.endsWith(" is not a hex char"));
+			}
+			else {
+				Assert.assertEquals(
+					"Invalid URL encoding " + encodedURLString, message);
+			}
 		}
 	}
 

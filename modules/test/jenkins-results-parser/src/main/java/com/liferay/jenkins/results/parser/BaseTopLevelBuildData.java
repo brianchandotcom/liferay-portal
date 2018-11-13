@@ -113,6 +113,15 @@ public abstract class BaseTopLevelBuildData
 		return getRunID();
 	}
 
+	@Override
+	public void setDistNodes(List<String> distNodes) {
+		if (distNodes == null) {
+			throw new RuntimeException("Dist nodes is null");
+		}
+
+		put("dist_nodes", JenkinsResultsParserUtil.join(",", distNodes));
+	}
+
 	protected BaseTopLevelBuildData(
 		String runID, String jobName, String buildURL) {
 

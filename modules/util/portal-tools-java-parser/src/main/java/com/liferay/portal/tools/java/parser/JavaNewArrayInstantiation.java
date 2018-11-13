@@ -14,10 +14,37 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 /**
  * @author Hugo Huijser
  */
 public class JavaNewArrayInstantiation extends JavaExpression {
+
+	@Override
+	public String getString(
+		String indent, String prefix, String suffix, int maxLineLength,
+		boolean forceLineBreak) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(indent);
+		sb.append(prefix);
+
+		if (_initialJavaArray == null) {
+			append(
+				sb, _javaArrayDeclarator, indent, "new ", suffix,
+				maxLineLength);
+		}
+		else {
+			append(sb, _javaArrayDeclarator, indent, "new ", "", maxLineLength);
+			append(
+				sb, _initialJavaArray, indent, " ", suffix, maxLineLength,
+				false);
+		}
+
+		return sb.toString();
+	}
 
 	public void setInitialJavaArray(JavaArray initialJavaArray) {
 		_initialJavaArray = initialJavaArray;

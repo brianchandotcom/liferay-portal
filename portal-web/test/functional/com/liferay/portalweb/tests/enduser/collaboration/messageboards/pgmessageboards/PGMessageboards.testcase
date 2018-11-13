@@ -1131,84 +1131,6 @@
 		</execute>
 	</command>
 
-	<command name="ViewVisualStateOfReadMBThread" priority="5">
-		<description message="This is a use case for LPS-77263." />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject 1" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject 2" />
-		</execute>
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Members" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignUserAsMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Message Boards Page" />
-		</execute>
-
-		<execute macro="MessageboardsThread#gotoCP">
-			<var name="threadSubject" value="MB Thread Message Subject 1" />
-		</execute>
-
-		<execute function="Click" locator1="Breadcrumb#BREADCRUMB_ENTRY_LINK">
-			<var name="key_breadcrumbName" value="Home" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewMBThreadVisualStatePG">
-			<var name="threadSubject" value="MB Thread Message Subject 1" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewMBThreadVisualStatePG">
-			<var name="threadSubject" value="MB Thread Message Subject 2" />
-			<var name="unReadMBthread" value="true" />
-		</execute>
-	</command>
-
 	<command name="ViewMBThreadReplyViaMoreMessages" priority="4">
 		<property name="custom.properties" value="discussion.comments.delta.value=5" />
 
@@ -1344,6 +1266,84 @@
 			<var name="parentcategory1" value="MB Category Name" />
 			<var name="parentcategory2" value="MB Subcategory Name" />
 			<var name="subscribedThread" value="MB Subcategory Name 2" />
+		</execute>
+	</command>
+
+	<command name="ViewVisualStateOfReadMBThread" priority="5">
+		<description message="This is a use case for LPS-77263." />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject 1" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject 2" />
+		</execute>
+
+		<execute macro="JSONUser#addUser">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Members" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#assignUserAsMemberCP">
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#gotoCP">
+			<var name="threadSubject" value="MB Thread Message Subject 1" />
+		</execute>
+
+		<execute function="Click" locator1="Breadcrumb#BREADCRUMB_ENTRY_LINK">
+			<var name="key_breadcrumbName" value="Home" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewMBThreadVisualStatePG">
+			<var name="threadSubject" value="MB Thread Message Subject 1" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewMBThreadVisualStatePG">
+			<var name="threadSubject" value="MB Thread Message Subject 2" />
+			<var name="unReadMBthread" value="true" />
 		</execute>
 	</command>
 </definition>

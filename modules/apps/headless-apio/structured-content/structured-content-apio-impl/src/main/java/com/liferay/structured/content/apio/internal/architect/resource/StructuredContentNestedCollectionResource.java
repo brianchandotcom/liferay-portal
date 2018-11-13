@@ -638,7 +638,7 @@ public class StructuredContentNestedCollectionResource
 	}
 
 	private List<StructuredContentField> _getStructuredContentFields(
-		JournalArticleWrapper journalArticleWrapper) {
+		JournalArticle journalArticle) {
 
 		return Try.fromFallible(
 			() ->
@@ -646,8 +646,7 @@ public class StructuredContentNestedCollectionResource
 					JournalArticle.class)
 		).map(
 			assetRendererFactory -> assetRendererFactory.getAssetRenderer(
-				journalArticleWrapper,
-				AssetRendererFactory.TYPE_LATEST_APPROVED)
+				journalArticle, AssetRendererFactory.TYPE_LATEST_APPROVED)
 		).map(
 			AssetRenderer::getDDMFormValuesReader
 		).map(
@@ -662,8 +661,7 @@ public class StructuredContentNestedCollectionResource
 				return stream.map(
 					ddmFormFieldValue -> (StructuredContentField)
 						new StructuredContentFieldImpl(
-							ddmFormFieldValue,
-							journalArticleWrapper.getDDMStructure())
+							ddmFormFieldValue, journalArticle.getDDMStructure())
 				).collect(
 					Collectors.toList()
 				);

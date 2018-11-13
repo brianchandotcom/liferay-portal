@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
@@ -30,12 +31,15 @@ import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticleWrapper;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -61,6 +65,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.assertj.core.api.Assertions;
 
@@ -614,6 +619,72 @@ public class StructuredContentNestedCollectionResourceTest
 			Filter.emptyFilter(), Sort.emptySort());
 
 		Assert.assertEquals(0, pageItems.getTotalCount());
+	}
+
+	@Test
+	public void testGetStructuredContentFields() throws Throwable {
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(JournalArticle.class), _group);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			deserialize(
+				_ddmFormDeserializerTracker,
+				read("test-journal-all-fields-structure.json")),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM,
+			read("test-journal-all-fields-template.xsl"), LocaleUtil.US);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		Map<Locale, String> titleMap = new HashMap<>();
+
+		titleMap.put(LocaleUtil.US, RandomTestUtil.randomString());
+
+		JournalArticle journalArticle =
+			JournalArticleLocalServiceUtil.addArticle(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				ClassNameLocalServiceUtil.getClassNameId(DDMStructure.class),
+				ddmStructure.getStructureId(), StringPool.BLANK, true, 0,
+				titleMap, null, read("test-journal-all-fields-content.xml"),
+				ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey(),
+				null, 1, 1, 1965, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0,
+				true, true, false, null, null, null, null, serviceContext);
+
+		List<StructuredContentField> structuredContentFields =
+			getStructuredContentFields(
+				new JournalArticleWrapper(journalArticle));
+
+		boolean found = false;
+
+		for (StructuredContentField structuredContentField :
+				structuredContentFields) {
+
+			if (Objects.equals("MyText", structuredContentField.getName())) {
+				Assert.assertEquals(
+					"string", structuredContentField.getDataType());
+				Assert.assertEquals(
+					"text", structuredContentField.getInputControl());
+				Assert.assertEquals(
+					"TextFieldNameLabel_us",
+					structuredContentField.getLocalizedLabel(LocaleUtil.US));
+				Assert.assertEquals(
+					"TextFieldValue_us",
+					structuredContentField.getLocalizedValue(LocaleUtil.US));
+
+				found = true;
+			}
+		}
+
+		Assert.assertTrue("The field MyText was not found", found);
 	}
 
 	private static final AcceptLanguage _acceptLanguage =

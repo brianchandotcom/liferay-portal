@@ -39,7 +39,7 @@
 	<bean class="com.liferay.portal.search.IndexableAdvice" id="indexableAdvice">
 		<property name="nextMethodInterceptor" ref="systemEventAdvice" />
 	</bean>
-	<bean class="com.liferay.portal.security.access.control.AccessControlAdvice" id="accessControlAdvice">
+	<bean class="com.liferay.portal.security.access.control.AccessControlAdvice" id="serviceAdvice">
 		<property name="nextMethodInterceptor" ref="portalResiliencyAdvice" />
 	</bean>
 	<bean class="com.liferay.portal.service.ServiceContextAdvice" id="serviceContextAdvice">
@@ -54,9 +54,6 @@
 			<bean class="com.liferay.portal.spring.aop.ServiceBeanMatcher" />
 		</property>
 		<property name="methodInterceptor" ref="serviceAdvice" />
-	</bean>
-	<bean class="com.liferay.portal.spring.aop.SkipAdvice" id="serviceAdvice">
-		<property name="nextMethodInterceptor" ref="accessControlAdvice" />
 	</bean>
 	<bean class="com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor" />
 	<bean class="com.liferay.portal.spring.context.PortletBeanFactoryCleaner" />

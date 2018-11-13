@@ -14,8 +14,6 @@
 
 package com.liferay.portal.spring.aop;
 
-import com.liferay.portal.kernel.spring.aop.Skip;
-
 /**
  * @author Shuyang Zhou
  */
@@ -36,8 +34,7 @@ public class ServiceBeanMatcher implements BeanMatcher {
 		}
 
 		if (!beanName.equals(_COUNTER_SERVICE_BEAN_NAME) &&
-			beanName.endsWith(_SERVICE_SUFFIX) &&
-			(beanClass.getAnnotation(Skip.class) == null)) {
+			beanName.endsWith(_SERVICE_SUFFIX)) {
 
 			return true;
 		}

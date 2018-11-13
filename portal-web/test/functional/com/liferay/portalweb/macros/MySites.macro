@@ -29,27 +29,13 @@
 	</command>
 
 	<command name="viewNoOptions">
-		<if>
-			<isset var="navItem" />
-			<then>
-				<execute macro="Navigator#gotoNavItem">
-					<var name="navItem" value="${navItem}" />
-				</execute>
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="${navItem}" />
+		</execute>
 
-				<execute function="AssertElementNotPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-					<var name="key_rowEntry" value="${siteName}" />
-				</execute>
-			</then>
-			<else>
-				<execute macro="LexiconEntry#openEntryMenu">
-					<var name="rowEntry" value="${siteName}" />
-				</execute>
-
-				<execute macro="MenuItem#viewNotPresent">
-					<var name="menuItem" value="${menuItem}" />
-				</execute>
-			</else>
-		</if>
+		<execute function="AssertElementNotPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${siteName}" />
+		</execute>
 	</command>
 
 	<command name="viewTags">

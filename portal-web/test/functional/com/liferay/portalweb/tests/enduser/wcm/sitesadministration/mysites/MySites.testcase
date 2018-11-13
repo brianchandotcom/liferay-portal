@@ -631,7 +631,7 @@
 		</execute>
 
 		<execute macro="MySites#viewNoOptions">
-			<var name="itemName" value="Leave" />
+			<var name="navItem" value="Available Sites" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 	</command>

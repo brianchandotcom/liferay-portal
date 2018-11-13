@@ -14,7 +14,7 @@
 
 package com.liferay.exportimport.internal.background.task.executor.permission;
 
-import com.liferay.portal.background.task.executor.permission.BackgroundTaskExecutorPermissionChecker;
+import com.liferay.portal.background.task.executor.permission.BackgroundTaskExecutorPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -29,10 +29,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "background.task.executor.class.name=com.liferay.exportimport.internal.background.task.PortletExportBackgroundTaskExecutor",
-	service = BackgroundTaskExecutorPermissionChecker.class
+	service = BackgroundTaskExecutorPermission.class
 )
-public class PortletExportBackgroundTaskExecutorPermissionChecker
-	implements BackgroundTaskExecutorPermissionChecker {
+public class PortletExportBackgroundTaskExecutorPermission
+	implements BackgroundTaskExecutorPermission {
 
 	@Override
 	public void checkPermission(

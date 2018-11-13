@@ -16,7 +16,7 @@ package com.liferay.portal.background.task.internal.security.permission.resource
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.background.task.executor.permission.BackgroundTaskExecutorPermissionChecker;
+import com.liferay.portal.background.task.executor.permission.BackgroundTaskExecutorPermission;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -40,9 +40,9 @@ public class BackgroundTaskModelResourcePermissionRegistrar {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		_backgroundTaskExecutorPermissionCheckers =
+		_backgroundTaskExecutorPermissions =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, BackgroundTaskExecutorPermissionChecker.class,
+				bundleContext, BackgroundTaskExecutorPermission.class,
 				"background.task.executor.class.name");
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
@@ -56,20 +56,15 @@ public class BackgroundTaskModelResourcePermissionRegistrar {
 				_backgroundTaskLocalService::getBackgroundTask, null,
 				(modelResourcePermission, consumer) -> consumer.accept(
 					(permissionChecker, name, backgroundTask, actionId) -> {
-						BackgroundTaskExecutorPermissionChecker
-							backgroundTaskExecutorPermissionChecker =
-								_backgroundTaskExecutorPermissionCheckers.
-									getService(
-										backgroundTask.
-											getTaskExecutorClassName());
+						BackgroundTaskExecutorPermission
+							backgroundTaskExecutorPermission =
+								_backgroundTaskExecutorPermissions.getService(
+									backgroundTask.getTaskExecutorClassName());
 
-						if (backgroundTaskExecutorPermissionChecker != null) {
-							backgroundTaskExecutorPermissionChecker.
-								checkPermission(
-									permissionChecker,
-									backgroundTask.getGroupId(),
-									backgroundTask.getBackgroundTaskId(),
-									actionId);
+						if (backgroundTaskExecutorPermission != null) {
+							backgroundTaskExecutorPermission.checkPermission(
+								permissionChecker, backgroundTask.getGroupId(),
+								backgroundTask.getBackgroundTaskId(), actionId);
 						}
 
 						return true;
@@ -79,12 +74,12 @@ public class BackgroundTaskModelResourcePermissionRegistrar {
 
 	@Deactivate
 	public void deactivate() {
-		_backgroundTaskExecutorPermissionCheckers.close();
+		_backgroundTaskExecutorPermissions.close();
 		_serviceRegistration.unregister();
 	}
 
-	private ServiceTrackerMap<String, BackgroundTaskExecutorPermissionChecker>
-		_backgroundTaskExecutorPermissionCheckers;
+	private ServiceTrackerMap<String, BackgroundTaskExecutorPermission>
+		_backgroundTaskExecutorPermissions;
 
 	@Reference
 	private BackgroundTaskLocalService _backgroundTaskLocalService;

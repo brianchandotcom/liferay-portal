@@ -1455,15 +1455,19 @@ public class GitWorkingDirectory {
 	}
 
 	public List<LocalGitCommit> log(int num) {
-		return log(num, null);
+		return _log(0, num, null, null);
 	}
 
 	public List<LocalGitCommit> log(int num, File file) {
-		return _log(0, num, file);
+		return _log(0, num, file, null);
 	}
 
 	public List<LocalGitCommit> log(int start, int num) {
-		return _log(start, num, null);
+		return _log(start, num, null, null);
+	}
+
+	public List<LocalGitCommit> log(int start, int num, String sha) {
+		return _log(start, num, null, sha);
 	}
 
 	public RemoteGitBranch pushToRemoteGitRepository(
@@ -2050,10 +2054,12 @@ public class GitWorkingDirectory {
 		return executionResult.getStandardOut();
 	}
 
-	private List<LocalGitCommit> _log(int start, int num, File file) {
+	private List<LocalGitCommit> _log(
+		int start, int num, File file, String sha) {
+
 		List<LocalGitCommit> localGitCommits = new ArrayList<>(num);
 
-		String gitLog = _log(start, num, file, "%H %ct %s");
+		String gitLog = _log(start, num, file, "%H %ct %s", sha);
 
 		gitLog = gitLog.replaceAll("Finished executing Bash commands.", "");
 
@@ -2066,7 +2072,13 @@ public class GitWorkingDirectory {
 		return localGitCommits;
 	}
 
-	private String _log(int start, int num, File file, String format) {
+	private String _log(
+		int start, int num, File file, String format, String sha) {
+
+		if ((sha == null) || sha.isEmpty()) {
+			sha = "HEAD";
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("git log ");
@@ -2077,9 +2089,12 @@ public class GitWorkingDirectory {
 			sb.append(" ");
 		}
 		else {
-			sb.append("HEAD~");
+			sb.append(sha);
+			sb.append("~");
 			sb.append(start + num);
-			sb.append("..HEAD~");
+			sb.append("..");
+			sb.append(sha);
+			sb.append("~");
 			sb.append(start);
 		}
 

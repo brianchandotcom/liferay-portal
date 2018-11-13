@@ -14,10 +14,30 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 /**
  * @author Hugo Huijser
  */
 public class JavaTernaryOperator extends JavaExpression {
+
+	@Override
+	public String getString(
+		String indent, String prefix, String suffix, int maxLineLength,
+		boolean forceLineBreak) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(indent);
+		sb.append(prefix);
+
+		append(sb, _conditionJavaExpression, indent, "", " ? ", maxLineLength);
+		append(sb, _trueValueJavaExpression, indent, "", " : ", maxLineLength);
+		append(
+			sb, _falseValueJavaExpression, indent, "", suffix, maxLineLength);
+
+		return sb.toString();
+	}
 
 	public void setConditionJavaExpression(
 		JavaExpression conditionJavaExpression) {

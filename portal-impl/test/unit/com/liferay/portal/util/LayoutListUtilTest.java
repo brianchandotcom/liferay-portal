@@ -14,8 +14,6 @@
 
 package com.liferay.portal.util;
 
-import com.germinus.easyconf.ConfigurationSerializer;
-
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.kernel.log.Log;
@@ -50,24 +48,13 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author László Csontos
  */
 @PrepareForTest(
-	{
-		ConfigurationSerializer.class, LayoutLocalServiceUtil.class,
-		LocalizationUtil.class, PropsUtil.class
-	}
+	{LayoutLocalServiceUtil.class, LocalizationUtil.class, PropsUtil.class}
 )
 @RunWith(PowerMockRunner.class)
 public class LayoutListUtilTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		mockStatic(ConfigurationSerializer.class);
-
-		when(
-			ConfigurationSerializer.getSerializer()
-		).thenReturn(
-			null
-		);
-
 		mockStatic(LayoutLocalServiceUtil.class);
 
 		addLayouts(0, 0);

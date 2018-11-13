@@ -36,11 +36,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -49,9 +44,6 @@ import org.springframework.mock.web.MockHttpServletResponse;
  * @author Igor Spasic
  * @author Raymond Augé
  */
-@PowerMockIgnore("javax.xml.datatype.*")
-@PrepareForTest(PortalUtil.class)
-@RunWith(PowerMockRunner.class)
 public class JSONWebServiceServiceActionTest
 	extends BaseJSONWebServiceTestCase {
 
@@ -84,14 +76,6 @@ public class JSONWebServiceServiceActionTest
 
 		jsonWebServiceActionsManagerUtil.setJSONWebServiceActionsManager(
 			new JSONWebServiceActionsManagerImpl());
-
-		spy(PortalUtil.class);
-
-		when(
-			PortalUtil.getPortalLibDir()
-		).thenReturn(
-			""
-		);
 	}
 
 	@Test

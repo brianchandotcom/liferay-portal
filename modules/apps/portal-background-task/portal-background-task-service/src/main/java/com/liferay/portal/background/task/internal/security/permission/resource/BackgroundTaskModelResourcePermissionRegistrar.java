@@ -19,8 +19,11 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.portal.background.task.executor.permission.BackgroundTaskExecutorPermission;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
@@ -54,21 +57,8 @@ public class BackgroundTaskModelResourcePermissionRegistrar {
 			ModelResourcePermissionFactory.create(
 				BackgroundTask.class, BackgroundTask::getBackgroundTaskId,
 				_backgroundTaskLocalService::getBackgroundTask, null,
-				(modelResourcePermission, consumer) -> consumer.accept(
-					(permissionChecker, name, backgroundTask, actionId) -> {
-						BackgroundTaskExecutorPermission
-							backgroundTaskExecutorPermission =
-								_backgroundTaskExecutorPermissions.getService(
-									backgroundTask.getTaskExecutorClassName());
-
-						if (backgroundTaskExecutorPermission == null) {
-							return null;
-						}
-
-						return backgroundTaskExecutorPermission.contains(
-							permissionChecker, backgroundTask.getGroupId(),
-							backgroundTask.getBackgroundTaskId(), actionId);
-					})),
+				(modelResourcePermission, consumer) ->
+					consumer.accept(new BackgroundTaskPermissionLogic())),
 			properties);
 	}
 
@@ -85,5 +75,29 @@ public class BackgroundTaskModelResourcePermissionRegistrar {
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
 	private ServiceRegistration<ModelResourcePermission> _serviceRegistration;
+
+	private class BackgroundTaskPermissionLogic
+		implements ModelResourcePermissionLogic<BackgroundTask> {
+
+		@Override
+		public Boolean contains(
+				PermissionChecker permissionChecker, String name,
+				BackgroundTask backgroundTask, String actionId)
+			throws PortalException {
+
+			BackgroundTaskExecutorPermission backgroundTaskExecutorPermission =
+				_backgroundTaskExecutorPermissions.getService(
+					backgroundTask.getTaskExecutorClassName());
+
+			if (backgroundTaskExecutorPermission == null) {
+				return null;
+			}
+
+			return backgroundTaskExecutorPermission.contains(
+				permissionChecker, backgroundTask.getGroupId(),
+				backgroundTask.getBackgroundTaskId(), actionId);
+		}
+
+	}
 
 }

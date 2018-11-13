@@ -43,6 +43,13 @@ public class JavaVariableDefinition extends BaseJavaTerm {
 		_modifiers = modifiers;
 	}
 
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		return "TODO";
+	}
+
 	private JavaExpression _assignValueJavaExpression;
 	private List<JavaAnnotation> _javaAnnotations;
 	private JavaType _javaType;

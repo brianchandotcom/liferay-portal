@@ -25,6 +25,14 @@ public class JavaAnnotation extends JavaExpression {
 		_name = new JavaSimpleValue(name);
 	}
 
+	@Override
+	public String getString(
+		String indent, String prefix, String suffix, int maxLineLength,
+		boolean forceLineBreak) {
+
+		return "TODO";
+	}
+
 	public void setJavaAnnotationMemberValuePairs(
 		List<JavaAnnotationMemberValuePair> javaAnnotationMemberValuePairs) {
 

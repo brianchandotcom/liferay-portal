@@ -27,6 +27,13 @@ public class JavaAnnotationMemberValuePair extends BaseJavaTerm {
 		_valueJavaExpression = valueJavaExpression;
 	}
 
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		return "TODO";
+	}
+
 	private final JavaSimpleValue _name;
 	private JavaExpression _valueJavaExpression;
 

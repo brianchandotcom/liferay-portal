@@ -27,6 +27,14 @@ public class JavaLambdaExpression extends JavaExpression {
 		_javaLambdaParameters = javaLambdaParameters;
 	}
 
+	@Override
+	public String getString(
+		String indent, String prefix, String suffix, int maxLineLength,
+		boolean forceLineBreak) {
+
+		return "TODO";
+	}
+
 	private final List<JavaLambdaParameter> _javaLambdaParameters;
 
 }

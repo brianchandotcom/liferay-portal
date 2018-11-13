@@ -23,6 +23,14 @@ public class JavaInstanceofStatement extends JavaExpression {
 		_classJavaType = classJavaType;
 	}
 
+	@Override
+	public String getString(
+		String indent, String prefix, String suffix, int maxLineLength,
+		boolean forceLineBreak) {
+
+		return "TODO";
+	}
+
 	public void setValue(JavaExpression valueJavaExpression) {
 		_valueJavaExpression = valueJavaExpression;
 	}

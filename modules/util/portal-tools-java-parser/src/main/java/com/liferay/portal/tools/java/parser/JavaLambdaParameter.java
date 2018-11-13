@@ -27,6 +27,13 @@ public class JavaLambdaParameter extends BaseJavaTerm {
 		_javaType = javaType;
 	}
 
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		return "TODO";
+	}
+
 	private JavaType _javaType;
 	private final JavaSimpleValue _name;
 

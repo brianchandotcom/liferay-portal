@@ -27,6 +27,13 @@ public class JavaLabeledStatement extends BaseJavaTerm {
 		_loopJavaTerm = loopJavaTerm;
 	}
 
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		return "TODO";
+	}
+
 	private final JavaSimpleValue _labelName;
 	private JavaTerm _loopJavaTerm;
 

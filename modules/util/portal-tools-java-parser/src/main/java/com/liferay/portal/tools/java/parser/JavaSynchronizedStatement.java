@@ -25,6 +25,13 @@ public class JavaSynchronizedStatement extends BaseJavaTerm {
 		_synchronizedJavaExpression = synchronizedJavaExpression;
 	}
 
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		return "TODO";
+	}
+
 	private JavaExpression _synchronizedJavaExpression;
 
 }

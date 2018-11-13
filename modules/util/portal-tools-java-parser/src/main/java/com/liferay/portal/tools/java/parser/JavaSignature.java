@@ -14,7 +14,10 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Hugo Huijser
@@ -53,6 +56,162 @@ public class JavaSignature extends BaseJavaTerm {
 
 	public void setReturnJavaType(JavaType returnJavaType) {
 		_returnJavaType = returnJavaType;
+	}
+
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(indent);
+
+		if (!_modifiers.isEmpty()) {
+			appendSingleLine(sb, _modifiers, " ", maxLineLength);
+		}
+
+		if ((_genericJavaTypes != null) &&
+			Objects.equals(
+				append(sb, _genericJavaTypes, indent, " <", ">", maxLineLength),
+				APPENDED_NEW_LINE)) {
+
+			indent += "\t";
+		}
+
+		if (_returnJavaType != null) {
+			boolean newLine = false;
+
+			if (_genericJavaTypes != null) {
+				newLine = true;
+			}
+
+			if (Objects.equals(
+					append(
+						sb, _returnJavaType, indent, " ", "", maxLineLength,
+						newLine),
+					APPENDED_NEW_LINE)) {
+
+				indent += "\t";
+			}
+		}
+
+		if (_javaParameters.isEmpty()) {
+			if (_exceptionJavaExpressions.isEmpty()) {
+				if ((_genericJavaTypes == null) &&
+					((_returnJavaType == null) ||
+					 Objects.equals(_returnJavaType.toString(), "void"))) {
+
+					appendSingleLine(sb, _objectName, " ", "()" + suffix, -1);
+				}
+				else {
+					append(
+						sb, _objectName, indent, " ", "()" + suffix,
+						maxLineLength);
+				}
+
+				return sb.toString();
+			}
+
+			if (!appendSingleLine(sb, _objectName, " ", "()", maxLineLength)) {
+				if ((_genericJavaTypes == null) &&
+					((_returnJavaType == null) ||
+					 Objects.equals(_returnJavaType.toString(), "void"))) {
+
+					appendSingleLine(sb, _objectName, " ", "()", -1);
+				}
+				else {
+					appendNewLine(
+						sb, _objectName, indent + "\t\t", "", "()",
+						maxLineLength);
+				}
+
+				appendNewLine(
+					sb, _exceptionJavaExpressions, indent + "\t", "throws ",
+					suffix, maxLineLength);
+
+				return sb.toString();
+			}
+
+			append(
+				sb, _exceptionJavaExpressions, indent,
+				" throws ", suffix, maxLineLength);
+
+			return sb.toString();
+		}
+
+		if (_exceptionJavaExpressions.isEmpty()) {
+			if (appendSingleLine(sb, _objectName, " ", "(", maxLineLength)) {
+				append(
+					sb, _javaParameters, indent, "", ")" + suffix,
+					maxLineLength);
+
+				return sb.toString();
+			}
+
+			if ((_genericJavaTypes == null) &&
+				((_returnJavaType == null) ||
+				 Objects.equals(_returnJavaType.toString(), "void"))) {
+
+				appendSingleLine(sb, _objectName, " ", "(", -1);
+				appendNewLine(
+					sb, _javaParameters, indent + "\t", "", ")" + suffix,
+					maxLineLength);
+			}
+			else {
+				appendNewLine(
+					sb, _objectName, indent + "\t", "", "(", maxLineLength);
+				append(
+					sb, _javaParameters, indent + "\t", "", ")" + suffix,
+					maxLineLength);
+			}
+
+			return sb.toString();
+		}
+
+		if (appendSingleLine(sb, _objectName, " ", "(", maxLineLength)) {
+			if (appendSingleLine(sb, _javaParameters, "", ")", maxLineLength)) {
+				if (appendSingleLine(
+						sb, _exceptionJavaExpressions,
+						" throws ", suffix, maxLineLength)) {
+
+					return sb.toString();
+				}
+
+				appendNewLine(
+					sb, _exceptionJavaExpressions, indent + "\t", "throws ",
+					suffix, maxLineLength);
+
+				return sb.toString();
+			}
+
+			appendNewLine(
+				sb, _javaParameters, indent + "\t\t", "", ")", maxLineLength);
+			appendNewLine(
+				sb, _exceptionJavaExpressions, indent + "\t", "throws ", suffix,
+				maxLineLength);
+
+			return sb.toString();
+		}
+
+		if ((_genericJavaTypes == null) &&
+			((_returnJavaType == null) ||
+			 Objects.equals(_returnJavaType.toString(), "void"))) {
+
+			appendSingleLine(sb, _objectName, " ", "(", -1);
+		}
+		else {
+			appendNewLine(
+				sb, _objectName, indent + "\t\t", "", "(", maxLineLength);
+
+			append(
+				sb, _javaParameters, indent + "\t\t", "", ")", maxLineLength);
+
+			appendNewLine(
+				sb, _exceptionJavaExpressions, indent + "\t", "throws ", suffix,
+				maxLineLength);
+		}
+
+		return sb.toString();
 	}
 
 	private List<JavaExpression> _exceptionJavaExpressions;

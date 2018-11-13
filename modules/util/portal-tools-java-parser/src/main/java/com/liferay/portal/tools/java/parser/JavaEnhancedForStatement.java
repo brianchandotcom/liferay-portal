@@ -31,6 +31,13 @@ public class JavaEnhancedForStatement extends BaseJavaTerm {
 		_javaVariableDefinition = javaVariableDefinition;
 	}
 
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		return "TODO";
+	}
+
 	private JavaExpression _collectionJavaExpression;
 	private JavaVariableDefinition _javaVariableDefinition;
 

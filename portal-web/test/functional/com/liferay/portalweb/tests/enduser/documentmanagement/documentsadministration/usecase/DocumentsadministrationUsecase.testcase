@@ -817,6 +817,8 @@
 	</command>
 
 	<command name="CheckValidationForFileEntries" priority="5">
+		<description message="This test checks if the file extension upload restrictions in System Settings works as expected." />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />

@@ -14,6 +14,8 @@
 
 package com.liferay.segments.odata.retriever.test;
 
+import com.fasterxml.jackson.databind.util.ISO8601Utils;
+
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
@@ -46,6 +48,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -91,6 +94,41 @@ public class UserODataRetrieverCustomFieldsTest {
 	@After
 	public void tearDown() {
 		_serviceTracker.close();
+	}
+
+	@Test
+	public void testGetUsersFilterByCustomFieldWithEqualsAndDateType()
+		throws Exception {
+
+		ExpandoColumn expandoColumn = _addExpandoColumn(
+			_expandoTable, RandomTestUtil.randomString(),
+			ExpandoColumnConstants.DATE,
+			ExpandoColumnConstants.INDEX_TYPE_KEYWORD);
+
+		Date columnValue = new Date();
+
+		User user1 = _addUser(expandoColumn.getName(), columnValue);
+
+		User user2 = UserTestUtil.addUser();
+
+		_users.add(user1);
+		_users.add(user2);
+
+		String filterString = String.format(
+			"(customField/%s eq %s)", _encodeName(expandoColumn),
+			ISO8601Utils.format(columnValue));
+
+		int count = _getODataRetriever().getResultsCount(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+
+		List<User> users = _getODataRetriever().getResults(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault(), 0, 1);
+
+		Assert.assertEquals(user1, users.get(0));
 	}
 
 	@Test

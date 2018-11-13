@@ -35,11 +35,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.odata.entity.DateEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
@@ -184,9 +186,21 @@ public class ExpandoColumnModelListener
 			ExpandoBridgeIndexerUtil.encodeFieldName(
 				expandoColumn.getName(), indexType);
 
-		return Optional.of(
-			new StringEntityField(
-				encodedName, locale -> encodedIndexedFieldName));
+		int expandoColumnType = expandoColumn.getType();
+		EntityField entityField;
+
+		if (expandoColumnType == ExpandoColumnConstants.DATE) {
+			entityField = new DateEntityField(
+				encodedName,
+				locale -> Field.getSortableFieldName(encodedIndexedFieldName),
+				locale -> encodedIndexedFieldName);
+		}
+		else {
+			entityField = new StringEntityField(
+				encodedName, locale -> encodedIndexedFieldName);
+		}
+
+		return Optional.of(entityField);
 	}
 
 	private Map<Long, EntityField> _getUserEntityFields()

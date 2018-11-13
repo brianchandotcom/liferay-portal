@@ -14,11 +14,12 @@
 
 package com.liferay.user.associated.data.web.internal.user.action.contributor;
 
-import com.liferay.admin.kernel.util.Omniadmin;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.web.internal.util.UADAnonymizerHelper;
 import com.liferay.users.admin.user.action.contributor.BaseUserActionContributor;
@@ -63,8 +64,11 @@ public abstract class BaseUADUserActionContributor
 	public boolean isShow(
 		PortletRequest portletRequest, User user, User selectedUser) {
 
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
 		if (Objects.equals(user, selectedUser) ||
-			!omniadmin.isOmniadmin(user) ||
+			!permissionChecker.isCompanyAdmin() ||
 			uadAnonymizerHelper.isAnonymousUser(selectedUser)) {
 
 			return false;
@@ -76,9 +80,6 @@ public abstract class BaseUADUserActionContributor
 	protected abstract String getKey();
 
 	protected abstract String getMVCRenderCommandName();
-
-	@Reference
-	protected Omniadmin omniadmin;
 
 	@Reference
 	protected UADAnonymizerHelper uadAnonymizerHelper;

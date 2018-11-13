@@ -29,7 +29,9 @@
 			<else>
 				<execute macro="User#tearDownCP" />
 
-				<execute macro="Site#tearDownCP" />
+				<execute macro="JSONGroup#deleteGroupByName">
+					<var name="groupName" value="Home Site" />
+				</execute>
 			</else>
 		</if>
 	</tear-down>

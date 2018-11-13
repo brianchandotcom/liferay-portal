@@ -114,6 +114,8 @@ public class Setup {
 			Iterator<Element> portletElementIterator =
 				pageElement.elementIterator("portlet");
 
+			List<Portlet> portlets = new LinkedList<>();
+
 			while (portletElementIterator.hasNext()) {
 				Element portletElement = portletElementIterator.next();
 
@@ -129,20 +131,16 @@ public class Setup {
 								pageName);
 					}
 
-					List<Portlet> portlets = new LinkedList<>();
-
 					portlets.add(
 						_createPortlet(
 							portletElement, context, pageName));
-
-					PortalPage portalPage = new PortalPage(
-						pageName, portlets);
-
-					_setupPage(userId, groupId, portalPage, bundles);
-
-					break;
 				}
 			}
+
+			PortalPage portalPage = new PortalPage(
+				pageName, portlets);
+
+			_setupPage(userId, groupId, portalPage, bundles);
 		}
 	}
 

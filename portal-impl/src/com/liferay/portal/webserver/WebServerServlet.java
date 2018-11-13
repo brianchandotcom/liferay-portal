@@ -334,11 +334,13 @@ public class WebServerServlet extends HttpServlet {
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 			uuid, groupId);
 
-		if (!fileEntry.containsPermission(
-				PermissionCheckerFactoryUtil.create(_getUser(request)),
-				ActionKeys.VIEW)) {
+		User user = _getUser(request);
 
-			throw new PrincipalException();
+		if (!fileEntry.containsPermission(
+				PermissionCheckerFactoryUtil.create(user), ActionKeys.VIEW)) {
+
+			throw new PrincipalException.MustHavePermission(
+				user.getUserId(), ActionKeys.VIEW);
 		}
 
 		int status = ParamUtil.getInteger(

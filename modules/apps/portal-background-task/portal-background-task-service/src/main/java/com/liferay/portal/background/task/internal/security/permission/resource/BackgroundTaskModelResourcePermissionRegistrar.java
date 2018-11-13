@@ -62,7 +62,7 @@ public class BackgroundTaskModelResourcePermissionRegistrar {
 									backgroundTask.getTaskExecutorClassName());
 
 						if (backgroundTaskExecutorPermission != null) {
-							backgroundTaskExecutorPermission.checkPermission(
+							return backgroundTaskExecutorPermission.contains(
 								permissionChecker, backgroundTask.getGroupId(),
 								backgroundTask.getBackgroundTaskId(), actionId);
 						}

@@ -16,7 +16,6 @@ package com.liferay.exportimport.internal.background.task.executor.permission;
 
 import com.liferay.portal.background.task.executor.permission.BackgroundTaskExecutorPermission;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermission;
@@ -35,17 +34,13 @@ public class PortletExportBackgroundTaskExecutorPermission
 	implements BackgroundTaskExecutorPermission {
 
 	@Override
-	public void checkPermission(
+	public Boolean contains(
 			PermissionChecker permissionChecker, long groupId, long primaryKey,
 			String actionId)
 		throws PortalException {
 
-		if (!_groupPermission.contains(
-				permissionChecker, groupId,
-				ActionKeys.EXPORT_IMPORT_PORTLET_INFO)) {
-
-			throw new PrincipalException();
-		}
+		return _groupPermission.contains(
+			permissionChecker, groupId, ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 	}
 
 	@Reference

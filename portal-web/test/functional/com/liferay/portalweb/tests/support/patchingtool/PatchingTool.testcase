@@ -3,6 +3,7 @@
 	<property name="portal.fixpack.release" value="true" />
 	<property name="test.ignore.tomcat.ext.environment" value="true" />
 	<property name="testray.main.component.name" value="Patching Tool" />
+	<property name="custom.properties" value="module.framework.properties.initial.system.check.enabled=true" />
 
 	<var method="PropsUtil#get('test.build.fix.pack.zip.url')" name="testBuildFixPackZipURL" />
 	<var method="PropsUtil#get('test.build.fix.pack.zip.url.previous')" name="testBuildFixPackZipURLPrevious" />
@@ -48,5 +49,9 @@
 		</execute>
 
 		<execute macro="SignIn#signIn" />
+
+		<execute function="AssertConsoleTextPresent" value1="Declarative Service Soft Circular Dependency Checker check result: No issues were found." />
+		<execute function="AssertConsoleTextPresent" value1="Declarative Service Unsatisfied Component Checker check result: No issues were found." />
+		<execute function="AssertConsoleTextPresent" value1="Spring Extender Unavailable Component Checker check result: No issues were found." />
 	</command>
 </definition>

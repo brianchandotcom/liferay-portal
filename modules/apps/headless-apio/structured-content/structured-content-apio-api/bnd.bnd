@@ -6,5 +6,6 @@ Export-Package:\
 	com.liferay.structured.content.apio.architect.filter,\
 	com.liferay.structured.content.apio.architect.filter.expression,\
 	com.liferay.structured.content.apio.architect.identifier,\
+	com.liferay.structured.content.apio.architect.resource,\
 	com.liferay.structured.content.apio.architect.sort,\
 	com.liferay.structured.content.apio.architect.util

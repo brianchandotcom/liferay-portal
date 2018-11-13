@@ -54,6 +54,7 @@ import com.liferay.portal.odata.sort.Sort;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.structured.content.apio.architect.resource.StructuredContentField;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -113,9 +114,10 @@ public class StructuredContentNestedCollectionResourceTest
 
 		ddmFormFieldValue.setName("MyBoolean");
 
-		String dataType = getDataType(ddmFormFieldValue, ddmStructure);
+		StructuredContentField structuredContentField =
+			createStructuredContentField(ddmFormFieldValue, ddmStructure);
 
-		Assert.assertEquals("boolean", dataType);
+		Assert.assertEquals("boolean", structuredContentField.getDataType());
 	}
 
 	@Test
@@ -142,9 +144,10 @@ public class StructuredContentNestedCollectionResourceTest
 
 		ddmFormFieldValue.setName("MyLinkToPage");
 
-		String dataType = getDataType(ddmFormFieldValue, ddmStructure);
+		StructuredContentField structuredContentField =
+			createStructuredContentField(ddmFormFieldValue, ddmStructure);
 
-		Assert.assertEquals("url", dataType);
+		Assert.assertEquals("url", structuredContentField.getDataType());
 	}
 
 	@Test
@@ -171,9 +174,11 @@ public class StructuredContentNestedCollectionResourceTest
 
 		ddmFormFieldValue.setName("MyBoolean");
 
-		String inputControl = getInputControl(ddmFormFieldValue, ddmStructure);
+		StructuredContentField structuredContentField =
+			createStructuredContentField(ddmFormFieldValue, ddmStructure);
 
-		Assert.assertEquals("checkbox", inputControl);
+		Assert.assertEquals(
+			"checkbox", structuredContentField.getInputControl());
 	}
 
 	@Test
@@ -200,9 +205,10 @@ public class StructuredContentNestedCollectionResourceTest
 
 		ddmFormFieldValue.setName("MyInteger");
 
-		String inputControl = getInputControl(ddmFormFieldValue, ddmStructure);
+		StructuredContentField structuredContentField =
+			createStructuredContentField(ddmFormFieldValue, ddmStructure);
 
-		Assert.assertNull(inputControl);
+		Assert.assertNull(structuredContentField.getInputControl());
 	}
 
 	@Test

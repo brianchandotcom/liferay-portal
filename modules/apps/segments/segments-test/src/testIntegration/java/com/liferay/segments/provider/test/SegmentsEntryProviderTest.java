@@ -16,15 +16,19 @@ package com.liferay.segments.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.model.SegmentsEntry;
@@ -97,6 +101,8 @@ public class SegmentsEntryProviderTest {
 
 	@Test
 	public void testGetSegmentsEntryIds() throws Exception {
+		_segmentsEntryProvider.clearCache();
+
 		_user1 = UserTestUtil.addUser(_group.getGroupId());
 		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
@@ -125,6 +131,36 @@ public class SegmentsEntryProviderTest {
 			segmentsEntryIds, segmentsEntry1.getSegmentsEntryId());
 		ArrayUtil.contains(
 			segmentsEntryIds, segmentsEntry2.getSegmentsEntryId());
+	}
+
+	@Test
+	public void testGetSegmentsEntryIdsFromCache() throws Exception {
+		_segmentsEntryProvider.clearCache();
+
+		PortalCache<String, long[]> portalCache =
+			ReflectionTestUtil.getFieldValue(
+				_segmentsEntryProvider, "_portalCache");
+
+		String className = User.class.getName();
+
+		long classPK = RandomTestUtil.nextLong();
+		long segmentsEntryId = RandomTestUtil.nextLong();
+
+		portalCache.put(
+			PortalUtil.getClassNameId(className) + "_" + classPK,
+			new long[] {segmentsEntryId});
+
+		Assert.assertTrue(
+			ArrayUtil.contains(
+				_segmentsEntryProvider.getSegmentsEntryIds(className, classPK),
+				segmentsEntryId));
+
+		_segmentsEntryProvider.clearCache(className, classPK);
+
+		Assert.assertTrue(
+			ArrayUtil.isEmpty(
+				_segmentsEntryProvider.getSegmentsEntryIds(
+					className, classPK)));
 	}
 
 	@DeleteAfterTestRun

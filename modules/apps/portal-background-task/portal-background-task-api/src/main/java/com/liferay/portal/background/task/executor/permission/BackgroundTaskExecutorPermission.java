@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
  */
 public interface BackgroundTaskExecutorPermission {
 
-	public void checkPermission(
+	public Boolean contains(
 			PermissionChecker permissionChecker, long groupId, long primaryKey,
 			String actionId)
 		throws PortalException;

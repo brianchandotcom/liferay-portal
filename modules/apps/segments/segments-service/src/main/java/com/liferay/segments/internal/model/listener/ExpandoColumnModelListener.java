@@ -21,6 +21,8 @@ import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.util.ExpandoBridgeIndexerUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
@@ -34,6 +36,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -101,6 +104,7 @@ public class ExpandoColumnModelListener
 					_serviceRegistration = _updateRegistry(
 						_bundleContext, _serviceRegistration,
 						_userEntityFields);
+
 				});
 		}
 		catch (PortalException pe) {
@@ -137,6 +141,13 @@ public class ExpandoColumnModelListener
 		onAfterCreate(expandoColumn);
 	}
 
+	private String _encodeName(ExpandoColumn expandoColumn) {
+		return StringBundler.concat(
+			StringPool.UNDERLINE, expandoColumn.getColumnId(),
+			StringPool.UNDERLINE,
+			FriendlyURLNormalizerUtil.normalize(expandoColumn.getName()));
+	}
+
 	private DynamicQuery _getTableDynamicQuery(long classNameId, String name) {
 		DynamicQuery dynamicQuery = _expandoTableLocalService.dynamicQuery();
 
@@ -167,12 +178,15 @@ public class ExpandoColumnModelListener
 			return Optional.empty();
 		}
 
-		String encodedFieldName = ExpandoBridgeIndexerUtil.encodeFieldName(
-			expandoColumn.getName(), indexType);
+		String encodedName = _encodeName(expandoColumn);
+
+		String encodedIndexedFieldName =
+			ExpandoBridgeIndexerUtil.encodeFieldName(
+				expandoColumn.getName(), indexType);
 
 		return Optional.of(
 			new StringEntityField(
-				expandoColumn.getName(), locale -> encodedFieldName));
+				encodedName, locale -> encodedIndexedFieldName));
 	}
 
 	private Map<Long, EntityField> _getUserEntityFields()
@@ -196,6 +210,7 @@ public class ExpandoColumnModelListener
 							userClassNameId,
 							ExpandoTableConstants.DEFAULT_TABLE_NAME)));
 			});
+
 		columnActionableDynamicQuery.setPerformActionMethod(
 			(ActionableDynamicQuery.PerformActionMethod<ExpandoColumn>)
 				expandoColumn -> {

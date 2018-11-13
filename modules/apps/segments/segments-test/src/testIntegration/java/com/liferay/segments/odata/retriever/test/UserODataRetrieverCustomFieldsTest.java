@@ -19,8 +19,10 @@ import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -43,7 +45,9 @@ import com.liferay.segments.odata.retriever.ODataRetriever;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -94,10 +98,11 @@ public class UserODataRetrieverCustomFieldsTest {
 		throws Exception {
 
 		ExpandoColumn expandoColumn = _addExpandoColumn(
-			_expandoTable, "keywordColumn", ExpandoColumnConstants.STRING,
+			_expandoTable, RandomTestUtil.randomString(),
+			ExpandoColumnConstants.STRING,
 			ExpandoColumnConstants.INDEX_TYPE_KEYWORD);
 
-		String columnValue = "Software Engineer";
+		String columnValue = RandomTestUtil.randomString();
 
 		User user1 = _addUser(expandoColumn.getName(), columnValue);
 
@@ -107,8 +112,8 @@ public class UserODataRetrieverCustomFieldsTest {
 		_users.add(user2);
 
 		String filterString =
-			"(customField/" + expandoColumn.getName() + " eq '" + columnValue +
-				"')";
+			"(customField/" + _encodeName(expandoColumn) + " eq '" +
+				columnValue + "')";
 
 		int count = _getODataRetriever().getResultsCount(
 			TestPropsValues.getCompanyId(), filterString,
@@ -142,7 +147,7 @@ public class UserODataRetrieverCustomFieldsTest {
 		return _expandoColumnLocalService.updateExpandoColumn(expandoColumn);
 	}
 
-	private User _addUser(String columnName, String columnValue)
+	private User _addUser(String columnName, Serializable columnValue)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -154,13 +159,33 @@ public class UserODataRetrieverCustomFieldsTest {
 
 		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
 
-		UserTestUtil.addUser();
-
 		return UserTestUtil.addUser(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			serviceContext);
+	}
+
+	private String _encodeName(ExpandoColumn expandoColumn) throws Exception {
+		return ReflectionTestUtil.invoke(
+			_getExpandoColumnModelListener(), "_encodeName",
+			new Class<?>[] {ExpandoColumn.class}, expandoColumn);
+	}
+
+	@SuppressWarnings("unchecked")
+	private ModelListener<ExpandoColumn> _getExpandoColumnModelListener()
+		throws Exception {
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		Collection<ModelListener> collection = registry.getServices(
+			ModelListener.class,
+			"(component.name=com.liferay.segments.internal.model.listener." +
+				"ExpandoColumnModelListener)");
+
+		Iterator<ModelListener> iterator = collection.iterator();
+
+		return (ModelListener<ExpandoColumn>)iterator.next();
 	}
 
 	private ODataRetriever<User> _getODataRetriever() {

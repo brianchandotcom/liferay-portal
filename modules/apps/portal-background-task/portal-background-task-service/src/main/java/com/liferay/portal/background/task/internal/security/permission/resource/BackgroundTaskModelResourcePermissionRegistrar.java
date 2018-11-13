@@ -25,9 +25,7 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -42,6 +40,11 @@ public class BackgroundTaskModelResourcePermissionRegistrar {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		_backgroundTaskExecutorPermissionCheckers =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, BackgroundTaskExecutorPermissionChecker.class,
+				"background.task.executor.class.name");
+
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("model.class.name", BackgroundTask.class.getName());
@@ -76,24 +79,12 @@ public class BackgroundTaskModelResourcePermissionRegistrar {
 
 	@Deactivate
 	public void deactivate() {
+		_backgroundTaskExecutorPermissionCheckers.close();
 		_serviceRegistration.unregister();
 	}
 
-	private static final
-		ServiceTrackerMap<String, BackgroundTaskExecutorPermissionChecker>
-			_backgroundTaskExecutorPermissionCheckers;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			BackgroundTaskExecutorPermissionChecker.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		_backgroundTaskExecutorPermissionCheckers =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, BackgroundTaskExecutorPermissionChecker.class,
-				"background.task.executor.class.name");
-	}
+	private ServiceTrackerMap<String, BackgroundTaskExecutorPermissionChecker>
+		_backgroundTaskExecutorPermissionCheckers;
 
 	@Reference
 	private BackgroundTaskLocalService _backgroundTaskLocalService;

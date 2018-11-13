@@ -42,20 +42,38 @@ class ScrollTracker {
 		this.stepsReached = null;
 	}
 
+	/**
+	 * Calculates the depth of the element on the page. If the
+	 * element is not passed as a parameter the calculation must be
+	 * performed to get the page depth
+	 * @param {object} element The Blog DOM element
+	 * @return {number} depth percentage from 0 to 100
+	 */
 	getDepth(element) {
 		const {top, height} = getDimensions(element);
+		const visibleArea = window.innerHeight;
 
-		let depth = 0;
+		let value = 0;
 
 		if (element) {
-			depth = -top / height;
+			if (top > 0) {
+				value = (visibleArea - top) / height;
+			} else {
+				value = visibleArea / (height + top);
+			}
 		} else {
-			const visibleArea = window.innerHeight;
-
-			depth = (top + visibleArea) / height;
+			value = (top + visibleArea) / height;
 		}
 
-		return Math.round(depth * 100);
+		const depth = Math.round(value * 100);
+
+		if (depth <= 0) {
+			return 0;
+		} else if (depth >= 100) {
+			return 100;
+		}
+
+		return depth;
 	}
 
 	/**

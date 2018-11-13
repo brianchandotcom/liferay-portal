@@ -29,6 +29,13 @@ public class JavaConstructor extends BaseJavaTerm {
 		_javaSignature = javaSignature;
 	}
 
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		return _javaSignature.toString(indent, prefix, " {", maxLineLength);
+	}
+
 	private List<JavaAnnotation> _javaAnnotations;
 	private JavaSignature _javaSignature;
 

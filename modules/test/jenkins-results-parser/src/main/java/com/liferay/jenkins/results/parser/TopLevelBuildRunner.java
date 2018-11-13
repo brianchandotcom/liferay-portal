@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.google.common.collect.Lists;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -147,6 +149,13 @@ public abstract class TopLevelBuildRunner
 		filePropagator.setCleanUpCommand(_FILE_PROPAGATOR_CLEAN_UP_COMMAND);
 
 		filePropagator.start(_FILE_PROPAGATOR_THREAD_COUNT);
+
+		List<String> distNodes = Lists.newArrayList(
+			topLevelBuildData.getDistNodes());
+
+		distNodes.removeAll(filePropagator.getErrorSlaves());
+
+		topLevelBuildData.setDistNodes(distNodes);
 	}
 
 	protected void publishJenkinsReport() {

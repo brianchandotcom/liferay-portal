@@ -10456,7 +10456,6 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
-
 		<!--
 		Deploy project samples to the deploy directory.
 		-->

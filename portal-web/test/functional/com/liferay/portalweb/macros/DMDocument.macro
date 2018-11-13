@@ -175,9 +175,11 @@
 		</if>
 
 		<if>
-			<equals arg1="${dmFile}" arg2="Invalid" />
+			<isset var="validationError" />
 			<then>
 				<execute macro="Button#clickPublish" />
+
+				<execute function="AssertTextEquals" locator1="Message#ERROR_FORM_VALIDATION" value1="${validationError}" />
 			</then>
 			<else>
 				<execute macro="PortletEntry#publish" />

@@ -885,10 +885,8 @@
 			<execute macro="DMDocument#addCP">
 				<var name="dmDocumentFile" value="${dmDocumentTitle}" />
 				<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-				<var name="dmFile" value="Invalid" />
+				<var name="validationError" value="Please enter a file with a valid extension (.doc)." />
 			</execute>
-
-			<execute function="AssertTextEquals" locator1="Message#ERROR_FORM_VALIDATION" value1="Please enter a file with a valid extension (.doc)." />
 		</for>
 	</command>
 

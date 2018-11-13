@@ -38,6 +38,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.Value;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
@@ -104,6 +105,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -654,18 +656,8 @@ public class StructuredContentNestedCollectionResource
 		).map(
 			DDMFormValues::getDDMFormFieldValues
 		).map(
-			ddmFormFieldValueList -> {
-				Stream<DDMFormFieldValue> stream =
-					ddmFormFieldValueList.stream();
-
-				return stream.map(
-					ddmFormFieldValue -> (StructuredContentField)
-						new StructuredContentFieldImpl(
-							ddmFormFieldValue, journalArticle.getDDMStructure())
-				).collect(
-					Collectors.toList()
-				);
-			}
+			ddmFormFieldValueList -> _toStructuredContentFields(
+				ddmFormFieldValueList, journalArticle.getDDMStructure())
 		).map(
 			this::_getStructuredContentFields
 		).orElse(
@@ -709,6 +701,22 @@ public class StructuredContentNestedCollectionResource
 			JournalArticle::getResourcePrimKey
 		).orElse(
 			null
+		);
+	}
+
+	private List<StructuredContentField> _toStructuredContentFields(
+		List<DDMFormFieldValue> ddmFormFieldValues, DDMStructure ddmStructure) {
+
+		Stream<DDMFormFieldValue> stream = ddmFormFieldValues.stream();
+
+		return stream.filter(
+			ddmFormFieldValue -> !Objects.equals(
+				DDMFormFieldType.SEPARATOR, ddmFormFieldValue.getType())
+		).map(
+			ddmFormFieldValue -> new StructuredContentFieldImpl(
+				ddmFormFieldValue, ddmStructure)
+		).collect(
+			Collectors.toList()
 		);
 	}
 
@@ -922,17 +930,9 @@ public class StructuredContentNestedCollectionResource
 
 		@Override
 		public List<StructuredContentField> getNestedFields() {
-			List<DDMFormFieldValue> ddmFormFieldValues =
-				_ddmFormFieldValue.getNestedDDMFormFieldValues();
-
-			Stream<DDMFormFieldValue> stream = ddmFormFieldValues.stream();
-
-			return stream.map(
-				ddmFormFieldValue -> new StructuredContentFieldImpl(
-					ddmFormFieldValue, _ddmStructure)
-			).collect(
-				Collectors.toList()
-			);
+			return _toStructuredContentFields(
+				_ddmFormFieldValue.getNestedDDMFormFieldValues(),
+				_ddmStructure);
 		}
 
 		private final DDMFormFieldValue _ddmFormFieldValue;

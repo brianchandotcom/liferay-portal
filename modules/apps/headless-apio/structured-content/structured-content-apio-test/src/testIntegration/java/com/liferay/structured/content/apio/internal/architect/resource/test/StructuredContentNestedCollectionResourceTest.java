@@ -731,7 +731,7 @@ public class StructuredContentNestedCollectionResourceTest
 				new JournalArticleWrapper(journalArticle));
 
 		Assert.assertEquals(
-			structuredContentFields.toString(), 1,
+			structuredContentFields.toString(), 0,
 			structuredContentFields.size());
 	}
 

@@ -9,6 +9,17 @@
 		padding: 0;
 	}
 
+	.modal-body.inline-scroller .empty-collaborators {
+		height: 125px;
+		text-align: center;
+	}
+
+	@media (min-height: 400px) {
+		.modal-body.inline-scroller .empty-collaborators {
+			height: 320px;
+		}
+	}
+
 	h4 {
 		margin-bottom: 0;
 	}

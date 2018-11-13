@@ -20,25 +20,28 @@
 
 	<div id="{$id}">
 		<div class="inline-scroller modal-body">
-			<ul class="list-group">
-				{foreach $collaborator in $collaborators}
-					<li class="list-group-item list-group-item-flex" data-onmouseout="{$_handleHoverCollaborator}" data-onmouseover="{$_handleHoverCollaborator}" id="collaborator{$collaborator.id}">
-						{call .collaborator}
-							{param _handleChangeExpirationDate: $_handleChangeExpirationDate /}
-							{param _handleChangePermission: $_handleChangePermission /}
-							{param _handleDeleteCollaborator: $_handleDeleteCollaborator /}
-							{param _handleDeleteExpirationDate: $_handleDeleteExpirationDate /}
-							{param _hideShowExpirationDateBlock: $_hideShowExpirationDateBlock /}
-							{param _loadingResponse: $_loadingResponse /}
-							{param _tomorrowDate: $_tomorrowDate /}
-							{param spritemap: $spritemap /}
-							{param collaborator: $collaborator /}
-						{/call}
-					</li>
-				{ifempty}
-					<h5>{msg desc=""}no-collaborators{/msg}</h5>
-				{/foreach}
-			</ul>
+			{if length($collaborators) > 0}
+				<ul class="list-group">
+					{foreach $collaborator in $collaborators}
+						<li class="list-group-item list-group-item-flex" data-onmouseout="{$_handleHoverCollaborator}" data-onmouseover="{$_handleHoverCollaborator}" id="collaborator{$collaborator.id}">
+							{call .collaborator}
+								{param _handleChangeExpirationDate: $_handleChangeExpirationDate /}
+								{param _handleChangePermission: $_handleChangePermission /}
+								{param _handleDeleteCollaborator: $_handleDeleteCollaborator /}
+								{param _handleDeleteExpirationDate: $_handleDeleteExpirationDate /}
+								{param _hideShowExpirationDateBlock: $_hideShowExpirationDateBlock /}
+								{param _loadingResponse: $_loadingResponse /}
+								{param _tomorrowDate: $_tomorrowDate /}
+								{param spritemap: $spritemap /}
+								{param collaborator: $collaborator /}
+							{/call}
+						</li>
+					{/foreach}
+				</ul>
+			{else}
+				{call .emptyCollaborators}
+				{/call}
+			{/if}
 		</div>
 
 		<div class="modal-footer">
@@ -191,6 +194,15 @@
 					{param style: 'link' /}
 				{/call}
 			</div>
+		</div>
+	</div>
+{/template}
+
+{template .emptyCollaborators}
+	<div class="autofit-row autofit-row-center empty-collaborators">
+		<div class="autofit-col autofit-col-expand">
+			<h3>{msg desc=""}no-collaborators{/msg}</h3>
+			<p>{msg desc=""}you-can-add-collaborators-sharing-the-document-again{/msg}</p>
 		</div>
 	</div>
 {/template}

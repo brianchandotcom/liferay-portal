@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 import java.util.List;
 
 /**
@@ -23,6 +25,31 @@ public class JavaClassCall extends JavaExpression {
 
 	public JavaClassCall(String className) {
 		_className = new JavaSimpleValue(className);
+	}
+
+	@Override
+	public String getString(
+		String indent, String prefix, String suffix, int maxLineLength,
+		boolean forceLineBreak) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(indent);
+		sb.append(prefix);
+
+		if (_genericJavaTypes == null) {
+			append(sb, _className, indent, "", "(", maxLineLength);
+		}
+		else {
+			append(sb, _className, indent, maxLineLength);
+			append(sb, _genericJavaTypes, indent, "<", ">(", maxLineLength);
+		}
+
+		append(
+			sb, _parameterValueJavaExpressions, indent, "", ")" + suffix,
+			maxLineLength);
+
+		return sb.toString();
 	}
 
 	public void setGenericJavaTypes(List<JavaType> genericJavaTypes) {

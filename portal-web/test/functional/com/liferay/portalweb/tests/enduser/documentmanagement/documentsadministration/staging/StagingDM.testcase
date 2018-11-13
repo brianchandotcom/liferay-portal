@@ -108,14 +108,12 @@
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging DM Pag" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
 		<execute macro="Staging#gotoPublishToLive" />
 
 		<execute macro="Staging#publishToLive" />
+
+		<execute function="AssertConsoleTextNotPresent" value1="DDMFormValuesValidationException" />
+		<execute function="AssertConsoleTextNotPresent" value1="No value defined for field name" />
 	</command>
 
 	<command name="PublishFolderWithWorkflow" priority="5">

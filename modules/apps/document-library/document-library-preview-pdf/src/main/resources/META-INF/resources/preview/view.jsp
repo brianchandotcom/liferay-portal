@@ -36,6 +36,9 @@ String[] previewFileURLs = new String[1];
 previewFileURLs[0] = DLUtil.getPreviewURL(fileVersion.getFileEntry(), fileVersion, themeDisplay, previewQueryString);
 
 String previewFileURL = previewFileURLs[0];
+
+Map<String, Object> context = new HashMap<>();
+context.put("baseImageURL", previewFileURL);
 %>
 
 <div class="lfr-preview-file" id="<portlet:namespace /><%= randomNamespace %>previewFile">
@@ -81,3 +84,15 @@ String previewFileURL = previewFileURLs[0];
 		currentImage.setStyle('background-image', 'none');
 	}
 </aui:script>
+
+<liferay-util:html-top
+	outputKey="document_library_preview_pdf_css"
+>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/preview/css/main.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
+<soy:component-renderer
+	context="<%= context %>"
+	module="document-library-preview-pdf/preview/js/PdfPreviewer.es"
+	templateNamespace="com.liferay.document.library.preview.PdfPreviewer.render"
+/>

@@ -37,6 +37,17 @@ public class JavaMethod extends BaseJavaTerm {
 		_javaSignature = javaSignature;
 	}
 
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		if (_hasBody) {
+			return _javaSignature.toString(indent, prefix, " {", maxLineLength);
+		}
+
+		return _javaSignature.toString(indent, prefix, ";", maxLineLength);
+	}
+
 	private boolean _hasBody;
 	private List<JavaAnnotation> _javaAnnotations;
 	private JavaSignature _javaSignature;

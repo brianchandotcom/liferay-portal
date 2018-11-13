@@ -58,6 +58,7 @@ public enum JavaOperator {
 	UNARY_BITWISE_OPERATOR(TokenTypes.BNOT, "~", false, true),
 	UNARY_MINUS(TokenTypes.UNARY_MINUS, "-", false, true),
 	UNARY_PLUS(TokenTypes.UNARY_PLUS, "+", false, true),
+	UNSIGNED_RIGHT_SHIFT_ASSIGNMENT_OPERATOR(TokenTypes.BSR_ASSIGN, ">>>="),
 	UNSIGNED_RIGHT_SHIFT_OPERATOR(TokenTypes.BSR, ">>>");
 
 	public int getType() {

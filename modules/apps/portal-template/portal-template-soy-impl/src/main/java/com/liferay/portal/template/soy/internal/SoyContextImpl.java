@@ -206,6 +206,8 @@ public class SoyContextImpl implements SoyContext {
 		Stream<Entry<String, Object>> stream = entries.stream();
 
 		return stream.filter(
+			entry -> entry.getValue() != null
+		).filter(
 			entry -> !_restrictedVariables.contains(entry.getKey())
 		).collect(
 			Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)

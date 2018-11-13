@@ -80,6 +80,18 @@ public class SoyContextImplTest {
 	}
 
 	@Test
+	public void testCreateInjectedSoyTemplateRecordWithNullValues() {
+		SoyContextImpl soyContextImpl = new SoyContextImpl();
+
+		soyContextImpl.putInjectedData("key", null);
+
+		SoyTemplateRecord soyTemplateRecord =
+			soyContextImpl.createInjectedSoyTemplateRecord();
+
+		Assert.assertEquals(null, soyTemplateRecord.get("key"));
+	}
+
+	@Test
 	public void testCreateSoyTemplateRecord() {
 		Set<String> restrictedVariables = new HashSet<>();
 
@@ -96,6 +108,18 @@ public class SoyContextImplTest {
 
 		Assert.assertEquals("value", soyTemplateRecord.get("key"));
 		Assert.assertNull(soyTemplateRecord.get("restrictedKey"));
+	}
+
+	@Test
+	public void testCreateSoyTemplateRecordWithNullValues() {
+		SoyContextImpl soyContextImpl = new SoyContextImpl();
+
+		soyContextImpl.put("key", null);
+
+		SoyTemplateRecord soyTemplateRecord =
+			soyContextImpl.createInjectedSoyTemplateRecord();
+
+		Assert.assertEquals(null, soyTemplateRecord.get("key"));
 	}
 
 	@Test

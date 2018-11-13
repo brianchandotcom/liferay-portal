@@ -69,7 +69,13 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 	 * @review
 	 */
 	public SoyTemplateRecord(Map<String, Object> map) {
-		_map = new ConcurrentHashMap<>(map);
+		_map = new ConcurrentHashMap<>();
+
+		for (Map.Entry<String, Object> entry : map.entrySet()) {
+			if (entry.getValue() != null) {
+				_map.put(entry.getKey(), entry.getValue());
+			}
+		}
 	}
 
 	@Override

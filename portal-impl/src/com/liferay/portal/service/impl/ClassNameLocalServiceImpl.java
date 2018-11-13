@@ -17,7 +17,6 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
-import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -98,7 +97,7 @@ public class ClassNameLocalServiceImpl
 	}
 
 	@Override
-	@Skip
+	@Transactional(enabled = false)
 	public ClassName getClassName(String value) {
 		if (Validator.isNull(value)) {
 			return _nullClassName;
@@ -131,13 +130,13 @@ public class ClassNameLocalServiceImpl
 	}
 
 	@Override
-	@Skip
+	@Transactional(enabled = false)
 	public long getClassNameId(Class<?> clazz) {
 		return getClassNameId(clazz.getName());
 	}
 
 	@Override
-	@Skip
+	@Transactional(enabled = false)
 	public long getClassNameId(String value) {
 		ClassName className = getClassName(value);
 

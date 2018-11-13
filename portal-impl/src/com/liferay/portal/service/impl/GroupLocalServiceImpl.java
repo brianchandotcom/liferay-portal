@@ -94,7 +94,6 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.security.permission.RolePermissions;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -1395,7 +1394,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *         <code>null</code> if a matching group could not be found
 	 */
 	@Override
-	@Skip
+	@Transactional(enabled = false)
 	public Group fetchGroup(long companyId, String groupKey) {
 		Group group = _systemGroupsMap.get(
 			StringUtil.toHexString(companyId).concat(groupKey));
@@ -1633,7 +1632,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
-	@Skip
+	@Transactional(enabled = false)
 	public Group getGroup(long companyId, String groupKey)
 		throws PortalException {
 
@@ -2497,7 +2496,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	@Override
-	@Skip
+	@Transactional(enabled = false)
 	public boolean isLiveGroupActive(Group group) {
 		if (group == null) {
 			return false;

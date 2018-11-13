@@ -24,7 +24,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureVersionLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureVersionVersionComparator;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.spring.aop.Skip;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -75,7 +75,7 @@ public class DDMStructureVersionLocalServiceImpl
 	}
 
 	@Override
-	@Skip
+	@Transactional(enabled = false)
 	public DDMForm getStructureVersionDDMForm(
 			DDMStructureVersion structureVersion)
 		throws PortalException {

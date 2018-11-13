@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.Resource;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
-import com.liferay.portal.kernel.spring.aop.Skip;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.impl.ResourceImpl;
 import com.liferay.portal.service.base.ResourceLocalServiceBaseImpl;
@@ -80,7 +80,7 @@ import org.apache.commons.lang.time.StopWatch;
  * @author Julio Camarero
  * @author Connor McKay
  */
-@Skip
+@Transactional(enabled = false)
 public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 	/**

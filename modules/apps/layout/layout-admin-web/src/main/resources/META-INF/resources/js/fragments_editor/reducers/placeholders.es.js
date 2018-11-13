@@ -15,6 +15,18 @@ const DRAG_POSITIONS = {
 };
 
 /**
+ * Possible drop target types
+ * @review
+ * @type {!object}
+ */
+const DROP_TARGET_TYPES = {
+	column: 'layout-column',
+	fragment: 'fragment-entry-link',
+	fragmentList: 'fragment-entry-link-list',
+	section: 'layout-section'
+};
+
+/**
  * Updates hover status with the information sent.
  * @param {!object} state
  * @param {CLEAR_DRAG_TARGET|UPDATE_DRAG_TARGET} actionType
@@ -72,6 +84,7 @@ function updateHighlightMappingReducer(state, actionType, payload) {
 
 export {
 	DRAG_POSITIONS,
+	DROP_TARGET_TYPES,
 	updateDragTargetReducer,
 	updateHighlightMappingReducer
 };

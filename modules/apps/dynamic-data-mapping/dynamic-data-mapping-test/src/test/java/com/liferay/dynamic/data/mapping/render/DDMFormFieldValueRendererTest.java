@@ -184,7 +184,8 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 	@Test
 	public void testDecimalFieldValueRendererWithoutDefaultValue() {
 		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
-			"Decimal", createLocalizedValue("", "1,2", LocaleUtil.US));
+			"Decimal",
+			createLocalizedValue(StringPool.BLANK, "1,2", LocaleUtil.US));
 
 		DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
 			new DecimalDDMFormFieldValueRenderer();

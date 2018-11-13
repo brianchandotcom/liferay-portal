@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class JavaConstructor extends BaseJavaTerm {
+public class JavaConstructorDefinition extends BaseJavaTerm {
 
 	public void setJavaAnnotations(List<JavaAnnotation> javaAnnotations) {
 		_javaAnnotations = javaAnnotations;

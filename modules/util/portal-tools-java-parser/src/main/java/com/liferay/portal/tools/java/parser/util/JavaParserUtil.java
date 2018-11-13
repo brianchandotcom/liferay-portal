@@ -26,8 +26,8 @@ import com.liferay.portal.tools.java.parser.JavaArrayElement;
 import com.liferay.portal.tools.java.parser.JavaBreakStatement;
 import com.liferay.portal.tools.java.parser.JavaCatchStatement;
 import com.liferay.portal.tools.java.parser.JavaClassCall;
-import com.liferay.portal.tools.java.parser.JavaConstructor;
 import com.liferay.portal.tools.java.parser.JavaConstructorCall;
+import com.liferay.portal.tools.java.parser.JavaConstructorDefinition;
 import com.liferay.portal.tools.java.parser.JavaContinueStatement;
 import com.liferay.portal.tools.java.parser.JavaElseStatement;
 import com.liferay.portal.tools.java.parser.JavaEnhancedForStatement;
@@ -38,8 +38,8 @@ import com.liferay.portal.tools.java.parser.JavaInstanceofStatement;
 import com.liferay.portal.tools.java.parser.JavaLabeledStatement;
 import com.liferay.portal.tools.java.parser.JavaLambdaExpression;
 import com.liferay.portal.tools.java.parser.JavaLambdaParameter;
-import com.liferay.portal.tools.java.parser.JavaMethod;
 import com.liferay.portal.tools.java.parser.JavaMethodCall;
+import com.liferay.portal.tools.java.parser.JavaMethodDefinition;
 import com.liferay.portal.tools.java.parser.JavaMethodReference;
 import com.liferay.portal.tools.java.parser.JavaNewArrayInstantiation;
 import com.liferay.portal.tools.java.parser.JavaNewClassInstantiation;
@@ -138,21 +138,6 @@ public class JavaParserUtil {
 		return javaCatchStatement;
 	}
 
-	public static JavaConstructor parseJavaConstructor(
-		DetailAST constructorDefinitionDetailAST) {
-
-		JavaConstructor javaConstructor = new JavaConstructor();
-
-		javaConstructor.setJavaAnnotations(
-			_parseJavaAnnotations(
-				constructorDefinitionDetailAST.findFirstToken(
-					TokenTypes.MODIFIERS)));
-		javaConstructor.setJavaSignature(
-			_parseJavaSignature(constructorDefinitionDetailAST));
-
-		return javaConstructor;
-	}
-
 	public static JavaConstructorCall parseJavaConstructorCall(
 		DetailAST detailAST) {
 
@@ -164,6 +149,22 @@ public class JavaParserUtil {
 				detailAST.findFirstToken(TokenTypes.ELIST)));
 
 		return javaConstructorCall;
+	}
+
+	public static JavaConstructorDefinition parseJavaConstructorDefinition(
+		DetailAST constructorDefinitionDetailAST) {
+
+		JavaConstructorDefinition javaConstructorDefinition =
+			new JavaConstructorDefinition();
+
+		javaConstructorDefinition.setJavaAnnotations(
+			_parseJavaAnnotations(
+				constructorDefinitionDetailAST.findFirstToken(
+					TokenTypes.MODIFIERS)));
+		javaConstructorDefinition.setJavaSignature(
+			_parseJavaSignature(constructorDefinitionDetailAST));
+
+		return javaConstructorDefinition;
 	}
 
 	public static JavaContinueStatement parseJavaContinueStatement(
@@ -356,25 +357,25 @@ public class JavaParserUtil {
 		return javaLabeledStatement;
 	}
 
-	public static JavaMethod parseJavaMethod(
+	public static JavaMethodDefinition parseJavaMethodDefinition(
 		DetailAST methodDefinitionDetailAST) {
 
-		JavaMethod javaMethod = new JavaMethod();
+		JavaMethodDefinition javaMethodDefinition = new JavaMethodDefinition();
 
-		javaMethod.setJavaAnnotations(
+		javaMethodDefinition.setJavaAnnotations(
 			_parseJavaAnnotations(
 				methodDefinitionDetailAST.findFirstToken(
 					TokenTypes.MODIFIERS)));
-		javaMethod.setJavaSignature(
+		javaMethodDefinition.setJavaSignature(
 			_parseJavaSignature(methodDefinitionDetailAST));
 
 		DetailAST lastChildDetailAST = methodDefinitionDetailAST.getLastChild();
 
 		if (lastChildDetailAST.getType() == TokenTypes.SLIST) {
-			javaMethod.setHasBody(true);
+			javaMethodDefinition.setHasBody(true);
 		}
 
-		return javaMethod;
+		return javaMethodDefinition;
 	}
 
 	public static JavaReturnStatement parseJavaReturnStatement(

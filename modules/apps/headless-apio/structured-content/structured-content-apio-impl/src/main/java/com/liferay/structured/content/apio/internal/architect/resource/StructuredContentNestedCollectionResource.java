@@ -99,6 +99,7 @@ import com.liferay.structured.content.apio.internal.model.RenderedJournalArticle
 import com.liferay.structured.content.apio.internal.util.JournalArticleContentHelper;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -313,7 +314,7 @@ public class StructuredContentNestedCollectionResource
 
 		String ddmStructureKey = ddmStructure.getStructureKey();
 		String ddmTemplateKey = _getDDMTemplateKey(ddmStructure);
-		Date displayDate = new Date();
+		Calendar calendar = Calendar.getInstance();
 
 		ServiceContext serviceContext =
 			structuredContentCreatorForm.getServiceContext(contentSpaceId);
@@ -325,19 +326,19 @@ public class StructuredContentNestedCollectionResource
 			ddmStructureKey, ddmTemplateKey, null,
 			_getDefaultValue(
 				structuredContentCreatorForm.getPublishedDateMonthOptional(),
-				displayDate.getMonth()),
+				calendar.get(Calendar.MONTH)),
 			_getDefaultValue(
 				structuredContentCreatorForm.getPublishedDateDayOptional(),
-				displayDate.getDate()),
+				calendar.get(Calendar.DATE)),
 			_getDefaultValue(
 				structuredContentCreatorForm.getPublishedDateYearOptional(),
-				displayDate.getYear()),
+				calendar.get(Calendar.YEAR)),
 			_getDefaultValue(
 				structuredContentCreatorForm.getPublishedDateHourOptional(),
-				displayDate.getHours()),
+				calendar.get(Calendar.HOUR)),
 			_getDefaultValue(
 				structuredContentCreatorForm.getPublishedDateMinuteOptional(),
-				displayDate.getMinutes()),
+				calendar.get(Calendar.MINUTE)),
 			0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, null,
 			serviceContext);
 

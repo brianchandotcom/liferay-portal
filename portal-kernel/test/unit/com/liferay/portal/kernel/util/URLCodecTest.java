@@ -294,9 +294,6 @@ public class URLCodecTest {
 		_ENCODED_URLS = new String[_RAW_URLS.length];
 		_ESCAPE_SPACES_ENCODED_URLS = new String[_RAW_URLS.length];
 
-		_ENCODED_URLS[0] = null;
-		_ESCAPE_SPACES_ENCODED_URLS[0] = null;
-
 		try {
 			for (int i = 1; i < _RAW_URLS.length; i++) {
 				_ENCODED_URLS[i] = URLEncoder.encode(

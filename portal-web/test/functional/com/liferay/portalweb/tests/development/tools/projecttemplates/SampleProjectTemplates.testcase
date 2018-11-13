@@ -45,7 +45,7 @@
 
 		<execute macro="Portlet#viewPG">
 			<var name="portletBody" value="Hello from Samplemvc!" />
-			<var name="portletName" value="SAMPLEMVC" />
+			<var name="portletName" value="Samplemvc" />
 		</execute>
 	</command>
 
@@ -54,21 +54,13 @@
 		<property name="test.name.skip.portal.instance" value="SampleProjectTemplates#ThemeTemplateSmoke" />
 		<var name="themeName" value="sampletheme" />
 
-		<execute macro="Navigator#gotoPage">
+		<execute macro="Page#changeCurrentTheme">
 			<var name="pageName" value="Templates Page" />
+			<var name="themeName" value="${themeName}" />
 		</execute>
 
-		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="pageName" value="Templates Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavTab">
-			<var name="navTab" value="Look and Feel" />
-		</execute>
-
-		<execute macro="Theme#changeCurrentTheme">
-			<var name="key_cardTitleText" value="${themeName}" />
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/guest/templates-page" />
 		</execute>
 
 		<execute function="AssertHTMLSourceTextPresent" value1="themeId=${themeName}" />

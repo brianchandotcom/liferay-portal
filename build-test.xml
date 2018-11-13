@@ -5974,24 +5974,24 @@ go]]></replacevalue>
 		<if>
 			<equals arg1="${project.templates}" arg2="mvc-portlet" />
 			<then>
-				<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-${blade.templates}" task="generateSampleProject" />
+				<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-${project.templates}" task="generateSampleProject" />
 
-				<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-${blade.templates}/build/samplemvc" task="assemble" />
+				<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-${project.templates}/build/samplemvc" task="assemble" />
 
 				<copy
-					file="${project.dir}/modules/sdk/project-templates/project-templates-${blade.templates}/build/samplemvc/build/libs/samplemvc-1.0.0.jar"
+					file="${project.dir}/modules/sdk/project-templates/project-templates-${project.templates}/build/samplemvc/build/libs/samplemvc-1.0.0.jar"
 					todir="${liferay.home}/deploy"
 				/>
 			</then>
 			<elseif>
 				<equals arg1="${project.templates}" arg2="theme" />
 				<then>
-					<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-${blade.templates}" task="generateSampleProject" />
+					<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-${project.templates}" task="generateSampleProject" />
 
-					<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-${blade.templates}/build/sampletheme" task="assemble" />
+					<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-${project.templates}/build/sampletheme" task="assemble" />
 
 					<copy
-						file="${project.dir}/modules/sdk/project-templates/project-templates-${blade.templates}/build/sampletheme/build/libs/sampletheme.war"
+						file="${project.dir}/modules/sdk/project-templates/project-templates-${project.templates}/build/sampletheme/build/libs/sampletheme.war"
 						todir="${liferay.home}/deploy"
 					/>
 				</then>
@@ -10455,6 +10455,13 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 				<antcall target="deploy-blade-templates" />
 			</then>
 		</if>
+
+
+		<!--
+		Deploy project samples to the deploy directory.
+		-->
+
+		<get-testcase-property property.name="project.templates" />
 
 		<if>
 			<isset property="project.templates" />

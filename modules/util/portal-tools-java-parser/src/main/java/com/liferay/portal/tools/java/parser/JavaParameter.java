@@ -14,6 +14,10 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+
 import java.util.List;
 
 /**
@@ -35,6 +39,34 @@ public class JavaParameter extends BaseJavaTerm {
 
 	public void setModifiers(List<JavaSimpleValue> modifiers) {
 		_modifiers = modifiers;
+	}
+
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(indent);
+		sb.append(StringUtil.trimLeading(prefix));
+
+		if (ListUtil.isNotEmpty(_javaAnnotations)) {
+			appendSingleLine(sb, _javaAnnotations, " ", maxLineLength);
+		}
+
+		if (ListUtil.isNotEmpty(_modifiers)) {
+			appendSingleLine(sb, _modifiers, " ", " ", "", maxLineLength);
+		}
+
+		if (append(sb, _javaType, indent, " ", "", maxLineLength, false) ==
+				APPENDED_NEW_LINE) {
+
+			indent += "\t";
+		}
+
+		append(sb, _name, indent, " ", suffix, maxLineLength);
+
+		return sb.toString();
 	}
 
 	private List<JavaAnnotation> _javaAnnotations;

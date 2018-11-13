@@ -555,6 +555,10 @@
 			<var name="groupName" value="Site Name" />
 		</execute>
 
+		<execute macro="Site#openSiteSettingsAdmin">
+			<var name="siteURLKey" value="site-name" />
+		</execute>
+
 		<execute macro="Site#manageMembershipOptions">
 			<var name="allowManualMembershipManagement" value="false" />
 		</execute>
@@ -596,6 +600,10 @@
 
 		<execute macro="JSONGroup#addGroup">
 			<var name="groupName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#openSiteSettingsAdmin">
+			<var name="siteURLKey" value="site-name" />
 		</execute>
 
 		<execute macro="Site#manageMembershipOptions">

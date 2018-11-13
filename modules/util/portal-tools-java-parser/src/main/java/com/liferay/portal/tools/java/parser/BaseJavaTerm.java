@@ -14,8 +14,32 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.petra.string.StringPool;
+
 /**
  * @author Hugo Huijser
  */
 public abstract class BaseJavaTerm implements JavaTerm {
+
+	@Override
+	public String toString() {
+		return toString(
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, -1);
+	}
+
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength) {
+
+		return null;
+	}
+
+	@Override
+	public String toString(
+		String indent, String prefix, String suffix, int maxLineLength,
+		boolean forceLineBreak) {
+
+		return toString(indent, prefix, suffix, maxLineLength);
+	}
+
 }

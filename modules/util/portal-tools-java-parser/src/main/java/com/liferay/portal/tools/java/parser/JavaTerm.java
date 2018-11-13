@@ -18,4 +18,12 @@ package com.liferay.portal.tools.java.parser;
  * @author Hugo Huijser
  */
 public interface JavaTerm {
+
+	public abstract String toString(
+		String indent, String prefix, String suffix, int maxLineLength);
+
+	public abstract String toString(
+		String indent, String prefix, String suffix, int maxLineLength,
+		boolean forceLineBreak);
+
 }

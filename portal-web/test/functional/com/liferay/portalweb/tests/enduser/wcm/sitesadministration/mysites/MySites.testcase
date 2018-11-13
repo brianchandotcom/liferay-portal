@@ -36,14 +36,17 @@
 
 	<command name="DisplayMySitesPagination" priority="3">
 		<description message="Assert that pagination is working for the MySites widget" />
-
 		<property name="testray.component.names" value="Site Administration" />
+
+		<!-- Add enough sites to allow pagination to occur -->
 
 		<for list="01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24" param="index">
 			<execute macro="JSONGroup#addGroup">
 				<var name="groupName" value="Site Name ${index}" />
 			</execute>
 		</for>
+
+		<!-- Add MySites Widget to page -->
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />
@@ -58,6 +61,8 @@
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Home Site" />
 		</execute>
+
+		<!-- View pagination -->
 
 		<execute macro="Pagination#viewResults">
 			<var name="results" value="Showing 1 to 20 of 25 entries." />
@@ -74,12 +79,15 @@
 
 	<command name="JoinSiteOpen" priority="4">
 		<description message="Assert a default user can join a normal open site" />
-
 		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
+
+		<!-- Create an open site -->
 
 		<execute macro="JSONGroup#addGroup">
 			<var name="groupName" value="Site Name" />
 		</execute>
+
+		<!-- Create a user and set its password -->
 
 		<execute macro="JSONUser#addUser">
 			<var name="userEmailAddress" value="userea@liferay.com" />
@@ -95,6 +103,8 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
+		<!-- Login with the new user and join the open site -->
+
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">
@@ -107,6 +117,8 @@
 		<execute macro="Site#joinViaMySitesPG">
 			<var name="siteName" value="Site Name" />
 		</execute>
+
+		<!-- Relog in to superadmin -->
 
 		<execute macro="User#logoutPG" />
 
@@ -118,9 +130,10 @@
 
 	<command name="JoinSitePrivateNo" priority="5">
 		<description message="Assert a default user cannot join a normal private site" />
-
 		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
+
+		<!-- Create a private site -->
 
 		<execute macro="Site#openSitesAdmin" />
 
@@ -128,6 +141,8 @@
 			<var name="membershipType" value="Private" />
 			<var name="siteName" value="Site Name" />
 		</execute>
+
+		<!-- Create a user and set its password -->
 
 		<execute macro="JSONUser#addUser">
 			<var name="userEmailAddress" value="userea@liferay.com" />
@@ -143,6 +158,8 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
+		<!-- Login with the new user and attempt to join the private site -->
+
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">
@@ -156,6 +173,8 @@
 			<var name="membershipType" value="Private" />
 			<var name="siteName" value="Site Name" />
 		</execute>
+
+		<!-- Relog in to superadmin -->
 
 		<execute macro="User#logoutPG" />
 
@@ -167,8 +186,9 @@
 
 	<command name="JoinSiteRestricted" priority="5">
 		<description message="Assert joining a restricted site requires admin approval" />
-
 		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
+
+		<!-- Create a restricted site -->
 
 		<execute macro="Site#openSitesAdmin" />
 
@@ -176,6 +196,8 @@
 			<var name="membershipType" value="Restricted" />
 			<var name="siteName" value="Site Name" />
 		</execute>
+
+		<!-- Create a user and set its password -->
 
 		<execute macro="JSONUser#addUser">
 			<var name="userEmailAddress" value="userea@liferay.com" />
@@ -191,6 +213,8 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
+		<!-- Login with the new user and request to join the restricted site -->
+
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">
@@ -205,6 +229,8 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
+		<!-- View that the user's membership request is sent -->
+
 		<execute macro="UserBar#gotoDashboard" />
 
 		<execute macro="NavItem#gotoAvailableSites" />
@@ -213,15 +239,13 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
+		<!-- Approve user's membership request with superadmin -->
+
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="Site#openSiteMembershipsAdmin">
@@ -234,6 +258,8 @@
 			<var name="userLastName" value="userln" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
+
+		<!-- View that the user's membership request is approved -->
 
 		<execute macro="User#logoutPG" />
 
@@ -249,6 +275,8 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
+		<!-- Relog in to superadmin -->
+
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">
@@ -258,14 +286,17 @@
 	</command>
 
 	<command name="LeaveSite" priority="5">
-		<description message="Assert a default user can join leave a site" />
-
+		<description message="Assert a default user can leave a site" />
 		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
+
+		<!-- Create a generic site -->
 
 		<execute macro="JSONGroup#addGroup">
 			<var name="groupName" value="Site Name" />
 		</execute>
+
+		<!-- Create a user and set its password -->
 
 		<execute macro="JSONUser#addUser">
 			<var name="userEmailAddress" value="userea@liferay.com" />
@@ -281,6 +312,8 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
+		<!-- Log in with new user and join site -->
+
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">
@@ -294,11 +327,15 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
+		<!-- Leave site -->
+
 		<execute macro="UserBar#gotoDashboard" />
 
 		<execute macro="Site#leaveViaMySitesPG">
 			<var name="siteName" value="Site Name" />
 		</execute>
+
+		<!-- Relog in to superadmin -->
 
 		<execute macro="User#logoutPG" />
 
@@ -310,17 +347,15 @@
 
 	<command name="SearchSite" priority="4">
 		<description message="Search for a site using MySites widget" />
-
 		<property name="testray.component.names" value="Site Administration" />
+
+		<!-- Create a site -->
 
 		<execute macro="JSONGroup#addGroup">
 			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Site Name" />
-			<var name="layoutName" value="Test Page" />
-		</execute>
+		<!-- Add MySites widget -->
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />
@@ -330,6 +365,8 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="My Sites" />
 		</execute>
+
+		<!-- Search for new site in MySites widget -->
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />
@@ -349,8 +386,9 @@
 
 	<command name="ViewMembershipAssignViaSiteCP" priority="3">
 		<description message="Asssign site membership to a user in multiple ways via CP" />
-
 		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
+
+		<!-- Create a user and set its password -->
 
 		<execute macro="JSONUser#addUser">
 			<var name="userEmailAddress" value="userea@liferay.com" />
@@ -366,6 +404,8 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
+		<!-- Make user a member of home site via Site Settings CP -->
+
 		<execute macro="Site#openSiteMembershipsAdmin">
 			<var name="siteURLKey" value="home-site" />
 		</execute>
@@ -376,19 +416,20 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
+		<!-- Assign user Power User role -->
+
 		<execute macro="JSONRole#assignRoleToUser">
 			<var name="roleTitle" value="Power User" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
+		<!-- Create another new site -->
+
 		<execute macro="JSONGroup#addGroup">
 			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Site Name" />
-			<var name="layoutName" value="Public Page" />
-		</execute>
+		<!-- Make user a member of new site via User Admin CP -->
 
 		<execute macro="User#openUsersAdmin" />
 
@@ -396,6 +437,8 @@
 			<var name="siteName" value="Site Name" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
+
+		<!-- Add MySites widget -->
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />
@@ -406,10 +449,14 @@
 			<var name="portletName" value="My Sites" />
 		</execute>
 
+		<!-- Relog into portal as user -->
+
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
+
+		<!-- Assert user is a member of both sites -->
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />
@@ -424,12 +471,15 @@
 
 	<command name="ViewNoInactiveSite" priority="3">
 		<description message="Assert inactive sites are not searchable" />
-
 		<property name="testray.component.names" value="Site Administration" />
+
+		<!-- Create a new site -->
 
 		<execute macro="JSONGroup#addGroup">
 			<var name="groupName" value="Site Name" />
 		</execute>
+
+		<!-- Deactivate the new site -->
 
 		<execute macro="Site#openSiteSettingsAdmin">
 			<var name="siteURLKey" value="site-name" />
@@ -439,6 +489,8 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
+		<!-- Create a MySites widget -->
+
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Home Site" />
@@ -447,6 +499,8 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="My Sites" />
 		</execute>
+
+		<!-- Assert deactivated site is not searchable -->
 
 		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="Site Name" />
@@ -460,8 +514,9 @@
 
 	<command name="ViewNoJoinOption" priority="3">
 		<description message="Assert a user cannot join a site with manual membership management disabled" />
-
 		<property name="testray.component.names" value="Site Administration,Users and Organizations" />
+
+		<!-- Create a new user -->
 
 		<execute macro="JSONUser#addUser">
 			<var name="userEmailAddress" value="userea@liferay.com" />
@@ -476,6 +531,8 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
+
+		<!-- Give user administrative role for home site -->
 
 		<execute macro="Site#openSiteMembershipsAdmin">
 			<var name="siteURLKey" value="home-site" />
@@ -492,18 +549,17 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
+		<!-- Add new site with manual membership disabled -->
+
 		<execute macro="JSONGroup#addGroup">
 			<var name="groupName" value="Site Name" />
-		</execute>
-
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Site Name" />
-			<var name="layoutName" value="Public Page" />
 		</execute>
 
 		<execute macro="Site#manageMembershipOptions">
 			<var name="allowManualMembershipManagement" value="false" />
 		</execute>
+
+		<!-- Add MySites widget -->
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />
@@ -513,6 +569,8 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="My Sites" />
 		</execute>
+
+		<!-- Assert user cannot join a site with disabled membership maanagement -->
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />
@@ -532,21 +590,19 @@
 
 	<command name="ViewNoLeaveOption" priority="3">
 		<description message="Assert a user cannot leave a site with manual membership management disabled" />
-
 		<property name="testray.component.names" value="Site Administration" />
+
+		<!-- Add new site with manual membership disabled -->
 
 		<execute macro="JSONGroup#addGroup">
 			<var name="groupName" value="Site Name" />
 		</execute>
 
-		<execute macro="JSONLayout#addPublicLayout">
-			<var name="groupName" value="Site Name" />
-			<var name="layoutName" value="Site Page" />
-		</execute>
-
 		<execute macro="Site#manageMembershipOptions">
 			<var name="allowManualMembershipManagement" value="false" />
 		</execute>
+
+		<!-- Add MySites widget -->
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />
@@ -556,6 +612,8 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="My Sites" />
 		</execute>
+
+		<!-- Assert superadmin cannot leave site -->
 
 		<execute macro="Search#searchPG">
 			<var name="portletName" value="My Sites" />
@@ -570,8 +628,9 @@
 
 	<command name="ViewSitePages" priority="3">
 		<description message="Assert a user can navigate to a Site's public or private pages via MySites widget" />
-
 		<property name="testray.component.names" value="Site Administration" />
+
+		<!-- Add a site with a public and private page -->
 
 		<execute macro="JSONGroup#addGroup">
 			<var name="groupName" value="Site Name" />
@@ -587,6 +646,8 @@
 			<var name="layoutName" value="Private Page" />
 		</execute>
 
+		<!-- Add MySites widget-->
+
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Home Site" />
@@ -595,6 +656,8 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="My Sites" />
 		</execute>
+
+		<!-- Go to public and private pages via MySites widget -->
 
 		<execute macro="MySites#gotoPagesPG">
 			<var name="menuItem" value="Go to Public Pages" />
@@ -616,8 +679,9 @@
 
 	<command name="ViewSiteWithTags" priority="4">
 		<description message="Assert that site tags appear in MySites widget" />
-
 		<property name="testray.component.names" value="Site Administration,Tags" />
+
+		<!-- Create a new site with tags -->
 
 		<execute macro="JSONGroup#addGroup">
 			<var name="groupName" value="Site Name" />
@@ -633,6 +697,8 @@
 			</execute>
 		</for>
 
+		<!-- Add MySites widget -->
+
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />
 			<var name="siteName" value="Home Site" />
@@ -641,6 +707,8 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="My Sites" />
 		</execute>
+
+		<!-- View Site tags via MySites widget -->
 
 		<execute macro="Site#viewMySitesViaMySitesPG">
 			<var name="memberCount" value="1" />

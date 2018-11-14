@@ -14,8 +14,10 @@
 
 package com.liferay.portal.spring.aop;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.reflect.AnnotationLocator;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.transaction.TransactionsUtil;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -25,6 +27,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -110,41 +113,17 @@ public class ServiceBeanAopCacheManager {
 		return annotation;
 	}
 
-	public ChainableMethodAdvice[] getMethodInterceptors(
-		Class<?> targetClass, Method method) {
-
-		ChainableMethodAdvice[] chainableMethodAdvices =
-			_chainableMethodAdvices.get(method);
-
-		if (chainableMethodAdvices == null) {
-			List<ChainableMethodAdvice> filteredChainableMethodAdvices =
-				new ArrayList<>();
-
-			for (ChainableMethodAdvice chainableMethodAdvice :
-					_fullChainableMethodAdvices) {
-
-				if (chainableMethodAdvice.isEnabled(targetClass, method)) {
-					filteredChainableMethodAdvices.add(chainableMethodAdvice);
-				}
-			}
-
-			if (filteredChainableMethodAdvices.isEmpty()) {
-				chainableMethodAdvices = _emptyChainableMethodAdvices;
-			}
-			else {
-				chainableMethodAdvices = filteredChainableMethodAdvices.toArray(
-					new ChainableMethodAdvice[
-						filteredChainableMethodAdvices.size()]);
-			}
-
-			_chainableMethodAdvices.put(method, chainableMethodAdvices);
+	public AopMethod getAopMethod(Object target, Method method) {
+		if (!TransactionsUtil.isEnabled()) {
+			return new AopMethod(target, method, _emptyChainableMethodAdvices);
 		}
 
-		return chainableMethodAdvices;
+		return _aopMethods.computeIfAbsent(
+			new CacheKey(target, method), this::_createAopMethod);
 	}
 
 	public void reset() {
-		_chainableMethodAdvices.clear();
+		_aopMethods.clear();
 	}
 
 	private static <T> T _findAnnotation(
@@ -168,6 +147,36 @@ public class ServiceBeanAopCacheManager {
 		}
 
 		return defaultValue;
+	}
+
+	private AopMethod _createAopMethod(CacheKey cacheKey) {
+		Object target = cacheKey._target;
+
+		Class<?> targetClass = target.getClass();
+
+		Method method = cacheKey._method;
+
+		List<ChainableMethodAdvice> filteredChainableMethodAdvices =
+			new ArrayList<>();
+
+		for (ChainableMethodAdvice chainableMethodAdvice :
+				_fullChainableMethodAdvices) {
+
+			if (chainableMethodAdvice.isEnabled(targetClass, method)) {
+				filteredChainableMethodAdvices.add(chainableMethodAdvice);
+			}
+		}
+
+		ChainableMethodAdvice[] chainableMethodAdvices =
+			_emptyChainableMethodAdvices;
+
+		if (!filteredChainableMethodAdvices.isEmpty()) {
+			chainableMethodAdvices = filteredChainableMethodAdvices.toArray(
+				new ChainableMethodAdvice[
+					filteredChainableMethodAdvices.size()]);
+		}
+
+		return new AopMethod(target, method, chainableMethodAdvices);
 	}
 
 	private void _registerAnnotationChainableMethodAdvice(
@@ -201,10 +210,42 @@ public class ServiceBeanAopCacheManager {
 	private final
 		Map<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>[]>
 			_annotationChainableMethodAdvices = new HashMap<>();
-	private final Map<Method, ChainableMethodAdvice[]> _chainableMethodAdvices =
+	private final Map<CacheKey, AopMethod> _aopMethods =
 		new ConcurrentHashMap<>();
 	private final ChainableMethodAdvice[] _fullChainableMethodAdvices;
 	private final Map<Method, Annotation[]> _methodAnnotations =
 		new ConcurrentHashMap<>();
+
+	private static class CacheKey {
+
+		@Override
+		public boolean equals(Object obj) {
+			CacheKey cacheKey = (CacheKey)obj;
+
+			if (Objects.equals(_target, cacheKey._target) &&
+				Objects.equals(_method, cacheKey._method)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		@Override
+		public int hashCode() {
+			int hash = HashUtil.hash(0, _target);
+
+			return HashUtil.hash(hash, _method);
+		}
+
+		private CacheKey(Object target, Method method) {
+			_target = target;
+			_method = method;
+		}
+
+		private final Method _method;
+		private final Object _target;
+
+	}
 
 }

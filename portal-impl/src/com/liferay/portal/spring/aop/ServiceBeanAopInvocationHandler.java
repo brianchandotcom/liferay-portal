@@ -14,8 +14,6 @@
 
 package com.liferay.portal.spring.aop;
 
-import com.liferay.portal.transaction.TransactionsUtil;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
@@ -39,18 +37,9 @@ public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 
-		ChainableMethodAdvice[] chainableMethodAdvices =
-			_emptyChainableMethodAdvices;
-
-		if (TransactionsUtil.isEnabled()) {
-			chainableMethodAdvices =
-				_serviceBeanAopCacheManager.getMethodInterceptors(
-					_target.getClass(), method);
-		}
-
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
 			new ServiceBeanMethodInvocation(
-				new AopMethod(_target, method, chainableMethodAdvices),
+				_serviceBeanAopCacheManager.getAopMethod(_target, method),
 				arguments);
 
 		return serviceBeanMethodInvocation.proceed();
@@ -61,9 +50,6 @@ public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 
 		_serviceBeanAopCacheManager.reset();
 	}
-
-	private static final ChainableMethodAdvice[] _emptyChainableMethodAdvices =
-		new ChainableMethodAdvice[0];
 
 	private final ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
 	private volatile Object _target;

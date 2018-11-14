@@ -1,6 +1,6 @@
 <definition component-name="portal-project-template">
 	<property name="portal.acceptance" value="true" />
-	<property name="portal.release" value="true" />
+	<property name="portal.release" value="false" />
 	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Project Templates" />
 

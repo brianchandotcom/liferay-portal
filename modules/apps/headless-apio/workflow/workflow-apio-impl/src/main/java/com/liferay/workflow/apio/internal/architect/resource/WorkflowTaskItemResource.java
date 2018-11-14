@@ -131,7 +131,7 @@ public class WorkflowTaskItemResource
 		Long workflowTaskId, AssignToUserForm assignToMeForm, Company company,
 		CurrentUser currentUser) {
 
-		long assigneeUserId = assignToMeForm.getUserId();
+		long assigneeUserId = assignToMeForm.getAssigneeId();
 
 		return Try.fromFallible(
 			() -> _workflowTaskManager.assignWorkflowTaskToUser(

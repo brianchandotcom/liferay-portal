@@ -110,7 +110,7 @@
 
 		<execute macro="WebContentTemplates#viewTableEntryCP">
 			<var name="templateName" value="WC Template Name" />
-			<var name="templateSmallImage" value="WC Template Name" />
+			<var name="templateSmallImage" value="true" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -136,7 +136,7 @@
 
 		<execute macro="WebContentTemplates#viewTableEntryCP">
 			<var name="templateName" value="WC Template Name" />
-			<var name="templateSmallImage" value="WC Template Name" />
+			<var name="templateSmallImage" value="true" />
 		</execute>
 	</command>
 

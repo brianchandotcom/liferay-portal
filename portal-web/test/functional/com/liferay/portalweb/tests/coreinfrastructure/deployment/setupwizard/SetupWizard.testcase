@@ -7,6 +7,7 @@
 	<command name="HypersonicToHypersonic" priority="5">
 		<property name="database.types" value="hypersonic" />
 		<property name="portal.acceptance" value="true" />
+		<property name="test.name.skip.portal.instance" value="SetupWizard#HypersonicToHypersonic" />
 
 		<execute macro="SetupWizard#configurePG">
 			<var name="administratorEmail" value="test@liferay.com" />
@@ -27,6 +28,7 @@
 	<command name="HypersonicToMySQL" priority="5">
 		<property name="database.types" value="mysql" />
 		<property name="portal.acceptance" value="true" />
+		<property name="test.name.skip.portal.instance" value="SetupWizard#HypersonicToMySQL" />
 
 		<execute macro="SetupWizard#configurePG">
 			<var name="administratorEmail" value="test@liferay.com" />
@@ -47,6 +49,7 @@
 	<command name="HypersonicWithSpecialContent" priority="5">
 		<property name="database.types" value="hypersonic" />
 		<property name="portal.acceptance" value="false" />
+		<property name="test.name.skip.portal.instance" value="SetupWizard#HypersonicWithSpecialContent" />
 
 		<execute macro="SetupWizard#configurePortalNamePG">
 			<var name="portalName" value="" />
@@ -101,6 +104,7 @@
 
 	<command name="MySQLWithXSSContent" priority="5">
 		<property name="database.types" value="mysql" />
+		<property name="test.name.skip.portal.instance" value="SetupWizard#MySQLWithXSSContent" />
 
 		<execute macro="SetupWizard#configurePG">
 			<var name="administratorEmail" value="test@liferay.com" />

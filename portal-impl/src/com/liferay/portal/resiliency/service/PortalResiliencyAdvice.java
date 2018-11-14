@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.security.access.control.AccessControl;
 import com.liferay.portal.kernel.security.access.control.AccessControlThreadLocal;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
@@ -95,6 +96,10 @@ public class PortalResiliencyAdvice
 
 	@Override
 	public boolean isEnabled(Class<?> targetClass, Method method) {
+		if (!PropsValues.PORTAL_RESILIENCY_ENABLED) {
+			return false;
+		}
+
 		if (!super.isEnabled(targetClass, method)) {
 			return false;
 		}

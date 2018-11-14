@@ -185,7 +185,7 @@
 	</command>
 
 	<command name="AssertNavigationMenuNotCreatedByDefault" priority="3">
-		<description message="This is a use case for LPS-87134. We assert that navigation menus are not automatically created, even if a page is created." />
+		<description message="This is a test for LPS-87134. We assert that navigation menus are not automatically created, even if a page is created." />
 
 		<!-- Create a public and private page -->
 
@@ -365,7 +365,7 @@
 	</command>
 
 	<command name="ToggleAutomaticallyAddNewPagesToNavigationMenu" priority="5">
-		<description message="This is a use case for LPS-87134. We assert that the option to automatically add new pages to a navigation menu works as expected." />
+		<description message="This is a test for LPS-87134. We assert that the option to automatically add new pages to a navigation menu works as expected." />
 
 		<!-- Create navigation menus and enable option to add new pages to navigation menu -->
 

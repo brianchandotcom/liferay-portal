@@ -4,7 +4,7 @@
 	<property name="testray.main.component.name" value="Navigation" />
 
 	<command name="AddURLNavigationMenu" priority="4">
-		<description message="This is a use case for LPS-75059." />
+		<description message="This is a test for LPS-75059." />
 
 		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Test Site Name" />
@@ -49,7 +49,7 @@
 	</command>
 
 	<command name="AddSubmenuNavigationMenu" priority="5">
-		<description message="This is a use case for LPS-75061" />
+		<description message="This is a test for LPS-75061" />
 
 		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
 			<var name="siteURLKey" value="test-site-name" />
@@ -111,7 +111,7 @@
 	</command>
 
 	<command name="EditNavigationMenuPageItemName" priority="5">
-		<description message="This is a usecase for LPS-76658" />
+		<description message="This is a test for LPS-76658" />
 		<property name="portal.acceptance" value="true" />
 
 		<for list="1,2" param="index">

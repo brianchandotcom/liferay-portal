@@ -30,7 +30,7 @@
 	</tear-down>
 
 	<command name="AddChildPage" priority="5">
-		<description message="This is a usecase of LPS-87134. Assert we can navigate to a child page in the navigation menu widget using pages hierarchy menu." />
+		<description message="This is a test for LPS-87134. Assert we can navigate to a child page in the navigation menu widget using pages hierarchy menu." />
 
 		<!-- Add page and child page -->
 
@@ -59,7 +59,7 @@
 	</command>
 
 	<command name="AddMultiplePages" priority="5">
-		<description message="This is a usecase of LPS-87134. Assert we can navigate to different pages in the navigation menu widget using pages hierarchy menu." />
+		<description message="This is a test for LPS-87134. Assert we can navigate to different pages in the navigation menu widget using pages hierarchy menu." />
 
 		<!-- Add multiple pages -->
 
@@ -81,7 +81,7 @@
 	</command>
 
 	<command name="AssertPagesHierarchyNavigationIsDefault" priority="3">
-		<description message="This is a usecase of LPS-87134. Assert Pages Hierarchy is the default navigation in the Navigation Menu widget. If this fails we need to either report this as a bug or adjust the rest of the tests in this testcase to set pages hierarchy as the default in the navigation menu widget." />
+		<description message="This is a test for LPS-87134. Assert Pages Hierarchy is the default navigation in the Navigation Menu widget. If this fails we need to either report this as a bug or adjust the rest of the tests in this testcase to set pages hierarchy as the default in the navigation menu widget." />
 
 		<!-- Add default page and navigate to site -->
 
@@ -102,7 +102,7 @@
 	</command>
 
 	<command name="HidePages" priority="4">
-		<description message="This is a usecase of LPS-87134. Assert we can hide pages in the navigation menu widget using pages hierarchy menu." />
+		<description message="This is a test for LPS-87134. Assert we can hide pages in the navigation menu widget using pages hierarchy menu." />
 
 		<!-- Add two pages -->
 

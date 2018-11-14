@@ -41,38 +41,19 @@ public abstract class BaseWorkspaceGitRepository
 	public List<List<LocalGitCommit>> getCommitGroups(
 		List<LocalGitCommit> localGitCommits, int count) {
 
-		if (count >= localGitCommits.size()) {
-			List<List<LocalGitCommit>> commitGroups = new ArrayList<>();
+		int localGitCommitsSize = localGitCommits.size();
 
-			for (LocalGitCommit localGitCommit : localGitCommits) {
-				commitGroups.add(Lists.newArrayList(localGitCommit));
+		int groupSize = 1;
+
+		if (localGitCommitsSize > count) {
+			groupSize = localGitCommitsSize / count;
+
+			if ((localGitCommitsSize % count) > 0) {
+				groupSize++;
 			}
-
-			return commitGroups;
 		}
 
-		List<List<LocalGitCommit>> commitGroups = new ArrayList<>();
-
-		int totalCommitCount = localGitCommits.size();
-
-		int commitGroupSize = totalCommitCount / (count - 1);
-
-		List<LocalGitCommit> commitGroup = null;
-
-		for (int i = 0; i < (totalCommitCount - 1); i++) {
-			if ((i % commitGroupSize) == 0) {
-				commitGroup = new ArrayList<>();
-
-				commitGroups.add(commitGroup);
-			}
-
-			commitGroup.add(localGitCommits.get(i));
-		}
-
-		commitGroups.add(
-			Lists.newArrayList(localGitCommits.get(totalCommitCount - 1)));
-
-		return commitGroups;
+		return Lists.partition(localGitCommits, groupSize);
 	}
 
 	@Override

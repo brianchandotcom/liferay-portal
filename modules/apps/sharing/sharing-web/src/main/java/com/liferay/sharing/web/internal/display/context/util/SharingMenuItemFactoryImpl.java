@@ -46,8 +46,8 @@ import java.util.ResourceBundle;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
-
 import javax.portlet.WindowStateException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -120,7 +120,7 @@ public class SharingMenuItemFactoryImpl
 		template.put("namespace", liferayPortletResponse.getNamespace());
 		template.put(
 			"sharingDialogId",
-			_getSharingDialogId(liferayPortletResponse.getNamespace()));
+			liferayPortletResponse.getNamespace() + "sharingDialogId");
 
 		template.processTemplate(unsyncStringWriter);
 
@@ -163,7 +163,7 @@ public class SharingMenuItemFactoryImpl
 			"refererPortletNamespace", liferayPortletResponse.getNamespace());
 		sharingURL.setParameter(
 			"sharingDialogId",
-			_getSharingDialogId(liferayPortletResponse.getNamespace()));
+			liferayPortletResponse.getNamespace() + "sharingDialogId");
 
 		try {
 			sharingURL.setWindowState(LiferayWindowState.POP_UP);
@@ -182,10 +182,6 @@ public class SharingMenuItemFactoryImpl
 		sb.append("');");
 
 		return sb.toString();
-	}
-
-	private String _getSharingDialogId(String namespace) {
-		return namespace.concat("sharingDialogId");
 	}
 
 	@Reference

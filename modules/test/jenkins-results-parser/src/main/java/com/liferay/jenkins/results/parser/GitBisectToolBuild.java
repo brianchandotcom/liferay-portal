@@ -216,7 +216,7 @@ public class GitBisectToolBuild extends TopLevelBuild {
 		GitCommitGroup gitCommitGroup = null;
 
 		List<LocalGitCommit> localGitCommits =
-			_workspaceGitRepository.getHistoricalLocalGitCommits();
+			_workspaceGitRepository.getCommitHistory();
 
 		for (int i = 0; i < localGitCommits.size(); i++) {
 			LocalGitCommit localGitCommit = localGitCommits.get(i);

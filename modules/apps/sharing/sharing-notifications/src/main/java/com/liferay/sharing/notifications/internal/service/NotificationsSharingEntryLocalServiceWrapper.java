@@ -14,7 +14,6 @@
 
 package com.liferay.sharing.notifications.internal.service;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.notifications.internal.util.SharingNotificationSubcriptionSender;
@@ -38,7 +36,6 @@ import com.liferay.sharing.service.SharingEntryLocalServiceWrapper;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -100,21 +97,6 @@ public class NotificationsSharingEntryLocalServiceWrapper
 		return sharingEntry;
 	}
 
-	private String _getMessageBody(
-		SharingEntry sharingEntry, User user, String entryURL) {
-
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(user.getLocale());
-
-		String linkText = ResourceBundleUtil.getString(
-			resourceBundle, "view-x",
-			_sharingNotificationUtil.getSharingEntryObjectTitle(
-				sharingEntry, user.getLocale()));
-
-		return StringBundler.concat(
-			"<a href=\"", entryURL, "\">", linkText, "</a>");
-	}
-
 	private void _sendNotificationEvent(
 		SharingEntry sharingEntry, int notificationType,
 		ServiceContext serviceContext) {
@@ -135,7 +117,8 @@ public class NotificationsSharingEntryLocalServiceWrapper
 				sharingEntry, serviceContext.getLiferayPortletRequest());
 
 			sharingNotificationSubcriptionSender.setBody(
-				_getMessageBody(sharingEntry, user, entryURL));
+				_sharingNotificationUtil.getNotificationEmailBody(
+					sharingEntry, serviceContext.getLiferayPortletRequest()));
 
 			sharingNotificationSubcriptionSender.setUserNotificationMessage(
 				_sharingNotificationUtil.getNotificationMessage(

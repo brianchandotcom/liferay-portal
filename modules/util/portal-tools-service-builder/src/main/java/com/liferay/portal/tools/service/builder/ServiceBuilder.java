@@ -3861,7 +3861,14 @@ public class ServiceBuilder {
 
 		Map<String, Object> context = _getContext();
 
-		context.put("uadBundleName", _getUADBundleName(uadApplicationName));
+		context.put(
+			"uadBundleName",
+			StringBundler.concat(
+				"Liferay ",
+				TextFormatter.format(
+					TextFormatter.format(uadApplicationName, TextFormatter.K),
+					TextFormatter.J),
+				" UAD"));
 		context.put("uadPackagePath", entity.getUADPackagePath());
 
 		String content = _processTemplate(_tplUADBnd, context);
@@ -4939,13 +4946,6 @@ public class ServiceBuilder {
 		Collections.sort(transients);
 
 		return transients;
-	}
-
-	private String _getUADBundleName(String uadApplicationName) {
-		return "Liferay " +
-			TextFormatter.format(
-				TextFormatter.format(uadApplicationName, TextFormatter.K),
-				TextFormatter.J) + " UAD";
 	}
 
 	private List<Path> _getUpdateSQLFilePaths() throws IOException {

@@ -4961,6 +4961,12 @@ JAR files.
 - [LPS-87006]: Skip copying `compileInclude` configuration dependencies sources
 if the sources JAR contains invalid entries.
 
+## 5.5.110 - 2018-11-13
+
+### Changed
+- [LPS-87293]: Update the [Liferay Gradle Plugins] dependency to version
+3.13.12.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -5466,6 +5472,7 @@ if the sources JAR contains invalid entries.
 [LPS-86835]: https://issues.liferay.com/browse/LPS-86835
 [LPS-86916]: https://issues.liferay.com/browse/LPS-86916
 [LPS-87006]: https://issues.liferay.com/browse/LPS-87006
+[LPS-87293]: https://issues.liferay.com/browse/LPS-87293
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

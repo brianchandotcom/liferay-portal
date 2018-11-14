@@ -14,8 +14,10 @@
 
 package com.liferay.portal.odata.internal.sort;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.sort.InvalidSortException;
@@ -25,6 +27,7 @@ import com.liferay.portal.odata.sort.SortParser;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -89,6 +92,36 @@ public class SortParserImpl implements SortParser {
 		);
 	}
 
+	protected Optional<EntityField> getEntityFieldOptional(
+		Map<String, EntityField> entityFieldsMap, String fieldName) {
+
+		if (fieldName.contains(StringPool.FORWARD_SLASH)) {
+			List<String> list = StringUtil.split(fieldName, '/');
+
+			String complexTypeName = list.get(0);
+
+			EntityField entityField = entityFieldsMap.get(complexTypeName);
+
+			if ((entityField == null) ||
+				!Objects.equals(
+					EntityField.Type.COMPLEX, entityField.getType())) {
+
+				throw new InvalidSortException(
+					"Unable to sort because: " + fieldName +
+						" is not a complex field");
+			}
+
+			ComplexEntityField complexEntityField =
+				(ComplexEntityField)entityField;
+
+			return getEntityFieldOptional(
+				complexEntityField.getEntityFieldsMap(),
+				fieldName.substring(complexTypeName.length() + 1));
+		}
+
+		return Optional.ofNullable(entityFieldsMap.get(fieldName));
+	}
+
 	protected Optional<SortField> getSortFieldOptional(String sortString) {
 		List<String> list = StringUtil.split(sortString, ':');
 
@@ -103,23 +136,24 @@ public class SortParserImpl implements SortParser {
 
 		String fieldName = list.get(0);
 
-		boolean ascending = _ASC_DEFAULT;
+		final boolean ascending;
 
 		if (list.size() > 1) {
 			ascending = isAscending(list.get(1));
 		}
-
-		Map<String, EntityField> entityFieldsMap =
-			_entityModel.getEntityFieldsMap();
-
-		EntityField entityField = entityFieldsMap.get(fieldName);
-
-		if (entityField == null) {
-			throw new InvalidSortException(
-				"Unable to sort by field: " + fieldName);
+		else {
+			ascending = _ASC_DEFAULT;
 		}
 
-		return Optional.of(new SortField(entityField, ascending));
+		Optional<EntityField> entityFieldOptional = getEntityFieldOptional(
+			_entityModel.getEntityFieldsMap(), fieldName);
+
+		return entityFieldOptional.map(
+			entityField -> Optional.of(new SortField(entityField, ascending))
+		).orElseThrow(
+			() -> new InvalidSortException(
+				"Unable to sort by field: " + fieldName)
+		);
 	}
 
 	protected boolean isAscending(String orderBy) {

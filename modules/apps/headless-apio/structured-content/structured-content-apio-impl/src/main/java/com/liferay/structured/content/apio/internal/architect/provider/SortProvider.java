@@ -15,6 +15,8 @@
 package com.liferay.structured.content.apio.internal.architect.provider;
 
 import com.liferay.apio.architect.provider.Provider;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.sort.Sort;
 import com.liferay.portal.odata.sort.SortParser;
@@ -24,6 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Cristina González
@@ -43,8 +47,29 @@ public class SortProvider implements Provider<Sort> {
 	}
 
 	@Reference(
-		target = "(entity.model.name=" + StructuredContentEntityModel.NAME + ")"
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(entity.model.name=" + StructuredContentEntityModel.NAME + ")",
+		unbind = "unbind"
 	)
+	public void setSortParser(SortParser sortParser) {
+		if (_log.isInfoEnabled()) {
+			_log.info("Binding " + sortParser);
+		}
+
+		_sortParser = sortParser;
+	}
+
+	public void unbind(SortParser sortParser) {
+		if (_log.isInfoEnabled()) {
+			_log.info("Unbinding " + sortParser);
+		}
+
+		_sortParser = null;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(SortProvider.class);
+
 	private SortParser _sortParser;
 
 }

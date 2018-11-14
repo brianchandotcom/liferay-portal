@@ -34,34 +34,6 @@ public class DetailASTUtil {
 		return _getAllChildTokens(detailAST, recursive, null, tokenTypes);
 	}
 
-	public static int getEndLineNumber(DetailAST detailAST) {
-		int endLineNumber = detailAST.getLineNo();
-
-		for (DetailAST childDetailAST :
-				getAllChildTokens(detailAST, true, ALL_TYPES)) {
-
-			if (childDetailAST.getLineNo() > endLineNumber) {
-				endLineNumber = childDetailAST.getLineNo();
-			}
-		}
-
-		return endLineNumber;
-	}
-
-	public static int getStartLineNumber(DetailAST detailAST) {
-		int startLineNumber = detailAST.getLineNo();
-
-		for (DetailAST childDetailAST :
-				getAllChildTokens(detailAST, true, ALL_TYPES)) {
-
-			if (childDetailAST.getLineNo() < startLineNumber) {
-				startLineNumber = childDetailAST.getLineNo();
-			}
-		}
-
-		return startLineNumber;
-	}
-
 	public static boolean hasParentWithTokenType(
 		DetailAST detailAST, int... tokenTypes) {
 

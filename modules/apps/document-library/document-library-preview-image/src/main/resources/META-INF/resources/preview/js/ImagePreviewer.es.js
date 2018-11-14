@@ -1,7 +1,8 @@
+import {Config} from 'metal-state';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+
 import templates from './ImagePreviewer.soy';
-import {Config} from 'metal-state';
 
 /**
  * Available zoom sizes
@@ -131,21 +132,21 @@ class ImagePreviewer extends Component {
 
 		let zoomValue;
 
-		switch (value) {
-		case 'in':
-			zoomValue = ZOOM_LEVELS
-				.find((zoom) => zoom > this.currentZoom);
-			break;
-		case 'out':
-			zoomValue = ZOOM_LEVELS_REVERSED
-				.find((zoom) => zoom < this.currentZoom);
-			break;
-		case 'real':
+		if (value === 'in') {
+			zoomValue = ZOOM_LEVELS.find(
+				zoom => zoom > this.currentZoom
+			);
+		}
+		else if (value === 'out') {
+			zoomValue = ZOOM_LEVELS_REVERSED.find(
+				zoom => zoom < this.currentZoom
+			);
+		}
+		else if (value === 'real') {
 			zoomValue = 1;
-			break;
-		case 'fit':
+		}
+		else if (value === 'fit') {
 			this._clearZoom();
-			break;
 		}
 
 		if (zoomValue) {

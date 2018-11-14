@@ -81,12 +81,13 @@ public interface StructuredContentField {
 	public String getName();
 
 	/**
-	 * Returns the nested fields of the structured content field.
+	 * Returns the nested structured content fields of the structured content
+	 * field.
 	 *
 	 * @return the nested fields.
 	 *
 	 * @review
 	 */
-	public List<StructuredContentField> getNestedFields();
+	public List<StructuredContentField> getNestedStructuredContentFields();
 
 }

@@ -1,0 +1,72 @@
+<definition component-name="portal-wcm">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Fragments" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Test Site Name" />
+		</execute>
+
+		<execute macro="JSONFragment#addFragmentCollection">
+			<var name="groupName" value="Test Site Name" />
+			<var name="name" value="Collection Name" />
+		</execute>
+
+		<execute macro="FragmentsAdmin#openFragmentsAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="JSONGroup#deleteGroupByName">
+					<var name="groupName" value="Test Site Name" />
+				</execute>
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="AutocompleteFragment" priority="4">
+		<description message="This is a usecase of LPS-80503. Assert that when lfr is typed within a tag, a list of choices to autocomplete the fragment are presented." />
+
+		<!-- Go to fragments editor -->
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
+		</execute>
+
+		<execute macro="FragmentsAdmin#addFragment">
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
+		<!-- Autocomplete editable fragment -->
+
+		<var name="fragmentHTML"><![CDATA[<lfr-editable id="" type="image">]]></var>
+
+		<execute macro="FragmentsAdmin#autocompleteFragmentHTML">
+			<var name="autocompleteField" value="lfr-editable:image" />
+			<var name="fragmentHTML" value="${fragmentHTML}" />
+		</execute>
+
+		<!-- Autocomplete widget fragment -->
+
+		<var name="fragmentHTML"><![CDATA[<lfr-widget-asset-list>]]></var>
+
+		<execute macro="FragmentsAdmin#autocompleteFragmentHTML">
+			<var name="autocompleteField" value="lfr-widget-asset-list" />
+			<var name="fragmentHTML" value="${fragmentHTML}" />
+		</execute>
+	</command>
+</definition>

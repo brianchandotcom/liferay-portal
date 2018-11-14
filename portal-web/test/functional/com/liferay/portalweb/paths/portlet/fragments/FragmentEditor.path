@@ -9,8 +9,18 @@
 </thead>
 <tbody>
 <tr>
+	<td>AUTOCOMPLETE_FIELD</td>
+	<td>//ul[contains(@class,'ace-autocomplete-results')]//li[contains(.,'${autocompleteField}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HTML_EDITOR</td>
 	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][1]//textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HTML_EDITOR_CONTENT</td>
+	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][1]//div[contains(@class,'ace_content')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -21,6 +31,11 @@
 <tr>
 	<td>JAVASCRIPT_EDITOR</td>
 	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][3]//textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LFR-EDITABLE</td>
+	<td>//lfr-editable[contains(@type,'${key_type}')]</td>
 	<td></td>
 </tr>
 <tr>

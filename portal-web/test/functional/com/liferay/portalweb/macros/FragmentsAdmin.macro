@@ -40,6 +40,18 @@
 		<execute macro="Button#clickSave" />
 	</command>
 
+	<command name="autocompleteFragmentHTML" summary="Type HTML into the fragment HTML editor using the auto complete feature.">
+		<var name="htmlSnippet"><![CDATA[<lfr-]]></var>
+
+		<execute function="Type#typeAceEditorNoError" locator1="FragmentEditor#HTML_EDITOR" value1="${htmlSnippet}" />
+
+		<execute function="Click" locator1="FragmentEditor#AUTOCOMPLETE_FIELD">
+			<var name="autocompleteField" value="${autocompleteField}" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="FragmentEditor#HTML_EDITOR_CONTENT" value1="${fragmentHTML}" />
+	</command>
+
 	<command name="exportCollection">
 		<execute macro="Navigator#gotoNavNested">
 			<var name="navNested" value="${collectionName}" />

@@ -892,7 +892,6 @@ public class ServiceBuilder {
 
 					_createUADBnd(uadApplicationName);
 					_createUADConstants(uadApplicationName);
-					_createUADTestBnd(uadApplicationName);
 				}
 
 				_deleteOrmXml();
@@ -3932,35 +3931,6 @@ public class ServiceBuilder {
 		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
-	private void _createUADTestBnd(String uadApplicationName) throws Exception {
-		List<Entity> entities = _uadApplicationEntities.get(uadApplicationName);
-
-		Entity entity = entities.get(0);
-
-		String uadTestIntegrationOutputPath =
-			entity.getUADTestIntegrationOutputPath();
-
-		int index = uadTestIntegrationOutputPath.indexOf("/src/");
-
-		String uadTestIntegrationDirName =
-			uadTestIntegrationOutputPath.substring(0, index);
-
-		File file = new File(uadTestIntegrationDirName + "/bnd.bnd");
-
-		if (file.exists()) {
-			return;
-		}
-
-		Map<String, Object> context = _getContext();
-
-		context.put("uadBundleName", _getUADBundleName(uadApplicationName));
-		context.put("uadPackagePath", entity.getUADPackagePath());
-
-		String content = _processTemplate(_tplUADTestBnd, context);
-
-		ToolsUtil.writeFileRaw(file, content, _modifiedFileNames);
-	}
-
 	private void _deleteFile(String fileName) {
 		File file = new File(fileName);
 
@@ -6977,7 +6947,6 @@ public class ServiceBuilder {
 	private String _tplUADConstants = _TPL_ROOT + "uad_constants.ftl";
 	private String _tplUADDisplay = _TPL_ROOT + "uad_display.ftl";
 	private String _tplUADExporter = _TPL_ROOT + "uad_exporter.ftl";
-	private String _tplUADTestBnd = _TPL_ROOT + "uad_test_bnd.ftl";
 	private Map<String, List<Entity>> _uadApplicationEntities = new HashMap<>();
 	private String _uadDirName;
 

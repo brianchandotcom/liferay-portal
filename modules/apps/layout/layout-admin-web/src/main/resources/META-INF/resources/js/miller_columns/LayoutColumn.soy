@@ -158,13 +158,11 @@
 	<li {$listGroupItemAttributes}>
 		<div class="autofit-row autofit-row-center">
 			{if $layoutColumnItem.plid != '0'}
-				<div class="autofit-col">
-					<span class="layout-drag-handler">
-						{call .lexiconIcon}
-							{param name: 'drag' /}
-							{param pathThemeImages: $pathThemeImages /}
-						{/call}
-					</span>
+				<div class="layout-drag-handler">
+					{call .lexiconIcon}
+						{param name: 'drag' /}
+						{param pathThemeImages: $pathThemeImages /}
+					{/call}
 				</div>
 
 				{let $layoutColumnItemAttributes kind="attributes"}
@@ -354,14 +352,12 @@
 					</div>
 				{/if}
 
-				<div class="flex-col layout-has-child-col">
+				<div class="layout-has-child-col">
 					{if $layoutColumnItem.hasChild}
-						<div class="component-action disabled">
-							{call .lexiconIcon}
-								{param name: 'caret-right' /}
-								{param pathThemeImages: $pathThemeImages /}
-							{/call}
-						</div>
+						{call .lexiconIcon}
+							{param name: 'caret-right' /}
+							{param pathThemeImages: $pathThemeImages /}
+						{/call}
 					{/if}
 				</div>
 			{/if}

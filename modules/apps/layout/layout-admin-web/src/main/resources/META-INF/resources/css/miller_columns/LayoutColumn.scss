@@ -70,21 +70,22 @@
 }
 
 .layout-drag-handler {
+	align-items: center;
 	color: #CDCED9;
 	cursor: move;
-}
+	display: inline-flex;
 
-.layout-drag-handler svg {
-	height: 24px;
-	width: 24px;
+	svg {
+		height: 24px;
+		width: 24px;
+	}
 }
 
 .layout-has-child-col {
-	min-width: 32px;
-}
-
-.layout-has-child-col .component-action {
-	cursor: inherit;
+	align-items: center;
+	color: #CDCED9;
+	display: inline-flex;
+	min-width: 16px;
 }
 
 .list-group-item.layout-item {

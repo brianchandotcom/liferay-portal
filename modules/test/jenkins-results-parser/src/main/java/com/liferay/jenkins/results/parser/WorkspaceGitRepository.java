@@ -24,6 +24,9 @@ public interface WorkspaceGitRepository extends LocalGitRepository {
 
 	public static final Integer MAX_COMMIT_HISTORY = 25000;
 
+	public List<List<LocalGitCommit>> getCommitGroups(
+		List<LocalGitCommit> localGitCommits, int count);
+
 	public List<LocalGitCommit> getCommitHistory();
 
 	public List<LocalGitCommit> getCommitsInRange(

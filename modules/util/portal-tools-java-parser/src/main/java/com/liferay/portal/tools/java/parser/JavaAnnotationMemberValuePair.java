@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 /**
  * @author Hugo Huijser
  */
@@ -31,7 +33,22 @@ public class JavaAnnotationMemberValuePair extends BaseJavaTerm {
 	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength) {
 
-		return "TODO";
+		StringBundler sb = new StringBundler();
+
+		if (_valueJavaExpression instanceof JavaArray) {
+			sb.append(_name.toString(indent, prefix, " =", -1));
+
+			append(
+				sb, _valueJavaExpression, indent, " ", suffix, maxLineLength,
+				false);
+
+			return sb.toString();
+		}
+
+		sb.append(_name.toString(indent, prefix, " = ", -1));
+		sb.append(_valueJavaExpression.toString("", "", suffix, -1));
+
+		return sb.toString();
 	}
 
 	private final JavaSimpleValue _name;

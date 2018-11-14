@@ -39,8 +39,6 @@ Liferay-JS-Resources-Top-Head:\
 	/loader/config.js,\
 	/loader/loader.js,\
 	\
-	/lodash/lodash.js,\
-	\
 	/aui/aui/aui.js,\
 	/aui/aui-base-html5-shiv/aui-base-html5-shiv.js,\
 	\
@@ -54,8 +52,6 @@ Liferay-JS-Resources-Top-Head:\
 	\
 	/jquery/fm.js,\
 	/jquery/form.js,\
-	\
-	/lodash/util.js,\
 	\
 	/misc/svg4everybody.js,\
 	\

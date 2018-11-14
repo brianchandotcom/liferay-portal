@@ -127,8 +127,9 @@
 		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
 	</command>
 
-	<command name="ViewConfigedSetupWizardValue" priority="5">
+	<command name="ViewConfiguredSetupWizardValue" priority="5">
 		<property name="database.types" value="mysql" />
+		<property name="test.name.skip.portal.instance" value="SetupWizard#ViewConfiguredSetupWizardValue" />
 
 		<execute macro="SetupWizard#configurePG">
 			<var name="administratorEmail" value="user@liferay.com" />
@@ -154,10 +155,10 @@
 				<contains string="${fileContent}" substring="default.admin.last.name=User" />
 			</and>
 			<then>
-				<echo message="Save the configuration in portal file portal-setup-wizard.properties successfully" />
+				<echo message="The configuration was saved successfully in portal-setup-wizard.properties!" />
 			</then>
 			<else>
-				<fail message="Fail to save the configuration in portal file portal-setup-wizard.properties" />
+				<fail message="Fail to save the configuration in portal file portal-setup-wizard.properties." />
 			</else>
 		</if>
 	</command>

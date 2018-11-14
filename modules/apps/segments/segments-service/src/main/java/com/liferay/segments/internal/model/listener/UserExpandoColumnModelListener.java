@@ -64,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author David Arques
  */
 @Component(immediate = true, service = ModelListener.class)
-public class ExpandoColumnModelListener
+public class UserExpandoColumnModelListener
 	extends BaseModelListener<ExpandoColumn> {
 
 	@Activate
@@ -299,7 +299,7 @@ public class ExpandoColumnModelListener
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ExpandoColumnModelListener.class);
+		UserExpandoColumnModelListener.class);
 
 	private BundleContext _bundleContext;
 

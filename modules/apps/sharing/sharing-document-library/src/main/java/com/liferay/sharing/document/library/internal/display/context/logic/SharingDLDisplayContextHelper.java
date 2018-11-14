@@ -63,9 +63,6 @@ public class SharingDLDisplayContextHelper {
 
 		_fileEntry = fileEntry;
 		_request = request;
-
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
 	}
 
 	public JavaScriptMenuItem getJavacriptEditWithImageEditorMenuItem(
@@ -96,39 +93,6 @@ public class SharingDLDisplayContextHelper {
 		javaScriptToolbarItem.setOnClick(_getOnclickMethod(resourceBundle));
 
 		return javaScriptToolbarItem;
-	}
-
-	public boolean isShowActions() throws PortalException {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
-		String portletName = portletDisplay.getPortletName();
-
-		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-			return true;
-		}
-
-		Settings settings = SettingsFactoryUtil.getSettings(
-			new PortletInstanceSettingsLocator(
-				_themeDisplay.getLayout(), portletDisplay.getId()));
-
-		TypedSettings typedSettings = new TypedSettings(settings);
-
-		return typedSettings.getBooleanValue("showActions");
-	}
-
-	public boolean isShowShareAction() throws PortalException {
-		if (_showImageEditorAction != null) {
-			return _showImageEditorAction;
-		}
-
-		if (!_themeDisplay.isSignedIn() || !isShowActions()) {
-			_showImageEditorAction = false;
-		}
-		else {
-			_showImageEditorAction = true;
-		}
-
-		return _showImageEditorAction;
 	}
 
 	private String _getJavaScript() throws PortalException {
@@ -217,7 +181,5 @@ public class SharingDLDisplayContextHelper {
 
 	private final FileEntry _fileEntry;
 	private final HttpServletRequest _request;
-	private Boolean _showImageEditorAction;
-	private final ThemeDisplay _themeDisplay;
 
 }

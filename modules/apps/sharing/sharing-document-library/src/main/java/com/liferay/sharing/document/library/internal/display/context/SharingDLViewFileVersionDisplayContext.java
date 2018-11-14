@@ -14,6 +14,7 @@
 
 package com.liferay.sharing.document.library.internal.display.context;
 
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -21,6 +22,13 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
+import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
+import com.liferay.portal.kernel.settings.TypedSettings;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.document.library.internal.display.context.logic.SharingDLDisplayContextHelper;
 
 import java.util.List;
@@ -46,13 +54,15 @@ public class SharingDLViewFileVersionDisplayContext
 
 		_resourceBundle = resourceBundle;
 		_sharingDLDisplayContextHelper = sharingDLDisplayContextHelper;
+		_themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
 	public Menu getMenu() throws PortalException {
 		Menu menu = super.getMenu();
 
-		if (!_sharingDLDisplayContextHelper.isShowShareAction()) {
+		if (!_isShowShareAction()) {
 			return menu;
 		}
 
@@ -69,7 +79,7 @@ public class SharingDLViewFileVersionDisplayContext
 	public List<ToolbarItem> getToolbarItems() throws PortalException {
 		List<ToolbarItem> toolbarItems = super.getToolbarItems();
 
-		if (!_sharingDLDisplayContextHelper.isShowShareAction()) {
+		if (!_isShowShareAction()) {
 			return toolbarItems;
 		}
 
@@ -80,10 +90,45 @@ public class SharingDLViewFileVersionDisplayContext
 		return toolbarItems;
 	}
 
+	private boolean _isShowActions() throws PortalException {
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		String portletName = portletDisplay.getPortletName();
+
+		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+			return true;
+		}
+
+		Settings settings = SettingsFactoryUtil.getSettings(
+			new PortletInstanceSettingsLocator(
+				_themeDisplay.getLayout(), portletDisplay.getId()));
+
+		TypedSettings typedSettings = new TypedSettings(settings);
+
+		return typedSettings.getBooleanValue("showActions");
+	}
+
+	private boolean _isShowShareAction() throws PortalException {
+		if (_showImageEditorAction != null) {
+			return _showImageEditorAction;
+		}
+
+		if (!_themeDisplay.isSignedIn() || !_isShowActions()) {
+			_showImageEditorAction = false;
+		}
+		else {
+			_showImageEditorAction = true;
+		}
+
+		return _showImageEditorAction;
+	}
+
 	private static final UUID _UUID = UUID.fromString(
 		"6d7d30de-01fa-49db-a422-d78748aa03a7");
 
 	private final ResourceBundle _resourceBundle;
 	private final SharingDLDisplayContextHelper _sharingDLDisplayContextHelper;
+	private Boolean _showImageEditorAction;
+	private final ThemeDisplay _themeDisplay;
 
 }

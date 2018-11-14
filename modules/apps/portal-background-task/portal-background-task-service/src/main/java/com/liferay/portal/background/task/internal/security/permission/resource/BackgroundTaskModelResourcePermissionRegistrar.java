@@ -63,9 +63,9 @@ public class BackgroundTaskModelResourcePermissionRegistrar {
 
 	@Deactivate
 	public void deactivate() {
-		_backgroundTaskModelResourcePermissionLogics.close();
-
 		_serviceRegistration.unregister();
+
+		_backgroundTaskModelResourcePermissionLogics.close();
 	}
 
 	@Reference

@@ -28,9 +28,9 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.notifications.internal.util.SharingNotificationSubcriptionSender;
 import com.liferay.sharing.notifications.internal.util.SharingNotificationUtil;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
@@ -122,43 +122,57 @@ public class NotificationsSharingEntryLocalServiceWrapper
 		try {
 			User user = _userLocalService.getUser(sharingEntry.getToUserId());
 
-			SubscriptionSender subscriptionSender = new SubscriptionSender();
+			SharingNotificationSubcriptionSender
+				sharingNotificationSubcriptionSender =
+					new SharingNotificationSubcriptionSender();
 
 			String message = _sharingNotificationUtil.getNotificationMessage(
 				sharingEntry, user.getLocale());
 
-			subscriptionSender.setSubject(message);
+			sharingNotificationSubcriptionSender.setSubject(message);
 
 			String entryURL = _sharingNotificationUtil.getNotificationURL(
 				sharingEntry, serviceContext.getLiferayPortletRequest());
 
-			subscriptionSender.setBody(
+			sharingNotificationSubcriptionSender.setBody(
 				_getMessageBody(sharingEntry, user, entryURL));
 
-			subscriptionSender.setClassName(sharingEntry.getModelClassName());
-			subscriptionSender.setClassPK(sharingEntry.getSharingEntryId());
-			subscriptionSender.setCompanyId(user.getCompanyId());
-			subscriptionSender.setCurrentUserId(serviceContext.getUserId());
-			subscriptionSender.setEntryURL(entryURL);
+			sharingNotificationSubcriptionSender.setUserNotificationMessage(
+				_sharingNotificationUtil.getNotificationMessage(
+					sharingEntry, user.getLocale()));
+
+			sharingNotificationSubcriptionSender.setClassName(
+				sharingEntry.getModelClassName());
+			sharingNotificationSubcriptionSender.setClassPK(
+				sharingEntry.getSharingEntryId());
+			sharingNotificationSubcriptionSender.setCompanyId(
+				user.getCompanyId());
+			sharingNotificationSubcriptionSender.setCurrentUserId(
+				serviceContext.getUserId());
+			sharingNotificationSubcriptionSender.setEntryURL(entryURL);
 			String fromName = PrefsPropsUtil.getString(
 				user.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_NAME);
 			String fromAddress = PrefsPropsUtil.getString(
 				user.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
 
-			subscriptionSender.setFrom(fromAddress, fromName);
+			sharingNotificationSubcriptionSender.setFrom(fromAddress, fromName);
 
-			subscriptionSender.setHtmlFormat(true);
-			subscriptionSender.setMailId(
+			sharingNotificationSubcriptionSender.setHtmlFormat(true);
+			sharingNotificationSubcriptionSender.setMailId(
 				"sharing_entry", sharingEntry.getSharingEntryId());
-			subscriptionSender.setNotificationType(notificationType);
-			subscriptionSender.setPortletId(SharingPortletKeys.SHARING);
-			subscriptionSender.setScopeGroupId(sharingEntry.getGroupId());
-			subscriptionSender.setServiceContext(serviceContext);
+			sharingNotificationSubcriptionSender.setNotificationType(
+				notificationType);
+			sharingNotificationSubcriptionSender.setPortletId(
+				SharingPortletKeys.SHARING);
+			sharingNotificationSubcriptionSender.setScopeGroupId(
+				sharingEntry.getGroupId());
+			sharingNotificationSubcriptionSender.setServiceContext(
+				serviceContext);
 
-			subscriptionSender.addRuntimeSubscribers(
+			sharingNotificationSubcriptionSender.addRuntimeSubscribers(
 				user.getEmailAddress(), user.getFullName());
 
-			subscriptionSender.flushNotificationsAsync();
+			sharingNotificationSubcriptionSender.flushNotificationsAsync();
 		}
 		catch (Exception e) {
 			_log.error(

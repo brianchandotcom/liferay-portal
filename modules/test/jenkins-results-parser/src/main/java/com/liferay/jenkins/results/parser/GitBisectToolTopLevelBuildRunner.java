@@ -232,13 +232,13 @@ public class GitBisectToolTopLevelBuildRunner
 			return portalBranchSHAList;
 		}
 
-		List<String> list = new ArrayList<>();
+		List<String> portalBranchSHAList = new ArrayList<>();
 
 		for (String portalBranchSHA : portalBranchSHAs.split(",")) {
-			list.add(portalBranchSHA.trim());
+			portalBranchSHAList.add(portalBranchSHA.trim());
 		}
 
-		return list;
+		return portalBranchSHAList;
 	}
 
 	private List<String> _getTestList() {

@@ -104,13 +104,11 @@ public class LiferayDynamicCapability
 					ServiceReference<Capability> serviceReference,
 					Capability capability) {
 
-					synchronized (this) {
-						_unregisterRepositoryEventListeners(capability);
+					_unregisterRepositoryEventListeners(capability);
 
-						_capabilities.remove(capability);
+					_capabilities.remove(capability);
 
-						_updateRepositoryWrappers();
-					}
+					_updateRepositoryWrappers();
 				}
 
 			});

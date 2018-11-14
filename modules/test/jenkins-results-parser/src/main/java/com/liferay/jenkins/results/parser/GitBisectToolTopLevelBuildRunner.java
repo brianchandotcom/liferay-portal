@@ -128,6 +128,19 @@ public class GitBisectToolTopLevelBuildRunner
 		_validateBuildParameterPortalUpstreamBranchName();
 	}
 
+	private Integer _getAllowedPortalBranchSHAs() {
+		String allowedPortalBranchSHAs = getJobProperty(
+			"allowed.portal.branch.shas");
+
+		if ((allowedPortalBranchSHAs == null) ||
+			allowedPortalBranchSHAs.isEmpty()) {
+
+			return -1;
+		}
+
+		return Integer.valueOf(allowedPortalBranchSHAs);
+	}
+
 	private String _getBatchName() {
 		BuildData buildData = getBuildData();
 
@@ -163,6 +176,16 @@ public class GitBisectToolTopLevelBuildRunner
 		return sb.toString();
 	}
 
+	private int _getMaxCommitGroupCount() {
+		int maxCommitGroupCount = _getAllowedPortalBranchSHAs();
+
+		if (maxCommitGroupCount != -1) {
+			return maxCommitGroupCount;
+		}
+
+		return _DEFAULT_MAX_COMMIT_GROUP_COUNT;
+	}
+
 	private List<String> _getPortalBranchSHAs() {
 		String portalBranchSHAs = getBuildParameter(_PORTAL_BRANCH_SHAS);
 
@@ -186,6 +209,12 @@ public class GitBisectToolTopLevelBuildRunner
 		}
 
 		return list;
+	}
+
+	private WorkspaceGitRepository _getWorkspaceGitRepository() {
+		PortalWorkspace portalWorkspace = getWorkspace();
+
+		return portalWorkspace.getPrimaryPortalWorkspaceGitRepository();
 	}
 
 	private void _validateBuildParameterJenkinsGitHubURL() {
@@ -272,25 +301,21 @@ public class GitBisectToolTopLevelBuildRunner
 			failBuildRunner(_PORTAL_BRANCH_SHAS + " is null");
 		}
 
-		String allowedPortalBranchSHAs = getJobProperty(
-			"allowed.portal.branch.shas");
+		Integer allowedPortalBranchSHAs = _getAllowedPortalBranchSHAs();
 
-		if ((allowedPortalBranchSHAs == null) ||
-			allowedPortalBranchSHAs.isEmpty()) {
-
+		if (allowedPortalBranchSHAs == -1) {
 			return;
 		}
 
 		Integer portalBranchSHACount = StringUtils.countMatches(
 			portalBranchSHAs, ",") + 1;
 
-		if (portalBranchSHACount >
-				Integer.valueOf(allowedPortalBranchSHAs)) {
-
+		if (portalBranchSHACount > allowedPortalBranchSHAs) {
 			failBuildRunner(
 				JenkinsResultsParserUtil.combine(
 					_PORTAL_BRANCH_SHAS, " can only reference ",
-					allowedPortalBranchSHAs, " portal branch SHAs"));
+					String.valueOf(allowedPortalBranchSHAs),
+					" portal branch SHAs"));
 		}
 	}
 
@@ -366,6 +391,8 @@ public class GitBisectToolTopLevelBuildRunner
 		}
 	}
 
+	private static final Integer _DEFAULT_MAX_COMMIT_GROUP_COUNT = 5;
+
 	private static final String _JENKINS_GITHUB_URL = "JENKINS_GITHUB_URL";
 
 	private static final String _PORTAL_BATCH_NAME = "PORTAL_BATCH_NAME";
@@ -380,6 +407,11 @@ public class GitBisectToolTopLevelBuildRunner
 	private static final String _PORTAL_UPSTREAM_BRANCH_NAME =
 		"PORTAL_UPSTREAM_BRANCH_NAME";
 
+	private static final Pattern _compareURLPattern = Pattern.compile(
+		JenkinsResultsParserUtil.combine(
+			"https://github.com/(?<username>[^/]+)/(?<repositoryName>[^/]+)",
+			"/compare/(?<earliestSHA>[0-9a-f]{5,40})\\.{3}",
+			"(?<latestSHA>[0-9a-f]{5,40})"));
 	private static final Pattern _pattern = Pattern.compile(
 		"https://github.com/[^/]+/(?<repositoryName>[^/]+)/tree/.+");
 

@@ -33,8 +33,9 @@ import org.json.JSONObject;
  */
 public class LiferayJSONSerializer extends JSONSerializer {
 
-	public LiferayJSONSerializer(LiferayJSONDeserializationWhitelist
-		liferayJSONDeserializationWhitelist) {
+	public LiferayJSONSerializer(
+		LiferayJSONDeserializationWhitelist
+			liferayJSONDeserializationWhitelist) {
 
 		_liferayJSONDeserializationWhitelist =
 			liferayJSONDeserializationWhitelist;

@@ -43,26 +43,17 @@
 	}
 }
 
+.layout-column .list-group-item.layout-column-item-drag-top:first-child {
+	box-shadow: inset 0 2px 0 0 #0B5FFF;
+	transition-delay: 0s;
+}
+
 .layout-column-item-dragged {
 	opacity: 0.4;
 }
 
-.layout-column-item-drag-bottom {
-	border-bottom: 2px solid #0B5FFF;
-	margin-bottom: 0;
-}
-
-.layout-column-item-drag-bottom + .layout-drop-target-item {
-	border-top: 0;
-}
-
 .layout-column-item-drag-inside {
 	box-shadow: inset 0 0 0 2px #0B5FFF;
-}
-
-.layout-column-item-drag-top,
-.layout-column .list-group-item.layout-column-item-drag-top:first-child {
-	border-top: 2px solid #0B5FFF;
 }
 
 .layout-column-item-subtitle {
@@ -92,10 +83,21 @@
 	cursor: pointer;
 	height: 68px;
 	max-height: 68px;
+	transition: box-shadow 0s ease-out 32ms;
 }
 
 .list-group-item.layout-item:last-child {
 	border-radius: 0;
+}
+
+.list-group-item.layout-item.layout-column-item-drag-bottom {
+	box-shadow: inset 0 -2px 0 0 #0B5FFF;
+	transition-delay: 0s;
+}
+
+.list-group-item.layout-item.layout-column-item-drag-top {
+	box-shadow: 0 -2px 0 0 #0B5FFF;
+	transition-delay: 0s;
 }
 
 .list-group-item.layout-drag-item.dragging {

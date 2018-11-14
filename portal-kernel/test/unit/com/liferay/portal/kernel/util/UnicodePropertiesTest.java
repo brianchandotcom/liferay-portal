@@ -241,9 +241,9 @@ public class UnicodePropertiesTest {
 		if (safe) {
 			_assertUnicodeProperties(
 				new String[] {
-					_TEST_VALUE_1 + StringPool.NEW_LINE,
-					_TEST_VALUE_2 + StringPool.NEW_LINE,
-					_TEST_VALUE_3 + StringPool.NEW_LINE
+					_TEST_VALUE_1.concat(StringPool.NEW_LINE),
+					_TEST_VALUE_2.concat(StringPool.NEW_LINE),
+					_TEST_VALUE_3.concat(StringPool.NEW_LINE)
 				},
 				new String[] {_TEST_KEY_1, _TEST_KEY_2, _TEST_KEY_3},
 				unicodeProperties);
@@ -251,9 +251,9 @@ public class UnicodePropertiesTest {
 		else {
 			_assertUnicodeProperties(
 				new String[] {
-					_TEST_VALUE_1 + _safeNewLineCharacter,
-					_TEST_VALUE_2 + _safeNewLineCharacter,
-					_TEST_VALUE_3 + _safeNewLineCharacter
+					_TEST_VALUE_1.concat(_safeNewLineCharacter),
+					_TEST_VALUE_2.concat(_safeNewLineCharacter),
+					_TEST_VALUE_3.concat(_safeNewLineCharacter)
 				},
 				new String[] {_TEST_KEY_1, _TEST_KEY_2, _TEST_KEY_3},
 				unicodeProperties);
@@ -302,16 +302,16 @@ public class UnicodePropertiesTest {
 			new String[] {_TEST_VALUE_1}, new String[] {_TEST_KEY_1},
 			unicodeProperties);
 
-		unicodeProperties.put(_TEST_LINE_1 + _safeNewLineCharacter);
+		unicodeProperties.put(_TEST_LINE_1.concat(_safeNewLineCharacter));
 
 		if (safe) {
 			_assertUnicodeProperties(
-				new String[] {_TEST_VALUE_1 + StringPool.NEW_LINE},
+				new String[] {_TEST_VALUE_1.concat(StringPool.NEW_LINE)},
 				new String[] {_TEST_KEY_1}, unicodeProperties);
 		}
 		else {
 			_assertUnicodeProperties(
-				new String[] {_TEST_VALUE_1 + _safeNewLineCharacter},
+				new String[] {_TEST_VALUE_1.concat(_safeNewLineCharacter)},
 				new String[] {_TEST_KEY_1}, unicodeProperties);
 		}
 	}
@@ -332,8 +332,8 @@ public class UnicodePropertiesTest {
 		unicodeProperties.put(_TEST_LINE_2);
 
 		_assertToString(
-			_TEST_LINE_2 + StringPool.NEW_LINE, unicodeProperties.toString(),
-			unicodeProperties.toSortedString());
+			_TEST_LINE_2.concat(StringPool.NEW_LINE),
+			unicodeProperties.toString(), unicodeProperties.toSortedString());
 
 		unicodeProperties.put(_TEST_LINE_3);
 
@@ -343,7 +343,8 @@ public class UnicodePropertiesTest {
 				StringPool.NEW_LINE),
 			unicodeProperties.toString(), unicodeProperties.toSortedString());
 
-		unicodeProperties.put(_TEST_KEY_3, _TEST_VALUE_3 + StringPool.NEW_LINE);
+		unicodeProperties.put(
+			_TEST_KEY_3, _TEST_VALUE_3.concat(StringPool.NEW_LINE));
 
 		if (safe) {
 			_assertToString(

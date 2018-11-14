@@ -381,12 +381,12 @@
 		<execute function="Pause" locator1="1000" />
 
 		<if>
-			<isset var="titleSiteName" />
+			<isset var="siteName" />
 			<then>
 				<execute function="Click" locator1="ItemSelector#SITES_NAVIGATION" />
 
-				<execute function="AssertClick" locator1="ItemSelector#TITLE_SITE_NAME" value1="${titleSiteName}">
-					<var name="key_titleSiteName" value="${titleSiteName}" />
+				<execute function="AssertClick" locator1="ItemSelector#SITE_SELECTOR" value1="${siteName}">
+					<var name="key_siteName" value="${siteName}" />
 				</execute>
 			</then>
 		</if>

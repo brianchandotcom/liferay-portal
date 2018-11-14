@@ -40,8 +40,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TITLE_SITE_NAME</td>
-	<td>//div[contains(@class,'card-col-content')]/span[contains(@class,'lfr-card-title-text')]/a[contains(@title,'${key_titleSiteName}')]</td>
+	<td>SITE_SELECTOR</td>
+	<td>//div[contains(@class,'card-col-content')]/span[contains(@class,'lfr-card-title-text')]/a[contains(@title,'${key_siteName}')]</td>
 	<td></td>
 </tr>
 <tr>

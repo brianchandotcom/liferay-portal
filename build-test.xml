@@ -5458,32 +5458,6 @@ go]]></replacevalue>
 		<delete dir="/tmp/sprite" />
 	</target>
 
-	<target name="deploy-blade-templates">
-		<if>
-			<equals arg1="${blade.templates}" arg2="simple" />
-			<then>
-				<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet" task="generateSampleProject" />
-
-				<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/build/npm-simple-portlet" task="assemble" />
-
-				<copy
-					file="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/build/npm-simple-portlet/build/libs/npm.simple.portlet-1.0.0.jar"
-					todir="${liferay.home}/deploy"
-				/>
-			</then>
-			<else>
-				<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet" task="generateSampleProject" />
-
-				<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet/build/npm-${blade.templates}-portlet" task="assemble" />
-
-				<copy
-					file="${project.dir}/modules/sdk/project-templates/project-templates-npm-${blade.templates}-portlet/build/npm-${blade.templates}-portlet/build/libs/npm.${blade.templates}.portlet-1.0.0.jar"
-					todir="${liferay.home}/deploy"
-				/>
-			</else>
-		</if>
-	</target>
-
 	<target name="deploy-dependency-jars">
 		<get-testcase-property property.name="liferay.training.dependency.jars" />
 
@@ -5984,6 +5958,19 @@ go]]></replacevalue>
 				/>
 			</then>
 			<elseif>
+				<equals arg1="${project.templates}" arg2="simple" />
+				<then>
+					<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet" task="generateSampleProject" />
+
+					<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/build/npm-simple-portlet" task="assemble" />
+
+					<copy
+						file="${project.dir}/modules/sdk/project-templates/project-templates-npm-portlet/build/npm-simple-portlet/build/libs/npm.simple.portlet-1.0.0.jar"
+						todir="${liferay.home}/deploy"
+					/>
+				</then>
+			</elseif>
+			<elseif>
 				<equals arg1="${project.templates}" arg2="theme" />
 				<then>
 					<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-${project.templates}" task="generateSampleProject" />
@@ -5996,6 +5983,16 @@ go]]></replacevalue>
 					/>
 				</then>
 			</elseif>
+			<else>
+				<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-${project.templates}-portlet" task="generateSampleProject" />
+
+				<gradle-execute dir="${project.dir}/modules/sdk/project-templates/project-templates-npm-${project.templates}-portlet/build/npm-${project.templates}-portlet" task="assemble" />
+
+				<copy
+					file="${project.dir}/modules/sdk/project-templates/project-templates-npm-${project.templates}-portlet/build/npm-${project.templates}-portlet/build/libs/npm.${project.templates}.portlet-1.0.0.jar"
+					todir="${liferay.home}/deploy"
+				/>
+			</else>
 		</if>
 	</target>
 
@@ -10444,15 +10441,6 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</or>
 			<then>
 				<ant antfile="build-test-apacheds.xml" target="start-apacheds" />
-			</then>
-		</if>
-
-		<get-testcase-property property.name="blade.templates" />
-
-		<if>
-			<isset property="blade.templates" />
-			<then>
-				<antcall target="deploy-blade-templates" />
 			</then>
 		</if>
 

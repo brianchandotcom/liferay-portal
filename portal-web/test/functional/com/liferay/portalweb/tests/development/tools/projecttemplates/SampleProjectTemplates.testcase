@@ -2,7 +2,7 @@
 	<property name="portal.acceptance" value="true" />
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
-	<property name="testray.main.component.name" value="Blade Template" />
+	<property name="testray.main.component.name" value="Project Template" />
 
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />

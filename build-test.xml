@@ -1717,9 +1717,7 @@ jdbc.default.password=${database.password}</echo>
 
 	<macrodef name="prepare-elasticsearch-configuration">
 		<sequential>
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config">
-httpEnabled=B&quot;false&quot;
-logExceptionsOnly=B&quot;false&quot;</echo>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config">logExceptionsOnly="false"</echo>
 		</sequential>
 	</macrodef>
 
@@ -6821,16 +6819,7 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 			</then>
 		</if>
 
-		<get-testcase-property property.name="testray.main.component.name" />
-
-		<if>
-			<not>
-				<contains string="${testray.main.component.name}" substring="Elasticsearch Impl" />
-			</not>
-			<then>
-				<prepare-elasticsearch-configuration />
-			</then>
-		</if>
+		<prepare-elasticsearch-configuration />
 
 		<get-testcase-property property.name="prepare.oauth2.global.scopes" />
 

@@ -1023,7 +1023,8 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 	}
 
 	protected Map<String, DDMExpressionFunction>
-		createDDMExpressionFunctionMap() throws Exception {
+			createDDMExpressionFunctionMap()
+		throws Exception {
 
 		Map<String, DDMExpressionFunction> ddmExpressionFunctionMap =
 			new HashMap<>();

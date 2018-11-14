@@ -29,8 +29,8 @@ public class PortalCacheHelperUtil {
 		portalCacheManager.clearAll();
 	}
 
-	public static <K extends Serializable, V> PortalCache<K, V>
-		getPortalCache(String portalCacheManagerName, String portalCacheName) {
+	public static <K extends Serializable, V> PortalCache<K, V> getPortalCache(
+		String portalCacheManagerName, String portalCacheName) {
 
 		PortalCacheManager<?, ?> portalCacheManager =
 			PortalCacheManagerProvider.getPortalCacheManager(

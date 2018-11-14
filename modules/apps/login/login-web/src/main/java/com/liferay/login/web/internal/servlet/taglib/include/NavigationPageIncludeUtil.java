@@ -30,7 +30,9 @@ import org.osgi.framework.FrameworkUtil;
  */
 public class NavigationPageIncludeUtil {
 
-	public static void includePost(PageContext pageContext)throws JspException {
+	public static void includePost(PageContext pageContext)
+		throws JspException {
+
 		for (PageInclude pageInclude : _postPageIncludes) {
 			pageInclude.include(pageContext);
 		}

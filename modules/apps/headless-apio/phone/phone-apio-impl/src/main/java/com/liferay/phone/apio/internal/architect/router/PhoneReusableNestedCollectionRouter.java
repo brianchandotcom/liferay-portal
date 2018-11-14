@@ -47,8 +47,8 @@ public class PhoneReusableNestedCollectionRouter
 		<Phone, Long, PhoneIdentifier, ClassNameClassPK> {
 
 	@Override
-	public NestedCollectionRoutes
-		<Phone, Long, ClassNameClassPK> collectionRoutes(
+	public NestedCollectionRoutes<Phone, Long, ClassNameClassPK>
+		collectionRoutes(
 			NestedCollectionRoutes.Builder<Phone, Long, ClassNameClassPK>
 				builder) {
 

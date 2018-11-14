@@ -32,16 +32,16 @@ public interface MultiVMPool {
 	 *             #getPortalCache(String)}
 	 */
 	@Deprecated
-	public PortalCache<? extends Serializable, ? extends Serializable>
-		getCache(String portalCacheName);
+	public PortalCache<? extends Serializable, ? extends Serializable> getCache(
+		String portalCacheName);
 
 	/**
 	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #getPortalCache(String, boolean)}
 	 */
 	@Deprecated
-	public PortalCache<? extends Serializable, ? extends Serializable>
-		getCache(String portalCacheName, boolean blocking);
+	public PortalCache<? extends Serializable, ? extends Serializable> getCache(
+		String portalCacheName, boolean blocking);
 
 	/**
 	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link

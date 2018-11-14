@@ -92,7 +92,8 @@ public class StructureRepresentorBuilderHelperTest {
 	}
 
 	private StructureRepresentorBuilderHelper
-		_getStructureRepresentorBuilderHelper() throws Exception {
+			_getStructureRepresentorBuilderHelper()
+		throws Exception {
 
 		Registry registry = RegistryUtil.getRegistry();
 

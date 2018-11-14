@@ -71,7 +71,8 @@ public class CertAuthPoolingHttpClientFactory
 
 	@Override
 	protected PoolingHttpClientConnectionManager
-		createPoolingHttpClientConnectionManager() throws Exception {
+			createPoolingHttpClientConnectionManager()
+		throws Exception {
 
 		SSLConnectionSocketFactory sslConnectionSocketFactory =
 			_sslSocketFactoryBuilder.build();

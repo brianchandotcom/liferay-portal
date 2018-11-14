@@ -105,8 +105,8 @@ public class LuceneRepositorySearchQueryTermBuilder
 		return BooleanClauseOccur.SHOULD;
 	}
 
-	protected BooleanClause.Occur
-		getBooleanClauseOccur(BooleanClauseOccur occur) {
+	protected BooleanClause.Occur getBooleanClauseOccur(
+		BooleanClauseOccur occur) {
 
 		if (occur.equals(BooleanClauseOccur.MUST)) {
 			return BooleanClause.Occur.MUST;

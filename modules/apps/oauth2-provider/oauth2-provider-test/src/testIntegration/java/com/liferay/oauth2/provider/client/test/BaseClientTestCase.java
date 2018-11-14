@@ -215,7 +215,7 @@ public abstract class BaseClientTestCase {
 		};
 	}
 
-	protected WebTarget getAuthorizeDecisionWebTarget()	 {
+	protected WebTarget getAuthorizeDecisionWebTarget() {
 		WebTarget webTarget = getAuthorizeWebTarget();
 
 		return webTarget.path("decision");
@@ -370,7 +370,7 @@ public abstract class BaseClientTestCase {
 		return invocationBuilder;
 	}
 
-	protected WebTarget getJsonWebTarget(String... paths)	 {
+	protected WebTarget getJsonWebTarget(String... paths) {
 		Client client = getClient();
 
 		WebTarget webTarget = client.target(_getPortalURL());
@@ -448,7 +448,7 @@ public abstract class BaseClientTestCase {
 		return getToken(clientId, null);
 	}
 
-	protected String getToken(String clientId, String hostname)	 {
+	protected String getToken(String clientId, String hostname) {
 		return parseTokenString(
 			getClientCredentialsResponse(
 				clientId, getTokenInvocationBuilder(hostname)));
@@ -474,7 +474,7 @@ public abstract class BaseClientTestCase {
 		return webTarget.path("token");
 	}
 
-	protected WebTarget getWebTarget(String... paths)	 {
+	protected WebTarget getWebTarget(String... paths) {
 		Client client = getClient();
 
 		WebTarget target = client.target(_getPortalURL());

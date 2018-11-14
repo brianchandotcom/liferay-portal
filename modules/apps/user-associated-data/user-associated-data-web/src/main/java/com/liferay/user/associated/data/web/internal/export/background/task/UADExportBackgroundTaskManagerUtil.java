@@ -116,8 +116,8 @@ public class UADExportBackgroundTaskManagerUtil {
 	}
 
 	private static BackgroundTask _getBackgroundTask(
-		com.liferay.
-			portal.background.task.model.BackgroundTask backgroundTask) {
+		com.liferay.portal.background.task.model.BackgroundTask
+			backgroundTask) {
 
 		return BackgroundTaskManagerUtil.fetchBackgroundTask(
 			backgroundTask.getBackgroundTaskId());

@@ -77,7 +77,16 @@ public class BundleServletContextAdapter
 	}
 
 	@Override
+	public void addListener(Class<? extends EventListener> eventListener) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void addListener(String s) {
+	}
+
+	@Override
+	public <T extends EventListener> void addListener(T t) {
 	}
 
 	@Override
@@ -104,15 +113,6 @@ public class BundleServletContextAdapter
 		throw new UnsupportedOperationException();
 	}
 
-	@Override public <T extends EventListener> void addListener(T t) {
-	}
-
-	@Override public void addListener(
-		Class<? extends EventListener> eventListener) {
-
-		throw new UnsupportedOperationException();
-	}
-
 	@Override
 	public <T extends EventListener> T createListener(Class<T> clazz)
 		throws ServletException {
@@ -129,10 +129,6 @@ public class BundleServletContextAdapter
 
 	@Override
 	public void declareRoles(String... strings) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override public boolean setInitParameter(String s, String s1) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -162,6 +158,11 @@ public class BundleServletContextAdapter
 	}
 
 	@Override
+	public Set<SessionTrackingMode> getDefaultSessionTrackingModes() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public int getEffectiveMajorVersion() {
 		return 3;
 	}
@@ -171,16 +172,13 @@ public class BundleServletContextAdapter
 		return 0;
 	}
 
-	@Override public Set<SessionTrackingMode> getDefaultSessionTrackingModes() {
-		throw new UnsupportedOperationException();
-	}
-
 	@Override
 	public Set<SessionTrackingMode> getEffectiveSessionTrackingModes() {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override public FilterRegistration getFilterRegistration(String s) {
+	@Override
+	public FilterRegistration getFilterRegistration(String s) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -219,12 +217,13 @@ public class BundleServletContextAdapter
 		return 0;
 	}
 
-	@Override public RequestDispatcher getRequestDispatcher(String s) {
+	@Override
+	public RequestDispatcher getNamedDispatcher(String s) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public RequestDispatcher getNamedDispatcher(String s) {
+	public RequestDispatcher getRequestDispatcher(String s) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -272,8 +271,8 @@ public class BundleServletContextAdapter
 	}
 
 	@Override
-	public Map
-		<String, ? extends ServletRegistration> getServletRegistrations() {
+	public Map<String, ? extends ServletRegistration>
+		getServletRegistrations() {
 
 		throw new UnsupportedOperationException();
 	}
@@ -310,6 +309,11 @@ public class BundleServletContextAdapter
 
 	@Override
 	public void setAttribute(String s, Object o) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean setInitParameter(String s, String s1) {
 		throw new UnsupportedOperationException();
 	}
 

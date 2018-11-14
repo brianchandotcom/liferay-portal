@@ -382,8 +382,8 @@ public class ItemSelectorImpl implements ItemSelector {
 	}
 
 	protected
-		<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType>
-			void unsetItemSelectionCriterionHandler(
+		<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType> void
+			unsetItemSelectionCriterionHandler(
 				ItemSelectorCriterionHandler<T> itemSelectionCriterionHandler) {
 
 		Class<T> itemSelectorCriterionClass =

@@ -60,9 +60,7 @@ public class DDMDataProviderInstanceLocalServiceTest
 		new LiferayIntegrationTestRule();
 
 	@Test(
-		expected =
-			RequiredDataProviderInstanceException.
-				MustNotDeleteDataProviderInstanceReferencedByDataProviderInstanceLinks.class
+		expected = RequiredDataProviderInstanceException.MustNotDeleteDataProviderInstanceReferencedByDataProviderInstanceLinks.class
 	)
 	public void testDeleteReferencedDataProviderInstance1() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
@@ -90,9 +88,7 @@ public class DDMDataProviderInstanceLocalServiceTest
 	}
 
 	@Test(
-		expected =
-			RequiredDataProviderInstanceException.
-				MustNotDeleteDataProviderInstanceReferencedByDataProviderInstanceLinks.class
+		expected = RequiredDataProviderInstanceException.MustNotDeleteDataProviderInstanceReferencedByDataProviderInstanceLinks.class
 	)
 	public void testDeleteReferencedDataProviderInstance2() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
@@ -125,9 +121,7 @@ public class DDMDataProviderInstanceLocalServiceTest
 	}
 
 	@Test(
-		expected =
-			RequiredDataProviderInstanceException.
-				MustNotDeleteDataProviderInstanceReferencedByDataProviderInstanceLinks.class
+		expected = RequiredDataProviderInstanceException.MustNotDeleteDataProviderInstanceReferencedByDataProviderInstanceLinks.class
 	)
 	public void testDeleteReferencedDataProviderInstance3() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("Field1");

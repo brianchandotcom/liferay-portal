@@ -115,7 +115,7 @@ public class JournalTestUtilTest {
 	}
 
 	@Test
-	public void testAddArticleWithoutFolder()throws Exception {
+	public void testAddArticleWithoutFolder() throws Exception {
 		Assert.assertNotNull(
 			JournalTestUtil.addArticle(
 				_group.getGroupId(), "Test Article",

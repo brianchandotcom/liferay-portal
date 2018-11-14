@@ -235,8 +235,8 @@ public class DDLXLSExporter extends BaseDDLExporter {
 	}
 
 	@Override
-	protected
-		DDMFormFieldTypeServicesTracker getDDMFormFieldTypeServicesTracker() {
+	protected DDMFormFieldTypeServicesTracker
+		getDDMFormFieldTypeServicesTracker() {
 
 		return _ddmFormFieldTypeServicesTracker;
 	}

@@ -58,7 +58,8 @@ public class DDMFormFieldTemplateContextContributorTestHelper
 	}
 
 	public GridDDMFormFieldTemplateContextContributor
-		createGridDDMFormFieldTemplateContextContributor() throws Exception {
+			createGridDDMFormFieldTemplateContextContributor()
+		throws Exception {
 
 		GridDDMFormFieldTemplateContextContributor
 			gridDDMFormFieldTemplateContextContributor =
@@ -74,7 +75,8 @@ public class DDMFormFieldTemplateContextContributorTestHelper
 	}
 
 	public NumericDDMFormFieldTemplateContextContributor
-		createNumericDDMFormFieldTemplateContextContributor() throws Exception {
+			createNumericDDMFormFieldTemplateContextContributor()
+		throws Exception {
 
 		NumericDDMFormFieldTemplateContextContributor
 			numericDDMFormFieldTemplateContextContributor =
@@ -84,7 +86,8 @@ public class DDMFormFieldTemplateContextContributorTestHelper
 	}
 
 	public RadioDDMFormFieldTemplateContextContributor
-		createRadioDDMFormFieldTemplateContextContributor() throws Exception {
+			createRadioDDMFormFieldTemplateContextContributor()
+		throws Exception {
 
 		RadioDDMFormFieldTemplateContextContributor
 			radioDDMFormFieldTemplateContextContributor =
@@ -100,7 +103,8 @@ public class DDMFormFieldTemplateContextContributorTestHelper
 	}
 
 	public SelectDDMFormFieldTemplateContextContributor
-		createSelectDDMFormFieldTemplateContextContributor() throws Exception {
+			createSelectDDMFormFieldTemplateContextContributor()
+		throws Exception {
 
 		SelectDDMFormFieldTemplateContextContributor
 			selectDDMFormFieldTemplateContextContributor =
@@ -124,7 +128,8 @@ public class DDMFormFieldTemplateContextContributorTestHelper
 	}
 
 	public TextDDMFormFieldTemplateContextContributor
-		createTextDDMFormFieldTemplateContextContributor() throws Exception {
+			createTextDDMFormFieldTemplateContextContributor()
+		throws Exception {
 
 		TextDDMFormFieldTemplateContextContributor
 			textDDMFormFieldTemplateContextContributor =

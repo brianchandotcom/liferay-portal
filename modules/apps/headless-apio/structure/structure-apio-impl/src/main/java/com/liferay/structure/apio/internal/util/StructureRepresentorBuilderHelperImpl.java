@@ -154,8 +154,8 @@ public class StructureRepresentorBuilderHelperImpl
 
 	@Override
 	public NestedRepresentor.FirstStep<FormLayoutPage>
-		buildFormLayoutPageFirstStep(NestedRepresentor.Builder<FormLayoutPage>
-		builder) {
+		buildFormLayoutPageFirstStep(
+			NestedRepresentor.Builder<FormLayoutPage> builder) {
 
 		return builder.types(
 			"FormLayoutPage"

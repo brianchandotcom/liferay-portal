@@ -78,8 +78,8 @@ public class PortletIdCodec {
 			portletId.substring(x + _USER_SEPARATOR.length()));
 	}
 
-	public static ObjectValuePair<Long, String>
-		decodeUserIdAndInstanceId(String userIdAndInstanceId) {
+	public static ObjectValuePair<Long, String> decodeUserIdAndInstanceId(
+		String userIdAndInstanceId) {
 
 		if (userIdAndInstanceId == null) {
 			throw new InvalidParameterException(

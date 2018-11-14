@@ -125,8 +125,8 @@ public class ManageCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 		return DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd", locale);
 	}
 
-	private Map<Long, Collection<SharingEntryAction>>
-		_getSharingEntryActions(ActionRequest actionRequest) {
+	private Map<Long, Collection<SharingEntryAction>> _getSharingEntryActions(
+		ActionRequest actionRequest) {
 
 		Map<Long, Collection<SharingEntryAction>> sharingEntryActions =
 			new HashMap<>();

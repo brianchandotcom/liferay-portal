@@ -114,8 +114,8 @@ public class PortletInstance {
 		return getPortletInstanceKey();
 	}
 
-	private static ObjectValuePair<Long, String>
-		_decodeUserIdAndInstanceId(String userIdAndInstanceId) {
+	private static ObjectValuePair<Long, String> _decodeUserIdAndInstanceId(
+		String userIdAndInstanceId) {
 
 		return PortletIdCodec.decodeUserIdAndInstanceId(userIdAndInstanceId);
 	}

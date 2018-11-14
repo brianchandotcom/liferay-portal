@@ -249,7 +249,7 @@ public class DLFileEntryServiceTest {
 	}
 
 	@Test
-	public void testUpdateFileName()throws Exception {
+	public void testUpdateFileName() throws Exception {
 		DLFileEntry dlFileEntry = addDLFileEntry(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, false);
 

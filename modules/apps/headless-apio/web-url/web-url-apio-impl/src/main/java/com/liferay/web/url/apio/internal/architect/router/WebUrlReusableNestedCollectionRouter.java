@@ -48,8 +48,8 @@ public class WebUrlReusableNestedCollectionRouter
 		<Website, Long, WebUrlIdentifier, ClassNameClassPK> {
 
 	@Override
-	public NestedCollectionRoutes
-		<Website, Long, ClassNameClassPK> collectionRoutes(
+	public NestedCollectionRoutes<Website, Long, ClassNameClassPK>
+		collectionRoutes(
 			NestedCollectionRoutes.Builder<Website, Long, ClassNameClassPK>
 				builder) {
 

@@ -149,7 +149,8 @@ public abstract class BasePoolingHttpClientFactory
 	protected abstract void configure(HttpClientBuilder httpClientBuilder);
 
 	protected abstract PoolingHttpClientConnectionManager
-		createPoolingHttpClientConnectionManager() throws Exception;
+			createPoolingHttpClientConnectionManager()
+		throws Exception;
 
 	protected void removeHttpRequestInterceptor(
 		HttpRequestInterceptor httpRequestInterceptor) {

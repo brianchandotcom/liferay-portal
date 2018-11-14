@@ -177,8 +177,8 @@ public abstract class BaseDDLExporter implements DDLExporter {
 			ddmFormField.getName(), ddmFormField.getLabel(), valueString);
 	}
 
-	protected abstract
-		DDMFormFieldTypeServicesTracker getDDMFormFieldTypeServicesTracker();
+	protected abstract DDMFormFieldTypeServicesTracker
+		getDDMFormFieldTypeServicesTracker();
 
 	protected abstract DDMFormFieldValueRendererRegistry
 		getDDMFormFieldValueRendererRegistry();

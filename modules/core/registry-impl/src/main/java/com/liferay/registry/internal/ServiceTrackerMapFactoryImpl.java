@@ -371,8 +371,8 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 	}
 
 	protected void addServiceTrackerMap(
-		com.liferay.osgi.service.tracker.collections.map.
-			ServiceTrackerMap<?, ?> serviceTrackerMap) {
+		com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap<?, ?>
+			serviceTrackerMap) {
 
 		Reference
 			<com.liferay.osgi.service.tracker.collections.map.

@@ -25,8 +25,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class RepositoryEventTestUtil {
 
-	protected static <S extends RepositoryEventType, T>
-		AtomicInteger registerCounterRepositoryEventListener(
+	protected static <S extends RepositoryEventType, T> AtomicInteger
+		registerCounterRepositoryEventListener(
 			RepositoryEventRegistry repositoryEventRegistry,
 			Class<S> eventClass, Class<T> modelClass) {
 
@@ -41,8 +41,8 @@ public class RepositoryEventTestUtil {
 		return count;
 	}
 
-	protected static <S extends RepositoryEventType, T>
-		AtomicInteger registerCounterRepositoryEventListener(
+	protected static <S extends RepositoryEventType, T> AtomicInteger
+		registerCounterRepositoryEventListener(
 			RepositoryEventRegistry repositoryEventRegistry,
 			Class<S> eventClass, Class<T> modelClass, AtomicInteger count) {
 

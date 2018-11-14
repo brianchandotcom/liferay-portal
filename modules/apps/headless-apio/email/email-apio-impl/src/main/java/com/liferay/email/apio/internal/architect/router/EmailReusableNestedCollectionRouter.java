@@ -48,10 +48,10 @@ public class EmailReusableNestedCollectionRouter
 		<EmailAddress, Long, EmailIdentifier, ClassNameClassPK> {
 
 	@Override
-	public NestedCollectionRoutes
-		<EmailAddress, Long, ClassNameClassPK> collectionRoutes(
-			NestedCollectionRoutes.Builder
-				<EmailAddress, Long, ClassNameClassPK> builder) {
+	public NestedCollectionRoutes<EmailAddress, Long, ClassNameClassPK>
+		collectionRoutes(
+			NestedCollectionRoutes.Builder<EmailAddress, Long, ClassNameClassPK>
+				builder) {
 
 		return builder.addGetter(
 			this::_getPageItems

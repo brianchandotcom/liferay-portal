@@ -156,8 +156,8 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 	}
 
 	@Override
-	public com.liferay.dynamic.data.mapping.kernel.DDMFormField
-		translate(DDMFormField ddmFormField) {
+	public com.liferay.dynamic.data.mapping.kernel.DDMFormField translate(
+		DDMFormField ddmFormField) {
 
 		if (ddmFormField == null) {
 			return null;

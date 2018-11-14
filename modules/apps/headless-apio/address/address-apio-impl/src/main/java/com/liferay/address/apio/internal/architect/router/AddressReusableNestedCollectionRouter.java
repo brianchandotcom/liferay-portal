@@ -53,8 +53,8 @@ public class AddressReusableNestedCollectionRouter
 		<Address, Long, AddressIdentifier, ClassNameClassPK> {
 
 	@Override
-	public NestedCollectionRoutes
-		<Address, Long, ClassNameClassPK> collectionRoutes(
+	public NestedCollectionRoutes<Address, Long, ClassNameClassPK>
+		collectionRoutes(
 			NestedCollectionRoutes.Builder<Address, Long, ClassNameClassPK>
 				builder) {
 

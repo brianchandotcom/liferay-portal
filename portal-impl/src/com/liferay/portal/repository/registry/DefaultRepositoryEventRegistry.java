@@ -39,8 +39,8 @@ public class DefaultRepositoryEventRegistry
 	}
 
 	@Override
-	public <S extends RepositoryEventType, T>
-		void registerRepositoryEventListener(
+	public <S extends RepositoryEventType, T> void
+		registerRepositoryEventListener(
 			Class<S> repositoryEventTypeClass, Class<T> modelClass,
 			RepositoryEventListener<S, T> repositoryEventListener) {
 

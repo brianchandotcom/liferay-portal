@@ -64,10 +64,6 @@ public class ValidationBuild extends BaseBuild {
 			for (int i = 1; i < consoleSnippets.length; i++) {
 				String consoleSnippet = consoleSnippets[i];
 
-				if (consoleSnippet.contains("merge-test-results:")) {
-					continue;
-				}
-
 				Dom4JUtil.addToElement(
 					taskSummaryListElement,
 					getTaskSummaryIndexElement(consoleSnippet));

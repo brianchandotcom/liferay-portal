@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.document.library.internal.display.context.logic.SharingDLDisplayContextHelper;
 
 import java.util.List;
@@ -49,17 +47,12 @@ public class SharingDLViewFileVersionDisplayContext
 
 		_resourceBundle = resourceBundle;
 
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		try {
 			FileEntry fileEntry = null;
 
 			if (fileVersion != null) {
 				fileEntry = fileVersion.getFileEntry();
 			}
-
-			_fileEntry = fileEntry;
 
 			_sharingDLDisplayContextHelper = new SharingDLDisplayContextHelper(
 				fileEntry, request);
@@ -82,11 +75,8 @@ public class SharingDLViewFileVersionDisplayContext
 
 		List<MenuItem> menuItems = menu.getMenuItems();
 
-		SharingDLDisplayContextHelper sharingDLDisplayContextHelper =
-			new SharingDLDisplayContextHelper(_fileEntry, request);
-
 		menuItems.add(
-			sharingDLDisplayContextHelper.
+			_sharingDLDisplayContextHelper.
 				getJavacriptEditWithImageEditorMenuItem(_resourceBundle));
 
 		return menu;
@@ -100,11 +90,8 @@ public class SharingDLViewFileVersionDisplayContext
 			return toolbarItems;
 		}
 
-		SharingDLDisplayContextHelper imageEditorDLDisplayContextHelper =
-			new SharingDLDisplayContextHelper(_fileEntry, request);
-
 		toolbarItems.add(
-			imageEditorDLDisplayContextHelper.
+			_sharingDLDisplayContextHelper.
 				getJavacriptEditWithImageEditorToolbarItem(_resourceBundle));
 
 		return toolbarItems;
@@ -113,9 +100,7 @@ public class SharingDLViewFileVersionDisplayContext
 	private static final UUID _UUID = UUID.fromString(
 		"6d7d30de-01fa-49db-a422-d78748aa03a7");
 
-	private final FileEntry _fileEntry;
 	private final ResourceBundle _resourceBundle;
 	private final SharingDLDisplayContextHelper _sharingDLDisplayContextHelper;
-	private final ThemeDisplay _themeDisplay;
 
 }

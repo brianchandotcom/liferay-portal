@@ -312,9 +312,10 @@ public class DDMFormEvaluatorHelper {
 	}
 
 	protected DDMFormFieldValidation getDDMFormFieldValidation(
-		DDMFormEvaluatorFieldContextKey field) {
+		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {
 
-		DDMFormField ddmFormField = _ddmFormFieldsMap.get(field.getName());
+		DDMFormField ddmFormField = _ddmFormFieldsMap.get(
+			ddmFormEvaluatorFieldContextKey.getName());
 
 		return ddmFormField.getDDMFormFieldValidation();
 	}

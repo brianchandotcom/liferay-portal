@@ -67,6 +67,41 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	@Override
+	public List<LocalGitCommit> getCommitsInRange(
+		String earliestSHA, String latestSHA) {
+
+		List<LocalGitCommit> localGitCommitsInRange = new ArrayList<>();
+
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		int index = 0;
+
+		while (index < MAX_COMMIT_HISTORY) {
+			int currentGroupSize = _COMMIT_HISTORY_GROUP_SIZE;
+
+			if (index > (MAX_COMMIT_HISTORY - _COMMIT_HISTORY_GROUP_SIZE)) {
+				currentGroupSize =
+					MAX_COMMIT_HISTORY % _COMMIT_HISTORY_GROUP_SIZE;
+			}
+
+			List<LocalGitCommit> localGitCommits = gitWorkingDirectory.log(
+				index, currentGroupSize, latestSHA);
+
+			for (LocalGitCommit localGitCommit : localGitCommits) {
+				localGitCommitsInRange.add(localGitCommit);
+
+				if (earliestSHA.equals(localGitCommit.getSHA())) {
+					return localGitCommitsInRange;
+				}
+			}
+
+			index += _COMMIT_HISTORY_GROUP_SIZE;
+		}
+
+		return localGitCommitsInRange;
+	}
+
+	@Override
 	public String getFileContent(String filePath) {
 		File file = new File(getDirectory(), filePath);
 

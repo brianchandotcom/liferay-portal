@@ -26,6 +26,9 @@ public interface WorkspaceGitRepository extends LocalGitRepository {
 
 	public List<LocalGitCommit> getCommitHistory();
 
+	public List<LocalGitCommit> getCommitsInRange(
+		String earliestSHA, String latestSHA);
+
 	public String getFileContent(String filePath);
 
 	public String getGitHubDevBranchName();

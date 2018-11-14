@@ -17,10 +17,12 @@ package com.liferay.portal.spring.transaction;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.lang.HashUtil;
-import com.liferay.petra.reflect.AnnotationLocator;
+import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.spring.aop.ChainableMethodAdvice;
+import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import java.util.Objects;
@@ -35,7 +37,13 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
  * @author Shuyang Zhou
  */
 @ProviderType
-public class TransactionInterceptor extends ChainableMethodAdvice {
+public class TransactionInterceptor
+	extends AnnotationChainableMethodAdvice<Transactional> {
+
+	@Override
+	public Transactional getNullAnnotation() {
+		return _nullTransactional;
+	}
 
 	public TransactionAttribute getTransactionAttribute(
 		MethodInvocation methodInvocation) {
@@ -64,8 +72,12 @@ public class TransactionInterceptor extends ChainableMethodAdvice {
 
 	@Override
 	public boolean isEnabled(Class<?> targetClass, Method method) {
-		Transactional transactional = AnnotationLocator.locate(
-			method, targetClass, Transactional.class);
+		Transactional transactional = serviceBeanAopCacheManager.findAnnotation(
+			targetClass, method, Transactional.class, _nullTransactional);
+
+		if (transactional == _nullTransactional) {
+			return false;
+		}
 
 		TransactionAttribute transactionAttribute =
 			TransactionAttributeBuilder.build(transactional);
@@ -87,6 +99,61 @@ public class TransactionInterceptor extends ChainableMethodAdvice {
 	}
 
 	protected TransactionExecutor transactionExecutor;
+
+	private static final Transactional _nullTransactional =
+		new Transactional() {
+
+			@Override
+			public Class<? extends Annotation> annotationType() {
+				return Transactional.class;
+			}
+
+			@Override
+			public boolean enabled() {
+				return false;
+			}
+
+			@Override
+			public Isolation isolation() {
+				return null;
+			}
+
+			@Override
+			public Class<? extends Throwable>[] noRollbackFor() {
+				return null;
+			}
+
+			@Override
+			public String[] noRollbackForClassName() {
+				return null;
+			}
+
+			@Override
+			public Propagation propagation() {
+				return null;
+			}
+
+			@Override
+			public boolean readOnly() {
+				return true;
+			}
+
+			@Override
+			public Class<? extends Throwable>[] rollbackFor() {
+				return null;
+			}
+
+			@Override
+			public String[] rollbackForClassName() {
+				return null;
+			}
+
+			@Override
+			public int timeout() {
+				return -1;
+			}
+
+		};
 
 	private final ConcurrentMap<CacheKey, TransactionAttribute>
 		_transactionAttributes = new ConcurrentHashMap<>();

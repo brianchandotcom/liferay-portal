@@ -87,6 +87,9 @@ public class DynamicDataSourceAdviceTest {
 		_dynamicDataSourceAdvice.setDynamicDataSourceTargetSource(
 			_dynamicDataSourceTargetSource);
 
+		_dynamicDataSourceAdvice.setTransactionInterceptor(
+			_transactionInterceptor);
+
 		_serviceBeanAopCacheManager = new ServiceBeanAopCacheManager(
 			_dynamicDataSourceAdvice);
 
@@ -109,9 +112,6 @@ public class DynamicDataSourceAdviceTest {
 			annotationChainableMethodAdvices,
 			registeredAnnotationChainableMethodAdvices.get(
 				MasterDataSource.class));
-
-		_dynamicDataSourceAdvice.setTransactionInterceptor(
-			_transactionInterceptor);
 	}
 
 	@Test

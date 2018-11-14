@@ -14,14 +14,11 @@
 
 package com.liferay.portal.dao.jdbc.aop;
 
-import com.liferay.petra.reflect.AnnotationLocator;
 import com.liferay.portal.kernel.dao.jdbc.aop.DynamicDataSourceTargetSource;
 import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
 import com.liferay.portal.kernel.dao.jdbc.aop.Operation;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
-import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 import com.liferay.portal.spring.transaction.TransactionInterceptor;
 
 import java.lang.reflect.Method;
@@ -71,17 +68,7 @@ public class DynamicDataSourceAdvice
 
 	@Override
 	public boolean isEnabled(Class<?> targetClass, Method method) {
-		Transactional transactional = AnnotationLocator.locate(
-			method, targetClass, Transactional.class);
-
-		TransactionAttribute transactionAttribute =
-			TransactionAttributeBuilder.build(transactional);
-
-		if (transactionAttribute == null) {
-			return false;
-		}
-
-		return true;
+		return _transactionInterceptor.isEnabled(targetClass, method);
 	}
 
 	public void setDynamicDataSourceTargetSource(

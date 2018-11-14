@@ -30,6 +30,26 @@ import java.util.Objects;
 public abstract class BaseJavaTerm implements JavaTerm {
 
 	@Override
+	public Position getEndPosition() {
+		return _endPosition;
+	}
+
+	@Override
+	public Position getStartPosition() {
+		return _startPosition;
+	}
+
+	@Override
+	public void setEndPosition(Position endPosition) {
+		_endPosition = endPosition;
+	}
+
+	@Override
+	public void setStartPosition(Position startPosition) {
+		_startPosition = startPosition;
+	}
+
+	@Override
 	public String toString() {
 		return toString(
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, -1);
@@ -454,5 +474,8 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			}
 		}
 	}
+
+	private Position _endPosition;
+	private Position _startPosition;
 
 }

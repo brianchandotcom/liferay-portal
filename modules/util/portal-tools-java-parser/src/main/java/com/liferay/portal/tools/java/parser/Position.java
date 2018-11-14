@@ -17,21 +17,22 @@ package com.liferay.portal.tools.java.parser;
 /**
  * @author Hugo Huijser
  */
-public interface JavaTerm {
+public class Position {
 
-	public abstract Position getEndPosition();
+	public Position(int lineNumber, int linePosition) {
+		_lineNumber = lineNumber;
+		_linePosition = linePosition;
+	}
 
-	public abstract Position getStartPosition();
+	public int getLineNumber() {
+		return _lineNumber;
+	}
 
-	public abstract void setEndPosition(Position endPosition);
+	public int getLinePosition() {
+		return _linePosition;
+	}
 
-	public abstract void setStartPosition(Position startPosition);
-
-	public abstract String toString(
-		String indent, String prefix, String suffix, int maxLineLength);
-
-	public abstract String toString(
-		String indent, String prefix, String suffix, int maxLineLength,
-		boolean forceLineBreak);
+	private final int _lineNumber;
+	private final int _linePosition;
 
 }

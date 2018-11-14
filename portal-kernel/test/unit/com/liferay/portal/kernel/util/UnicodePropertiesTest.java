@@ -155,7 +155,7 @@ public class UnicodePropertiesTest {
 	public void testSetProperty() {
 		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
-		Assert.assertNull(unicodeProperties.setProperty(null, null));
+		Assert.assertNull(unicodeProperties.setProperty(null, _TEST_VALUE_1));
 		Assert.assertTrue(
 			"nothing will be put in if key is null",
 			unicodeProperties.isEmpty());

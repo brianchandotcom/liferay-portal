@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.google.common.collect.Lists;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -34,6 +36,35 @@ import org.json.JSONObject;
  */
 public abstract class BaseWorkspaceGitRepository
 	extends BaseLocalGitRepository implements WorkspaceGitRepository {
+
+	@Override
+	public List<LocalGitCommit> getCommitHistory() {
+		if (_commitHistory != null) {
+			return _commitHistory;
+		}
+
+		if (!has("commits")) {
+			return new ArrayList<>();
+		}
+
+		_commitHistory = new ArrayList<>();
+
+		JSONArray commitsJSONArray = getJSONArray("commits");
+
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		for (int i = 0; i < commitsJSONArray.length(); i++) {
+			JSONObject commitJSONObject = commitsJSONArray.getJSONObject(i);
+
+			_commitHistory.add(
+				GitCommitFactory.newLocalGitCommit(
+					gitWorkingDirectory, commitJSONObject.getString("message"),
+					commitJSONObject.getString("sha"),
+					commitJSONObject.getLong("commitTime")));
+		}
+
+		return _commitHistory;
+	}
 
 	@Override
 	public String getFileContent(String filePath) {
@@ -57,35 +88,6 @@ public abstract class BaseWorkspaceGitRepository
 	@Override
 	public String getGitHubURL() {
 		return getString("git_hub_url");
-	}
-
-	@Override
-	public List<LocalGitCommit> getHistoricalLocalGitCommits() {
-		if (_historicalLocalGitCommits != null) {
-			return _historicalLocalGitCommits;
-		}
-
-		if (!has("commits")) {
-			return new ArrayList<>();
-		}
-
-		_historicalLocalGitCommits = new ArrayList<>();
-
-		JSONArray commitsJSONArray = getJSONArray("commits");
-
-		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
-
-		for (int i = 0; i < commitsJSONArray.length(); i++) {
-			JSONObject commitJSONObject = commitsJSONArray.getJSONObject(i);
-
-			_historicalLocalGitCommits.add(
-				GitCommitFactory.newLocalGitCommit(
-					gitWorkingDirectory, commitJSONObject.getString("message"),
-					commitJSONObject.getString("sha"),
-					commitJSONObject.getLong("commitTime")));
-		}
-
-		return _historicalLocalGitCommits;
 	}
 
 	@Override
@@ -192,7 +194,7 @@ public abstract class BaseWorkspaceGitRepository
 
 	@Override
 	public void storeCommitHistory(List<String> commitSHAs) {
-		_historicalLocalGitCommits = getHistoricalLocalGitCommits();
+		_commitHistory = getCommitHistory();
 
 		List<String> requiredCommitSHAs = new ArrayList<>();
 
@@ -216,7 +218,7 @@ public abstract class BaseWorkspaceGitRepository
 				index, currentGroupSize);
 
 			for (LocalGitCommit localGitCommit : localGitCommits) {
-				_historicalLocalGitCommits.add(localGitCommit);
+				_commitHistory.add(localGitCommit);
 
 				commitsJSONArray.put(localGitCommit.toJSONObject());
 
@@ -479,7 +481,7 @@ public abstract class BaseWorkspaceGitRepository
 
 	private static final String _SHA_REGEX = "[0-9a-f]{7,40}";
 
-	private List<LocalGitCommit> _historicalLocalGitCommits;
+	private List<LocalGitCommit> _commitHistory;
 	private final Map<String, Properties> _propertiesFilesMap = new HashMap<>();
 
 }

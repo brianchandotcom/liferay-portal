@@ -186,8 +186,9 @@
 	<target name="cleanup-tck">
 
 		<exec dir="${tck.home}/.." executable="git" failonerror="false">
-			<arg value="stash" />
-			<arg value="pop" />
+			<arg value="apply" />
+			<arg value="--reverse" />
+			<arg value="${project.dir}/tck/pluto-patch.diff" />
 		</exec>
 
 	</target>

@@ -40,7 +40,7 @@ import templates from './Layout.soy';
  */
 const DRAG_SPEED = 20;
 
-const UPDATE_PATH_TIMEOUT = 1000;
+const UPDATE_PATH_TIMEOUT = 500;
 
 /**
  * Component that allows to show layouts tree in form of three dependent

@@ -12,6 +12,11 @@
 	.modal-body.inline-scroller .empty-collaborators {
 		height: 125px;
 		text-align: center;
+
+		.message-content {
+			margin: 0 auto;
+			max-width: 340px;
+		}
 	}
 
 	@media (min-height: 400px) {

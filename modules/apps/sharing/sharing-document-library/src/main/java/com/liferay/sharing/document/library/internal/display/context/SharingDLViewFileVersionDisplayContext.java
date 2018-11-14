@@ -113,10 +113,9 @@ public class SharingDLViewFileVersionDisplayContext
 			return _showImageEditorAction;
 		}
 
-		if (!_themeDisplay.isSignedIn() || !_isShowActions()) {
-			_showImageEditorAction = false;
-		}
-		else {
+		_showImageEditorAction = false;
+
+		if (_themeDisplay.isSignedIn() && _isShowActions()) {
 			_showImageEditorAction = true;
 		}
 

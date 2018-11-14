@@ -529,7 +529,7 @@ public class StructuredContentNestedCollectionResource
 			pagination.getStartPosition(), pagination.getEndPosition());
 
 		Query fullQuery = _getFullQuery(
-			filter, themeDisplay.getLocale(), searchContext);
+			filter, acceptLanguage.getPreferredLocale(), searchContext);
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();

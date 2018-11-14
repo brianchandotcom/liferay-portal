@@ -1251,8 +1251,8 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 		FilterParser filterParser = _getFilterParser();
 
 		PageItems<JournalArticle> pageItems = getPageItems(
-			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
-			getThemeDisplay(_group, LocaleUtil.SPAIN),
+			PaginationRequest.of(10, 1), _group.getGroupId(),
+			() -> LocaleUtil.SPAIN, getThemeDisplay(_group, LocaleUtil.SPAIN),
 			new Filter(filterParser.parse("(title eq 'titulo1')")),
 			Sort.emptySort());
 

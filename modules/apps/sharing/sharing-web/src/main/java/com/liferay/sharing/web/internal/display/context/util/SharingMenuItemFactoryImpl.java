@@ -19,14 +19,14 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptToolbarItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
 import com.liferay.sharing.display.context.util.SharingToolbarItemFactory;
 import com.liferay.sharing.model.SharingEntry;
@@ -50,6 +50,7 @@ import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -71,7 +72,7 @@ public class SharingMenuItemFactoryImpl
 
 		javaScriptMenuItem.setJavaScript(_getJavaScript(request));
 		javaScriptMenuItem.setKey("#share");
-		javaScriptMenuItem.setLabel(LanguageUtil.get(resourceBundle, "share"));
+		javaScriptMenuItem.setLabel(_language.get(resourceBundle, "share"));
 		javaScriptMenuItem.setOnClick(
 			_getOnclickMethod(fileEntry, request, resourceBundle));
 
@@ -89,8 +90,7 @@ public class SharingMenuItemFactoryImpl
 
 		javaScriptToolbarItem.setJavaScript(_getJavaScript(request));
 		javaScriptToolbarItem.setKey("#share");
-		javaScriptToolbarItem.setLabel(
-			LanguageUtil.get(resourceBundle, "share"));
+		javaScriptToolbarItem.setLabel(_language.get(resourceBundle, "share"));
 		javaScriptToolbarItem.setOnClick(
 			_getOnclickMethod(fileEntry, request, resourceBundle));
 
@@ -132,7 +132,7 @@ public class SharingMenuItemFactoryImpl
 		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		return PortalUtil.getLiferayPortletResponse(portletResponse);
+		return _portal.getLiferayPortletResponse(portletResponse);
 	}
 
 	private String _getOnclickMethod(
@@ -147,7 +147,7 @@ public class SharingMenuItemFactoryImpl
 
 		sharingURL.setParameter("mvcRenderCommandName", "/sharing/share");
 
-		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+		long classNameId = _classNameLocalService.getClassNameId(
 			DLFileEntry.class.getName());
 
 		sharingURL.setParameter("classNameId", String.valueOf(classNameId));
@@ -177,7 +177,7 @@ public class SharingMenuItemFactoryImpl
 		sb.append("sharing('");
 		sb.append(sharingURL.toString());
 		sb.append("', '");
-		sb.append(LanguageUtil.get(resourceBundle, "share"));
+		sb.append(_language.get(resourceBundle, "share"));
 		sb.append("');");
 
 		return sb.toString();
@@ -186,5 +186,14 @@ public class SharingMenuItemFactoryImpl
 	private String _getSharingDialogId(String namespace) {
 		return namespace.concat("sharingDialogId");
 	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 }

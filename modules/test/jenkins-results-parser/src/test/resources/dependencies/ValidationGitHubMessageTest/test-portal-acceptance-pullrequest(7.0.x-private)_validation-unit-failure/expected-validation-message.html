@@ -14,6 +14,33 @@
     <li>subrepository-semantic-versioning-jdk8 -  :white_check_mark:</li>
     <li>subrepository-pmd-jdk8 -  :white_check_mark:</li>
     <li>subrepository-source-format-jdk8 -  :white_check_mark:</li>
+    <li>subrepository-unit-jdk8 -  :x:
+      <pre>
+        <code>     [echo] 	at org.gradle.launcher.cli.CommandLineActionFactory$WithLogging.execute(CommandLineActionFactory.java:210)
+     [echo] 	at org.gradle.launcher.cli.CommandLineActionFactory$WithLogging.execute(CommandLineActionFactory.java:174)
+     [echo] 	at org.gradle.launcher.Main.doAction(Main.java:33)
+     [echo] 	at org.gradle.launcher.bootstrap.EntryPoint.run(EntryPoint.java:45)
+     [echo] 	at org.gradle.launcher.bootstrap.ProcessBootstrap.runNoExit(ProcessBootstrap.java:60)
+     [echo] 	at org.gradle.launcher.bootstrap.ProcessBootstrap.run(ProcessBootstrap.java:37)
+     [echo] 	at org.gradle.launcher.GradleMain.main(GradleMain.java:23)
+     [echo] 	at org.gradle.wrapper.BootstrapMainStarter.start(BootstrapMainStarter.java:31)
+     [echo] 	at org.gradle.wrapper.WrapperExecutor.execute(WrapperExecutor.java:108)
+     [echo] 	at org.gradle.wrapper.GradleWrapperMain.main(GradleWrapperMain.java:61)
+     [echo] Caused by: org.gradle.api.GradleException: There were failing tests. See the report at: file:///opt/dev/projects/github/liferay-portal-7.0.x-private/modules/private/apps/osb-pulpo/osb-pulpo-engine-contacts/osb-pulpo-engine-contacts/build/reports/tests/test/index.html
+     [echo] 	at org.gradle.api.tasks.testing.Test.handleTestFailures(Test.java:1250)
+     [echo] 	at org.gradle.api.tasks.testing.Test.executeTests(Test.java:662)
+     [echo] 	at org.gradle.internal.reflect.JavaMethod.invoke(JavaMethod.java:73)
+     [echo] 	at org.gradle.api.internal.project.taskfactory.DefaultTaskClassInfoStore$StandardTaskAction.doExecute(DefaultTaskClassInfoStore.java:141)
+     [echo] 	at org.gradle.api.internal.project.taskfactory.DefaultTaskClassInfoStore$StandardTaskAction.execute(DefaultTaskClassInfoStore.java:134)
+     [echo] 	at org.gradle.api.internal.project.taskfactory.DefaultTaskClassInfoStore$StandardTaskAction.execute(DefaultTaskClassInfoStore.java:123)
+     [echo] 	at org.gradle.api.internal.AbstractTask$TaskActionWrapper.execute(AbstractTask.java:632)
+     [echo] 	at org.gradle.api.internal.AbstractTask$TaskActionWrapper.execute(AbstractTask.java:615)
+     [echo] 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeAction(ExecuteActionsTaskExecuter.java:95)
+     [echo] 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeActions(ExecuteActionsTaskExecuter.java:76)
+     [echo] 	... 62 more
+     [echo] </code>
+      </pre>
+    </li>
   </ul>
   <h5>For full console, click
     <a href="${dependencies.url}/ValidationGitHubMessageTest/test-portal-acceptance-pullrequest(7.0.x-private)_validation-unit-failure/test-1-10/test-portal-acceptance-pullrequest-validation(7.0.x-private)/51//consoleText">here</a>.

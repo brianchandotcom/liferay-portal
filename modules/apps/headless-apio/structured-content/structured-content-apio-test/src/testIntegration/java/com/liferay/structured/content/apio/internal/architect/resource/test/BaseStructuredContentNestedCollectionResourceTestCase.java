@@ -207,8 +207,8 @@ public abstract class BaseStructuredContentNestedCollectionResourceTestCase {
 		ClassLoader classLoader = clazz.getClassLoader();
 
 		InputStream inputStream = classLoader.getResourceAsStream(
-			"/com/liferay/structured/content/apio/internal/architect/reso" +
-				"urce/test/" + fileName);
+			"/com/liferay/structured/content/apio/internal/architect/" +
+				"resource/test/" + fileName);
 
 		return StringUtil.read(inputStream);
 	}

@@ -25,7 +25,7 @@
 
 	<command name="AngularTemplateSmoke" priority="4">
 		<property name="project.templates" value="angular" />
-		<property name="test.name.skip.portal.instance" value="BladeNPMTemplates#AngularTemplateSmoke" />
+		<property name="test.name.skip.portal.instance" value="NPMTemplates#AngularTemplateSmoke" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Templates Page" />
@@ -43,7 +43,7 @@
 
 	<command name="BillboardjsTemplateSmoke" priority="4">
 		<property name="project.templates" value="billboardjs" />
-		<property name="test.name.skip.portal.instance" value="BladeNPMTemplates#BillboardjsTemplateSmoke" />
+		<property name="test.name.skip.portal.instance" value="NPMTemplates#BillboardjsTemplateSmoke" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Templates Page" />
@@ -60,12 +60,12 @@
 
 		<var name="key_portletName" value="npmbillboardjs" />
 
-		<execute function="AssertElementPresent" locator1="BladeNPMTemplates#BILLBOARDJS_BODY" />
+		<execute function="AssertElementPresent" locator1="NPMTemplates#BILLBOARDJS_BODY" />
 	</command>
 
 	<command name="IsomorphicTemplateSmoke" priority="4">
 		<property name="project.templates" value="isomorphic" />
-		<property name="test.name.skip.portal.instance" value="BladeNPMTemplates#IsomorphicTemplateSmoke" />
+		<property name="test.name.skip.portal.instance" value="NPMTemplates#IsomorphicTemplateSmoke" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Templates Page" />
@@ -83,7 +83,7 @@
 
 	<command name="JQueryTemplateSmoke" priority="4">
 		<property name="project.templates" value="jquery" />
-		<property name="test.name.skip.portal.instance" value="BladeNPMTemplates#JQueryTemplateSmoke" />
+		<property name="test.name.skip.portal.instance" value="NPMTemplates#JQueryTemplateSmoke" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Templates Page" />
@@ -101,7 +101,7 @@
 
 	<command name="MetaljsTemplateSmoke" priority="4">
 		<property name="project.templates" value="metaljs" />
-		<property name="test.name.skip.portal.instance" value="BladeNPMTemplates#MetaljsTemplateSmoke" />
+		<property name="test.name.skip.portal.instance" value="NPMTemplates#MetaljsTemplateSmoke" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Templates Page" />
@@ -119,7 +119,7 @@
 
 	<command name="ReactTemplateSmoke" priority="4">
 		<property name="project.templates" value="react" />
-		<property name="test.name.skip.portal.instance" value="BladeNPMTemplates#ReactTemplateSmoke" />
+		<property name="test.name.skip.portal.instance" value="NPMTemplates#ReactTemplateSmoke" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Templates Page" />
@@ -137,7 +137,7 @@
 
 	<command name="SimpleTemplateSmoke" priority="4">
 		<property name="project.templates" value="simple" />
-		<property name="test.name.skip.portal.instance" value="BladeNPMTemplates#SimpleTemplateSmoke" />
+		<property name="test.name.skip.portal.instance" value="NPMTemplates#SimpleTemplateSmoke" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Templates Page" />
@@ -155,7 +155,7 @@
 
 	<command name="VuejsTemplateSmoke" priority="4">
 		<property name="project.templates" value="vuejs" />
-		<property name="test.name.skip.portal.instance" value="BladeNPMTemplates#VuejsTemplateSmoke" />
+		<property name="test.name.skip.portal.instance" value="NPMTemplates#VuejsTemplateSmoke" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Templates Page" />

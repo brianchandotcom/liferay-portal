@@ -1,14 +1,14 @@
 <html>
 <head>
-<title>BladeNPMTemplates</title>
+<title>NPMTemplates</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">BladeNPMTemplates</td></tr>
+<tr><td rowspan="1" colspan="3">NPMTemplates</td></tr>
 </thead>
 <tbody>
-<!--BLADE-NPM-TEMPLATES-->
+<!--NPM-TEMPLATES-->
 <tr>
 	<td>BILLBOARDJS_BODY</td>
 	<td>//div[contains(@id,'${key_portletName}') and contains(@class,'bb')]</td>

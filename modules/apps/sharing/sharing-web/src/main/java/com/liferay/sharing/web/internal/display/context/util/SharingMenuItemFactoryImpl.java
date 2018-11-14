@@ -47,6 +47,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import javax.portlet.WindowStateException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -167,8 +168,8 @@ public class SharingMenuItemFactoryImpl
 		try {
 			sharingURL.setWindowState(LiferayWindowState.POP_UP);
 		}
-		catch (Exception e) {
-			throw new SystemException("Unable to set window state", e);
+		catch (WindowStateException wse) {
+			throw new SystemException("Unable to set window state", wse);
 		}
 
 		StringBundler sb = new StringBundler(6);

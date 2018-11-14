@@ -4651,6 +4651,9 @@ public class PortalImpl implements Portal {
 
 		Locale locale = portletRequest.getLocale();
 
+		String portletTitle = _getPortletTitle(
+			PortletIdCodec.decodePortletName(portletId), portletConfig, locale);
+
 		if (portletConfig == null) {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				getCompanyId(portletRequest), portletId);
@@ -4660,11 +4663,35 @@ public class PortalImpl implements Portal {
 			ServletContext servletContext =
 				(ServletContext)request.getAttribute(WebKeys.CTX);
 
-			return getPortletTitle(portlet, servletContext, locale);
+			portletTitle = getPortletTitle(portlet, servletContext, locale);
 		}
 
-		return _getPortletTitle(
-			PortletIdCodec.decodePortletName(portletId), portletConfig, locale);
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		long portletScopeGroupId = _getScopeGroupId(
+			themeDisplay, layout, portletId);
+
+		if (portletScopeGroupId != layout.getGroupId()) {
+			Group portletScopeGroup = GroupLocalServiceUtil.fetchGroup(
+				portletScopeGroupId);
+
+			String portletScopeName = portletScopeGroup.getName(locale);
+
+			try {
+				portletScopeName = portletScopeGroup.getDescriptiveName(locale);
+			}
+			catch (PortalException pe) {
+				_log.error("Unable to get descriptive name", pe);
+			}
+
+			return getNewPortletTitle(
+				portletTitle, StringPool.BLANK, portletScopeName);
+		}
+
+		return portletTitle;
 	}
 
 	@Override

@@ -370,15 +370,12 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 		if (getLineLength(s) <= maxLineLength) {
 			sb.append(javaTermContent);
-
-			return;
 		}
-
-		appendNewLine(
-			sb, javaTerm, indent + "\t", StringUtil.trimLeading(prefix), suffix,
-			maxLineLength);
-
-		return;
+		else {
+			appendNewLine(
+				sb, javaTerm, indent + "\t", StringUtil.trimLeading(prefix),
+				suffix, maxLineLength);
+		}
 	}
 
 	private String _getFirstLine(String s) {

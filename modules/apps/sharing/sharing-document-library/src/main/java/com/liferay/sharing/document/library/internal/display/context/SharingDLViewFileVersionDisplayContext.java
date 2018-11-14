@@ -17,8 +17,6 @@ package com.liferay.sharing.document.library.internal.display.context;
 import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
@@ -41,28 +39,13 @@ public class SharingDLViewFileVersionDisplayContext
 	public SharingDLViewFileVersionDisplayContext(
 		DLViewFileVersionDisplayContext parentDLDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion, ResourceBundle resourceBundle) {
+		FileVersion fileVersion, ResourceBundle resourceBundle,
+		SharingDLDisplayContextHelper sharingDLDisplayContextHelper) {
 
 		super(_UUID, parentDLDisplayContext, request, response, fileVersion);
 
 		_resourceBundle = resourceBundle;
-
-		try {
-			FileEntry fileEntry = null;
-
-			if (fileVersion != null) {
-				fileEntry = fileVersion.getFileEntry();
-			}
-
-			_sharingDLDisplayContextHelper = new SharingDLDisplayContextHelper(
-				fileEntry, request);
-		}
-		catch (PortalException pe) {
-			throw new SystemException(
-				"Unable to create sharing document library view file version " +
-					"display context for file version " + fileVersion,
-				pe);
-		}
+		_sharingDLDisplayContextHelper = sharingDLDisplayContextHelper;
 	}
 
 	@Override

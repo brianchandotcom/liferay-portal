@@ -19,6 +19,8 @@ import com.liferay.document.library.display.context.DLEditFileEntryDisplayContex
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.liferay.sharing.document.library.internal.display.context.logic.SharingDLDisplayContextHelper;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -71,15 +74,30 @@ public class SharingDLDisplayContextFactory implements DLDisplayContextFactory {
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		try {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		return new SharingDLViewFileVersionDisplayContext(
-			parentDLViewFileVersionDisplayContext, request, response,
-			fileVersion,
-			ResourceBundleUtil.getBundle(
-				themeDisplay.getLocale(),
-				SharingDLDisplayContextFactory.class));
+			FileEntry fileEntry = null;
+
+			if (fileVersion != null) {
+				fileEntry = fileVersion.getFileEntry();
+			}
+
+			return new SharingDLViewFileVersionDisplayContext(
+				parentDLViewFileVersionDisplayContext, request, response,
+				fileVersion,
+				ResourceBundleUtil.getBundle(
+					themeDisplay.getLocale(),
+					SharingDLDisplayContextFactory.class),
+				new SharingDLDisplayContextHelper(fileEntry, request));
+		}
+		catch (PortalException pe) {
+			throw new SystemException(
+				"Unable to create sharing document library view file version " +
+					"display context for file version " + fileVersion,
+				pe);
+		}
 	}
 
 	@Reference(unbind = "-")

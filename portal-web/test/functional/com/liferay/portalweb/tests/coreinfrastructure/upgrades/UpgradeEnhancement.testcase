@@ -1,6 +1,6 @@
 <definition component-name="portal-upgrades">
-	<property name="app.server.types" value="jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly" />
-	<property name="database.types" value="db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
+	<property name="app.server.types" value="tomcat" />
+	<property name="database.types" value="mysql" />
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
 	<property name="ignore.errors" value="Plugin security management is not enabled. Enable a security manager, then restart." />
@@ -8,7 +8,6 @@
 
 	<command name="DirectUpgradeFromArchive6012" priority="5">
 		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="database.types" value="mysql" />
 		<property name="portal.upgrades" value="true" />
 		<property name="portal.version" value="6.0.12" />
 		<property name="skip.start-app-server" value="true" />

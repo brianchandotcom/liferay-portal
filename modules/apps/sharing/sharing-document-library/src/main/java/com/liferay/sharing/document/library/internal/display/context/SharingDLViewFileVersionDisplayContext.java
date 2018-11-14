@@ -18,6 +18,7 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
@@ -29,7 +30,8 @@ import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.sharing.document.library.internal.display.context.logic.SharingDLDisplayContextHelper;
+import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
+import com.liferay.sharing.display.context.util.SharingToolbarItemFactory;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -47,15 +49,20 @@ public class SharingDLViewFileVersionDisplayContext
 	public SharingDLViewFileVersionDisplayContext(
 		DLViewFileVersionDisplayContext parentDLDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion, ResourceBundle resourceBundle,
-		SharingDLDisplayContextHelper sharingDLDisplayContextHelper) {
+		FileEntry fileEntry, FileVersion fileVersion,
+		ResourceBundle resourceBundle,
+		SharingMenuItemFactory sharingMenuItemFactory,
+		SharingToolbarItemFactory sharingToolbarItemFactory) {
 
 		super(_UUID, parentDLDisplayContext, request, response, fileVersion);
 
+		_request = request;
+		_fileEntry = fileEntry;
 		_resourceBundle = resourceBundle;
-		_sharingDLDisplayContextHelper = sharingDLDisplayContextHelper;
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+		_sharingMenuItemFactory = sharingMenuItemFactory;
+		_sharingToolbarItemFactory = sharingToolbarItemFactory;
 	}
 
 	@Override
@@ -69,8 +76,8 @@ public class SharingDLViewFileVersionDisplayContext
 		List<MenuItem> menuItems = menu.getMenuItems();
 
 		menuItems.add(
-			_sharingDLDisplayContextHelper.
-				getJavacriptEditWithImageEditorMenuItem(_resourceBundle));
+			_sharingMenuItemFactory.createShareMenuItem(
+				_fileEntry, _request, _resourceBundle));
 
 		return menu;
 	}
@@ -84,8 +91,8 @@ public class SharingDLViewFileVersionDisplayContext
 		}
 
 		toolbarItems.add(
-			_sharingDLDisplayContextHelper.
-				getJavacriptEditWithImageEditorToolbarItem(_resourceBundle));
+			_sharingToolbarItemFactory.createShareToolbarItem(
+				_fileEntry, _request, _resourceBundle));
 
 		return toolbarItems;
 	}
@@ -125,8 +132,11 @@ public class SharingDLViewFileVersionDisplayContext
 	private static final UUID _UUID = UUID.fromString(
 		"6d7d30de-01fa-49db-a422-d78748aa03a7");
 
+	private final FileEntry _fileEntry;
+	private final HttpServletRequest _request;
 	private final ResourceBundle _resourceBundle;
-	private final SharingDLDisplayContextHelper _sharingDLDisplayContextHelper;
+	private final SharingMenuItemFactory _sharingMenuItemFactory;
+	private final SharingToolbarItemFactory _sharingToolbarItemFactory;
 	private Boolean _showImageEditorAction;
 	private final ThemeDisplay _themeDisplay;
 

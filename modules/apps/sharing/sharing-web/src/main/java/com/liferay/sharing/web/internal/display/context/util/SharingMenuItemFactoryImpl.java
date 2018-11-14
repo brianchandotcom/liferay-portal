@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.sharing.document.library.internal.display.context.logic;
+package com.liferay.sharing.web.internal.display.context.util;
 
-import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,19 +29,16 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptToolbarItem;
-import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
-import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
-import com.liferay.portal.kernel.settings.TypedSettings;
+import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.URLTemplateResource;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
+import com.liferay.sharing.display.context.util.SharingToolbarItemFactory;
 import com.liferay.sharing.model.SharingEntry;
 
 import java.util.ResourceBundle;
@@ -53,64 +49,72 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
- * @author Sergio González
+ * @author Adolfo Pérez
  */
-public class SharingDLDisplayContextHelper {
+@Component(
+	immediate = true,
+	service = {SharingMenuItemFactory.class, SharingToolbarItemFactory.class}
+)
+public class SharingMenuItemFactoryImpl
+	implements SharingMenuItemFactory, SharingToolbarItemFactory {
 
-	public SharingDLDisplayContextHelper(
-		FileEntry fileEntry, HttpServletRequest request) {
-
-		_fileEntry = fileEntry;
-		_request = request;
-	}
-
-	public JavaScriptMenuItem getJavacriptEditWithImageEditorMenuItem(
+	@Override
+	public MenuItem createShareMenuItem(
+			FileEntry fileEntry, HttpServletRequest request,
 			ResourceBundle resourceBundle)
 		throws PortalException {
 
 		JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
 
-		javaScriptMenuItem.setJavaScript(_getJavaScript());
+		javaScriptMenuItem.setJavaScript(_getJavaScript(request));
 		javaScriptMenuItem.setKey("#share");
 		javaScriptMenuItem.setLabel(LanguageUtil.get(resourceBundle, "share"));
-		javaScriptMenuItem.setOnClick(_getOnclickMethod(resourceBundle));
+		javaScriptMenuItem.setOnClick(
+			_getOnclickMethod(fileEntry, request, resourceBundle));
 
 		return javaScriptMenuItem;
 	}
 
-	public JavaScriptToolbarItem getJavacriptEditWithImageEditorToolbarItem(
+	@Override
+	public ToolbarItem createShareToolbarItem(
+			FileEntry fileEntry, HttpServletRequest request,
 			ResourceBundle resourceBundle)
 		throws PortalException {
 
 		JavaScriptToolbarItem javaScriptToolbarItem =
 			new JavaScriptToolbarItem();
 
-		javaScriptToolbarItem.setJavaScript(_getJavaScript());
+		javaScriptToolbarItem.setJavaScript(_getJavaScript(request));
 		javaScriptToolbarItem.setKey("#share");
 		javaScriptToolbarItem.setLabel(
 			LanguageUtil.get(resourceBundle, "share"));
-		javaScriptToolbarItem.setOnClick(_getOnclickMethod(resourceBundle));
+		javaScriptToolbarItem.setOnClick(
+			_getOnclickMethod(fileEntry, request, resourceBundle));
 
 		return javaScriptToolbarItem;
 	}
 
-	private String _getJavaScript() throws PortalException {
+	private String _getJavaScript(HttpServletRequest request)
+		throws PortalException {
+
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		String javaScript =
-			"/com/liferay/sharing/document/library/internal/display/context" +
+			"/com/liferay/sharing/web/internal/display/context/util" +
 				"/dependencies/sharing_js.ftl";
 		Class<?> clazz = getClass();
 
 		URLTemplateResource urlTemplateResource = new URLTemplateResource(
 			javaScript, clazz.getResource(javaScript));
 
+		LiferayPortletResponse liferayPortletResponse =
+			_getLiferayPortletResponse(request);
+
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
-
-		LiferayPortletResponse liferayPortletResponse =
-			_getLiferayPortletResponse();
 
 		template.put("namespace", liferayPortletResponse.getNamespace());
 		template.put(
@@ -122,20 +126,24 @@ public class SharingDLDisplayContextHelper {
 		return unsyncStringWriter.toString();
 	}
 
-	private LiferayPortletResponse _getLiferayPortletResponse() {
-		PortletResponse portletResponse =
-			(PortletResponse)_request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
+	private LiferayPortletResponse _getLiferayPortletResponse(
+		HttpServletRequest request) {
+
+		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		return PortalUtil.getLiferayPortletResponse(portletResponse);
 	}
 
-	private String _getOnclickMethod(ResourceBundle resourceBundle) {
+	private String _getOnclickMethod(
+		FileEntry fileEntry, HttpServletRequest request,
+		ResourceBundle resourceBundle) {
+
 		String sharingPortletId = PortletProviderUtil.getPortletId(
 			SharingEntry.class.getName(), PortletProvider.Action.EDIT);
 
 		PortletURL sharingURL = PortletURLFactoryUtil.create(
-			_request, sharingPortletId, PortletRequest.RENDER_PHASE);
+			request, sharingPortletId, PortletRequest.RENDER_PHASE);
 
 		sharingURL.setParameter("mvcRenderCommandName", "/sharing/share");
 
@@ -145,10 +153,10 @@ public class SharingDLDisplayContextHelper {
 		sharingURL.setParameter("classNameId", String.valueOf(classNameId));
 
 		sharingURL.setParameter(
-			"classPK", String.valueOf(_fileEntry.getFileEntryId()));
+			"classPK", String.valueOf(fileEntry.getFileEntryId()));
 
 		LiferayPortletResponse liferayPortletResponse =
-			_getLiferayPortletResponse();
+			_getLiferayPortletResponse(request);
 
 		sharingURL.setParameter(
 			"refererPortletNamespace", liferayPortletResponse.getNamespace());
@@ -178,8 +186,5 @@ public class SharingDLDisplayContextHelper {
 	private String _getSharingDialogId(String namespace) {
 		return namespace.concat("sharingDialogId");
 	}
-
-	private final FileEntry _fileEntry;
-	private final HttpServletRequest _request;
 
 }

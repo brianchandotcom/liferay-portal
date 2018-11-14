@@ -26,12 +26,14 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.sharing.document.library.internal.display.context.logic.SharingDLDisplayContextHelper;
+import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
+import com.liferay.sharing.display.context.util.SharingToolbarItemFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -84,11 +86,11 @@ public class SharingDLDisplayContextFactory implements DLDisplayContextFactory {
 
 			return new SharingDLViewFileVersionDisplayContext(
 				parentDLViewFileVersionDisplayContext, request, response,
-				fileVersion,
+				fileEntry, fileVersion,
 				ResourceBundleUtil.getBundle(
 					themeDisplay.getLocale(),
 					SharingDLDisplayContextFactory.class),
-				new SharingDLDisplayContextHelper(fileEntry, request));
+				_sharingMenuItemFactory, _sharingToolbarItemFactory);
 		}
 		catch (PortalException pe) {
 			throw new SystemException(
@@ -97,5 +99,11 @@ public class SharingDLDisplayContextFactory implements DLDisplayContextFactory {
 				pe);
 		}
 	}
+
+	@Reference
+	private SharingMenuItemFactory _sharingMenuItemFactory;
+
+	@Reference
+	private SharingToolbarItemFactory _sharingToolbarItemFactory;
 
 }

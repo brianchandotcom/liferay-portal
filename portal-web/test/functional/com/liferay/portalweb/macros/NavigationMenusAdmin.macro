@@ -276,12 +276,6 @@
 		</execute>
 	</command>
 
-	<command name="viewNoItem">
-		<execute function="AssertElementNotPresent" locator1="SiteNavigationMenu#ITEM_ENTRY">
-			<var name="key_itemName" value="${itemName}" />
-		</execute>
-	</command>
-
 	<command name="viewItemNested">
 		<execute function="AssertNotAttributeValue" locator1="SiteNavigationMenu#ITEM_ENTRY" locator2="data-parent-site-navigation-menu-item-id" value1="0">
 			<var name="key_itemName" value="${itemName}" />
@@ -304,6 +298,12 @@
 		<execute function="AssertTextEquals" locator1="SiteNavigationMenu#MENU_MARKED_AS" value1="${menuType}">
 			<var name="key_markedAs" value="${menuType}" />
 			<var name="key_rowEntry" value="${rowEntry}" />
+		</execute>
+	</command>
+
+	<command name="viewNoItem">
+		<execute function="AssertElementNotPresent" locator1="SiteNavigationMenu#ITEM_ENTRY">
+			<var name="key_itemName" value="${itemName}" />
 		</execute>
 	</command>
 </definition>

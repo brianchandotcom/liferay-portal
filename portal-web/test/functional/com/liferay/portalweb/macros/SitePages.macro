@@ -8,8 +8,8 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute macro="SitePages#_addPageToNavigationMenu">
-			<var name="navigationMenus" value="${navigationMenus}" />
 			<var name="assertCheckboxMissing" value="${assertCheckboxMissing}" />
+			<var name="navigationMenus" value="${navigationMenus}" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">

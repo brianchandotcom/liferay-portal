@@ -38,6 +38,44 @@ public abstract class BaseWorkspaceGitRepository
 	extends BaseLocalGitRepository implements WorkspaceGitRepository {
 
 	@Override
+	public List<List<LocalGitCommit>> getCommitGroups(
+		List<LocalGitCommit> localGitCommits, int count) {
+
+		if (count >= localGitCommits.size()) {
+			List<List<LocalGitCommit>> commitGroups = new ArrayList<>();
+
+			for (LocalGitCommit localGitCommit : localGitCommits) {
+				commitGroups.add(Lists.newArrayList(localGitCommit));
+			}
+
+			return commitGroups;
+		}
+
+		List<List<LocalGitCommit>> commitGroups = new ArrayList<>();
+
+		int totalCommitCount = localGitCommits.size();
+
+		int commitGroupSize = totalCommitCount / (count - 1);
+
+		List<LocalGitCommit> commitGroup = null;
+
+		for (int i = 0; i < (totalCommitCount - 1); i++) {
+			if ((i % commitGroupSize) == 0) {
+				commitGroup = new ArrayList<>();
+
+				commitGroups.add(commitGroup);
+			}
+
+			commitGroup.add(localGitCommits.get(i));
+		}
+
+		commitGroups.add(
+			Lists.newArrayList(localGitCommits.get(totalCommitCount - 1)));
+
+		return commitGroups;
+	}
+
+	@Override
 	public List<LocalGitCommit> getCommitHistory() {
 		if (_commitHistory != null) {
 			return _commitHistory;

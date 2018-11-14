@@ -674,7 +674,7 @@ public class StructuredContentNestedCollectionResource
 		List<StructuredContentField> nestedStructureContentFields =
 			stream.flatMap(
 				structuredContentField -> _getStructuredContentFields(
-					structuredContentField.getNestedFields()
+					structuredContentField.getNestedStructuredContentFields()
 				).stream()
 			).collect(
 				Collectors.toList()
@@ -929,7 +929,7 @@ public class StructuredContentNestedCollectionResource
 		}
 
 		@Override
-		public List<StructuredContentField> getNestedFields() {
+		public List<StructuredContentField> getNestedStructuredContentFields() {
 			return _toStructuredContentFields(
 				_ddmFormFieldValue.getNestedDDMFormFieldValues(),
 				_ddmStructure);

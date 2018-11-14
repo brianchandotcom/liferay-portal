@@ -15,6 +15,7 @@
 package com.liferay.workflow.apio.internal.architect.form;
 
 import com.liferay.apio.architect.form.Form;
+import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 
 import java.util.Date;
 
@@ -37,17 +38,20 @@ public class AssignToUserForm {
 		return formBuilder.title(
 			__ -> "Assign task"
 		).description(
-			__ ->
-				"This form can be used to assign a task to an user"
+			__ -> "This form can be used to assign a task to an user"
 		).constructor(
 			AssignToUserForm::new
 		).addOptionalDate(
 			"dueDate", AssignToUserForm::setDueDate
 		).addOptionalString(
 			"comment", AssignToUserForm::setComment
-		).addRequiredLong(
-			"userId", AssignToUserForm::setUserId
+		).addRequiredLinkedModel(
+			"assignee", PersonIdentifier.class, AssignToUserForm::setAssigneeId
 		).build();
+	}
+
+	public Long getAssigneeId() {
+		return _assigneeId;
 	}
 
 	public String getComment() {
@@ -62,8 +66,8 @@ public class AssignToUserForm {
 		return _dueDate;
 	}
 
-	public long getUserId() {
-		return _userId;
+	public void setAssigneeId(Long assigneeId) {
+		_assigneeId = assigneeId;
 	}
 
 	public void setComment(String comment) {
@@ -74,12 +78,8 @@ public class AssignToUserForm {
 		_dueDate = dueDate;
 	}
 
-	public void setUserId(long userId) {
-		_userId = userId;
-	}
-
+	private Long _assigneeId;
 	private String _comment;
 	private Date _dueDate;
-	private long _userId;
 
 }

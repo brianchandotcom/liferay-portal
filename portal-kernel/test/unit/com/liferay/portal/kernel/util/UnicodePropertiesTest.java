@@ -147,7 +147,8 @@ public class UnicodePropertiesTest {
 		Assert.assertEquals(
 			_TEST_VALUE_1, unicodeProperties.remove(_TEST_KEY_1));
 		Assert.assertTrue(
-			"unicodeProperties should be empty after removing testKey1",
+			"unicodeProperties should be empty after removing testKey1: " +
+				unicodeProperties.toString(),
 			unicodeProperties.isEmpty());
 	}
 
@@ -157,12 +158,14 @@ public class UnicodePropertiesTest {
 
 		Assert.assertNull(unicodeProperties.setProperty(null, _TEST_VALUE_1));
 		Assert.assertTrue(
-			"nothing will be put in if key is null",
+			"nothing will be put in if key is null: " +
+				unicodeProperties.toString(),
 			unicodeProperties.isEmpty());
 
 		Assert.assertNull(unicodeProperties.setProperty(_TEST_KEY_1, null));
 		Assert.assertTrue(
-			"nothing will be put in if value is null",
+			"nothing will be put in if value is null: " +
+				unicodeProperties.toString(),
 			unicodeProperties.isEmpty());
 
 		Assert.assertNull(
@@ -174,7 +177,8 @@ public class UnicodePropertiesTest {
 		Assert.assertEquals(
 			_TEST_VALUE_1, unicodeProperties.setProperty(_TEST_KEY_1, null));
 		Assert.assertTrue(
-			"setProperty() of null value must remove entry",
+			"setProperty() of null value must remove entry: " +
+				unicodeProperties.toString(),
 			unicodeProperties.isEmpty());
 	}
 
@@ -215,7 +219,8 @@ public class UnicodePropertiesTest {
 		loadMethod.load(null, unicodeProperties);
 
 		Assert.assertTrue(
-			"nothing will be loaded in if props is null",
+			"nothing will be loaded in if props is null: " +
+				unicodeProperties.toString(),
 			unicodeProperties.isEmpty());
 
 		loadMethod.load(_TEST_LINE_1, unicodeProperties);
@@ -270,7 +275,8 @@ public class UnicodePropertiesTest {
 			unicodeProperties.put(_TEST_KEY_1);
 
 			Assert.assertTrue(
-				"nothing will be put in if the line contains no \"=\"",
+				"nothing will be put in if the line contains no \"=\": " +
+					unicodeProperties.toString(),
 				unicodeProperties.isEmpty());
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
@@ -287,13 +293,15 @@ public class UnicodePropertiesTest {
 		unicodeProperties.put("");
 
 		Assert.assertTrue(
-			"nothing will be put in if called with empty string (\"\")",
+			"nothing will be put in if called with empty string (\"\"): " +
+				unicodeProperties.toString(),
 			unicodeProperties.isEmpty());
 
 		unicodeProperties.put("# " + _TEST_LINE_1);
 
 		Assert.assertTrue(
-			"nothing will be put in if the line is started with #",
+			"nothing will be put in if the line is started with #: " +
+				unicodeProperties.toString(),
 			unicodeProperties.isEmpty());
 
 		unicodeProperties.put(_TEST_LINE_1);

@@ -91,13 +91,12 @@ public abstract class BaseJavaTerm implements JavaTerm {
 				appendNewLine(
 					sb, javaTerm, "\t" + indent, prefix, suffix, maxLineLength);
 			}
-		}
-		else {
-			_appendWithLineBreak(
-				sb, javaTerm, indent, prefix, suffix, maxLineLength);
+
+			return APPENDED_NEW_LINE;
 		}
 
-		return APPENDED_NEW_LINE;
+		return _appendWithLineBreak(
+			sb, javaTerm, indent, prefix, suffix, maxLineLength);
 	}
 
 	protected int append(
@@ -148,7 +147,10 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		StringBundler sb, JavaTerm javaTerm, String indent, String prefix,
 		String suffix, int maxLineLength) {
 
-		sb.append("\n");
+		if (sb.index() > 0) {
+			sb.append("\n");
+		}
+
 		sb.append(
 			javaTerm.toString(
 				indent, StringUtil.trimLeading(prefix), suffix, maxLineLength));
@@ -339,7 +341,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		return false;
 	}
 
-	private void _appendWithLineBreak(
+	private int _appendWithLineBreak(
 		StringBundler sb, JavaTerm javaTerm, String indent, String prefix,
 		String suffix, int maxLineLength) {
 
@@ -352,12 +354,17 @@ public abstract class BaseJavaTerm implements JavaTerm {
 				sb.append("\n");
 			}
 
-			sb.append(
-				javaTerm.toString(
-					indent, StringUtil.trimLeading(prefix), suffix,
-					maxLineLength, true));
+			String s = javaTerm.toString(
+				indent, StringUtil.trimLeading(prefix), suffix, maxLineLength,
+				true);
 
-			return;
+			sb.append(s);
+
+			if (s.contains("\n")) {
+				return APPENDED_NEW_LINE;
+			}
+
+			return APPENDED_SINGLE_LINE;
 		}
 
 		String javaTermContent = javaTerm.toString(
@@ -376,6 +383,8 @@ public abstract class BaseJavaTerm implements JavaTerm {
 				sb, javaTerm, indent + "\t", StringUtil.trimLeading(prefix),
 				suffix, maxLineLength);
 		}
+
+		return APPENDED_NEW_LINE;
 	}
 
 	private String _getFirstLine(String s) {

@@ -66,6 +66,8 @@
 	</command>
 
 	<command name="expandContentPageFragmentSidebar">
+		<execute function="Pause" locator1="1000" />
+
 		<if>
 			<not>
 				<condition function="IsElementPresent" locator1="PageEditor#CONTENT_PAGE_FRAGMENT_SIDEBAR" />

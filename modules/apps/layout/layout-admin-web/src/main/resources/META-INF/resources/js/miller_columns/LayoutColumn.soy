@@ -235,16 +235,18 @@
 				{else}
 					{if $layoutColumnItem.actionURLs['addURL']}
 						<div class="flex-col">
-							<a
-								class="component-action"
-								href="{$layoutColumnItem.actionURLs['addURL']}"
-								title="{msg desc=""}add-page{/msg}"
-							>
-								{call .lexiconIcon}
-									{param name: 'plus' /}
-									{param pathThemeImages: $pathThemeImages /}
-								{/call}
-							</a>
+							<div class="quick-action-menu">
+								<a
+									class="component-action"
+									href="{$layoutColumnItem.actionURLs['addURL']}"
+									title="{msg desc=""}add-page{/msg}"
+								>
+									{call .lexiconIcon}
+										{param name: 'plus' /}
+										{param pathThemeImages: $pathThemeImages /}
+									{/call}
+								</a>
+							</div>
 						</div>
 					{/if}
 

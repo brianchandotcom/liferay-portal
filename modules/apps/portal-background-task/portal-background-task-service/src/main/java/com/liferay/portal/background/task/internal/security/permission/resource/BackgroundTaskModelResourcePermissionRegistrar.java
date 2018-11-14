@@ -16,7 +16,6 @@ package com.liferay.portal.background.task.internal.security.permission.resource
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.background.task.executor.permission.BackgroundTaskExecutorPermission;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,9 +42,9 @@ public class BackgroundTaskModelResourcePermissionRegistrar {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		_backgroundTaskExecutorPermissions =
+		_backgroundTaskModelResourcePermissionLogics =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, BackgroundTaskExecutorPermission.class,
+				bundleContext, ModelResourcePermissionLogic.class,
 				"background.task.executor.class.name");
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
@@ -64,16 +63,16 @@ public class BackgroundTaskModelResourcePermissionRegistrar {
 
 	@Deactivate
 	public void deactivate() {
-		_backgroundTaskExecutorPermissions.close();
+		_backgroundTaskModelResourcePermissionLogics.close();
+
 		_serviceRegistration.unregister();
 	}
-
-	private ServiceTrackerMap<String, BackgroundTaskExecutorPermission>
-		_backgroundTaskExecutorPermissions;
 
 	@Reference
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
+	private ServiceTrackerMap<String, ModelResourcePermissionLogic>
+		_backgroundTaskModelResourcePermissionLogics;
 	private ServiceRegistration<ModelResourcePermission> _serviceRegistration;
 
 	private class BackgroundTaskPermissionLogic
@@ -85,17 +84,17 @@ public class BackgroundTaskModelResourcePermissionRegistrar {
 				BackgroundTask backgroundTask, String actionId)
 			throws PortalException {
 
-			BackgroundTaskExecutorPermission backgroundTaskExecutorPermission =
-				_backgroundTaskExecutorPermissions.getService(
-					backgroundTask.getTaskExecutorClassName());
+			ModelResourcePermissionLogic<BackgroundTask>
+				backgroundTaskModelResourcePermissionLogic =
+					_backgroundTaskModelResourcePermissionLogics.getService(
+						backgroundTask.getTaskExecutorClassName());
 
-			if (backgroundTaskExecutorPermission == null) {
+			if (backgroundTaskModelResourcePermissionLogic == null) {
 				return null;
 			}
 
-			return backgroundTaskExecutorPermission.contains(
-				permissionChecker, backgroundTask.getGroupId(),
-				backgroundTask.getBackgroundTaskId(), actionId);
+			return backgroundTaskModelResourcePermissionLogic.contains(
+				permissionChecker, name, backgroundTask, actionId);
 		}
 
 	}

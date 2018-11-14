@@ -14,10 +14,11 @@
 
 package com.liferay.exportimport.internal.background.task.executor.permission;
 
-import com.liferay.portal.background.task.executor.permission.BackgroundTaskExecutorPermission;
+import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.service.permission.GroupPermission;
 
 import org.osgi.service.component.annotations.Component;
@@ -28,19 +29,20 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "background.task.executor.class.name=com.liferay.exportimport.internal.background.task.PortletExportBackgroundTaskExecutor",
-	service = BackgroundTaskExecutorPermission.class
+	service = ModelResourcePermissionLogic.class
 )
 public class PortletExportBackgroundTaskExecutorPermission
-	implements BackgroundTaskExecutorPermission {
+	implements ModelResourcePermissionLogic<BackgroundTask> {
 
 	@Override
 	public Boolean contains(
-			PermissionChecker permissionChecker, long groupId, long primaryKey,
-			String actionId)
+			PermissionChecker permissionChecker, String name,
+			BackgroundTask backgroundTask, String actionId)
 		throws PortalException {
 
 		return _groupPermission.contains(
-			permissionChecker, groupId, ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
+			permissionChecker, backgroundTask.getGroupId(),
+			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 	}
 
 	@Reference

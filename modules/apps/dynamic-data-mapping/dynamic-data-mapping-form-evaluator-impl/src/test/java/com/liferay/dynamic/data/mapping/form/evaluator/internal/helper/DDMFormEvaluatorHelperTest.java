@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.AllFunc
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.BelongsToRoleFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.BetweenFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.CalculateFunction;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.ContainsFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.GetValueFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.JumpPageFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.SetEnabledFunction;
@@ -850,6 +851,46 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 	}
 
 	@Test
+	public void testValidationExpressionWithEmptyNumericField()
+		throws Exception {
+
+		DDMForm ddmForm = new DDMForm();
+
+		DDMFormField ddmFormField = createDDMFormField(
+			"field0", "numeric", FieldConstants.INTEGER);
+
+		DDMFormFieldValidation ddmFormFieldValidation =
+			new DDMFormFieldValidation();
+
+		ddmFormFieldValidation.setErrorMessage(
+			"This field should be less than zero.");
+		ddmFormFieldValidation.setExpression("field0 < 0");
+
+		ddmFormField.setDDMFormFieldValidation(ddmFormFieldValidation);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field0_instanceId", "field0", new UnlocalizedValue("")));
+
+		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse =
+			doEvaluate(ddmForm, ddmFormValues);
+
+		Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
+			ddmFormFieldsPropertyChanges =
+				ddmFormEvaluatorEvaluateResponse.
+					getDDMFormFieldsPropertyChanges();
+
+		Assert.assertEquals(
+			ddmFormFieldsPropertyChanges.toString(), 0,
+			ddmFormFieldsPropertyChanges.size());
+	}
+
+	@Test
 	public void testValidationExpressionWithNoErrorMessage() throws Exception {
 		DDMForm ddmForm = new DDMForm();
 
@@ -893,6 +934,67 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 			"This field is invalid.",
 			ddmFormFieldPropertyChanges.get("errorMessage"));
 		Assert.assertFalse((boolean)ddmFormFieldPropertyChanges.get("valid"));
+	}
+
+	@Test
+	public void testValidationForRepeatableField() throws Exception {
+		DDMForm ddmForm = new DDMForm();
+
+		DDMFormField ddmFormField = createDDMFormField(
+			"field0", "text", FieldConstants.STRING);
+
+		DDMFormFieldValidation ddmFormFieldValidation =
+			new DDMFormFieldValidation();
+
+		ddmFormFieldValidation.setErrorMessage(
+			"This field should not contain zero.");
+
+		ddmFormFieldValidation.setExpression("NOT(contains(field0, \"0\"))");
+
+		ddmFormField.setDDMFormFieldValidation(ddmFormFieldValidation);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field0_0", "field0", new UnlocalizedValue("0")));
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field0_1", "field0", new UnlocalizedValue("1")));
+
+		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse =
+			doEvaluate(ddmForm, ddmFormValues);
+
+		Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
+			ddmFormFieldsPropertyChanges = null;
+
+		ddmFormFieldsPropertyChanges =
+			ddmFormEvaluatorEvaluateResponse.getDDMFormFieldsPropertyChanges();
+
+		Assert.assertEquals(
+			ddmFormFieldsPropertyChanges.toString(), 2,
+			ddmFormFieldsPropertyChanges.size());
+
+		Map<String, Object> ddmFormFieldPropertyChanges1 =
+			ddmFormFieldsPropertyChanges.get(
+				new DDMFormEvaluatorFieldContextKey("field0", "field0_0"));
+
+		Map<String, Object> ddmFormFieldPropertyChanges2 =
+			ddmFormFieldsPropertyChanges.get(
+				new DDMFormEvaluatorFieldContextKey("field0", "field0_1"));
+
+		Assert.assertEquals(
+			"This field should not contain zero.",
+			ddmFormFieldPropertyChanges1.get("errorMessage"));
+
+		Assert.assertNull(ddmFormFieldPropertyChanges2.get("errorMessage"));
+
+		Assert.assertFalse((boolean)ddmFormFieldPropertyChanges1.get("valid"));
+		Assert.assertTrue((boolean)ddmFormFieldPropertyChanges2.get("valid"));
 	}
 
 	@Test
@@ -1033,6 +1135,7 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 			"belongsTo", createBelongsToRoleFunction());
 		ddmExpressionFunctionMap.put("between", new BetweenFunction());
 		ddmExpressionFunctionMap.put("calculate", new CalculateFunction());
+		ddmExpressionFunctionMap.put("contains", new ContainsFunction());
 		ddmExpressionFunctionMap.put("getValue", new GetValueFunction());
 		ddmExpressionFunctionMap.put("jumpPage", new JumpPageFunction());
 		ddmExpressionFunctionMap.put("setEnabled", new SetEnabledFunction());

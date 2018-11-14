@@ -341,6 +341,18 @@ public class DDMExpressionEvaluatorVisitor
 
 		Object variableValue = _variables.get(variable);
 
+		if ((variableValue == null) &&
+			_ddmExpressionFieldAccessor.isField(variable)) {
+
+			GetFieldPropertyRequest.Builder builder =
+				GetFieldPropertyRequest.Builder.newBuilder(variable, "value");
+
+			GetFieldPropertyResponse getFieldPropertyResponse =
+				_ddmExpressionFieldAccessor.getFieldProperty(builder.build());
+
+			variableValue = getFieldPropertyResponse.getValue();
+		}
+
 		if (variableValue == null) {
 			throw new IllegalStateException(
 				String.format("variable %s not defined", variable));

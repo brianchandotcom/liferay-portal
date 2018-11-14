@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.expression.UpdateFieldPropertyRequest;
 import com.liferay.dynamic.data.mapping.expression.UpdateFieldPropertyResponse;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorFieldContextKey;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.helper.DDMFormEvaluatorFormValuesHelper;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,9 +44,18 @@ public class DDMFormEvaluatorExpressionObserver
 	public UpdateFieldPropertyResponse updateFieldProperty(
 		UpdateFieldPropertyRequest updateFieldPropertyRequest) {
 
-		updateFieldProperty(
-			updateFieldPropertyRequest.getField(),
-			updateFieldPropertyRequest.getProperties());
+		if (Validator.isNull(updateFieldPropertyRequest.getInstanceId())) {
+			updateFieldProperty(
+				updateFieldPropertyRequest.getField(),
+				updateFieldPropertyRequest.getProperties());
+		}
+		else {
+			updateFieldProperty(
+				new DDMFormEvaluatorFieldContextKey(
+					updateFieldPropertyRequest.getField(),
+					updateFieldPropertyRequest.getInstanceId()),
+				updateFieldPropertyRequest.getProperties());
+		}
 
 		UpdateFieldPropertyResponse.Builder builder =
 			UpdateFieldPropertyResponse.Builder.newBuilder(true);

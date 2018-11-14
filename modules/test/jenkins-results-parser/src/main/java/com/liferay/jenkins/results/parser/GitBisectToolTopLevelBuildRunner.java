@@ -207,6 +207,31 @@ public class GitBisectToolTopLevelBuildRunner
 			return portalBranchSHAList;
 		}
 
+		Matcher matcher = _compareURLPattern.matcher(portalBranchSHAs);
+
+		if (matcher.find()) {
+			WorkspaceGitRepository workspaceGitRepository =
+				_getWorkspaceGitRepository();
+
+			List<LocalGitCommit> commits =
+				workspaceGitRepository.getCommitsInRange(
+					matcher.group("earliestSHA"), matcher.group("latestSHA"));
+
+			List<List<LocalGitCommit>> commitGroups =
+				workspaceGitRepository.getCommitGroups(
+					commits, _getMaxCommitGroupCount());
+
+			List<String> portalBranchSHAList = new ArrayList<>();
+
+			for (List<LocalGitCommit> localGitCommits : commitGroups) {
+				LocalGitCommit localGitCommit = localGitCommits.get(0);
+
+				portalBranchSHAList.add(localGitCommit.getSHA());
+			}
+
+			return portalBranchSHAList;
+		}
+
 		List<String> list = new ArrayList<>();
 
 		for (String portalBranchSHA : portalBranchSHAs.split(",")) {

@@ -157,7 +157,7 @@
 
 		<execute macro="NavigationMenusAdmin#addItem">
 			<var name="item" value="Page" />
-			<var name="pageNames" value="Site Page Name 1,Site Page Name 2" />
+			<var name="pageNames" value="Test Page Name 1,Test Page Name 2" />
 		</execute>
 
 		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
@@ -170,16 +170,16 @@
 
 		<execute macro="NavigationMenusAdmin#editItem">
 			<var name="item" value="Page" />
-			<var name="itemName" value="Site Page Name 2" />
-			<var name="name" value="Site Page Name 3" />
+			<var name="itemName" value="Test Page Name 2" />
+			<var name="name" value="Test Page Name 3" />
 		</execute>
 
 		<execute macro="NavigationMenusAdmin#viewItem">
-			<var name="itemName" value="Site Page Name 3" />
+			<var name="itemName" value="Test Page Name 3" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name 1" />
+			<var name="pageName" value="Test Page Name 1" />
 			<var name="siteName" value="Test Site Name" />
 		</execute>
 
@@ -192,12 +192,12 @@
 		<execute macro="Portlet#saveAndCloseConfig" />
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name 3" />
+			<var name="pageName" value="Test Page Name 3" />
 			<var name="siteName" value="Test Site Name" />
 		</execute>
 
 		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
-		<execute function="AssertLocation" value1="${portalURL}/web/test-site-name/site-page-name-2" />
+		<execute function="AssertLocation" value1="${portalURL}/web/test-site-name/test-page-name-2" />
 	</command>
 </definition>

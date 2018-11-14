@@ -16,6 +16,7 @@ package com.liferay.portal.tools.java.parser;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.ToolsUtil;
 
 /**
  * @author Hugo Huijser
@@ -46,6 +47,10 @@ public class JavaSimpleValue extends JavaExpression {
 
 			if (x == -1) {
 				return StringBundler.concat(indent, prefix, _name, suffix);
+			}
+
+			if (ToolsUtil.isInsideQuotes(_name, x)) {
+				continue;
 			}
 
 			s = StringBundler.concat(indent, prefix, _name.substring(0, x + 1));

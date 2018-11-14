@@ -122,7 +122,7 @@
 			value="-Dtest.context.base='${test.context.base[tck]}' -Dtest.server.username.id='${test.server.username.id[tck]}' -Dtest.server.username='${test.server.username[tck]}' -Dtest.server.password.id='${test.server.password.id[tck]}' -Dtest.server.password='${test.server.password[tck]}' -Dtest.timeout='${test.timeout[tck]}' -Dtest.ignore.list.file=${project.dir}/tck/ignoredTestCases.xml -Dtest.non.exclusive.file=${project.dir}/tck/nonExclusiveTestCases.xml"
 		/>
 
-		<execute dir="${tck.home}">
+		<execute dir="${tck.home}" failonerror="false">
 			mvn -Pliferay,run-tck -Djava.awt.headless=true ${tck.properties} -Dtest.browser=htmlunit -Dtest.browser.binary= -Dtest.browser.webDriver= -Dtest.list.file=${project.dir}/tck/htmlunit-tests.xml test
 		</execute>
 
@@ -160,7 +160,7 @@
 			name="selenium.tck.browser.driver.executable" silent="true"
 		/>
 
-		<execute dir="${tck.home}">
+		<execute dir="${tck.home}" failonerror="false">
 			mvn -Pliferay,run-tck -Djava.awt.headless=true ${tck.properties} -Dtest.browser=${browser.type[tck]} -Dtest.browser.binary='${browser.bin.file}' -Dtest.browser.webDriver=${selenium.executable.dir.name}${selenium.tck.browser.driver.executable} -Dtest.list.file=${tck.tests.xml} test
 		</execute>
 

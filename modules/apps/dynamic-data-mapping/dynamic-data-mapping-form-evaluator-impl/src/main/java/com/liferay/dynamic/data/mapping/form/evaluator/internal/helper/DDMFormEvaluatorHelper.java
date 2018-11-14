@@ -57,6 +57,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -254,12 +255,8 @@ public class DDMFormEvaluatorHelper {
 					field -> field.getVisibilityExpression())
 			);
 
-		Set<Map.Entry<String, String>> entrySet =
-			nameVisibilityExpressionMap.entrySet();
-
-		Stream<Map.Entry<String, String>> entryStream = entrySet.stream();
-
-		entryStream.forEach(this::evaluateVisibilityExpression);
+		forEachEntry(
+			nameVisibilityExpressionMap, this::evaluateVisibilityExpression);
 	}
 
 	protected boolean fieldsWithValidations(DDMFormField ddmFormField) {
@@ -283,6 +280,16 @@ public class DDMFormEvaluatorHelper {
 		}
 
 		return getBooleanPropertyValue(ddmFormFieldContextKey, "visible", true);
+	}
+
+	protected <K, V> void forEachEntry(
+		Map<K, V> map, Consumer<Map.Entry<K, V>> entryConsumer) {
+
+		Set<Map.Entry<K, V>> entrySet = map.entrySet();
+
+		Stream<Map.Entry<K, V>> entryStream = entrySet.parallelStream();
+
+		entryStream.forEach(entryConsumer);
 	}
 
 	protected boolean getBooleanPropertyValue(
@@ -506,14 +513,7 @@ public class DDMFormEvaluatorHelper {
 					Function.identity(), this::getDDMFormFieldValidation)
 			);
 
-		Set<Map.Entry<DDMFormEvaluatorFieldContextKey, DDMFormFieldValidation>>
-			entrySet = ddmFormFieldValidations.entrySet();
-
-		Stream
-			<Map.Entry<DDMFormEvaluatorFieldContextKey, DDMFormFieldValidation>>
-				entryStream = entrySet.stream();
-
-		entryStream.forEach(this::validateField);
+		forEachEntry(ddmFormFieldValidations, this::validateField);
 	}
 
 	protected void verifyFieldsMarkedAsRequired() {

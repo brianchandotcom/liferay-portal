@@ -42,7 +42,7 @@
 		</execute>
 
 		<execute macro="NavigationMenusAdmin#addMenu">
-			<var name="menuName" value="Primary Menu Name 1" />
+			<var name="menuName" value="Test Navigation Menu Name" />
 		</execute>
 
 		<execute macro="NavigationMenusAdmin#openNavigationMenusAdmin">
@@ -50,7 +50,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Primary Menu Name 1" />
+			<var name="rowEntry" value="Test Navigation Menu Name" />
 		</execute>
 
 		<execute macro="NavigationMenusAdmin#addItem">
@@ -93,7 +93,7 @@
 		<execute macro="NavigationMenusWidget#gotoNavigationMenuWidgetConfig" />
 
 		<execute macro="NavigationMenusWidget#chooseMenu">
-			<var name="menuName" value="Primary Menu Name 1" />
+			<var name="menuName" value="Test Navigation Menu Name" />
 		</execute>
 
 		<execute macro="Portlet#saveAndCloseConfig" />

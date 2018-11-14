@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.internal.background.task.executor.permission;
+package com.liferay.exportimport.internal.security.permission.resource.logic;
 
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "background.task.executor.class.name=com.liferay.exportimport.internal.background.task.PortletExportBackgroundTaskExecutor",
 	service = ModelResourcePermissionLogic.class
 )
-public class PortletExportBackgroundTaskExecutorPermission
+public class PortletExportBackgroundTaskExecutorPermissionLogic
 	implements ModelResourcePermissionLogic<BackgroundTask> {
 
 	@Override

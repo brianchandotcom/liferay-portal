@@ -14,6 +14,9 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringBundler;
+
 import java.util.List;
 
 /**
@@ -30,7 +33,51 @@ public class JavaAnnotation extends JavaExpression {
 		String indent, String prefix, String suffix, int maxLineLength,
 		boolean forceLineBreak) {
 
-		return "TODO";
+		StringBundler sb = new StringBundler();
+
+		sb.append(indent);
+		sb.append(prefix);
+		sb.append(StringPool.AT);
+		sb.append(_name);
+
+		if ((_javaAnnotationMemberValuePairs == null) &&
+			(_valueJavaExpression == null)) {
+
+			return sb.toString();
+		}
+
+		sb.append("(");
+
+		if (_javaAnnotationMemberValuePairs != null) {
+			if (appendSingleLine(
+					sb, _javaAnnotationMemberValuePairs, "", ")" + suffix,
+					maxLineLength)) {
+
+				return sb.toString();
+			}
+
+			appendNewLine(
+				sb, _javaAnnotationMemberValuePairs, indent + "\t",
+				maxLineLength);
+		}
+		else {
+			if (appendSingleLine(
+					sb, _valueJavaExpression, "", ")" + suffix,
+					maxLineLength)) {
+
+				return sb.toString();
+			}
+
+			appendNewLine(
+				sb, _valueJavaExpression, indent + "\t", maxLineLength);
+		}
+
+		sb.append("\n");
+		sb.append(indent);
+		sb.append(")");
+		sb.append(suffix);
+
+		return sb.toString();
 	}
 
 	public void setJavaAnnotationMemberValuePairs(

@@ -6,9 +6,6 @@ const blogElement = `<div data-analytics-asset-id="1" data-analytics-asset-type=
 	<p>"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"</p>
 	<h3>Section 1.10.33 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC</h3>
 	<p>"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."</p>
-	<p>"On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when and when nothing prevents our being able to do what we be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains."</p>
-	<p>"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again or pursues or desires to, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences he rejects pleasures to secure other greater, or else he endures pains to avoid worse pains that has no annoying consequences, or one who avoids all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely
-	painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences he rejects pleasures to secure other greater, or else he endures pains to avoid worse awesome other hand, we denounce with righteous."</p>
 </div>`;
 
 const divElement = `<div>
@@ -16,15 +13,13 @@ const divElement = `<div>
 	<p>"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"</p>
 	<h3>Section 1.10.33 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC</h3>
 	<p>"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."</p>
-	<p>"On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when and when nothing prevents our being able to do what we be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains."</p>
-	<p>"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again or pursues or desires to, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences he rejects pleasures to secure other greater, or else he endures pains to avoid worse pains that has no annoying consequences, or one who avoids all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely
-	painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences he rejects pleasures to secure other greater, or else he endures pains to avoid worse awesome other hand, we denounce with righteous."</p>
 </div>`;
 
 const getPage = () => {
 	document.body.innerHTML = '';
 
 	const page = document.createElement('div');
+	page.style.width = '600px';
 	page.innerHTML = divElement + divElement + blogElement + divElement + divElement;
 
 	document.body.appendChild(page);
@@ -33,14 +28,14 @@ const getPage = () => {
 };
 
 describe('getDepth from a element', () => {
-	it('should return the depth number from a element when the element was completely viewed', () => {
+	it('should return the depth number from a element when the element has not yet been seen', () => {
 		const page = getPage();
 		const blogElementNode = page.querySelector('#blog');
 		const scroll = new ScrollTracker();
 
-		window.scrollTo(0, 3000);
+		window.scrollTo(0, 0);
 
-		expect(scroll.getDepth(blogElementNode)).to.equal(100);
+		expect(scroll.getDepth(blogElementNode)).to.equal(0);
 
 		page.innerHTML = '';
 
@@ -52,7 +47,7 @@ describe('getDepth from a element', () => {
 		const blogElementNode = page.querySelector('#blog');
 		const scroll = new ScrollTracker();
 
-		window.scrollTo(0, 2360);
+		window.scrollTo(0, 1670);
 
 		expect(scroll.getDepth(blogElementNode)).to.equal(50);
 
@@ -61,14 +56,31 @@ describe('getDepth from a element', () => {
 		document.body.removeChild(page);
 	});
 
-	it('should return the depth number from a element when the element has not yet been seen', () => {
+	it('should return the depth number from a element when the element was completely viewed', () => {
 		const page = getPage();
 		const blogElementNode = page.querySelector('#blog');
 		const scroll = new ScrollTracker();
 
-		window.scrollTo(0, 4000);
+		window.scrollTo(0, 5000);
 
-		expect(scroll.getDepth(blogElementNode)).to.equal(0);
+		expect(scroll.getDepth(blogElementNode)).to.equal(100);
+
+		page.innerHTML = '';
+
+		document.body.removeChild(page);
+	});
+
+	it('should return the depth number from a element when it is fully visible on the screen', () => {
+		const page = getPage();
+		const blogElementNode = page.querySelector('#blog');
+		const scroll = new ScrollTracker();
+
+		window.scrollTo(0, 2000);
+
+		const {top, bottom} = blogElementNode.getBoundingClientRect();
+
+		expect(top <= 0 && bottom > 0).to.equal(true);
+		expect(scroll.getDepth(blogElementNode) >=0 && scroll.getDepth(blogElementNode) <= 100).to.equal(true);
 
 		page.innerHTML = '';
 
@@ -77,22 +89,12 @@ describe('getDepth from a element', () => {
 });
 
 describe('getDepth from a page', () => {
-	it('should return the depth number from page when the element was seen in half', () => {
-		getPage();
-
-		const scroll = new ScrollTracker();
-
-		window.scrollTo(0, 2360);
-
-		expect(scroll.getDepth()).to.equal(50);
-	});
-
 	it('should return the depth number from page when the element was completely viewed', () => {
 		getPage();
 
 		const scroll = new ScrollTracker();
 
-		window.scrollTo(0, 5500);
+		window.scrollTo(0, 5000);
 
 		expect(scroll.getDepth()).to.equal(100);
 	});

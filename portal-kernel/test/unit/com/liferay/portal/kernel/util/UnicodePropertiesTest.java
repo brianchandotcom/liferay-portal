@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
@@ -231,10 +232,10 @@ public class UnicodePropertiesTest {
 			unicodeProperties);
 
 		loadMethod.load(
-			_TEST_LINE_1 + _safeNewLineCharacter + StringPool.NEW_LINE +
-				_TEST_LINE_2 + _safeNewLineCharacter + StringPool.NEW_LINE +
-					_TEST_LINE_3 + _safeNewLineCharacter +
-						StringPool.NEW_LINE,
+			StringBundler.concat(
+				_TEST_LINE_1, _safeNewLineCharacter, StringPool.NEW_LINE,
+				_TEST_LINE_2, _safeNewLineCharacter, StringPool.NEW_LINE,
+				_TEST_LINE_3, _safeNewLineCharacter, StringPool.NEW_LINE),
 			unicodeProperties);
 
 		if (safe) {
@@ -337,23 +338,26 @@ public class UnicodePropertiesTest {
 		unicodeProperties.put(_TEST_LINE_3);
 
 		_assertToString(
-			_TEST_LINE_2 + StringPool.NEW_LINE + _TEST_LINE_3 +
-				StringPool.NEW_LINE,
+			StringBundler.concat(
+				_TEST_LINE_2, StringPool.NEW_LINE, _TEST_LINE_3,
+				StringPool.NEW_LINE),
 			unicodeProperties.toString(), unicodeProperties.toSortedString());
 
 		unicodeProperties.put(_TEST_KEY_3, _TEST_VALUE_3 + StringPool.NEW_LINE);
 
 		if (safe) {
 			_assertToString(
-				_TEST_LINE_2 + StringPool.NEW_LINE + _TEST_LINE_3 +
-					_safeNewLineCharacter + StringPool.NEW_LINE,
+				StringBundler.concat(
+					_TEST_LINE_2, StringPool.NEW_LINE, _TEST_LINE_3,
+					_safeNewLineCharacter, StringPool.NEW_LINE),
 				unicodeProperties.toString(),
 				unicodeProperties.toSortedString());
 		}
 		else {
 			_assertToString(
-				_TEST_LINE_2 + StringPool.NEW_LINE + _TEST_LINE_3 +
-					StringPool.NEW_LINE + StringPool.NEW_LINE,
+				StringBundler.concat(
+					_TEST_LINE_2, StringPool.NEW_LINE, _TEST_LINE_3,
+					StringPool.NEW_LINE, StringPool.NEW_LINE),
 				unicodeProperties.toString(),
 				unicodeProperties.toSortedString());
 		}
@@ -382,15 +386,18 @@ public class UnicodePropertiesTest {
 	private static String _safeNewLineCharacter;
 
 	static {
-		_TEST_LINE_1 = _TEST_KEY_1 + StringPool.EQUAL + _TEST_VALUE_1;
+		_TEST_LINE_1 = StringBundler.concat(
+			_TEST_KEY_1, StringPool.EQUAL, _TEST_VALUE_1);
 
-		_TEST_LINE_2 = _TEST_KEY_2 + StringPool.EQUAL + _TEST_VALUE_2;
+		_TEST_LINE_2 = StringBundler.concat(
+			_TEST_KEY_2, StringPool.EQUAL, _TEST_VALUE_2);
 
-		_TEST_LINE_3 = _TEST_KEY_3 + StringPool.EQUAL + _TEST_VALUE_3;
+		_TEST_LINE_3 = StringBundler.concat(
+			_TEST_KEY_3, StringPool.EQUAL, _TEST_VALUE_3);
 
-		_TEST_PROPS =
-			_TEST_LINE_1 + StringPool.NEW_LINE + _TEST_LINE_2 +
-				StringPool.NEW_LINE + _TEST_LINE_3;
+		_TEST_PROPS = StringBundler.concat(
+			_TEST_LINE_1, StringPool.NEW_LINE, _TEST_LINE_2,
+			StringPool.NEW_LINE, _TEST_LINE_3);
 	}
 
 	private interface LoadMethod<E, U, T extends Throwable> {

@@ -74,7 +74,7 @@
 
 		<execute function="AssertElementPresent" locator1="DDMEditTemplate#CACHEABLE_CHECKBOX" />
 
-		<execute macro="WebContentTemplates#inputStructure">
+		<execute macro="WebContentTemplates#inputTemplateAddScreenFields">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateFieldNames" value="Text" />
 		</execute>

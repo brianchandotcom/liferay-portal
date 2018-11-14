@@ -480,7 +480,7 @@
 				<var name="templateName" value="${templateName}" />
 			</execute>
 
-			<execute macro="WebContentTemplates#inputStructure">
+			<execute macro="WebContentTemplates#inputTemplateAddScreenFields">
 				<var name="structureName" value="Content List" />
 			</execute>
 

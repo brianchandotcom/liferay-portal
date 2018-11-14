@@ -1282,7 +1282,7 @@
 		</execute>
 
 		<for list="Date,Image" param="templateFieldName">
-			<execute macro="WebContentTemplates#addFields">
+			<execute macro="WebContentTemplates#inputTemplateAddScreenFields">
 				<var name="templateFieldNames" value="${templateFieldName}" />
 			</execute>
 		</for>

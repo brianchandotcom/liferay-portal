@@ -1,22 +1,5 @@
 <definition>
-	<command name="addCP">
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="WebContentTemplates#inputTemplateAddScreenFields">
-			<var name="structureName" value="${structureName}" />
-			<var name="templateDescription" value="${templateDescription}" />
-			<var name="templateFieldNames" value="${templateFieldNames}" />
-			<var name="templateFile" value="${templateFile}" />
-			<var name="templateLanguage" value="${templateLanguage}" />
-			<var name="templateName" value="${templateName}" />
-			<var name="templateScript" value="${templateScript}" />
-			<var name="templateSmallImageURL" value="${templateSmallImageURL}" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#save" />
-	</command>
-
-	<command name="addFields">
+	<command name="_addFields" summary="Helper function to add fields to a template">
 		<if>
 			<isset var="templateFieldNames" />
 			<then>
@@ -29,67 +12,7 @@
 		</if>
 	</command>
 
-	<command name="addNullCP">
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Templates" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute function="AssertElementNotPresent" locator1="TextInput#REQUIRED_ALERT" />
-
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewRequiredField" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
-	<command name="addRoleViewPermissions">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Permissions" />
-			<var name="rowEntry" value="${templateName}" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
-			<var name="addOrRemoveViewPermission" value="Add" />
-			<var name="roleList" value="${roles}" />
-		</execute>
-
-		<execute function="SelectFrameTop" />
-	</command>
-
-	<command name="deleteCP">
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Templates" />
-		</execute>
-
-		<var name="key_ddlTemplateName" value="${templateName}" />
-
-		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS" />
-
-		<execute macro="MenuItem#clickNoError">
-			<var name="menuItem" value="Delete" />
-		</execute>
-
-		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-
-		<if>
-			<equals arg1="${webContentHasReference}" arg2="true" />
-			<then>
-				<execute macro="Alert#viewRequestFailedToComplete" />
-
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="The template cannot be deleted because it is required by one or more template links." />
-			</then>
-			<else>
-				<execute macro="Alert#viewSuccessMessage" />
-			</else>
-		</if>
-	</command>
-
-	<command name="inputDescription">
+	<command name="_inputDescription" summary="Helper function to add a description to a template">
 		<if>
 			<isset var="templateDescription" />
 			<then>
@@ -104,7 +27,7 @@
 		</if>
 	</command>
 
-	<command name="inputScript">
+	<command name="_inputScript" summary="Helper function to add a script to a template">
 		<if>
 			<isset var="templateScript" />
 			<then>
@@ -113,34 +36,7 @@
 		</if>
 	</command>
 
-	<command name="inputSmallImage">
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Details" />
-		</execute>
-
-		<if>
-			<isset var="templateSmallImageURL" />
-			<then>
-				<if>
-					<condition function="IsElementNotPresent" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE_URL" />
-					<then>
-						<execute function="Check" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE" />
-					</then>
-					<else>
-						<execute function="Click" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE" />
-
-						<execute function="Check" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE" />
-					</else>
-				</if>
-			</then>
-		</if>
-
-		<execute function="Check" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE_URL" />
-
-		<execute function="Type" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE_URL_INPUT" value1="${templateSmallImageURL}" />
-	</command>
-
-	<command name="inputStructure">
+	<command name="_inputStructure" summary="Helper function to link a structure to a template">
 		<if>
 			<isset var="structureName" />
 			<then>
@@ -165,46 +61,7 @@
 		</if>
 	</command>
 
-	<command name="inputTemplateAddScreenFields">
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="${templateName}" />
-		</execute>
-
-		<execute macro="WebContentTemplates#inputStructure">
-			<var name="structureName" value="${structureName}" />
-		</execute>
-
-		<execute macro="WebContentTemplates#inputDescription">
-			<var name="templateDescription" value="${templateDescription}" />
-		</execute>
-
-		<execute macro="WebContentTemplates#inputTemplateLanguage">
-			<var name="templateLanguage" value="${templateLanguage}" />
-		</execute>
-
-		<if>
-			<isset var="templateSmallImageURL" />
-			<then>
-				<execute macro="WebContentTemplates#inputSmallImage">
-					<var name="templateSmallImageURL" value="${templateSmallImageURL}" />
-				</execute>
-			</then>
-		</if>
-
-		<execute macro="WebContentTemplates#inputScript">
-			<var name="templateScript" value="${templateScript}" />
-		</execute>
-
-		<execute macro="WebContentTemplates#addFields">
-			<var name="templateFieldNames" value="${templateFieldNames}" />
-		</execute>
-
-		<execute macro="WebContentTemplates#inputTemplateFile">
-			<var name="templateFile" value="${templateFile}" />
-		</execute>
-	</command>
-
-	<command name="inputTemplateFile">
+	<command name="_inputTemplateFile" summary="Helper function to add a script to a template via file">
 		<if>
 			<isset var="templateFile" />
 			<then>
@@ -213,7 +70,7 @@
 		</if>
 	</command>
 
-	<command name="inputTemplateLanguage">
+	<command name="_inputTemplateLanguage" summary="Helper function to add the template language to read the template in">
 		<execute macro="Panel#expandPanel">
 			<var name="panel" value="Details" />
 		</execute>
@@ -251,7 +108,146 @@
 		</if>
 	</command>
 
-	<command name="localizeTemplateName">
+	<command name="addCP" summary="Click on the add button to add a template, input most basic fields and then save the template">
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute macro="WebContentTemplates#inputTemplateAddScreenFields">
+			<var name="structureName" value="${structureName}" />
+			<var name="templateDescription" value="${templateDescription}" />
+			<var name="templateFieldNames" value="${templateFieldNames}" />
+			<var name="templateFile" value="${templateFile}" />
+			<var name="templateLanguage" value="${templateLanguage}" />
+			<var name="templateName" value="${templateName}" />
+			<var name="templateScript" value="${templateScript}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#save" />
+	</command>
+
+	<command name="addNullCP" summary="Attempt to add a blank template">
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute function="AssertElementNotPresent" locator1="TextInput#REQUIRED_ALERT" />
+
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewRequiredField" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="addRoleViewPermissions" summary="Give specified roles permissions to view a specific template">
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Permissions" />
+			<var name="rowEntry" value="${templateName}" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
+			<var name="addOrRemoveViewPermission" value="Add" />
+			<var name="roleList" value="${roles}" />
+		</execute>
+
+		<execute function="SelectFrameTop" />
+	</command>
+
+	<command name="deleteCP" summary="Attempt to delete a specified template">
+		<var name="key_ddlTemplateName" value="${templateName}" />
+
+		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS" />
+
+		<execute macro="MenuItem#clickNoError">
+			<var name="menuItem" value="Delete" />
+		</execute>
+
+		<execute function="AssertConfirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
+		<if>
+			<equals arg1="${webContentHasReference}" arg2="true" />
+			<then>
+				<execute macro="Alert#viewRequestFailedToComplete" />
+
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="The template cannot be deleted because it is required by one or more template links." />
+			</then>
+			<else>
+				<execute macro="Alert#viewSuccessMessage" />
+			</else>
+		</if>
+	</command>
+
+	<command name="inputSmallImage">
+		<execute macro="Panel#expandPanel">
+			<var name="panel" value="Details" />
+		</execute>
+
+		<if>
+			<isset var="templateSmallImageURL" />
+			<then>
+				<if>
+					<condition function="IsElementNotPresent" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE_URL" />
+					<then>
+						<execute function="Check" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE" />
+					</then>
+					<else>
+						<execute function="Click" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE" />
+
+						<execute function="Check" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE" />
+					</else>
+				</if>
+			</then>
+		</if>
+
+		<execute function="Check" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE_URL" />
+
+		<execute function="Type" locator1="DDMEditTemplate#DETAILS_SMALL_IMAGE_URL_INPUT" value1="${templateSmallImageURL}" />
+	</command>
+
+	<command name="inputTemplateAddScreenFields" summary="Input most basic fields inside a template">
+		<if>
+			<isset var="templateName" />
+			<then>
+				<execute macro="PortletEntry#inputName">
+					<var name="name" value="${templateName}" />
+				</execute>
+			</then>
+		</if>
+
+		<execute macro="WebContentTemplates#_inputStructure">
+			<var name="structureName" value="${structureName}" />
+		</execute>
+
+		<execute macro="WebContentTemplates#_inputDescription">
+			<var name="templateDescription" value="${templateDescription}" />
+		</execute>
+
+		<execute macro="WebContentTemplates#_inputTemplateLanguage">
+			<var name="templateLanguage" value="${templateLanguage}" />
+		</execute>
+
+		<if>
+			<isset var="templateSmallImageURL" />
+			<then>
+				<execute macro="WebContentTemplates#inputSmallImage">
+					<var name="templateSmallImageURL" value="${templateSmallImageURL}" />
+				</execute>
+			</then>
+		</if>
+
+		<execute macro="WebContentTemplates#_inputScript">
+			<var name="templateScript" value="${templateScript}" />
+		</execute>
+
+		<execute macro="WebContentTemplates#_addFields">
+			<var name="templateFieldNames" value="${templateFieldNames}" />
+		</execute>
+
+		<execute macro="WebContentTemplates#_inputTemplateFile">
+			<var name="templateFile" value="${templateFile}" />
+		</execute>
+	</command>
+
+	<command name="localizeTemplateName" summary="Add localization for the template name">
 		<var name="key_ddlTemplateName" value="${templateName}" />
 
 		<execute macro="WebContentNavigator#gotoViewTemplate">
@@ -280,7 +276,7 @@
 		</if>
 	</command>
 
-	<command name="tearDownCP">
+	<command name="tearDownCP" summary="Teardown templates in the guest site">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -411,7 +407,7 @@
 		</if>
 	</command>
 
-	<command name="viewTableEntryCP">
+	<command name="viewTableEntryCP" summary="Assert that the template's table entry is present">
 		<var name="key_ddlTemplateName" value="${templateName}" />
 
 		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" value1="${templateName}" />

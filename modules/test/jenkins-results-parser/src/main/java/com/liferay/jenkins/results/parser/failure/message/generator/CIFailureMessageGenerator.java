@@ -28,15 +28,18 @@ public class CIFailureMessageGenerator extends BaseFailureMessageGenerator {
 	public Element getMessageElement(Build build) {
 		String consoleText = build.getConsoleText();
 
-		if (!consoleText.contains(_TOKEN_CI_ERROR)) {
+		int index = consoleText.indexOf(_TOKEN_CI_ERROR);
+
+		if (index == -1) {
 			return null;
 		}
 
-		return Dom4JUtil.toCodeSnippetElement(_TOKEN_CI_ERROR);
+		String snippet = consoleText.substring(
+			index, consoleText.indexOf("\n", index));
+
+		return Dom4JUtil.toCodeSnippetElement(snippet);
 	}
 
-	private static final String _TOKEN_CI_ERROR =
-		"A CI failure has occurred. QA Engineering has been notified. Please " +
-			"try again later or contact QA Engineering for an update.";
+	private static final String _TOKEN_CI_ERROR = "A CI failure has occurred.";
 
 }

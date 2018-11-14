@@ -90,6 +90,14 @@
 			<var name="siteName" value="Test Site Name" />
 		</execute>
 
+		<execute macro="NavigationMenusWidget#gotoNavigationMenuWidgetConfig" />
+
+		<execute macro="NavigationMenusWidget#chooseMenu">
+			<var name="menuName" value="Primary Menu Name 1" />
+		</execute>
+
+		<execute macro="Portlet#saveAndCloseConfig" />
+
 		<execute macro="Page#gotoChildPagePG">
 			<var name="childPageName" value="Liferay" />
 			<var name="pageName" value="Test Submenu" />

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.upgrade;
 
+import com.liferay.exportimport.kernel.staging.StagingConstants;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.layouts.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -51,15 +52,13 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 		typeSettingsProperties.fastLoad(typeSettings);
 
-		String oldStagingPortletId = StagingUtil.getStagedPortletId(
-			oldRootPortletId);
+		String oldStagingPortletId = _getStagedPortletId(oldRootPortletId);
 
 		if (!typeSettingsProperties.containsKey(oldStagingPortletId)) {
 			return typeSettings;
 		}
 
-		String newStagingPortletId = StagingUtil.getStagedPortletId(
-			newRootPortletId);
+		String newStagingPortletId = _getStagedPortletId(newRootPortletId);
 
 		String value = typeSettingsProperties.remove(oldStagingPortletId);
 
@@ -164,7 +163,7 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 		sb.append("_USER_%' OR typeSettings like '%,");
 		sb.append(portletId);
 		sb.append("_USER_%' OR typeSettings like '%");
-		sb.append(StagingUtil.getStagedPortletId(portletId));
+		sb.append(_getStagedPortletId(portletId));
 		sb.append("=%'");
 
 		return sb.toString();
@@ -577,6 +576,16 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				updateLayouts(portletId, newPortletInstanceKey, true);
 			}
 		}
+	}
+
+	private String _getStagedPortletId(String portletId) {
+		String key = portletId;
+
+		if (key.startsWith(StagingConstants.STAGED_PORTLET)) {
+			return key;
+		}
+
+		return StagingConstants.STAGED_PORTLET.concat(portletId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

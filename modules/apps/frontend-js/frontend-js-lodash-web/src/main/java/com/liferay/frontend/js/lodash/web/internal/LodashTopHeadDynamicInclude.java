@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.js.lodash.web.internal;
 
+import com.liferay.frontend.js.lodash.web.configuration.JSLodashConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
@@ -22,16 +24,24 @@ import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.ComponentContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julien Castelain
  */
-@Component(immediate = true, service = DynamicInclude.class)
+@Component(
+	configurationPid = "com.liferay.frontend.js.lodash.web.configuration.JSLodashConfiguration",
+	immediate = true, service = DynamicInclude.class
+)
 public class LodashTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Override
@@ -40,29 +50,40 @@ public class LodashTopHeadDynamicInclude extends BaseDynamicInclude {
 			String key)
 		throws IOException {
 
-		PrintWriter printWriter = response.getWriter();
+		if (_jsLodashConfiguration.enableLodash()) {
+			PrintWriter printWriter = response.getWriter();
 
-		AbsolutePortalURLBuilder absolutePortalURLBuilder =
-			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
-				request);
+			AbsolutePortalURLBuilder absolutePortalURLBuilder =
+				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
+					request);
 
-		for (String fileName : _FILE_NAMES) {
-			printWriter.print(
-				"<script data-senna-track=\"permanent\" src=\"");
+			for (String fileName : _FILE_NAMES) {
+				printWriter.print(
+					"<script data-senna-track=\"permanent\" src=\"");
 
-			printWriter.print(
-				absolutePortalURLBuilder.forResource(
-					"/o/frontend-js-lodash-web/" + fileName
-				).build());
+				printWriter.print(
+					absolutePortalURLBuilder.forResource(
+						"/o/frontend-js-lodash-web/" + fileName
+					).build());
 
-			printWriter.println("\" type=\"text/javascript\"></script>");
+				printWriter.println("\" type=\"text/javascript\"></script>");
+			}
 		}
 	}
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		dynamicIncludeRegistry.register(
-			"/html/common/themes/top_head.jsp#pre");
+		dynamicIncludeRegistry.register("/html/common/themes/top_head.jsp#pre");
+	}
+
+	@Activate
+	@Modified
+	protected void activate(
+			ComponentContext componentContext, Map<String, Object> properties)
+		throws Exception {
+
+		_jsLodashConfiguration = ConfigurableUtil.createConfigurable(
+			JSLodashConfiguration.class, properties);
 	}
 
 	private static final String[] _FILE_NAMES =
@@ -70,5 +91,7 @@ public class LodashTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
+
+	private volatile JSLodashConfiguration _jsLodashConfiguration;
 
 }

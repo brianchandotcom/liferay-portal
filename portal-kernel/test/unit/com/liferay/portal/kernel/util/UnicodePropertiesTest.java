@@ -158,13 +158,13 @@ public class UnicodePropertiesTest {
 
 		Assert.assertNull(unicodeProperties.setProperty(null, _TEST_VALUE_1));
 		Assert.assertTrue(
-			"nothing will be put in if key is null: " +
+			"Nothing should be put in if key is null: " +
 				unicodeProperties.toString(),
 			unicodeProperties.isEmpty());
 
 		Assert.assertNull(unicodeProperties.setProperty(_TEST_KEY_1, null));
 		Assert.assertTrue(
-			"nothing will be put in if value is null: " +
+			"Nothing should be put in if value is null: " +
 				unicodeProperties.toString(),
 			unicodeProperties.isEmpty());
 
@@ -219,7 +219,7 @@ public class UnicodePropertiesTest {
 		loadMethod.load(null, unicodeProperties);
 
 		Assert.assertTrue(
-			"nothing will be loaded in if props is null: " +
+			"Nothing should be loaded in if props is null: " +
 				unicodeProperties.toString(),
 			unicodeProperties.isEmpty());
 
@@ -275,7 +275,7 @@ public class UnicodePropertiesTest {
 			unicodeProperties.put(_TEST_KEY_1);
 
 			Assert.assertTrue(
-				"nothing will be put in if the line contains no \"=\": " +
+				"Nothing should be put in if the line contains no \"=\": " +
 					unicodeProperties.toString(),
 				unicodeProperties.isEmpty());
 
@@ -293,14 +293,14 @@ public class UnicodePropertiesTest {
 		unicodeProperties.put("");
 
 		Assert.assertTrue(
-			"nothing will be put in if called with empty string (\"\"): " +
+			"Nothing should be put in if called with empty string (\"\"): " +
 				unicodeProperties.toString(),
 			unicodeProperties.isEmpty());
 
 		unicodeProperties.put("# " + _TEST_LINE_1);
 
 		Assert.assertTrue(
-			"nothing will be put in if the line is started with #: " +
+			"Nothing should be put in if the line is started with #: " +
 				unicodeProperties.toString(),
 			unicodeProperties.isEmpty());
 

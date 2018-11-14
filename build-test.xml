@@ -10370,7 +10370,7 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 					<then>
 						<replace
 							file="${app.server.dir}/webapps/ROOT/WEB-INF/web.xml"
-							token="&lt;session-timeout&gt;30&lt;/session-timeout&gt;"
+							token="&lt;session-timeout&gt;15&lt;/session-timeout&gt;"
 							value="&lt;session-timeout&gt;${web.xml.timeout}&lt;/session-timeout&gt;"
 						/>
 					</then>

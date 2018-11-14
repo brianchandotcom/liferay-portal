@@ -978,7 +978,7 @@
 		<url-pattern>/webdav/*</url-pattern>
 	</servlet-mapping>
 	<session-config>
-		<session-timeout>30</session-timeout>
+		<session-timeout>15</session-timeout>
 		<cookie-config>
 			<http-only>true</http-only>
 		</cookie-config>

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.notifications.internal.util.SharingNotificationUtil;
@@ -61,6 +62,13 @@ public class SharingUserNotificationHandler
 			sharingEntryId);
 
 		if (sharingEntry == null) {
+			String message = userNotificationEventPayloadJSONObject.getString(
+				"message");
+
+			if (Validator.isNotNull(message)) {
+				return message;
+			}
+
 			_userNotificationEventLocalService.deleteUserNotificationEvent(
 				userNotificationEvent);
 

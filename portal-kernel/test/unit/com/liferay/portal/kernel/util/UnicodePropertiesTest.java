@@ -145,27 +145,6 @@ public class UnicodePropertiesTest {
 	}
 
 	@Test
-	public void testSetNullProperty() throws Exception {
-		UnicodeProperties props = new UnicodeProperties();
-
-		int hashCode = props.hashCode();
-
-		props.setProperty(null, "value");
-
-		Assert.assertEquals(
-			"setProperty() of null key must not change properties", hashCode,
-			props.hashCode());
-
-		props.setProperty("key", null);
-		props.setProperty("key", "value");
-		props.setProperty("key", null);
-
-		Assert.assertEquals(
-			"setProperty() of null value must remove entry", hashCode,
-			props.hashCode());
-	}
-
-	@Test
 	public void testSetProperty() {
 		UnicodeProperties unicodeProperties = new UnicodeProperties();
 

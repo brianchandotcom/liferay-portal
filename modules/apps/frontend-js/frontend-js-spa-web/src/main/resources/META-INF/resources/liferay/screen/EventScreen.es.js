@@ -304,15 +304,18 @@ class EventScreen extends HtmlScreen {
 	 */
 
 	runFaviconInElement_(elements) {
-		return super.runFaviconInElement_(elements).then(() => {
-			elements.forEach(element => {
-				if (!element.type && element.href.indexOf('.ico') !== -1) {
-					element.type = 'image/x-icon';
-				}
-			});
-		});
+		return super.runFaviconInElement_(elements).then(
+			() => {
+				elements.forEach(
+					element => {
+						if (!element.type && element.href.indexOf('.ico') !== -1) {
+							element.type = 'image/x-icon';
+						}
+					}
+				);
+			}
+		);
 	}
-
 }
 
 export default EventScreen;

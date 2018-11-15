@@ -159,6 +159,7 @@ public class SharedWithMeViewDisplayContext {
 		}
 
 		menu.setMenuItems(menuItems);
+		menu.setScroll(false);
 		menu.setShowWhenSingleIcon(true);
 
 		return menu;

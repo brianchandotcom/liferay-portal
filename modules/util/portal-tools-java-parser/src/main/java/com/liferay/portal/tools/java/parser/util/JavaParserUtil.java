@@ -275,7 +275,7 @@ public class JavaParserUtil {
 			}
 		}
 		else if (detailAST.getType() == TokenTypes.METHOD_CALL) {
-			return _parseJavaMethodCall(detailAST, hasSurroundingParentheses);
+			return _parseJavaMethodCall(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.METHOD_REF) {
 			javaExpression = _parseJavaMethodReference(detailAST);
@@ -998,7 +998,7 @@ public class JavaParserUtil {
 	}
 
 	private static JavaExpression _parseJavaMethodCall(
-		DetailAST methodCallDetailAST, boolean hasSurroundingParentheses) {
+		DetailAST methodCallDetailAST) {
 
 		JavaExpression javaExpression = null;
 		JavaMethodCall javaMethodCall = null;
@@ -1048,19 +1048,11 @@ public class JavaParserUtil {
 			_parseParameterValueJavaExpressions(
 				methodCallDetailAST.findFirstToken(TokenTypes.ELIST)));
 
-		if (hasSurroundingParentheses) {
-			javaMethodCall.setHasSurroundingParentheses(true, false);
-		}
-
 		if (javaExpression == null) {
 			return javaMethodCall;
 		}
 
 		javaExpression.setChainedJavaExpression(javaMethodCall);
-
-		if (hasSurroundingParentheses) {
-			javaExpression.setHasSurroundingParentheses(true, true);
-		}
 
 		return javaExpression;
 	}

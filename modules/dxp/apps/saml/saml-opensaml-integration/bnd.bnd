@@ -37,3 +37,19 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
+-includeresource:\
+	opensaml-core-*;lib:=true,\
+	opensaml-messaging-api-*;lib:=true,\
+	opensaml-messaging-impl-*;lib:=true,\
+	opensaml-profile-api-*;lib:=true,\
+	opensaml-profile-impl-*;lib:=true,\
+	opensaml-saml-api-*;lib:=true,\
+	opensaml-saml-impl-*;lib:=true,\
+	opensaml-security-api-*;lib:=true,\
+	opensaml-security-impl-*;lib:=true,\
+	opensaml-soap-api-*;lib:=true,\
+	opensaml-soap-impl-*;lib:=true,\
+	opensaml-storage-api-*;lib:=true,\
+	opensaml-storage-impl-*;lib:=true,\
+	opensaml-xmlsec-api-*;lib:=true,\
+	opensaml-xmlsec-impl-*;lib:=true

@@ -138,6 +138,11 @@ public class SharedWithMeViewDisplayContext {
 	public Menu getSharingEntryMenu(SharingEntry sharingEntry)
 		throws PortalException {
 
+		Menu menu = new Menu();
+
+		menu.setDirection("left-side");
+		menu.setMarkupView("lexicon");
+
 		List<MenuItem> menuItems = new ArrayList<>(2);
 
 		if (hasEditPermission(
@@ -153,9 +158,8 @@ public class SharedWithMeViewDisplayContext {
 					_request, _resourceBundle));
 		}
 
-		Menu menu = new Menu();
-
 		menu.setMenuItems(menuItems);
+		menu.setShowWhenSingleIcon(true);
 
 		return menu;
 	}

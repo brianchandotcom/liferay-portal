@@ -29,6 +29,10 @@ public interface EditableElementParser {
 
 	public String getValue(Element element);
 
+	public default boolean isCss() {
+		return false;
+	}
+
 	/**
 	 * Replaces editable element value with the provided one.
 	 *

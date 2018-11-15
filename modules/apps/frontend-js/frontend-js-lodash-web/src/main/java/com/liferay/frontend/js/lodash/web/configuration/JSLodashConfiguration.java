@@ -18,7 +18,7 @@ import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
-@ExtendedObjectClassDefinition(category = "infrastructure")
+@ExtendedObjectClassDefinition(category = "third-party")
 @Meta.OCD(
 	description = "frontend-js-lodash-description",
 	id = "com.liferay.frontend.js.lodash.web.configuration.JSLodashConfiguration",

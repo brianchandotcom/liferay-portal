@@ -132,8 +132,8 @@ public class JavaSignature extends BaseJavaTerm {
 			}
 
 			append(
-				sb, _exceptionJavaExpressions, indent,
-				" throws ", suffix, maxLineLength);
+				sb, _exceptionJavaExpressions, indent, " throws ", suffix,
+				maxLineLength);
 
 			return sb.toString();
 		}

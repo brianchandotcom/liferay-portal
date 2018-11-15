@@ -56,25 +56,7 @@ xpack.security.sessionTimeout: 600000</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="configure-portal-x-pack-monitoring-osgi-properties">
-		<sequential>
-			<propertyregex
-				defaultValue="${elastic.xpack.kibana.user.password}"
-				input="${elastic.xpack.kibana.user.password}"
-				override="true"
-				property="osgi.config.kibana.user.password"
-				regexp="="
-				replace="\\\\="
-			/>
-
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.configuration.XPackMonitoringConfiguration.config">kibanaPassword="${osgi.config.kibana.user.password}"
-kibanaURL="https://localhost:5601"
-kibanaUserName="kibana"
-proxyServletLogEnable="true"</echo>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="configure-portal-x-pack-security-osgi-properties">
+	<macrodef name="configure-portal-x-pack-osgi-properties">
 		<sequential>
 			<propertyregex
 				defaultValue="${elastic.xpack.elastic.user.password}"
@@ -84,6 +66,10 @@ proxyServletLogEnable="true"</echo>
 				regexp="="
 				replace="\\\\="
 			/>
+
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.configuration.XPackMonitoringConfiguration.config">kibanaPassword="${osgi.config.elastic.user.password}"
+kibanaURL="https://localhost:5601"
+proxyServletLogEnable="true"</echo>
 
 			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.xpack.security.internal.configuration.XPackSecurityConfiguration.config">certificateFormat="PEM"
 password="${osgi.config.elastic.user.password}"
@@ -655,9 +641,7 @@ xpack.monitoring.collection.enabled: true</echo>
 
 				<set-x-pack-user-passwords />
 
-				<configure-portal-x-pack-security-osgi-properties />
-
-				<configure-portal-x-pack-monitoring-osgi-properties />
+				<configure-portal-x-pack-osgi-properties />
 
 				<configure-portal-x-pack-security-truststore />
 

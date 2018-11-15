@@ -303,6 +303,48 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			suffix, maxLineLength);
 	}
 
+	protected int appendWithLineBreak(
+		StringBundler sb, JavaTerm javaTerm, String indent, String prefix,
+		String suffix, int maxLineLength) {
+
+		String lastLine = _getLastLine(sb);
+
+		if (Validator.isNull(StringUtil.trim(lastLine))) {
+			sb = _stripTrailingWhitespace(sb);
+
+			if (sb.index() > 0) {
+				sb.append("\n");
+			}
+
+			String s = javaTerm.toString(
+				indent, StringUtil.trimLeading(prefix), suffix, maxLineLength,
+				true);
+
+			sb.append(s);
+
+			return StringUtil.count(s, CharPool.NEW_LINE);
+		}
+
+		String javaTermContent = javaTerm.toString(
+			indent, "", suffix, maxLineLength, true);
+
+		javaTermContent = StringUtil.replaceFirst(
+			javaTermContent, indent, prefix);
+
+		String s = lastLine + _getFirstLine(javaTermContent);
+
+		if (getLineLength(s) <= maxLineLength) {
+			sb.append(javaTermContent);
+		}
+		else {
+			appendNewLine(
+				sb, javaTerm, indent + "\t", StringUtil.trimLeading(prefix),
+				suffix, maxLineLength);
+		}
+
+		return 1;
+	}
+
 	protected int getLineLength(String line) {
 		int lineLength = 0;
 
@@ -355,48 +397,6 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		sb.setIndex(index);
 
 		return false;
-	}
-
-	protected int appendWithLineBreak(
-		StringBundler sb, JavaTerm javaTerm, String indent, String prefix,
-		String suffix, int maxLineLength) {
-
-		String lastLine = _getLastLine(sb);
-
-		if (Validator.isNull(StringUtil.trim(lastLine))) {
-			sb = _stripTrailingWhitespace(sb);
-
-			if (sb.index() > 0) {
-				sb.append("\n");
-			}
-
-			String s = javaTerm.toString(
-				indent, StringUtil.trimLeading(prefix), suffix, maxLineLength,
-				true);
-
-			sb.append(s);
-
-			return StringUtil.count(s, CharPool.NEW_LINE);
-		}
-
-		String javaTermContent = javaTerm.toString(
-			indent, "", suffix, maxLineLength, true);
-
-		javaTermContent = StringUtil.replaceFirst(
-			javaTermContent, indent, prefix);
-
-		String s = lastLine + _getFirstLine(javaTermContent);
-
-		if (getLineLength(s) <= maxLineLength) {
-			sb.append(javaTermContent);
-		}
-		else {
-			appendNewLine(
-				sb, javaTerm, indent + "\t", StringUtil.trimLeading(prefix),
-				suffix, maxLineLength);
-		}
-
-		return 1;
 	}
 
 	private String _getFirstLine(String s) {

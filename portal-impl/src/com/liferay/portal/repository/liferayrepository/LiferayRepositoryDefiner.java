@@ -106,6 +106,11 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			WorkflowCapability.class,
 			_portalCapabilityLocator.getWorkflowCapability(
 				documentRepository, WorkflowCapability.OperationMode.FULL));
+
+		capabilityRegistry.addSupportedCapability(
+			DynamicCapability.class,
+			_portalCapabilityLocator.getDynamicCapability(
+				documentRepository, getClassName()));
 		capabilityRegistry.addSupportedCapability(
 			ProcessorCapability.class,
 			_portalCapabilityLocator.getProcessorCapability(
@@ -114,10 +119,6 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 		capabilityRegistry.addSupportedCapability(
 			SyncCapability.class,
 			_portalCapabilityLocator.getSyncCapability(documentRepository));
-		capabilityRegistry.addSupportedCapability(
-			DynamicCapability.class,
-			_portalCapabilityLocator.getDynamicCapability(
-				documentRepository, getClassName()));
 	}
 
 	@Override

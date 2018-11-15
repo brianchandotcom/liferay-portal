@@ -27,11 +27,11 @@ public class BundleSupportConstants {
 	public static final String DEFAULT_BUNDLE_CACHE_DIR_NAME =
 		".liferay/bundles";
 
-	public static final String DEFAULT_BUNDLE_FORMAT = "zip";
+	public static final String DEFAULT_BUNDLE_FORMAT = "tar.gz";
 
 	public static final String DEFAULT_BUNDLE_URL =
-		"https://releases-cdn.liferay.com/portal/7.1.0-ga1" +
-			"/liferay-ce-portal-tomcat-7.1.0-ga1-20180703012531655.zip";
+		"https://releases-cdn.liferay.com/portal/7.1.1-ga2" +
+			"/liferay-ce-portal-tomcat-7.1.1-ga2-20181112144637000.tar.gz";
 
 	public static final URL DEFAULT_BUNDLE_URL_OBJECT;
 

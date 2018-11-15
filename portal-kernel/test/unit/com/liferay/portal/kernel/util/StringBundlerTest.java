@@ -424,8 +424,8 @@ public class StringBundlerTest {
 			StringPool.NULL, StringBundler.concat(new String[] {null}));
 		Assert.assertEquals(
 			"test1test2", StringBundler.concat("test1", "test2"));
-		Assert.assertEquals(
-			"test1test2test3", StringBundler.concat("test1", "test2", "test3"));
+		Assert.assertEquals("abcdef", StringBundler.concat("a", "bc", "def"));
+		Assert.assertEquals("abcdef", StringBundler.concat("abc", "de", "f"));
 		Assert.assertEquals(
 			"test1test2test3test4",
 			StringBundler.concat("test1", "test2", "test3", "test4"));

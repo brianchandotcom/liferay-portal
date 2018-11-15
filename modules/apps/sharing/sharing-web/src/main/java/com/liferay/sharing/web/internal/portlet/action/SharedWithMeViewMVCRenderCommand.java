@@ -78,9 +78,11 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		String mvcRenderCommandName = ParamUtil.getString(
+			renderRequest, "mvcRenderCommandName");
+
 		if (Objects.equals(
-				renderRequest.getParameter("mvcRenderCommandName"),
-				"/shared_with_me/view_sharing_entry")) {
+				mvcRenderCommandName, "/shared_with_me/view_sharing_entry")) {
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
@@ -153,8 +155,7 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 			sharedWithMeViewDisplayContext);
 
 		if (Objects.equals(
-				renderRequest.getParameter("mvcRenderCommandName"),
-				"/shared_with_me/select_asset_type")) {
+				mvcRenderCommandName, "/shared_with_me/select_asset_type")) {
 
 			return "/shared_with_me/select_asset_type.jsp";
 		}
@@ -167,7 +168,7 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, SharedWithMeFilterItem.class,
 			Collections.reverseOrder(
-				new PropertyServiceReferenceComparator(
+				new PropertyServiceReferenceComparator<>(
 					"navigation.item.order")));
 	}
 

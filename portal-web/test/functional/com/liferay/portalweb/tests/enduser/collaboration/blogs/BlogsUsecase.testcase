@@ -1266,6 +1266,181 @@
 		<execute macro="Staging#publishToLive" />
 	</command>
 
+	<command name="StagingBlogsWithDeletedSmallImage" priority="5">
+		<description message="This is a use case for LPS-78833." />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="siteType" value="Blank" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Site Page Name" />
+			<var name="sitePageType" value="Widget Page" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Publishing" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoAddEntry" />
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panel" value="Configuration" />
+		</execute>
+
+		<execute macro="BlogsEntry#addSmallImage">
+			<var name="navTab" value="Documents and Media" />
+			<var name="uploadFileName" value="Document_3.jpg" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedView" />
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="ProductMenu#gotoLiveSite" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="cards" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="Blogs#ICON_VIEW_ENTRY_TITLE">
+			<var name="key_entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEditCP">
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panel" value="Configuration" />
+		</execute>
+
+		<execute macro="BlogsEntry#removeSmallImage">
+			<var name="uploadFileName" value="Document_3.jpg" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEditCP">
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="BlogsEntry#SMALL_IMAGE">
+			<var name="key_smallImage" value="Document_3.jpg" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Button#SELECT_FILE_SMALL_IMAGE" value1="Select File" />
+
+		<execute macro="ProductMenu#gotoLiveSite" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="cards" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="Blogs#ICON_VIEW_ENTRY_TITLE">
+			<var name="key_entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute function="AssertClick" locator1="NavBar#NAV_BAR_GENERAL" value1="Images">
+			<var name="key_navItem" value="Images" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${rowEntry}">
+			<var name="key_cardText" value="Document_3.jpg" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${rowEntry}">
+			<var name="key_cardText" value="Document_3 (1).jpg" />
+		</execute>
+	</command>
+
 	<command name="StagingBlogsWithScheduledPublishing" priority="3">
 		<property name="test.name.skip.portal.instance" value="BlogsUsecase#StagingBlogsWithScheduledPublishing" />
 

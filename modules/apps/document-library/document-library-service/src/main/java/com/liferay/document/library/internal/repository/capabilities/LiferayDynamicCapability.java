@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.internal.repository.capabilities;
 
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
@@ -36,7 +36,10 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -48,10 +51,21 @@ public class LiferayDynamicCapability
 	public LiferayDynamicCapability(
 		BundleContext bundleContext, String repositoryClassName) {
 
-		_serviceTracker = ServiceTrackerListFactory.open(
-			bundleContext, Capability.class,
-			"(|(repository.class.name=" + repositoryClassName +
-				")(repository.class.name=ALL))",
+		Filter filter = null;
+
+		try {
+			filter = bundleContext.createFilter(
+				StringBundler.concat(
+					"(&(objectClass=", Capability.class.getName(),
+					")(|(repository.class.name=", repositoryClassName,
+					")(repository.class.name=ALL)))"));
+		}
+		catch (InvalidSyntaxException ise) {
+			ReflectionUtil.throwException(ise);
+		}
+
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext, filter,
 			new ServiceTrackerCustomizer<Capability, Capability>() {
 
 				@Override
@@ -98,6 +112,8 @@ public class LiferayDynamicCapability
 				}
 
 			});
+
+		_serviceTracker.open();
 	}
 
 	public void clear() {
@@ -226,7 +242,7 @@ public class LiferayDynamicCapability
 	private volatile LocalRepository _originalLocalRepository;
 	private volatile Repository _originalRepository;
 	private volatile RepositoryEventRegistry _repositoryEventRegistry;
-	private final ServiceTrackerList<Capability, Capability> _serviceTracker;
+	private final ServiceTracker<Capability, Capability> _serviceTracker;
 
 	private static class CapabilityRegistration {
 

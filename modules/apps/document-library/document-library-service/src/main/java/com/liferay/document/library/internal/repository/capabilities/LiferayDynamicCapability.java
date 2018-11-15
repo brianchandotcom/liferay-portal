@@ -93,10 +93,6 @@ public class LiferayDynamicCapability
 				public void modifiedService(
 					ServiceReference<Capability> serviceReference,
 					Capability capability) {
-
-					removedService(serviceReference, capability);
-
-					addingService(serviceReference);
 				}
 
 				@Override

@@ -16,6 +16,14 @@ class FragmentEditableFieldTooltip extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
+	attached() {
+		this._alignTooltip();
+	}
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
 	created() {
 		this._handleDocumentClick = this._handleDocumentClick.bind(this);
 
@@ -67,11 +75,13 @@ class FragmentEditableFieldTooltip extends Component {
 	 * @review
 	 */
 	_alignTooltip() {
-		Align.align(
-			this.refs.tooltip,
-			this.alignElement,
-			Align.Top
-		);
+    if (this.refs.tooltip) {
+      Align.align(
+        this.refs.tooltip,
+        this.alignElement,
+        Align.Top
+      );
+    }
 	}
 
 	/**

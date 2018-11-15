@@ -18,20 +18,7 @@ import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.ObjectNotFoundException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
-
-import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.StaleObjectStateException;
@@ -58,8 +45,6 @@ public class ExceptionTranslator {
 			Object currentObject = session.get(
 				object.getClass(), baseModel.getPrimaryKeyObj());
 
-			_initPermissionChecker();
-
 			JSONSerializer jsonSerializer =
 				JSONFactoryUtil.createJSONSerializer();
 
@@ -72,32 +57,5 @@ public class ExceptionTranslator {
 
 		return new ORMException(e);
 	}
-
-	private static void _initPermissionChecker() {
-		final long companyId = PortalUtil.getDefaultCompanyId();
-		Role role = null;
-
-		try {
-			role = RoleLocalServiceUtil.getRole(
-				companyId, RoleConstants.ADMINISTRATOR);
-
-			long roleId = role.getRoleId();
-
-			List<User> admins = UserLocalServiceUtil.getRoleUsers(roleId, 0, 1);
-
-			User admin = admins.get(0);
-
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(admin);
-
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-		}
-		catch (Exception e1) {
-			_log.error("Unable to initiate admin PermissionChecker ", e1);
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ExceptionTranslator.class);
 
 }

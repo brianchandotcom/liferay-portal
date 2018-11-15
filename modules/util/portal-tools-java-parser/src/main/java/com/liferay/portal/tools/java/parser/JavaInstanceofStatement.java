@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 /**
  * @author Hugo Huijser
  */
@@ -28,7 +30,21 @@ public class JavaInstanceofStatement extends JavaExpression {
 		String indent, String prefix, String suffix, int maxLineLength,
 		boolean forceLineBreak) {
 
-		return "TODO";
+		StringBundler sb = new StringBundler();
+
+		sb.append(indent);
+		sb.append(prefix);
+
+		int addedLinesCount = append(
+			sb, _valueJavaExpression, indent, "", " instanceof", maxLineLength);
+
+		for (int i = 0; i < addedLinesCount; i++) {
+			indent += "\t";
+		}
+
+		append(sb, _classJavaType, indent, " ", suffix, maxLineLength);
+
+		return sb.toString();
 	}
 
 	public void setValue(JavaExpression valueJavaExpression) {

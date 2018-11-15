@@ -87,6 +87,23 @@ public class FragmentEntryProcessorRegistryImpl
 	}
 
 	@Override
+	public String processFragmentEntryLinkCSS(
+			FragmentEntryLink fragmentEntryLink, String mode, Locale locale)
+		throws PortalException {
+
+		String css = fragmentEntryLink.getCss();
+
+		for (FragmentEntryProcessor fragmentEntryProcessor :
+				_serviceTrackerList) {
+
+			css = fragmentEntryProcessor.processFragmentEntryLinkCSS(
+				fragmentEntryLink, css, mode, locale);
+		}
+
+		return css;
+	}
+
+	@Override
 	public String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink)
 		throws PortalException {

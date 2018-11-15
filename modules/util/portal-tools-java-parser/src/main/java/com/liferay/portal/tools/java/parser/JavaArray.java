@@ -39,20 +39,19 @@ public class JavaArray extends JavaExpression {
 		sb.append(prefix);
 		sb.append("{");
 
-		if (forceLineBreak) {
-			appendNewLine(
-				sb, _valueJavaExpressions, indent + "\t", maxLineLength);
-
-			sb.append("\n");
-			sb.append(indent);
-			sb.append("}");
-			sb.append(suffix);
+		if (!forceLineBreak &&
+			appendSingleLine(
+				sb, _valueJavaExpressions, "", "}" + suffix, maxLineLength)) {
 
 			return sb.toString();
 		}
 
-		append(
-			sb, _valueJavaExpressions, indent, "", "}" + suffix, maxLineLength);
+		appendNewLine(sb, _valueJavaExpressions, indent + "\t", maxLineLength);
+
+		sb.append("\n");
+		sb.append(indent);
+		sb.append("}");
+		sb.append(suffix);
 
 		return sb.toString();
 	}

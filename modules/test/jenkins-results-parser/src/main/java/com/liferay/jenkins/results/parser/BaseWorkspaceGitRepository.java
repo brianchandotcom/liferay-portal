@@ -39,21 +39,27 @@ public abstract class BaseWorkspaceGitRepository
 	extends BaseLocalGitRepository implements WorkspaceGitRepository {
 
 	@Override
-	public List<List<LocalGitCommit>> partitionLocalGitCommits(
-		List<LocalGitCommit> localGitCommits, int count) {
+	public String getFileContent(String filePath) {
+		File file = new File(getDirectory(), filePath);
 
-		LinkedList<LocalGitCommit> linkedList = new LinkedList<>(
-			localGitCommits);
+		try {
+			String fileContent = JenkinsResultsParserUtil.read(file);
 
-		List<LocalGitCommit> lastLocalGitCommitList = Lists.newArrayList(
-			linkedList.removeLast());
+			return fileContent.trim();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
 
-		List<List<LocalGitCommit>> localGitCommitsLists =
-			JenkinsResultsParserUtil.partitionByCount(linkedList, count);
+	@Override
+	public String getGitHubDevBranchName() {
+		return getString("git_hub_dev_branch_name");
+	}
 
-		localGitCommitsLists.add(lastLocalGitCommitList);
-
-		return localGitCommitsLists;
+	@Override
+	public String getGitHubURL() {
+		return getString("git_hub_url");
 	}
 
 	@Override
@@ -121,30 +127,6 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	@Override
-	public String getFileContent(String filePath) {
-		File file = new File(getDirectory(), filePath);
-
-		try {
-			String fileContent = JenkinsResultsParserUtil.read(file);
-
-			return fileContent.trim();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-	}
-
-	@Override
-	public String getGitHubDevBranchName() {
-		return getString("git_hub_dev_branch_name");
-	}
-
-	@Override
-	public String getGitHubURL() {
-		return getString("git_hub_url");
-	}
-
-	@Override
 	public Properties getWorkspaceJobProperties(String propertyType, Job job) {
 		Properties jobProperties = job.getJobProperties();
 
@@ -200,6 +182,24 @@ public abstract class BaseWorkspaceGitRepository
 		}
 
 		return workspaceJobProperties;
+	}
+
+	@Override
+	public List<List<LocalGitCommit>> partitionLocalGitCommits(
+		List<LocalGitCommit> localGitCommits, int count) {
+
+		LinkedList<LocalGitCommit> linkedList = new LinkedList<>(
+			localGitCommits);
+
+		List<LocalGitCommit> lastLocalGitCommitList = Lists.newArrayList(
+			linkedList.removeLast());
+
+		List<List<LocalGitCommit>> localGitCommitsLists =
+			JenkinsResultsParserUtil.partitionByCount(linkedList, count);
+
+		localGitCommitsLists.add(lastLocalGitCommitList);
+
+		return localGitCommitsLists;
 	}
 
 	@Override

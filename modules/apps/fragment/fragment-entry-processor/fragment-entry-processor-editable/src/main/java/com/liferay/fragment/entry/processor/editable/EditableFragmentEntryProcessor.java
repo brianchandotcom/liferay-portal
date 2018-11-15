@@ -36,6 +36,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -64,6 +66,12 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		for (Map.Entry<String, EditableElementParser> editableElementParser :
 				_editableElementParsers.entrySet()) {
+
+			EditableElementParser parser = editableElementParser.getValue();
+
+			if (parser.isCss()) {
+				continue;
+			}
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -126,6 +134,65 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 
 		return defaultEditableValuesJSONObject;
+	}
+
+	@Override
+	public String processFragmentEntryLinkCSS(
+			FragmentEntryLink fragmentEntryLink, String css, String mode,
+			Locale locale)
+		throws PortalException {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			fragmentEntryLink.getEditableValues());
+
+		Class<?> clazz = getClass();
+
+		JSONObject editableValuesJSONObject = jsonObject.getJSONObject(
+			clazz.getName());
+
+		Map<String, Map<String, String>> stylesheet = _getStylesheet(css);
+
+		for (Map.Entry<String, Map<String, String>> selector :
+				stylesheet.entrySet()) {
+
+			Map<String, String> properties = selector.getValue();
+
+			for (Map.Entry<String, String> property : properties.entrySet()) {
+				String id = StringUtil.trim(
+					StringUtil.add(
+						selector.getKey(), property.getKey(),
+						StringPool.SPACE));
+
+				if ((editableValuesJSONObject == null) ||
+					!editableValuesJSONObject.has(id)) {
+
+					continue;
+				}
+
+				JSONObject editableValueJSONObject =
+					editableValuesJSONObject.getJSONObject(id);
+
+				String value = StringPool.BLANK;
+
+				if (Objects.equals(
+						mode, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE)) {
+
+					EditableElementParser editableElementParser =
+						_editableElementParsers.get(property);
+
+					value = _getMappedValue(
+						editableElementParser, editableValueJSONObject);
+				}
+
+				if (Validator.isNull(value)) {
+					value = _getEditableValue(editableValueJSONObject, locale);
+				}
+
+				properties.put(property.getKey(), value);
+			}
+		}
+
+		return _toCSSString(stylesheet);
 	}
 
 	@Override
@@ -259,6 +326,63 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			editableElementParser.getFieldTemplate(), "field_name", value);
 	}
 
+	private Map<String, Map<String, String>> _getStylesheet(String css) {
+		Map<String, Map<String, String>> stylesheet = new HashMap<>();
+
+		Matcher selectorMatcher = _cssSelectorPattern.matcher(css);
+
+		while (selectorMatcher.find()) {
+			String selector = StringUtil.trim(selectorMatcher.group(1));
+
+			String cssText = selectorMatcher.group(2);
+
+			Matcher propertiesMatcher = _cssPropertyPattern.matcher(cssText);
+
+			Map<String, String> properties = stylesheet.getOrDefault(
+				selector, new HashMap<>());
+
+			while (propertiesMatcher.find()) {
+				String property = StringUtil.trim(propertiesMatcher.group(1));
+				String value = propertiesMatcher.group(2);
+
+				properties.put(property, value);
+			}
+
+			stylesheet.put(selector, properties);
+		}
+
+		return stylesheet;
+	}
+
+	private String _toCSSString(Map<String, Map<String, String>> stylesheet) {
+		StringBundler sb = new StringBundler(stylesheet.size() * 7);
+
+		for (Map.Entry<String, Map<String, String>> selector :
+				stylesheet.entrySet()) {
+
+			Map<String, String> properties = selector.getValue();
+
+			StringBundler propertiesSB = new StringBundler(
+				properties.size() * 4);
+
+			for (Map.Entry<String, String> property : properties.entrySet()) {
+				propertiesSB.append(property.getKey());
+				propertiesSB.append(StringPool.COLON);
+				propertiesSB.append(property.getValue());
+				propertiesSB.append(StringPool.SEMICOLON);
+			}
+
+			sb.append(selector.getKey());
+			sb.append(StringPool.SPACE);
+			sb.append(StringPool.OPEN_CURLY_BRACE);
+			sb.append(propertiesSB.toString());
+			sb.append(StringPool.CLOSE_CURLY_BRACE);
+			sb.append(StringPool.SPACE);
+		}
+
+		return sb.toString();
+	}
+
 	private void _validateAttribute(Element element, String attributeName)
 		throws FragmentEntryContentException {
 
@@ -358,6 +482,11 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private static final String[] _REQUIRED_ATTRIBUTE_NAMES = {"id", "type"};
+
+	private static final Pattern _cssPropertyPattern = Pattern.compile(
+		"([^:]+)\\s*:([^;]+);");
+	private static final Pattern _cssSelectorPattern = Pattern.compile(
+		"([^\\{]+)\\s*\\{([^\\}]+)\\}");
 
 	private final Map<String, EditableElementParser> _editableElementParsers =
 		new HashMap<>();

@@ -301,7 +301,7 @@ public class JavaParserUtil {
 		}
 
 		if ((javaExpression != null) && hasSurroundingParentheses) {
-			javaExpression.setHasSurroundingParentheses(true, false);
+			javaExpression.setHasSurroundingParentheses(true);
 		}
 
 		return javaExpression;

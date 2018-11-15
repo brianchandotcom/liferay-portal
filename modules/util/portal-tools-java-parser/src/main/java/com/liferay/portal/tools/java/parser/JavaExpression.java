@@ -36,10 +36,9 @@ public abstract class JavaExpression extends BaseJavaTerm {
 	}
 
 	public void setHasSurroundingParentheses(
-		boolean hasSurroundingParentheses, boolean parenthesesIncludeChain) {
+		boolean hasSurroundingParentheses) {
 
 		_hasSurroundingParentheses = hasSurroundingParentheses;
-		_parenthesesIncludeChain = parenthesesIncludeChain;
 	}
 
 	@Override
@@ -68,28 +67,18 @@ public abstract class JavaExpression extends BaseJavaTerm {
 		StringBundler sb = new StringBundler();
 
 		if (_hasSurroundingParentheses) {
-			if (!_parenthesesIncludeChain) {
-				sb.append(
-					getString(
-						indent, prefix + "(", ").", maxLineLength,
-						forceLineBreak));
-			}
-			else {
-				sb.append(
-					getString(
-						indent, prefix + "(", ".", maxLineLength,
-						forceLineBreak));
-			}
+			sb.append(
+				getString(
+					indent, prefix + "(", ").", maxLineLength, forceLineBreak));
 		}
 		else {
 			sb.append(
 				getString(indent, prefix, ".", maxLineLength, forceLineBreak));
 		}
 
-		if (_hasSurroundingParentheses && _parenthesesIncludeChain) {
-			append(
-				sb, _chainedJavaExpression, indent, "", ")" + suffix,
-				maxLineLength, false);
+		if (forceLineBreak) {
+			appendWithLineBreak(
+				sb, _chainedJavaExpression, indent, "", suffix, maxLineLength);
 		}
 		else {
 			append(
@@ -102,6 +91,5 @@ public abstract class JavaExpression extends BaseJavaTerm {
 
 	private JavaExpression _chainedJavaExpression;
 	private boolean _hasSurroundingParentheses;
-	private boolean _parenthesesIncludeChain;
 
 }

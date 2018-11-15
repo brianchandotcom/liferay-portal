@@ -36,6 +36,14 @@ public interface FragmentEntryProcessor {
 		return null;
 	}
 
+	public default String processFragmentEntryLinkCSS(
+			FragmentEntryLink fragmentEntryLink, String css, String mode,
+			Locale locale)
+		throws PortalException {
+
+		return css;
+	}
+
 	public default String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink, String html)
 		throws PortalException {

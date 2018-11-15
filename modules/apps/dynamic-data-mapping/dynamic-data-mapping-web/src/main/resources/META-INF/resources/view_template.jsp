@@ -62,7 +62,7 @@ if (layout != null) {
 		</c:when>
 		<c:otherwise>
 			<liferay-ui:header
-				backURL="<%= PortalUtil.escapeRedirect(ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK)) %>"
+				backURL="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>"
 				cssClass="container-fluid container-fluid-max-xl"
 				title="<%= ddmDisplay.getViewTemplatesTitle(structure, controlPanel, ddmDisplayContext.isSearch(), locale) %>"
 			/>

@@ -75,6 +75,21 @@
 	<td>//button[contains(@data-type,'button-underline')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TEXT_FORMATTING_LINK</td>
+	<td>//button[contains(@data-type,'button-link')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_FORMATTING_LINK_INPUT</td>
+	<td>//div[contains(@class,'ae-container-input')]//input[contains(@class,'ae-input')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_FORMATTING_LINK_INPUT_CONFIRM</td>
+	<td>//button[contains(@aria-label,'Confirm')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

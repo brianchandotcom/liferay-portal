@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import org.hibernate.Session;
 import org.hibernate.StaleObjectStateException;
@@ -56,11 +57,12 @@ public class ExceptionTranslator {
 			try {
 				PermissionThreadLocal.setPermissionChecker(null);
 
-				String objStr = jsonSerializer.serialize(object);
-				String currObjStr = jsonSerializer.serialize(currentObject);
-
 				return new ORMException(
-					objStr + " is stale in comparison to " + currObjStr, e);
+					StringBundler.concat(
+						jsonSerializer.serialize(object),
+						" is stale in comparison to ",
+						jsonSerializer.serialize(currentObject)),
+					e);
 			}
 			finally {
 				PermissionThreadLocal.setPermissionChecker(permissionChecker);

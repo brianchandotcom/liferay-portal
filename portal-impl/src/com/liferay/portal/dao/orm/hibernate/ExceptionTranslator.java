@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.dao.orm.ObjectNotFoundException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 
 import org.hibernate.Session;
 import org.hibernate.StaleObjectStateException;
@@ -48,11 +50,21 @@ public class ExceptionTranslator {
 			JSONSerializer jsonSerializer =
 				JSONFactoryUtil.createJSONSerializer();
 
-			String objStr = jsonSerializer.serialize(object);
-			String currObjStr = jsonSerializer.serialize(currentObject);
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
 
-			return new ORMException(
-				objStr + " is stale in comparison to " + currObjStr, e);
+			try {
+				PermissionThreadLocal.setPermissionChecker(null);
+
+				String objStr = jsonSerializer.serialize(object);
+				String currObjStr = jsonSerializer.serialize(currentObject);
+
+				return new ORMException(
+					objStr + " is stale in comparison to " + currObjStr, e);
+			}
+			finally {
+				PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			}
 		}
 
 		return new ORMException(e);

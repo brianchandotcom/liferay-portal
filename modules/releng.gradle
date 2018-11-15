@@ -37,8 +37,14 @@ import org.eclipse.jgit.revwalk.RevWalk
 import org.eclipse.jgit.treewalk.TreeWalk
 import org.eclipse.jgit.treewalk.filter.PathFilter
 
-import org.gradle.initialization.GradleLauncher
-import org.gradle.initialization.NestedBuildFactory
+import org.gradle.StartParameter
+import org.gradle.api.Transformer
+import org.gradle.api.internal.BuildDefinition
+import org.gradle.internal.build.BuildState
+import org.gradle.internal.build.BuildStateRegistry
+import org.gradle.internal.build.PublicBuildPath
+import org.gradle.internal.build.StandAloneNestedBuild
+import org.gradle.internal.invocation.BuildController
 import org.gradle.util.GUtil
 
 buildscript {
@@ -1148,12 +1154,24 @@ private boolean _executeGradle(File moduleDir, List<String> taskNames, Map<Strin
 }
 
 private boolean _executeGradle(StartParameter startParameter) {
-	NestedBuildFactory nestedBuildFactory = gradle.services.get(NestedBuildFactory)
+	BuildDefinition buildDefinition = BuildDefinition.fromStartParameter(startParameter, gradle.services.get(PublicBuildPath))
+	BuildStateRegistry buildStateRegistry = gradle.services.get(BuildStateRegistry)
 
-	GradleLauncher gradleLauncher = nestedBuildFactory.nestedInstance(startParameter)
+	StandAloneNestedBuild standAloneNestedBuild = buildStateRegistry.addNestedBuildTree(buildDefinition, gradle.services.get(BuildState));
+
+	Transformer<Void, BuildController> transformer = new Transformer<Void, BuildController>() {
+
+		@Override
+		public Void transform(BuildController buildController) {
+			buildController.run()
+
+			return null
+		}
+
+	}
 
 	try {
-		gradleLauncher.run()
+		standAloneNestedBuild.run(transformer)
 
 		return true
 	}
@@ -1165,9 +1183,6 @@ private boolean _executeGradle(StartParameter startParameter) {
 		e.printStackTrace()
 
 		return false
-	}
-	finally {
-		gradleLauncher.stop()
 	}
 }
 

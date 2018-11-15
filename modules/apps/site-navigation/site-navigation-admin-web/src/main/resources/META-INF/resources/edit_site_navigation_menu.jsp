@@ -288,6 +288,13 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 	var handleSidebarCloseButtonClick = function() {
 		closeSidebar();
 		siteNavigationMenuItemDOMHandlerModule.unselectAll();
+
+		var sidebarHeaderButton = A.one('#<portlet:namespace />sidebarHeaderButton');
+
+		sidebarHeaderButton.removeEventListener(
+			'click',
+			handleSidebarCloseButtonClick
+		);
 	};
 
 	var handleSiteNavigationMenuItemRemoveIconClick = function(event) {

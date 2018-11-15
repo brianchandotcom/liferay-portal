@@ -32,7 +32,7 @@ AUI.add(
 
 		var TPL_MOVE_OPTION = new A.Template(
 			'<tpl for="options">',
-				'<div class="move-option {[ values.selected ? "', STR_SELECTED, '" : "" ]}" data-value="{value}">',
+				'<div class="handle move-option {[ values.selected ? "', STR_SELECTED, '" : "" ]}" data-value="{value}">',
 					'<i class="handle icon-reorder"></i>',
 
 					'<input {[ values.selected ? "', STR_CHECKED, '" : "" ]} class="checkbox" id="{value}CheckBox" type="checkbox" value="{value}" />',

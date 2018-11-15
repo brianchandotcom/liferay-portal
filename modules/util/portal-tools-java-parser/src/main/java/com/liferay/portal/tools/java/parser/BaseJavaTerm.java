@@ -115,7 +115,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			return 1;
 		}
 
-		return _appendWithLineBreak(
+		return appendWithLineBreak(
 			sb, javaTerm, indent, prefix, suffix, maxLineLength);
 	}
 
@@ -357,7 +357,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		return false;
 	}
 
-	private int _appendWithLineBreak(
+	protected int appendWithLineBreak(
 		StringBundler sb, JavaTerm javaTerm, String indent, String prefix,
 		String suffix, int maxLineLength) {
 

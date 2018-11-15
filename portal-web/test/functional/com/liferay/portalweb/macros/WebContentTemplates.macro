@@ -1,5 +1,5 @@
 <definition>
-	<command name="_addFields" summary="Helper function to add fields to a template">
+	<command name="_addFields" summary="Helper function to add fields '${templateFieldNames}' to the template">
 		<if>
 			<isset var="templateFieldNames" />
 			<then>
@@ -12,7 +12,7 @@
 		</if>
 	</command>
 
-	<command name="_inputDescription" summary="Helper function to add a description to a template">
+	<command name="_inputDescription" summary="Helper function to add description '${description}' to the template">
 		<if>
 			<isset var="templateDescription" />
 			<then>
@@ -27,7 +27,7 @@
 		</if>
 	</command>
 
-	<command name="_inputScript" summary="Helper function to add a script to a template">
+	<command name="_inputScript" summary="Helper function to add a script to the template">
 		<if>
 			<isset var="templateScript" />
 			<then>
@@ -36,7 +36,7 @@
 		</if>
 	</command>
 
-	<command name="_inputStructure" summary="Helper function to link a structure to a template">
+	<command name="_inputStructure" summary="Helper function to link structure '${structureName}' to the template">
 		<if>
 			<isset var="structureName" />
 			<then>
@@ -70,7 +70,7 @@
 		</if>
 	</command>
 
-	<command name="_inputTemplateLanguage" summary="Helper function to add the template language to read the template in">
+	<command name="_inputTemplateLanguage" summary="Helper function to select template language 'templateLanguage' to read the template in">
 		<execute macro="Panel#expandPanel">
 			<var name="panel" value="Details" />
 		</execute>
@@ -108,7 +108,7 @@
 		</if>
 	</command>
 
-	<command name="addCP" summary="Click on the add button to add a template, input most basic fields and then save the template">
+	<command name="addCP" summary="Click on the add button to add a template named '${templateName}' for structure '${structureName}', input most basic fields and then save the template">
 		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute macro="WebContentTemplates#inputTemplateAddScreenFields">
@@ -136,7 +136,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="addRoleViewPermissions" summary="Give specified roles permissions to view a specific template">
+	<command name="addRoleViewPermissions" summary="Give the roles '${roles}' permissions to view the template '${templateName}'">
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Permissions" />
 			<var name="rowEntry" value="${templateName}" />
@@ -152,7 +152,7 @@
 		<execute function="SelectFrameTop" />
 	</command>
 
-	<command name="deleteCP" summary="Attempt to delete a specified template">
+	<command name="deleteCP" summary="Attempt to delete the template '${templateName}'">
 		<var name="key_ddlTemplateName" value="${templateName}" />
 
 		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS" />
@@ -176,7 +176,7 @@
 		</if>
 	</command>
 
-	<command name="inputSmallImage">
+	<command name="inputSmallImage" summary="Input a small image with the url '${templateSmallImageURL}'">
 		<execute macro="Panel#expandPanel">
 			<var name="panel" value="Details" />
 		</execute>
@@ -328,7 +328,7 @@
 		</execute>
 	</command>
 
-	<command name="viewCP" summary="Assert that certain template attributes are present">
+	<command name="viewCP" summary="Assert that certain template attributes are present for the template '${templateName}'">
 		<var name="key_ddlTemplateName" value="${templateName}" />
 
 		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" value1="${templateName}" />
@@ -407,7 +407,7 @@
 		</if>
 	</command>
 
-	<command name="viewTableEntryCP" summary="Assert that the template's table entry is present">
+	<command name="viewTableEntryCP" summary="Assert that the table entry for template '${templateName}' is present">
 		<var name="key_ddlTemplateName" value="${templateName}" />
 
 		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" value1="${templateName}" />

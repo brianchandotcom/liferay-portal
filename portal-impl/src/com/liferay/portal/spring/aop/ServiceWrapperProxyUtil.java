@@ -23,7 +23,6 @@ import java.io.IOException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationHandler;
 
 /**
  * @author Shuyang Zhou
@@ -34,21 +33,14 @@ public class ServiceWrapperProxyUtil {
 			Object springServiceProxy, String fieldName, Class<?> wrapperClass)
 		throws Exception {
 
-		if (!ProxyUtil.isProxyClass(springServiceProxy.getClass())) {
-			throw new IllegalArgumentException(
-				springServiceProxy + " is not a Spring service proxy");
-		}
-
-		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
-			springServiceProxy);
-
-		if (!(invocationHandler instanceof ServiceBeanAopProxy)) {
-			throw new IllegalArgumentException(
-				springServiceProxy + " is not a Spring service proxy");
-		}
-
 		ServiceBeanAopProxy serviceBeanAopProxy =
-			(ServiceBeanAopProxy)invocationHandler;
+			ProxyUtil.fetchInvocationHandler(
+				springServiceProxy, ServiceBeanAopProxy.class);
+
+		if (serviceBeanAopProxy == null) {
+			throw new IllegalArgumentException(
+				springServiceProxy + " is not a Spring service proxy");
+		}
 
 		final Object targetService = serviceBeanAopProxy.getTarget();
 

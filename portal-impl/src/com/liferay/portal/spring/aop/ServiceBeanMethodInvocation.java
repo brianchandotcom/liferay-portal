@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import java.io.Serializable;
 
 import java.lang.reflect.AccessibleObject;
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -128,16 +127,12 @@ public class ServiceBeanMethodInvocation
 				return false;
 			}
 
-			if (ProxyUtil.isProxyClass(argument.getClass())) {
-				InvocationHandler invocationHandler =
-					ProxyUtil.getInvocationHandler(argument);
+			ServiceBeanAopProxy serviceBeanAopProxy =
+				ProxyUtil.fetchInvocationHandler(
+					argument, ServiceBeanAopProxy.class);
 
-				if (invocationHandler instanceof ServiceBeanAopProxy) {
-					ServiceBeanAopProxy serviceBeanAopProxy =
-						(ServiceBeanAopProxy)invocationHandler;
-
-					argument = serviceBeanAopProxy.getTarget();
-				}
+			if (serviceBeanAopProxy != null) {
+				argument = serviceBeanAopProxy.getTarget();
 			}
 
 			return _target.equals(argument);

@@ -27,7 +27,6 @@ import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 /**
@@ -147,11 +146,9 @@ public class ServiceWrapperRegistry {
 			ClassLoader classLoader = clazz.getClassLoader();
 
 			try {
-				InvocationHandler invocationHandler =
-					ProxyUtil.getInvocationHandler(serviceProxy);
-
 				ServiceBeanAopProxy serviceBeanAopProxy =
-					(ServiceBeanAopProxy)invocationHandler;
+					ProxyUtil.fetchInvocationHandler(
+						serviceProxy, ServiceBeanAopProxy.class);
 
 				serviceWrapper.setWrappedService(
 					(T)serviceBeanAopProxy.getTarget());

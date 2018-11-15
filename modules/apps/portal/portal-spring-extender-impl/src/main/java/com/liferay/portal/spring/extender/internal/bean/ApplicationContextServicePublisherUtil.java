@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.util.PropsValues;
 
-import java.lang.reflect.InvocationHandler;
-
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
@@ -113,13 +111,11 @@ public class ApplicationContextServicePublisherUtil {
 		Class<?> clazz = bean.getClass();
 
 		if (ProxyUtil.isProxyClass(clazz)) {
-			InvocationHandler invocationHandler =
-				ProxyUtil.getInvocationHandler(bean);
+			ServiceBeanAopProxy serviceBeanAopProxy =
+				ProxyUtil.fetchInvocationHandler(
+					bean, ServiceBeanAopProxy.class);
 
-			if (invocationHandler instanceof ServiceBeanAopProxy) {
-				ServiceBeanAopProxy serviceBeanAopProxy =
-					(ServiceBeanAopProxy)invocationHandler;
-
+			if (serviceBeanAopProxy != null) {
 				Object target = serviceBeanAopProxy.getTarget();
 
 				clazz = target.getClass();

@@ -41,8 +41,6 @@ import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.StrictPortletPreferencesImpl;
 
-import java.lang.reflect.InvocationHandler;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -1498,11 +1496,10 @@ public class PortletPreferencesLocalServiceTest {
 	}
 
 	protected void replaceService() {
-		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
-			PortletPreferencesLocalServiceUtil.getService());
-
 		ServiceBeanAopProxy serviceBeanAopProxy =
-			(ServiceBeanAopProxy)invocationHandler;
+			ProxyUtil.fetchInvocationHandler(
+				PortletPreferencesLocalServiceUtil.getService(),
+				ServiceBeanAopProxy.class);
 
 		Object previousService = serviceBeanAopProxy.getTarget();
 

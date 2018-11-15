@@ -105,8 +105,10 @@ public class Test {
 
 			errorCollector.addError(
 				new Throwable(
-					"Expected message mismatch in sample '" + sampleKey +
-						"'."));
+					JenkinsResultsParserUtil.combine(
+						"Expected message mismatch in sample '", sampleKey,
+						"'.\n Expected message file: ",
+						expectedMessageFile.getPath())));
 		}
 	}
 

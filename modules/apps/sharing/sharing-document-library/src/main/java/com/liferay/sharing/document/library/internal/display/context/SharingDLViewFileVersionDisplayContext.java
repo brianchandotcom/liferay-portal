@@ -17,6 +17,7 @@ package com.liferay.sharing.document.library.internal.display.context;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -77,7 +78,8 @@ public class SharingDLViewFileVersionDisplayContext
 
 		menuItems.add(
 			_sharingMenuItemFactory.createShareMenuItem(
-				_fileEntry, _request, _resourceBundle));
+				DLFileEntryConstants.getClassName(),
+				_fileEntry.getFileEntryId(), _request, _resourceBundle));
 
 		return menu;
 	}
@@ -92,7 +94,8 @@ public class SharingDLViewFileVersionDisplayContext
 
 		toolbarItems.add(
 			_sharingToolbarItemFactory.createShareToolbarItem(
-				_fileEntry, _request, _resourceBundle));
+				DLFileEntryConstants.getClassName(),
+				_fileEntry.getFileEntryId(), _request, _resourceBundle));
 
 		return toolbarItems;
 	}

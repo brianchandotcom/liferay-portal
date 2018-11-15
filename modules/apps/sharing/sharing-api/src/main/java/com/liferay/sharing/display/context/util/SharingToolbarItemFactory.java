@@ -15,7 +15,6 @@
 package com.liferay.sharing.display.context.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 
 import java.util.ResourceBundle;
@@ -28,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface SharingToolbarItemFactory {
 
 	public ToolbarItem createShareToolbarItem(
-			FileEntry fileEntry, HttpServletRequest request,
+			String className, long classPK, HttpServletRequest request,
 			ResourceBundle resourceBundle)
 		throws PortalException;
 

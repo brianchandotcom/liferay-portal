@@ -14,7 +14,6 @@
 
 package com.liferay.sharing.web.internal.display.context.util;
 
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptToolbarItem;
@@ -65,7 +63,7 @@ public class SharingMenuItemFactoryImpl
 
 	@Override
 	public MenuItem createShareMenuItem(
-			FileEntry fileEntry, HttpServletRequest request,
+			String className, long classPK, HttpServletRequest request,
 			ResourceBundle resourceBundle)
 		throws PortalException {
 
@@ -75,14 +73,14 @@ public class SharingMenuItemFactoryImpl
 		javaScriptMenuItem.setKey("#share");
 		javaScriptMenuItem.setLabel(_language.get(resourceBundle, "share"));
 		javaScriptMenuItem.setOnClick(
-			_getOnclickMethod(fileEntry, request, resourceBundle));
+			_getOnclickMethod(className, classPK, request, resourceBundle));
 
 		return javaScriptMenuItem;
 	}
 
 	@Override
 	public ToolbarItem createShareToolbarItem(
-			FileEntry fileEntry, HttpServletRequest request,
+			String className, long classPK, HttpServletRequest request,
 			ResourceBundle resourceBundle)
 		throws PortalException {
 
@@ -93,7 +91,7 @@ public class SharingMenuItemFactoryImpl
 		javaScriptToolbarItem.setKey("#share");
 		javaScriptToolbarItem.setLabel(_language.get(resourceBundle, "share"));
 		javaScriptToolbarItem.setOnClick(
-			_getOnclickMethod(fileEntry, request, resourceBundle));
+			_getOnclickMethod(className, classPK, request, resourceBundle));
 
 		return javaScriptToolbarItem;
 	}
@@ -137,7 +135,7 @@ public class SharingMenuItemFactoryImpl
 	}
 
 	private String _getOnclickMethod(
-		FileEntry fileEntry, HttpServletRequest request,
+		String className, long classPK, HttpServletRequest request,
 		ResourceBundle resourceBundle) {
 
 		String sharingPortletId = PortletProviderUtil.getPortletId(
@@ -148,13 +146,11 @@ public class SharingMenuItemFactoryImpl
 
 		sharingURL.setParameter("mvcRenderCommandName", "/sharing/share");
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			DLFileEntry.class.getName());
+		long classNameId = _classNameLocalService.getClassNameId(className);
 
 		sharingURL.setParameter("classNameId", String.valueOf(classNameId));
 
-		sharingURL.setParameter(
-			"classPK", String.valueOf(fileEntry.getFileEntryId()));
+		sharingURL.setParameter("classPK", String.valueOf(classPK));
 
 		LiferayPortletResponse liferayPortletResponse =
 			_getLiferayPortletResponse(request);

@@ -65,6 +65,16 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 
 				<aui:input checked="<%= (segmentsEntry != null) && Validator.isNotNull(segmentsEntry.getFilterString()) %>" disabled="<%= segmentsEntry != null %>" name="dynamic" type="toggle-switch" />
 
+				<div id="<portlet:namespace />-query-builder-root"></div>
+
+				<%= segmentsJsRequire %>
+
+				<aui:script require="<%= segmentsJsRequire %>">
+					segmentsJsRequire.default('<portlet:namespace />-query-builder-root', {
+						segmentName: <%= segmentsEntryId %>
+					});
+				</aui:script>
+
 				<div id="<portlet:namespace />criteriaWrapper">
 
 					<%

@@ -74,6 +74,7 @@ import java.util.regex.Pattern;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 
+import com.google.common.collect.Lists;
 import org.apache.commons.codec.binary.Base64;
 
 import org.json.JSONArray;
@@ -1404,6 +1405,22 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return sb.toString();
+	}
+
+	public static <T> List<List<T>> partitionByCount(List<T> list, int count) {
+		int listSize = list.size();
+
+		int partitionSize = 1;
+
+		if (listSize > count) {
+			partitionSize = listSize / count;
+
+			if ((listSize % count) > 0) {
+				partitionSize++;
+			}
+		}
+
+		return Lists.partition(list, partitionSize);
 	}
 
 	public static String read(File file) throws IOException {

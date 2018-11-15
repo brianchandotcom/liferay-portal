@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -38,35 +39,34 @@ public abstract class BaseWorkspaceGitRepository
 	extends BaseLocalGitRepository implements WorkspaceGitRepository {
 
 	@Override
-	public List<List<LocalGitCommit>> getCommitGroups(
+	public List<List<LocalGitCommit>> partitionLocalGitCommits(
 		List<LocalGitCommit> localGitCommits, int count) {
 
-		int localGitCommitsSize = localGitCommits.size();
+		LinkedList<LocalGitCommit> linkedList = new LinkedList<>(
+			localGitCommits);
 
-		int groupSize = 1;
+		List<LocalGitCommit> lastLocalGitCommitList = Lists.newArrayList(
+			linkedList.removeLast());
 
-		if (localGitCommitsSize > count) {
-			groupSize = localGitCommitsSize / count;
+		List<List<LocalGitCommit>> localGitCommitsLists =
+			JenkinsResultsParserUtil.partitionByCount(linkedList, count);
 
-			if ((localGitCommitsSize % count) > 0) {
-				groupSize++;
-			}
-		}
+		localGitCommitsLists.add(lastLocalGitCommitList);
 
-		return Lists.partition(localGitCommits, groupSize);
+		return localGitCommitsLists;
 	}
 
 	@Override
-	public List<LocalGitCommit> getCommitHistory() {
-		if (_commitHistory != null) {
-			return _commitHistory;
+	public List<LocalGitCommit> getHistoricalLocalGitCommits() {
+		if (_historicalLocalGitCommits != null) {
+			return _historicalLocalGitCommits;
 		}
 
 		if (!has("commits")) {
 			return new ArrayList<>();
 		}
 
-		_commitHistory = new ArrayList<>();
+		_historicalLocalGitCommits = new ArrayList<>();
 
 		JSONArray commitsJSONArray = getJSONArray("commits");
 
@@ -75,21 +75,21 @@ public abstract class BaseWorkspaceGitRepository
 		for (int i = 0; i < commitsJSONArray.length(); i++) {
 			JSONObject commitJSONObject = commitsJSONArray.getJSONObject(i);
 
-			_commitHistory.add(
+			_historicalLocalGitCommits.add(
 				GitCommitFactory.newLocalGitCommit(
 					gitWorkingDirectory, commitJSONObject.getString("message"),
 					commitJSONObject.getString("sha"),
 					commitJSONObject.getLong("commitTime")));
 		}
 
-		return _commitHistory;
+		return _historicalLocalGitCommits;
 	}
 
 	@Override
-	public List<LocalGitCommit> getCommitsInRange(
+	public List<LocalGitCommit> getRangeLocalGitCommits(
 		String earliestSHA, String latestSHA) {
 
-		List<LocalGitCommit> localGitCommitsInRange = new ArrayList<>();
+		List<LocalGitCommit> rangeLocalGitCommits = new ArrayList<>();
 
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
@@ -107,17 +107,17 @@ public abstract class BaseWorkspaceGitRepository
 				index, currentGroupSize, latestSHA);
 
 			for (LocalGitCommit localGitCommit : localGitCommits) {
-				localGitCommitsInRange.add(localGitCommit);
+				rangeLocalGitCommits.add(localGitCommit);
 
 				if (earliestSHA.equals(localGitCommit.getSHA())) {
-					return localGitCommitsInRange;
+					return rangeLocalGitCommits;
 				}
 			}
 
 			index += _COMMIT_HISTORY_GROUP_SIZE;
 		}
 
-		return localGitCommitsInRange;
+		return rangeLocalGitCommits;
 	}
 
 	@Override
@@ -248,7 +248,8 @@ public abstract class BaseWorkspaceGitRepository
 
 	@Override
 	public void storeCommitHistory(List<String> commitSHAs) {
-		_commitHistory = getCommitHistory();
+		List<LocalGitCommit> historicalLocalGitCommits =
+			getHistoricalLocalGitCommits();
 
 		List<String> requiredCommitSHAs = new ArrayList<>();
 
@@ -272,7 +273,7 @@ public abstract class BaseWorkspaceGitRepository
 				index, currentGroupSize);
 
 			for (LocalGitCommit localGitCommit : localGitCommits) {
-				_commitHistory.add(localGitCommit);
+				historicalLocalGitCommits.add(localGitCommit);
 
 				commitsJSONArray.put(localGitCommit.toJSONObject());
 
@@ -535,7 +536,7 @@ public abstract class BaseWorkspaceGitRepository
 
 	private static final String _SHA_REGEX = "[0-9a-f]{7,40}";
 
-	private List<LocalGitCommit> _commitHistory;
+	private List<LocalGitCommit> _historicalLocalGitCommits;
 	private final Map<String, Properties> _propertiesFilesMap = new HashMap<>();
 
 }

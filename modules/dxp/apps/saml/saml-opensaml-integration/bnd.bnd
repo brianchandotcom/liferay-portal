@@ -5,7 +5,10 @@ Export-Package: com.liferay.saml.opensaml.integration.resolver
 Import-Package:\
 	!bsh,\
 	\
+	!com.beust.jcommander.*,\
+	\
 	!com.google.common.*,\
+	!com.google.errorprone.*,\
 	\
 	!com.sun.*,\
 	\
@@ -13,9 +16,15 @@ Import-Package:\
 	\
 	!com.werken.*,\
 	\
+	!javax.annotation.*,\
+	\
 	!net.fortuna.*,\
 	\
 	!net.jcip.*,\
+	\
+	!net.shibboleth.utilities.java.support.annotation.*,\
+	\
+	!net.spy.memcached.*,\
 	\
 	!nu.xom,\
 	\
@@ -26,11 +35,16 @@ Import-Package:\
 	!org.apache.oro.*,\
 	!org.apache.poi.*,\
 	!org.apache.tools.ant.*,\
-	!org.apache.xml.resolver.*,\
+	\
+	!org.checkerframework.*,\
 	\
 	!org.joda.convert,\
 	\
+	!org.ldaptive.*,\
+	\
 	!org.owasp.validator.html,\
+	\
+	!org.relaxng.datatype.*,\
 	\
 	!sun.io,\
 	\

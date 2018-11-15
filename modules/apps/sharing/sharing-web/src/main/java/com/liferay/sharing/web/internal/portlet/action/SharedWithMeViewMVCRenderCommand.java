@@ -28,7 +28,9 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
 import com.liferay.sharing.filter.SharedWithMeFilterItem;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
@@ -44,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -140,15 +143,20 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 			_portal.getLiferayPortletRequest(renderRequest);
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(renderResponse);
+
 		HttpServletRequest request = _portal.getHttpServletRequest(
 			renderRequest);
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(
+				_portal.getLocale(request));
 
 		SharedWithMeViewDisplayContext sharedWithMeViewDisplayContext =
 			new SharedWithMeViewDisplayContext(
 				liferayPortletRequest, liferayPortletResponse, request,
-				_sharingEntryLocalService,
+				resourceBundle, _sharingEntryLocalService,
 				_sharingEntryInterpreterProvider::getSharingEntryInterpreter,
-				sharedWithMeFilterItems);
+				sharedWithMeFilterItems, _sharingMenuItemFactory);
 
 		renderRequest.setAttribute(
 			SharedWithMeViewDisplayContext.class.getName(),
@@ -180,6 +188,9 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 	@Reference
 	private Portal _portal;
 
+	@Reference(target = "(bundle.symbolic.name=com.liferay.sharing.web)")
+	private ResourceBundleLoader _resourceBundleLoader;
+
 	private ServiceTrackerList<SharedWithMeFilterItem, SharedWithMeFilterItem>
 		_serviceTrackerList;
 
@@ -188,5 +199,8 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;
+
+	@Reference
+	private SharingMenuItemFactory _sharingMenuItemFactory;
 
 }

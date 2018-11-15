@@ -23,42 +23,9 @@ SharingEntry sharingEntry = (SharingEntry)row.getObject();
 
 SharedWithMeViewDisplayContext sharedWithMeViewDisplayContext = (SharedWithMeViewDisplayContext)renderRequest.getAttribute(SharedWithMeViewDisplayContext.class.getName());
 
-PortletURL editPortletURL = sharedWithMeViewDisplayContext.getURLEdit(sharingEntry, liferayPortletRequest, liferayPortletResponse);
-
-editPortletURL.setWindowState(LiferayWindowState.POP_UP);
-
-editPortletURL.setParameter("hideDefaultSuccessMessage", Boolean.TRUE.toString());
-editPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
-
-PortletURL redirectURL = liferayPortletResponse.createLiferayPortletURL(plid, portletDisplay.getId(), PortletRequest.RENDER_PHASE, false);
-
-redirectURL.setParameter("mvcRenderCommandName", "/shared_with_me/close_sharing_entry_edit_dialog");
-
-redirectURL.setWindowState(LiferayWindowState.POP_UP);
-
-editPortletURL.setParameter("redirect", redirectURL.toString());
-
-Map<String, Object> data = new HashMap<String, Object>();
-
-data.put("destroyOnHide", true);
-data.put("id", HtmlUtil.escape(renderResponse.getNamespace()) + "editAsset");
-data.put("title", LanguageUtil.format(request, "edit-x", HtmlUtil.escape(sharedWithMeViewDisplayContext.getTitle(sharingEntry)), false));
+boolean hasEditPermission = sharedWithMeViewDisplayContext.hasEditPermission(sharingEntry.getClassNameId(), sharingEntry.getClassPK());
 %>
 
-<c:if test="<%= sharedWithMeViewDisplayContext.hasEditPermission(sharingEntry.getClassNameId(), sharingEntry.getClassPK()) %>">
-	<liferay-ui:icon-menu
-		direction="left-side"
-		icon="<%= StringPool.BLANK %>"
-		markupView="lexicon"
-		message="<%= StringPool.BLANK %>"
-		showWhenSingleIcon="<%= true %>"
-	>
-		<liferay-ui:icon
-			data="<%= data %>"
-			message='<%= LanguageUtil.format(request, "edit-x", HtmlUtil.escape(sharedWithMeViewDisplayContext.getTitle(sharingEntry)), false) %>'
-			method="get"
-			url="<%= editPortletURL.toString() %>"
-			useDialog="<%= true %>"
-		/>
-	</liferay-ui:icon-menu>
+<c:if test="<%= hasEditPermission || sharingEntry.isShareable() %>">
+	<liferay-ui:menu menu="<%= sharedWithMeViewDisplayContext.getSharingEntryMenu(sharingEntry) %>" />
 </c:if>

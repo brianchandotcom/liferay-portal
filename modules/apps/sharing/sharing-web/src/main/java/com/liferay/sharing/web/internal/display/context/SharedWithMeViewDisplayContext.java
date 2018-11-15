@@ -20,15 +20,23 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
+import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
 import com.liferay.sharing.filter.SharedWithMeFilterItem;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.model.SharingEntry;
@@ -37,13 +45,19 @@ import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.util.comparator.SharingEntryModifiedDateComparator;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.function.Function;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import javax.portlet.WindowStateException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -54,22 +68,110 @@ public class SharedWithMeViewDisplayContext {
 	public SharedWithMeViewDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest request,
+		HttpServletRequest request, ResourceBundle resourceBundle,
 		SharingEntryLocalService sharingEntryLocalService,
 		Function<SharingEntry, SharingEntryInterpreter>
 			sharingEntryInterpreterFunction,
-		List<SharedWithMeFilterItem> sharedWithMeFilterItems) {
+		List<SharedWithMeFilterItem> sharedWithMeFilterItems,
+		SharingMenuItemFactory sharingMenuItemFactory) {
 
+		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_request = request;
+		_resourceBundle = resourceBundle;
 		_sharingEntryLocalService = sharingEntryLocalService;
 		_sharingEntryInterpreterFunction = sharingEntryInterpreterFunction;
 		_sharedWithMeFilterItems = sharedWithMeFilterItems;
+		_sharingMenuItemFactory = sharingMenuItemFactory;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	private final LiferayPortletRequest _liferayPortletRequest;
+	private final ResourceBundle _resourceBundle;
+
+	public Menu getSharingEntryMenu(SharingEntry sharingEntry)
+		throws PortalException {
+
+		List<MenuItem> menuItems = new ArrayList<>(2);
+
+		if (hasEditPermission(sharingEntry.getClassNameId(), sharingEntry.getClassPK())) {
+			menuItems.add(_createEditMenuItem(sharingEntry));
+		}
+
+		if (sharingEntry.isShareable()) {
+			menuItems.add(
+				_sharingMenuItemFactory.createShareMenuItem(
+					sharingEntry.getClassName(), sharingEntry.getClassPK(),
+					_request, _resourceBundle));
+		}
+
+		Menu menu = new Menu();
+
+		menu.setMenuItems(menuItems);
+
+		return menu;
+	}
+
+	private final SharingMenuItemFactory _sharingMenuItemFactory;
+
+	private MenuItem _createEditMenuItem(SharingEntry sharingEntry)
+		throws PortalException {
+
+		try {
+			URLMenuItem urlMenuItem = new URLMenuItem();
+
+			Map<String, Object> data = new HashMap<>(3);
+
+			data.put("destroyOnHide", true);
+			data.put(
+				"id",
+				HtmlUtil.escape(
+					_liferayPortletResponse.getNamespace()) + "editAsset");
+			data.put(
+				"title",
+				LanguageUtil.format(
+					_request, "edit-x", HtmlUtil.escape(getTitle(sharingEntry)),
+					false));
+
+			urlMenuItem.setData(data);
+
+			urlMenuItem.setLabel(
+				LanguageUtil.format(
+					_request, "edit-x", HtmlUtil.escape(getTitle(sharingEntry)),
+					false));
+			urlMenuItem.setMethod("get");
+
+			PortletURL editPortletURL = getURLEdit(
+				sharingEntry, _liferayPortletRequest, _liferayPortletResponse);
+
+			editPortletURL.setWindowState(LiferayWindowState.POP_UP);
+
+			editPortletURL.setParameter(
+				"hideDefaultSuccessMessage", Boolean.TRUE.toString());
+			editPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
+
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			PortletURL redirectURL =
+				_liferayPortletResponse.createLiferayPortletURL(
+					_themeDisplay.getPlid(),
+					portletDisplay.getId(), PortletRequest.RENDER_PHASE, false);
+
+			editPortletURL.setParameter("redirect", redirectURL.toString());
+
+			urlMenuItem.setURL(editPortletURL.toString());
+
+			urlMenuItem.setUseDialog(true);
+
+			return urlMenuItem;
+		}
+		catch (WindowStateException wse) {
+			throw new SystemException(wse);
+		}
 	}
 
 	public String getAssetTypeTitle(SharingEntry sharingEntry)

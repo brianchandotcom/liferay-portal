@@ -75,7 +75,7 @@ public class LiferayDynamicCapability
 					Capability capability = bundleContext.getService(
 						serviceReference);
 
-					synchronized (this) {
+					synchronized (LiferayDynamicCapability.this) {
 						if (capability instanceof RepositoryEventAware) {
 							_registerRepositoryEventListeners(
 								(RepositoryEventAware & Capability)capability);
@@ -96,15 +96,17 @@ public class LiferayDynamicCapability
 				}
 
 				@Override
-				public synchronized void removedService(
+				public void removedService(
 					ServiceReference<Capability> serviceReference,
 					Capability capability) {
 
-					_unregisterRepositoryEventListeners(capability);
+					synchronized (LiferayDynamicCapability.this) {
+						_unregisterRepositoryEventListeners(capability);
 
-					_capabilities.remove(capability);
+						_capabilities.remove(capability);
 
-					_updateRepositoryWrappers();
+						_updateRepositoryWrappers();
+					}
 				}
 
 			});
@@ -125,7 +127,7 @@ public class LiferayDynamicCapability
 	}
 
 	@Override
-	public LocalRepository wrapLocalRepository(
+	public synchronized LocalRepository wrapLocalRepository(
 		LocalRepository localRepository) {
 
 		_originalLocalRepository = localRepository;
@@ -138,7 +140,7 @@ public class LiferayDynamicCapability
 	}
 
 	@Override
-	public Repository wrapRepository(Repository repository) {
+	public synchronized Repository wrapRepository(Repository repository) {
 		_originalRepository = repository;
 
 		_liferayDynamicCapabilityRepositoryWrapper =
@@ -228,15 +230,15 @@ public class LiferayDynamicCapability
 		return wrappedRepository;
 	}
 
-	private Set<Capability> _capabilities = new HashSet<>();
+	private final Set<Capability> _capabilities = new HashSet<>();
 	private final Map<Capability, CapabilityRegistration>
 		_capabilityRegistrations = new ConcurrentHashMap<>();
-	private volatile LiferayDynamicCapabilityLocalRepositoryWrapper
+	private LiferayDynamicCapabilityLocalRepositoryWrapper
 		_liferayDynamicCapabilityLocalRepositoryWrapper;
-	private volatile LiferayDynamicCapabilityRepositoryWrapper
+	private LiferayDynamicCapabilityRepositoryWrapper
 		_liferayDynamicCapabilityRepositoryWrapper;
-	private volatile LocalRepository _originalLocalRepository;
-	private volatile Repository _originalRepository;
+	private LocalRepository _originalLocalRepository;
+	private Repository _originalRepository;
 	private volatile RepositoryEventRegistry _repositoryEventRegistry;
 	private final ServiceTracker<Capability, Capability> _serviceTracker;
 

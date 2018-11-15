@@ -114,7 +114,7 @@
 			</parameters>
 			<configuration>
 				<tokenFile default-value="${user.home}/.liferay/token" implementation="java.io.File" />
-				<tokenUrl default-value="https://releases-cdn.liferay.com/portal/7.1.0-ga1/liferay-ce-portal-tomcat-7.1.0-ga1-20180703012531655.zip" implementation="java.net.URL" />
+				<tokenUrl default-value="https://releases-cdn.liferay.com/portal/7.1.1-ga2/liferay-ce-portal-tomcat-7.1.1-ga2-20181112144637000.tar.gz" implementation="java.net.URL" />
 			</configuration>
 		</mojo>
 		<mojo>

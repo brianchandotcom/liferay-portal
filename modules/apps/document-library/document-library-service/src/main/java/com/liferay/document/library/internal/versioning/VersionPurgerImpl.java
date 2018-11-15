@@ -49,7 +49,7 @@ public class VersionPurgerImpl implements VersionPurger {
 
 	@Override
 	public Collection<FileVersion> getToPurgeFileVersions(FileEntry fileEntry) {
-		long maximumNumberOfVersions =
+		int maximumNumberOfVersions =
 			_dlConfiguration.maximumNumberOfVersions();
 
 		if (maximumNumberOfVersions == 0) {
@@ -58,13 +58,13 @@ public class VersionPurgerImpl implements VersionPurger {
 
 		int status = WorkflowConstants.STATUS_ANY;
 
-		long numberOfVersions = fileEntry.getFileVersionsCount(status);
+		int numberOfVersions = fileEntry.getFileVersionsCount(status);
 
 		if (numberOfVersions > maximumNumberOfVersions) {
 			List<FileVersion> fileVersions = fileEntry.getFileVersions(status);
 
 			int numberOfVersionsToPurge =
-				(int)(numberOfVersions - maximumNumberOfVersions);
+				numberOfVersions - maximumNumberOfVersions;
 
 			return fileVersions.subList(
 				fileVersions.size() - numberOfVersionsToPurge,

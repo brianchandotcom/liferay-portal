@@ -135,6 +135,9 @@ public class FragmentEntryRenderUtil {
 		FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry =
 			getService();
 
+		String css = fragmentEntryProcessorRegistry.processFragmentEntryLinkCSS(
+			fragmentEntryLink, mode, locale);
+
 		String html =
 			fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink, mode, locale);
@@ -143,9 +146,13 @@ public class FragmentEntryRenderUtil {
 			html = _processTemplate(html, parameterMap, request, response);
 		}
 
+		if (Validator.isNotNull(css)) {
+			css = _processTemplate(css, parameterMap, request, response);
+		}
+
 		return renderFragmentEntry(
 			fragmentEntryLink.getFragmentEntryId(),
-			fragmentEntryLink.getPosition(), fragmentEntryLink.getCss(), html,
+			fragmentEntryLink.getPosition(), css, html,
 			fragmentEntryLink.getJs());
 	}
 

@@ -94,6 +94,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAV_BAR_GENERAL</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'${key_navItem}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAV_ITEM_LINK</td>
 	<td>//div[contains(@class,'navbar')]//a[normalize-space()='${key_navItem}']</td>
 	<td></td>

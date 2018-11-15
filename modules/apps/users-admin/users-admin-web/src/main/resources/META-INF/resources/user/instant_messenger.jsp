@@ -39,6 +39,10 @@ Contact selContact = (Contact)request.getAttribute("user.selContact");
 		</aui:fieldset>
 	</c:when>
 	<c:otherwise>
-		<div class="alert alert-info"><liferay-ui:message key="this-section-will-be-editable-after-creating-the-user" /></div>
+		<clay:alert
+			message='<%= LanguageUtil.get(request, "this-section-will-be-editable-after-creating-the-user") %>'
+			style="info"
+			title='<%= LanguageUtil.get(request, "info") + ":" %>'
+		/>
 	</c:otherwise>
 </c:choose>

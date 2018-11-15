@@ -137,8 +137,10 @@ if (filterManageableOrganizations) {
 		</aui:form>
 	</c:when>
 	<c:otherwise>
-		<div class="alert alert-info">
-			<liferay-ui:message key="you-do-not-belong-to-an-organization-and-are-not-allowed-to-view-other-organizations" />
-		</div>
+		<clay:alert
+			message='<%= LanguageUtil.get(request, "you-do-not-belong-to-an-organization-and-are-not-allowed-to-view-other-organizations") %>'
+			style="info"
+			title='<%= LanguageUtil.get(request, "info") + ":" %>'
+		/>
 	</c:otherwise>
 </c:choose>

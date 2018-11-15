@@ -87,7 +87,11 @@ String organizationIdsString = ParamUtil.getString(request, "organizationsSearch
 
 		<c:if test="<%= lockedOut %>">
 			<aui:button-row>
-				<div class="alert alert-warning"><liferay-ui:message key="this-user-account-has-been-locked-due-to-excessive-failed-login-attempts" /></div>
+				<clay:alert
+					message='<%= LanguageUtil.get(request, "this-user-account-has-been-locked-due-to-excessive-failed-login-attempts") %>'
+					style="warning"
+					title='<%= LanguageUtil.get(request, "warning") + ":" %>'
+				/>
 
 				<%
 				String taglibOnClick = renderResponse.getNamespace() + "saveUser('unlock');";

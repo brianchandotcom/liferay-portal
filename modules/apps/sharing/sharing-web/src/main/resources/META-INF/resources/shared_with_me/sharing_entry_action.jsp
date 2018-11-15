@@ -27,5 +27,7 @@ boolean hasEditPermission = sharedWithMeViewDisplayContext.hasEditPermission(sha
 %>
 
 <c:if test="<%= hasEditPermission || sharingEntry.isShareable() %>">
-	<liferay-ui:menu menu="<%= sharedWithMeViewDisplayContext.getSharingEntryMenu(sharingEntry) %>" />
+	<liferay-ui:menu
+		menu="<%= sharedWithMeViewDisplayContext.getSharingEntryMenu(sharingEntry) %>"
+	/>
 </c:if>

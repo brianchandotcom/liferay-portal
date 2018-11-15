@@ -56,8 +56,8 @@ import java.util.function.Function;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-
 import javax.portlet.WindowStateException;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -88,90 +88,6 @@ public class SharedWithMeViewDisplayContext {
 			liferayPortletRequest, liferayPortletResponse);
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
-	}
-
-	private final LiferayPortletRequest _liferayPortletRequest;
-	private final ResourceBundle _resourceBundle;
-
-	public Menu getSharingEntryMenu(SharingEntry sharingEntry)
-		throws PortalException {
-
-		List<MenuItem> menuItems = new ArrayList<>(2);
-
-		if (hasEditPermission(sharingEntry.getClassNameId(), sharingEntry.getClassPK())) {
-			menuItems.add(_createEditMenuItem(sharingEntry));
-		}
-
-		if (sharingEntry.isShareable()) {
-			menuItems.add(
-				_sharingMenuItemFactory.createShareMenuItem(
-					sharingEntry.getClassName(), sharingEntry.getClassPK(),
-					_request, _resourceBundle));
-		}
-
-		Menu menu = new Menu();
-
-		menu.setMenuItems(menuItems);
-
-		return menu;
-	}
-
-	private final SharingMenuItemFactory _sharingMenuItemFactory;
-
-	private MenuItem _createEditMenuItem(SharingEntry sharingEntry)
-		throws PortalException {
-
-		try {
-			URLMenuItem urlMenuItem = new URLMenuItem();
-
-			Map<String, Object> data = new HashMap<>(3);
-
-			data.put("destroyOnHide", true);
-			data.put(
-				"id",
-				HtmlUtil.escape(
-					_liferayPortletResponse.getNamespace()) + "editAsset");
-			data.put(
-				"title",
-				LanguageUtil.format(
-					_request, "edit-x", HtmlUtil.escape(getTitle(sharingEntry)),
-					false));
-
-			urlMenuItem.setData(data);
-
-			urlMenuItem.setLabel(
-				LanguageUtil.format(
-					_request, "edit-x", HtmlUtil.escape(getTitle(sharingEntry)),
-					false));
-			urlMenuItem.setMethod("get");
-
-			PortletURL editPortletURL = _getURLEdit(
-				sharingEntry, _liferayPortletRequest, _liferayPortletResponse);
-
-			editPortletURL.setWindowState(LiferayWindowState.POP_UP);
-
-			editPortletURL.setParameter(
-				"hideDefaultSuccessMessage", Boolean.TRUE.toString());
-			editPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
-
-			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
-			PortletURL redirectURL =
-				_liferayPortletResponse.createLiferayPortletURL(
-					_themeDisplay.getPlid(),
-					portletDisplay.getId(), PortletRequest.RENDER_PHASE, false);
-
-			editPortletURL.setParameter("redirect", redirectURL.toString());
-
-			urlMenuItem.setURL(editPortletURL.toString());
-
-			urlMenuItem.setUseDialog(true);
-
-			return urlMenuItem;
-		}
-		catch (WindowStateException wse) {
-			throw new SystemException(wse);
-		}
 	}
 
 	public String getAssetTypeTitle(SharingEntry sharingEntry)
@@ -219,6 +135,31 @@ public class SharedWithMeViewDisplayContext {
 		return _sharedWithMeFilterItems;
 	}
 
+	public Menu getSharingEntryMenu(SharingEntry sharingEntry)
+		throws PortalException {
+
+		List<MenuItem> menuItems = new ArrayList<>(2);
+
+		if (hasEditPermission(
+				sharingEntry.getClassNameId(), sharingEntry.getClassPK())) {
+
+			menuItems.add(_createEditMenuItem(sharingEntry));
+		}
+
+		if (sharingEntry.isShareable()) {
+			menuItems.add(
+				_sharingMenuItemFactory.createShareMenuItem(
+					sharingEntry.getClassName(), sharingEntry.getClassPK(),
+					_request, _resourceBundle));
+		}
+
+		Menu menu = new Menu();
+
+		menu.setMenuItems(menuItems);
+
+		return menu;
+	}
+
 	public String getSortingOrder() {
 		return ParamUtil.getString(_request, "orderByType", "asc");
 	}
@@ -243,26 +184,6 @@ public class SharedWithMeViewDisplayContext {
 		}
 
 		return sharingEntryInterpreter.getTitle(sharingEntry);
-	}
-
-	private PortletURL _getURLEdit(
-			SharingEntry sharingEntry,
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws PortalException {
-
-		SharingEntryInterpreter sharingEntryInterpreter =
-			_sharingEntryInterpreterFunction.apply(sharingEntry);
-
-		if (sharingEntryInterpreter == null) {
-			return null;
-		}
-
-		SharingEntryEditRenderer sharingEntryEditRenderer =
-			sharingEntryInterpreter.getSharingEntryEditRenderer();
-
-		return sharingEntryEditRenderer.getURLEdit(
-			sharingEntry, liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public boolean hasEditPermission(long classNameId, long classPK) {
@@ -304,6 +225,62 @@ public class SharedWithMeViewDisplayContext {
 					Objects.equals(getSortingOrder(), "asc")));
 
 		searchContainer.setResults(sharingEntries);
+	}
+
+	private MenuItem _createEditMenuItem(SharingEntry sharingEntry)
+		throws PortalException {
+
+		try {
+			URLMenuItem urlMenuItem = new URLMenuItem();
+
+			Map<String, Object> data = new HashMap<>(3);
+
+			data.put("destroyOnHide", true);
+			data.put(
+				"id",
+				HtmlUtil.escape(_liferayPortletResponse.getNamespace()) +
+					"editAsset");
+			data.put(
+				"title",
+				LanguageUtil.format(
+					_request, "edit-x", HtmlUtil.escape(getTitle(sharingEntry)),
+					false));
+
+			urlMenuItem.setData(data);
+
+			urlMenuItem.setLabel(
+				LanguageUtil.format(
+					_request, "edit-x", HtmlUtil.escape(getTitle(sharingEntry)),
+					false));
+			urlMenuItem.setMethod("get");
+
+			PortletURL editPortletURL = _getURLEdit(
+				sharingEntry, _liferayPortletRequest, _liferayPortletResponse);
+
+			editPortletURL.setWindowState(LiferayWindowState.POP_UP);
+
+			editPortletURL.setParameter(
+				"hideDefaultSuccessMessage", Boolean.TRUE.toString());
+			editPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
+
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			PortletURL redirectURL =
+				_liferayPortletResponse.createLiferayPortletURL(
+					_themeDisplay.getPlid(), portletDisplay.getId(),
+					PortletRequest.RENDER_PHASE, false);
+
+			editPortletURL.setParameter("redirect", redirectURL.toString());
+
+			urlMenuItem.setURL(editPortletURL.toString());
+
+			urlMenuItem.setUseDialog(true);
+
+			return urlMenuItem;
+		}
+		catch (WindowStateException wse) {
+			throw new SystemException(wse);
+		}
 	}
 
 	private PortletURL _getCurrentSortingURL() throws PortletException {
@@ -395,13 +372,36 @@ public class SharedWithMeViewDisplayContext {
 		};
 	}
 
+	private PortletURL _getURLEdit(
+			SharingEntry sharingEntry,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws PortalException {
+
+		SharingEntryInterpreter sharingEntryInterpreter =
+			_sharingEntryInterpreterFunction.apply(sharingEntry);
+
+		if (sharingEntryInterpreter == null) {
+			return null;
+		}
+
+		SharingEntryEditRenderer sharingEntryEditRenderer =
+			sharingEntryInterpreter.getSharingEntryEditRenderer();
+
+		return sharingEntryEditRenderer.getURLEdit(
+			sharingEntry, liferayPortletRequest, liferayPortletResponse);
+	}
+
 	private final PortletURL _currentURLObj;
+	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final HttpServletRequest _request;
+	private final ResourceBundle _resourceBundle;
 	private final List<SharedWithMeFilterItem> _sharedWithMeFilterItems;
 	private final Function<SharingEntry, SharingEntryInterpreter>
 		_sharingEntryInterpreterFunction;
 	private final SharingEntryLocalService _sharingEntryLocalService;
+	private final SharingMenuItemFactory _sharingMenuItemFactory;
 	private final ThemeDisplay _themeDisplay;
 
 }

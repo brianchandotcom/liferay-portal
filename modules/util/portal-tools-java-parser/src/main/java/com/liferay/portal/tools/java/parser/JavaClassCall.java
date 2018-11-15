@@ -35,13 +35,24 @@ public class JavaClassCall extends JavaExpression {
 		StringBundler sb = new StringBundler();
 
 		sb.append(indent);
-		sb.append(prefix);
 
 		if (_genericJavaTypes == null) {
-			append(sb, _className, indent, "", "(", maxLineLength);
+			if (_parameterValueJavaExpressions.isEmpty()) {
+				append(
+					sb, _className, indent, prefix, "()" + suffix,
+					maxLineLength, !forceLineBreak);
+
+				return sb.toString();
+			}
+
+			append(
+				sb, _className, indent, prefix, "(", maxLineLength,
+				!forceLineBreak);
 		}
 		else {
-			append(sb, _className, indent, maxLineLength);
+			append(
+				sb, _className, indent, prefix, "", maxLineLength,
+				!forceLineBreak);
 			append(sb, _genericJavaTypes, indent, "<", ">(", maxLineLength);
 		}
 

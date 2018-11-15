@@ -772,8 +772,6 @@ syncGitRepoReleases {
 	description = "Runs 'gradlew baseline -PsyncRelease' on every read-only Git subrepository."
 
 	doLast {
-		NestedBuildFactory nestedBuildFactory = gradle.services.get(NestedBuildFactory)
-
 		FileTree gitRepoFileTree = fileTree(dir: projectDir, include: "**/.gitrepo")
 
 		gitRepoFileTree.each {
@@ -796,7 +794,6 @@ syncGitRepoReleases {
 			File settingsGradleFile = new File(moduleDir, "settings.gradle")
 			File settingsGradleBackupFile = new File(moduleDir, "settings.gradle.backup")
 
-			GradleLauncher gradleLauncher
 			String syncRelease
 
 			try {
@@ -810,15 +807,9 @@ syncGitRepoReleases {
 				startParameter.projectProperties = ["syncRelease": "true"]
 				startParameter.taskNames = ["baseline"]
 
-				gradleLauncher = nestedBuildFactory.nestedInstance(startParameter)
-
-				gradleLauncher.run()
+				_executeGradle(startParameter)
 			}
 			finally {
-				if (gradleLauncher) {
-					gradleLauncher.stop()
-				}
-
 				assert settingsGradleBackupFile.renameTo(settingsGradleFile)
 
 				_setSystemProperty "org.gradle.project.syncRelease", syncRelease
@@ -1080,16 +1071,7 @@ private void _cherryPickPrepNext(Commit commit) {
 			startParameter.projectProperties = ["forced.update.version": newVersion]
 			startParameter.taskNames = [moduleTaskPrefix + "updateVersion"]
 
-			NestedBuildFactory nestedBuildFactory = gradle.services.get(NestedBuildFactory)
-
-			GradleLauncher gradleLauncher = nestedBuildFactory.nestedInstance(startParameter)
-
-			try {
-				gradleLauncher.run()
-			}
-			finally {
-				gradleLauncher.stop()
-			}
+			_executeGradle(startParameter)
 
 			grgit.add patterns: [moduleDirName]
 
@@ -1108,16 +1090,10 @@ private void _cherryPickPrepNext(Commit commit) {
 		startParameter.projectProperties = ["syncRelease": "true"]
 		startParameter.taskNames = [moduleTaskPrefix + "baseline"]
 
-		NestedBuildFactory nestedBuildFactory = gradle.services.get(NestedBuildFactory)
-
-		GradleLauncher gradleLauncher = nestedBuildFactory.nestedInstance(startParameter)
-
 		try {
-			gradleLauncher.run()
+			_executeGradle(startParameter)
 		}
 		finally {
-			gradleLauncher.stop()
-
 			_setSystemProperty "baseline.ignoreFailures", baselineIgnoreFailures
 			_setSystemProperty "org.gradle.project.syncRelease", syncRelease
 		}
@@ -1159,6 +1135,19 @@ private boolean _executeGradle(File moduleDir, List<String> taskNames, Map<Strin
 		moduleTaskPrefix + it
 	}
 
+	try {
+		return _executeGradle(startParameter)
+	}
+	finally {
+		oldSystemProperties.each {
+			String key, String value ->
+
+			_setSystemProperty(key, value)
+		}
+	}
+}
+
+private boolean _executeGradle(StartParameter startParameter) {
 	NestedBuildFactory nestedBuildFactory = gradle.services.get(NestedBuildFactory)
 
 	GradleLauncher gradleLauncher = nestedBuildFactory.nestedInstance(startParameter)
@@ -1179,12 +1168,6 @@ private boolean _executeGradle(File moduleDir, List<String> taskNames, Map<Strin
 	}
 	finally {
 		gradleLauncher.stop()
-
-		oldSystemProperties.each {
-			String key, String value ->
-
-			_setSystemProperty(key, value)
-		}
 	}
 }
 

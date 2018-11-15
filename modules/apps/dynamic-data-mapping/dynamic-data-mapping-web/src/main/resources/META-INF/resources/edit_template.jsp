@@ -153,7 +153,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:header
-							backURL="<%= PortalUtil.escapeRedirect(ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource)) %>"
+							backURL="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource) %>"
 							localizeTitle="<%= false %>"
 							showBackURL="<%= showBackURL %>"
 							title="<%= title %>"

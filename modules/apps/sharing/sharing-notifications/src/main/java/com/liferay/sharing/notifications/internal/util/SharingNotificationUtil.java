@@ -101,6 +101,10 @@ public class SharingNotificationUtil {
 					sharingEntry, toUser, portletRequest),
 				_getActionName(sharingEntry, resourceBundle)));
 
+		template.put(
+			"actionTitle",
+			_getEmailActionTitle(sharingEntry, toUser.getLocale()));
+
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		template.processTemplate(unsyncStringWriter);
@@ -162,6 +166,33 @@ public class SharingNotificationUtil {
 		return ResourceBundleUtil.getString(resourceBundle, "nothing");
 	}
 
+	private String _getEmailActionTitle(
+			SharingEntry sharingEntry, Locale locale)
+		throws PortalException {
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale);
+
+		SharingEntryInterpreter sharingEntryInterpreter =
+			_getSharingEntryInterpreter(sharingEntry);
+
+		if (sharingEntryInterpreter != null) {
+			return ResourceBundleUtil.getString(
+				resourceBundle, "view-x",
+				sharingEntryInterpreter.getAssetTypeTitle(
+					sharingEntry, locale));
+		}
+
+		return ResourceBundleUtil.getString(resourceBundle, "view");
+	}
+
+	private SharingEntryInterpreter _getSharingEntryInterpreter(
+		SharingEntry sharingEntry) {
+
+		return _sharingEntryInterpreterProvider.getSharingEntryInterpreter(
+			sharingEntry);
+	}
+
 	private String _getSharingEntryObjectLink(
 			SharingEntry sharingEntry, User toUser,
 			PortletRequest portletRequest)
@@ -179,8 +210,7 @@ public class SharingNotificationUtil {
 		SharingEntry sharingEntry, Locale locale) {
 
 		SharingEntryInterpreter sharingEntryInterpreter =
-			_sharingEntryInterpreterProvider.getSharingEntryInterpreter(
-				sharingEntry);
+			_getSharingEntryInterpreter(sharingEntry);
 
 		if (sharingEntryInterpreter != null) {
 			return sharingEntryInterpreter.getTitle(sharingEntry);

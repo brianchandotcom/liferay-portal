@@ -90,7 +90,7 @@ public class LiferayDynamicCapability
 				}
 
 				@Override
-				public synchronized void modifiedService(
+				public void modifiedService(
 					ServiceReference<Capability> serviceReference,
 					Capability capability) {
 

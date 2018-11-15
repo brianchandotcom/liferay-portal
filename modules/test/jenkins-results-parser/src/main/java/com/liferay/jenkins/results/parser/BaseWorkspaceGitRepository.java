@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -188,18 +187,26 @@ public abstract class BaseWorkspaceGitRepository
 	public List<List<LocalGitCommit>> partitionLocalGitCommits(
 		List<LocalGitCommit> localGitCommits, int count) {
 
-		LinkedList<LocalGitCommit> linkedList = new LinkedList<>(
-			localGitCommits);
+		List<List<LocalGitCommit>> partitionedLocalGitCommits =
+			new ArrayList<>();
+
+		if ((localGitCommits == null) || localGitCommits.isEmpty()) {
+			return partitionedLocalGitCommits;
+		}
 
 		List<LocalGitCommit> lastLocalGitCommitList = Lists.newArrayList(
-			linkedList.removeLast());
+			localGitCommits.get(localGitCommits.size() - 1));
 
-		List<List<LocalGitCommit>> localGitCommitsLists =
-			JenkinsResultsParserUtil.partitionByCount(linkedList, count);
+		if (localGitCommits.size() > 1) {
+			partitionedLocalGitCommits.addAll(
+				JenkinsResultsParserUtil.partitionByCount(
+					localGitCommits.subList(0, localGitCommits.size() - 2),
+					count));
+		}
 
-		localGitCommitsLists.add(lastLocalGitCommitList);
+		partitionedLocalGitCommits.add(lastLocalGitCommitList);
 
-		return localGitCommitsLists;
+		return partitionedLocalGitCommits;
 	}
 
 	@Override

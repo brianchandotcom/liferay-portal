@@ -16,7 +16,6 @@ package com.liferay.document.library.internal.repository.capabilities;
 
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
@@ -33,7 +32,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -51,42 +49,30 @@ public class LiferayDynamicCapability
 		BundleContext bundleContext, String repositoryClassName) {
 
 		_serviceTracker = ServiceTrackerListFactory.open(
-			bundleContext, Capability.class, null,
+			bundleContext, Capability.class,
+			"(|(repository.class.name=" + repositoryClassName +
+				")(repository.class.name=ALL))",
 			new ServiceTrackerCustomizer<Capability, Capability>() {
 
 				@Override
 				public Capability addingService(
 					ServiceReference<Capability> serviceReference) {
 
-					String capabilityRepositoryClassName =
-						(String)serviceReference.getProperty(
-							"repository.class.name");
+					Capability capability = bundleContext.getService(
+						serviceReference);
 
-					if (Objects.equals(
-							StringPool.STAR, capabilityRepositoryClassName) ||
-						Objects.equals(
-							repositoryClassName,
-							capabilityRepositoryClassName)) {
-
-						Capability capability = bundleContext.getService(
-							serviceReference);
-
-						synchronized (this) {
-							if (capability instanceof RepositoryEventAware) {
-								_registerRepositoryEventListeners(
-									(RepositoryEventAware & Capability)
-										capability);
-							}
-
-							_capabilities.add(capability);
-
-							_updateRepositoryWrappers();
+					synchronized (this) {
+						if (capability instanceof RepositoryEventAware) {
+							_registerRepositoryEventListeners(
+								(RepositoryEventAware & Capability)capability);
 						}
 
-						return capability;
+						_capabilities.add(capability);
+
+						_updateRepositoryWrappers();
 					}
 
-					return null;
+					return capability;
 				}
 
 				@Override

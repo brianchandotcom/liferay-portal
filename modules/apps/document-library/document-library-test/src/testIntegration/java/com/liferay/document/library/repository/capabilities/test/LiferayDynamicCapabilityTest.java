@@ -89,13 +89,13 @@ public class LiferayDynamicCapabilityTest {
 		ServiceRegistration<Capability> capabilityServiceRegistration =
 			registry.registerService(
 				Capability.class, testRepositoryEventAwareCapability,
-				_getCapabilityProperties("*"));
+				_getCapabilityProperties("ALL"));
 
 		capabilityServiceRegistration.unregister();
 
 		capabilityServiceRegistration = registry.registerService(
 			Capability.class, testRepositoryEventAwareCapability,
-			_getCapabilityProperties("*"));
+			_getCapabilityProperties("ALL"));
 
 		try {
 			_addRandomFileEntry(
@@ -123,7 +123,7 @@ public class LiferayDynamicCapabilityTest {
 					repositoryEventRegistry.registerRepositoryEventListener(
 						RepositoryEventType.Add.class, FileEntry.class,
 						fileEntry -> atomicInteger.incrementAndGet()),
-				_getCapabilityProperties("*"));
+				_getCapabilityProperties("ALL"));
 
 		try {
 			_addRandomFileEntry(
@@ -176,7 +176,7 @@ public class LiferayDynamicCapabilityTest {
 					}
 
 				},
-				_getCapabilityProperties("*"));
+				_getCapabilityProperties("ALL"));
 
 		try {
 			FileEntry fileEntry2 = _addRandomFileEntry(serviceContext);
@@ -288,7 +288,7 @@ public class LiferayDynamicCapabilityTest {
 					repositoryEventRegistry.registerRepositoryEventListener(
 						RepositoryEventType.Add.class, FileEntry.class,
 						fileEntry -> atomicInteger.incrementAndGet()),
-				_getCapabilityProperties("*"));
+				_getCapabilityProperties("ALL"));
 
 		capabilityServiceRegistration.unregister();
 

@@ -201,7 +201,7 @@ public abstract class BaseWorkspaceGitRepository
 			partitionedLocalGitCommits.addAll(
 				JenkinsResultsParserUtil.partitionByCount(
 					localGitCommits.subList(0, localGitCommits.size() - 2),
-					count));
+					count - 1));
 		}
 
 		partitionedLocalGitCommits.add(lastLocalGitCommitList);

@@ -1183,6 +1183,12 @@
 		<execute function="AssertClick" locator1="BreadcrumbPortlet#BREADCRUMB_PAGE" value1="Home" />
 	</command>
 
+	<command name="openDocumentsAndMediaAdmin">
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet" />
+		</execute>
+	</command>
+
 	<command name="revertPG">
 		<execute macro="DMNavigator#gotoDocumentVersion" />
 

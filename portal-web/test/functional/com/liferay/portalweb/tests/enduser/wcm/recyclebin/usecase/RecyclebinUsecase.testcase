@@ -903,6 +903,10 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Templates" />
+		</execute>
+
 		<execute macro="WebContentTemplates#viewCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />

@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.sharing.api
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.sharing.constants,\
+	com.liferay.sharing.display.context.util,\
 	com.liferay.sharing.exception,\
 	com.liferay.sharing.filter,\
 	com.liferay.sharing.interpreter,\

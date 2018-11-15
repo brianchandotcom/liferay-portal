@@ -14,12 +14,19 @@
 
 package com.liferay.portal.odata.internal.filter;
 
+import com.liferay.portal.odata.entity.DateEntityField;
+import com.liferay.portal.odata.entity.DoubleEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
+import com.liferay.portal.odata.filter.expression.LiteralExpression;
+import com.liferay.portal.odata.filter.expression.MemberExpression;
+import com.liferay.portal.odata.filter.expression.MethodExpression;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -47,6 +54,56 @@ public class FilterParserImplTest {
 		);
 
 		exception.hasMessage("Unknown property.");
+	}
+
+	@Test
+	public void testParseWithContainsMethod() throws ExpressionVisitException {
+		Expression expression = _filterParserImpl.parse(
+			"contains(fieldExternal, 'value')");
+
+		Assert.assertNotNull(expression);
+
+		MethodExpression methodExpression = (MethodExpression)expression;
+
+		Assert.assertEquals(
+			MethodExpression.Type.CONTAINS, methodExpression.getType());
+
+		List<Expression> expressions = methodExpression.getExpressions();
+
+		MemberExpression memberExpression1 = (MemberExpression)expressions.get(
+			0);
+
+		List<String> resourcePath = memberExpression1.getResourcePath();
+
+		Assert.assertEquals("fieldExternal", resourcePath.get(0));
+
+		LiteralExpression literalExpression =
+			(LiteralExpression)expressions.get(1);
+
+		Assert.assertEquals("'value'", literalExpression.getText());
+	}
+
+	@Test
+	public void testParseWithContainsMethodAndDateType() {
+		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
+			() -> _filterParserImpl.parse(
+				"contains(dateExternal, 2012-05-29T09:13:28Z)")
+		).isInstanceOf(
+			ExpressionVisitException.class
+		);
+
+		exception.hasMessage("Incompatible types.");
+	}
+
+	@Test
+	public void testParseWithContainsMethodAndDoubleType() {
+		AbstractThrowableAssert exception = Assertions.assertThatThrownBy(
+			() -> _filterParserImpl.parse("contains(doubleExternal, 7)")
+		).isInstanceOf(
+			ExpressionVisitException.class
+		);
+
+		exception.hasMessage("Incompatible types.");
 	}
 
 	@Test
@@ -207,12 +264,13 @@ public class FilterParserImplTest {
 				@Override
 				public Map<String, EntityField> getEntityFieldsMap() {
 					return Stream.of(
-						new EntityField(
-							"fieldExternal", EntityField.Type.STRING,
-							locale -> "fieldInternal"),
-						new EntityField(
-							"dateExternal", EntityField.Type.DATE,
-							locale -> "dateInternal")
+						new DateEntityField(
+							"dateExternal", locale -> "dateInternal",
+							locale -> "dateInternal"),
+						new DoubleEntityField(
+							"doubleExternal", locale -> "doubleInternal"),
+						new StringEntityField(
+							"fieldExternal", locale -> "fieldInternal")
 					).collect(
 						Collectors.toMap(
 							EntityField::getName, Function.identity())

@@ -245,7 +245,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 			append(
 				sb, javaTerm, StringUtil.replaceFirst(indent, "\t", ""), prefix,
-				delimeter, maxLineLength);
+				StringUtil.trimTrailing(delimeter), maxLineLength);
 
 			sb = _stripTrailingWhitespace(sb);
 

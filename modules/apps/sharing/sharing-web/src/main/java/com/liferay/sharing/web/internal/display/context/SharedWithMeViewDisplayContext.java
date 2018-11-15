@@ -145,7 +145,7 @@ public class SharedWithMeViewDisplayContext {
 					false));
 			urlMenuItem.setMethod("get");
 
-			PortletURL editPortletURL = getURLEdit(
+			PortletURL editPortletURL = _getURLEdit(
 				sharingEntry, _liferayPortletRequest, _liferayPortletResponse);
 
 			editPortletURL.setWindowState(LiferayWindowState.POP_UP);
@@ -245,7 +245,7 @@ public class SharedWithMeViewDisplayContext {
 		return sharingEntryInterpreter.getTitle(sharingEntry);
 	}
 
-	public PortletURL getURLEdit(
+	private PortletURL _getURLEdit(
 			SharingEntry sharingEntry,
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)

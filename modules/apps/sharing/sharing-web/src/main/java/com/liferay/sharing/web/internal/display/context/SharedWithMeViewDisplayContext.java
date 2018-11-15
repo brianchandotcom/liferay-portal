@@ -248,10 +248,7 @@ public class SharedWithMeViewDisplayContext {
 
 			urlMenuItem.setData(data);
 
-			urlMenuItem.setLabel(
-				LanguageUtil.format(
-					_request, "edit-x", HtmlUtil.escape(getTitle(sharingEntry)),
-					false));
+			urlMenuItem.setLabel(LanguageUtil.get(_request, "edit"));
 			urlMenuItem.setMethod("get");
 
 			PortletURL editPortletURL = _getURLEdit(

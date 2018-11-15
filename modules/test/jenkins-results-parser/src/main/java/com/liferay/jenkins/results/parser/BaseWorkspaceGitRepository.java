@@ -205,22 +205,22 @@ public abstract class BaseWorkspaceGitRepository
 					" lists"));
 		}
 
-		List<LocalGitCommit> lastLocalGitCommitList = Lists.newArrayList(
+		List<LocalGitCommit> lastLocalGitCommitsPartition = Lists.newArrayList(
 			localGitCommits.get(localGitCommitsSize - 1));
 
-		List<List<LocalGitCommit>> partitionedLocalGitCommits = new ArrayList<>(
+		List<List<LocalGitCommit>> localGitCommitsPartitions = new ArrayList<>(
 			count);
 
 		if (localGitCommits.size() > 1) {
-			partitionedLocalGitCommits.addAll(
+			localGitCommitsPartitions.addAll(
 				JenkinsResultsParserUtil.partitionByCount(
 					localGitCommits.subList(0, localGitCommitsSize - 2),
 					count - 1));
 		}
 
-		partitionedLocalGitCommits.add(lastLocalGitCommitList);
+		localGitCommitsPartitions.add(lastLocalGitCommitsPartition);
 
-		return partitionedLocalGitCommits;
+		return localGitCommitsPartitions;
 	}
 
 	@Override

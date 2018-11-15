@@ -45,9 +45,13 @@ public class JavaClassCall extends JavaExpression {
 				return sb.toString();
 			}
 
-			append(
+			int addedLinesCount = append(
 				sb, _className, indent, prefix, "(", maxLineLength,
 				!forceLineBreak);
+
+			for (int i = 0; i < addedLinesCount; i++) {
+				indent += "\t";
+			}
 		}
 		else {
 			append(

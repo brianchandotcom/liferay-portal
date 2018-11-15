@@ -18,6 +18,9 @@ import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
+/**
+ * @author Julien Castelain
+ */
 @ExtendedObjectClassDefinition(category = "third-party")
 @Meta.OCD(
 	description = "frontend-js-lodash-description",
@@ -25,7 +28,14 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	localization = "content/Language",
 	name = "frontend-js-lodash-configuration-name"
 )
-public @interface JSLodashConfiguration {
+public interface JSLodashConfiguration {
+
+	/**
+	 * Set this to <code>true</code> to enable lodash usage.
+	 *
+	 * @return <code>true</code> if lodash is enabled.
+	 * @review
+	 */
 	@Meta.AD(deflt = "true", name = "enable-lodash", required = false)
 	public boolean enableLodash();
 

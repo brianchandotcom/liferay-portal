@@ -364,7 +364,7 @@ portalArtifactsJar {
 	version = _getReleaseInfoVersion()
 
 	doFirst {
-		ConfigurationContainer configurationContainer = project.getConfigurations();
+		ConfigurationContainer configurationContainer = project.getConfigurations()
 
 		Configuration detachedConfiguration = configurationContainer.detachedConfiguration(_getPortalArtifactsDependencies() as Dependency[])
 
@@ -406,7 +406,7 @@ portalJavadoc {
 	title = "Portal " + _getReleaseInfoVersion()
 
 	doFirst {
-		ConfigurationContainer configurationContainer = project.getConfigurations();
+		ConfigurationContainer configurationContainer = project.getConfigurations()
 
 		Configuration detachedConfiguration = configurationContainer.detachedConfiguration(_getPortalJavadocDependencies() as Dependency[])
 
@@ -462,7 +462,7 @@ portalSourcesJar {
 	version = _getReleaseInfoVersion()
 
 	doFirst {
-		ConfigurationContainer configurationContainer = project.getConfigurations();
+		ConfigurationContainer configurationContainer = project.getConfigurations()
 
 		Configuration detachedConfiguration = configurationContainer.detachedConfiguration(_getPortalSourcesDependencies() as Dependency[])
 
@@ -1157,7 +1157,7 @@ private boolean _executeGradle(StartParameter startParameter) {
 	BuildDefinition buildDefinition = BuildDefinition.fromStartParameter(startParameter, gradle.services.get(PublicBuildPath))
 	BuildStateRegistry buildStateRegistry = gradle.services.get(BuildStateRegistry)
 
-	StandAloneNestedBuild standAloneNestedBuild = buildStateRegistry.addNestedBuildTree(buildDefinition, gradle.services.get(BuildState));
+	StandAloneNestedBuild standAloneNestedBuild = buildStateRegistry.addNestedBuildTree(buildDefinition, gradle.services.get(BuildState))
 
 	Transformer<Void, BuildController> transformer = new Transformer<Void, BuildController>() {
 

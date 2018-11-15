@@ -181,6 +181,8 @@
 	</command>
 
 	<command name="PublicationWithoutReadyForPublication" priority="4">
+		<description message="This is a use case for LPS-78292." />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
@@ -219,6 +221,56 @@
 		<execute macro="Page#viewNoPage">
 			<var name="pageName" value="Staging Test Page 2" />
 			<var name="privacy" value="Public Pages" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page 2" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="Staging#addPageVariationPG">
+			<var name="pageVariationName" value="Page Variation Name" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Hello World" />
+			<var name="portletOption" value="Look and Feel Configuration" />
+		</execute>
+
+		<execute macro="IFrame#selectConfigurationFrame" />
+
+		<execute macro="Portlet#configureCustomTitleViaLookandfeelPG">
+			<var name="portletName" value="Hello World" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page 2" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="Hello World Custom" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive">
+			<var name="pleaseDoNotMarkAsReady" value="true" />
+		</execute>
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Staging Test Page 2" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#viewNoSpecificPG">
+			<var name="portletName" value="Hello World Custom" />
 		</execute>
 	</command>
 

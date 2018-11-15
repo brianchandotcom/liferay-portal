@@ -17,7 +17,6 @@ package com.liferay.portal.tools.java.parser;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Hugo Huijser
@@ -48,11 +47,10 @@ public class JavaMethodCall extends JavaExpression {
 				false);
 		}
 		else {
-			if (Objects.equals(
-					append(
-						sb, _methodName, indent, "", "(", maxLineLength, false),
-					APPENDED_NEW_LINE)) {
+			int addedLinesCount = append(
+				sb, _methodName, indent, "", "(", maxLineLength, false);
 
+			for (int i = 0; i < addedLinesCount; i++) {
 				indent += "\t";
 			}
 

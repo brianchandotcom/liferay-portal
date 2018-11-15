@@ -70,12 +70,13 @@ public class JavaSignature extends BaseJavaTerm {
 			appendSingleLine(sb, _modifiers, " ", maxLineLength);
 		}
 
-		if ((_genericJavaTypes != null) &&
-			Objects.equals(
-				append(sb, _genericJavaTypes, indent, " <", ">", maxLineLength),
-				APPENDED_NEW_LINE)) {
+		if (_genericJavaTypes != null) {
+			int addedLinesCount = append(
+				sb, _genericJavaTypes, indent, " <", ">", maxLineLength);
 
-			indent += "\t";
+			for (int i = 0; i < addedLinesCount; i++) {
+				indent += "\t";
+			}
 		}
 
 		if (_returnJavaType != null) {
@@ -85,12 +86,10 @@ public class JavaSignature extends BaseJavaTerm {
 				newLine = true;
 			}
 
-			if (Objects.equals(
-					append(
-						sb, _returnJavaType, indent, " ", "", maxLineLength,
-						newLine),
-					APPENDED_NEW_LINE)) {
+			int addedLinesCount = append(
+				sb, _returnJavaType, indent, " ", "", maxLineLength, newLine);
 
+			for (int i = 0; i < addedLinesCount; i++) {
 				indent += "\t";
 			}
 		}

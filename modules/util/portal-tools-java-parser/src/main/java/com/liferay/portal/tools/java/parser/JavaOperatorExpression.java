@@ -16,8 +16,6 @@ package com.liferay.portal.tools.java.parser;
 
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.util.Objects;
-
 /**
  * @author Hugo Huijser
  */
@@ -39,13 +37,11 @@ public class JavaOperatorExpression extends JavaExpression {
 
 		if (_leftHandJavaExpression != null) {
 			if (_rightHandJavaExpression != null) {
-				if (Objects.equals(
-						append(
-							sb, _leftHandJavaExpression, indent, "",
-							" " + _javaOperator.getValue(), maxLineLength,
-							false),
-						APPENDED_NEW_LINE)) {
+				int addedLinesCount = append(
+					sb, _leftHandJavaExpression, indent, "",
+					" " + _javaOperator.getValue(), maxLineLength, false);
 
+				for (int i = 0; i < addedLinesCount; i++) {
 					indent += "\t";
 				}
 

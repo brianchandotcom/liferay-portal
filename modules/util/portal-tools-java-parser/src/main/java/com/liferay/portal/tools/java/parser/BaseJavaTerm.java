@@ -95,7 +95,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		String suffix, int maxLineLength, boolean newLine) {
 
 		if (appendSingleLine(sb, javaTerm, prefix, suffix, maxLineLength)) {
-			return APPENDED_SINGLE_LINE;
+			return 0;
 		}
 
 		sb = _stripTrailingWhitespace(sb);
@@ -112,7 +112,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 					sb, javaTerm, "\t" + indent, prefix, suffix, maxLineLength);
 			}
 
-			return APPENDED_NEW_LINE;
+			return 1;
 		}
 
 		return _appendWithLineBreak(
@@ -144,7 +144,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		if (appendSingleLine(
 				sb, list, delimeter, prefix, suffix, maxLineLength)) {
 
-			return APPENDED_SINGLE_LINE;
+			return 0;
 		}
 
 		sb = _stripTrailingWhitespace(sb);
@@ -152,7 +152,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		appendNewLine(
 			sb, list, delimeter, "\t" + indent, prefix, suffix, maxLineLength);
 
-		return APPENDED_NEW_LINE;
+		return 1;
 	}
 
 	protected void appendNewLine(
@@ -330,10 +330,6 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		return lineLength;
 	}
 
-	protected static final int APPENDED_NEW_LINE = 0;
-
-	protected static final int APPENDED_SINGLE_LINE = 1;
-
 	private boolean _appendSingleLine(
 		StringBundler sb, String s, String prefix, String suffix,
 		int maxLineLength) {
@@ -380,11 +376,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 			sb.append(s);
 
-			if (s.contains("\n")) {
-				return APPENDED_NEW_LINE;
-			}
-
-			return APPENDED_SINGLE_LINE;
+			return StringUtil.count(s, CharPool.NEW_LINE);
 		}
 
 		String javaTermContent = javaTerm.toString(
@@ -404,7 +396,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 				suffix, maxLineLength);
 		}
 
-		return APPENDED_NEW_LINE;
+		return 1;
 	}
 
 	private String _getFirstLine(String s) {

@@ -109,6 +109,8 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 
 		EclipseProject eclipseProject = eclipseModel.getProject();
 
+		eclipseProject.setName(project.getName());
+
 		List<String> natures = eclipseProject.getNatures();
 
 		natures.add("com.liferay.ide.core.liferayNature");

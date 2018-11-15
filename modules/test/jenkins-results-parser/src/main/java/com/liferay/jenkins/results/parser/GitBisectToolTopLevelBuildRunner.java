@@ -213,17 +213,17 @@ public class GitBisectToolTopLevelBuildRunner
 			WorkspaceGitRepository workspaceGitRepository =
 				_getWorkspaceGitRepository();
 
-			List<LocalGitCommit> commits =
-				workspaceGitRepository.getCommitsInRange(
+			List<LocalGitCommit> localGitCommitsInRange =
+				workspaceGitRepository.getLocalGitCommitsInRange(
 					matcher.group("earliestSHA"), matcher.group("latestSHA"));
 
-			List<List<LocalGitCommit>> commitGroups =
-				workspaceGitRepository.getCommitGroups(
-					commits, _getMaxCommitGroupCount());
+			List<List<LocalGitCommit>> localGitCommitGroups =
+				workspaceGitRepository.getLocalGitCommitGroups(
+					localGitCommitsInRange, _getMaxCommitGroupCount());
 
 			List<String> portalBranchSHAList = new ArrayList<>();
 
-			for (List<LocalGitCommit> localGitCommits : commitGroups) {
+			for (List<LocalGitCommit> localGitCommits : localGitCommitGroups) {
 				LocalGitCommit localGitCommit = localGitCommits.get(0);
 
 				portalBranchSHAList.add(localGitCommit.getSHA());

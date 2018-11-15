@@ -215,11 +215,11 @@ public class GitBisectToolBuild extends TopLevelBuild {
 
 		GitCommitGroup gitCommitGroup = null;
 
-		List<LocalGitCommit> localGitCommits =
-			_workspaceGitRepository.getCommitHistory();
+		List<LocalGitCommit> localGitCommitHistory =
+			_workspaceGitRepository.getLocalGitCommitHistory();
 
-		for (int i = 0; i < localGitCommits.size(); i++) {
-			LocalGitCommit localGitCommit = localGitCommits.get(i);
+		for (int i = 0; i < localGitCommitHistory.size(); i++) {
+			LocalGitCommit localGitCommit = localGitCommitHistory.get(i);
 
 			String sha = localGitCommit.getSHA();
 

@@ -38,7 +38,7 @@ public abstract class BaseWorkspaceGitRepository
 	extends BaseLocalGitRepository implements WorkspaceGitRepository {
 
 	@Override
-	public List<List<LocalGitCommit>> getCommitGroups(
+	public List<List<LocalGitCommit>> getLocalGitCommitGroups(
 		List<LocalGitCommit> localGitCommits, int count) {
 
 		int localGitCommitsSize = localGitCommits.size();
@@ -57,16 +57,16 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	@Override
-	public List<LocalGitCommit> getCommitHistory() {
-		if (_commitHistory != null) {
-			return _commitHistory;
+	public List<LocalGitCommit> getLocalGitCommitHistory() {
+		if (_localGitCommitHistory != null) {
+			return _localGitCommitHistory;
 		}
 
 		if (!has("commits")) {
 			return new ArrayList<>();
 		}
 
-		_commitHistory = new ArrayList<>();
+		_localGitCommitHistory = new ArrayList<>();
 
 		JSONArray commitsJSONArray = getJSONArray("commits");
 
@@ -75,18 +75,18 @@ public abstract class BaseWorkspaceGitRepository
 		for (int i = 0; i < commitsJSONArray.length(); i++) {
 			JSONObject commitJSONObject = commitsJSONArray.getJSONObject(i);
 
-			_commitHistory.add(
+			_localGitCommitHistory.add(
 				GitCommitFactory.newLocalGitCommit(
 					gitWorkingDirectory, commitJSONObject.getString("message"),
 					commitJSONObject.getString("sha"),
 					commitJSONObject.getLong("commitTime")));
 		}
 
-		return _commitHistory;
+		return _localGitCommitHistory;
 	}
 
 	@Override
-	public List<LocalGitCommit> getCommitsInRange(
+	public List<LocalGitCommit> getLocalGitCommitsInRange(
 		String earliestSHA, String latestSHA) {
 
 		List<LocalGitCommit> localGitCommitsInRange = new ArrayList<>();
@@ -248,7 +248,7 @@ public abstract class BaseWorkspaceGitRepository
 
 	@Override
 	public void storeCommitHistory(List<String> commitSHAs) {
-		_commitHistory = getCommitHistory();
+		_localGitCommitHistory = getLocalGitCommitHistory();
 
 		List<String> requiredCommitSHAs = new ArrayList<>();
 
@@ -272,7 +272,7 @@ public abstract class BaseWorkspaceGitRepository
 				index, currentGroupSize);
 
 			for (LocalGitCommit localGitCommit : localGitCommits) {
-				_commitHistory.add(localGitCommit);
+				_localGitCommitHistory.add(localGitCommit);
 
 				commitsJSONArray.put(localGitCommit.toJSONObject());
 
@@ -535,7 +535,7 @@ public abstract class BaseWorkspaceGitRepository
 
 	private static final String _SHA_REGEX = "[0-9a-f]{7,40}";
 
-	private List<LocalGitCommit> _commitHistory;
+	private List<LocalGitCommit> _localGitCommitHistory;
 	private final Map<String, Properties> _propertiesFilesMap = new HashMap<>();
 
 }

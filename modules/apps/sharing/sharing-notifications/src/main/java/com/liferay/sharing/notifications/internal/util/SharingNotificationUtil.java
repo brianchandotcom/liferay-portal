@@ -55,11 +55,11 @@ public class SharingNotificationUtil {
 			SharingEntry sharingEntry, PortletRequest portletRequest)
 		throws Exception {
 
+		Class<?> clazz = getClass();
+
 		String templateId =
 			"/com/liferay/sharing/notifications/dependencies" +
 				"/sharing_entry_added_email_body.ftl";
-
-		Class<?> clazz = getClass();
 
 		URLTemplateResource templateResource = new URLTemplateResource(
 			templateId, clazz.getResource(templateId));
@@ -68,8 +68,6 @@ public class SharingNotificationUtil {
 			TemplateConstants.LANG_TYPE_FTL, templateResource, false);
 
 		User fromUser = _userLocalService.getUser(sharingEntry.getFromUserId());
-
-		User toUser = _userLocalService.getUser(sharingEntry.getToUserId());
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -80,17 +78,14 @@ public class SharingNotificationUtil {
 			template.put("fromUserURL", fromUser.getDisplayURL(themeDisplay));
 		}
 
+		User toUser = _userLocalService.getUser(sharingEntry.getToUserId());
+
+		template.put(
+			"actionTitle",
+			_getEmailActionTitle(sharingEntry, toUser.getLocale()));
+
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(toUser.getLocale());
-
-		template.put("fromUserName", _getUserName(fromUser, resourceBundle));
-
-		template.put(
-			"sharingEntryTitle",
-			_getSharingEntryObjectTitle(sharingEntry, toUser.getLocale()));
-		template.put(
-			"sharingEntryURL",
-			getNotificationURL(sharingEntry, portletRequest));
 
 		template.put(
 			"content",
@@ -101,9 +96,14 @@ public class SharingNotificationUtil {
 					sharingEntry, toUser, portletRequest),
 				_getActionName(sharingEntry, resourceBundle)));
 
+		template.put("fromUserName", _getUserName(fromUser, resourceBundle));
+
 		template.put(
-			"actionTitle",
-			_getEmailActionTitle(sharingEntry, toUser.getLocale()));
+			"sharingEntryTitle",
+			_getSharingEntryObjectTitle(sharingEntry, toUser.getLocale()));
+		template.put(
+			"sharingEntryURL",
+			getNotificationURL(sharingEntry, portletRequest));
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 

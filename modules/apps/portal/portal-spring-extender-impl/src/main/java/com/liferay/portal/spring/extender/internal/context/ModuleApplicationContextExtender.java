@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.spring.context.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.extender.internal.configuration.ConfigurationUtil;
 
 import java.io.InputStream;
@@ -124,6 +125,10 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ModuleApplicationContextExtender.class);
 
+	@Reference
+	private ConfigurableApplicationContextConfigurator
+		_configurableApplicationContextConfigurator;
+
 	private class ModuleApplicationContextExtension implements Extension {
 
 		public ModuleApplicationContextExtension(Bundle bundle) {
@@ -150,7 +155,9 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 			Bundle bundle = bundleContext.getBundle();
 
 			_component.setImplementation(
-				new ModuleApplicationContextRegistrator(_bundle, bundle));
+				new ModuleApplicationContextRegistrator(
+					_configurableApplicationContextConfigurator, _bundle,
+					bundle));
 
 			BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 

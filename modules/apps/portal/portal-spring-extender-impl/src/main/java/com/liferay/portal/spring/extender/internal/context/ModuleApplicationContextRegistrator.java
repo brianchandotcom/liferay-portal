@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.spring.context.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.extender.internal.bean.ApplicationContextServicePublisherUtil;
 import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
 
@@ -41,8 +42,12 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class ModuleApplicationContextRegistrator {
 
 	public ModuleApplicationContextRegistrator(
+		ConfigurableApplicationContextConfigurator
+			configurableApplicationContextConfigurator,
 		Bundle extendeeBundle, Bundle extenderBundle) {
 
+		_configurableApplicationContextConfigurator =
+			configurableApplicationContextConfigurator;
 		_extendeeBundle = extendeeBundle;
 		_extenderBundle = extenderBundle;
 	}
@@ -72,6 +77,9 @@ public class ModuleApplicationContextRegistrator {
 				_configurableApplicationContext.setParent(
 					parentApplicationContext);
 			}
+
+			_configurableApplicationContextConfigurator.configure(
+				_configurableApplicationContext);
 
 			_configurableApplicationContext.refresh();
 
@@ -115,6 +123,8 @@ public class ModuleApplicationContextRegistrator {
 	}
 
 	private ConfigurableApplicationContext _configurableApplicationContext;
+	private final ConfigurableApplicationContextConfigurator
+		_configurableApplicationContextConfigurator;
 	private final Bundle _extendeeBundle;
 	private final Bundle _extenderBundle;
 	private List<ServiceRegistration<?>> _serviceRegistrations;

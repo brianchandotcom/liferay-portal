@@ -49,6 +49,7 @@ import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
 import com.liferay.portal.spring.bean.LiferayBeanFactory;
 import com.liferay.portal.spring.context.ArrayApplicationContext;
+import com.liferay.portal.spring.context.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.xml.SAXReaderImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -67,6 +68,7 @@ import org.apache.commons.lang.time.StopWatch;
 
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -226,10 +228,10 @@ public class InitUtil {
 				ModuleFrameworkUtilAdapter.startFramework();
 			}
 
-			ApplicationContext appApplicationContext =
+			ConfigurableApplicationContext configurableApplicationContext =
 				new ClassPathXmlApplicationContext(
 					configLocations.toArray(new String[configLocations.size()]),
-					infrastructureApplicationContext) {
+					false, infrastructureApplicationContext) {
 
 					@Override
 					protected DefaultListableBeanFactory createBeanFactory() {
@@ -239,8 +241,24 @@ public class InitUtil {
 
 				};
 
+			if (infrastructureApplicationContext.containsBean(
+					"configurableApplicationContextConfigurator")) {
+
+				ConfigurableApplicationContextConfigurator
+					configurableApplicationContextConfigurator =
+						infrastructureApplicationContext.getBean(
+							"configurableApplicationContextConfigurator",
+							ConfigurableApplicationContextConfigurator.class);
+
+				configurableApplicationContextConfigurator.configure(
+					configurableApplicationContext);
+			}
+
+			configurableApplicationContext.refresh();
+
 			BeanLocator beanLocator = new BeanLocatorImpl(
-				PortalClassLoaderUtil.getClassLoader(), appApplicationContext);
+				PortalClassLoaderUtil.getClassLoader(),
+				configurableApplicationContext);
 
 			PortalBeanLocatorUtil.setBeanLocator(beanLocator);
 
@@ -248,7 +266,7 @@ public class InitUtil {
 				ModuleFrameworkUtilAdapter.startRuntime();
 			}
 
-			_appApplicationContext = appApplicationContext;
+			_appApplicationContext = configurableApplicationContext;
 
 			if (initModuleFramework && registerContext) {
 				registerContext();

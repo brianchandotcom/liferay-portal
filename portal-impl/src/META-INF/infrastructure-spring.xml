@@ -22,6 +22,7 @@
 		<property name="mailSession" ref="mailSession" />
 		<property name="transactionManager" ref="liferayTransactionManager" />
 	</bean>
+	<bean class="com.liferay.portal.spring.aop.AopConfigurableApplicationContextConfigurator" id="configurableApplicationContextConfigurator" />
 	<bean class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy" id="liferayDataSource">
 		<property name="targetDataSource" ref="liferayDataSourceImpl" />
 	</bean>

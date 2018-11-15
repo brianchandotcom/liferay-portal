@@ -22,90 +22,90 @@ import org.aopalliance.intercept.MethodInterceptor;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 
 /**
  * @author Shuyang Zhou
  */
 public class AopConfigurableApplicationContextConfigurator
-	implements ApplicationContextAware, BeanFactoryPostProcessor,
-			   ConfigurableApplicationContextConfigurator {
+	implements ConfigurableApplicationContextConfigurator {
 
 	@Override
 	public void configure(
 		ConfigurableApplicationContext configurableApplicationContext) {
 
 		configurableApplicationContext.addBeanFactoryPostProcessor(
-			configurableListableBeanFactory -> _postProcessBeanFactory(
-				configurableApplicationContext.getClassLoader(),
-				configurableListableBeanFactory));
+			new AopBeanFactoryPostProcessor(
+				configurableApplicationContext.getClassLoader()));
 	}
 
-	@Override
-	public void postProcessBeanFactory(
-			ConfigurableListableBeanFactory configurableListableBeanFactory)
-		throws BeansException {
+	private static class AopBeanFactoryPostProcessor
+		implements BeanFactoryPostProcessor {
 
-		_postProcessBeanFactory(_classLoader, configurableListableBeanFactory);
-	}
+		@Override
+		public void postProcessBeanFactory(
+				ConfigurableListableBeanFactory configurableListableBeanFactory)
+			throws BeansException {
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext)
-		throws BeansException {
+			if (configurableListableBeanFactory.getBeanDefinitionCount() == 0) {
 
-		_classLoader = applicationContext.getClassLoader();
-	}
+				// Protection for the those theme wars with no spring xmls.
 
-	private static void _postProcessBeanFactory(
-		ClassLoader classLoader,
-		ConfigurableListableBeanFactory configurableListableBeanFactory) {
+				return;
+			}
 
-		// Ensure the ChainableMethodAdvice assembling is done
+			// Ensure the ChainableMethodAdvice assembling is done
 
-		configurableListableBeanFactory.getBean(
-			"chainableMethodAdviceAssembler",
-			ChainableMethodAdviceAssembler.class);
+			configurableListableBeanFactory.getBean(
+				"chainableMethodAdviceAssembler",
+				ChainableMethodAdviceAssembler.class);
 
-		// Counter AOP for portal spring context only
+			// Counter AOP for portal spring context only
 
-		if (PortalClassLoaderUtil.isPortalClassLoader(classLoader)) {
-			ServiceBeanAutoProxyCreator counterServiceBeanAutoProxyCreator =
+			if (PortalClassLoaderUtil.isPortalClassLoader(_classLoader)) {
+				ServiceBeanAutoProxyCreator counterServiceBeanAutoProxyCreator =
+					new ServiceBeanAutoProxyCreator();
+
+				counterServiceBeanAutoProxyCreator.setBeanMatcher(
+					new ServiceBeanMatcher(true));
+				counterServiceBeanAutoProxyCreator.setMethodInterceptor(
+					configurableListableBeanFactory.getBean(
+						"counterTransactionAdvice", MethodInterceptor.class));
+
+				counterServiceBeanAutoProxyCreator.setBeanClassLoader(
+					_classLoader);
+
+				counterServiceBeanAutoProxyCreator.afterPropertiesSet();
+
+				configurableListableBeanFactory.addBeanPostProcessor(
+					counterServiceBeanAutoProxyCreator);
+			}
+
+			// Service AOP
+
+			ServiceBeanAutoProxyCreator serviceBeanAutoProxyCreator =
 				new ServiceBeanAutoProxyCreator();
 
-			counterServiceBeanAutoProxyCreator.setBeanMatcher(
-				new ServiceBeanMatcher(true));
-			counterServiceBeanAutoProxyCreator.setMethodInterceptor(
+			serviceBeanAutoProxyCreator.setBeanMatcher(
+				new ServiceBeanMatcher());
+			serviceBeanAutoProxyCreator.setMethodInterceptor(
 				configurableListableBeanFactory.getBean(
-					"counterTransactionAdvice", MethodInterceptor.class));
+					"serviceAdvice", MethodInterceptor.class));
 
-			counterServiceBeanAutoProxyCreator.setBeanClassLoader(classLoader);
+			serviceBeanAutoProxyCreator.setBeanClassLoader(_classLoader);
 
-			counterServiceBeanAutoProxyCreator.afterPropertiesSet();
+			serviceBeanAutoProxyCreator.afterPropertiesSet();
 
 			configurableListableBeanFactory.addBeanPostProcessor(
-				counterServiceBeanAutoProxyCreator);
+				serviceBeanAutoProxyCreator);
 		}
 
-		// Service AOP
+		private AopBeanFactoryPostProcessor(ClassLoader classLoader) {
+			_classLoader = classLoader;
+		}
 
-		ServiceBeanAutoProxyCreator serviceBeanAutoProxyCreator =
-			new ServiceBeanAutoProxyCreator();
+		private final ClassLoader _classLoader;
 
-		serviceBeanAutoProxyCreator.setBeanMatcher(new ServiceBeanMatcher());
-		serviceBeanAutoProxyCreator.setMethodInterceptor(
-			configurableListableBeanFactory.getBean(
-				"serviceAdvice", MethodInterceptor.class));
-
-		serviceBeanAutoProxyCreator.setBeanClassLoader(classLoader);
-
-		serviceBeanAutoProxyCreator.afterPropertiesSet();
-
-		configurableListableBeanFactory.addBeanPostProcessor(
-			serviceBeanAutoProxyCreator);
 	}
-
-	private ClassLoader _classLoader;
 
 }

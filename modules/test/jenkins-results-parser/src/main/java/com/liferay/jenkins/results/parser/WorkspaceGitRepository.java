@@ -24,6 +24,12 @@ public interface WorkspaceGitRepository extends LocalGitRepository {
 
 	public static final Integer MAX_COMMIT_HISTORY = 25000;
 
+	public String getFileContent(String filePath);
+
+	public String getGitHubDevBranchName();
+
+	public String getGitHubURL();
+
 	public List<List<LocalGitCommit>> getLocalGitCommitGroups(
 		List<LocalGitCommit> localGitCommits, int count);
 
@@ -31,12 +37,6 @@ public interface WorkspaceGitRepository extends LocalGitRepository {
 
 	public List<LocalGitCommit> getLocalGitCommitsInRange(
 		String earliestSHA, String latestSHA);
-
-	public String getFileContent(String filePath);
-
-	public String getGitHubDevBranchName();
-
-	public String getGitHubURL();
 
 	public String getType();
 

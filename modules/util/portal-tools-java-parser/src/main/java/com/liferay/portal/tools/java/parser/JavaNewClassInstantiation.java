@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 /**
  * @author Hugo Huijser
  */
@@ -24,8 +26,15 @@ public class JavaNewClassInstantiation extends JavaExpression {
 		String indent, String prefix, String suffix, int maxLineLength,
 		boolean forceLineBreak) {
 
-		return _javaClassCall.toString(
-			indent, prefix + "new ", suffix, maxLineLength);
+		StringBundler sb = new StringBundler();
+
+		sb.append(indent);
+		sb.append(prefix);
+
+		append(
+			sb, _javaClassCall, indent, "new ", suffix, maxLineLength, false);
+
+		return sb.toString();
 	}
 
 	public void setJavaClassCall(JavaClassCall javaClassCall) {

@@ -36,12 +36,11 @@ public class JavaOperatorExpression extends JavaExpression {
 		StringBundler sb = new StringBundler();
 
 		sb.append(indent);
-		sb.append(prefix);
 
 		if (_leftHandJavaExpression != null) {
 			if (_rightHandJavaExpression != null) {
 				int addedLinesCount = append(
-					sb, _leftHandJavaExpression, indent, "",
+					sb, _leftHandJavaExpression, indent, prefix,
 					" " + _javaOperator.getValue(), maxLineLength, false);
 
 				if (Objects.equals(
@@ -67,19 +66,20 @@ public class JavaOperatorExpression extends JavaExpression {
 				else {
 					append(
 						sb, _rightHandJavaExpression, indent, " ", suffix,
-						maxLineLength, false);
+						maxLineLength);
 				}
 			}
 			else {
 				append(
-					sb, _leftHandJavaExpression, indent, "",
+					sb, _leftHandJavaExpression, indent, prefix,
 					_javaOperator.getValue() + suffix, maxLineLength, false);
 			}
 		}
 		else {
 			append(
-				sb, _rightHandJavaExpression, indent, _javaOperator.getValue(),
-				suffix, maxLineLength, false);
+				sb, _rightHandJavaExpression, indent,
+				prefix + _javaOperator.getValue(), suffix, maxLineLength,
+				false);
 		}
 
 		return sb.toString();

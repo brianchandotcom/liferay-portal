@@ -140,6 +140,7 @@ public class UnicodePropertiesTest {
 		unicodeProperties.put(_TEST_KEY_1, _TEST_VALUE_1);
 
 		Assert.assertNull(unicodeProperties.remove(null));
+
 		_assertUnicodeProperties(
 			new String[] {_TEST_VALUE_1}, new String[] {_TEST_KEY_1},
 			unicodeProperties);
@@ -170,6 +171,7 @@ public class UnicodePropertiesTest {
 
 		Assert.assertNull(
 			unicodeProperties.setProperty(_TEST_KEY_1, _TEST_VALUE_1));
+
 		_assertUnicodeProperties(
 			new String[] {_TEST_VALUE_1}, new String[] {_TEST_KEY_1},
 			unicodeProperties);

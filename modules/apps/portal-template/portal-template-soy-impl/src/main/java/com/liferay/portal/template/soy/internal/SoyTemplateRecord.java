@@ -211,28 +211,61 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 		if (object == null) {
 			return NullData.INSTANCE;
 		}
-		else if (object instanceof SoyData) {
-			return (SoyData)object;
+		else if (object instanceof BigDecimal) {
+			return StringData.forValue(object.toString());
 		}
-		else if (object instanceof SoyRawData) {
-			SoyRawData soyRawData = (SoyRawData)object;
-
-			return _toSoyValue(soyRawData.getValue());
-		}
-		else if (object instanceof String) {
-			return StringData.forValue((String)object);
+		else if (object instanceof BigInteger) {
+			return StringData.forValue(object.toString());
 		}
 		else if (object instanceof Boolean) {
 			return BooleanData.forValue((Boolean)object);
 		}
-		else if (object instanceof Integer) {
-			return IntegerData.forValue((Integer)object);
-		}
-		else if (object instanceof Long) {
-			return IntegerData.forValue((Long)object);
+		else if (object instanceof Double) {
+			return FloatData.forValue((Double)object);
 		}
 		else if (object instanceof Enum) {
 			return StringData.forValue(object.toString());
+		}
+		else if (object instanceof Float) {
+			return FloatData.forValue((Float)object);
+		}
+		else if (object instanceof Integer) {
+			return IntegerData.forValue((Integer)object);
+		}
+		else if (object instanceof Iterable<?>) {
+			SoyListData soyListData = new SoyListData();
+
+			Iterable<?> iterable = (Iterable<?>)object;
+
+			iterable.forEach(entry -> soyListData.add(_toSoyValue(entry)));
+
+			return soyListData;
+		}
+		else if (object instanceof JSONArray) {
+			JSONArray jsonArray = (JSONArray)object;
+
+			SoyListData soyListData = new SoyListData();
+
+			Iterator it = jsonArray.iterator();
+
+			it.forEachRemaining(value -> soyListData.add(_toSoyValue(value)));
+
+			return soyListData;
+		}
+		else if (object instanceof JSONObject) {
+			JSONObject jsonObject = (JSONObject)object;
+
+			SoyMapData soyMapData = new SoyMapData();
+
+			Iterator<String> it = jsonObject.keys();
+
+			it.forEachRemaining(
+				key -> soyMapData.put(key, _toSoyValue(jsonObject.get(key))));
+
+			return soyMapData;
+		}
+		else if (object instanceof Long) {
+			return IntegerData.forValue((Long)object);
 		}
 		else if (object instanceof Map<?, ?>) {
 			@SuppressWarnings("unchecked")
@@ -248,49 +281,16 @@ public class SoyTemplateRecord extends SoyAbstractValue implements SoyRecord {
 
 			return soyMapData;
 		}
-		else if (object instanceof JSONObject) {
-			JSONObject jsonObject = (JSONObject)object;
-
-			SoyMapData soyMapData = new SoyMapData();
-
-			Iterator<String> it = jsonObject.keys();
-
-			it.forEachRemaining(
-				key -> soyMapData.put(key, _toSoyValue(jsonObject.get(key))));
-
-			return soyMapData;
+		else if (object instanceof SoyData) {
+			return (SoyData)object;
 		}
-		else if (object instanceof JSONArray) {
-			JSONArray jsonArray = (JSONArray)object;
+		else if (object instanceof SoyRawData) {
+			SoyRawData soyRawData = (SoyRawData)object;
 
-			SoyListData soyListData = new SoyListData();
-
-			Iterator it = jsonArray.iterator();
-
-			it.forEachRemaining(value -> soyListData.add(_toSoyValue(value)));
-
-			return soyListData;
+			return _toSoyValue(soyRawData.getValue());
 		}
-		else if (object instanceof Iterable<?>) {
-			SoyListData soyListData = new SoyListData();
-
-			Iterable<?> iterable = (Iterable<?>)object;
-
-			iterable.forEach(entry -> soyListData.add(_toSoyValue(entry)));
-
-			return soyListData;
-		}
-		else if (object instanceof Double) {
-			return FloatData.forValue((Double)object);
-		}
-		else if (object instanceof Float) {
-			return FloatData.forValue((Float)object);
-		}
-		else if (object instanceof BigDecimal) {
-			return StringData.forValue(object.toString());
-		}
-		else if (object instanceof BigInteger) {
-			return StringData.forValue(object.toString());
+		else if (object instanceof String) {
+			return StringData.forValue((String)object);
 		}
 
 		SoyMapData soyMapData = new SoyMapData();

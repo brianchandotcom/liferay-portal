@@ -39,6 +39,9 @@ String previewFileURL = previewFileURLs[0];
 
 Map<String, Object> context = new HashMap<>();
 context.put("baseImageURL", previewFileURL);
+context.put("currentPage", 1);
+context.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+context.put("totalPages", previewFileCount);
 %>
 
 <div class="lfr-preview-file" id="<portlet:namespace /><%= randomNamespace %>previewFile">

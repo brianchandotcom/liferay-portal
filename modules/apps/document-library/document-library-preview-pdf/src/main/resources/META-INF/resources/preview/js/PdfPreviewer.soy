@@ -4,4 +4,56 @@
  * ImagePreviewer Component
  */
 {template .render}
+	{@param baseImageURL: string}
+	{@param currentPage: number}
+	{@param spritemap: string}
+	{@param totalPages: number}
+	{@param? _handleClickGoToPage: any}
+	{@param? id: string}
+
+	<div class="preview-file" id="{$id}">
+		<div class="preview-file-container preview-file-max-height" ref="imageContainer">
+			<img class="preview-file-pdf" src="{$baseImageURL + $currentPage}" />
+		</div>
+
+		{call .toolbar}
+			{param currentPage: $currentPage /}
+			{param spritemap: $spritemap /}
+			{param totalPages: $totalPages /}
+			{param _handleClickGoToPage: $_handleClickGoToPage /}
+			{param nextPageDisabled: $nextPageDisabled /}
+			{param previousPageDiabled: $previousPageDiabled /}
+		{/call}
+	</div>
+{/template}
+
+{template .toolbar}
+	{@param currentPage: number}
+	{@param spritemap: string}
+	{@param totalPages: number}
+	{@param? _handleClickGoToPage: any}
+	{let $baseButtonsToolbar:[
+		'elementClasses': 'btn-dark',
+		'events': [ 'click': $_handleClickGoToPage],
+		'spritemap': $spritemap,
+		'style': false
+	] /}
+	<div class="preview-toolbar-container">
+		<div class="btn-group" role="group">
+			{call ClayButton.render data="$baseButtonsToolbar"}
+				{param label kind="text"}{$currentPage} / {$totalPages}{/param}
+				{param value: 'ask' /}
+			{/call}
+			{call ClayButton.render data="$baseButtonsToolbar"}
+				{param icon: 'caret-top' /}
+				{param monospaced: true /}
+				{param value: 'previous' /}
+			{/call}
+			{call ClayButton.render data="$baseButtonsToolbar"}
+				{param icon: 'caret-bottom' /}
+				{param monospaced: true /}
+				{param value: 'next' /}
+			{/call}
+		</div>
+	</div>
 {/template}

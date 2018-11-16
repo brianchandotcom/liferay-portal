@@ -131,11 +131,6 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		return _getExistentFile("package-lock.json");
 	}
 
-	@Optional
-	public String getRegistryUrl() {
-		return GradleUtil.toString(_registryUrl);
-	}
-
 	@InputFile
 	@Optional
 	public File getShrinkwrapJsonFile() {
@@ -176,10 +171,6 @@ public class NpmInstallTask extends ExecuteNpmTask {
 
 	public void setProduction(boolean production) {
 		_production = production;
-	}
-
-	public void setRegistryUrl(Object registryUrl) {
-		_registryUrl = registryUrl;
 	}
 
 	public void setRemoveShrinkwrappedUrls(Object removeShrinkwrappedUrls) {
@@ -256,13 +247,7 @@ public class NpmInstallTask extends ExecuteNpmTask {
 			completeArgs.add("install");
 		}
 
-		String registryUrl = getRegistryUrl();
-
 		completeArgs.add("--production=" + _production);
-
-		if (Validator.isNotNull(registryUrl)) {
-			completeArgs.add("--registry=" + registryUrl);
-		}
 
 		return completeArgs;
 	}
@@ -604,7 +589,6 @@ public class NpmInstallTask extends ExecuteNpmTask {
 	private Object _nodeModulesDigestFile;
 	private boolean _npmCacheVerify;
 	private boolean _production;
-	private Object _registryUrl;
 	private Object _removeShrinkwrappedUrls;
 	private Object _useNpmCI;
 

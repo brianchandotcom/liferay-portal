@@ -117,7 +117,8 @@ import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.framework.wiring.FrameworkWiring;
 
 import org.springframework.beans.factory.BeanIsAbstractException;
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.context.ConfigurableApplicationContext;
 
 /**
  * @author Raymond Augé
@@ -321,10 +322,11 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			_log.debug("Registering context " + context);
 		}
 
-		if (context instanceof ApplicationContext) {
-			ApplicationContext applicationContext = (ApplicationContext)context;
+		if (context instanceof ConfigurableApplicationContext) {
+			ConfigurableApplicationContext configurableApplicationContext =
+				(ConfigurableApplicationContext)context;
 
-			_registerApplicationContext(applicationContext);
+			_registerApplicationContext(configurableApplicationContext);
 		}
 		else if (context instanceof ServletContext) {
 			ServletContext servletContext = (ServletContext)context;
@@ -557,11 +559,11 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			_log.debug("Unregistering context " + context);
 		}
 
-		if (!(context instanceof ApplicationContext)) {
+		if (!(context instanceof ConfigurableApplicationContext)) {
 			return;
 		}
 
-		_unregisterApplicationContext((ApplicationContext)context);
+		_unregisterApplicationContext((ConfigurableApplicationContext)context);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Registered context " + context);
@@ -1240,7 +1242,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	private void _registerApplicationContext(
-		ApplicationContext applicationContext) {
+		ConfigurableApplicationContext configurableApplicationContext) {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Register application context");
@@ -1248,29 +1250,38 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
 
-		for (String beanName : applicationContext.getBeanDefinitionNames()) {
-			Object bean = null;
+		ConfigurableListableBeanFactory configurableListableBeanFactory =
+			configurableApplicationContext.getBeanFactory();
 
-			try {
-				bean = applicationContext.getBean(beanName);
-			}
-			catch (BeanIsAbstractException biae) {
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+		Iterator<String> iterator =
+			configurableListableBeanFactory.getBeanNamesIterator();
 
-			if (bean != null) {
-				ServiceRegistration<?> serviceRegistration = _registerService(
-					_framework.getBundleContext(), beanName, bean);
+		iterator.forEachRemaining(
+			beanName -> {
+				Object bean = null;
 
-				if (serviceRegistration != null) {
-					serviceRegistrations.add(serviceRegistration);
+				try {
+					bean = configurableApplicationContext.getBean(beanName);
 				}
-			}
-		}
+				catch (BeanIsAbstractException biae) {
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
 
-		_springContextServices.put(applicationContext, serviceRegistrations);
+				if (bean != null) {
+					ServiceRegistration<?> serviceRegistration =
+						_registerService(
+							_framework.getBundleContext(), beanName, bean);
+
+					if (serviceRegistration != null) {
+						serviceRegistrations.add(serviceRegistration);
+					}
+				}
+			});
+
+		_springContextServices.put(
+			configurableApplicationContext, serviceRegistrations);
 	}
 
 	private ServiceRegistration<?> _registerService(
@@ -1727,10 +1738,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	private void _unregisterApplicationContext(
-		ApplicationContext applicationContext) {
+		ConfigurableApplicationContext configurableApplicationContext) {
 
 		List<ServiceRegistration<?>> serviceRegistrations =
-			_springContextServices.remove(applicationContext);
+			_springContextServices.remove(configurableApplicationContext);
 
 		if (serviceRegistrations == null) {
 			return;
@@ -1787,7 +1798,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		ModuleFrameworkImpl.class);
 
 	private Framework _framework;
-	private final Map<ApplicationContext, List<ServiceRegistration<?>>>
-		_springContextServices = new ConcurrentHashMap<>();
+	private final Map
+		<ConfigurableApplicationContext, List<ServiceRegistration<?>>>
+			_springContextServices = new ConcurrentHashMap<>();
 
 }

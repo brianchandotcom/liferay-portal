@@ -24,6 +24,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -32,7 +33,9 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 
 import org.springframework.beans.factory.BeanIsAbstractException;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.annotation.AnnotationUtils;
 
 /**
@@ -42,30 +45,35 @@ import org.springframework.core.annotation.AnnotationUtils;
 public class ApplicationContextServicePublisherUtil {
 
 	public static List<ServiceRegistration<?>> registerContext(
-		ApplicationContext applicationContext, BundleContext bundleContext,
-		boolean parentContext) {
+		ConfigurableApplicationContext configurableApplicationContext,
+		BundleContext bundleContext, boolean parentContext) {
 
-		String[] beanNames = applicationContext.getBeanDefinitionNames();
+		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
 
-		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>(
-			beanNames.length + 1);
+		ConfigurableListableBeanFactory configurableListableBeanFactory =
+			configurableApplicationContext.getBeanFactory();
 
-		for (String beanName : beanNames) {
-			try {
-				ServiceRegistration<?> serviceRegistration = _registerService(
-					bundleContext, beanName,
-					applicationContext.getBean(beanName));
+		Iterator<String> iterator =
+			configurableListableBeanFactory.getBeanNamesIterator();
 
-				if (serviceRegistration != null) {
-					serviceRegistrations.add(serviceRegistration);
+		iterator.forEachRemaining(
+			beanName -> {
+				try {
+					ServiceRegistration<?> serviceRegistration =
+						_registerService(
+							bundleContext, beanName,
+							configurableApplicationContext.getBean(beanName));
+
+					if (serviceRegistration != null) {
+						serviceRegistrations.add(serviceRegistration);
+					}
 				}
-			}
-			catch (BeanIsAbstractException biae) {
-			}
-			catch (Exception e) {
-				_log.error("Unable to register service " + beanName, e);
-			}
-		}
+				catch (BeanIsAbstractException biae) {
+				}
+				catch (Exception e) {
+					_log.error("Unable to register service " + beanName, e);
+				}
+			});
 
 		Bundle bundle = bundleContext.getBundle();
 
@@ -84,7 +92,8 @@ public class ApplicationContextServicePublisherUtil {
 
 		ServiceRegistration<ApplicationContext> serviceRegistration =
 			bundleContext.registerService(
-				ApplicationContext.class, applicationContext, properties);
+				ApplicationContext.class, configurableApplicationContext,
+				properties);
 
 		serviceRegistrations.add(serviceRegistration);
 

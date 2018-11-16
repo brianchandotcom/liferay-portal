@@ -47,9 +47,32 @@ public class SharingPermissionImpl implements SharingPermission {
 			long groupId, Collection<SharingEntryAction> sharingEntryActions)
 		throws PortalException {
 
-		_checkSharingPermission(
-			permissionChecker, classNameId, classPK, groupId,
-			sharingEntryActions);
+		if (!contains(
+				permissionChecker, classNameId, classPK, groupId,
+				sharingEntryActions)) {
+
+			ClassName className = _classNameLocalService.fetchByClassNameId(
+				classNameId);
+
+			String resourceName = String.valueOf(classNameId);
+
+			if (className != null) {
+				resourceName = className.getClassName();
+			}
+
+			Stream<SharingEntryAction> sharingEntryActionStream =
+				sharingEntryActions.stream();
+
+			String[] actionIds = sharingEntryActionStream.map(
+				SharingEntryAction::getActionId
+			).toArray(
+				String[]::new
+			);
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), resourceName, classPK,
+				actionIds);
+		}
 	}
 
 	@Override
@@ -58,16 +81,34 @@ public class SharingPermissionImpl implements SharingPermission {
 			long groupId, Collection<SharingEntryAction> sharingEntryActions)
 		throws PortalException {
 
-		try {
-			_checkSharingPermission(
-				permissionChecker, classNameId, classPK, groupId,
-				sharingEntryActions);
+		SharingPermissionChecker sharingPermissionChecker =
+			_serviceTrackerMap.getService(classNameId);
+
+		if (sharingPermissionChecker == null) {
+			throw new PrincipalException(
+				"sharing permission checker is null for class name ID " +
+					classNameId);
+		}
+
+		if (sharingPermissionChecker.hasPermission(
+				permissionChecker, classPK, groupId, sharingEntryActions)) {
 
 			return true;
 		}
-		catch (PrincipalException pe) {
-			return false;
+
+		Stream<SharingEntryAction> sharingEntryActionStream =
+			sharingEntryActions.stream();
+
+		if (sharingEntryActionStream.allMatch(
+				sharingEntryAction ->
+					_sharingEntryLocalService.hasShareableSharingPermission(
+						permissionChecker.getUserId(), classNameId, classPK,
+						sharingEntryAction))) {
+
+			return true;
 		}
+
+		return false;
 	}
 
 	@Activate
@@ -86,59 +127,6 @@ public class SharingPermissionImpl implements SharingPermission {
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
-	}
-
-	private void _checkSharingPermission(
-			PermissionChecker permissionChecker, long classNameId, long classPK,
-			long groupId, Collection<SharingEntryAction> sharingEntryActions)
-		throws PortalException {
-
-		SharingPermissionChecker sharingPermissionChecker =
-			_serviceTrackerMap.getService(classNameId);
-
-		if (sharingPermissionChecker == null) {
-			throw new PrincipalException(
-				"sharing permission checker is null for class name ID " +
-					classNameId);
-		}
-
-		if (sharingPermissionChecker.hasPermission(
-				permissionChecker, classPK, groupId, sharingEntryActions)) {
-
-			return;
-		}
-
-		Stream<SharingEntryAction> sharingEntryActionStream =
-			sharingEntryActions.stream();
-
-		if (sharingEntryActionStream.allMatch(
-				sharingEntryAction ->
-					_sharingEntryLocalService.hasShareableSharingPermission(
-						permissionChecker.getUserId(), classNameId, classPK,
-						sharingEntryAction))) {
-
-			return;
-		}
-
-		ClassName className = _classNameLocalService.fetchByClassNameId(
-			classNameId);
-
-		String resourceName = String.valueOf(classNameId);
-
-		if (className != null) {
-			resourceName = className.getClassName();
-		}
-
-		sharingEntryActionStream = sharingEntryActions.stream();
-
-		String[] actionIds = sharingEntryActionStream.map(
-			SharingEntryAction::getActionId
-		).toArray(
-			String[]::new
-		);
-
-		throw new PrincipalException.MustHavePermission(
-			permissionChecker.getUserId(), resourceName, classPK, actionIds);
 	}
 
 	@Reference

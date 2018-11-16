@@ -23,9 +23,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharing.constants.SharingPortletKeys;
-import com.liferay.sharing.model.SharingEntry;
-import com.liferay.sharing.notifications.internal.util.SharingNotificationUtil;
-import com.liferay.sharing.service.SharingEntryLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,35 +52,16 @@ public class SharingUserNotificationHandler
 			JSONFactoryUtil.createJSONObject(
 				userNotificationEvent.getPayload());
 
-		long sharingEntryId = userNotificationEventPayloadJSONObject.getLong(
-			"classPK");
+		String message = userNotificationEventPayloadJSONObject.getString(
+			"message");
 
-		SharingEntry sharingEntry = _sharingEntryLocalService.fetchSharingEntry(
-			sharingEntryId);
-
-		if (sharingEntry == null) {
-			String message = userNotificationEventPayloadJSONObject.getString(
-				"message");
-
-			if (Validator.isNotNull(message)) {
-				return message;
-			}
-
+		if (Validator.isNull(message)) {
 			_userNotificationEventLocalService.deleteUserNotificationEvent(
 				userNotificationEvent);
-
-			return null;
 		}
 
-		return _sharingNotificationUtil.getNotificationMessage(
-			sharingEntry, serviceContext.getLocale());
+		return message;
 	}
-
-	@Reference
-	private SharingEntryLocalService _sharingEntryLocalService;
-
-	@Reference
-	private SharingNotificationUtil _sharingNotificationUtil;
 
 	@Reference
 	private UserNotificationEventLocalService

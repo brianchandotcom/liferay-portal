@@ -108,10 +108,9 @@ public class NotificationsSharingEntryLocalServiceWrapper
 				sharingNotificationSubcriptionSender =
 					new SharingNotificationSubcriptionSender();
 
-			String message = _sharingNotificationUtil.getNotificationMessage(
-				sharingEntry, user.getLocale());
-
-			sharingNotificationSubcriptionSender.setSubject(message);
+			sharingNotificationSubcriptionSender.setSubject(
+				_sharingNotificationUtil.getNotificationMessage(
+					sharingEntry, user.getLocale()));
 
 			String entryURL = _sharingNotificationUtil.getNotificationURL(
 				sharingEntry, serviceContext.getLiferayPortletRequest());
@@ -119,10 +118,6 @@ public class NotificationsSharingEntryLocalServiceWrapper
 			sharingNotificationSubcriptionSender.setBody(
 				_sharingNotificationUtil.getNotificationEmailBody(
 					sharingEntry, serviceContext.getLiferayPortletRequest()));
-
-			sharingNotificationSubcriptionSender.setUserNotificationMessage(
-				_sharingNotificationUtil.getNotificationMessage(
-					sharingEntry, user.getLocale()));
 
 			sharingNotificationSubcriptionSender.setClassName(
 				sharingEntry.getModelClassName());

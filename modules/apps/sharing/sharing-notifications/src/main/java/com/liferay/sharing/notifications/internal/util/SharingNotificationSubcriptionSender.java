@@ -22,19 +22,13 @@ import com.liferay.portal.kernel.util.SubscriptionSender;
  */
 public class SharingNotificationSubcriptionSender extends SubscriptionSender {
 
-	public void setUserNotificationMessage(String userNotificationMessage) {
-		_userNotificationMessage = userNotificationMessage;
-	}
-
 	@Override
 	protected void populateNotificationEventJSONObject(
 		JSONObject notificationEventJSONObject) {
 
 		super.populateNotificationEventJSONObject(notificationEventJSONObject);
 
-		notificationEventJSONObject.put("message", _userNotificationMessage);
+		notificationEventJSONObject.put("message", subject);
 	}
-
-	private String _userNotificationMessage;
 
 }

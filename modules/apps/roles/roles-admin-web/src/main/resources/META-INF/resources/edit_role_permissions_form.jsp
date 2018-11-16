@@ -215,7 +215,6 @@ if (Validator.isNotNull(portletResource)) {
 					<liferay-ui:search-iterator
 						paginate="<%= false %>"
 						searchContainer="<%= searchContainer %>"
-						searchResultCssClass="show-quick-actions-on-hover table table-autofit"
 					/>
 				</div>
 			</div>

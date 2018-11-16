@@ -14,8 +14,6 @@
 
 package com.liferay.sharing.web.internal.util;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,22 +23,18 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.security.permission.SharingEntryAction;
-import com.liferay.sharing.security.permission.SharingPermissionChecker;
+import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplay;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayAction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -78,18 +72,11 @@ public class SharingUtil {
 			PermissionChecker permissionChecker, long classNameId, long classPK,
 			long groupId, Locale locale) {
 
-		SharingPermissionChecker sharingPermissionChecker =
-			_serviceTrackerMap.getService(classNameId);
-
-		if (sharingPermissionChecker == null) {
-			return Collections.emptyList();
-		}
-
 		List<SharingEntryAction> sharingEntryActions = new ArrayList<>();
 
 		try {
-			if (sharingPermissionChecker.hasPermission(
-					permissionChecker, classPK, groupId,
+			if (_sharingPermission.contains(
+					permissionChecker, classNameId, classPK, groupId,
 					Arrays.asList(SharingEntryAction.VIEW))) {
 
 				sharingEntryActions.add(SharingEntryAction.VIEW);
@@ -100,8 +87,8 @@ public class SharingUtil {
 		}
 
 		try {
-			if (sharingPermissionChecker.hasPermission(
-					permissionChecker, classPK, groupId,
+			if (_sharingPermission.contains(
+					permissionChecker, classNameId, classPK, groupId,
 					Arrays.asList(SharingEntryAction.UPDATE))) {
 
 				sharingEntryActions.add(SharingEntryAction.UPDATE);
@@ -112,8 +99,8 @@ public class SharingUtil {
 		}
 
 		try {
-			if (sharingPermissionChecker.hasPermission(
-					permissionChecker, classPK, groupId,
+			if (_sharingPermission.contains(
+					permissionChecker, classNameId, classPK, groupId,
 					Arrays.asList(SharingEntryAction.ADD_DISCUSSION))) {
 
 				sharingEntryActions.add(SharingEntryAction.ADD_DISCUSSION);
@@ -135,33 +122,12 @@ public class SharingUtil {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, SharingPermissionChecker.class,
-			"(model.class.name=*)",
-			(serviceReference, emitter) -> {
-				emitter.emit(
-					_classNameLocalService.getClassNameId(
-						(String)serviceReference.getProperty(
-							"model.class.name")));
-			});
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(SharingUtil.class);
 
 	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
-	private ServiceTrackerMap<Long, SharingPermissionChecker>
-		_serviceTrackerMap;
+	private SharingEntryLocalService _sharingEntryLocalService;
 
 	@Reference
-	private SharingEntryLocalService _sharingEntryLocalService;
+	private SharingPermission _sharingPermission;
 
 }

@@ -141,6 +141,10 @@ public interface ElasticsearchConfiguration {
 	)
 	public String clientTransportNodesSamplerInterval();
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	@Meta.AD(
 		deflt = "true", description = "http-enabled-help",
 		name = "http-enabled", required = false

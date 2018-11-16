@@ -81,8 +81,7 @@ public class SharingNotificationUtil {
 
 		template.put(
 			"content",
-			_getContent(
-				sharingEntry, portletRequest, fromUser, resourceBundle));
+			_getNotificationMessage(sharingEntry, locale, portletRequest));
 
 		template.put("fromUserName", _getUserName(fromUser, resourceBundle));
 
@@ -110,16 +109,10 @@ public class SharingNotificationUtil {
 	}
 
 	public String getNotificationMessage(
-		SharingEntry sharingEntry, Locale locale) {
+			SharingEntry sharingEntry, Locale locale)
+		throws PortalException {
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
-
-		return ResourceBundleUtil.getString(
-			resourceBundle, "x-has-shared-x-with-you-for-x",
-			_getUserName(sharingEntry, resourceBundle),
-			_getSharingEntryObjectTitle(sharingEntry, resourceBundle),
-			_getActionName(sharingEntry, resourceBundle));
+		return _getNotificationMessage(sharingEntry, locale, null);
 	}
 
 	public String getNotificationURL(
@@ -163,31 +156,6 @@ public class SharingNotificationUtil {
 		return ResourceBundleUtil.getString(resourceBundle, "nothing");
 	}
 
-	private String _getContent(
-			SharingEntry sharingEntry, PortletRequest portletRequest,
-			User fromUser, ResourceBundle resourceBundle)
-		throws PortalException {
-
-		if (portletRequest != null) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			return ResourceBundleUtil.getString(
-				resourceBundle, "x-has-shared-x-with-you-for-x",
-				_getUserLink(fromUser, resourceBundle, themeDisplay),
-				_getSharingEntryObjectLink(
-					sharingEntry, portletRequest, resourceBundle),
-				_getActionName(sharingEntry, resourceBundle));
-		}
-
-		return ResourceBundleUtil.getString(
-			resourceBundle, "x-has-shared-x-with-you-for-x",
-			_getUserName(fromUser, resourceBundle),
-			_getSharingEntryObjectTitle(sharingEntry, resourceBundle),
-			_getActionName(sharingEntry, resourceBundle));
-	}
-
 	private String _getEmailActionTitle(
 			SharingEntry sharingEntry, Locale locale)
 		throws PortalException {
@@ -208,12 +176,52 @@ public class SharingNotificationUtil {
 		return ResourceBundleUtil.getString(resourceBundle, "view");
 	}
 
+	private String _getFromUserName(
+			SharingEntry sharingEntry, ResourceBundle resourceBundle,
+			PortletRequest portletRequest)
+		throws PortalException {
+
+		User user = _userLocalService.fetchUserById(
+			sharingEntry.getFromUserId());
+
+		String userName = _getUserName(user, resourceBundle);
+
+		if ((portletRequest != null) && (user != null)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			return StringBundler.concat(
+				"<a href=\"", user.getDisplayURL(themeDisplay), "\">",
+				HtmlUtil.escape(userName), "</a>");
+		}
+
+		return userName;
+	}
+
 	private Locale _getLocale(User toUser) {
 		if (toUser != null) {
 			return toUser.getLocale();
 		}
 
 		return Locale.getDefault();
+	}
+
+	private String _getNotificationMessage(
+			SharingEntry sharingEntry, Locale locale,
+			PortletRequest portletRequest)
+		throws PortalException {
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale);
+
+		return ResourceBundleUtil.getString(
+			resourceBundle, "x-has-shared-x-with-you-for-x",
+			_getFromUserName(sharingEntry, resourceBundle, portletRequest),
+			_getSharingEntryObjectTitle(
+				sharingEntry, resourceBundle, portletRequest),
+			_getActionName(sharingEntry, resourceBundle),
+			sharingEntry.getExpirationDate());
 	}
 
 	private SharingEntryInterpreter _getSharingEntryInterpreter(
@@ -223,51 +231,30 @@ public class SharingNotificationUtil {
 			sharingEntry);
 	}
 
-	private String _getSharingEntryObjectLink(
-			SharingEntry sharingEntry, PortletRequest portletRequest,
-			ResourceBundle resourceBundle)
-		throws PortalException {
-
-		return StringBundler.concat(
-			"<a href=\"", getNotificationURL(sharingEntry, portletRequest),
-			"\">",
-			HtmlUtil.escape(
-				_getSharingEntryObjectTitle(sharingEntry, resourceBundle)),
-			"</a>");
-	}
-
 	private String _getSharingEntryObjectTitle(
-		SharingEntry sharingEntry, ResourceBundle resourceBundle) {
+			SharingEntry sharingEntry, ResourceBundle resourceBundle,
+			PortletRequest portletRequest)
+		throws PortalException {
 
 		SharingEntryInterpreter sharingEntryInterpreter =
 			_getSharingEntryInterpreter(sharingEntry);
 
+		String title;
+
 		if (sharingEntryInterpreter != null) {
-			return sharingEntryInterpreter.getTitle(sharingEntry);
+			title = sharingEntryInterpreter.getTitle(sharingEntry);
+		}
+		else {
+			title = ResourceBundleUtil.getString(resourceBundle, "something");
 		}
 
-		return ResourceBundleUtil.getString(resourceBundle, "something");
-	}
-
-	private String _getUserLink(
-			User user, ResourceBundle resourceBundle, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		if (user == null) {
-			return _getUserName(user, resourceBundle);
+		if (portletRequest != null) {
+			return StringBundler.concat(
+				"<a href=\"", getNotificationURL(sharingEntry, portletRequest),
+				"\">", HtmlUtil.escape(title), "</a>");
 		}
 
-		return StringBundler.concat(
-			"<a href=\"", user.getDisplayURL(themeDisplay), "\">",
-			HtmlUtil.escape(_getUserName(user, resourceBundle)), "</a>");
-	}
-
-	private String _getUserName(
-		SharingEntry sharingEntry, ResourceBundle resourceBundle) {
-
-		return _getUserName(
-			_userLocalService.fetchUserById(sharingEntry.getFromUserId()),
-			resourceBundle);
+		return title;
 	}
 
 	private String _getUserName(User user, ResourceBundle resourceBundle) {

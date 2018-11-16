@@ -51,12 +51,8 @@ public class JavaMethodCall extends JavaExpression {
 				false);
 		}
 		else {
-			int addedLinesCount = append(
+			indent = append(
 				sb, _methodName, indent, "", "(", maxLineLength, false);
-
-			for (int i = 0; i < addedLinesCount; i++) {
-				indent += "\t";
-			}
 
 			if (forceLineBreak) {
 				appendNewLine(

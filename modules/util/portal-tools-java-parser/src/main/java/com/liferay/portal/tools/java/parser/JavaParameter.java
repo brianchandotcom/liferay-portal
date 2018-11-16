@@ -58,12 +58,7 @@ public class JavaParameter extends BaseJavaTerm {
 			appendSingleLine(sb, _modifiers, " ", " ", "", maxLineLength);
 		}
 
-		int addedLinesCount = append(
-			sb, _javaType, indent, " ", "", maxLineLength, false);
-
-		for (int i = 0; i < addedLinesCount; i++) {
-			indent += "\t";
-		}
+		indent = append(sb, _javaType, indent, " ", "", maxLineLength, false);
 
 		append(sb, _name, indent, " ", suffix, maxLineLength);
 

@@ -35,12 +35,8 @@ public class JavaInstanceofStatement extends JavaExpression {
 		sb.append(indent);
 		sb.append(prefix);
 
-		int addedLinesCount = append(
+		indent = append(
 			sb, _valueJavaExpression, indent, "", " instanceof", maxLineLength);
-
-		for (int i = 0; i < addedLinesCount; i++) {
-			indent += "\t";
-		}
 
 		append(sb, _classJavaType, indent, " ", suffix, maxLineLength);
 

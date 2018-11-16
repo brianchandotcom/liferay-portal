@@ -67,13 +67,13 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		return toString(indent, prefix, suffix, maxLineLength);
 	}
 
-	protected int append(
+	protected String append(
 		StringBundler sb, JavaTerm javaTerm, String indent, int maxLineLength) {
 
 		return append(sb, javaTerm, indent, maxLineLength, true);
 	}
 
-	protected int append(
+	protected String append(
 		StringBundler sb, JavaTerm javaTerm, String indent, int maxLineLength,
 		boolean newLine) {
 
@@ -82,7 +82,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			maxLineLength, newLine);
 	}
 
-	protected int append(
+	protected String append(
 		StringBundler sb, JavaTerm javaTerm, String indent, String prefix,
 		String suffix, int maxLineLength) {
 
@@ -90,12 +90,12 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			sb, javaTerm, indent, prefix, suffix, maxLineLength, true);
 	}
 
-	protected int append(
+	protected String append(
 		StringBundler sb, JavaTerm javaTerm, String indent, String prefix,
 		String suffix, int maxLineLength, boolean newLine) {
 
 		if (appendSingleLine(sb, javaTerm, prefix, suffix, maxLineLength)) {
-			return 0;
+			return indent;
 		}
 
 		sb = _stripTrailingWhitespace(sb);
@@ -112,14 +112,14 @@ public abstract class BaseJavaTerm implements JavaTerm {
 					sb, javaTerm, "\t" + indent, prefix, suffix, maxLineLength);
 			}
 
-			return 1;
+			return indent + "\t";
 		}
 
 		return appendWithLineBreak(
 			sb, javaTerm, indent, prefix, suffix, maxLineLength);
 	}
 
-	protected int append(
+	protected String append(
 		StringBundler sb, List<? extends JavaTerm> list, String indent,
 		int maxLineLength) {
 
@@ -128,7 +128,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			maxLineLength);
 	}
 
-	protected int append(
+	protected String append(
 		StringBundler sb, List<? extends JavaTerm> list, String indent,
 		String prefix, String suffix, int maxLineLength) {
 
@@ -137,14 +137,14 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			maxLineLength);
 	}
 
-	protected int append(
+	protected String append(
 		StringBundler sb, List<? extends JavaTerm> list, String delimeter,
 		String indent, String prefix, String suffix, int maxLineLength) {
 
 		if (appendSingleLine(
 				sb, list, delimeter, prefix, suffix, maxLineLength)) {
 
-			return 0;
+			return indent;
 		}
 
 		sb = _stripTrailingWhitespace(sb);
@@ -152,7 +152,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		appendNewLine(
 			sb, list, delimeter, "\t" + indent, prefix, suffix, maxLineLength);
 
-		return 1;
+		return indent + "\t";
 	}
 
 	protected void appendNewLine(
@@ -303,7 +303,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			suffix, maxLineLength);
 	}
 
-	protected int appendWithLineBreak(
+	protected String appendWithLineBreak(
 		StringBundler sb, JavaTerm javaTerm, String indent, String prefix,
 		String suffix, int maxLineLength) {
 
@@ -322,7 +322,13 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 			sb.append(s);
 
-			return StringUtil.count(s, CharPool.NEW_LINE);
+			int newLineCount = StringUtil.count(s, CharPool.NEW_LINE);
+
+			for (int i = 0; i < newLineCount; i++) {
+				indent += "\t";
+			}
+
+			return indent;
 		}
 
 		String javaTermContent = javaTerm.toString(
@@ -342,7 +348,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 				suffix, maxLineLength);
 		}
 
-		return 1;
+		return indent + "\t";
 	}
 
 	protected int getLineLength(String line) {

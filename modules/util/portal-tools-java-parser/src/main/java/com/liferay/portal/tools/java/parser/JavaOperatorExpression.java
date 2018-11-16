@@ -39,20 +39,20 @@ public class JavaOperatorExpression extends JavaExpression {
 
 		if (_leftHandJavaExpression != null) {
 			if (_rightHandJavaExpression != null) {
-				int addedLinesCount = append(
-					sb, _leftHandJavaExpression, indent, prefix,
-					" " + _javaOperator.getValue(), maxLineLength, false);
-
 				if (Objects.equals(
 						_javaOperator.getCategory(),
 						JavaOperator.Category.CONDITIONAL)) {
 
+					append(
+						sb, _leftHandJavaExpression, indent, prefix,
+						" " + _javaOperator.getValue(), maxLineLength, false);
+
 					indent = StringUtil.replaceFirst(indent, "\t", "");
 				}
 				else {
-					for (int i = 0; i < addedLinesCount; i++) {
-						indent += "\t";
-					}
+					indent = append(
+						sb, _leftHandJavaExpression, indent, prefix,
+						" " + _javaOperator.getValue(), maxLineLength, false);
 				}
 
 				if (forceLineBreak ||

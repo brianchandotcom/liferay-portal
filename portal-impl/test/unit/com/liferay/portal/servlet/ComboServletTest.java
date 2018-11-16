@@ -14,6 +14,7 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.language.LanguageImpl;
+import com.liferay.portal.model.impl.PortletAppImpl;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.HttpImpl;
@@ -51,7 +53,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.internal.stubbing.answers.CallsRealMethods;
@@ -291,11 +292,9 @@ public class ComboServletTest extends PowerMockito {
 	}
 
 	protected void setUpPortalPortlet() {
-		when(
-			_portalPortletApp.getServletContext()
-		).thenReturn(
-			_portalServletContext
-		);
+		_portalPortletApp = new PortletAppImpl(StringPool.BLANK);
+
+		_portalPortletApp.setServletContext(_portalServletContext);
 
 		_portalPortlet = new PortletWrapper(null) {
 
@@ -329,11 +328,9 @@ public class ComboServletTest extends PowerMockito {
 	}
 
 	protected void setUpTestPortlet() {
-		when(
-			_testPortletApp.getServletContext()
-		).thenReturn(
-			_pluginServletContext
-		);
+		_testPortletApp = new PortletAppImpl(StringPool.BLANK);
+
+		_testPortletApp.setServletContext(_pluginServletContext);
 
 		_testPortlet = new PortletWrapper(null) {
 
@@ -369,16 +366,11 @@ public class ComboServletTest extends PowerMockito {
 	private MockHttpServletResponse _mockHttpServletResponse;
 	private MockServletContext _pluginServletContext;
 	private Portlet _portalPortlet;
-
-	@Mock
 	private PortletApp _portalPortletApp;
-
 	private MockServletContext _portalServletContext;
 	private PortletLocalService _portletLocalService;
 	private Portlet _portletUndeployed;
 	private Portlet _testPortlet;
-
-	@Mock
 	private PortletApp _testPortletApp;
 
 }

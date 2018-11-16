@@ -47,9 +47,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author László Csontos
  */
-@PrepareForTest(
-	{LayoutLocalServiceUtil.class, LocalizationUtil.class, PropsUtil.class}
-)
+@PrepareForTest({LayoutLocalServiceUtil.class, PropsUtil.class})
 @RunWith(PowerMockRunner.class)
 public class LayoutListUtilTest extends PowerMockito {
 
@@ -66,13 +64,9 @@ public class LayoutListUtilTest extends PowerMockito {
 			_layouts
 		);
 
-		mockStatic(LocalizationUtil.class);
+		LocalizationUtil localizationUtil = new LocalizationUtil();
 
-		when(
-			LocalizationUtil.getLocalization()
-		).thenReturn(
-			new LocalizationImpl()
-		);
+		localizationUtil.setLocalization(new LocalizationImpl());
 
 		mockStatic(PropsUtil.class);
 

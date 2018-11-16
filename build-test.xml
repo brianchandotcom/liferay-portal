@@ -1842,15 +1842,15 @@ jdbc.default.password=${database.password}</echo>
 
 			<local name="petra.jar.files" />
 
-			<antelope:stringutil property="petra.jar.files" string="${module.configuration.content}">
+			<antelope:stringutil if:set="module.configuration.content" property="petra.jar.files" string="${module.configuration.content}">
 				<antelope:replace regex="\s*&lt;resource-root path=&quot;" replacement="" />
 			</antelope:stringutil>
 
-			<antelope:stringutil property="petra.jar.files" string="${petra.jar.files}">
+			<antelope:stringutil if:set="petra.jar.files" property="petra.jar.files" string="${petra.jar.files}">
 				<antelope:replace regex="&quot;\s/&gt;[\n\r]*" replacement="," />
 			</antelope:stringutil>
 
-			<for list="${petra.jar.files}" param="petra.jar.file">
+			<for if:set="petra.jar.files" list="${petra.jar.files}" param="petra.jar.file">
 				<sequential>
 					<if>
 						<not>

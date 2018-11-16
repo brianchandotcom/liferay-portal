@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.SamlBinding;
-import com.liferay.saml.opensaml.integration.internal.transport.HttpClientInTransport;
-import com.liferay.saml.opensaml.integration.internal.transport.HttpClientOutTransport;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.opensaml.integration.internal.util.SamlUtil;
 import com.liferay.saml.opensaml.integration.metadata.MetadataManager;

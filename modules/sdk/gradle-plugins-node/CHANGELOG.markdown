@@ -268,6 +268,14 @@ task's `useNpmCI` property is set to `true`.
 beginning from version 6.2.1. Download and install Node.js and NPM separately
 for Node.js versions 5.5.0 - 6.2.0.
 
+## 4.5.0 - 2018-11-16
+
+### Added
+- [LPS-87465]: Add the property `production` to all tasks that extend
+`ExecuteNodeTask`. If `true`, devDependencies are not installed when running
+`npm install` without any arguments and sets `NODE_ENV=production` for lifecycle
+scripts.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -297,3 +305,4 @@ for Node.js versions 5.5.0 - 6.2.0.
 [LPS-82568]: https://issues.liferay.com/browse/LPS-82568
 [LPS-85959]: https://issues.liferay.com/browse/LPS-85959
 [LPS-86576]: https://issues.liferay.com/browse/LPS-86576
+[LPS-87465]: https://issues.liferay.com/browse/LPS-87465

@@ -16,23 +16,21 @@ package com.liferay.saml.opensaml.integration.internal.resolver;
 
 import com.liferay.saml.opensaml.integration.resolver.AttributeResolver;
 
-import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.saml2.core.AuthnRequest;
-import org.opensaml.saml2.core.NameID;
-import org.opensaml.saml2.core.Response;
+import org.opensaml.messaging.context.MessageContext;
+import org.opensaml.saml.saml2.core.AuthnRequest;
 
 /**
  * @author Carlos Sierra Andrés
  * @author Stian Sigvartsen
  */
 public class AttributeResolverSAMLContextImpl
-	extends SAMLContextImpl<AuthnRequest, Response, AttributeResolver>
+	extends SAMLContextImpl<AuthnRequest, AttributeResolver>
 	implements AttributeResolver.AttributeResolverSAMLContext {
 
 	public AttributeResolverSAMLContextImpl(
-		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext) {
+		MessageContext<AuthnRequest> messageContext) {
 
-		super(samlMessageContext);
+		super(messageContext);
 	}
 
 }

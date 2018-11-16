@@ -16,23 +16,21 @@ package com.liferay.saml.opensaml.integration.internal.resolver;
 
 import com.liferay.saml.opensaml.integration.resolver.UserResolver;
 
-import org.opensaml.common.SAMLObject;
-import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.saml2.core.NameID;
-import org.opensaml.saml2.core.Response;
+import org.opensaml.messaging.context.MessageContext;
+import org.opensaml.saml.saml2.core.Response;
 
 /**
  * @author Carlos Sierra Andrés
  * @author Stian Sigvartsen
  */
 public class UserResolverSAMLContextImpl
-	extends SAMLContextImpl<Response, SAMLObject, UserResolver>
+	extends SAMLContextImpl<Response, UserResolver>
 	implements UserResolver.UserResolverSAMLContext {
 
 	public UserResolverSAMLContextImpl(
-		SAMLMessageContext<Response, SAMLObject, NameID> samlMessageContext) {
+		MessageContext<Response> messageContext) {
 
-		super(samlMessageContext);
+		super(messageContext);
 	}
 
 }

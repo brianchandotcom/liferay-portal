@@ -69,6 +69,7 @@ import javax.enterprise.context.Initialized;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Observes;
+import javax.enterprise.event.ObservesAsync;
 import javax.enterprise.inject.spi.AfterBeanDiscovery;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.Bean;
@@ -278,13 +279,11 @@ public class BeanPortletExtension implements Extension {
 	}
 
 	@SuppressWarnings({"serial", "unchecked"})
-	public void step4ApplicationScopedInitialized(
-		@Initialized(ApplicationScoped.class) @Observes ServletContext
-			servletContext,
-		BeanManager beanManager) {
+	public void step4ApplicationScopedInitializedAsync(
+		@ObservesAsync ServletContextEvent servletContextEvent,
+		BeanManager beanManager, BundleContext bundleContext) {
 
-		BundleContext bundleContext =
-			(BundleContext)servletContext.getAttribute("osgi-bundlecontext");
+		ServletContext servletContext = servletContextEvent.getServletContext();
 
 		Bundle bundle = bundleContext.getBundle();
 
@@ -481,6 +480,15 @@ public class BeanPortletExtension implements Extension {
 				properties));
 	}
 
+	public void step4ApplicationScopedInitializedSync(
+		@Initialized(ApplicationScoped.class) @Observes ServletContext
+			servletContext,
+		BeanManager beanManager,
+		javax.enterprise.event.Event<ServletContextEvent> servletContextEvent) {
+
+		servletContextEvent.fireAsync(new ServletContextEvent(servletContext));
+	}
+
 	public void step5SessionScopeBeforeDestroyed(
 		@Destroyed(SessionScoped.class) @Observes Object httpSessionObject) {
 
@@ -529,6 +537,20 @@ public class BeanPortletExtension implements Extension {
 					" bean filters for ",
 					servletContext.getServletContextName()));
 		}
+	}
+
+	public static class ServletContextEvent {
+
+		public ServletContextEvent(ServletContext servletContext) {
+			_servletContext = servletContext;
+		}
+
+		public ServletContext getServletContext() {
+			return _servletContext;
+		}
+
+		private final ServletContext _servletContext;
+
 	}
 
 	private void _addBeanFiltersFromAnnotatedClasses() {

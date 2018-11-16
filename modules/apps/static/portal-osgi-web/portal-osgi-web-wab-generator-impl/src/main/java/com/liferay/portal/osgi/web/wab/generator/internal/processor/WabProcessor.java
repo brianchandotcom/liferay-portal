@@ -14,6 +14,7 @@
 
 package com.liferay.portal.osgi.web.wab.generator.internal.processor;
 
+import aQute.bnd.cdi.Discover;
 import aQute.bnd.component.DSAnnotations;
 import aQute.bnd.header.Attrs;
 import aQute.bnd.header.Parameters;
@@ -363,54 +364,7 @@ public class WabProcessor {
 			return;
 		}
 
-		String cdiInstruction = analyzer.getProperty(Constants.CDIANNOTATIONS);
-
-		if (Validator.isNotNull(cdiInstruction)) {
-			return;
-		}
-
 		String finalBeansXMLFile = beansXMLFile;
-
-		Document document = readDocument(file);
-
-		cdiInstruction = "*;discover=all";
-
-		if (document.hasContent()) {
-			Element rootElement = document.getRootElement();
-
-			// bean-discovery-mode="all" version="1.1"
-
-			XPath xPath = SAXReaderUtil.createXPath(
-				"/cdi-beans:beans/@version", _xsds);
-
-			Node versionNode = xPath.selectSingleNode(rootElement);
-
-			if (versionNode != null) {
-				Version version = Version.valueOf(versionNode.getStringValue());
-
-				if (_CDI_ARCHIVE_VERSION.compareTo(version) <= 0) {
-					xPath = SAXReaderUtil.createXPath(
-						"/cdi-beans:beans/@bean-discovery-mode", _xsds);
-
-					Node beanDiscoveryModeNode = xPath.selectSingleNode(
-						rootElement);
-
-					if (beanDiscoveryModeNode == null) {
-						cdiInstruction = "*;discover=annotated";
-					}
-					else {
-						cdiInstruction =
-							"*;discover=" +
-								beanDiscoveryModeNode.getStringValue();
-					}
-				}
-			}
-		}
-
-		analyzer.setProperty(Constants.CDIANNOTATIONS, cdiInstruction);
-
-		appendProperty(
-			analyzer, Constants.REQUIRE_CAPABILITY, _CDI_REQUIREMENTS);
 
 		Set<Object> plugins = analyzer.getPlugins();
 
@@ -453,6 +407,22 @@ public class WabProcessor {
 				}
 
 			});
+
+		String cdiInstruction = analyzer.getProperty(Constants.CDIANNOTATIONS);
+
+		if (cdiInstruction != null) {
+			return;
+		}
+
+		Document document = readDocument(file);
+
+		Discover discover = _findDiscoveryMode(document);
+
+		analyzer.setProperty(
+			Constants.CDIANNOTATIONS, "*;discover=" + discover);
+
+		appendProperty(
+			analyzer, Constants.REQUIRE_CAPABILITY, _CDI_REQUIREMENTS);
 	}
 
 	protected void processBundleClasspath(
@@ -1217,11 +1187,11 @@ public class WabProcessor {
 
 		processRequiredDeploymentContexts(analyzer);
 
-		processBeans(analyzer);
-
 		_processExcludedJSPs(analyzer);
 
 		analyzer.setProperties(pluginPackageProperties);
+
+		processBeans(analyzer);
 
 		try {
 			jar = analyzer.build();
@@ -1299,6 +1269,42 @@ public class WabProcessor {
 		FileUtil.copyFile(file, new File(dir, sb.toString()));
 	}
 
+	private Discover _findDiscoveryMode(Document document) {
+		if (!document.hasContent()) {
+			return Discover.all;
+		}
+
+		Element rootElement = document.getRootElement();
+
+		// bean-discovery-mode="all" version="1.1"
+
+		XPath xPath = SAXReaderUtil.createXPath(
+			"/cdi-beans:beans/@version", _xsds);
+
+		Node versionNode = xPath.selectSingleNode(rootElement);
+
+		if (versionNode == null) {
+			return Discover.all;
+		}
+
+		Version version = Version.valueOf(versionNode.getStringValue());
+
+		if (_CDI_ARCHIVE_VERSION.compareTo(version) <= 0) {
+			xPath = SAXReaderUtil.createXPath(
+				"/cdi-beans:beans/@bean-discovery-mode", _xsds);
+
+			Node beanDiscoveryModeNode = xPath.selectSingleNode(rootElement);
+
+			if (beanDiscoveryModeNode == null) {
+				return Discover.annotated;
+			}
+
+			return Discover.valueOf(beanDiscoveryModeNode.getStringValue());
+		}
+
+		return Discover.all;
+	}
+
 	private void _processExcludedJSPs(Analyzer analyzer) {
 		File file = new File(_pluginDir, "/WEB-INF/liferay-hook.xml");
 
@@ -1343,6 +1349,7 @@ public class WabProcessor {
 
 	private static final String _CDI_REQUIREMENTS = StringBundler.concat(
 		"osgi.cdi.extension;filter:='(osgi.cdi.extension=aries.cdi.http)',",
+		"osgi.cdi.extension;filter:='(osgi.cdi.extension=aries.cdi.el.jsp)',",
 		"osgi.cdi.extension;filter:='(osgi.cdi.extension=",
 		"com.liferay.bean.portlet.cdi.extension)'");
 

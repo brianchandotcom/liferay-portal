@@ -501,6 +501,14 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+		long userId, long layoutPageTemplateEntryId, String name, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateLayoutPageTemplateEntry(userId,
+			layoutPageTemplateEntryId, name, status);
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

@@ -517,6 +517,14 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+		long userId, long layoutPageTemplateEntryId, String name, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(userId,
+			layoutPageTemplateEntryId, name, status);
+	}
+
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(layoutPageTemplateEntryId,

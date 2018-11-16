@@ -390,6 +390,10 @@ public interface LayoutPageTemplateEntryLocalService extends BaseLocalService,
 		long layoutPageTemplateEntryId, long classNameId, long classTypeId)
 		throws PortalException;
 
+	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(long userId,
+		long layoutPageTemplateEntryId, String name, int status)
+		throws PortalException;
+
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId, String name) throws PortalException;
 

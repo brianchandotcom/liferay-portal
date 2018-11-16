@@ -21,6 +21,10 @@ import com.liferay.portal.kernel.util.StringBundler;
  */
 public abstract class JavaExpression extends BaseJavaTerm {
 
+	public JavaExpression getChainedJavaExpression() {
+		return _chainedJavaExpression;
+	}
+
 	public abstract String getString(
 		String indent, String prefix, String suffix, int maxLineLength,
 		boolean forceLineBreak);

@@ -109,7 +109,6 @@ page import="com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil" %
 page import="com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil" %><%@
 page import="com.liferay.portal.model.impl.*" %><%@
-page import="com.liferay.portal.service.*" %><%@
 page import="com.liferay.taglib.search.DateSearchEntry" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 

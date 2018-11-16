@@ -22,6 +22,7 @@ import com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice;
 import com.liferay.portal.resiliency.service.PortalResiliencyAdvice;
 import com.liferay.portal.search.IndexableAdvice;
 import com.liferay.portal.security.access.control.AccessControlAdvice;
+import com.liferay.portal.service.ServiceContextAdvice;
 import com.liferay.portal.spring.context.ConfigurableApplicationContextConfigurator;
 
 import com.liferay.portal.systemevent.SystemEventAdvice;
@@ -132,9 +133,14 @@ public class AopConfigurableApplicationContextConfigurator
 				configurableListableBeanFactory.getBean(
 					"serviceAdvice", MethodInterceptor.class);
 
+			ServiceContextAdvice serviceContextAdvice =
+				new ServiceContextAdvice();
+
+			serviceContextAdvice.setNextMethodInterceptor(methodInterceptor);
+
 			SystemEventAdvice systemEventAdvice = new SystemEventAdvice();
 
-			systemEventAdvice.setNextMethodInterceptor(methodInterceptor);
+			systemEventAdvice.setNextMethodInterceptor(serviceContextAdvice);
 
 			IndexableAdvice indexableAdvice = new IndexableAdvice();
 

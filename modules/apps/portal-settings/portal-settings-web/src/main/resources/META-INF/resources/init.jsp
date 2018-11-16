@@ -65,7 +65,6 @@ page import="com.liferay.portal.kernel.util.TextFormatter" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.webserver.WebServerServletTokenUtil" %><%@
 page import="com.liferay.portal.model.impl.*" %><%@
-page import="com.liferay.portal.service.*" %><%@
 page import="com.liferay.portal.settings.web.internal.constants.PortalSettingsWebKeys" %><%@
 page import="com.liferay.portal.settings.web.internal.exception.RequiredLocaleException" %><%@
 page import="com.liferay.portal.util.PrefsPropsUtil" %><%@

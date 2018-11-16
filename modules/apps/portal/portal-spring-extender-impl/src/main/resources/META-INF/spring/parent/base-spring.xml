@@ -18,10 +18,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean class="com.liferay.portal.service.ServiceContextAdvice" id="serviceAdvice">
-		<property name="nextMethodInterceptor" ref="retryAdvice" />
-	</bean>
-	<bean class="com.liferay.portal.spring.aop.RetryAdvice" id="retryAdvice">
+	<bean class="com.liferay.portal.spring.aop.RetryAdvice" id="serviceAdvice">
 		<property name="nextMethodInterceptor" ref="transactionAdvice" />
 	</bean>
 	<bean class="com.liferay.portal.spring.context.PortletBeanFactoryCleaner" />

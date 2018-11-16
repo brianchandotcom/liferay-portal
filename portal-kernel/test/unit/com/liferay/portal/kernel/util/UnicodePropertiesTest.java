@@ -14,14 +14,18 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
+import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -103,9 +107,26 @@ public class UnicodePropertiesTest {
 	@Test
 	public void testLoad() throws Exception {
 		_testLoad(
-			(props, unicodeProperties) -> unicodeProperties.load(props), false);
+			(props, unicodeProperties) -> {
+				try {
+					unicodeProperties.load(props);
+				}
+				catch (IOException ioe) {
+					ReflectionUtil.throwException(ioe);
+				}
+			},
+			false);
+
 		_testLoad(
-			(props, unicodeProperties) -> unicodeProperties.load(props), true);
+			(props, unicodeProperties) -> {
+				try {
+					unicodeProperties.load(props);
+				}
+				catch (IOException ioe) {
+					ReflectionUtil.throwException(ioe);
+				}
+			},
+			true);
 	}
 
 	@Test
@@ -215,33 +236,32 @@ public class UnicodePropertiesTest {
 	}
 
 	private void _testLoad(
-			LoadMethod<String, UnicodeProperties, Exception> loadMethod,
-			boolean safe)
+			BiConsumer<String, UnicodeProperties> loadMethod, boolean safe)
 		throws Exception {
 
 		UnicodeProperties unicodeProperties = new UnicodeProperties(safe);
 
-		loadMethod.load(null, unicodeProperties);
+		loadMethod.accept(null, unicodeProperties);
 
 		Assert.assertTrue(
 			"Nothing should be loaded in if props is null: " +
 				unicodeProperties.toString(),
 			unicodeProperties.isEmpty());
 
-		loadMethod.load(_TEST_LINE_1, unicodeProperties);
+		loadMethod.accept(_TEST_LINE_1, unicodeProperties);
 
 		_assertUnicodeProperties(
 			new String[] {_TEST_VALUE_1}, new String[] {_TEST_KEY_1},
 			unicodeProperties);
 
-		loadMethod.load(_TEST_PROPS, unicodeProperties);
+		loadMethod.accept(_TEST_PROPS, unicodeProperties);
 
 		_assertUnicodeProperties(
 			new String[] {_TEST_VALUE_1, _TEST_VALUE_2, _TEST_VALUE_3},
 			new String[] {_TEST_KEY_1, _TEST_KEY_2, _TEST_KEY_3},
 			unicodeProperties);
 
-		loadMethod.load(
+		loadMethod.accept(
 			StringBundler.concat(
 				_TEST_LINE_1, _safeNewLineCharacter, StringPool.NEW_LINE,
 				_TEST_LINE_2, _safeNewLineCharacter, StringPool.NEW_LINE,
@@ -405,12 +425,6 @@ public class UnicodePropertiesTest {
 		_TEST_PROPS = StringBundler.concat(
 			_TEST_LINE_1, StringPool.NEW_LINE, _TEST_LINE_2,
 			StringPool.NEW_LINE, _TEST_LINE_3);
-	}
-
-	private interface LoadMethod<E, U, T extends Throwable> {
-
-		public void load(E e, U u) throws T;
-
 	}
 
 }

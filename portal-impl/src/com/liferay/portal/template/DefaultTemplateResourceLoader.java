@@ -43,6 +43,22 @@ import java.util.Set;
  */
 public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #DefaultTemplateResourceLoader(
+	 * 				String, Set, long, MultiVMPool, SingleVMPool)}
+	 */
+	@Deprecated
+	public DefaultTemplateResourceLoader(
+		String name, long modificationCheckInterval, MultiVMPool multiVMPool,
+		SingleVMPool singleVMPool) {
+
+		throw new UnsupportedOperationException(
+			"This constructor is deprecated and replaced by " +
+				"#DefaultTemplateResourceLoader(String, Set, long, " +
+					"MultiVMPool, SingleVMPool)");
+	}
+
 	public DefaultTemplateResourceLoader(
 		String name, Set<TemplateResourceParser> templateResourceParsers,
 		long modificationCheckInterval, MultiVMPool multiVMPool,
@@ -56,7 +72,6 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		_name = name;
 
 		_templateResourceParsers = templateResourceParsers;
-
 		_modificationCheckInterval = modificationCheckInterval;
 
 		_multiVMPool = multiVMPool;
@@ -84,22 +99,6 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 		_singleVMPortalCache.registerPortalCacheListener(
 			cacheListener, PortalCacheListenerScope.ALL);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #DefaultTemplateResourceLoader(
-	 * 				String, Set, long, MultiVMPool, SingleVMPool)}
-	 */
-	@Deprecated
-	public DefaultTemplateResourceLoader(
-		String name, long modificationCheckInterval, MultiVMPool multiVMPool,
-		SingleVMPool singleVMPool) {
-
-		throw new UnsupportedOperationException(
-			"This constructor is deprecated and replaced by " +
-				"#DefaultTemplateResourceLoader(String, Set, long, " +
-					"MultiVMPool, SingleVMPool)");
 	}
 
 	/**

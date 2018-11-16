@@ -44,7 +44,6 @@ import org.gradle.api.Task;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.specs.Spec;
-import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
@@ -141,12 +140,6 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		return _nodeModulesCacheNativeSync;
 	}
 
-	@Input
-	@Optional
-	public boolean isProduction() {
-		return _production;
-	}
-
 	public boolean isRemoveShrinkwrappedUrls() {
 		return GradleUtil.toBoolean(_removeShrinkwrappedUrls);
 	}
@@ -167,10 +160,6 @@ public class NpmInstallTask extends ExecuteNpmTask {
 
 	public void setNodeModulesDigestFile(Object nodeModulesDigestFile) {
 		_nodeModulesDigestFile = nodeModulesDigestFile;
-	}
-
-	public void setProduction(boolean production) {
-		_production = production;
 	}
 
 	public void setRemoveShrinkwrappedUrls(Object removeShrinkwrappedUrls) {
@@ -246,8 +235,6 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		else {
 			completeArgs.add("install");
 		}
-
-		completeArgs.add("--production=" + _production);
 
 		return completeArgs;
 	}
@@ -588,7 +575,6 @@ public class NpmInstallTask extends ExecuteNpmTask {
 	private boolean _nodeModulesCacheNativeSync = true;
 	private Object _nodeModulesDigestFile;
 	private boolean _npmCacheVerify;
-	private boolean _production;
 	private Object _removeShrinkwrappedUrls;
 	private Object _useNpmCI;
 

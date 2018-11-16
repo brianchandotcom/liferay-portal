@@ -130,6 +130,10 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 		return GradleUtil.toBoolean(_cacheConcurrent);
 	}
 
+	public boolean isProduction() {
+		return _production;
+	}
+
 	public boolean isProgress() {
 		return _progress;
 	}
@@ -144,6 +148,10 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 
 	public void setLogLevel(Object logLevel) {
 		_logLevel = logLevel;
+	}
+
+	public void setProduction(boolean production) {
+		_production = production;
 	}
 
 	public void setProgress(boolean progress) {
@@ -172,6 +180,9 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 			completeArgs.add(logLevel);
 		}
 
+		completeArgs.add("--production");
+		completeArgs.add(Boolean.toString(isProduction()));
+
 		completeArgs.add("--progress");
 		completeArgs.add(Boolean.toString(isProgress()));
 
@@ -188,6 +199,7 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 	private Object _cacheConcurrent;
 	private Object _cacheDir;
 	private Object _logLevel;
+	private boolean _production;
 	private boolean _progress = true;
 	private Object _registry;
 

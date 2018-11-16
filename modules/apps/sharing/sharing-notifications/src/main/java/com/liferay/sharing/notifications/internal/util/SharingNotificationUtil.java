@@ -69,19 +69,19 @@ public class SharingNotificationUtil {
 
 		User toUser = _userLocalService.fetchUser(sharingEntry.getToUserId());
 
-		Locale locale = _getLocale(toUser);
-
-		template.put("actionTitle", _getEmailActionTitle(sharingEntry, locale));
-
 		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
+			_resourceBundleLoader.loadResourceBundle(_getLocale(toUser));
+
+		template.put(
+			"actionTitle", _getEmailActionTitle(sharingEntry, resourceBundle));
 
 		User fromUser = _userLocalService.fetchUser(
 			sharingEntry.getFromUserId());
 
 		template.put(
 			"content",
-			_getNotificationMessage(sharingEntry, locale, portletRequest));
+			_getNotificationMessage(
+				sharingEntry, resourceBundle.getLocale(), portletRequest));
 
 		template.put("fromUserName", _getUserName(fromUser, resourceBundle));
 
@@ -157,11 +157,8 @@ public class SharingNotificationUtil {
 	}
 
 	private String _getEmailActionTitle(
-			SharingEntry sharingEntry, Locale locale)
+			SharingEntry sharingEntry, ResourceBundle resourceBundle)
 		throws PortalException {
-
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
 
 		SharingEntryInterpreter sharingEntryInterpreter =
 			_getSharingEntryInterpreter(sharingEntry);
@@ -170,7 +167,7 @@ public class SharingNotificationUtil {
 			return ResourceBundleUtil.getString(
 				resourceBundle, "view-x",
 				sharingEntryInterpreter.getAssetTypeTitle(
-					sharingEntry, locale));
+					sharingEntry, resourceBundle.getLocale()));
 		}
 
 		return ResourceBundleUtil.getString(resourceBundle, "view");

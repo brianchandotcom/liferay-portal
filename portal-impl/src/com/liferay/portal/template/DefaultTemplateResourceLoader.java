@@ -88,8 +88,8 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #DefaultTemplateResourceLoader(Set<TemplateResourceParser>,
-	 *             String, long, MultiVMPool, SingleVMPool)}
+	 *             #DefaultTemplateResourceLoader(
+	 * 				Set, String, long, MultiVMPool, SingleVMPool)}
 	 */
 	@Deprecated
 	public DefaultTemplateResourceLoader(
@@ -98,8 +98,8 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 		throw new UnsupportedOperationException(
 			"This constructor is deprecated and replaced by " +
-				"#DefaultTemplateResourceLoader(Set<TemplateResourceParser>, " +
-					"String, long, MultiVMPool, SingleVMPool)");
+				"#DefaultTemplateResourceLoader(Set, String, long, " +
+					"MultiVMPool, SingleVMPool)");
 	}
 
 	/**

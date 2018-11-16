@@ -11,7 +11,7 @@
 		<property name="dataSource" ref="liferayDataSource" />
 		<property name="sessionFactory" ref="liferaySessionFactory" />
 	</bean>
-	<bean class="com.liferay.portal.dao.jdbc.aop.DynamicDataSourceAdviceFactoryUtil" factory-method="createDynamicDataSourceAdvice" id="transactionAdvice">
+	<bean class="com.liferay.portal.dao.jdbc.aop.DynamicDataSourceAdviceFactoryUtil" factory-method="createDynamicDataSourceAdvice" id="serviceAdvice">
 		<constructor-arg>
 			<bean class="com.liferay.portal.spring.transaction.TransactionInterceptor">
 				<property name="transactionExecutor" ref="transactionExecutor" />
@@ -20,9 +20,6 @@
 	</bean>
 	<bean class="com.liferay.portal.kernel.portlet.PortletClassLoaderUtil" factory-method="getClassLoader" id="portletClassLoader" />
 	<bean class="com.liferay.portal.kernel.portlet.PortletClassLoaderUtil" factory-method="getServletContextName" id="servletContextName" />
-	<bean class="com.liferay.portal.spring.aop.RetryAdvice" id="serviceAdvice">
-		<property name="nextMethodInterceptor" ref="transactionAdvice" />
-	</bean>
 	<bean class="com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor" />
 	<bean class="com.liferay.portal.spring.context.PortletBeanFactoryCleaner" />
 	<bean class="com.liferay.portal.spring.context.ServiceBeanPublisher" />

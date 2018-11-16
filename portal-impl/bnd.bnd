@@ -18,7 +18,6 @@ Export-Package:\
 	com.liferay.portal.service.persistence.constants,\
 	com.liferay.portal.servlet,\
 	com.liferay.portal.servlet.filters.authverifier,\
-	com.liferay.portal.spring.aop,\
 	com.liferay.portal.spring.bean,\
 	com.liferay.portal.spring.context,\
 	com.liferay.portal.spring.hibernate,\

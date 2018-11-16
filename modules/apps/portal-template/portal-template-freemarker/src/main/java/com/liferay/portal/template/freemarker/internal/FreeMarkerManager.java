@@ -592,12 +592,13 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		public Set<String> addingBundle(
 			Bundle bundle, BundleEvent bundleEvent) {
 
-			boolean track = false;
-			Set<String> trackedKeys = new HashSet<>();
+			Set<String> trackedKeys = null;
 
 			URL url = bundle.getEntry("/META-INF/taglib-mappings.properties");
 
 			if (url != null) {
+				trackedKeys = new HashSet<>();
+
 				try (InputStream inputStream = url.openStream()) {
 					Properties properties = PropertiesUtil.load(
 						inputStream, StringPool.UTF8);
@@ -608,8 +609,6 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 					_taglibMappings.putAll(map);
 
 					trackedKeys.addAll(map.keySet());
-
-					track = true;
 				}
 				catch (Exception e) {
 					_log.error(e, e);
@@ -628,17 +627,15 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 				Object value = attributes.get("osgi.extender");
 
 				if (value.equals("jsp.taglib")) {
-					track = true;
+					if (trackedKeys == null) {
+						trackedKeys = Collections.emptySet();
+					}
 
 					break;
 				}
 			}
 
-			if (track) {
-				return trackedKeys;
-			}
-
-			return null;
+			return trackedKeys;
 		}
 
 		@Override

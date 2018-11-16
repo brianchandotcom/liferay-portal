@@ -313,7 +313,7 @@
 		<execute function="AssertHTMLSourceTextPresent" value1="${escapedScript}" />
 	</command>
 
-	<command ignore="true" name="ViewMobileDeviceRules" priority="3">
+	<command name="ViewMobileDeviceRules" priority="3">
 		<description message="This is a use case for LPS-42750." />
 
 		<!-- LRQA-42888 -->

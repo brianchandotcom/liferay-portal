@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceScannerStrategy;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.aop.ServiceBeanAopInvocationHandler;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -64,14 +63,7 @@ public class ServiceJSONWebServiceScannerStrategy
 			InvocationHandler invocationHandler =
 				ProxyUtil.getInvocationHandler(service);
 
-			if (invocationHandler instanceof ServiceBeanAopInvocationHandler) {
-				ServiceBeanAopInvocationHandler
-					serviceBeanAopInvocationHandler =
-						(ServiceBeanAopInvocationHandler)invocationHandler;
-
-				service = serviceBeanAopInvocationHandler.getTarget();
-			}
-			else if (invocationHandler instanceof ClassLoaderBeanHandler) {
+			if (invocationHandler instanceof ClassLoaderBeanHandler) {
 				ClassLoaderBeanHandler classLoaderBeanHandler =
 					(ClassLoaderBeanHandler)invocationHandler;
 
@@ -84,6 +76,18 @@ public class ServiceJSONWebServiceScannerStrategy
 				}
 				else {
 					service = bean;
+				}
+			}
+			else {
+				Class<?> invocationHandlerClass = invocationHandler.getClass();
+
+				try {
+					Method method = invocationHandlerClass.getMethod(
+						"getTarget");
+
+					service = method.invoke(invocationHandler);
+				}
+				catch (ReflectiveOperationException roe) {
 				}
 			}
 		}

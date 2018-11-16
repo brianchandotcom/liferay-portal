@@ -19,8 +19,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.aop.ServiceBeanAopInvocationHandler;
 import com.liferay.portal.util.PropsValues;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -120,14 +122,19 @@ public class ApplicationContextServicePublisherUtil {
 		Class<?> clazz = bean.getClass();
 
 		if (ProxyUtil.isProxyClass(clazz)) {
-			ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler =
-				ProxyUtil.fetchInvocationHandler(
-					bean, ServiceBeanAopInvocationHandler.class);
+			InvocationHandler invocationHandler =
+				ProxyUtil.getInvocationHandler(bean);
 
-			if (serviceBeanAopInvocationHandler != null) {
-				Object target = serviceBeanAopInvocationHandler.getTarget();
+			Class<?> invocationHandlerClass = invocationHandler.getClass();
+
+			try {
+				Method method = invocationHandlerClass.getMethod("getTarget");
+
+				Object target = method.invoke(invocationHandler);
 
 				clazz = target.getClass();
+			}
+			catch (ReflectiveOperationException roe) {
 			}
 		}
 

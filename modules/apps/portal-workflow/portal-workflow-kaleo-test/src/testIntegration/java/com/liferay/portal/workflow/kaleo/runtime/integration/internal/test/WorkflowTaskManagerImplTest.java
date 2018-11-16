@@ -819,6 +819,32 @@ public class WorkflowTaskManagerImplTest
 	}
 
 	@Test
+	public void testSearchWorkflowTaskByDeletedAsset() throws Exception {
+		activateSingleApproverWorkflow(
+			JournalFolder.class.getName(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
+
+		JournalArticle article = addJournalArticle(
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		int total = searchCount(article.getTitle());
+
+		Assert.assertEquals(1, total);
+
+		JournalArticleLocalServiceUtil.deleteArticle(article);
+
+		total = searchCount(article.getTitle());
+
+		Assert.assertEquals(0, total);
+
+		deactivateWorkflow(
+			JournalFolder.class.getName(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
+	}
+
+	@Test
 	public void testSearchWorkflowTaskByUserRoles() throws Exception {
 		activateSingleApproverWorkflow(BlogsEntry.class.getName(), 0, 0);
 

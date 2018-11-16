@@ -16,6 +16,9 @@ package com.liferay.portal.spring.aop;
 
 import com.liferay.portal.cache.thread.local.ThreadLocalCacheAdvice;
 import com.liferay.portal.increment.BufferedIncrementAdvice;
+import com.liferay.portal.internal.cluster.ClusterableAdvice;
+import com.liferay.portal.internal.cluster.SPIClusterableAdvice;
+import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.messaging.async.AsyncAdvice;
 import com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice;
@@ -25,6 +28,7 @@ import com.liferay.portal.security.access.control.AccessControlAdvice;
 import com.liferay.portal.service.ServiceContextAdvice;
 import com.liferay.portal.spring.context.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.systemevent.SystemEventAdvice;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Map;
 
@@ -185,7 +189,27 @@ public class AopConfigurableApplicationContextConfigurator
 			accessControlAdvice.setNextMethodInterceptor(
 				portalResiliencyAdvice);
 
-			return accessControlAdvice;
+			methodInterceptor = accessControlAdvice;
+
+			if (PropsValues.CLUSTER_LINK_ENABLED) {
+				ClusterableAdvice clusterableAdvice = new ClusterableAdvice();
+
+				clusterableAdvice.setNextMethodInterceptor(methodInterceptor);
+
+				methodInterceptor = clusterableAdvice;
+			}
+
+			if (SPIUtil.isSPI()) {
+				SPIClusterableAdvice spiClusterableAdvice =
+					new SPIClusterableAdvice();
+
+				spiClusterableAdvice.setNextMethodInterceptor(
+					methodInterceptor);
+
+				methodInterceptor = spiClusterableAdvice;
+			}
+
+			return methodInterceptor;
 		}
 
 		private final ClassLoader _classLoader;

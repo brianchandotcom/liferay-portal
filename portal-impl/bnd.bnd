@@ -3,7 +3,6 @@ Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
 Bundle-Version: 4.0.0
 Export-Package:\
 	com.liferay.portal.bean,\
-	com.liferay.portal.cluster,\
 	com.liferay.portal.dao.jdbc.aop,\
 	com.liferay.portal.dao.orm.hibernate,\
 	com.liferay.portal.deploy.hot,\

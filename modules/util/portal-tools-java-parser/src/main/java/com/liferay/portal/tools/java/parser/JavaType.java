@@ -61,16 +61,16 @@ public class JavaType extends BaseJavaTerm {
 		sb.append(indent);
 		sb.append(prefix);
 
-		int addedLinesCount = append(
-			sb, _name, indent, maxLineLength, !forceLineBreak);
+		if (!appendSingleLine(sb, _name, maxLineLength)) {
+			append(sb, _name, indent, maxLineLength, !forceLineBreak);
+		}
+		else if (forceLineBreak) {
+			sb.append("\n");
+			sb.append(indent);
+			sb.append("\t");
+		}
 
 		if (_genericJavaTypes != null) {
-			if (forceLineBreak && (addedLinesCount == 0)) {
-				sb.append("\n");
-				sb.append(indent);
-				sb.append("\t");
-			}
-
 			append(sb, _genericJavaTypes, indent, "<", ">", maxLineLength);
 		}
 

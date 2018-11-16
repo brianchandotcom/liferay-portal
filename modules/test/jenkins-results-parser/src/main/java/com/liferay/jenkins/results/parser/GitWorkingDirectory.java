@@ -77,14 +77,7 @@ public class GitWorkingDirectory {
 			}
 		}
 
-		GitRemote newGitRemote = new GitRemote(
-			this,
-			new String[] {
-				JenkinsResultsParserUtil.combine(
-					gitRemoteName, "\t", remoteURL, " (fetch)"),
-				JenkinsResultsParserUtil.combine(
-					gitRemoteName, "\t", remoteURL, " (push)")
-			});
+		GitRemote newGitRemote = new GitRemote(this, gitRemoteName, remoteURL);
 
 		_gitRemotes.put(gitRemoteName, newGitRemote);
 

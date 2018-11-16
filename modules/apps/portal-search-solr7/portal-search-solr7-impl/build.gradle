@@ -1,4 +1,4 @@
-String luceneVersion = "7.2.1"
+String luceneVersion = "7.5.0"
 
 dependencies {
 	compileInclude group: "commons-io", name: "commons-io", version: "2.4"

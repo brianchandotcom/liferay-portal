@@ -68,21 +68,7 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 			return new long[0];
 		}
 
-		if (Validator.isNotNull(segmentsEntry.getCriteria())) {
-			ODataRetriever oDataRetriever = _serviceTrackerMap.getService(
-				segmentsEntry.getType());
-
-			List<BaseModel<?>> results = oDataRetriever.getResults(
-				segmentsEntry.getCompanyId(), segmentsEntry.getCriteria(),
-				Locale.getDefault(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			Stream<BaseModel<?>> stream = results.stream();
-
-			return stream.mapToLong(
-				baseModel -> (Long)baseModel.getPrimaryKeyObj()
-			).toArray();
-		}
-		else {
+		if (Validator.isNull(segmentsEntry.getCriteria())) {
 			List<SegmentsEntryRel> segmentsEntryRels =
 				_segmentsEntryRelLocalService.getSegmentsEntryRels(
 					segmentsEntryId);
@@ -93,6 +79,23 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 				SegmentsEntryRel::getClassPK
 			).toArray();
 		}
+
+		ODataRetriever oDataRetriever = _serviceTrackerMap.getService(
+			segmentsEntry.getType());
+
+		if (oDataRetriever == null) {
+			return new long[0];
+		}
+
+		List<BaseModel<?>> results = oDataRetriever.getResults(
+			segmentsEntry.getCompanyId(), segmentsEntry.getCriteria(),
+			Locale.getDefault(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Stream<BaseModel<?>> stream = results.stream();
+
+		return stream.mapToLong(
+			baseModel -> (Long)baseModel.getPrimaryKeyObj()
+		).toArray();
 	}
 
 	@Override

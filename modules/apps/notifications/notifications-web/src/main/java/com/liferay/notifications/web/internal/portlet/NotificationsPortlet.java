@@ -17,6 +17,7 @@ package com.liferay.notifications.web.internal.portlet;
 import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.model.UserNotificationDelivery;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -100,8 +101,14 @@ public class NotificationsPortlet extends MVCPortlet {
 			actionRequest, "userNotificationEventId");
 
 		try {
-			_userNotificationEventLocalService.deleteUserNotificationEvent(
-				userNotificationEventId);
+			UserNotificationEvent userNotificationEvent =
+				_userNotificationEventLocalService.
+					fetchUserNotificationEvent(userNotificationEventId);
+
+			if (userNotificationEvent != null) {
+				_userNotificationEventLocalService.deleteUserNotificationEvent(
+					userNotificationEvent);
+			}
 		}
 		catch (Exception e) {
 			throw new PortletException(e);

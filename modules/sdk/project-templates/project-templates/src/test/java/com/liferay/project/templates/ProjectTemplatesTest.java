@@ -1302,19 +1302,6 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNBPortletWithBOM() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"npm-billboardjs-portlet", "billboardjs-dependency-management",
-			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
-	}
-
-	@Test
 	public void testBuildTemplateNpmAngularPortlet70() throws Exception {
 		_testBuildTemplateNpmAngular70(
 			"npm-angular-portlet", "foo", "foo", "Foo");
@@ -1340,143 +1327,6 @@ public class ProjectTemplatesTest {
 
 		_testBuildTemplateNpmAngular71(
 			"npm-angular-portlet", "foo-bar", "foo.bar", "FooBar");
-	}
-
-	@Test
-	public void testBuildTemplateNpmBillboardjsPortlet70() throws Exception {
-		_testBuildTemplateNpm70("npm-billboardjs-portlet", "foo", "foo", "Foo");
-	}
-
-	@Test
-	public void testBuildTemplateNpmBillboardjsPortlet71() throws Exception {
-		_testBuildTemplateNpm71("npm-billboardjs-portlet", "foo", "foo", "Foo");
-	}
-
-	@Test
-	public void testBuildTemplateNpmBillboardjsPortletWithDashes70()
-		throws Exception {
-
-		_testBuildTemplateNpm70(
-			"npm-billboardjs-portlet", "foo-bar", "foo.bar", "FooBar");
-	}
-
-	@Test
-	public void testBuildTemplateNpmBillboardjsPortletWithDashes71()
-		throws Exception {
-
-		_testBuildTemplateNpm71(
-			"npm-billboardjs-portlet", "foo-bar", "foo.bar", "FooBar");
-	}
-
-	@Test
-	public void testBuildTemplateNpmJQueryPortlet70() throws Exception {
-		_testBuildTemplateNpm70("npm-jquery-portlet", "foo", "foo", "Foo");
-	}
-
-	@Test
-	public void testBuildTemplateNpmJQueryPortlet71() throws Exception {
-		_testBuildTemplateNpm71("npm-jquery-portlet", "foo", "foo", "Foo");
-	}
-
-	@Test
-	public void testBuildTemplateNpmJQueryPortletWithBOM() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"npm-jquery-portlet", "jquery-dependency-management",
-			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
-	}
-
-	@Test
-	public void testBuildTemplateNpmJQueryPortletWithDashes70()
-		throws Exception {
-
-		_testBuildTemplateNpm70(
-			"npm-jquery-portlet", "foo-bar", "foo.bar", "FooBar");
-	}
-
-	@Test
-	public void testBuildTemplateNpmJQueryPortletWithDashes71()
-		throws Exception {
-
-		_testBuildTemplateNpm71(
-			"npm-jquery-portlet", "foo-bar", "foo.bar", "FooBar");
-	}
-
-	@Test
-	public void testBuildTemplateNpmMetaljsPortlet70() throws Exception {
-		_testBuildTemplateNpm70("npm-metaljs-portlet", "foo", "foo", "Foo");
-	}
-
-	@Test
-	public void testBuildTemplateNpmMetaljsPortlet71() throws Exception {
-		_testBuildTemplateNpm71("npm-metaljs-portlet", "foo", "foo", "Foo");
-	}
-
-	@Test
-	public void testBuildTemplateNpmMetaljsPortletWithBOM() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"npm-metaljs-portlet", "metaljs-dependency-management",
-			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
-	}
-
-	@Test
-	public void testBuildTemplateNpmMetaljsPortletWithDashes70()
-		throws Exception {
-
-		_testBuildTemplateNpm70(
-			"npm-metaljs-portlet", "foo-bar", "foo.bar", "FooBar");
-	}
-
-	@Test
-	public void testBuildTemplateNpmMetaljsPortletWithDashes71()
-		throws Exception {
-
-		_testBuildTemplateNpm71(
-			"npm-metaljs-portlet", "foo-bar", "foo.bar", "FooBar");
-	}
-
-	@Test
-	public void testBuildTemplateNpmPortlet70() throws Exception {
-		_testBuildTemplateNpm70("npm-portlet", "foo", "foo", "Foo");
-	}
-
-	@Test
-	public void testBuildTemplateNpmPortlet71() throws Exception {
-		_testBuildTemplateNpm71("npm-portlet", "foo", "foo", "Foo");
-	}
-
-	@Test
-	public void testBuildTemplateNpmPortletWithBOM() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"npm-portlet", "npm-portlet-dependency-management",
-			"--dependency-management-enabled");
-
-		_testNotContains(
-			gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		_testContains(
-			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL + "\n");
-	}
-
-	@Test
-	public void testBuildTemplateNpmPortletWithDashes70() throws Exception {
-		_testBuildTemplateNpm70("npm-portlet", "foo-bar", "foo.bar", "FooBar");
-	}
-
-	@Test
-	public void testBuildTemplateNpmPortletWithDashes71() throws Exception {
-		_testBuildTemplateNpm71("npm-portlet", "foo-bar", "foo.bar", "FooBar");
 	}
 
 	@Test
@@ -4953,10 +4803,6 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, "package.json",
 			"target/classes/META-INF/resources");
 
-		_testNotContains(
-			gradleProjectDir, ".npmbundlerrc",
-			"target/classes/META-INF/resources");
-
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, name, "com.test", "-DclassName=" + className,
 			"-Dpackage=" + packageName, "-DliferayVersion=7.0");
@@ -4968,10 +4814,6 @@ public class ProjectTemplatesTest {
 		_testNotContains(
 			mavenProjectDir, "package.json",
 			"build/resources/main/META-INF/resources");
-
-		_testContains(
-			mavenProjectDir, ".npmbundlerrc",
-			"target/classes/META-INF/resources");
 
 		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
 			_addNpmrc(gradleProjectDir);
@@ -5004,10 +4846,6 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, "package.json",
 			"target/classes/META-INF/resources");
 
-		_testNotContains(
-			gradleProjectDir, ".npmbundlerrc",
-			"target/classes/META-INF/resources");
-
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, name, "com.test", "-DclassName=" + className,
 			"-Dpackage=" + packageName, "-DliferayVersion=7.1");
@@ -5022,10 +4860,6 @@ public class ProjectTemplatesTest {
 		_testNotContains(
 			mavenProjectDir, "package.json",
 			"build/resources/main/META-INF/resources");
-
-		_testContains(
-			mavenProjectDir, ".npmbundlerrc",
-			"target/classes/META-INF/resources");
 
 		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
 			_addNpmrc(gradleProjectDir);

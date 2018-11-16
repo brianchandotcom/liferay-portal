@@ -971,6 +971,13 @@ public class PortalImpl implements Portal {
 			url = null;
 		}
 		else {
+			if (!securityMode.equals("ip") && _log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Invalid ", PropsKeys.REDIRECT_URL_SECURITY_MODE,
+						" property value was configured: ", securityMode));
+			}
+
 			String[] allowedIps = PropsValues.REDIRECT_URL_IPS_ALLOWED;
 
 			if (allowedIps.length == 0) {

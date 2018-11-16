@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.saml.opensaml.integration.internal.profile;
+package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

@@ -1274,6 +1274,13 @@ public class JenkinsResultsParserUtil {
 	public static List<String> getSlaves(
 		Properties buildProperties, String jenkinsMasterPatternString) {
 
+		return getSlaves(buildProperties, jenkinsMasterPatternString, null);
+	}
+
+	public static List<String> getSlaves(
+		Properties buildProperties, String jenkinsMasterPatternString,
+		Integer targetSlaveCount) {
+
 		List<String> slaves = new ArrayList<>();
 
 		Pattern jenkinsSlavesPropertyNamePattern = Pattern.compile(
@@ -1294,7 +1301,50 @@ public class JenkinsResultsParserUtil {
 			}
 		}
 
-		return slaves;
+		if (targetSlaveCount == null) {
+			return slaves;
+		}
+
+		if (slaves.size() < targetSlaveCount) {
+			throw new IllegalStateException(
+				"Size must not exceed the amount of slaves");
+		}
+
+		if (targetSlaveCount == slaves.size()) {
+			return slaves;
+		}
+
+		List<String> randomSlaves = new ArrayList<>(targetSlaveCount);
+
+		for (int i = 0; i < targetSlaveCount; i++) {
+			for (int j = 0; j < slaves.size(); j++) {
+				String randomSlave = getRandomString(slaves);
+
+				if (randomSlaves.contains(randomSlave)) {
+					continue;
+				}
+
+				try {
+					InetAddress inetAddress = InetAddress.getByName(
+						randomSlave);
+
+					if (!inetAddress.isReachable(5000)) {
+						System.out.println("Could not reach " + randomSlave);
+
+						continue;
+					}
+
+					randomSlaves.add(randomSlave);
+
+					break;
+				}
+				catch (IOException ioe) {
+					System.out.println("Could not reach " + randomSlave);
+				}
+			}
+		}
+
+		return randomSlaves;
 	}
 
 	public static List<String> getSlaves(String jenkinsMasterPatternString)

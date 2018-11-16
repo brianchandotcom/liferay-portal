@@ -97,7 +97,7 @@
 
 	<command name="AvailableSiteLocalesSubsetNotAllowed" priority="5">
 		<property name="portal.acceptance" value="false" />
-		<property name="test.name.skip.portal.instance" value="SitelocalizationUsecase#AvailableSiteLocalesSubsetOfAvailablePortalLocales" />
+		<property name="test.name.skip.portal.instance" value="LocalizationWithSites#AvailableSiteLocalesSubsetOfAvailablePortalLocales" />
 		<property name="testray.component.names" value="Site Localization" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -139,7 +139,7 @@
 
 	<command name="LocalizationStyle0" priority="3">
 		<property name="custom.properties" value="locale.prepend.friendly.url.style=0" />
-		<property name="test.name.skip.portal.instance" value="SitelocalizationUsecase#LocalizationStyle0" />
+		<property name="test.name.skip.portal.instance" value="LocalizationWithSites#LocalizationStyle0" />
 		<property name="testray.component.names" value="Site Localization" />
 
 		<var method="PropsUtil#get('portal.url')" name="portalURL" />
@@ -192,7 +192,7 @@
 
 	<command name="LocalizationStyle1" priority="3">
 		<property name="custom.properties" value="locale.prepend.friendly.url.style=1" />
-		<property name="test.name.skip.portal.instance" value="SitelocalizationUsecase#LocalizationStyle1" />
+		<property name="test.name.skip.portal.instance" value="LocalizationWithSites#LocalizationStyle1" />
 		<property name="testray.component.names" value="Site Localization" />
 
 		<var method="PropsUtil#get('portal.url')" name="portalURL" />
@@ -245,7 +245,7 @@
 
 	<command name="LocalizationStyle2" priority="3">
 		<property name="custom.properties" value="locale.prepend.friendly.url.style=2" />
-		<property name="test.name.skip.portal.instance" value="SitelocalizationUsecase#LOcalizationStyle2" />
+		<property name="test.name.skip.portal.instance" value="LocalizationWithSites#LOcalizationStyle2" />
 		<property name="testray.component.names" value="Site Localization" />
 
 		<var method="PropsUtil#get('portal.url')" name="portalURL" />
@@ -384,7 +384,7 @@
 	</command>
 
 	<command name="NoLocalePrependedWhenLocaleMatchMyPreferredLocalization" priority="3">
-		<property name="test.name.skip.portal.instance" value="SitelocalizationUsecase#NoLocalePrependedWhenLocaleMatchMyPreferredLocalization" />
+		<property name="test.name.skip.portal.instance" value="LocalizationWithSites#NoLocalePrependedWhenLocaleMatchMyPreferredLocalization" />
 		<property name="testray.component.names" value="Site Localization" />
 
 		<var method="PropsUtil#get('portal.url')" name="portalURL" />
@@ -551,7 +551,7 @@
 	</command>
 
 	<command name="PortletInteractionLocalization" priority="4">
-		<property name="test.name.skip.portal.instance" value="SitelocalizationUsecase#PortletInteractionLocalization" />
+		<property name="test.name.skip.portal.instance" value="LocalizationWithSites#PortletInteractionLocalization" />
 		<property name="testray.component.names" value="Site Localization" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -756,7 +756,7 @@
 	<command name="RedirectLocalizedFriendlyURL" priority="4">
 		<description message="This is a use case for LPS-59345" />
 
-		<property name="test.name.skip.portal.instance" value="SitelocalizationUsecase#RedirectLocalizedFriendlyURL" />
+		<property name="test.name.skip.portal.instance" value="LocalizationWithSites#RedirectLocalizedFriendlyURL" />
 
 		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
@@ -819,7 +819,7 @@
 
 	<command name="SiteTemplateLocalization" priority="5">
 		<property name="portal.acceptance" value="false" />
-		<property name="test.name.skip.portal.instance" value="SitelocalizationUsecase#SiteTemplateLocalization" />
+		<property name="test.name.skip.portal.instance" value="LocalizationWithSites#SiteTemplateLocalization" />
 		<property name="testray.component.names" value="Site and Page Templates,Site Localization" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -889,7 +889,7 @@
 	</command>
 
 	<command name="ViewAvailableSiteLocaleAlternatives" priority="4">
-		<property name="test.name.skip.portal.instance" value="SitelocalizationUsecase#ViewAvailableSiteLocaleAlternatives" />
+		<property name="test.name.skip.portal.instance" value="LocalizationWithSites#ViewAvailableSiteLocaleAlternatives" />
 		<property name="testray.component.names" value="Site Localization" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -1085,7 +1085,7 @@
 
 	<command name="ViewSiteLocalizationAfterDeletingOriginalLocale" priority="5">
 		<property name="portal.acceptance" value="false" />
-		<property name="test.name.skip.portal.instance" value="SitelocalizationUsecase#ViewSiteLocalizationAfterDeletingOriginalLocale" />
+		<property name="test.name.skip.portal.instance" value="LocalizationWithSites#ViewSiteLocalizationAfterDeletingOriginalLocale" />
 		<property name="testray.component.names" value="Site Localization" />
 
 		<execute macro="ProductMenu#gotoPortlet">

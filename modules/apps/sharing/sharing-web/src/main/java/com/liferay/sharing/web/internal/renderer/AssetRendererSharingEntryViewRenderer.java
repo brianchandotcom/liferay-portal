@@ -26,6 +26,7 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -47,18 +48,18 @@ public class AssetRendererSharingEntryViewRenderer
 			HttpServletResponse response)
 		throws IOException, PortalException {
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(_JSP_PATH);
-
-		AssetRenderer assetRenderer = AssetRendererSharingUtil.getAssetRenderer(
-			sharingEntry);
-
-		request.setAttribute(AssetRenderer.class.getName(), assetRenderer);
-
 		try {
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher(_JSP_PATH);
+
+			AssetRenderer assetRenderer =
+				AssetRendererSharingUtil.getAssetRenderer(sharingEntry);
+
+			request.setAttribute(AssetRenderer.class.getName(), assetRenderer);
+
 			requestDispatcher.include(request, response);
 		}
-		catch (Exception e) {
+		catch (IOException | ServletException e) {
 			_log.error("Unable to include JSP " + _JSP_PATH, e);
 
 			throw new IOException("Unable to include JSP " + _JSP_PATH, e);

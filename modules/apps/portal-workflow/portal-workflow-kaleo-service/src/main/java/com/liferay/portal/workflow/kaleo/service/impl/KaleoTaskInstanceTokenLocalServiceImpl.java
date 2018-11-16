@@ -250,9 +250,6 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 
 		// Kaleo task instance tokens
 
-		kaleoTaskInstanceTokenPersistence.removeByKaleoInstanceId(
-			kaleoInstanceId);
-
 		for (KaleoTaskInstanceToken kaleoTaskInstanceToken :
 				kaleoTaskInstanceTokenPersistence.findByKaleoInstanceId(
 					kaleoInstanceId)) {

@@ -21,11 +21,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.saml.util.MetadataUtil;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.io.StringWriter;
 
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
+
+import net.shibboleth.utilities.java.support.xml.ParserPool;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -35,10 +37,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 
-import org.opensaml.saml2.metadata.EntityDescriptor;
-import org.opensaml.xml.XMLObject;
-import org.opensaml.xml.parse.ParserPool;
-import org.opensaml.xml.util.XMLObjectHelper;
+import org.opensaml.core.xml.XMLObject;
+import org.opensaml.core.xml.util.XMLObjectSupport;
+import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -108,7 +109,7 @@ public class MetadataUtilImpl implements MetadataUtil {
 		throws Exception {
 
 		try (InputStream is = inputStream) {
-			XMLObject xmlObject = XMLObjectHelper.unmarshallFromInputStream(
+			XMLObject xmlObject = XMLObjectSupport.unmarshallFromInputStream(
 				parserPool, inputStream);
 
 			EntityDescriptor entityDescriptor =
@@ -118,11 +119,11 @@ public class MetadataUtilImpl implements MetadataUtil {
 				return null;
 			}
 
-			StringWriter stringWriter = new StringWriter();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-			XMLObjectHelper.marshallToWriter(entityDescriptor, stringWriter);
+			XMLObjectSupport.marshallToOutputStream(entityDescriptor, baos);
 
-			return stringWriter.toString();
+			return baos.toString();
 		}
 	}
 

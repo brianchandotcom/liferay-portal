@@ -302,8 +302,7 @@ public class NotificationsPortlet extends MVCPortlet {
 	}
 
 	protected void updateArchived(
-			long userNotificationEventId, boolean archived)
-		throws Exception {
+		long userNotificationEventId, boolean archived) {
 
 		UserNotificationEvent userNotificationEvent =
 			_userNotificationEventLocalService.fetchUserNotificationEvent(

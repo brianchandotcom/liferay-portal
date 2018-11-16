@@ -193,18 +193,18 @@ public class SharingNotificationUtil {
 			PortletRequest portletRequest)
 		throws PortalException {
 
-		User user = _userLocalService.fetchUserById(
+		User fromUser = _userLocalService.fetchUser(
 			sharingEntry.getFromUserId());
 
-		String userName = _getUserName(user, resourceBundle);
+		String userName = _getUserName(fromUser, resourceBundle);
 
-		if ((portletRequest != null) && (user != null)) {
+		if ((portletRequest != null) && (fromUser != null)) {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
 			return StringBundler.concat(
-				"<a href=\"", user.getDisplayURL(themeDisplay), "\">",
+				"<a href=\"", fromUser.getDisplayURL(themeDisplay), "\">",
 				HtmlUtil.escape(userName), "</a>");
 		}
 
@@ -224,14 +224,14 @@ public class SharingNotificationUtil {
 			PortletRequest portletRequest)
 		throws PortalException {
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
-
 		String languageKey = "x-has-shared-x-with-you-for-x";
 
 		if (sharingEntry.getExpirationDate() != null) {
 			languageKey = "x-has-shared-x-with-you-for-x-until-x";
 		}
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale);
 
 		return ResourceBundleUtil.getString(
 			resourceBundle, languageKey,

@@ -16,6 +16,10 @@ package com.liferay.segments.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.criteria.Criteria;
+import com.liferay.segments.criteria.CriteriaSerializer;
+
 /**
  * @author Eduardo Garcia
  */
@@ -24,5 +28,27 @@ public class SegmentsEntryImpl extends SegmentsEntryBaseImpl {
 
 	public SegmentsEntryImpl() {
 	}
+
+	@Override
+	public Criteria getCriteriaObj() {
+		if ((_criteria == null) && Validator.isNotNull(getCriteria())) {
+			_criteria = CriteriaSerializer.deserialize(getCriteria());
+		}
+
+		return _criteria;
+	}
+
+	@Override
+	public String getFilter() {
+		Criteria criteriaObj = getCriteriaObj();
+
+		if (criteriaObj != null) {
+			return criteriaObj.getFilter();
+		}
+
+		return null;
+	}
+
+	private Criteria _criteria;
 
 }

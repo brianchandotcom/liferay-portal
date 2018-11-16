@@ -76,9 +76,7 @@ public class ListTypeLocalServiceImpl extends ListTypeLocalServiceBaseImpl {
 	public void validate(long listTypeId, String type) throws PortalException {
 		ListType listType = listTypePersistence.fetchByPrimaryKey(listTypeId);
 
-		String listTypeType = listType.getType();
-
-		if ((listType == null) || !listTypeType.equals(type)) {
+		if ((listType == null) || !type.equals(listType.getType())) {
 			NoSuchListTypeException nslte = new NoSuchListTypeException();
 
 			nslte.setType(type);

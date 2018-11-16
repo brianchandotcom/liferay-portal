@@ -2476,6 +2476,10 @@ public interface PropsKeys {
 
 	public static final String TRANSACTION_ISOLATION_PORTAL = "transaction.isolation.portal";
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String TRANSACTION_MANAGER_IMPL = "transaction.manager.impl";
 
 	public static final String TRANSACTIONAL_CACHE_ENABLED = "transactional.cache.enable";

@@ -16,10 +16,9 @@ package com.liferay.portal.spring.transaction;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.SortedProperties;
+import com.liferay.portal.spring.hibernate.LastSessionRecorderHibernateTransactionManager;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.Enumeration;
 import java.util.Properties;
@@ -39,16 +38,10 @@ import org.springframework.transaction.support.AbstractPlatformTransactionManage
 public class TransactionManagerFactory {
 
 	public static AbstractPlatformTransactionManager createTransactionManager(
-			DataSource dataSource, SessionFactory sessionFactory)
-		throws ReflectiveOperationException {
+		DataSource dataSource, SessionFactory sessionFactory) {
 
-		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
-
-		Class<?> clazz = classLoader.loadClass(
-			PropsValues.TRANSACTION_MANAGER_IMPL);
-
-		AbstractPlatformTransactionManager abstractPlatformTransactionManager =
-			(AbstractPlatformTransactionManager)clazz.newInstance();
+		HibernateTransactionManager hibernateTransactionManager =
+			new LastSessionRecorderHibernateTransactionManager();
 
 		Properties properties = PropsUtil.getProperties(
 			"transaction.manager.property.", true);
@@ -61,24 +54,14 @@ public class TransactionManagerFactory {
 
 			String value = properties.getProperty(key);
 
-			BeanUtil.setProperty(
-				abstractPlatformTransactionManager, key, value);
+			BeanUtil.setProperty(hibernateTransactionManager, key, value);
 		}
 
-		if (abstractPlatformTransactionManager instanceof
-				HibernateTransactionManager) {
-
-			HibernateTransactionManager hibernateTransactionManager =
-				(HibernateTransactionManager)abstractPlatformTransactionManager;
-
-			hibernateTransactionManager.setDataSource(dataSource);
-			hibernateTransactionManager.setSessionFactory(sessionFactory);
-		}
+		hibernateTransactionManager.setDataSource(dataSource);
+		hibernateTransactionManager.setSessionFactory(sessionFactory);
 
 		if (_log.isDebugEnabled()) {
-			clazz = abstractPlatformTransactionManager.getClass();
-
-			_log.debug("Created transaction manager " + clazz.getName());
+			_log.debug("Created transaction manager");
 
 			SortedProperties sortedProperties = new SortedProperties(
 				properties);
@@ -86,7 +69,7 @@ public class TransactionManagerFactory {
 			sortedProperties.list(System.out);
 		}
 
-		return abstractPlatformTransactionManager;
+		return hibernateTransactionManager;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

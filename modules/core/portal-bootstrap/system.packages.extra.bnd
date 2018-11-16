@@ -37,6 +37,7 @@ Export-Package:\
 	!com.liferay.portal.scripting.python,\
 	!com.liferay.portal.scripting.ruby,\
 	!com.liferay.portal.search.lucene.*,\
+	!com.liferay.portal.security.access.control,\
 	!com.liferay.portal.security.jaas.ext.*,\
 	!com.liferay.portal.sharepoint.*,\
 	!com.liferay.portal.tools.comparator,\

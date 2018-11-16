@@ -15,6 +15,7 @@
 package com.liferay.portal.spring.aop;
 
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.security.access.control.AccessControlAdvice;
 import com.liferay.portal.spring.context.ConfigurableApplicationContextConfigurator;
 
 import java.util.Map;
@@ -22,6 +23,7 @@ import java.util.Map;
 import org.aopalliance.intercept.MethodInterceptor;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -88,8 +90,7 @@ public class AopConfigurableApplicationContextConfigurator
 			serviceBeanAutoProxyCreator.setBeanMatcher(
 				new ServiceBeanMatcher());
 			serviceBeanAutoProxyCreator.setMethodInterceptor(
-				configurableListableBeanFactory.getBean(
-					"serviceAdvice", MethodInterceptor.class));
+				_createMethodInterceptor(configurableListableBeanFactory));
 
 			serviceBeanAutoProxyCreator.setBeanClassLoader(_classLoader);
 
@@ -116,6 +117,19 @@ public class AopConfigurableApplicationContextConfigurator
 
 				chainableMethodAdviceInjector.inject();
 			}
+		}
+
+		private MethodInterceptor _createMethodInterceptor(
+			BeanFactory beanFactory) {
+
+			MethodInterceptor methodInterceptor = beanFactory.getBean(
+				"serviceAdvice", MethodInterceptor.class);
+
+			AccessControlAdvice accessControlAdvice = new AccessControlAdvice();
+
+			accessControlAdvice.setNextMethodInterceptor(methodInterceptor);
+
+			return accessControlAdvice;
 		}
 
 		private final ClassLoader _classLoader;

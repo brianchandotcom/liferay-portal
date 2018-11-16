@@ -215,8 +215,14 @@ public class SharingNotificationUtil {
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(locale);
 
+		String languageKey = "x-has-shared-x-with-you-for-x";
+
+		if (sharingEntry.getExpirationDate() != null) {
+			languageKey = "x-has-shared-x-with-you-for-x-until-x";
+		}
+
 		return ResourceBundleUtil.getString(
-			resourceBundle, "x-has-shared-x-with-you-for-x",
+			resourceBundle, languageKey,
 			_getFromUserName(sharingEntry, resourceBundle, portletRequest),
 			_getSharingEntryObjectTitle(
 				sharingEntry, resourceBundle, portletRequest),

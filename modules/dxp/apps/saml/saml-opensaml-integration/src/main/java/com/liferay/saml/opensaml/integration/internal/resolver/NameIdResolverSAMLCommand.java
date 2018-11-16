@@ -18,21 +18,19 @@ import com.liferay.saml.opensaml.integration.resolver.NameIdResolver;
 
 import java.util.function.Function;
 
-import org.opensaml.common.SAMLObject;
-import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.saml2.core.NameID;
+import org.opensaml.messaging.context.MessageContext;
+import org.opensaml.saml.common.SAMLObject;
 
 /**
  * @author Tomas Polesovsky
  */
 public class NameIdResolverSAMLCommand<T, R extends NameIdResolver>
-	extends SAMLCommandImpl<SAMLObject, SAMLObject, T, R> {
+	extends SAMLCommandImpl<SAMLObject, T, R> {
 
 	public NameIdResolverSAMLCommand(
-		Function<SAMLMessageContext<SAMLObject, SAMLObject, NameID>, T>
-			samlMessageContextFunction) {
+		Function<MessageContext<SAMLObject>, T> messageContextFunction) {
 
-		super(samlMessageContextFunction);
+		super(messageContextFunction);
 	}
 
 }

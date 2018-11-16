@@ -18,22 +18,19 @@ import com.liferay.saml.opensaml.integration.resolver.AttributeResolver;
 
 import java.util.function.Function;
 
-import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.saml2.core.AuthnRequest;
-import org.opensaml.saml2.core.NameID;
-import org.opensaml.saml2.core.Response;
+import org.opensaml.messaging.context.MessageContext;
+import org.opensaml.saml.saml2.core.AuthnRequest;
 
 /**
  * @author Tomas Polesovsky
  */
 public class AttributeResolverSAMLCommand <T, R extends AttributeResolver>
-	extends SAMLCommandImpl<AuthnRequest, Response, T, R> {
+	extends SAMLCommandImpl<AuthnRequest, T, R> {
 
 	public AttributeResolverSAMLCommand(
-		Function<SAMLMessageContext<AuthnRequest, Response, NameID>, T>
-			samlMessageContextFunction) {
+		Function<MessageContext<AuthnRequest>, T> messageContextFunction) {
 
-		super(samlMessageContextFunction);
+		super(messageContextFunction);
 	}
 
 }

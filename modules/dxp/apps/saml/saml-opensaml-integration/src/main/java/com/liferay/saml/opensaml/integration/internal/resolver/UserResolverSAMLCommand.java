@@ -18,22 +18,19 @@ import com.liferay.saml.opensaml.integration.resolver.UserResolver;
 
 import java.util.function.Function;
 
-import org.opensaml.common.SAMLObject;
-import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.saml2.core.NameID;
-import org.opensaml.saml2.core.Response;
+import org.opensaml.messaging.context.MessageContext;
+import org.opensaml.saml.saml2.core.Response;
 
 /**
  * @author Tomas Polesovsky
  */
 public class UserResolverSAMLCommand<T, R extends UserResolver>
-	extends SAMLCommandImpl<Response, SAMLObject, T, R> {
+	extends SAMLCommandImpl<Response, T, R> {
 
 	public UserResolverSAMLCommand(
-		Function<SAMLMessageContext<Response, SAMLObject, NameID>, T>
-			samlMessageContextFunction) {
+		Function<MessageContext<Response>, T> messageContextFunction) {
 
-		super(samlMessageContextFunction);
+		super(messageContextFunction);
 	}
 
 }

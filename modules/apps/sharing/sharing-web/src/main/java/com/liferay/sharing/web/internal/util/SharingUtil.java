@@ -73,40 +73,20 @@ public class SharingUtil {
 
 		List<SharingEntryAction> sharingEntryActions = new ArrayList<>();
 
-		try {
-			if (_sharingPermission.contains(
-					permissionChecker, classNameId, classPK, groupId,
-					Arrays.asList(SharingEntryAction.VIEW))) {
+		for (SharingEntryAction sharingEntryAction :
+				SharingEntryAction.values()) {
 
-				sharingEntryActions.add(SharingEntryAction.VIEW);
+			try {
+				if (_sharingPermission.contains(
+						permissionChecker, classNameId, classPK, groupId,
+						Arrays.asList(sharingEntryAction))) {
+
+					sharingEntryActions.add(sharingEntryAction);
+				}
 			}
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
-		}
-
-		try {
-			if (_sharingPermission.contains(
-					permissionChecker, classNameId, classPK, groupId,
-					Arrays.asList(SharingEntryAction.UPDATE))) {
-
-				sharingEntryActions.add(SharingEntryAction.UPDATE);
+			catch (PortalException pe) {
+				_log.error(pe, pe);
 			}
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
-		}
-
-		try {
-			if (_sharingPermission.contains(
-					permissionChecker, classNameId, classPK, groupId,
-					Arrays.asList(SharingEntryAction.ADD_DISCUSSION))) {
-
-				sharingEntryActions.add(SharingEntryAction.ADD_DISCUSSION);
-			}
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
 		}
 
 		ResourceBundle resourceBundle =

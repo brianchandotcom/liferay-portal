@@ -592,31 +592,9 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		public Set<String> addingBundle(
 			Bundle bundle, BundleEvent bundleEvent) {
 
-			Set<String> trackedKeys = null;
-
 			URL url = bundle.getEntry("/META-INF/taglib-mappings.properties");
 
-			if (url != null) {
-				trackedKeys = new HashSet<>();
-
-				try (InputStream inputStream = url.openStream()) {
-					Properties properties = PropertiesUtil.load(
-						inputStream, StringPool.UTF8);
-
-					@SuppressWarnings("unchecked")
-					Map<String, String> map = PropertiesUtil.toMap(properties);
-
-					_taglibMappings.putAll(map);
-
-					trackedKeys.addAll(map.keySet());
-
-					return trackedKeys;
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
-			}
-			else {
+			if (url == null) {
 				BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
 				List<BundleCapability> bundleCapabilities =
@@ -633,8 +611,24 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 					}
 				}
 			}
+			else {
+				try (InputStream inputStream = url.openStream()) {
+					Properties properties = PropertiesUtil.load(
+						inputStream, StringPool.UTF8);
 
-			return trackedKeys;
+					@SuppressWarnings("unchecked")
+					Map<String, String> map = PropertiesUtil.toMap(properties);
+
+					_taglibMappings.putAll(map);
+
+					return map.keySet();
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
+			}
+
+			return null;
 		}
 
 		@Override

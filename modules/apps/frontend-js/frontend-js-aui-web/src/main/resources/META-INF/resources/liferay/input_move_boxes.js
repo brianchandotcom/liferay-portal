@@ -308,10 +308,10 @@ AUI.add(
 
 							if (target.get('length') > 0) {
 								if (target == instance._rightBox) {
-									btnDisabledRight = false;
+									btnDisabledLeft = false;
 								}
 								else if (target == instance._leftBox) {
-									btnDisabledLeft = false;
+									btnDisabledRight = false;
 								}
 							}
 

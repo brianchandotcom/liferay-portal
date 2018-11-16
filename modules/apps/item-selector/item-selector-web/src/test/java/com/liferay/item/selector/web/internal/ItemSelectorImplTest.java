@@ -169,8 +169,8 @@ public class ItemSelectorImplTest extends PowerMockito {
 
 		Assert.assertEquals(
 			"itemSelectedEventName",
-			parameters.get(
-				ItemSelectorImpl.PARAMETER_ITEM_SELECTED_EVENT_NAME)[0]);
+			parameters.get(ItemSelectorImpl.PARAMETER_ITEM_SELECTED_EVENT_NAME)
+				[0]);
 		Assert.assertEquals(
 			MediaItemSelectorCriterion.class.getName() + "," +
 				FlickrItemSelectorCriterion.class.getName(),

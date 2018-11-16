@@ -86,8 +86,8 @@ public class DLAdminNavigationDisplayContext {
 						});
 
 					add(
-						DLAdminNavigationDisplayContext.this
-							::_populateMetadataSetsNavigationItem);
+						DLAdminNavigationDisplayContext.this::
+							_populateMetadataSetsNavigationItem);
 				}
 			}
 		};

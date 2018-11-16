@@ -943,8 +943,7 @@ public class LiferayOAuthDataProvider
 		for (String feature : oAuth2Application.getFeaturesList()) {
 			properties.put(
 				OAuth2ProviderRestEndpointConstants.
-					PROPERTY_KEY_CLIENT_FEATURE_PREFIX +
-						feature,
+					PROPERTY_KEY_CLIENT_FEATURE_PREFIX + feature,
 				feature);
 		}
 

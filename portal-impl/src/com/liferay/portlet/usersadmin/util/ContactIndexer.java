@@ -189,8 +189,7 @@ public class ContactIndexer extends BaseIndexer<Contact> {
 				catch (PortalException pe) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to index contact " +
-								contact.getContactId(),
+							"Unable to index contact " + contact.getContactId(),
 							pe);
 					}
 				}

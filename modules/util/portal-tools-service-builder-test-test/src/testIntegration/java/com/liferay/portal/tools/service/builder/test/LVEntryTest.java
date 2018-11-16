@@ -227,8 +227,7 @@ public class LVEntryTest {
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
-				"LVEntry is a draft " +
-					draftLVEntry.getPrimaryKey(),
+				"LVEntry is a draft " + draftLVEntry.getPrimaryKey(),
 				iae.getMessage());
 		}
 
@@ -292,8 +291,7 @@ public class LVEntryTest {
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
-				"LVEntry is not a draft " +
-					_lvEntry.getPrimaryKey(),
+				"LVEntry is not a draft " + _lvEntry.getPrimaryKey(),
 				iae.getMessage());
 		}
 
@@ -388,8 +386,7 @@ public class LVEntryTest {
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
-				"LVEntry is a draft " +
-					draftLVEntry.getPrimaryKey(),
+				"LVEntry is a draft " + draftLVEntry.getPrimaryKey(),
 				iae.getMessage());
 		}
 
@@ -400,8 +397,7 @@ public class LVEntryTest {
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
-				"LVEntry is a draft " +
-					draftLVEntry.getPrimaryKey(),
+				"LVEntry is a draft " + draftLVEntry.getPrimaryKey(),
 				iae.getMessage());
 		}
 
@@ -839,8 +835,7 @@ public class LVEntryTest {
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
-				"Can only update draft entries " +
-					_lvEntry.getPrimaryKey(),
+				"Can only update draft entries " + _lvEntry.getPrimaryKey(),
 				iae.getMessage());
 		}
 
@@ -852,8 +847,7 @@ public class LVEntryTest {
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
-				"Can only update draft entries " +
-					_lvEntry.getPrimaryKey(),
+				"Can only update draft entries " + _lvEntry.getPrimaryKey(),
 				iae.getMessage());
 		}
 
@@ -865,8 +859,7 @@ public class LVEntryTest {
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
-				"Can only update draft entries " +
-					_lvEntry.getPrimaryKey(),
+				"Can only update draft entries " + _lvEntry.getPrimaryKey(),
 				iae.getMessage());
 		}
 	}

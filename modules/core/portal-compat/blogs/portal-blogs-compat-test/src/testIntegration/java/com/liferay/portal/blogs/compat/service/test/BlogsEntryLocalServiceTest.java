@@ -339,8 +339,7 @@ public class BlogsEntryLocalServiceTest {
 			entries[2]);
 		Assert.assertEquals(
 			"The previous entry relative to entry" + currentEntry.getEntryId() +
-				" should be " +
-					previousEntry.getEntryId(),
+				" should be " + previousEntry.getEntryId(),
 			entries[0].getEntryId(), previousEntry.getEntryId());
 		Assert.assertEquals(
 			"The current entry relative to entry " + currentEntry.getEntryId() +

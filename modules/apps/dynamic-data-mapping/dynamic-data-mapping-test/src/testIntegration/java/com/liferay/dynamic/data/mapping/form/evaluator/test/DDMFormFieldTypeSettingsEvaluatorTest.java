@@ -218,11 +218,11 @@ public class DDMFormFieldTypeSettingsEvaluatorTest {
 					ddmDataProviderInstanceIdFormFieldValue.getInstanceId()));
 
 		Assert.assertTrue(
-			(Boolean)
-				ddmDataProviderInstanceIdFieldPropertyChanges.get("visible"));
+			(Boolean)ddmDataProviderInstanceIdFieldPropertyChanges.get(
+				"visible"));
 		Assert.assertTrue(
-			(Boolean)
-				ddmDataProviderInstanceIdFieldPropertyChanges.get("required"));
+			(Boolean)ddmDataProviderInstanceIdFieldPropertyChanges.get(
+				"required"));
 
 		ddmFormFieldValues = ddmFormFieldValueMap.get(
 			"ddmDataProviderInstanceOutput");
@@ -238,13 +238,11 @@ public class DDMFormFieldTypeSettingsEvaluatorTest {
 						getInstanceId()));
 
 		Assert.assertTrue(
-			(Boolean)
-				ddmDataProviderInstanceOutputFieldPropertyChanges.get(
-					"visible"));
+			(Boolean)ddmDataProviderInstanceOutputFieldPropertyChanges.get(
+				"visible"));
 		Assert.assertTrue(
-			(Boolean)
-				ddmDataProviderInstanceOutputFieldPropertyChanges.get(
-					"required"));
+			(Boolean)ddmDataProviderInstanceOutputFieldPropertyChanges.get(
+				"required"));
 
 		ddmFormFieldValues = ddmFormFieldValueMap.get("options");
 
@@ -311,11 +309,11 @@ public class DDMFormFieldTypeSettingsEvaluatorTest {
 					ddmDataProviderInstanceIdFormFieldValue.getInstanceId()));
 
 		Assert.assertFalse(
-			(Boolean)
-				ddmDataProviderInstanceIdFieldPropertyChanges.get("visible"));
+			(Boolean)ddmDataProviderInstanceIdFieldPropertyChanges.get(
+				"visible"));
 		Assert.assertFalse(
-			(Boolean)
-				ddmDataProviderInstanceIdFieldPropertyChanges.get("required"));
+			(Boolean)ddmDataProviderInstanceIdFieldPropertyChanges.get(
+				"required"));
 
 		ddmFormFieldValues = ddmFormFieldValueMap.get(
 			"ddmDataProviderInstanceOutput");
@@ -331,13 +329,11 @@ public class DDMFormFieldTypeSettingsEvaluatorTest {
 						getInstanceId()));
 
 		Assert.assertFalse(
-			(Boolean)
-				ddmDataProviderInstanceOutputFieldPropertyChanges.get(
-					"visible"));
+			(Boolean)ddmDataProviderInstanceOutputFieldPropertyChanges.get(
+				"visible"));
 		Assert.assertFalse(
-			(Boolean)
-				ddmDataProviderInstanceOutputFieldPropertyChanges.get(
-					"required"));
+			(Boolean)ddmDataProviderInstanceOutputFieldPropertyChanges.get(
+				"required"));
 
 		ddmFormFieldValues = ddmFormFieldValueMap.get("options");
 

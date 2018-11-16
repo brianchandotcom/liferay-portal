@@ -44,8 +44,7 @@ public class SchemaUtils {
 					CommonErrorCodes.UNEXPECTED_EXCEPTION);
 
 			talendRuntimeExceptionBuilder.setAndThrow(
-				"Schema type is not supported: " + schema.getType()
-			);
+				"Schema type is not supported: " + schema.getType());
 		}
 
 		Schema newSchema = Schema.createRecord(

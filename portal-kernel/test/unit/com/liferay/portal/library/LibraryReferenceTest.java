@@ -137,8 +137,7 @@ public class LibraryReferenceTest {
 	public void testLibDependencyJarsInVersionsExt() {
 		for (String jar : _libDependencyJars) {
 			Assert.assertTrue(
-				_VERSIONS_EXT_FILE_NAME + " is missing a reference to " +
-					jar,
+				_VERSIONS_EXT_FILE_NAME + " is missing a reference to " + jar,
 				_versionsExtJars.contains(jar));
 		}
 	}

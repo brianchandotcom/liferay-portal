@@ -668,8 +668,8 @@ public class GitHubDevSyncUtil {
 				"Found ",
 				String.valueOf(orphanedBaseCachedRemoteGitBranchesMap.size()),
 				" orphaned base cache branches ", "and ",
-				String.valueOf(orphanedTimestampedCachedRemoteGitBranchesMap.
-					size()),
+				String.valueOf(
+					orphanedTimestampedCachedRemoteGitBranchesMap.size()),
 				" orphaned timestamp branches on ", gitRemote.getRemoteURL(),
 				".\n", sb.toString()));
 

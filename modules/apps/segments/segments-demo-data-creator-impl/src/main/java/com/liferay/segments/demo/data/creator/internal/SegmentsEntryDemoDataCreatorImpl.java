@@ -86,7 +86,7 @@ public class SegmentsEntryDemoDataCreatorImpl
 			long[] groupUserIds = _userLocalService.getGroupUserIds(groupId);
 
 			for (long groupUserId : groupUserIds) {
-				 _segmentsEntryRelLocalService.addSegmentsEntryRel(
+				_segmentsEntryRelLocalService.addSegmentsEntryRel(
 					segmentsEntry.getSegmentsEntryId(),
 					_portal.getClassNameId(User.class), groupUserId,
 					serviceContext);

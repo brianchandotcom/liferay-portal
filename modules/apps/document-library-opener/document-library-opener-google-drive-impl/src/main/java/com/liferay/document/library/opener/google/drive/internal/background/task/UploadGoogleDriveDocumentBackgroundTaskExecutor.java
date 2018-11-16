@@ -69,8 +69,8 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 	extends BaseBackgroundTaskExecutor {
 
 	public UploadGoogleDriveDocumentBackgroundTaskExecutor() {
-		setBackgroundTaskStatusMessageTranslator(new
-			UploadGoogleDriveDocumentBackgroundTaskStatusMessageTranslator());
+		setBackgroundTaskStatusMessageTranslator(
+			new UploadGoogleDriveDocumentBackgroundTaskStatusMessageTranslator());
 		setIsolationLevel(BackgroundTaskConstants.ISOLATION_LEVEL_TASK_NAME);
 	}
 

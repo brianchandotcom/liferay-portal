@@ -140,8 +140,7 @@ public class PublishFolderMVCActionCommand extends BaseMVCActionCommand {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to get folders, file entries, and file shortcuts " +
-						"for folder " +
-							folder.getFolderId(),
+						"for folder " + folder.getFolderId(),
 					pe);
 			}
 		}

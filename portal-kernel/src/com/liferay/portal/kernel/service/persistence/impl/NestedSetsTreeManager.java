@@ -124,8 +124,8 @@ public abstract class NestedSetsTreeManager<T extends NestedSetsTreeNodeModel> {
 		else {
 			doUpdate(
 				t.getNestedSetsTreeNodeScopeId(),
-				t.getNestedSetsTreeNodeRight() -
-					t.getNestedSetsTreeNodeLeft() + 1,
+				t.getNestedSetsTreeNodeRight() - t.getNestedSetsTreeNodeLeft() +
+					1,
 				newParentNestedSetsTreeNodeRight, true,
 				t.getNestedSetsTreeNodeLeft(), false, null);
 

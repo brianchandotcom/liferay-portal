@@ -375,8 +375,7 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 			LDAPConstants.GROUP_DEFAULT_OBJECT_CLASSES,
 			_prefsProps.getStringArray(
 				companyId,
-				LegacyLDAPPropsKeys.LDAP_GROUP_DEFAULT_OBJECT_CLASSES +
-					postfix,
+				LegacyLDAPPropsKeys.LDAP_GROUP_DEFAULT_OBJECT_CLASSES + postfix,
 				StringPool.COMMA));
 		dictionary.put(
 			LDAPConstants.GROUP_MAPPINGS,
@@ -427,8 +426,7 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 			LDAPConstants.USER_DEFAULT_OBJECT_CLASSES,
 			_prefsProps.getStringArray(
 				companyId,
-				LegacyLDAPPropsKeys.LDAP_USER_DEFAULT_OBJECT_CLASSES +
-					postfix,
+				LegacyLDAPPropsKeys.LDAP_USER_DEFAULT_OBJECT_CLASSES + postfix,
 				StringPool.COMMA));
 		dictionary.put(
 			LDAPConstants.USER_IGNORE_ATTRIBUTES,

@@ -55,8 +55,7 @@ public class GoogleMapsConfigurationAction extends DefaultConfigurationAction {
 			PortletSession.APPLICATION_SCOPE);
 
 		portletSession.removeAttribute(
-			_portal.getPortletNamespace(portletResource) +
-				"directionsAddress",
+			_portal.getPortletNamespace(portletResource) + "directionsAddress",
 			PortletSession.APPLICATION_SCOPE);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);

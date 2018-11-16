@@ -154,8 +154,7 @@ public class FolderIndexer extends BaseIndexer<Folder> {
 				catch (PortalException pe) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to index folder " +
-								folder.getFolderId(),
+							"Unable to index folder " + folder.getFolderId(),
 							pe);
 					}
 				}

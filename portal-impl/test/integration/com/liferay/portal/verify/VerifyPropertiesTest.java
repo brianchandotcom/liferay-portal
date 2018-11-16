@@ -197,8 +197,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
 			Assert.assertEquals(
-				"Portal property \"" + obsoletePortalKey +
-					"\" is obsolete",
+				"Portal property \"" + obsoletePortalKey + "\" is obsolete",
 				loggingEvent.getMessage());
 		}
 		finally {
@@ -234,8 +233,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
 			Assert.assertEquals(
-				"System property \"" + obsoleteSystemKey +
-					"\" is obsolete",
+				"System property \"" + obsoleteSystemKey + "\" is obsolete",
 				loggingEvent.getMessage());
 		}
 		finally {

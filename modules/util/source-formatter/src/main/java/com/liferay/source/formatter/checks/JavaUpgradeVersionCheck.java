@@ -206,8 +206,7 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 
 				addMessage(
 					fileName,
-					"Expected new schema version: " +
-						expectedSchemaVersion,
+					"Expected new schema version: " + expectedSchemaVersion,
 					lineNumber);
 			}
 		}

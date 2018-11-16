@@ -73,8 +73,7 @@ public class DefaultNoticeableFutureTest {
 		Assert.assertTrue(
 			_defaultNoticeableFuture.addFutureListener(testFutureListener2));
 		Assert.assertEquals(
-			testFutureListener1.hashCode() +
-				testFutureListener2.hashCode(),
+			testFutureListener1.hashCode() + testFutureListener2.hashCode(),
 			futureListeners.hashCode());
 
 		Assert.assertFalse(

@@ -734,8 +734,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			Assert.assertSame(IOException.class, throwable.getClass());
 			Assert.assertEquals(
-				"Unable to get input paths: " +
-					Arrays.asList(inputPath2),
+				"Unable to get input paths: " + Arrays.asList(inputPath2),
 				throwable.getMessage());
 		}
 	}
@@ -834,8 +833,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 			Assert.assertEquals(
 				StringPool.BLANK, loadedProcessConfig.getBootstrapClassPath());
 			Assert.assertEquals(
-				mappedRuntimePath1 + File.pathSeparator +
-					mappedRuntimePath3,
+				mappedRuntimePath1 + File.pathSeparator + mappedRuntimePath3,
 				loadedProcessConfig.getRuntimeClassPath());
 		}
 
@@ -870,8 +868,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 			Assert.assertEquals(
 				StringPool.BLANK, loadedProcessConfig.getBootstrapClassPath());
 			Assert.assertEquals(
-				mappedRuntimePath1 + File.pathSeparator +
-					mappedRuntimePath3,
+				mappedRuntimePath1 + File.pathSeparator + mappedRuntimePath3,
 				loadedProcessConfig.getRuntimeClassPath());
 		}
 	}

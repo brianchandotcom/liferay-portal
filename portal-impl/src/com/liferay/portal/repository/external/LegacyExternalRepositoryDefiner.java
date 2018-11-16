@@ -100,8 +100,8 @@ public class LegacyExternalRepositoryDefiner extends BaseRepositoryDefiner {
 			ProcessorCapability.class,
 			_portalCapabilityLocator.getProcessorCapability(
 				capabilityRegistry.getTarget(),
-				ProcessorCapability.
-					ResourceGenerationStrategy.ALWAYS_GENERATE));
+				ProcessorCapability.ResourceGenerationStrategy.
+					ALWAYS_GENERATE));
 	}
 
 	@Override

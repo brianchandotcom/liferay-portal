@@ -152,8 +152,7 @@ public class AccountIndexer extends BaseIndexer<Account> {
 				catch (PortalException pe) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to index account " +
-								account.getAccountId(),
+							"Unable to index account " + account.getAccountId(),
 							pe);
 					}
 				}

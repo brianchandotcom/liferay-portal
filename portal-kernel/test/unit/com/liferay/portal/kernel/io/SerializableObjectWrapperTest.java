@@ -295,8 +295,8 @@ public class SerializableObjectWrapperTest {
 	private void _testHashCode() throws Exception {
 		Assert.assertNotEquals(
 			_testSerializableObjectWrapper.hashCode(),
-			new SerializableObjectWrapper(
-				_ANOTHER_TEST_SERIALIZABLE).hashCode());
+			new SerializableObjectWrapper(_ANOTHER_TEST_SERIALIZABLE).
+				hashCode());
 
 		Assert.assertEquals(
 			_testSerializableObjectWrapper.hashCode(),

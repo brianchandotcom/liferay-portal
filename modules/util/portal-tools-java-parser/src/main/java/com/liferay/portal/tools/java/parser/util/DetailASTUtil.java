@@ -15,8 +15,10 @@
 package com.liferay.portal.tools.java.parser.util;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.tools.java.parser.Position;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,63 @@ public class DetailASTUtil {
 		DetailAST detailAST, boolean recursive, int... tokenTypes) {
 
 		return _getAllChildTokens(detailAST, recursive, null, tokenTypes);
+	}
+
+	public static Position getEndPosition(DetailAST detailAST) {
+		DetailAST lastChildDetailAST = detailAST.getLastChild();
+
+		if (lastChildDetailAST.getType() == TokenTypes.SLIST) {
+			return new Position(
+				lastChildDetailAST.getLineNo(),
+				lastChildDetailAST.getColumnNo());
+		}
+
+		DetailAST nextSiblingDetailAST = detailAST.getNextSibling();
+
+		if (nextSiblingDetailAST.getType() == TokenTypes.SEMI) {
+			return new Position(
+				nextSiblingDetailAST.getLineNo(),
+				nextSiblingDetailAST.getColumnNo());
+		}
+
+		String s = detailAST.getText();
+
+		Position endPosition = new Position(
+			detailAST.getLineNo(), detailAST.getColumnNo() + s.length());
+
+		for (DetailAST childDetailAST :
+				getAllChildTokens(detailAST, true, ALL_TYPES)) {
+
+			s = childDetailAST.getText();
+
+			Position childDetailASTEndPosition = new Position(
+				childDetailAST.getLineNo(),
+				childDetailAST.getColumnNo() + s.length());
+
+			if (childDetailASTEndPosition.compareTo(endPosition) > 0) {
+				endPosition = childDetailASTEndPosition;
+			}
+		}
+
+		return endPosition;
+	}
+
+	public static Position getStartPosition(DetailAST detailAST) {
+		Position startPosition = new Position(
+			detailAST.getLineNo(), detailAST.getColumnNo());
+
+		for (DetailAST childDetailAST :
+				getAllChildTokens(detailAST, true, ALL_TYPES)) {
+
+			Position childDetailASTStartPosition = new Position(
+				childDetailAST.getLineNo(), childDetailAST.getColumnNo());
+
+			if (childDetailASTStartPosition.compareTo(startPosition) < 0) {
+				startPosition = childDetailASTStartPosition;
+			}
+		}
+
+		return startPosition;
 	}
 
 	public static boolean hasParentWithTokenType(

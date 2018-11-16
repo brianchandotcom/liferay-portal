@@ -139,7 +139,9 @@ public class UnicodePropertiesTest {
 
 		unicodeProperties.put(_TEST_KEY_1, _TEST_VALUE_1);
 
-		Assert.assertNull(unicodeProperties.remove(null));
+		String result = unicodeProperties.remove(null);
+
+		Assert.assertNull(result, result);
 
 		_assertUnicodeProperties(
 			new String[] {_TEST_VALUE_1}, new String[] {_TEST_KEY_1},

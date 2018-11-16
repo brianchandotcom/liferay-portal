@@ -27,6 +27,10 @@ public class JavaMethodCall extends JavaExpression {
 		_methodName = new JavaSimpleValue(methodName);
 	}
 
+	public List<JavaExpression> getParameterValueJavaExpressions() {
+		return _parameterValueJavaExpressions;
+	}
+
 	@Override
 	public String getString(
 		String indent, String prefix, String suffix, int maxLineLength,

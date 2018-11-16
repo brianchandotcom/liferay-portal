@@ -191,10 +191,11 @@ public class UnicodePropertiesTest {
 	}
 
 	private void _assertToString(
-		String expectedToString, String toString, String toSortedString) {
+		String expectedToString, UnicodeProperties unicodeProperties) {
 
-		Assert.assertEquals(expectedToString, toString);
-		Assert.assertEquals(expectedToString, toSortedString);
+		Assert.assertEquals(expectedToString, unicodeProperties.toString());
+		Assert.assertEquals(
+			expectedToString, unicodeProperties.toSortedString());
 	}
 
 	private void _assertUnicodeProperties(
@@ -329,21 +330,16 @@ public class UnicodePropertiesTest {
 	private void _testToString(boolean safe) {
 		UnicodeProperties unicodeProperties = new UnicodeProperties(safe);
 
-		_assertToString(
-			StringPool.BLANK, unicodeProperties.toString(),
-			unicodeProperties.toSortedString());
+		_assertToString(StringPool.BLANK, unicodeProperties);
 
 		unicodeProperties.put(_TEST_KEY_1, StringPool.BLANK);
 
-		_assertToString(
-			StringPool.BLANK, unicodeProperties.toString(),
-			unicodeProperties.toSortedString());
+		_assertToString(StringPool.BLANK, unicodeProperties);
 
 		unicodeProperties.put(_TEST_LINE_2);
 
 		_assertToString(
-			_TEST_LINE_2.concat(StringPool.NEW_LINE),
-			unicodeProperties.toString(), unicodeProperties.toSortedString());
+			_TEST_LINE_2.concat(StringPool.NEW_LINE), unicodeProperties);
 
 		unicodeProperties.put(_TEST_LINE_3);
 
@@ -351,7 +347,7 @@ public class UnicodePropertiesTest {
 			StringBundler.concat(
 				_TEST_LINE_2, StringPool.NEW_LINE, _TEST_LINE_3,
 				StringPool.NEW_LINE),
-			unicodeProperties.toString(), unicodeProperties.toSortedString());
+			unicodeProperties);
 
 		unicodeProperties.put(
 			_TEST_KEY_3, _TEST_VALUE_3.concat(StringPool.NEW_LINE));
@@ -361,16 +357,14 @@ public class UnicodePropertiesTest {
 				StringBundler.concat(
 					_TEST_LINE_2, StringPool.NEW_LINE, _TEST_LINE_3,
 					_safeNewLineCharacter, StringPool.NEW_LINE),
-				unicodeProperties.toString(),
-				unicodeProperties.toSortedString());
+				unicodeProperties);
 		}
 		else {
 			_assertToString(
 				StringBundler.concat(
 					_TEST_LINE_2, StringPool.NEW_LINE, _TEST_LINE_3,
 					StringPool.NEW_LINE, StringPool.NEW_LINE),
-				unicodeProperties.toString(),
-				unicodeProperties.toSortedString());
+				unicodeProperties);
 		}
 	}
 

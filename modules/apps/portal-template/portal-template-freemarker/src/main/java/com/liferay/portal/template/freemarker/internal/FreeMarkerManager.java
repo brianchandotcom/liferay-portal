@@ -595,30 +595,24 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 			boolean track = false;
 			Set<String> trackedKeys = new HashSet<>();
 
-			Enumeration<URL> enumeration = bundle.findEntries(
-				"/META-INF", "taglib-mappings.properties", true);
+			URL url = bundle.getEntry("/META-INF/taglib-mappings.properties");
 
-			if (enumeration != null) {
-				while (enumeration.hasMoreElements()) {
-					URL url = enumeration.nextElement();
+			if (url != null) {
+				try (InputStream inputStream = url.openStream()) {
+					Properties properties = PropertiesUtil.load(
+						inputStream, StringPool.UTF8);
 
-					try (InputStream inputStream = url.openStream()) {
-						Properties properties = PropertiesUtil.load(
-							inputStream, StringPool.UTF8);
+					@SuppressWarnings("unchecked")
+					Map<String, String> map = PropertiesUtil.toMap(properties);
 
-						@SuppressWarnings("unchecked")
-						Map<String, String> map = PropertiesUtil.toMap(
-							properties);
+					_taglibMappings.putAll(map);
 
-						_taglibMappings.putAll(map);
+					trackedKeys.addAll(map.keySet());
 
-						trackedKeys.addAll(map.keySet());
-
-						track = true;
-					}
-					catch (Exception e) {
-						_log.error(e, e);
-					}
+					track = true;
+				}
+				catch (Exception e) {
+					_log.error(e, e);
 				}
 			}
 

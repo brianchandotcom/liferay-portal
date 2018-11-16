@@ -17,9 +17,12 @@ package com.liferay.portal.spring.aop;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.spring.context.ConfigurableApplicationContextConfigurator;
 
+import java.util.Map;
+
 import org.aopalliance.intercept.MethodInterceptor;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -54,11 +57,7 @@ public class AopConfigurableApplicationContextConfigurator
 				return;
 			}
 
-			// Ensure the ChainableMethodAdvice assembling is done
-
-			configurableListableBeanFactory.getBean(
-				"chainableMethodAdviceAssembler",
-				ChainableMethodAdviceAssembler.class);
+			_assembleChainableMethodAdvices(configurableListableBeanFactory);
 
 			// Counter AOP for portal spring context only
 
@@ -102,6 +101,21 @@ public class AopConfigurableApplicationContextConfigurator
 
 		private AopBeanFactoryPostProcessor(ClassLoader classLoader) {
 			_classLoader = classLoader;
+		}
+
+		private void _assembleChainableMethodAdvices(
+			ListableBeanFactory listableBeanFactory) {
+
+			Map<String, ChainableMethodAdviceInjector>
+				chainableMethodAdviceInjectors =
+					listableBeanFactory.getBeansOfType(
+						ChainableMethodAdviceInjector.class);
+
+			for (ChainableMethodAdviceInjector chainableMethodAdviceInjector :
+					chainableMethodAdviceInjectors.values()) {
+
+				chainableMethodAdviceInjector.inject();
+			}
 		}
 
 		private final ClassLoader _classLoader;

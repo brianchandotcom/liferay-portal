@@ -16,7 +16,7 @@ package com.liferay.saml.opensaml.integration.internal.util;
 
 import com.liferay.saml.util.NameIdTypeValues;
 
-import org.opensaml.saml2.core.NameIDType;
+import org.opensaml.saml.saml2.core.NameIDType;
 
 import org.osgi.service.component.annotations.Component;
 

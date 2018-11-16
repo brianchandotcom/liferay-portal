@@ -20,9 +20,9 @@ import com.liferay.saml.opensaml.integration.internal.velocity.VelocityEngineFac
 import java.util.Hashtable;
 import java.util.Map;
 
-import org.apache.http.client.HttpClient;
+import net.shibboleth.utilities.java.support.xml.ParserPool;
 
-import org.opensaml.xml.parse.ParserPool;
+import org.apache.http.client.HttpClient;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;

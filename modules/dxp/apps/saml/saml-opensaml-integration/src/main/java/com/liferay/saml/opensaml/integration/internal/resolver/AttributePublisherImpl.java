@@ -28,8 +28,8 @@ import java.util.stream.Stream;
 
 import org.joda.time.DateTime;
 
-import org.opensaml.saml2.core.Attribute;
-import org.opensaml.xml.XMLObject;
+import org.opensaml.core.xml.XMLObject;
+import org.opensaml.saml.saml2.core.Attribute;
 
 /**
  * @author Carlos Sierra Andrés

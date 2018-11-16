@@ -48,7 +48,7 @@ import java.util.Properties;
 
 import org.joda.time.DateTime;
 
-import org.opensaml.saml2.core.NameIDType;
+import org.opensaml.saml.saml2.core.NameIDType;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

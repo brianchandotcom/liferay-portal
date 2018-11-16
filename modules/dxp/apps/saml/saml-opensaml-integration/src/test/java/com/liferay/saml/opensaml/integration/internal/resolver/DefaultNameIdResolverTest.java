@@ -28,8 +28,8 @@ import org.junit.Test;
 
 import org.mockito.Mockito;
 
-import org.opensaml.saml2.core.NameID;
-import org.opensaml.saml2.core.NameIDPolicy;
+import org.opensaml.saml.saml2.core.NameID;
+import org.opensaml.saml.saml2.core.NameIDPolicy;
 
 /**
  * @author Mika Koivisto

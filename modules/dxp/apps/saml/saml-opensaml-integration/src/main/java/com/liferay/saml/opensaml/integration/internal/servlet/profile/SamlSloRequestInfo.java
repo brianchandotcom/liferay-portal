@@ -22,7 +22,7 @@ import java.io.Serializable;
 
 import org.joda.time.DateTime;
 
-import org.opensaml.saml2.core.StatusCode;
+import org.opensaml.saml.saml2.core.StatusCode;
 
 /**
  * @author Mika Koivisto
@@ -82,7 +82,7 @@ public class SamlSloRequestInfo implements Serializable {
 	}
 
 	public void setStatusCode(String statusCode) {
-		if (statusCode.equals(StatusCode.SUCCESS_URI)) {
+		if (statusCode.equals(StatusCode.SUCCESS)) {
 			_status = REQUEST_STATUS_SUCCESS;
 		}
 		else {

@@ -14,7 +14,6 @@
 
 package com.liferay.segments.web.internal.display.context;
 
-import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
@@ -23,7 +22,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -290,14 +288,6 @@ public class SelectSegmentsEntryUsersDisplayContext {
 		LinkedHashMap<String, Object> userParams = new LinkedHashMap<>();
 
 		userParams.put("inherit", Boolean.TRUE);
-
-		Group group = _groupLocalService.fetchGroup(segmentsEntry.getGroupId());
-
-		if (group != null) {
-			group = StagingUtil.getLiveGroup(group.getGroupId());
-		}
-
-		userParams.put("usersGroups", group.getGroupId());
 
 		int usersCount = _userLocalService.searchCount(
 			themeDisplay.getCompanyId(), searchTerms.getKeywords(),

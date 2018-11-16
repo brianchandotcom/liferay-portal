@@ -15,6 +15,7 @@
 package com.liferay.portal.spring.aop;
 
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.messaging.async.AsyncAdvice;
 import com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice;
 import com.liferay.portal.resiliency.service.PortalResiliencyAdvice;
 import com.liferay.portal.security.access.control.AccessControlAdvice;
@@ -127,10 +128,15 @@ public class AopConfigurableApplicationContextConfigurator
 				configurableListableBeanFactory.getBean(
 					"serviceAdvice", MethodInterceptor.class);
 
+			AsyncAdvice asyncAdvice = new AsyncAdvice();
+
+			asyncAdvice.setDefaultDestinationName("liferay/async_service");
+			asyncAdvice.setNextMethodInterceptor(methodInterceptor);
+
 			ServiceMonitorAdvice serviceMonitorAdvice =
 				new ServiceMonitorAdvice();
 
-			serviceMonitorAdvice.setNextMethodInterceptor(methodInterceptor);
+			serviceMonitorAdvice.setNextMethodInterceptor(asyncAdvice);
 
 			configurableListableBeanFactory.registerSingleton(
 				"serviceMonitoringControl", serviceMonitorAdvice);

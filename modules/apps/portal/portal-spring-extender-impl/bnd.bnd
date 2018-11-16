@@ -17,7 +17,6 @@ Import-Package:\
 	com.liferay.portal.kernel.service.configuration,\
 	com.liferay.portal.kernel.spring.util,\
 	com.liferay.portal.kernel.util,\
-	com.liferay.portal.messaging.async,\
 	com.liferay.portal.search,\
 	com.liferay.portal.security.permission,\
 	com.liferay.portal.service,\

@@ -28,6 +28,7 @@ Export-Package:\
 	!com.liferay.portal.jericho,\
 	!com.liferay.portal.license.*,\
 	!com.liferay.portal.messaging,\
+	!com.liferay.portal.messaging.async,\
 	!com.liferay.portal.microsofttranslator,\
 	!com.liferay.portal.monitoring.statistics.service,\
 	!com.liferay.portal.nio.intraband.proxy,\

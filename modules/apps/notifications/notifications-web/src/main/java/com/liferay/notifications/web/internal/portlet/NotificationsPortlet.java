@@ -319,21 +319,14 @@ public class NotificationsPortlet extends MVCPortlet {
 			userNotificationEvent);
 	}
 
-	private void _deleteUserNotificationEvent(long userNotificationEventId)
-		throws PortletException {
+	private void _deleteUserNotificationEvent(long userNotificationEventId) {
+		UserNotificationEvent userNotificationEvent =
+			_userNotificationEventLocalService.fetchUserNotificationEvent(
+				userNotificationEventId);
 
-		try {
-			UserNotificationEvent userNotificationEvent =
-				_userNotificationEventLocalService.
-					fetchUserNotificationEvent(userNotificationEventId);
-
-			if (userNotificationEvent != null) {
-				_userNotificationEventLocalService.deleteUserNotificationEvent(
-					userNotificationEvent);
-			}
-		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		if (userNotificationEvent != null) {
+			_userNotificationEventLocalService.deleteUserNotificationEvent(
+				userNotificationEvent);
 		}
 	}
 

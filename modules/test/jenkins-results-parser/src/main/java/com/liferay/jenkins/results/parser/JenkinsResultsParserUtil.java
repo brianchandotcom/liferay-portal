@@ -787,6 +787,35 @@ public class JenkinsResultsParserUtil {
 		return excludedFiles;
 	}
 
+	public static String getGitHubAPIRateLimitStatus() {
+		StringBuilder sb = new StringBuilder();
+
+		try {
+			JSONObject jsonObject = toJSONObject(
+				"https://api.github.com/rate_limit");
+
+			jsonObject = jsonObject.getJSONObject("rate");
+
+			sb.append(jsonObject.getInt("remaining"));
+
+			sb.append(" GitHub API calls out of ");
+			sb.append(jsonObject.getInt("limit"));
+
+			sb.append(" remain. GitHub API call limit will reset in ");
+			sb.append(
+				toDurationString(
+					(1000 * jsonObject.getLong("reset")) -
+						(System.currentTimeMillis())));
+
+			sb.append(".");
+		}
+		catch (Exception e) {
+			System.out.println("Unable to get GitHub API rate limit");
+		}
+
+		return sb.toString();
+	}
+
 	public static String getGitHubApiUrl(
 		String gitRepositoryName, String username, String path) {
 
@@ -1991,6 +2020,10 @@ public class JenkinsResultsParserUtil {
 				retryCount++;
 
 				if ((maxRetries >= 0) && (retryCount >= maxRetries)) {
+					if (url.startsWith("https://api.github.com")) {
+						System.out.println(getGitHubAPIRateLimitStatus());
+					}
+
 					throw ioe;
 				}
 

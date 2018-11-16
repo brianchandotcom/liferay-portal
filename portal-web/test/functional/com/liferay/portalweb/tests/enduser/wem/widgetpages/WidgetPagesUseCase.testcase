@@ -355,7 +355,7 @@
 
 	<command name="SitesPrivatePagesPermissions" priority="5">
 		<property name="portal.acceptance" value="true" />
-		<property name="test.name.skip.portal.instance" value="SitepagesUsecase#SitesPrivatePagesPermissions" />
+		<property name="test.name.skip.portal.instance" value="WidgetPagesUseCase#SitesPrivatePagesPermissions" />
 		<property name="testray.component.names" value="Permissions,Roles,Site Pages Administration,Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -531,7 +531,7 @@
 	</command>
 
 	<command ignore="true" name="ViewSecureContentAndPageAsGuest" priority="3">
-		<property name="test.name.skip.portal.instance" value="SitepagesUsecase#ViewSecureContentAndPageAsGuest" />
+		<property name="test.name.skip.portal.instance" value="WidgetPagesUseCase#ViewSecureContentAndPageAsGuest" />
 		<property name="testray.component.names" value="Message Boards,Site Pages Administration" />
 
 		<execute macro="TestCase#getSiteName">
@@ -765,7 +765,7 @@
 	</command>
 
 	<command ignore="true" name="ViewSecureContentAndPageAsSiteMember" priority="3">
-		<property name="test.name.skip.portal.instance" value="SitepagesUsecase#ViewSecureContentAndPageAsSiteMember" />
+		<property name="test.name.skip.portal.instance" value="WidgetPagesUseCase#ViewSecureContentAndPageAsSiteMember" />
 		<property name="testray.component.names" value="Message Boards,Site Pages Administration" />
 
 		<execute macro="TestCase#getSiteName">
@@ -1043,7 +1043,7 @@
 	</command>
 
 	<command ignore="true" name="ViewSecureContentAndPageAsUser" priority="5">
-		<property name="test.name.skip.portal.instance" value="SitepagesUsecase#ViewSecureContentAndPageAsUser" />
+		<property name="test.name.skip.portal.instance" value="WidgetPagesUseCase#ViewSecureContentAndPageAsUser" />
 		<property name="testray.component.names" value="Message Boards,Site Pages Administration,Training" />
 
 		<execute macro="TestCase#getSiteName">

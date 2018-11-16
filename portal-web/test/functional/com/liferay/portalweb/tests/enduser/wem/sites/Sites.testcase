@@ -25,7 +25,7 @@
 	</tear-down>
 
 	<command name="ActivateSite" priority="4">
-		<property name="test.name.skip.portal.instance" value="CPSites#ActivateSite" />
+		<property name="test.name.skip.portal.instance" value="Sites#ActivateSite" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
@@ -252,7 +252,7 @@
 	</command>
 
 	<command name="EditSiteFriendlyURLInvalid" priority="3">
-		<property name="test.name.skip.portal.instance" value="CPSites#EditSiteFriendlyURLInvalid" />
+		<property name="test.name.skip.portal.instance" value="Sites#EditSiteFriendlyURLInvalid" />
 
 		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 

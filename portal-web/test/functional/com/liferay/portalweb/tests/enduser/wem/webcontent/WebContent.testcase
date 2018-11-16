@@ -171,7 +171,7 @@
 	<command name="AddStructureViaLocaleURL" priority="4">
 		<description message="This is a use case for LPS-77387." />
 
-		<property name="test.name.skip.portal.instance" value="CPWebcontent#AddStructureViaLocaleURL" />
+		<property name="test.name.skip.portal.instance" value="WebContent#AddStructureViaLocaleURL" />
 
 		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
@@ -855,7 +855,7 @@
 	</command>
 
 	<command name="AddWebContentWithImageField" priority="4">
-		<property name="test.name.skip.portal.instance" value="CPWebcontent#AddWebContentWithImageField" />
+		<property name="test.name.skip.portal.instance" value="WebContent#AddWebContentWithImageField" />
 		<property name="testray.component.names" value="Web Content Administration" />
 
 		<execute macro="WebContent#openWebContentAdmin">

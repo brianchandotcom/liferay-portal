@@ -76,7 +76,7 @@
 	</tear-down>
 
 	<command name="AddXSL" priority="4">
-		<property name="test.name.skip.portal.instance" value="XSLContent#AddXSL" />
+		<property name="test.name.skip.portal.instance" value="XSL#AddXSL" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -214,7 +214,7 @@
 
 	<command name="ConfigurePortletWithCorruptXML" priority="4">
 		<property name="ignore.errors" value="must be terminated by the matching end-tag" />
-		<property name="test.name.skip.portal.instance" value="XSLContent#ConfigurePortletWithCorruptXML" />
+		<property name="test.name.skip.portal.instance" value="XSL#ConfigurePortletWithCorruptXML" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -340,7 +340,7 @@
 
 	<command name="ConfigurePortletWithCorruptXSL" priority="4">
 		<property name="ignore.errors" value="must be terminated by the matching end-tag" />
-		<property name="test.name.skip.portal.instance" value="XSLContent#ConfigurePortletWithCorruptXSL" />
+		<property name="test.name.skip.portal.instance" value="XSL#ConfigurePortletWithCorruptXSL" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -465,7 +465,7 @@
 	</command>
 
 	<command name="ConfigurePortletWithIncorrectVersionXmlAndXsl" priority="4">
-		<property name="test.name.skip.portal.instance" value="XSLContent#ConfigurePortletWithIncorrectVersionXmlAndXsl" />
+		<property name="test.name.skip.portal.instance" value="XSL#ConfigurePortletWithIncorrectVersionXmlAndXsl" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -594,7 +594,7 @@
 	</command>
 
 	<command name="ViewXSLDefaultContent" priority="4">
-		<property name="test.name.skip.portal.instance" value="XSLContent#ViewXSLDefaultContent" />
+		<property name="test.name.skip.portal.instance" value="XSL#ViewXSLDefaultContent" />
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page Name" />

@@ -70,7 +70,7 @@
 
 	<command name="AddAndEditAssetsViaVirtualHostOrganizations" priority="4">
 		<property name="custom.properties" value="virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com" />
-		<property name="test.name.skip.portal.instance" value="WebcontentpublicationUsecase#AddAndEditAssetsViaVirtualHostOrganizations" />
+		<property name="test.name.skip.portal.instance" value="AssetPublisherUseCase#AddAndEditAssetsViaVirtualHostOrganizations" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
@@ -371,7 +371,7 @@
 	</command>
 
 	<command name="AssetPublisherCategoriesLocalization" priority="3">
-		<property name="test.name.skip.portal.instance" value="WebcontentpublicationUsecase#AssetPublisherCategoriesLocalization" />
+		<property name="test.name.skip.portal.instance" value="AssetPublisherUseCase#AssetPublisherCategoriesLocalization" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1280,7 +1280,7 @@
 	</command>
 
 	<command name="AssetPublisherHasOpenOfficeFileTypeLinks" priority="3">
-		<property name="test.name.skip.portal.instance" value="WebcontentpublicationUsecase#AssetPublisherHasOpenOfficeFileTypeLinks" />
+		<property name="test.name.skip.portal.instance" value="AssetPublisherUseCase#AssetPublisherHasOpenOfficeFileTypeLinks" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
@@ -1384,7 +1384,7 @@
 
 	<command name="AssetPublisherSiteAndGlobalScopeAccessibility" priority="5">
 		<property name="portal.acceptance" value="false" />
-		<property name="test.name.skip.portal.instance" value="WebcontentpublicationUsecase#AssetPublisherSiteAndGlobalScopeAccessibility" />
+		<property name="test.name.skip.portal.instance" value="AssetPublisherUseCase#AssetPublisherSiteAndGlobalScopeAccessibility" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Sites" />

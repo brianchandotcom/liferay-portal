@@ -352,7 +352,7 @@
 		<property name="custom.properties" value="editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl=ckeditor" />
 		<property name="dummy.socket.proxy.disabled" value="true" />
 		<property name="portal.acceptance" value="false" />
-		<property name="test.name.skip.portal.instance" value="WebcontentUsecase#AddAudioViaWebContent" />
+		<property name="test.name.skip.portal.instance" value="WebContentUseCase#AddAudioViaWebContent" />
 		<property name="testray.component.names" value="Training,Web Content Administration" />
 
 		<execute macro="ServerAdministration#openServerAdmin" />
@@ -788,7 +788,7 @@
 	</command>
 
 	<command name="AddLocalizedWebContentViaSourceEditor" priority="5">
-		<property name="test.name.skip.portal.instance" value="WebcontentUsecase#AddLocalizedWebContentViaSourceEditor" />
+		<property name="test.name.skip.portal.instance" value="WebContentUseCase#AddLocalizedWebContentViaSourceEditor" />
 		<property name="testray.component.names" value="Training,Web Content Administration" />
 
 		<execute macro="JSONLayout#addPublicLayout">
@@ -916,7 +916,7 @@
 	<command name="AddVideoViaWebContent" priority="4">
 		<property name="custom.properties" value="editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl=ckeditor" />
 		<property name="dummy.socket.proxy.disabled" value="true" />
-		<property name="test.name.skip.portal.instance" value="WebcontentUsecase#AddVideoViaWebContent" />
+		<property name="test.name.skip.portal.instance" value="WebContentUseCase#AddVideoViaWebContent" />
 		<property name="testray.component.names" value="Web Content Administration" />
 
 		<execute macro="ServerAdministration#openServerAdmin" />
@@ -1072,7 +1072,7 @@
 	</command>
 
 	<command name="AddWebContentRemoveGuestViewPermission" priority="4">
-		<property name="test.name.skip.portal.instance" value="WebcontentUsecase#AddWebContentRemoveGuestViewPermission" />
+		<property name="test.name.skip.portal.instance" value="WebContentUseCase#AddWebContentRemoveGuestViewPermission" />
 		<property name="testray.component.names" value="Permissions,Web Content Administration" />
 
 		<execute macro="SystemSettings#openSystemSettingsAdmin" />
@@ -2271,7 +2271,7 @@
 	<command name="UndeployWebContentDisplayModuleViaGogoShell" priority="5">
 		<description message="This is a use case for LPS-71941." />
 
-		<property name="test.name.skip.portal.instance" value="WebcontentUsecase#UndeployWebContentDisplayModuleViaGogoShell" />
+		<property name="test.name.skip.portal.instance" value="WebContentUseCase#UndeployWebContentDisplayModuleViaGogoShell" />
 
 		<execute macro="JSONLayout#addPublicLayout">
 			<var name="groupName" value="Test Site Name" />
@@ -2336,7 +2336,7 @@
 	</command>
 
 	<command name="UseStructureAndTemplateFromParentSiteHierarchy" priority="4">
-		<property name="test.name.skip.portal.instance" value="WebcontentUsecase#UseStructureAndtemplateFromParentSiteHierarchy" />
+		<property name="test.name.skip.portal.instance" value="WebContentUseCase#UseStructureAndtemplateFromParentSiteHierarchy" />
 		<property name="testray.component.names" value="Web Content Administration" />
 
 		<execute macro="SystemSettings#openSystemSettingsAdmin" />
@@ -2791,7 +2791,7 @@
 	</command>
 
 	<command name="WebContentAdministrationLocalization" priority="4">
-		<property name="test.name.skip.portal.instance" value="WebcontentUsecase#WebContentAdministrationLocalization" />
+		<property name="test.name.skip.portal.instance" value="WebContentUseCase#WebContentAdministrationLocalization" />
 		<property name="testray.component.names" value="Localization,Web Content Administration" />
 
 		<execute macro="JSONLayout#addPublicLayout">

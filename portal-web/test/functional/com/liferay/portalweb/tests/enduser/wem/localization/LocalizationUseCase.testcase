@@ -41,7 +41,7 @@
 	</tear-down>
 
 	<command name="MoveCurrentLanguagesToAvailable" priority="4">
-		<property name="test.name.skip.portal.instance" value="LanguageUsecase#MoveCurrentLanguagesToAvailable" />
+		<property name="test.name.skip.portal.instance" value="LocalizationUsecase#MoveCurrentLanguagesToAvailable" />
 		<property name="testray.component.names" value="Localization" />
 
 		<execute macro="Navigator#gotoSitePage">
@@ -87,7 +87,7 @@
 	</command>
 
 	<command name="ViewDisplayOptionsViaLanguagePortlet" priority="4">
-		<property name="test.name.skip.portal.instance" value="LanguageUsecase#ViewDisplayOptionsViaLanguagePortlet" />
+		<property name="test.name.skip.portal.instance" value="LocalizationUsecase#ViewDisplayOptionsViaLanguagePortlet" />
 		<property name="testray.component.names" value="Localization" />
 
 		<execute macro="Navigator#gotoSitePage">
@@ -179,7 +179,7 @@
 	</command>
 
 	<command name="ViewRemovedCurrentPortalLanguagesViaLanguagePortlet" priority="4">
-		<property name="test.name.skip.portal.instance" value="LanguageUsecase#ViewRemovedCurrentPortalLanguagesViaLanguagePortlet" />
+		<property name="test.name.skip.portal.instance" value="LocalizationUsecase#ViewRemovedCurrentPortalLanguagesViaLanguagePortlet" />
 		<property name="testray.component.names" value="Localization" />
 
 		<execute macro="Navigator#gotoSitePage">
@@ -228,7 +228,7 @@
 	</command>
 
 	<command name="ViewRemovedCurrentSiteLanguagesViaLanguagePortlet" priority="4">
-		<property name="test.name.skip.portal.instance" value="LanguageUsecase#ViewRemovedCurrentSiteLanguageViaLanguagePortlet" />
+		<property name="test.name.skip.portal.instance" value="LocalizationUsecase#ViewRemovedCurrentSiteLanguageViaLanguagePortlet" />
 		<property name="testray.component.names" value="Localization" />
 
 		<execute macro="Navigator#gotoSitePage">

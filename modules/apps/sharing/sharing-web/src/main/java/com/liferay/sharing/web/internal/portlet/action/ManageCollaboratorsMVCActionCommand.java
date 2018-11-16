@@ -199,12 +199,11 @@ public class ManageCollaboratorsMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		Set<Long> toEditSharingEntryIds = new HashSet<>();
-
 		Map<Long, Collection<SharingEntryAction>> sharingEntryActions =
 			_getSharingEntryActions(actionRequest);
 
-		toEditSharingEntryIds.addAll(sharingEntryActions.keySet());
+		Set<Long> toEditSharingEntryIds = new HashSet<>(
+			sharingEntryActions.keySet());
 
 		Map<Long, Date> sharingEntryExpirationDates =
 			_getSharingEntryExpirationDates(actionRequest, resourceBundle);

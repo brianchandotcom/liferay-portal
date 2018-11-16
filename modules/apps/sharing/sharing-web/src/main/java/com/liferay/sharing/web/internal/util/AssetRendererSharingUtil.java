@@ -36,12 +36,8 @@ public class AssetRendererSharingUtil {
 			return null;
 		}
 
-		AssetRenderer<?> assetRenderer = null;
-
-		assetRenderer = assetRendererFactory.getAssetRenderer(
+		return assetRendererFactory.getAssetRenderer(
 			sharingEntry.getClassPK());
-
-		return assetRenderer;
 	}
 
 }

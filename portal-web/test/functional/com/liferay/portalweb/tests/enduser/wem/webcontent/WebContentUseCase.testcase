@@ -2270,7 +2270,6 @@
 
 	<command name="UndeployWebContentDisplayModuleViaGogoShell" priority="5">
 		<description message="This is a use case for LPS-71941." />
-
 		<property name="test.name.skip.portal.instance" value="WebContentUseCase#UndeployWebContentDisplayModuleViaGogoShell" />
 
 		<execute macro="JSONLayout#addPublicLayout">

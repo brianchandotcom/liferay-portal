@@ -53,6 +53,15 @@
 	</command>
 
 	<command name="gotoAdd">
+		<var method="PropsUtil#get('browser.type')" name="browserType" />
+
+		<if>
+			<equals arg1="${browserType}" arg2="chrome" />
+			<then>
+				<execute macro="LexiconEntry#waitForManagementBar" />
+			</then>
+		</if>
+
 		<execute function="Click" locator1="Button#PLUS" />
 	</command>
 
@@ -199,5 +208,37 @@
 		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
 			<var name="key_menuItem" value="${menuItem}" />
 		</execute>
+	</command>
+
+	<command name="waitForManagementBar">
+		<execute function="AssertVisible" locator1="ManagementBar#MANAGEMENT_BAR" />
+
+		<var name="javaScript"><![CDATA[
+var managementBar = Liferay.component(document.querySelector("nav.management-bar").parentNode.id);
+
+if (managementBar !== undefined) {
+	if (managementBar.wasRendered) {
+		return 'ready';
+	}
+	else {
+		return 'pending';
+	}
+}
+else {
+	return 'pending';
+}
+		]]></var>
+		<var name="managementBarReady" value="" />
+
+		<while max-iterations="30">
+			<not>
+				<equals arg1="${managementBarReady}" arg2="ready" />
+			</not>
+			<then>
+				<var method="selenium#getEval(${javaScript})" name="managementBarReady" />
+
+				<execute function="Pause" locator1="1000" />
+			</then>
+		</while>
 	</command>
 </definition>

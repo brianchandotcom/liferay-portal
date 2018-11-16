@@ -34,6 +34,8 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author Adolfo Pérez
@@ -96,6 +98,10 @@ public class SharingPermissionImpl implements SharingPermission {
 			return true;
 		}
 
+		if (_sharingEntryLocalService == null) {
+			return false;
+		}
+
 		Stream<SharingEntryAction> sharingEntryActionStream =
 			sharingEntryActions.stream();
 
@@ -135,7 +141,10 @@ public class SharingPermissionImpl implements SharingPermission {
 	private ServiceTrackerMap<Long, SharingPermissionChecker>
 		_serviceTrackerMap;
 
-	@Reference
-	private SharingEntryLocalService _sharingEntryLocalService;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC
+	)
+	private volatile SharingEntryLocalService _sharingEntryLocalService;
 
 }

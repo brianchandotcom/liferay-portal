@@ -77,19 +77,18 @@ public class GitWorkingDirectory {
 			}
 		}
 
-		GitUtil.ExecutionResult executionResult = executeBashCommands(
-			GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, GitUtil.TIMEOUT,
-			JenkinsResultsParserUtil.combine(
-				"git remote add ", gitRemoteName, " ", remoteURL));
-
-		if (executionResult.getExitValue() != 0) {
-			throw new RuntimeException(
+		GitRemote newGitRemote = new GitRemote(
+			this,
+			new String[] {
 				JenkinsResultsParserUtil.combine(
-					"Unable to add git remote ", gitRemoteName, "\n",
-					executionResult.getStandardError()));
-		}
+					gitRemoteName, "\t", remoteURL, " (fetch)"),
+				JenkinsResultsParserUtil.combine(
+					gitRemoteName, "\t", remoteURL, " (push)")
+			});
 
-		return getGitRemote(gitRemoteName);
+		_gitRemotes.put(gitRemoteName, newGitRemote);
+
+		return newGitRemote;
 	}
 
 	public void checkoutLocalGitBranch(LocalGitBranch localGitBranch) {
@@ -805,21 +804,13 @@ public class GitWorkingDirectory {
 			name = "upstream-temp";
 		}
 
-		Map<String, GitRemote> gitRemotes = getGitRemotes();
+		if (_gitRemotes.isEmpty()) {
+			getGitRemotes();
+		}
 
 		name = name.trim();
 
-		GitRemote gitRemote = gitRemotes.get(name);
-
-		if ((gitRemote == null) && name.equals("upstream-temp")) {
-			JenkinsResultsParserUtil.sleep(1000);
-
-			gitRemotes = getGitRemotes();
-
-			return gitRemotes.get(name);
-		}
-
-		return gitRemote;
+		return _gitRemotes.get(name);
 	}
 
 	public Set<String> getGitRemoteNames() {
@@ -829,7 +820,9 @@ public class GitWorkingDirectory {
 	}
 
 	public Map<String, GitRemote> getGitRemotes() {
-		Map<String, GitRemote> gitRemotes = new HashMap<>();
+		if (!_gitRemotes.isEmpty()) {
+			return _gitRemotes;
+		}
 
 		int retries = 0;
 
@@ -837,7 +830,7 @@ public class GitWorkingDirectory {
 
 		while (true) {
 			if (retries > 1) {
-				return gitRemotes;
+				return _gitRemotes;
 			}
 
 			GitUtil.ExecutionResult executionResult = executeBashCommands(
@@ -905,7 +898,7 @@ public class GitWorkingDirectory {
 
 				sb.append(gitRemote.getName());
 
-				gitRemotes.put(gitRemote.getName(), gitRemote);
+				_gitRemotes.put(gitRemote.getName(), gitRemote);
 			}
 
 			System.out.println(sb);
@@ -916,7 +909,7 @@ public class GitWorkingDirectory {
 			throw t;
 		}
 
-		return gitRemotes;
+		return _gitRemotes;
 	}
 
 	public String getGitRepositoryName() {
@@ -1624,16 +1617,7 @@ public class GitWorkingDirectory {
 			return;
 		}
 
-		GitUtil.ExecutionResult executionResult = executeBashCommands(
-			GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, GitUtil.TIMEOUT,
-			"git remote rm " + gitRemote.getName());
-
-		if (executionResult.getExitValue() != 0) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to remove git remote ", gitRemote.getName(), "\n",
-					executionResult.getStandardError()));
-		}
+		_gitRemotes.remove(gitRemote.getName());
 	}
 
 	public void removeGitRemotes(List<GitRemote> gitRemotes) {
@@ -2150,6 +2134,7 @@ public class GitWorkingDirectory {
 			"git.working.directory.public.only.repository.names");
 
 	private File _gitDirectory;
+	private final Map<String, GitRemote> _gitRemotes = new HashMap<>();
 	private final String _gitRepositoryName;
 	private final String _gitRepositoryUsername;
 	private Set<String> _javaDirPaths;

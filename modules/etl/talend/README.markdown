@@ -3,17 +3,17 @@
 This project contains components for working with Liferay DXP from Talend
 Studio.
 
-Open Talend 7.0.1
+Open Talend 7.1.1
 
 ## Prerequisites
 
 * JDK 1.8+
 * Apache Maven 3.3+
-* Open Talend 7.0.1
-	* Components API v0.23.1
+* Open Talend 7.1.1
+	* Components API v0.25.3
 
 Download Talend Open Studio: https://www.talend.com/products/talend-open-studio/
-* Direct link: https://download-mirror2.talend.com/esb/release/V7.0.1/TOS_ESB-20180411_1414-V7.0.1.zip
+* Direct link: https://download-mirror2.talend.com/esb/release/V7.1.1/TOS_ESB-20181026_1147-V7.1.1.zip
 
 ## Build
 

@@ -278,29 +278,6 @@ public class NotificationsPortlet extends MVCPortlet {
 	protected void setRelease(Release release) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-
-		_subscriptionLocalService = subscriptionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserNotificationDeliveryLocalService(
-		UserNotificationDeliveryLocalService
-			userNotificationDeliveryLocalService) {
-
-		_userNotificationDeliveryLocalService =
-			userNotificationDeliveryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserNotificationEventLocalService(
-		UserNotificationEventLocalService userNotificationEventLocalService) {
-
-		_userNotificationEventLocalService = userNotificationEventLocalService;
-	}
-
 	protected void updateArchived(
 		long userNotificationEventId, boolean archived) {
 
@@ -343,9 +320,14 @@ public class NotificationsPortlet extends MVCPortlet {
 	@Reference(target = "(bundle.symbolic.name=com.liferay.notifications.web)")
 	private ResourceBundleLoader _resourceBundleLoader;
 
+	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
+
+	@Reference
 	private UserNotificationDeliveryLocalService
 		_userNotificationDeliveryLocalService;
+
+	@Reference
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
 

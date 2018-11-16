@@ -21,6 +21,7 @@ Export-Package:\
 	\
 	!com.liferay.portal.asm,\
 	!com.liferay.portal.aspectj,\
+	!com.liferay.portal.cache.thread.local,\
 	!com.liferay.portal.fabric,\
 	!com.liferay.portal.freemarker,\
 	!com.liferay.portal.javadoc,\

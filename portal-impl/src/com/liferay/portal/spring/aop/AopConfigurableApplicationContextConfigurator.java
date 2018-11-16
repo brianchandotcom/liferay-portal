@@ -14,6 +14,7 @@
 
 package com.liferay.portal.spring.aop;
 
+import com.liferay.portal.cache.thread.local.ThreadLocalCacheAdvice;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.messaging.async.AsyncAdvice;
 import com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice;
@@ -128,10 +129,15 @@ public class AopConfigurableApplicationContextConfigurator
 				configurableListableBeanFactory.getBean(
 					"serviceAdvice", MethodInterceptor.class);
 
+			ThreadLocalCacheAdvice threadLocalCacheAdvice =
+				new ThreadLocalCacheAdvice();
+
+			threadLocalCacheAdvice.setNextMethodInterceptor(methodInterceptor);
+
 			AsyncAdvice asyncAdvice = new AsyncAdvice();
 
 			asyncAdvice.setDefaultDestinationName("liferay/async_service");
-			asyncAdvice.setNextMethodInterceptor(methodInterceptor);
+			asyncAdvice.setNextMethodInterceptor(threadLocalCacheAdvice);
 
 			ServiceMonitorAdvice serviceMonitorAdvice =
 				new ServiceMonitorAdvice();

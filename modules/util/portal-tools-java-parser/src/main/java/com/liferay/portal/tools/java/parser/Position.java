@@ -17,11 +17,20 @@ package com.liferay.portal.tools.java.parser;
 /**
  * @author Hugo Huijser
  */
-public class Position {
+public class Position implements Comparable<Position> {
 
 	public Position(int lineNumber, int linePosition) {
 		_lineNumber = lineNumber;
 		_linePosition = linePosition;
+	}
+
+	@Override
+	public int compareTo(Position position) {
+		if (_lineNumber != position.getLineNumber()) {
+			return _lineNumber - position.getLineNumber();
+		}
+
+		return _linePosition - position.getLinePosition();
 	}
 
 	public int getLineNumber() {

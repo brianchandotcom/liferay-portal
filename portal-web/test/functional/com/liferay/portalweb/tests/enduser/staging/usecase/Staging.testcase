@@ -211,6 +211,8 @@
 	</command>
 
 	<command name="PublishRenamedTags" priority="4">
+		<description message="This is a use case for LPS-80492." />
+
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -311,6 +313,10 @@
 
 		<execute macro="Tag#viewCP">
 			<var name="tagName" value="tag name edit" />
+		</execute>
+
+		<execute macro="LexiconEntry#viewNoEntryMenu">
+			<var name="rowEntry" value="tag name edit" />
 		</execute>
 	</command>
 
@@ -2546,52 +2552,6 @@
 		<execute macro="DMDocument#viewPGViaAP">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-	</command>
-
-	<command name="TagNotToBeEditableOnLive" priority="4">
-		<description message="This is a use case for LPS-80492." />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Tags" />
-		</execute>
-
-		<execute macro="Tag#addCP">
-			<var name="tagName" value="tagname" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Staging Test Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Tags" />
-		</execute>
-
-		<execute macro="LexiconEntry#viewNoEntryMenu">
-			<var name="rowEntry" value="tagname" />
 		</execute>
 	</command>
 

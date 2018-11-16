@@ -89,7 +89,7 @@ public class FreeMarkerTemplateResourceLoader
 			FreeMarkerEngineConfiguration.class, properties);
 
 		_defaultTemplateResourceLoader = new DefaultTemplateResourceLoader(
-			_templateResourceParsers, TemplateConstants.LANG_TYPE_FTL,
+			TemplateConstants.LANG_TYPE_FTL, _templateResourceParsers,
 			_freeMarkerEngineConfiguration.resourceModificationCheck(),
 			_multiVMPool, _singleVMPool);
 	}

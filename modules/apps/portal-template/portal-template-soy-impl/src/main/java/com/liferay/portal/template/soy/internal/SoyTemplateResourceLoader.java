@@ -87,7 +87,7 @@ public class SoyTemplateResourceLoader implements TemplateResourceLoader {
 			SoyTemplateEngineConfiguration.class, properties);
 
 		_defaultTemplateResourceLoader = new DefaultTemplateResourceLoader(
-			_templateResourceParsers, TemplateConstants.LANG_TYPE_SOY,
+			TemplateConstants.LANG_TYPE_SOY, _templateResourceParsers,
 			_soyTemplateEngineConfiguration.resourceModificationCheck(),
 			_multiVMPool, _singleVMPool);
 	}

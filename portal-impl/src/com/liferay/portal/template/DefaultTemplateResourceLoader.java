@@ -44,7 +44,7 @@ import java.util.Set;
 public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 	public DefaultTemplateResourceLoader(
-		Set<TemplateResourceParser> templateResourceParsers, String name,
+		String name, Set<TemplateResourceParser> templateResourceParsers,
 		long modificationCheckInterval, MultiVMPool multiVMPool,
 		SingleVMPool singleVMPool) {
 
@@ -53,9 +53,9 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 				"Template resource loader name is null");
 		}
 
-		_templateResourceParsers = templateResourceParsers;
-
 		_name = name;
+
+		_templateResourceParsers = templateResourceParsers;
 
 		_modificationCheckInterval = modificationCheckInterval;
 
@@ -89,7 +89,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 	/**
 	 * @deprecated As of Judson (7.1.x), replaced by {@link
 	 *             #DefaultTemplateResourceLoader(
-	 * 				Set, String, long, MultiVMPool, SingleVMPool)}
+	 * 				String, Set, long, MultiVMPool, SingleVMPool)}
 	 */
 	@Deprecated
 	public DefaultTemplateResourceLoader(
@@ -98,7 +98,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 		throw new UnsupportedOperationException(
 			"This constructor is deprecated and replaced by " +
-				"#DefaultTemplateResourceLoader(Set, String, long, " +
+				"#DefaultTemplateResourceLoader(String, Set, long, " +
 					"MultiVMPool, SingleVMPool)");
 	}
 

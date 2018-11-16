@@ -25,12 +25,9 @@
 			</bean>
 		</property>
 	</bean>
-	<bean class="com.liferay.portal.messaging.async.AsyncAdvice" id="asyncAdvice">
+	<bean class="com.liferay.portal.messaging.async.AsyncAdvice" id="serviceAdvice">
 		<property name="defaultDestinationName" value="liferay/async_service" />
 		<property name="nextMethodInterceptor" ref="threadLocalCacheAdvice" />
-	</bean>
-	<bean class="com.liferay.portal.resiliency.service.PortalResiliencyAdvice" id="serviceAdvice">
-		<property name="nextMethodInterceptor" ref="asyncAdvice" />
 	</bean>
 	<bean class="com.liferay.portal.search.IndexableAdvice" id="indexableAdvice">
 		<property name="nextMethodInterceptor" ref="systemEventAdvice" />

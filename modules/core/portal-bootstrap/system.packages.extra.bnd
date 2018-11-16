@@ -31,6 +31,7 @@ Export-Package:\
 	!com.liferay.portal.microsofttranslator,\
 	!com.liferay.portal.monitoring.statistics,\
 	!com.liferay.portal.nio.intraband.proxy,\
+	!com.liferay.portal.resiliency.service,\
 	!com.liferay.portal.scripting.beanshell,\
 	!com.liferay.portal.scripting.groovy,\
 	!com.liferay.portal.scripting.javascript,\

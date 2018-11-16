@@ -15,7 +15,6 @@ Export-Package:\
 	com.liferay.portal.minifier,\
 	com.liferay.portal.monitoring.statistics.service,\
 	com.liferay.portal.plugin,\
-	com.liferay.portal.resiliency.service,\
 	com.liferay.portal.search,\
 	com.liferay.portal.security.auth,\
 	com.liferay.portal.security.lang,\

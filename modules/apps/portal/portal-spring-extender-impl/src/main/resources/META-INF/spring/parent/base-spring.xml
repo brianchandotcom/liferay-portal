@@ -28,11 +28,8 @@
 		<property name="defaultDestinationName" value="liferay/async_service" />
 		<property name="nextMethodInterceptor" ref="threadLocalCacheAdvice" />
 	</bean>
-	<bean class="com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice" id="serviceMonitorAdvice">
+	<bean class="com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice" id="serviceAdvice">
 		<property name="nextMethodInterceptor" ref="asyncAdvice" />
-	</bean>
-	<bean class="com.liferay.portal.resiliency.service.PortalResiliencyAdvice" id="serviceAdvice">
-		<property name="nextMethodInterceptor" ref="serviceMonitorAdvice" />
 	</bean>
 	<bean class="com.liferay.portal.search.IndexableAdvice" id="indexableAdvice">
 		<property name="nextMethodInterceptor" ref="systemEventAdvice" />

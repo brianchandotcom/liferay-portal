@@ -350,7 +350,7 @@
 	</command>
 
 	<command name="AddSubcategoryConfigureParentCategory" priority="3">
-		<property name="test.name.skip.portal.instance" value="CategoriesUsecase#AddSubcategoryConfigureParentCategory" />
+		<property name="test.name.skip.portal.instance" value="CategoriesUseCase#AddSubcategoryConfigureParentCategory" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
@@ -1692,7 +1692,7 @@
 	</command>
 
 	<command name="ViewFlattenedTreeCategoryNavigationDisplayStyle" priority="3">
-		<property name="test.name.skip.portal.instance" value="CategoriesUsecase#ViewFlattenedTreeCategoryNavigationDisplayStyle" />
+		<property name="test.name.skip.portal.instance" value="CategoriesUseCase#ViewFlattenedTreeCategoryNavigationDisplayStyle" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />

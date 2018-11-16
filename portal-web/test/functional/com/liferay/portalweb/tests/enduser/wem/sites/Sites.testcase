@@ -25,7 +25,7 @@
 	</tear-down>
 
 	<command name="ActivateSite" priority="4">
-		<property name="test.name.skip.portal.instance" value="CPSites#ActivateSite" />
+		<property name="test.name.skip.portal.instance" value="Sites#ActivateSite" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
@@ -252,7 +252,7 @@
 	</command>
 
 	<command name="EditSiteFriendlyURLInvalid" priority="3">
-		<property name="test.name.skip.portal.instance" value="CPSites#EditSiteFriendlyURLInvalid" />
+		<property name="test.name.skip.portal.instance" value="Sites#EditSiteFriendlyURLInvalid" />
 
 		<var method="PropsUtil#get('portal.url')" name="portalURL" />
 
@@ -349,6 +349,35 @@
 		<execute macro="Site#selectParentSite">
 			<var name="chooseButtonAvailable" value="false" />
 			<var name="parentSiteName" value="Site Name" />
+		</execute>
+	</command>
+
+	<command name="ViewDefaultGlobalScopeLandingPage" priority="4">
+		<property name="testray.component.names" value="Site Administration" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="Site#viewGlobalLandingDefault">
+			<var name="portletName" value="Web Content" />
+			<var name="siteName" value="Global" />
 		</execute>
 	</command>
 

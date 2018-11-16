@@ -422,7 +422,7 @@
 	</command>
 
 	<command name="LocalizeDefaultPageTemplates" priority="4">
-		<property name="test.name.skip.portal.instance" value="CPPagetemplates#LocalizeDefaultPageTemplates" />
+		<property name="test.name.skip.portal.instance" value="WidgetPageTemplates#LocalizeDefaultPageTemplates" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Global" />

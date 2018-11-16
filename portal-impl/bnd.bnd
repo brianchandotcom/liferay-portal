@@ -11,7 +11,6 @@ Export-Package:\
 	com.liferay.portal.freemarker,\
 	com.liferay.portal.minifier,\
 	com.liferay.portal.plugin,\
-	com.liferay.portal.search,\
 	com.liferay.portal.security.auth,\
 	com.liferay.portal.security.lang,\
 	com.liferay.portal.service.http,\

@@ -19,9 +19,6 @@
 			</bean>
 		</property>
 	</bean>
-	<bean class="com.liferay.portal.search.IndexableAdvice" id="serviceAdvice">
-		<property name="nextMethodInterceptor" ref="systemEventAdvice" />
-	</bean>
 	<bean class="com.liferay.portal.service.ServiceContextAdvice" id="serviceContextAdvice">
 		<property name="nextMethodInterceptor" ref="retryAdvice" />
 	</bean>
@@ -45,7 +42,7 @@
 	<bean class="com.liferay.portal.spring.transaction.TransactionInterceptor" id="transactionAdvice">
 		<property name="transactionExecutor" ref="transactionExecutor" />
 	</bean>
-	<bean class="com.liferay.portal.systemevent.SystemEventAdvice" id="systemEventAdvice">
+	<bean class="com.liferay.portal.systemevent.SystemEventAdvice" id="serviceAdvice">
 		<property name="nextMethodInterceptor" ref="serviceContextAdvice" />
 	</bean>
 	<bean class="com.liferay.portal.transaction.TransactionLifecycleManagerInitializer">

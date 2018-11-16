@@ -20,9 +20,6 @@
 	</bean>
 	<bean class="com.liferay.portal.kernel.portlet.PortletClassLoaderUtil" factory-method="getClassLoader" id="portletClassLoader" />
 	<bean class="com.liferay.portal.kernel.portlet.PortletClassLoaderUtil" factory-method="getServletContextName" id="servletContextName" />
-	<bean class="com.liferay.portal.search.IndexableAdvice" id="serviceAdvice">
-		<property name="nextMethodInterceptor" ref="systemEventAdvice" />
-	</bean>
 	<bean class="com.liferay.portal.service.ServiceContextAdvice" id="serviceContextAdvice">
 		<property name="nextMethodInterceptor" ref="retryAdvice" />
 	</bean>
@@ -36,7 +33,7 @@
 		<constructor-arg ref="liferayTransactionManager" />
 		<constructor-arg value="false" />
 	</bean>
-	<bean class="com.liferay.portal.systemevent.SystemEventAdvice" id="systemEventAdvice">
+	<bean class="com.liferay.portal.systemevent.SystemEventAdvice" id="serviceAdvice">
 		<property name="nextMethodInterceptor" ref="serviceContextAdvice" />
 	</bean>
 </beans>

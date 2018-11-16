@@ -49,12 +49,6 @@
 	<bean class="com.liferay.portal.spring.aop.RetryAdvice" id="retryAdvice">
 		<property name="nextMethodInterceptor" ref="transactionAdvice" />
 	</bean>
-	<bean class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator" depends-on="chainableMethodAdviceAssembler">
-		<property name="beanMatcher">
-			<bean class="com.liferay.portal.spring.aop.ServiceBeanMatcher" />
-		</property>
-		<property name="methodInterceptor" ref="serviceAdvice" />
-	</bean>
 	<bean class="com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor" />
 	<bean class="com.liferay.portal.spring.context.PortletBeanFactoryCleaner" />
 	<bean class="com.liferay.portal.spring.context.ServiceBeanPublisher" />

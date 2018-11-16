@@ -17,6 +17,7 @@ package com.liferay.portal.spring.context;
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.kernel.bean.BeanLocator;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -135,6 +136,15 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 
 		configurableWebApplicationContext.addBeanFactoryPostProcessor(
 			new PortletBeanFactoryPostProcessor());
+
+		ConfigurableApplicationContextConfigurator
+			configurableApplicationContextConfigurator =
+				(ConfigurableApplicationContextConfigurator)
+					PortalBeanLocatorUtil.locate(
+						"configurableApplicationContextConfigurator");
+
+		configurableApplicationContextConfigurator.configure(
+			configurableWebApplicationContext);
 	}
 
 	@Override

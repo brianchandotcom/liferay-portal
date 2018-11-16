@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.Dialect;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Projection;
@@ -80,6 +81,10 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	public static final String COUNT_COLUMN_NAME = "COUNT_VALUE";
 
+	public void cacheResult(T model) {
+		throw new UnsupportedOperationException();
+	}
+
 	@Override
 	public void clearCache() {
 	}
@@ -126,8 +131,48 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public T fetchByPrimaryKey(Serializable primaryKey) {
-		throw new UnsupportedOperationException();
+		EntityCache entityCache = getEntityCache();
+
+		Serializable serializable = entityCache.getResult(
+			_entityCacheEnabled, _modelImplClass, primaryKey);
+
+		if (serializable == nullModel) {
+			return null;
+		}
+
+		T model = (T)serializable;
+
+		if (model == null) {
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				model = (T)session.get(_modelImplClass, primaryKey);
+
+				if (model == null) {
+					entityCache.putResult(
+						_entityCacheEnabled, _modelImplClass, primaryKey,
+						nullModel);
+				}
+				else {
+					cacheResult(model);
+				}
+			}
+			catch (Exception e) {
+				entityCache.removeResult(
+					_entityCacheEnabled, _modelImplClass, primaryKey);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return model;
 	}
 
 	@Override
@@ -516,6 +561,10 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		return fieldName;
 	}
 
+	protected EntityCache getEntityCache() {
+		throw new UnsupportedOperationException();
+	}
+
 	protected Map<String, Integer> getTableColumnsMap() {
 		throw new UnsupportedOperationException();
 	}
@@ -532,8 +581,16 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		throw new UnsupportedOperationException();
 	}
 
+	protected void setEntityCacheEnabled(boolean entityCacheEnabled) {
+		_entityCacheEnabled = entityCacheEnabled;
+	}
+
 	protected void setModelClass(Class<T> modelClass) {
 		_modelClass = modelClass;
+	}
+
+	protected void setModelImplClass(Class<? extends T> modelImplClass) {
+		_modelImplClass = modelImplClass;
 	}
 
 	/**
@@ -610,7 +667,9 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	private DB _db;
 	private Map<String, String> _dbColumnNames;
 	private Dialect _dialect;
+	private boolean _entityCacheEnabled;
 	private Class<T> _modelClass;
+	private Class<? extends T> _modelImplClass;
 	private SessionFactory _sessionFactory;
 
 	private static class NullModel

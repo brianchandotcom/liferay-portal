@@ -228,6 +228,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	public ${entity.name}PersistenceImpl() {
 		setModelClass(${entity.name}.class);
 
+		<#if !serviceBuilder.isVersionLTE_7_1_0()>
+			setModelImplClass(${entity.name}Impl.class);
+			setEntityCacheEnabled(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED);
+		</#if>
+
 		<#if entity.badEntityColumns?size != 0>
 			try {
 				Field field = BasePersistenceImpl.class.getDeclaredField("_dbColumnNames");
@@ -867,49 +872,51 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		return findByPrimaryKey((Serializable)${entity.PKVarName});
 	}
 
-	/**
-	 * Returns the ${entity.humanName} with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ${entity.humanName}
-	 * @return the ${entity.humanName}, or <code>null</code> if a ${entity.humanName} with the primary key could not be found
-	 */
-	@Override
-	public ${entity.name} fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = ${entityCache}.getResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey);
+	<#if serviceBuilder.isVersionLTE_7_1_0()>
+		/**
+		 * Returns the ${entity.humanName} with the primary key or returns <code>null</code> if it could not be found.
+		 *
+		 * @param primaryKey the primary key of the ${entity.humanName}
+		 * @return the ${entity.humanName}, or <code>null</code> if a ${entity.humanName} with the primary key could not be found
+		 */
+		@Override
+		public ${entity.name} fetchByPrimaryKey(Serializable primaryKey) {
+			Serializable serializable = ${entityCache}.getResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey);
 
-		if (serializable == nullModel) {
-			return null;
-		}
+			if (serializable == nullModel) {
+				return null;
+			}
 
-		${entity.name} ${entity.varName} = (${entity.name})serializable;
+			${entity.name} ${entity.varName} = (${entity.name})serializable;
 
-		if (${entity.varName} == null) {
-			Session session = null;
+			if (${entity.varName} == null) {
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				${entity.varName} = (${entity.name})session.get(${entity.name}Impl.class, primaryKey);
+					${entity.varName} = (${entity.name})session.get(${entity.name}Impl.class, primaryKey);
 
-				if (${entity.varName} != null) {
-					cacheResult(${entity.varName});
+					if (${entity.varName} != null) {
+						cacheResult(${entity.varName});
+					}
+					else {
+						${entityCache}.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey, nullModel);
+					}
 				}
-				else {
-					${entityCache}.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey, nullModel);
+				catch (Exception e) {
+					${entityCache}.removeResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey);
+
+					throw processException(e);
+				}
+				finally {
+					closeSession(session);
 				}
 			}
-			catch (Exception e) {
-				${entityCache}.removeResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, primaryKey);
 
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
+			return ${entity.varName};
 		}
-
-		return ${entity.varName};
-	}
+	</#if>
 
 	/**
 	 * Returns the ${entity.humanName} with the primary key or returns <code>null</code> if it could not be found.
@@ -1520,6 +1527,17 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		@Override
 		public Set<String> getCompoundPKColumnNames() {
 			return _compoundPKColumnNames;
+		}
+	</#if>
+
+	<#if !serviceBuilder.isVersionLTE_7_1_0()>
+		@Override
+		protected EntityCache getEntityCache() {
+			<#if osgiModule>
+				return entityCache;
+			<#else>
+				return EntityCacheUtil.getEntityCache();
+			</#if>
 		}
 	</#if>
 

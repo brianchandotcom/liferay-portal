@@ -119,11 +119,13 @@ public class MetadataUtilImpl implements MetadataUtil {
 				return null;
 			}
 
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream();
 
-			XMLObjectSupport.marshallToOutputStream(entityDescriptor, baos);
+			XMLObjectSupport.marshallToOutputStream(
+				entityDescriptor, byteArrayOutputStream);
 
-			return baos.toString();
+			return byteArrayOutputStream.toString();
 		}
 	}
 

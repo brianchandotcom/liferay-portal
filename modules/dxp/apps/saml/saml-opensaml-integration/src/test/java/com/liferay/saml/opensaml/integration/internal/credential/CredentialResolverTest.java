@@ -41,11 +41,11 @@ public class CredentialResolverTest extends BaseSamlTestCase {
 
 	@Test
 	public void testResolveNonexistingCredential() throws Exception {
-		EntityIdCriterion entityIDCriteria = new EntityIdCriterion("na");
+		EntityIdCriterion entityIDCriterion = new EntityIdCriterion("na");
 
 		CriteriaSet criteriaSet = new CriteriaSet();
 
-		criteriaSet.add(entityIDCriteria);
+		criteriaSet.add(entityIDCriterion);
 
 		Credential credential = credentialResolver.resolveSingle(criteriaSet);
 
@@ -59,11 +59,11 @@ public class CredentialResolverTest extends BaseSamlTestCase {
 	}
 
 	protected void testResolveCredential(String spEntityId) throws Exception {
-		EntityIdCriterion entityIDCriteria = new EntityIdCriterion(spEntityId);
+		EntityIdCriterion entityIDCriterion = new EntityIdCriterion(spEntityId);
 
 		CriteriaSet criteriaSet = new CriteriaSet();
 
-		criteriaSet.add(entityIDCriteria);
+		criteriaSet.add(entityIDCriterion);
 
 		Credential credential = credentialResolver.resolveSingle(criteriaSet);
 

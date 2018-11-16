@@ -15,12 +15,10 @@
 package com.liferay.portal.util;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.mockito.ReturnArgumentCalledAnswer;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 import javax.servlet.http.HttpSession;
 
@@ -41,7 +39,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author Miguel Pastor
  */
 @PowerMockIgnore("javax.xml.datatype.*")
-@PrepareForTest({HttpUtil.class, PropsValues.class})
+@PrepareForTest(HttpUtil.class)
 @RunWith(PowerMockRunner.class)
 public class PortalImplUnitTest extends PowerMockito {
 
@@ -478,16 +476,7 @@ public class PortalImplUnitTest extends PowerMockito {
 	protected void setPropsValuesValue(String fieldName, Object value)
 		throws Exception {
 
-		Field field = field(PropsValues.class, fieldName);
-
-		field.setAccessible(true);
-
-		Field modifiersField = Field.class.getDeclaredField("modifiers");
-
-		modifiersField.setAccessible(true);
-		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-
-		field.set(PropsValues.class, value);
+		ReflectionTestUtil.setFieldValue(PropsValues.class, fieldName, value);
 	}
 
 	private final PortalImpl _portalImpl = new PortalImpl();

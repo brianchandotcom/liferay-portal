@@ -14,10 +14,8 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-
-import java.lang.reflect.Field;
 
 import java.util.Set;
 
@@ -25,12 +23,10 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Tomas Polesovsky
  */
-public class PortalImplEscapeRedirectTest extends PowerMockito {
+public class PortalImplEscapeRedirectTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -237,10 +233,7 @@ public class PortalImplEscapeRedirectTest extends PowerMockito {
 	protected void setPropsValuesValue(String name, Object value)
 		throws Exception {
 
-		Field field = ReflectionUtil.unfinalField(
-			field(PropsValues.class, name));
-
-		field.set(PropsValues.class, value);
+		ReflectionTestUtil.setFieldValue(PropsValues.class, name, value);
 	}
 
 	private final PortalImpl _portalImpl = new PortalImpl();

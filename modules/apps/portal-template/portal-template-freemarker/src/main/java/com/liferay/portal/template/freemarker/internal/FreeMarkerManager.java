@@ -609,29 +609,28 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 					_taglibMappings.putAll(map);
 
 					trackedKeys.addAll(map.keySet());
+
+					return trackedKeys;
 				}
 				catch (Exception e) {
 					_log.error(e, e);
 				}
 			}
+			else {
+				BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
-			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+				List<BundleCapability> bundleCapabilities =
+					bundleWiring.getCapabilities("osgi.extender");
 
-			List<BundleCapability> bundleCapabilities =
-				bundleWiring.getCapabilities("osgi.extender");
+				for (BundleCapability bundleCapability : bundleCapabilities) {
+					Map<String, Object> attributes =
+						bundleCapability.getAttributes();
 
-			for (BundleCapability bundleCapability : bundleCapabilities) {
-				Map<String, Object> attributes =
-					bundleCapability.getAttributes();
+					Object value = attributes.get("osgi.extender");
 
-				Object value = attributes.get("osgi.extender");
-
-				if (value.equals("jsp.taglib")) {
-					if (trackedKeys == null) {
-						trackedKeys = Collections.emptySet();
+					if (value.equals("jsp.taglib")) {
+						return Collections.emptySet();
 					}
-
-					break;
 				}
 			}
 

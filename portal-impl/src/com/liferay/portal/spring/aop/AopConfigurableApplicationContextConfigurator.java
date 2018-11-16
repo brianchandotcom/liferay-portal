@@ -24,6 +24,7 @@ import com.liferay.portal.search.IndexableAdvice;
 import com.liferay.portal.security.access.control.AccessControlAdvice;
 import com.liferay.portal.spring.context.ConfigurableApplicationContextConfigurator;
 
+import com.liferay.portal.systemevent.SystemEventAdvice;
 import java.util.Map;
 
 import org.aopalliance.intercept.MethodInterceptor;
@@ -131,9 +132,13 @@ public class AopConfigurableApplicationContextConfigurator
 				configurableListableBeanFactory.getBean(
 					"serviceAdvice", MethodInterceptor.class);
 
+			SystemEventAdvice systemEventAdvice = new SystemEventAdvice();
+
+			systemEventAdvice.setNextMethodInterceptor(methodInterceptor);
+
 			IndexableAdvice indexableAdvice = new IndexableAdvice();
 
-			indexableAdvice.setNextMethodInterceptor(methodInterceptor);
+			indexableAdvice.setNextMethodInterceptor(systemEventAdvice);
 
 			BufferedIncrementAdvice bufferedIncrementAdvice =
 				new BufferedIncrementAdvice();

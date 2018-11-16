@@ -44,6 +44,7 @@ Export-Package:\
 	!com.liferay.portal.security.access.control,\
 	!com.liferay.portal.security.jaas.ext.*,\
 	!com.liferay.portal.sharepoint.*,\
+	!com.liferay.portal.systemevent,\
 	!com.liferay.portal.tools.comparator,\
 	!com.liferay.portal.tools.javadocformatter,\
 	!com.liferay.portal.tools.jspc.common,\

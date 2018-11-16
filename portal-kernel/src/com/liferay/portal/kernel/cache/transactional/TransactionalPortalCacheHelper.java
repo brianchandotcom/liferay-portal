@@ -308,11 +308,10 @@ public class TransactionalPortalCacheHelper {
 					"._backupPortalCacheMapsThreadLocal",
 				ArrayList::new, false);
 	private static final ThreadLocal<List<PortalCacheMap>>
-		_portalCacheMapsThreadLocal =
-			new CentralizedThreadLocal<>(
-				TransactionalPortalCacheHelper.class.getName() +
-					"._portalCacheMapsThreadLocal",
-				ArrayList::new, false);
+		_portalCacheMapsThreadLocal = new CentralizedThreadLocal<>(
+			TransactionalPortalCacheHelper.class.getName() +
+				"._portalCacheMapsThreadLocal",
+			ArrayList::new, false);
 	private static volatile Boolean _transactionalCacheEnabled;
 
 	private static class MarkerUncommittedBuffer extends UncommittedBuffer {

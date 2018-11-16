@@ -74,9 +74,8 @@ public class AtomCollectionAdapterRegistryUtil {
 
 	private final Map<String, AtomCollectionAdapter<?>>
 		_atomCollectionAdapters = new ConcurrentHashMap<>();
-	private final
-		ServiceTracker<AtomCollectionAdapter<?>, AtomCollectionAdapter<?>>
-			_serviceTracker;
+	private final ServiceTracker
+		<AtomCollectionAdapter<?>, AtomCollectionAdapter<?>> _serviceTracker;
 
 	private class AtomCollectionAdapterServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

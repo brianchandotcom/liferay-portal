@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -35,6 +36,8 @@ import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
+
+import java.text.Format;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -173,6 +176,18 @@ public class SharingNotificationUtil {
 		return ResourceBundleUtil.getString(resourceBundle, "view");
 	}
 
+	private String _getExpirationDateText(
+		SharingEntry sharingEntry, Locale locale) {
+
+		if (sharingEntry.getExpirationDate() == null) {
+			return null;
+		}
+
+		Format expirationDateFormat = DateFormatFactoryUtil.getDate(locale);
+
+		return expirationDateFormat.format(sharingEntry.getExpirationDate());
+	}
+
 	private String _getFromUserName(
 			SharingEntry sharingEntry, ResourceBundle resourceBundle,
 			PortletRequest portletRequest)
@@ -224,7 +239,7 @@ public class SharingNotificationUtil {
 			_getSharingEntryObjectTitle(
 				sharingEntry, resourceBundle, portletRequest),
 			_getActionName(sharingEntry, resourceBundle),
-			sharingEntry.getExpirationDate());
+			_getExpirationDateText(sharingEntry, locale));
 	}
 
 	private SharingEntryInterpreter _getSharingEntryInterpreter(

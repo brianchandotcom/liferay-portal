@@ -15,6 +15,7 @@
 package com.liferay.portal.spring.aop;
 
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice;
 import com.liferay.portal.resiliency.service.PortalResiliencyAdvice;
 import com.liferay.portal.security.access.control.AccessControlAdvice;
 import com.liferay.portal.spring.context.ConfigurableApplicationContextConfigurator;
@@ -24,7 +25,6 @@ import java.util.Map;
 import org.aopalliance.intercept.MethodInterceptor;
 
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -121,15 +121,25 @@ public class AopConfigurableApplicationContextConfigurator
 		}
 
 		private MethodInterceptor _createMethodInterceptor(
-			BeanFactory beanFactory) {
+			ConfigurableListableBeanFactory configurableListableBeanFactory) {
 
-			MethodInterceptor methodInterceptor = beanFactory.getBean(
-				"serviceAdvice", MethodInterceptor.class);
+			MethodInterceptor methodInterceptor =
+				configurableListableBeanFactory.getBean(
+					"serviceAdvice", MethodInterceptor.class);
+
+			ServiceMonitorAdvice serviceMonitorAdvice =
+				new ServiceMonitorAdvice();
+
+			serviceMonitorAdvice.setNextMethodInterceptor(methodInterceptor);
+
+			configurableListableBeanFactory.registerSingleton(
+				"serviceMonitoringControl", serviceMonitorAdvice);
 
 			PortalResiliencyAdvice portalResiliencyAdvice =
 				new PortalResiliencyAdvice();
 
-			portalResiliencyAdvice.setNextMethodInterceptor(methodInterceptor);
+			portalResiliencyAdvice.setNextMethodInterceptor(
+				serviceMonitorAdvice);
 
 			AccessControlAdvice accessControlAdvice = new AccessControlAdvice();
 

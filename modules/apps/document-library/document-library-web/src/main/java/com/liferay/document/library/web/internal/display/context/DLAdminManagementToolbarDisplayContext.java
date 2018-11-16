@@ -603,7 +603,7 @@ public class DLAdminManagementToolbarDisplayContext {
 					SafeConsumer.ignore(
 						dropdownItem -> {
 							dropdownItem.setActive(
-								(navigation.equals("home")) &&
+								navigation.equals("home") &&
 								(fileEntryTypeId == -1));
 
 							PortletURL viewAllDocumentsURL =

@@ -24,6 +24,7 @@ Export-Package:\
 	!com.liferay.portal.cache.thread.local,\
 	!com.liferay.portal.fabric,\
 	!com.liferay.portal.freemarker,\
+	!com.liferay.portal.increment,\
 	!com.liferay.portal.javadoc,\
 	!com.liferay.portal.jcr.jackrabbit,\
 	!com.liferay.portal.jericho,\

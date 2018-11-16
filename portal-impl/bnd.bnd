@@ -9,7 +9,6 @@ Export-Package:\
 	com.liferay.portal.deploy.hot,\
 	com.liferay.portal.events,\
 	com.liferay.portal.freemarker,\
-	com.liferay.portal.increment,\
 	com.liferay.portal.minifier,\
 	com.liferay.portal.plugin,\
 	com.liferay.portal.search,\

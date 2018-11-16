@@ -12,9 +12,6 @@
 		<property name="dataSource" ref="liferayDataSource" />
 		<property name="sessionFactory" ref="liferaySessionFactory" />
 	</bean>
-	<bean class="com.liferay.portal.increment.BufferedIncrementAdvice" id="serviceAdvice">
-		<property name="nextMethodInterceptor" ref="indexableAdvice" />
-	</bean>
 	<bean class="com.liferay.portal.kernel.transaction.TransactionInvokerUtil" id="com.liferay.portal.kernel.transaction.TransactionInvokerUtil">
 		<property name="transactionInvoker">
 			<bean class="com.liferay.portal.spring.transaction.TransactionInvokerImpl">
@@ -22,7 +19,7 @@
 			</bean>
 		</property>
 	</bean>
-	<bean class="com.liferay.portal.search.IndexableAdvice" id="indexableAdvice">
+	<bean class="com.liferay.portal.search.IndexableAdvice" id="serviceAdvice">
 		<property name="nextMethodInterceptor" ref="systemEventAdvice" />
 	</bean>
 	<bean class="com.liferay.portal.service.ServiceContextAdvice" id="serviceContextAdvice">

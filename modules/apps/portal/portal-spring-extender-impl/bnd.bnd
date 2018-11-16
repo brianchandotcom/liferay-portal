@@ -6,7 +6,6 @@ Import-Package:\
 	com.liferay.portal.cluster,\
 	com.liferay.portal.dao.jdbc.aop,\
 	com.liferay.portal.dao.orm.hibernate,\
-	com.liferay.portal.increment,\
 	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.configuration,\
 	com.liferay.portal.kernel.exception,\

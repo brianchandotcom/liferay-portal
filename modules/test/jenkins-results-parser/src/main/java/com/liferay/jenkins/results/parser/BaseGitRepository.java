@@ -28,6 +28,12 @@ import org.json.JSONObject;
  */
 public abstract class BaseGitRepository implements GitRepository {
 
+	public static void setRepositoryProperties(
+		Properties repositoryProperties) {
+
+		_repositoryProperties = repositoryProperties;
+	}
+
 	@Override
 	public JSONObject getJSONObject() {
 		return _jsonObject;

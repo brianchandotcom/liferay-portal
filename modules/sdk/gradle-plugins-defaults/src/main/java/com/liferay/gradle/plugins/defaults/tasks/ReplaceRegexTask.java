@@ -58,7 +58,6 @@ public class ReplaceRegexTask extends DefaultTask {
 		return _preClosures;
 	}
 
-	@Input
 	public Object getReplacement() {
 		return _replacement;
 	}

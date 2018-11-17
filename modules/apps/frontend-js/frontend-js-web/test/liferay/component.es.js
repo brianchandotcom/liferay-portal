@@ -9,7 +9,7 @@ import {
 } from '../../src/main/resources/META-INF/resources/liferay/component.es';
 
 describe(
-	'LiferayComponent',
+	'Liferay',
 	() => {
 		afterEach(
 			() => {
@@ -28,6 +28,20 @@ describe(
 		describe(
 			'Liferay.component',
 			() => {
+				it(
+					'should store function inputs and invoke them lazily on component retrieval',
+					() => {
+						const myButton = {myButton: 'myButton'};
+						const spy = jest.fn(x => myButton);
+
+						component('myButton', spy);
+
+						expect(spy).not.toHaveBeenCalled();
+
+						expect(component('myButton')).toEqual(myButton);
+					}
+				);
+
 				it(
 					'should warn through console when a component is registered twice',
 					() => {
@@ -250,6 +264,32 @@ describe(
 						expect(component('component1')).toBe(1);
 						expect(component('component2')).toBeUndefined();
 						expect(component('component3')).toBe(3);
+					}
+				);
+			}
+		);
+
+		describe(
+			'Liferay.destroyUnfulfilledPromises',
+			() => {
+				it(
+					'should clean up all pending invocations of componentReady',
+					() => {
+						const spy = jest.fn();
+
+						componentReady('component').then(spy);
+
+						destroyUnfulfilledPromises();
+
+						const promise = componentReady('component').then(
+							component => {
+								expect(spy).not.toHaveBeenCalled();
+							}
+						);
+
+						component('component', 1);
+
+						return promise;
 					}
 				);
 			}

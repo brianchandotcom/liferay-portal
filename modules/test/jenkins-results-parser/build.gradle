@@ -1,6 +1,3 @@
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
-
 dependencies {
 	compile group: "com.amazonaws", name: "aws-java-sdk-core", version: "1.11.220"
 	compile group: "com.amazonaws", name: "aws-java-sdk-ec2", version: "1.11.220"
@@ -12,4 +9,32 @@ dependencies {
 	compile group: "junit", name: "junit", version: "4.12"
 	compile group: "org.apache.ant", name: "ant", version: "1.9.4"
 	compile group: "org.json", name: "json", version: "20140107"
+}
+
+def propertiesFile = new File("${projectDir}/src/test/resources/test-jenkins-results-parser-util-ext.properties")
+
+task deleteProperties
+task writeProperties
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+compileJava.dependsOn(writeProperties)
+
+test.finalizedBy(deleteProperties)
+
+deleteProperties {
+	doLast {
+		delete propertiesFile
+	}
+}
+
+writeProperties {
+	doLast {
+		def repositoryDir = System.getProperty("repository.dir")
+
+		if ((repositoryDir != null) && !repositoryDir.isEmpty()) {
+			propertiesFile.text = "repository.dir=" + repositoryDir
+		}
+	}
 }

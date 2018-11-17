@@ -1,3 +1,10 @@
+import {
+	component,
+    componentReady,
+    destroyComponent,
+    destroyComponents,
+	destroyUnfulfilledPromises
+} from './component.es';
 import escape from 'lodash.escape';
 import groupBy from 'lodash.groupby';
 import isEqual from 'lodash.isequal';
@@ -7,6 +14,12 @@ import ns from './util/ns.es';
 import objectToFormData from './util/object_to_form_data.es';
 import toCharCode from './util/to_char_code.es';
 import unescape from 'lodash.unescape';
+
+Liferay.component = component;
+Liferay.componentReady = componentReady;
+Liferay.destroyComponent = destroyComponent;
+Liferay.destroyComponents = destroyComponents;
+Liferay.destroyUnfulfilledPromises = destroyUnfulfilledPromises;
 
 Liferay.Util.escape = escape;
 Liferay.Util.groupBy = groupBy;

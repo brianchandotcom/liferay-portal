@@ -1,60 +1,27 @@
 'use strict';
 
-import fs from 'fs';
+import {
+	component,
+    componentReady,
+    destroyComponent,
+    destroyComponents,
+	destroyUnfulfilledPromises
+} from '../../src/main/resources/META-INF/resources/liferay/component.es';
 
 describe(
 	'LiferayComponent',
 	() => {
 		afterEach(
 			() => {
-				Liferay.destroyComponents();
+				destroyComponents();
 			}
 		);
 
 		beforeEach(
 			() => {
-				const window = {
-					Liferay: {
-						fire: () => 0,
-						namespace: 0
-					}
-				};
-
-				const AUI = Object.assign(
-					() => (
-						{
-							mix: () => 0,
-							namespace: () => 0
-						}
-					),
-					{
-						$: Object.assign(
-							() => (
-								{
-									on: () => 0
-								}
-							),
-							{
-								ajaxPrefilter: () => 0,
-								ajaxSetup: () => 0
-							}
-						),
-						_: {
-							assign: () => 0,
-							forEach: () => 0
-						}
-					}
-				);
-
-				const themeDisplay = {
-					getPathContext: () => 0
-				};
-
-				const script = fs.readFileSync(
-					'./src/main/resources/META-INF/resources/liferay/liferay.js'
-				);
-
-				eval(script.toString());
+				Liferay = {
+					fire: () => 0
+				}
 			}
 		);
 
@@ -73,8 +40,8 @@ describe(
 							}
 						};
 
-						Liferay.component('myButton', 1);
-						Liferay.component('myButton', 2);
+						component('myButton', 1);
+						component('myButton', 2);
 
 						expect(msg).toEqual('Component with id "myButton" is being registered twice. This can lead to unexpected behaviour in the "Liferay.component" and "Liferay.componentReady" APIs, as well as in the "*:registered" events. ');
 					}
@@ -90,13 +57,13 @@ describe(
 					() => {
 						const myButton = {myButton: 'myButton'};
 
-						const promise = Liferay.componentReady('myButton').then(
+						const promise = componentReady('myButton').then(
 							component => {
 								expect(component).toBe(myButton);
 							}
 						);
 
-						Liferay.component('myButton', myButton);
+						component('myButton', myButton);
 
 						return promise;
 					}
@@ -107,9 +74,9 @@ describe(
 					() => {
 						const myButton = {myButton: 'myButton'};
 
-						Liferay.component('myButton', myButton);
+						component('myButton', myButton);
 
-						return Liferay.componentReady('myButton').then(
+						return componentReady('myButton').then(
 							component => {
 								expect(component).toBe(myButton);
 							}
@@ -123,15 +90,15 @@ describe(
 						const myButton1 = {myButton1: 'myButton1'};
 						const myButton2 = {myButton2: 'myButton2'};
 
-						const promise = Liferay.componentReady('myButton1', 'myButton2').then(
+						const promise = componentReady('myButton1', 'myButton2').then(
 							([component1, component2]) => {
 								expect(component1).toBe(myButton1);
 								expect(component2).toBe(myButton2);
 							}
 						);
 
-						Liferay.component('myButton1', myButton1);
-						Liferay.component('myButton2', myButton2);
+						component('myButton1', myButton1);
+						component('myButton2', myButton2);
 
 						return promise;
 					}
@@ -143,10 +110,10 @@ describe(
 						const myButton1 = {myButton1: 'myButton1'};
 						const myButton2 = {myButton2: 'myButton2'};
 
-						Liferay.component('myButton1', myButton1);
-						Liferay.component('myButton2', myButton2);
+						component('myButton1', myButton1);
+						component('myButton2', myButton2);
 
-						return Liferay.componentReady('myButton1', 'myButton2').then(
+						return componentReady('myButton1', 'myButton2').then(
 							([component1, component2]) => {
 								expect(component1).toBe(myButton1);
 								expect(component2).toBe(myButton2);
@@ -165,22 +132,22 @@ describe(
 					() => {
 						const componentId = 'myComponent';
 
-						Liferay.component(componentId, {});
+						component(componentId, {});
 
-						Liferay.destroyComponent(componentId);
+						destroyComponent(componentId);
 
-						expect(Liferay.component(componentId)).toBeUndefined();
+						expect(component(componentId)).toBeUndefined();
 					}
 				);
 
 				it(
 					'should ignore non registered components',
 					() => {
-						Liferay.component('componentId', {});
+						component('componentId', {});
 
 						expect(
 							() => {
-								Liferay.destroyComponent('otherComponentId');
+								destroyComponent('otherComponentId');
 							}
 						).not.toThrow();
 					}
@@ -192,14 +159,14 @@ describe(
 						const componentId = 'myComponent';
 						const destroyFn = jest.fn();
 
-						Liferay.component(
+						component(
 							componentId,
 							{
 								destroy: destroyFn
 							}
 						);
 
-						Liferay.destroyComponent(componentId);
+						destroyComponent(componentId);
 
 						expect(destroyFn).toHaveBeenCalled();
 					}
@@ -211,14 +178,14 @@ describe(
 						const componentId = 'myComponent';
 						const disposeFn = jest.fn();
 
-						Liferay.component(
+						component(
 							componentId,
 							{
 								dispose: disposeFn
 							}
 						);
 
-						Liferay.destroyComponent(componentId);
+						destroyComponent(componentId);
 
 						expect(disposeFn).toHaveBeenCalled();
 					}
@@ -232,15 +199,15 @@ describe(
 				it(
 					'should destroy all registered components if no filter function is provided',
 					() => {
-						Liferay.component('component1', 1);
-						Liferay.component('component2', 2);
-						Liferay.component('component3', 3);
+						component('component1', 1);
+						component('component2', 2);
+						component('component3', 3);
 
-						Liferay.destroyComponents();
+						destroyComponents();
 
-						expect(Liferay.component('component1')).toBeUndefined();
-						expect(Liferay.component('component2')).toBeUndefined();
-						expect(Liferay.component('component3')).toBeUndefined();
+						expect(component('component1')).toBeUndefined();
+						expect(component('component2')).toBeUndefined();
+						expect(component('component3')).toBeUndefined();
 					}
 				);
 
@@ -251,11 +218,11 @@ describe(
 
 						const destroyConfig = {destroy: true};
 
-						Liferay.component('component1', 1);
-						Liferay.component('component2', 2, destroyConfig);
-						Liferay.component('component3', 3);
+						component('component1', 1);
+						component('component2', 2, destroyConfig);
+						component('component3', 3);
 
-						Liferay.destroyComponents(filterFn);
+						destroyComponents(filterFn);
 
 						expect(filterFn).toHaveBeenCalledTimes(3);
 
@@ -274,15 +241,15 @@ describe(
 
 						const destroyConfig = {destroy: true};
 
-						Liferay.component('component1', 1);
-						Liferay.component('component2', 2, destroyConfig);
-						Liferay.component('component3', 3);
+						component('component1', 1);
+						component('component2', 2, destroyConfig);
+						component('component3', 3);
 
-						Liferay.destroyComponents(filterFn);
+						destroyComponents(filterFn);
 
-						expect(Liferay.component('component1')).toBe(1);
-						expect(Liferay.component('component2')).toBeUndefined();
-						expect(Liferay.component('component3')).toBe(3);
+						expect(component('component1')).toBe(1);
+						expect(component('component2')).toBeUndefined();
+						expect(component('component3')).toBe(3);
 					}
 				);
 			}

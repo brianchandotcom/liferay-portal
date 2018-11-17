@@ -19,6 +19,7 @@ import java.io.File;
 import java.net.URI;
 import java.net.URL;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.junit.Assert;
@@ -138,6 +139,122 @@ public class JenkinsResultsParserUtilTest
 			"http://test-4-1/ABC?123=456&xyz=abc",
 			JenkinsResultsParserUtil.getLocalURL(
 				"http://test-4-1/ABC?123=456&xyz=abc"));
+	}
+
+	@Test
+	public void testIsJSONArrayEqual() {
+		JSONArray actualJSONArray = new JSONArray();
+		JSONArray expectedJSONArray = new JSONArray();
+
+		actualJSONArray.put(true);
+		actualJSONArray.put(1.1);
+		actualJSONArray.put(1);
+		actualJSONArray.put("value");
+
+		expectedJSONArray.put(true);
+		expectedJSONArray.put(1.1);
+		expectedJSONArray.put(1);
+		expectedJSONArray.put("value");
+
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("boolean", true);
+		jsonObject.put("double", 1.1);
+		jsonObject.put("int", 1);
+		jsonObject.put("string", "value");
+
+		actualJSONArray.put(jsonObject);
+		expectedJSONArray.put(jsonObject);
+
+		JSONArray jsonArray = new JSONArray();
+
+		jsonArray.put(true);
+		jsonArray.put(1.1);
+		jsonArray.put(1);
+		jsonArray.put("value");
+
+		actualJSONArray.put(jsonArray);
+		expectedJSONArray.put(jsonArray);
+
+		if (!JenkinsResultsParserUtil.isJSONArrayEqual(
+				actualJSONArray, expectedJSONArray)) {
+
+			Assert.fail(
+				JenkinsResultsParserUtil.combine(
+					"Expected does not match actual\nexpected: ",
+					expectedJSONArray.toString(), "\nactual:   ",
+					actualJSONArray.toString()));
+		}
+
+		actualJSONArray.put("string2");
+
+		if (JenkinsResultsParserUtil.isJSONArrayEqual(
+				actualJSONArray, expectedJSONArray)) {
+
+			Assert.fail(
+				JenkinsResultsParserUtil.combine(
+					"Expected should not match actual\nexpected: ",
+					expectedJSONArray.toString(), "\nactual:   ",
+					actualJSONArray.toString()));
+		}
+	}
+
+	@Test
+	public void testIsJSONObjectEqual() {
+		JSONObject actualJSONObject = new JSONObject();
+		JSONObject expectedJSONObject = new JSONObject();
+
+		actualJSONObject.put("boolean", true);
+		actualJSONObject.put("double", 1.1);
+		actualJSONObject.put("int", 1);
+		actualJSONObject.put("string", "value");
+
+		expectedJSONObject.put("boolean", true);
+		expectedJSONObject.put("double", 1.1);
+		expectedJSONObject.put("int", 1);
+		expectedJSONObject.put("string", "value");
+
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("boolean", true);
+		jsonObject.put("double", 1.1);
+		jsonObject.put("int", 1);
+		jsonObject.put("string", "value");
+
+		actualJSONObject.put("json_object", jsonObject);
+		expectedJSONObject.put("json_object", jsonObject);
+
+		JSONArray jsonArray = new JSONArray();
+
+		jsonArray.put(true);
+		jsonArray.put(1.1);
+		jsonArray.put(1);
+		jsonArray.put("value");
+
+		actualJSONObject.put("json_array", jsonArray);
+		expectedJSONObject.put("json_array", jsonArray);
+
+		if (!JenkinsResultsParserUtil.isJSONObjectEqual(
+				actualJSONObject, expectedJSONObject)) {
+
+			Assert.fail(
+				JenkinsResultsParserUtil.combine(
+					"Expected does not match actual\nexpected: ",
+					expectedJSONObject.toString(), "\nactual:   ",
+					actualJSONObject.toString()));
+		}
+
+		actualJSONObject.put("string", "value2");
+
+		if (JenkinsResultsParserUtil.isJSONObjectEqual(
+				actualJSONObject, expectedJSONObject)) {
+
+			Assert.fail(
+				JenkinsResultsParserUtil.combine(
+					"Expected should not match actual\nexpected: ",
+					expectedJSONObject.toString(), "\nactual:   ",
+					actualJSONObject.toString()));
+		}
 	}
 
 	@Test

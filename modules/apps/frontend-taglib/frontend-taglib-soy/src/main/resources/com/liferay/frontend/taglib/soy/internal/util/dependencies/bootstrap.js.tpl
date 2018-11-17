@@ -5,7 +5,7 @@ Liferay.Loader.require.apply(
 			function(Component) {
 				var context = $CONTEXT;
 
-				var destroyConfig = {
+				var componentConfig = {
 					destroyOnNavigate: true,
 					portletId: context.portletId
 				};
@@ -14,14 +14,14 @@ Liferay.Loader.require.apply(
 					Liferay.component(
 						'$ID',
 						new Component.default(context, '#$ID'),
-						destroyConfig
+						componentConfig
 					);
 				}
 				else {
 					Liferay.component(
 						'$ID',
 						new Component.default(context),
-						destroyConfig
+						componentConfig
 					);
 				}
 			},

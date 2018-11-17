@@ -1,6 +1,6 @@
 import {isFunction} from 'metal';
 
-let componentDestroyConfigs = {};
+let componentConfigs = {};
 let componentPromiseWrappers = {};
 let components = {};
 let componentsFn = {};
@@ -31,7 +31,20 @@ const _createPromiseWrapper = function(value) {
     return promiseWrapper;
 };
 
-const component = function(id, value, destroyConfig) {
+/**
+ * This method acts in a dual way. It allows both to register a component and to
+ * retrieve its instance from the global register.
+ *
+ * @param {string} id The id of the component to retrieve or register
+ * @param {object} value The component instance or a component constructor. If a
+ * constructor is provided, it will be invoked the first time the component is
+ * requested and its result will be stored and returned as the component
+ * @param {object} componentConfig Custom component configuration. Can be used to
+ * provide additional hints for the system handling of the component lifecycle
+ * @return {object} The passed value, or the stored component for the provided id
+ */
+
+const component = function(id, value, componentConfig) {
     let retVal;
 
     if (arguments.length === 1) {
@@ -49,7 +62,7 @@ const component = function(id, value, destroyConfig) {
     }
     else {
         if (components[id] && value !== null) {
-            delete componentDestroyConfigs[id];
+            delete componentConfigs[id];
             delete componentPromiseWrappers[id];
 
             console.warn('Component with id "' + id + '" is being registered twice. This can lead to unexpected behaviour in the "Liferay.component" and "Liferay.componentReady" APIs, as well as in the "*:registered" events.');
@@ -58,11 +71,11 @@ const component = function(id, value, destroyConfig) {
         retVal = (components[id] = value);
 
         if (value === null) {
-            delete componentDestroyConfigs[id];
+            delete componentConfigs[id];
             delete componentPromiseWrappers[id];
         }
         else {
-            componentDestroyConfigs[id] = destroyConfig;
+            componentConfigs[id] = componentConfig;
 
             Liferay.fire(id + ':registered');
 
@@ -143,7 +156,7 @@ const destroyComponent = function(componentId) {
             destroyFn.call(component);
         }
 
-        delete componentDestroyConfigs[componentId];
+        delete componentConfigs[componentId];
         delete componentPromiseWrappers[componentId];
         delete componentsFn[componentId];
         delete components[componentId];
@@ -167,7 +180,7 @@ const destroyComponents = function(filterFn) {
             componentId => {
                 return filterFn(
                     components[componentId],
-                    componentDestroyConfigs[componentId] || {}
+                    componentConfigs[componentId] || {}
                 );
             }
         );

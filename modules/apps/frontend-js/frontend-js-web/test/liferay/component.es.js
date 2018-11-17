@@ -216,10 +216,10 @@ describe(
 					() => {
 						const filterFn = jest.fn();
 
-						const destroyConfig = {destroy: true};
+						const componentConfig = {destroy: true};
 
 						component('component1', 1);
-						component('component2', 2, destroyConfig);
+						component('component2', 2, componentConfig);
 						component('component3', 3);
 
 						destroyComponents(filterFn);
@@ -227,7 +227,7 @@ describe(
 						expect(filterFn).toHaveBeenCalledTimes(3);
 
 						expect(filterFn.mock.calls[0]).toEqual([1, {}]);
-						expect(filterFn.mock.calls[1]).toEqual([2, destroyConfig]);
+						expect(filterFn.mock.calls[1]).toEqual([2, componentConfig]);
 						expect(filterFn.mock.calls[2]).toEqual([3, {}]);
 					}
 				);
@@ -236,13 +236,13 @@ describe(
 					'should only destoy the components matched by the provided filter function',
 					() => {
 						const filterFn = jest.fn(
-							(component, destroyConfig) => destroyConfig.destroy
+							(component, componentConfig) => componentConfig.destroy
 						);
 
-						const destroyConfig = {destroy: true};
+						const componentConfig = {destroy: true};
 
 						component('component1', 1);
-						component('component2', 2, destroyConfig);
+						component('component2', 2, componentConfig);
 						component('component3', 3);
 
 						destroyComponents(filterFn);

@@ -14,8 +14,8 @@
 
 		destroyComponents: function(portletId) {
 			Liferay.destroyComponents(
-				function(component, destroyConfig) {
-					return portletId === destroyConfig.portletId;
+				function(component, componentConfig) {
+					return portletId === componentConfig.portletId;
 				}
 			);
 		},

@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.criteria.Criteria;
+import com.liferay.segments.criteria.CriteriaSerializer;
 import com.liferay.segments.demo.data.creator.SegmentsEntryDemoDataCreator;
 import com.liferay.segments.exception.NoSuchEntryException;
 import com.liferay.segments.model.SegmentsEntry;
@@ -122,7 +124,15 @@ public class SegmentsEntryDemoDataCreatorImpl
 			"/segment", index, "/criteria.txt");
 
 		try {
-			return StringUtil.read(clazz.getClassLoader(), contentPath, false);
+			String criteriaFilter = StringUtil.read(
+				clazz.getClassLoader(), contentPath, false);
+
+			Criteria criteria = new Criteria();
+
+			criteria.addCriterion(
+				"entity-model", criteriaFilter, Criteria.Conjunction.AND);
+
+			return CriteriaSerializer.serialize(criteria);
 		}
 		catch (IOException ioe) {
 			return StringPool.BLANK;

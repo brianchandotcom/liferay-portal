@@ -1542,6 +1542,72 @@ public class JenkinsResultsParserUtil {
 		return false;
 	}
 
+	public static boolean isJSONArrayEqual(
+		JSONArray expectedJSONArray, JSONArray actualJSONArray) {
+
+		if (expectedJSONArray.length() != actualJSONArray.length()) {
+			return false;
+		}
+
+		for (int i = 0; i < expectedJSONArray.length(); i++) {
+			Object actual = actualJSONArray.get(i);
+
+			if (actual instanceof JSONObject) {
+				return isJSONObjectEqual(
+					expectedJSONArray.getJSONObject(i),
+					actualJSONArray.getJSONObject(i));
+			}
+			else if (actual instanceof JSONArray) {
+				return isJSONArrayEqual(
+					expectedJSONArray.getJSONArray(i),
+					actualJSONArray.getJSONArray(i));
+			}
+
+			Object expected = expectedJSONArray.get(i);
+
+			if (!actual.equals(expected)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	public static boolean isJSONObjectEqual(
+		JSONObject expectedJSONObject, JSONObject actualJSONObject) {
+
+		JSONArray namesJSONArray = expectedJSONObject.names();
+
+		for (int i = 0; i < namesJSONArray.length(); i++) {
+			String name = namesJSONArray.getString(i);
+
+			if (!actualJSONObject.has(name)) {
+				return false;
+			}
+
+			Object actual = actualJSONObject.get(name);
+
+			if (actual instanceof JSONObject) {
+				return isJSONObjectEqual(
+					expectedJSONObject.getJSONObject(name),
+					actualJSONObject.getJSONObject(name));
+			}
+			else if (actual instanceof JSONArray) {
+				return isJSONArrayEqual(
+					expectedJSONObject.getJSONArray(name),
+					actualJSONObject.getJSONArray(name));
+			}
+
+			Object expected = expectedJSONObject.get(name);
+
+			if (!actual.equals(expected)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	public static boolean isWindows() {
 		if (File.pathSeparator.equals(";")) {
 			return true;

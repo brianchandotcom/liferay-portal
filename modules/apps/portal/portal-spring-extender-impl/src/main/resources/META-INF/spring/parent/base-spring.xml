@@ -11,16 +11,12 @@
 		<property name="dataSource" ref="liferayDataSource" />
 		<property name="sessionFactory" ref="liferaySessionFactory" />
 	</bean>
-	<bean class="com.liferay.portal.dao.jdbc.aop.DynamicDataSourceAdviceFactoryUtil" factory-method="createDynamicDataSourceAdvice" id="serviceAdvice">
-		<constructor-arg>
-			<bean class="com.liferay.portal.spring.transaction.TransactionInterceptor">
-				<property name="transactionExecutor" ref="transactionExecutor" />
-			</bean>
-		</constructor-arg>
-	</bean>
 	<bean class="com.liferay.portal.spring.context.PortletBeanFactoryCleaner" />
 	<bean class="com.liferay.portal.spring.transaction.TransactionExecutorFactory" factory-method="createTransactionExecutor" id="transactionExecutor">
 		<constructor-arg ref="liferayTransactionManager" />
 		<constructor-arg value="false" />
+	</bean>
+	<bean class="com.liferay.portal.spring.transaction.TransactionInterceptor" id="serviceAdvice">
+		<property name="transactionExecutor" ref="transactionExecutor" />
 	</bean>
 </beans>

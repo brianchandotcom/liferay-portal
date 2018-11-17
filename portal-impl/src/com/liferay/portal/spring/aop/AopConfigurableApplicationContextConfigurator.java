@@ -15,10 +15,13 @@
 package com.liferay.portal.spring.aop;
 
 import com.liferay.portal.cache.thread.local.ThreadLocalCacheAdvice;
+import com.liferay.portal.dao.jdbc.aop.DynamicDataSourceAdvice;
 import com.liferay.portal.increment.BufferedIncrementAdvice;
 import com.liferay.portal.internal.cluster.ClusterableAdvice;
 import com.liferay.portal.internal.cluster.SPIClusterableAdvice;
+import com.liferay.portal.kernel.dao.jdbc.aop.DynamicDataSourceTargetSource;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.messaging.async.AsyncAdvice;
 import com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice;
@@ -27,6 +30,7 @@ import com.liferay.portal.search.IndexableAdvice;
 import com.liferay.portal.security.access.control.AccessControlAdvice;
 import com.liferay.portal.service.ServiceContextAdvice;
 import com.liferay.portal.spring.context.ConfigurableApplicationContextConfigurator;
+import com.liferay.portal.spring.transaction.TransactionInterceptor;
 import com.liferay.portal.systemevent.SystemEventAdvice;
 import com.liferay.portal.util.PropsValues;
 
@@ -136,6 +140,21 @@ public class AopConfigurableApplicationContextConfigurator
 			MethodInterceptor methodInterceptor =
 				configurableListableBeanFactory.getBean(
 					"serviceAdvice", MethodInterceptor.class);
+
+			DynamicDataSourceTargetSource dynamicDataSourceTargetSource =
+				InfrastructureUtil.getDynamicDataSourceTargetSource();
+
+			if (dynamicDataSourceTargetSource != null) {
+				DynamicDataSourceAdvice dynamicDataSourceAdvice =
+					new DynamicDataSourceAdvice();
+
+				dynamicDataSourceAdvice.setDynamicDataSourceTargetSource(
+					dynamicDataSourceTargetSource);
+				dynamicDataSourceAdvice.setTransactionInterceptor(
+					(TransactionInterceptor)methodInterceptor);
+
+				methodInterceptor = dynamicDataSourceAdvice;
+			}
 
 			RetryAdvice retryAdvice = new RetryAdvice();
 

@@ -23,12 +23,12 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.spring.transaction.TransactionExecutor;
-import com.liferay.portal.spring.transaction.TransactionExecutorThreadLocal;
 
 import java.io.Closeable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
@@ -49,7 +49,6 @@ import org.junit.runners.model.Statement;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 
 /**
@@ -232,19 +231,27 @@ public class TransactionalTestRule implements TestRule {
 
 	private static Closeable _installTransactionExecutor(
 			String originBundleSymbolicName)
-		throws InvalidSyntaxException {
+		throws Exception {
 
 		if (originBundleSymbolicName == null) {
 			return () -> {
 			};
 		}
 
-		ThreadLocal<Deque<TransactionExecutor>>
-			transactionExecutorsThreadLocal = ReflectionTestUtil.getFieldValue(
-				TransactionExecutorThreadLocal.class,
-				"_transactionExecutorThreadLocal");
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
-		Deque<TransactionExecutor> transactionExecutors =
+		Class<?> clazz = classLoader.loadClass(
+			"com.liferay.portal.spring.transaction." +
+				"TransactionExecutorThreadLocal");
+
+		Field field = clazz.getDeclaredField("_transactionExecutorThreadLocal");
+
+		field.setAccessible(true);
+
+		ThreadLocal<Deque<Object>> transactionExecutorsThreadLocal =
+			(ThreadLocal<Deque<Object>>)field.get(null);
+
+		Deque<Object> transactionExecutors =
 			transactionExecutorsThreadLocal.get();
 
 		Bundle bundle = FrameworkUtil.getBundle(TransactionalTestRule.class);
@@ -253,7 +260,7 @@ public class TransactionalTestRule implements TestRule {
 
 		ServiceReference<?>[] serviceReferences =
 			bundleContext.getAllServiceReferences(
-				TransactionExecutor.class.getName(),
+				"com.liferay.portal.spring.transaction.TransactionExecutor",
 				"(origin.bundle.symbolic.name=" + originBundleSymbolicName +
 					")");
 
@@ -265,8 +272,8 @@ public class TransactionalTestRule implements TestRule {
 
 		ServiceReference<?> serviceReference = serviceReferences[0];
 
-		TransactionExecutor portletTransactionExecutor =
-			(TransactionExecutor)bundleContext.getService(serviceReference);
+		Object portletTransactionExecutor = bundleContext.getService(
+			serviceReference);
 
 		if (portletTransactionExecutor == transactionExecutors.peek()) {
 			return () -> {

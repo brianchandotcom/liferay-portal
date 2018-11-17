@@ -15,7 +15,6 @@
 package com.liferay.portlet;
 
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.exception.NoSuchPreferencesException;
@@ -31,6 +30,10 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.spring.aop.AopMethod;
+import com.liferay.portal.spring.aop.ChainableMethodAdvice;
+import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
+import com.liferay.portal.spring.aop.ServiceBeanAopInvocationHandler;
 import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionAttributeAdapter;
 import com.liferay.portal.spring.transaction.TransactionInterceptor;
@@ -68,20 +71,35 @@ public class PortalPreferencesImplTest {
 
 	@BeforeClass
 	public static void setUpClass() throws NoSuchMethodException {
-		_transactionInterceptor =
-			(TransactionInterceptor)PortalBeanLocatorUtil.locate(
-				"transactionAdvice");
-
-		_originalTransactionExecutor = ReflectionTestUtil.getFieldValue(
-			_transactionInterceptor, "transactionExecutor");
-
-		_originalPortalPreferencesLocalService =
-			PortalPreferencesLocalServiceUtil.getService();
-
 		_updatePreferencesMethod =
 			PortalPreferencesLocalService.class.getMethod(
 				"updatePortalPreferences",
 				com.liferay.portal.kernel.model.PortalPreferences.class);
+
+		_originalPortalPreferencesLocalService =
+			PortalPreferencesLocalServiceUtil.getService();
+
+		ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler =
+			ProxyUtil.fetchInvocationHandler(
+				_originalPortalPreferencesLocalService,
+				ServiceBeanAopInvocationHandler.class);
+
+		ServiceBeanAopCacheManager serviceBeanAopCacheManager =
+			ReflectionTestUtil.getFieldValue(
+				serviceBeanAopInvocationHandler, "_serviceBeanAopCacheManager");
+
+		AopMethod aopMethod = serviceBeanAopCacheManager.getAopMethod(
+			serviceBeanAopInvocationHandler.getTarget(),
+			_updatePreferencesMethod);
+
+		ChainableMethodAdvice[] chainableMethodAdvices =
+			aopMethod.getChainableMethodAdvices();
+
+		_transactionInterceptor = (TransactionInterceptor)
+			chainableMethodAdvices[0];
+
+		_originalTransactionExecutor = ReflectionTestUtil.getFieldValue(
+			_transactionInterceptor, "transactionExecutor");
 
 		_platformTransactionManager = ReflectionTestUtil.getFieldValue(
 			_originalTransactionExecutor, "_platformTransactionManager");

@@ -21,6 +21,7 @@ import com.liferay.portal.internal.cluster.ClusterableAdvice;
 import com.liferay.portal.internal.cluster.SPIClusterableAdvice;
 import com.liferay.portal.kernel.dao.jdbc.aop.DynamicDataSourceTargetSource;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.messaging.async.AsyncAdvice;
@@ -30,7 +31,10 @@ import com.liferay.portal.search.IndexableAdvice;
 import com.liferay.portal.security.access.control.AccessControlAdvice;
 import com.liferay.portal.service.ServiceContextAdvice;
 import com.liferay.portal.spring.context.ConfigurableApplicationContextConfigurator;
+import com.liferay.portal.spring.transaction.TransactionExecutor;
+import com.liferay.portal.spring.transaction.TransactionExecutorFactory;
 import com.liferay.portal.spring.transaction.TransactionInterceptor;
+import com.liferay.portal.spring.transaction.TransactionInvokerImpl;
 import com.liferay.portal.systemevent.SystemEventAdvice;
 import com.liferay.portal.util.PropsValues;
 
@@ -40,6 +44,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.transaction.PlatformTransactionManager;
 
 /**
  * @author Shuyang Zhou
@@ -117,9 +122,38 @@ public class AopConfigurableApplicationContextConfigurator
 		private MethodInterceptor _createMethodInterceptor(
 			ConfigurableListableBeanFactory configurableListableBeanFactory) {
 
-			MethodInterceptor methodInterceptor =
+			PlatformTransactionManager platformTransactionManager =
 				configurableListableBeanFactory.getBean(
-					"serviceAdvice", MethodInterceptor.class);
+					"liferayTransactionManager",
+					PlatformTransactionManager.class);
+
+			TransactionExecutor transactionExecutor =
+				TransactionExecutorFactory.createTransactionExecutor(
+					platformTransactionManager, false);
+
+			configurableListableBeanFactory.registerSingleton(
+				"transactionExecutor", transactionExecutor);
+
+			if (PortalClassLoaderUtil.isPortalClassLoader(_classLoader)) {
+				TransactionInvokerImpl transactionInvokerImpl =
+					new TransactionInvokerImpl();
+
+				transactionInvokerImpl.setTransactionExecutor(
+					transactionExecutor);
+
+				TransactionInvokerUtil transactionInvokerUtil =
+					new TransactionInvokerUtil();
+
+				transactionInvokerUtil.setTransactionInvoker(
+					transactionInvokerImpl);
+			}
+
+			TransactionInterceptor transactionInterceptor =
+				new TransactionInterceptor();
+
+			transactionInterceptor.setTransactionExecutor(transactionExecutor);
+
+			MethodInterceptor methodInterceptor = transactionInterceptor;
 
 			DynamicDataSourceTargetSource dynamicDataSourceTargetSource =
 				InfrastructureUtil.getDynamicDataSourceTargetSource();
@@ -131,7 +165,7 @@ public class AopConfigurableApplicationContextConfigurator
 				dynamicDataSourceAdvice.setDynamicDataSourceTargetSource(
 					dynamicDataSourceTargetSource);
 				dynamicDataSourceAdvice.setTransactionInterceptor(
-					(TransactionInterceptor)methodInterceptor);
+					transactionInterceptor);
 
 				methodInterceptor = dynamicDataSourceAdvice;
 			}

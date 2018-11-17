@@ -12,19 +12,8 @@
 		<property name="dataSource" ref="liferayDataSource" />
 		<property name="sessionFactory" ref="liferaySessionFactory" />
 	</bean>
-	<bean class="com.liferay.portal.kernel.transaction.TransactionInvokerUtil" id="com.liferay.portal.kernel.transaction.TransactionInvokerUtil">
-		<property name="transactionInvoker">
-			<bean class="com.liferay.portal.spring.transaction.TransactionInvokerImpl">
-				<property name="transactionExecutor" ref="transactionExecutor" />
-			</bean>
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.spring.aop.DynamicProxyCreator" factory-method="getDynamicProxyCreator" />
 	<bean class="com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor" />
-	<bean class="com.liferay.portal.spring.transaction.TransactionExecutorFactory" factory-method="createTransactionExecutor" id="transactionExecutor">
-		<constructor-arg ref="liferayTransactionManager" />
-		<constructor-arg value="false" />
-	</bean>
 	<bean class="com.liferay.portal.spring.transaction.TransactionInterceptor" id="counterTransactionAdvice">
 		<property name="transactionExecutor">
 			<bean class="com.liferay.portal.spring.transaction.TransactionExecutorFactory" factory-method="createTransactionExecutor">
@@ -32,9 +21,6 @@
 				<constructor-arg value="true" />
 			</bean>
 		</property>
-	</bean>
-	<bean class="com.liferay.portal.spring.transaction.TransactionInterceptor" id="serviceAdvice">
-		<property name="transactionExecutor" ref="transactionExecutor" />
 	</bean>
 	<bean class="com.liferay.portal.transaction.TransactionLifecycleManagerInitializer">
 		<property name="transactionLifecycleListeners">

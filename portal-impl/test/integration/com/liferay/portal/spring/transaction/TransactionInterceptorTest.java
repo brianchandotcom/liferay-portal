@@ -63,12 +63,9 @@ public class TransactionInterceptorTest {
 		MockPlatformTransactionManager platformTransactionManagerWrapper =
 			new MockPlatformTransactionManager(hibernateTransactionManager);
 
-		TransactionInterceptor transactionInterceptor =
-			(TransactionInterceptor)PortalBeanLocatorUtil.locate(
-				"transactionAdvice");
-
 		TransactionExecutor transactionExecutor =
-			transactionInterceptor.transactionExecutor;
+			(TransactionExecutor)PortalBeanLocatorUtil.locate(
+				"transactionExecutor");
 
 		PlatformTransactionManager platformTransactionManager =
 			ReflectionTestUtil.getAndSetFieldValue(

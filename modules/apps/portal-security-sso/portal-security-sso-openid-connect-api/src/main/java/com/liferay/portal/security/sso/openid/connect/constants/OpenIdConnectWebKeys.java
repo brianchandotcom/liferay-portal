@@ -33,6 +33,9 @@ public class OpenIdConnectWebKeys {
 
 	public static final String OPEN_ID_CONNECT_REQUEST_ACTION_NAME =
 		"/login/openid_connect_request";
+	
+	public static final String OPEN_ID_CONNECT_RESPONSE_ACTION_NAME =
+		"/login/openid_connect_response";
 
 	public static final String OPEN_ID_CONNECT_SESSION =
 		"OPEN_ID_CONNECT_SESSION";

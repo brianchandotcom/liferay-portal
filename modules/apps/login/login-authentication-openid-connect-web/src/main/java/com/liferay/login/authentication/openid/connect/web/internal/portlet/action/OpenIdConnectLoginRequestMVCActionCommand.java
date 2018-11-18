@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnect;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceHandler;
@@ -31,7 +32,7 @@ import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWeb
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.RenderURL;
+import javax.portlet.ActionURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -81,17 +82,27 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 				LiferayPortletResponse liferayPortletResponse =
 					_portal.getLiferayPortletResponse(actionResponse);
 
-				RenderURL renderURL = liferayPortletResponse.createRenderURL();
+				ActionURL actionURL = liferayPortletResponse.createActionURL();
 
-				renderURL.setParameter(
+				actionURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					OpenIdConnectWebKeys.OPEN_ID_CONNECT_RESPONSE_ACTION_NAME);
+				actionURL.setParameter(
 					"saveLastPath", Boolean.FALSE.toString());
-				renderURL.setParameter(
+				actionURL.setParameter(
 					"mvcRenderCommandName",
 					OpenIdConnectWebKeys.OPEN_ID_CONNECT_REQUEST_ACTION_NAME);
 
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				if (Validator.isNotNull(redirect)) {
+					actionURL.setParameter("redirect", redirect);
+				}
+
 				session.setAttribute(
 					OpenIdConnectWebKeys.OPEN_ID_CONNECT_RENDER_URL,
-					renderURL.toString());
+					actionURL.toString());
 			}
 
 			_openIdConnectServiceHandler.requestAuthentication(

@@ -14,17 +14,12 @@
 
 package com.liferay.login.authentication.openid.connect.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnect;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProviderRegistry;
@@ -77,17 +72,6 @@ public class OpenIdConnectLoginRequestMVCRenderCommand
 			return "/login.jsp";
 		}
 
-		String error = ParamUtil.getString(renderRequest, "error");
-
-		if (Validator.isNotNull(error)) {
-			if (ArrayUtil.contains(_ERRORS, error)) {
-				SessionErrors.add(renderRequest, error);
-			}
-			else {
-				SessionErrors.add(renderRequest, "unknownError");
-			}
-		}
-
 		Collection<String> openIdConnectProviderNames =
 			_openIdConnectProviderRegistry.getOpenIdConnectProviderNames();
 
@@ -112,11 +96,6 @@ public class OpenIdConnectLoginRequestMVCRenderCommand
 
 		return "/navigation.jsp";
 	}
-
-	private static final String[] _ERRORS = {
-		UserEmailAddressException.MustNotUseCompanyMx.class.getSimpleName(),
-		"StrangersNotAllowedException"
-	};
 
 	private static final String _JSP_PATH =
 		"/com.liferay.login.web/openid_connect.jsp";

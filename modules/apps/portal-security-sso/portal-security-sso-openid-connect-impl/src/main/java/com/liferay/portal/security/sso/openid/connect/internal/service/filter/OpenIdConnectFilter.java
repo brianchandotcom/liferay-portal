@@ -109,6 +109,13 @@ public class OpenIdConnectFilter extends BaseFilter {
 				_openIdConnectServiceHandler.processAuthenticationResponse(
 					httpServletRequest, httpServletResponse);
 			}
+
+			HttpSession session = httpServletRequest.getSession(false);
+
+			String renderURL = (String)session.getAttribute(
+				OpenIdConnectWebKeys.OPEN_ID_CONNECT_RENDER_URL);
+
+			httpServletResponse.sendRedirect(renderURL);
 		}
 		catch (StrangersNotAllowedException |
 			   UserEmailAddressException.MustNotUseCompanyMx e) {

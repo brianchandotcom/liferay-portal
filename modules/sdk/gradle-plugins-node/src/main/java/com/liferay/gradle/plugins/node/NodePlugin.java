@@ -20,6 +20,7 @@ import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
+import com.liferay.gradle.plugins.node.tasks.NpmRunTask;
 import com.liferay.gradle.plugins.node.tasks.NpmShrinkwrapTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.util.StringUtil;
@@ -218,13 +219,13 @@ public class NodePlugin implements Plugin<Project> {
 
 		String taskName = "npmRun" + StringUtil.capitalize(name);
 
-		final ExecuteNpmTask executeNpmTask = GradleUtil.addTask(
-			project, taskName, ExecuteNpmTask.class);
+		final NpmRunTask npmRunTask = GradleUtil.addTask(
+			project, taskName, NpmRunTask.class);
 
-		executeNpmTask.dependsOn(npmInstallTask);
-		executeNpmTask.setArgs("run-script", name);
-		executeNpmTask.setDescription("Runs the \"" + name + "\" NPM script.");
-		executeNpmTask.setGroup(BasePlugin.BUILD_GROUP);
+		npmRunTask.dependsOn(npmInstallTask);
+		npmRunTask.setScriptName(name);
+		npmRunTask.setDescription("Runs the \"" + name + "\" NPM script.");
+		npmRunTask.setGroup(BasePlugin.BUILD_GROUP);
 
 		if (taskName.equals(NPM_RUN_BUILD_TASK_NAME)) {
 			PluginContainer pluginContainer = project.getPlugins();
@@ -235,7 +236,7 @@ public class NodePlugin implements Plugin<Project> {
 
 					@Override
 					public void execute(JavaPlugin javaPlugin) {
-						_configureTaskNpmRunBuildForJavaPlugin(executeNpmTask);
+						_configureTaskNpmRunBuildForJavaPlugin(npmRunTask);
 					}
 
 				});
@@ -252,13 +253,13 @@ public class NodePlugin implements Plugin<Project> {
 						LifecycleBasePlugin lifecycleBasePlugin) {
 
 						_configureTaskNpmRunTestForLifecycleBasePlugin(
-							executeNpmTask);
+							npmRunTask);
 					}
 
 				});
 		}
 
-		return executeNpmTask;
+		return npmRunTask;
 	}
 
 	private NpmShrinkwrapTask _addTaskNpmShrinkwrap(

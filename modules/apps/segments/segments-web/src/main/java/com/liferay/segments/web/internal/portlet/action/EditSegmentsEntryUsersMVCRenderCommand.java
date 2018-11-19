@@ -14,15 +14,12 @@
 
 package com.liferay.segments.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.constants.SegmentsPortletKeys;
-import com.liferay.segments.odata.retriever.ODataRetriever;
-import com.liferay.segments.service.SegmentsEntryRelService;
+import com.liferay.segments.provider.SegmentsEntryProvider;
 import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
 import com.liferay.segments.web.internal.display.context.EditSegmentsEntryDisplayContext;
@@ -61,9 +58,8 @@ public class EditSegmentsEntryUsersMVCRenderCommand
 		EditSegmentsEntryDisplayContext editSegmentsEntryDisplayContext =
 			new EditSegmentsEntryDisplayContext(
 				httpServletRequest, renderRequest, renderResponse,
-				_organizationODataRetriever, _userODataRetriever,
-				_organizationLocalService, _segmentsEntryService,
-				_segmentsEntryRelService, _userLocalService);
+				_segmentsEntryProvider, _organizationLocalService,
+				_segmentsEntryService, _userLocalService);
 
 		renderRequest.setAttribute(
 			SegmentsWebKeys.EDIT_SEGMENTS_ENTRY_DISPLAY_CONTEXT,
@@ -75,26 +71,16 @@ public class EditSegmentsEntryUsersMVCRenderCommand
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
 
-	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.model.Organization)"
-	)
-	private ODataRetriever<Organization> _organizationODataRetriever;
-
 	@Reference
 	private Portal _portal;
 
 	@Reference
-	private SegmentsEntryRelService _segmentsEntryRelService;
+	private SegmentsEntryProvider _segmentsEntryProvider;
 
 	@Reference
 	private SegmentsEntryService _segmentsEntryService;
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
-	)
-	private ODataRetriever<User> _userODataRetriever;
 
 }

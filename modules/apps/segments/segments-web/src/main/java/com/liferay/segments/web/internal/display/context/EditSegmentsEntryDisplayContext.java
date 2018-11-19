@@ -20,7 +20,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -30,20 +29,17 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.model.SegmentsEntry;
-import com.liferay.segments.model.SegmentsEntryRel;
-import com.liferay.segments.odata.retriever.ODataRetriever;
-import com.liferay.segments.service.SegmentsEntryRelService;
+import com.liferay.segments.provider.SegmentsEntryProvider;
 import com.liferay.segments.service.SegmentsEntryService;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.LongStream;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -59,25 +55,18 @@ public class EditSegmentsEntryDisplayContext {
 	public EditSegmentsEntryDisplayContext(
 		HttpServletRequest request, RenderRequest renderRequest,
 		RenderResponse renderResponse,
-		ODataRetriever<Organization> organizationODataRetriever,
-		ODataRetriever<User> userODataRetriever,
+		SegmentsEntryProvider segmentsEntryProvider,
 		OrganizationLocalService organizationLocalService,
 		SegmentsEntryService segmentsEntryService,
-		SegmentsEntryRelService segmentsEntryRelService,
 		UserLocalService userLocalService) {
 
 		_request = request;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_organizationODataRetriever = organizationODataRetriever;
-		_userODataRetriever = userODataRetriever;
+		_segmentsEntryProvider = segmentsEntryProvider;
 		_organizationLocalService = organizationLocalService;
 		_segmentsEntryService = segmentsEntryService;
-		_segmentsEntryRelService = segmentsEntryRelService;
 		_userLocalService = userLocalService;
-
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() throws PortalException {
@@ -175,7 +164,8 @@ public class EditSegmentsEntryDisplayContext {
 		}
 
 		SearchContainer organizationSearchContainer = new SearchContainer(
-			_renderRequest, getPortletURL("organizations"), null, null);
+			_renderRequest, getPortletURL("organizations"), null,
+			"no-organizations-have-been-assigned-to-this-segment");
 
 		organizationSearchContainer.setId("segmentsEntryOrganizations");
 
@@ -188,51 +178,31 @@ public class EditSegmentsEntryDisplayContext {
 		int total = 0;
 		List<Organization> organizations = null;
 
-		if (Validator.isNotNull(segmentsEntry.getCriteria())) {
-			organizationSearchContainer.setEmptyResultsMessage(
-				"no-organizations-were-found-that-matched-the-segment-" +
-					"criteria");
+		try {
+			total = _segmentsEntryProvider.getSegmentsEntryClassPKsCount(
+				segmentsEntry.getSegmentsEntryId());
 
-			try {
-				organizations = _organizationODataRetriever.getResults(
-					segmentsEntry.getCompanyId(), segmentsEntry.getCriteria(),
-					_themeDisplay.getLocale(),
+			long[] segmentsEntryClassPKs =
+				_segmentsEntryProvider.getSegmentsEntryClassPKs(
+					segmentsEntry.getSegmentsEntryId(),
 					organizationSearchContainer.getStart(),
 					organizationSearchContainer.getEnd());
 
-				total = _organizationODataRetriever.getResultsCount(
-					segmentsEntry.getCompanyId(), segmentsEntry.getCriteria(),
-					_themeDisplay.getLocale());
-			}
-			catch (PortalException pe) {
-				_log.error(
-					"Unable to retrieve organizations with the criteria " +
-						segmentsEntry.getCriteria(),
-					pe);
-			}
-		}
-		else {
-			organizationSearchContainer.setEmptyResultsMessage(
-				"no-organizations-have-been-assigned-to-this-segment");
+			LongStream segmentsEntryClassPKsStream = Arrays.stream(
+				segmentsEntryClassPKs);
 
-			organizationSearchContainer.setRowChecker(
-				new EmptyOnClickRowChecker(_renderResponse));
-
-			List<SegmentsEntryRel> segmentsEntryRels =
-				_segmentsEntryRelService.getSegmentsEntryRels(
-					getSegmentsEntryId());
-
-			Stream<SegmentsEntryRel> stream = segmentsEntryRels.stream();
-
-			organizations = stream.map(
-				segmentsEntryRel -> _organizationLocalService.fetchOrganization(
-					segmentsEntryRel.getClassPK())
+			organizations = segmentsEntryClassPKsStream.boxed(
+			).map(
+				organizationId -> _organizationLocalService.fetchOrganization(
+					organizationId)
 			).collect(
 				Collectors.toList()
 			);
-
-			total = _segmentsEntryRelService.getSegmentsEntryRelsCount(
-				getSegmentsEntryId());
+		}
+		catch (PortalException pe) {
+			_log.error(
+				"Unable to retrieve organizations for segment " + segmentsEntry,
+				pe);
 		}
 
 		organizationSearchContainer.setResults(organizations);
@@ -313,7 +283,8 @@ public class EditSegmentsEntryDisplayContext {
 		}
 
 		SearchContainer userSearchContainer = new SearchContainer(
-			_renderRequest, getPortletURL("users"), null, null);
+			_renderRequest, getPortletURL("users"), null,
+			"no-users-have-been-assigned-to-this-segment");
 
 		userSearchContainer.setId("segmentsEntryUsers");
 
@@ -326,51 +297,29 @@ public class EditSegmentsEntryDisplayContext {
 		int total = 0;
 		List<User> users = null;
 
-		if (Validator.isNotNull(segmentsEntry.getCriteria())) {
-			userSearchContainer.setEmptyResultsMessage(
-				"no-users-were-found-that-matched-the-segment-criteria");
+		try {
+			total = _segmentsEntryProvider.getSegmentsEntryClassPKsCount(
+				segmentsEntry.getSegmentsEntryId());
 
-			try {
-				total = _userODataRetriever.getResultsCount(
-					segmentsEntry.getCompanyId(), segmentsEntry.getCriteria(),
-					_themeDisplay.getLocale());
-
-				users = _userODataRetriever.getResults(
-					segmentsEntry.getCompanyId(), segmentsEntry.getCriteria(),
-					_themeDisplay.getLocale(), userSearchContainer.getStart(),
+			long[] segmentsEntryClassPKs =
+				_segmentsEntryProvider.getSegmentsEntryClassPKs(
+					segmentsEntry.getSegmentsEntryId(),
+					userSearchContainer.getStart(),
 					userSearchContainer.getEnd());
-			}
-			catch (PortalException pe) {
-				_log.error(
-					"Unable to retrieve users with the criteria " +
-						segmentsEntry.getCriteria(),
-					pe);
-			}
-		}
-		else {
-			userSearchContainer.setEmptyResultsMessage(
-				"no-users-have-been-assigned-to-this-segment");
 
-			userSearchContainer.setRowChecker(
-				new EmptyOnClickRowChecker(_renderResponse));
+			LongStream segmentsEntryClassPKsStream = Arrays.stream(
+				segmentsEntryClassPKs);
 
-			List<SegmentsEntryRel> segmentsEntryRels =
-				_segmentsEntryRelService.getSegmentsEntryRels(
-					getSegmentsEntryId(), userSearchContainer.getStart(),
-					userSearchContainer.getEnd(),
-					userSearchContainer.getOrderByComparator());
-
-			Stream<SegmentsEntryRel> stream = segmentsEntryRels.stream();
-
-			users = stream.map(
-				segmentsEntryRel -> _userLocalService.fetchUser(
-					segmentsEntryRel.getClassPK())
+			users = segmentsEntryClassPKsStream.boxed(
+			).map(
+				userId -> _userLocalService.fetchUser(userId)
 			).collect(
 				Collectors.toList()
 			);
-
-			total = _segmentsEntryRelService.getSegmentsEntryRelsCount(
-				getSegmentsEntryId());
+		}
+		catch (PortalException pe) {
+			_log.error(
+				"Unable to retrieve users for segment " + segmentsEntry, pe);
 		}
 
 		userSearchContainer.setResults(users);
@@ -469,7 +418,6 @@ public class EditSegmentsEntryDisplayContext {
 
 	private String _displayStyle;
 	private final OrganizationLocalService _organizationLocalService;
-	private final ODataRetriever<Organization> _organizationODataRetriever;
 	private SearchContainer _organizationSearchContainer;
 	private String _redirect;
 	private final RenderRequest _renderRequest;
@@ -478,11 +426,9 @@ public class EditSegmentsEntryDisplayContext {
 	private SegmentsEntry _segmentsEntry;
 	private Long _segmentsEntryId;
 	private String _segmentsEntryName;
-	private final SegmentsEntryRelService _segmentsEntryRelService;
+	private final SegmentsEntryProvider _segmentsEntryProvider;
 	private final SegmentsEntryService _segmentsEntryService;
-	private final ThemeDisplay _themeDisplay;
 	private final UserLocalService _userLocalService;
-	private final ODataRetriever<User> _userODataRetriever;
 	private SearchContainer _userSearchContainer;
 
 }

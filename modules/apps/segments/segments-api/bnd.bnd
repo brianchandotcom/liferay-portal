@@ -3,6 +3,8 @@ Bundle-SymbolicName: com.liferay.segments.api
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.segments.constants,\
+	com.liferay.segments.criteria,\
+	com.liferay.segments.criteria.contributor,\
 	com.liferay.segments.exception,\
 	com.liferay.segments.model,\
 	com.liferay.segments.odata.retriever,\

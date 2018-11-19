@@ -371,10 +371,13 @@
 
 		<execute macro="BlogsNavigator#gotoAddEntry" />
 
-		<execute macro="BlogsEntry#addEntryExternalURL">
+		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryExternalURL" value="www.liferay.com" />
 			<var name="entryTitle" value="Blogs Entry Title 3" />
+		</execute>
+
+		<execute macro="BlogsEntry#addEntryExternalURL">
+			<var name="entryExternalURL" value="www.liferay.com" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />

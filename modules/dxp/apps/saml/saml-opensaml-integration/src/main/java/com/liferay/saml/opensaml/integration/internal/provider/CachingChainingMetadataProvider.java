@@ -34,7 +34,7 @@ import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 /**
  * @author Mika Koivisto
  */
-public class CachingChainingMetadataProvider extends BaseMetadataProvider {
+public class CachingChainingMetadataProvider extends AbstractMetadataResolver {
 
 	public void addMetadataProvider(MetadataProvider metadataProvider) {
 		Lock lock = _readWriteLock.writeLock();

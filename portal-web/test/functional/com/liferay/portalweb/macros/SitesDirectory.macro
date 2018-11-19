@@ -33,8 +33,14 @@
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
-		<execute function="AssertTextEquals" locator1="Select#SITES" value1="Top Level Parent Level Siblings Children" />
-		<execute function="AssertTextEquals" locator1="Select#DISPLAY_STYLE" value1="Icon Descriptive List List Hierarchy" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Select#SITES" value1="Top Level" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Select#SITES" value1="Parent Level" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Select#SITES" value1="Siblings" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Select#SITES" value1="Children" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Select#DISPLAY_STYLE" value1="Icon" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Select#DISPLAY_STYLE" value1="Descriptive" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Select#DISPLAY_STYLE" value1="List" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Select#DISPLAY_STYLE" value1="List Hierarchy" />
 
 		<execute function="SelectFrameTop" />
 	</command>

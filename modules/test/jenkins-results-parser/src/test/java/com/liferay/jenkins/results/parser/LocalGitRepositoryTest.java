@@ -14,8 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
-import com.liferay.jenkins.results.parser.util.TestPropsUtil;
-import com.liferay.jenkins.results.parser.util.TestPropsValues;
+import com.liferay.jenkins.results.parser.util.TestPropertiesUtil;
+import com.liferay.jenkins.results.parser.util.TestPropertiesValues;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +35,7 @@ public class LocalGitRepositoryTest
 
 	@BeforeClass
 	public static void setUpClass() {
-		TestPropsUtil.printProperties();
+		TestPropertiesUtil.printProperties();
 
 		Properties repositoryProperties = new Properties();
 
@@ -115,12 +115,12 @@ public class LocalGitRepositoryTest
 	}
 
 	private static final String _REPOSITORY_DIR =
-		TestPropsValues.REPOSITORY_DIR;
+		TestPropertiesValues.REPOSITORY_DIR;
 
 	private static final String _REPOSITORY_NAME =
-		TestPropsValues.REPOSITORY_NAME;
+		TestPropertiesValues.REPOSITORY_NAME;
 
 	private static final String _REPOSITORY_UPSTREAM_BRANCH_NAME =
-		TestPropsValues.REPOSITORY_UPSTREAM_BRANCH_NAME;
+		TestPropertiesValues.REPOSITORY_UPSTREAM_BRANCH_NAME;
 
 }

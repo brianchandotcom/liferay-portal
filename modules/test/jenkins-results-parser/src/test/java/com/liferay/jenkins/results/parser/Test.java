@@ -33,6 +33,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ErrorCollector;
@@ -218,6 +219,10 @@ public class Test {
 			new File(dir, urlSuffix),
 			JenkinsResultsParserUtil.toString(
 				JenkinsResultsParserUtil.getLocalURL(urlString)));
+	}
+
+	protected void failTest(String message) {
+		Assert.fail(message);
 	}
 
 	protected String fixMessage(String message) {

@@ -23,6 +23,10 @@ String redirect = ParamUtil.getString(request, "redirect", editSegmentsEntryDisp
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
+Criteria criteria = editSegmentsEntryDisplayContext.getCriteria();
+
+List<SegmentsCriteriaContributor> segmentsCriteriaContributors = editSegmentsEntryDisplayContext.getSegmentsCriteriaContributors();
+
 SegmentsEntry segmentsEntry = editSegmentsEntryDisplayContext.getSegmentsEntry();
 
 long segmentsEntryId = editSegmentsEntryDisplayContext.getSegmentsEntryId();
@@ -63,10 +67,43 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 
 				<aui:input checked="<%= (segmentsEntry == null) ? false : segmentsEntry.isActive() %>" name="active" type="toggle-switch" />
 
-				<aui:input checked="<%= (segmentsEntry != null) && Validator.isNotNull(segmentsEntry.getCriteria()) %>" disabled="<%= segmentsEntry != null %>" name="dynamic" type="toggle-switch" />
+				<aui:input checked="<%= (segmentsEntry != null) && Validator.isNotNull(segmentsEntry.getFilter()) %>" disabled="<%= segmentsEntry != null %>" name="dynamic" type="toggle-switch" />
 
 				<div id="<portlet:namespace />criteriaWrapper">
-					<aui:input name="criteria" type="textarea" />
+
+					<%
+					for (int i = 0; i < segmentsCriteriaContributors.size(); i++) {
+						SegmentsCriteriaContributor segmentsCriteriaContributor = segmentsCriteriaContributors.get(i);
+
+						Criteria.Criterion criterion = segmentsCriteriaContributor.getCriterion(criteria);
+
+						if (i > 0) {
+					%>
+
+							<aui:select label="" name='<%= "criterionConjunction" + segmentsCriteriaContributor.getKey() %>'>
+
+								<%
+								for (Criteria.Conjunction conjunction : Criteria.Conjunction.values()) {
+								%>
+
+									<aui:option label="<%= conjunction.getValue() %>" selected="<%= (criterion != null) && conjunction.equals(criterion.getConjunction()) %>" />
+
+								<%
+								}
+								%>
+
+							</aui:select>
+
+						<%
+						}
+						%>
+
+						<aui:input label="<%= segmentsCriteriaContributor.getLabel(locale) %>" name='<%= "criterionFilter" + segmentsCriteriaContributor.getKey() %>' type="textarea" value="<%= (criterion != null) ? criterion.getFilter() : StringPool.BLANK %>" />
+
+					<%
+					}
+					%>
+
 				</div>
 			</aui:fieldset>
 		</aui:fieldset-group>

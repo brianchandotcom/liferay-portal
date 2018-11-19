@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.constants.SegmentsPortletKeys;
+import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributorRegistry;
 import com.liferay.segments.provider.SegmentsEntryProvider;
 import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
@@ -58,8 +59,9 @@ public class EditSegmentsEntryOrganizationsMVCRenderCommand
 		EditSegmentsEntryDisplayContext editSegmentsEntryDisplayContext =
 			new EditSegmentsEntryDisplayContext(
 				httpServletRequest, renderRequest, renderResponse,
-				_segmentsEntryProvider, _organizationLocalService,
-				_segmentsEntryService, _userLocalService);
+				_segmentsCriteriaContributorRegistry, _segmentsEntryProvider,
+				_organizationLocalService, _segmentsEntryService,
+				_userLocalService);
 
 		renderRequest.setAttribute(
 			SegmentsWebKeys.EDIT_SEGMENTS_ENTRY_DISPLAY_CONTEXT,
@@ -73,6 +75,10 @@ public class EditSegmentsEntryOrganizationsMVCRenderCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsCriteriaContributorRegistry
+		_segmentsCriteriaContributorRegistry;
 
 	@Reference
 	private SegmentsEntryProvider _segmentsEntryProvider;

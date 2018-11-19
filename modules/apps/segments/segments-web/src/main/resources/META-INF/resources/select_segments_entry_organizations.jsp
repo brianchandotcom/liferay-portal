@@ -22,12 +22,12 @@ SelectSegmentsEntryOrganizationsDisplayContext selectSegmentsEntryOrganizationsD
 
 <clay:management-toolbar
 	clearResultsURL="<%= selectSegmentsEntryOrganizationsDisplayContext.getClearResultsURL() %>"
-	componentId="segmentsEntryOrganizationsManagementToolbar"
+	componentId="selectSegmentsEntryOrganizationsManagementToolbar"
 	disabled="<%= selectSegmentsEntryOrganizationsDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= selectSegmentsEntryOrganizationsDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= selectSegmentsEntryOrganizationsDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= selectSegmentsEntryOrganizationsDisplayContext.getSearchActionURL() %>"
-	searchContainerId="segmentsEntryOrganizations"
+	searchContainerId="selectSegmentsEntryOrganizations"
 	searchFormName="searchFm"
 	showSearch="<%= selectSegmentsEntryOrganizationsDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= selectSegmentsEntryOrganizationsDisplayContext.getOrderByType() %>"
@@ -37,7 +37,7 @@ SelectSegmentsEntryOrganizationsDisplayContext selectSegmentsEntryOrganizationsD
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
-		id="segmentsEntryOrganizations"
+		id="selectSegmentsEntryOrganizations"
 		searchContainer="<%= selectSegmentsEntryOrganizationsDisplayContext.getOrganizationSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
@@ -72,7 +72,7 @@ SelectSegmentsEntryOrganizationsDisplayContext selectSegmentsEntryOrganizationsD
 </aui:form>
 
 <aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />segmentsEntryOrganizations');
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />selectSegmentsEntryOrganizations');
 
 	searchContainer.on(
 		'rowToggled',

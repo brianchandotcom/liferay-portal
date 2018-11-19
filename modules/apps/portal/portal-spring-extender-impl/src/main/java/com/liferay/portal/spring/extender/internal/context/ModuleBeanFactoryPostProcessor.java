@@ -15,11 +15,11 @@
 package com.liferay.portal.spring.extender.internal.context;
 
 import com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor;
-import com.liferay.portal.spring.context.PortletBeanFactoryPostProcessor;
 import com.liferay.portal.spring.extender.internal.bean.ServiceReferenceAnnotationBeanPostProcessor;
 
 import org.osgi.framework.BundleContext;
 
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 
@@ -27,12 +27,9 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
  * @author Miguel Pastor
  */
 public class ModuleBeanFactoryPostProcessor
-	extends PortletBeanFactoryPostProcessor {
+	implements BeanFactoryPostProcessor {
 
-	public ModuleBeanFactoryPostProcessor(
-		ClassLoader classLoader, BundleContext bundleContext) {
-
-		_classLoader = classLoader;
+	public ModuleBeanFactoryPostProcessor(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 	}
 
@@ -52,16 +49,8 @@ public class ModuleBeanFactoryPostProcessor
 		configurableListableBeanFactory.addBeanPostProcessor(
 			new BeanReferenceAnnotationBeanPostProcessor(
 				configurableListableBeanFactory));
-
-		super.postProcessBeanFactory(configurableListableBeanFactory);
-	}
-
-	@Override
-	protected ClassLoader getClassLoader() {
-		return _classLoader;
 	}
 
 	private final BundleContext _bundleContext;
-	private final ClassLoader _classLoader;
 
 }

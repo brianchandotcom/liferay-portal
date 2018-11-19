@@ -51,6 +51,10 @@ import org.springframework.web.context.support.XmlWebApplicationContext;
  */
 public class PortletApplicationContext extends XmlWebApplicationContext {
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static ClassLoader getBeanClassLoader() {
 		ClassLoader beanClassLoader =
 			AggregateClassLoader.getAggregateClassLoader(
@@ -63,7 +67,14 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 	}
 
 	public PortletApplicationContext() {
-		setClassLoader(getBeanClassLoader());
+		ClassLoader beanClassLoader =
+			AggregateClassLoader.getAggregateClassLoader(
+				new ClassLoader[] {
+					PortletClassLoaderUtil.getClassLoader(),
+					PortalClassLoaderUtil.getClassLoader()
+				});
+
+		setClassLoader(new FilterClassLoader(beanClassLoader));
 	}
 
 	/**
@@ -132,7 +143,7 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 	protected void initBeanDefinitionReader(
 		XmlBeanDefinitionReader xmlBeanDefinitionReader) {
 
-		xmlBeanDefinitionReader.setBeanClassLoader(getBeanClassLoader());
+		xmlBeanDefinitionReader.setBeanClassLoader(getClassLoader());
 	}
 
 	protected void injectExplicitBean(

@@ -67,7 +67,7 @@ public class ModuleApplicationContextRegistrator {
 
 			_configurableApplicationContext.addBeanFactoryPostProcessor(
 				new ModuleBeanFactoryPostProcessor(
-					classLoader, _extendeeBundle.getBundleContext()));
+					_extendeeBundle.getBundleContext()));
 
 			ApplicationContext parentApplicationContext =
 				ParentModuleApplicationContextHolder.getApplicationContext(

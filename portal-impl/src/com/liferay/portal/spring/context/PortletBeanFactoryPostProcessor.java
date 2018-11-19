@@ -19,21 +19,19 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 public class PortletBeanFactoryPostProcessor
 	implements BeanFactoryPostProcessor {
 
 	@Override
 	public void postProcessBeanFactory(
 		ConfigurableListableBeanFactory configurableListableBeanFactory) {
-
-		ClassLoader classLoader = getClassLoader();
-
-		configurableListableBeanFactory.setBeanClassLoader(classLoader);
 	}
 
 	protected ClassLoader getClassLoader() {
-		return PortletApplicationContext.getBeanClassLoader();
+		return null;
 	}
 
 }

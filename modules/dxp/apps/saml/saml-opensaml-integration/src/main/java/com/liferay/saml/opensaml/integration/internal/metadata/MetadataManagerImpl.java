@@ -221,7 +221,7 @@ public class MetadataManagerImpl
 
 	@Override
 	public MetadataResolver getMetadataResolver() throws SamlException {
-		return _cachingChainingMetadataProvider;
+		return _cachingChainingMetadataResolver;
 	}
 
 	@Override
@@ -534,7 +534,7 @@ public class MetadataManagerImpl
 			_log.debug("Adding metadata provider " + metadataProvider);
 		}
 
-		_cachingChainingMetadataProvider.addMetadataProvider(metadataProvider);
+		_cachingChainingMetadataResolver.addMetadataProvider(metadataProvider);
 	}
 
 	@Reference(unbind = "-")
@@ -551,7 +551,7 @@ public class MetadataManagerImpl
 
 	@Deactivate
 	public void shutdown() {
-		_cachingChainingMetadataProvider.destroy();
+		_cachingChainingMetadataResolver.destroy();
 	}
 
 	public void unsetMetadataProvider(MetadataProvider metadataProvider) {
@@ -559,7 +559,7 @@ public class MetadataManagerImpl
 			_log.debug("Removing metadata provider " + metadataProvider);
 		}
 
-		_cachingChainingMetadataProvider.removeMetadataProvider(
+		_cachingChainingMetadataResolver.removeMetadataProvider(
 			metadataProvider);
 	}
 
@@ -591,7 +591,7 @@ public class MetadataManagerImpl
 		MetadataManagerImpl.class);
 
 	private final CachingChainingMetadataResolver
-		_cachingChainingMetadataProvider =
+		_cachingChainingMetadataResolver =
 			new CachingChainingMetadataResolver();
 	private CredentialResolver _credentialResolver;
 	private Http _http;

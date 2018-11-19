@@ -1312,16 +1312,12 @@ public class JenkinsResultsParserUtil {
 		}
 
 		if (targetSlaveCount == null) {
-			return new ArrayList<>(slaves);
+			targetSlaveCount = slaves.size();
 		}
 
 		if (slaves.size() < targetSlaveCount) {
 			throw new IllegalStateException(
 				"Target size exceeds the number of available slaves");
-		}
-
-		if (targetSlaveCount == slaves.size()) {
-			return new ArrayList<>(slaves);
 		}
 
 		List<String> randomSlaves = new ArrayList<>(targetSlaveCount);

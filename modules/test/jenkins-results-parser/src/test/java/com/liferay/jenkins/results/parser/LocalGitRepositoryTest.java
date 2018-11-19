@@ -24,14 +24,14 @@ import java.util.Properties;
 
 import org.json.JSONObject;
 
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  * @author Michael Hashimoto
  */
-public class LocalGitRepositoryTest extends TestPropsValues {
+public class LocalGitRepositoryTest
+	extends com.liferay.jenkins.results.parser.Test {
 
 	@BeforeClass
 	public static void setUpClass() {
@@ -41,9 +41,9 @@ public class LocalGitRepositoryTest extends TestPropsValues {
 
 		repositoryProperties.put(
 			JenkinsResultsParserUtil.combine(
-				"repository.dir[", REPOSITORY_NAME, "][",
-				REPOSITORY_UPSTREAM_BRANCH_NAME, "]"),
-			REPOSITORY_DIR);
+				"repository.dir[", _REPOSITORY_NAME, "][",
+				_REPOSITORY_UPSTREAM_BRANCH_NAME, "]"),
+			_REPOSITORY_DIR);
 
 		BaseGitRepository.setRepositoryProperties(repositoryProperties);
 	}
@@ -53,7 +53,7 @@ public class LocalGitRepositoryTest extends TestPropsValues {
 		LocalGitRepository localGitRepository = _getLocalGitRepository();
 
 		if (!(localGitRepository instanceof DefaultLocalGitRepository)) {
-			Assert.fail("Invalid LocalGitRepository instance");
+			failTest("Invalid LocalGitRepository instance");
 		}
 
 		GitWorkingDirectory gitWorkingDirectory =
@@ -62,45 +62,46 @@ public class LocalGitRepositoryTest extends TestPropsValues {
 		System.out.println(gitWorkingDirectory);
 
 		if (!(gitWorkingDirectory instanceof PortalGitWorkingDirectory)) {
-			Assert.fail("Invalid GitWorkingDirectory instance");
+			failTest("Invalid GitWorkingDirectory instance");
 		}
 
 		File directory = localGitRepository.getDirectory();
 
 		try {
-			if (!REPOSITORY_DIR.equals(directory.getCanonicalPath())) {
-				Assert.fail("The repository dir should be " + REPOSITORY_DIR);
+			if (!_REPOSITORY_DIR.equals(directory.getCanonicalPath())) {
+				failTest("The repository dir should be " + _REPOSITORY_DIR);
 			}
 		}
 		catch (IOException ioe) {
-			Assert.fail("The repository dir should be " + REPOSITORY_DIR);
+			failTest("The repository dir should be " + _REPOSITORY_DIR);
 		}
 
-		if (!REPOSITORY_UPSTREAM_BRANCH_NAME.equals(
+		if (!_REPOSITORY_UPSTREAM_BRANCH_NAME.equals(
 				localGitRepository.getUpstreamBranchName())) {
 
-			Assert.fail(
-				"The upstream branch name should be " +
-					REPOSITORY_UPSTREAM_BRANCH_NAME);
+			failTest(
+				JenkinsResultsParserUtil.combine(
+					"The upstream branch name should be ",
+					_REPOSITORY_UPSTREAM_BRANCH_NAME));
 		}
 
-		if (!REPOSITORY_NAME.equals(localGitRepository.getName())) {
-			Assert.fail("The repository name should be " + REPOSITORY_NAME);
+		if (!_REPOSITORY_NAME.equals(localGitRepository.getName())) {
+			failTest("The repository name should be " + _REPOSITORY_NAME);
 		}
 
 		JSONObject expectedJSONObject = new JSONObject();
 
-		expectedJSONObject.put("directory", REPOSITORY_DIR);
-		expectedJSONObject.put("name", REPOSITORY_NAME);
+		expectedJSONObject.put("directory", _REPOSITORY_DIR);
+		expectedJSONObject.put("name", _REPOSITORY_NAME);
 		expectedJSONObject.put(
-			"upstream_branch_name", REPOSITORY_UPSTREAM_BRANCH_NAME);
+			"upstream_branch_name", _REPOSITORY_UPSTREAM_BRANCH_NAME);
 
 		JSONObject actualJSONObject = localGitRepository.getJSONObject();
 
 		if (!JenkinsResultsParserUtil.isJSONObjectEqual(
 				expectedJSONObject, actualJSONObject)) {
 
-			Assert.fail(
+			failTest(
 				JenkinsResultsParserUtil.combine(
 					"Expected does not match actual\nexpected: ",
 					expectedJSONObject.toString(), "\nactual:   ",
@@ -110,7 +111,16 @@ public class LocalGitRepositoryTest extends TestPropsValues {
 
 	private LocalGitRepository _getLocalGitRepository() {
 		return GitRepositoryFactory.getLocalGitRepository(
-			REPOSITORY_NAME, REPOSITORY_UPSTREAM_BRANCH_NAME);
+			_REPOSITORY_NAME, _REPOSITORY_UPSTREAM_BRANCH_NAME);
 	}
+
+	private static final String _REPOSITORY_DIR =
+		TestPropsValues.REPOSITORY_DIR;
+
+	private static final String _REPOSITORY_NAME =
+		TestPropsValues.REPOSITORY_NAME;
+
+	private static final String _REPOSITORY_UPSTREAM_BRANCH_NAME =
+		TestPropsValues.REPOSITORY_UPSTREAM_BRANCH_NAME;
 
 }

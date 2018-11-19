@@ -45,7 +45,9 @@
 	<div class="preview-toolbar-container">
 		<div class="btn-group" role="group">
 			{call ClayButton.render data="$baseButtonsToolbar"}
-				{param label kind="text"}{$currentPage} / {$totalPages}{/param}
+				{param label kind="text"}
+					{msg desc=""}page{/msg} {$currentPage} / {$totalPages}
+				{/param}
 				{param value: 'ask' /}
 			{/call}
 			{call ClayButton.render data="$baseButtonsToolbar"}

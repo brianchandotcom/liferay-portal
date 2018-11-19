@@ -187,6 +187,26 @@
 		</if>
 	</command>
 
+	<command name="addGoogleApp">
+		<execute macro="Portlet#clickPortletPlusIconPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+			<if>
+				<equals arg1="${dmGoogleApp}" arg2="Google Docs" />
+				<then>
+					<execute function="Click" locator1="DocumentsAndMedia#GOOGLE_DOCS_MENU_ITEM" />
+				</then>
+			<else>
+				<var name="key_menuItem" value="${dmGoogleApp}" />
+
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="${dmGoogleApp}" />
+				</execute>
+			</else>
+		</if>
+	</command>
+
 	<command name="addDMMarketingBannerCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 

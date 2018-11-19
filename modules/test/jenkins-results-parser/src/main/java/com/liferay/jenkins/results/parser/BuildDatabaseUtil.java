@@ -26,6 +26,10 @@ import java.util.concurrent.TimeoutException;
 public class BuildDatabaseUtil {
 
 	public static BuildDatabase getBuildDatabase() {
+		return getBuildDatabase(true);
+	}
+
+	public static BuildDatabase getBuildDatabase(boolean download) {
 		if (_buildDatabase != null) {
 			return _buildDatabase;
 		}
@@ -45,7 +49,7 @@ public class BuildDatabaseUtil {
 		String distNodes = System.getenv("DIST_NODES");
 		String distPath = System.getenv("DIST_PATH");
 
-		if ((distNodes != null) && (distPath != null)) {
+		if ((distNodes != null) && (distPath != null) && download) {
 			_downloadBuildDatabaseFile(baseDir, distNodes, distPath);
 		}
 

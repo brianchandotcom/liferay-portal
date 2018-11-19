@@ -14,10 +14,11 @@
 
 package com.liferay.saml.opensaml.integration.internal.binding;
 
-import org.opensaml.common.xml.SAMLConstants;
-import org.opensaml.saml2.binding.decoding.HTTPRedirectDeflateDecoder;
-import org.opensaml.saml2.binding.encoding.HTTPRedirectDeflateEncoder;
-import org.opensaml.xml.parse.ParserPool;
+import net.shibboleth.utilities.java.support.xml.ParserPool;
+
+import org.opensaml.saml.common.xml.SAMLConstants;
+import org.opensaml.saml.saml2.binding.decoding.impl.HTTPRedirectDeflateDecoder;
+import org.opensaml.saml.saml2.binding.encoding.impl.HTTPRedirectDeflateEncoder;
 
 /**
  * @author Mika Koivisto
@@ -26,8 +27,12 @@ public class HttpRedirectBinding extends BaseSamlBinding {
 
 	public HttpRedirectBinding(ParserPool parserPool) {
 		super(
-			new HTTPRedirectDeflateDecoder(parserPool),
-			new HTTPRedirectDeflateEncoder());
+			() -> new HTTPRedirectDeflateDecoder() {
+				{
+					setParserPool(parserPool);
+				}
+			},
+			() -> new HTTPRedirectDeflateEncoder());
 	}
 
 	@Override

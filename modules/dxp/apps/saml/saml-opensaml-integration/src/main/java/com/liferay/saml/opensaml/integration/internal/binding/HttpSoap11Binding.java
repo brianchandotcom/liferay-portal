@@ -14,11 +14,12 @@
 
 package com.liferay.saml.opensaml.integration.internal.binding;
 
+import net.shibboleth.utilities.java.support.xml.ParserPool;
+
 import org.apache.http.client.HttpClient;
 
-import org.opensaml.common.xml.SAMLConstants;
-import org.opensaml.saml2.binding.decoding.HTTPSOAP11Decoder;
-import org.opensaml.xml.parse.ParserPool;
+import org.opensaml.saml.common.xml.SAMLConstants;
+import org.opensaml.saml.saml2.binding.decoding.impl.HTTPSOAP11Decoder;
 
 /**
  * @author Mika Koivisto
@@ -27,8 +28,12 @@ public class HttpSoap11Binding extends BaseSamlBinding {
 
 	public HttpSoap11Binding(ParserPool parserPool, HttpClient httpClient) {
 		super(
-			new HTTPSOAP11Decoder(parserPool),
-			new HttpSoap11Encoder(httpClient));
+			() -> new HTTPSOAP11Decoder() {
+				{
+					setParserPool(parserPool);
+				}
+			},
+			() -> new HttpSoap11Encoder(httpClient));
 	}
 
 	@Override

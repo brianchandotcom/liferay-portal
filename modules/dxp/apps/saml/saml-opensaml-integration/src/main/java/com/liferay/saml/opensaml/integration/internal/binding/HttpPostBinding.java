@@ -14,12 +14,13 @@
 
 package com.liferay.saml.opensaml.integration.internal.binding;
 
+import net.shibboleth.utilities.java.support.xml.ParserPool;
+
 import org.apache.velocity.app.VelocityEngine;
 
-import org.opensaml.common.xml.SAMLConstants;
-import org.opensaml.saml2.binding.decoding.HTTPPostDecoder;
-import org.opensaml.saml2.binding.encoding.HTTPPostEncoder;
-import org.opensaml.xml.parse.ParserPool;
+import org.opensaml.saml.common.xml.SAMLConstants;
+import org.opensaml.saml.saml2.binding.decoding.impl.HTTPPostDecoder;
+import org.opensaml.saml.saml2.binding.encoding.impl.HTTPPostEncoder;
 
 /**
  * @author Mika Koivisto
@@ -30,9 +31,16 @@ public class HttpPostBinding extends BaseSamlBinding {
 		ParserPool parserPool, VelocityEngine velocityEngine) {
 
 		super(
-			new HTTPPostDecoder(parserPool),
-			new HTTPPostEncoder(
-				velocityEngine, "/templates/saml2-post-binding.vm"));
+			() -> new HTTPPostDecoder() {
+				{
+					setParserPool(parserPool);
+				}
+			},
+			() -> new HTTPPostEncoder() {
+				{
+					setVelocityEngine(velocityEngine);
+				}
+			});
 	}
 
 	@Override

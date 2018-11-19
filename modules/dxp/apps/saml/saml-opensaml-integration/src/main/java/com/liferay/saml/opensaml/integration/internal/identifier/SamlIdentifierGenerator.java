@@ -14,32 +14,52 @@
 
 package com.liferay.saml.opensaml.integration.internal.identifier;
 
+import com.google.common.escape.Escaper;
+import com.google.common.xml.XmlEscapers;
+
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.SecureRandom;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 
-import org.opensaml.common.IdentifierGenerator;
+import javax.annotation.Nonnull;
+
+import net.shibboleth.utilities.java.support.security.IdentifierGenerationStrategy;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Mika Koivisto
  */
-@Component(immediate = true, service = IdentifierGenerator.class)
-public class SamlIdentifierGenerator implements IdentifierGenerator {
+@Component(immediate = true, service = IdentifierGenerationStrategy.class)
+public class SamlIdentifierGenerator implements IdentifierGenerationStrategy {
 
+	@Nonnull
 	@Override
 	public String generateIdentifier() {
-		return generateIdentifier(16);
+		return generateIdentifier(16, false);
 	}
 
+	@Nonnull
 	@Override
-	public String generateIdentifier(int size) {
+	public String generateIdentifier(boolean xmlSafe) {
+		return generateIdentifier(16, xmlSafe);
+	}
+
+	public String generateIdentifier(int size, boolean xmlSafe) {
 		byte[] bytes = new byte[size];
 
 		_secureRandom.nextBytes(bytes);
 
-		return StringPool.UNDERLINE.concat(UnicodeFormatter.bytesToHex(bytes));
+		String identifier = StringPool.UNDERLINE.concat(
+			UnicodeFormatter.bytesToHex(bytes));
+
+		if (xmlSafe) {
+			Escaper escaper = XmlEscapers.xmlAttributeEscaper();
+
+			return escaper.escape(identifier);
+		}
+
+		return identifier;
 	}
 
 	private final SecureRandom _secureRandom = new SecureRandom();

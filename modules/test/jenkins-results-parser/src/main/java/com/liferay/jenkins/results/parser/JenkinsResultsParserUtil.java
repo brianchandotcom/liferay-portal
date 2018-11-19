@@ -1475,14 +1475,24 @@ public class JenkinsResultsParserUtil {
 			Object actual = actualJSONArray.get(i);
 
 			if (actual instanceof JSONObject) {
-				return isJSONObjectEqual(
-					expectedJSONArray.getJSONObject(i),
-					actualJSONArray.getJSONObject(i));
+				if (!isJSONObjectEqual(
+						expectedJSONArray.getJSONObject(i),
+						actualJSONArray.getJSONObject(i))) {
+
+					return false;
+				}
+
+				continue;
 			}
 			else if (actual instanceof JSONArray) {
-				return isJSONArrayEqual(
-					expectedJSONArray.getJSONArray(i),
-					actualJSONArray.getJSONArray(i));
+				if (!isJSONArrayEqual(
+						expectedJSONArray.getJSONArray(i),
+						actualJSONArray.getJSONArray(i))) {
+
+					return false;
+				}
+
+				continue;
 			}
 
 			Object expected = expectedJSONArray.get(i);
@@ -1510,14 +1520,24 @@ public class JenkinsResultsParserUtil {
 			Object actual = actualJSONObject.get(name);
 
 			if (actual instanceof JSONObject) {
-				return isJSONObjectEqual(
-					expectedJSONObject.getJSONObject(name),
-					actualJSONObject.getJSONObject(name));
+				if (!isJSONObjectEqual(
+						expectedJSONObject.getJSONObject(name),
+						actualJSONObject.getJSONObject(name))) {
+
+					return false;
+				}
+
+				continue;
 			}
 			else if (actual instanceof JSONArray) {
-				return isJSONArrayEqual(
-					expectedJSONObject.getJSONArray(name),
-					actualJSONObject.getJSONArray(name));
+				if (!isJSONArrayEqual(
+						expectedJSONObject.getJSONArray(name),
+						actualJSONObject.getJSONArray(name))) {
+
+					return false;
+				}
+
+				continue;
 			}
 
 			Object expected = expectedJSONObject.get(name);

@@ -291,8 +291,8 @@ public class ServiceBeanAopCacheManager {
 
 		int newLength = methodInterceptors.length - 1;
 
-		MethodInterceptor[] newMethodInterceptors = new MethodInterceptor[
-			newLength];
+		MethodInterceptor[] newMethodInterceptors =
+			new MethodInterceptor[newLength];
 
 		if (index > 0) {
 			System.arraycopy(
@@ -393,8 +393,8 @@ public class ServiceBeanAopCacheManager {
 		new ConcurrentHashMap<>();
 	private static final Annotation[] _nullAnnotations = new Annotation[0];
 
-	private final
-		Map<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>[]>
+	private final Map
+		<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>[]>
 			_annotationChainableMethodAdvices = new HashMap<>();
 	private final MethodInterceptor[] _classLevelMethodInterceptors;
 	private final MethodInterceptor[] _fullMethodInterceptors;

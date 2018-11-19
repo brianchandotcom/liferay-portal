@@ -81,8 +81,8 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 		verify(
 			verifiableResourcedModels.toArray(
-				new VerifiableResourcedModel[
-					verifiableResourcedModels.size()]));
+				new VerifiableResourcedModel
+					[verifiableResourcedModels.size()]));
 	}
 
 	private String _getVerifyResourcedModelSQL(

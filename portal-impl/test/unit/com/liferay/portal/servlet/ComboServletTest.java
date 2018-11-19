@@ -24,9 +24,7 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -50,7 +48,6 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -76,13 +73,13 @@ public class ComboServletTest extends PowerMockito {
 	public static void setUpClass() throws Exception {
 		ToolDependencies.wireCaches();
 
-		_http = HttpUtil.getHttp();
+		HttpUtil httpUtil = new HttpUtil();
 
-		_httpUtil.setHttp(new HttpImpl());
+		httpUtil.setHttp(new HttpImpl());
 
-		_portal = PortalUtil.getPortal();
+		PortalUtil portalUtil = new PortalUtil();
 
-		_portalUtil.setPortal(new PortalImpl());
+		portalUtil.setPortal(new PortalImpl());
 
 		ReflectionTestUtil.setFieldValue(
 			PrefsPropsUtil.class, "_portalPreferencesLocalService",
@@ -109,12 +106,6 @@ public class ComboServletTest extends PowerMockito {
 				}
 
 			});
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_httpUtil.setHttp(_http);
-		_portalUtil.setPortal(_portal);
 	}
 
 	@Before
@@ -363,11 +354,6 @@ public class ComboServletTest extends PowerMockito {
 	private static final String _NONEXISTING_PORTLET_ID = "2345678";
 
 	private static final String _TEST_PORTLET_ID = "TEST_PORTLET_ID";
-
-	private static Http _http;
-	private static final HttpUtil _httpUtil = new HttpUtil();
-	private static Portal _portal;
-	private static final PortalUtil _portalUtil = new PortalUtil();
 
 	private ComboServlet _comboServlet;
 	private MockHttpServletRequest _mockHttpServletRequest;

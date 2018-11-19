@@ -14,6 +14,7 @@ import {
 	clearFollowingColumns,
 	clearPath,
 	deleteEmptyColumns,
+	setActiveItem,
 	setHomePage
 } from './utils/LayoutUpdateUtils.es';
 import {
@@ -398,6 +399,8 @@ class Layout extends Component {
 
 				const item = getItem(this.layoutColumns, itemPlid);
 
+				this.layoutColumns = setActiveItem(this.layoutColumns, itemPlid);
+
 				navigate(item.url);
 			}
 		}
@@ -694,37 +697,9 @@ class Layout extends Component {
 			targetColumnIndex
 		);
 
-		const targetItem = getItem(
-			nextLayoutColumns,
-			targetItemPlid
-		);
+		nextLayoutColumns = setActiveItem(nextLayoutColumns, targetItemPlid);
 
-		const activeItem = getColumnActiveItem(
-			nextLayoutColumns,
-			targetColumnIndex
-		);
-
-		if (activeItem && (activeItem !== targetItem)) {
-			nextLayoutColumns = setIn(
-				nextLayoutColumns,
-				[
-					targetColumnIndex,
-					targetColumn.indexOf(activeItem),
-					'active'
-				],
-				false
-			);
-		}
-
-		nextLayoutColumns = setIn(
-			nextLayoutColumns,
-			[
-				targetColumnIndex,
-				targetColumn.indexOf(targetItem),
-				'active'
-			],
-			true
-		);
+		this._draggingItem.active = false;
 
 		this._currentPathItemPlid = targetItemPlid;
 

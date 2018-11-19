@@ -19,10 +19,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.io.Serializable;
 
-import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.saml2.core.AuthnRequest;
-import org.opensaml.saml2.core.NameID;
-import org.opensaml.saml2.core.Response;
+import org.opensaml.messaging.context.MessageContext;
 
 /**
  * @author Mika Koivisto
@@ -34,24 +31,20 @@ public class SamlSsoRequestContext implements Serializable {
 	public static final int STAGE_INITIAL = 0;
 
 	public SamlSsoRequestContext(
-		String peerEntityId, String relayState,
-		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext,
+		String peerEntityId, String relayState, MessageContext messageContext,
 		UserLocalService userLocalService) {
 
-		this(
-			null, peerEntityId, relayState, samlMessageContext,
-			userLocalService);
+		this(null, peerEntityId, relayState, messageContext, userLocalService);
 	}
 
 	public SamlSsoRequestContext(
 		String authnRequestXml, String peerEntityId, String relayState,
-		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext,
-		UserLocalService userLocalService) {
+		MessageContext messageContext, UserLocalService userLocalService) {
 
 		_authnRequestXml = authnRequestXml;
 		_peerEntityId = peerEntityId;
 		_relayState = relayState;
-		_samlMessageContext = samlMessageContext;
+		_messageContext = messageContext;
 		_userLocalService = userLocalService;
 	}
 
@@ -67,10 +60,8 @@ public class SamlSsoRequestContext implements Serializable {
 		return _relayState;
 	}
 
-	public SAMLMessageContext<AuthnRequest, Response, NameID>
-		getSAMLMessageContext() {
-
-		return _samlMessageContext;
+	public MessageContext getSAMLMessageContext() {
+		return _messageContext;
 	}
 
 	public String getSamlSsoSessionId() {
@@ -102,10 +93,8 @@ public class SamlSsoRequestContext implements Serializable {
 		_newSession = newSession;
 	}
 
-	public void setSAMLMessageContext(
-		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext) {
-
-		_samlMessageContext = samlMessageContext;
+	public void setSAMLMessageContext(MessageContext messageContext) {
+		_messageContext = messageContext;
 	}
 
 	public void setSamlSsoSessionId(String samlSsoSessionId) {
@@ -121,11 +110,10 @@ public class SamlSsoRequestContext implements Serializable {
 	}
 
 	private final String _authnRequestXml;
+	private volatile MessageContext _messageContext;
 	private boolean _newSession;
 	private final String _peerEntityId;
 	private final String _relayState;
-	private volatile SAMLMessageContext<AuthnRequest, Response, NameID>
-		_samlMessageContext;
 	private String _samlSsoSessionId;
 	private int _stage;
 	private long _userId;

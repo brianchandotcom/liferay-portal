@@ -36,10 +36,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.saml2.core.LogoutRequest;
-import org.opensaml.saml2.core.LogoutResponse;
-import org.opensaml.saml2.core.NameID;
+import org.opensaml.messaging.context.MessageContext;
+import org.opensaml.saml.common.messaging.context.SAMLPeerEntityContext;
 
 /**
  * @author Mika Koivisto
@@ -47,33 +45,15 @@ import org.opensaml.saml2.core.NameID;
 public class SamlSloContext implements Serializable {
 
 	public SamlSloContext(
-		SamlIdpSsoSession samlIdpSsoSession,
+		SamlIdpSsoSession samlIdpSsoSession, MessageContext<?> messageContext,
 		SamlIdpSpConnectionLocalService samlIdpSpConnectionLocalService,
 		SamlIdpSpSessionLocalService samlIdpSpSessionLocalService,
 		UserLocalService userLocalService) {
 
-		this(
-			samlIdpSsoSession, null, samlIdpSpConnectionLocalService,
-			samlIdpSpSessionLocalService, userLocalService);
-	}
-
-	public SamlSloContext(
-		SamlIdpSsoSession samlIdpSsoSession,
-		SAMLMessageContext<LogoutRequest, LogoutResponse, NameID>
-			samlMessageContext,
-		SamlIdpSpConnectionLocalService samlIdpSpConnectionLocalService,
-		SamlIdpSpSessionLocalService samlIdpSpSessionLocalService,
-		UserLocalService userLocalService) {
-
-		_samlMessageContext = samlMessageContext;
+		_messageContext = messageContext;
 		_samlIdpSpConnectionLocalService = samlIdpSpConnectionLocalService;
 		_samlIdpSpSessionLocalService = samlIdpSpSessionLocalService;
 		_userLocalService = userLocalService;
-
-		if (samlMessageContext != null) {
-			samlMessageContext.setInboundMessageTransport(null);
-			samlMessageContext.setOutboundMessageTransport(null);
-		}
 
 		if (samlIdpSsoSession == null) {
 			return;
@@ -90,11 +70,16 @@ public class SamlSloContext implements Serializable {
 
 				String samlSpEntityId = samlIdpSpSession.getSamlSpEntityId();
 
-				if ((samlMessageContext != null) &&
-					samlSpEntityId.equals(
-						samlMessageContext.getPeerEntityId())) {
+				if (messageContext != null) {
+					SAMLPeerEntityContext samlPeerEntityContext =
+						messageContext.getSubcontext(
+							SAMLPeerEntityContext.class);
 
-					continue;
+					if (samlSpEntityId.equals(
+							samlPeerEntityContext.getEntityId())) {
+
+						continue;
+					}
 				}
 
 				String name = samlSpEntityId;
@@ -128,10 +113,19 @@ public class SamlSloContext implements Serializable {
 		}
 	}
 
-	public SAMLMessageContext<LogoutRequest, LogoutResponse, NameID>
-		getSamlMessageContext() {
+	public SamlSloContext(
+		SamlIdpSsoSession samlIdpSsoSession,
+		SamlIdpSpConnectionLocalService samlIdpSpConnectionLocalService,
+		SamlIdpSpSessionLocalService samlIdpSpSessionLocalService,
+		UserLocalService userLocalService) {
 
-		return _samlMessageContext;
+		this(
+			samlIdpSsoSession, null, samlIdpSpConnectionLocalService,
+			samlIdpSpSessionLocalService, userLocalService);
+	}
+
+	public MessageContext<?> getMessageContext() {
+		return _messageContext;
 	}
 
 	public SamlSloRequestInfo getSamlSloRequestInfo(String entityId) {
@@ -191,11 +185,10 @@ public class SamlSloContext implements Serializable {
 
 	private static final Log _log = LogFactoryUtil.getLog(SamlSloContext.class);
 
+	private final MessageContext<?> _messageContext;
 	private final SamlIdpSpConnectionLocalService
 		_samlIdpSpConnectionLocalService;
 	private final SamlIdpSpSessionLocalService _samlIdpSpSessionLocalService;
-	private final SAMLMessageContext<LogoutRequest, LogoutResponse, NameID>
-		_samlMessageContext;
 	private final Map<String, SamlSloRequestInfo> _samlRequestInfos =
 		new ConcurrentHashMap<>();
 	private String _samlSsoSessionId;

@@ -55,11 +55,13 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -1228,8 +1230,16 @@ public class JenkinsResultsParserUtil {
 		return randomList;
 	}
 
-	public static String getRandomString(List<String> list) {
-		return list.get(getRandomValue(0, list.size() - 1));
+	public static String getRandomString(Collection<String> collection) {
+		int randomIndex = getRandomValue(0, collection.size() - 1);
+
+		Iterator<String> iterator = collection.iterator();
+
+		for (int i = 0; i < (randomIndex - 1); i++) {
+			iterator.next();
+		}
+
+		return iterator.next();
 	}
 
 	public static int getRandomValue(int start, int end) {
@@ -1281,7 +1291,7 @@ public class JenkinsResultsParserUtil {
 		Properties buildProperties, String jenkinsMasterPatternString,
 		Integer targetSlaveCount) {
 
-		List<String> slaves = new ArrayList<>();
+		Set<String> slaves = new HashSet<>();
 
 		Pattern jenkinsSlavesPropertyNamePattern = Pattern.compile(
 			"master.slaves\\(" + jenkinsMasterPatternString + "\\)");
@@ -1302,45 +1312,32 @@ public class JenkinsResultsParserUtil {
 		}
 
 		if (targetSlaveCount == null) {
-			return slaves;
+			return new ArrayList<>(slaves);
 		}
 
 		if (slaves.size() < targetSlaveCount) {
 			throw new IllegalStateException(
-				"Size must not exceed the amount of slaves");
+				"Target size exceeds the number of available slaves");
 		}
 
 		if (targetSlaveCount == slaves.size()) {
-			return slaves;
+			return new ArrayList<>(slaves);
 		}
 
 		List<String> randomSlaves = new ArrayList<>(targetSlaveCount);
 
-		for (int i = 0; i < targetSlaveCount; i++) {
-			for (int j = 0; j < slaves.size(); j++) {
-				String randomSlave = getRandomString(slaves);
+		while (randomSlaves.size() < targetSlaveCount) {
+			String randomSlave = getRandomString(slaves);
 
-				if (randomSlaves.contains(randomSlave)) {
-					continue;
-				}
+			slaves.remove(randomSlave);
 
-				try {
-					InetAddress inetAddress = InetAddress.getByName(
-						randomSlave);
+			if (isReachable(randomSlave)) {
+				randomSlaves.add(randomSlave);
+			}
 
-					if (!inetAddress.isReachable(5000)) {
-						System.out.println("Could not reach " + randomSlave);
-
-						continue;
-					}
-
-					randomSlaves.add(randomSlave);
-
-					break;
-				}
-				catch (IOException ioe) {
-					System.out.println("Could not reach " + randomSlave);
-				}
+			if (slaves.isEmpty() && (randomSlaves.size() < targetSlaveCount)) {
+				throw new RuntimeException(
+					"Unable to find enough reachable slaves");
 			}
 		}
 
@@ -1457,6 +1454,23 @@ public class JenkinsResultsParserUtil {
 		if (fileAbsolutePath.startsWith(directoryAbsolutePath)) {
 			return true;
 		}
+
+		return false;
+	}
+
+	public static boolean isReachable(String hostname) {
+		try {
+			InetAddress inetAddress = InetAddress.getByName(hostname);
+
+			if (inetAddress.isReachable(5000)) {
+				return true;
+			}
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+
+		System.out.println("Could not reach " + hostname);
 
 		return false;
 	}

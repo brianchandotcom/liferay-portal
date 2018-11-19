@@ -87,8 +87,6 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 
 		super.contextInitialized(servletContextEvent);
 
-		PortletBeanFactoryCleaner.readBeans();
-
 		ApplicationContext applicationContext =
 			WebApplicationContextUtils.getWebApplicationContext(servletContext);
 

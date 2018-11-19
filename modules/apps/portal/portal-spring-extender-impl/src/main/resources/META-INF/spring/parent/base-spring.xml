@@ -11,5 +11,4 @@
 		<property name="dataSource" ref="liferayDataSource" />
 		<property name="sessionFactory" ref="liferaySessionFactory" />
 	</bean>
-	<bean class="com.liferay.portal.spring.context.PortletBeanFactoryCleaner" />
 </beans>

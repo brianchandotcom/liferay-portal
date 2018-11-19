@@ -22,13 +22,11 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.wiring.BundleWiring;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 
 /**
  * @author Miguel Pastor
  */
-public class ModuleSessionFactory
-	extends PortletSessionFactoryImpl implements ApplicationContextAware {
+public class ModuleSessionFactory extends PortletSessionFactoryImpl {
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) {

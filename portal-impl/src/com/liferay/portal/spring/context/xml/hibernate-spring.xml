@@ -10,18 +10,14 @@
 	<bean class="com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper" factory-method="createVerifySessionFactoryWrapper" id="liferaySessionFactory">
 		<constructor-arg>
 			<bean class="com.liferay.portal.dao.orm.hibernate.PortletSessionFactoryImpl">
-				<property name="sessionFactoryClassLoader" ref="portletClassLoader" />
 				<property name="sessionFactoryImplementor" ref="liferayHibernateSessionFactory" />
 			</bean>
 		</constructor-arg>
 	</bean>
 	<bean class="com.liferay.portal.spring.hibernate.PortletHibernateConfiguration" id="liferayHibernateSessionFactory">
-		<constructor-arg>
-			<ref bean="portletClassLoader" />
-		</constructor-arg>
-		<constructor-arg>
+		<property name="dataSource">
 			<ref bean="liferayDataSource" />
-		</constructor-arg>
+		</property>
 		<property name="hibernateProperties">
 			<props>
 				<prop key="javax.persistence.validation.mode">none</prop>

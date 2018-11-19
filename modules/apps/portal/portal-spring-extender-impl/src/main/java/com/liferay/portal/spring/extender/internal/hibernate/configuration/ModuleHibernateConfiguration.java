@@ -18,13 +18,12 @@ import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 
 /**
  * @author Miguel Pastor
  */
 public class ModuleHibernateConfiguration
-	extends PortletHibernateConfiguration implements ApplicationContextAware {
+	extends PortletHibernateConfiguration {
 
 	public ModuleHibernateConfiguration() {
 		this(null);

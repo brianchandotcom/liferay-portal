@@ -14,14 +14,20 @@
 
 package com.liferay.portal.spring.hibernate;
 
+import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
+
 import javax.sql.DataSource;
+
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Ganesh Ram
  */
 public class PortletHibernateConfiguration
-	extends PortalHibernateConfiguration {
+	extends PortalHibernateConfiguration implements ApplicationContextAware {
 
 	public PortletHibernateConfiguration() {
 		this(null, null);
@@ -36,6 +42,13 @@ public class PortletHibernateConfiguration
 	}
 
 	@Override
+	public void setApplicationContext(ApplicationContext applicationContext)
+		throws BeansException {
+
+		_classLoader = PortletClassLoaderUtil.getClassLoader();
+	}
+
+	@Override
 	protected ClassLoader getConfigurationClassLoader() {
 		return _classLoader;
 	}
@@ -45,6 +58,6 @@ public class PortletHibernateConfiguration
 		return new String[] {"META-INF/portlet-hbm.xml"};
 	}
 
-	private final ClassLoader _classLoader;
+	private ClassLoader _classLoader;
 
 }

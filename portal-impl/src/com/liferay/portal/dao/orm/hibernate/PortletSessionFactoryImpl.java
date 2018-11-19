@@ -19,18 +19,28 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 
 import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
 /**
  * @author Shuyang Zhou
  * @author Alexander Chow
  */
 @ProviderType
-public class PortletSessionFactoryImpl extends SessionFactoryImpl {
+public class PortletSessionFactoryImpl
+	extends SessionFactoryImpl implements ApplicationContextAware {
+
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		setSessionFactoryClassLoader(PortletClassLoaderUtil.getClassLoader());
+	}
 
 	/**
 	 * @deprecated As of Judson (7.1.x), with no direct replacement

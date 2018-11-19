@@ -36,17 +36,17 @@ import org.opensaml.saml.saml2.metadata.EntityDescriptor;
  */
 public class CachingChainingMetadataProvider extends AbstractMetadataResolver {
 
-	public void addMetadataProvider(MetadataProvider metadataProvider) {
+	public void addMetadataProvider(MetadataResolver metadataResolver) {
 		Lock lock = _readWriteLock.writeLock();
 
 		lock.lock();
 
 		try {
-			if (metadataProvider != null) {
-				metadataProvider.setRequireValidMetadata(
-					requireValidMetadata());
+			if (metadataResolver != null) {
+				metadataResolver.setRequireValidMetadata(
+					isRequireValidMetadata());
 
-				_metadataProviders.add(metadataProvider);
+				_metadataResolvers.add(metadataResolver);
 			}
 		}
 		finally {

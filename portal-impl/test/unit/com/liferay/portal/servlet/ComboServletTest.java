@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletWrapper;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceWrapper;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -96,27 +95,28 @@ public class ComboServletTest extends PowerMockito {
 	public void setUp() throws ServletException {
 		MockitoAnnotations.initMocks(this);
 
-		_portletLocalService = new PortletLocalServiceWrapper(null) {
-
-			@Override
-			public Portlet getPortletById(String portletId) {
-				if (Objects.equals(_TEST_PORTLET_ID, portletId)) {
-					return _testPortlet;
-				}
-				else if (Objects.equals(PortletKeys.PORTAL, portletId)) {
-					return _portalPortlet;
-				}
-				else if (Objects.equals(_NONEXISTING_PORTLET_ID, portletId)) {
-					return null;
-				}
-
-				return _portletUndeployed;
-			}
-
-		};
-
 		ReflectionTestUtil.setFieldValue(
-			PortletLocalServiceUtil.class, "_service", _portletLocalService);
+			PortletLocalServiceUtil.class, "_service",
+			new PortletLocalServiceWrapper(null) {
+
+				@Override
+				public Portlet getPortletById(String portletId) {
+					if (Objects.equals(_TEST_PORTLET_ID, portletId)) {
+						return _testPortlet;
+					}
+					else if (Objects.equals(PortletKeys.PORTAL, portletId)) {
+						return _portalPortlet;
+					}
+					else if (Objects.equals(
+								_NONEXISTING_PORTLET_ID, portletId)) {
+
+						return null;
+					}
+
+					return _portletUndeployed;
+				}
+
+			});
 
 		setUpComboServlet();
 
@@ -376,7 +376,6 @@ public class ComboServletTest extends PowerMockito {
 	private Portlet _portalPortlet;
 	private PortletApp _portalPortletApp;
 	private MockServletContext _portalServletContext;
-	private PortletLocalService _portletLocalService;
 	private Portlet _portletUndeployed;
 	private Portlet _testPortlet;
 	private PortletApp _testPortletApp;

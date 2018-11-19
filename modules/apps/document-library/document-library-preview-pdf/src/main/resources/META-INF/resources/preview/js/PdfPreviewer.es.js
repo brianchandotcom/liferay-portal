@@ -15,6 +15,7 @@ class PdfPreviewer extends Component {
 	 * @inheritDoc
 	 */
 	syncCurrentPage(currentPage) {
+		this.refs.imageContainer.scrollTop = 0;
 		this.previousPageDiabled = currentPage === 1;
 		this.nextPageDisabled = currentPage === this.totalPages;
 	}

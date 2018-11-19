@@ -345,7 +345,7 @@
 
 		<execute macro="Blogs#addEntryWithUploadedCoverImage">
 			<var name="coverImageName" value="Document_1" />
-			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryContent" value="Blogs Entry Content 1" />
 			<var name="entryTitle" value="Blogs Entry Title 1" />
 			<var name="navTab" value="Upload Image" />
 			<var name="uploadFileName" value="Document_1.jpg" />
@@ -362,7 +362,7 @@
 		</execute>
 
 		<execute macro="BlogsEntry#addContentWithInlineImage">
-			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryContent" value="Blogs Entry Content 2" />
 			<var name="navTab" value="Upload Image" />
 			<var name="uploadFileName" value="Document_2.jpg" />
 		</execute>
@@ -374,7 +374,7 @@
 		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
-			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryContent" value="Blogs Entry Content 3" />
 			<var name="entryTitle" value="Blogs Entry Title 3" />
 		</execute>
 
@@ -401,34 +401,34 @@
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryContent" value="Blogs Entry Content 1" />
 			<var name="entryTitle" value="Blogs Entry Title 1" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryContent" value="Blogs Entry Content 1" />
 			<var name="entryTitle" value="Blogs Entry Title 1" />
 			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryContent" value="Blogs Entry Content 2" />
 			<var name="entryTitle" value="Blogs Entry Title 2" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryContent" value="Blogs Entry Content 2" />
 			<var name="entryInlineImage" value="Document_2.jpg" />
 			<var name="entryTitle" value="Blogs Entry Title 2" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryContent" value="Blogs Entry Conten 3t" />
 			<var name="entryTitle" value="Blogs Entry Title 3" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryContent" value="Blogs Entry Content 3" />
 			<var name="entryExternalURL" value="https://www.liferay.com" />
 			<var name="entryTitle" value="Blogs Entry Title 3" />
 		</execute>
@@ -441,34 +441,34 @@
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryContent" value="Blogs Entry Content 1" />
 			<var name="entryTitle" value="Blogs Entry Title 1" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryContent" value="Blogs Entry Content 1" />
 			<var name="entryTitle" value="Blogs Entry Title 1" />
 			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryContent" value="Blogs Entry Content 2" />
 			<var name="entryTitle" value="Blogs Entry Title 2" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryContent" value="Blogs Entry Content 2" />
 			<var name="entryInlineImage" value="Document_2.jpg" />
 			<var name="entryTitle" value="Blogs Entry Title 2" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryContent" value="Blogs Entry Content 3" />
 			<var name="entryTitle" value="Blogs Entry Title 3" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryContent" value="Blogs Entry Content 3" />
 			<var name="entryExternalURL" value="https://www.liferay.com" />
 			<var name="entryTitle" value="Blogs Entry Title 3" />
 		</execute>

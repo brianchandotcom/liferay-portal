@@ -238,7 +238,7 @@ public class ValidationBuild extends BaseBuild {
 		}
 
 		if (result.equals("SUCCESSFUL")) {
-			return " :white_check_mark:";
+			return " :heavy_check_mark:";
 		}
 
 		return "";

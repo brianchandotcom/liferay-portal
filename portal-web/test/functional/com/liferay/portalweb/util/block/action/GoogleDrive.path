@@ -64,6 +64,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--GOOGLE_DOCS-->
+<tr>
+	<td>GOOGLE_DOCS_TITLE</td>
+	<td>//div/input[contains(@class,'docs-title-input')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--LIST_VIEW-->
 <tr>
 	<td>LIST_VIEW_DOCUMENT</td>

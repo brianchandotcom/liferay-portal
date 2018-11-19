@@ -1534,11 +1534,12 @@ public class JenkinsResultsParserUtil {
 
 		for (int i = 0; i < expectedJSONArray.length(); i++) {
 			Object actual = actualJSONArray.get(i);
+			Object expected = expectedJSONArray.get(i);
 
 			if (actual instanceof JSONObject) {
-				if (!isJSONObjectEqual(
-						expectedJSONArray.getJSONObject(i),
-						actualJSONArray.getJSONObject(i))) {
+				if (!(expected instanceof JSONObject) ||
+					!isJSONObjectEqual(
+						(JSONObject)expected, (JSONObject)actual)) {
 
 					return false;
 				}
@@ -1546,20 +1547,18 @@ public class JenkinsResultsParserUtil {
 				continue;
 			}
 			else if (actual instanceof JSONArray) {
-				if (!isJSONArrayEqual(
-						expectedJSONArray.getJSONArray(i),
-						actualJSONArray.getJSONArray(i))) {
+				if (!(expected instanceof JSONArray) ||
+					!isJSONArrayEqual((JSONArray)expected, (JSONArray)actual)) {
 
 					return false;
 				}
 
 				continue;
 			}
-
-			Object expected = expectedJSONArray.get(i);
-
-			if (!actual.equals(expected)) {
-				return false;
+			else {
+				if (!actual.equals(expected)) {
+					return false;
+				}
 			}
 		}
 
@@ -1579,32 +1578,27 @@ public class JenkinsResultsParserUtil {
 			}
 
 			Object actual = actualJSONObject.get(name);
-
-			if (actual instanceof JSONObject) {
-				if (!isJSONObjectEqual(
-						expectedJSONObject.getJSONObject(name),
-						actualJSONObject.getJSONObject(name))) {
-
-					return false;
-				}
-
-				continue;
-			}
-			else if (actual instanceof JSONArray) {
-				if (!isJSONArrayEqual(
-						expectedJSONObject.getJSONArray(name),
-						actualJSONObject.getJSONArray(name))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			Object expected = expectedJSONObject.get(name);
 
-			if (!actual.equals(expected)) {
-				return false;
+			if (actual instanceof JSONObject) {
+				if (!(expected instanceof JSONObject) ||
+					!isJSONObjectEqual(
+						(JSONObject)expected, (JSONObject)actual)) {
+
+					return false;
+				}
+			}
+			else if (actual instanceof JSONArray) {
+				if (!(expected instanceof JSONArray) ||
+					!isJSONArrayEqual((JSONArray)expected, (JSONArray)actual)) {
+
+					return false;
+				}
+			}
+			else {
+				if (!actual.equals(expected)) {
+					return false;
+				}
 			}
 		}
 

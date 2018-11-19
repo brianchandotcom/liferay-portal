@@ -14,13 +14,7 @@
 
 package com.liferay.portal.spring.context;
 
-import java.util.Map;
-
-import org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator;
-import org.springframework.beans.factory.BeanFactoryAware;
-import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
-import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 
 /**
@@ -36,40 +30,6 @@ public class PortletBeanFactoryPostProcessor
 		ClassLoader classLoader = getClassLoader();
 
 		configurableListableBeanFactory.setBeanClassLoader(classLoader);
-
-		ListableBeanFactory parentListableBeanFactory =
-			(ListableBeanFactory)
-				configurableListableBeanFactory.getParentBeanFactory();
-
-		if (parentListableBeanFactory != null) {
-			Map<String, BeanPostProcessor> beanPostProcessors =
-				parentListableBeanFactory.getBeansOfType(
-					BeanPostProcessor.class, true, false);
-
-			for (BeanPostProcessor beanPostProcessor :
-					beanPostProcessors.values()) {
-
-				if (beanPostProcessor instanceof BeanFactoryAware) {
-					BeanFactoryAware beanFactoryAware =
-						(BeanFactoryAware)beanPostProcessor;
-
-					beanFactoryAware.setBeanFactory(
-						configurableListableBeanFactory);
-				}
-
-				if (beanPostProcessor instanceof
-						AbstractAutoProxyCreator) {
-
-					AbstractAutoProxyCreator abstractAutoProxyCreator =
-						(AbstractAutoProxyCreator)beanPostProcessor;
-
-					abstractAutoProxyCreator.setProxyClassLoader(classLoader);
-				}
-
-				configurableListableBeanFactory.addBeanPostProcessor(
-					beanPostProcessor);
-			}
-		}
 	}
 
 	protected ClassLoader getClassLoader() {

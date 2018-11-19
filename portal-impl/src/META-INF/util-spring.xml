@@ -311,14 +311,6 @@
 			<bean class="com.liferay.portal.spring.hibernate.LastSessionRecorderHelperImpl" />
 		</property>
 	</bean>
-	<bean class="com.liferay.portal.spring.util.SpringFactoryImpl" id="com.liferay.portal.kernel.spring.util.SpringFactory">
-		<property name="beanDefinitions">
-			<map />
-		</property>
-	</bean>
-	<bean class="com.liferay.portal.kernel.spring.util.SpringFactoryUtil" id="com.liferay.portal.kernel.spring.util.SpringFactoryUtil">
-		<property name="springFactory" ref="com.liferay.portal.kernel.spring.util.SpringFactory" />
-	</bean>
 	<bean class="com.liferay.portal.kernel.theme.PortletDecoratorFactoryUtil" id="com.liferay.portal.kernel.theme.PortletDecoratorFactoryUtil">
 		<property name="portletDecoratorFactory">
 			<bean class="com.liferay.portal.theme.PortletDecoratorFactoryImpl" />

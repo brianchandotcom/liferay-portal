@@ -14,13 +14,10 @@
 
 package com.liferay.portal.spring.context;
 
-import com.liferay.portal.kernel.spring.util.SpringFactoryUtil;
-
 import java.util.Map;
 
 import org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator;
 import org.springframework.beans.factory.BeanFactoryAware;
-import org.springframework.beans.factory.BeanIsAbstractException;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -71,27 +68,6 @@ public class PortletBeanFactoryPostProcessor
 
 				configurableListableBeanFactory.addBeanPostProcessor(
 					beanPostProcessor);
-			}
-		}
-
-		String[] names =
-			configurableListableBeanFactory.getBeanDefinitionNames();
-
-		for (String name : names) {
-			if (!name.contains(SpringFactoryUtil.class.getName())) {
-				continue;
-			}
-
-			try {
-				Object bean = configurableListableBeanFactory.getBean(name);
-
-				if (bean instanceof BeanPostProcessor) {
-					configurableListableBeanFactory.addBeanPostProcessor(
-						(BeanPostProcessor)bean);
-				}
-			}
-			catch (BeanIsAbstractException biae) {
-				continue;
 			}
 		}
 	}

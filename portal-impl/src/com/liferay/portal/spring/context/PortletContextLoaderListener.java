@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
+import com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor;
 
 import java.lang.reflect.Method;
 
@@ -146,6 +147,12 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 						contextClosedEvent.getApplicationContext());
 				}
 			});
+
+		configurableWebApplicationContext.addBeanFactoryPostProcessor(
+			configurableListableBeanFactory ->
+				configurableListableBeanFactory.addBeanPostProcessor(
+					new BeanReferenceAnnotationBeanPostProcessor(
+						configurableListableBeanFactory)));
 
 		ConfigurableApplicationContextConfigurator
 			configurableApplicationContextConfigurator =

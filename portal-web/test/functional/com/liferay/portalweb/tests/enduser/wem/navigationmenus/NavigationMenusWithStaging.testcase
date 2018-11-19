@@ -191,7 +191,15 @@
 			<var name="siteURLKey" value="test-site-name-staging" />
 		</execute>
 
-		<execute macro="Staging#publishCustomPublication" />
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute function="Check" locator1="StagingPublishToLive#DELETIONS_REPLICATE_INDIVIDUAL_DELETIONS_CHECKBOX" />
+
+		<execute function="AssertClickNoError" locator1="Staging#STAGING_PUBLISH_TO_LIVE_BUTTON" value1="Publish to Live" />
+
+		<execute function="Pause" locator1="30000" />
+
+		<execute function="AssertTextEquals" locator1="Staging#PROCESS_RESULT" value1="SUCCESSFUL" />
 
 		<execute macro="Navigator#openWithAppendToBaseURL">
 			<var name="urlAppend" value="web/test-site-name" />
@@ -307,7 +315,15 @@
 			<var name="siteURLKey" value="test-site-name-staging" />
 		</execute>
 
-		<execute macro="Staging#publishCustomPublication" />
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute function="Check" locator1="StagingPublishToLive#DELETIONS_REPLICATE_INDIVIDUAL_DELETIONS_CHECKBOX" />
+
+		<execute function="AssertClickNoError" locator1="Staging#STAGING_PUBLISH_TO_LIVE_BUTTON" value1="Publish to Live" />
+
+		<execute function="Pause" locator1="30000" />
+
+		<execute function="AssertTextEquals" locator1="Staging#PROCESS_RESULT" value1="SUCCESSFUL" />
 
 		<execute macro="Navigator#openWithAppendToBaseURL">
 			<var name="urlAppend" value="web/test-site-name" />

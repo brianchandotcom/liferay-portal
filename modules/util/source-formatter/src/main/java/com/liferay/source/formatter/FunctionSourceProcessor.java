@@ -48,6 +48,7 @@ public class FunctionSourceProcessor extends BaseSourceProcessor {
 		return super.format(file, fileName, absolutePath, content);
 	}
 
-	private static final String[] _INCLUDES = {"**/*.function"};
+	private static final String[] _INCLUDES =
+		{"**/*.function", "**/*.macro", "**/*.testcase"};
 
 }

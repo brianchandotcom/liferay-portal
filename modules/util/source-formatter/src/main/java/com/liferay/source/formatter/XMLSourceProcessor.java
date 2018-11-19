@@ -51,7 +51,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (fileName.endsWith(".function") && !SourceUtil.isXML(content)) {
+		if ((fileName.endsWith(".function") || fileName.endsWith(".macro") ||
+			 fileName.endsWith(".testcase")) &&
+			!SourceUtil.isXML(content)) {
+
 			return file;
 		}
 

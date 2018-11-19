@@ -179,7 +179,7 @@ public class JenkinsResultsParserUtilTest
 		if (!JenkinsResultsParserUtil.isJSONArrayEqual(
 				actualJSONArray, expectedJSONArray)) {
 
-			Assert.fail(
+			failTest(
 				JenkinsResultsParserUtil.combine(
 					"Expected does not match actual\nexpected: ",
 					expectedJSONArray.toString(), "\nactual:   ",
@@ -191,7 +191,7 @@ public class JenkinsResultsParserUtilTest
 		if (JenkinsResultsParserUtil.isJSONArrayEqual(
 				actualJSONArray, expectedJSONArray)) {
 
-			Assert.fail(
+			failTest(
 				JenkinsResultsParserUtil.combine(
 					"Expected should not match actual\nexpected: ",
 					expectedJSONArray.toString(), "\nactual:   ",
@@ -237,7 +237,7 @@ public class JenkinsResultsParserUtilTest
 		if (!JenkinsResultsParserUtil.isJSONObjectEqual(
 				actualJSONObject, expectedJSONObject)) {
 
-			Assert.fail(
+			failTest(
 				JenkinsResultsParserUtil.combine(
 					"Expected does not match actual\nexpected: ",
 					expectedJSONObject.toString(), "\nactual:   ",
@@ -249,7 +249,7 @@ public class JenkinsResultsParserUtilTest
 		if (JenkinsResultsParserUtil.isJSONObjectEqual(
 				actualJSONObject, expectedJSONObject)) {
 
-			Assert.fail(
+			failTest(
 				JenkinsResultsParserUtil.combine(
 					"Expected should not match actual\nexpected: ",
 					expectedJSONObject.toString(), "\nactual:   ",

@@ -83,6 +83,32 @@ public class ComboServletTest extends PowerMockito {
 		_portal = PortalUtil.getPortal();
 
 		_portalUtil.setPortal(new PortalImpl());
+
+		ReflectionTestUtil.setFieldValue(
+			PrefsPropsUtil.class, "_portalPreferencesLocalService",
+			new PortalPreferencesLocalServiceWrapper(null) {
+
+				@Override
+				public PortletPreferences getPreferences(
+					long ownerId, int ownerType) {
+
+					return new PortalPreferencesWrapper(null) {
+
+						@Override
+						public String getValue(String key, String def) {
+							if (PropsKeys.COMBO_ALLOWED_FILE_EXTENSIONS.equals(
+									key)) {
+
+								return ".css,.js";
+							}
+
+							return null;
+						}
+
+					};
+				}
+
+			});
 	}
 
 	@AfterClass
@@ -136,32 +162,6 @@ public class ComboServletTest extends PowerMockito {
 			}
 
 		};
-
-		ReflectionTestUtil.setFieldValue(
-			PrefsPropsUtil.class, "_portalPreferencesLocalService",
-			new PortalPreferencesLocalServiceWrapper(null) {
-
-				@Override
-				public PortletPreferences getPreferences(
-					long ownerId, int ownerType) {
-
-					return new PortalPreferencesWrapper(null) {
-
-						@Override
-						public String getValue(String key, String def) {
-							if (PropsKeys.COMBO_ALLOWED_FILE_EXTENSIONS.equals(
-									key)) {
-
-								return ".css,.js";
-							}
-
-							return null;
-						}
-
-					};
-				}
-
-			});
 
 		_mockHttpServletRequest = new MockHttpServletRequest();
 

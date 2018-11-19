@@ -38,6 +38,7 @@ import org.apache.commons.lang.time.StopWatch;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -45,23 +46,8 @@ import org.junit.Test;
  */
 public class LayoutListUtilTest {
 
-	@Before
-	public void setUp() throws Exception {
-		addLayouts(0, 0);
-
-		ReflectionTestUtil.setFieldValue(
-			LayoutLocalServiceUtil.class, "_service",
-			new LayoutLocalServiceWrapper(null) {
-
-				@Override
-				public List<Layout> getLayouts(
-					long groupId, boolean privateLayout) {
-
-					return _layouts;
-				}
-
-			});
-
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		LocalizationUtil localizationUtil = new LocalizationUtil();
 
 		localizationUtil.setLocalization(new LocalizationImpl());
@@ -79,6 +65,24 @@ public class LayoutListUtilTest {
 				@Override
 				public String[] getArray(String key) {
 					return new String[0];
+				}
+
+			});
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		addLayouts(0, 0);
+
+		ReflectionTestUtil.setFieldValue(
+			LayoutLocalServiceUtil.class, "_service",
+			new LayoutLocalServiceWrapper(null) {
+
+				@Override
+				public List<Layout> getLayouts(
+					long groupId, boolean privateLayout) {
+
+					return _layouts;
 				}
 
 			});

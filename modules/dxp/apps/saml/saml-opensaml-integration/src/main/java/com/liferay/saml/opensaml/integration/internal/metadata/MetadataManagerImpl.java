@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataProvider;
+import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataResolver;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.opensaml.integration.metadata.MetadataManager;
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
@@ -220,7 +220,7 @@ public class MetadataManagerImpl
 	}
 
 	@Override
-	public MetadataProvider getMetadataProvider() throws SamlException {
+	public MetadataResolver getMetadataResolver() throws SamlException {
 		return _cachingChainingMetadataProvider;
 	}
 
@@ -590,9 +590,9 @@ public class MetadataManagerImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		MetadataManagerImpl.class);
 
-	private final CachingChainingMetadataProvider
+	private final CachingChainingMetadataResolver
 		_cachingChainingMetadataProvider =
-			new CachingChainingMetadataProvider();
+			new CachingChainingMetadataResolver();
 	private CredentialResolver _credentialResolver;
 	private Http _http;
 	private ParserPool _parserPool;

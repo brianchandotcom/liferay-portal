@@ -54,8 +54,6 @@ import java.util.Set;
 public abstract class Baseline {
 
 	public boolean execute() throws Exception {
-		boolean match = true;
-
 		_headerPrinted = false;
 		_printWriter = null;
 
@@ -98,7 +96,7 @@ public abstract class Baseline {
 
 		try {
 			if (oldJar == null) {
-				return match;
+				return true;
 			}
 
 			aQute.bnd.differ.Baseline baseline = new aQute.bnd.differ.Baseline(
@@ -116,7 +114,7 @@ public abstract class Baseline {
 				newJar, oldJar, new Instructions(packageFilter));
 
 			if (infos.isEmpty()) {
-				return match;
+				return true;
 			}
 
 			BundleInfo bundleInfo = baseline.getBundleInfo();
@@ -137,13 +135,6 @@ public abstract class Baseline {
 				bundleInfo.mismatch = true;
 			}
 
-			if (bundleInfo.mismatch) {
-				match = false;
-
-				updateBundleVersion(
-					bundleInfo.newerVersion, bundleInfo.suggestedVersion);
-			}
-
 			Info[] infosArray = infos.toArray(new Info[infos.size()]);
 
 			Arrays.sort(
@@ -157,11 +148,11 @@ public abstract class Baseline {
 
 				});
 
-			doHeader(bundleInfo);
+			Set<String> mismatchPackageNames = new HashSet<>();
 
 			for (Info info : infosArray) {
 				if (info.mismatch) {
-					match = false;
+					mismatchPackageNames.add(info.packageName);
 				}
 
 				Diff packageDiff = info.packageDiff;
@@ -189,7 +180,7 @@ public abstract class Baseline {
 
 				if (suggestedVersion != null) {
 					if (newerVersion.compareTo(suggestedVersion) > 0) {
-						match = false;
+						mismatchPackageNames.add(info.packageName);
 
 						warnings = _WARNING_EXCESSIVE_VERSION_INCREASE;
 					}
@@ -221,7 +212,7 @@ public abstract class Baseline {
 				}
 
 				if (isIgnoredWarnings(newJar, info, delta, warnings)) {
-					match = true;
+					mismatchPackageNames.remove(info.packageName);
 
 					continue;
 				}
@@ -253,6 +244,21 @@ public abstract class Baseline {
 					doPackageDiff(packageDiff);
 				}
 			}
+
+			if (mismatchPackageNames.isEmpty()) {
+				return true;
+			}
+
+			Version newVersion = bundleInfo.suggestedVersion;
+			Version oldVersion = bundleInfo.newerVersion;
+
+			updateBundleVersion(oldVersion, newVersion);
+
+			reportBundleVersion(bundleInfo);
+
+			reportMode();
+
+			return false;
 		}
 		finally {
 			log(baselineProcessor);
@@ -268,8 +274,6 @@ public abstract class Baseline {
 				_printWriter.close();
 			}
 		}
-
-		return match;
 	}
 
 	public Properties getProperties() {
@@ -394,35 +398,6 @@ public abstract class Baseline {
 		}
 
 		sb.deleteCharAt(sb.length() - 1);
-	}
-
-	protected void doHeader(BundleInfo bundleInfo) throws IOException {
-		if (!bundleInfo.mismatch) {
-			return;
-		}
-
-		String output = "[Baseline Report] Mode: ";
-
-		if (_reportDiff) {
-			output += "diff";
-		}
-		else {
-			output += "standard";
-		}
-
-		if (_logFile != null) {
-			output += " (persisted)";
-		}
-
-		log(output);
-
-		output =
-			"[Baseline Warning] Bundle Version Change Recommended: " +
-				bundleInfo.suggestedVersion;
-
-		log(output);
-
-		persistLog(output);
 	}
 
 	protected void doInfo(BundleInfo bundleInfo, Info info, String warnings)
@@ -702,6 +677,18 @@ public abstract class Baseline {
 		_printWriter.println(output);
 	}
 
+	protected void reportBundleVersion(BundleInfo bundleInfo)
+		throws IOException {
+
+		String output =
+			"[Baseline Warning] Bundle Version Change Recommended: " +
+				bundleInfo.suggestedVersion;
+
+		log(output);
+
+		persistLog(output);
+	}
+
 	protected void reportLog(
 			String string1, String string2, String string3, String string4,
 			String string5, String string6, String string7, String string8)
@@ -714,6 +701,23 @@ public abstract class Baseline {
 		log(output);
 
 		persistLog(output);
+	}
+
+	protected void reportMode() {
+		String output = "[Baseline Report] Mode: ";
+
+		if (_reportDiff) {
+			output += "diff";
+		}
+		else {
+			output += "standard";
+		}
+
+		if (_logFile != null) {
+			output += " (persisted)";
+		}
+
+		log(output);
 	}
 
 	protected void updateBundleVersion(Version oldVersion, Version newVersion)

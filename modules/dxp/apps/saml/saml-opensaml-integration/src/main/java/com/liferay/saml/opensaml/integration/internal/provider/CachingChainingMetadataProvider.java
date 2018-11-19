@@ -14,42 +14,22 @@
 
 package com.liferay.saml.opensaml.integration.internal.provider;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import javax.xml.namespace.QName;
+import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
+import net.shibboleth.utilities.java.support.resolver.ResolverException;
 
-import org.joda.time.DateTime;
-
-import org.opensaml.saml2.common.Extensions;
-import org.opensaml.saml2.metadata.EntitiesDescriptor;
-import org.opensaml.saml2.metadata.EntityDescriptor;
-import org.opensaml.saml2.metadata.RoleDescriptor;
-import org.opensaml.saml2.metadata.provider.BaseMetadataProvider;
-import org.opensaml.saml2.metadata.provider.MetadataProvider;
-import org.opensaml.saml2.metadata.provider.MetadataProviderException;
-import org.opensaml.xml.Namespace;
-import org.opensaml.xml.NamespaceManager;
-import org.opensaml.xml.XMLObject;
-import org.opensaml.xml.schema.XSBooleanValue;
-import org.opensaml.xml.signature.Signature;
-import org.opensaml.xml.util.IDIndex;
-import org.opensaml.xml.util.LazySet;
-import org.opensaml.xml.validation.Validator;
-
-import org.w3c.dom.Element;
+import org.opensaml.saml.metadata.resolver.MetadataResolver;
+import org.opensaml.saml.metadata.resolver.impl.AbstractMetadataResolver;
+import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 
 /**
  * @author Mika Koivisto

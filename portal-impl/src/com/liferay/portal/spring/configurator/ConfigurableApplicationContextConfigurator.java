@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.spring.context;
+package com.liferay.portal.spring.configurator;
 
 import org.springframework.context.ConfigurableApplicationContext;
 

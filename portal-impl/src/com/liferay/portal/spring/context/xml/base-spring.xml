@@ -14,5 +14,4 @@
 	<bean class="com.liferay.portal.kernel.portlet.PortletClassLoaderUtil" factory-method="getClassLoader" id="portletClassLoader" />
 	<bean class="com.liferay.portal.kernel.portlet.PortletClassLoaderUtil" factory-method="getServletContextName" id="servletContextName" />
 	<bean class="com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor" />
-	<bean class="com.liferay.portal.spring.context.ServiceBeanPublisher" />
 </beans>

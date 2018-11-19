@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 
 import java.lang.reflect.Method;
 
@@ -67,6 +68,11 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 			}
 		}
 
+		ApplicationContext applicationContext =
+			WebApplicationContextUtils.getWebApplicationContext(servletContext);
+
+		ModuleFrameworkUtilAdapter.unregisterContext(applicationContext);
+
 		super.contextDestroyed(servletContextEvent);
 	}
 
@@ -89,6 +95,8 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 
 		ApplicationContext applicationContext =
 			WebApplicationContextUtils.getWebApplicationContext(servletContext);
+
+		ModuleFrameworkUtilAdapter.registerContext(applicationContext);
 
 		BeanLocatorImpl beanLocatorImpl = new BeanLocatorImpl(
 			classLoader, applicationContext);

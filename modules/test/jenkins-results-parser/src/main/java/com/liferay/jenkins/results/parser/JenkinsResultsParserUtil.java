@@ -1231,6 +1231,10 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String getRandomString(Collection<String> collection) {
+		if ((collection == null) || collection.isEmpty()) {
+			throw new IllegalArgumentException("Collection is null or empty");
+		}
+
 		int randomIndex = getRandomValue(0, collection.size() - 1);
 
 		Iterator<String> iterator = collection.iterator();

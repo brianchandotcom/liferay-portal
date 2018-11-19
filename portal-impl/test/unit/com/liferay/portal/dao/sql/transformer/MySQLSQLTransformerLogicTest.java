@@ -15,7 +15,6 @@
 package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.portal.dao.db.MySQLDB;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,7 +26,15 @@ public class MySQLSQLTransformerLogicTest
 	extends BaseSQLTransformerLogicTestCase {
 
 	public MySQLSQLTransformerLogicTest() {
-		super(_getCaseInsensitiveMySQLDB());
+		super(
+			new MySQLDB(5, 7) {
+
+				@Override
+				public boolean isSupportsStringCaseSensitiveQuery() {
+					return false;
+				}
+
+			});
 	}
 
 	@Test
@@ -116,15 +123,6 @@ public class MySQLSQLTransformerLogicTest
 	@Override
 	protected String getNullDateTransformedSQL() {
 		return "select NULL from Foo";
-	}
-
-	private static MySQLDB _getCaseInsensitiveMySQLDB() {
-		MySQLDB mySQLDB = new MySQLDB(5, 7);
-
-		ReflectionTestUtil.setFieldValue(
-			mySQLDB, "_supportsStringCaseSensitiveQuery", false);
-
-		return mySQLDB;
 	}
 
 }

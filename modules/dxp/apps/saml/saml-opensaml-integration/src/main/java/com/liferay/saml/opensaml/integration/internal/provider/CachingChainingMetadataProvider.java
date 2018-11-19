@@ -55,24 +55,24 @@ public class CachingChainingMetadataProvider extends AbstractMetadataResolver {
 	}
 
 	@Override
-	public void destroy() {
+	public void doDestroy() {
 		Lock lock = _readWriteLock.writeLock();
 
 		lock.lock();
 
 		try {
-			_metadataProvidersMap.clear();
+			_metadataResolversMap.clear();
 
-			for (MetadataProvider metadataProvider : _metadataProviders) {
-				if (metadataProvider instanceof BaseMetadataProvider) {
-					BaseMetadataProvider baseMetadataProvider =
-						(BaseMetadataProvider)metadataProvider;
+			for (MetadataResolver metadataProvider : _metadataResolvers) {
+				if (metadataProvider instanceof AbstractMetadataResolver) {
+					AbstractMetadataResolver baseMetadataProvider =
+						(AbstractMetadataResolver)metadataProvider;
 
 					baseMetadataProvider.destroy();
 				}
 			}
 
-			_metadataProviders.clear();
+			_metadataResolvers.clear();
 		}
 		finally {
 			lock.unlock();

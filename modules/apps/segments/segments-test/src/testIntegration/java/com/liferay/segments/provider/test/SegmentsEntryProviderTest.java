@@ -27,6 +27,9 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.segments.criteria.Criteria;
+import com.liferay.segments.criteria.CriteriaSerializer;
+import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.provider.SegmentsEntryProvider;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -61,9 +64,15 @@ public class SegmentsEntryProviderTest {
 		_user1 = UserTestUtil.addUser(_group.getGroupId());
 		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
-		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(),
+		Criteria criteria = new Criteria();
+
+		_segmentsCriteriaContributor.contribute(
+			criteria,
 			String.format("(firstName eq '%s')", _user1.getFirstName()),
+			Criteria.Conjunction.AND);
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
 			User.class.getName());
 
 		int segmentsEntryClassPksCount =
@@ -112,18 +121,30 @@ public class SegmentsEntryProviderTest {
 		_user1 = UserTestUtil.addUser(_group.getGroupId());
 		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
+		Criteria criteria1 = new Criteria();
+
+		_segmentsCriteriaContributor.contribute(
+			criteria1,
+			String.format("(firstName eq '%s')", _user1.getFirstName()),
+			Criteria.Conjunction.AND);
+
 		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId(), User.class.getName(), _user1.getUserId());
 		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(),
-			String.format("(firstName eq '%s')", _user1.getFirstName()),
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria1),
 			User.class.getName());
+
+		Criteria criteria2 = new Criteria();
+
+		_segmentsCriteriaContributor.contribute(
+			criteria2,
+			String.format("(firstName eq '%s')", _user2.getFirstName()),
+			Criteria.Conjunction.AND);
 
 		SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId(), User.class.getName(), _user2.getUserId());
 		SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(),
-			String.format("(firstName eq '%s')", _user2.getFirstName()),
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria2),
 			User.class.getName());
 
 		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
@@ -142,6 +163,12 @@ public class SegmentsEntryProviderTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject(
+		filter = "segments.criteria.contributor.key=entity-model",
+		type = SegmentsCriteriaContributor.class
+	)
+	private SegmentsCriteriaContributor _segmentsCriteriaContributor;
 
 	@Inject
 	private SegmentsEntryLocalService _segmentsEntryLocalService;

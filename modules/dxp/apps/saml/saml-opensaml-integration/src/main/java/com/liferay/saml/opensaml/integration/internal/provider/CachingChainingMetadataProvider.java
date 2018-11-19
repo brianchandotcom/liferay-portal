@@ -78,15 +78,15 @@ public class CachingChainingMetadataProvider extends AbstractMetadataResolver {
 		}
 	}
 
-	public void removeMetadataProvider(MetadataProvider metadataProvider) {
+	public void removeMetadataProvider(MetadataResolver metadataProvider) {
 		Lock lock = _readWriteLock.writeLock();
 
 		lock.lock();
 
 		try {
-			_metadataProvidersMap.clear();
+			_metadataResolvers.remove(metadataProvider);
 
-			_metadataProviders.remove(metadataProvider);
+			_metadataResolversMap.clear();
 		}
 		finally {
 			lock.unlock();

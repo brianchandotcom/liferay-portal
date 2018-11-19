@@ -14,16 +14,19 @@
 
 package com.liferay.saml.opensaml.integration.internal.binding;
 
-import com.liferay.saml.opensaml.integration.internal.transport.HttpClientOutTransport;
+import java.io.IOException;
 
+import org.apache.http.HttpRequest;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.impl.client.HttpClients;
 
-import org.opensaml.saml2.binding.encoding.HTTPSOAP11Encoder;
-import org.opensaml.ws.message.MessageContext;
-import org.opensaml.ws.message.encoder.MessageEncodingException;
-import org.opensaml.ws.transport.OutTransport;
+import org.opensaml.messaging.context.MessageContext;
+import org.opensaml.messaging.context.httpclient.HttpClientRequestContext;
+import org.opensaml.messaging.encoder.MessageEncodingException;
+import org.opensaml.saml.common.SAMLObject;
+import org.opensaml.saml.saml2.binding.encoding.impl.HTTPSOAP11Encoder;
 
 /**
  * @author Mika Koivisto
@@ -39,25 +42,25 @@ public class HttpSoap11Encoder extends HTTPSOAP11Encoder {
 	}
 
 	@Override
-	public void encode(MessageContext messageContext)
-		throws MessageEncodingException {
+	public void encode() throws MessageEncodingException {
+		super.encode();
 
-		super.encode(messageContext);
+		MessageContext<SAMLObject> messageContext = getMessageContext();
 
-		OutTransport outTransport =
-			messageContext.getOutboundMessageTransport();
+		HttpClientRequestContext httpClientRequestContext =
+			messageContext.getSubcontext(HttpClientRequestContext.class, false);
 
-		if (outTransport instanceof HttpClientOutTransport) {
-			HttpClientOutTransport httpClientTransport =
-				(HttpClientOutTransport)outTransport;
+		if (httpClientRequestContext != null) {
+			HttpClientContext httpClientContext =
+				httpClientRequestContext.getHttpClientContext();
 
-			HttpPost httpPost = httpClientTransport.getHttpPost();
+			HttpRequest httpRequest = httpClientContext.getRequest();
 
 			try {
-				_httpClient.execute(httpPost);
+				_httpClient.execute((HttpUriRequest)httpRequest);
 			}
-			catch (Exception e) {
-				throw new MessageEncodingException(e);
+			catch (IOException ioe) {
+				throw new MessageEncodingException(ioe);
 			}
 		}
 	}

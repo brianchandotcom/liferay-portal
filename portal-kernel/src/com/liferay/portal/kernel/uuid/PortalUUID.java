@@ -14,14 +14,9 @@
 
 package com.liferay.portal.kernel.uuid;
 
-import aQute.bnd.annotation.ProviderType;
-
-import java.util.List;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public interface PortalUUID {
 
 	public String fromJsSafeUuid(String jsSafeUuid);
@@ -29,8 +24,6 @@ public interface PortalUUID {
 	public String generate();
 
 	public String generate(byte[] bytes);
-
-	public List<String> getUuids(String s);
 
 	public String toJsSafeUuid(String uuid);
 

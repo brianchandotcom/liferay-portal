@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.uuid;
 
-import java.util.List;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
@@ -36,10 +34,6 @@ public class PortalUUIDUtil {
 
 	public static PortalUUID getPortalUUID() {
 		return _portalUUID;
-	}
-
-	public static List<String> getUuids(String s) {
-		return getPortalUUID().getUuids(s);
 	}
 
 	public static String toJsSafeUuid(String uuid) {

@@ -20,11 +20,7 @@ import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Brian Wing Shun Chan
@@ -53,26 +49,9 @@ public class PortalUUIDImpl implements PortalUUID {
 	}
 
 	@Override
-	public List<String> getUuids(String s) {
-		List<String> uuids = new ArrayList<>();
-
-		Matcher matcher = _uuidPattern.matcher(s);
-
-		while (matcher.find()) {
-			uuids.add(matcher.group(0));
-		}
-
-		return uuids;
-	}
-
-	@Override
 	public String toJsSafeUuid(String uuid) {
 		return StringUtil.replace(
 			uuid, CharPool.DASH, StringPool.DOUBLE_UNDERLINE);
 	}
-
-	private static final Pattern _uuidPattern = Pattern.compile(
-		"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-" +
-			"[a-fA-F0-9]{12}");
 
 }

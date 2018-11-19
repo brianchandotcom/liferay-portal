@@ -1,3 +1,4 @@
+import {DROP_TARGET_TYPES} from './LayoutDragDrop.es';
 import {
 	getColumnActiveItem,
 	getHomeItem,
@@ -64,16 +65,21 @@ function clearPath(
 	layoutColumns,
 	sourceItem,
 	sourceItemColumnIndex,
-	targetItemPlid
+	targetId,
+	targetType
 ) {
 	let nextLayoutColumns = layoutColumns.map(
 		(layoutColumn) => [...layoutColumn]
 	);
 
-	const targetColumnIndex = getItemColumnIndex(
-		nextLayoutColumns,
-		targetItemPlid
-	);
+	let targetColumnIndex = targetId;
+
+	if (targetType === DROP_TARGET_TYPES.item) {
+		targetColumnIndex = getItemColumnIndex(
+			nextLayoutColumns,
+			targetId
+		);
+	}
 
 	if (
 		sourceItem &&

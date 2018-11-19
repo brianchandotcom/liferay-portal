@@ -255,6 +255,14 @@ class Layout extends Component {
 			let priority = null;
 
 			if (targetType === DROP_TARGET_TYPES.column) {
+				layoutColumns = clearPath(
+					layoutColumns,
+					this._draggingItem,
+					this._draggingItemColumnIndex,
+					targetId,
+					targetType
+				);
+
 				const dropData = dropItemInsideColumn(
 					layoutColumns,
 					this._draggingItem,
@@ -272,7 +280,8 @@ class Layout extends Component {
 					layoutColumns,
 					this._draggingItem,
 					this._draggingItemColumnIndex,
-					targetId
+					targetId,
+					targetType
 				);
 
 				if (this._draggingItemPosition === DRAG_POSITIONS.inside) {

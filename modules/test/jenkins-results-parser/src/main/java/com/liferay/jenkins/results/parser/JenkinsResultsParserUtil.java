@@ -1289,12 +1289,13 @@ public class JenkinsResultsParserUtil {
 	public static List<String> getSlaves(
 		Properties buildProperties, String jenkinsMasterPatternString) {
 
-		return getSlaves(buildProperties, jenkinsMasterPatternString, null);
+		return getSlaves(
+			buildProperties, jenkinsMasterPatternString, null, false);
 	}
 
 	public static List<String> getSlaves(
 		Properties buildProperties, String jenkinsMasterPatternString,
-		Integer targetSlaveCount) {
+		Integer targetSlaveCount, boolean validate) {
 
 		Set<String> slaves = new LinkedHashSet<>();
 
@@ -1317,6 +1318,10 @@ public class JenkinsResultsParserUtil {
 		}
 
 		if (targetSlaveCount == null) {
+			if (!validate) {
+				return new ArrayList<>(slaves);
+			}
+
 			targetSlaveCount = slaves.size();
 		}
 
@@ -1332,7 +1337,7 @@ public class JenkinsResultsParserUtil {
 
 			slaves.remove(randomSlave);
 
-			if (isReachable(randomSlave)) {
+			if (!validate || isReachable(randomSlave)) {
 				randomSlaves.add(randomSlave);
 			}
 

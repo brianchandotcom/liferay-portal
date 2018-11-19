@@ -36,6 +36,8 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.segments.criteria.Criteria" %><%@
+page import="com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor" %><%@
 page import="com.liferay.segments.exception.NoSuchEntryException" %><%@
 page import="com.liferay.segments.exception.SegmentsEntryCriteriaException" %><%@
 page import="com.liferay.segments.exception.SegmentsEntryKeyException" %><%@
@@ -45,6 +47,8 @@ page import="com.liferay.segments.web.internal.display.context.EditSegmentsEntry
 page import="com.liferay.segments.web.internal.display.context.SegmentsDisplayContext" %><%@
 page import="com.liferay.segments.web.internal.display.context.SelectSegmentsEntryOrganizationsDisplayContext" %><%@
 page import="com.liferay.segments.web.internal.display.context.SelectSegmentsEntryUsersDisplayContext" %>
+
+<%@ page import="java.util.List" %>
 
 <liferay-frontend:defineObjects />
 

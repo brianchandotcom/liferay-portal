@@ -118,7 +118,8 @@ public class JournalArticleAssetDisplayContributor
 			FileEntry fileEntry = _dlAppService.getFileEntryByUuidAndGroupId(
 				uuid, groupId);
 
-			return DLUtil.getImagePreviewURL(fileEntry, null);
+			return DLUtil.getDownloadURL(
+				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK);
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {

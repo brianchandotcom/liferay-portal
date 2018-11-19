@@ -398,35 +398,6 @@ public abstract class Baseline {
 		sb.deleteCharAt(sb.length() - 1);
 	}
 
-	protected void reportMode() {
-		String output = "[Baseline Report] Mode: ";
-
-		if (_reportDiff) {
-			output += "diff";
-		}
-		else {
-			output += "standard";
-		}
-
-		if (_logFile != null) {
-			output += " (persisted)";
-		}
-
-		log(output);
-	}
-
-	protected void reportBundleVersion(BundleInfo bundleInfo)
-		throws IOException {
-
-		String output =
-			"[Baseline Warning] Bundle Version Change Recommended: " +
-				bundleInfo.suggestedVersion;
-
-		log(output);
-
-		persistLog(output);
-	}
-
 	protected void doInfo(BundleInfo bundleInfo, Info info, String warnings)
 		throws IOException {
 
@@ -704,6 +675,18 @@ public abstract class Baseline {
 		_printWriter.println(output);
 	}
 
+	protected void reportBundleVersion(BundleInfo bundleInfo)
+		throws IOException {
+
+		String output =
+			"[Baseline Warning] Bundle Version Change Recommended: " +
+				bundleInfo.suggestedVersion;
+
+		log(output);
+
+		persistLog(output);
+	}
+
 	protected void reportLog(
 			String string1, String string2, String string3, String string4,
 			String string5, String string6, String string7, String string8)
@@ -716,6 +699,23 @@ public abstract class Baseline {
 		log(output);
 
 		persistLog(output);
+	}
+
+	protected void reportMode() {
+		String output = "[Baseline Report] Mode: ";
+
+		if (_reportDiff) {
+			output += "diff";
+		}
+		else {
+			output += "standard";
+		}
+
+		if (_logFile != null) {
+			output += " (persisted)";
+		}
+
+		log(output);
 	}
 
 	protected void updateBundleVersion(Version oldVersion, Version newVersion)

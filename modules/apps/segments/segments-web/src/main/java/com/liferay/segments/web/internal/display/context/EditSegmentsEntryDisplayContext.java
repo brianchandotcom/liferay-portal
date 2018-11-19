@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -31,6 +32,9 @@ import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.criteria.Criteria;
+import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
+import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributorRegistry;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.provider.SegmentsEntryProvider;
 import com.liferay.segments.service.SegmentsEntryService;
@@ -55,6 +59,7 @@ public class EditSegmentsEntryDisplayContext {
 	public EditSegmentsEntryDisplayContext(
 		HttpServletRequest request, RenderRequest renderRequest,
 		RenderResponse renderResponse,
+		SegmentsCriteriaContributorRegistry segmentsCriteriaContributorRegistry,
 		SegmentsEntryProvider segmentsEntryProvider,
 		OrganizationLocalService organizationLocalService,
 		SegmentsEntryService segmentsEntryService,
@@ -63,6 +68,8 @@ public class EditSegmentsEntryDisplayContext {
 		_request = request;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+		_segmentsCriteriaContributorRegistry =
+			segmentsCriteriaContributorRegistry;
 		_segmentsEntryProvider = segmentsEntryProvider;
 		_organizationLocalService = organizationLocalService;
 		_segmentsEntryService = segmentsEntryService;
@@ -73,7 +80,7 @@ public class EditSegmentsEntryDisplayContext {
 		SegmentsEntry segmentsEntry = getSegmentsEntry();
 
 		if ((segmentsEntry == null) ||
-			Validator.isNotNull(segmentsEntry.getCriteria())) {
+			Validator.isNotNull(segmentsEntry.getFilter())) {
 
 			return new DropdownItemList();
 		}
@@ -102,6 +109,16 @@ public class EditSegmentsEntryDisplayContext {
 						}));
 			}
 		};
+	}
+
+	public Criteria getCriteria() throws PortalException {
+		SegmentsEntry segmentsEntry = getSegmentsEntry();
+
+		if (segmentsEntry == null) {
+			return new Criteria();
+		}
+
+		return segmentsEntry.getCriteriaObj();
 	}
 
 	public String getDisplayStyle() {
@@ -175,6 +192,11 @@ public class EditSegmentsEntryDisplayContext {
 			return organizationSearchContainer;
 		}
 
+		if (Validator.isNull(segmentsEntry.getFilter())) {
+			organizationSearchContainer.setRowChecker(
+				new EmptyOnClickRowChecker(_renderResponse));
+		}
+
 		int total = 0;
 		List<Organization> organizations = null;
 
@@ -234,6 +256,13 @@ public class EditSegmentsEntryDisplayContext {
 		}
 
 		return _redirect;
+	}
+
+	public List<SegmentsCriteriaContributor> getSegmentsCriteriaContributors()
+		throws PortalException {
+
+		return _segmentsCriteriaContributorRegistry.
+			getSegmentsCriteriaContributors(getType());
 	}
 
 	public SegmentsEntry getSegmentsEntry() throws PortalException {
@@ -309,6 +338,11 @@ public class EditSegmentsEntryDisplayContext {
 			return userSearchContainer;
 		}
 
+		if (Validator.isNull(segmentsEntry.getFilter())) {
+			userSearchContainer.setRowChecker(
+				new EmptyOnClickRowChecker(_renderResponse));
+		}
+
 		int total = 0;
 		List<User> users = null;
 
@@ -355,7 +389,7 @@ public class EditSegmentsEntryDisplayContext {
 		SegmentsEntry segmentsEntry = getSegmentsEntry();
 
 		if ((segmentsEntry != null) &&
-			Validator.isNotNull(segmentsEntry.getCriteria())) {
+			Validator.isNotNull(segmentsEntry.getFilter())) {
 
 			return false;
 		}
@@ -367,7 +401,7 @@ public class EditSegmentsEntryDisplayContext {
 		SegmentsEntry segmentsEntry = getSegmentsEntry();
 
 		if ((segmentsEntry != null) &&
-			Validator.isNotNull(segmentsEntry.getCriteria())) {
+			Validator.isNotNull(segmentsEntry.getFilter())) {
 
 			return false;
 		}
@@ -438,6 +472,8 @@ public class EditSegmentsEntryDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private final SegmentsCriteriaContributorRegistry
+		_segmentsCriteriaContributorRegistry;
 	private SegmentsEntry _segmentsEntry;
 	private Long _segmentsEntryId;
 	private final SegmentsEntryProvider _segmentsEntryProvider;

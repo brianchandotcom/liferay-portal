@@ -9,6 +9,8 @@
 	{@param spritemap: string}
 	{@param totalPages: number}
 	{@param? _handleClickGoToPage: any}
+	{@param? nextPageDisabled: bool}
+	{@param? previousPageDiabled: bool}
 	{@param? id: string}
 
 	<div class="preview-file" id="{$id}">
@@ -32,6 +34,8 @@
 	{@param spritemap: string}
 	{@param totalPages: number}
 	{@param? _handleClickGoToPage: any}
+	{@param? nextPageDisabled: bool}
+	{@param? previousPageDiabled: bool}
 	{let $baseButtonsToolbar:[
 		'elementClasses': 'btn-dark',
 		'events': [ 'click': $_handleClickGoToPage],
@@ -45,11 +49,13 @@
 				{param value: 'ask' /}
 			{/call}
 			{call ClayButton.render data="$baseButtonsToolbar"}
+				{param disabled: $previousPageDiabled /}
 				{param icon: 'caret-top' /}
 				{param monospaced: true /}
 				{param value: 'previous' /}
 			{/call}
 			{call ClayButton.render data="$baseButtonsToolbar"}
+				{param disabled: $nextPageDisabled /}
 				{param icon: 'caret-bottom' /}
 				{param monospaced: true /}
 				{param value: 'next' /}

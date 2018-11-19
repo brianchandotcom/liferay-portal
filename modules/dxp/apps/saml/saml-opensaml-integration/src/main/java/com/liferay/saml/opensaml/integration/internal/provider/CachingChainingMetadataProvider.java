@@ -94,7 +94,29 @@ public class CachingChainingMetadataProvider extends AbstractMetadataResolver {
 	}
 
 	@Override
+	public Iterable<EntityDescriptor> resolve(CriteriaSet criteria)
+		throws ResolverException {
 
+		ArrayList<EntityDescriptor> entityDescriptors = new ArrayList<>();
+
+		Lock lock = _readWriteLock.writeLock();
+
+		lock.lock();
+
+		try {
+			for (MetadataResolver metadataResolver : _metadataResolvers) {
+				Iterable<EntityDescriptor> iterable = metadataResolver.resolve(
+					criteria);
+
+				iterable.forEach(entityDescriptors::add);
+			}
+
+			return entityDescriptors;
+		}
+		finally {
+			lock.unlock();
+		}
+	}
 
 	@Override
 	public void setRequireValidMetadata(boolean requireValidMetadata) {

@@ -1,4 +1,18 @@
 <definition>
+	<command name="edit">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS" />
+
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit in Google Docs" />
+		</execute>
+
+		<execute function="Type" locator1="GoogleDrive#GOOGLE_DOCS_TITLE" value1="${dmDocumentTitleEdit}" />
+
+		<execute function="AssertClick" locator1="Button#SAVE_AND_RETURN_TO_LIFERAY" />
+	</command>
+
 	<command name="gotoDrive">
 		<execute function="AssertClick" locator1="Button#SELECT_FILE" value1="Select File" />
 

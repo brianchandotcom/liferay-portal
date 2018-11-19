@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Pavel Savinov
@@ -258,46 +260,48 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 	}
 
 	private List<AssetEntry> _getManualAssetEntries(int start, int end) {
-		List<AssetEntry> assetEntries = new ArrayList<>();
-
 		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
 			AssetListEntryAssetEntryRelLocalServiceUtil.
 				getAssetListEntryAssetEntryRels(
 					getAssetListEntryId(), start, end);
 
-		for (AssetListEntryAssetEntryRel assetListEntryAssetEntryRel :
-				assetListEntryAssetEntryRels) {
+		Stream<AssetListEntryAssetEntryRel> stream =
+			assetListEntryAssetEntryRels.stream();
 
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-				assetListEntryAssetEntryRel.getAssetEntryId());
-
-			if (assetEntry == null) {
-				continue;
-			}
-
-			if (!assetEntry.isVisible()) {
-				continue;
-			}
-
-			AssetRendererFactory assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(
-						assetEntry.getClassName());
-
-			if (assetRendererFactory == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"No asset renderer factory associated with " +
-							assetEntry.getClassName());
+		return stream.map(
+			assetListEntryAssetEntryRel ->
+				AssetEntryLocalServiceUtil.fetchEntry(
+					assetListEntryAssetEntryRel.getAssetEntryId())
+		).filter(
+			assetEntry -> {
+				if (assetEntry == null) {
+					return false;
 				}
 
-				continue;
+				if (!assetEntry.isVisible()) {
+					return false;
+				}
+
+				AssetRendererFactory assetRendererFactory =
+					AssetRendererFactoryRegistryUtil.
+						getAssetRendererFactoryByClassName(
+							assetEntry.getClassName());
+
+				if (assetRendererFactory == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"No asset renderer factory associated with " +
+								assetEntry.getClassName());
+					}
+
+					return false;
+				}
+
+				return true;
 			}
-
-			assetEntries.add(assetEntry);
-		}
-
-		return assetEntries;
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private void _setCategoriesAndTags(

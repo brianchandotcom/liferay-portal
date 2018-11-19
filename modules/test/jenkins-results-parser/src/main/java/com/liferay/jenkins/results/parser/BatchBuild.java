@@ -474,12 +474,7 @@ public class BatchBuild extends BaseBuild {
 
 			if (isCompareToUpstream()) {
 				for (TestResult testResult : getTestResults(null)) {
-					String testStatus = testResult.getStatus();
-
-					if (testStatus.equals("FIXED") ||
-						testStatus.equals("PASSED") ||
-						testStatus.equals("SKIPPED")) {
-
+					if (!testResult.isFailing()) {
 						continue;
 					}
 

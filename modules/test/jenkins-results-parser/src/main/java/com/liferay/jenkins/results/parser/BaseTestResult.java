@@ -189,6 +189,17 @@ public class BaseTestResult implements TestResult {
 		return testReportURL;
 	}
 
+	@Override
+	public boolean isFailing() {
+		if (_status.equals("FIXED") || _status.equals("PASSED") ||
+			_status.equals("SKIPPED")) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	protected BaseTestResult(Build build, JSONObject caseJSONObject) {
 		if (build == null) {
 			throw new IllegalArgumentException("Build is null");

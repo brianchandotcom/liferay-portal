@@ -277,15 +277,9 @@ public class ValidationBuild extends BaseBuild {
 			List<Element> failureElements = new ArrayList<>();
 
 			for (TestResult testResult : getTestResults(null)) {
-				String testStatus = testResult.getStatus();
-
-				if (testStatus.equals("FIXED") || testStatus.equals("PASSED") ||
-					testStatus.equals("SKIPPED")) {
-
-					continue;
+				if (testResult.isFailing()) {
+					failureElements.add(testResult.getGitHubElement());
 				}
-
-				failureElements.add(testResult.getGitHubElement());
 			}
 
 			if (!failureElements.isEmpty()) {

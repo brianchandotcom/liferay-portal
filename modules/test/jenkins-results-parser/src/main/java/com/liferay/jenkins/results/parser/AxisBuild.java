@@ -279,11 +279,7 @@ public class AxisBuild extends BaseBuild {
 			List<Element> upstreamJobFailureElements = new ArrayList<>();
 
 			for (TestResult testResult : getTestResults(null)) {
-				String testStatus = testResult.getStatus();
-
-				if (testStatus.equals("FIXED") || testStatus.equals("PASSED") ||
-					testStatus.equals("SKIPPED")) {
-
+				if (!testResult.isFailing()) {
 					continue;
 				}
 

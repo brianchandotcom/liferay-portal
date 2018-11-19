@@ -45,4 +45,6 @@ public interface TestResult {
 
 	public String getTestReportURL();
 
+	public boolean isFailing();
+
 }

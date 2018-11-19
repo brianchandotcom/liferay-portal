@@ -1490,23 +1490,6 @@ public class JenkinsResultsParserUtil {
 		return false;
 	}
 
-	public static boolean isReachable(String hostname) {
-		try {
-			InetAddress inetAddress = InetAddress.getByName(hostname);
-
-			if (inetAddress.isReachable(5000)) {
-				return true;
-			}
-		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
-		}
-
-		System.out.println("Unable to reach " + hostname);
-
-		return false;
-	}
-
 	public static boolean isJSONArrayEqual(
 		JSONArray expectedJSONArray, JSONArray actualJSONArray) {
 
@@ -1571,6 +1554,23 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return true;
+	}
+
+	public static boolean isReachable(String hostname) {
+		try {
+			InetAddress inetAddress = InetAddress.getByName(hostname);
+
+			if (inetAddress.isReachable(5000)) {
+				return true;
+			}
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+
+		System.out.println("Unable to reach " + hostname);
+
+		return false;
 	}
 
 	public static boolean isWindows() {

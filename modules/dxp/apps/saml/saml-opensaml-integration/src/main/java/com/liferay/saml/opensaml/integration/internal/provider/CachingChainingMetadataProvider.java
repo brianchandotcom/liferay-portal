@@ -94,6 +94,9 @@ public class CachingChainingMetadataProvider extends AbstractMetadataResolver {
 	}
 
 	@Override
+
+
+	@Override
 	public void setRequireValidMetadata(boolean requireValidMetadata) {
 		super.setRequireValidMetadata(requireValidMetadata);
 
@@ -102,7 +105,7 @@ public class CachingChainingMetadataProvider extends AbstractMetadataResolver {
 		lock.lock();
 
 		try {
-			for (MetadataProvider metadataProvider : _metadataProviders) {
+			for (MetadataResolver metadataProvider : _metadataResolvers) {
 				metadataProvider.setRequireValidMetadata(requireValidMetadata);
 			}
 		}

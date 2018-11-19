@@ -292,7 +292,6 @@ public class SourceFormatter {
 		_sourceProcessors.add(new DTDSourceProcessor());
 		_sourceProcessors.add(new LFRBuildSourceProcessor());
 		_sourceProcessors.add(new FTLSourceProcessor());
-		_sourceProcessors.add(new PoshiSourceProcessor());
 		_sourceProcessors.add(new GradleSourceProcessor());
 		_sourceProcessors.add(new GroovySourceProcessor());
 		_sourceProcessors.add(new HTMLSourceProcessor());
@@ -302,6 +301,7 @@ public class SourceFormatter {
 		_sourceProcessors.add(new JSSourceProcessor());
 		_sourceProcessors.add(new MarkdownSourceProcessor());
 		_sourceProcessors.add(new PackageinfoSourceProcessor());
+		_sourceProcessors.add(new PoshiSourceProcessor());
 		_sourceProcessors.add(new PropertiesSourceProcessor());
 		_sourceProcessors.add(new SHSourceProcessor());
 		_sourceProcessors.add(new SoySourceProcessor());

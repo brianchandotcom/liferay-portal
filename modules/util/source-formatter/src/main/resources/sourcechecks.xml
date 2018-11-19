@@ -80,10 +80,6 @@
 		<check name="FTLTagCheck" />
 		<check name="FTLWhitespaceCheck" />
 	</source-processor>
-	<source-processor name="PoshiSourceProcessor">
-		<check name="PoshiIndentationCheck" />
-		<check name="WhitespaceCheck" />
-	</source-processor>
 	<source-processor name="GradleSourceProcessor">
 		<check name="GradleBlockOrderCheck" />
 		<check name="GradleBodyCheck" />
@@ -371,6 +367,10 @@
 	</source-processor>
 	<source-processor name="PackageinfoSourceProcessor">
 		<check name="PackageinfoBNDExportPackageCheck" />
+		<check name="WhitespaceCheck" />
+	</source-processor>
+	<source-processor name="PoshiSourceProcessor">
+		<check name="PoshiIndentationCheck" />
 		<check name="WhitespaceCheck" />
 	</source-processor>
 	<source-processor name="PropertiesSourceProcessor">

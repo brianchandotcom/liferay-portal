@@ -628,7 +628,6 @@
 		<var name="key_entryContent" value="${entryContent}" />
 		<var name="key_entrySubtitle" value="${entrySubtitle}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
-		<var name="key_uploadFileName" value="${uploadFileName}" />
 
 		<execute function="Pause" locator1="3000" />
 
@@ -644,7 +643,9 @@
 		<if>
 			<isset var="uploadFileName" />
 			<then>
-				<execute function="AssertElementPresent" locator1="BlogsEntry#ENTRY_COVER_IMAGE" />
+				<execute function="AssertElementPresent" locator1="BlogsEntry#ENTRY_COVER_IMAGE">
+					<var name="key_uploadFileName" value="${uploadFileName}" />
+				</execute>
 			</then>
 		</if>
 
@@ -672,8 +673,6 @@
 		<if>
 			<isset var="entryExternalURL" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
-
 				<execute function="AssertClick#assertTextClickAtNoJavaScript" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
 
 				<execute function="AssertLocation" value1="${entryExternalURL}/" />

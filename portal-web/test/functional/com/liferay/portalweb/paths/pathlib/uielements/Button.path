@@ -204,6 +204,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISCARD_CHANGES</td>
+	<td>//button[contains(.,'Discard Changes')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENTS_AND_MEDIA</td>
 	<td>//div[@data-fieldname='${key_fieldName}']/div/button[contains(.,'Select')]</td>
 	<td></td>
@@ -476,6 +481,11 @@
 <tr>
 	<td>SAVE_AND_CONTINUE</td>
 	<td>//button[contains(.,'Save and Continue')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_AND_RETURN_TO_LIFERAY</td>
+	<td>//button[contains(.,'Save and Return to Liferay')]</td>
 	<td></td>
 </tr>
 <tr>

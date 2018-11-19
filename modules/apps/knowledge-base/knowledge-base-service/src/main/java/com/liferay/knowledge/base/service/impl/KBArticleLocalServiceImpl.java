@@ -2055,9 +2055,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 
 		int urlTitleMaxSize = ModelHintsUtil.getMaxLength(
-			KBArticle.class.getName(), "urlTitle") + 1;
+			KBArticle.class.getName(), "urlTitle");
 
-		if (urlTitle.length() > urlTitleMaxSize) {
+		if (urlTitle.length() > (urlTitleMaxSize + 1)) {
 			throw new KBArticleUrlTitleException.MustNotExceedMaximumSize(
 				urlTitle, urlTitleMaxSize);
 		}

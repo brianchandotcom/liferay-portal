@@ -4851,7 +4851,7 @@ version 1.3.7.
 ## 5.5.91 - 2018-10-17
 
 ### Added
-- [LPS-86477]: Allow the `test` and `testIntegration` task `ignoreFailures`
+- [LPS-86477]: Allow the `test` and `testIntegration` tasks' `ignoreFailures`
 property to be overridden for OSGi projects. This can be done via command line
 argument:
 	- `./gradlew test -Dtest.ignore.failures=false`
@@ -4899,8 +4899,8 @@ version 1.3.8.
 ## 5.5.99 - 2018-10-23
 
 ### Changed
-- [LPS-86500]: Remove the `portal` configuration from the compile classpath of
-the `test` source set.
+- [LPS-86500]: Remove the `portal` configuration from the `test` source set's
+compile classpath.
 
 ## 5.5.100 - 2018-10-24
 
@@ -4952,14 +4952,14 @@ version 2.0.0.
 
 ### Changed
 - [LPS-87006]: Update the `jarSources` and `jarSourcesCommercial` tasks to
-include `compileInclude` configuration dependencies sources in the respective
-JAR files.
+include `compileInclude` configuration dependency sources in the respective JAR
+files.
 
 ## 5.5.109 - 2018-11-09
 
 ### Fixed
-- [LPS-87006]: Skip copying `compileInclude` configuration dependencies sources
-if the sources JAR contains invalid entries.
+- [LPS-87006]: Skip copying `compileInclude` configuration dependency sources if
+the sources JAR contains invalid entries.
 
 ## 5.5.110 - 2018-11-13
 

@@ -162,9 +162,9 @@ task.
 ## 2.0.0 - 2018-10-29
 
 ### Changed
-- [LPS-86583]: Add the property `baselineConfiguration` that has the
-configuration which contains exactly one dependency to the previously released
-version of the project for baselining.
+- [LPS-86583]: Add the property `baselineConfiguration` which contains the
+configuration with exactly one dependency to the previously released version of
+the project for baselining.
 
 [Bnd Builder Gradle Plugin]: https://github.com/bndtools/bnd/tree/master/biz.aQute.bnd.gradle
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

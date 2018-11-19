@@ -2779,9 +2779,9 @@ another task with the same name is being executed in a parent project.
 ## 2.3.282 - 2018-11-13
 
 ### Added
-- [LPS-87293]: Add the option to pretty print the output from the
-`checkSourceFormatting` and `formatSource` task. This can be enabled via command
-line argument:
+- [LPS-87293]: Add the option to pretty print output from the
+`checkSourceFormatting` and `formatSource` tasks. This can be enabled via
+command line argument:
 	- `./gradlew checkSourceFormatting -DcheckSourceFormatting.pretty.print=true`
 	- `./gradlew formatSource -DformatSource.pretty.print=true`
 

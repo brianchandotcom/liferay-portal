@@ -5875,7 +5875,7 @@ to version 2.4.0.
 ## 3.13.0 - 2018-10-17
 
 ### Changed
-- [LPS-86018]: Enable `watch` task for theme and WAR projects.
+- [LPS-86018]: Enable the `watch` task for theme and WAR projects.
 
 ## 3.13.1 - 2018-10-17
 
@@ -5936,7 +5936,7 @@ to version 2.3.281.
 ## 3.13.8 - 2018-10-29
 
 ### Changed
-- [LPS-86549]: Use update rather than refresh strategy when watching OSGi
+- [LPS-86549]: Use *update* rather than *refresh* strategy when watching OSGi
 changes.
 
 ## 3.13.9 - 2018-11-02

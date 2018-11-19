@@ -69,7 +69,7 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 			return new long[0];
 		}
 
-		if (Validator.isNull(segmentsEntry.getCriteria())) {
+		if (Validator.isNull(segmentsEntry.getFilter())) {
 			List<SegmentsEntryRel> segmentsEntryRels =
 				_segmentsEntryRelLocalService.getSegmentsEntryRels(
 					segmentsEntryId, start, end, null);
@@ -89,7 +89,7 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 		}
 
 		List<BaseModel<?>> results = oDataRetriever.getResults(
-			segmentsEntry.getCompanyId(), segmentsEntry.getCriteria(),
+			segmentsEntry.getCompanyId(), segmentsEntry.getFilter(),
 			Locale.getDefault(), start, end);
 
 		Stream<BaseModel<?>> stream = results.stream();
@@ -110,7 +110,7 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 			return 0;
 		}
 
-		if (Validator.isNull(segmentsEntry.getCriteria())) {
+		if (Validator.isNull(segmentsEntry.getFilter())) {
 			return _segmentsEntryRelLocalService.getSegmentsEntryRelsCount(
 				segmentsEntryId);
 		}
@@ -123,7 +123,7 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 		}
 
 		return oDataRetriever.getResultsCount(
-			segmentsEntry.getCompanyId(), segmentsEntry.getCriteria(),
+			segmentsEntry.getCompanyId(), segmentsEntry.getFilter(),
 			Locale.getDefault());
 	}
 
@@ -145,13 +145,13 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 		List<SegmentsEntry> allSegmentsEntries = new ArrayList();
 
 		for (SegmentsEntry segmentsEntry : segmentsEntries) {
-			if (Validator.isNotNull(segmentsEntry.getCriteria()) &&
+			if (Validator.isNotNull(segmentsEntry.getFilter()) &&
 				(oDataRetriever != null)) {
 
 				StringBundler sb = new StringBundler(5);
 
 				sb.append("(");
-				sb.append(segmentsEntry.getCriteria());
+				sb.append(segmentsEntry.getFilter());
 				sb.append(") and (classPK eq '");
 				sb.append(classPK);
 				sb.append("')");

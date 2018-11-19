@@ -51,16 +51,16 @@
 		<execute function="Click" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_MENULIST_ADD_REPORT" value1="Add Report" />
 
-		<execute function="Select" locator1="ReportsAdminEditReportEntry#REPORT_FORMAT_SELECT" value1="csv" />
-		<execute function="Type" locator1="ReportsAdminEditReportEntry#EMAIL_NOTIFICATIONS_FIELD" value1="InvalidEmail" />
+		<execute function="Select" locator1="Select#REPORT_FORMAT" value1="csv" />
+		<execute function="Type" locator1="TextInput#EMAIL_NOTIFICATIONS" value1="InvalidEmail" />
 		<execute function="AssertClick" locator1="ReportsAdminEditReportEntry#GENERATE_BUTTON" value1="Generate" />
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_ENTER_A_VALID_EMAIL_ADDRESS" value1="Please enter a valid email address." />
 
-		<execute function="Type" locator1="ReportsAdminEditReportEntry#EMAIL_NOTIFICATIONS_FIELD" value1="liferay.qa1@gmail.com" />
-		<execute function="Type" locator1="ReportsAdminEditReportEntry#EMAIL_RECIPIENT_FIELD" value1="InvalidEmail" />
+		<execute function="Type" locator1="TextInput#EMAIL_NOTIFICATIONS" value1="liferay.qa1@gmail.com" />
+		<execute function="Type" locator1="TextInput#EMAIL_RECIPIENT" value1="InvalidEmail" />
 		<execute function="AssertClick" locator1="ReportsAdminEditReportEntry#GENERATE_BUTTON" value1="Generate" />
 
 		<execute macro="Alert#viewRequestFailedToComplete" />

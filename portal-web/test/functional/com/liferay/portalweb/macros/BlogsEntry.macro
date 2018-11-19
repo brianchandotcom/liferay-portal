@@ -58,7 +58,7 @@
 
 		<var name="key_assetType" value="${assetType}" />
 
-		<execute function="AssertClick" locator1="AssetRelatedAssets#RELATED_ASSETS_SELECT_MENULIST_ASSET" value1="${assetType}" />
+		<execute function="AssertClick" locator1="APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_ASSET" value1="${assetType}" />
 
 		<var name="key_assetTitle" value="${assetTitle}" />
 

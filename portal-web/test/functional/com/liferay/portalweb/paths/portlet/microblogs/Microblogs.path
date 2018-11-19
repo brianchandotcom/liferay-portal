@@ -29,11 +29,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TEXT_AREA</td>
-	<td>//textarea[contains(@class,'field-input')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

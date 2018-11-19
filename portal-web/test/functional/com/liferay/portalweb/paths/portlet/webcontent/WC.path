@@ -38,17 +38,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SEARCH-->
-<tr>
-	<td>SEARCH_TITLE</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--ENTRY_CARDS-->
 <tr>
 	<td>ENTRY_CARDS_THUMBNAIL</td>

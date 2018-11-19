@@ -142,12 +142,12 @@
 				</execute>
 
 				<for list="${tagNameList}" param="tagName">
-					<execute function="Click#clickAt" locator1="AssetCategorization#TAGS_ADD_BUTTON" value1="Add" />
+					<execute function="Click#clickAt" locator1="Button#ADD_TAGS" value1="Add" />
 
 					<execute function="Type" locator1="AssetCategorization#TAGS_FIELD" value1="${tagName}" />
 				</for>
 
-				<execute function="Click#clickAt" locator1="AssetCategorization#TAGS_ADD_BUTTON" value1="Add" />
+				<execute function="Click#clickAt" locator1="Button#ADD_TAGS" value1="Add" />
 			</then>
 		</if>
 
@@ -282,7 +282,7 @@
 			<then>
 				<var name="key_fieldName" value="Text" />
 
-				<execute function="Type" locator1="DocumentsAndMediaEditCustomDocumentType#TEXT_FIELD" value1="${textField}" />
+				<execute function="Type" locator1="TextInput#DDM" value1="${textField}" />
 			</then>
 		</if>
 
@@ -291,7 +291,7 @@
 			<then>
 				<var name="key_fieldName" value="Number" />
 
-				<execute function="Type" locator1="DocumentsAndMediaEditCustomDocumentType#NUMBER_FIELD" value1="${numberField}" />
+				<execute function="Type" locator1="TextInput#DDM" value1="${numberField}" />
 			</then>
 		</if>
 
@@ -300,7 +300,7 @@
 			<then>
 				<var name="key_fieldName" value="Boolean" />
 
-				<execute function="Check" locator1="DocumentsAndMediaEditCustomDocumentType#BOOLEAN_CHECKBOX" value1="${booleanField}" />
+				<execute function="Check" locator1="TextInput#DDM" value1="${booleanField}" />
 			</then>
 		</if>
 
@@ -344,7 +344,7 @@
 				<for list="${dmDocumentFileList}" param="dmDocumentFile">
 					<var name="key_dmDocumentFile" value="${dmDocumentFile}" />
 
-					<execute function="AssertClick" locator1="DynamicUploader#SELECT_FILES_BUTTON" value1="Select Files" />
+					<execute function="AssertClick" locator1="Button#SELECT_FILES" value1="Select Files" />
 
 					<if>
 						<equals arg1="${uploadTempFile}" arg2="true" />
@@ -541,7 +541,7 @@
 
 		<execute function="AssertClick" locator1="AssetRelatedAssets#RELATED_ASSETS_SELECT" value1="Select" />
 
-		<execute function="AssertClick" locator1="AssetRelatedAssets#RELATED_ASSETS_SELECT_MENULIST_ASSET" value1="${assetType}" />
+		<execute function="AssertClick" locator1="APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_ASSET" value1="${assetType}" />
 
 		<var name="key_assetTitle" value="${assetTitle}" />
 
@@ -1667,7 +1667,7 @@
 
 		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE" value1="${dmFolderName}" />
 
-		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#BREADCRUMB_LAST" value1="${dmFolderName}" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#BREADCRUMB_FOLDER_NAME" value1="${dmFolderName}" />
 		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_ICON" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 	</command>

@@ -24,11 +24,6 @@
 	<td>xpath=(//select[contains(@id,'PortletConfigurationPortlet')])[${key_rowNumber}]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>RULE_PANEL_SELECT_CONTENT</td>
-	<td>xpath=(//div/a[@title='Select Content'])[${key_rowNumber}]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

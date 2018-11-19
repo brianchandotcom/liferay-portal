@@ -13,7 +13,7 @@
 		<if>
 			<equals arg1="${pageTemplateActive}" arg2="Not Active" />
 			<then>
-				<execute function="Click" locator1="PageTemplates#ACTIVE_TOGGLE_SWITCH" />
+				<execute function="Click" locator1="ToggleSwitch#ACTIVE" />
 			</then>
 		</if>
 
@@ -41,7 +41,7 @@
 		<if>
 			<isset var="pageTemplateStatus" />
 			<then>
-				<execute function="Click" locator1="PageTemplates#ACTIVE_TOGGLE_SWITCH" />
+				<execute function="Click" locator1="ToggleSwitch#ACTIVE" />
 			</then>
 		</if>
 
@@ -81,7 +81,7 @@
 		<if>
 			<equals arg1="${pageTemplateActive}" arg2="Not Active" />
 			<then>
-				<execute function="Click" locator1="PageTemplates#ACTIVE_TOGGLE_SWITCH" />
+				<execute function="Click" locator1="ToggleSwitch#ACTIVE" />
 			</then>
 		</if>
 

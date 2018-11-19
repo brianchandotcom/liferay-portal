@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BREADCRUMB_LAST</td>
-	<td>//div[contains(@id,'breadcrumbContainer')]//li[contains(.,'${key_dmFolderName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CHOOSE_FOLDER_BUTTON</td>
 	<td>//button[@data-foldername='${key_dmFolderName}']/span[contains(.,'Choose')]</td>
 	<td></td>

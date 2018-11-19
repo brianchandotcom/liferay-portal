@@ -1430,7 +1430,7 @@
 
 		<var name="key_fieldName" value="Decimal" />
 
-		<execute function="Type" locator1="DDLEditRecord#DECIMAL_FIELD" value1="0.987a" />
+		<execute function="Type" locator1="TextInput#DDM" value1="0.987a" />
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 		<execute function="AssertTextEquals" locator1="DDLEditRecord#RECORD_FIELD_ALERT" value1="Please enter a valid number." />
@@ -1755,7 +1755,7 @@
 
 		<var name="key_fieldName" value="Integer" />
 
-		<execute function="Type" locator1="DDLEditRecord#INTEGER_FIELD" value1="aaaa" />
+		<execute function="Type" locator1="TextInput#DDM" value1="aaaa" />
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 		<execute function="AssertTextEquals" locator1="DDLEditRecord#RECORD_FIELD_ALERT" value1="Please enter only digits." />
@@ -1825,7 +1825,7 @@
 
 		<var name="key_fieldName" value="Number" />
 
-		<execute function="Type" locator1="DDLEditRecord#NUMBER_FIELD" value1="555b" />
+		<execute function="Type" locator1="TextInput#DDM" value1="555b" />
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 		<execute function="AssertTextEquals" locator1="DDLEditRecord#RECORD_FIELD_ALERT" value1="Please enter a valid number." />
 	</command>

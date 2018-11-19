@@ -67,8 +67,8 @@
 			<var name="navUnderline" value="Properties" />
 		</execute>
 
-		<execute function="Type" locator1="CategoriesEditSubcategory#PROPERTIES_KEY_FIELD_DEFAULT" value1="${propertiesKeyField}" />
-		<execute function="Type" locator1="CategoriesEditSubcategory#PROPERTIES_VALUE_FIELD_DEFAULT" value1="${propertiesValueField}" />
+		<execute function="Type" locator1="CategoriesEditCategory#PROPERTIES_KEY_FIELD_1" value1="${propertiesKeyField}" />
+		<execute function="Type" locator1="CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1" value1="${propertiesValueField}" />
 
 		<execute macro="PortletEntry#save" />
 	</command>
@@ -178,8 +178,8 @@
 			<var name="navUnderline" value="Properties" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="CategoriesEditSubcategory#PROPERTIES_KEY_FIELD_DEFAULT" value1="${propertiesKeyField}" />
-		<execute function="AssertTextEquals" locator1="CategoriesEditSubcategory#PROPERTIES_VALUE_FIELD_DEFAULT" value1="${propertiesValueField}" />
+		<execute function="AssertTextEquals" locator1="CategoriesEditCategory#PROPERTIES_KEY_FIELD_1" value1="${propertiesKeyField}" />
+		<execute function="AssertTextEquals" locator1="CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1" value1="${propertiesValueField}" />
 	</command>
 
 	<command name="viewCP">

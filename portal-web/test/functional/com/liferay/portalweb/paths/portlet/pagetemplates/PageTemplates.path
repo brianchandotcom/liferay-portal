@@ -8,16 +8,6 @@
 <tr><td rowspan="1" colspan="3">PageTemplates</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>ACTIVE_TOGGLE_SWITCH</td>
-	<td>//label[contains(.,'Active')]//span[contains(@class,'toggle-switch-handle')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PAGE_TEMPLATE_TABLE-->
 <tr>
 	<td>PAGE_TEMPLATE_TABLE_NAME</td>

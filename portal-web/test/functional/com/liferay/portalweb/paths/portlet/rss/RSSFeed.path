@@ -91,11 +91,6 @@
 </tr>
 <!--DISPLAY_SETTINGS-->
 <tr>
-	<td>DISPLAY_SETTINGS_DISPLAY_TEMPLATE_OPTION</td>
-	<td>//select[contains(@id,'displayStyle')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DISPLAY_SETTINGS_SHOW_FEED_TITLE</td>
 	<td>//input[contains(@id,'showFeedTitle')]</td>
 	<td></td>

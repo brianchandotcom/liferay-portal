@@ -223,13 +223,13 @@
 	</command>
 
 	<command name="editConnectorName">
-		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_NAME" />
+		<execute function="DoubleClick" locator1="DDMEditStructure#SETTINGS_NAME" />
 
-		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_NAME_FIELD" value1="${connectorName}" />
+		<execute function="Type" locator1="TextInput#TEXT" value1="${connectorName}" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_NAME" value1="${connectorName}" />
+		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_NAME" value1="${connectorName}" />
 	</command>
 
 	<command name="editExecutionType">
@@ -239,7 +239,7 @@
 	<command name="editNodeAssignments">
 		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_ASSIGNMENTS" />
 
-		<execute function="Select" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_ASSIGNMENT_TYPE_SELECT" value1="${nodeAssignmentType}" />
+		<execute function="Select" locator1="Select#ASSIGNMENT_TYPE" value1="${nodeAssignmentType}" />
 
 		<if>
 			<equals arg1="${nodeAssignmentType}" arg2="Role" />
@@ -283,7 +283,7 @@
 	<command name="editNodeDescription">
 		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_DESCRIPTION" />
 
-		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_DESCRIPTION_FIELD" value1="${nodeDescription}" />
+		<execute function="Type" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_TEXT_AREA" value1="${nodeDescription}" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
@@ -291,13 +291,13 @@
 	</command>
 
 	<command name="editNodeName">
-		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_NAME" />
+		<execute function="DoubleClick" locator1="DDMEditStructure#SETTINGS_NAME" />
 
-		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_NAME_FIELD" value1="${nodeName}" />
+		<execute function="Type" locator1="TextInput#TEXT" value1="${nodeName}" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_NAME" value1="${nodeName}" />
+		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_NAME" value1="${nodeName}" />
 	</command>
 
 	<command name="editNodeNotifications">
@@ -535,7 +535,7 @@
 
 		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_ASSIGNMENTS" />
 
-		<execute function="AssertElementPresent" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_ASSIGNMENT_TYPE_SELECT" />
+		<execute function="AssertElementPresent" locator1="Select#ASSIGNMENT_TYPE" />
 	</command>
 
 	<command name="viewNodeNotifications">

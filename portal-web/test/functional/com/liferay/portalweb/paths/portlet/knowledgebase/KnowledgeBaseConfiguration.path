@@ -70,22 +70,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--EMAIL_FROM-->
-<tr>
-	<td>EMAIL_FROM_NAME_FIELD</td>
-	<td>//input[contains(@id,'emailFromName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMAIL_FROM_ADDRESS_FIELD</td>
-	<td>//input[contains(@id,'emailFromAddress')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SUGGESTION_RECEIVED_EMAIL-->
 <tr>
 	<td>SUGGESTION_RECEIVED_EMAIL_EDITOR_IFRAME</td>

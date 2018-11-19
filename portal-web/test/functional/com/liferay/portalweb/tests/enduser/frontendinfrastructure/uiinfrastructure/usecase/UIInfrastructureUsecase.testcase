@@ -138,7 +138,7 @@
 
 			<execute macro="IFrame#selectConfigurationFrame" />
 
-			<execute function="AssertTextEquals" locator1="NavTab#LOOK_AND_FEEL_GENERAL" value1="General" />
+			<execute function="AssertTextEquals" locator1="NavTab#GENERAL" value1="General" />
 
 			<execute macro="IFrame#closeFrame" />
 		</task>

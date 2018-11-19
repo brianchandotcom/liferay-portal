@@ -561,7 +561,7 @@
 		<if>
 			<equals arg1="${markAsQuestion}" arg2="true" />
 			<then>
-				<execute function="AssertClick" locator1="MessageBoards#THREAD_TABLE_ADMIN_FLAG" value1="Waiting for an Answer">
+				<execute function="AssertClick" locator1="MessageBoards#THREAD_TABLE_STARTED_BY" value1="Waiting for an Answer">
 					<var name="key_threadSubject" value="${threadSubject}" />
 				</execute>
 			</then>

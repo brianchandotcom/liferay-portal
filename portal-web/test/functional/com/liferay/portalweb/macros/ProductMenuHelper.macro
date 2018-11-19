@@ -71,11 +71,11 @@
 
 	<command name="openSitesPopup">
 		<if>
-			<condition function="IsElementNotPresent" locator1="ProductMenu#SITES_MODAL_TITLE" />
+			<condition function="IsElementNotPresent" locator1="Portlet#H3_MODAL_TITLE" />
 			<then>
 				<execute function="Click" locator1="ProductMenu#SITES_COMPASS" />
 
-				<execute function="AssertVisible" locator1="ProductMenu#SITES_MODAL_TITLE" />
+				<execute function="AssertVisible" locator1="Portlet#H3_MODAL_TITLE" />
 			</then>
 		</if>
 	</command>

@@ -1,6 +1,6 @@
 <definition>
 	<command name="viewContentPG">
-		<execute function="AssertTextEquals#assertPartialText" locator1="Drools#WELCOME_MESSAGE" value1="${welcomeMessage}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Drools#DROOLS_CONTENT" value1="${welcomeMessage}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Drools#DROOLS_CONTENT" value1="${droolsContent}" />
 
 		<if>
@@ -12,7 +12,7 @@
 	</command>
 
 	<command name="viewDefaultPG">
-		<execute function="AssertTextEquals#assertPartialText" locator1="Drools#WELCOME_MESSAGE" value1="${welcomeMessage}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Drools#DROOLS_CONTENT" value1="${welcomeMessage}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Drools#DROOLS_CONTENT" value1="There are no results." />
 	</command>
 </definition>

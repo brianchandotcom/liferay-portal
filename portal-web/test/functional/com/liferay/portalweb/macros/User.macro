@@ -97,7 +97,7 @@
 		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute function="Type" locator1="AdvancedSearch#EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
 
 		<if>
@@ -153,7 +153,7 @@
 			<else>
 				<execute macro="Alert#viewSuccessMessage" />
 				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
-				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+				<execute function="AssertTextEquals" locator1="AdvancedSearch#EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
 				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
 
 				<if>
@@ -224,7 +224,7 @@
 		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute function="Type" locator1="AdvancedSearch#EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
 
@@ -239,7 +239,7 @@
 		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute function="Type" locator1="AdvancedSearch#EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
 
@@ -252,7 +252,7 @@
 		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="Paste" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${siteID}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute function="Type" locator1="AdvancedSearch#EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
 
@@ -517,13 +517,13 @@
 
 		<var name="key_roleTitle" value="${roleTitle}" />
 
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#ROLES_REGULAR_ROLES_TABLE_TITLE" value1="${roleTitle}" />
+		<execute function="AssertTextEquals" locator1="Permissions#CONTENT_PERMISSIONS_ROLE_NAME" value1="${roleTitle}" />
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ROLES_ORGANIZATION_SELECT_CHOOSE_BUTTON" value1="Choose" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#ROLES_ORGANIZATION_ROLES_TABLE_TITLE" value1="${roleTitle}" />
+		<execute function="AssertTextEquals" locator1="Permissions#CONTENT_PERMISSIONS_ROLE_NAME" value1="${roleTitle}" />
 
 		<execute macro="PortletEntry#save" />
 	</command>
@@ -543,13 +543,13 @@
 
 		<var name="key_roleTitle" value="${roleTitle}" />
 
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#ROLES_REGULAR_ROLES_TABLE_TITLE" value1="${roleTitle}" />
+		<execute function="AssertTextEquals" locator1="Permissions#CONTENT_PERMISSIONS_ROLE_NAME" value1="${roleTitle}" />
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ROLES_ORGANIZATION_SELECT_CHOOSE_BUTTON" value1="Choose" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#ROLES_REGULAR_ROLES_TABLE_TITLE" value1="${roleTitle}" />
+		<execute function="AssertTextEquals" locator1="Permissions#CONTENT_PERMISSIONS_ROLE_NAME" value1="${roleTitle}" />
 
 		<execute macro="PortletEntry#save" />
 	</command>
@@ -780,9 +780,9 @@
 
 		<execute function="KeyPress" locator1="OpenIDLogin#YAHOO_LOGIN_USERNAME_FIELD" value1="\RETURN" />
 
-		<execute function="Type" locator1="OpenIDLogin#YAHOO_LOGIN_PASSWORD_FIELD" value1="${openIDPassword}" />
+		<execute function="Type" locator1="TextInput#PASSWORD_TYPE" value1="${openIDPassword}" />
 
-		<execute function="KeyPress" locator1="OpenIDLogin#YAHOO_LOGIN_PASSWORD_FIELD" value1="\RETURN" />
+		<execute function="KeyPress" locator1="TextInput#PASSWORD_TYPE" value1="\RETURN" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="OpenIDLogin#YAHOO_LOGIN_SKIP_SECURE_BUTTON" />
@@ -910,7 +910,7 @@
 			<var name="menuItem" value="Edit" />
 		</execute>
 
-		<execute function="Select" locator1="PortalSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT" value1="${languageName}" />
+		<execute function="Select" locator1="Select#DEFAULT_LANGUAGE" value1="${languageName}" />
 
 		<execute macro="PortletEntry#save" />
 	</command>
@@ -1061,12 +1061,12 @@
 		<execute macro="UserNavigator#gotoDisplaySettings" />
 
 		<if>
-			<condition function="IsTextNotEqual" locator1="UsersAndOrganizationsEditUser#DISPLAY_SETTINGS_AMERICA_TIME_ZONE_SELECT" value1="(UTC -07:00) Pacific Daylight Time" />
+			<condition function="IsTextNotEqual" locator1="Select#LOS_ANGELES_TIME_ZONE" value1="(UTC -07:00) Pacific Daylight Time" />
 			<then>
-				<execute function="Select" locator1="UsersAndOrganizationsEditUser#DISPLAY_SETTINGS_TIME_ZONE_SELECT" value1="(UTC -08:00) Pacific Standard Time" />
+				<execute function="Select" locator1="Select#TIME_ZONE" value1="(UTC -08:00) Pacific Standard Time" />
 			</then>
 			<else>
-				<execute function="Select" locator1="UsersAndOrganizationsEditUser#DISPLAY_SETTINGS_TIME_ZONE_SELECT" value1="(UTC -07:00) Pacific Daylight Time" />
+				<execute function="Select" locator1="Select#TIME_ZONE" value1="(UTC -07:00) Pacific Daylight Time" />
 			</else>
 		</if>
 
@@ -1077,12 +1077,12 @@
 		<execute macro="UserNavigator#gotoDisplaySettings" />
 
 		<if>
-			<condition function="IsTextNotEqual" locator1="UsersAndOrganizationsEditUser#DISPLAY_SETTINGS_AMERICA_TIME_ZONE_SELECT" value1="(UTC -07:00) Pacific Daylight Time" />
+			<condition function="IsTextNotEqual" locator1="Select#LOS_ANGELES_TIME_ZONE" value1="(UTC -07:00) Pacific Daylight Time" />
 			<then>
-				<execute function="AssertSelectedLabel" locator1="UsersAndOrganizationsEditUser#DISPLAY_SETTINGS_TIME_ZONE_SELECT" value1="(UTC -08:00) Pacific Standard Time" />
+				<execute function="AssertSelectedLabel" locator1="Select#TIME_ZONE" value1="(UTC -08:00) Pacific Standard Time" />
 			</then>
 			<else>
-				<execute function="AssertSelectedLabel" locator1="UsersAndOrganizationsEditUser#DISPLAY_SETTINGS_TIME_ZONE_SELECT" value1="(UTC -07:00) Pacific Daylight Time" />
+				<execute function="AssertSelectedLabel" locator1="Select#TIME_ZONE" value1="(UTC -07:00) Pacific Daylight Time" />
 			</else>
 		</if>
 
@@ -1126,13 +1126,13 @@
 			<var name="searchTerm" value="${orgName}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsSelectOrganization#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute function="AssertTextEquals" locator1="ContentRow#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsSelectOrganization#ORGANIZATION_TABLE_CHOOSE_BUTTON" value1="Choose" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#ORGANIZATIONS_TABLE_NAME" value1="${orgName}" />
+		<execute function="AssertTextEquals" locator1="ContentRow#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 
 		<execute macro="PortletEntry#save" />
 	</command>
@@ -1633,8 +1633,8 @@
 
 		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
 
-		<execute function="Type" locator1="OpenAM#USER_NAME" value1="${userScreenName}" />
-		<execute function="Type" locator1="OpenAM#PASSWORD" value1="${password}" />
+		<execute function="Type" locator1="TextInput#TEXT" value1="${userScreenName}" />
+		<execute function="Type" locator1="TextInput#PASSWORD_TYPE" value1="${password}" />
 
 		<execute function="Click" locator1="OpenAM#LOG_IN" />
 
@@ -2022,7 +2022,7 @@
 				<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
 
 				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
-				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+				<execute function="AssertTextEquals" locator1="AdvancedSearch#EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
 				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
 				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
 			</else>
@@ -2118,7 +2118,7 @@
 				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#ROLES_INHERITED_SITE_ROLES_TABLE_TITLE" value1="${roleTitle}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#ROLES_REGULAR_ROLES_TABLE_TITLE" value1="${roleTitle}" />
+				<execute function="AssertTextEquals" locator1="Permissions#CONTENT_PERMISSIONS_ROLE_NAME" value1="${roleTitle}" />
 			</else>
 		</if>
 	</command>

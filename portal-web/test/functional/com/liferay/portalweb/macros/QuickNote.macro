@@ -6,7 +6,7 @@
 
 		<execute function="Click" locator1="QuickNote#NOTE_CONTENT_EDITABLE" />
 
-		<execute function="Type" locator1="QuickNote#NOTE_CONTENT_TEXTAREA" value1="${noteContent}" />
+		<execute function="Type" locator1="TextArea#FIELD_INPUT" value1="${noteContent}" />
 
 		<execute function="Click" locator1="QuickNote#OK_BUTTON" />
 

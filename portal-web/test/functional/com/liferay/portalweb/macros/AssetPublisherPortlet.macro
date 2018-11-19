@@ -306,7 +306,7 @@
 			<var name="navTab" value="Display Settings" />
 		</execute>
 
-		<execute function="Select" locator1="APConfigurationDisplaysettings#DISPLAY_TEMPLATE_SELECT" value1="${displayTemplate}" />
+		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="${displayTemplate}" />
 
 		<execute macro="PortletEntry#save" />
 

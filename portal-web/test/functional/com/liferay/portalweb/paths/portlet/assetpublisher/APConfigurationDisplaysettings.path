@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>DISPLAY_TEMPLATE_SELECT</td>
-	<td>//select[contains(@id,'displayStyle')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ASSET_LINK_BEHAVIOR_SELECT</td>
 	<td>//select[contains(@id,'assetLinkBehavior')]</td>
 	<td></td>

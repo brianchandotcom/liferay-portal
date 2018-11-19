@@ -81,11 +81,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD</td>
-	<td>//div[contains(@id,'cke')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -914,7 +914,7 @@
 			<var name="webContentTitle" value="Netz Inhalt1 Titel" />
 		</execute>
 
-		<execute function="Type" locator1="DDMField#INTEGER" value1="3">
+		<execute function="Type" locator1="TextInput#DDM" value1="3">
 			<var name="key_fieldName" value="Integer" />
 		</execute>
 
@@ -967,7 +967,7 @@
 			<var name="webContentTitle" value="Netz Inhalt2 Titel" />
 		</execute>
 
-		<execute function="Type" locator1="DDMField#INTEGER" value1="8">
+		<execute function="Type" locator1="TextInput#DDM" value1="8">
 			<var name="key_fieldName" value="Integer" />
 		</execute>
 
@@ -1020,7 +1020,7 @@
 			<var name="webContentTitle" value="Netz Inhalt3 Titel" />
 		</execute>
 
-		<execute function="Type" locator1="DDMField#INTEGER" value1="5">
+		<execute function="Type" locator1="TextInput#DDM" value1="5">
 			<var name="key_fieldName" value="Integer" />
 		</execute>
 

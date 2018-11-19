@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_INPUT</td>
+	<td>//textarea[contains(@class,'field-input')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEO_META_TAGS_DESCRIPTION</td>
 	<td>//textarea[contains(@id,'descriptionSEO')]</td>
 	<td></td>

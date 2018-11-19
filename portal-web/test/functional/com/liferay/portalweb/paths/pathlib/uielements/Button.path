@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>ADD_TAGS</td>
-	<td>//button[contains(.,'Add')]</td>
+	<td>//button[@title='Add Tags']</td>
 	<td></td>
 </tr>
 <tr>
@@ -316,6 +316,11 @@
 <tr>
 	<td>LEAVE</td>
 	<td>//button[contains(.,'Leave')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LINK_TO_PAGE_SELECT_PAGE</td>
+	<td>//div[@data-fieldname='${key_fieldName}']//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -13,12 +13,12 @@
 		<execute macro="CalendarConfiguration#disableGlobalTimeZone" />
 
 		<if>
-			<condition function="IsTextNotEqual" locator1="CalendarConfiguration#USER_SETTINGS_TIME_ZONE_LOS_ANGELES_SELECT_OPTION" value1="(UTC -07:00) Pacific Daylight Time" />
+			<condition function="IsTextNotEqual" locator1="Select#LOS_ANGELES_TIME_ZONE" value1="(UTC -07:00) Pacific Daylight Time" />
 			<then>
-				<execute function="Select" locator1="CalendarConfiguration#USER_SETTINGS_TIME_ZONE_SELECT" value1="(UTC -08:00) Pacific Standard Time" />
+				<execute function="Select" locator1="Select#TIME_ZONE" value1="(UTC -08:00) Pacific Standard Time" />
 			</then>
 			<else>
-				<execute function="Select" locator1="CalendarConfiguration#USER_SETTINGS_TIME_ZONE_SELECT" value1="(UTC -07:00) Pacific Daylight Time" />
+				<execute function="Select" locator1="Select#TIME_ZONE" value1="(UTC -07:00) Pacific Daylight Time" />
 			</else>
 		</if>
 	</command>
@@ -26,7 +26,7 @@
 	<command name="editTimeZoneUTC">
 		<execute macro="CalendarConfiguration#disableGlobalTimeZone" />
 
-		<execute function="Select" locator1="CalendarConfiguration#USER_SETTINGS_TIME_ZONE_SELECT" value1="(UTC) Coordinated Universal Time" />
+		<execute function="Select" locator1="Select#TIME_ZONE" value1="(UTC) Coordinated Universal Time" />
 	</command>
 
 	<command name="enableGlobalTimeZone">

@@ -56,7 +56,7 @@
 			<var name="portletName" value="Test Localized Portlet" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="TestBlob#TEST_PORTLET_BODY_FAILED" />
+		<execute function="AssertElementNotPresent" locator1="TestJSR#TEST_PORTLET_BODY_FAILED" />
 
 		<execute function="AssertClick" locator1="TestLocalized#ENGLISH_LOCALIZATION" value1="English" />
 

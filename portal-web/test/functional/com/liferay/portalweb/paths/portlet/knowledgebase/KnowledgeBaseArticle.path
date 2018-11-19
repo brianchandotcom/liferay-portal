@@ -24,11 +24,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>HEADER_TITLE</td>
-	<td>//h3[@class='header-title']/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONTENT_IMAGE</td>
 	<td>//p/img</td>
 	<td></td>
@@ -98,11 +93,6 @@
 <tr>
 	<td>ATTACHMENTS_HEADER_EXPANDED</td>
 	<td>//a[contains(@class,'collapse-icon') and contains(@aria-expanded,'true') and contains(.,'Attachments')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ATTACHMENTS_INVALID_SIZE_ERROR</td>
-	<td>//li[contains(@class,'upload-error')]//span[@class='error-message']</td>
 	<td></td>
 </tr>
 <tr>

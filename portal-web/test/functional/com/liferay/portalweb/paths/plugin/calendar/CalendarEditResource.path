@@ -9,17 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>HEADER_TITLE</td>
-	<td>//h3[@class='header-title']/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--DETAILS-->
-<tr>
 	<td>DETAILS_PANEL_COLLAPSED</td>
 	<td>//a[@aria-expanded='false' and contains(@aria-controls,'calendarResourceDetailsPanelContent')]</td>
 	<td></td>

@@ -16,8 +16,8 @@
 			<var name="description" value="${pollsQuestion}" />
 		</execute>
 
-		<execute function="Type" locator1="Polls#CHOICE_A_FIELD" value1="${pollsQuestionChoiceA}" />
-		<execute function="Type" locator1="Polls#CHOICE_B_FIELD" value1="${pollsQuestionChoiceB}" />
+		<execute function="Type" locator1="TextInput#POLL_CHOICE_A" value1="${pollsQuestionChoiceA}" />
+		<execute function="Type" locator1="TextInput#POLL_CHOICE_B" value1="${pollsQuestionChoiceB}" />
 
 		<execute function="AssertChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
 
@@ -81,8 +81,8 @@
 			<var name="description" value="${pollsQuestion}" />
 		</execute>
 
-		<execute function="Type" locator1="Polls#CHOICE_A_FIELD" value1="${pollsQuestionChoiceA}" />
-		<execute function="Type" locator1="Polls#CHOICE_B_FIELD" value1="${pollsQuestionChoiceB}" />
+		<execute function="Type" locator1="TextInput#POLL_CHOICE_A" value1="${pollsQuestionChoiceA}" />
+		<execute function="Type" locator1="TextInput#POLL_CHOICE_B" value1="${pollsQuestionChoiceB}" />
 
 		<execute function="AssertChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
 

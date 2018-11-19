@@ -2,7 +2,7 @@
 	<command name="_gotoChildArticle">
 		<var name="key_kbChildArticleTitle" value="${kbChildArticleTitle}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBase#CHILD_PAGE_HEADER" value1="Child Article" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Wiki#CHILD_PAGE_HEADER" value1="Child Article" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#CHILD_PAGE_TITLE" value1="${kbChildArticleTitle}" />
 
 		<execute function="AssertClick" locator1="KnowledgeBase#CHILD_PAGE_TITLE" value1="${kbChildArticleTitle}" />
@@ -301,7 +301,7 @@
 			<var name="kbArticleAttachment" value="${kbArticleAttachment}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#ATTACHMENTS_INVALID_SIZE_ERROR" value1="Request is larger than ${maxFileSize}KB and could not be processed." />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_ATTACHMENT_INVALID_SIZE_ERROR" value1="Request is larger than ${maxFileSize}KB and could not be processed." />
 
 		<execute macro="PortletEntry#publish" />
 	</command>
@@ -376,9 +376,9 @@
 			<then>
 				<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#NAVIGATION_TAB_EMAIL_FROM" value1="Email From" />
 
-				<execute function="Type" locator1="KnowledgeBaseConfiguration#EMAIL_FROM_NAME_FIELD" value1="${userName}" />
+				<execute function="Type" locator1="TextInput#EMAIL_FROM_NAME" value1="${userName}" />
 
-				<execute function="Type" locator1="KnowledgeBaseConfiguration#EMAIL_FROM_ADDRESS_FIELD" value1="${userEmailAddress}" />
+				<execute function="Type" locator1="TextInput#EMAIL_FROM_ADDRESS" value1="${userEmailAddress}" />
 
 				<execute macro="PortletEntry#save" />
 			</then>
@@ -742,7 +742,7 @@
 			<var name="key_kbTool" value="${key_editLocalized}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HEADER_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${kbArticleTitle}" />
 
 		<execute function="AssertElementPresent" locator1="AlloyEditor#EDITOR">
 			<var name="key_editor" value="title" />

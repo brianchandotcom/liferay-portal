@@ -34,17 +34,6 @@
 	<td>//input[contains(@id,'value0')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--PERMISSIONS-->
-<tr>
-	<td>PERMISSIONS_VIEWABLE_BY_SELECT</td>
-	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

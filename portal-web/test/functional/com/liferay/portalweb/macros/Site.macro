@@ -337,7 +337,7 @@
 			<var name="displayStyle" value="table" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="SiteMembershipsUserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 
 		<execute function="Click" locator1="SiteMembershipsUserGroups#USER_GROUP_TABLE_ACTIONS" />
 
@@ -494,9 +494,9 @@
 			<isset var="currentSiteLanguages" />
 			<then>
 				<while>
-					<condition function="IsElementPresent" locator1="SiteSettingsDisplaySettings#AVAILABLE_LANGUAGES_CURRENT_PRESENT" />
+					<condition function="IsElementPresent" locator1="LanguageConfiguration#LANGUAGES_CURRENT_SELECT" />
 					<then>
-						<execute function="Click" locator1="SiteSettingsDisplaySettings#AVAILABLE_LANGUAGES_CURRENT_PRESENT" />
+						<execute function="Click" locator1="LanguageConfiguration#LANGUAGES_CURRENT_SELECT" />
 
 						<execute function="Click" locator1="SiteSettingsDisplaySettings#MOVE_CURRENT_TO_AVAILABLE_BUTTON" />
 					</then>
@@ -505,11 +505,11 @@
 				<for list="${currentSiteLanguages}" param="currentSiteLanguage">
 					<var name="currentSiteLanguage" value="${currentSiteLanguage}" />
 
-					<execute function="Select" locator1="SiteSettingsDisplaySettings#AVAILABLE_LANGUAGES_AVAILABLE_SELECT" value1="${currentSiteLanguage}" />
+					<execute function="Select" locator1="LanguageConfiguration#LANGUAGES_AVAILABLE" value1="${currentSiteLanguage}" />
 
 					<execute function="Click" locator1="SiteSettingsDisplaySettings#MOVE_AVAILABLE_TO_CURRENT_BUTTON" />
 
-					<execute function="AssertTextEquals#assertPartialText" locator1="SiteSettingsDisplaySettings#AVAILABLE_LANGUAGES_CURRENT_SELECT" value1="${currentSiteLanguage}" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="LanguageConfiguration#LANGUAGES_CURRENT" value1="${currentSiteLanguage}" />
 				</for>
 			</then>
 		</if>
@@ -519,7 +519,7 @@
 			<then>
 				<var name="defaultSiteLanguage" value="${defaultSiteLanguage}" />
 
-				<execute function="Select" locator1="SiteSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT" value1="${defaultSiteLanguage}" />
+				<execute function="Select" locator1="Select#DEFAULT_LANGUAGE" value1="${defaultSiteLanguage}" />
 			</then>
 		</if>
 
@@ -962,7 +962,7 @@
 			<var name="displayStyle" value="table" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="SiteMembershipsUserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 
 		<execute macro="LexiconEntry#openEntryMenu">
 			<var name="rowEntry" value="${userGroupName}" />
@@ -1206,13 +1206,13 @@
 		<for list="${currentSiteLanguages}" param="currentSiteLanguage">
 			<var name="currentSiteLanguage" value="${currentSiteLanguage}" />
 
-			<execute function="AssertTextEquals#assertPartialText" locator1="SiteSettingsDisplaySettings#AVAILABLE_LANGUAGES_CURRENT_SELECT" value1="${currentSiteLanguage}" />
+			<execute function="AssertTextEquals#assertPartialText" locator1="LanguageConfiguration#LANGUAGES_CURRENT" value1="${currentSiteLanguage}" />
 		</for>
 
 		<for list="${availableSiteLanguages}" param="availableSiteLanguage">
 			<var name="availableSiteLanguage" value="${availableSiteLanguage}" />
 
-			<execute function="AssertTextEquals#assertPartialText" locator1="SiteSettingsDisplaySettings#AVAILABLE_LANGUAGES_AVAILABLE_SELECT" value1="${availableSiteLanguage}" />
+			<execute function="AssertTextEquals#assertPartialText" locator1="LanguageConfiguration#LANGUAGES_AVAILABLE" value1="${availableSiteLanguage}" />
 		</for>
 
 		<if>
@@ -1220,7 +1220,7 @@
 			<then>
 				<var name="defaultSiteLanguage" value="${defaultSiteLanguage}" />
 
-				<execute function="Select" locator1="SiteSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT" value1="${defaultSiteLanguage}" />
+				<execute function="Select" locator1="Select#DEFAULT_LANGUAGE" value1="${defaultSiteLanguage}" />
 			</then>
 		</if>
 	</command>

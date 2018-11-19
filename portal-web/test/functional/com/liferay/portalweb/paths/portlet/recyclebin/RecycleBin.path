@@ -76,16 +76,6 @@
 	<td>//iframe[contains(@id,'selectContainer_iframe_')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>RECYCLE_BIN_FOLDER_WARNING_INFO</td>
-	<td>//div[contains(@class,'alert-block')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RECYCLE_BIN_FOLDER_WARNING_CHOOSE_THIS_FOLDER_BUTTON</td>
-	<td>//button[contains(.,'Choose This Folder')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

@@ -147,11 +147,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_WEB_CONTENT_IFRAME</td>
-	<td>//iframe[contains(@id,'selectContent')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_WEB_CONTENT_TITLE</td>
 	<td>//div[contains(@class,'field-editor') and contains(@class,'expanded')]//span[contains(@class,'lfr-card-title-text')]</td>
 	<td></td>

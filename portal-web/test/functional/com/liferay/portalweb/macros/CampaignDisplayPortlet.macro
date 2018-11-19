@@ -19,7 +19,7 @@
 
 		<execute function="Select" locator1="CampaignContentDisplay#RULE_PANEL_CAMPAIGN_SELECT" value1="${campaignName}" />
 
-		<execute function="Click" locator1="CampaignContentDisplay#RULE_PANEL_SELECT_CONTENT" />
+		<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT" />
 
 		<execute macro="MenuItem#click">
 			<var name="menuItem" value="${contentType}" />

@@ -255,7 +255,7 @@
 
 		<while>
 			<and>
-				<condition function="IsElementNotPresent" locator1="OpenAM#USER_NAME" />
+				<condition function="IsElementNotPresent" locator1="TextInput#TEXT" />
 				<not>
 					<equals arg1="${pauseCount}" arg2="20" />
 				</not>

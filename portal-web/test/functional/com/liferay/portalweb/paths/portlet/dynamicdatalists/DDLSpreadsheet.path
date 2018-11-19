@@ -14,16 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CELL_EDITOR_FIELD</td>
-	<td>//input[@name='${key_fieldName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CELL_EDITOR_SELECT</td>
-	<td>//select[@name='${key_fieldName}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

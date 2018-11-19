@@ -14,14 +14,14 @@
 	<td></td>
 </tr>
 <tr>
-    <td>ORDER_ICON_GENERIC</td>
-    <td>//nav[contains(@class,'management-bar')]//a[contains(@class,'order') and contains(@class,'active')]</td>
-    <td></td>
+	<td>ORDER_ICON_GENERIC</td>
+	<td>//nav[contains(@class,'management-bar')]//a[contains(@class,'order') and contains(@class,'active')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ORDER_ICON_SPECIFIC</td>
-    <td>//nav[contains(@class,'management-bar')]//a[contains(@class,'order')][@title='${key_order}']</td>
-    <td></td>
+	<td>ORDER_ICON_SPECIFIC</td>
+	<td>//nav[contains(@class,'management-bar')]//a[contains(@class,'order')][@title='${key_order}']</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

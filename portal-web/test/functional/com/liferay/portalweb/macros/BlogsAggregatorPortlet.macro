@@ -38,8 +38,8 @@
 
 		<var name="key_orgName" value="${orgName}" />
 
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsSelectOrganization#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsSelectOrganization#ORGANIZATION_TABLE_PARENT_ORGANIZATION" value1="${parentOrgName}" />
+		<execute function="AssertTextEquals" locator1="ContentRow#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute function="AssertTextEquals" locator1="ContentRow#ORGANIZATION_TABLE_NAME_SECOND_COLUMN" value1="${parentOrgName}" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

@@ -112,7 +112,7 @@
 	<command name="gotoDetailsViaDialogBox">
 		<execute function="AssertClick" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_VIEW_DETAILS_BUTTON" value1="View Details" />
 
-		<execute function="SelectFrame" locator1="CalendarViewEventDetails#VIEW_EVENT_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
 
 	<command name="gotoEdit">

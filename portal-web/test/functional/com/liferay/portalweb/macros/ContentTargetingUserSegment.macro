@@ -10,7 +10,7 @@
 			<var name="menuItem" value="${contentVisitedContent}" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_WEB_CONTENT_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#SELECT_CONTENT" />
 
 		<execute macro="LexiconEntry#gotoEntry">
 			<var name="rowEntry" value="${webContentTitle}" />

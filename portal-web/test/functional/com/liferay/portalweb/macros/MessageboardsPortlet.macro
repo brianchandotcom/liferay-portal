@@ -117,14 +117,14 @@
 		<if>
 			<isset var="emailFromName" />
 			<then>
-				<execute function="Type" locator1="MessageBoardsAdminConfiguration#EMAIL_FROM_NAME" value1="${emailFromName}" />
+				<execute function="Type" locator1="TextInput#EMAIL_FROM_NAME" value1="${emailFromName}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="emailFromAddress" />
 			<then>
-				<execute function="Type" locator1="MessageBoardsAdminConfiguration#EMAIL_FROM_ADDRESS" value1="${emailFromAddress}" />
+				<execute function="Type" locator1="TextInput#EMAIL_FROM_ADDRESS" value1="${emailFromAddress}" />
 			</then>
 		</if>
 
@@ -320,8 +320,8 @@
 
 		<execute function="AssertClick" locator1="MessageBoardsAdminConfiguration#SETUP_NAVIGATION_EMAIL_FROM" value1="Email From" />
 
-		<execute function="AssertTextEquals" locator1="MessageBoardsAdminConfiguration#EMAIL_FROM_NAME" value1="[$MESSAGE_USER_NAME$]" />
-		<execute function="AssertTextEquals" locator1="MessageBoardsAdminConfiguration#EMAIL_FROM_ADDRESS" value1="test@liferay.com" />
+		<execute function="AssertTextEquals" locator1="TextInput#EMAIL_FROM_NAME" value1="[$MESSAGE_USER_NAME$]" />
+		<execute function="AssertTextEquals" locator1="TextInput#EMAIL_FROM_ADDRESS" value1="test@liferay.com" />
 	</command>
 
 	<command name="viewNoPermissionCP">

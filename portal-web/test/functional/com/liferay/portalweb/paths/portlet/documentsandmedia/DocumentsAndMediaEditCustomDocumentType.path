@@ -9,23 +9,8 @@
 </thead>
 <tbody>
 <tr>
-	<td>BOOLEAN_CHECKBOX</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NUMBER_FIELD</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//input</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SELECT_OPTIONS_SELECT</td>
 	<td>//select[contains(@id,'Select')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEXT_FIELD</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//input</td>
 	<td></td>
 </tr>
 </tbody>

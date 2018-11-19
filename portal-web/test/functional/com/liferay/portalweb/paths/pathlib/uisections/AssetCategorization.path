@@ -59,11 +59,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TAGS_ADD_BUTTON</td>
-	<td>//button[@title='Add Tags']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TAGS_SELECT_BUTTON</td>
 	<td>//button[@title='Select Tags']</td>
 	<td></td>

@@ -49,7 +49,7 @@
 			<var name="panel" value="Permissions" />
 		</execute>
 
-		<execute function="Select" locator1="CategoriesEditCategory#PERMISSIONS_VIEWABLE_BY_SELECT" value1="${viewableBy}" />
+		<execute function="Select" locator1="Select#PERMISSIONS" value1="${viewableBy}" />
 
 		<execute macro="PortletEntry#save" />
 	</command>

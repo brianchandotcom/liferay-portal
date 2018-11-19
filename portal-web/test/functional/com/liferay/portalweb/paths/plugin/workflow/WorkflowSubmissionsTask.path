@@ -26,11 +26,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PREVIEW_TITLE</td>
-	<td>//h3[@class='task-content-title']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PREVIEW_CONTENT</td>
 	<td>//div[@id='preview']//div[@class='panel-body']</td>
 	<td></td>

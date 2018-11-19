@@ -272,17 +272,6 @@
 	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[3]//a</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--THREAD_TABLE_ADMIN-->
-<tr>
-	<td>THREAD_TABLE_ADMIN_FLAG</td>
-	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[3]//a</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

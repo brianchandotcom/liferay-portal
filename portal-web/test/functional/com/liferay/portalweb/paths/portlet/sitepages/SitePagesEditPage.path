@@ -10,11 +10,6 @@
 <tbody>
 <!--DETAILS-->
 <tr>
-	<td>FRIENDLY_URL_FIELD</td>
-	<td>//input[contains(@id,'friendlyURL')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LAYOUT_CARD</td>
 	<td>//div[contains(@class,'card')]//span[contains(.,'${key_columnName}')]</td>
 	<td></td>

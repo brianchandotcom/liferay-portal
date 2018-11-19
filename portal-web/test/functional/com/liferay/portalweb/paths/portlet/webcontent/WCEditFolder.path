@@ -8,7 +8,6 @@
 <tr><td rowspan="1" colspan="3">WCEditFolder</td></tr>
 </thead>
 <tbody>
-<!--WORKFLOW -->
 <tr>
 	<td>WORKFLOW_STRUCTURE_RESTRICTIONS_TOGGLE</td>
 	<td>//a[contains(.,'Structure Restrictions and Workflow')]</td>

@@ -25,7 +25,7 @@
 			<then>
 				<execute function="Click" locator1="LanguageConfiguration#LANGUAGES_CURRENT_SELECT" />
 
-				<execute function="Click" locator1="LanguageConfiguration#MOVE_CURRENT_TO_AVAILABLE_BUTTON" />
+				<execute function="Click" locator1="Button#MOVE_CURRENT_TO_AVAILABLE" />
 			</then>
 		</while>
 	</command>
@@ -36,7 +36,7 @@
 
 			<execute function="Select" locator1="LanguageConfiguration#LANGUAGES_AVAILABLE" value1="${currentLanguage}" />
 
-			<execute function="Click" locator1="LanguageConfiguration#MOVE_AVAILABLE_TO_CURRENT_BUTTON" />
+			<execute function="Click" locator1="Button#MOVE_AVAILABLE_TO_CURRENT" />
 
 			<execute function="AssertTextEquals#assertPartialText" locator1="LanguageConfiguration#LANGUAGES_CURRENT" value1="${currentLanguage}" />
 		</for>
@@ -87,7 +87,7 @@
 			<var name="panel" value="Languages" />
 		</execute>
 
-		<execute function="Select" locator1="LanguageConfiguration#DISPLAY_TEMPLATE_SELECT" value1="${displayStyle}" />
+		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="${displayStyle}" />
 
 		<execute macro="Button#clickSave" />
 

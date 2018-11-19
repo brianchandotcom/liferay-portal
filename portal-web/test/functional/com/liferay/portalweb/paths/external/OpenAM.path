@@ -13,16 +13,6 @@
 	<td>//input[@value='Log in']</td>
 	<td></td>
 </tr>
-<tr>
-	<td>PASSWORD</td>
-	<td>//input[@type='password']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_NAME</td>
-	<td>//input[@type='text']</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

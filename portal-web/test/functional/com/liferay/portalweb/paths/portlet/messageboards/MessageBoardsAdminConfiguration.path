@@ -24,22 +24,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--EMAIL_FROM-->
-<tr>
-	<td>EMAIL_FROM_NAME</td>
-	<td>//input[contains(@id,'emailFromName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMAIL_FROM_ADDRESS</td>
-	<td>//input[contains(@id,'emailFromAddress')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--MESSAGE_ADDED_EMAIL-->
 <tr>
 	<td>MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX</td>

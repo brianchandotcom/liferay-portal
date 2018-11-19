@@ -17,12 +17,12 @@
 		<if>
 			<equals arg1="${enableDisplaySettingsShowSearch}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX" />
+				<execute function="Check" locator1="Checkbox#SHOW_SEARCH_CHECKBOX" />
 			</then>
 			<elseif>
 				<equals arg1="${enableDisplaySettingsShowSearch}" arg2="false" />
 				<then>
-					<execute function="Uncheck" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX" />
+					<execute function="Uncheck" locator1="Checkbox#SHOW_SEARCH_CHECKBOX" />
 				</then>
 			</elseif>
 		</if>
@@ -99,7 +99,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
-		<execute function="AssertClick" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_ROOT_FOLDER_SELECT_BUTTON" value1="Select" />
+		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 
@@ -158,9 +158,9 @@
 			</then>
 		</if>
 
-		<execute function="AssertChecked" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX" />
+		<execute function="AssertChecked" locator1="Checkbox#SHOW_SEARCH_CHECKBOX" />
 		<execute function="AssertTextEquals#assertValue" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_MAXIMUM_ENTRIES_TO_DISPLAY_SELECT" value1="20" />
-		<execute function="AssertChecked" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX" />
+		<execute function="AssertChecked" locator1="Checkbox#SHOW_SEARCH_CHECKBOX" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

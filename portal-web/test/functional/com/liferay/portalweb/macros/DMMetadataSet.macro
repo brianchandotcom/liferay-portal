@@ -51,11 +51,11 @@
 
 	<command name="selectMetadataSetsFrame">
 		<if>
-			<condition function="IsElementPresent" locator1="DocumentsAndMediaMetadataSets#METADATA_SETS_IFRAME" />
+			<condition function="IsElementPresent" locator1="IFrame#DIALOG" />
 			<then>
 				<execute function="SelectFrameTop" />
 
-				<execute function="SelectFrame" locator1="DocumentsAndMediaMetadataSets#METADATA_SETS_IFRAME" />
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 			</then>
 		</if>
 	</command>

@@ -299,7 +299,7 @@
 		</for>
 
 		<for list="6,7" param="viewEntryCount">
-			<execute function="AssertElementNotPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE">
+			<execute function="AssertElementNotPresent" locator1="Blogs#ENTRY_TABLE_TITLE">
 				<var name="key_entryTitle" value="Announcements Entry Title ${viewEntryCount}" />
 			</execute>
 		</for>
@@ -314,7 +314,7 @@
 		</for>
 
 		<for list="1,2,3,4,5" param="viewEntryCount">
-			<execute function="AssertElementNotPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE">
+			<execute function="AssertElementNotPresent" locator1="Blogs#ENTRY_TABLE_TITLE">
 				<var name="key_entryTitle" value="Announcements Entry Title ${viewEntryCount}" />
 			</execute>
 		</for>
@@ -329,7 +329,7 @@
 		</for>
 
 		<for list="6,7" param="viewEntryCount">
-			<execute function="AssertElementNotPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE">
+			<execute function="AssertElementNotPresent" locator1="Blogs#ENTRY_TABLE_TITLE">
 				<var name="key_entryTitle" value="Announcements Entry Title ${viewEntryCount}" />
 			</execute>
 		</for>

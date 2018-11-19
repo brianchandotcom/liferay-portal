@@ -33,17 +33,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--NAVIGATION-->
-<tr>
-	<td>NAVIGATION_RESOURCES</td>
-	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Resources')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--VIEW-->
 <tr>
 	<td>VIEW_TODAY_BUTTON</td>
@@ -240,22 +229,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--CURRENT_SITE_CALENDARS_MENULIST-->
-<tr>
-	<td>CURRENT_SITE_CALENDARS_MENULIST_ADD_CALENDAR</td>
-	<td>//li[@class='simple-menu-item' and @data-id='add']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CURRENT_SITE_CALENDARS_MENULIST_MANAGE_CALENDAR</td>
-	<td>//li[@class='simple-menu-item' and @data-id='manage']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CURRENT_SITE_CALENDARS_CALENDAR-->
 <tr>
 	<td>CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY</td>
@@ -275,11 +248,6 @@
 <tr>
 	<td>CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW</td>
 	<td>//div[contains(@id,'siteCalendarList')]/div/div[contains(.,'${key_site}')]/div[@class='calendar-list-item-arrow']/i[@class='icon-caret-down']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL</td>
-	<td>//div[contains(@id,'siteCalendarList')]/div/div/span[contains(.,'${key_calendarName}')]</td>
 	<td></td>
 </tr>
 <tr>

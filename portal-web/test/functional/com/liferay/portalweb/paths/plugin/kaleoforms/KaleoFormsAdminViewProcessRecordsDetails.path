@@ -8,12 +8,6 @@
 <tr><td rowspan="1" colspan="3">KaleoFormsAdminViewProcessRecordsDetails</td></tr>
 </thead>
 <tbody>
-<!--CURRENT_RECORD-->
-<tr>
-	<td>CURRENT_RECORD_STATUS</td>
-	<td>//span[@class='workflow-status']/span</td>
-	<td></td>
-</tr>
 <tr>
 	<td>CURRENT_RECORD_FIELD</td>
 	<td>//label[contains(.,'${key_fieldName}')]/../../div[contains(.,'${key_fieldName}') and contains(.,'${key_kfProcessFieldData}')]</td>

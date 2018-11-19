@@ -37,7 +37,7 @@
 			<var name="locale" value="${friendlyUrlLocalized}" />
 		</execute>
 
-		<execute function="Type" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1="${localizedFriendlyURL}" />
+		<execute function="Type" locator1="TextInput#FRIENDLY_URL" value1="${localizedFriendlyURL}" />
 	</command>
 
 	<command name="addJavaScript">
@@ -156,7 +156,7 @@
 			<var name="locale" value="${friendlyUrlLocalized}" />
 		</execute>
 
-		<execute function="Type" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1=" " />
+		<execute function="Type" locator1="TextInput#FRIENDLY_URL" value1=" " />
 
 		<execute macro="Button#clickSave" />
 	</command>
@@ -671,7 +671,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1="/${pageName}" />
+		<execute function="AssertTextEquals" locator1="TextInput#FRIENDLY_URL" value1="/${pageName}" />
 	</command>
 
 	<command name="viewPageLayout">

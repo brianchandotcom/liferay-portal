@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSIGNMENT_TYPE</td>
+	<td>//select[@name='assignmentType']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PERMISSIONS_VIEW_ROLE</td>
 	<td>//select[contains(.,'${key_permissionsViewRole}')]</td>
 	<td></td>
@@ -84,8 +89,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOS_ANGELES_TIME_ZONE</td>
+	<td>//select[contains(@id,'timeZoneId')]/option[@value='America/Los_Angeles']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NEW_PARENT</td>
 	<td>//div[label[contains(.,'New Parent')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_DELTA</td>
+	<td>//select[contains(@id,'pageDelta')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS</td>
+	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -96,6 +116,16 @@
 <tr>
 	<td>REGION</td>
 	<td>//div[label[contains(.,'Region')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_FORMAT</td>
+	<td>//select[contains(@id,'AdminPortlet_format')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAML_NAME_IDENTIFIER_FORMAT_SELECT</td>
+	<td>//select[contains(@id,'SamlAdminPortlet_nameIdFormat')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -121,6 +151,11 @@
 <tr>
 	<td>TYPE</td>
 	<td>//div[label[contains(.,'Type')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_DEFAULT</td>
+	<td>//select[contains(@id,'workflowDefinition-1')]</td>
 	<td></td>
 </tr>
 </tbody>

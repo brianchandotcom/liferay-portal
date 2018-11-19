@@ -2,13 +2,13 @@
 	<var name="siteName" value="Liferay" />
 
 	<command name="_selectCalendarSettingsIframe">
-		<execute function="SelectFrame" locator1="CalendarEditCalendar#EDIT_CALENDAR_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
 
 	<command name="_selectPermissionsIframe">
 		<execute function="AssertTextEquals" locator1="CalendarPermissions#PERMISSIONS_TITLE" value1="Permissions" />
 
-		<execute function="SelectFrame" locator1="CalendarPermissions#CALENDAR_PERMISSIONS_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
 
 	<command name="closeModal">
@@ -29,7 +29,7 @@
 			<var name="key_siteName" value="${siteName}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar" />
+		<execute function="AssertClick" locator1="Calendar#MY_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar" />
 
 		<execute macro="CalendarNavigator#_selectCalendarSettingsIframe" />
 	</command>
@@ -77,7 +77,7 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertTextEquals" locator1="CalendarEditResource#HEADER_TITLE" value1="New Resource" />
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="New Resource" />
 	</command>
 
 	<command name="gotoConfiguration">
@@ -100,7 +100,7 @@
 			<var name="key_siteName" value="${siteName}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_MANAGE_CALENDAR" value1="Manage Calendars" />
+		<execute function="AssertClick" locator1="Calendar#MY_CALENDARS_MENULIST_MANAGE_CALENDAR" value1="Manage Calendars" />
 	</command>
 
 	<command name="gotoEditEvent">
@@ -129,7 +129,7 @@
 			<var name="rowEntry" value="${calendarResourceName}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="CalendarEditResource#HEADER_TITLE" value1="${calendarResourceName}" />
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${calendarResourceName}" />
 	</command>
 
 	<command name="gotoEventDetails">
@@ -199,7 +199,7 @@
 	</command>
 
 	<command name="gotoResources">
-		<execute function="AssertClick" locator1="Calendar#NAVIGATION_RESOURCES" value1="Resources" />
+		<execute function="AssertClick" locator1="NavBar#RESOURCES" value1="Resources" />
 	</command>
 
 	<command name="gotoSpecificBusyDayViaSmallCalendar">

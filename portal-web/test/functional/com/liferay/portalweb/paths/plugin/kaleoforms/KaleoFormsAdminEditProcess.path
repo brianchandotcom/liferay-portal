@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>NEXT_BUTTON</td>
-	<td>//button[contains(.,'Next')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NEXT_BUTTON_INACTIVE</td>
 	<td>//button[@disabled='' and contains(.,'Next')]</td>
 	<td></td>

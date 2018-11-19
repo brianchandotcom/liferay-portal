@@ -111,7 +111,7 @@
 		</execute>
 
 		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="WCEditFolder#WORKFLOW_PARENT_FOLDER_RADIO" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="Radio#WORKFLOW_PARENT_FOLDER" />
 			<then>
 				<execute function="Click" locator1="WCEditFolder#WORKFLOW_STRUCTURE_RESTRICTIONS_TOGGLE" />
 			</then>
@@ -120,12 +120,12 @@
 		<if>
 			<equals arg1="${workflowRestriction}" arg2="Parent Folder" />
 			<then>
-				<execute function="Click" locator1="WCEditFolder#WORKFLOW_PARENT_FOLDER_RADIO" />
+				<execute function="Click" locator1="Radio#WORKFLOW_PARENT_FOLDER" />
 			</then>
 			<elseif>
 				<equals arg1="${workflowRestriction}" arg2="Specific Restrictions" />
 				<then>
-					<execute function="Click" locator1="WCEditFolder#WORKFLOW_SPECIFIC_RESTRICTIONS_RADIO" />
+					<execute function="Click" locator1="Radio#WORKFLOW_SPECIFIC_RESTRICTIONS" />
 
 					<execute function="AssertClick" locator1="WCEditFolder#WORKFLOW_SPECIFIC_RESTRICTIONS_CHOOSE_STRUCTURE_BUTTON" value1="Choose Structure" />
 
@@ -145,9 +145,9 @@
 			<elseif>
 				<equals arg1="${workflowRestriction}" arg2="Default Workflow" />
 				<then>
-					<execute function="Click" locator1="WCEditFolder#WORKFLOW_DEFAULT_WORKFLOW_RADIO" />
+					<execute function="Click" locator1="Radio#WORKFLOW_DEFAULT_WORKFLOW" />
 
-					<execute function="Select" locator1="WCEditFolder#WORKFLOW_DEFAULT_WORKFLOW_WORKFLOW_SELECT" value1="${workflowDefinition}" />
+					<execute function="Select" locator1="Select#WORKFLOW_DEFAULT" value1="${workflowDefinition}" />
 				</then>
 			</elseif>
 		</if>

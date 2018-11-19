@@ -453,7 +453,7 @@
 
 		<var name="key_fieldName" value="${Text2}" />
 
-		<execute function="AssertElementNotPresent" locator1="DDLEditRecord#TEXT_FIELD" />
+		<execute function="AssertElementNotPresent" locator1="TextInput#DDM" />
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 

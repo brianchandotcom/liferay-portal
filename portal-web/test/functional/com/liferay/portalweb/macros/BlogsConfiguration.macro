@@ -33,11 +33,11 @@
 	</command>
 
 	<command name="selectDisplayTemplate">
-		<execute function="Select" locator1="Configuration#SETUP_DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT" value1="${displayTemplate}" />
+		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="${displayTemplate}" />
 	</command>
 
 	<command name="selectMaximumItemstoDisplay">
-		<execute function="Select" locator1="Configuration#SETUP_DISPLAY_SETTINGS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="${maximumItemsToDisplay}" />
+		<execute function="Select" locator1="Select#PAGE_DELTA" value1="${maximumItemsToDisplay}" />
 	</command>
 
 	<command name="selectScopeCP">
@@ -109,8 +109,8 @@
 	</command>
 
 	<command name="viewDefaultConfiguration">
-		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_DISPLAY_SETTINGS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="20" />
-		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT" value1="abstract" />
+		<execute function="AssertTextEquals#assertValue" locator1="Select#PAGE_DELTA" value1="20" />
+		<execute function="AssertTextEquals#assertValue" locator1="Select#DISPLAY_TEMPLATE" value1="abstract" />
 		<execute function="AssertChecked" locator1="Checkbox#ENABLE_REPORT_INAPPROPRIATE_CONTENT" />
 		<execute function="AssertChecked" locator1="Checkbox#SHOW_RELATED_ASSETS" />
 		<execute function="AssertChecked" locator1="Checkbox#ENABLE_RATINGS" />

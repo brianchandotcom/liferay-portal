@@ -24,7 +24,7 @@
 		<if>
 			<isset var="displayTemplate" />
 			<then>
-				<execute function="Select" locator1="TagsNavigationConfiguration#DISPLAY_TEMPLATE_SELECT" value1="${displayTemplate}" />
+				<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="${displayTemplate}" />
 			</then>
 		</if>
 
@@ -90,7 +90,7 @@
 		<if>
 			<isset var="displayTemplate" />
 			<then>
-				<execute function="AssertSelectedLabel" locator1="TagsNavigationConfiguration#DISPLAY_TEMPLATE_SELECT" value1="${displayTemplate}" />
+				<execute function="AssertSelectedLabel" locator1="Select#DISPLAY_TEMPLATE" value1="${displayTemplate}" />
 			</then>
 		</if>
 

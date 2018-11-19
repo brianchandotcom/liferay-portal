@@ -9,23 +9,8 @@
 </thead>
 <tbody>
 <tr>
-	<td>DEFAULT_LANGUAGE_SELECT</td>
-	<td>//select[contains(@id,'languageId')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AVAILABLE_LANGUAGES_CURRENT_SELECT</td>
-	<td>//select[contains(@id,'currentLanguageIds')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>AVAILABLE_LANGUAGES_CURRENT_PRESENT</td>
 	<td>//select[contains(@id,'currentLanguageIds')]/option</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AVAILABLE_LANGUAGES_AVAILABLE_SELECT</td>
-	<td>//select[contains(@id,'availableLanguageIds')]</td>
 	<td></td>
 </tr>
 </tbody>

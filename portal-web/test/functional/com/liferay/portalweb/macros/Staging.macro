@@ -199,7 +199,7 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="Type" locator1="StagingPublishToLive#PUBLISH_TEMPLATES_NAME_FIELD" value1="${publishTemplateName}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${publishTemplateName}" />
 		<execute macro="PortletEntry#inputDescription">
 			<var name="description" value="${publishTemplateDescription}" />
 		</execute>
@@ -483,7 +483,7 @@
 
 				<execute function="AssertConfirm" value1="Are you sure you want to deactivate staging for ${siteName}?" />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS_3" value1="Staging is successfully disabled." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Staging is successfully disabled." />
 			</then>
 		</if>
 
@@ -567,7 +567,7 @@
 
 		<execute function="AssertClick" locator1="StagingPublishToLive#PUBLISH_TEMPLATES_TABLE_NAME" value1="${publishTemplateName}" />
 
-		<execute function="Type" locator1="StagingPublishToLive#PUBLISH_TEMPLATES_NAME_FIELD" value1="${publishTemplateNameEdit}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${publishTemplateNameEdit}" />
 		<execute macro="PortletEntry#inputDescription">
 			<var name="description" value="${publishTemplateDescriptionEdit}" />
 		</execute>

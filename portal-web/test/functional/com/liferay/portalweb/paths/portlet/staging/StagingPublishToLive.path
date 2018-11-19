@@ -128,17 +128,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--PUBLISH_TEMPLATES-->
-<tr>
-	<td>PUBLISH_TEMPLATES_NAME_FIELD</td>
-	<td>//div[contains(@class,'form-group')]//input[contains(@id,'name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--PUBLISH_TEMPLATES_TABLE-->
 <tr>
 	<td>PUBLISH_TEMPLATES_TABLE_NAME</td>

@@ -444,7 +444,7 @@
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsAssignOrganizationalRoles#USER_TABLE_SCREEN_NAME_1" value1="usersn" />
+		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ID_1" value1="usersn" />
 		<execute function="AssertNotVisible" locator1="UsersAndOrganizationsAssignOrganizationalRoles#USER_TABLE_SCREEN_NAME_2" />
 	</command>
 

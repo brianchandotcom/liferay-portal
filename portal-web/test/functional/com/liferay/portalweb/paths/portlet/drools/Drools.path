@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>WELCOME_MESSAGE</td>
-	<td>//div[contains(@id,'sampledroolsportlet')]//div[@class='portlet-body']</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

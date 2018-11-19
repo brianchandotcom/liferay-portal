@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>FEED_TITLE</td>
-	<td>//*[@id='feedTitleText']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FEED_EVENT_LINK</td>
 	<td>//*[@class='entry']/*/*[contains(.,'${key_eventTitle}')]</td>
 	<td></td>

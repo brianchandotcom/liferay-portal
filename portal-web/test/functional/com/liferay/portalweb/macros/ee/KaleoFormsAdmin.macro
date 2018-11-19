@@ -480,26 +480,26 @@
 
 	<command name="next">
 		<execute function="AssertElementNotPresent" locator1="KaleoFormsAdminEditProcess#NEXT_BUTTON_INACTIVE" />
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#NEXT_BUTTON" value1="Next" />
+		<execute function="AssertClick" locator1="Button#NEXT" value1="Next" />
 	</command>
 
 	<command name="populateFieldDate">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="Type" locator1="DDLEditRecord#DATE_FIELD" value1="${kfProcessFieldData}" />
-		<execute function="Click" locator1="DDLEditRecord#DATE_FIELD" />
+		<execute function="Type" locator1="TextInput#DDM" value1="${kfProcessFieldData}" />
+		<execute function="Click" locator1="TextInput#DDM" />
 	</command>
 
 	<command name="populateFieldSelect">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="Select" locator1="DDLEditRecord#SELECT_SELECT" value1="${kfProcessFieldData}" />
+		<execute function="Select" locator1="DDMField#SELECT" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="populateFieldText">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="Type" locator1="DDLEditRecord#TEXT_FIELD" value1="${kfProcessFieldData}" />
+		<execute function="Type" locator1="TextInput#DDM" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="populateFieldTextBox">
@@ -788,7 +788,7 @@
 			<var name="rowEntry" value="${kfProcessFieldData}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="KaleoFormsAdminViewProcessRecordsDetails#CURRENT_RECORD_STATUS" value1="${kfStatus}" />
+		<execute function="AssertTextEquals" locator1="AssetWorkflow#WORKFLOW_STATUS" value1="${kfStatus}" />
 	</command>
 
 	<command name="viewProcessRecordDetailsField">

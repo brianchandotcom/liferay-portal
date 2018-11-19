@@ -9,16 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>VIEW_EVENT_IFRAME</td>
-	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EVENT_TITLE</td>
-	<td>//h3[@class='header-title']/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>STATUS</td>
 	<td>//dl[contains(@class,'property-list')]/dd[1]</td>
 	<td></td>

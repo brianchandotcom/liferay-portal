@@ -249,11 +249,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RECYCLE_BIN_INFO</td>
-	<td>//div[contains(@class,'tooltip-content')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>REQUIRED_INFO</td>
 	<td>//div[contains(@class,'required') and contains(@role,'alert')]</td>
 	<td></td>
@@ -281,11 +276,6 @@
 <tr>
 	<td>SUCCESS_2</td>
 	<td>//span[contains(@class,'alert-success') and contains(@class,'message')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUCCESS_3</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>

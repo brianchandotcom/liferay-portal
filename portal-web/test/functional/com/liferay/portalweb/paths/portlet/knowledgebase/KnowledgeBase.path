@@ -94,11 +94,6 @@
 </tr>
 <!--CHILD_ARTICLES-->
 <tr>
-	<td>CHILD_PAGE_HEADER</td>
-	<td>//div[@class='sidenav-content']/h4</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CHILD_PAGE_TITLE</td>
 	<td>//li[@class='list-group-item']//a[contains(.,'${key_kbChildArticleTitle}')]</td>
 	<td></td>

@@ -103,11 +103,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ASSET_ABSTRACT_VIEW</td>
-	<td>//h4[@class='asset-title']/a[contains(.,'${key_assetTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ASSET_ABSTRACT_GENERIC</td>
 	<td>//div[contains(@class,'asset-abstract')]</td>
 	<td></td>

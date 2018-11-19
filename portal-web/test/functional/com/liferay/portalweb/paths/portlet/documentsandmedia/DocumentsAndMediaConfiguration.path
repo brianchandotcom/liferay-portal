@@ -25,16 +25,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DISPLAY_SETTINGS_ROOT_FOLDER_SELECT_BUTTON</td>
-	<td>//button[contains(.,'Select')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX</td>
-	<td>//input[contains(@id,'showFoldersSearch')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DISPLAY_SETTINGS_MAXIMUM_ENTRIES_TO_DISPLAY_SELECT</td>
 	<td>//select[contains(@id,'entriesPerPage')]</td>
 	<td></td>

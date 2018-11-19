@@ -95,7 +95,7 @@
 	</command>
 
 	<command name="editHelpText">
-		<execute function="Type" locator1="FormFields#HELP_TEXT_INPUT_FIELD" value1="${fieldHelpText}">
+		<execute function="Type" locator1="FormFields#TEXT_FIELD" value1="${fieldHelpText}">
 			<var name="key_fieldName" value="${fieldName}" />
 		</execute>
 	</command>
@@ -409,18 +409,18 @@
 		<if>
 			<condition function="IsElementPresent" locator1="FormFields#DATE_FIELD" />
 			<then>
-				<execute function="AssertNotVisible" locator1="FormFields#DATE_LABEL" />
+				<execute function="AssertNotVisible" locator1="FormFields#LABEL" />
 				<execute function="AssertNotVisible" locator1="FormFields#DATE_FIELD" />
 			</then>
 			<else>
-				<execute function="AssertElementNotPresent" locator1="FormFields#DATE_LABEL" />
+				<execute function="AssertElementNotPresent" locator1="FormFields#LABEL" />
 				<execute function="AssertElementNotPresent" locator1="FormFields#DATE_FIELD" />
 			</else>
 		</if>
 	</command>
 
 	<command name="viewDateLabel">
-		<execute function="AssertTextEquals#assertText" locator1="FormFields#DATE_LABEL" value1="${fieldLabel}">
+		<execute function="AssertTextEquals#assertText" locator1="FormFields#LABEL" value1="${fieldLabel}">
 			<var name="key_fieldLabel" value="${fieldLabel}" />
 			<var name="key_fieldName" value="${fieldName}" />
 		</execute>
@@ -538,7 +538,7 @@
 	</command>
 
 	<command name="viewRadioLabel">
-		<execute function="AssertTextEquals#assertText" locator1="FormFields#RADIO_LABEL" value1="${fieldLabel}">
+		<execute function="AssertTextEquals#assertText" locator1="Form#FIELD_LABEL" value1="${fieldLabel}">
 			<var name="key_fieldName" value="${fieldName}" />
 		</execute>
 	</command>
@@ -562,7 +562,7 @@
 		<var name="key_fieldLabel" value="${fieldLabel}" />
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="AssertTextEquals#assertText" locator1="FormFields#TEXT_LABEL" value1="${fieldLabel}" />
+		<execute function="AssertTextEquals#assertText" locator1="FormFields#LABEL" value1="${fieldLabel}" />
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#TEXT_LABEL_2" value1="${fieldLabel}" />
 	</command>
 
@@ -614,7 +614,7 @@
 	</command>
 
 	<command name="viewSelectLabel">
-		<execute function="AssertTextEquals#assertText" locator1="FormFields#SELECT_LABEL" value1="${fieldLabel}">
+		<execute function="AssertTextEquals#assertText" locator1="Form#FIELD_LABEL" value1="${fieldLabel}">
 			<var name="key_fieldName" value="${fieldName}" />
 		</execute>
 	</command>
@@ -668,7 +668,7 @@
 	</command>
 
 	<command name="viewSwitcherLabel">
-		<execute function="AssertTextEquals#assertText" locator1="FormFields#SWITCHER_LABEL" value1="${fieldLabel}">
+		<execute function="AssertTextEquals#assertText" locator1="FormFields#LABEL" value1="${fieldLabel}">
 			<var name="key_fieldLabel" value="${fieldLabel}" />
 			<var name="key_fieldName" value="${fieldName}" />
 		</execute>
@@ -677,7 +677,7 @@
 	<command name="viewSwitcherLabelNotPresent">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="AssertTextNotPresent" locator1="FormFields#SWITCHER_LABEL" value1="${fieldLabel}" />
+		<execute function="AssertTextNotPresent" locator1="FormFields#LABEL" value1="${fieldLabel}" />
 	</command>
 
 	<command name="viewTextField">
@@ -705,12 +705,12 @@
 		<var name="key_fieldLabel" value="${fieldLabel}" />
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="AssertNotVisible" locator1="FormFields#TEXT_LABEL" />
+		<execute function="AssertNotVisible" locator1="FormFields#LABEL" />
 		<execute function="AssertNotVisible" locator1="FormFields#TEXT_FIELD" />
 	</command>
 
 	<command name="viewTextLabel">
-		<execute function="AssertTextEquals#assertText" locator1="FormFields#TEXT_LABEL" value1="${fieldLabel}">
+		<execute function="AssertTextEquals#assertText" locator1="FormFields#LABEL" value1="${fieldLabel}">
 			<var name="key_fieldLabel" value="${fieldLabel}" />
 			<var name="key_fieldName" value="${fieldName}" />
 		</execute>
@@ -750,6 +750,6 @@
 		<var name="key_fieldLabel" value="${fieldLabel}" />
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="AssertTextEquals#assertText" locator1="FormFields#UPLOAD_LABEL" value1="${fieldLabel}" />
+		<execute function="AssertTextEquals#assertText" locator1="Form#FIELD_LABEL" value1="${fieldLabel}" />
 	</command>
 </definition>

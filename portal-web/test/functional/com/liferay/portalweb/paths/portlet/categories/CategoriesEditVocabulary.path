@@ -34,17 +34,6 @@
 	<td>xpath=(//button[contains(@class,'delete-row')])[2]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--PERMISSIONS-->
-<tr>
-	<td>PERMISSIONS_VIEWABLE_BY_SELECT</td>
-	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

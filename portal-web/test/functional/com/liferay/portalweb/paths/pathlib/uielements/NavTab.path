@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMAIL_FROM</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Email From')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMAIL_VERIFICATION_NOTIFICATION</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Email Verification Notification')]</td>
 	<td></td>
@@ -101,11 +106,6 @@
 <tr>
 	<td>PASSWORD_CHANGED_NOTIFICATION</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Password Changed Notification')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LOOK_AND_FEEL_GENERAL</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'General')]</td>
 	<td></td>
 </tr>
 <tr>

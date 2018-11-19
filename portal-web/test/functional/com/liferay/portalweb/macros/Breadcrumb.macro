@@ -27,7 +27,7 @@
 		<if>
 			<isset var="selectADTType" />
 			<then>
-				<execute function="Select" locator1="Configuration#SETUP_DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT" value1="${selectADTType}" />
+				<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="${selectADTType}" />
 			</then>
 		</if>
 

@@ -7,7 +7,7 @@
 
 		<execute function="Click" locator1="JSONWS#USER_UPDATE_USER" />
 
-		<execute function="AssertTextEquals" locator1="JSONWSAddress#API_METHOD" value1="/user/update-user" />
+		<execute function="AssertTextEquals" locator1="JSONWSUser#API_METHOD" value1="/user/update-user" />
 		<execute function="AssertElementPresent" locator1="Button#INVOKE" />
 	</command>
 
@@ -36,7 +36,7 @@
 
 		<execute function="Click" locator1="JSONWS#ADDRESS_ADD_ADDRESS" />
 
-		<execute function="AssertTextEquals" locator1="JSONWSAddress#API_METHOD" value1="/address/add-address" />
+		<execute function="AssertTextEquals" locator1="JSONWSUser#API_METHOD" value1="/address/add-address" />
 
 		<var method="selenium#getElementValue('JSONWSAddress#P_AUTH_FIELD')" name="pAuth" />
 

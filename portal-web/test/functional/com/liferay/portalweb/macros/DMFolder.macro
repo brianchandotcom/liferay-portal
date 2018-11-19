@@ -238,7 +238,7 @@
 		</execute>
 
 		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="DocumentsAndMediaEditFolder#WORKFLOW_PARENT_FOLDER_RADIO" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="Radio#WORKFLOW_PARENT_FOLDER" />
 			<then>
 				<execute function="Click" locator1="DocumentsAndMediaEditFolder#WORKFLOW_DOCUMENT_TYPE_RESTRICTIONS_TOGGLE" />
 			</then>
@@ -247,14 +247,14 @@
 		<if>
 			<equals arg1="${workflowRestriction}" arg2="Parent Folder" />
 			<then>
-				<execute function="Click" locator1="DocumentsAndMediaEditFolder#WORKFLOW_PARENT_FOLDER_RADIO" />
+				<execute function="Click" locator1="Radio#WORKFLOW_PARENT_FOLDER" />
 
 				<execute macro="Button#clickSave" />
 			</then>
 			<elseif>
 				<equals arg1="${workflowRestriction}" arg2="Specific Restrictions" />
 				<then>
-					<execute function="Click" locator1="DocumentsAndMediaEditFolder#WORKFLOW_SPECIFIC_RESTRICTIONS_RADIO" />
+					<execute function="Click" locator1="Radio#WORKFLOW_SPECIFIC_RESTRICTIONS" />
 
 					<execute function="AssertClick" locator1="DocumentsAndMediaEditFolder#WORKFLOW_SPECIFIC_RESTRICTIONS_SELECT_DOCUMENT_TYPE_BUTTON" value1="Select Document Type" />
 
@@ -280,9 +280,9 @@
 			<elseif>
 				<equals arg1="${workflowRestriction}" arg2="Default Workflow" />
 				<then>
-					<execute function="Click" locator1="DocumentsAndMediaEditFolder#WORKFLOW_DEFAULT_WORKFLOW_RADIO" />
+					<execute function="Click" locator1="Radio#WORKFLOW_DEFAULT_WORKFLOW" />
 
-					<execute function="Select" locator1="DocumentsAndMediaEditFolder#WORKFLOW_DEFAULT_WORKFLOW_WORKFLOW_SELECT" value1="${workflowDefinition}" />
+					<execute function="Select" locator1="Select#WORKFLOW_DEFAULT" value1="${workflowDefinition}" />
 
 					<execute macro="Button#clickSave" />
 				</then>
@@ -622,7 +622,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#BREADCRUMB_LAST" value1="${dmFolderName}" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#BREADCRUMB_FOLDER_NAME" value1="${dmFolderName}" />
 	</command>
 
 	<command name="viewDefaultCP">

@@ -74,7 +74,7 @@
 	</command>
 
 	<command name="addSubstructure">
-		<execute function="AssertClick" locator1="DDMEditStructure#DETAILS_PARENT_SELECT_BUTTON" value1="Select" />
+		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 

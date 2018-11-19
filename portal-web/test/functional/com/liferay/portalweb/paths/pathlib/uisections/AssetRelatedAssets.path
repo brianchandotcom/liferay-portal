@@ -29,11 +29,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RELATED_ASSETS_SELECT_MENULIST_ASSET</td>
-	<td>//a[@data-title='Select ${key_assetType}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ASSET_TITLE</td>
 	<td>//li[@class='asset-links-list-item']//a/span | //li[@class='asset-links-list-item']//a</td>
 	<td></td>

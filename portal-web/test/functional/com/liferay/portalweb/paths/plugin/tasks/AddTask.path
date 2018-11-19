@@ -39,11 +39,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TASK_ADD_TAG_BUTTON</td>
-	<td>//button[@title='Add Tags']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TASK_TAG</td>
 	<td>//li[contains(.,'${key_tagNumber}')]/span/span</td>
 	<td></td>

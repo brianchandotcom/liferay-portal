@@ -14,21 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DEFAULT_LANGUAGE_SELECT</td>
-	<td>//select[contains(@id,'languageId')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AVAILABLE_LANGUAGES_CURRENT_SELECT</td>
-	<td>//select[contains(@id,'currentLanguageIds')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AVAILABLE_LANGUAGES_CURRENT_PRESENT</td>
-	<td>//select[contains(@id,'currentLanguageIds')]/option</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MOVE_CURRENT_TO_AVAILABLE_BUTTON</td>
 	<td>//div[@class='btn-group-vertical']/button[1]</td>
 	<td></td>
@@ -36,11 +21,6 @@
 <tr>
 	<td>MOVE_AVAILABLE_TO_CURRENT_BUTTON</td>
 	<td>//div[@class='btn-group-vertical']/button[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AVAILABLE_LANGUAGES_AVAILABLE_SELECT</td>
-	<td>//select[contains(@id,'availableLanguageIds')]</td>
 	<td></td>
 </tr>
 </tbody>

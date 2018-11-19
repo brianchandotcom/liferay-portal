@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
+
 import org.dom4j.Element;
 
 import org.json.JSONObject;
@@ -61,12 +63,45 @@ public class ValidationBuild extends BaseBuild {
 			Element taskSummaryListElement = Dom4JUtil.getNewElement(
 				"ul", rootElement);
 
+			List<String> junitTaskNames = new ArrayList<>();
+
 			for (int i = 1; i < consoleSnippets.length; i++) {
 				String consoleSnippet = consoleSnippets[i];
+
+				if (consoleSnippet.contains("merge-test-results:")) {
+					junitTaskNames.add(getTaskName(consoleSnippet));
+
+					continue;
+				}
 
 				Dom4JUtil.addToElement(
 					taskSummaryListElement,
 					getTaskSummaryIndexElement(consoleSnippet));
+			}
+
+			if (!junitTaskNames.isEmpty()) {
+				List<TestResult> testResults = getTestResults(null);
+
+				String taskStatus = "SUCCESSFUL";
+
+				for (TestResult testResult : testResults) {
+					if (testResult.isFailing()) {
+						taskStatus = "FAILED";
+
+						break;
+					}
+				}
+
+				Element taskSummaryIndexElement = Dom4JUtil.getNewElement(
+					"li", null);
+
+				Dom4JUtil.addToElement(
+					taskSummaryIndexElement,
+					StringUtils.join(junitTaskNames, "/"), " - ",
+					getTaskResultIcon(taskStatus));
+
+				Dom4JUtil.addToElement(
+					taskSummaryListElement, taskSummaryIndexElement);
 			}
 
 			Dom4JUtil.addToElement(

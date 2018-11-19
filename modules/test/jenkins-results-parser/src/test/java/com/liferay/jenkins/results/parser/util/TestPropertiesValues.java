@@ -17,15 +17,15 @@ package com.liferay.jenkins.results.parser.util;
 /**
  * @author Michael Hashimoto
  */
-public class TestPropsValues {
+public class TestPropertiesValues {
 
-	public static final String REPOSITORY_DIR = TestPropsUtil.get(
+	public static final String REPOSITORY_DIR = TestPropertiesUtil.get(
 		"repository.dir");
 
-	public static final String REPOSITORY_NAME = TestPropsUtil.get(
+	public static final String REPOSITORY_NAME = TestPropertiesUtil.get(
 		"repository.name");
 
 	public static final String REPOSITORY_UPSTREAM_BRANCH_NAME =
-		TestPropsUtil.get("repository.upstream.branch.name");
+		TestPropertiesUtil.get("repository.upstream.branch.name");
 
 }

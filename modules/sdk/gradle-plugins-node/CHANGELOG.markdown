@@ -272,9 +272,9 @@ for Node.js versions 5.5.0 - 6.2.0.
 
 ### Added
 - [LPS-87465]: Add the property `production` to all tasks that extend
-`ExecuteNodeTask`. If `true`, devDependencies are not installed when running
-`npm install` without any arguments and sets `NODE_ENV=production` for lifecycle
-scripts.
+`ExecuteNodeTask`. If `true`, [`devDependencies`](https://docs.npmjs.com/files/package.json#devdependencies)
+are not installed when running `npm install` without any arguments and sets
+`NODE_ENV=production` for lifecycle scripts.
 
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023

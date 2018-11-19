@@ -58,7 +58,8 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 	}
 
 	@Override
-	public long[] getSegmentsEntryClassPKs(long segmentsEntryId)
+	public long[] getSegmentsEntryClassPKs(
+			long segmentsEntryId, int start, int end)
 		throws PortalException {
 
 		SegmentsEntry segmentsEntry =
@@ -71,7 +72,7 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 		if (Validator.isNull(segmentsEntry.getCriteria())) {
 			List<SegmentsEntryRel> segmentsEntryRels =
 				_segmentsEntryRelLocalService.getSegmentsEntryRels(
-					segmentsEntryId);
+					segmentsEntryId, start, end, null);
 
 			Stream<SegmentsEntryRel> stream = segmentsEntryRels.stream();
 
@@ -89,13 +90,41 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 
 		List<BaseModel<?>> results = oDataRetriever.getResults(
 			segmentsEntry.getCompanyId(), segmentsEntry.getCriteria(),
-			Locale.getDefault(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			Locale.getDefault(), start, end);
 
 		Stream<BaseModel<?>> stream = results.stream();
 
 		return stream.mapToLong(
 			baseModel -> (Long)baseModel.getPrimaryKeyObj()
 		).toArray();
+	}
+
+	@Override
+	public int getSegmentsEntryClassPKsCount(long segmentsEntryId)
+		throws PortalException {
+
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.fetchSegmentsEntry(segmentsEntryId);
+
+		if (segmentsEntry == null) {
+			return 0;
+		}
+
+		if (Validator.isNull(segmentsEntry.getCriteria())) {
+			return _segmentsEntryRelLocalService.getSegmentsEntryRelsCount(
+				segmentsEntryId);
+		}
+
+		ODataRetriever oDataRetriever = _serviceTrackerMap.getService(
+			segmentsEntry.getType());
+
+		if (oDataRetriever == null) {
+			return 0;
+		}
+
+		return oDataRetriever.getResultsCount(
+			segmentsEntry.getCompanyId(), segmentsEntry.getCriteria(),
+			Locale.getDefault());
 	}
 
 	@Override

@@ -29,11 +29,25 @@ public interface SegmentsEntryProvider {
 	 * Returns the primary keys of the entities related with the segment.
 	 *
 	 * @param  segmentsEntryId the ID of the segment
+	 * @param  start the lower bound of the range of primary keys
+	 * @param  end the upper bound of the range of primary keys (not inclusive)
 	 * @return the primary keys of the entities related with the segment
 	 * @throws PortalException
 	 * @review
 	 */
-	public long[] getSegmentsEntryClassPKs(long segmentsEntryId)
+	public long[] getSegmentsEntryClassPKs(
+			long segmentsEntryId, int start, int end)
+		throws PortalException;
+
+	/**
+	 * Returns the number of entities related with the segment.
+	 *
+	 * @param  segmentsEntryId the ID of the segment
+	 * @return the number of entities related with the segment
+	 * @throws PortalException
+	 * @review
+	 */
+	public int getSegmentsEntryClassPKsCount(long segmentsEntryId)
 		throws PortalException;
 
 	/**

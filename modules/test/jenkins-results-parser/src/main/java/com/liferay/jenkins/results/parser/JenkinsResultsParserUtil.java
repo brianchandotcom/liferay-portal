@@ -62,6 +62,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -1295,7 +1296,7 @@ public class JenkinsResultsParserUtil {
 		Properties buildProperties, String jenkinsMasterPatternString,
 		Integer targetSlaveCount) {
 
-		Set<String> slaves = new HashSet<>();
+		Set<String> slaves = new LinkedHashSet<>();
 
 		Pattern jenkinsSlavesPropertyNamePattern = Pattern.compile(
 			"master.slaves\\(" + jenkinsMasterPatternString + "\\)");

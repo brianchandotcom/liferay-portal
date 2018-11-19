@@ -30,7 +30,7 @@ if (Validator.isNotNull(backURL)) {
 	portletDisplay.setURLBack(backURL);
 }
 
-renderResponse.setTitle(editSegmentsEntryDisplayContext.getSegmentsEntryName(locale));
+renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 %>
 
 <liferay-util:include page="/edit_segments_entry_tabs.jsp" servletContext="<%= application %>" />

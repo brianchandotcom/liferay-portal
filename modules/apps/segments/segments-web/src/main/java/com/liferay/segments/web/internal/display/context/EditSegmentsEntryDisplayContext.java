@@ -19,7 +19,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -27,6 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -261,20 +261,35 @@ public class EditSegmentsEntryDisplayContext {
 		return _segmentsEntryId;
 	}
 
-	public String getSegmentsEntryName(Locale locale) throws PortalException {
-		if (_segmentsEntryName != null) {
-			return _segmentsEntryName;
+	public String getTitle(Locale locale) throws PortalException {
+		if (_title != null) {
+			return _title;
 		}
 
 		SegmentsEntry segmentsEntry = getSegmentsEntry();
 
-		if (segmentsEntry == null) {
-			return StringPool.BLANK;
+		if (segmentsEntry != null) {
+			_title = segmentsEntry.getName(locale);
+		}
+		else {
+			String type = ResourceActionsUtil.getModelResource(
+				locale, getType());
+
+			_title = LanguageUtil.format(
+				_request, "new-x-segment", type, false);
 		}
 
-		_segmentsEntryName = segmentsEntry.getName(locale);
+		return _title;
+	}
 
-		return _segmentsEntryName;
+	public String getType() throws PortalException {
+		SegmentsEntry segmentsEntry = getSegmentsEntry();
+
+		if (segmentsEntry != null) {
+			return segmentsEntry.getType();
+		}
+
+		return ParamUtil.getString(_request, "type", User.class.getName());
 	}
 
 	public SearchContainer getUserSearchContainer() throws PortalException {
@@ -425,9 +440,9 @@ public class EditSegmentsEntryDisplayContext {
 	private final HttpServletRequest _request;
 	private SegmentsEntry _segmentsEntry;
 	private Long _segmentsEntryId;
-	private String _segmentsEntryName;
 	private final SegmentsEntryProvider _segmentsEntryProvider;
 	private final SegmentsEntryService _segmentsEntryService;
+	private String _title;
 	private final UserLocalService _userLocalService;
 	private SearchContainer _userSearchContainer;
 

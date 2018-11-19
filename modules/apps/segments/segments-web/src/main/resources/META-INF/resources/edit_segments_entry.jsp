@@ -27,12 +27,14 @@ SegmentsEntry segmentsEntry = editSegmentsEntryDisplayContext.getSegmentsEntry()
 
 long segmentsEntryId = editSegmentsEntryDisplayContext.getSegmentsEntryId();
 
+String type = editSegmentsEntryDisplayContext.getType();
+
 if (Validator.isNotNull(backURL)) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(backURL);
 }
 
-renderResponse.setTitle(editSegmentsEntryDisplayContext.getSegmentsEntryName(locale));
+renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 %>
 
 <liferay-util:include page="/edit_segments_entry_tabs.jsp" servletContext="<%= application %>" />
@@ -43,6 +45,7 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getSegmentsEntryName(loc
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="segmentsEntryId" type="hidden" value="<%= segmentsEntryId %>" />
 	<aui:input name="saveAndContinue" type="hidden" />
+	<aui:input name="type" type="hidden" value="<%= type %>" />
 
 	<div class="lfr-form-content">
 		<aui:model-context bean="<%= segmentsEntry %>" model="<%= SegmentsEntry.class %>" />
@@ -59,11 +62,6 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getSegmentsEntryName(loc
 				<aui:input name="key" required="<%= true %>" />
 
 				<aui:input checked="<%= (segmentsEntry == null) ? false : segmentsEntry.isActive() %>" name="active" type="toggle-switch" />
-
-				<aui:select disabled="<%= segmentsEntry != null %>" name="type">
-					<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, Organization.class.getName()) %>" value="<%= Organization.class.getName() %>" />
-					<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, User.class.getName()) %>" value="<%= User.class.getName() %>" />
-				</aui:select>
 
 				<aui:input checked="<%= (segmentsEntry != null) && Validator.isNotNull(segmentsEntry.getCriteria()) %>" disabled="<%= segmentsEntry != null %>" name="dynamic" type="toggle-switch" />
 

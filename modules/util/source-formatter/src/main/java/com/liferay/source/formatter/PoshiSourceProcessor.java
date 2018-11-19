@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class FunctionSourceProcessor extends BaseSourceProcessor {
+public class PoshiSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<String> doGetFileNames() throws IOException {

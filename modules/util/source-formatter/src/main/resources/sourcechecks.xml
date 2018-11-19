@@ -80,8 +80,8 @@
 		<check name="FTLTagCheck" />
 		<check name="FTLWhitespaceCheck" />
 	</source-processor>
-	<source-processor name="FunctionSourceProcessor">
-		<check name="FunctionIndentationCheck" />
+	<source-processor name="PoshiSourceProcessor">
+		<check name="PoshiIndentationCheck" />
 		<check name="WhitespaceCheck" />
 	</source-processor>
 	<source-processor name="GradleSourceProcessor">

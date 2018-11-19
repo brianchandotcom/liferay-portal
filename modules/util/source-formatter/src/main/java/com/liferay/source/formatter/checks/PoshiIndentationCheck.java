@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * @author Hugo Huijser
  */
-public class FunctionIndentationCheck extends BaseFileCheck {
+public class PoshiIndentationCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(

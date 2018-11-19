@@ -292,7 +292,7 @@ public class SourceFormatter {
 		_sourceProcessors.add(new DTDSourceProcessor());
 		_sourceProcessors.add(new LFRBuildSourceProcessor());
 		_sourceProcessors.add(new FTLSourceProcessor());
-		_sourceProcessors.add(new FunctionSourceProcessor());
+		_sourceProcessors.add(new PoshiSourceProcessor());
 		_sourceProcessors.add(new GradleSourceProcessor());
 		_sourceProcessors.add(new GroovySourceProcessor());
 		_sourceProcessors.add(new HTMLSourceProcessor());

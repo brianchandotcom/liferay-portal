@@ -98,7 +98,9 @@ public class ValidationBuild extends BaseBuild {
 				Dom4JUtil.addToElement(
 					taskSummaryIndexElement,
 					StringUtils.join(junitTaskNames, "/"), " - ",
-					getTaskResultIcon(taskStatus));
+					getTaskResultIcon(taskStatus),
+					Dom4JUtil.toCodeSnippetElement(
+						"Test failures detected. See below for more details."));
 
 				Dom4JUtil.addToElement(
 					taskSummaryListElement, taskSummaryIndexElement);

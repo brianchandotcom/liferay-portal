@@ -142,6 +142,10 @@ public abstract class Baseline {
 
 				updateBundleVersion(
 					bundleInfo.newerVersion, bundleInfo.suggestedVersion);
+
+				reportMode();
+
+				reportBundleVersion(bundleInfo);
 			}
 
 			Info[] infosArray = infos.toArray(new Info[infos.size()]);
@@ -156,10 +160,6 @@ public abstract class Baseline {
 					}
 
 				});
-
-			reportMode(bundleInfo);
-
-			reportBundleVersion(bundleInfo);
 
 			for (Info info : infosArray) {
 				if (info.mismatch) {
@@ -398,11 +398,7 @@ public abstract class Baseline {
 		sb.deleteCharAt(sb.length() - 1);
 	}
 
-	protected void reportMode(BundleInfo bundleInfo) {
-		if (!bundleInfo.mismatch) {
-			return;
-		}
-
+	protected void reportMode() {
 		String output = "[Baseline Report] Mode: ";
 
 		if (_reportDiff) {
@@ -421,10 +417,6 @@ public abstract class Baseline {
 
 	protected void reportBundleVersion(BundleInfo bundleInfo)
 		throws IOException {
-
-		if (!bundleInfo.mismatch) {
-			return;
-		}
 
 		String output =
 			"[Baseline Warning] Bundle Version Change Recommended: " +

@@ -212,6 +212,11 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	}
 
 	@Override
+	public com.liferay.segments.criteria.Criteria getCriteriaObj() {
+		return _segmentsEntry.getCriteriaObj();
+	}
+
+	@Override
 	public String getDefaultLanguageId() {
 		return _segmentsEntry.getDefaultLanguageId();
 	}
@@ -295,6 +300,11 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _segmentsEntry.getExpandoBridge();
+	}
+
+	@Override
+	public String getFilter() {
+		return _segmentsEntry.getFilter();
 	}
 
 	/**

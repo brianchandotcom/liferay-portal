@@ -319,8 +319,8 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 		_portletAsyncListenerFactories =
 			ServiceTrackerCollections.openSingleValueMap(
 				PortletAsyncListenerFactory.class, "servlet.context.name");
-	private static final
-		ServiceTrackerMap<String, PortletAsyncScopeManagerFactory>
+	private static final ServiceTrackerMap
+		<String, PortletAsyncScopeManagerFactory>
 			_portletAsyncScopeManagerFactories =
 				ServiceTrackerCollections.openSingleValueMap(
 					PortletAsyncScopeManagerFactory.class,

@@ -62,9 +62,8 @@ public class MethodParametersResolverImpl implements MethodParametersResolver {
 		return methodParameters;
 	}
 
-	private static final ConcurrentMap
-		<AccessibleObject, MethodParameter[]> _methodParameters =
-			new ConcurrentReferenceKeyHashMap<>(
-				FinalizeManager.WEAK_REFERENCE_FACTORY);
+	private static final ConcurrentMap<AccessibleObject, MethodParameter[]>
+		_methodParameters = new ConcurrentReferenceKeyHashMap<>(
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 
 }

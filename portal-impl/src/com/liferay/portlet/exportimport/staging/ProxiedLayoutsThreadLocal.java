@@ -45,9 +45,9 @@ public class ProxiedLayoutsThreadLocal {
 		_proxiedLayouts.set(objectValuePair);
 	}
 
-	private static final
-		ThreadLocal<ObjectValuePair<ServiceContext, Map<Layout, Object>>>
-			_proxiedLayouts = new CentralizedThreadLocal<>(
+	private static final ThreadLocal
+		<ObjectValuePair<ServiceContext, Map<Layout, Object>>> _proxiedLayouts =
+			new CentralizedThreadLocal<>(
 				ProxiedLayoutsThreadLocal.class + "._proxiedLayouts");
 
 }

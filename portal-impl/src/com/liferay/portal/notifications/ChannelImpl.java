@@ -468,10 +468,9 @@ public class ChannelImpl extends BaseChannelImpl {
 		Map<String, NotificationEvent> unconfirmedNotificationEvents =
 			_getUnconfirmedNotificationEvents();
 
-		List<NotificationEvent> notificationEvents =
-			new ArrayList<>(
-				notificationEventsSet.size() +
-					unconfirmedNotificationEvents.size());
+		List<NotificationEvent> notificationEvents = new ArrayList<>(
+			notificationEventsSet.size() +
+				unconfirmedNotificationEvents.size());
 
 		for (NotificationEvent notificationEvent : notificationEventsSet) {
 			if (isRemoveNotificationEvent(notificationEvent, currentTime)) {

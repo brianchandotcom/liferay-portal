@@ -124,8 +124,9 @@ public class SecureXMLFactoryProviderImplTest {
 			@Override
 			public void run(String xml) throws Exception {
 				XMLEventReader xmlEventReader =
-					_secureXMLFactoryProvider.newXMLInputFactory().
-						createXMLEventReader(new StringReader(xml));
+					_secureXMLFactoryProvider.
+						newXMLInputFactory().createXMLEventReader(
+							new StringReader(xml));
 
 				while (xmlEventReader.hasNext()) {
 					xmlEventReader.next();

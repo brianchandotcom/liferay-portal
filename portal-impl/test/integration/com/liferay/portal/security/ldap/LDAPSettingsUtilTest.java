@@ -56,14 +56,14 @@ public class LDAPSettingsUtilTest {
 
 	@Test
 	public void testGetContactMappings() throws Exception {
-		Properties properties = LDAPSettingsUtil .getContactMappings(1, 1);
+		Properties properties = LDAPSettingsUtil.getContactMappings(1, 1);
 
 		Assert.assertEquals("1", properties.get("ldapServerId"));
 	}
 
 	@Test
 	public void testGetGroupMappings() throws Exception {
-		Properties properties = LDAPSettingsUtil .getGroupMappings(1, 1);
+		Properties properties = LDAPSettingsUtil.getGroupMappings(1, 1);
 
 		Assert.assertEquals("1", properties.get("ldapServerId"));
 	}
@@ -92,7 +92,7 @@ public class LDAPSettingsUtilTest {
 
 	@Test
 	public void testGetUserMappings() throws Exception {
-		Properties properties = LDAPSettingsUtil .getUserMappings(1, 1);
+		Properties properties = LDAPSettingsUtil.getUserMappings(1, 1);
 
 		Assert.assertEquals("1", properties.get("ldapServerId"));
 	}

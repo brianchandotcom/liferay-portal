@@ -137,10 +137,9 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DynamicQueryFactoryImpl.class);
 
-	private static final
-		ConcurrentMap<ClassLoader, Map<String, Class<?>>> _classes =
-			new ConcurrentReferenceKeyHashMap<>(
-				FinalizeManager.WEAK_REFERENCE_FACTORY);
+	private static final ConcurrentMap<ClassLoader, Map<String, Class<?>>>
+		_classes = new ConcurrentReferenceKeyHashMap<>(
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 
 	private final ClassLoader _portalClassLoader =
 		DynamicQueryFactoryImpl.class.getClassLoader();

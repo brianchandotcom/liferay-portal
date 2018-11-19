@@ -1870,10 +1870,7 @@ public class VerifyProperties extends VerifyProcess {
 			"default.user.layout.template.id",
 			"default.user.public.layout.template.id"
 		},
-		{
-			"default.user.private.layout.lar",
-			"default.user.private.layouts.lar"
-		},
+		{"default.user.private.layout.lar", "default.user.private.layouts.lar"},
 		{"default.user.public.layout.lar", "default.user.public.layouts.lar"},
 		{
 			"dl.hook.cmis.credentials.password",
@@ -1889,10 +1886,7 @@ public class VerifyProperties extends VerifyProcess {
 		{"dl.hook.impl", "dl.store.impl"},
 		{"dl.hook.jcr.fetch.delay", "dl.store.jcr.fetch.delay"},
 		{"dl.hook.jcr.fetch.max.failures", "dl.store.jcr.fetch.max.failures"},
-		{
-			"dl.hook.jcr.move.version.labels",
-			"dl.store.jcr.move.version.labels"
-		},
+		{"dl.hook.jcr.move.version.labels", "dl.store.jcr.move.version.labels"},
 		{"dl.hook.s3.access.key", "dl.store.s3.access.key"},
 		{"dl.hook.s3.bucket.name", "dl.store.s3.bucket.name"},
 		{"dl.hook.s3.secret.key", "dl.store.s3.secret.key"},

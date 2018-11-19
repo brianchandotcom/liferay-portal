@@ -221,8 +221,8 @@ public class EventsProcessorUtil {
 	private static final ServiceTrackerMap<String, List<LifecycleAction>>
 		_lifecycleActions = ServiceTrackerCollections.openMultiValueMap(
 			LifecycleAction.class, "key");
-	private static final
-		ConcurrentMap<String, Map<Object, ServiceRegistration<LifecycleAction>>>
+	private static final ConcurrentMap
+		<String, Map<Object, ServiceRegistration<LifecycleAction>>>
 			_serviceRegistrationMaps = new ConcurrentHashMap<>();
 
 }

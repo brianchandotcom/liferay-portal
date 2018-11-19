@@ -16,8 +16,10 @@ package com.liferay.saml.opensaml.integration.internal.binding;
 
 import com.liferay.saml.opensaml.integration.SamlBinding;
 
-import org.opensaml.ws.message.decoder.MessageDecoder;
-import org.opensaml.ws.message.encoder.MessageEncoder;
+import java.util.function.Supplier;
+
+import org.opensaml.messaging.decoder.servlet.HttpServletRequestMessageDecoder;
+import org.opensaml.messaging.encoder.servlet.HttpServletResponseMessageEncoder;
 
 /**
  * @author Mika Koivisto
@@ -25,23 +27,34 @@ import org.opensaml.ws.message.encoder.MessageEncoder;
 public abstract class BaseSamlBinding implements SamlBinding {
 
 	public BaseSamlBinding(
-		MessageDecoder messageDecoder, MessageEncoder messageEncoder) {
+		Supplier<HttpServletRequestMessageDecoder>
+			httpServletRequestMessageDecoderSupplier,
+		Supplier<HttpServletResponseMessageEncoder>
+			httpServletResponseMessageEncoderSupplier) {
 
-		_messageDecoder = messageDecoder;
-		_messageEncoder = messageEncoder;
+		_httpServletRequestMessageDecoderSupplier =
+			httpServletRequestMessageDecoderSupplier;
+		_httpServletResponseMessageEncoderSupplier =
+			httpServletResponseMessageEncoderSupplier;
 	}
 
 	@Override
-	public MessageDecoder getMessageDecoder() {
-		return _messageDecoder;
+	public Supplier<HttpServletRequestMessageDecoder>
+		getHttpServletRequestMessageDecoderSupplier() {
+
+		return _httpServletRequestMessageDecoderSupplier;
 	}
 
 	@Override
-	public MessageEncoder getMessageEncoder() {
-		return _messageEncoder;
+	public Supplier<HttpServletResponseMessageEncoder>
+		getHttpServletResponseMessageEncoderSupplier() {
+
+		return _httpServletResponseMessageEncoderSupplier;
 	}
 
-	private final MessageDecoder _messageDecoder;
-	private final MessageEncoder _messageEncoder;
+	private final Supplier<HttpServletRequestMessageDecoder>
+		_httpServletRequestMessageDecoderSupplier;
+	private final Supplier<HttpServletResponseMessageEncoder>
+		_httpServletResponseMessageEncoderSupplier;
 
 }

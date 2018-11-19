@@ -14,8 +14,10 @@
 
 package com.liferay.saml.opensaml.integration;
 
-import org.opensaml.ws.message.decoder.MessageDecoder;
-import org.opensaml.ws.message.encoder.MessageEncoder;
+import java.util.function.Supplier;
+
+import org.opensaml.messaging.decoder.servlet.HttpServletRequestMessageDecoder;
+import org.opensaml.messaging.encoder.servlet.HttpServletResponseMessageEncoder;
 
 /**
  * @author Mika Koivisto
@@ -24,8 +26,10 @@ public interface SamlBinding {
 
 	public String getCommunicationProfileId();
 
-	public MessageDecoder getMessageDecoder();
+	public Supplier<HttpServletRequestMessageDecoder>
+		getHttpServletRequestMessageDecoderSupplier();
 
-	public MessageEncoder getMessageEncoder();
+	public Supplier<HttpServletResponseMessageEncoder>
+		getHttpServletResponseMessageEncoderSupplier();
 
 }

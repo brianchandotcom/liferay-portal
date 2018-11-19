@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EDIT_EVENT_IFRAME</td>
-	<td>//iframe[contains(@class,'dialog-iframe-node ')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FORM_CONTENT</td>
 	<td>//div[@id='Content']</td>
 	<td></td>

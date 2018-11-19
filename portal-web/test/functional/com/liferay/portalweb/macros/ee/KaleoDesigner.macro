@@ -339,7 +339,7 @@
 		<if>
 			<isset var="nodeNotificationsRecipientType" />
 			<then>
-				<execute function="Select" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_TYPE_SELECT" value1="${nodeNotificationsRecipientType}" />
+				<execute function="Select" locator1="Select#ASSIGNMENT_TYPE" value1="${nodeNotificationsRecipientType}" />
 
 				<if>
 					<equals arg1="${nodeNotificationsRecipientType}" arg2="Role" />
@@ -591,7 +591,7 @@
 				<if>
 					<equals arg1="${nodeNotificationsRecipientType}" arg2="Role" />
 					<then>
-						<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_TYPE_SELECT" value1="${nodeNotificationsRecipientType}" />
+						<execute function="AssertTextEquals" locator1="Select#ASSIGNMENT_TYPE" value1="${nodeNotificationsRecipientType}" />
 						<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_SEARCH" value1="${nodeNotificationsRecipientRole}" />
 					</then>
 				</if>
@@ -599,7 +599,7 @@
 				<if>
 					<equals arg1="${nodeNotificationsRecipientType}" arg2="Role Type" />
 					<then>
-						<execute function="AssertSelectedLabel" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_TYPE_SELECT" value1="Role Type" />
+						<execute function="AssertSelectedLabel" locator1="Select#ASSIGNMENT_TYPE" value1="Role Type" />
 
 						<if>
 							<equals arg1="${nodeNotificationsRecipientType}" arg2="Role" />

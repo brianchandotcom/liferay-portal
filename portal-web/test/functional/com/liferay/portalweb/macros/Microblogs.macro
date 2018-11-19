@@ -20,7 +20,7 @@
 
 		<execute function="AssertClick" locator1="Microblogs#TIMELINE_ENTRY_ACTION" value1="Edit" />
 
-		<execute function="Type#clickAtType" locator1="Microblogs#TEXT_AREA" value1="${entryContentEdit}" />
+		<execute function="Type#clickAtType" locator1="TextArea#FIELD_INPUT" value1="${entryContentEdit}" />
 
 		<execute function="AssertClick" locator1="Button#POST" value1="Post" />
 	</command>
@@ -42,7 +42,7 @@
 
 		<var name="key_entryContent" value="${entryContent}" />
 
-		<execute function="Type#clickAtType" locator1="Microblogs#TEXT_AREA" value1="${entryContent}" />
+		<execute function="Type#clickAtType" locator1="TextArea#FIELD_INPUT" value1="${entryContent}" />
 
 		<execute function="AssertClick" locator1="Button#POST" value1="Post" />
 

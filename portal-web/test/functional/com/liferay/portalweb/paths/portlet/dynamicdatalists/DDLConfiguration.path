@@ -20,11 +20,6 @@
 </tr>
 <!--NAVIGATION-->
 <tr>
-	<td>NAVIGATION_SHARING</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Sharing')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NAVIGATION_SCOPE</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'nav-pills')]/li/a[contains(.,'Scope')]</td>
 	<td></td>

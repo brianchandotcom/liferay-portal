@@ -57,13 +57,13 @@
 	<command name="addCommentCP">
 		<execute macro="Organization#gotoMiscellaneousCP" />
 
-		<execute function="Type" locator1="TextInput#COMMENTS" value1="${orgComment}" />
+		<execute function="Type" locator1="TextArea#COMMENTS" value1="${orgComment}" />
 
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="Organization#gotoMiscellaneousCP" />
 
-		<execute function="AssertTextEquals" locator1="TextInput#COMMENTS" value1="${orgComment}" />
+		<execute function="AssertTextEquals" locator1="TextArea#COMMENTS" value1="${orgComment}" />
 	</command>
 
 	<command name="addCP">

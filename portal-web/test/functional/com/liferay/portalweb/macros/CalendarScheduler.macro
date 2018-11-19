@@ -126,7 +126,7 @@
 
 		<execute function="AssertClick" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON" value1="Edit" />
 
-		<execute function="SelectFrame" locator1="CalendarEditEvent#EDIT_EVENT_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#METADATA_SETS_IFRAME" />
 	</command>
 
 	<command name="gotoEditSpecific">
@@ -140,13 +140,13 @@
 
 		<execute function="AssertClick" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON" value1="Edit" />
 
-		<execute function="SelectFrame" locator1="CalendarEditEvent#EDIT_EVENT_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#METADATA_SETS_IFRAME" />
 	</command>
 
 	<command name="gotoEditViaDialogBox">
 		<execute function="AssertClick" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON" value1="Edit" />
 
-		<execute function="SelectFrame" locator1="CalendarEditEvent#EDIT_EVENT_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#METADATA_SETS_IFRAME" />
 	</command>
 
 	<command name="saveEvent">

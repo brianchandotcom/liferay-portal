@@ -1096,7 +1096,7 @@
 	</command>
 
 	<command name="selectEventIframe">
-		<execute function="SelectFrame" locator1="CalendarEditEvent#EDIT_EVENT_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#METADATA_SETS_IFRAME" />
 	</command>
 
 	<command name="selectRepeatFrequency">

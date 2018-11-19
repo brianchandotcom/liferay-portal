@@ -90,8 +90,8 @@ public class TemplatePortletPreferencesTest {
 			String xml = future.get();
 
 			PortletPreferencesImpl portletPreferencesImpl =
-				(PortletPreferencesImpl)PortletPreferencesFactoryUtil.
-					fromDefaultXML(xml);
+				(PortletPreferencesImpl)
+					PortletPreferencesFactoryUtil.fromDefaultXML(xml);
 
 			Map<String, String[]> map = portletPreferencesImpl.getMap();
 

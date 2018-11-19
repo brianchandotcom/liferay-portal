@@ -41,8 +41,8 @@ public class PortletURLImplWrapper extends LiferayPortletURLWrapper {
 		LiferayPortletResponse liferayPortletResponse =
 			LiferayPortletUtil.getLiferayPortletResponse(portletResponse);
 
-		PortletResponseImpl portletResponseImpl = (PortletResponseImpl)
-			liferayPortletResponse;
+		PortletResponseImpl portletResponseImpl =
+			(PortletResponseImpl)liferayPortletResponse;
 
 		return PortletURLFactoryUtil.create(
 			portletResponseImpl.getPortletRequest(),

@@ -406,8 +406,9 @@ public class PortletPreferencesLocalServiceTest {
 	@Test
 	public void testFetchLayoutJxPortletPreferences() throws Exception {
 		PortletPreferencesImpl portletPreferencesImpl =
-			(PortletPreferencesImpl)PortletPreferencesTestUtil.
-				fetchLayoutJxPortletPreferences(_layout, _portlet);
+			(PortletPreferencesImpl)
+				PortletPreferencesTestUtil.fetchLayoutJxPortletPreferences(
+					_layout, _portlet);
 
 		Assert.assertNull(portletPreferencesImpl);
 	}

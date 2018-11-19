@@ -339,12 +339,9 @@ public class CachingChainingMetadataProvider extends AbstractMetadataResolver {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		CachingChainingMetadataProvider.class);
-
-	private final List<MetadataProvider> _metadataProviders =
+	private final List<MetadataResolver> _metadataResolvers =
 		new CopyOnWriteArrayList<>();
-	private final Map<String, MetadataProvider> _metadataProvidersMap =
+	private final Map<String, MetadataResolver> _metadataResolversMap =
 		new ConcurrentHashMap<>();
 	private final ReadWriteLock _readWriteLock = new ReentrantReadWriteLock(
 		true);

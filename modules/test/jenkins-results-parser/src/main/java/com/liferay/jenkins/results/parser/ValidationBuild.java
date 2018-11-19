@@ -193,6 +193,10 @@ public class ValidationBuild extends BaseBuild {
 		return resultMessageElement;
 	}
 
+	protected String getTaskName(String console) {
+		return console.substring(0, console.indexOf("\n"));
+	}
+
 	protected String getTaskResultIcon(String result) {
 		if (result.equals("FAILED")) {
 			return " :x:";
@@ -206,7 +210,7 @@ public class ValidationBuild extends BaseBuild {
 	}
 
 	protected Element getTaskSummaryIndexElement(String console) {
-		String taskName = console.substring(0, console.indexOf("\n"));
+		String taskName = getTaskName(console);
 
 		Matcher matcher = _consoleResultPattern.matcher(console);
 

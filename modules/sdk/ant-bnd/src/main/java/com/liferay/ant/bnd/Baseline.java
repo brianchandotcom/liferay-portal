@@ -157,7 +157,9 @@ public abstract class Baseline {
 
 				});
 
-			doHeader(bundleInfo);
+			reportMode(bundleInfo);
+
+			reportBundleVersion(bundleInfo);
 
 			for (Info info : infosArray) {
 				if (info.mismatch) {
@@ -396,7 +398,7 @@ public abstract class Baseline {
 		sb.deleteCharAt(sb.length() - 1);
 	}
 
-	protected void doHeader(BundleInfo bundleInfo) throws IOException {
+	protected void reportMode(BundleInfo bundleInfo) {
 		if (!bundleInfo.mismatch) {
 			return;
 		}
@@ -415,8 +417,16 @@ public abstract class Baseline {
 		}
 
 		log(output);
+	}
 
-		output =
+	protected void reportBundleVersion(BundleInfo bundleInfo)
+		throws IOException {
+
+		if (!bundleInfo.mismatch) {
+			return;
+		}
+
+		String output =
 			"[Baseline Warning] Bundle Version Change Recommended: " +
 				bundleInfo.suggestedVersion;
 

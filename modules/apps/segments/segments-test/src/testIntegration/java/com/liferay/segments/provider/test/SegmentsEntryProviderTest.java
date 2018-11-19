@@ -66,9 +66,15 @@ public class SegmentsEntryProviderTest {
 			String.format("(firstName eq '%s')", _user1.getFirstName()),
 			User.class.getName());
 
+		int segmentsEntryClassPksCount =
+			_segmentsEntryProvider.getSegmentsEntryClassPKsCount(
+				segmentsEntry.getSegmentsEntryId());
+
+		Assert.assertEquals(1, segmentsEntryClassPksCount);
+
 		long[] segmentsEntryClassPKs =
 			_segmentsEntryProvider.getSegmentsEntryClassPKs(
-				segmentsEntry.getSegmentsEntryId());
+				segmentsEntry.getSegmentsEntryId(), 0, 1);
 
 		Assert.assertArrayEquals(
 			new long[] {_user1.getUserId()}, segmentsEntryClassPKs);
@@ -87,9 +93,15 @@ public class SegmentsEntryProviderTest {
 			_portal.getClassNameId(User.class.getName()), _user1.getUserId(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
+		int segmentsEntryClassPksCount =
+			_segmentsEntryProvider.getSegmentsEntryClassPKsCount(
+				segmentsEntry.getSegmentsEntryId());
+
+		Assert.assertEquals(1, segmentsEntryClassPksCount);
+
 		long[] segmentsEntryClassPKs =
 			_segmentsEntryProvider.getSegmentsEntryClassPKs(
-				segmentsEntry.getSegmentsEntryId());
+				segmentsEntry.getSegmentsEntryId(), 0, 1);
 
 		Assert.assertArrayEquals(
 			new long[] {_user1.getUserId()}, segmentsEntryClassPKs);

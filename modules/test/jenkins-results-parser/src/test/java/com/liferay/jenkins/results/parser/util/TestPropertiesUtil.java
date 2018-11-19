@@ -25,7 +25,7 @@ import java.util.Properties;
 /**
  * @author Michael Hashimoto
  */
-public class TestPropsUtil {
+public class TestPropertiesUtil {
 
 	public static String get(String key) {
 		return _instance._get(key);
@@ -43,8 +43,8 @@ public class TestPropsUtil {
 		_instance._set(key, value);
 	}
 
-	private TestPropsUtil() {
-		try (InputStream is = TestPropsUtil.class.getResourceAsStream(
+	private TestPropertiesUtil() {
+		try (InputStream is = TestPropertiesUtil.class.getResourceAsStream(
 				"/test-jenkins-results-parser-util.properties")) {
 
 			_props.load(is);
@@ -53,7 +53,7 @@ public class TestPropsUtil {
 			throw new RuntimeException(ioe);
 		}
 
-		try (InputStream is = TestPropsUtil.class.getResourceAsStream(
+		try (InputStream is = TestPropertiesUtil.class.getResourceAsStream(
 				"/test-jenkins-results-parser-util-ext.properties")) {
 
 			if (is != null) {
@@ -93,7 +93,8 @@ public class TestPropsUtil {
 		_props.setProperty(key, value);
 	}
 
-	private static final TestPropsUtil _instance = new TestPropsUtil();
+	private static final TestPropertiesUtil _instance =
+		new TestPropertiesUtil();
 
 	private final Properties _props = new Properties();
 

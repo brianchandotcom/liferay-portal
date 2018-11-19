@@ -31,15 +31,20 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptUIItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collection;
 import java.util.List;
@@ -63,6 +68,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		DLViewFileVersionDisplayContext parentDLDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion, ResourceBundle resourceBundle,
+		ModelResourcePermission<FileEntry> fileEntryModelResourcePermission,
 		DLOpenerFileEntryReferenceLocalService
 			dlOpenerFileEntryReferenceLocalService,
 		DLOpenerGoogleDriveManager dlOpenerGoogleDriveManager, Portal portal) {
@@ -70,9 +76,16 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		super(_UUID, parentDLDisplayContext, request, response, fileVersion);
 
 		_resourceBundle = resourceBundle;
+		_fileEntryModelResourcePermission = fileEntryModelResourcePermission;
 		_dlOpenerFileEntryReferenceLocalService =
 			dlOpenerFileEntryReferenceLocalService;
 		_dlOpenerGoogleDriveManager = dlOpenerGoogleDriveManager;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_permissionChecker = themeDisplay.getPermissionChecker();
+
 		_portal = portal;
 	}
 
@@ -81,7 +94,10 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		if (!isActionsVisible() ||
 			!DLOpenerGoogleDriveMimeTypes.isMimeTypeSupported(
 				fileVersion.getMimeType()) ||
-			!_dlOpenerGoogleDriveManager.isConfigured()) {
+			!_dlOpenerGoogleDriveManager.isConfigured() ||
+			!_fileEntryModelResourcePermission.contains(
+				_permissionChecker, fileVersion.getFileEntry(),
+				ActionKeys.UPDATE)) {
 
 			return super.getMenu();
 		}
@@ -241,6 +257,9 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 	private final DLOpenerFileEntryReferenceLocalService
 		_dlOpenerFileEntryReferenceLocalService;
 	private final DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
+	private final ModelResourcePermission<FileEntry>
+		_fileEntryModelResourcePermission;
+	private final PermissionChecker _permissionChecker;
 	private final Portal _portal;
 	private final ResourceBundle _resourceBundle;
 

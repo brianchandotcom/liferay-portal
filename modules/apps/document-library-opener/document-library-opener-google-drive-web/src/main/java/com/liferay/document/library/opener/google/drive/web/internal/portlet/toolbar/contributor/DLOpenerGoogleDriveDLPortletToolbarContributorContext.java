@@ -22,9 +22,14 @@ import com.liferay.document.library.portlet.toolbar.contributor.DLPortletToolbar
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
@@ -60,22 +65,39 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		if (!_dlOpenerGoogleDriveManager.isConfigured()) {
-			return;
-		}
+		try {
+			long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
-		menuItems.add(
-			_createURLMenuItem(
-				portletRequest, folder, "google-docs",
-				DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_DOCX));
-		menuItems.add(
-			_createURLMenuItem(
-				portletRequest, folder, "google-slides",
-				DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_PPTX));
-		menuItems.add(
-			_createURLMenuItem(
-				portletRequest, folder, "google-sheets",
-				DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_XSLX));
+			if (folder != null) {
+				folderId = folder.getFolderId();
+			}
+
+			if (!_dlOpenerGoogleDriveManager.isConfigured() ||
+				!ModelResourcePermissionHelper.contains(
+					_folderEntryModelResourcePermission,
+					themeDisplay.getPermissionChecker(),
+					themeDisplay.getScopeGroupId(), folderId,
+					ActionKeys.ADD_DOCUMENT)) {
+
+				return;
+			}
+
+			menuItems.add(
+				_createURLMenuItem(
+					portletRequest, folder, "google-docs",
+					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_DOCX));
+			menuItems.add(
+				_createURLMenuItem(
+					portletRequest, folder, "google-slides",
+					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_PPTX));
+			menuItems.add(
+				_createURLMenuItem(
+					portletRequest, folder, "google-sheets",
+					DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_XSLX));
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
 	}
 
 	private URLMenuItem _createURLMenuItem(
@@ -140,8 +162,16 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 		return _language.get(resourceBundle, key);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLOpenerGoogleDriveDLPortletToolbarContributorContext.class);
+
 	@Reference
 	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
+	)
+	private ModelResourcePermission<Folder> _folderEntryModelResourcePermission;
 
 	@Reference
 	private Language _language;

@@ -22,8 +22,10 @@ import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLoc
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -84,6 +86,7 @@ public class DLOpenerGoogleDriveDLDisplayContextFactory
 			ResourceBundleUtil.getBundle(
 				themeDisplay.getLocale(),
 				DLOpenerGoogleDriveDLDisplayContextFactory.class),
+			_fileEntryModelResourcePermission,
 			_dlOpenerFileEntryReferenceLocalService,
 			_dlOpenerGoogleDriveManager, _portal);
 	}
@@ -94,6 +97,12 @@ public class DLOpenerGoogleDriveDLDisplayContextFactory
 
 	@Reference
 	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
+	)
+	private ModelResourcePermission<FileEntry>
+		_fileEntryModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

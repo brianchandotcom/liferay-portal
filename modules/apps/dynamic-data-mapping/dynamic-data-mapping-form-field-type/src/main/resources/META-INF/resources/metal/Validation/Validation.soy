@@ -1,0 +1,148 @@
+{namespace Validation}
+
+{template .render}
+	{@param name: string}
+	{@param? id: string}
+	{@param? spritemap: string}
+	{@param? value: any}
+	{@param? dataType: string}
+	{@param? enableValidation: bool}
+	{@param? errorMessage: string}
+	{@param? parameterMessage: string}
+	{@param? strings: [chooseAnOption: string, email: string, errorMessage: string, ifInput: string, showErrorMessage: string, theValue: string, url: string, validationMessage: string]}
+	{@param? handleEnableValidation: any}
+	{@param? handleValidationValue: any}
+	{@param? handleParameterMessage: any}
+	{@param? handleErrorMessage: any}
+	{@param? selectedValidation: [parameterMessage: string, value: string]}
+	{@param? validations: list<[
+		checked: bool,
+		disabled: bool,
+		id: string,
+		inline: bool,
+		label: string,
+		name: string,
+		showLabel: bool,
+		value: string
+	]>}
+
+	{call .content}
+		{param id: $id /}
+		{param name: $name /}
+		{param dataType: $dataType /}
+		{param value: $value /}
+		{param strings: $strings /}
+		{param enableValidation: $enableValidation /}
+		{param errorMessage: $errorMessage /}
+		{param parameterMessage: $parameterMessage /}
+		{param handleEnableValidation: $handleEnableValidation /}
+		{param handleValidationValue: $handleValidationValue /}
+		{param handleParameterMessage: $handleParameterMessage /}
+		{param handleErrorMessage: $handleErrorMessage /}
+		{param validations: $validations /}
+		{param selectedValidation: $selectedValidation /}
+		{param spritemap: $spritemap /}
+	{/call}
+
+{/template}
+
+{template .content}
+	{@param name: string}
+	{@param value: any}
+	{@param? dataType: string}
+	{@param? enableValidation: bool}
+	{@param? errorMessage: string}
+	{@param? parameterMessage: string}
+	{@param? strings: [chooseAnOption: string, email: string, errorMessage: string, ifInput: string, showErrorMessage: string, theValue: string, url: string, validationMessage: string]}
+	{@param? handleEnableValidation: any}
+	{@param? handleValidationValue: any}
+	{@param? handleParameterMessage: any}
+	{@param? handleErrorMessage: any}
+	{@param? selectedValidation: [parameterMessage: string, value: string]}
+	{@param? spritemap: string}
+	{@param? validations: list<[
+		checked: bool,
+		disabled: bool,
+		id: string,
+		inline: bool,
+		label: string,
+		name: string,
+		showLabel: bool,
+		value: string
+	]>}
+
+	<div class="form-group lfr-ddm-form-field-validation">
+
+		{call Checkbox.render}
+			{param _handleToggleChanged: $handleEnableValidation /}
+			{param label: 'Validator' /}
+			{param value: $enableValidation /}
+			{param showAsSwitcher: true /}
+			{param spritemap: $spritemap /}
+		{/call}
+
+		{if $enableValidation}
+
+			{call Select.render}
+				{param events: [
+					'fieldEdited': $handleValidationValue
+				] /}
+				{param label: $strings.ifInput /}
+				{param options: $validations /}
+				{param strings: ['chooseAnOption': $strings?.chooseAnOption] /}
+				{param spritemap: $spritemap /}
+				{param value: $selectedValidation?.value /}
+				// {param showLabel: true /}
+			{/call}
+
+			{if $selectedValidation?.parameterMessage and $dataType == 'string'}
+				{call Text.render}
+					{param name: $name + '_parameterMessage' /}
+					{param dataType: $dataType /}
+					{param label: $strings?.theValue /}
+					{param placeholder: $selectedValidation?.parameterMessage /}
+					{param required: true /}
+					{param value: $parameterMessage /}
+					{param spritemap: $spritemap /}
+					{param events: [
+						'fieldEdited': $handleParameterMessage
+					] /}
+				{/call}
+
+			{elseif $selectedValidation?.parameterMessage}
+				{call Numeric.render}
+					{param name: $name + '_parameterMessage' /}
+					{param dataType: $dataType /}
+					{param label: $strings?.theValue /}
+					{param placeholder: $selectedValidation?.parameterMessage /}
+					{param required: true /}
+					{param value: $parameterMessage /}
+					{param spritemap: $spritemap /}
+					{param events: [
+						'fieldEdited': $handleParameterMessage
+					] /}
+				{/call}
+
+			{/if}
+
+			{call Text.render}
+				{param name: $name + '_errorMessage' /}
+				{param label: $strings?.showErrorMessage /}
+				{param placeholder: $strings?.showErrorMessage /}
+				{param value: $errorMessage /}
+				{param required: true /}
+				{param spritemap: $spritemap /}
+				{param events: [
+					'fieldEdited': $handleErrorMessage
+				] /}
+			{/call}
+
+		{/if}
+
+		<input
+			name="{$name}"
+			type="hidden"
+			value="{$value}"
+		/>
+	</div>
+{/template}

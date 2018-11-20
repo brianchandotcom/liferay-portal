@@ -68,40 +68,9 @@ public class DBMetadataProvider extends BaseMetadataProvider {
 	}
 
 	@Override
-	public List<RoleDescriptor> getRole(String entityId, QName qName)
-		throws MetadataProviderException {
-
-		EntityDescriptor entityDescriptor = getEntityDescriptor(entityId);
-
-		if (entityDescriptor != null) {
-			return entityDescriptor.getRoleDescriptors(qName);
-		}
-
-		return null;
-	}
-
-	@Override
-	public RoleDescriptor getRole(
-			String entityId, QName qName, String supportedProtocol)
-		throws MetadataProviderException {
-
-		List<RoleDescriptor> roleDescriptors = getRole(entityId, qName);
-
-		if ((roleDescriptors == null) || roleDescriptors.isEmpty()) {
-			return null;
-		}
-
-		for (RoleDescriptor roleDescriptor : roleDescriptors) {
-			if (roleDescriptor.isSupportedProtocol(supportedProtocol)) {
-				return roleDescriptor;
-			}
-		}
-
-		return null;
-	}
-
 	public void setParserPool(ParserPool parserPool) {
 		_parserPool = parserPool;
+
 	}
 
 	protected String getMetadataXml(String entityId) throws Exception {

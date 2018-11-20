@@ -8,13 +8,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
 	<bean class="com.liferay.portal.spring.hibernate.PortletHibernateConfiguration" id="liferayHibernateSessionFactory">
-		<property name="dataSource">
-			<ref bean="liferayDataSource" />
-		</property>
-		<property name="hibernateProperties">
-			<props>
-				<prop key="javax.persistence.validation.mode">none</prop>
-			</props>
-		</property>
+		<property name="dataSource" ref="liferayDataSource" />
 	</bean>
 </beans>

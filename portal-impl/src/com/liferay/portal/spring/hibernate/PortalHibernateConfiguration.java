@@ -72,6 +72,14 @@ import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
  */
 public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
+	public PortalHibernateConfiguration() {
+		Properties properties = new Properties();
+
+		properties.put("javax.persistence.validation.mode", "none");
+
+		setHibernateProperties(properties);
+	}
+
 	@Override
 	public SessionFactory buildSessionFactory() throws Exception {
 		setBeanClassLoader(getConfigurationClassLoader());
@@ -339,7 +347,8 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 	}
 
 	private static final String[] _PRELOAD_CLASS_NAMES =
-		PropsValues.SPRING_HIBERNATE_CONFIGURATION_PROXY_FACTORY_PRELOAD_CLASSLOADER_CLASSES;
+		PropsValues.
+			SPRING_HIBERNATE_CONFIGURATION_PROXY_FACTORY_PRELOAD_CLASSLOADER_CLASSES;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalHibernateConfiguration.class);

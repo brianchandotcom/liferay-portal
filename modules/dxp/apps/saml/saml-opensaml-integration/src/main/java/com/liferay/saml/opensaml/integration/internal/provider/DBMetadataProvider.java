@@ -55,28 +55,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = MetadataProvider.class)
 public class DBMetadataProvider extends BaseMetadataProvider {
 
-	@Override
-	public EntityDescriptor getEntityDescriptor(String entityId)
-		throws MetadataProviderException {
+	protected EntityDescriptor getEntityDescriptor(String entityID)
+		throws Exception {
 
-		try {
-			String metadataXml = getMetadataXml(entityId);
-
-			if (Validator.isNull(metadataXml)) {
-				return null;
-			}
-
-			XMLObject metadataXmlObject = XMLObjectHelper.unmarshallFromReader(
-				_parserPool, new StringReader(metadataXml));
-
-			EntityDescriptor entityDescriptor =
-				SamlUtil.getEntityDescriptorById(entityId, metadataXmlObject);
-
-			return entityDescriptor;
-		}
-		catch (Exception e) {
-			throw new MetadataProviderException(e);
-		}
+		return SamlUtil.getEntityDescriptorById(
+			entityID, getMetadata(entityID));
 	}
 
 	@Override

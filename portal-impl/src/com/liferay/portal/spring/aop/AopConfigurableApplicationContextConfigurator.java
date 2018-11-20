@@ -17,11 +17,16 @@ package com.liferay.portal.spring.aop;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.cache.thread.local.ThreadLocalCacheAdvice;
 import com.liferay.portal.dao.jdbc.aop.DynamicDataSourceAdvice;
+import com.liferay.portal.dao.orm.hibernate.PortletSessionFactoryImpl;
+import com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl;
+import com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper;
 import com.liferay.portal.increment.BufferedIncrementAdvice;
 import com.liferay.portal.internal.cluster.ClusterableAdvice;
 import com.liferay.portal.internal.cluster.SPIClusterableAdvice;
 import com.liferay.portal.kernel.dao.jdbc.aop.DynamicDataSourceTargetSource;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
+import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -45,10 +50,11 @@ import javax.sql.DataSource;
 
 import org.aopalliance.intercept.MethodInterceptor;
 
-import org.hibernate.SessionFactory;
+import org.hibernate.engine.SessionFactoryImplementor;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
@@ -254,19 +260,35 @@ public class AopConfigurableApplicationContextConfigurator
 		private PlatformTransactionManager _getPlatformTransactionManager(
 			ConfigurableListableBeanFactory configurableListableBeanFactory) {
 
+			DataSource liferayDataSource =
+				configurableListableBeanFactory.getBean(
+					"liferayDataSource", DataSource.class);
+
+			SessionFactoryImplementor liferayHibernateSessionFactory =
+				configurableListableBeanFactory.getBean(
+					"liferayHibernateSessionFactory",
+					SessionFactoryImplementor.class);
+
+			SessionFactoryImpl sessionFactoryImpl =
+				new PortletSessionFactoryImpl();
+
+			sessionFactoryImpl.setSessionFactoryClassLoader(_classLoader);
+			sessionFactoryImpl.setSessionFactoryImplementor(
+				liferayHibernateSessionFactory);
+
+			SessionFactory sessionFactory =
+				VerifySessionFactoryWrapper.createVerifySessionFactoryWrapper(
+					sessionFactoryImpl);
+
+			configurableListableBeanFactory.addBeanPostProcessor(
+				new BasePersistenceInjectionBeanPostProcessor(
+					liferayDataSource, sessionFactory));
+
 			if (PortalClassLoaderUtil.isPortalClassLoader(_classLoader)) {
 				return configurableListableBeanFactory.getBean(
 					"liferayTransactionManager",
 					PlatformTransactionManager.class);
 			}
-
-			DataSource liferayDataSource =
-				configurableListableBeanFactory.getBean(
-					"liferayDataSource", DataSource.class);
-
-			SessionFactory liferayHibernateSessionFactory =
-				configurableListableBeanFactory.getBean(
-					"liferayHibernateSessionFactory", SessionFactory.class);
 
 			if (InfrastructureUtil.getDataSource() == liferayDataSource) {
 				return new PortletTransactionManager(
@@ -285,6 +307,48 @@ public class AopConfigurableApplicationContextConfigurator
 		}
 
 		private final ClassLoader _classLoader;
+
+	}
+
+	private static class BasePersistenceInjectionBeanPostProcessor
+		implements BeanPostProcessor {
+
+		@Override
+		public Object postProcessAfterInitialization(
+			Object bean, String beanName) {
+
+			return bean;
+		}
+
+		@Override
+		public Object postProcessBeforeInitialization(
+			Object bean, String beanName) {
+
+			if (bean instanceof BasePersistenceImpl) {
+				BasePersistenceImpl<?> basePersistenceImpl =
+					(BasePersistenceImpl<?>)bean;
+
+				if (basePersistenceImpl.getDataSource() == null) {
+					basePersistenceImpl.setDataSource(_dataSource);
+				}
+
+				if (basePersistenceImpl.getDialect() == null) {
+					basePersistenceImpl.setSessionFactory(_sessionFactory);
+				}
+			}
+
+			return bean;
+		}
+
+		private BasePersistenceInjectionBeanPostProcessor(
+			DataSource dataSource, SessionFactory sessionFactory) {
+
+			_dataSource = dataSource;
+			_sessionFactory = sessionFactory;
+		}
+
+		private final DataSource _dataSource;
+		private final SessionFactory _sessionFactory;
 
 	}
 

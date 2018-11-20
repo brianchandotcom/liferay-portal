@@ -25,21 +25,12 @@ import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-
 /**
  * @author Shuyang Zhou
  * @author Alexander Chow
  */
 @ProviderType
-public class PortletSessionFactoryImpl
-	extends SessionFactoryImpl implements ApplicationContextAware {
-
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) {
-		setSessionFactoryClassLoader(applicationContext.getClassLoader());
-	}
+public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 
 	/**
 	 * @deprecated As of Judson (7.1.x), with no direct replacement

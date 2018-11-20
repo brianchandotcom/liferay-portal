@@ -680,21 +680,6 @@ public class SharingEntryLocalServiceUtil {
 	}
 
 	/**
-	* Returns {@code true} if the sharing entry has the sharing entry action.
-	*
-	* @param sharingEntry the sharing entry
-	* @param sharingEntryAction the sharing entry action
-	* @return {@code true} if the sharing entry has the sharing entry action;
-	{@code false} otherwise
-	*/
-	public static boolean hasSharingPermission(
-		com.liferay.sharing.model.SharingEntry sharingEntry,
-		com.liferay.sharing.security.permission.SharingEntryAction sharingEntryAction) {
-		return getService()
-				   .hasSharingPermission(sharingEntry, sharingEntryAction);
-	}
-
-	/**
 	* Updates the sharing entry in the database.
 	*
 	* @param sharingEntryId the primary key of the sharing entry

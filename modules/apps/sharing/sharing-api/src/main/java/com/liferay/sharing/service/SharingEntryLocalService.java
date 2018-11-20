@@ -598,18 +598,6 @@ public interface SharingEntryLocalService extends BaseLocalService,
 		long classPK, SharingEntryAction sharingEntryAction);
 
 	/**
-	* Returns {@code true} if the sharing entry has the sharing entry action.
-	*
-	* @param sharingEntry the sharing entry
-	* @param sharingEntryAction the sharing entry action
-	* @return {@code true} if the sharing entry has the sharing entry action;
-	{@code false} otherwise
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasSharingPermission(SharingEntry sharingEntry,
-		SharingEntryAction sharingEntryAction);
-
-	/**
 	* Updates the sharing entry in the database.
 	*
 	* @param sharingEntryId the primary key of the sharing entry

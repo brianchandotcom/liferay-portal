@@ -353,6 +353,19 @@ public class SharingEntryWrapper implements SharingEntry,
 		return _sharingEntry.hashCode();
 	}
 
+	/**
+	* Returns {@code true} if the sharing entry has the sharing entry action.
+	*
+	* @param sharingEntryAction the sharing entry action
+	* @return {@code true} if the sharing entry has the sharing entry action;
+	{@code false} otherwise
+	*/
+	@Override
+	public boolean hasSharingPermission(
+		com.liferay.sharing.security.permission.SharingEntryAction sharingEntryAction) {
+		return _sharingEntry.hasSharingPermission(sharingEntryAction);
+	}
+
 	@Override
 	public boolean isCachedModel() {
 		return _sharingEntry.isCachedModel();

@@ -321,10 +321,9 @@ public class SamlUtil {
 	}
 
 	public static AssertionConsumerService resolverAssertionConsumerService(
-		SAMLMessageContext<AuthnRequest, ?, ?> samlMessageContext,
-		String binding) {
+		MessageContext<?> messageContext, String binding) {
 
-		AuthnRequest authnRequest = samlMessageContext.getInboundSAMLMessage();
+		AuthnRequest authnRequest = getAuthnRequest(messageContext);
 
 		Integer assertionConsumerServiceIndex = null;
 		String assertionConsumerServiceURL = null;
@@ -336,8 +335,14 @@ public class SamlUtil {
 				authnRequest.getAssertionConsumerServiceURL();
 		}
 
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+		SAMLMetadataContext samlMetadataContext =
+			samlPeerEntityContext.getSubcontext(SAMLMetadataContext.class);
+
 		SPSSODescriptor spSSODescriptor =
-			(SPSSODescriptor)samlMessageContext.getPeerEntityRoleMetadata();
+			(SPSSODescriptor)samlMetadataContext.getRoleDescriptor();
 
 		for (AssertionConsumerService assertionConsumerService :
 				spSSODescriptor.getAssertionConsumerServices()) {

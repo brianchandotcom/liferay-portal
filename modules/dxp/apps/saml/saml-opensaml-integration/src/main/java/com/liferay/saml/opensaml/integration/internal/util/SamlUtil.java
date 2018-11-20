@@ -147,9 +147,7 @@ public class SamlUtil {
 
 		if ((entityDescriptors != null) && !entityDescriptors.isEmpty()) {
 			for (EntityDescriptor entityDescriptor : entityDescriptors) {
-				if (DatatypeHelper.safeEquals(
-						entityDescriptor.getEntityID(), entityId)) {
-
+				if (Objects.equals(entityDescriptor.getEntityID(), entityId)) {
 					return entityDescriptor;
 				}
 			}
@@ -164,9 +162,7 @@ public class SamlUtil {
 		if (metadata instanceof EntityDescriptor) {
 			EntityDescriptor entityDescriptor = (EntityDescriptor)metadata;
 
-			if (DatatypeHelper.safeEquals(
-					entityDescriptor.getEntityID(), entityId)) {
-
+			if (Objects.equals(entityDescriptor.getEntityID(), entityId)) {
 				return entityDescriptor;
 			}
 		}

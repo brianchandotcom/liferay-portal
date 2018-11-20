@@ -50,15 +50,32 @@ public class JavaClassCall extends JavaExpression {
 				!forceLineBreak);
 		}
 		else {
-			append(
+			indent = append(
 				sb, _className, indent, prefix, "", maxLineLength,
 				!forceLineBreak);
-			append(sb, _genericJavaTypes, indent, "<", ">(", maxLineLength);
+
+			if (_parameterValueJavaExpressions.isEmpty()) {
+				append(
+					sb, _genericJavaTypes, indent, "<", ">()" + suffix,
+					maxLineLength);
+
+				return sb.toString();
+			}
+
+			indent = append(
+				sb, _genericJavaTypes, indent, "<", ">(", maxLineLength);
 		}
 
-		append(
-			sb, _parameterValueJavaExpressions, indent, "", ")" + suffix,
-			maxLineLength);
+		if (forceLineBreak) {
+			appendNewLine(
+				sb, _parameterValueJavaExpressions, indent + "\t", "",
+				")" + suffix, maxLineLength);
+		}
+		else {
+			append(
+				sb, _parameterValueJavaExpressions, indent, "", ")" + suffix,
+				maxLineLength);
+		}
 
 		return sb.toString();
 	}

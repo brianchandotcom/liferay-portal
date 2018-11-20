@@ -26,6 +26,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.journal.exception.NoSuchArticleException;
@@ -417,8 +418,12 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 
 		Locale locale = _portal.getLocale(request);
 
-		_portal.addPageSubtitle(assetEntry.getTitle(locale), request);
-		_portal.addPageDescription(assetEntry.getDescription(locale), request);
+		String keywords = _assetHelper.getAssetKeywords(
+			assetEntry.getClassName(), assetEntry.getClassPK());
+
+		_portal.setPageTitle(assetEntry.getTitle(locale), request);
+		_portal.setPageDescription(assetEntry.getDescription(locale), request);
+		_portal.setPageKeywords(keywords, request);
 
 		Layout layout = _getAssetDisplayPageEntryLayout(groupId, assetEntry);
 
@@ -437,6 +442,9 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private AssetHelper _assetHelper;
 
 	private AssetTagLocalService _assetTagLocalService;
 

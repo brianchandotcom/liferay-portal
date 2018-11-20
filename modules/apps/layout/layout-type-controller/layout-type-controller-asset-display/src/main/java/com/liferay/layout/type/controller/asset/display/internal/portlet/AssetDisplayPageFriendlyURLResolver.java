@@ -19,6 +19,7 @@ import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.asset.display.contributor.constants.AssetDisplayWebKeys;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryService;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -83,8 +84,12 @@ public class AssetDisplayPageFriendlyURLResolver
 
 		Locale locale = _portal.getLocale(request);
 
-		_portal.addPageSubtitle(assetEntry.getTitle(locale), request);
-		_portal.addPageDescription(assetEntry.getDescription(locale), request);
+		String keywords = _assetHelper.getAssetKeywords(
+			assetEntry.getClassName(), assetEntry.getClassPK());
+
+		_portal.setPageTitle(assetEntry.getTitle(locale), request);
+		_portal.setPageDescription(assetEntry.getDescription(locale), request);
+		_portal.setPageKeywords(keywords, request);
 
 		Layout layout = getAssetDisplayLayout(groupId);
 
@@ -148,6 +153,9 @@ public class AssetDisplayPageFriendlyURLResolver
 
 	@Reference
 	private AssetEntryService _assetEntryService;
+
+	@Reference
+	private AssetHelper _assetHelper;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

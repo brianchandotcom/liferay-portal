@@ -44,16 +44,21 @@ class SidebarAvailableFragments extends Component {
 
 	/**
 	 * Callback that is executed when an item is being dragged.
-	 * @param {object} data
+	 * @param {object} eventData
 	 * @param {MouseEvent} data.originalEvent
 	 * @private
 	 * @review
 	 */
-	_handleDrag(data) {
-		const targetItem = data.target;
+	_handleDrag(eventData) {
+		const targetItem = eventData.target;
 
-		if (targetItem && 'fragmentEntryLinkId' in targetItem.dataset) {
-			const mouseY = data.originalEvent.clientY;
+		const data = targetItem ? targetItem.dataset : null;
+		const targetIsColumn = targetItem && ('columnId' in data);
+		const targetIsFragment = targetItem && ('fragmentEntryLinkId' in data);
+		const targetIsSection = targetItem && ('layoutSectionId' in data);
+
+		if (targetIsColumn || targetIsFragment || targetIsSection) {
+			const mouseY = eventData.originalEvent.clientY;
 			const targetItemRegion = position.getRegion(targetItem);
 
 			let nearestBorder = DRAG_POSITIONS.bottom;
@@ -62,12 +67,28 @@ class SidebarAvailableFragments extends Component {
 				nearestBorder = DRAG_POSITIONS.top;
 			}
 
+			let hoveredElementId = null;
+			let hoveredElementType = null;
+
+			if (targetIsColumn) {
+				hoveredElementId = data.columnId;
+				hoveredElementType = DROP_TARGET_TYPES.column;
+			}
+			else if (targetIsFragment) {
+				hoveredElementId = data.fragmentEntryLinkId;
+				hoveredElementType = DROP_TARGET_TYPES.fragment;
+			}
+			else if (targetIsSection) {
+				hoveredElementId = data.layoutSectionId;
+				hoveredElementType = DROP_TARGET_TYPES.section;
+			}
+
 			this.store.dispatchAction(
 				UPDATE_DRAG_TARGET,
 				{
 					hoveredElementBorder: nearestBorder,
-					hoveredElementId: targetItem.dataset.fragmentEntryLinkId,
-					hoveredElementType: DROP_TARGET_TYPES.fragment
+					hoveredElementId,
+					hoveredElementType
 				}
 			);
 		}

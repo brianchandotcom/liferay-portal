@@ -133,6 +133,7 @@
 
 	{let $sectionClasses kind="text"}
 		fragment-entry-link-list__row-section
+		fragment-entry-link-drop-target
 		{sp}layouts-drop-target
 		{sp}{$styleModifier}
 
@@ -207,7 +208,14 @@
 	]}
 	{@param? store: ?}
 
-	<div class="col col-{$size} fragment-entry-link-list__col" data-column-id="{$columnId}">
+	{let $columnClasses kind="text"}
+		col
+		{sp}col-{$size}
+		{sp}fragment-entry-link-list__col
+		{sp}fragment-entry-link-drop-target
+	{/let}
+
+	<div class="{$columnClasses}" data-column-id="{$columnId}">
 		{foreach $fragmentEntryLinkId in $fragmentEntryLinkIds}
 			{let $fragmentEntryLink: $fragmentEntryLinks[$fragmentEntryLinkId] /}
 

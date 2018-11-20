@@ -14,8 +14,6 @@
 
 package com.liferay.portal.spring.hibernate;
 
-import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
-
 import javax.sql.DataSource;
 
 import org.springframework.beans.BeansException;
@@ -45,7 +43,7 @@ public class PortletHibernateConfiguration
 	public void setApplicationContext(ApplicationContext applicationContext)
 		throws BeansException {
 
-		_classLoader = PortletClassLoaderUtil.getClassLoader();
+		_classLoader = applicationContext.getClassLoader();
 	}
 
 	@Override

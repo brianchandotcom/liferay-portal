@@ -369,12 +369,6 @@ public class JavaParserUtil {
 		javaMethodDefinition.setJavaSignature(
 			_parseJavaSignature(methodDefinitionDetailAST));
 
-		DetailAST lastChildDetailAST = methodDefinitionDetailAST.getLastChild();
-
-		if (lastChildDetailAST.getType() == TokenTypes.SLIST) {
-			javaMethodDefinition.setHasBody(true);
-		}
-
 		return javaMethodDefinition;
 	}
 

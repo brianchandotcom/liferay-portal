@@ -23,14 +23,6 @@ import java.util.List;
  */
 public class JavaMethodDefinition extends BaseJavaTerm {
 
-	public boolean hasBody() {
-		return _hasBody;
-	}
-
-	public void setHasBody(boolean hasBody) {
-		_hasBody = hasBody;
-	}
-
 	public void setJavaAnnotations(List<JavaAnnotation> javaAnnotations) {
 		_javaAnnotations = javaAnnotations;
 	}
@@ -57,19 +49,11 @@ public class JavaMethodDefinition extends BaseJavaTerm {
 			}
 		}
 
-		if (_hasBody) {
-			appendNewLine(
-				sb, _javaSignature, indent, "", " {" + suffix, maxLineLength);
-		}
-		else {
-			appendNewLine(
-				sb, _javaSignature, indent, "", ";" + suffix, maxLineLength);
-		}
+		appendNewLine(sb, _javaSignature, indent, "", suffix, maxLineLength);
 
 		return sb.toString();
 	}
 
-	private boolean _hasBody;
 	private List<JavaAnnotation> _javaAnnotations;
 	private JavaSignature _javaSignature;
 

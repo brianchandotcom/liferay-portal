@@ -21,8 +21,9 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -52,7 +53,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Igor Spasic
  */
-@PrepareForTest({ServiceContextFactory.class, PropsUtil.class})
+@PrepareForTest(ServiceContextFactory.class)
 @RunWith(PowerMockRunner.class)
 public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
@@ -81,14 +82,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 				}));
 
-		mockStatic(PropsUtil.class);
-
-		when(
-			PropsUtil.getArray(
-				PropsKeys.JSONWS_WEB_SERVICE_INVALID_HTTP_METHODS)
-		).thenReturn(
-			null
-		);
+		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
 
 		initPortalServices();
 

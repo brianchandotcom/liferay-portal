@@ -29,12 +29,17 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsPortletKeys;
+import com.liferay.segments.criteria.Criteria;
+import com.liferay.segments.criteria.CriteriaSerializer;
+import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
+import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributorRegistry;
 import com.liferay.segments.exception.NoSuchEntryException;
 import com.liferay.segments.exception.SegmentsEntryCriteriaException;
 import com.liferay.segments.exception.SegmentsEntryKeyException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryService;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -75,10 +80,12 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active", true);
-		String criteria = ParamUtil.getString(actionRequest, "criteria");
 		boolean dynamic = ParamUtil.getBoolean(actionRequest, "dynamic", true);
 		String key = ParamUtil.getString(actionRequest, "key", name);
+
 		String type = ParamUtil.getString(actionRequest, "type");
+
+		Criteria criteria = getCriteria(actionRequest, type);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			SegmentsEntry.class.getName(), actionRequest);
@@ -90,13 +97,15 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			if (segmentsEntryId <= 0) {
 				segmentsEntry = _segmentsEntryService.addSegmentsEntry(
-					nameMap, descriptionMap, active, criteria, key, type,
+					nameMap, descriptionMap, active,
+					CriteriaSerializer.serialize(criteria), key, type,
 					serviceContext);
 			}
 			else {
 				segmentsEntry = _segmentsEntryService.updateSegmentsEntry(
-					segmentsEntryId, nameMap, descriptionMap, active, criteria,
-					key, serviceContext);
+					segmentsEntryId, nameMap, descriptionMap, active,
+					CriteriaSerializer.serialize(criteria), key,
+					serviceContext);
 			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -133,6 +142,37 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	protected Criteria getCriteria(ActionRequest actionRequest, String type) {
+		List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
+			_segmentsCriteriaContributorRegistry.
+				getSegmentsCriteriaContributors(type);
+
+		Criteria criteria = new Criteria();
+
+		for (SegmentsCriteriaContributor segmentsCriteriaContributor :
+				segmentsCriteriaContributors) {
+
+			String criterionFilter = ParamUtil.getString(
+				actionRequest,
+				"criterionFilter" + segmentsCriteriaContributor.getKey());
+
+			if (Validator.isNull(criterionFilter)) {
+				continue;
+			}
+
+			String criterionConjunction = ParamUtil.getString(
+				actionRequest,
+				"criterionConjunction" + segmentsCriteriaContributor.getKey(),
+				Criteria.Conjunction.AND.getValue());
+
+			segmentsCriteriaContributor.contribute(
+				criteria, criterionFilter,
+				Criteria.Conjunction.parse(criterionConjunction));
+		}
+
+		return criteria;
+	}
+
 	protected String getSaveAndContinueRedirect(
 			ActionRequest actionRequest, SegmentsEntry segmentsEntry,
 			String redirect)
@@ -158,16 +198,20 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 		return portletURL.toString();
 	}
 
-	protected void validateCriteria(String criteria, boolean dynamic)
+	protected void validateCriteria(Criteria criteria, boolean dynamic)
 		throws SegmentsEntryCriteriaException {
 
-		if (dynamic && Validator.isNull(criteria)) {
+		if (dynamic && Validator.isNull(criteria.getFilter())) {
 			throw new SegmentsEntryCriteriaException();
 		}
 	}
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsCriteriaContributorRegistry
+		_segmentsCriteriaContributorRegistry;
 
 	@Reference
 	private SegmentsEntryService _segmentsEntryService;

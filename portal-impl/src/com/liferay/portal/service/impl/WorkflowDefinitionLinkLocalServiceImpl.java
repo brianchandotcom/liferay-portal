@@ -217,6 +217,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 			throw new NoSuchWorkflowDefinitionLinkException();
 		}
 
+		groupId = StagingUtil.getLiveGroupId(groupId);
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return workflowDefinitionLinkPersistence.findByG_C_C_C(
@@ -240,6 +241,8 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 	@Override
 	public int getWorkflowDefinitionLinksCount(
 		long companyId, long groupId, String className) {
+
+		groupId = StagingUtil.getLiveGroupId(groupId);
 
 		return workflowDefinitionLinkPersistence.countByG_C_C(
 			groupId, companyId,

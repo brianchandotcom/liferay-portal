@@ -37,25 +37,51 @@ public class JavaArrayDeclarator extends JavaExpression {
 		sb.append(indent);
 		sb.append(prefix);
 
-		if (_genericJavaTypes == null) {
-			append(sb, _className, indent, "", "[", maxLineLength);
-		}
-		else {
-			append(sb, _className, indent, maxLineLength);
-			append(sb, _genericJavaTypes, indent, "<", ">[", maxLineLength);
+		append(sb, _className, indent, maxLineLength);
+
+		if (_genericJavaTypes != null) {
+			append(sb, _genericJavaTypes, indent, "<", ">", maxLineLength);
 		}
 
+		int index = sb.index();
+
+		outerLoop:
+		while (true) {
+			for (int i = 0; i < _dimensionValueJavaExpressions.size(); i++) {
+				String expressionSuffix = "]";
+
+				if (i == (_dimensionValueJavaExpressions.size() - 1)) {
+					expressionSuffix += suffix;
+				}
+
+				if (!appendSingleLine(
+						sb, _dimensionValueJavaExpressions.get(i), "[",
+						expressionSuffix, maxLineLength)) {
+
+					sb.setIndex(index);
+
+					indent += "\t";
+
+					break outerLoop;
+				}
+			}
+
+			return sb.toString();
+		}
+
+		sb.append("\n");
+		sb.append(indent);
+
 		for (int i = 0; i < _dimensionValueJavaExpressions.size(); i++) {
+			String expressionSuffix = "]";
+
 			if (i == (_dimensionValueJavaExpressions.size() - 1)) {
-				append(
-					sb, _dimensionValueJavaExpressions.get(i), indent, "",
-					"]" + suffix, maxLineLength);
+				expressionSuffix += suffix;
 			}
-			else {
-				append(
-					sb, _dimensionValueJavaExpressions.get(i), indent, "", "][",
-					maxLineLength);
-			}
+
+			append(
+				sb, _dimensionValueJavaExpressions.get(i), indent, "[",
+				expressionSuffix, maxLineLength);
 		}
 
 		return sb.toString();

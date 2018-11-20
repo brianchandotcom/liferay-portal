@@ -202,6 +202,12 @@
 		</while>
 	</command>
 
+	<command name="viewCP">
+		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
+
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocumentTypes#DOCUMENT_TYPES_TABLE_NAME" value1="${dmDocumentTypeName}" />
+	</command>
+
 	<command name="viewMenulistOption">
 		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 

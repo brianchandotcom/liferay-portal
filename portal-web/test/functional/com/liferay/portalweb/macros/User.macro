@@ -490,8 +490,10 @@
 	</command>
 
 	<command name="answerPasswordReminder">
+		<execute function="Pause" locator1="3000" />
+
 		<if>
-			<condition function="IsElementPresent" locator1="TextInput#ANSWER" />
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#ANSWER" />
 			<then>
 				<execute function="Type" locator1="TextInput#ANSWER" value1="test" />
 

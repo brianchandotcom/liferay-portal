@@ -16,9 +16,9 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.MockPortletPreferences;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.util.PropsImpl;
 
 import javax.portlet.PortletPreferences;
 
@@ -26,24 +26,28 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Iván Zaera
  */
-public class UpgradeMessageBoardsTest extends PowerMockito {
+public class UpgradeMessageBoardsTest {
 
 	@Before
 	public void setUp() {
-		Props props = mock(Props.class);
+		PropsUtil.setProps(
+			new PropsImpl() {
 
-		when(
-			props.get(PropsKeys.MESSAGE_BOARDS_EMAIL_HTML_FORMAT)
-		).thenReturn(
-			Boolean.FALSE.toString()
-		);
+				@Override
+				public String get(String key) {
+					if (key.equals(
+							PropsKeys.MESSAGE_BOARDS_EMAIL_HTML_FORMAT)) {
 
-		PropsUtil.setProps(props);
+						return StringPool.FALSE;
+					}
+
+					return null;
+				}
+
+			});
 
 		_portletPreferences = new MockPortletPreferences();
 		_upgradeMessageBoards = new UpgradeMessageBoards();

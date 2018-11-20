@@ -15,6 +15,7 @@
 package com.liferay.portal.util;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.ConfigurationImpl;
 import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,20 +39,11 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author László Csontos
  */
-@PrepareForTest(PropsUtil.class)
-@RunWith(PowerMockRunner.class)
-public class LayoutListUtilTest extends PowerMockito {
+public class LayoutListUtilTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -74,19 +66,22 @@ public class LayoutListUtilTest extends PowerMockito {
 
 		localizationUtil.setLocalization(new LocalizationImpl());
 
-		mockStatic(PropsUtil.class);
+		ReflectionTestUtil.setFieldValue(
+			PropsUtil.class, "_configuration",
+			new ConfigurationImpl(
+				PropsUtil.class.getClassLoader(), PropsFiles.PORTAL, 0, null) {
 
-		when(
-			PropsUtil.get(Mockito.anyString())
-		).thenReturn(
-			StringPool.BLANK
-		);
+				@Override
+				public String get(String key) {
+					return StringPool.BLANK;
+				}
 
-		when(
-			PropsUtil.getArray(Mockito.anyString())
-		).thenReturn(
-			new String[0]
-		);
+				@Override
+				public String[] getArray(String key) {
+					return new String[0];
+				}
+
+			});
 
 		Class<?> clazz = getClass();
 

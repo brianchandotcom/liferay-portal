@@ -3860,6 +3860,40 @@ log.sanitizer.enabled=false</echo>
 		</run-batch-test>
 	</target>
 
+	<target name="js-unit-jdk8">
+		<run-batch-test>
+			<test-action>
+				<gradle-execute dir="modules" task="npmRunTest" />
+
+				<replace
+					dir="modules"
+					includes="**/TEST-frontend-js.xml"
+				>
+					<replacefilter>
+						<replacetoken><![CDATA[<testsuites>]]></replacetoken>
+						<replacevalue><![CDATA[]]></replacevalue>
+					</replacefilter>
+					<replacefilter>
+						<replacetoken><![CDATA[</testsuites>]]></replacetoken>
+						<replacevalue><![CDATA[]]></replacevalue>
+					</replacefilter>
+				</replace>
+			</test-action>
+
+			<test-set-up>
+				<if>
+					<isset property="env.DIST_PATH" />
+					<then>
+						<prepare-test-environment />
+					</then>
+					<else>
+						<prepare-test-build />
+					</else>
+				</if>
+			</test-set-up>
+		</run-batch-test>
+	</target>
+
 	<target name="jsf-jdk8">
 		<run-batch-test>
 			<test-action>
@@ -4948,40 +4982,6 @@ ${output.content}</echo>
 				</if>
 			</then>
 		</if>
-	</target>
-
-	<target name="js-unit-jdk8">
-		<run-batch-test>
-			<test-action>
-				<gradle-execute dir="modules" task="npmRunTest" />
-
-				<replace
-					dir="modules"
-					includes="**/TEST-frontend-js.xml"
-				>
-					<replacefilter>
-						<replacetoken><![CDATA[<testsuites>]]></replacetoken>
-						<replacevalue><![CDATA[]]></replacevalue>
-					</replacefilter>
-					<replacefilter>
-						<replacetoken><![CDATA[</testsuites>]]></replacetoken>
-						<replacevalue><![CDATA[]]></replacevalue>
-					</replacefilter>
-				</replace>
-			</test-action>
-
-			<test-set-up>
-				<if>
-					<isset property="env.DIST_PATH" />
-					<then>
-						<prepare-test-environment />
-					</then>
-					<else>
-						<prepare-test-build />
-					</else>
-				</if>
-			</test-set-up>
-		</run-batch-test>
 	</target>
 
 	<target name="portal-frontend-js-lint-jdk8">

@@ -828,11 +828,13 @@ public class OpenSamlUtil {
 	public static String marshall(XMLObject xmlObject)
 		throws MarshallingException {
 
-		StringWriter stringWriter = new StringWriter();
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
 
-		XMLObjectHelper.marshallToWriter(xmlObject, stringWriter);
+		XMLObjectSupport.marshallToOutputStream(
+			xmlObject, byteArrayOutputStream);
 
-		return stringWriter.toString();
+		return byteArrayOutputStream.toString();
 	}
 
 	public static void signObject(

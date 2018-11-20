@@ -132,7 +132,7 @@
 				<actions>
 					<replaceregexp
 						file="${tck.tests.xml}"
-						flags="im"
+						flags="gis"
 						match="&lt;entry[^&gt;]+key=&quot;@{key}&quot;[^&gt;]*&gt;[^&lt;]*&lt;/entry&gt;"
 						replace=""
 					/>
@@ -170,21 +170,21 @@
 
 		<propertycopy
 			from="browser.${browser.type[tck]}.version"
-			name="browser.version" silent="true"
+			name="tck.browser.version" silent="true"
 		/>
 
 		<propertycopy
-			from="browser.${browser.type[tck]}.bin.file[${browser.version}]"
-			name="browser.bin.file" silent="true"
+			from="browser.${browser.type[tck]}.bin.file[${tck.browser.version}]"
+			name="tck.browser.bin.file" silent="true"
 		/>
 
 		<propertycopy
 			from="selenium.${browser.type[tck]}.driver.executable"
-			name="selenium.tck.browser.driver.executable" silent="true"
+			name="tck.selenium.browser.driver.executable" silent="true"
 		/>
 
 		<execute dir="${tck.home}" failonerror="false">
-			mvn -Pliferay,run-tck -Djava.awt.headless=true ${tck.properties} -Dtest.browser=${browser.type[tck]} -Dtest.browser.binary='${browser.bin.file}' -Dtest.browser.webDriver=${project.dir}/tck/${selenium.executable.dir.name}${selenium.tck.browser.driver.executable} -Dtest.list.file=${tck.tests.xml} test
+			mvn -Pliferay,run-tck -Djava.awt.headless=true ${tck.properties} -Dtest.browser=${browser.type[tck]} -Dtest.browser.binary='${tck.browser.bin.file}' -Dtest.browser.webDriver=${project.dir}/tck/${selenium.executable.dir.name}${tck.selenium.browser.driver.executable} -Dtest.list.file=${tck.tests.xml} test
 		</execute>
 
 		<if>

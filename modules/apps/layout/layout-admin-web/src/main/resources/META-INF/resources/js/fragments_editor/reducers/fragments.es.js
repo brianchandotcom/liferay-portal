@@ -7,8 +7,10 @@ import {
 import {DRAG_POSITIONS} from './placeholders.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLink.es';
 import {
+	add,
 	getFragmentRowIndex,
 	setIn,
+	updateIn,
 	updateLayoutData
 } from '../utils/utils.es';
 
@@ -421,6 +423,52 @@ function _getFragmentEntryLinkContent(
 				{content: response.content}
 			);
 		}
+	);
+}
+
+/**
+ * Returns a new layoutData with the given fragmentEntryLinkId inserted
+ * into a given column at the given position
+ *
+ * @param {object} layoutData
+ * @param {string} fragmentEntryLinkId
+ * @param {string} targetColumnId
+ * @param {number} position
+ * @return {object}
+ */
+
+function _addFragmentToColumn(
+	layoutData,
+	fragmentEntryLinkId,
+	targetColumnId,
+	position
+) {
+	const {structure} = layoutData;
+
+	const column = getColumn(structure, targetColumnId);
+	const section = structure.find(
+		section => section.columns.find(
+			_column => column === _column
+		)
+	);
+
+	const columnIndex = section.columns.indexOf(column);
+	const sectionIndex = structure.indexOf(section);
+
+	return updateIn(
+		layoutData,
+		[
+			'structure',
+			sectionIndex,
+			'columns',
+			columnIndex,
+			'fragmentEntryLinkIds'
+		],
+		fragmentEntryLinkIds => add(
+			fragmentEntryLinkIds,
+			fragmentEntryLinkId,
+			position
+		)
 	);
 }
 

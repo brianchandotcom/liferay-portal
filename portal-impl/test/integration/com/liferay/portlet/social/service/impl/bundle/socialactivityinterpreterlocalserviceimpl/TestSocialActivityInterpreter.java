@@ -73,7 +73,6 @@ public class TestSocialActivityInterpreter
 
 	@Override
 	public void updateActivitySet(long activityId) {
-		return;
 	}
 
 }

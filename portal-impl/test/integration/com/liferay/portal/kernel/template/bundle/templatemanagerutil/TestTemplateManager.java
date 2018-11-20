@@ -46,40 +46,30 @@ public class TestTemplateManager implements TemplateManager {
 	public void addContextObjects(
 		Map<String, Object> contextObjects,
 		Map<String, Object> newContextObjects) {
-
-		return;
 	}
 
 	@Override
 	public void addStaticClassSupport(
 		Map<String, Object> contextObjects, String variableName,
 		Class<?> variableClass) {
-
-		return;
 	}
 
 	@Override
 	public void addTaglibApplication(
 		Map<String, Object> contextObjects, String applicationName,
 		ServletContext servletContext) {
-
-		return;
 	}
 
 	@Override
 	public void addTaglibFactory(
 		Map<String, Object> contextObjects, String taglibLiferayHash,
 		ServletContext servletContext) {
-
-		return;
 	}
 
 	@Override
 	public void addTaglibRequest(
 		Map<String, Object> contextObjects, String applicationName,
 		HttpServletRequest request, HttpServletResponse response) {
-
-		return;
 	}
 
 	@Override
@@ -92,18 +82,14 @@ public class TestTemplateManager implements TemplateManager {
 	public void addTaglibTheme(
 		Map<String, Object> contextObjects, String string,
 		HttpServletRequest request, HttpServletResponse response) {
-
-		return;
 	}
 
 	@Override
 	public void destroy() {
-		return;
 	}
 
 	@Override
 	public void destroy(ClassLoader classLoader) {
-		return;
 	}
 
 	@Override
@@ -156,7 +142,6 @@ public class TestTemplateManager implements TemplateManager {
 
 	@Override
 	public void init() {
-		return;
 	}
 
 }

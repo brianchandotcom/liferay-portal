@@ -45,12 +45,10 @@ public class TestTemplateResource implements TemplateResource {
 
 	@Override
 	public void readExternal(ObjectInput objectInput) {
-		return;
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) {
-		return;
 	}
 
 }

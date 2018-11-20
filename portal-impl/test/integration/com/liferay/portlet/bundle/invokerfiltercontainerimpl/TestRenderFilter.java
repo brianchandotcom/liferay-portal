@@ -40,20 +40,16 @@ public class TestRenderFilter implements RenderFilter {
 
 	@Override
 	public void destroy() {
-		return;
 	}
 
 	@Override
 	public void doFilter(
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		FilterChain filterChain) {
-
-		return;
 	}
 
 	@Override
 	public void init(FilterConfig filterConfig) {
-		return;
 	}
 
 }

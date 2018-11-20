@@ -40,20 +40,16 @@ public class TestEventFilter implements EventFilter {
 
 	@Override
 	public void destroy() {
-		return;
 	}
 
 	@Override
 	public void doFilter(
 		EventRequest eventRequest, EventResponse eventResponse,
 		FilterChain filterChain) {
-
-		return;
 	}
 
 	@Override
 	public void init(FilterConfig filterConfig) {
-		return;
 	}
 
 }

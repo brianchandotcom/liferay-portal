@@ -138,7 +138,6 @@ public class TestWebDAVStorage implements WebDAVStorage {
 
 	@Override
 	public void setRootPath(String rootPath) {
-		return;
 	}
 
 	@Override

@@ -40,7 +40,6 @@ public class TestPollerProcessor implements PollerProcessor {
 
 	@Override
 	public void send(PollerRequest pollerRequest) {
-		return;
 	}
 
 }

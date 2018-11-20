@@ -33,17 +33,14 @@ public class TestTemplateResourceLoader implements TemplateResourceLoader {
 
 	@Override
 	public void clearCache() {
-		return;
 	}
 
 	@Override
 	public void clearCache(String templateId) {
-		return;
 	}
 
 	@Override
 	public void destroy() {
-		return;
 	}
 
 	@Override

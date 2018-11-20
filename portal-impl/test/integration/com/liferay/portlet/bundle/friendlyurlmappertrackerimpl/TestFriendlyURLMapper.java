@@ -69,28 +69,22 @@ public class TestFriendlyURLMapper implements FriendlyURLMapper {
 	public void populateParams(
 		String friendlyURLPath, Map<String, String[]> parameterMap,
 		Map<String, Object> requestContext) {
-
-		return;
 	}
 
 	@Override
 	public void setMapping(String mapping) {
-		return;
 	}
 
 	@Override
 	public void setPortletId(String portletId) {
-		return;
 	}
 
 	@Override
 	public void setPortletInstanceable(boolean portletInstanceable) {
-		return;
 	}
 
 	@Override
 	public void setRouter(Router router) {
-		return;
 	}
 
 }

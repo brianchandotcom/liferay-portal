@@ -40,20 +40,16 @@ public class TestResourceFilter implements ResourceFilter {
 
 	@Override
 	public void destroy() {
-		return;
 	}
 
 	@Override
 	public void doFilter(
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
 		FilterChain filterChain) {
-
-		return;
 	}
 
 	@Override
 	public void init(FilterConfig filterConfig) {
-		return;
 	}
 
 }

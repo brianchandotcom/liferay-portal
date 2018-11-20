@@ -16,20 +16,12 @@ package com.liferay.portal.spring.hibernate;
 
 import javax.sql.DataSource;
 
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Ganesh Ram
  */
 public class PortletHibernateConfiguration
-	extends PortalHibernateConfiguration implements ApplicationContextAware {
-
-	public PortletHibernateConfiguration() {
-		this(null, null);
-	}
+	extends PortalHibernateConfiguration {
 
 	public PortletHibernateConfiguration(
 		ClassLoader classLoader, DataSource dataSource) {
@@ -37,13 +29,6 @@ public class PortletHibernateConfiguration
 		_classLoader = classLoader;
 
 		setDataSource(dataSource);
-	}
-
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext)
-		throws BeansException {
-
-		_classLoader = applicationContext.getClassLoader();
 	}
 
 	@Override
@@ -58,6 +43,6 @@ public class PortletHibernateConfiguration
 		};
 	}
 
-	private ClassLoader _classLoader;
+	private final ClassLoader _classLoader;
 
 }

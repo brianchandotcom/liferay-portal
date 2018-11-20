@@ -36,6 +36,7 @@ import com.liferay.portal.search.IndexableAdvice;
 import com.liferay.portal.security.access.control.AccessControlAdvice;
 import com.liferay.portal.service.ServiceContextAdvice;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
+import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 import com.liferay.portal.spring.hibernate.PortletTransactionManager;
 import com.liferay.portal.spring.transaction.TransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionExecutorFactory;
@@ -276,10 +277,27 @@ public class AopConfigurableApplicationContextConfigurator
 				configurableListableBeanFactory.getBean(
 					"liferayDataSource", DataSource.class);
 
-			SessionFactoryImplementor liferayHibernateSessionFactory =
-				configurableListableBeanFactory.getBean(
-					"liferayHibernateSessionFactory",
-					SessionFactoryImplementor.class);
+			SessionFactoryImplementor liferayHibernateSessionFactory = null;
+
+			if (PortalClassLoaderUtil.isPortalClassLoader(_classLoader)) {
+				liferayHibernateSessionFactory =
+					configurableListableBeanFactory.getBean(
+						"liferayHibernateSessionFactory",
+						SessionFactoryImplementor.class);
+			}
+			else {
+				PortletHibernateConfiguration portletHibernateConfiguration =
+					new PortletHibernateConfiguration(
+						_classLoader, liferayDataSource);
+
+				try {
+					liferayHibernateSessionFactory = (SessionFactoryImplementor)
+						portletHibernateConfiguration.buildSessionFactory();
+				}
+				catch (Exception e) {
+					return ReflectionUtil.throwException(e);
+				}
+			}
 
 			SessionFactoryImpl sessionFactoryImpl = new SessionFactoryImpl();
 

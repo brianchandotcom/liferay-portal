@@ -28,7 +28,7 @@ import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplay;
 import com.liferay.sharing.web.internal.display.SharingEntryPermissionDisplayAction;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -75,7 +75,7 @@ public class SharingUtil {
 			try {
 				if (_sharingPermission.contains(
 						permissionChecker, classNameId, classPK, groupId,
-						Arrays.asList(sharingEntryAction))) {
+						Collections.singletonList(sharingEntryAction))) {
 
 					sharingEntryActions.add(sharingEntryAction);
 				}

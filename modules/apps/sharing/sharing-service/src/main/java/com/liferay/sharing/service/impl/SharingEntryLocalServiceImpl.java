@@ -604,19 +604,6 @@ public class SharingEntryLocalServiceImpl
 		return false;
 	}
 
-	@Override
-	public boolean hasSharingPermission(
-		SharingEntry sharingEntry, SharingEntryAction sharingEntryAction) {
-
-		long actionIds = sharingEntry.getActionIds();
-
-		if ((actionIds & sharingEntryAction.getBitwiseValue()) != 0) {
-			return true;
-		}
-
-		return false;
-	}
-
 	/**
 	 * Updates the sharing entry in the database.
 	 *

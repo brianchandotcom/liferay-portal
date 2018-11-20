@@ -131,8 +131,8 @@ public class StagedModelDataHandlerRegistryUtil {
 
 		ServiceRegistration<StagedModelDataHandler<?>> serviceRegistration =
 			registry.registerService(
-				(Class<StagedModelDataHandler<?>>)(Class<?>)
-					StagedModelDataHandler.class,
+				(Class<StagedModelDataHandler<?>>)
+					(Class<?>)StagedModelDataHandler.class,
 				stagedModelDataHandler);
 
 		_serviceRegistrations.put(stagedModelDataHandler, serviceRegistration);
@@ -152,9 +152,8 @@ public class StagedModelDataHandlerRegistryUtil {
 
 	private final ServiceRegistrationMap<StagedModelDataHandler<?>>
 		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
-	private final
-		ServiceTracker<StagedModelDataHandler<?>, StagedModelDataHandler<?>>
-			_serviceTracker;
+	private final ServiceTracker
+		<StagedModelDataHandler<?>, StagedModelDataHandler<?>> _serviceTracker;
 	private final Map<String, StagedModelDataHandler<?>>
 		_stagedModelDataHandlers = new ConcurrentHashMap<>();
 

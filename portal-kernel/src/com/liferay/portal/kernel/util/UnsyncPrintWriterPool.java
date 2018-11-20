@@ -77,11 +77,10 @@ public class UnsyncPrintWriterPool {
 	}
 
 	private static final ThreadLocal<List<UnsyncPrintWriter>>
-		_borrowedUnsyncPrintWritersThreadLocal =
-			new CentralizedThreadLocal<>(
-				UnsyncPrintWriterPool.class.getName() +
-					"._borrowedUnsyncPrintWritersThreadLocal",
-				ArrayList::new);
+		_borrowedUnsyncPrintWritersThreadLocal = new CentralizedThreadLocal<>(
+			UnsyncPrintWriterPool.class.getName() +
+				"._borrowedUnsyncPrintWritersThreadLocal",
+			ArrayList::new);
 	private static final ThreadLocal<Boolean> _enabledThreadLocal =
 		new CentralizedThreadLocal<>(
 			UnsyncPrintWriterPool.class.getName() + "._enabledThreadLocal",

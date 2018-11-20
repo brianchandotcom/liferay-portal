@@ -41,10 +41,9 @@ public class ClusterableContextThreadLocal {
 	}
 
 	private static final ThreadLocal<HashMap<String, Serializable>>
-		_contextThreadLocal =
-			new CentralizedThreadLocal<>(
-				ClusterableContextThreadLocal.class.getName() +
-					"._contextThreadLocal",
-				HashMap::new);
+		_contextThreadLocal = new CentralizedThreadLocal<>(
+			ClusterableContextThreadLocal.class.getName() +
+				"._contextThreadLocal",
+			HashMap::new);
 
 }

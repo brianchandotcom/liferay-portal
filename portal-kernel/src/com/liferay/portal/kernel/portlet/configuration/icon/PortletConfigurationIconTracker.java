@@ -167,8 +167,8 @@ public class PortletConfigurationIconTracker {
 		_serviceTrackerList = ServiceTrackerCollections.openList(
 			PortletConfigurationIconLocator.class);
 	private static final ServiceTrackerMap
-		<String, List<PortletConfigurationIcon>>
-			_serviceTrackerMap = ServiceTrackerCollections.openMultiValueMap(
+		<String, List<PortletConfigurationIcon>> _serviceTrackerMap =
+			ServiceTrackerCollections.openMultiValueMap(
 				PortletConfigurationIcon.class, null,
 				new PortletConfigurationIconServiceReferenceMapper());
 

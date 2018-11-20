@@ -121,8 +121,8 @@ public class AssetRendererFactoryRegistryUtil {
 
 		ServiceRegistration<AssetRendererFactory<?>> serviceRegistration =
 			registry.registerService(
-				(Class<AssetRendererFactory<?>>)(Class<?>)
-					AssetRendererFactory.class,
+				(Class<AssetRendererFactory<?>>)
+					(Class<?>)AssetRendererFactory.class,
 				assetRendererFactory);
 
 		_serviceRegistrations.put(assetRendererFactory, serviceRegistration);
@@ -196,9 +196,8 @@ public class AssetRendererFactoryRegistryUtil {
 		_assetRenderFactoriesMapByClassType = new ConcurrentHashMap<>();
 	private static final ServiceRegistrationMap<AssetRendererFactory<?>>
 		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
-	private static final
-		ServiceTracker<AssetRendererFactory<?>, AssetRendererFactory<?>>
-			_serviceTracker;
+	private static final ServiceTracker
+		<AssetRendererFactory<?>, AssetRendererFactory<?>> _serviceTracker;
 
 	private static class AssetRendererFactoryServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

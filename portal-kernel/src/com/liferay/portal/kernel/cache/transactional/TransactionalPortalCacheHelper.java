@@ -302,11 +302,10 @@ public class TransactionalPortalCacheHelper {
 		_NULL_HOLDER, PortalCache.DEFAULT_TIME_TO_LIVE, false);
 
 	private static final ThreadLocal<List<List<PortalCacheMap>>>
-		_backupPortalCacheMapsThreadLocal =
-			new CentralizedThreadLocal<>(
-				TransactionalPortalCacheHelper.class.getName() +
-					"._backupPortalCacheMapsThreadLocal",
-				ArrayList::new, false);
+		_backupPortalCacheMapsThreadLocal = new CentralizedThreadLocal<>(
+			TransactionalPortalCacheHelper.class.getName() +
+				"._backupPortalCacheMapsThreadLocal",
+			ArrayList::new, false);
 	private static final ThreadLocal<List<PortalCacheMap>>
 		_portalCacheMapsThreadLocal = new CentralizedThreadLocal<>(
 			TransactionalPortalCacheHelper.class.getName() +

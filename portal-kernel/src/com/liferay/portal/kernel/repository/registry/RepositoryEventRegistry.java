@@ -27,8 +27,8 @@ public interface RepositoryEventRegistry {
 			Class<S> repositoryEventTypeClass, Class<T> modelClass,
 			RepositoryEventListener<S, T> repositoryEventListeners);
 
-	public default <S extends RepositoryEventType, T>
-		void unregisterRepositoryEventListener(
+	public default <S extends RepositoryEventType, T> void
+		unregisterRepositoryEventListener(
 			Class<S> repositoryEventTypeClass, Class<T> modelClass,
 			RepositoryEventListener<S, T> repositoryEventListener) {
 	}

@@ -99,8 +99,8 @@ public class PermissionUpdateHandlerRegistryUtil {
 
 		ServiceRegistration<PermissionUpdateHandler> serviceRegistration =
 			registry.registerService(
-				(Class<PermissionUpdateHandler>)(Class<?>)
-					PermissionUpdateHandler.class,
+				(Class<PermissionUpdateHandler>)
+					(Class<?>)PermissionUpdateHandler.class,
 				permissionUpdateHandler);
 
 		_serviceRegistrations.put(permissionUpdateHandler, serviceRegistration);

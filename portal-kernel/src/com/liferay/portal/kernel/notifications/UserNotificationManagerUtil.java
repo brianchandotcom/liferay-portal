@@ -337,8 +337,8 @@ public class UserNotificationManagerUtil {
 	private final ServiceRegistrationMap<UserNotificationHandler>
 		_userNotificationHandlerServiceRegistrations =
 			new ServiceRegistrationMapImpl<>();
-	private final
-		ServiceTracker<UserNotificationHandler, UserNotificationHandler>
+	private final ServiceTracker
+		<UserNotificationHandler, UserNotificationHandler>
 			_userNotificationHandlerServiceTracker;
 
 	private class UserNotificationHandlerServiceTrackerCustomizer

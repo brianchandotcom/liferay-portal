@@ -85,8 +85,8 @@ public class ModelAdapterUtil {
 		return modelAdapterBuilder.build(adapteeModel);
 	}
 
-	private static final
-		ServiceTracker<ModelAdapterBuilderLocator, ModelAdapterBuilderLocator>
+	private static final ServiceTracker
+		<ModelAdapterBuilderLocator, ModelAdapterBuilderLocator>
 			_modelAdapterBuilderLocatorServiceTracker;
 
 	static {

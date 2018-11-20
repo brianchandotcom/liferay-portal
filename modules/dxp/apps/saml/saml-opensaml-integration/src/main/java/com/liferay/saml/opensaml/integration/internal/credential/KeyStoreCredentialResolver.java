@@ -171,7 +171,7 @@ public class KeyStoreCredentialResolver extends AbstractCredentialResolver {
 		KeyStore.SecretKeyEntry secretKeyEntry, String entityId,
 		UsageType usageType) {
 
-		BasicCredential basicCredential = new BasicCredential() {};
+		BasicCredential basicCredential = new BasicCredential();
 
 		basicCredential.setEntityId(entityId);
 		basicCredential.setSecretKey(secretKeyEntry.getSecretKey());

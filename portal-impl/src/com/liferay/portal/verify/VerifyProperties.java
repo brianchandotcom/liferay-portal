@@ -1822,7 +1822,7 @@ public class VerifyProperties extends VerifyProcess {
 		"social.activity.sets.bundling.enabled", "social.activity.sets.enabled",
 		"social.bookmark.display.styles", "social.bookmark.types",
 		"spring.hibernate.data.source", "spring.hibernate.session.factory",
-		"struts.portlet.ignored.parameters.regexp",
+		"spring.portlet.configs", "struts.portlet.ignored.parameters.regexp",
 		"struts.portlet.request.processor",
 		"table.mapper.cache.mapping.table.names", "tck.url",
 		"user.groups.indexer.enabled", "users.form.add.identification",

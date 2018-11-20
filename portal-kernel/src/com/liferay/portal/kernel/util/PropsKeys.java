@@ -2357,6 +2357,10 @@ public interface PropsKeys {
 
 	public static final String SPRING_INFRASTRUCTURE_CONFIGS = "spring.infrastructure.configs";
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String SPRING_PORTLET_CONFIGS = "spring.portlet.configs";
 
 	public static final String SPRITE_FILE_NAME = "sprite.file.name";

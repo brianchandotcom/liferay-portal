@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 import com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor;
@@ -150,10 +151,21 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 			});
 
 		configurableWebApplicationContext.addBeanFactoryPostProcessor(
-			configurableListableBeanFactory ->
+			configurableListableBeanFactory -> {
 				configurableListableBeanFactory.addBeanPostProcessor(
 					new BeanReferenceAnnotationBeanPostProcessor(
-						configurableListableBeanFactory)));
+						configurableListableBeanFactory));
+
+				if ((configurableListableBeanFactory.getBeanDefinitionCount() >
+						0) &&
+					!configurableListableBeanFactory.containsBean(
+						"liferayDataSource")) {
+
+					configurableListableBeanFactory.registerSingleton(
+						"liferayDataSource",
+						InfrastructureUtil.getDataSource());
+				}
+			});
 
 		ConfigurableApplicationContextConfigurator
 			configurableApplicationContextConfigurator =

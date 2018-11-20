@@ -1,3 +1,5 @@
+import {DRAG_POSITIONS} from '../reducers/placeholders.es';
+
 /**
  * Inserts an element in the given position of a given array and returns
  * a copy of the array
@@ -28,6 +30,36 @@ function getColumn(structure, columnId) {
 		)
 		.filter(column => column)
 		.find(column => column);
+}
+
+/**
+ * Returns the position in the structure of the given section
+ * @param {object} structure
+ * @param {number} targetSectionId
+ * @param {string} targetBorder
+ * @return {number}
+ */
+function getDropSectionPosition(
+	structure,
+	targetSectionId,
+	targetBorder
+) {
+	let position = structure.length;
+
+	const targetPosition = structure.findIndex(
+		section => section.rowId === targetSectionId
+	);
+
+	if (targetPosition > -1 && targetBorder) {
+		if (targetBorder === DRAG_POSITIONS.top) {
+			position = targetPosition;
+		}
+		else {
+			position = targetPosition + 1;
+		}
+	}
+
+	return position;
 }
 
 /**
@@ -170,6 +202,7 @@ function updateLayoutData(
 export {
 	add,
 	getColumn,
+	getDropSectionPosition,
 	getFragmentColumn,
 	getFragmentRowIndex,
 	setIn,

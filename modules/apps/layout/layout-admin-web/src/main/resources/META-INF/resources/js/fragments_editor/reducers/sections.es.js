@@ -1,6 +1,9 @@
 import {ADD_SECTION} from '../actions/actions.es';
-import {DRAG_POSITIONS} from './placeholders.es';
-import {setIn, updateLayoutData} from '../utils/utils.es';
+import {
+	getDropSectionPosition,
+	setIn,
+	updateLayoutData
+} from '../utils/utils.es';
 
 /**
  * @param {!object} state
@@ -16,7 +19,7 @@ function addSectionReducer(state, actionType, payload) {
 	return new Promise(
 		resolve => {
 			if (actionType === ADD_SECTION) {
-				const position = _getDropSectionPosition(
+				const position = getDropSectionPosition(
 					state.layoutData.structure,
 					state.hoveredElementId,
 					state.hoveredElementBorder
@@ -104,36 +107,6 @@ function _addSection(layoutColumns, layoutData, position) {
 	nextData = setIn(nextData, ['nextRowId'], nextRowId + 1);
 
 	return nextData;
-}
-
-/**
- * Returns the position in the structure of the given section
- * @param {object} structure
- * @param {number} targetSectionId
- * @param {string} targetBorder
- * @return {number}
- */
-function _getDropSectionPosition(
-	structure,
-	targetSectionId,
-	targetBorder
-) {
-	let position = structure.length;
-
-	const targetPosition = structure.findIndex(
-		section => section.rowId === targetSectionId
-	);
-
-	if (targetPosition > -1 && targetBorder) {
-		if (targetBorder === DRAG_POSITIONS.top) {
-			position = targetPosition;
-		}
-		else {
-			position = targetPosition + 1;
-		}
-	}
-
-	return position;
 }
 
 export {addSectionReducer};

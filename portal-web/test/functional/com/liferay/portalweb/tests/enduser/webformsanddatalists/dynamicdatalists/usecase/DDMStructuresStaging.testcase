@@ -66,6 +66,8 @@
 	<command name="AddWebContentTemplateWithSmallImage" priority="3">
 		<description message="This is a use case for LPS-80085." />
 
+		<property name="test.name.skip.portal.instance" value="DDMStructuresStaging#AddWebContentTemplateWithSmallImage" />
+
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Staging Page" />
 			<var name="siteName" value="Staging Site Name" />

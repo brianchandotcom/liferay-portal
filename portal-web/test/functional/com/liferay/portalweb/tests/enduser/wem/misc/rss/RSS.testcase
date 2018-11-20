@@ -868,6 +868,11 @@
 
 		<execute macro="Button#clickPublish" />
 
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="RSSPortlet#viewUpdateFeedTitle">
 			<var name="feedHeading" value="Web Content Title Updated Feed" />
 			<var name="pageName" value="Site Page Name" />

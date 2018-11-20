@@ -317,7 +317,7 @@
 			<var name="urlAppend" value="web/test-site-name-2-staging" />
 		</execute>
 
-		<execute function="Click" locator1="Home#PAGE">
+		<execute function="Click#pauseClick" locator1="Home#PAGE">
 			<var name="key_pageName" value="Test Template Content Page" />
 		</execute>
 
@@ -333,7 +333,7 @@
 			</execute>
 		</for>
 
-		<execute function="Click" locator1="Home#PAGE">
+		<execute function="Click#pauseClick" locator1="Home#PAGE">
 			<var name="key_pageName" value="Test Regular Content Page" />
 		</execute>
 
@@ -343,7 +343,7 @@
 			<var name="key_position" value="1" />
 		</execute>
 
-		<execute function="Click" locator1="Home#PAGE">
+		<execute function="Click#pauseClick" locator1="Home#PAGE">
 			<var name="key_pageName" value="Liferay" />
 		</execute>
 

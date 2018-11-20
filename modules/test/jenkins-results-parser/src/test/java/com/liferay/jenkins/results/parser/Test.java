@@ -326,8 +326,6 @@ public class Test {
 						"String mismatch\nExpected:", expected, "\nActual:",
 						actual)));
 		}
-
-		return;
 	}
 
 	protected String toURLString(File file) throws Exception {

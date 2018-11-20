@@ -10,6 +10,8 @@
 
 		<execute function="Type" locator1="GoogleDrive#GOOGLE_DOCS_TITLE" value1="${dmDocumentTitleEdit}" />
 
-		<execute function="AssertClick" locator1="Button#SAVE_AND_RETURN_TO_LIFERAY" />
+		<execute function="AssertClick" locator1="Button#ANY" value1="Save and Return to Liferay">
+			<var name="key_text" value="Save and Return to Liferay" />
+		</execute>
 	</command>
 </definition>

@@ -82,28 +82,26 @@ public class ValidationBuild extends BaseBuild {
 			if (!junitTaskNames.isEmpty()) {
 				List<TestResult> testResults = getTestResults(null);
 
-				String taskStatus = "SUCCESSFUL";
+				String taskResult = "SUCCESSFUL";
+
+				Element messageElement = null;
 
 				for (TestResult testResult : testResults) {
 					if (testResult.isFailing()) {
-						taskStatus = "FAILED";
+						taskResult = "FAILED";
+
+						messageElement = Dom4JUtil.toCodeSnippetElement(
+							"Test failures detected. See below for details.");
 
 						break;
 					}
 				}
 
-				Element taskSummaryIndexElement = Dom4JUtil.getNewElement(
-					"li", null);
-
 				Dom4JUtil.addToElement(
-					taskSummaryIndexElement,
-					StringUtils.join(junitTaskNames, "/"), " - ",
-					getTaskResultIcon(taskStatus),
-					Dom4JUtil.toCodeSnippetElement(
-						"Test failures detected. See below for more details."));
-
-				Dom4JUtil.addToElement(
-					taskSummaryListElement, taskSummaryIndexElement);
+					taskSummaryListElement,
+					getTaskSummaryIndexElement(
+						StringUtils.join(junitTaskNames, "/"), taskResult,
+						messageElement));
 			}
 
 			Dom4JUtil.addToElement(
@@ -257,11 +255,7 @@ public class ValidationBuild extends BaseBuild {
 			taskResult = matcher.group(1);
 		}
 
-		Element taskSummaryIndexElement = Dom4JUtil.getNewElement("li", null);
-
-		Dom4JUtil.addToElement(
-			taskSummaryIndexElement, taskName, " - ",
-			getTaskResultIcon(taskResult));
+		Element messageElement = null;
 
 		if (taskResult.equals("FAILED")) {
 			if (taskName.contains("subrepository-source-format")) {
@@ -269,21 +263,31 @@ public class ValidationBuild extends BaseBuild {
 					sourceFormatFailureMessageGenerator =
 						new SourceFormatFailureMessageGenerator();
 
-				Dom4JUtil.addToElement(
-					taskSummaryIndexElement,
-					sourceFormatFailureMessageGenerator.getMessageElement(
-						this));
-
-				return taskSummaryIndexElement;
+				messageElement =
+					sourceFormatFailureMessageGenerator.getMessageElement(this);
 			}
+			else {
+				GenericFailureMessageGenerator genericFailureMessageGenerator =
+					new GenericFailureMessageGenerator();
 
-			GenericFailureMessageGenerator genericFailureMessageGenerator =
-				new GenericFailureMessageGenerator();
-
-			Dom4JUtil.addToElement(
-				taskSummaryIndexElement,
-				genericFailureMessageGenerator.getMessageElement(console));
+				messageElement =
+					genericFailureMessageGenerator.getMessageElement(console);
+			}
 		}
+
+		return getTaskSummaryIndexElement(taskName, taskResult, messageElement);
+	}
+
+	protected Element getTaskSummaryIndexElement(
+		String taskName, String taskResult, Element messageElement) {
+
+		Element taskSummaryIndexElement = Dom4JUtil.getNewElement("li", null);
+
+		Dom4JUtil.addToElement(
+			taskSummaryIndexElement, taskName, " - ",
+			getTaskResultIcon(taskResult));
+
+		Dom4JUtil.addToElement(taskSummaryIndexElement, messageElement);
 
 		return taskSummaryIndexElement;
 	}

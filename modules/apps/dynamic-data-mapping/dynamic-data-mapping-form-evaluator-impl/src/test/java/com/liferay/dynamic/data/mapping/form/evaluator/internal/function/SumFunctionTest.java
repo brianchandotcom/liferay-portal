@@ -28,9 +28,10 @@ public class SumFunctionTest {
 	public void testApply() {
 		SumFunction sumFunction = new SumFunction();
 
-		BigDecimal result = sumFunction.apply(new BigDecimal[] {
-			new BigDecimal(1), new BigDecimal(2), new BigDecimal(3)
-		});
+		BigDecimal result = sumFunction.apply(
+			new BigDecimal[] {
+				new BigDecimal(1), new BigDecimal(2), new BigDecimal(3)
+			});
 
 		Assert.assertEquals(new BigDecimal(6), result);
 	}

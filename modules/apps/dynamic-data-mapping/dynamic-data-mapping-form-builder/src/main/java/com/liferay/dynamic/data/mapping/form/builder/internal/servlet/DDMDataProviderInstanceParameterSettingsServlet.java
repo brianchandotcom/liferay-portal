@@ -81,9 +81,8 @@ public class DDMDataProviderInstanceParameterSettingsServlet
 		}
 
 		DDMDataProviderParameterSettings ddmDataProviderParameterSetting =
-			(DDMDataProviderParameterSettings)
-				DDMFormInstanceFactory.create(
-					ddmDataProvider.getSettings(), ddmFormValues);
+			(DDMDataProviderParameterSettings)DDMFormInstanceFactory.create(
+				ddmDataProvider.getSettings(), ddmFormValues);
 
 		parametersJSONObject.put(
 			"inputs",

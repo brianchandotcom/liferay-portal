@@ -52,8 +52,8 @@ public class ContentTransformerUtil {
 	private static final ContentTransformerUtil _instance =
 		new ContentTransformerUtil();
 
-	private final
-		ServiceTrackerList<ContentTransformerHandler, ContentTransformerHandler>
+	private final ServiceTrackerList
+		<ContentTransformerHandler, ContentTransformerHandler>
 			_contentTransformerHandlers;
 
 }

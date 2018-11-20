@@ -67,9 +67,8 @@ public class PortletPanelAppAdapterRegistry {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletPanelAppAdapterRegistry.class);
 
-	private final
-		Map<ServiceReference<Portlet>, ServiceRegistration<PanelApp>>
-			_serviceRegistrations = new ConcurrentHashMap<>();
+	private final Map<ServiceReference<Portlet>, ServiceRegistration<PanelApp>>
+		_serviceRegistrations = new ConcurrentHashMap<>();
 	private ServiceTracker<Portlet, PanelApp> _serviceTracker;
 
 }

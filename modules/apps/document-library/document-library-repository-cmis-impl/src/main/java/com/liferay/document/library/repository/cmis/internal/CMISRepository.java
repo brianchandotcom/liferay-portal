@@ -1846,8 +1846,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 		hits.setDocs(
 			documents.toArray(
-				new com.liferay.portal.kernel.search.Document[
-					documents.size()]));
+				new com.liferay.portal.kernel.search.Document
+					[documents.size()]));
 		hits.setLength(total);
 		hits.setQuery(query);
 		hits.setQueryTerms(new String[0]);

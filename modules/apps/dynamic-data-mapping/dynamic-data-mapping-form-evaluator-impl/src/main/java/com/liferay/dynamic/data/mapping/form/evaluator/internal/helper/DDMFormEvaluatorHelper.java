@@ -482,9 +482,7 @@ public class DDMFormEvaluatorHelper {
 					_resourceBundle, "this-field-is-invalid");
 			}
 
-			builder.withParameter(
-				"errorMessage", errorMessage
-			);
+			builder.withParameter("errorMessage", errorMessage);
 		}
 
 		ddmFormEvaluatorExpressionObserver.updateFieldProperty(builder.build());

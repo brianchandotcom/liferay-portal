@@ -387,7 +387,7 @@ public class AMImageScalerTrackerImplTest {
 			"com.liferay.adaptive.media.image.internal.scaler." +
 				"AMImageScalerTrackerImpl";
 
-	@Inject (filter = "component.name=*.AMDefaultImageScaler")
+	@Inject(filter = "component.name=*.AMDefaultImageScaler")
 	private AMImageScaler _amDefaultImageScaler;
 
 	@Inject

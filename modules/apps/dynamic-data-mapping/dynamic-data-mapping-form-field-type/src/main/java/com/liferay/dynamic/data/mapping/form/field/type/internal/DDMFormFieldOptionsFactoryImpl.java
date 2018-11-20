@@ -79,8 +79,8 @@ public class DDMFormFieldOptionsFactoryImpl
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
 		List<Map<String, String>> options =
-			(List<Map<String, String>>)
-				ddmFormFieldRenderingContext.getProperty("options");
+			(List<Map<String, String>>)ddmFormFieldRenderingContext.getProperty(
+				"options");
 
 		if (options == null) {
 			return ddmFormField.getDDMFormFieldOptions();

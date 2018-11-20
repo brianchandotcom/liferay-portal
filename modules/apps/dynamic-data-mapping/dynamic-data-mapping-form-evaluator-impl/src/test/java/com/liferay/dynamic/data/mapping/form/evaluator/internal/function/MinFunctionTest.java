@@ -37,10 +37,11 @@ public class MinFunctionTest {
 	public void testMax() {
 		MinFunction minFunction = new MinFunction();
 
-		BigDecimal result = minFunction.apply(new BigDecimal[] {
-			new BigDecimal(1), new BigDecimal(10), new BigDecimal(3),
-			new BigDecimal(19), new BigDecimal(17)
-		});
+		BigDecimal result = minFunction.apply(
+			new BigDecimal[] {
+				new BigDecimal(1), new BigDecimal(10), new BigDecimal(3),
+				new BigDecimal(19), new BigDecimal(17)
+			});
 
 		Assert.assertEquals(BigDecimal.ONE, result);
 	}

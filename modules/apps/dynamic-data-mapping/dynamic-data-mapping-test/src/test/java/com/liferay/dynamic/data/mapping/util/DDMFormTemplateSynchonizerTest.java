@@ -307,8 +307,7 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 
 		DDMFormDeserializerDeserializeRequest.Builder builder =
 			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
-				ddmTemplate.getScript()
-			);
+				ddmTemplate.getScript());
 
 		DDMFormDeserializerDeserializeResponse
 			ddmFormDeserializerDeserializeResponse =

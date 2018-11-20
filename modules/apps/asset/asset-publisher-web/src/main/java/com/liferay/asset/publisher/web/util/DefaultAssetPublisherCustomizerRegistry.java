@@ -64,8 +64,7 @@ public class DefaultAssetPublisherCustomizerRegistry
 			assetPublisherCustomizer.getPortletId());
 	}
 
-	private final
-		Map<String, AssetPublisherCustomizer> _assetPublisherCustomizers =
-			new ConcurrentHashMap<>();
+	private final Map<String, AssetPublisherCustomizer>
+		_assetPublisherCustomizers = new ConcurrentHashMap<>();
 
 }

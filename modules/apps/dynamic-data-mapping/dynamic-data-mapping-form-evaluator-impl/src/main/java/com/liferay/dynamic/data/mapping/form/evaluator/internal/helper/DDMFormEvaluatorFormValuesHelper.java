@@ -88,8 +88,8 @@ public class DDMFormEvaluatorFormValuesHelper {
 		}
 	}
 
-	private final
-		Map<String, Map<DDMFormEvaluatorFieldContextKey, DDMFormFieldValue>>
+	private final Map
+		<String, Map<DDMFormEvaluatorFieldContextKey, DDMFormFieldValue>>
 			_ddmFormFieldValuesMap = new HashMap<>();
 
 }

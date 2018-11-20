@@ -85,8 +85,8 @@ public class CheckboxMultipleDDMFormFieldTemplateContextContributor
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
 		List<Map<String, String>> keyValuePairs =
-			(List<Map<String, String>>)
-				ddmFormFieldRenderingContext.getProperty("options");
+			(List<Map<String, String>>)ddmFormFieldRenderingContext.getProperty(
+				"options");
 
 		if (ListUtil.isEmpty(keyValuePairs)) {
 			return ddmFormField.getDDMFormFieldOptions();

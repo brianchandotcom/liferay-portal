@@ -180,8 +180,7 @@ public class BeanPortletInvokerPortlet
 					String markup = (String)beanMethod.invoke();
 
 					if (markup != null) {
-						RenderResponse renderResponse = (RenderResponse)
-							args[1];
+						RenderResponse renderResponse = (RenderResponse)args[1];
 
 						PrintWriter writer = renderResponse.getWriter();
 

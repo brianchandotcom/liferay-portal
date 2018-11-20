@@ -52,9 +52,8 @@ public class ConfigurationDDMFormDeclarationUtil {
 		return null;
 	}
 
-	private static final
-		ServiceTrackerMap<String, ConfigurationDDMFormDeclaration>
-			_serviceTrackerMap;
+	private static final ServiceTrackerMap
+		<String, ConfigurationDDMFormDeclaration> _serviceTrackerMap;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(

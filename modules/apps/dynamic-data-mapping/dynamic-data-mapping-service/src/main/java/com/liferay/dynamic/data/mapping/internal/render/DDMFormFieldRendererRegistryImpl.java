@@ -80,8 +80,8 @@ public class DDMFormFieldRendererRegistryImpl
 	private final BundleContext _bundleContext;
 	private final Map<String, List<DDMFormFieldRenderer>>
 		_ddmFormFieldRenderersMap = new ConcurrentHashMap<>();
-	private final
-		Map<DDMFormFieldRenderer, ServiceRegistration<DDMFormFieldRenderer>>
+	private final Map
+		<DDMFormFieldRenderer, ServiceRegistration<DDMFormFieldRenderer>>
 			_serviceRegistrations = new ConcurrentHashMap<>();
 	private final ServiceTracker<DDMFormFieldRenderer, DDMFormFieldRenderer>
 		_serviceTracker;

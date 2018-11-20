@@ -47,8 +47,8 @@ public class ScopedBeanManager {
 
 	public void destroyScopedBeans() {
 		if (_portletResponse instanceof StateAwareResponse) {
-			StateAwareResponse stateAwareResponse = (StateAwareResponse)
-				_portletResponse;
+			StateAwareResponse stateAwareResponse =
+				(StateAwareResponse)_portletResponse;
 
 			Enumeration<String> attributeNames =
 				_portletRequest.getAttributeNames();
@@ -195,8 +195,8 @@ public class ScopedBeanManager {
 				name, bean, creationalContext,
 				RenderStateScoped.class.getSimpleName());
 
-			PortletSerializable portletSerializable = (PortletSerializable)
-				scopedBean.getBeanInstance();
+			PortletSerializable portletSerializable =
+				(PortletSerializable)scopedBean.getBeanInstance();
 
 			String parameterName = _getParameterName(portletSerializable);
 

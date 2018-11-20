@@ -37,10 +37,11 @@ public class MaxFunctionTest {
 	public void testMax() {
 		MaxFunction maxFunction = new MaxFunction();
 
-		BigDecimal result = maxFunction.apply(new BigDecimal[] {
-			new BigDecimal(1), new BigDecimal(10), new BigDecimal(3),
-			new BigDecimal(19), new BigDecimal(17)
-		});
+		BigDecimal result = maxFunction.apply(
+			new BigDecimal[] {
+				new BigDecimal(1), new BigDecimal(10), new BigDecimal(3),
+				new BigDecimal(19), new BigDecimal(17)
+			});
 
 		Assert.assertEquals(new BigDecimal(19), result);
 	}

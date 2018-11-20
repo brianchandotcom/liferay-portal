@@ -899,9 +899,12 @@ public class OpenSamlUtil {
 	public static XMLObject unmarshall(String xml)
 		throws UnmarshallingException, XMLParserException {
 
-		ParserPool parserPool = Configuration.getParserPool();
+		XMLObjectProviderRegistry xmlObjectProviderRegistry =
+			ConfigurationService.get(XMLObjectProviderRegistry.class);
 
-		return XMLObjectHelper.unmarshallFromInputStream(
+		ParserPool parserPool = xmlObjectProviderRegistry.getParserPool();
+
+		return XMLObjectSupport.unmarshallFromInputStream(
 			parserPool, new ByteArrayInputStream(xml.getBytes()));
 	}
 

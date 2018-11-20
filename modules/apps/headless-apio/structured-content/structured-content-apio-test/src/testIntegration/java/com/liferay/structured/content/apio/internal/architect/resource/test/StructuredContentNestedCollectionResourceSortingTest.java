@@ -33,9 +33,11 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.filter.Filter;
 import com.liferay.portal.odata.sort.Sort;
 import com.liferay.portal.odata.sort.SortParser;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -47,6 +49,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -70,7 +73,22 @@ public class StructuredContentNestedCollectionResourceSortingTest
 
 	@Before
 	public void setUp() throws Exception {
+		Registry registry = RegistryUtil.getRegistry();
+
+		com.liferay.registry.Filter filter = registry.getFilter(
+			"(&(objectClass=" + SortParser.class.getName() +
+				")(entity.model.name=StructuredContent))");
+
+		_serviceTracker = registry.trackServices(filter);
+
+		_serviceTracker.open();
+
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@After
+	public void tearDown() {
+		_serviceTracker.close();
 	}
 
 	@Test
@@ -104,11 +122,13 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
+		SortParser sortParser = _getSortParser();
+
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(),
-			new Sort(_sortParser.parse("dateCreated:asc")));
+			new Sort(sortParser.parse("dateCreated:asc")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -150,11 +170,13 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
+		SortParser sortParser = _getSortParser();
+
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(),
-			new Sort(_sortParser.parse("dateCreated:desc")));
+			new Sort(sortParser.parse("dateCreated:desc")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -196,11 +218,13 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
+		SortParser sortParser = _getSortParser();
+
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(),
-			new Sort(_sortParser.parse("dateModified:asc")));
+			new Sort(sortParser.parse("dateModified:asc")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -242,11 +266,13 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
+		SortParser sortParser = _getSortParser();
+
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(),
-			new Sort(_sortParser.parse("dateModified:desc")));
+			new Sort(sortParser.parse("dateModified:desc")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -298,11 +324,13 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			Date.from(zonedDateTime2.toInstant()), null, true, true,
 			serviceContext);
 
+		SortParser sortParser = _getSortParser();
+
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(),
-			new Sort(_sortParser.parse("datePublished:asc")));
+			new Sort(sortParser.parse("datePublished:asc")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -354,11 +382,13 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			Date.from(zonedDateTime2.toInstant()), null, true, true,
 			serviceContext);
 
+		SortParser sortParser = _getSortParser();
+
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
 			Filter.emptyFilter(),
-			new Sort(_sortParser.parse("datePublished:desc")));
+			new Sort(sortParser.parse("datePublished:desc")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -398,10 +428,12 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
+		SortParser sortParser = _getSortParser();
+
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			Filter.emptyFilter(), new Sort(_sortParser.parse("title:asc")));
+			Filter.emptyFilter(), new Sort(sortParser.parse("title:asc")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -444,10 +476,12 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			stringMap2, null, LocaleUtil.SPAIN, null, true, true,
 			serviceContext);
 
+		SortParser sortParser = _getSortParser();
+
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			Filter.emptyFilter(), new Sort(_sortParser.parse("title:asc")));
+			Filter.emptyFilter(), new Sort(sortParser.parse("title:asc")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -491,10 +525,12 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
+		SortParser sortParser = _getSortParser();
+
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationRequest.of(10, 1), _group.getGroupId(),
 			() -> LocaleUtil.SPAIN, getThemeDisplay(_group, LocaleUtil.SPAIN),
-			Filter.emptyFilter(), new Sort(_sortParser.parse("title:asc")));
+			Filter.emptyFilter(), new Sort(sortParser.parse("title:asc")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -534,10 +570,12 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
+		SortParser sortParser = _getSortParser();
+
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			Filter.emptyFilter(), new Sort(_sortParser.parse("title")));
+			Filter.emptyFilter(), new Sort(sortParser.parse("title")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -577,10 +615,12 @@ public class StructuredContentNestedCollectionResourceSortingTest
 			stringMap2, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
+		SortParser sortParser = _getSortParser();
+
 		PageItems<JournalArticle> pageItems = getPageItems(
 			PaginationRequest.of(10, 1), _group.getGroupId(), _acceptLanguage,
 			getThemeDisplay(_group, LocaleUtil.getDefault()),
-			Filter.emptyFilter(), new Sort(_sortParser.parse("title:desc")));
+			Filter.emptyFilter(), new Sort(sortParser.parse("title:desc")));
 
 		Assert.assertEquals(2, pageItems.getTotalCount());
 
@@ -591,13 +631,15 @@ public class StructuredContentNestedCollectionResourceSortingTest
 		Assert.assertEquals(journalArticle1, journalArticles.get(1));
 	}
 
+	private SortParser _getSortParser() {
+		return _serviceTracker.getService();
+	}
+
 	private static final AcceptLanguage _acceptLanguage =
 		() -> LocaleUtil.getDefault();
+	private static ServiceTracker<SortParser, SortParser> _serviceTracker;
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject(filter = "entity.model.name=StructuredContent")
-	private SortParser _sortParser;
 
 }

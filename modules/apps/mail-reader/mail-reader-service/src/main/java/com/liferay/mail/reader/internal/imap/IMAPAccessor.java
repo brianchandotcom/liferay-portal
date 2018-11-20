@@ -874,8 +874,7 @@ public class IMAPAccessor {
 			int messageCount, int page, int messagesPerPage)
 		throws MailException {
 
-		int pageCount =
-			(int)(Math.ceil(messageCount / (double)messagesPerPage));
+		int pageCount = (int)Math.ceil(messageCount / (double)messagesPerPage);
 
 		if (messageCount == 0) {
 			return new int[] {0, 0};

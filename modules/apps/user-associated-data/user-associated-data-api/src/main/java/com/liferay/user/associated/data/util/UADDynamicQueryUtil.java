@@ -16,6 +16,7 @@ package com.liferay.user.associated.data.util;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Criterion;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 
@@ -46,17 +47,14 @@ public class UADDynamicQueryUtil {
 	private static Criterion _getCriterion(
 		String[] userIdFieldNames, long userId) {
 
-		Criterion criterion = RestrictionsFactoryUtil.eq(
-			userIdFieldNames[0], userId);
+		Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
 
-		for (int i = 1; i < userIdFieldNames.length; i++) {
-			Criterion userIdCriterion = RestrictionsFactoryUtil.eq(
-				userIdFieldNames[i], userId);
-
-			criterion = RestrictionsFactoryUtil.or(criterion, userIdCriterion);
+		for (String userIdFieldName : userIdFieldNames) {
+			disjunction.add(
+				RestrictionsFactoryUtil.eq(userIdFieldName, userId));
 		}
 
-		return criterion;
+		return disjunction;
 	}
 
 }

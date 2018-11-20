@@ -33,9 +33,12 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -136,6 +139,16 @@ public class AssetDisplayPageFriendlyURLResolver
 		long defaultUserId = _userLocalService.getDefaultUserId(
 			group.getCompanyId());
 
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(locale, "Asset Display Page");
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put("visible", Boolean.FALSE.toString());
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -143,9 +156,9 @@ public class AssetDisplayPageFriendlyURLResolver
 			"layout.instanceable.allowed", Boolean.TRUE);
 
 		return _layoutLocalService.addLayout(
-			defaultUserId, groupId, false, 0, "Asset Display Page", null, null,
-			AssetDisplayLayoutTypeControllerConstants.LAYOUT_TYPE_ASSET_DISPLAY,
-			true, null, serviceContext);
+			defaultUserId, groupId, false, 0, nameMap, null, null, null, null,
+			"asset_display", typeSettingsProperties.toString(), true,
+			new HashMap<>(), serviceContext);
 	}
 
 	@Reference

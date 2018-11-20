@@ -1,4 +1,4 @@
-[Baseline Warning] Bundle Version Change Recommended: 2.0.0
   PACKAGE_NAME                                       DELTA      CUR_VER    BASE_VER   REC_VER    WARNINGS  
 = ================================================== ========== ========== ========== ========== ==========
 * com.example.sample                                 MAJOR      1.0.1      1.0.0      2.0.0      VERSION INCREASE REQUIRED
+[Baseline Warning] Bundle Version Change Recommended: 2.0.0

@@ -70,47 +70,6 @@ public class ServiceContextAdvice extends ChainableMethodAdvice {
 
 	private final Map<Method, Integer> _indexCache = new ConcurrentHashMap<>();
 
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected boolean hasServiceContextParameter(Method method) {
-		Class<?>[] parameterTypes = method.getParameterTypes();
-
-		for (int i = parameterTypes.length - 1; i >= 0; i--) {
-			if (ServiceContext.class.isAssignableFrom(parameterTypes[i])) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected boolean pushServiceContext(MethodInvocation methodInvocation) {
-		Object[] arguments = methodInvocation.getArguments();
-
-		if (arguments == null) {
-			return false;
-		}
-
-		for (int i = arguments.length - 1; i >= 0; i--) {
-			if (arguments[i] instanceof ServiceContext) {
-				ServiceContext serviceContext = (ServiceContext)arguments[i];
-
-				ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private int _getServiceContextParameterIndex(Method method) {
 		Class<?>[] parameterTypes = method.getParameterTypes();
 

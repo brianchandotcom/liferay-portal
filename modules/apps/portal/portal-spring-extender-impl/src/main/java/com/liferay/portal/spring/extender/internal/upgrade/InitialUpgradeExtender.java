@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.spring.extender.internal.context;
+package com.liferay.portal.spring.extender.internal.upgrade;
 
 import com.liferay.osgi.felix.util.AbstractExtender;
 import com.liferay.petra.string.StringBundler;
@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(immediate = true, service = {})
-public class ParentModuleApplicationContextExtender extends AbstractExtender {
+public class InitialUpgradeExtender extends AbstractExtender {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) throws Exception {
@@ -82,7 +82,7 @@ public class ParentModuleApplicationContextExtender extends AbstractExtender {
 			return null;
 		}
 
-		return new ParentModuleApplicationContextExtension(bundle);
+		return new InitialUpgradeExtension(bundle);
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public class ParentModuleApplicationContextExtender extends AbstractExtender {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ParentModuleApplicationContextExtender.class);
+		InitialUpgradeExtender.class);
 
 	private static class InitialUpgradeStep implements UpgradeStep {
 
@@ -198,7 +198,7 @@ public class ParentModuleApplicationContextExtender extends AbstractExtender {
 
 	}
 
-	private class ParentModuleApplicationContextExtension implements Extension {
+	private class InitialUpgradeExtension implements Extension {
 
 		@Override
 		public void destroy() {
@@ -208,13 +208,13 @@ public class ParentModuleApplicationContextExtender extends AbstractExtender {
 		@Override
 		public void start() throws Exception {
 			BundleContext extenderBundleContext =
-				ParentModuleApplicationContextExtender.this.getBundleContext();
+				InitialUpgradeExtender.this.getBundleContext();
 
 			_serviceRegistration = _processInitialUpgrade(
 				extenderBundleContext);
 		}
 
-		private ParentModuleApplicationContextExtension(Bundle bundle) {
+		private InitialUpgradeExtension(Bundle bundle) {
 			_bundle = bundle;
 		}
 

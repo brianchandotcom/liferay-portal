@@ -24,31 +24,35 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
+
+import net.shibboleth.utilities.java.support.resolver.ResolverException;
 
 import org.joda.time.DateTime;
 
-import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.saml2.core.Attribute;
-import org.opensaml.saml2.core.AuthnRequest;
-import org.opensaml.saml2.core.NameID;
-import org.opensaml.saml2.metadata.AssertionConsumerService;
-import org.opensaml.saml2.metadata.EntitiesDescriptor;
-import org.opensaml.saml2.metadata.EntityDescriptor;
-import org.opensaml.saml2.metadata.IDPSSODescriptor;
-import org.opensaml.saml2.metadata.SPSSODescriptor;
-import org.opensaml.saml2.metadata.SSODescriptor;
-import org.opensaml.saml2.metadata.SingleLogoutService;
-import org.opensaml.saml2.metadata.SingleSignOnService;
-import org.opensaml.saml2.metadata.provider.MetadataProviderException;
-import org.opensaml.xml.XMLObject;
-import org.opensaml.xml.schema.XSAny;
-import org.opensaml.xml.schema.XSBoolean;
-import org.opensaml.xml.schema.XSBooleanValue;
-import org.opensaml.xml.schema.XSDateTime;
-import org.opensaml.xml.schema.XSInteger;
-import org.opensaml.xml.schema.XSString;
-import org.opensaml.xml.util.DatatypeHelper;
+import org.opensaml.core.xml.XMLObject;
+import org.opensaml.core.xml.schema.XSAny;
+import org.opensaml.core.xml.schema.XSBoolean;
+import org.opensaml.core.xml.schema.XSBooleanValue;
+import org.opensaml.core.xml.schema.XSDateTime;
+import org.opensaml.core.xml.schema.XSInteger;
+import org.opensaml.core.xml.schema.XSString;
+import org.opensaml.messaging.context.InOutOperationContext;
+import org.opensaml.messaging.context.MessageContext;
+import org.opensaml.saml.common.messaging.context.SAMLMetadataContext;
+import org.opensaml.saml.common.messaging.context.SAMLPeerEntityContext;
+import org.opensaml.saml.saml2.core.Attribute;
+import org.opensaml.saml.saml2.core.AuthnRequest;
+import org.opensaml.saml.saml2.core.NameID;
+import org.opensaml.saml.saml2.metadata.AssertionConsumerService;
+import org.opensaml.saml.saml2.metadata.EntitiesDescriptor;
+import org.opensaml.saml.saml2.metadata.EntityDescriptor;
+import org.opensaml.saml.saml2.metadata.IDPSSODescriptor;
+import org.opensaml.saml.saml2.metadata.SPSSODescriptor;
+import org.opensaml.saml.saml2.metadata.SSODescriptor;
+import org.opensaml.saml.saml2.metadata.SingleLogoutService;
+import org.opensaml.saml.saml2.metadata.SingleSignOnService;
 
 /**
  * @author Mika Koivisto

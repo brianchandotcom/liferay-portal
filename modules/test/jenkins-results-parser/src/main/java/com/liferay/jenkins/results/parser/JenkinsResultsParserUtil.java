@@ -1536,29 +1536,8 @@ public class JenkinsResultsParserUtil {
 			Object actual = actualJSONArray.get(i);
 			Object expected = expectedJSONArray.get(i);
 
-			if (actual instanceof JSONObject) {
-				if (!(expected instanceof JSONObject) ||
-					!isJSONObjectEqual(
-						(JSONObject)expected, (JSONObject)actual)) {
-
-					return false;
-				}
-
-				continue;
-			}
-			else if (actual instanceof JSONArray) {
-				if (!(expected instanceof JSONArray) ||
-					!isJSONArrayEqual((JSONArray)expected, (JSONArray)actual)) {
-
-					return false;
-				}
-
-				continue;
-			}
-			else {
-				if (!actual.equals(expected)) {
-					return false;
-				}
+			if (!_isJSONExpectedAndActualEqual(expected, actual)) {
+				return false;
 			}
 		}
 
@@ -1580,25 +1559,8 @@ public class JenkinsResultsParserUtil {
 			Object actual = actualJSONObject.get(name);
 			Object expected = expectedJSONObject.get(name);
 
-			if (actual instanceof JSONObject) {
-				if (!(expected instanceof JSONObject) ||
-					!isJSONObjectEqual(
-						(JSONObject)expected, (JSONObject)actual)) {
-
-					return false;
-				}
-			}
-			else if (actual instanceof JSONArray) {
-				if (!(expected instanceof JSONArray) ||
-					!isJSONArrayEqual((JSONArray)expected, (JSONArray)actual)) {
-
-					return false;
-				}
-			}
-			else {
-				if (!actual.equals(expected)) {
-					return false;
-				}
+			if (!_isJSONExpectedAndActualEqual(expected, actual)) {
+				return false;
 			}
 		}
 
@@ -2621,6 +2583,32 @@ public class JenkinsResultsParserUtil {
 
 	private static String _getRedactTokenKey(int index) {
 		return "github.message.redact.token[" + index + "]";
+	}
+
+	private static boolean _isJSONExpectedAndActualEqual(
+		Object expected, Object actual) {
+
+		if (actual instanceof JSONObject) {
+			if (!(expected instanceof JSONObject) ||
+				!isJSONObjectEqual((JSONObject)expected, (JSONObject)actual)) {
+
+				return false;
+			}
+		}
+		else if (actual instanceof JSONArray) {
+			if (!(expected instanceof JSONArray) ||
+				!isJSONArrayEqual((JSONArray)expected, (JSONArray)actual)) {
+
+				return false;
+			}
+		}
+		else {
+			if (!actual.equals(expected)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private static final long _BASH_COMMAND_TIMEOUT_DEFAULT = 1000 * 60 * 60;

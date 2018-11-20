@@ -30,8 +30,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationEvent;
-import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.web.context.ConfigurableWebApplicationContext;
 import org.springframework.web.context.ContextLoaderListener;
@@ -139,21 +137,14 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 		configurableWebApplicationContext.setConfigLocation(configLocation);
 
 		configurableWebApplicationContext.addApplicationListener(
-			new ApplicationListener<ApplicationEvent>() {
+			applicationEvent -> {
+				if (applicationEvent instanceof ContextClosedEvent) {
+					ContextClosedEvent contextClosedEvent =
+						(ContextClosedEvent)applicationEvent;
 
-				@Override
-				public void onApplicationEvent(
-					ApplicationEvent applicationEvent) {
-
-					if (applicationEvent instanceof ContextClosedEvent) {
-						ContextClosedEvent contextClosedEvent =
-							(ContextClosedEvent)applicationEvent;
-
-						ModuleFrameworkUtilAdapter.unregisterContext(
-							contextClosedEvent.getApplicationContext());
-					}
+					ModuleFrameworkUtilAdapter.unregisterContext(
+						contextClosedEvent.getApplicationContext());
 				}
-
 			});
 
 		configurableWebApplicationContext.addBeanFactoryPostProcessor(

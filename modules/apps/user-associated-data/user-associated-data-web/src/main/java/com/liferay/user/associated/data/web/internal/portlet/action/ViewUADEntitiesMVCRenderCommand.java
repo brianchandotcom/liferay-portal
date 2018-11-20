@@ -16,9 +16,12 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -27,6 +30,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
@@ -38,6 +42,8 @@ import com.liferay.user.associated.data.web.internal.util.SelectedUserHelper;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -180,27 +186,73 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 		LiferayPortletRequest liferayPortletRequest =
 			_portal.getLiferayPortletRequest(renderRequest);
 
-		SearchContainer<UADEntity> searchContainer = new SearchContainer<>(
-			renderRequest, currentURL, null, null);
+		DisplayTerms displayTerms = new DisplayTerms(renderRequest);
 
-		searchContainer.setEmptyResultsMessage(
-			"no-entities-remain-of-this-type");
+		int cur = ParamUtil.getInteger(
+			renderRequest, SearchContainer.DEFAULT_CUR_PARAM,
+			SearchContainer.DEFAULT_CUR);
+
+		SearchContainer<UADEntity> searchContainer = new SearchContainer<>(
+			renderRequest, displayTerms, displayTerms,
+			SearchContainer.DEFAULT_CUR_PARAM, cur,
+			SearchContainer.DEFAULT_DELTA, currentURL, null,
+			"no-entities-remain-of-this-type", null);
+
 		searchContainer.setId("UADEntities");
 
-		List<Object> entities = uadDisplay.getRange(
-			selectedUserId, searchContainer.getStart(),
-			searchContainer.getEnd());
+		String orderByCol = ParamUtil.getString(
+			renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
+			"modifiedDate");
 
-		List<UADEntity> uadEntities = new ArrayList<>();
+		searchContainer.setOrderByCol(orderByCol);
 
-		for (Object entity : entities) {
-			uadEntities.add(
-				_constructUADEntity(
-					entity, uadDisplay, liferayPortletRequest,
-					liferayPortletResponse));
+		String orderByType = ParamUtil.getString(
+			renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "asc");
+
+		searchContainer.setOrderByType(orderByType);
+
+		Map<String, String> orderableHeaders = new LinkedHashMap<>();
+
+		for (String orderByColumn : uadDisplay.getSortingFieldNames()) {
+			orderableHeaders.put(
+				TextFormatter.format(orderByColumn, TextFormatter.K),
+				orderByColumn);
 		}
 
-		searchContainer.setResults(uadEntities);
+		searchContainer.setOrderableHeaders(orderableHeaders);
+
+		try {
+			List entities = uadDisplay.search(
+				selectedUserId, null, displayTerms.getKeywords(),
+				searchContainer.getOrderByCol(),
+				searchContainer.getOrderByType(), searchContainer.getStart(),
+				searchContainer.getEnd());
+
+			List<UADEntity> uadEntities = new ArrayList<>();
+
+			for (Object entity : entities) {
+				uadEntities.add(
+					_constructUADEntity(
+						entity, uadDisplay, liferayPortletRequest,
+						liferayPortletResponse));
+			}
+
+			searchContainer.setResults(uadEntities);
+
+			searchContainer.setTotal(
+				(int)uadDisplay.searchCount(
+					selectedUserId, null, displayTerms.getKeywords(),
+					searchContainer.getOrderByCol(),
+					searchContainer.getOrderByType()));
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+
+			searchContainer.setResults(Collections.emptyList());
+			searchContainer.setTotal(0);
+		}
 
 		RowChecker rowChecker = new EmptyOnClickRowChecker(
 			liferayPortletResponse);
@@ -212,10 +264,11 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 
 		searchContainer.setRowChecker(rowChecker);
 
-		searchContainer.setTotal((int)uadDisplay.count(selectedUserId));
-
 		return searchContainer;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewUADEntitiesMVCRenderCommand.class);
 
 	@Reference
 	private Portal _portal;

@@ -129,6 +129,25 @@ public class DBMetadataProvider extends BaseMetadataProvider {
 		return null;
 	}
 
+	@Nonnull
+	@Override
+	protected List<EntityDescriptor> lookupEntityID(@Nonnull String entityID)
+		throws ResolverException {
+
+		try {
+			EntityDescriptor entityDescriptor = getEntityDescriptor(entityID);
+
+			if (entityDescriptor == null) {
+				return Collections.emptyList();
+			}
+
+			return Collections.singletonList(entityDescriptor);
+		}
+		catch (Exception e) {
+			throw new ResolverException(e);
+		}
+	}
+
 	@Reference
 	private ParserPool _parserPool;
 

@@ -36,10 +36,10 @@ public class JavaAnnotationMemberValuePair extends BaseJavaTerm {
 		StringBundler sb = new StringBundler();
 
 		if (_valueJavaExpression instanceof JavaArray) {
-			sb.append(_name.toString(indent, prefix, " =", -1));
+			sb.append(_name.toString(indent, prefix, " = ", -1));
 
 			append(
-				sb, _valueJavaExpression, indent, " ", suffix, maxLineLength,
+				sb, _valueJavaExpression, indent, "", suffix, maxLineLength,
 				false);
 
 			return sb.toString();

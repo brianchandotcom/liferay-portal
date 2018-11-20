@@ -27,35 +27,27 @@ import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 
 import java.io.StringReader;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
-import javax.xml.namespace.QName;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-import org.joda.time.DateTime;
+import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
+import net.shibboleth.utilities.java.support.resolver.ResolverException;
+import net.shibboleth.utilities.java.support.xml.ParserPool;
 
-import org.opensaml.saml2.common.Extensions;
-import org.opensaml.saml2.metadata.EntitiesDescriptor;
-import org.opensaml.saml2.metadata.EntityDescriptor;
-import org.opensaml.saml2.metadata.RoleDescriptor;
-import org.opensaml.saml2.metadata.provider.BaseMetadataProvider;
-import org.opensaml.saml2.metadata.provider.MetadataProvider;
-import org.opensaml.saml2.metadata.provider.MetadataProviderException;
-import org.opensaml.xml.Namespace;
-import org.opensaml.xml.NamespaceManager;
-import org.opensaml.xml.XMLObject;
-import org.opensaml.xml.parse.ParserPool;
-import org.opensaml.xml.schema.XSBooleanValue;
-import org.opensaml.xml.signature.Signature;
-import org.opensaml.xml.util.IDIndex;
-import org.opensaml.xml.util.LazySet;
-import org.opensaml.xml.util.XMLObjectHelper;
+import org.opensaml.core.criterion.EntityIdCriterion;
+import org.opensaml.core.xml.XMLObject;
+import org.opensaml.core.xml.util.XMLObjectSupport;
+import org.opensaml.saml.metadata.resolver.MetadataResolver;
+import org.opensaml.saml.metadata.resolver.filter.MetadataFilter;
+import org.opensaml.saml.metadata.resolver.impl.AbstractMetadataResolver;
+import org.opensaml.saml.metadata.resolver.impl.DOMMetadataResolver;
+import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import org.w3c.dom.Element;
 
 /**
  * @author Mika Koivisto

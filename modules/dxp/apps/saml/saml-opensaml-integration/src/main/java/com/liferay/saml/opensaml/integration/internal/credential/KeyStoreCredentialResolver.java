@@ -126,12 +126,11 @@ public class KeyStoreCredentialResolver extends AbstractCredentialResolver {
 		KeyStore.TrustedCertificateEntry trustedCertificateEntry,
 		String entityId, UsageType usageType) {
 
-		BasicX509Credential basicX509Credential = new BasicX509Credential();
-
 		X509Certificate x509Certificate =
 			(X509Certificate)trustedCertificateEntry.getTrustedCertificate();
 
-		basicX509Credential.setEntityCertificate(x509Certificate);
+		BasicX509Credential basicX509Credential = new BasicX509Credential(
+			x509Certificate);
 
 		List<X509Certificate> x509Certificates = new ArrayList<>();
 

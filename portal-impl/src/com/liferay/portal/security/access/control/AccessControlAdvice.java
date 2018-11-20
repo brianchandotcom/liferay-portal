@@ -59,16 +59,6 @@ public class AccessControlAdvice
 		return AccessControl.NULL_ACCESS_CONTROLLED;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setAccessControlAdvisor(
-		AccessControlAdvisor accessControlAdvisor) {
-
-		_accessControlAdvisor = accessControlAdvisor;
-	}
-
 	protected void decrementServiceDepth() {
 		AccessControlContext accessControlContext =
 			AccessControlUtil.getAccessControlContext();
@@ -118,7 +108,7 @@ public class AccessControlAdvice
 			serviceDepth);
 	}
 
-	private AccessControlAdvisor _accessControlAdvisor =
+	private final AccessControlAdvisor _accessControlAdvisor =
 		new AccessControlAdvisorImpl();
 
 }

@@ -26,7 +26,6 @@ import java.lang.reflect.Method;
 import org.aopalliance.intercept.MethodInvocation;
 
 import org.springframework.transaction.interceptor.TransactionAttribute;
-import org.springframework.transaction.interceptor.TransactionAttributeSource;
 
 /**
  * @author Shuyang Zhou
@@ -75,14 +74,6 @@ public class DynamicDataSourceAdvice
 		DynamicDataSourceTargetSource dynamicDataSourceTargetSource) {
 
 		_dynamicDataSourceTargetSource = dynamicDataSourceTargetSource;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setTransactionAttributeSource(
-		TransactionAttributeSource transactionAttributeSource) {
 	}
 
 	public void setTransactionInterceptor(

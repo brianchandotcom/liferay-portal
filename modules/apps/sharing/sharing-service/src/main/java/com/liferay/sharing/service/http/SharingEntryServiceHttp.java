@@ -136,7 +136,7 @@ public class SharingEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SharingEntryServiceUtil.class,
-					"deleteSharingEntry", _deleteSharingEntryParameterTypes3);
+					"deleteSharingEntry", _deleteSharingEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					sharingEntryId, serviceContext);
@@ -171,7 +171,7 @@ public class SharingEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SharingEntryServiceUtil.class,
-					"updateSharingEntry", _updateSharingEntryParameterTypes5);
+					"updateSharingEntry", _updateSharingEntryParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					sharingEntryId, sharingEntryActions, shareable,
@@ -210,10 +210,10 @@ public class SharingEntryServiceHttp {
 			java.util.Collection.class, java.util.Date.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteSharingEntryParameterTypes3 = new Class[] {
+	private static final Class<?>[] _deleteSharingEntryParameterTypes2 = new Class[] {
 			long.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateSharingEntryParameterTypes5 = new Class[] {
+	private static final Class<?>[] _updateSharingEntryParameterTypes3 = new Class[] {
 			long.class, java.util.Collection.class, boolean.class,
 			java.util.Date.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

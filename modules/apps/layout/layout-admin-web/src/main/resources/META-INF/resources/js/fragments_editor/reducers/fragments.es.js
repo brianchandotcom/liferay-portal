@@ -367,14 +367,13 @@ function _addFragmentEntryLink(
 }
 
 function _getDropFragmentPosition(
-	structure,
+	fragmentEntryLinkIds,
 	targetFragmentEntryLinkId,
 	targetBorder
 ) {
-	let position = structure.length;
+	let position = fragmentEntryLinkIds.length;
 
-	const targetPosition = getFragmentRowIndex(
-		structure,
+	const targetPosition = fragmentEntryLinkIds.indexOf(
 		targetFragmentEntryLinkId
 	);
 

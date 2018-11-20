@@ -18,10 +18,10 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.extender.internal.bean.ApplicationContextServicePublisherUtil;
-import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
 
 import java.beans.Introspector;
 
@@ -54,8 +54,21 @@ public class ModuleApplicationContextRegistrator {
 
 	protected void start() throws Exception {
 		try {
-			ClassLoader classLoader = new BundleResolverClassLoader(
-				_extendeeBundle, _extenderBundle);
+			BundleWiring extendeeBundleWiring = _extendeeBundle.adapt(
+				BundleWiring.class);
+
+			ClassLoader extendeeClassLoader =
+				extendeeBundleWiring.getClassLoader();
+
+			BundleWiring extenderBundleWiring = _extenderBundle.adapt(
+				BundleWiring.class);
+
+			ClassLoader extenderClassLoader =
+				extenderBundleWiring.getClassLoader();
+
+			ClassLoader classLoader =
+				AggregateClassLoader.getAggregateClassLoader(
+					extendeeClassLoader, extenderClassLoader);
 
 			Dictionary<String, String> headers = _extendeeBundle.getHeaders(
 				StringPool.BLANK);

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.spring.bean.LiferayBeanFactory;
 import com.liferay.portal.spring.extender.internal.bean.ApplicationContextServicePublisherUtil;
-import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
 import com.liferay.portal.spring.extender.internal.configuration.ConfigurationUtil;
 
 import java.io.IOException;
@@ -363,11 +363,9 @@ public class ParentModuleApplicationContextExtender extends AbstractExtender {
 		}
 
 		private ParentModuleApplicationContext(
-			Bundle bundle, Bundle extenderBundle) {
+			Bundle bundle, ClassLoader classLoader, Bundle extenderBundle) {
 
-			super(
-				bundle, new BundleResolverClassLoader(bundle, extenderBundle),
-				_PARENT_CONFIG_LOCATIONS);
+			super(bundle, classLoader, _PARENT_CONFIG_LOCATIONS);
 
 			_extenderBundle = extenderBundle;
 		}
@@ -550,13 +548,29 @@ public class ParentModuleApplicationContextExtender extends AbstractExtender {
 
 		@Override
 		public void start() throws Exception {
+			BundleWiring extendeeBundleWiring = _bundle.adapt(
+				BundleWiring.class);
+
+			ClassLoader extendeeClassLoader =
+				extendeeBundleWiring.getClassLoader();
+
 			BundleContext extenderBundleContext =
 				ParentModuleApplicationContextExtender.this.getBundleContext();
 
 			Bundle extenderBundle = extenderBundleContext.getBundle();
 
+			BundleWiring extenderBundleWiring = extenderBundle.adapt(
+				BundleWiring.class);
+
+			ClassLoader extenderClassLoader =
+				extenderBundleWiring.getClassLoader();
+
 			ModuleApplicationContext moduleApplicationContext =
-				new ParentModuleApplicationContext(_bundle, extenderBundle);
+				new ParentModuleApplicationContext(
+					_bundle,
+					AggregateClassLoader.getAggregateClassLoader(
+						extendeeClassLoader, extenderClassLoader),
+					extenderBundle);
 
 			moduleApplicationContext.refresh();
 

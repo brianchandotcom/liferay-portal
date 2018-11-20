@@ -281,15 +281,9 @@ public class ValidationBuild extends BaseBuild {
 	protected Element getTaskSummaryIndexElement(
 		String taskName, String taskResult, Element messageElement) {
 
-		Element taskSummaryIndexElement = Dom4JUtil.getNewElement("li", null);
-
-		Dom4JUtil.addToElement(
-			taskSummaryIndexElement, taskName, " - ",
-			getTaskResultIcon(taskResult));
-
-		Dom4JUtil.addToElement(taskSummaryIndexElement, messageElement);
-
-		return taskSummaryIndexElement;
+		return Dom4JUtil.getNewElement(
+			"li", null, taskName, " - ", getTaskResultIcon(taskResult),
+			messageElement);
 	}
 
 	protected Element getTestSummaryElement() {

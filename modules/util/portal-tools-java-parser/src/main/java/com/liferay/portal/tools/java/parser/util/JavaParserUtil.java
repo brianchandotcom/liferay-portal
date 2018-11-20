@@ -236,17 +236,30 @@ public class JavaParserUtil {
 			javaExpression = _parseJavaArrayDeclarator(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.DOT) {
-			Tuple chainTuple = _getChainTuple(detailAST);
+			DetailAST lastChildDetailAST = detailAST.getLastChild();
 
-			javaExpression = (JavaExpression)chainTuple.getObject(1);
+			if (lastChildDetailAST.getChildCount() > 0) {
+				DetailAST firstChildDetailAST = detailAST.getFirstChild();
 
-			if (javaExpression != null) {
+				javaExpression = new JavaSimpleValue(
+					firstChildDetailAST.getText());
+
 				javaExpression.setChainedJavaExpression(
-					new JavaSimpleValue((String)chainTuple.getObject(0)));
+					parseJavaExpression(lastChildDetailAST));
 			}
 			else {
-				javaExpression = new JavaSimpleValue(
-					(String)chainTuple.getObject(0));
+				Tuple chainTuple = _getChainTuple(detailAST);
+
+				javaExpression = (JavaExpression)chainTuple.getObject(1);
+
+				if (javaExpression != null) {
+					javaExpression.setChainedJavaExpression(
+						new JavaSimpleValue((String)chainTuple.getObject(0)));
+				}
+				else {
+					javaExpression = new JavaSimpleValue(
+						(String)chainTuple.getObject(0));
+				}
 			}
 		}
 		else if (detailAST.getType() == TokenTypes.INDEX_OP) {
@@ -480,7 +493,9 @@ public class JavaParserUtil {
 
 			JavaExpression javaExpression = null;
 
-			if (ArrayUtil.contains(_SIMPLE_TYPES, detailAST.getType())) {
+			if (ArrayUtil.contains(_SIMPLE_TYPES, detailAST.getType()) &&
+				(detailAST.getFirstChild() == null)) {
+
 				name = detailAST.getText() + "." + name;
 			}
 			else {

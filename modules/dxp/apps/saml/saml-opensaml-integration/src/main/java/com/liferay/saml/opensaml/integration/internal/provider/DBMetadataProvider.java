@@ -55,13 +55,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = MetadataProvider.class)
 public class DBMetadataProvider extends BaseMetadataProvider {
 
-	protected EntityDescriptor getEntityDescriptor(String entityID)
-		throws Exception {
-
-		return SamlUtil.getEntityDescriptorById(
-			entityID, getMetadata(entityID));
-	}
-
 	@Nonnull
 	@Override
 	public Iterable<EntityDescriptor> resolve(@Nullable CriteriaSet criteriaSet)
@@ -98,13 +91,18 @@ public class DBMetadataProvider extends BaseMetadataProvider {
 		}
 	}
 
-
 	@Override
 	public void setParserPool(ParserPool parserPool) {
 		super.setParserPool(parserPool);
 
 		_parserPool = parserPool;
+	}
 
+	protected EntityDescriptor getEntityDescriptor(String entityID)
+		throws Exception {
+
+		return SamlUtil.getEntityDescriptorById(
+			entityID, getMetadata(entityID));
 	}
 
 	protected XMLObject getMetadata(String entityID) throws Exception {

@@ -62,6 +62,42 @@ public class DBMetadataProvider extends BaseMetadataProvider {
 			entityID, getMetadata(entityID));
 	}
 
+	@Nonnull
+	@Override
+	public Iterable<EntityDescriptor> resolve(@Nullable CriteriaSet criteriaSet)
+		throws ResolverException {
+
+		if (criteriaSet == null) {
+			return Collections.emptyList();
+		}
+
+		EntityIdCriterion entityIdCriterion = criteriaSet.get(
+			EntityIdCriterion.class);
+
+		if (entityIdCriterion == null) {
+			throw new ResolverException("EntityIdCriterion is mandatory");
+		}
+
+		try {
+			XMLObject xmlObject = getMetadata(entityIdCriterion.getEntityId());
+
+			DOMMetadataResolver domMetadataResolver = new DOMMetadataResolver(
+				XMLObjectSupport.marshall(xmlObject));
+
+			domMetadataResolver.setId(DOMMetadataResolver.class.getName());
+			domMetadataResolver.setRequireValidMetadata(
+				isRequireValidMetadata());
+			domMetadataResolver.initialize();
+
+			return domMetadataResolver.resolve(criteriaSet);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+
+			throw new ResolverException(e);
+		}
+	}
+
 
 	@Override
 	public void setParserPool(ParserPool parserPool) {

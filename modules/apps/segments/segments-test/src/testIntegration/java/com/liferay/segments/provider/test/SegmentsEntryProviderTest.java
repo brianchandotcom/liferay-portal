@@ -17,10 +17,13 @@ package com.liferay.segments.provider.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -35,6 +38,9 @@ import com.liferay.segments.provider.SegmentsEntryProvider;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -60,15 +66,27 @@ public class SegmentsEntryProviderTest {
 	}
 
 	@Test
-	public void testGetSegmentsEntryClassPKsWithCriteria() throws Exception {
-		_user1 = UserTestUtil.addUser(_group.getGroupId());
-		_user2 = UserTestUtil.addUser(_group.getGroupId());
+	public void testGetSegmentsEntryClassPKsWithMultipleCriterion()
+		throws Exception {
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization);
+
+		_user1 = UserTestUtil.addOrganizationUser(
+			organization, RoleConstants.ORGANIZATION_USER);
+
+		_user2 = UserTestUtil.addUser();
 
 		Criteria criteria = new Criteria();
 
-		_segmentsCriteriaContributor.contribute(
+		_entityModelSegmentsCriteriaContributor.contribute(
 			criteria,
 			String.format("(firstName eq '%s')", _user1.getFirstName()),
+			Criteria.Conjunction.AND);
+
+		_organizationSegmentsCriteriaContributor.contribute(
+			criteria, String.format("(name eq '%s')", organization.getName()),
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
@@ -117,15 +135,59 @@ public class SegmentsEntryProviderTest {
 	}
 
 	@Test
-	public void testGetSegmentsEntryIds() throws Exception {
+	public void testGetSegmentsEntryClassPKsWithSingleCriterion()
+		throws Exception {
+
 		_user1 = UserTestUtil.addUser(_group.getGroupId());
+		_user2 = UserTestUtil.addUser(_group.getGroupId());
+
+		Criteria criteria = new Criteria();
+
+		_entityModelSegmentsCriteriaContributor.contribute(
+			criteria,
+			String.format("(firstName eq '%s')", _user1.getFirstName()),
+			Criteria.Conjunction.AND);
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
+			User.class.getName());
+
+		int segmentsEntryClassPksCount =
+			_segmentsEntryProvider.getSegmentsEntryClassPKsCount(
+				segmentsEntry.getSegmentsEntryId());
+
+		Assert.assertEquals(1, segmentsEntryClassPksCount);
+
+		long[] segmentsEntryClassPKs =
+			_segmentsEntryProvider.getSegmentsEntryClassPKs(
+				segmentsEntry.getSegmentsEntryId(), 0, 1);
+
+		Assert.assertArrayEquals(
+			new long[] {_user1.getUserId()}, segmentsEntryClassPKs);
+	}
+
+	@Test
+	public void testGetSegmentsEntryIdsWithMultipleCriterion()
+		throws Exception {
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization);
+
+		_user1 = UserTestUtil.addOrganizationUser(
+			organization, RoleConstants.ORGANIZATION_USER);
+
 		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
 		Criteria criteria1 = new Criteria();
 
-		_segmentsCriteriaContributor.contribute(
+		_entityModelSegmentsCriteriaContributor.contribute(
 			criteria1,
 			String.format("(firstName eq '%s')", _user1.getFirstName()),
+			Criteria.Conjunction.AND);
+
+		_organizationSegmentsCriteriaContributor.contribute(
+			criteria1, String.format("(name eq '%s')", organization.getName()),
 			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
@@ -136,7 +198,7 @@ public class SegmentsEntryProviderTest {
 
 		Criteria criteria2 = new Criteria();
 
-		_segmentsCriteriaContributor.contribute(
+		_entityModelSegmentsCriteriaContributor.contribute(
 			criteria2,
 			String.format("(firstName eq '%s')", _user2.getFirstName()),
 			Criteria.Conjunction.AND);
@@ -158,17 +220,69 @@ public class SegmentsEntryProviderTest {
 			segmentsEntryIds, segmentsEntry2.getSegmentsEntryId());
 	}
 
-	@DeleteAfterTestRun
-	private Group _group;
+	@Test
+	public void testGetSegmentsEntryIdsWithSingleCriterion() throws Exception {
+		_user1 = UserTestUtil.addUser(_group.getGroupId());
+		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
-	@Inject
-	private Portal _portal;
+		Criteria criteria1 = new Criteria();
+
+		_entityModelSegmentsCriteriaContributor.contribute(
+			criteria1,
+			String.format("(firstName eq '%s')", _user1.getFirstName()),
+			Criteria.Conjunction.AND);
+
+		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria1),
+			User.class.getName());
+
+		Criteria criteria2 = new Criteria();
+
+		_entityModelSegmentsCriteriaContributor.contribute(
+			criteria2,
+			String.format("(firstName eq '%s')", _user2.getFirstName()),
+			Criteria.Conjunction.AND);
+
+		SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), User.class.getName(), _user2.getUserId());
+		SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria2),
+			User.class.getName());
+
+		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
+			User.class.getName(), _user1.getUserId());
+
+		Assert.assertEquals(
+			segmentsEntryIds.toString(), 2, segmentsEntryIds.length);
+		ArrayUtil.contains(
+			segmentsEntryIds, segmentsEntry1.getSegmentsEntryId());
+		ArrayUtil.contains(
+			segmentsEntryIds, segmentsEntry2.getSegmentsEntryId());
+	}
 
 	@Inject(
 		filter = "segments.criteria.contributor.key=entity-model",
 		type = SegmentsCriteriaContributor.class
 	)
-	private SegmentsCriteriaContributor _segmentsCriteriaContributor;
+	private SegmentsCriteriaContributor _entityModelSegmentsCriteriaContributor;
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	@DeleteAfterTestRun
+	private final List<Organization> _organizations = new ArrayList<>();
+
+	@Inject(
+		filter = "segments.criteria.contributor.key=organization",
+		type = SegmentsCriteriaContributor.class
+	)
+	private SegmentsCriteriaContributor
+		_organizationSegmentsCriteriaContributor;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private SegmentsEntryLocalService _segmentsEntryLocalService;

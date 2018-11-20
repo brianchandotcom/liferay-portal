@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupWrapper;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Props;
@@ -38,25 +38,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Miguel Angelo Caldas Gallindo
  * @author André de Oliveira
  */
-public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
+public class BaseIndexerGetSiteGroupIdTest {
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
-		ReflectionTestUtil.setFieldValue(
-			GroupLocalServiceUtil.class, "_service", _groupLocalService);
-
 		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
 
 		Registry registry = new BasicRegistryImpl();
@@ -144,11 +133,20 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 
 		};
 
-		Mockito.when(
-			_groupLocalService.getGroup(groupId)
-		).thenReturn(
-			group
-		);
+		ReflectionTestUtil.setFieldValue(
+			GroupLocalServiceUtil.class, "_service",
+			new GroupLocalServiceWrapper(null) {
+
+				@Override
+				public Group getGroup(long groupId) {
+					if (groupId == group.getGroupId()) {
+						return group;
+					}
+
+					return null;
+				}
+
+			});
 
 		return group;
 	}
@@ -195,33 +193,39 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 
 		};
 
-		Mockito.when(
-			_groupLocalService.getGroup(groupId)
-		).thenReturn(
-			group
-		);
+		ReflectionTestUtil.setFieldValue(
+			GroupLocalServiceUtil.class, "_service",
+			new GroupLocalServiceWrapper(null) {
 
-		Mockito.when(
-			_groupLocalService.getGroup(parentGroupId)
-		).thenReturn(
-			parentGroup
-		);
+				@Override
+				public Group getGroup(long groupId) {
+					if (groupId == group.getGroupId()) {
+						return group;
+					}
+					else if (groupId == parentGroup.getGroupId()) {
+						return parentGroup;
+					}
+
+					return null;
+				}
+
+			});
 
 		return parentGroup;
 	}
 
 	protected void setUpNonexistentGroup(long groupId) throws PortalException {
-		Mockito.doThrow(
-			new NoSuchGroupException()
-		).when(
-			_groupLocalService
-		).getGroup(
-			groupId
-		);
-	}
+		ReflectionTestUtil.setFieldValue(
+			GroupLocalServiceUtil.class, "_service",
+			new GroupLocalServiceWrapper(null) {
 
-	@Mock
-	private GroupLocalService _groupLocalService;
+				@Override
+				public Group getGroup(long groupId) throws PortalException {
+					throw new NoSuchGroupException();
+				}
+
+			});
+	}
 
 	private BaseIndexer<Object> _indexer;
 

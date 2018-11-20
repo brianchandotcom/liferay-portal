@@ -14,6 +14,7 @@
 
 package com.liferay.portal.servlet.filters.autologin;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -25,6 +26,7 @@ import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
 import org.junit.AfterClass;
@@ -33,8 +35,6 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.mockito.Mockito;
 
 /**
  * @author Philip Jones
@@ -62,27 +62,27 @@ public class AutoLoginFilterTest {
 	public void testDoFilter() throws IOException, ServletException {
 		AutoLoginFilter autoLoginFilter = new AutoLoginFilter();
 
-		HttpServletRequest httpServletRequest = Mockito.mock(
-			HttpServletRequest.class);
-
-		Mockito.when(
-			httpServletRequest.getRequestURI()
-		).thenReturn(
-			""
-		);
-
-		Mockito.when(
-			httpServletRequest.getSession()
-		).thenReturn(
-			ProxyFactory.newDummyInstance(HttpSession.class)
-		);
-
 		FilterChain filterChain = ProxyFactory.newDummyInstance(
 			FilterChain.class);
 
 		_atomicState.reset();
 
-		autoLoginFilter.doFilter(httpServletRequest, null, filterChain);
+		autoLoginFilter.doFilter(
+			new HttpServletRequestWrapper(
+				ProxyFactory.newDummyInstance(HttpServletRequest.class)) {
+
+				@Override
+				public String getRequestURI() {
+					return StringPool.BLANK;
+				}
+
+				@Override
+				public HttpSession getSession() {
+					return ProxyFactory.newDummyInstance(HttpSession.class);
+				}
+
+			},
+			null, filterChain);
 
 		Assert.assertTrue(_atomicState.isSet());
 	}

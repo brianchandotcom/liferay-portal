@@ -1,19 +1,9 @@
 <definition>
-	<command name="edit">
-		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+	<command name="gotoDrive">
+		<execute function="AssertClick" locator1="Button#SELECT_FILE" value1="Select File" />
 
-		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS" />
+		<execute function="Pause" locator1="3000" />
 
-		<execute macro="MenuItem#click">
-			<var name="menuItem" value="Edit in Google Docs" />
-		</execute>
-
-		<execute function="Type" locator1="GoogleDrive#GOOGLE_DOCS_TITLE" value1="${dmDocumentTitleEdit}" />
-
-		<execute function="AssertClick" locator1="Button#SAVE_AND_RETURN_TO_LIFERAY" />
-	</command>
-
-	<command name="signIn">
 		<if>
 			<isset var="windowTitle" />
 			<then>
@@ -36,6 +26,8 @@
 
 				<execute function="Click" locator1="GoogleLogin#LOGIN_NEXT_BUTTON" />
 
+				<execute function="SelectWindow#selectWindowNoSPARefresh" locator1="title=${windowTitle}" />
+
 				<execute function="Pause" locator1="3000" />
 			</then>
 		</if>
@@ -47,8 +39,20 @@
 			</then>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="Button#SAVE_AND_RETURN_TO_LIFERAY" />
+		<execute function="SelectFrame" locator1="GoogleDrive#GOOGLE_DRIVE_IFRAME" />
+	</command>
 
-		<execute macro="Navigator#openURL" />
+	<command name="selectDocument">
+		<var name="key_googleDocName" value="${googleDocName}" />
+
+		<execute function="Click#clickAt" locator1="GoogleDrive#LIST_VIEW_DOCUMENT" value1="${googleDocName}" />
+
+		<execute function="Click#clickAt" locator1="GoogleDrive#SELECT_BUTTON" value1="Select" />
+
+		<execute function="SelectFrameTop" />
+
+		<var name="key_dmDocumentTitle" value="${googleDocName}" />
+
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaEntry#SELECTED_DOCUMENT_TITLE" value1="${googleDocName}" />
 	</command>
 </definition>

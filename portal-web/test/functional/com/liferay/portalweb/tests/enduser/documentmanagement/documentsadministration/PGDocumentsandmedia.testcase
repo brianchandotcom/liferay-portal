@@ -1030,13 +1030,13 @@
 			<var name="menuItem" value="Google Docs" />
 		</execute>
 
-		<execute macro="GoogleDoc#gotoDrive">
+		<execute macro="GoogleDrive#gotoDrive">
 			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
 			<var method="PropsUtil#get('email.password.3')" name="userPassword" />
 			<var name="windowTitle" value="Documents and Media Page - Liferay" />
 		</execute>
 
-		<execute macro="GoogleDoc#selectDocument">
+		<execute macro="GoogleDrive#selectDocument">
 			<var name="googleDocName" value="taco.jpg" />
 		</execute>
 
@@ -1444,13 +1444,13 @@
 			<var name="menuItem" value="Google Docs" />
 		</execute>
 
-		<execute macro="GoogleDoc#gotoDrive">
+		<execute macro="GoogleDrive#gotoDrive">
 			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
 			<var method="PropsUtil#get('email.password.3')" name="userPassword" />
 			<var name="windowTitle" value="Documents and Media Page - Liferay" />
 		</execute>
 
-		<execute macro="GoogleDoc#selectDocument">
+		<execute macro="GoogleDrive#selectDocument">
 			<var name="googleDocName" value="taco.jpg" />
 		</execute>
 

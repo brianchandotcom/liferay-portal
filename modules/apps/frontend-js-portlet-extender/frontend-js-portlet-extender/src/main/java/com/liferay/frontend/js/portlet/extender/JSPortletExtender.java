@@ -43,6 +43,7 @@ import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleWire;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.namespace.extender.ExtenderNamespace;
+import org.osgi.service.cm.ManagedService;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -172,13 +173,17 @@ public class JSPortletExtender {
 							new Hashtable<>();
 
 						properties.put("javax.portlet.name", name);
+						properties.put("service.pid", name);
 
 						_addServiceProperties(
 							properties, jsonObject.getJSONObject("portlet"));
 
 						ServiceRegistration<?> serviceRegistration =
 							bundleContext.registerService(
-								new String[] {Portlet.class.getName()},
+								new String[] {
+									ManagedService.class.getName(),
+									Portlet.class.getName()
+								},
 								new JSPortlet(name, version), properties);
 
 						return serviceRegistration;

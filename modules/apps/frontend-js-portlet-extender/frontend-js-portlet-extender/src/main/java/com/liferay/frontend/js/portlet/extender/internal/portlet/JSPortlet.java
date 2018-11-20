@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.js.portlet.extender.internal.portlet;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,14 +25,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 
+import java.util.Collections;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
+
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import org.osgi.service.cm.ConfigurationException;
+import org.osgi.service.cm.ManagedService;
 
 /**
  * @author Ray Augé
  * @author Iván Zaera Avellón
  */
-public class JSPortlet extends MVCPortlet {
+public class JSPortlet extends MVCPortlet implements ManagedService {
 
 	public JSPortlet(String name, String version) {
 		_name = name;
@@ -59,11 +70,12 @@ public class JSPortlet extends MVCPortlet {
 					new String[] {
 						"[$CONTEXT_PATH$]", "[$PORTLET_ELEMENT_ID$]",
 						"[$PORTLET_NAMESPACE$]", "[$PACKAGE_NAME$]",
-						"[$PACKAGE_VERSION$]"
+						"[$PACKAGE_VERSION$]", "[$CONFIGURATION]"
 					},
 					new String[] {
 						renderRequest.getContextPath(), portletElementId,
-						renderResponse.getNamespace(), _name, _version
+						renderResponse.getNamespace(), _name, _version,
+						_getConfiguration()
 					}));
 
 			printWriter.flush();
@@ -71,6 +83,33 @@ public class JSPortlet extends MVCPortlet {
 		catch (IOException ioe) {
 			_log.error("Unable to render HTML output", ioe);
 		}
+	}
+
+	@Override
+	public void updated(Dictionary<String, ?> properties)
+		throws ConfigurationException {
+
+		if (properties == null) {
+			_configuration.set(Collections.emptyMap());
+
+			return;
+		}
+
+		Map<String, String> configuration = new HashMap<>();
+
+		Enumeration<String> keys = properties.keys();
+
+		while (keys.hasMoreElements()) {
+			String key = keys.nextElement();
+
+			if (key.equals("service.pid")) {
+				continue;
+			}
+
+			configuration.put(key, String.valueOf(properties.get(key)));
+		}
+
+		_configuration.set(configuration);
 	}
 
 	private static String _loadTemplate(String name) {
@@ -87,6 +126,36 @@ public class JSPortlet extends MVCPortlet {
 		return StringPool.BLANK;
 	}
 
+	private String _escapeQuotes(String value) {
+		return value.replaceAll("'", "\\'");
+	}
+
+	private String _getConfiguration() {
+		Map<String, String> configuration = _configuration.get();
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("{");
+
+		String delimiter = "";
+
+		for (Map.Entry<String, String> entry : configuration.entrySet()) {
+			sb.append(delimiter);
+
+			sb.append("'");
+			sb.append(_escapeQuotes(entry.getKey()));
+			sb.append("':'");
+			sb.append(_escapeQuotes(entry.getValue()));
+			sb.append("'");
+
+			delimiter = ", ";
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
 	private static final String _HTML_TPL;
 
 	private static final String _JAVA_SCRIPT_TPL;
@@ -98,6 +167,8 @@ public class JSPortlet extends MVCPortlet {
 		_JAVA_SCRIPT_TPL = _loadTemplate("bootstrap.js.tpl");
 	}
 
+	private final AtomicReference<Map<String, String>> _configuration =
+		new AtomicReference<>();
 	private final String _name;
 	private final String _version;
 

@@ -63,7 +63,7 @@ public class JSONPropertyOrderCheck extends BaseFileCheck {
 		String tabs = StringPool.BLANK;
 
 		while (true) {
-			Pattern pattern1 = Pattern .compile(
+			Pattern pattern1 = Pattern.compile(
 				"(\n|^)" + tabs + "[^\n\t]*[\\{\\[]\n");
 
 			Matcher matcher1 = pattern1.matcher(content);

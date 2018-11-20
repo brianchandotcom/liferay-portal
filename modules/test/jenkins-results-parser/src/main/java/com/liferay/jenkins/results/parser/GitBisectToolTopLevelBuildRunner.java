@@ -350,8 +350,8 @@ public class GitBisectToolTopLevelBuildRunner
 			return;
 		}
 
-		Integer portalBranchSHACount = StringUtils.countMatches(
-			portalBranchSHAs, ",") + 1;
+		Integer portalBranchSHACount =
+			StringUtils.countMatches(portalBranchSHAs, ",") + 1;
 
 		if (portalBranchSHACount > allowedPortalBranchSHAs) {
 			failBuildRunner(

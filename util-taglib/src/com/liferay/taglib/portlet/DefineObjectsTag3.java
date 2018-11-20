@@ -41,8 +41,8 @@ public class DefineObjectsTag3 extends DefineObjectsTag {
 	public int doStartTag() {
 		super.doStartTag();
 
-		HttpServletRequest request = (HttpServletRequest)
-			pageContext.getRequest();
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
 
 		String lifecycle = (String)request.getAttribute(
 			PortletRequest.LIFECYCLE_PHASE);
@@ -90,8 +90,8 @@ public class DefineObjectsTag3 extends DefineObjectsTag {
 				"renderParams", portletRequest.getRenderParameters());
 
 			if (lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
-				ResourceRequest resourceRequest = (ResourceRequest)
-					portletRequest;
+				ResourceRequest resourceRequest =
+					(ResourceRequest)portletRequest;
 
 				pageContext.setAttribute(
 					"resourceParams", resourceRequest.getResourceParameters());
@@ -102,8 +102,8 @@ public class DefineObjectsTag3 extends DefineObjectsTag {
 				"windowState", portletRequest.getWindowState());
 		}
 
-		PortletResponse portletResponse = (PortletResponse)
-			request.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE);
+		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		if (portletResponse == null) {
 			return SKIP_BODY;
@@ -122,8 +122,8 @@ public class DefineObjectsTag3 extends DefineObjectsTag {
 		if (lifecycle.equals(PortletRequest.ACTION_PHASE) ||
 			lifecycle.equals(PortletRequest.EVENT_PHASE)) {
 
-			StateAwareResponse stateAwareResponse = (StateAwareResponse)
-				portletResponse;
+			StateAwareResponse stateAwareResponse =
+				(StateAwareResponse)portletResponse;
 
 			pageContext.setAttribute(
 				"mutableRenderParams",

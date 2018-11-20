@@ -2560,9 +2560,7 @@ public abstract class BaseBuild implements Build {
 	private static final String _CONSOLE_TEXT_CACHE_PREFIX = "console-text-";
 
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
-		{
-			new GenericFailureMessageGenerator()
-		};
+		{new GenericFailureMessageGenerator()};
 
 	private static final String[] _HIGH_PRIORITY_CONTENT_FLAGS =
 		{"compileJSP", "SourceFormatter.format", "Unable to compile JSPs"};

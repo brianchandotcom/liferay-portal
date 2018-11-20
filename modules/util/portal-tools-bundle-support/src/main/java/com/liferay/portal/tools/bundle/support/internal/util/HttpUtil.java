@@ -183,8 +183,8 @@ public class HttpUtil {
 				}
 			}
 			else {
-				RedirectLocations redirectLocations = (RedirectLocations)
-					httpContext.getAttribute(
+				RedirectLocations redirectLocations =
+					(RedirectLocations)httpContext.getAttribute(
 						HttpClientContext.REDIRECT_LOCATIONS);
 
 				if (redirectLocations != null) {

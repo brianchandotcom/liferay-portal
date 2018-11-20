@@ -87,8 +87,8 @@ public class Java2WsddTask {
 
 		String location = "http://localhost/services/" + serviceName;
 
-		String mappingPackage = packagePath.substring(
-			0, packagePath.lastIndexOf(".")) + ".ws";
+		String mappingPackage =
+			packagePath.substring(0, packagePath.lastIndexOf(".")) + ".ws";
 
 		Project project = AntUtil.getProject();
 

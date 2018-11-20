@@ -673,10 +673,9 @@ public class GitHubDevSyncUtil {
 				" orphaned timestamp branches on ", gitRemote.getRemoteURL(),
 				".\n", sb.toString()));
 
-		List<RemoteGitBranch> orphanedCachedRemoteGitBranches =
-			new ArrayList<>(
-				orphanedBaseCachedRemoteGitBranchesMap.size() +
-					orphanedTimestampedCachedRemoteGitBranchesMap.size());
+		List<RemoteGitBranch> orphanedCachedRemoteGitBranches = new ArrayList<>(
+			orphanedBaseCachedRemoteGitBranchesMap.size() +
+				orphanedTimestampedCachedRemoteGitBranchesMap.size());
 
 		orphanedCachedRemoteGitBranches.addAll(
 			orphanedBaseCachedRemoteGitBranchesMap.values());

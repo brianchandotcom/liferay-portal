@@ -144,10 +144,7 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 			"ResourceBundleUtil.getBundle(\"content.Language\", locale, " +
 				"getClass()"
 		},
-		{
-			"WindowState", "windowState",
-			"liferayPortletRequest.getWindowState()"
-		}
+		{"WindowState", "windowState", "liferayPortletRequest.getWindowState()"}
 	};
 
 	private static final String[][] _LIFERAY_THEME_DEFINE_OBJECTS = {

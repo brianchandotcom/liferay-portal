@@ -843,19 +843,57 @@ public class OpenSamlUtil {
 
 		Signature signature = buildSignature(credential);
 
-		SecurityHelper.prepareSignatureParams(
-			signature, credential, null, null);
+		SAMLMetadataSignatureSigningParametersResolver
+			samlMetadataSignatureSigningParametersResolver =
+				new SAMLMetadataSignatureSigningParametersResolver();
 
-		signableObject.setSignature(signature);
+		try {
+			SignatureSigningConfiguration globalSignatureSigningConfiguration =
+				SecurityConfigurationSupport.
+					getGlobalSignatureSigningConfiguration();
 
-		MarshallerFactory marshallerFactory =
-			Configuration.getMarshallerFactory();
+			if (globalSignatureSigningConfiguration instanceof
+					BasicSignatureSigningConfiguration) {
 
-		Marshaller marshaller = marshallerFactory.getMarshaller(signableObject);
+				BasicSignatureSigningConfiguration
+					signatureSigningConfiguration =
+						(BasicSignatureSigningConfiguration)
+							globalSignatureSigningConfiguration;
 
-		marshaller.marshall(signableObject);
+				signatureSigningConfiguration.setSigningCredentials(
+					Collections.singletonList(credential));
+			}
 
-		Signer.signObject(signature);
+			SignatureSigningConfigurationCriterion
+				signatureSigningConfigurationCriterion =
+					new SignatureSigningConfigurationCriterion(
+						globalSignatureSigningConfiguration);
+
+			SignatureSigningParameters signatureSigningParameters =
+				samlMetadataSignatureSigningParametersResolver.resolveSingle(
+					new CriteriaSet(signatureSigningConfigurationCriterion));
+
+			SignatureSupport.prepareSignatureParams(
+				signature, signatureSigningParameters);
+
+			signableObject.setSignature(signature);
+
+			XMLObjectProviderRegistry xmlObjectProviderRegistry =
+				ConfigurationService.get(XMLObjectProviderRegistry.class);
+
+			MarshallerFactory marshallerFactory =
+				xmlObjectProviderRegistry.getMarshallerFactory();
+
+			Marshaller marshaller = marshallerFactory.getMarshaller(
+				signableObject);
+
+			marshaller.marshall(signableObject);
+
+			Signer.signObject(signature);
+		}
+		catch (ResolverException re) {
+			throw new SignatureException(re);
+		}
 	}
 
 	public static XMLObject unmarshall(String xml)

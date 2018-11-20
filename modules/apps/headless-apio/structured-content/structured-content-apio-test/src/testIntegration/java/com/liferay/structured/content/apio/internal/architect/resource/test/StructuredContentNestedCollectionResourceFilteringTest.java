@@ -974,7 +974,7 @@ public class StructuredContentNestedCollectionResourceFilteringTest
 			JournalArticleLocalServiceUtil.addArticle(
 				TestPropsValues.getUser().getUserId(), _group.getGroupId(),
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, stringMap1,
-				null, read("test-journal-all-fields-content.xml"),
+				null, read("test-journal-all-fields-content-1.xml"),
 				ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 

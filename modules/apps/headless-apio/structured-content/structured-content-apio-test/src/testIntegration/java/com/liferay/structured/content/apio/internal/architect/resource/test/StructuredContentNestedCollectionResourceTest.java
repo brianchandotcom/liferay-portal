@@ -654,7 +654,7 @@ public class StructuredContentNestedCollectionResourceTest
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				ClassNameLocalServiceUtil.getClassNameId(DDMStructure.class),
 				ddmStructure.getStructureId(), StringPool.BLANK, true, 0,
-				titleMap, null, read("test-journal-all-fields-content.xml"),
+				titleMap, null, read("test-journal-all-fields-content-1.xml"),
 				ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey(),
 				null, 1, 1, 1965, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0,
 				true, true, false, null, null, null, null, serviceContext);

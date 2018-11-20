@@ -80,9 +80,24 @@ public class JavaVariableDefinition extends BaseJavaTerm {
 			indent = append(sb, _name, indent, "", " = ", maxLineLength);
 
 			if (_assignValueJavaExpression instanceof JavaOperatorExpression) {
-				append(
-					sb, _assignValueJavaExpression, indent, "", suffix,
-					maxLineLength);
+				JavaOperatorExpression javaOperatorExpression =
+					(JavaOperatorExpression)_assignValueJavaExpression;
+
+				JavaOperator javaOperator =
+					javaOperatorExpression.getJavaOperator();
+
+				if (javaOperator.equals(
+						JavaOperator.LOGICAL_COMPLEMENT_OPERATOR)) {
+
+					append(
+						sb, _assignValueJavaExpression, indent, "", suffix,
+						maxLineLength, false);
+				}
+				else {
+					append(
+						sb, _assignValueJavaExpression, indent, "", suffix,
+						maxLineLength);
+				}
 			}
 			else if (_assignValueJavaExpression instanceof JavaTypeCast) {
 				JavaTypeCast javaTypeCast =

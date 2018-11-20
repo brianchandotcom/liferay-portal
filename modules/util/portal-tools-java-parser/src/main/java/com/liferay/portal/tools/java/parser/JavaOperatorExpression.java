@@ -28,6 +28,10 @@ public class JavaOperatorExpression extends JavaExpression {
 		_javaOperator = javaOperator;
 	}
 
+	public JavaOperator getJavaOperator() {
+		return _javaOperator;
+	}
+
 	@Override
 	public String getString(
 		String indent, String prefix, String suffix, int maxLineLength,
@@ -76,6 +80,11 @@ public class JavaOperatorExpression extends JavaExpression {
 					sb, _leftHandJavaExpression, indent, prefix,
 					_javaOperator.getValue() + suffix, maxLineLength, false);
 			}
+		}
+		else if (forceLineBreak) {
+			appendWithLineBreak(
+				sb, _rightHandJavaExpression, indent,
+				prefix + _javaOperator.getValue(), suffix, maxLineLength);
 		}
 		else {
 			append(

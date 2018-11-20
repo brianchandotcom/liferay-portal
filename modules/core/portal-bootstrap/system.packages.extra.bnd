@@ -48,6 +48,7 @@ Export-Package:\
 	!com.liferay.portal.sharepoint.*,\
 	!com.liferay.portal.spring.aop,\
 	!com.liferay.portal.spring.context,\
+	!com.liferay.portal.spring.hibernate,\
 	!com.liferay.portal.spring.transaction,\
 	!com.liferay.portal.systemevent,\
 	!com.liferay.portal.tools.comparator,\

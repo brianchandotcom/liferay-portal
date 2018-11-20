@@ -63,6 +63,12 @@
 		</execute>
 	</command>
 
+	<command name="openRecycleBinAdmin">
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="group/${siteURLKey}/~/control_panel/manage/-/recycle_bin/entries" />
+		</execute>
+	</command>
+
 	<command name="restoreContentFromFolderCP">
 		<var name="key_assetName" value="${assetName}" />
 

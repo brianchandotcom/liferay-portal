@@ -1198,6 +1198,7 @@
 		</execute>
 
 		<execute macro="WebContent#deleteCP">
+			<var name="siteURLKey" value="test-site-name" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 	</command>
@@ -1224,6 +1225,7 @@
 		</execute>
 
 		<execute macro="WebContent#deleteCP">
+			<var name="siteURLKey" value="test-site-name" />
 			<var name="webContentTitle"><![CDATA[<!-- -->]]></var>
 			<var name="webContentTitleEscapeCharacter"><![CDATA[&lt;!-- --&gt;]]></var>
 		</execute>

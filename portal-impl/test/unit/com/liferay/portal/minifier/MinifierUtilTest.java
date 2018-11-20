@@ -16,44 +16,28 @@ package com.liferay.portal.minifier;
 
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.Mockito;
-
 /**
  * @author Iván Zaera Avellón
  */
-public class MinifierUtilTest extends Mockito {
+public class MinifierUtilTest {
 
 	@Before
 	public void setUp() {
-		Registry registry = mock(Registry.class);
-
-		when(
-			registry.setRegistry(any(Registry.class))
-		).thenReturn(
-			registry
-		);
-
-		when(
-			registry.getRegistry()
-		).thenReturn(
-			registry
-		);
-
-		when(
-			registry.trackServices(any(Class.class))
-		).thenReturn(
-			ProxyFactory.newDummyInstance(ServiceTracker.class)
-		);
+		Registry registry = new BasicRegistryImpl();
 
 		RegistryUtil.setRegistry(registry);
+
+		registry.registerService(
+			JavaScriptMinifier.class,
+			ProxyFactory.newDummyInstance(JavaScriptMinifier.class));
 	}
 
 	@Test

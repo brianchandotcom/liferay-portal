@@ -23,10 +23,6 @@ String redirect = ParamUtil.getString(request, "redirect", editSegmentsEntryDisp
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-Criteria criteria = editSegmentsEntryDisplayContext.getCriteria();
-
-List<SegmentsCriteriaContributor> segmentsCriteriaContributors = editSegmentsEntryDisplayContext.getSegmentsCriteriaContributors();
-
 SegmentsEntry segmentsEntry = editSegmentsEntryDisplayContext.getSegmentsEntry();
 
 long segmentsEntryId = editSegmentsEntryDisplayContext.getSegmentsEntryId();
@@ -72,10 +68,12 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 				<div id="<portlet:namespace />criteriaWrapper">
 
 					<%
+					List<SegmentsCriteriaContributor> segmentsCriteriaContributors = editSegmentsEntryDisplayContext.getSegmentsCriteriaContributors();
+
 					for (int i = 0; i < segmentsCriteriaContributors.size(); i++) {
 						SegmentsCriteriaContributor segmentsCriteriaContributor = segmentsCriteriaContributors.get(i);
 
-						Criteria.Criterion criterion = segmentsCriteriaContributor.getCriterion(criteria);
+						Criteria.Criterion criterion = segmentsCriteriaContributor.getCriterion(editSegmentsEntryDisplayContext.getCriteria());
 
 						if (i > 0) {
 					%>

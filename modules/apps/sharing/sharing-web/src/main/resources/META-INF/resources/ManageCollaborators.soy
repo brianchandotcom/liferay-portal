@@ -7,6 +7,7 @@
 	{@param id: string}
 	{@param collaborators: ?}
 	{@param spritemap: string}
+	{@param? expirationDateError: bool}
 	{@param? _handleChangeExpirationDate: any}
 	{@param? _handleChangePermission: any}
 	{@param? _handleDeleteCollaborator: any}
@@ -15,12 +16,19 @@
 	{@param? _handleCancelButtonClick: any}
 	{@param? _handleSaveButtonClick: any}
 	{@param? _hideShowExpirationDateBlock: any}
+	{@param? _removeExpirationDateError: any}
 	{@param? _loadingResponse: bool}
 	{@param? _tomorrowDate: string}
 
 	<div id="{$id}">
 		<div class="inline-scroller modal-body">
 			{if length($collaborators) > 0}
+				{if $expirationDateError}
+					{call .showError}
+						{param spritemap: $spritemap /}
+						{param _removeExpirationDateError: $_removeExpirationDateError /}
+					{/call}
+				{/if}
 				<ul class="list-group">
 					{foreach $collaborator in $collaborators}
 						<li class="list-group-item list-group-item-flex" data-onmouseout="{$_handleHoverCollaborator}" data-onmouseover="{$_handleHoverCollaborator}" id="collaborator{$collaborator.id}">
@@ -168,7 +176,7 @@
 			<div class="autofit-col no-padding">
 				<input
 					class="form-control"
-					data-onchange="{$_handleChangeExpirationDate}"
+					data-onblur="{$_handleChangeExpirationDate}"
 					min="{$_tomorrowDate}"
 					name="{$collaborator.sharingEntryId}"
 					type="date"
@@ -207,4 +215,18 @@
 			</div>
 		</div>
 	</div>
+{/template}
+
+{template .showError}
+	{@param spritemap: string}
+	{@param? _removeExpirationDateError: any}
+
+	{call ClayStripe.render}
+		{param destroyOnHide: true /}
+		{param events: ['hide': $_removeExpirationDateError ] /}
+		{param message: 'This is an error message' /}
+		{param spritemap: $spritemap /}
+		{param style: 'danger' /}
+		{param title: 'Error' /}
+	{/call}
 {/template}

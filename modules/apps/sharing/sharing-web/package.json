@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"clay-alert": "^2.4.1",
 		"clay-button": "^2.3.4",
 		"clay-select": "^2.3.2",
 		"clay-sticker": "^2.3.2",

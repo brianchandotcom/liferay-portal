@@ -1,6 +1,7 @@
 import 'clay-button';
-import 'clay-sticker';
 import 'clay-select';
+import 'clay-sticker';
+import {ClayStripe} from 'clay-alert';
 import dom from 'metal-dom';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
@@ -25,6 +26,8 @@ class ManageCollaborators extends PortletBase {
 		tomorrow = tomorrow.setDate(tomorrow.getDate() + 1);
 
 		this._tomorrowDate = new Date(tomorrow).toISOString().split('T')[0];
+
+		this.expirationDateError = true;
 	}
 
 	/**
@@ -132,7 +135,7 @@ class ManageCollaborators extends PortletBase {
 	 * Toggles the class 'active'
 	 *
 	 * @param {Event} event
-	 * @protectec
+	 * @protected
 	 */
 	_handleHoverCollaborator(event) {
 		dom.toggleClasses(event.delegateTarget, 'active');
@@ -225,6 +228,14 @@ class ManageCollaborators extends PortletBase {
 	 */
 	_getTooltipDate(expirationDate) {
 		return new Date(expirationDate).toLocaleDateString(Liferay.ThemeDisplay.getBCP47LanguageId());
+	}
+
+	/**
+	 * Cleans the error.
+	 * @protected
+	 */
+	_removeExpirationDateError() {
+		this.expirationDateError = false;
 	}
 
 	/**

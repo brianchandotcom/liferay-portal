@@ -9,7 +9,7 @@
 >
 	<bean class="com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper" factory-method="createVerifySessionFactoryWrapper" id="liferaySessionFactory">
 		<constructor-arg>
-			<bean class="com.liferay.portal.spring.extender.internal.hibernate.session.ModuleSessionFactory">
+			<bean class="com.liferay.portal.dao.orm.hibernate.PortletSessionFactoryImpl">
 				<property name="sessionFactoryImplementor" ref="liferayHibernateSessionFactory" />
 			</bean>
 		</constructor-arg>

@@ -30,6 +30,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.web.context.ConfigurableWebApplicationContext;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
@@ -67,11 +70,6 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 				_log.warn(e, e);
 			}
 		}
-
-		ApplicationContext applicationContext =
-			WebApplicationContextUtils.getWebApplicationContext(servletContext);
-
-		ModuleFrameworkUtilAdapter.unregisterContext(applicationContext);
 
 		super.contextDestroyed(servletContextEvent);
 	}
@@ -139,6 +137,24 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 			_PORTAL_CONFIG_LOCATION_PARAM);
 
 		configurableWebApplicationContext.setConfigLocation(configLocation);
+
+		configurableWebApplicationContext.addApplicationListener(
+			new ApplicationListener<ApplicationEvent>() {
+
+				@Override
+				public void onApplicationEvent(
+					ApplicationEvent applicationEvent) {
+
+					if (applicationEvent instanceof ContextClosedEvent) {
+						ContextClosedEvent contextClosedEvent =
+							(ContextClosedEvent)applicationEvent;
+
+						ModuleFrameworkUtilAdapter.unregisterContext(
+							contextClosedEvent.getApplicationContext());
+					}
+				}
+
+			});
 
 		configurableWebApplicationContext.addBeanFactoryPostProcessor(
 			new PortletBeanFactoryPostProcessor());

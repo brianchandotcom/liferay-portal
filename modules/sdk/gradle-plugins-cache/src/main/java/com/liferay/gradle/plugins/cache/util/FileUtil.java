@@ -47,7 +47,6 @@ import org.gradle.internal.hash.HashUtil;
 import org.gradle.internal.hash.HashValue;
 import org.gradle.process.ExecSpec;
 import org.gradle.process.internal.ExecException;
-import org.gradle.util.Clock;
 
 /**
  * @author Andrea Di Giorgi
@@ -121,11 +120,7 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 	public static String getDigest(
 		Project project, Iterable<File> files, boolean excludeIgnoredFiles) {
 
-		Clock clock = null;
-
-		if (_logger.isInfoEnabled()) {
-			clock = new Clock();
-		}
+		long start = System.currentTimeMillis();
 
 		StringBuilder sb = new StringBuilder();
 
@@ -161,9 +156,10 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
 		sb.setLength(sb.length() - 1);
 
-		if (_logger.isInfoEnabled() && (clock != null)) {
+		if (_logger.isInfoEnabled()) {
 			_logger.info(
-				"Getting the digest took " + clock.getTimeInMs() + " ms");
+				"Getting the digest took " +
+					(System.currentTimeMillis() - start) + " ms");
 		}
 
 		return sb.toString();

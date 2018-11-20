@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
+import com.liferay.sharing.exception.NoSuchEntryException;
 import com.liferay.sharing.filter.SharedWithMeFilterItem;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
@@ -90,19 +91,16 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			long sharingEntryId = ParamUtil.getLong(
-				renderRequest, "sharingEntryId");
-
 			try {
-				SharingEntry sharingEntry =
-					_sharingEntryLocalService.getSharingEntry(sharingEntryId);
+				SharingEntry sharingEntry = _getSharingEntry(
+					renderRequest, themeDisplay);
 
 				if (sharingEntry.getToUserId() != themeDisplay.getUserId()) {
 					throw new PrincipalException(
 						StringBundler.concat(
 							"User ", themeDisplay.getUserId(),
 							" does not have permission to view sharing entry ",
-							sharingEntryId));
+							sharingEntry.getSharingEntryId()));
 				}
 
 				SharingEntryInterpreter sharingEntryInterpreter =
@@ -183,6 +181,33 @@ public class SharedWithMeViewMVCRenderCommand implements MVCRenderCommand {
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerList.close();
+	}
+
+	private SharingEntry _getSharingEntry(
+			RenderRequest renderRequest, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		try {
+			long sharingEntryId = ParamUtil.getLong(
+				renderRequest, "sharingEntryId");
+
+			return _sharingEntryLocalService.getSharingEntry(sharingEntryId);
+		}
+		catch (NoSuchEntryException nsee) {
+			long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
+
+			long classPK = ParamUtil.getLong(renderRequest, "classPK");
+
+			List<SharingEntry> sharingEntries =
+				_sharingEntryLocalService.getSharingEntries(
+					themeDisplay.getUserId(), classNameId, classPK);
+
+			if (sharingEntries.isEmpty()) {
+				throw nsee;
+			}
+
+			return sharingEntries.get(0);
+		}
 	}
 
 	@Reference

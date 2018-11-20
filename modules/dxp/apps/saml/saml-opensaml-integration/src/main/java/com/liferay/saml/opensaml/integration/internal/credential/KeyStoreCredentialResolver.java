@@ -47,8 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.saml.runtime.configuration.SamlKeyStoreManagerConfiguration",
 	immediate = true, service = CredentialResolver.class
 )
-public class KeyStoreCredentialResolver
-	extends AbstractCriteriaFilteringCredentialResolver {
+public class KeyStoreCredentialResolver extends AbstractCredentialResolver {
 
 	@Reference(
 		name = "KeyStoreManager", target = "(default=true)", unbind = "-"

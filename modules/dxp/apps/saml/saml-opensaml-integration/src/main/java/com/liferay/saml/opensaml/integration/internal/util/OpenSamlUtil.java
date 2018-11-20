@@ -913,7 +913,14 @@ public class OpenSamlUtil {
 		return _xmlObjectBuilderFactory.getBuilder(qName);
 	}
 
-	private static final XMLObjectBuilderFactory _xmlObjectBuilderFactory =
-		Configuration.getBuilderFactory();
+	private static final XMLObjectBuilderFactory _xmlObjectBuilderFactory;
+
+	static {
+		XMLObjectProviderRegistry xmlObjectProviderRegistry =
+			ConfigurationService.get(XMLObjectProviderRegistry.class);
+
+		_xmlObjectBuilderFactory =
+			xmlObjectProviderRegistry.getBuilderFactory();
+	}
 
 }

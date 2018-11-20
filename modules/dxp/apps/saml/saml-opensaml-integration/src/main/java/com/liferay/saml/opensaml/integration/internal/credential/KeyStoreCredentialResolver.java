@@ -49,6 +49,64 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class KeyStoreCredentialResolver extends AbstractCredentialResolver {
 
+	@Override
+	public Iterable<Credential> resolve(CriteriaSet criteriaSet)
+		throws SecurityException {
+
+		try {
+			checkCriteriaRequirements(criteriaSet);
+
+			EntityIdCriterion entityIDCriterion = criteriaSet.get(
+				EntityIdCriterion.class);
+
+			String entityId = entityIDCriterion.getEntityId();
+
+			KeyStore.PasswordProtection keyStorePasswordProtection = null;
+
+			SamlProviderConfiguration samlProviderConfiguration =
+				_samlProviderConfigurationHelper.getSamlProviderConfiguration();
+
+			if (entityId.equals(samlProviderConfiguration.entityId())) {
+				String keyStoreCredentialPassword =
+					samlProviderConfiguration.keyStoreCredentialPassword();
+
+				if (keyStoreCredentialPassword != null) {
+					keyStorePasswordProtection =
+						new KeyStore.PasswordProtection(
+							keyStoreCredentialPassword.toCharArray());
+				}
+			}
+
+			KeyStore keyStore = _keyStoreManager.getKeyStore();
+
+			KeyStore.Entry entry = keyStore.getEntry(
+				entityId, keyStorePasswordProtection);
+
+			if (entry == null) {
+				return Collections.emptySet();
+			}
+
+			UsageType usageType = UsageType.UNSPECIFIED;
+
+			UsageCriterion usageCriterion = criteriaSet.get(
+				UsageCriterion.class);
+
+			if (usageCriterion != null) {
+				usageType = usageCriterion.getUsage();
+			}
+
+			Credential credential = buildCredential(entry, entityId, usageType);
+
+			return Collections.singleton(credential);
+		}
+		catch (RuntimeException re) {
+			throw new SecurityException(re);
+		}
+		catch (Exception e) {
+			throw new SecurityException(e);
+		}
+	}
+
 	@Reference(
 		name = "KeyStoreManager", target = "(default=true)", unbind = "-"
 	)
@@ -142,64 +200,6 @@ public class KeyStoreCredentialResolver extends AbstractCredentialResolver {
 		basicX509Credential.setUsageType(usageType);
 
 		return basicX509Credential;
-	}
-
-	@Override
-	public Iterable<Credential> resolve(CriteriaSet criteriaSet)
-		throws SecurityException {
-
-		try {
-			checkCriteriaRequirements(criteriaSet);
-
-			EntityIdCriterion entityIDCriterion = criteriaSet.get(
-				EntityIdCriterion.class);
-
-			String entityId = entityIDCriterion.getEntityId();
-
-			KeyStore.PasswordProtection keyStorePasswordProtection = null;
-
-			SamlProviderConfiguration samlProviderConfiguration =
-				_samlProviderConfigurationHelper.getSamlProviderConfiguration();
-
-			if (entityId.equals(samlProviderConfiguration.entityId())) {
-				String keyStoreCredentialPassword =
-					samlProviderConfiguration.keyStoreCredentialPassword();
-
-				if (keyStoreCredentialPassword != null) {
-					keyStorePasswordProtection =
-						new KeyStore.PasswordProtection(
-							keyStoreCredentialPassword.toCharArray());
-				}
-			}
-
-			KeyStore keyStore = _keyStoreManager.getKeyStore();
-
-			KeyStore.Entry entry = keyStore.getEntry(
-				entityId, keyStorePasswordProtection);
-
-			if (entry == null) {
-				return Collections.emptySet();
-			}
-
-			UsageType usageType = UsageType.UNSPECIFIED;
-
-			UsageCriterion usageCriterion = criteriaSet.get(
-				UsageCriterion.class);
-
-			if (usageCriterion != null) {
-				usageType = usageCriterion.getUsage();
-			}
-
-			Credential credential = buildCredential(entry, entityId, usageType);
-
-			return Collections.singleton(credential);
-		}
-		catch (RuntimeException re) {
-			throw new SecurityException(re);
-		}
-		catch (Exception e) {
-			throw new SecurityException(e);
-		}
 	}
 
 	private KeyStoreManager _keyStoreManager;

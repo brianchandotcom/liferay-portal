@@ -62,7 +62,7 @@ public class JavaType extends BaseJavaTerm {
 		sb.append(prefix);
 
 		if (!appendSingleLine(sb, _name, maxLineLength)) {
-			append(sb, _name, indent, maxLineLength, !forceLineBreak);
+			indent = append(sb, _name, indent, maxLineLength, !forceLineBreak);
 		}
 		else if (forceLineBreak) {
 			sb.append("\n");
@@ -71,17 +71,18 @@ public class JavaType extends BaseJavaTerm {
 		}
 
 		if (_genericJavaTypes != null) {
-			append(sb, _genericJavaTypes, indent, "<", ">", maxLineLength);
+			indent = append(
+				sb, _genericJavaTypes, indent, "<", ">", maxLineLength);
 		}
 
 		if (_lowerBoundJavaTypes != null) {
 			if (_lowerBoundJavaTypes.size() == 1) {
-				append(
+				indent = append(
 					sb, _lowerBoundJavaTypes.get(0), indent, " super ", "",
 					maxLineLength, false);
 			}
 			else {
-				append(
+				indent = append(
 					sb, _lowerBoundJavaTypes, " & ", indent, " super ", "",
 					maxLineLength);
 			}

@@ -163,8 +163,15 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		int beforeLineBreakCount = StringUtil.count(
 			sb.toString(), CharPool.NEW_LINE);
 
-		appendNewLine(
-			sb, list, delimeter, "\t" + indent, prefix, suffix, maxLineLength);
+		if (Validator.isNull(sb.toString())) {
+			appendNewLine(
+				sb, list, delimeter, indent, prefix, suffix, maxLineLength);
+		}
+		else {
+			appendNewLine(
+				sb, list, delimeter, indent + "\t", prefix, suffix,
+				maxLineLength);
+		}
 
 		int afterLineBreakCount = StringUtil.count(
 			sb.toString(), CharPool.NEW_LINE);
@@ -188,9 +195,9 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		StringBundler sb, JavaTerm javaTerm, String indent, String prefix,
 		String suffix, int maxLineLength) {
 
-		if (sb.index() > 0) {
-			sb = _stripTrailingWhitespace(sb);
+		sb = _stripTrailingWhitespace(sb);
 
+		if (sb.index() > 0) {
 			sb.append("\n");
 		}
 
@@ -221,22 +228,31 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 		sb = _stripTrailingWhitespace(sb);
 
-		sb.append("\n");
+		if (sb.index() > 0) {
+			sb.append("\n");
+		}
+
 		sb.append(indent);
 
+		String newLinePrefix = prefix;
+
 		for (int i = 0;; i++) {
+			JavaTerm javaTerm = list.get(i);
+
 			if (i > 0) {
-				indent += _getPrefixWhitespace(prefix);
+				newLinePrefix = _getPrefixWhitespace(prefix);
 
 				prefix = StringPool.BLANK;
 			}
 
-			JavaTerm javaTerm = list.get(i);
-
 			if (i == (list.size() - 1)) {
-				append(
-					sb, javaTerm, StringUtil.replaceFirst(indent, "\t", ""),
-					prefix, suffix, maxLineLength);
+				if (!appendSingleLine(
+						sb, javaTerm, prefix, suffix, maxLineLength)) {
+
+					appendNewLine(
+						sb, javaTerm, indent, newLinePrefix, suffix,
+						maxLineLength);
+				}
 
 				return;
 			}
@@ -247,27 +263,23 @@ public abstract class BaseJavaTerm implements JavaTerm {
 				continue;
 			}
 
-			if (i > 0) {
-				sb = _stripTrailingWhitespace(sb);
-
-				sb.append("\n");
-				sb.append(indent);
-			}
-
-			if (appendSingleLine(
-					sb, javaTerm, prefix, delimeter, maxLineLength)) {
-
-				continue;
-			}
-
-			append(
-				sb, javaTerm, StringUtil.replaceFirst(indent, "\t", ""), prefix,
-				StringUtil.trimTrailing(delimeter), maxLineLength);
-
 			sb = _stripTrailingWhitespace(sb);
 
 			sb.append("\n");
 			sb.append(indent);
+			sb.append(newLinePrefix);
+
+			if (!appendSingleLine(
+					sb, javaTerm, prefix, delimeter, maxLineLength)) {
+
+				appendNewLine(
+					sb, javaTerm, indent, newLinePrefix,
+					StringUtil.trimTrailing(delimeter), maxLineLength);
+
+				sb.append("\n");
+				sb.append(indent);
+				sb.append(newLinePrefix);
+			}
 		}
 	}
 

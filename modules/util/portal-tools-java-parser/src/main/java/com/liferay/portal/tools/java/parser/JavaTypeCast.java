@@ -31,9 +31,9 @@ public class JavaTypeCast extends JavaExpression {
 		StringBundler sb = new StringBundler();
 
 		sb.append(indent);
-		sb.append(prefix);
 
-		indent = append(sb, _javaTypes, " & ", indent, "(", ")", maxLineLength);
+		indent = append(
+			sb, _javaTypes, " & ", indent, prefix + "(", ")", maxLineLength);
 
 		if (forceLineBreak) {
 			appendWithLineBreak(

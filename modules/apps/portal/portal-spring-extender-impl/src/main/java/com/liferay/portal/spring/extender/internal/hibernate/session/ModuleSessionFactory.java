@@ -15,11 +15,6 @@
 package com.liferay.portal.spring.extender.internal.hibernate.session;
 
 import com.liferay.portal.dao.orm.hibernate.PortletSessionFactoryImpl;
-import com.liferay.portal.spring.extender.internal.context.ModuleApplicationContext;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.wiring.BundleWiring;
 
 import org.springframework.context.ApplicationContext;
 
@@ -30,19 +25,7 @@ public class ModuleSessionFactory extends PortletSessionFactoryImpl {
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) {
-		ModuleApplicationContext moduleApplicationContext =
-			(ModuleApplicationContext)applicationContext;
-
-		BundleContext bundleContext =
-			moduleApplicationContext.getBundleContext();
-
-		Bundle bundle = bundleContext.getBundle();
-
-		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-		ClassLoader classLoader = bundleWiring.getClassLoader();
-
-		setSessionFactoryClassLoader(classLoader);
+		setSessionFactoryClassLoader(applicationContext.getClassLoader());
 	}
 
 }

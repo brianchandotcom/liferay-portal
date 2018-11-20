@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 
 import javax.sql.DataSource;
@@ -39,7 +38,7 @@ public class PortletSessionFactoryImpl
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) {
-		setSessionFactoryClassLoader(PortletClassLoaderUtil.getClassLoader());
+		setSessionFactoryClassLoader(applicationContext.getClassLoader());
 	}
 
 	/**

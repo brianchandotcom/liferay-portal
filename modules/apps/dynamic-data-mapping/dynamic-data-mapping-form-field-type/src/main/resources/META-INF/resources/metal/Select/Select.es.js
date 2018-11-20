@@ -182,7 +182,7 @@ class Select extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		value: Config.array()
+		value: Config.oneOfType([Config.array(), Config.string()])
 	};
 
 	attached() {

@@ -14,20 +14,36 @@
 
 package com.liferay.user.associated.data.display;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Order;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.user.associated.data.util.UADDynamicQueryUtil;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
  * @author Pei-Jung Lan
+ * @author Drew Brokke
  */
 public abstract class BaseModelUADDisplay<T extends BaseModel>
 	implements UADDisplay<T> {
@@ -59,8 +75,35 @@ public abstract class BaseModelUADDisplay<T extends BaseModel>
 	}
 
 	@Override
+	public String[] getSortingFieldNames() {
+		return ArrayUtil.append(
+			new String[] {"createDate", "modifiedDate"}, getColumnFieldNames());
+	}
+
+	@Override
 	public String getTypeName(Locale locale) {
 		return getTypeClass().getSimpleName();
+	}
+
+	@Override
+	public List<T> search(
+		long userId, long[] groupIds, String keywords, String orderByField,
+		String orderByType, int start, int end) {
+
+		return doGetRange(
+			getSearchDynamicQuery(
+				userId, groupIds, keywords, orderByField, orderByType),
+			start, end);
+	}
+
+	@Override
+	public long searchCount(
+		long userId, long[] groupIds, String keywords, String orderByField,
+		String orderByType) {
+
+		return doCount(
+			getSearchDynamicQuery(
+				userId, groupIds, keywords, orderByField, orderByType));
 	}
 
 	protected abstract long doCount(DynamicQuery dynamicQuery);
@@ -76,5 +119,87 @@ public abstract class BaseModelUADDisplay<T extends BaseModel>
 		return UADDynamicQueryUtil.addDynamicQueryCriteria(
 			doGetDynamicQuery(), doGetUserIdFieldNames(), userId);
 	}
+
+	protected OrderByComparator<T> getOrderByComparator(
+		String orderByField, String orderByType) {
+
+		return null;
+	}
+
+	protected String[] getSearchableFields() {
+		return getDisplayFieldNames();
+	}
+
+	protected DynamicQuery getSearchDynamicQuery(
+		long userId, long[] groupIds, String keywords, String orderByField,
+		String orderByType) {
+
+		DynamicQuery dynamicQuery = getDynamicQuery(userId);
+
+		if (ArrayUtil.isNotEmpty(groupIds)) {
+			dynamicQuery.add(
+				RestrictionsFactoryUtil.in(
+					"groupId", ArrayUtil.toLongArray(groupIds)));
+		}
+
+		String[] searchableFields = getSearchableFields();
+
+		if (Validator.isNotNull(keywords) && (searchableFields.length > 0)) {
+			Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+
+			String quotedKeywords = StringUtil.quote(
+				keywords, CharPool.PERCENT);
+
+			Class<?> clazz = getTypeClass();
+
+			for (String searchableField : searchableFields) {
+				try {
+					Method method = clazz.getMethod(
+						"get" +
+							TextFormatter.format(
+								searchableField, TextFormatter.G));
+
+					if (method.getReturnType() == String.class) {
+						disjunction.add(
+							RestrictionsFactoryUtil.ilike(
+								searchableField, quotedKeywords));
+					}
+				}
+				catch (NoSuchMethodException | SecurityException e) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(e, e);
+					}
+				}
+			}
+
+			dynamicQuery.add(disjunction);
+		}
+
+		if (orderByField != null) {
+			OrderByComparator<T> obc = getOrderByComparator(
+				orderByField, orderByType);
+
+			if (obc != null) {
+				OrderFactoryUtil.addOrderByComparator(dynamicQuery, obc);
+			}
+			else {
+				Order order = null;
+
+				if (Objects.equals(orderByType, "desc")) {
+					order = OrderFactoryUtil.desc(orderByField);
+				}
+				else {
+					order = OrderFactoryUtil.asc(orderByField);
+				}
+
+				dynamicQuery.addOrder(order);
+			}
+		}
+
+		return dynamicQuery;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseModelUADDisplay.class);
 
 }

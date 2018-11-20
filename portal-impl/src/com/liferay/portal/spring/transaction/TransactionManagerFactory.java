@@ -40,7 +40,7 @@ public class TransactionManagerFactory {
 
 	public static AbstractPlatformTransactionManager createTransactionManager(
 			DataSource dataSource, SessionFactory sessionFactory)
-		throws Exception {
+		throws ReflectiveOperationException {
 
 		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 

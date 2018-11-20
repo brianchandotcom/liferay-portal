@@ -14,6 +14,7 @@
 
 package com.liferay.portal.spring.aop;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.cache.thread.local.ThreadLocalCacheAdvice;
 import com.liferay.portal.dao.jdbc.aop.DynamicDataSourceAdvice;
 import com.liferay.portal.increment.BufferedIncrementAdvice;
@@ -31,19 +32,26 @@ import com.liferay.portal.search.IndexableAdvice;
 import com.liferay.portal.security.access.control.AccessControlAdvice;
 import com.liferay.portal.service.ServiceContextAdvice;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
+import com.liferay.portal.spring.hibernate.PortletTransactionManager;
 import com.liferay.portal.spring.transaction.TransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionExecutorFactory;
 import com.liferay.portal.spring.transaction.TransactionInterceptor;
 import com.liferay.portal.spring.transaction.TransactionInvokerImpl;
+import com.liferay.portal.spring.transaction.TransactionManagerFactory;
 import com.liferay.portal.systemevent.SystemEventAdvice;
 import com.liferay.portal.util.PropsValues;
 
+import javax.sql.DataSource;
+
 import org.aopalliance.intercept.MethodInterceptor;
+
+import org.hibernate.SessionFactory;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
 /**
@@ -123,9 +131,7 @@ public class AopConfigurableApplicationContextConfigurator
 			ConfigurableListableBeanFactory configurableListableBeanFactory) {
 
 			PlatformTransactionManager platformTransactionManager =
-				configurableListableBeanFactory.getBean(
-					"liferayTransactionManager",
-					PlatformTransactionManager.class);
+				_getPlatformTransactionManager(configurableListableBeanFactory);
 
 			TransactionExecutor transactionExecutor =
 				TransactionExecutorFactory.createTransactionExecutor(
@@ -243,6 +249,39 @@ public class AopConfigurableApplicationContextConfigurator
 			}
 
 			return methodInterceptor;
+		}
+
+		private PlatformTransactionManager _getPlatformTransactionManager(
+			ConfigurableListableBeanFactory configurableListableBeanFactory) {
+
+			if (PortalClassLoaderUtil.isPortalClassLoader(_classLoader)) {
+				return configurableListableBeanFactory.getBean(
+					"liferayTransactionManager",
+					PlatformTransactionManager.class);
+			}
+
+			DataSource liferayDataSource =
+				configurableListableBeanFactory.getBean(
+					"liferayDataSource", DataSource.class);
+
+			SessionFactory liferayHibernateSessionFactory =
+				configurableListableBeanFactory.getBean(
+					"liferayHibernateSessionFactory", SessionFactory.class);
+
+			if (InfrastructureUtil.getDataSource() == liferayDataSource) {
+				return new PortletTransactionManager(
+					(HibernateTransactionManager)
+						InfrastructureUtil.getTransactionManager(),
+					liferayHibernateSessionFactory);
+			}
+
+			try {
+				return TransactionManagerFactory.createTransactionManager(
+					liferayDataSource, liferayHibernateSessionFactory);
+			}
+			catch (ReflectiveOperationException roe) {
+				return ReflectionUtil.throwException(roe);
+			}
 		}
 
 		private final ClassLoader _classLoader;

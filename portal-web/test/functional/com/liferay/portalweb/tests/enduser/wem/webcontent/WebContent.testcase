@@ -2269,10 +2269,10 @@
 			<var name="templateName" value="Basic Web Content" />
 		</execute>
 
-		<execute macro="Navigator#gotoBack" />
+		<execute macro="NavItem#gotoStructures" />
 
 		<execute macro="SiteAdmin#viewPortletTitle">
-			<var name="portletTitle" value="Structures" />
+			<var name="portletTitle" value="Web Content" />
 		</execute>
 
 		<execute macro="WebContentStructures#viewTableEntryCP">

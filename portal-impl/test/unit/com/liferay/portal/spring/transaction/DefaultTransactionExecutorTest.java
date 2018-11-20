@@ -108,14 +108,6 @@ public class DefaultTransactionExecutorTest
 	protected TransactionExecutor createTransactionExecutor(
 		PlatformTransactionManager platformTransactionManager) {
 
-		if (platformTransactionManager == null) {
-			@SuppressWarnings("deprecation")
-			TransactionExecutor transactionExecutor =
-				new DefaultTransactionExecutor();
-
-			return transactionExecutor;
-		}
-
 		return new DefaultTransactionExecutor(platformTransactionManager);
 	}
 

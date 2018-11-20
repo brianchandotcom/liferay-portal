@@ -168,64 +168,6 @@ public class CounterTransactionExecutorTest {
 			transactionAttributeAdapter, null, null);
 	}
 
-	@SuppressWarnings("deprecation")
-	@Test
-	public void testDeprecatedMethods() throws Throwable {
-		TransactionExecutor transactionExecutor = createTransactionExecutor(
-			null);
-
-		RecordPlatformTransactionManager recordPlatformTransactionManager =
-			new RecordPlatformTransactionManager(_transactionStatus);
-
-		TransactionAttributeAdapter transactionAttributeAdapter =
-			_newTransactionAttributeAdapter(t -> t == appException);
-
-		transactionExecutor.execute(
-			recordPlatformTransactionManager, transactionAttributeAdapter,
-			_newMethodInvocation(() -> null));
-
-		recordPlatformTransactionManager.verify(
-			transactionAttributeAdapter, _transactionStatus, null);
-
-		recordPlatformTransactionManager._commitTransactionStatus = null;
-
-		TransactionHandler transactionHandler =
-			(TransactionHandler)transactionExecutor;
-
-		TransactionStatusAdapter transactionStatusAdapter =
-			transactionHandler.start(
-				recordPlatformTransactionManager, transactionAttributeAdapter);
-
-		recordPlatformTransactionManager.verify(
-			transactionAttributeAdapter, null, null);
-
-		try {
-			transactionHandler.rollback(
-				recordPlatformTransactionManager, appException,
-				transactionAttributeAdapter, transactionStatusAdapter);
-
-			Assert.fail();
-		}
-		catch (Exception e) {
-			Assert.assertSame(appException, e);
-		}
-
-		recordPlatformTransactionManager.verify(
-			transactionAttributeAdapter, null, _transactionStatus);
-
-		recordPlatformTransactionManager._rollbackTransactionStatus = null;
-
-		transactionStatusAdapter = transactionHandler.start(
-			recordPlatformTransactionManager, transactionAttributeAdapter);
-
-		transactionHandler.commit(
-			recordPlatformTransactionManager, transactionAttributeAdapter,
-			transactionStatusAdapter);
-
-		recordPlatformTransactionManager.verify(
-			transactionAttributeAdapter, _transactionStatus, null);
-	}
-
 	@Test
 	public void testGetPlatformTransactionManager() {
 		RecordPlatformTransactionManager recordPlatformTransactionManager =
@@ -377,14 +319,6 @@ public class CounterTransactionExecutorTest {
 
 	protected TransactionExecutor createTransactionExecutor(
 		PlatformTransactionManager platformTransactionManager) {
-
-		if (platformTransactionManager == null) {
-			@SuppressWarnings("deprecation")
-			TransactionExecutor transactionExecutor =
-				new CounterTransactionExecutor();
-
-			return transactionExecutor;
-		}
 
 		return new CounterTransactionExecutor(platformTransactionManager);
 	}

@@ -124,11 +124,6 @@ public class DynamicDataSourceAdviceTest {
 	}
 
 	@Test
-	public void testDeprecatedMethods() {
-		_dynamicDataSourceAdvice.setTransactionAttributeSource(null);
-	}
-
-	@Test
 	public void testDynamicDataSourceAdvice() throws Throwable {
 		TestClass testClass = new TestClass();
 

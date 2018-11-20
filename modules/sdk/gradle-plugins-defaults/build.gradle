@@ -1,6 +1,6 @@
 import com.liferay.gradle.util.copy.ReplaceLeadingPathAction
 
-String gradleVersion = "2.14"
+String gradleVersion = "4.10.2"
 String pluginsSDKVersion = project.properties["plugins.sdk.version"]
 
 tasks.eclipse {

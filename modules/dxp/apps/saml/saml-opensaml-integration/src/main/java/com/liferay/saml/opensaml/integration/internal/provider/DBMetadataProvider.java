@@ -69,6 +69,8 @@ public class DBMetadataProvider extends BaseMetadataProvider {
 
 	@Override
 	public void setParserPool(ParserPool parserPool) {
+		super.setParserPool(parserPool);
+
 		_parserPool = parserPool;
 
 	}

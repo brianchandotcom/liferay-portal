@@ -58,7 +58,7 @@
 			<var name="dmGoogleApp" value="Google Docs" />
 		</execute>
 
-		<execute macro="GoogleDoc#signIn">
+		<execute macro="Google#signIn">
 			<var method="PropsUtil#get('email.address.3')" name="userEmailAddress" />
 			<var method="PropsUtil#get('email.password.3')" name="userPassword" />
 			<var name="windowTitle" value="Documents and Media Page - Liferay" />
@@ -77,8 +77,8 @@
 		</execute>
 
 		<execute macro="GoogleDoc#edit">
-			<var name="dmDocumentTitleEdit" value="Edited Google Document" />
 			<var name="dmDocumentTitle" value="Untitled" />
+			<var name="dmDocumentTitleEdit" value="Edited Google Document" />
 		</execute>
 	</command>
 

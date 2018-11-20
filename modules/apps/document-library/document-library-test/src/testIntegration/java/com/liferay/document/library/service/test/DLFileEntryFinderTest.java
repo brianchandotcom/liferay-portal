@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.spring.orm.LastSessionRecorderHelperUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -50,7 +51,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
-import com.liferay.portal.spring.hibernate.LastSessionRecorderUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
@@ -1261,7 +1261,7 @@ public class DLFileEntryFinderTest {
 			DLFileEntry.class.getName(),
 			_defaultRepositoryDLFileVersion.getFileEntryId());
 
-		LastSessionRecorderUtil.syncLastSessionState();
+		LastSessionRecorderHelperUtil.syncLastSessionState();
 
 		List<DLFileEntry> dlFileEntries =
 			DLFileEntryLocalServiceUtil.getNoAssetFileEntries();

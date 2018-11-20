@@ -22,7 +22,6 @@ import java.net.URL;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -47,12 +46,12 @@ public class JenkinsResultsParserUtilTest
 
 	@Test
 	public void testExpandSlaveRange() {
-		Assert.assertEquals(
+		testEquals(
 			"cloud-10-50-0-151,cloud-10-50-0-152,cloud-10-50-0-153," +
 				"cloud-10-50-0-154,cloud-10-50-0-155,cloud-10-50-0-156",
 			JenkinsResultsParserUtil.expandSlaveRange(
 				"cloud-10-50-0-151..156"));
-		Assert.assertEquals(
+		testEquals(
 			"cloud-10-50-0-47,cloud-10-50-0-0,cloud-10-50-0-1," +
 				"cloud-10-50-0-2,cloud-10-50-0-49,cloud-10-50-0-50",
 			JenkinsResultsParserUtil.expandSlaveRange(
@@ -61,65 +60,49 @@ public class JenkinsResultsParserUtilTest
 
 	@Test
 	public void testFixJSON() {
-		Assert.assertEquals(
-			"ABC&#09;123", JenkinsResultsParserUtil.fixJSON("ABC\t123"));
-		Assert.assertEquals(
-			"ABC&#34;123", JenkinsResultsParserUtil.fixJSON("ABC\"123"));
-		Assert.assertEquals(
-			"ABC&#39;123", JenkinsResultsParserUtil.fixJSON("ABC'123"));
-		Assert.assertEquals(
-			"ABC&#40;123", JenkinsResultsParserUtil.fixJSON("ABC(123"));
-		Assert.assertEquals(
-			"ABC&#41;123", JenkinsResultsParserUtil.fixJSON("ABC)123"));
-		Assert.assertEquals(
-			"ABC&#60;123", JenkinsResultsParserUtil.fixJSON("ABC<123"));
-		Assert.assertEquals(
-			"ABC&#62;123", JenkinsResultsParserUtil.fixJSON("ABC>123"));
-		Assert.assertEquals(
-			"ABC&#91;123", JenkinsResultsParserUtil.fixJSON("ABC[123"));
-		Assert.assertEquals(
-			"ABC&#92;123", JenkinsResultsParserUtil.fixJSON("ABC\\123"));
-		Assert.assertEquals(
-			"ABC&#93;123", JenkinsResultsParserUtil.fixJSON("ABC]123"));
-		Assert.assertEquals(
-			"ABC&#123;123", JenkinsResultsParserUtil.fixJSON("ABC{123"));
-		Assert.assertEquals(
-			"ABC&#125;123", JenkinsResultsParserUtil.fixJSON("ABC}123"));
-		Assert.assertEquals(
+		testEquals("ABC&#09;123", JenkinsResultsParserUtil.fixJSON("ABC\t123"));
+		testEquals("ABC&#34;123", JenkinsResultsParserUtil.fixJSON("ABC\"123"));
+		testEquals("ABC&#39;123", JenkinsResultsParserUtil.fixJSON("ABC'123"));
+		testEquals("ABC&#40;123", JenkinsResultsParserUtil.fixJSON("ABC(123"));
+		testEquals("ABC&#41;123", JenkinsResultsParserUtil.fixJSON("ABC)123"));
+		testEquals("ABC&#60;123", JenkinsResultsParserUtil.fixJSON("ABC<123"));
+		testEquals("ABC&#62;123", JenkinsResultsParserUtil.fixJSON("ABC>123"));
+		testEquals("ABC&#91;123", JenkinsResultsParserUtil.fixJSON("ABC[123"));
+		testEquals("ABC&#92;123", JenkinsResultsParserUtil.fixJSON("ABC\\123"));
+		testEquals("ABC&#93;123", JenkinsResultsParserUtil.fixJSON("ABC]123"));
+		testEquals("ABC&#123;123", JenkinsResultsParserUtil.fixJSON("ABC{123"));
+		testEquals("ABC&#125;123", JenkinsResultsParserUtil.fixJSON("ABC}123"));
+		testEquals(
 			"ABC<br />123", JenkinsResultsParserUtil.fixJSON("ABC\n123"));
 	}
 
 	@Test
 	public void testFixURL() {
-		Assert.assertEquals(
-			"ABC%28123", JenkinsResultsParserUtil.fixURL("ABC(123"));
-		Assert.assertEquals(
-			"ABC%29123", JenkinsResultsParserUtil.fixURL("ABC)123"));
-		Assert.assertEquals(
-			"ABC%5B123", JenkinsResultsParserUtil.fixURL("ABC[123"));
-		Assert.assertEquals(
-			"ABC%5D123", JenkinsResultsParserUtil.fixURL("ABC]123"));
+		testEquals("ABC%28123", JenkinsResultsParserUtil.fixURL("ABC(123"));
+		testEquals("ABC%29123", JenkinsResultsParserUtil.fixURL("ABC)123"));
+		testEquals("ABC%5B123", JenkinsResultsParserUtil.fixURL("ABC[123"));
+		testEquals("ABC%5D123", JenkinsResultsParserUtil.fixURL("ABC]123"));
 	}
 
 	@Test
 	public void testGetJobVariant() throws Exception {
 		TestSample testSample = testSamples.get("axis-integration-db2-1");
 
-		Assert.assertEquals(
+		testEquals(
 			"integration-db2",
 			JenkinsResultsParserUtil.getJobVariant(
 				read(testSample.getSampleDir(), "/api/json")));
 
 		testSample = testSamples.get("axis-plugin-1");
 
-		Assert.assertEquals(
+		testEquals(
 			"plugins",
 			JenkinsResultsParserUtil.getJobVariant(
 				read(testSample.getSampleDir(), "/api/json")));
 
 		testSample = testSamples.get("job-1");
 
-		Assert.assertEquals(
+		testEquals(
 			"",
 			JenkinsResultsParserUtil.getJobVariant(
 				read(testSample.getSampleDir(), "/api/json")));
@@ -127,15 +110,15 @@ public class JenkinsResultsParserUtilTest
 
 	@Test
 	public void testGetLocalURL() {
-		Assert.assertEquals(
+		testEquals(
 			"http://test-8/8/ABC?123=456&xyz=abc",
 			JenkinsResultsParserUtil.getLocalURL(
 				"https://test.liferay.com/8/ABC?123=456&xyz=abc"));
-		Assert.assertEquals(
+		testEquals(
 			"http://test-1-20/ABC?123=456&xyz=abc",
 			JenkinsResultsParserUtil.getLocalURL(
 				"https://test-1-20.liferay.com/ABC?123=456&xyz=abc"));
-		Assert.assertEquals(
+		testEquals(
 			"http://test-4-1/ABC?123=456&xyz=abc",
 			JenkinsResultsParserUtil.getLocalURL(
 				"http://test-4-1/ABC?123=456&xyz=abc"));
@@ -179,11 +162,12 @@ public class JenkinsResultsParserUtilTest
 		if (!JenkinsResultsParserUtil.isJSONArrayEqual(
 				actualJSONArray, expectedJSONArray)) {
 
-			failTest(
-				JenkinsResultsParserUtil.combine(
-					"Expected does not match actual\nexpected: ",
-					expectedJSONArray.toString(), "\nactual:   ",
-					actualJSONArray.toString()));
+			errorCollector.addError(
+				new Throwable(
+					JenkinsResultsParserUtil.combine(
+						"Expected does not match actual\nExpected: ",
+						expectedJSONArray.toString(), "\nActual:   ",
+						actualJSONArray.toString())));
 		}
 
 		actualJSONArray.put("string2");
@@ -191,11 +175,12 @@ public class JenkinsResultsParserUtilTest
 		if (JenkinsResultsParserUtil.isJSONArrayEqual(
 				actualJSONArray, expectedJSONArray)) {
 
-			failTest(
-				JenkinsResultsParserUtil.combine(
-					"Expected should not match actual\nexpected: ",
-					expectedJSONArray.toString(), "\nactual:   ",
-					actualJSONArray.toString()));
+			errorCollector.addError(
+				new Throwable(
+					JenkinsResultsParserUtil.combine(
+						"Expected should not match actual\nExpected: ",
+						expectedJSONArray.toString(), "\nActual:   ",
+						actualJSONArray.toString())));
 		}
 	}
 
@@ -237,11 +222,12 @@ public class JenkinsResultsParserUtilTest
 		if (!JenkinsResultsParserUtil.isJSONObjectEqual(
 				actualJSONObject, expectedJSONObject)) {
 
-			failTest(
-				JenkinsResultsParserUtil.combine(
-					"Expected does not match actual\nexpected: ",
-					expectedJSONObject.toString(), "\nactual:   ",
-					actualJSONObject.toString()));
+			errorCollector.addError(
+				new Throwable(
+					JenkinsResultsParserUtil.combine(
+						"Expected does not match actual\nExpected: ",
+						expectedJSONObject.toString(), "\nActual:   ",
+						actualJSONObject.toString())));
 		}
 
 		actualJSONObject.put("string", "value2");
@@ -249,11 +235,12 @@ public class JenkinsResultsParserUtilTest
 		if (JenkinsResultsParserUtil.isJSONObjectEqual(
 				actualJSONObject, expectedJSONObject)) {
 
-			failTest(
-				JenkinsResultsParserUtil.combine(
-					"Expected should not match actual\nexpected: ",
-					expectedJSONObject.toString(), "\nactual:   ",
-					actualJSONObject.toString()));
+			errorCollector.addError(
+				new Throwable(
+					JenkinsResultsParserUtil.combine(
+						"Expected should not match actual\nExpected: ",
+						expectedJSONObject.toString(), "\nActual:   ",
+						actualJSONObject.toString())));
 		}
 	}
 
@@ -283,8 +270,7 @@ public class JenkinsResultsParserUtilTest
 		JSONObject actualJSONObject = JenkinsResultsParserUtil.toJSONObject(
 			JenkinsResultsParserUtil.getLocalURL(toURLString(file)));
 
-		Assert.assertEquals(
-			expectedJSONObject.toString(), actualJSONObject.toString());
+		testEquals(expectedJSONObject.toString(), actualJSONObject.toString());
 	}
 
 	protected void testToString(File file) throws Exception {
@@ -292,7 +278,7 @@ public class JenkinsResultsParserUtilTest
 		String actualJSON = JenkinsResultsParserUtil.toString(
 			JenkinsResultsParserUtil.getLocalURL(toURLString(file)));
 
-		Assert.assertEquals(
+		testEquals(
 			expectedJSON.replace("\n", ""), actualJSON.replace("\n", ""));
 	}
 

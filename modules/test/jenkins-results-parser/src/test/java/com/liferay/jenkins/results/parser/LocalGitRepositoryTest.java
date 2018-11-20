@@ -53,7 +53,8 @@ public class LocalGitRepositoryTest
 		LocalGitRepository localGitRepository = _getLocalGitRepository();
 
 		if (!(localGitRepository instanceof DefaultLocalGitRepository)) {
-			failTest("Invalid LocalGitRepository instance");
+			errorCollector.addError(
+				new Throwable("Invalid LocalGitRepository instance"));
 		}
 
 		GitWorkingDirectory gitWorkingDirectory =
@@ -62,31 +63,39 @@ public class LocalGitRepositoryTest
 		System.out.println(gitWorkingDirectory);
 
 		if (!(gitWorkingDirectory instanceof PortalGitWorkingDirectory)) {
-			failTest("Invalid GitWorkingDirectory instance");
+			errorCollector.addError(
+				new Throwable("Invalid GitWorkingDirectory instance"));
 		}
 
 		File directory = localGitRepository.getDirectory();
 
 		try {
 			if (!_REPOSITORY_DIR.equals(directory.getCanonicalPath())) {
-				failTest("The repository dir should be " + _REPOSITORY_DIR);
+				errorCollector.addError(
+					new Throwable(
+						"The repository dir should be " + _REPOSITORY_DIR));
 			}
 		}
 		catch (IOException ioe) {
-			failTest("The repository dir should be " + _REPOSITORY_DIR);
+			errorCollector.addError(
+				new Throwable(
+					"The repository dir should be " + _REPOSITORY_DIR));
 		}
 
 		if (!_REPOSITORY_UPSTREAM_BRANCH_NAME.equals(
 				localGitRepository.getUpstreamBranchName())) {
 
-			failTest(
-				JenkinsResultsParserUtil.combine(
-					"The upstream branch name should be ",
-					_REPOSITORY_UPSTREAM_BRANCH_NAME));
+			errorCollector.addError(
+				new Throwable(
+					JenkinsResultsParserUtil.combine(
+						"The upstream branch name should be ",
+						_REPOSITORY_UPSTREAM_BRANCH_NAME)));
 		}
 
 		if (!_REPOSITORY_NAME.equals(localGitRepository.getName())) {
-			failTest("The repository name should be " + _REPOSITORY_NAME);
+			errorCollector.addError(
+				new Throwable(
+					"The repository name should be " + _REPOSITORY_NAME));
 		}
 
 		JSONObject expectedJSONObject = new JSONObject();
@@ -101,11 +110,12 @@ public class LocalGitRepositoryTest
 		if (!JenkinsResultsParserUtil.isJSONObjectEqual(
 				expectedJSONObject, actualJSONObject)) {
 
-			failTest(
-				JenkinsResultsParserUtil.combine(
-					"Expected does not match actual\nexpected: ",
-					expectedJSONObject.toString(), "\nactual:   ",
-					actualJSONObject.toString()));
+			errorCollector.addError(
+				new Throwable(
+					JenkinsResultsParserUtil.combine(
+						"Expected does not match actual\nExpected: ",
+						expectedJSONObject.toString(), "\nActual:   ",
+						actualJSONObject.toString())));
 		}
 	}
 

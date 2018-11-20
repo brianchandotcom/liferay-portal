@@ -48,7 +48,7 @@ public class ApplicationContextServicePublisherUtil {
 
 	public static List<ServiceRegistration<?>> registerContext(
 		ConfigurableApplicationContext configurableApplicationContext,
-		BundleContext bundleContext, boolean parentContext) {
+		BundleContext bundleContext) {
 
 		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
 
@@ -81,16 +81,9 @@ public class ApplicationContextServicePublisherUtil {
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		if (parentContext) {
-			properties.put(
-				"org.springframework.parent.context.service.name",
-				bundle.getSymbolicName());
-		}
-		else {
-			properties.put(
-				"org.springframework.context.service.name",
-				bundle.getSymbolicName());
-		}
+		properties.put(
+			"org.springframework.context.service.name",
+			bundle.getSymbolicName());
 
 		ServiceRegistration<ApplicationContext> serviceRegistration =
 			bundleContext.registerService(

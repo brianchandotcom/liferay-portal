@@ -15,6 +15,8 @@
 package com.liferay.portal.spring.extender.internal.context;
 
 import com.liferay.osgi.felix.util.AbstractExtender;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -52,8 +54,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
-import org.springframework.context.ApplicationContext;
-
 /**
  * @author Miguel Pastor
  */
@@ -62,12 +62,22 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) throws Exception {
+		_dataSources = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DataSource.class, null,
+			(serviceReference, emitter) -> {
+				Bundle serviceReferenceBundle = serviceReference.getBundle();
+
+				emitter.emit(serviceReferenceBundle.getSymbolicName());
+			});
+
 		start(bundleContext);
 	}
 
 	@Deactivate
 	protected void deactivate(BundleContext bundleContext) throws Exception {
 		stop(bundleContext);
+
+		_dataSources.close();
 	}
 
 	@Override
@@ -129,6 +139,8 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 	private ConfigurableApplicationContextConfigurator
 		_configurableApplicationContextConfigurator;
 
+	private ServiceTrackerMap<String, DataSource> _dataSources;
+
 	private class ModuleApplicationContextExtension implements Extension {
 
 		public ModuleApplicationContextExtension(Bundle bundle) {
@@ -157,7 +169,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 			_component.setImplementation(
 				new ModuleApplicationContextRegistrator(
 					_configurableApplicationContextConfigurator, _bundle,
-					bundle));
+					bundle, _dataSources));
 
 			BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 
@@ -171,19 +183,6 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 			String liferayService = headers.get("Liferay-Service");
 
 			if (liferayService != null) {
-				ServiceDependency serviceDependency =
-					_dependencyManager.createServiceDependency();
-
-				serviceDependency.setRequired(true);
-
-				serviceDependency.setService(
-					ApplicationContext.class,
-					StringBundler.concat(
-						"(org.springframework.parent.context.service.name=",
-						_bundle.getSymbolicName(), ")"));
-
-				_component.add(serviceDependency);
-
 				_generateConfigurationDependency(classLoader, "portlet");
 				_generateConfigurationDependency(classLoader, "service");
 			}

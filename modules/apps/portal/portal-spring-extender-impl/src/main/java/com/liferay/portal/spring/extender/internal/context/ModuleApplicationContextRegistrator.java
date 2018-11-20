@@ -14,11 +14,13 @@
 
 package com.liferay.portal.spring.extender.internal.context;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.extender.internal.bean.ApplicationContextServicePublisherUtil;
@@ -28,12 +30,13 @@ import java.beans.Introspector;
 import java.util.Dictionary;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleWiring;
 
 import org.springframework.beans.CachedIntrospectionResults;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 
 /**
@@ -44,12 +47,14 @@ public class ModuleApplicationContextRegistrator {
 	public ModuleApplicationContextRegistrator(
 		ConfigurableApplicationContextConfigurator
 			configurableApplicationContextConfigurator,
-		Bundle extendeeBundle, Bundle extenderBundle) {
+		Bundle extendeeBundle, Bundle extenderBundle,
+		ServiceTrackerMap<String, DataSource> dataSources) {
 
 		_configurableApplicationContextConfigurator =
 			configurableApplicationContextConfigurator;
 		_extendeeBundle = extendeeBundle;
 		_extenderBundle = extenderBundle;
+		_dataSources = dataSources;
 	}
 
 	protected void start() throws Exception {
@@ -79,17 +84,23 @@ public class ModuleApplicationContextRegistrator {
 					headers.get("Liferay-Spring-Context"), CharPool.COMMA));
 
 			_configurableApplicationContext.addBeanFactoryPostProcessor(
+				beanFactory -> {
+					if (!beanFactory.containsBean("liferayDataSource")) {
+						DataSource dataSource = _dataSources.getService(
+							_extendeeBundle.getSymbolicName());
+
+						if (dataSource == null) {
+							dataSource = InfrastructureUtil.getDataSource();
+						}
+
+						beanFactory.registerSingleton(
+							"liferayDataSource", dataSource);
+					}
+				});
+
+			_configurableApplicationContext.addBeanFactoryPostProcessor(
 				new ModuleBeanFactoryPostProcessor(
 					_extendeeBundle.getBundleContext()));
-
-			ApplicationContext parentApplicationContext =
-				ParentModuleApplicationContextHolder.getApplicationContext(
-					_extendeeBundle);
-
-			if (parentApplicationContext != null) {
-				_configurableApplicationContext.setParent(
-					parentApplicationContext);
-			}
 
 			_configurableApplicationContextConfigurator.configure(
 				_configurableApplicationContext);
@@ -108,7 +119,7 @@ public class ModuleApplicationContextRegistrator {
 			_serviceRegistrations =
 				ApplicationContextServicePublisherUtil.registerContext(
 					_configurableApplicationContext,
-					_extendeeBundle.getBundleContext(), false);
+					_extendeeBundle.getBundleContext());
 		}
 		catch (Exception e) {
 			throw new Exception(
@@ -138,6 +149,7 @@ public class ModuleApplicationContextRegistrator {
 	private ConfigurableApplicationContext _configurableApplicationContext;
 	private final ConfigurableApplicationContextConfigurator
 		_configurableApplicationContextConfigurator;
+	private final ServiceTrackerMap<String, DataSource> _dataSources;
 	private final Bundle _extendeeBundle;
 	private final Bundle _extenderBundle;
 	private List<ServiceRegistration<?>> _serviceRegistrations;

@@ -623,11 +623,11 @@ public class OpenSamlUtil {
 	public static KeyInfo buildKeyInfo(Credential credential)
 		throws SecurityException {
 
-		SecurityConfiguration securityConfiguration =
-			Configuration.getGlobalSecurityConfiguration();
+		EncryptionConfiguration globalEncryptionConfiguration =
+			SecurityConfigurationSupport.getGlobalEncryptionConfiguration();
 
 		NamedKeyInfoGeneratorManager namedKeyInfoGeneratorManager =
-			securityConfiguration.getKeyInfoGeneratorManager();
+			globalEncryptionConfiguration.getDataKeyInfoGeneratorManager();
 
 		KeyInfoGeneratorManager keyInfoGeneratorManager =
 			namedKeyInfoGeneratorManager.getDefaultManager();

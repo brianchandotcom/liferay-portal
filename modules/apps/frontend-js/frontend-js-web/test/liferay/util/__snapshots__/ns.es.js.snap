@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Liferay.Util.ns should return an object 1`] = `
+Object {
+  "_ns_arr1": Array [
+    1,
+    2,
+    3,
+  ],
+  "_ns_arr2": Array [
+    "foo",
+    "bar",
+    "baz",
+  ],
+  "_ns_int1": 1,
+  "_ns_int2": 2,
+  "_ns_obj1": Object {
+    "arr3": Array [
+      1,
+      2,
+      3,
+      "foo",
+      "bar",
+      "baz",
+    ],
+    "int3": 3,
+    "int4": 4,
+    "string3": "baz",
+  },
+  "_ns_string1": "foo",
+  "_ns_string2": "bar",
+}
+`;

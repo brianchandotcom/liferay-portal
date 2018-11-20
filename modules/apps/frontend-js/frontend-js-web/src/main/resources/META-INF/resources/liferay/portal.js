@@ -2,8 +2,6 @@
 	var Tabs = Liferay.namespace('Portal.Tabs');
 	var ToolTip = Liferay.namespace('Portal.ToolTip');
 
-	var toCharCode = Liferay.Util.toCharCode;
-
 	var BODY_CONTENT = 'bodyContent';
 
 	var TRIGGER = 'trigger';
@@ -36,7 +34,7 @@
 		var el;
 
 		for (var i = 0; i < names.length; i++) {
-			el = A.one('#' + namespace + toCharCode(names[i]) + 'TabsSection');
+			el = A.one('#' + namespace + Liferay.Util.toCharCode(names[i]) + 'TabsSection');
 
 			if (el) {
 				el.hide();
@@ -48,7 +46,7 @@
 		Tabs,
 		'show',
 		function(namespace, names, id, callback) {
-			var namespacedId = namespace + toCharCode(id);
+			var namespacedId = namespace + Liferay.Util.toCharCode(id);
 
 			var tab = A.one('#' + namespacedId + 'TabsId');
 			var tabSection = A.one('#' + namespacedId + 'TabsSection');

@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Liferay.Util.toCharCode should return string 1`] = `"10810510210111497121"`;

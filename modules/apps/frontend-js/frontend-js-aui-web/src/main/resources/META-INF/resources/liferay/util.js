@@ -1,4 +1,4 @@
-;(function(A, $, _, Liferay) {
+;(function(A, $, Liferay) {
 	A.use('aui-base-lang');
 
 	var AArray = A.Array;
@@ -67,7 +67,7 @@
 		},
 
 		addParams: function(params, url) {
-			if (_.isObject(params)) {
+			if (typeof params === 'object') {
 				params = $.param(params, true);
 			}
 			else {
@@ -118,7 +118,7 @@
 
 				var selector;
 
-				if (_.isArray(name)) {
+				if (Array.isArray(name)) {
 					selector = 'input[name=' + name.join('], input[name=') + STR_RIGHT_SQUARE_BRACKET;
 				}
 				else {
@@ -164,7 +164,7 @@
 
 				var inputs = form.find('input[type=checkbox]');
 
-				if (!_.isArray(name)) {
+				if (!Array.isArray(name)) {
 					name = [name];
 				}
 
@@ -172,7 +172,7 @@
 					function(index, item) {
 						item = $(item);
 
-						if (!item.is(allBoxNodes) && _.indexOf(name, item.attr('name')) > -1) {
+						if (!item.is(allBoxNodes) && name.indexOf(item.attr('name')) > -1) {
 							totalBoxes++;
 
 							if (item.prop(STR_CHECKED)) {
@@ -207,7 +207,9 @@
 			if (currentElement) {
 				var children = currentElement.getElementsByTagName('*');
 
-				var emptyFnFalse = _.constant(false);
+				var emptyFnFalse = function() {
+					return false;
+				};
 
 				for (var i = children.length - 1; i >= 0; i--) {
 					var item = children[i];
@@ -385,7 +387,7 @@
 				result = {};
 
 				var getterFn = this.isFunction(attributeGetter);
-				var getterString = _.isString(attributeGetter);
+				var getterString = typeof attributeGetter === 'string';
 
 				var attrs = el.attributes;
 				var length = attrs.length;
@@ -720,32 +722,6 @@
 			return newText.toLowerCase();
 		},
 
-		ns: function(namespace, obj) {
-			var instance = this;
-
-			var value;
-
-			var ns = instance._ns;
-
-			if (!_.isObject(obj)) {
-				value = ns(namespace, obj);
-			}
-			else {
-				value = {};
-
-				_.forEach(
-					obj,
-					function(item, index) {
-						index = ns(namespace, index);
-
-						value[index] = item;
-					}
-				);
-			}
-
-			return value;
-		},
-
 		openInDialog: function(event, config) {
 			event.preventDefault();
 
@@ -807,8 +783,7 @@
 				var selectedItems = box.find('option:selected');
 
 				if (down) {
-					_.forEachRight(
-						selectedItems,
+					selectedItems.reverse().forEach(
 						function(item, index) {
 							item = $(item);
 
@@ -826,8 +801,7 @@
 					);
 				}
 				else {
-					_.forEach(
-						selectedItems,
+					selectedItems.forEach(
 						function(item, index) {
 							item = $(item);
 
@@ -854,15 +828,15 @@
 		},
 
 		savePortletTitle: function(params) {
-			_.defaults(
-				params,
+			params = Object.assign(
 				{
 					doAsUserId: 0,
 					plid: 0,
 					portletId: 0,
 					title: '',
 					url: themeDisplay.getPathMain() + '/portal/update_portlet_title'
-				}
+				},
+				params
 			);
 
 			$.ajax(
@@ -1015,12 +989,6 @@
 			form.submit();
 		},
 
-		toCharCode: _.memoize(
-			function(name) {
-				return _.invokeMap(name, 'charCodeAt').join('');
-			}
-		),
-
 		toggleBoxes: function(checkBoxId, toggleBoxId, displayWhenUnchecked, toggleChildCheckboxes) {
 			var checkBox = $('#' + checkBoxId);
 			var toggleBox = $('#' + toggleBoxId);
@@ -1069,7 +1037,7 @@
 			var showBoxes;
 
 			if (showBoxIds) {
-				if (_.isArray(showBoxIds)) {
+				if (Array.isArray(showBoxIds)) {
 					showBoxIds = showBoxIds.join(',#');
 				}
 
@@ -1086,7 +1054,7 @@
 					}
 
 					if (hideBoxIds) {
-						if (_.isArray(hideBoxIds)) {
+						if (Array.isArray(hideBoxIds)) {
 							hideBoxIds = hideBoxIds.join(',#');
 						}
 
@@ -1263,17 +1231,7 @@
 			}
 
 			return editable;
-		},
-
-		_ns: _.cached(
-			function(namespace, str) {
-				if (!_.isUndefined(str) && !(str.lastIndexOf(namespace, 0) === 0)) {
-					str = namespace + str;
-				}
-
-				return str;
-			}
-		)
+		}
 	};
 
 	Liferay.provide(
@@ -1909,4 +1867,4 @@
 		TOOLTIP: 10000,
 		WINDOW: 1200
 	};
-})(AUI(), AUI.$, AUI._, Liferay);
+})(AUI(), AUI.$, Liferay);

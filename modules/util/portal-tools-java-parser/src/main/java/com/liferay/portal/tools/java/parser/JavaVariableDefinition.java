@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 import java.util.List;
 
 /**
@@ -23,6 +25,10 @@ public class JavaVariableDefinition extends BaseJavaTerm {
 
 	public JavaVariableDefinition(String name) {
 		_name = new JavaSimpleValue(name);
+	}
+
+	public JavaExpression getAssignValueJavaExpression() {
+		return _assignValueJavaExpression;
 	}
 
 	public void setAssignValueJavaExpression(
@@ -47,7 +53,65 @@ public class JavaVariableDefinition extends BaseJavaTerm {
 	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength) {
 
-		return "TODO";
+		StringBundler sb = new StringBundler();
+
+		for (int i = 0; i < _javaAnnotations.size(); i++) {
+			if (i == 0) {
+				appendNewLine(
+					sb, _javaAnnotations.get(i), indent, prefix, "",
+					maxLineLength);
+			}
+			else {
+				appendNewLine(
+					sb, _javaAnnotations.get(i), indent, maxLineLength);
+			}
+		}
+
+		if (sb.index() > 0) {
+			sb.append("\n");
+		}
+
+		sb.append(indent);
+
+		indent = append(sb, _modifiers, " ", indent, "", " ", maxLineLength);
+		indent = append(sb, _javaType, indent, "", " ", maxLineLength, false);
+
+		if (_assignValueJavaExpression != null) {
+			indent = append(sb, _name, indent, "", " = ", maxLineLength);
+
+			if (_assignValueJavaExpression instanceof JavaOperatorExpression) {
+				append(
+					sb, _assignValueJavaExpression, indent, "", suffix,
+					maxLineLength);
+			}
+			else if (_assignValueJavaExpression instanceof JavaTypeCast) {
+				JavaTypeCast javaTypeCast =
+					(JavaTypeCast)_assignValueJavaExpression;
+
+				if (javaTypeCast.getValueJavaExpression() instanceof
+						JavaOperatorExpression) {
+
+					append(
+						sb, _assignValueJavaExpression, indent, "", suffix,
+						maxLineLength);
+				}
+				else {
+					append(
+						sb, _assignValueJavaExpression, indent, "", suffix,
+						maxLineLength, false);
+				}
+			}
+			else {
+				append(
+					sb, _assignValueJavaExpression, indent, "", suffix,
+					maxLineLength, false);
+			}
+		}
+		else {
+			append(sb, _name, indent, "", suffix, maxLineLength);
+		}
+
+		return sb.toString();
 	}
 
 	private JavaExpression _assignValueJavaExpression;

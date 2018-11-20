@@ -31,8 +31,13 @@ public class JavaNewClassInstantiation extends JavaExpression {
 		sb.append(indent);
 		sb.append(prefix);
 
-		append(
-			sb, _javaClassCall, indent, "new ", suffix, maxLineLength, false);
+		if (forceLineBreak) {
+			appendWithLineBreak(
+				sb, _javaClassCall, indent, "new ", suffix, maxLineLength);
+		}
+		else {
+			append(sb, _javaClassCall, indent, "new ", suffix, maxLineLength);
+		}
 
 		return sb.toString();
 	}

@@ -32,16 +32,23 @@ public class JavaNewArrayInstantiation extends JavaExpression {
 		sb.append(prefix);
 
 		if (_initialJavaArray == null) {
-			append(
-				sb, _javaArrayDeclarator, indent, "new ", suffix,
-				maxLineLength);
+			if (forceLineBreak) {
+				appendWithLineBreak(
+					sb, _javaArrayDeclarator, indent, "new ", suffix,
+					maxLineLength);
+			}
+			else {
+				append(
+					sb, _javaArrayDeclarator, indent, "new ", suffix,
+					maxLineLength);
+			}
+
+			return sb.toString();
 		}
-		else {
-			append(sb, _javaArrayDeclarator, indent, "new ", "", maxLineLength);
-			append(
-				sb, _initialJavaArray, indent, " ", suffix, maxLineLength,
-				false);
-		}
+
+		append(sb, _javaArrayDeclarator, indent, "new ", "", maxLineLength);
+		append(
+			sb, _initialJavaArray, indent, " ", suffix, maxLineLength, false);
 
 		return sb.toString();
 	}

@@ -33,11 +33,23 @@ public class JavaTypeCast extends JavaExpression {
 		sb.append(indent);
 		sb.append(prefix);
 
-		append(sb, _javaTypes, " & ", indent, "(", ")", maxLineLength);
-		append(
-			sb, _valueJavaExpression, indent, "", suffix, maxLineLength, false);
+		indent = append(sb, _javaTypes, " & ", indent, "(", ")", maxLineLength);
+
+		if (forceLineBreak) {
+			appendWithLineBreak(
+				sb, _valueJavaExpression, indent, "", suffix, maxLineLength);
+		}
+		else {
+			append(
+				sb, _valueJavaExpression, indent, "", suffix, maxLineLength,
+				false);
+		}
 
 		return sb.toString();
+	}
+
+	public JavaExpression getValueJavaExpression() {
+		return _valueJavaExpression;
 	}
 
 	public void setJavaTypes(List<JavaType> javaTypes) {

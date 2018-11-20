@@ -28,8 +28,8 @@ public class OpenIdConnectWebKeys {
 	public static final String OPEN_ID_CONNECT_PROVIDER_NAMES =
 		"OPEN_ID_CONNECT_PROVIDER_NAMES";
 
-	public static final String OPEN_ID_CONNECT_RENDER_URL =
-		"OPEN_ID_CONNECT_RENDER_URL";
+	public static final String OPEN_ID_CONNECT_ACTION_URL =
+		"OPEN_ID_CONNECT_ACTION_URL";
 
 	public static final String OPEN_ID_CONNECT_REQUEST_ACTION_NAME =
 		"/login/openid_connect_request";

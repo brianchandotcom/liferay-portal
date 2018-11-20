@@ -101,7 +101,7 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 				}
 
 				session.setAttribute(
-					OpenIdConnectWebKeys.OPEN_ID_CONNECT_RENDER_URL,
+					OpenIdConnectWebKeys.OPEN_ID_CONNECT_ACTION_URL,
 					actionURL.toString());
 			}
 

@@ -22,9 +22,14 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.user.associated.data.web.internal.display.UADEntity;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -73,8 +78,53 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getClearResultsURL() {
+		PortletURL portletURL = getPortletURL();
+
+		portletURL.setParameter("keywords", (String)null);
+
+		return portletURL.toString();
+	}
+
+	@Override
 	public String getInfoPanelId() {
 		return "infoPanelId";
+	}
+
+	@Override
+	public String getSearchActionURL() {
+		PortletURL portletURL = getPortletURL();
+
+		return portletURL.toString();
+	}
+
+	@Override
+	public Boolean isShowSearch() {
+		return true;
+	}
+
+	@Override
+	protected Map<String, String> getOrderByEntriesMap() {
+		return searchContainer.getOrderableHeaders();
+	}
+
+	@Override
+	protected PortletURL getPortletURL() {
+		PortletURL portletURL = searchContainer.getIteratorURL();
+
+		String[] parameterNames =
+			{"keywords", "orderByCol", "orderByType", "cur", "delta"};
+
+		for (String parameterName : parameterNames) {
+			String value = ParamUtil.getString(request, parameterName);
+
+			if (Validator.isNotNull(value)) {
+				portletURL.setParameter(parameterName, (String)null);
+				portletURL.setParameter(parameterName, value);
+			}
+		}
+
+		return portletURL;
 	}
 
 }

@@ -47,8 +47,16 @@ public class JavaNewArrayInstantiation extends JavaExpression {
 		}
 
 		append(sb, _javaArrayDeclarator, indent, "new ", "", maxLineLength);
-		append(
-			sb, _initialJavaArray, indent, " ", suffix, maxLineLength, false);
+
+		if (forceLineBreak) {
+			appendWithLineBreak(
+				sb, _initialJavaArray, indent, " ", suffix, maxLineLength);
+		}
+		else {
+			append(
+				sb, _initialJavaArray, indent, " ", suffix, maxLineLength,
+				false);
+		}
 
 		return sb.toString();
 	}

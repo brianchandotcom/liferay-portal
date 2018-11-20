@@ -58,49 +58,6 @@ public class JavaType extends BaseJavaTerm {
 
 		StringBundler sb = new StringBundler();
 
-		sb.append(indent);
-		sb.append(prefix);
-
-		if (!appendSingleLine(sb, _name, maxLineLength)) {
-			indent = append(sb, _name, indent, maxLineLength, !forceLineBreak);
-		}
-		else if (forceLineBreak) {
-			sb.append("\n");
-			sb.append(indent);
-			sb.append("\t");
-		}
-
-		if (_genericJavaTypes != null) {
-			indent = append(
-				sb, _genericJavaTypes, indent, "<", ">", maxLineLength);
-		}
-
-		if (_lowerBoundJavaTypes != null) {
-			if (_lowerBoundJavaTypes.size() == 1) {
-				indent = append(
-					sb, _lowerBoundJavaTypes.get(0), indent, " super ", "",
-					maxLineLength, false);
-			}
-			else {
-				indent = append(
-					sb, _lowerBoundJavaTypes, " & ", indent, " super ", "",
-					maxLineLength);
-			}
-		}
-
-		if (_upperBoundJavaTypes != null) {
-			if (_upperBoundJavaTypes.size() == 1) {
-				append(
-					sb, _upperBoundJavaTypes.get(0), indent, " extends ", "",
-					maxLineLength, false);
-			}
-			else {
-				append(
-					sb, _upperBoundJavaTypes, " & ", indent, " extends ", "",
-					maxLineLength);
-			}
-		}
-
 		for (int i = 0; i < _arrayDimension; i++) {
 			sb.append("[]");
 		}
@@ -110,6 +67,62 @@ public class JavaType extends BaseJavaTerm {
 		}
 
 		sb.append(suffix);
+
+		suffix = sb.toString();
+
+		sb = new StringBundler();
+
+		sb.append(indent);
+
+		if ((_genericJavaTypes == null) && (_lowerBoundJavaTypes == null) &&
+			(_upperBoundJavaTypes == null)) {
+
+			append(
+				sb, _name, indent, prefix, suffix, maxLineLength,
+				!forceLineBreak);
+
+			return sb.toString();
+		}
+
+		if (!appendSingleLine(sb, _name, prefix, "", maxLineLength)) {
+			indent = append(
+				sb, _name, indent, prefix, "", maxLineLength, !forceLineBreak);
+		}
+		else if (forceLineBreak) {
+			sb.append("\n");
+			sb.append(indent);
+			sb.append("\t");
+		}
+
+		if (_genericJavaTypes != null) {
+			append(
+				sb, _genericJavaTypes, indent, "<", ">" + suffix,
+				maxLineLength);
+		}
+		else if (_lowerBoundJavaTypes != null) {
+			if (_lowerBoundJavaTypes.size() == 1) {
+				append(
+					sb, _lowerBoundJavaTypes.get(0), indent, " super ", suffix,
+					maxLineLength, false);
+			}
+			else {
+				indent = append(
+					sb, _lowerBoundJavaTypes, " & ", indent, " super ", suffix,
+					maxLineLength);
+			}
+		}
+		else if (_upperBoundJavaTypes != null) {
+			if (_upperBoundJavaTypes.size() == 1) {
+				append(
+					sb, _upperBoundJavaTypes.get(0), indent, " extends ",
+					suffix, maxLineLength, false);
+			}
+			else {
+				append(
+					sb, _upperBoundJavaTypes, " & ", indent, " extends ",
+					suffix, maxLineLength);
+			}
+		}
 
 		return sb.toString();
 	}

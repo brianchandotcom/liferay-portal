@@ -239,7 +239,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		for (int i = 0;; i++) {
 			JavaTerm javaTerm = list.get(i);
 
-			if (i > 0) {
+			if (i == 1) {
 				newLinePrefix = _getPrefixWhitespace(prefix);
 
 				prefix = StringPool.BLANK;
@@ -336,7 +336,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		StringBundler sb, JavaTerm javaTerm, String indent, String prefix,
 		String suffix, int maxLineLength) {
 
-		String lastLine = _getLastLine(sb);
+		String lastLine = getLastLine(sb);
 
 		if (Validator.isNull(StringUtil.trim(lastLine))) {
 			sb = _stripTrailingWhitespace(sb);
@@ -350,7 +350,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 			sb.append(s);
 
-			return _getIndent(_getLastLine(s));
+			return getIndent(_getLastLine(s));
 		}
 
 		if ((javaTerm instanceof JavaArray) && !lastLine.endsWith("]")) {
@@ -391,7 +391,25 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			sb.append(javaTermContent);
 		}
 
-		return indent + "\t";
+		return getIndent(getLastLine(sb));
+	}
+
+	protected String getIndent(String s) {
+		StringBundler sb = new StringBundler(s.length());
+
+		for (int i = 0; i < s.length(); i++) {
+			if (s.charAt(i) != CharPool.TAB) {
+				break;
+			}
+
+			sb.append(CharPool.TAB);
+		}
+
+		return sb.toString();
+	}
+
+	protected String getLastLine(StringBundler sb) {
+		return _getLastLine(sb.toString());
 	}
 
 	protected int getLineLength(String line) {
@@ -432,7 +450,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		sb.append(suffix);
 
 		if ((maxLineLength == -1) ||
-			(getLineLength(_getLastLine(sb)) <= maxLineLength)) {
+			(getLineLength(getLastLine(sb)) <= maxLineLength)) {
 
 			return true;
 		}
@@ -442,7 +460,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 			sb.append(StringUtil.trimTrailing(suffix));
 
-			if (getLineLength(_getLastLine(sb)) <= maxLineLength) {
+			if (getLineLength(getLastLine(sb)) <= maxLineLength) {
 				return true;
 			}
 		}
@@ -462,20 +480,6 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		return s;
 	}
 
-	private String _getIndent(String s) {
-		StringBundler sb = new StringBundler(s.length());
-
-		for (int i = 0; i < s.length(); i++) {
-			if (s.charAt(i) != CharPool.TAB) {
-				break;
-			}
-
-			sb.append(CharPool.TAB);
-		}
-
-		return sb.toString();
-	}
-
 	private String _getLastLine(String s) {
 		int x = s.lastIndexOf("\n");
 
@@ -484,10 +488,6 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		}
 
 		return s;
-	}
-
-	private String _getLastLine(StringBundler sb) {
-		return _getLastLine(sb.toString());
 	}
 
 	private String _getPrefixWhitespace(String prefix) {

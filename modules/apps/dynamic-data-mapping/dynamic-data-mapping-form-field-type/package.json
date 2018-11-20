@@ -59,6 +59,7 @@
 		"babel-plugin-transform-class-properties": "^6.24.1",
 		"babel-plugin-transform-object-rest-spread": "^6.26.0",
 		"babel-preset-env": "^1.7.0",
+		"browser-sync": "^2.24.7",
 		"check-source-formatting": "^2.0.4",
 		"eslint": "^4.10.0",
 		"eslint-config-liferay": "^2.0.8",
@@ -113,6 +114,7 @@
 		"csf": "csf src/**/*.es.js src/**/*.soy test/**/*.es.js --fail-on-errors",
 		"format": "npm run csf -- -i",
 		"lint": "eslint src/main/resources/META-INF/resources/metal/",
+		"start": "node watch.js",
 		"test": "npm run build-soy-tests && NODE_ENV=test jest --coverage && npm run clean",
 		"test:snapshots": "npm run build-soy-tests && NODE_ENV=test jest --coverage -u && npm run clean"
 	},

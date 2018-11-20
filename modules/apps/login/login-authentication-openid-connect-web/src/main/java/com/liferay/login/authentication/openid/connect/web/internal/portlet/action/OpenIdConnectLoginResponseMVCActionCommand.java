@@ -61,8 +61,9 @@ public class OpenIdConnectLoginResponseMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			actionRequest);
+		HttpServletRequest httpServletRequest =
+			_portal.getOriginalServletRequest(
+				_portal.getHttpServletRequest(actionRequest));
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -72,7 +73,7 @@ public class OpenIdConnectLoginResponseMVCActionCommand
 			return;
 		}
 
-		String error = ParamUtil.getString(actionRequest, "error");
+		String error = ParamUtil.getString(httpServletRequest, "error");
 
 		if (Validator.isNotNull(error)) {
 			if (ArrayUtil.contains(_ERRORS, error)) {
@@ -86,10 +87,7 @@ public class OpenIdConnectLoginResponseMVCActionCommand
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			if (Validator.isBlank(redirect)) {
-				HttpServletRequest originalHttpServletRequest =
-					_portal.getOriginalServletRequest(httpServletRequest);
-
-				HttpSession session = originalHttpServletRequest.getSession();
+				HttpSession session = httpServletRequest.getSession();
 
 				LastPath lastPath = (LastPath)session.getAttribute(
 					WebKeys.LAST_PATH);

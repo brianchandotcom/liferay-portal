@@ -21,30 +21,15 @@ import javax.servlet.FilterConfig;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Mariano Alvaro Saiz
  */
-@PrepareForTest(PropsUtil.class)
-@RunWith(PowerMockRunner.class)
 public class SharepointFilterTest {
 
 	@Test
 	public void testSharepointFilterIsDisabled() {
-		PowerMockito.mockStatic(PropsUtil.class);
-
-		Mockito.when(
-			PropsUtil.get(SharepointFilter.class.getName())
-		).thenReturn(
-			"false"
-		);
+		PropsUtil.set(SharepointFilter.class.getName(), "false");
 
 		SharepointFilter sharepointFilter = new SharepointFilter();
 
@@ -55,13 +40,7 @@ public class SharepointFilterTest {
 
 	@Test
 	public void testSharepointFilterIsEnabled() {
-		PowerMockito.mockStatic(PropsUtil.class);
-
-		Mockito.when(
-			PropsUtil.get(SharepointFilter.class.getName())
-		).thenReturn(
-			"true"
-		);
+		PropsUtil.set(SharepointFilter.class.getName(), "true");
 
 		SharepointFilter sharepointFilter = new SharepointFilter();
 

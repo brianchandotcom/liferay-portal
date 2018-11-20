@@ -21,30 +21,15 @@ import javax.servlet.FilterConfig;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Mariano Alvaro Saiz
  */
-@PrepareForTest(PropsUtil.class)
-@RunWith(PowerMockRunner.class)
 public class SecureFilterTest {
 
 	@Test
 	public void testSecureFilterIsEnabledIfDisabled() {
-		PowerMockito.mockStatic(PropsUtil.class);
-
-		Mockito.when(
-			PropsUtil.get(SecureFilter.class.getName())
-		).thenReturn(
-			"false"
-		);
+		PropsUtil.set(SecureFilter.class.getName(), "false");
 
 		SecureFilter secureFilter = new SecureFilter();
 
@@ -55,13 +40,7 @@ public class SecureFilterTest {
 
 	@Test
 	public void testSecureFilterIsEnabledIfEnabled() {
-		PowerMockito.mockStatic(PropsUtil.class);
-
-		Mockito.when(
-			PropsUtil.get(SecureFilter.class.getName())
-		).thenReturn(
-			"true"
-		);
+		PropsUtil.set(SecureFilter.class.getName(), "true");
 
 		SecureFilter secureFilter = new SecureFilter();
 

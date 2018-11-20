@@ -118,7 +118,7 @@ public class NumericDDMFormFieldTemplateContextContributor
 		DecimalFormat numberFormat = NumericDDMFormFieldUtil.getNumberFormat(
 			locale);
 
-		return numberFormat.format(GetterUtil.getNumber(value));
+		return numberFormat.format(value);
 	}
 
 	protected Map<String, String> getSymbolsMap(Locale locale) {

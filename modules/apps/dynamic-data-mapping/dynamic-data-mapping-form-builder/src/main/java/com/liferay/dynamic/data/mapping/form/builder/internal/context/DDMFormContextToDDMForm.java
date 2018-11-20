@@ -21,12 +21,16 @@ import com.liferay.dynamic.data.mapping.form.builder.internal.converter.DDMFormR
 import com.liferay.dynamic.data.mapping.form.builder.internal.converter.DDMFormRuleDeserializer;
 import com.liferay.dynamic.data.mapping.form.builder.internal.converter.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.form.builder.internal.converter.serializer.DDMFormRuleSerializerContext;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.DDMFormSuccessPageSettings;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -174,7 +178,7 @@ public class DDMFormContextToDDMForm
 			String serializedValue, boolean localizable, String dataType,
 			String type, Set<Locale> availableLocales, Locale defaultLocale)
 		throws PortalException {
-
+		
 		if (Objects.equals(dataType, "ddm-options")) {
 			return getDDMFormFieldOptions(
 				serializedValue, availableLocales, defaultLocale);
@@ -187,7 +191,7 @@ public class DDMFormContextToDDMForm
 		}
 		else if (localizable) {
 			return getLocalizedValue(
-				serializedValue, availableLocales, defaultLocale);
+				serializedValue, type, availableLocales, defaultLocale);
 		}
 		else if (Objects.equals(type, "select")) {
 			return getDDMFormFieldSelectValue(serializedValue);
@@ -241,7 +245,7 @@ public class DDMFormContextToDDMForm
 	}
 
 	protected LocalizedValue getLocalizedValue(
-			String serializedValue, Set<Locale> availableLocales,
+			String serializedValue, String type, Set<Locale> availableLocales,
 			Locale defaultLocale)
 		throws PortalException {
 
@@ -255,10 +259,23 @@ public class DDMFormContextToDDMForm
 		for (Locale availableLocale : availableLocales) {
 			String valueString = jsonObject.getString(
 				LocaleUtil.toLanguageId(availableLocale), defaultValueString);
-
-			localizedValue.addString(availableLocale, valueString);
+			
+			DDMFormFieldValueAccessor<?> ddmFormFieldValueAccessor =
+				_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueAccessor(type);
+		
+			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+		
+			ddmFormFieldValue.setValue(new UnlocalizedValue(valueString));
+			
+			if (ddmFormFieldValueAccessor != null) {
+				localizedValue.addString(
+					availableLocale, String.valueOf(ddmFormFieldValueAccessor.getValue(ddmFormFieldValue, defaultLocale)));
+			}
+			else {
+				localizedValue.addString(availableLocale, valueString);
+			}
 		}
-
+		
 		return localizedValue;
 	}
 
@@ -323,10 +340,10 @@ public class DDMFormContextToDDMForm
 					String valueProperty = getValueProperty(localizable);
 
 					String value = jsonObject.getString(valueProperty);
-
+					
 					String dataType = jsonObject.getString("dataType");
 					String type = jsonObject.getString("type");
-
+					
 					try {
 						Object propertyValue = getDDMFormFieldPropertyValue(
 							value, localizable, dataType, type,
@@ -402,6 +419,9 @@ public class DDMFormContextToDDMForm
 
 	@Reference
 	protected DDMFormRuleDeserializer ddmFormRuleDeserializer;
+	
+	@Reference
+	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
 	@Reference
 	protected JSONFactory jsonFactory;

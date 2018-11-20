@@ -52,8 +52,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mika Koivisto
  */
-@Component(immediate = true, service = MetadataProvider.class)
-public class DBMetadataProvider extends BaseMetadataProvider {
+@Component(immediate = true, service = MetadataResolver.class)
+public class DBMetadataResolver extends AbstractMetadataResolver {
 
 	@Nonnull
 	@Override

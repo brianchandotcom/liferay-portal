@@ -59,7 +59,7 @@ public class BaseIndexerGetSiteGroupIdTest {
 	public void testGetSiteGroupId() throws Exception {
 		long groupId = RandomTestUtil.randomLong();
 
-		setUpGroup(groupId, false);
+		_setUpGroup(groupId, 0, false);
 
 		Assert.assertEquals(groupId, _indexer.getSiteGroupId(groupId));
 	}
@@ -69,7 +69,7 @@ public class BaseIndexerGetSiteGroupIdTest {
 		long groupId = RandomTestUtil.randomLong();
 		long parentGroupId = RandomTestUtil.randomLong();
 
-		setUpLayoutGroup(groupId, parentGroupId, false);
+		_setUpGroup(groupId, parentGroupId, false);
 
 		Assert.assertEquals(parentGroupId, _indexer.getSiteGroupId(groupId));
 	}
@@ -78,7 +78,7 @@ public class BaseIndexerGetSiteGroupIdTest {
 	public void testGetSiteGroupIdNonexistent() throws Exception {
 		long groupId = RandomTestUtil.randomLong();
 
-		setUpNonexistentGroup(groupId);
+		_setUpGroup(0, 0, false);
 
 		Assert.assertEquals(groupId, _indexer.getSiteGroupId(groupId));
 	}
@@ -87,7 +87,7 @@ public class BaseIndexerGetSiteGroupIdTest {
 	public void testIsStagingGroup() throws Exception {
 		long groupId = RandomTestUtil.randomLong();
 
-		setUpGroup(groupId, true);
+		_setUpGroup(groupId, 0, true);
 
 		Assert.assertEquals(true, _indexer.isStagingGroup(groupId));
 	}
@@ -97,7 +97,7 @@ public class BaseIndexerGetSiteGroupIdTest {
 		long groupId = RandomTestUtil.randomLong();
 		long parentGroupId = RandomTestUtil.randomLong();
 
-		setUpLayoutGroup(groupId, parentGroupId, true);
+		_setUpGroup(groupId, parentGroupId, true);
 
 		Assert.assertEquals(true, _indexer.isStagingGroup(groupId));
 	}
@@ -106,70 +106,19 @@ public class BaseIndexerGetSiteGroupIdTest {
 	public void testIsStagingGroupNonexistent() throws Exception {
 		long groupId = RandomTestUtil.randomLong();
 
-		setUpNonexistentGroup(groupId);
+		_setUpGroup(0, 0, false);
 
 		Assert.assertEquals(false, _indexer.isStagingGroup(groupId));
 	}
 
-	protected Group setUpGroup(long groupId, boolean stagingGroup)
-		throws Exception {
+	private Group _getGroup(
+		long groupId, Group parentGroup, boolean stagingGroup) {
 
-		Group group = new GroupWrapper(null) {
+		if (groupId <= 0) {
+			return null;
+		}
 
-			@Override
-			public long getGroupId() {
-				return groupId;
-			}
-
-			@Override
-			public boolean isLayout() {
-				return false;
-			}
-
-			@Override
-			public boolean isStagingGroup() {
-				return stagingGroup;
-			}
-
-		};
-
-		ReflectionTestUtil.setFieldValue(
-			GroupLocalServiceUtil.class, "_service",
-			new GroupLocalServiceWrapper(null) {
-
-				@Override
-				public Group getGroup(long groupId) {
-					if (groupId == group.getGroupId()) {
-						return group;
-					}
-
-					return null;
-				}
-
-			});
-
-		return group;
-	}
-
-	protected Group setUpLayoutGroup(
-			long groupId, long parentGroupId, boolean stagingGroup)
-		throws PortalException {
-
-		Group parentGroup = new GroupWrapper(null) {
-
-			@Override
-			public long getGroupId() {
-				return parentGroupId;
-			}
-
-			@Override
-			public boolean isStagingGroup() {
-				return stagingGroup;
-			}
-
-		};
-
-		Group group = new GroupWrapper(null) {
+		return new GroupWrapper(null) {
 
 			@Override
 			public long getGroupId() {
@@ -183,45 +132,57 @@ public class BaseIndexerGetSiteGroupIdTest {
 
 			@Override
 			public long getParentGroupId() {
-				return parentGroupId;
+				if (parentGroup == null) {
+					return 0;
+				}
+
+				return parentGroup.getGroupId();
 			}
 
 			@Override
 			public boolean isLayout() {
+				if (parentGroup == null) {
+					return false;
+				}
+
 				return true;
 			}
 
+			@Override
+			public boolean isStagingGroup() {
+				return stagingGroup;
+			}
+
 		};
-
-		ReflectionTestUtil.setFieldValue(
-			GroupLocalServiceUtil.class, "_service",
-			new GroupLocalServiceWrapper(null) {
-
-				@Override
-				public Group getGroup(long groupId) {
-					if (groupId == group.getGroupId()) {
-						return group;
-					}
-					else if (groupId == parentGroup.getGroupId()) {
-						return parentGroup;
-					}
-
-					return null;
-				}
-
-			});
-
-		return parentGroup;
 	}
 
-	protected void setUpNonexistentGroup(long groupId) throws PortalException {
+	private void _setUpGroup(
+		long groupId, long parentGroupId, boolean stagingGroup) {
+
+		Group parentGroup = _getGroup(parentGroupId, null, stagingGroup);
+
+		Group group = _getGroup(groupId, parentGroup, stagingGroup);
+
 		ReflectionTestUtil.setFieldValue(
 			GroupLocalServiceUtil.class, "_service",
 			new GroupLocalServiceWrapper(null) {
 
 				@Override
 				public Group getGroup(long groupId) throws PortalException {
-					throw new NoSuchGroupException();
+					if (group == null) {
+						throw new NoSuchGroupException();
+					}
+
+					if (groupId == group.getGroupId()) {
+						return group;
+					}
+					else if ((parentGroup != null) &&
+							 (groupId == parentGroup.getGroupId())) {
+
+						return parentGroup;
+					}
+
+					return null;
 				}
 
 			});

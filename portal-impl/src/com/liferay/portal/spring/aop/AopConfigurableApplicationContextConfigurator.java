@@ -17,7 +17,6 @@ package com.liferay.portal.spring.aop;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.cache.thread.local.ThreadLocalCacheAdvice;
 import com.liferay.portal.dao.jdbc.aop.DynamicDataSourceAdvice;
-import com.liferay.portal.dao.orm.hibernate.PortletSessionFactoryImpl;
 import com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl;
 import com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper;
 import com.liferay.portal.increment.BufferedIncrementAdvice;
@@ -269,8 +268,7 @@ public class AopConfigurableApplicationContextConfigurator
 					"liferayHibernateSessionFactory",
 					SessionFactoryImplementor.class);
 
-			SessionFactoryImpl sessionFactoryImpl =
-				new PortletSessionFactoryImpl();
+			SessionFactoryImpl sessionFactoryImpl = new SessionFactoryImpl();
 
 			sessionFactoryImpl.setSessionFactoryClassLoader(_classLoader);
 			sessionFactoryImpl.setSessionFactoryImplementor(

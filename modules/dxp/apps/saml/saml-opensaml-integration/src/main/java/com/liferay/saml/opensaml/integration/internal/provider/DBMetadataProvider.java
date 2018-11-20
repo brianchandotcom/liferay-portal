@@ -56,11 +56,6 @@ import org.osgi.service.component.annotations.Reference;
 public class DBMetadataProvider extends BaseMetadataProvider {
 
 	@Override
-	public EntitiesDescriptor getEntitiesDescriptor(String name) {
-		return null;
-	}
-
-	@Override
 	public EntityDescriptor getEntityDescriptor(String entityId)
 		throws MetadataProviderException {
 

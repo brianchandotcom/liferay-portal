@@ -62,7 +62,7 @@ public class SamlUtil {
 	public static AssertionConsumerService
 			getAssertionConsumerServiceForBinding(
 				SPSSODescriptor spSSODescriptor, String binding)
-		throws MetadataProviderException {
+		throws ResolverException {
 
 		AssertionConsumerService assertionConsumerService =
 			spSSODescriptor.getDefaultAssertionConsumerService();
@@ -82,8 +82,7 @@ public class SamlUtil {
 			}
 		}
 
-		throw new MetadataProviderException(
-			"Binding " + binding + " is not supported");
+		throw new ResolverException("Binding " + binding + " is not supported");
 	}
 
 	public static Attribute getAttribute(
@@ -191,7 +190,7 @@ public class SamlUtil {
 
 	public static SingleLogoutService getSingleLogoutServiceForBinding(
 			SSODescriptor ssoDescriptor, String binding)
-		throws MetadataProviderException {
+		throws ResolverException {
 
 		List<SingleLogoutService> singleLogoutServices =
 			ssoDescriptor.getSingleLogoutServices();
@@ -202,13 +201,12 @@ public class SamlUtil {
 			}
 		}
 
-		throw new MetadataProviderException(
-			"Binding " + binding + " is not supported");
+		throw new ResolverException("Binding " + binding + " is not supported");
 	}
 
 	public static SingleSignOnService getSingleSignOnServiceForBinding(
 			IDPSSODescriptor idpSSODescriptor, String binding)
-		throws MetadataProviderException {
+		throws ResolverException {
 
 		List<SingleSignOnService> singleSignOnServices =
 			idpSSODescriptor.getSingleSignOnServices();
@@ -219,8 +217,7 @@ public class SamlUtil {
 			}
 		}
 
-		throw new MetadataProviderException(
-			"Binding " + binding + " is not supported");
+		throw new ResolverException("Binding " + binding + " is not supported");
 	}
 
 	public static Date getValueAsDate(

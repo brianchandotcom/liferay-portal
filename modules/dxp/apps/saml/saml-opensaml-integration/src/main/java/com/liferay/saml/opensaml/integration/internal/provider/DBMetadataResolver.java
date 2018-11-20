@@ -68,7 +68,7 @@ public class DBMetadataResolver extends AbstractMetadataResolver {
 			EntityIdCriterion.class);
 
 		if (entityIdCriterion == null) {
-			throw new ResolverException("EntityIdCriterion is mandatory");
+			throw new ResolverException("Entity ID criterion is null");
 		}
 
 		try {
@@ -80,6 +80,7 @@ public class DBMetadataResolver extends AbstractMetadataResolver {
 			domMetadataResolver.setId(DOMMetadataResolver.class.getName());
 			domMetadataResolver.setRequireValidMetadata(
 				isRequireValidMetadata());
+
 			domMetadataResolver.initialize();
 
 			return domMetadataResolver.resolve(criteriaSet);

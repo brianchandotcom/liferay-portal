@@ -40,6 +40,17 @@ public class CompanionPortalWorkspaceGitRepository
 			_parentWorkspaceGitRepository.getUpstreamBranchName();
 
 		if (parentUpstreamBranchName.contains("-private")) {
+			try {
+				JenkinsResultsParserUtil.write(
+					new File(
+						_parentWorkspaceGitRepository.getDirectory(),
+						"git-commit-portal"),
+					getBranchSHA());
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(ioe);
+			}
+
 			AntUtil.callTarget(
 				_parentWorkspaceGitRepository.getDirectory(),
 				"build-working-dir.xml", "prepare-working-dir");

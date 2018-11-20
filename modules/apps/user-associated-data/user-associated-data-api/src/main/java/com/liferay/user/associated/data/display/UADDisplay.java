@@ -53,6 +53,16 @@ public interface UADDisplay<T> extends UADComponent<T> {
 
 	public List<T> getRange(long userId, int start, int end);
 
+	public String[] getSortingFieldNames();
+
 	public String getTypeName(Locale locale);
+
+	public List<T> search(
+		long userId, long[] groupIds, String keywords, String orderByField,
+		String orderByType, int start, int end);
+
+	public long searchCount(
+		long userId, long[] groupIds, String keywords, String orderByField,
+		String orderByType);
 
 }

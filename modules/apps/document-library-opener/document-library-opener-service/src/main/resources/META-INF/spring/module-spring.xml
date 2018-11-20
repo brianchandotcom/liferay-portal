@@ -8,5 +8,5 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
 	<bean class="com.liferay.document.library.opener.service.impl.DLOpenerFileEntryReferenceLocalServiceImpl" id="com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService" />
-	<bean class="com.liferay.document.library.opener.service.persistence.impl.DLOpenerFileEntryReferencePersistenceImpl" id="com.liferay.document.library.opener.service.persistence.DLOpenerFileEntryReferencePersistence" parent="basePersistence" />
+	<bean class="com.liferay.document.library.opener.service.persistence.impl.DLOpenerFileEntryReferencePersistenceImpl" id="com.liferay.document.library.opener.service.persistence.DLOpenerFileEntryReferencePersistence" />
 </beans>

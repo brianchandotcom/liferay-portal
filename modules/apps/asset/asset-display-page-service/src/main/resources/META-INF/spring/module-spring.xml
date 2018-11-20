@@ -8,5 +8,5 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
 	<bean class="com.liferay.asset.display.page.service.impl.AssetDisplayPageEntryLocalServiceImpl" id="com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService" />
-	<bean class="com.liferay.asset.display.page.service.persistence.impl.AssetDisplayPageEntryPersistenceImpl" id="com.liferay.asset.display.page.service.persistence.AssetDisplayPageEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.asset.display.page.service.persistence.impl.AssetDisplayPageEntryPersistenceImpl" id="com.liferay.asset.display.page.service.persistence.AssetDisplayPageEntryPersistence" />
 </beans>

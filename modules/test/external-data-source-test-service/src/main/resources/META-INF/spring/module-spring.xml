@@ -8,5 +8,5 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
 	<bean class="com.liferay.external.data.source.test.service.impl.TestEntityLocalServiceImpl" id="com.liferay.external.data.source.test.service.TestEntityLocalService" />
-	<bean class="com.liferay.external.data.source.test.service.persistence.impl.TestEntityPersistenceImpl" id="com.liferay.external.data.source.test.service.persistence.TestEntityPersistence" parent="basePersistence" />
+	<bean class="com.liferay.external.data.source.test.service.persistence.impl.TestEntityPersistenceImpl" id="com.liferay.external.data.source.test.service.persistence.TestEntityPersistence" />
 </beans>

@@ -8,5 +8,5 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
 	<bean class="com.liferay.html.preview.service.impl.HtmlPreviewEntryLocalServiceImpl" id="com.liferay.html.preview.service.HtmlPreviewEntryLocalService" />
-	<bean class="com.liferay.html.preview.service.persistence.impl.HtmlPreviewEntryPersistenceImpl" id="com.liferay.html.preview.service.persistence.HtmlPreviewEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.html.preview.service.persistence.impl.HtmlPreviewEntryPersistenceImpl" id="com.liferay.html.preview.service.persistence.HtmlPreviewEntryPersistence" />
 </beans>

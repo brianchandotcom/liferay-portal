@@ -8,6 +8,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
 	<bean class="com.liferay.contacts.service.impl.EntryLocalServiceImpl" id="com.liferay.contacts.service.EntryLocalService" />
-	<bean class="com.liferay.contacts.service.persistence.impl.EntryPersistenceImpl" id="com.liferay.contacts.service.persistence.EntryPersistence" parent="basePersistence" />
-	<bean class="com.liferay.contacts.service.persistence.impl.EntryFinderImpl" id="com.liferay.contacts.service.persistence.EntryFinder" parent="basePersistence" />
+	<bean class="com.liferay.contacts.service.persistence.impl.EntryPersistenceImpl" id="com.liferay.contacts.service.persistence.EntryPersistence" />
+	<bean class="com.liferay.contacts.service.persistence.impl.EntryFinderImpl" id="com.liferay.contacts.service.persistence.EntryFinder" />
 </beans>

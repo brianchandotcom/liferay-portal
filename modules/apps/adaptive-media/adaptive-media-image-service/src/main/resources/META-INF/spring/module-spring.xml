@@ -8,5 +8,5 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
 	<bean class="com.liferay.adaptive.media.image.service.impl.AMImageEntryLocalServiceImpl" id="com.liferay.adaptive.media.image.service.AMImageEntryLocalService" />
-	<bean class="com.liferay.adaptive.media.image.service.persistence.impl.AMImageEntryPersistenceImpl" id="com.liferay.adaptive.media.image.service.persistence.AMImageEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.adaptive.media.image.service.persistence.impl.AMImageEntryPersistenceImpl" id="com.liferay.adaptive.media.image.service.persistence.AMImageEntryPersistence" />
 </beans>

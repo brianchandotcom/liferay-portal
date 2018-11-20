@@ -8,5 +8,5 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
 	<bean class="com.liferay.subscription.service.impl.SubscriptionLocalServiceImpl" id="com.liferay.subscription.service.SubscriptionLocalService" />
-	<bean class="com.liferay.subscription.service.persistence.impl.SubscriptionPersistenceImpl" id="com.liferay.subscription.service.persistence.SubscriptionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.subscription.service.persistence.impl.SubscriptionPersistenceImpl" id="com.liferay.subscription.service.persistence.SubscriptionPersistence" />
 </beans>

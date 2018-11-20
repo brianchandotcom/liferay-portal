@@ -14,12 +14,9 @@
 
 package com.liferay.portal.spring.transaction;
 
-import aQute.bnd.annotation.ProviderType;
-
 /**
  * @author Shuyang Zhou
  */
-@ProviderType
 public interface TransactionHandler {
 
 	public void commit(

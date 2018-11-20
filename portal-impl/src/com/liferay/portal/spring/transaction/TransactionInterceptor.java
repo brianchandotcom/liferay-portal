@@ -14,8 +14,6 @@
 
 package com.liferay.portal.spring.transaction;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -36,7 +34,6 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
 /**
  * @author Shuyang Zhou
  */
-@ProviderType
 public class TransactionInterceptor
 	extends AnnotationChainableMethodAdvice<Transactional> {
 

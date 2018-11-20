@@ -14,8 +14,6 @@
 
 package com.liferay.portal.spring.transaction;
 
-import aQute.bnd.annotation.ProviderType;
-
 import org.aopalliance.intercept.MethodInvocation;
 
 import org.springframework.transaction.PlatformTransactionManager;
@@ -24,7 +22,6 @@ import org.springframework.transaction.PlatformTransactionManager;
  * @author Michael C. Han
  * @author Shuyang Zhou
  */
-@ProviderType
 public interface TransactionExecutor {
 
 	public Object execute(

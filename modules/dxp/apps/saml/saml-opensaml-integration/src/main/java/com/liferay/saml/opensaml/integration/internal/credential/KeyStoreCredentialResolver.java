@@ -96,10 +96,9 @@ public class KeyStoreCredentialResolver extends AbstractCredentialResolver {
 		KeyStore.PrivateKeyEntry privateKeyEntry, String entityId,
 		UsageType usageType) {
 
-		BasicX509Credential basicX509Credential = new BasicX509Credential();
-
-		basicX509Credential.setEntityCertificate(
+		BasicX509Credential basicX509Credential = new BasicX509Credential(
 			(X509Certificate)privateKeyEntry.getCertificate());
+
 		basicX509Credential.setEntityCertificateChain(
 			Arrays.asList(
 				(X509Certificate[])privateKeyEntry.getCertificateChain()));

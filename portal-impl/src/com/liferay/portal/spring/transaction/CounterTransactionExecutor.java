@@ -24,33 +24,10 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class CounterTransactionExecutor
 	implements TransactionExecutor, TransactionHandler {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #CounterTransactionExecutor(PlatformTransactionManager)}
-	 */
-	@Deprecated
-	public CounterTransactionExecutor() {
-		_platformTransactionManager = null;
-	}
-
 	public CounterTransactionExecutor(
 		PlatformTransactionManager platformTransactionManager) {
 
 		_platformTransactionManager = platformTransactionManager;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #commit(
-	 *             TransactionAttributeAdapter, TransactionStatusAdapter)}
-	 */
-	@Deprecated
-	@Override
-	public void commit(
-		PlatformTransactionManager platformTransactionManager,
-		TransactionAttributeAdapter transactionAttributeAdapter,
-		TransactionStatusAdapter transactionStatusAdapter) {
-
-		_commit(platformTransactionManager, transactionStatusAdapter);
 	}
 
 	@Override
@@ -59,23 +36,6 @@ public class CounterTransactionExecutor
 		TransactionStatusAdapter transactionStatusAdapter) {
 
 		_commit(_platformTransactionManager, transactionStatusAdapter);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #execute(
-	 *             TransactionAttributeAdapter, MethodInvocation)}
-	 */
-	@Deprecated
-	@Override
-	public Object execute(
-			PlatformTransactionManager platformTransactionManager,
-			TransactionAttributeAdapter transactionAttributeAdapter,
-			MethodInvocation methodInvocation)
-		throws Throwable {
-
-		return _execute(
-			platformTransactionManager, transactionAttributeAdapter,
-			methodInvocation);
 	}
 
 	@Override
@@ -94,25 +54,6 @@ public class CounterTransactionExecutor
 		return _platformTransactionManager;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #rollback(
-	 *             Throwable, TransactionAttributeAdapter,
-	 *             TransactionStatusAdapter)}
-	 */
-	@Deprecated
-	@Override
-	public void rollback(
-			PlatformTransactionManager platformTransactionManager,
-			Throwable throwable,
-			TransactionAttributeAdapter transactionAttributeAdapter,
-			TransactionStatusAdapter transactionStatusAdapter)
-		throws Throwable {
-
-		throw _rollback(
-			platformTransactionManager, throwable, transactionAttributeAdapter,
-			transactionStatusAdapter);
-	}
-
 	@Override
 	public void rollback(
 			Throwable throwable,
@@ -123,19 +64,6 @@ public class CounterTransactionExecutor
 		throw _rollback(
 			_platformTransactionManager, throwable, transactionAttributeAdapter,
 			transactionStatusAdapter);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #start(
-	 *             TransactionAttributeAdapter)}
-	 */
-	@Deprecated
-	@Override
-	public TransactionStatusAdapter start(
-		PlatformTransactionManager platformTransactionManager,
-		TransactionAttributeAdapter transactionAttributeAdapter) {
-
-		return _start(platformTransactionManager, transactionAttributeAdapter);
 	}
 
 	@Override

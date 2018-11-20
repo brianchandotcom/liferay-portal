@@ -30,37 +30,10 @@ import org.springframework.transaction.support.TransactionCallback;
 public class CallbackPreferringTransactionExecutor
 	implements TransactionExecutor {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #CallbackPreferringTransactionExecutor(
-	 *             PlatformTransactionManager)}
-	 */
-	@Deprecated
-	public CallbackPreferringTransactionExecutor() {
-		_platformTransactionManager = null;
-	}
-
 	public CallbackPreferringTransactionExecutor(
 		PlatformTransactionManager platformTransactionManager) {
 
 		_platformTransactionManager = platformTransactionManager;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #execute(
-	 *             TransactionAttributeAdapter, MethodInvocation)}
-	 */
-	@Deprecated
-	@Override
-	public Object execute(
-			PlatformTransactionManager platformTransactionManager,
-			TransactionAttributeAdapter transactionAttributeAdapter,
-			MethodInvocation methodInvocation)
-		throws Throwable {
-
-		return _execute(
-			platformTransactionManager, transactionAttributeAdapter,
-			methodInvocation);
 	}
 
 	@Override
@@ -88,21 +61,6 @@ public class CallbackPreferringTransactionExecutor
 		return new CallbackPreferringTransactionCallback(
 			callbackPreferringPlatformTransactionManager,
 			transactionAttributeAdapter, methodInvocation);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #createTransactionCallback(
-	 *             CallbackPreferringPlatformTransactionManager,
-	 *             TransactionAttributeAdapter, MethodInvocation)}
-	 */
-	@Deprecated
-	protected TransactionCallback<Object> createTransactionCallback(
-		TransactionAttributeAdapter transactionAttributeAdapter,
-		MethodInvocation methodInvocation) {
-
-		return new CallbackPreferringTransactionCallback(
-			null, transactionAttributeAdapter, methodInvocation);
 	}
 
 	protected static class ThrowableHolder {

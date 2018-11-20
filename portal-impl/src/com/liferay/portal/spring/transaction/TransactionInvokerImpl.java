@@ -24,8 +24,6 @@ import java.util.concurrent.Callable;
 
 import org.aopalliance.intercept.MethodInvocation;
 
-import org.springframework.transaction.PlatformTransactionManager;
-
 /**
  * @author Shuyang Zhou
  */
@@ -55,14 +53,6 @@ public class TransactionInvokerImpl implements TransactionInvoker {
 					transactionConfig.getNoRollbackForClasses(),
 					transactionConfig.getNoRollbackForClassNames())),
 			new CallableMethodInvocation(callable));
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setPlatformTransactionManager(
-		PlatformTransactionManager platformTransactionManager) {
 	}
 
 	public void setTransactionExecutor(

@@ -26,17 +26,6 @@ public class TransactionStatusAdapter
 	extends DefaultTransactionStatus
 	implements com.liferay.portal.kernel.transaction.TransactionStatus {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public TransactionStatusAdapter(
-		PlatformTransactionManager platformTransactionManager,
-		TransactionStatus transactionStatus) {
-
-		this(transactionStatus);
-	}
-
 	public TransactionStatusAdapter(TransactionStatus transactionStatus) {
 		super(null, false, false, false, false, null);
 

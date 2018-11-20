@@ -27,17 +27,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 @ProviderType
 public interface TransactionExecutor {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #execute(
-	 *             TransactionAttributeAdapter, MethodInvocation)}
-	 */
-	@Deprecated
-	public Object execute(
-			PlatformTransactionManager platformTransactionManager,
-			TransactionAttributeAdapter transactionAttributeAdapter,
-			MethodInvocation methodInvocation)
-		throws Throwable;
-
 	public Object execute(
 			TransactionAttributeAdapter transactionAttributeAdapter,
 			MethodInvocation methodInvocation)

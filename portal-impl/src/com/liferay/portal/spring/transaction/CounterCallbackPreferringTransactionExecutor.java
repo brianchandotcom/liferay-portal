@@ -27,15 +27,6 @@ import org.springframework.transaction.support.TransactionCallback;
 public class CounterCallbackPreferringTransactionExecutor
 	extends CallbackPreferringTransactionExecutor {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #CounterCallbackPreferringTransactionExecutor(
-	 *             PlatformTransactionManager)}
-	 */
-	@Deprecated
-	public CounterCallbackPreferringTransactionExecutor() {
-	}
-
 	public CounterCallbackPreferringTransactionExecutor(
 		PlatformTransactionManager platformTransactionManager) {
 
@@ -51,22 +42,6 @@ public class CounterCallbackPreferringTransactionExecutor
 
 		return new CounterCallbackPreferringTransactionCallback(
 			transactionAttributeAdapter, methodInvocation);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #createTransactionCallback(
-	 *             CallbackPreferringPlatformTransactionManager,
-	 *             TransactionAttributeAdapter, MethodInvocation)}
-	 */
-	@Deprecated
-	@Override
-	protected TransactionCallback<Object> createTransactionCallback(
-		TransactionAttributeAdapter transactionAttributeAdapter,
-		MethodInvocation methodInvocation) {
-
-		return createTransactionCallback(
-			null, transactionAttributeAdapter, methodInvocation);
 	}
 
 	private static class CounterCallbackPreferringTransactionCallback

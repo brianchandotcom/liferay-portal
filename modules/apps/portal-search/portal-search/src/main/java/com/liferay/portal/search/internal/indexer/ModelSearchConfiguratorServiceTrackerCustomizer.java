@@ -374,8 +374,8 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 			_searchContextContributors;
 	private final Map<String, ServiceRegistrationHolder>
 		_serviceRegistrationHolders = new Hashtable<>();
-	private ServiceTracker
-		<ModelSearchConfigurator, ModelSearchConfigurator> _serviceTracker;
+	private ServiceTracker<ModelSearchConfigurator, ModelSearchConfigurator>
+		_serviceTracker;
 
 	private class ServiceRegistrationHolder {
 

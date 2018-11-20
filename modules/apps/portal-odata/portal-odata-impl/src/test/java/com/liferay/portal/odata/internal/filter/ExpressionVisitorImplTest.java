@@ -50,8 +50,8 @@ public class ExpressionVisitorImplTest {
 		TermFilter rightTermFilter = new TermFilter("title", "title2");
 
 		BooleanFilter booleanFilter =
-			(BooleanFilter)_expressionVisitorImpl.
-				visitBinaryExpressionOperation(
+			(BooleanFilter)
+				_expressionVisitorImpl.visitBinaryExpressionOperation(
 					BinaryExpression.Operation.AND, leftTermFilter,
 					rightTermFilter);
 
@@ -107,8 +107,8 @@ public class ExpressionVisitorImplTest {
 		String value = "title1";
 
 		RangeTermFilter rangeTermFilter =
-			(RangeTermFilter)_expressionVisitorImpl.
-				visitBinaryExpressionOperation(
+			(RangeTermFilter)
+				_expressionVisitorImpl.visitBinaryExpressionOperation(
 					BinaryExpression.Operation.GE, entityField, value);
 
 		Assert.assertEquals(entityField.getName(), rangeTermFilter.getField());
@@ -129,8 +129,8 @@ public class ExpressionVisitorImplTest {
 		String value = "title1";
 
 		RangeTermFilter rangeTermFilter =
-			(RangeTermFilter)_expressionVisitorImpl.
-				visitBinaryExpressionOperation(
+			(RangeTermFilter)
+				_expressionVisitorImpl.visitBinaryExpressionOperation(
 					BinaryExpression.Operation.GT, entityField, value);
 
 		Assert.assertEquals(entityField.getName(), rangeTermFilter.getField());
@@ -151,8 +151,8 @@ public class ExpressionVisitorImplTest {
 		String value = "title1";
 
 		RangeTermFilter rangeTermFilter =
-			(RangeTermFilter)_expressionVisitorImpl.
-				visitBinaryExpressionOperation(
+			(RangeTermFilter)
+				_expressionVisitorImpl.visitBinaryExpressionOperation(
 					BinaryExpression.Operation.LE, entityField, value);
 
 		Assert.assertEquals(entityField.getName(), rangeTermFilter.getField());
@@ -173,8 +173,8 @@ public class ExpressionVisitorImplTest {
 		String value = "title1";
 
 		RangeTermFilter rangeTermFilter =
-			(RangeTermFilter)_expressionVisitorImpl.
-				visitBinaryExpressionOperation(
+			(RangeTermFilter)
+				_expressionVisitorImpl.visitBinaryExpressionOperation(
 					BinaryExpression.Operation.LT, entityField, value);
 
 		Assert.assertEquals(entityField.getName(), rangeTermFilter.getField());
@@ -189,8 +189,8 @@ public class ExpressionVisitorImplTest {
 		TermFilter rightTermFilter = new TermFilter("title", "title2");
 
 		BooleanFilter booleanFilter =
-			(BooleanFilter)_expressionVisitorImpl.
-				visitBinaryExpressionOperation(
+			(BooleanFilter)
+				_expressionVisitorImpl.visitBinaryExpressionOperation(
 					BinaryExpression.Operation.OR, leftTermFilter,
 					rightTermFilter);
 

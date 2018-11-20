@@ -288,7 +288,9 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 	protected volatile SearchLayoutPrototypeCustomizer
 		searchLayoutPrototypeCustomizer;
 
-	@Reference protected UserLocalService userLocalService;
+	@Reference
+	protected UserLocalService userLocalService;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchLayoutFactoryImpl.class);
 

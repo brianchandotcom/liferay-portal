@@ -281,8 +281,8 @@ public class LanguageExtension implements Extension {
 			return loadResourceBundle(LocaleUtil.fromLanguageId(languageId));
 		}
 
-		private final
-			List<ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>>
+		private final List
+			<ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>>
 				_serviceTrackers;
 
 	}

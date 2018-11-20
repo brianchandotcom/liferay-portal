@@ -68,8 +68,8 @@ public class ConfigurationTemplatesPortletConfigurationIcon
 
 			PortletURL portletURL = PortletProviderUtil.getPortletURL(
 				portletRequest,
-				PortletConfigurationApplicationType.
-					PortletConfiguration.CLASS_NAME,
+				PortletConfigurationApplicationType.PortletConfiguration.
+					CLASS_NAME,
 				PortletProvider.Action.VIEW);
 
 			portletURL.setParameter(

@@ -333,8 +333,8 @@ public class PluginExecutor extends BaseExecutor {
 
 					});
 
-				File tempContextDir = tempContextDirs[
-					tempContextDirs.length - 1];
+				File tempContextDir =
+					tempContextDirs[tempContextDirs.length - 1];
 
 				installedDirs.add(tempContextDir);
 			}

@@ -140,8 +140,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		List<Diagnostic<? extends JavaFileObject>> diagnostics =
 			diagnosticCollector.getDiagnostics();
 
-		JavacErrorDetail[] javacErrorDetails = new JavacErrorDetail[
-			diagnostics.size()];
+		JavacErrorDetail[] javacErrorDetails =
+			new JavacErrorDetail[diagnostics.size()];
 
 		for (int i = 0; i < diagnostics.size(); i++) {
 			Diagnostic<? extends JavaFileObject> diagnostic = diagnostics.get(

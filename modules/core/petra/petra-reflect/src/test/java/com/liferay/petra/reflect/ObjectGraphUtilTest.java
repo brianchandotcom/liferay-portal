@@ -166,9 +166,8 @@ public class ObjectGraphUtilTest {
 		LinkedType1[] linkedType1Array = {new LinkedType1(), new LinkedType1()};
 
 		LinkedType1[] mappedLinkedType1Array =
-			(LinkedType1[])
-				_recordAnnotatedFieldMappingVisitor.mapValue(
-					null, linkedType1Array);
+			(LinkedType1[])_recordAnnotatedFieldMappingVisitor.mapValue(
+				null, linkedType1Array);
 
 		Assert.assertNotSame(linkedType1Array, mappedLinkedType1Array);
 		Assert.assertArrayEquals(linkedType1Array, mappedLinkedType1Array);

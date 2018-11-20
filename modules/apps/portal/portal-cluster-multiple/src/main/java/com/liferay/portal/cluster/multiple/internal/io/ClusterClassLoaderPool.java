@@ -147,8 +147,8 @@ public class ClusterClassLoaderPool {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterClassLoaderPool.class);
 
-	private static final
-		Map<String, ConcurrentNavigableMap<Version, ClassLoader>>
+	private static final Map
+		<String, ConcurrentNavigableMap<Version, ClassLoader>>
 			_fallbackClassLoaders = new ConcurrentHashMap<>();
 
 }

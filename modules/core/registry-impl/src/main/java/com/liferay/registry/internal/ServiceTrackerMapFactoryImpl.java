@@ -58,9 +58,8 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 
 			iterator.remove();
 
-			com.liferay.osgi.service.tracker.collections.map.
-				ServiceTrackerMap<?, ?> serviceTrackerMap =
-					serviceTrackerMapReference.get();
+			com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap
+				<?, ?> serviceTrackerMap = serviceTrackerMapReference.get();
 
 			if (serviceTrackerMap != null) {
 				try {
@@ -81,8 +80,8 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 	public <S> ServiceTrackerMap<String, List<S>> openMultiValueMap(
 		Class<S> clazz, String propertyKey) {
 
-		com.liferay.osgi.service.tracker.collections.map.
-			ServiceTrackerMap<String, List<S>> serviceTrackerMap =
+		com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap
+			<String, List<S>> serviceTrackerMap =
 				com.liferay.osgi.service.tracker.collections.map.
 					ServiceTrackerMapFactory.openMultiValueMap(
 						_bundleContext, clazz, propertyKey);
@@ -100,8 +99,8 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 		ServiceReferenceMapperWrapper<K, S> serviceReferenceMapperWrapper =
 			new ServiceReferenceMapperWrapper<>(serviceReferenceMapper);
 
-		com.liferay.osgi.service.tracker.collections.map.
-			ServiceTrackerMap<K, List<S>> serviceTrackerMap =
+		com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap
+			<K, List<S>> serviceTrackerMap =
 				com.liferay.osgi.service.tracker.collections.map.
 					ServiceTrackerMapFactory.openMultiValueMap(
 						_bundleContext, clazz, filterString,
@@ -123,8 +122,8 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 		ServiceReferenceComparatorAdapter<S> serviceReferenceComparatorAdapter =
 			new ServiceReferenceComparatorAdapter<>(comparator);
 
-		com.liferay.osgi.service.tracker.collections.map.
-			ServiceTrackerMap<K, List<S>> serviceTrackerMap =
+		com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap
+			<K, List<S>> serviceTrackerMap =
 				com.liferay.osgi.service.tracker.collections.map.
 					ServiceTrackerMapFactory.openMultiValueMap(
 						_bundleContext, clazz, filterString,
@@ -151,8 +150,8 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 				new ServiceTrackerMapListenerWrapper<>(
 					serviceTrackerMapListener);
 
-		com.liferay.osgi.service.tracker.collections.map.
-			ServiceTrackerMap<K, List<S>> serviceTrackerMap =
+		com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap
+			<K, List<S>> serviceTrackerMap =
 				com.liferay.osgi.service.tracker.collections.map.
 					ServiceTrackerMapFactory.openMultiValueMap(
 						_bundleContext, clazz, filterString,
@@ -175,8 +174,8 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 		ServiceTrackerCustomizerAdapter<SR, S> serviceTrackerCustomizerAdapter =
 			new ServiceTrackerCustomizerAdapter<>(serviceTrackerCustomizer);
 
-		com.liferay.osgi.service.tracker.collections.map.
-			ServiceTrackerMap<K, List<S>> serviceTrackerMap =
+		com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap
+			<K, List<S>> serviceTrackerMap =
 				com.liferay.osgi.service.tracker.collections.map.
 					ServiceTrackerMapFactory.openMultiValueMap(
 						_bundleContext, clazz, filterString,
@@ -203,8 +202,8 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 			serviceReferenceComparatorAdapter =
 				new ServiceReferenceComparatorAdapter<>(comparator);
 
-		com.liferay.osgi.service.tracker.collections.map.
-			ServiceTrackerMap<K, List<S>> serviceTrackerMap =
+		com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap
+			<K, List<S>> serviceTrackerMap =
 				com.liferay.osgi.service.tracker.collections.map.
 					ServiceTrackerMapFactory.openMultiValueMap(
 						_bundleContext, clazz, filterString,
@@ -225,8 +224,8 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 		ServiceTrackerCustomizerAdapter<SR, S> serviceTrackerCustomizerAdapter =
 			new ServiceTrackerCustomizerAdapter<>(serviceTrackerCustomizer);
 
-		com.liferay.osgi.service.tracker.collections.map.
-			ServiceTrackerMap<String, List<S>> serviceTrackerMap =
+		com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap
+			<String, List<S>> serviceTrackerMap =
 				com.liferay.osgi.service.tracker.collections.map.
 					ServiceTrackerMapFactory.openMultiValueMap(
 						_bundleContext, clazz, propertyKey,
@@ -241,8 +240,8 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 	public <S> ServiceTrackerMap<String, S> openSingleValueMap(
 		Class<S> clazz, String propertyKey) {
 
-		com.liferay.osgi.service.tracker.collections.map.
-			ServiceTrackerMap<String, S> serviceTrackerMap =
+		com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap
+			<String, S> serviceTrackerMap =
 				com.liferay.osgi.service.tracker.collections.map.
 					ServiceTrackerMapFactory.openSingleValueMap(
 						_bundleContext, clazz, propertyKey);
@@ -260,8 +259,8 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 		ServiceReferenceMapperWrapper<K, S> serviceReferenceMapperWrapper =
 			new ServiceReferenceMapperWrapper<>(serviceReferenceMapper);
 
-		com.liferay.osgi.service.tracker.collections.map.
-			ServiceTrackerMap<K, S> serviceTrackerMap =
+		com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap<K, S>
+			serviceTrackerMap =
 				com.liferay.osgi.service.tracker.collections.map.
 					ServiceTrackerMapFactory.openSingleValueMap(
 						_bundleContext, clazz, filterString,
@@ -283,8 +282,8 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 		ServiceReferenceComparatorAdapter<S> serviceReferenceComparatorAdapter =
 			new ServiceReferenceComparatorAdapter<>(comparator);
 
-		com.liferay.osgi.service.tracker.collections.map.
-			ServiceTrackerMap<K, S> serviceTrackerMap =
+		com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap<K, S>
+			serviceTrackerMap =
 				com.liferay.osgi.service.tracker.collections.map.
 					ServiceTrackerMapFactory.openSingleValueMap(
 						_bundleContext, clazz, filterString,
@@ -307,8 +306,8 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 		ServiceTrackerCustomizerAdapter<SR, S> serviceTrackerCustomizerAdapter =
 			new ServiceTrackerCustomizerAdapter<>(serviceTrackerCustomizer);
 
-		com.liferay.osgi.service.tracker.collections.map.
-			ServiceTrackerMap<K, S> serviceTrackerMap =
+		com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap<K, S>
+			serviceTrackerMap =
 				com.liferay.osgi.service.tracker.collections.map.
 					ServiceTrackerMapFactory.openSingleValueMap(
 						_bundleContext, clazz, filterString,
@@ -336,8 +335,8 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 			serviceReferenceComparatorAdapter =
 				new ServiceReferenceComparatorAdapter<>(comparator);
 
-		com.liferay.osgi.service.tracker.collections.map.
-			ServiceTrackerMap<K, S> serviceTrackerMap =
+		com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap<K, S>
+			serviceTrackerMap =
 				com.liferay.osgi.service.tracker.collections.map.
 					ServiceTrackerMapFactory.openSingleValueMap(
 						_bundleContext, clazz, filterString,
@@ -358,8 +357,8 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 		ServiceTrackerCustomizerAdapter<SR, S> serviceTrackerCustomizerAdapter =
 			new ServiceTrackerCustomizerAdapter<>(serviceTrackerCustomizer);
 
-		com.liferay.osgi.service.tracker.collections.map.
-			ServiceTrackerMap<String, S> serviceTrackerMap =
+		com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap
+			<String, S> serviceTrackerMap =
 				com.liferay.osgi.service.tracker.collections.map.
 					ServiceTrackerMapFactory.openSingleValueMap(
 						_bundleContext, clazz, propertyKey,
@@ -375,8 +374,8 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 			serviceTrackerMap) {
 
 		Reference
-			<com.liferay.osgi.service.tracker.collections.map.
-				ServiceTrackerMap<?, ?>> reference = new WeakReference<>(
+			<com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap
+				<?, ?>> reference = new WeakReference<>(
 					serviceTrackerMap, _referenceQueue);
 
 		_serviceTrackerMaps.add(reference);
@@ -392,17 +391,14 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 	}
 
 	private final BundleContext _bundleContext;
-	private final
-		ReferenceQueue
-			<com.liferay.osgi.service.tracker.collections.map.
-				ServiceTrackerMap<?, ?>> _referenceQueue =
-					new ReferenceQueue<>();
-	private final
-		Set
-			<Reference
-				<com.liferay.osgi.service.tracker.collections.map.
-					ServiceTrackerMap<?, ?>>> _serviceTrackerMaps =
-						Collections.newSetFromMap(new ConcurrentHashMap<>());
+	private final ReferenceQueue
+		<com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap
+			<?, ?>> _referenceQueue = new ReferenceQueue<>();
+	private final Set
+		<Reference
+			<com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap
+				<?, ?>>> _serviceTrackerMaps = Collections.newSetFromMap(
+					new ConcurrentHashMap<>());
 
 	private static class EmitterWrapper<K>
 		implements ServiceReferenceMapper.Emitter<K> {
@@ -546,8 +542,9 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 			return _serviceTrackerMap.keySet();
 		}
 
-		private final com.liferay.osgi.service.tracker.collections.map.
-			ServiceTrackerMap<K, S> _serviceTrackerMap;
+		private final
+			com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap
+				<K, S> _serviceTrackerMap;
 
 	}
 

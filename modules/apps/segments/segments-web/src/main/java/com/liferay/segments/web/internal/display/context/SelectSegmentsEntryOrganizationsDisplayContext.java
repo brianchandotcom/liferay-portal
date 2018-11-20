@@ -194,8 +194,8 @@ public class SelectSegmentsEntryOrganizationsDisplayContext {
 				segmentsEntry));
 
 		OrganizationSearchTerms searchTerms =
-			(OrganizationSearchTerms)organizationSearchContainer.
-				getSearchTerms();
+			(OrganizationSearchTerms)
+				organizationSearchContainer.getSearchTerms();
 
 		LinkedHashMap<String, Object> organizationParams =
 			new LinkedHashMap<>();

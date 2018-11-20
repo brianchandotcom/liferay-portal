@@ -52,6 +52,6 @@ public class MemberExpressionImpl implements MemberExpression {
 		return _resourcePath.toString();
 	}
 
-	private final List<String > _resourcePath;
+	private final List<String> _resourcePath;
 
 }

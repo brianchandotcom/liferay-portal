@@ -83,12 +83,12 @@ public class KeyStoreCredentialResolver extends AbstractCredentialResolver {
 	}
 
 	protected void checkCriteriaRequirements(CriteriaSet criteriaSet) {
-		EntityIDCriteria entityCriteria = criteriaSet.get(
-			EntityIDCriteria.class);
+		EntityIdCriterion entityIdCriterion = criteriaSet.get(
+			EntityIdCriterion.class);
 
-		if (entityCriteria == null) {
+		if (entityIdCriterion == null) {
 			throw new IllegalArgumentException(
-				"No entity ID criteria was available in criteria set");
+				"No entity ID criterion was available in criteria set");
 		}
 	}
 

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -135,6 +136,10 @@ public class AssetDisplayPageFriendlyURLResolver
 
 		long defaultUserId = _userLocalService.getDefaultUserId(
 			group.getCompanyId());
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put("visible", Boolean.FALSE.toString());
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();

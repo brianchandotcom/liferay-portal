@@ -808,7 +808,7 @@ public class JenkinsResultsParserUtil {
 			sb.append(
 				toDurationString(
 					(1000 * jsonObject.getLong("reset")) -
-						(System.currentTimeMillis())));
+						System.currentTimeMillis()));
 
 			sb.append(".");
 		}

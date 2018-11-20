@@ -45,21 +45,17 @@ public class SharingUtil {
 	public SharingEntryPermissionDisplayAction
 		getSharingEntryPermissionDisplayActionKey(SharingEntry sharingEntry) {
 
-		if (_sharingEntryLocalService.hasSharingPermission(
-				sharingEntry, SharingEntryAction.UPDATE)) {
-
+		if (sharingEntry.hasSharingPermission(SharingEntryAction.UPDATE)) {
 			return SharingEntryPermissionDisplayAction.UPDATE;
 		}
 
-		if (_sharingEntryLocalService.hasSharingPermission(
-				sharingEntry, SharingEntryAction.ADD_DISCUSSION)) {
+		if (sharingEntry.hasSharingPermission(
+				SharingEntryAction.ADD_DISCUSSION)) {
 
 			return SharingEntryPermissionDisplayAction.COMMENTS;
 		}
 
-		if (_sharingEntryLocalService.hasSharingPermission(
-				sharingEntry, SharingEntryAction.VIEW)) {
-
+		if (sharingEntry.hasSharingPermission(SharingEntryAction.VIEW)) {
 			return SharingEntryPermissionDisplayAction.VIEW;
 		}
 

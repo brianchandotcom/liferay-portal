@@ -197,9 +197,7 @@ public class SharedWithMeViewDisplayContext {
 				_themeDisplay.getUserId(), classNameId, classPK);
 
 		for (SharingEntry sharingEntry : toUserSharingEntries) {
-			if (_sharingEntryLocalService.hasSharingPermission(
-					sharingEntry, SharingEntryAction.UPDATE)) {
-
+			if (sharingEntry.hasSharingPermission(SharingEntryAction.UPDATE)) {
 				return true;
 			}
 		}

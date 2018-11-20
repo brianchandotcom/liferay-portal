@@ -566,7 +566,7 @@ public class SharingEntryLocalServiceImpl
 				continue;
 			}
 
-			if (hasSharingPermission(sharingEntry, sharingEntryAction)) {
+			if (sharingEntry.hasSharingPermission(sharingEntryAction)) {
 				return true;
 			}
 		}
@@ -596,7 +596,7 @@ public class SharingEntryLocalServiceImpl
 				toUserId, classNameId, classPK);
 
 		for (SharingEntry sharingEntry : sharingEntries) {
-			if (hasSharingPermission(sharingEntry, sharingEntryAction)) {
+			if (sharingEntry.hasSharingPermission(sharingEntryAction)) {
 				return true;
 			}
 		}
@@ -604,14 +604,6 @@ public class SharingEntryLocalServiceImpl
 		return false;
 	}
 
-	/**
-	 * Returns {@code true} if the sharing entry has the sharing entry action.
-	 *
-	 * @param  sharingEntry the sharing entry
-	 * @param  sharingEntryAction the sharing entry action
-	 * @return {@code true} if the sharing entry has the sharing entry action;
-	 *         {@code false} otherwise
-	 */
 	@Override
 	public boolean hasSharingPermission(
 		SharingEntry sharingEntry, SharingEntryAction sharingEntryAction) {

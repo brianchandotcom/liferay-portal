@@ -139,6 +139,22 @@ public class SamlUtil {
 		return attributesMap;
 	}
 
+	public static AuthnRequest getAuthnRequest(
+		MessageContext<?> messageContext) {
+
+		InOutOperationContext<AuthnRequest, ?> inOutOperationContext =
+			messageContext.getSubcontext(InOutOperationContext.class, false);
+
+		if (inOutOperationContext == null) {
+			return null;
+		}
+
+		MessageContext<AuthnRequest> inboundMessageContext =
+			inOutOperationContext.getInboundMessageContext();
+
+		return inboundMessageContext.getMessage();
+	}
+
 	public static EntityDescriptor getEntityDescriptorById(
 		String entityId, EntitiesDescriptor descriptor) {
 

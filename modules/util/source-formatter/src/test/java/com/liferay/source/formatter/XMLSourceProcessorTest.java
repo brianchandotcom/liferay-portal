@@ -21,7 +21,6 @@ import org.junit.Test;
  */
 public class XMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 
-	@Test
 	public void testCharactersAfterDefinitionTag() throws Exception {
 		test(
 			"CharactersAfterDefinitionTag1.testmacro",
@@ -37,7 +36,6 @@ public class XMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 			"Characters found after definition element");
 	}
 
-	@Test
 	public void testCharactersBeforeDefinitionTag() throws Exception {
 		test(
 			"CharactersBeforeDefinitionTag1.testmacro",

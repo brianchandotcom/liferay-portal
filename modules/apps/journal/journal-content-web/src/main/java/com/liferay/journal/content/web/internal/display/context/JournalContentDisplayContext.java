@@ -994,12 +994,11 @@ public class JournalContentDisplayContext {
 
 		};
 
-	private static final
-		ServiceTrackerMap<String, ContentMetadataAssetAddonEntry>
+	private static final ServiceTrackerMap
+		<String, ContentMetadataAssetAddonEntry>
 			_contentMetadataAssetAddonEntryMap;
-	private static final
-		ServiceTrackerMap<String, UserToolAssetAddonEntry>
-			_userToolAssetAddonEntryMap;
+	private static final ServiceTrackerMap<String, UserToolAssetAddonEntry>
+		_userToolAssetAddonEntryMap;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(

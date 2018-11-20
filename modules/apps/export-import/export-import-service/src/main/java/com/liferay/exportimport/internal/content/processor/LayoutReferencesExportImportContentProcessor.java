@@ -1019,9 +1019,8 @@ public class LayoutReferencesExportImportContentProcessor
 				StringPool.SLASH;
 
 	private static final String _PUBLIC_GROUP_SERVLET_MAPPING =
-		PropsUtil.get(
-			PropsKeys.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING) +
-				StringPool.SLASH;
+		PropsUtil.get(PropsKeys.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING) +
+			StringPool.SLASH;
 
 	private static final String _TEMPLATE_NAME_PREFIX = "template";
 

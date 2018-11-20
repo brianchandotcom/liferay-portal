@@ -52,8 +52,8 @@ public class EhcachePortalCacheManagerListenerFactory
 
 		try {
 			CacheManagerEventListenerFactory cacheManagerEventListenerFactory =
-				(CacheManagerEventListenerFactory)
-					InstanceFactory.newInstance(getClassLoader(), className);
+				(CacheManagerEventListenerFactory)InstanceFactory.newInstance(
+					getClassLoader(), className);
 
 			return new EhcachePortalCacheManagerListenerAdapter(
 				cacheManagerEventListenerFactory.

@@ -2803,8 +2803,8 @@ public class StagingImpl implements Staging {
 
 				if (!Validator.isBlank(name)) {
 					Map<String, String[]> parameterMap =
-						(Map<String, String[]>)publishLayoutRemoteSettingsMap.
-							get("parameterMap");
+						(Map<String, String[]>)
+							publishLayoutRemoteSettingsMap.get("parameterMap");
 
 					parameterMap.put("name", new String[] {name});
 				}

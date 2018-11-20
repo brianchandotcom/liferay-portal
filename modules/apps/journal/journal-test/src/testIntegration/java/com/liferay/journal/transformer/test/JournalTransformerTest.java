@@ -323,8 +323,7 @@ public class JournalTransformerTest {
 		String content = (String)_transformMethod.invoke(
 			null, null, tokens, Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null,
-			"#parse(\"$templatesPath/" + _ddmTemplate.getTemplateKey() +
-				"\")",
+			"#parse(\"$templatesPath/" + _ddmTemplate.getTemplateKey() + "\")",
 			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);

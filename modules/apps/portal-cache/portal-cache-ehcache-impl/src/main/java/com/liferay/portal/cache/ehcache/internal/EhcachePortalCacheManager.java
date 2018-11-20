@@ -376,8 +376,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		PortalCache<K, V> portalCache) {
 
 		EhcachePortalCache<K, V> ehcachePortalCache =
-			(EhcachePortalCache<K, V>)
-				EhcacheUnwrapUtil.getWrappedPortalCache(portalCache);
+			(EhcachePortalCache<K, V>)EhcacheUnwrapUtil.getWrappedPortalCache(
+				portalCache);
 
 		Map<PortalCacheListener<K, V>, PortalCacheListenerScope>
 			portalCacheListeners = ehcachePortalCache.getPortalCacheListeners();

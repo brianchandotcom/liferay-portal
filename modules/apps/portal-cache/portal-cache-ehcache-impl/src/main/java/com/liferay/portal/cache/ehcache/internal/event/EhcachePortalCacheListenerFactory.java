@@ -54,8 +54,8 @@ public class EhcachePortalCacheListenerFactory
 
 		if (replicator) {
 			PortalCacheListener<K, V> portalCacheListener =
-				(PortalCacheListener<K, V>)
-					_portalCacheReplicatorFactory.create(properties);
+				(PortalCacheListener<K, V>)_portalCacheReplicatorFactory.create(
+					properties);
 
 			if (portalCacheListener == null) {
 				return null;

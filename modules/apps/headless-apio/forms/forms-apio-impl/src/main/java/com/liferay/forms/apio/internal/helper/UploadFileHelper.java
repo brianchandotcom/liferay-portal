@@ -71,9 +71,7 @@ public class UploadFileHelper {
 		Optional<Long> folderIdOptional =
 			mediaObjectCreatorForm.getFolderIdOptional();
 
-		long folderId = folderIdOptional.orElse(
-			0L
-		);
+		long folderId = folderIdOptional.orElse(0L);
 
 		BinaryFile binaryFile = mediaObjectCreatorForm.getBinaryFile();
 

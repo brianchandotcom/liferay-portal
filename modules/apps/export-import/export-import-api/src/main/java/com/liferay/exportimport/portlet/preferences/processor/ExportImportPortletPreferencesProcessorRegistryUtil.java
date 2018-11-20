@@ -83,10 +83,9 @@ public class ExportImportPortletPreferencesProcessorRegistryUtil {
 	private final BundleContext _bundleContext;
 	private final Map<String, ExportImportPortletPreferencesProcessor>
 		_exportImportPortletPreferencesProcessors = new ConcurrentHashMap<>();
-	private final
-		ServiceTracker
-			<ExportImportPortletPreferencesProcessor,
-			 ExportImportPortletPreferencesProcessor> _serviceTracker;
+	private final ServiceTracker
+		<ExportImportPortletPreferencesProcessor,
+		 ExportImportPortletPreferencesProcessor> _serviceTracker;
 
 	private class ExportImportPortletPreferencesProcessorServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

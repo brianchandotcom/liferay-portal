@@ -167,8 +167,8 @@ public class LayoutPageTemplateCollectionServiceImpl
 				layoutPageTemplateCollectionId, name, description);
 	}
 
-	private static volatile
-		ModelResourcePermission<LayoutPageTemplateCollection>
+	private static volatile ModelResourcePermission
+		<LayoutPageTemplateCollection>
 			_layoutPageTemplateCollectionModelResourcePermission =
 				ModelResourcePermissionFactory.getInstance(
 					LayoutPageTemplateCollectionServiceImpl.class,

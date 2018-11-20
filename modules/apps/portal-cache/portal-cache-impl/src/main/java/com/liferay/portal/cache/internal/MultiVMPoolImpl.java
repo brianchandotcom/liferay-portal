@@ -186,9 +186,8 @@ public class MultiVMPoolImpl implements MultiVMPool {
 	private ServiceTracker
 		<SPIPortalCacheManagerConfigurator, SPIPortalCacheManagerConfigurator>
 			_serviceTracker;
-	private volatile
-		PortalCacheManager<? extends Serializable, ? extends Serializable>
-			_spiPortalCacheManager;
+	private volatile PortalCacheManager
+		<? extends Serializable, ? extends Serializable> _spiPortalCacheManager;
 
 	private class SPIPortalCacheManagerConfiguratorServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

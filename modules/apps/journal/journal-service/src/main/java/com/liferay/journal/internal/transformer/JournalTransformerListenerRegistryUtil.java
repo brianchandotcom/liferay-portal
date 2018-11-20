@@ -42,9 +42,8 @@ public class JournalTransformerListenerRegistryUtil {
 		return journalTransformerListenerRegistry.getTransformerListeners();
 	}
 
-	private static final
-		ServiceTracker<?, JournalTransformerListenerRegistry> _serviceTracker =
-			ServiceTrackerFactory.open(
-				JournalTransformerListenerRegistry.class);
+	private static final ServiceTracker<?, JournalTransformerListenerRegistry>
+		_serviceTracker = ServiceTrackerFactory.open(
+			JournalTransformerListenerRegistry.class);
 
 }

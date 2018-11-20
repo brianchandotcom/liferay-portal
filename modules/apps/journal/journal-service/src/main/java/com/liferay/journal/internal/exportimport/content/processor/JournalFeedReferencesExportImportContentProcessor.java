@@ -385,8 +385,8 @@ public class JournalFeedReferencesExportImportContentProcessor
 			if (journalFeed == null) {
 				ExportImportContentValidationException eicve =
 					new ExportImportContentValidationException(
-						JournalFeedReferencesExportImportContentProcessor.
-							class.getName(),
+						JournalFeedReferencesExportImportContentProcessor.class.
+							getName(),
 						new NoSuchFeedException());
 
 				eicve.setStagedModelClassName(JournalFeed.class.getName());

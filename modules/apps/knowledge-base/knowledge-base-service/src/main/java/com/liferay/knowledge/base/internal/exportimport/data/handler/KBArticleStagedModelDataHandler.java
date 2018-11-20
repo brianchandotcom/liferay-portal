@@ -256,8 +256,9 @@ public class KBArticleStagedModelDataHandler
 
 				if (existingKBArticle == null) {
 					Map<Long, Long> kbFolderIds =
-						(Map<Long, Long>)portletDataContext.
-							getNewPrimaryKeysMap(KBFolder.class);
+						(Map<Long, Long>)
+							portletDataContext.getNewPrimaryKeysMap(
+								KBFolder.class);
 
 					long kbFolderId = MapUtil.getLong(
 						kbFolderIds, kbArticle.getKbFolderId(),

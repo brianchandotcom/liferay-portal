@@ -274,6 +274,124 @@
 		<execute function="AssertElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" />
 	</command>
 
+	<command name="EditUserAddresses" priority="4">
+		<execute macro="JSONUser#addUser">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="UserNavigator#gotoUser">
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="UserNavigator#gotoContact" />
+
+		<execute macro="User#addAddress">
+			<var name="city" value="Diamond Bar" />
+			<var name="country" value="United States" />
+			<var name="postalCode" value="91765" />
+			<var name="region" value="California" />
+			<var name="street1" value="1400 Montefino Ave" />
+		</execute>
+
+		<execute macro="User#viewAddress">
+			<var name="city" value="Diamond Bar" />
+			<var name="country" value="United States" />
+			<var name="postalCode" value="91765" />
+			<var name="region" value="California" />
+			<var name="street1" value="1400 Montefino Ave" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="primaryValue" value="1400 Montefino Ave" />
+		</execute>
+
+		<execute macro="User#addAddress">
+			<var name="city" value="Chicago" />
+			<var name="makePrimary" value="true" />
+			<var name="postalCode" value="60606" />
+			<var name="street1" value="205 West Wacker Dr" />a
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="primaryValue" value="205 West Wacker Dr" />
+		</execute>
+
+		<execute macro="User#addAddress">
+			<var name="city" value="Raleigh" />
+			<var name="postalCode" value="27607" />
+			<var name="street1" value="4000 Westchase Blvd" />a
+		</execute>
+
+		<execute macro="User#viewNotPrimary">
+			<var name="primaryValue" value="1400 Montefino Ave" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="primaryValue" value="205 West Wacker Dr" />
+		</execute>
+
+		<execute macro="User#viewNotPrimary">
+			<var name="primaryValue" value="4000 Westchase Blvd" />
+		</execute>
+
+		<execute macro="UserNavigator#gotoEditAddress">
+			<var name="rowEntry" value="205 West Wacker Dr" />
+		</execute>
+
+		<execute macro="User#editPrimary">
+			<var name="makePrimary" value="false" />
+		</execute>
+
+		<execute macro="User#viewNotPrimary">
+			<var name="primaryValue" value="205 West Wacker Dr" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="primaryValue" value="4000 Westchase Blvd" />
+		</execute>
+
+		<execute macro="User#makePrimary">
+			<var name="rowEntry" value="205 West Wacker Dr" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="primaryValue" value="205 West Wacker Dr" />
+		</execute>
+
+		<execute macro="User#viewNotPrimary">
+			<var name="primaryValue" value="1400 Montefino Ave" />
+		</execute>
+
+		<execute macro="User#viewNotPrimary">
+			<var name="primaryValue" value="4000 Westchase Blvd" />
+		</execute>
+
+		<execute macro="User#removeAddress">
+			<var name="rowEntry" value="4000 Westchase Blvd" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="primaryValue" value="205 West Wacker Dr" />
+		</execute>
+
+		<execute macro="User#removeAddress">
+			<var name="rowEntry" value="205 West Wacker Dr" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="primaryValue" value="1400 Montefino Ave" />
+		</execute>
+	</command>
+
 	<command name="ImpersonatingAdministratorandOwner" priority="4">
 		<property name="test.name.skip.portal.instance" value="UsersandorganizationsUsecase#ImpersonatingAdministratorandOwner" />
 

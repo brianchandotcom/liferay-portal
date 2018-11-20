@@ -272,6 +272,12 @@
 	<td>//label[@id='uploadImage']</td>
 	<td></td>
 </tr>
+<!--ADDRESSES-->
+<tr>
+	<td>ADDRESSES_ADD_BUTTON</td>
+	<td>//a[contains(@class,'btn')]/span[contains(.,'Add')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

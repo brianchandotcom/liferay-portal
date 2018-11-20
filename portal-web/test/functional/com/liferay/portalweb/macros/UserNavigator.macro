@@ -13,6 +13,16 @@
 		</execute>
 	</command>
 
+	<command name="gotoEditAddress">
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#TABLE_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${rowEntry}" />
+		</execute>
+
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Edit" />
+		</execute>
+	</command>
+
 	<command name="gotoGeneral">
 		<if>
 			<condition function="IsElementNotPresent" locator1="NavUnderline#ACTIVE_NAV_UNDERLINE_LINK" />

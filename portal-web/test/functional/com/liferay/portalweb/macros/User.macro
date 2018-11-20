@@ -48,6 +48,47 @@
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>
 
+	<command name="addAddress">
+		<execute function="Click#mouseDownMouseUp" locator1="UsersAndOrganizationsEditUser#ADDRESSES_ADD_BUTTON" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<if>
+			<equals arg1="${makePrimary}" arg2="true" />
+			<then>
+				<execute function="Check" locator1="Checkbox#ANY_CHECKBOX">
+					<var name="checkboxName" value="Make Primary" />
+				</execute>
+			</then>
+		</if>
+
+		<execute function="Type" locator1="TextInput#STREET_1" value1="${street1}" />
+
+		<execute function="Type" locator1="TextInput#CITY" value1="${city}" />
+
+		<if>
+			<isset var="country" />
+			<then>
+				<execute function="Select" locator1="Select#COUNTRY" value1="${country}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="region" />
+			<then>
+				<execute function="Select" locator1="Select#REGION" value1="${region}" />
+			</then>
+		</if>
+
+		<execute function="Type" locator1="TextInput#POSTAL_CODE" value1="${postalCode}" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="Click" locator1="Button#SAVE" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="addAddressViaMyAccount">
 		<execute function="Click" locator1="NavBar#ADDRESSES" />
 
@@ -1041,6 +1082,33 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
+	<command name="editPrimary">
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<if>
+			<equals arg1="${makePrimary}" arg2="true" />
+			<then>
+				<execute function="Check" locator1="Checkbox#ANY_CHECKBOX">
+					<var name="checkboxName" value="Make Primary" />
+				</execute>
+			</then>
+			<elseif>
+				<equals arg1="${makePrimary}" arg2="false" />
+				<then>
+					<execute function="Uncheck" locator1="Checkbox#ANY_CHECKBOX">
+						<var name="checkboxName" value="Make Primary" />
+					</execute>
+				</then>
+			</elseif>
+		</if>
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="Click" locator1="Button#SAVE" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="editUserDisplaySettingsCP">
 		<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -1697,9 +1765,29 @@
 		<execute macro="UserBar#signOut" />
 	</command>
 
+	<command name="makePrimary">
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#TABLE_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${rowEntry}" />
+		</execute>
+
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Make Primary" />
+		</execute>
+	</command>
+
 	<command name="openUsersAdmin">
 		<execute macro="Navigator#openWithAppendToBaseURL">
 			<var name="urlAppend" value="group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet" />
+		</execute>
+	</command>
+
+	<command name="removeAddress">
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#TABLE_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${rowEntry}" />
+		</execute>
+
+		<execute macro="MenuItem#click">
+			<var name="menuItem" value="Remove" />
 		</execute>
 	</command>
 
@@ -1956,6 +2044,16 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
+	<command name="viewAddress">
+		<var name="key_primaryValue" value="${street1}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="UsersAndOrganizations#USER_ADDRESS_TABLE" value1="${city}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="UsersAndOrganizations#USER_ADDRESS_TABLE" value1="${country}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="UsersAndOrganizations#USER_ADDRESS_TABLE" value1="${postalCode}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="UsersAndOrganizations#USER_ADDRESS_TABLE" value1="${region}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="UsersAndOrganizations#USER_ADDRESS_TABLE" value1="${street1}" />
+	</command>
+
 	<command name="viewCaptchaPG">
 		<if>
 			<equals arg1="${captchaType}" arg2="captcha" />
@@ -2027,6 +2125,12 @@
 		</if>
 	</command>
 
+	<command name="viewIsPrimary">
+		<var name="key_primaryValue" value="${primaryValue}" />
+
+		<execute function="AssertElementPresent" locator1="UsersAndOrganizations#USER_ADDRESS_PRIMARY_TABLE" />
+	</command>
+
 	<command name="viewLoggedInPG">
 		<execute macro="ProductMenuHelper#expandPanel">
 			<var name="panel" value="Control Panel" />
@@ -2078,6 +2182,12 @@
 		<execute function="AssertElementPresent" locator1="Checkbox#REMEMBER_ME" />
 
 		<execute function="AssertTextEquals" locator1="Button#SIGN_IN" value1="Sign In" />
+	</command>
+
+	<command name="viewNotPrimary">
+		<var name="key_primaryValue" value="${primaryValue}" />
+
+		<execute function="AssertElementNotPresent" locator1="UsersAndOrganizations#USER_ADDRESS_PRIMARY_TABLE" />
 	</command>
 
 	<command name="viewNoUsersFoundCP">

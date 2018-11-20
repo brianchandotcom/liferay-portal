@@ -88,6 +88,17 @@
 	<td>//tr[contains(.,'${key_userScreenName}')]/td[7]//span/a[contains(.,'Impersonate User')]</td>
 	<td></td>
 </tr>
+<!--USER_ADDRESS_TABLE-->
+<tr>
+	<td>USER_ADDRESS_TABLE</td>
+	<td>//tr[contains(.,'${key_primaryValue}')]/td[2]/div[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_ADDRESS_PRIMARY_TABLE</td>
+	<td>//tr[contains(.,'${key_primaryValue}')]//span/span[contains(.,'PRIMARY')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

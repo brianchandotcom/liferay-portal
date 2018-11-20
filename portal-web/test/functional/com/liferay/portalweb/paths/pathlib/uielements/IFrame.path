@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DIALOG_2</td>
+	<td>//iframe[contains(@class,'dialog-iframe-modal')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_TYPES</td>
 	<td>//iframe[contains(@id,'_openFileEntryTypeView_iframe_')]</td>
 	<td></td>

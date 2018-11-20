@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.security.permission.SharingPermission;
@@ -89,8 +89,8 @@ public class SharingUtil {
 			}
 		}
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, SharingUtil.class);
 
 		return SharingEntryPermissionDisplay.getSharingEntryPermissionDisplays(
 			sharingEntryActions, resourceBundle);
@@ -102,9 +102,6 @@ public class SharingUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(SharingUtil.class);
-
-	@Reference(target = "(bundle.symbolic.name=com.liferay.sharing.web)")
-	private ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference
 	private SharingEntryLocalService _sharingEntryLocalService;

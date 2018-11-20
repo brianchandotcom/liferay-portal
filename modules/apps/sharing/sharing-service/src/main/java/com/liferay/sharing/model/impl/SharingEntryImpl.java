@@ -16,6 +16,8 @@ package com.liferay.sharing.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.sharing.security.permission.SharingEntryAction;
+
 /**
  * The extended model implementation for the {@code SharingEntry} service.
  * Represents a row in the {@code SharingEntry} database table, with each column
@@ -33,13 +35,19 @@ import aQute.bnd.annotation.ProviderType;
 public class SharingEntryImpl extends SharingEntryBaseImpl {
 
 	/**
-	 * NOTE FOR DEVELOPERS:
+	 * Returns {@code true} if the sharing entry has the sharing entry action.
 	 *
-	 * Never reference this class directly. All methods that expect a sharing
-	 * entry model instance should use the {@link
-	 * com.liferay.sharing.model.SharingEntry} interface instead.
+	 * @param  sharingEntryAction the sharing entry action
+	 * @return {@code true} if the sharing entry has the sharing entry action;
+	 *         {@code false} otherwise
 	 */
-	public SharingEntryImpl() {
+	@Override
+	public boolean hasSharingPermission(SharingEntryAction sharingEntryAction) {
+		if ((getActionIds() & sharingEntryAction.getBitwiseValue()) != 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

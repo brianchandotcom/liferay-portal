@@ -3,6 +3,7 @@ export const capitalize = text => {
 };
 
 const SPLIT_REGEX = /({\d+})/g;
+
 const SPLIT_WORDS_REGEX = /({\w+})/g;
 
 export function sub(langKey, args) {
@@ -29,13 +30,15 @@ export function subWords(langKey, args) {
 	const keyArray = langKey.split(SPLIT_WORDS_REGEX).filter(val => val.length !== 0);
 
 	for (const arg in args) {
-		const indexKey = `{${arg}}`;
-		let argIndex = keyArray.indexOf(indexKey);
+		if (args.hasOwnProperty(arg)) {
+			const indexKey = `{${arg}}`;
+			let argIndex = keyArray.indexOf(indexKey);
 
-		while (argIndex >= 0) {
-			keyArray.splice(argIndex, 1, args[arg]);
+			while (argIndex >= 0) {
+				keyArray.splice(argIndex, 1, args[arg]);
 
-			argIndex = keyArray.indexOf(indexKey);
+				argIndex = keyArray.indexOf(indexKey);
+			}
 		}
 	}
 

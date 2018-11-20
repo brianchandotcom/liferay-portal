@@ -14,8 +14,6 @@
 
 package com.liferay.portal.monitoring.statistics.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.monitoring.DataSample;
 import com.liferay.portal.kernel.monitoring.DataSampleFactory;
 import com.liferay.portal.kernel.monitoring.MethodSignature;
@@ -30,7 +28,6 @@ import javax.portlet.PortletResponse;
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class DataSampleFactoryUtil {
 
 	public static DataSample createPortalRequestDataSample(

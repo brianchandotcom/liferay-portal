@@ -7,6 +7,12 @@
 
 	<target name="prepare-tck">
 
+		<!-- Prepare TCK target is expected by CI. -->
+		<echo>prepare-tck</echo>
+	</target>
+
+	<target name="prepare-tck-appserver">
+
 		<propertycopy
 			from="app.server.${app.server.type}.classes.portal.dir"
 			name="app.server.classes.portal.dir" override="true"
@@ -42,7 +48,7 @@
 
 		<!--
 		Due to a Liferay-specific performance optimization, the Portlet Hub dependency must be
-		configured statically in order for top_head.jsp to output render data
+		configured statically in order for top_head.jsp to output render data.
 		-->
 		<exec dir="${tck.home}/.." executable="git" failonerror="true">
 			<arg value="apply" />

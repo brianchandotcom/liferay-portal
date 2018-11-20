@@ -6501,12 +6501,33 @@ ${output.content}</echo>
 					<test-action>
 						<ant antfile="build-test-tck.xml" target="prepare-tck" />
 
+						<ant antfile="build-test-tck.xml" target="prepare-tck-appserver" />
+
 						<ant antfile="build-test-tck.xml" target="run-tck-tests" />
 
 						<ant antfile="build-test-tck.xml" target="cleanup-tck" />
 					</test-action>
 				</database-test-run-test>
 			</test-action>
+
+			<test-set-up>
+				<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+				<if>
+					<isset property="env.DIST_PATH" />
+					<then>
+						<prepare-test-environment />
+					</then>
+					<else>
+						<prepare-test-build />
+					</else>
+				</if>
+
+				<antcall target="prepare-portal-ext-properties">
+					<param name="hot.deploy.dependency.management.enabled" value="false" />
+				</antcall>
+
+				<antcall target="prepare-system-ext-properties" />
+			</test-set-up>
 		</run-batch-test>
 	</target>
 

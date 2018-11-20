@@ -145,16 +145,16 @@ public class KeyStoreCredentialResolver extends AbstractCredentialResolver {
 	}
 
 	@Override
-	protected Iterable<Credential> resolveFromSource(CriteriaSet criteriaSet)
+	public Iterable<Credential> resolve(CriteriaSet criteriaSet)
 		throws SecurityException {
 
 		try {
 			checkCriteriaRequirements(criteriaSet);
 
-			EntityIDCriteria entityIDCriteria = criteriaSet.get(
-				EntityIDCriteria.class);
+			EntityIdCriterion entityIDCriterion = criteriaSet.get(
+				EntityIdCriterion.class);
 
-			String entityId = entityIDCriteria.getEntityID();
+			String entityId = entityIDCriterion.getEntityId();
 
 			KeyStore.PasswordProtection keyStorePasswordProtection = null;
 
@@ -183,10 +183,11 @@ public class KeyStoreCredentialResolver extends AbstractCredentialResolver {
 
 			UsageType usageType = UsageType.UNSPECIFIED;
 
-			UsageCriteria usageCriteria = criteriaSet.get(UsageCriteria.class);
+			UsageCriterion usageCriterion = criteriaSet.get(
+				UsageCriterion.class);
 
-			if (usageCriteria != null) {
-				usageType = usageCriteria.getUsage();
+			if (usageCriterion != null) {
+				usageType = usageCriterion.getUsage();
 			}
 
 			Credential credential = buildCredential(entry, entityId, usageType);

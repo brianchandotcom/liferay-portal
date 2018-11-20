@@ -86,8 +86,6 @@ public class DBMetadataResolver extends AbstractMetadataResolver {
 			return domMetadataResolver.resolve(criteriaSet);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
-
 			throw new ResolverException(e);
 		}
 	}

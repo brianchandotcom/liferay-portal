@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 import java.util.List;
 
 /**
@@ -33,7 +35,23 @@ public class JavaConstructorDefinition extends BaseJavaTerm {
 	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength) {
 
-		return _javaSignature.toString(indent, prefix, " {", maxLineLength);
+		StringBundler sb = new StringBundler();
+
+		for (int i = 0; i < _javaAnnotations.size(); i++) {
+			if (i == 0) {
+				appendNewLine(
+					sb, _javaAnnotations.get(i), indent, prefix, "",
+					maxLineLength);
+			}
+			else {
+				appendNewLine(
+					sb, _javaAnnotations.get(i), indent, maxLineLength);
+			}
+		}
+
+		appendNewLine(sb, _javaSignature, indent, "", suffix, maxLineLength);
+
+		return sb.toString();
 	}
 
 	private List<JavaAnnotation> _javaAnnotations;

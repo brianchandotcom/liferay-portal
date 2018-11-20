@@ -302,7 +302,7 @@ public class DDMFormAdminDisplayContext {
 			ddmFormRenderingContext.setHttpServletRequest(httpServletRequest);
 			ddmFormRenderingContext.setHttpServletResponse(httpServletResponse);
 			ddmFormRenderingContext.setContainerId("settings");
-			ddmFormRenderingContext.setLocale(themeDisplay.getLocale());
+			ddmFormRenderingContext.setLocale(LocaleUtil.fromLanguageId(getDefaultLanguageId()));
 			ddmFormRenderingContext.setPortletNamespace(
 				_renderResponse.getNamespace());
 
@@ -841,7 +841,7 @@ public class DDMFormAdminDisplayContext {
 		DDMFormBuilderContextRequest ddmFormBuilderContextRequest =
 			DDMFormBuilderContextRequest.with(
 				Optional.ofNullable(null), themeDisplay.getRequest(),
-				themeDisplay.getResponse(), themeDisplay.getSiteDefaultLocale(),
+				themeDisplay.getResponse(), LocaleUtil.fromLanguageId(getDefaultLanguageId()),
 				true);
 
 		ddmFormBuilderContextRequest.addProperty(

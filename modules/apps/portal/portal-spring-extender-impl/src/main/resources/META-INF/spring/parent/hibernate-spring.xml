@@ -14,7 +14,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean class="com.liferay.portal.spring.extender.internal.hibernate.configuration.ModuleHibernateConfiguration" id="liferayHibernateSessionFactory">
+	<bean class="com.liferay.portal.spring.hibernate.PortletHibernateConfiguration" id="liferayHibernateSessionFactory">
 		<property name="dataSource" ref="liferayDataSource" />
 		<property name="hibernateProperties">
 			<props>

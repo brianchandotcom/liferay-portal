@@ -53,7 +53,9 @@ public class PortletHibernateConfiguration
 
 	@Override
 	protected String[] getConfigurationResources() {
-		return new String[] {"META-INF/portlet-hbm.xml"};
+		return new String[] {
+			"META-INF/module-hbm.xml", "META-INF/portlet-hbm.xml"
+		};
 	}
 
 	private ClassLoader _classLoader;

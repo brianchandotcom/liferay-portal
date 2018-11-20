@@ -18,7 +18,6 @@ Export-Package:\
 	com.liferay.portal.servlet.filters.authverifier,\
 	com.liferay.portal.spring.bean,\
 	com.liferay.portal.spring.configurator,\
-	com.liferay.portal.spring.jndi,\
 	com.liferay.portal.template,\
 	com.liferay.portal.tools,\
 	com.liferay.portal.upgrade.util,\

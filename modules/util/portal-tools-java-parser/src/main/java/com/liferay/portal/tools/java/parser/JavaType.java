@@ -110,15 +110,7 @@ public class JavaType extends BaseJavaTerm {
 
 		sb.append(suffix);
 
-		String s = sb.toString();
-
-		if (!forceLineBreak && (getLineLength(s) > maxLineLength) &&
-			(maxLineLength != -1)) {
-
-			return toString(indent, prefix, suffix, maxLineLength, true);
-		}
-
-		return s;
+		return sb.toString();
 	}
 
 	private final int _arrayDimension;

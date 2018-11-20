@@ -36,9 +36,10 @@ public class JavaInstanceofStatement extends JavaExpression {
 		sb.append(prefix);
 
 		indent = append(
-			sb, _valueJavaExpression, indent, "", " instanceof", maxLineLength);
+			sb, _valueJavaExpression, indent, "", " instanceof ",
+			maxLineLength);
 
-		append(sb, _classJavaType, indent, " ", suffix, maxLineLength);
+		append(sb, _classJavaType, indent, "", suffix, maxLineLength);
 
 		return sb.toString();
 	}

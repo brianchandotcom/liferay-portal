@@ -45,14 +45,16 @@ public class JavaOperatorExpression extends JavaExpression {
 
 					append(
 						sb, _leftHandJavaExpression, indent, prefix,
-						" " + _javaOperator.getValue(), maxLineLength, false);
+						" " + _javaOperator.getValue() + " ", maxLineLength,
+						false);
 
 					indent = StringUtil.replaceFirst(indent, "\t", "");
 				}
 				else {
 					indent = append(
 						sb, _leftHandJavaExpression, indent, prefix,
-						" " + _javaOperator.getValue(), maxLineLength, false);
+						" " + _javaOperator.getValue() + " ", maxLineLength,
+						false);
 				}
 
 				if (forceLineBreak ||
@@ -60,12 +62,12 @@ public class JavaOperatorExpression extends JavaExpression {
 						JavaOperatorExpression)) {
 
 					append(
-						sb, _rightHandJavaExpression, indent, " ", suffix,
+						sb, _rightHandJavaExpression, indent, "", suffix,
 						maxLineLength);
 				}
 				else {
 					append(
-						sb, _rightHandJavaExpression, indent, " ", suffix,
+						sb, _rightHandJavaExpression, indent, "", suffix,
 						maxLineLength);
 				}
 			}

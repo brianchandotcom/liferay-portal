@@ -67,12 +67,12 @@ public class JavaSignature extends BaseJavaTerm {
 		sb.append(indent);
 
 		if (!_modifiers.isEmpty()) {
-			appendSingleLine(sb, _modifiers, " ", maxLineLength);
+			appendSingleLine(sb, _modifiers, " ", "", " ", maxLineLength);
 		}
 
 		if (_genericJavaTypes != null) {
 			indent = append(
-				sb, _genericJavaTypes, indent, " <", ">", maxLineLength);
+				sb, _genericJavaTypes, indent, "<", "> ", maxLineLength);
 		}
 
 		if (_returnJavaType != null) {
@@ -83,7 +83,7 @@ public class JavaSignature extends BaseJavaTerm {
 			}
 
 			indent = append(
-				sb, _returnJavaType, indent, " ", "", maxLineLength, newLine);
+				sb, _returnJavaType, indent, "", " ", maxLineLength, newLine);
 		}
 
 		if (_javaParameters.isEmpty()) {
@@ -92,27 +92,27 @@ public class JavaSignature extends BaseJavaTerm {
 					((_returnJavaType == null) ||
 					 Objects.equals(_returnJavaType.toString(), "void"))) {
 
-					appendSingleLine(sb, _objectName, " ", "()" + suffix, -1);
+					appendSingleLine(sb, _objectName, "", "()" + suffix, -1);
 				}
 				else {
 					append(
-						sb, _objectName, indent, " ", "()" + suffix,
+						sb, _objectName, indent, "", "()" + suffix,
 						maxLineLength);
 				}
 
 				return sb.toString();
 			}
 
-			if (!appendSingleLine(sb, _objectName, " ", "()", maxLineLength)) {
+			if (!appendSingleLine(sb, _objectName, "", "() ", maxLineLength)) {
 				if ((_genericJavaTypes == null) &&
 					((_returnJavaType == null) ||
 					 Objects.equals(_returnJavaType.toString(), "void"))) {
 
-					appendSingleLine(sb, _objectName, " ", "()", -1);
+					appendSingleLine(sb, _objectName, "", "() ", -1);
 				}
 				else {
 					appendNewLine(
-						sb, _objectName, indent + "\t\t", "", "()",
+						sb, _objectName, indent + "\t\t", "", "() ",
 						maxLineLength);
 				}
 
@@ -124,14 +124,14 @@ public class JavaSignature extends BaseJavaTerm {
 			}
 
 			append(
-				sb, _exceptionJavaExpressions, indent, " throws ", suffix,
+				sb, _exceptionJavaExpressions, indent, "throws ", suffix,
 				maxLineLength);
 
 			return sb.toString();
 		}
 
 		if (_exceptionJavaExpressions.isEmpty()) {
-			if (appendSingleLine(sb, _objectName, " ", "(", maxLineLength)) {
+			if (appendSingleLine(sb, _objectName, "", "(", maxLineLength)) {
 				append(
 					sb, _javaParameters, indent, "", ")" + suffix,
 					maxLineLength);
@@ -143,7 +143,7 @@ public class JavaSignature extends BaseJavaTerm {
 				((_returnJavaType == null) ||
 				 Objects.equals(_returnJavaType.toString(), "void"))) {
 
-				appendSingleLine(sb, _objectName, " ", "(", -1);
+				appendSingleLine(sb, _objectName, "", "(", -1);
 				appendNewLine(
 					sb, _javaParameters, indent + "\t", "", ")" + suffix,
 					maxLineLength);
@@ -159,7 +159,7 @@ public class JavaSignature extends BaseJavaTerm {
 			return sb.toString();
 		}
 
-		if (appendSingleLine(sb, _objectName, " ", "(", maxLineLength)) {
+		if (appendSingleLine(sb, _objectName, "", "(", maxLineLength)) {
 			if (appendSingleLine(sb, _javaParameters, "", ")", maxLineLength)) {
 				if (appendSingleLine(
 						sb, _exceptionJavaExpressions,

@@ -15,7 +15,6 @@
 package com.liferay.portal.tools.java.parser;
 
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 
 /**
@@ -31,8 +30,6 @@ public class JavaSimpleValue extends JavaExpression {
 	public String getString(
 		String indent, String prefix, String suffix, int maxLineLength,
 		boolean forceLineBreak) {
-
-		prefix = StringUtil.trimLeading(prefix);
 
 		String s = StringBundler.concat(indent, prefix, _name, suffix);
 

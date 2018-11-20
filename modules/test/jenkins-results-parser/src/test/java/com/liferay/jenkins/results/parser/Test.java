@@ -33,7 +33,6 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ErrorCollector;
@@ -221,10 +220,6 @@ public class Test {
 				JenkinsResultsParserUtil.getLocalURL(urlString)));
 	}
 
-	protected void failTest(String message) {
-		Assert.fail(message);
-	}
-
 	protected String fixMessage(String message) {
 		if (message.contains(JenkinsResultsParserUtil.DEPENDENCIES_URL_FILE)) {
 			message = message.replace(
@@ -312,6 +307,27 @@ public class Test {
 		}
 
 		return string.replace("${" + token + "}", value);
+	}
+
+	protected void testEquals(String expected, String actual) {
+		if (!((expected == null) ^ (actual == null))) {
+			if ((expected != null) && !expected.equals(actual)) {
+				errorCollector.addError(
+					new Throwable(
+						JenkinsResultsParserUtil.combine(
+							"String mismatch\nExpected:", expected, "\nActual:",
+							actual)));
+			}
+		}
+		else {
+			errorCollector.addError(
+				new Throwable(
+					JenkinsResultsParserUtil.combine(
+						"String mismatch\nExpected:", expected, "\nActual:",
+						actual)));
+		}
+
+		return;
 	}
 
 	protected String toURLString(File file) throws Exception {

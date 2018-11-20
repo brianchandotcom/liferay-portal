@@ -152,6 +152,10 @@ public class ServiceBuilderArgs {
 		return _osgiModule;
 	}
 
+	public boolean isSpringConfiguratorEnabled() {
+		return _springConfiguratorEnabled;
+	}
+
 	public void setApiDirName(String apiDirName) {
 		_apiDirName = apiDirName;
 	}
@@ -266,6 +270,12 @@ public class ServiceBuilderArgs {
 
 	public void setResourcesDirName(String resourcesDirName) {
 		_resourcesDirName = resourcesDirName;
+	}
+
+	public void setSpringConfiguratorEnabled(
+		boolean springConfiguratorEnabled) {
+
+		_springConfiguratorEnabled = springConfiguratorEnabled;
 	}
 
 	public void setSpringFileName(String springFileName) {
@@ -384,6 +394,7 @@ public class ServiceBuilderArgs {
 	private String[] _resourceActionsConfigs = RESOURCE_ACTION_CONFIGS;
 	private boolean _resourceActionsConfigsSet;
 	private String _resourcesDirName = "src";
+	private boolean _springConfiguratorEnabled;
 	private String _springFileName = "src/META-INF/portal-spring.xml";
 	private String[] _springNamespaces = {"beans"};
 	private String _sqlDirName = "../sql";

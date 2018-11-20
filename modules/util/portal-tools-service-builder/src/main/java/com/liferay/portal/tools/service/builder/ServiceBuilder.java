@@ -212,6 +212,8 @@ public class ServiceBuilder {
 		String targetEntityName = arguments.get("service.target.entity.name");
 		String testDirName = arguments.get("service.test.dir");
 		String uadDirName = arguments.get("service.uad.dir");
+		boolean springConfiguratorEnabled = GetterUtil.getBoolean(
+			arguments.get("spring.configurator.enabled"));
 
 		Set<String> resourceActionModels = readResourceActionModels(
 			implDirName, resourcesDirName, resourceActionsConfigs);
@@ -235,7 +237,7 @@ public class ServiceBuilder {
 				readOnlyPrefixes, resourceActionModels, resourcesDirName,
 				springFileName, springNamespaces, sqlDirName, sqlFileName,
 				sqlIndexesFileName, sqlSequencesFileName, targetEntityName,
-				testDirName, uadDirName, true);
+				testDirName, uadDirName, springConfiguratorEnabled, true);
 
 			String modifiedFileNames = StringUtil.merge(
 				serviceBuilder.getModifiedFileNames());
@@ -485,7 +487,7 @@ public class ServiceBuilder {
 			pluginName, propsUtil, readOnlyPrefixes, resourceActionModels,
 			resourcesDirName, springFileName, springNamespaces, sqlDirName,
 			sqlFileName, sqlIndexesFileName, sqlSequencesFileName,
-			targetEntityName, testDirName, uadDirName, true);
+			targetEntityName, testDirName, uadDirName, true, true);
 	}
 
 	public ServiceBuilder(
@@ -499,7 +501,8 @@ public class ServiceBuilder {
 			String springFileName, String[] springNamespaces, String sqlDirName,
 			String sqlFileName, String sqlIndexesFileName,
 			String sqlSequencesFileName, String targetEntityName,
-			String testDirName, String uadDirName, boolean build)
+			String testDirName, String uadDirName,
+			boolean springConfiguratorEnabled, boolean build)
 		throws Exception {
 
 		_tplBadAliasNames = _getTplProperty(
@@ -584,6 +587,7 @@ public class ServiceBuilder {
 			_targetEntityName = targetEntityName;
 			_testDirName = _normalize(testDirName);
 			_uadDirName = _normalize(uadDirName);
+			_springConfiguratorEnabled = springConfiguratorEnabled;
 			_build = build;
 
 			_badTableNames = _readLines(_tplBadTableNames);
@@ -1130,7 +1134,8 @@ public class ServiceBuilder {
 			_pluginName, _propsUtil, _readOnlyPrefixes, _resourceActionModels,
 			_resourcesDirName, _springFileName, _springNamespaces, _sqlDirName,
 			_sqlFileName, _sqlIndexesFileName, _sqlSequencesFileName,
-			_targetEntityName, _testDirName, _uadDirName, false);
+			_targetEntityName, _testDirName, _uadDirName,
+			_springConfiguratorEnabled, false);
 
 		entity = serviceBuilder.getEntity(refEntity);
 
@@ -1839,6 +1844,10 @@ public class ServiceBuilder {
 		}
 
 		return true;
+	}
+
+	public boolean isSpringConfiguratorEnabled() {
+		return _springConfiguratorEnabled;
 	}
 
 	public boolean isTxRequiredMethod(
@@ -6891,6 +6900,7 @@ public class ServiceBuilder {
 	private Set<String> _resourceActionModels = new HashSet<>();
 	private String _resourcesDirName;
 	private String _serviceOutputPath;
+	private boolean _springConfiguratorEnabled;
 	private String _springFileName;
 	private String[] _springNamespaces;
 	private String _sqlDirName;

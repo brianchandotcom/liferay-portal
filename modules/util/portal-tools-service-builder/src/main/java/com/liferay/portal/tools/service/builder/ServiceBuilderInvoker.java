@@ -76,7 +76,7 @@ public class ServiceBuilderInvoker {
 			serviceBuilderArgs.getTargetEntityName(),
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getTestDirName()),
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getUADDirName()),
-			true);
+			serviceBuilderArgs.isSpringConfiguratorEnabled(), true);
 	}
 
 	private static String _getAbsolutePath(File baseDir, String fileName) {

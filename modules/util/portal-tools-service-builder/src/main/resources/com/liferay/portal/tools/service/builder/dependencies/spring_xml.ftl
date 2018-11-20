@@ -13,7 +13,12 @@
 
 	<#if entity.hasEntityColumns()>
 		<#if !stringUtil.equals(entity.dataSource, "liferayDataSource") || !stringUtil.equals(entity.sessionFactory, "liferaySessionFactory")>
-			<bean class="${entity.persistenceClassName}" id="${apiPackagePath}.service.persistence.${entity.name}Persistence" parent="basePersistence">
+			<bean
+				class="${entity.persistenceClassName}" id="${apiPackagePath}.service.persistence.${entity.name}Persistence"
+				<#if !serviceBuilder.isSpringConfiguratorEnabled()>
+					parent="basePersistence"
+				</#if>
+			>
 				<#if !stringUtil.equals(entity.dataSource, "liferayDataSource")>
 					<property name="dataSource" ref="${entity.getDataSource()}" />
 				</#if>
@@ -23,13 +28,23 @@
 				</#if>
 			</bean>
 		<#else>
-			<bean class="${entity.persistenceClassName}" id="${apiPackagePath}.service.persistence.${entity.name}Persistence" parent="basePersistence" />
+			<bean
+				class="${entity.persistenceClassName}" id="${apiPackagePath}.service.persistence.${entity.name}Persistence"
+				<#if !serviceBuilder.isSpringConfiguratorEnabled()>
+					parent="basePersistence"
+				</#if>
+			/>
 		</#if>
 	</#if>
 
 	<#if entity.hasFinderClassName()>
 		<#if !stringUtil.equals(entity.dataSource, "liferayDataSource") || !stringUtil.equals(entity.sessionFactory, "liferaySessionFactory")>
-			<bean class="${entity.finderClassName}" id="${apiPackagePath}.service.persistence.${entity.name}Finder" parent="basePersistence">
+			<bean
+				class="${entity.finderClassName}" id="${apiPackagePath}.service.persistence.${entity.name}Finder"
+				<#if !serviceBuilder.isSpringConfiguratorEnabled()>
+					parent="basePersistence"
+				</#if>
+			>
 				<#if !stringUtil.equals(entity.dataSource, "liferayDataSource")>
 					<property name="dataSource" ref="${entity.getDataSource()}" />
 				</#if>
@@ -39,7 +54,12 @@
 				</#if>
 			</bean>
 		<#else>
-			<bean class="${entity.finderClassName}" id="${apiPackagePath}.service.persistence.${entity.name}Finder" parent="basePersistence" />
+			<bean
+				class="${entity.finderClassName}" id="${apiPackagePath}.service.persistence.${entity.name}Finder"
+				<#if !serviceBuilder.isSpringConfiguratorEnabled()>
+					parent="basePersistence"
+				</#if>
+			/>
 		</#if>
 	</#if>
 </#list>

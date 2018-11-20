@@ -254,7 +254,7 @@ public abstract class BaseWorkspaceGitRepository
 
 		LocalGitBranch localGitBranch =
 			gitWorkingDirectory.createLocalGitBranch(
-				_getBranchName(), true, _getBranchSHA());
+				_getBranchName(), true, getBranchSHA());
 
 		gitWorkingDirectory.createLocalGitBranch(localGitBranch, true);
 
@@ -350,7 +350,7 @@ public abstract class BaseWorkspaceGitRepository
 	@Override
 	public String toString() {
 		return JenkinsResultsParserUtil.combine(
-			getGitHubURL(), " - ", _getBranchSHA());
+			getGitHubURL(), " - ", getBranchSHA());
 	}
 
 	@Override
@@ -435,6 +435,10 @@ public abstract class BaseWorkspaceGitRepository
 		}
 	}
 
+	protected String getBranchSHA() {
+		return optString("branch_sha");
+	}
+
 	@Override
 	protected void put(String key, Object value) {
 		super.put(key, value);
@@ -462,10 +466,6 @@ public abstract class BaseWorkspaceGitRepository
 
 	private String _getBranchName() {
 		return getString("branch_name");
-	}
-
-	private String _getBranchSHA() {
-		return optString("branch_sha");
 	}
 
 	private String _getWorkspaceJobPropertyName(String jobPropertyName) {

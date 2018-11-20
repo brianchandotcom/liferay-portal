@@ -62,10 +62,6 @@ public class DBMetadataProvider extends BaseMetadataProvider {
 			entityID, getMetadata(entityID));
 	}
 
-	@Override
-	public XMLObject getMetadata() {
-		return new DBEntitiesDescriptor();
-	}
 
 	@Override
 	public void setParserPool(ParserPool parserPool) {
@@ -73,6 +69,25 @@ public class DBMetadataProvider extends BaseMetadataProvider {
 
 		_parserPool = parserPool;
 
+	}
+
+	protected XMLObject getMetadata(String entityID) throws Exception {
+		String metadataXml = getMetadataXml(entityID);
+
+		if (Validator.isNull(metadataXml)) {
+			return null;
+		}
+
+		XMLObject metadataXmlObject = XMLObjectSupport.unmarshallFromReader(
+			_parserPool, new StringReader(metadataXml));
+
+		MetadataFilter metadataFilter = getMetadataFilter();
+
+		if (metadataFilter != null) {
+			metadataXmlObject = metadataFilter.filter(metadataXmlObject);
+		}
+
+		return metadataXmlObject;
 	}
 
 	protected String getMetadataXml(String entityId) throws Exception {

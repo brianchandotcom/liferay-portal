@@ -837,6 +837,42 @@ public class OpenSamlUtil {
 		return byteArrayOutputStream.toString();
 	}
 
+	public static void prepareSecurityParametersContext(
+			Credential credential,
+			SecurityParametersContext securityParametersContext)
+		throws PortalException {
+
+		BasicSignatureSigningConfiguration basicSignatureSigningConfiguration =
+			DefaultSecurityConfigurationBootstrap.
+				buildDefaultSignatureSigningConfiguration();
+
+		basicSignatureSigningConfiguration.setSigningCredentials(
+			Collections.singletonList(credential));
+
+		SignatureSigningConfigurationCriterion
+			signatureSigningConfigurationCriterion =
+				new SignatureSigningConfigurationCriterion(
+					basicSignatureSigningConfiguration);
+
+		SAMLMetadataSignatureSigningParametersResolver
+			samlMetadataSignatureSigningParametersResolver =
+				new SAMLMetadataSignatureSigningParametersResolver();
+
+		try {
+			SignatureSigningParameters signatureSigningParameters =
+				samlMetadataSignatureSigningParametersResolver.resolveSingle(
+					new CriteriaSet(signatureSigningConfigurationCriterion));
+
+			securityParametersContext.setSignatureSigningParameters(
+				signatureSigningParameters);
+
+			signatureSigningParameters.setSigningCredential(credential);
+		}
+		catch (ResolverException re) {
+			throw new PortalException(re);
+		}
+	}
+
 	public static void signObject(
 			SignableSAMLObject signableObject, Credential credential)
 		throws MarshallingException, SecurityException, SignatureException {

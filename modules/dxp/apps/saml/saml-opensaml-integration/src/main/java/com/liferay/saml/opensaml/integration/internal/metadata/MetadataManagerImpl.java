@@ -449,20 +449,27 @@ public class MetadataManagerImpl
 	public boolean hasDefaultIdpRole() {
 		String defaultIdpEntityId = getDefaultIdpEntityId();
 
+		if (Validator.isNull(defaultIdpEntityId)) {
+			return false;
+		}
+
 		try {
-			MetadataProvider metadataProvider = getMetadataProvider();
+			MetadataResolver metadataResolver = getMetadataResolver();
 
-			if (Validator.isNull(defaultIdpEntityId) ||
-				(metadataProvider.getRole(
-					defaultIdpEntityId, IDPSSODescriptor.DEFAULT_ELEMENT_NAME,
-					SAMLConstants.SAML20P_NS) == null)) {
+			EntityDescriptor entityDescriptor = metadataResolver.resolveSingle(
+				new CriteriaSet(
+					new EntityIdCriterion(defaultIdpEntityId),
+					new EntityRoleCriterion(
+						IDPSSODescriptor.DEFAULT_ELEMENT_NAME),
+					new ProtocolCriterion(SAMLConstants.SAML20P_NS)));
 
+			if (entityDescriptor == null) {
 				return false;
 			}
 
 			return true;
 		}
-		catch (MetadataProviderException | SamlException e) {
+		catch (ResolverException | SamlException e) {
 			String message =
 				"Error retrieving metadata information: " + e.getMessage();
 

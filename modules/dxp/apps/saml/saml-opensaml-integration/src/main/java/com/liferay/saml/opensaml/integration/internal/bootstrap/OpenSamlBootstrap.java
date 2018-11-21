@@ -43,18 +43,10 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(immediate = true, service = OpenSamlBootstrap.class)
 public class OpenSamlBootstrap {
 
-	public static synchronized void bootstrap() throws ConfigurationException {
-		initializeXMLSecurity();
-
-		initializeXMLTooling(_XML_TOOLING_CONFIGS);
-
-		initializeArtifactBuilderFactories();
-
-		initializeGlobalSecurityConfiguration();
+	public static synchronized void bootstrap() throws InitializationException {
+		InitializationService.initialize();
 
 		initializeParserPool();
-
-		initializeESAPI();
 	}
 
 	@Activate
@@ -124,20 +116,6 @@ public class OpenSamlBootstrap {
 			_parserPoolServiceRegistration.unregister();
 		}
 	}
-
-	private static final String[] _XML_TOOLING_CONFIGS = {
-		"/default-config.xml", "/encryption-config.xml",
-		"/encryption-validation-config.xml", "/saml1-metadata-config.xml",
-		"/saml2-assertion-config.xml",
-		"/saml2-assertion-delegation-restriction-config.xml",
-		"/saml2-core-validation-config.xml", "/saml2-metadata-config.xml",
-		"/saml2-metadata-idp-discovery-config.xml",
-		"/saml2-metadata-query-config.xml",
-		"/saml2-metadata-validation-config.xml", "/saml2-protocol-config.xml",
-		"/saml2-protocol-thirdparty-config.xml", "/schema-config.xml",
-		"/signature-config.xml", "/signature-validation-config.xml",
-		"/soap11-config.xml"
-	};
 
 	private ServiceRegistration<ParserPool> _parserPoolServiceRegistration;
 

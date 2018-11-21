@@ -3,4 +3,67 @@
 
 <service-builder auto-namespace-tables="false" package-path="com.liferay.change.tracking.engine">
 	<namespace>ChangeTrackingEngine</namespace>
+	<entity local-service="true" name="ChangeCollection" remote-service="false" trash-enabled="false" uuid="false">
+
+		<!-- PK fields -->
+
+		<column name="changeCollectionId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+
+		<!-- Relationships -->
+
+		<column entity="ChangeEntry" mapping-table="Collections_Entries" name="changeCollections" type="Collection" />
+
+		<!-- References -->
+
+		<reference entity="ChangeEntry" package-path="com.liferay.change.tracking.engine" />
+	</entity>
+	<entity local-service="true" name="ChangeEntry" remote-service="false" trash-enabled="false" uuid="false">
+
+		<!-- PK fields -->
+
+		<column name="changeEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="resourcePrimKey" type="long" />
+
+		<!-- Relationships -->
+
+		<column entity="ChangeCollection" mapping-table="Collections_Entries" name="changeEntries" type="Collection" />
+
+		<!-- References -->
+
+		<reference entity="ChangeCollection" package-path="com.liferay.change.tracking.engine" />
+	</entity>
 </service-builder>

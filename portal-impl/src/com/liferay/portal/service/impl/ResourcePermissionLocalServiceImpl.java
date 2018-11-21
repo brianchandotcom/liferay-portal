@@ -103,7 +103,7 @@ public class ResourcePermissionLocalServiceImpl
 		ModelPermissions modelPermissions =
 			serviceContext.getModelPermissions();
 
-		if (modelPermissions != null) {
+		if (matches(modelPermissions, auditedModel.getModelClassName())) {
 			addModelResourcePermissions(
 				auditedModel.getCompanyId(), getGroupId(auditedModel),
 				auditedModel.getUserId(), auditedModel.getModelClassName(),
@@ -178,7 +178,7 @@ public class ResourcePermissionLocalServiceImpl
 				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,
 				ownerRole.getRoleId(), userId, ownerPermissions);
 
-			if (modelPermissions != null) {
+			if (matches(modelPermissions, name)) {
 				for (String roleName : modelPermissions.getRoleNames()) {
 					Role role = getRole(companyId, groupId, roleName);
 
@@ -1667,6 +1667,10 @@ public class ResourcePermissionLocalServiceImpl
 			ModelPermissions modelPermissions)
 		throws PortalException {
 
+		if (!matches(modelPermissions, name)) {
+			return;
+		}
+
 		for (String roleName : modelPermissions.getRoleNames()) {
 			Role role = getRole(companyId, groupId, roleName);
 
@@ -1777,6 +1781,35 @@ public class ResourcePermissionLocalServiceImpl
 
 		if (roleId == guestRole.getRoleId()) {
 			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean matches(
+		ModelPermissions modelPermissions, String resourcePermissionName) {
+
+		if (modelPermissions == null) {
+			return false;
+		}
+
+		String resourceName = modelPermissions.getResourceName();
+
+		if (resourceName == null) {
+			return true;
+		}
+
+		if (StringUtil.equals(resourceName, resourcePermissionName)) {
+			return true;
+		}
+		else {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Model permissions resource name ", resourceName,
+						" does not match resource permission name ",
+						resourcePermissionName));
+			}
 		}
 
 		return false;

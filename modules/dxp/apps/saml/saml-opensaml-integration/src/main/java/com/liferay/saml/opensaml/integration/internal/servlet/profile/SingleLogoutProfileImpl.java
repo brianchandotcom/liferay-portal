@@ -1059,31 +1059,47 @@ public class SingleLogoutProfileImpl
 			String statusCodeURI, SamlSloContext samlSloContext)
 		throws Exception {
 
-		SAMLMessageContext<LogoutRequest, LogoutResponse, NameID>
-			samlMessageContext = samlSloContext.getSamlMessageContext();
-
 		LogoutResponse logoutResponse = OpenSamlUtil.buildLogoutResponse();
 
+		MessageContext<?> messageContext = samlSloContext.getMessageContext();
+
+		InOutOperationContext inOutOperationContext =
+			messageContext.getSubcontext(InOutOperationContext.class);
+
+		MessageContext<LogoutRequest> inboundMessageContext =
+			inOutOperationContext.getInboundMessageContext();
+
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+		SAMLMetadataContext samlPeerMetadataContext =
+			samlPeerEntityContext.getSubcontext(SAMLMetadataContext.class);
+
 		SSODescriptor ssoDescriptor =
-			(SSODescriptor)samlMessageContext.getPeerEntityRoleMetadata();
+			(SSODescriptor)samlPeerMetadataContext.getRoleDescriptor();
+
+		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
+			SAMLBindingContext.class);
 
 		SingleLogoutService singleLogoutService =
 			SamlUtil.resolveSingleLogoutService(
-				ssoDescriptor, samlMessageContext.getCommunicationProfileId());
+				ssoDescriptor, samlBindingContext.getBindingUri());
 
 		logoutResponse.setDestination(singleLogoutService.getLocation());
 
 		logoutResponse.setID(generateIdentifier(20));
 
-		LogoutRequest logoutRequest =
-			samlMessageContext.getInboundSAMLMessage();
+		LogoutRequest logoutRequest = inboundMessageContext.getMessage();
 
 		logoutResponse.setInResponseTo(logoutRequest.getID());
 
 		logoutResponse.setIssueInstant(new DateTime(DateTimeZone.UTC));
 
+		SAMLSelfEntityContext samlSelfEntityContext =
+			messageContext.getSubcontext(SAMLSelfEntityContext.class);
+
 		Issuer issuer = OpenSamlUtil.buildIssuer(
-			samlMessageContext.getLocalEntityId());
+			samlSelfEntityContext.getEntityId());
 
 		logoutResponse.setIssuer(issuer);
 
@@ -1095,32 +1111,39 @@ public class SingleLogoutProfileImpl
 
 		logoutResponse.setVersion(SAMLVersion.VERSION_20);
 
-		HttpServletRequestAdapter httpServletRequestAdapter =
-			new HttpServletRequestAdapter(request);
+		MessageContext outboundMessageContext =
+			inOutOperationContext.getOutboundMessageContext();
 
-		samlMessageContext.setInboundMessageTransport(
-			httpServletRequestAdapter);
+		outboundMessageContext.setMessage(logoutResponse);
 
-		HttpServletResponseAdapter httpServletResponseAdapter =
-			new HttpServletResponseAdapter(response, request.isSecure());
+		outboundMessageContext.addSubcontext(samlPeerEntityContext);
 
-		samlMessageContext.setOutboundMessageTransport(
-			httpServletResponseAdapter);
+		SecurityParametersContext securityParametersContext =
+			outboundMessageContext.getSubcontext(
+				SecurityParametersContext.class, true);
 
-		samlMessageContext.setOutboundSAMLMessage(logoutResponse);
+		OpenSamlUtil.prepareSecurityParametersContext(
+			metadataManager.getSigningCredential(), securityParametersContext);
 
-		samlMessageContext.setOutboundSAMLMessageSigningCredential(
-			metadataManager.getSigningCredential());
-		samlMessageContext.setOutboundSAMLProtocol(SAMLConstants.SAML20P_NS);
-		samlMessageContext.setPeerEntityEndpoint(singleLogoutService);
+		SAMLProtocolContext samlProtocolContext =
+			outboundMessageContext.getSubcontext(
+				SAMLProtocolContext.class, true);
 
-		if (!statusCodeURI.equals(StatusCode.UNSUPPORTED_BINDING_URI)) {
+		samlProtocolContext.setProtocol(SAMLConstants.SAML20P_NS);
+
+		SAMLEndpointContext samlPeerEndpointContext =
+			samlPeerEntityContext.getSubcontext(
+				SAMLEndpointContext.class, true);
+
+		samlPeerEndpointContext.setEndpoint(singleLogoutService);
+
+		if (!statusCodeURI.equals(StatusCode.UNSUPPORTED_BINDING)) {
 			terminateSsoSession(request, response);
 
 			logout(request, response);
 		}
 
-		sendSamlMessage(samlMessageContext);
+		sendSamlMessage(messageContext, response);
 	}
 
 	protected void sendSpLogoutRequest(

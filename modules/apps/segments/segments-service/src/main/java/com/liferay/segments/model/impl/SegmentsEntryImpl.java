@@ -39,11 +39,11 @@ public class SegmentsEntryImpl extends SegmentsEntryBaseImpl {
 	}
 
 	@Override
-	public String getFilter() {
+	public String getFilterString() {
 		Criteria criteriaObj = getCriteriaObj();
 
 		if (criteriaObj != null) {
-			return criteriaObj.getFilter();
+			return criteriaObj.getFilterString();
 		}
 
 		return null;

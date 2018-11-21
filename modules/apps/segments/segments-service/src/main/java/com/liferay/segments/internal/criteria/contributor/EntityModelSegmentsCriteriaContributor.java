@@ -43,10 +43,11 @@ public class EntityModelSegmentsCriteriaContributor
 
 	@Override
 	public void contribute(
-		Criteria criteria, String filter, Criteria.Conjunction conjunction) {
+		Criteria criteria, String filterString,
+		Criteria.Conjunction conjunction) {
 
-		criteria.addCriterion(getKey(), filter, conjunction);
-		criteria.addFilter(filter, conjunction);
+		criteria.addCriterion(getKey(), filterString, conjunction);
+		criteria.addFilter(filterString, conjunction);
 	}
 
 	@Override

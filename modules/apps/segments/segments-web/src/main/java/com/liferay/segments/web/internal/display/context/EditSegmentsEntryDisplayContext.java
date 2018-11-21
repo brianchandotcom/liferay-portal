@@ -80,7 +80,7 @@ public class EditSegmentsEntryDisplayContext {
 		SegmentsEntry segmentsEntry = getSegmentsEntry();
 
 		if ((segmentsEntry == null) ||
-			Validator.isNotNull(segmentsEntry.getFilter())) {
+			Validator.isNotNull(segmentsEntry.getFilterString())) {
 
 			return new DropdownItemList();
 		}
@@ -192,7 +192,7 @@ public class EditSegmentsEntryDisplayContext {
 			return organizationSearchContainer;
 		}
 
-		if (Validator.isNull(segmentsEntry.getFilter())) {
+		if (Validator.isNull(segmentsEntry.getFilterString())) {
 			organizationSearchContainer.setRowChecker(
 				new EmptyOnClickRowChecker(_renderResponse));
 		}
@@ -338,7 +338,7 @@ public class EditSegmentsEntryDisplayContext {
 			return userSearchContainer;
 		}
 
-		if (Validator.isNull(segmentsEntry.getFilter())) {
+		if (Validator.isNull(segmentsEntry.getFilterString())) {
 			userSearchContainer.setRowChecker(
 				new EmptyOnClickRowChecker(_renderResponse));
 		}
@@ -389,7 +389,7 @@ public class EditSegmentsEntryDisplayContext {
 		SegmentsEntry segmentsEntry = getSegmentsEntry();
 
 		if ((segmentsEntry != null) &&
-			Validator.isNotNull(segmentsEntry.getFilter())) {
+			Validator.isNotNull(segmentsEntry.getFilterString())) {
 
 			return false;
 		}
@@ -401,7 +401,7 @@ public class EditSegmentsEntryDisplayContext {
 		SegmentsEntry segmentsEntry = getSegmentsEntry();
 
 		if ((segmentsEntry != null) &&
-			Validator.isNotNull(segmentsEntry.getFilter())) {
+			Validator.isNotNull(segmentsEntry.getFilterString())) {
 
 			return false;
 		}

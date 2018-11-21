@@ -5991,6 +5991,40 @@ version 1.0.247.
 dependency to version 2.1.37.
 - [LPS-87465]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.4.16.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Alloy Taglib] dependency to
+version 2.0.1.
+- [LPS-87466]: Update the [Liferay Gradle Plugins CSS Builder] dependency to
+version 2.2.5.
+- [LPS-87466]: Update the [Liferay Gradle Plugins DB Support] dependency to
+version 1.0.4.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Jasper JSPC] dependency to
+version 2.0.4.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Javadoc Formatter] dependency
+to version 1.0.23.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Lang Builder] dependency to
+version 3.0.3.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.1.65.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.283.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Soy] dependency to version
+3.1.7.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Test Integration] dependency
+to version 2.4.1.
+- [LPS-87466]: Update the [Liferay Gradle Plugins TLD Formatter] dependency to
+version 1.0.8.
+- [LPS-87466]: Update the [Liferay Gradle Plugins TLDDoc Builder] dependency
+to version 1.3.2.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Upgrade Table Builder]
+dependency to version 2.0.2.
+- [LPS-87466]: Update the [Liferay Gradle Plugins WSDD Builder] dependency to
+version 1.0.12.
+- [LPS-87466]: Update the [Liferay Gradle Plugins WSDL Builder] dependency to
+version 2.0.2.
+- [LPS-87466]: Update the [Liferay Gradle Plugins XML Formatter] dependency tos
+version 1.0.10.
+- [LPS-87466]: Update the [Liferay Gradle Plugins XSD Builder] dependency tos
+version 1.0.6.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -6017,6 +6051,7 @@ version 2.4.16.
 [Liferay Gradle Plugins WSDD Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-wsdd-builder
 [Liferay Gradle Plugins WSDL Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-wsdl-builder
 [Liferay Gradle Plugins XML Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-xml-formatter
+[Liferay Gradle Plugins XSD Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-xsd-builder
 [Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
 [Liferay Jasper JSPC]: https://github.com/liferay/liferay-portal/tree/master/modules/util/jasper-jspc
 [Liferay Javadoc Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/javadoc-formatter

@@ -27,8 +27,15 @@ configuration's `com.liferay.jasper.jspc` default dependency.
 - [LPS-76202]: Defer evaluation of the project's build directory so it can be
 changed after applying the plugin.
 
+## 2.0.4 - 2018-11-16
+
+### Changed
+- [LPS-87466]: Update the [Liferay Gradle Util] dependency to version 1.0.32.
+
+[Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-70677]: https://issues.liferay.com/browse/LPS-70677
 [LPS-71048]: https://issues.liferay.com/browse/LPS-71048
 [LPS-74368]: https://issues.liferay.com/browse/LPS-74368
 [LPS-76202]: https://issues.liferay.com/browse/LPS-76202
+[LPS-87466]: https://issues.liferay.com/browse/LPS-87466

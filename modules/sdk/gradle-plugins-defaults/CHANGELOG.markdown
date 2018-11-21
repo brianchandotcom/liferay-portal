@@ -4994,6 +4994,16 @@ to version 1.1.2.
 3.13.15.
 - [LPS-87465]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
 2.0.12.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Dependency Checker] dependency
+to version 1.0.2.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Lang Merger] dependency to
+version 1.1.1.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Patcher] dependency to version
+1.0.15.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Poshi Runner] dependency to
+version 2.2.6.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Whip] dependency to version
+1.0.6.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
@@ -5011,6 +5021,7 @@ to version 1.1.2.
 [Liferay Gradle Plugins Patcher]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-patcher
 [Liferay Gradle Plugins Poshi Runner]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-poshi-runner
 [Liferay Gradle Plugins Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-source-formatter
+[Liferay Gradle Plugins Whip]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-whip
 [Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
 [Liferay Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/source-formatter
 [LPS-52675]: https://issues.liferay.com/browse/LPS-52675

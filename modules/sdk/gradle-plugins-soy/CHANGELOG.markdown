@@ -77,7 +77,13 @@ version 3.0.4.
 - [LPS-81638]: Automatically run the `replaceSoyTranslation` task after both
 `configJSModules` and `transpileJS`, if present.
 
+## 3.1.7 - 2018-11-16
+
+### Changed
+- [LPS-87466]: Update the [Liferay Gradle Util] dependency to version 1.0.32.
+
 [Command Line Tools for Metal.js]: https://github.com/metal/metal-cli
+[Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
 [Liferay Portal Tools Soy Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-soy-builder
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-67766]: https://issues.liferay.com/browse/LPS-67766
@@ -88,3 +94,4 @@ version 3.0.4.
 [LPS-75554]: https://issues.liferay.com/browse/LPS-75554
 [LPS-81638]: https://issues.liferay.com/browse/LPS-81638
 [LPS-81900]: https://issues.liferay.com/browse/LPS-81900
+[LPS-87466]: https://issues.liferay.com/browse/LPS-87466

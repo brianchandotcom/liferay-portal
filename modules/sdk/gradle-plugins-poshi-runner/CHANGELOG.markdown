@@ -41,9 +41,16 @@ repositories.
 - [LPS-77359]: Avoid out-of-memory errors when running on large Git
 repositories by invoking Git directly.
 
+## 2.2.6 - 2018-11-16
+
+### Changed
+- [LPS-87466]: Update the [Liferay Gradle Util] dependency to version 1.0.32.
+
+[Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
 [LPS-77359]: https://issues.liferay.com/browse/LPS-77359
 [LPS-78096]: https://issues.liferay.com/browse/LPS-78096
 [LPS-78266]: https://issues.liferay.com/browse/LPS-78266
 [LPS-78537]: https://issues.liferay.com/browse/LPS-78537
 [LPS-80394]: https://issues.liferay.com/browse/LPS-80394
 [LPS-80950]: https://issues.liferay.com/browse/LPS-80950
+[LPS-87466]: https://issues.liferay.com/browse/LPS-87466

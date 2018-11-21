@@ -34,8 +34,15 @@ directories for `portal/definitions` to use these files for TLD scheme validatio
 Set the properties `xmlParserClassName` and `xmlParserClasspath` to `null` to
 use the default XML parser provided by Ant.
 
+## 1.3.2 - 2018-11-16
+
+### Changed
+- [LPS-87466]: Update the [Liferay Gradle Util] dependency to version 1.0.32.
+
+[Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
+[XML Resolver]: http://xmlresolver.org/
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-68666]: https://issues.liferay.com/browse/LPS-68666
 [LPS-71591]: https://issues.liferay.com/browse/LPS-71591
+[LPS-87466]: https://issues.liferay.com/browse/LPS-87466
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023
-[XML Resolver]: http://xmlresolver.org/

@@ -16,17 +16,18 @@ const DRAG_POSITIONS = {
 };
 
 /**
+ * Updates hover status with the information sent.
  * @param {!object} state
- * @param {!string} actionType
+ * @param {CLEAR_DRAG_TARGET|UPDATE_DRAG_TARGET} actionType
  * @param {!object} payload
- * @param {!string} payload.hoveredElementBorder
- * @param {!string} payload.hoveredFragmentEntryLinkId
+ * @param {string} payload.hoveredElementBorder
+ * @param {string} payload.hoveredFragmentEntryLinkId
+ * @param {string} payload.hoveredSectionId
  * @return {object}
  * @review
  */
-
 function updateDragTargetReducer(state, actionType, payload) {
-	let nextState = Object.assign({}, state);
+	const nextState = Object.assign({}, state);
 
 	if (actionType === CLEAR_DRAG_TARGET) {
 		nextState.hoveredElementBorder = null;

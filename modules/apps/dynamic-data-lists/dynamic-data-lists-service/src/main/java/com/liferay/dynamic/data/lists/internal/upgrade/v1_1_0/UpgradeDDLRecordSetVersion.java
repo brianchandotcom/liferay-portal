@@ -18,8 +18,6 @@ import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -31,9 +29,7 @@ import java.sql.ResultSet;
  */
 public class UpgradeDDLRecordSetVersion extends UpgradeProcess {
 
-	public UpgradeDDLRecordSetVersion(
-		CounterLocalService counterLocalService) {
-
+	public UpgradeDDLRecordSetVersion(CounterLocalService counterLocalService) {
 		_counterLocalService = counterLocalService;
 	}
 

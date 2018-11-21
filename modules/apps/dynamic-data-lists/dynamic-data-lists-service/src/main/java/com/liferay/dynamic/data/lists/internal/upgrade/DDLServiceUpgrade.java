@@ -61,8 +61,7 @@ public class DDLServiceUpgrade implements UpgradeStepRegistrator {
 			new com.liferay.dynamic.data.lists.internal.upgrade.v1_1_0.
 				UpgradeDDLRecordSet(),
 			new com.liferay.dynamic.data.lists.internal.upgrade.v1_1_0.
-				UpgradeDDLRecordSetVersion(
-					_counterLocalService));
+				UpgradeDDLRecordSetVersion(_counterLocalService));
 
 		registry.register(
 			"1.1.0", "2.0.0",

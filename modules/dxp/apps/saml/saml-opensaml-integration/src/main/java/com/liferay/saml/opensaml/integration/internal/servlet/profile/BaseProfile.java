@@ -192,27 +192,33 @@ public abstract class BaseProfile {
 			"Unsupported binding " + communicationProfileId);
 	}
 
-	public SAMLMessageContext<?, ?, ?> getSamlMessageContext(
+	public MessageContext<SAMLObject> getMessageContext(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		SAMLMessageContext<SAMLObject, SAMLObject, NameID> samlMessageContext =
-			new BasicSAMLMessageContext<>();
+		MessageContext<SAMLObject> messageContext = new MessageContext<>();
 
-		HttpServletRequestAdapter httpServletRequestAdapter =
-			new HttpServletRequestAdapter(new ProxyPathRequestWrapper(request));
-
-		samlMessageContext.setInboundMessageTransport(
-			httpServletRequestAdapter);
-
-		samlMessageContext.setInboundSAMLProtocol(SAMLConstants.SAML20P_NS);
+		messageContext.setAutoCreateSubcontexts(true);
 
 		RoleDescriptor roleDescriptor = null;
 
 		EntityDescriptor entityDescriptor = metadataManager.getEntityDescriptor(
 			request);
 
-		samlMessageContext.setLocalEntityMetadata(entityDescriptor);
+		SAMLSelfEntityContext samlSelfEntityContext =
+			messageContext.getSubcontext(SAMLSelfEntityContext.class);
+
+		SAMLMetadataContext samlSelfMetadataContext =
+			samlSelfEntityContext.getSubcontext(
+				SAMLMetadataContext.class, true);
+
+		samlSelfMetadataContext.setEntityDescriptor(entityDescriptor);
+
+		SAMLProtocolContext samlProtocolContext =
+			samlSelfEntityContext.getSubcontext(
+				SAMLProtocolContext.class, true);
+
+		samlProtocolContext.setProtocol(SAMLConstants.SAML20P_NS);
 
 		if (samlProviderConfigurationHelper.isRoleIdp()) {
 			roleDescriptor = entityDescriptor.getIDPSSODescriptor(
@@ -223,40 +229,22 @@ public abstract class BaseProfile {
 				SAMLConstants.SAML20P_NS);
 		}
 
-		samlMessageContext.setLocalEntityId(entityDescriptor.getEntityID());
+		samlSelfMetadataContext.setRoleDescriptor(roleDescriptor);
+
+		samlSelfEntityContext.setEntityId(entityDescriptor.getEntityID());
+
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
 
 		if (samlProviderConfigurationHelper.isRoleIdp()) {
-			samlMessageContext.setLocalEntityRole(
-				IDPSSODescriptor.DEFAULT_ELEMENT_NAME);
+			samlPeerEntityContext.setRole(SPSSODescriptor.DEFAULT_ELEMENT_NAME);
 		}
 		else if (samlProviderConfigurationHelper.isRoleSp()) {
-			samlMessageContext.setLocalEntityRole(
-				SPSSODescriptor.DEFAULT_ELEMENT_NAME);
-		}
-
-		samlMessageContext.setLocalEntityRoleMetadata(roleDescriptor);
-
-		MetadataProvider metadataProvider =
-			metadataManager.getMetadataProvider();
-
-		samlMessageContext.setMetadataProvider(metadataProvider);
-
-		HttpServletResponseAdapter httpServletResponseAdapter =
-			new HttpServletResponseAdapter(response, request.isSecure());
-
-		samlMessageContext.setOutboundMessageTransport(
-			httpServletResponseAdapter);
-
-		if (samlProviderConfigurationHelper.isRoleIdp()) {
-			samlMessageContext.setPeerEntityRole(
-				SPSSODescriptor.DEFAULT_ELEMENT_NAME);
-		}
-		else if (samlProviderConfigurationHelper.isRoleSp()) {
-			samlMessageContext.setPeerEntityRole(
+			samlPeerEntityContext.setRole(
 				IDPSSODescriptor.DEFAULT_ELEMENT_NAME);
 		}
 
-		return samlMessageContext;
+		return messageContext;
 	}
 
 	public SAMLMessageContext<?, ?, ?> getSamlMessageContext(

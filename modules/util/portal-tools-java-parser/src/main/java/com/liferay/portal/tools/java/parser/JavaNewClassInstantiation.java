@@ -29,14 +29,16 @@ public class JavaNewClassInstantiation extends JavaExpression {
 		StringBundler sb = new StringBundler();
 
 		sb.append(indent);
-		sb.append(prefix);
 
 		if (forceLineBreak) {
 			appendWithLineBreak(
-				sb, _javaClassCall, indent, "new ", suffix, maxLineLength);
+				sb, _javaClassCall, indent, prefix + "new ", suffix,
+				maxLineLength);
 		}
 		else {
-			append(sb, _javaClassCall, indent, "new ", suffix, maxLineLength);
+			append(
+				sb, _javaClassCall, indent, prefix + "new ", suffix,
+				maxLineLength);
 		}
 
 		return sb.toString();

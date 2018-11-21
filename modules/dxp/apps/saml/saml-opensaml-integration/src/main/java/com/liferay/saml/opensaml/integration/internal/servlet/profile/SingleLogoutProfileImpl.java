@@ -1241,25 +1241,17 @@ public class SingleLogoutProfileImpl
 	}
 
 	protected String sendSyncLogoutRequest(
-			SAMLMessageContext<LogoutResponse, LogoutRequest, NameID>
-				samlMessageContext,
-			SamlSloContext samlSloContext)
+			MessageContext<?> messageContext, SamlSloContext samlSloContext)
 		throws Exception {
 
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+		SAMLEndpointContext samlPeerEndpointSubcontext =
+			samlPeerEntityContext.getSubcontext(SAMLEndpointContext.class);
+
 		SingleLogoutService singleLogoutService =
-			(SingleLogoutService)samlMessageContext.getPeerEntityEndpoint();
-
-		HttpPost httpPost = new HttpPost(singleLogoutService.getLocation());
-
-		HttpClientInTransport httpClientInTransport = new HttpClientInTransport(
-			httpPost, singleLogoutService.getLocation());
-
-		samlMessageContext.setInboundMessageTransport(httpClientInTransport);
-
-		HttpClientOutTransport httpClientOutTransport =
-			new HttpClientOutTransport(httpPost);
-
-		samlMessageContext.setOutboundMessageTransport(httpClientOutTransport);
+			(SingleLogoutService)samlPeerEndpointSubcontext.getEndpoint();
 
 		LogoutRequest logoutRequest = OpenSamlUtil.buildLogoutRequest();
 
@@ -1267,46 +1259,100 @@ public class SingleLogoutProfileImpl
 		logoutRequest.setID(generateIdentifier(20));
 		logoutRequest.setIssueInstant(new DateTime(DateTimeZone.UTC));
 
+		SAMLSelfEntityContext samlSelfEntityContext =
+			messageContext.getSubcontext(SAMLSelfEntityContext.class);
+
 		Issuer issuer = OpenSamlUtil.buildIssuer(
-			samlMessageContext.getLocalEntityId());
+			samlSelfEntityContext.getEntityId());
 
 		logoutRequest.setIssuer(issuer);
 
-		logoutRequest.setNameID(samlMessageContext.getSubjectNameIdentifier());
+		SAMLSubjectNameIdentifierContext samlSubjectNameIdentifierContext =
+			messageContext.getSubcontext(
+				SAMLSubjectNameIdentifierContext.class);
+
+		logoutRequest.setNameID(
+			samlSubjectNameIdentifierContext.getSAML2SubjectNameID());
 
 		logoutRequest.setVersion(SAMLVersion.VERSION_20);
 
 		addSessionIndex(logoutRequest, samlSloContext.getSamlSsoSessionId());
 
-		samlMessageContext.setOutboundSAMLMessage(logoutRequest);
+		InOutOperationContext inOutOperationContext =
+			messageContext.getSubcontext(InOutOperationContext.class);
+
+		MessageContext outboundMessageContext =
+			inOutOperationContext.getOutboundMessageContext();
+
+		outboundMessageContext.addSubcontext(samlPeerEndpointSubcontext);
+
+		outboundMessageContext.setMessage(logoutRequest);
 
 		Credential credential = metadataManager.getSigningCredential();
 
-		samlMessageContext.setOutboundSAMLMessageSigningCredential(credential);
+		SecurityParametersContext securityParametersContext =
+			outboundMessageContext.getSubcontext(
+				SecurityParametersContext.class, true);
 
-		samlMessageContext.setOutboundSAMLProtocol(SAMLConstants.SAML20P_NS);
+		OpenSamlUtil.prepareSecurityParametersContext(
+			credential, securityParametersContext);
+
+		SAMLProtocolContext samlProtocolContext =
+			outboundMessageContext.getSubcontext(SAMLProtocolContext.class);
+
+		samlProtocolContext.setProtocol(SAMLConstants.SAML20P_NS);
 
 		OpenSamlUtil.signObject(logoutRequest, credential);
 
 		SamlBinding samlBinding = getSamlBinding(
 			SAMLConstants.SAML2_SOAP11_BINDING_URI);
 
-		MessageEncoder messageEncoder = samlBinding.getMessageEncoder();
+		PipelineFactoryHttpSOAPClient<Object, Object>
+			pipelineFactoryHttpSOAPClient =
+				new PipelineFactoryHttpSOAPClient<>();
 
-		messageEncoder.encode(samlMessageContext);
+		pipelineFactoryHttpSOAPClient.setPipelineFactory(
+			new HttpClientMessagePipelineFactory<Object, Object>() {
 
-		SecurityPolicyResolver securityPolicyResolver =
-			metadataManager.getSecurityPolicyResolver(
-				samlBinding.getCommunicationProfileId(), true);
+				@Nonnull
+				@Override
+				public HttpClientMessagePipeline<Object, Object> newInstance() {
+					Supplier<HttpServletResponseMessageEncoder>
+						messageEncoderSupplier =
+							samlBinding.
+								getHttpServletResponseMessageEncoderSupplier();
 
-		samlMessageContext.setSecurityPolicyResolver(securityPolicyResolver);
+					Supplier<HttpServletRequestMessageDecoder>
+						messageDecoderSupplier =
+							samlBinding.
+								getHttpServletRequestMessageDecoderSupplier();
 
-		MessageDecoder messageDecoder = samlBinding.getMessageDecoder();
+					return new BasicHttpClientMessagePipeline<>(
+						messageEncoderSupplier.get(),
+						messageDecoderSupplier.get());
+				}
 
-		messageDecoder.decode(samlMessageContext);
+				@Nonnull
+				@Override
+				public HttpClientMessagePipeline<Object, Object> newInstance(
+					@Nullable String pipelineName) {
 
-		LogoutResponse logoutResponse =
-			samlMessageContext.getInboundSAMLMessage();
+					return newInstance();
+				}
+
+			});
+
+		pipelineFactoryHttpSOAPClient.setHttpClient(_httpClient);
+
+		pipelineFactoryHttpSOAPClient.initialize();
+
+		pipelineFactoryHttpSOAPClient.send(
+			singleLogoutService.getLocation(), inOutOperationContext);
+
+		MessageContext<LogoutResponse> inboundMessageContext =
+			inOutOperationContext.getInboundMessageContext();
+
+		LogoutResponse logoutResponse = inboundMessageContext.getMessage();
 
 		Status status = logoutResponse.getStatus();
 

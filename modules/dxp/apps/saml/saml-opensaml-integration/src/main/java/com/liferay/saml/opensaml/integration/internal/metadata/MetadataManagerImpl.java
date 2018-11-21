@@ -413,14 +413,15 @@ public class MetadataManagerImpl
 
 			CriteriaSet criteriaSet = new CriteriaSet();
 
-			EntityIDCriteria entityIDCriteria = new EntityIDCriteria(entityId);
+			EntityIdCriterion entityIdCriterion = new EntityIdCriterion(
+				entityId);
 
-			criteriaSet.add(entityIDCriteria);
+			criteriaSet.add(entityIdCriterion);
 
 			return _credentialResolver.resolveSingle(criteriaSet);
 		}
-		catch (SecurityException se) {
-			throw new SamlException(se);
+		catch (ResolverException re) {
+			throw new SamlException(re);
 		}
 	}
 

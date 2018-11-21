@@ -24,7 +24,7 @@
 
 		<!-- Relationships -->
 
-		<column entity="ChangeEntry" mapping-table="Collections_Entries" name="changeCollections" type="Collection" />
+		<column entity="ChangeEntry" mapping-table="Collections_Entries" name="changeEntries" type="Collection" />
 
 		<!-- References -->
 
@@ -52,7 +52,7 @@
 
 		<!-- Relationships -->
 
-		<column entity="ChangeCollection" mapping-table="Collections_Entries" name="changeEntries" type="Collection" />
+		<column entity="ChangeCollection" mapping-table="Collections_Entries" name="changeCollections" type="Collection" />
 
 		<!-- References -->
 

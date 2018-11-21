@@ -544,13 +544,17 @@ public class SingleLogoutProfileImpl
 			return;
 		}
 
-		SAMLMessageContext<LogoutResponse, LogoutRequest, NameID>
-			samlMessageContext =
-				(SAMLMessageContext<LogoutResponse, LogoutRequest, NameID>)
-					getSamlMessageContext(request, response, entityId);
+		MessageContext<?> messageContext = getMessageContext(
+			request, response, entityId);
+
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+		SAMLMetadataContext samlPeerMetadataContext =
+			samlPeerEntityContext.getSubcontext(SAMLMetadataContext.class);
 
 		SPSSODescriptor spSSODescriptor =
-			(SPSSODescriptor)samlMessageContext.getPeerEntityRoleMetadata();
+			(SPSSODescriptor)samlPeerMetadataContext.getRoleDescriptor();
 
 		SingleLogoutService singleLogoutService =
 			SamlUtil.resolveSingleLogoutService(
@@ -563,8 +567,7 @@ public class SingleLogoutProfileImpl
 
 			samlSloRequestInfo.setStatus(
 				SamlSloRequestInfo.REQUEST_STATUS_UNSUPPORTED);
-			samlSloRequestInfo.setStatusCode(
-				StatusCode.UNSUPPORTED_BINDING_URI);
+			samlSloRequestInfo.setStatusCode(StatusCode.UNSUPPORTED_BINDING);
 
 			request.setAttribute(
 				SamlWebKeys.SAML_SLO_REQUEST_INFO,
@@ -596,7 +599,7 @@ public class SingleLogoutProfileImpl
 
 				samlSloRequestInfo.setStatus(
 					SamlSloRequestInfo.REQUEST_STATUS_FAILED);
-				samlSloRequestInfo.setStatusCode(StatusCode.PARTIAL_LOGOUT_URI);
+				samlSloRequestInfo.setStatusCode(StatusCode.PARTIAL_LOGOUT);
 
 				request.setAttribute(
 					SamlWebKeys.SAML_SLO_REQUEST_INFO,
@@ -627,8 +630,7 @@ public class SingleLogoutProfileImpl
 				if (expireDateTime.isBeforeNow()) {
 					samlRequestInfo.setStatus(
 						SamlSloRequestInfo.REQUEST_STATUS_TIMED_OUT);
-					samlRequestInfo.setStatusCode(
-						StatusCode.PARTIAL_LOGOUT_URI);
+					samlRequestInfo.setStatusCode(StatusCode.PARTIAL_LOGOUT);
 				}
 			}
 		}

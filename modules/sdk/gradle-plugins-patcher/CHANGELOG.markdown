@@ -6,4 +6,14 @@
 - [LPS-82178]: Fix error when adding the original library to the `compileOnly`
 configuration.
 
+## 1.0.14 - 2018-09-17
+
+### Changed
+- [LPS-51081]: Update the [Liferay Gradle Util] dependency to version 1.0.31.
+
+### Fixed
+- [LPS-51081]: Fix error when running the `patch` task on Windows.
+
+[Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
+[LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-82178]: https://issues.liferay.com/browse/LPS-82178

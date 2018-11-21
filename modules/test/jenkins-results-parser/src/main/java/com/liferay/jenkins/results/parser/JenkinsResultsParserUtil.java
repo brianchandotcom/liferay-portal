@@ -2497,6 +2497,8 @@ public class JenkinsResultsParserUtil {
 
 	private static Hashtable<?, ?> _buildProperties;
 	private static String[] _buildPropertiesURLs;
+	private static final Pattern _curlyBraceExpansionPattern = Pattern.compile(
+		"\\{.*?\\}");
 	private static final Pattern _javaVersionPattern = Pattern.compile(
 		"(\\d+\\.\\d+)");
 	private static final Pattern _nestedPropertyPattern = Pattern.compile(

@@ -1795,7 +1795,7 @@ public class ResourcePermissionLocalServiceImpl
 
 		String resourceName = modelPermissions.getResourceName();
 
-		if (resourceName == null) {
+		if (StringUtil.equals(resourceName, ModelPermissions.ALL_RESOURCES)) {
 			return true;
 		}
 

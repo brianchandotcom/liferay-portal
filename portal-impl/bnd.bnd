@@ -16,7 +16,6 @@ Export-Package:\
 	com.liferay.portal.service.persistence.constants,\
 	com.liferay.portal.servlet,\
 	com.liferay.portal.servlet.filters.authverifier,\
-	com.liferay.portal.spring.bean,\
 	com.liferay.portal.spring.configurator,\
 	com.liferay.portal.template,\
 	com.liferay.portal.tools,\

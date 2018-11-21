@@ -3,22 +3,19 @@ import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
-import {OPEN_ASSET_TYPE_DIALOG} from '../../../actions/actions.es';
+import {OPEN_ASSET_TYPE_DIALOG, UPDATE_HIGHLIGHT_MAPPING_STATUS} from '../../../actions/actions.es';
 import {Store} from '../../../store/store.es';
 import templates from './SidebarMapping.soy';
-import {UPDATE_HIGHLIGHT_MAPPING_STATUS} from '../../../actions/actions.es';
 
 /**
  * SidebarMapping
  */
-
 class SidebarMapping extends Component {
 
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
-
 	disposed() {
 		this.store.dispatchAction(
 			UPDATE_HIGHLIGHT_MAPPING_STATUS,
@@ -30,15 +27,15 @@ class SidebarMapping extends Component {
 
 	/**
 	 * Callback executed on highlight mapping checkbox click
+	 * @param {MouseEvent} event
 	 * @private
 	 * @review
 	 */
-
 	_handleHighlightMappingCheckboxChange(event) {
 		this.store.dispatchAction(
 			UPDATE_HIGHLIGHT_MAPPING_STATUS,
 			{
-				highlightMapping: !!event.delegateTarget.checked
+				highlightMapping: Boolean(event.delegateTarget.checked)
 			}
 		);
 	}
@@ -48,7 +45,6 @@ class SidebarMapping extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleSelectAssetTypeButtonClick() {
 		this.store.dispatchAction(OPEN_ASSET_TYPE_DIALOG);
 	}
@@ -73,7 +69,6 @@ SidebarMapping.STATE = {
 	 * @review
 	 * @type {boolean}
 	 */
-
 	highlightMapping: Config.bool()
 		.value(false),
 
@@ -94,7 +89,6 @@ SidebarMapping.STATE = {
 	 *   }
 	 * }}
 	 */
-
 	selectedMappingTypes: Config
 		.shapeOf(
 			{
@@ -122,7 +116,6 @@ SidebarMapping.STATE = {
 	 * @review
 	 * @type {Store}
 	 */
-
 	store: Config.instanceOf(Store)
 };
 

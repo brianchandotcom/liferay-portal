@@ -15,7 +15,6 @@ import templates from './FragmentsEditor.soy';
  * FragmentsEditor
  * @review
  */
-
 class FragmentsEditor extends Component {
 
 	/**
@@ -23,7 +22,6 @@ class FragmentsEditor extends Component {
 	 * @param {string} fragmentEntryLinkId
 	 * @review
 	 */
-
 	_focusFragmentEntryLink(fragmentEntryLinkId) {
 		this.refs.fragmentsEditorRender.focusFragmentEntryLink(
 			fragmentEntryLinkId
@@ -37,7 +35,6 @@ class FragmentsEditor extends Component {
 	 * @return {FragmentEntryLink}
 	 * @review
 	 */
-
 	_getFragmentEntryLinkComponent(fragmentEntryLinkId) {
 		return this.refs.fragmentsEditorRender.refs[
 			`fragmentEntryLink_${fragmentEntryLinkId}`
@@ -54,7 +51,6 @@ class FragmentsEditor extends Component {
 	 * }} event
 	 * @private
 	 */
-
 	_handleMappeableFieldSelected(event) {
 		this._setFragmentEntryLinkEditableValue(
 			event.fragmentEntryLinkId,
@@ -68,9 +64,9 @@ class FragmentsEditor extends Component {
 	 * @param {Array} list
 	 * @param {number} indexA
 	 * @param {number} indexB
+	 * @return {Array}
 	 * @private
 	 */
-
 	_swapListElements(list, indexA, indexB) {
 		[list[indexA], list[indexB]] = [list[indexB], list[indexA]];
 

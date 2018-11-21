@@ -23,14 +23,12 @@ const EDITABLE_FRAGMENT_ENTRY_PROCESSOR = 'com.liferay.fragment.entry.processor.
  * FragmentEntryLink
  * @review
  */
-
 class FragmentEntryLink extends Component {
 
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
-
 	created() {
 		this._updateEditableStatus = this._updateEditableStatus.bind(this);
 	}
@@ -39,7 +37,6 @@ class FragmentEntryLink extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
-
 	disposed() {
 		this._destroyEditables();
 	}
@@ -48,7 +45,6 @@ class FragmentEntryLink extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
-
 	prepareStateForRender(state) {
 		return Object.assign(
 			{},
@@ -65,7 +61,6 @@ class FragmentEntryLink extends Component {
 	 * @param {string} newContent
 	 * @review
 	 */
-
 	syncContent(newContent) {
 		if (newContent) {
 			this._renderContent(newContent);
@@ -78,7 +73,6 @@ class FragmentEntryLink extends Component {
 	 * @param {object} newEditableValues
 	 * @review
 	 */
-
 	syncEditableValues(newEditableValues) {
 		if (this._editables) {
 			this._editables.forEach(
@@ -106,7 +100,6 @@ class FragmentEntryLink extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
-
 	syncLanguageId() {
 		if (this.content) {
 			this._renderContent(this.content);
@@ -118,7 +111,6 @@ class FragmentEntryLink extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
-
 	syncStyleModifier() {
 		if (this.content) {
 			this._renderContent(this.content);
@@ -129,7 +121,6 @@ class FragmentEntryLink extends Component {
 	 * Propagate store to editables when it's loaded
 	 * @review
 	 */
-
 	syncStore() {
 		if (this._editables) {
 			this._editables.forEach(
@@ -143,7 +134,6 @@ class FragmentEntryLink extends Component {
 	/**
 	 * Create instances of FragmentEditableField for each editable.
 	 */
-
 	_createEditables() {
 		this._destroyEditables();
 
@@ -194,7 +184,6 @@ class FragmentEntryLink extends Component {
 	/**
 	 * Destroy existing FragmentEditableField instances.
 	 */
-
 	_destroyEditables() {
 		if (this._editables) {
 			this._editables.forEach(
@@ -210,7 +199,6 @@ class FragmentEntryLink extends Component {
 	 * @param {!number} direction
 	 * @private
 	 */
-
 	_emitMoveEvent(direction) {
 		this.emit(
 			'move',
@@ -228,7 +216,6 @@ class FragmentEntryLink extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleFragmentKeyUp(event) {
 		if (document.activeElement === this.refs.fragmentEntryLinkWrapper) {
 			switch (event.which) {
@@ -249,7 +236,6 @@ class FragmentEntryLink extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleFragmentMoveDownButtonClick() {
 		this._emitMoveEvent(FragmentEntryLink.MOVE_DIRECTIONS.DOWN);
 	}
@@ -261,7 +247,6 @@ class FragmentEntryLink extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleFragmentMoveUpButtonClick() {
 		this._emitMoveEvent(FragmentEntryLink.MOVE_DIRECTIONS.UP);
 	}
@@ -270,7 +255,6 @@ class FragmentEntryLink extends Component {
 	 * Callback executed when the fragment remove button is clicked.
 	 * @private
 	 */
-
 	_handleFragmentRemoveButtonClick() {
 		this.store
 			.dispatchAction(
@@ -305,7 +289,6 @@ class FragmentEntryLink extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_renderContent(content) {
 		if (this.refs.content) {
 			AUI().use(
@@ -336,7 +319,6 @@ class FragmentEntryLink extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_update(languageId, defaultLanguageId, updateFunctions) {
 		const editableValues = this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR];
 
@@ -370,7 +352,6 @@ class FragmentEntryLink extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_updateEditableStatus(editableId, value, defaultValue, mappedField) {
 		const element = this.element.querySelector(`lfr-editable[id="${editableId}"]`);
 
@@ -398,7 +379,6 @@ class FragmentEntryLink extends Component {
  * @static
  * @type {!object}
  */
-
 FragmentEntryLink.MOVE_DIRECTIONS = {
 	DOWN: 1,
 	UP: -1
@@ -410,7 +390,6 @@ FragmentEntryLink.MOVE_DIRECTIONS = {
  * @static
  * @type {!Object}
  */
-
 FragmentEntryLink.STATE = {
 
 	/**
@@ -421,7 +400,6 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-
 	content: Config.any()
 		.setter(
 			content => {
@@ -438,7 +416,6 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {object}
 	 */
-
 	defaultEditorConfigurations: Config.object().value({}),
 
 	/**
@@ -449,7 +426,6 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	defaultLanguageId: Config.string().required(),
 
 	/**
@@ -461,7 +437,6 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {!Object}
 	 */
-
 	editableValues: Config.object().required(),
 
 	/**
@@ -472,7 +447,6 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	fragmentEntryLinkId: Config.string().required(),
 
 	/**
@@ -483,7 +457,6 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	imageSelectorURL: Config.string().required(),
 
 	/**
@@ -494,7 +467,6 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	languageId: Config.string().required(),
 
 	/**
@@ -505,7 +477,6 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-
 	name: Config.string().value(''),
 
 	/**
@@ -525,7 +496,6 @@ FragmentEntryLink.STATE = {
 	 *   }
 	 * }}
 	 */
-
 	selectedMappingTypes: Config
 		.shapeOf(
 			{
@@ -553,7 +523,6 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {!bool}
 	 */
-
 	showControlBar: Config.bool().value(true),
 
 	/**
@@ -564,7 +533,6 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {bool}
 	 */
-
 	showMapping: Config.bool().value(false),
 
 	/**
@@ -575,7 +543,6 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {MetalStore}
 	 */
-
 	store: Config.instanceOf(MetalStore),
 
 	/**
@@ -586,7 +553,6 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	styleModifier: Config.string(),
 
 	/**
@@ -597,7 +563,6 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	portletNamespace: Config.string().required(),
 
 	/**
@@ -608,7 +573,6 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	spritemap: Config.string().required()
 };
 

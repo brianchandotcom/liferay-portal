@@ -1,7 +1,6 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import {Drag, DragDrop} from 'metal-drag-drop';
-import {getFragmentRowIndex} from '../../utils/utils.es';
 import position from 'metal-position';
 import Soy from 'metal-soy';
 
@@ -14,7 +13,7 @@ import {
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../actions/actions.es';
 import {DRAG_POSITIONS} from '../../reducers/placeholders.es';
-import {setIn} from '../../utils/utils.es';
+import {getFragmentRowIndex, setIn} from '../../utils/utils.es';
 import state from '../../store/state.es';
 import templates from './FragmentEntryLinkList.soy';
 
@@ -56,7 +55,6 @@ class FragmentEntryLinkList extends Component {
 	 * @private
 	 * @review
 	 */
-
 	attached() {
 		this._initializeDragAndDrop();
 	}
@@ -66,7 +64,6 @@ class FragmentEntryLinkList extends Component {
 	 * @private
 	 * @review
 	 */
-
 	dispose() {
 		this._dragDrop.dispose();
 	}
@@ -76,7 +73,6 @@ class FragmentEntryLinkList extends Component {
 	 * @private
 	 * @review
 	 */
-
 	prepareStateForRender(state) {
 		return FragmentEntryLinkList._setEmptySections(state);
 	}
@@ -86,7 +82,6 @@ class FragmentEntryLinkList extends Component {
 	 * @param {string} fragmentEntryLinkId
 	 * @review
 	 */
-
 	focusFragmentEntryLink(fragmentEntryLinkId) {
 		requestAnimationFrame(
 			() => {
@@ -107,7 +102,6 @@ class FragmentEntryLinkList extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleDrag(data) {
 		const targetItem = data.target;
 
@@ -132,12 +126,10 @@ class FragmentEntryLinkList extends Component {
 	}
 
 	/**
-	* Callback that is executed when we leave a drag target.
-	* @param {!MouseEvent} event
-	* @private
-	* @review
-	*/
-
+	 * Callback that is executed when we leave a drag target.
+	 * @private
+	 * @review
+	 */
 	_handleDragEnd() {
 		this.store.dispatchAction(
 			CLEAR_DRAG_TARGET
@@ -151,7 +143,6 @@ class FragmentEntryLinkList extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleDrop(data, event) {
 		event.preventDefault();
 
@@ -205,7 +196,6 @@ class FragmentEntryLinkList extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleFragmentMove(event) {
 		const placeholderId = event.fragmentEntryLinkId;
 
@@ -266,7 +256,6 @@ class FragmentEntryLinkList extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_initializeDragAndDrop() {
 		if (this._dragDrop) {
 			this._dragDrop.dispose();
@@ -306,7 +295,6 @@ class FragmentEntryLinkList extends Component {
  * @static
  * @type {!Object}
  */
-
 FragmentEntryLinkList.STATE = {
 
 	/**
@@ -317,7 +305,6 @@ FragmentEntryLinkList.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	hoveredElementBorder: Config.string(),
 
 	/**
@@ -328,7 +315,6 @@ FragmentEntryLinkList.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	hoveredFragmentEntryLinkId: Config.string(),
 
 	/**
@@ -339,7 +325,6 @@ FragmentEntryLinkList.STATE = {
 	 * @review
 	 * @type {object}
 	 */
-
 	layoutData: state.layoutData,
 
 	/**
@@ -350,7 +335,6 @@ FragmentEntryLinkList.STATE = {
 	 * @review
 	 * @type {object|null}
 	 */
-
 	_dragDrop: Config.internal().value(null),
 
 	/**
@@ -361,7 +345,6 @@ FragmentEntryLinkList.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	_targetBorder: Config.internal().string()
 };
 

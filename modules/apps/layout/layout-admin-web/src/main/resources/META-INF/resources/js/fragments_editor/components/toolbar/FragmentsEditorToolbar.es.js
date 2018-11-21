@@ -14,13 +14,11 @@ import {
  * FragmentsEditorToolbar
  * @review
  */
-
 class FragmentsEditorToolbar extends Component {
 
 	/**
 	 * @inheritDoc
 	 */
-
 	created() {
 		this.once(
 			'storeChanged',
@@ -36,7 +34,6 @@ class FragmentsEditorToolbar extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleToggleContextualSidebarButtonClick() {
 		this.store.dispatchAction(TOGGLE_SIDEBAR);
 	}
@@ -48,7 +45,6 @@ class FragmentsEditorToolbar extends Component {
  * @static
  * @type {!Object}
  */
-
 FragmentsEditorToolbar.STATE = {
 
 	/**
@@ -59,7 +55,6 @@ FragmentsEditorToolbar.STATE = {
 	 * @review
 	 * @type {Store}
 	 */
-
 	store: Config.instanceOf(Store)
 };
 

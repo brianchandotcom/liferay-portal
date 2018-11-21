@@ -6,7 +6,6 @@
  * @param {string} fragmentEntryLinkId
  * @return {number}
  */
-
 function getFragmentRowIndex(structure, fragmentEntryLinkId) {
 	return structure.findIndex(
 		row => {
@@ -27,14 +26,12 @@ function getFragmentRowIndex(structure, fragmentEntryLinkId) {
  * Recursively inserts a value inside an object creating
  * a copy of the original target. It the object (or any in the path),
  * it's an Array, it will generate new Arrays, preserving the same structure.
- *
- * @param {!Array|!Object} Original object that will be copied
- * @param {!string[]} Array of strings used for reaching the deep property
+ * @param {!Array|!Object} object Original object that will be copied
+ * @param {!Array<string>} keyPath Array of strings used for reaching the deep property
  * @param {*} value Value to be inserted
- * @return {!Array|!Object} Copy of the original object with the new value
+ * @return {Array|Object} Copy of the original object with the new value
  * @review
  */
-
 function setIn(object, keyPath, value) {
 	const nextKey = keyPath[0];
 	const target = object instanceof Array ?

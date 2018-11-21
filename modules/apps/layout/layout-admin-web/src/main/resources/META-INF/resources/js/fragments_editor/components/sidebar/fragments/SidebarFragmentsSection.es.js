@@ -12,7 +12,6 @@ import templates from './SidebarFragmentsSection.soy';
  * @review
  * @type {!string}
  */
-
 const ADDED_TAB_ID = 'added';
 
 /**
@@ -20,20 +19,17 @@ const ADDED_TAB_ID = 'added';
  * @review
  * @type {!string}
  */
-
 const DEFAULT_TAB_ID = 'available';
 
 /**
  * SidebarFragmentsSection
  */
-
 class SidebarFragmentsSection extends Component {
 
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
-
 	created() {
 		const addedTab = this.sidebarTabs.find(
 			tab => tab.id === ADDED_TAB_ID
@@ -48,7 +44,6 @@ class SidebarFragmentsSection extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
-
 	prepareStateForRender(state) {
 		return Object.assign(
 			{},
@@ -71,12 +66,12 @@ class SidebarFragmentsSection extends Component {
 
 	/**
 	 * Enable or disable added tab depending on we have fragments or not
+	 * @param {boolean} enabled
 	 * @private
 	 * @review
 	 */
-
 	toggleAddedTab(enabled) {
-		this._addedTabEnabled = !!enabled;
+		this._addedTabEnabled = Boolean(enabled);
 
 		if (!enabled) {
 			this._selectedTab = DEFAULT_TAB_ID;
@@ -89,7 +84,6 @@ class SidebarFragmentsSection extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleTabClick(event) {
 		this._selectedTab = event.delegateTarget.dataset.tabId;
 	}
@@ -101,7 +95,6 @@ class SidebarFragmentsSection extends Component {
  * @static
  * @type {!Object}
  */
-
 SidebarFragmentsSection.STATE = {
 
 	/**
@@ -116,7 +109,6 @@ SidebarFragmentsSection.STATE = {
 	 * 	 label: string
 	 * }>}
 	 */
-
 	sidebarTabs: Config.arrayOf(
 		Config.shapeOf(
 			{
@@ -136,7 +128,6 @@ SidebarFragmentsSection.STATE = {
 	 * @review
 	 * @type {bool}
 	 */
-
 	_addedTabEnabled: Config
 		.bool()
 		.internal()
@@ -151,7 +142,6 @@ SidebarFragmentsSection.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-
 	_selectedTab: Config
 		.string()
 		.internal()

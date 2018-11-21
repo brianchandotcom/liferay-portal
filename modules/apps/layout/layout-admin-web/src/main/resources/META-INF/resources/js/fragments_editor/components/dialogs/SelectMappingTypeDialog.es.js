@@ -13,14 +13,12 @@ import templates from './SelectMappingTypeDialog.soy';
 /**
  * SelectMappingTypeDialog
  */
-
 class SelectMappingTypeDialog extends PortletBase {
 
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
-
 	rendered() {
 		if (this.visible && !this._mappingTypes) {
 			this._loadMappingTypes();
@@ -48,7 +46,6 @@ class SelectMappingTypeDialog extends PortletBase {
 	 * @private
 	 * @review
 	 */
-
 	_handleCancelButtonClick() {
 		this.store
 			.dispatchAction(
@@ -61,7 +58,6 @@ class SelectMappingTypeDialog extends PortletBase {
 	 * @private
 	 * @review
 	 */
-
 	_handleMappingSubtypeSelectChange() {
 		const selectInput = this.refs.modal.refs.selectMappingSubtype;
 
@@ -78,7 +74,6 @@ class SelectMappingTypeDialog extends PortletBase {
 	 * @private
 	 * @review
 	 */
-
 	_handleMappingTypeSelectChange() {
 		const selectInput = this.refs.modal.refs.selectMappingType;
 
@@ -98,7 +93,6 @@ class SelectMappingTypeDialog extends PortletBase {
 	 * @private
 	 * @review
 	 */
-
 	_handleSubmitButtonClick() {
 		const mappingTypes = {};
 		const subtype = this._mappingSubtypes.find(
@@ -143,7 +137,6 @@ class SelectMappingTypeDialog extends PortletBase {
 	 * @private
 	 * @review
 	 */
-
 	_handleVisibleChanged(change) {
 		this.store
 			.dispatchAction(
@@ -164,7 +157,6 @@ class SelectMappingTypeDialog extends PortletBase {
 	 * @private
 	 * @review
 	 */
-
 	_loadMappingSubtypes() {
 		this._mappingSubtypes = null;
 
@@ -184,14 +176,15 @@ class SelectMappingTypeDialog extends PortletBase {
 	/**
 	 * Load a list of mapping types.
 	 * @private
+	 * @return {Promise<Response>}
 	 * @review
 	 */
-
 	_loadMappingTypes() {
 		return this.fetch(this.getAssetDisplayContributorsURL, {})
 			.then(
 				response => response.json()
-			).then(
+			)
+			.then(
 				response => {
 					this._mappingTypes = response;
 				}
@@ -205,7 +198,6 @@ class SelectMappingTypeDialog extends PortletBase {
  * @static
  * @type {!Object}
  */
-
 SelectMappingTypeDialog.STATE = {
 
 	/**
@@ -216,7 +208,6 @@ SelectMappingTypeDialog.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	classPK: Config.string().required(),
 
 	/**
@@ -228,7 +219,6 @@ SelectMappingTypeDialog.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	getAssetClassTypesURL: Config.string().required(),
 
 	/**
@@ -240,7 +230,6 @@ SelectMappingTypeDialog.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	getAssetDisplayContributorsURL: Config.string().required(),
 
 	/**
@@ -251,7 +240,6 @@ SelectMappingTypeDialog.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	portletNamespace: Config.string().required(),
 
 	/**
@@ -262,7 +250,6 @@ SelectMappingTypeDialog.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	spritemap: Config.string().required(),
 
 	/**
@@ -273,7 +260,6 @@ SelectMappingTypeDialog.STATE = {
 	 * @review
 	 * @type {Store}
 	 */
-
 	store: Config.instanceOf(Store),
 
 	/**
@@ -288,7 +274,6 @@ SelectMappingTypeDialog.STATE = {
 	 *   label: !string
 	 * }>}
 	 */
-
 	_mappingTypes: Config
 		.arrayOf(
 			Config.shapeOf(
@@ -312,7 +297,6 @@ SelectMappingTypeDialog.STATE = {
 	 *   label: !string
 	 * }>}
 	 */
-
 	_mappingSubtypes: Config
 		.arrayOf(
 			Config.shapeOf(
@@ -333,7 +317,6 @@ SelectMappingTypeDialog.STATE = {
 	 * @review
 	 * @type {boolean}
 	 */
-
 	_savingChanges: Config
 		.bool()
 		.internal()
@@ -348,7 +331,6 @@ SelectMappingTypeDialog.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-
 	_selectedMappingTypeId: Config
 		.string()
 		.internal()
@@ -363,7 +345,6 @@ SelectMappingTypeDialog.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-
 	_selectedMappingSubtypeId: Config
 		.string()
 		.internal()

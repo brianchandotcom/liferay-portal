@@ -6,7 +6,6 @@ import {object} from 'metal';
  * @review
  * @type {number}
  */
-
 const KEY_ENTER = 13;
 
 let _destroyedCallback;
@@ -17,7 +16,6 @@ let _editorEventHandler;
 /**
  * Destroys, if any, an existing instance of AlloyEditor.
  */
-
 function destroy() {
 	if (_editor) {
 		_editorEventHandler.removeAllListeners();
@@ -42,7 +40,6 @@ function destroy() {
  * Returns the existing editable element or null.
  * @returns {HTMLElement|null}
  */
-
 function getActiveEditableElement() {
 	return _editableElement;
 }
@@ -56,7 +53,6 @@ function getActiveEditableElement() {
  * @param {function} changedCallback
  * @param {function} destroyedCallback
  */
-
 function init(
 	editableElement,
 	fragmentEntryLinkId,
@@ -145,8 +141,9 @@ function init(
  * @param {string} portletNamespace
  * @param {string} fragmentEntryLinkId
  * @param {object} defaultEditorConfiguration
+ * @param {string} editorName
+ * @return {object}
  */
-
 function _getEditorConfiguration(
 	editableElement,
 	portletNamespace,
@@ -180,7 +177,6 @@ function _getEditorConfiguration(
  * @private
  * @review
  */
-
 function _handleNativeEditorKey(event) {
 	if (
 		event.data.keyCode === KEY_ENTER &&

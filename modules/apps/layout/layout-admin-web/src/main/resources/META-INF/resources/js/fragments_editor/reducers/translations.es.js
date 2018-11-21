@@ -16,7 +16,6 @@ const EDITABLE_VALUES_KEY = 'com.liferay.fragment.entry.processor.editable.Edita
  * @return {object}
  * @review
  */
-
 function languageIdReducer(state, actionType, payload) {
 	let nextState = state;
 
@@ -39,7 +38,6 @@ function languageIdReducer(state, actionType, payload) {
  * @return {object}
  * @review
  */
-
 function translationStatusReducer(state, actionType) {
 	const nextState = Object.assign({}, state);
 
@@ -59,11 +57,11 @@ function translationStatusReducer(state, actionType) {
 
 /**
  * Gets all editable values in the current fragment
- * @returns Array<Object>
+ * @param {object[]} fragmentEntryLinks
+ * @return {object[]}
  * @private
  * @review
  */
-
 function _getEditableValues(fragmentEntryLinks) {
 	return Object.values(fragmentEntryLinks)
 		.filter(
@@ -77,6 +75,11 @@ function _getEditableValues(fragmentEntryLinks) {
 		.filter(editableValues => editableValues);
 }
 
+/**
+ * Return the language keys for a given language object
+ * @param {object} availableLanguages
+ * @return {string[]}
+ */
 function _getLanguageKeys(availableLanguages) {
 	return Object
 		.keys(availableLanguages)
@@ -85,19 +88,20 @@ function _getLanguageKeys(availableLanguages) {
 
 /**
  * Gets the translation status for a given set of parameters
- * @param languageIds The set of languageIds to check
- * @param editableValues The current editable values state
- * @private
- * @returns {{
+ * Translation status: {
  * 	languageValues: {{
  * 		languageId: string
  * 		values: Array<string>
  *  }},
  *  translationKeys: Array<string>
- * }} A translation status object
+ * }
+ *
+ * @param {string[]} languageIds The set of languageIds to check
+ * @param {{editableValues: object}[]} editableValues The current editable values state
+ * @private
+ * @return {object} A translation status object
  * @review
  */
-
 function _getTranslationStatus(languageIds, editableValues) {
 	const translationKeys = editableValues.map(
 		editableValue => {
@@ -118,12 +122,14 @@ function _getTranslationStatus(languageIds, editableValues) {
 						editableValueId => editableValue[editableValueId][languageId]
 					);
 				}
-			).reduce(
-				(acc, val) => acc.concat(val),
-				[]
-			).filter(
-				localeValue => localeValue
-			);
+			)
+				.reduce(
+					(acc, val) => acc.concat(val),
+					[]
+				)
+				.filter(
+					localeValue => localeValue
+				);
 
 			return {
 				languageId,

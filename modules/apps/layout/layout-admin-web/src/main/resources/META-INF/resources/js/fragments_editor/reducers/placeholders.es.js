@@ -9,7 +9,6 @@ import {
  * @review
  * @type {!object}
  */
-
 const DRAG_POSITIONS = {
 	bottom: 'drag-bottom',
 	top: 'drag-top'
@@ -55,7 +54,6 @@ function updateDragTargetReducer(state, actionType, payload) {
  * @return {object}
  * @review
  */
-
 function updateHighlightMappingReducer(state, actionType, payload) {
 	let nextState = state;
 
@@ -64,7 +62,7 @@ function updateHighlightMappingReducer(state, actionType, payload) {
 			{},
 			nextState,
 			{
-				highlightMapping: !!payload.highlightMapping
+				highlightMapping: Boolean(payload.highlightMapping)
 			}
 		);
 	}

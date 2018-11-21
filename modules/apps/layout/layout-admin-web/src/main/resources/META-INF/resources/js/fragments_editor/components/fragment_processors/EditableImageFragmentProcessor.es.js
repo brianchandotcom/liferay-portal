@@ -1,7 +1,6 @@
 /**
  * Possible types that can be returned by the image selector
  */
-
 const RETURN_TYPES = {
 	fileEntryItemSelector: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType',
 	url: 'URL'
@@ -16,7 +15,6 @@ const RETURN_TYPES = {
  * @param {function} changedCallback
  * @private
  */
-
 function _handleImageEditorChange(
 	changeEvent,
 	editableElement,
@@ -48,7 +46,6 @@ function _handleImageEditorChange(
  * destroyed on hide.
  * @review
  */
-
 function destroy() {
 }
 
@@ -63,7 +60,6 @@ function destroy() {
  * @param {function} destroyedCallback
  * @review
  */
-
 function init(
 	editableElement,
 	fragmentEntryLinkId,

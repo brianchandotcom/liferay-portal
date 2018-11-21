@@ -7,13 +7,15 @@ import Soy from 'metal-soy';
 
 import templates from './FragmentEditableFieldTooltip.soy';
 
+/**
+ * FragmentEditableFieldTooltip
+ */
 class FragmentEditableFieldTooltip extends Component {
 
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
-
 	created() {
 		this._handleDocumentClick = this._handleDocumentClick.bind(this);
 
@@ -39,7 +41,6 @@ class FragmentEditableFieldTooltip extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
-
 	disposed() {
 		if (this._documentClickHandler) {
 			this._documentClickHandler.removeListener();
@@ -56,7 +57,6 @@ class FragmentEditableFieldTooltip extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
-
 	rendered() {
 		this._alignTooltip();
 	}
@@ -66,7 +66,6 @@ class FragmentEditableFieldTooltip extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_alignTooltip() {
 		Align.align(
 			this.refs.tooltip,
@@ -77,8 +76,8 @@ class FragmentEditableFieldTooltip extends Component {
 
 	/**
 	 * Handle a button click
+	 * @param {MouseEvent} event
 	 */
-
 	_handleButtonClick(event) {
 		const button = event.delegateTarget;
 		const buttonId = button.dataset.tooltipButtonId;
@@ -93,7 +92,6 @@ class FragmentEditableFieldTooltip extends Component {
 	 * Hide tooltip on document click when it is outside the tooltip
 	 * @param {MouseEvent} event
 	 */
-
 	_handleDocumentClick(event) {
 		if (
 			this.refs.tooltip &&
@@ -109,7 +107,6 @@ class FragmentEditableFieldTooltip extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleWindowResize() {
 		this._alignTooltip();
 	}
@@ -121,7 +118,6 @@ class FragmentEditableFieldTooltip extends Component {
  * @static
  * @type {!Object}
  */
-
 FragmentEditableFieldTooltip.STATE = {
 
 	/**
@@ -132,7 +128,6 @@ FragmentEditableFieldTooltip.STATE = {
 	 * @review
 	 * @type {HTMLElement}
 	 */
-
 	alignElement: Config.object().required(),
 
 	/**
@@ -146,7 +141,6 @@ FragmentEditableFieldTooltip.STATE = {
 	 *   label: !string
 	 * }>}
 	 */
-
 	buttons: Config.arrayOf(
 		Config.shapeOf(
 			{

@@ -12,9 +12,8 @@ import {
  * @return {object}
  * @review
  */
-
 function openAssetTypeDialogReducer(state, actionType) {
-	let nextState = Object.assign({}, state);
+	const nextState = Object.assign({}, state);
 
 	if (actionType === OPEN_ASSET_TYPE_DIALOG) {
 		nextState.selectMappingTypeDialogVisible = true;
@@ -33,9 +32,8 @@ function openAssetTypeDialogReducer(state, actionType) {
  * @return {object}
  * @review
  */
-
 function openMappingFieldsDialogReducer(state, actionType, payload) {
-	let nextState = Object.assign({}, state);
+	const nextState = Object.assign({}, state);
 
 	if (actionType === OPEN_MAPPING_FIELDS_DIALOG) {
 		nextState.selectMappingDialogEditableId = payload.editableId;
@@ -63,11 +61,10 @@ function openMappingFieldsDialogReducer(state, actionType, payload) {
  * @return {object}
  * @review
  */
-
 function selectMappeableTypeReducer(state, actionType, payload) {
 	return new Promise(
-		(resolve, reject) => {
-			let nextState = Object.assign({}, state);
+		resolve => {
+			const nextState = Object.assign({}, state);
 
 			if (actionType === SELECT_MAPPEABLE_TYPE) {
 				_selectMappingType(
@@ -104,9 +101,8 @@ function selectMappeableTypeReducer(state, actionType, payload) {
  * @return {object}
  * @review
  */
-
 function hideMappingDialogReducer(state, actionType) {
-	let nextState = Object.assign({}, state);
+	const nextState = Object.assign({}, state);
 
 	if (actionType === HIDE_MAPPING_DIALOG) {
 		nextState.selectMappingDialogVisible = false;
@@ -121,9 +117,8 @@ function hideMappingDialogReducer(state, actionType) {
  * @return {object}
  * @review
  */
-
 function hideMappingTypeDialogReducer(state, actionType) {
-	let nextState = Object.assign({}, state);
+	const nextState = Object.assign({}, state);
 
 	if (actionType === HIDE_MAPPING_TYPE_DIALOG) {
 		nextState.selectMappingTypeDialogVisible = false;

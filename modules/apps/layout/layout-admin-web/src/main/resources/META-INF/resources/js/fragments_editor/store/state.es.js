@@ -18,7 +18,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	addFragmentEntryLinkURL: Config.string().required(),
 
 	/**
@@ -29,7 +28,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	classNameId: Config.string().required(),
 
 	/**
@@ -40,7 +38,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	classPK: Config.string().required(),
 
 	/**
@@ -52,7 +49,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {boolean}
 	 */
-
 	contextualSidebarVisible: Config.bool().value(true),
 
 	/**
@@ -63,7 +59,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	deleteFragmentEntryLinkURL: Config.string().required(),
 
 	/**
@@ -73,7 +68,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {!object}
 	 */
-
 	fragmentEntryLinks: Config.objectOf(
 		Config.shapeOf(
 			{
@@ -94,7 +88,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {boolean}
 	 */
-
 	highlightMapping: Config.bool()
 		.value(false),
 
@@ -105,7 +98,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {string}
 	 */
-
 	hoveredElementBorder: Config
 		.oneOf(Object.values(DRAG_POSITIONS))
 		.value(null),
@@ -117,7 +109,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {string}
 	 */
-
 	hoveredFragmentEntryLinkId: Config
 		.string()
 		.value(null),
@@ -129,7 +120,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {string}
 	 */
-
 	hoveredSectionId: Config
 		.string()
 		.value(null),
@@ -141,7 +131,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	languageId: Config.string().required(),
 
 	/**
@@ -151,7 +140,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {string}
 	 */
-
 	lastSaveDate: Config.string()
 		.internal()
 		.value(''),
@@ -163,7 +151,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {{structure: Array}}
 	 */
-
 	layoutData: Config
 		.shapeOf(
 			{
@@ -203,7 +190,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	portletNamespace: Config.string().required(),
 
 	/**
@@ -214,7 +200,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	renderFragmentEntryURL: Config.string().required(),
 
 	/**
@@ -224,7 +209,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {boolean}
 	 */
-
 	savingChanges: Config.bool()
 		.internal()
 		.value(false),
@@ -238,7 +222,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {string}
 	 */
-
 	selectMappingDialogEditableType: Config
 		.string()
 		.value(''),
@@ -252,7 +235,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {string}
 	 */
-
 	selectMappingDialogEditableId: Config
 		.string()
 		.value(''),
@@ -266,7 +248,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {string}
 	 */
-
 	selectMappingDialogFragmentEntryLinkId: Config
 		.string()
 		.value(''),
@@ -280,7 +261,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {string}
 	 */
-
 	selectMappingDialogMappedFieldId: Config
 		.string()
 		.value(''),
@@ -294,7 +274,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {boolean}
 	 */
-
 	selectMappingDialogVisible: Config
 		.bool()
 		.value(false),
@@ -308,7 +287,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {boolean}
 	 */
-
 	selectMappingTypeDialogVisible: Config
 		.bool()
 		.value(false),
@@ -320,7 +298,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	updateLayoutPageTemplateDataURL: Config.string().required(),
 
 	/**
@@ -331,7 +308,6 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	updateLayoutPageTemplateEntryAssetTypeURL: Config.string().required()
 };
 

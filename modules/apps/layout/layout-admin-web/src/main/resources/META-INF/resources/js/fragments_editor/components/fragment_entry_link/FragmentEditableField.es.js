@@ -7,10 +7,10 @@ import './FragmentEditableFieldTooltip.es';
 
 import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
 import {getActiveEditableElement} from '../fragment_processors/EditableTextFragmentProcessor.es';
-import {OPEN_MAPPING_FIELDS_DIALOG} from '../../actions/actions.es';
 import {Store} from '../../store/store.es';
 import templates from './FragmentEditableField.soy';
 import {
+	OPEN_MAPPING_FIELDS_DIALOG,
 	UPDATE_EDITABLE_VALUE,
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS,
@@ -22,14 +22,12 @@ import {
  * @review
  * @type {!string}
  */
-
 const DEFAULT_LANGUAGE_ID_KEY = 'defaultValue';
 
 /**
  * Buttons rendered inside the tooltip
  * @review
  */
-
 const TOOLTIP_BUTTONS = {
 	edit: {
 		id: 'edit',
@@ -47,13 +45,15 @@ const TOOLTIP_BUTTONS = {
 	}
 };
 
+/**
+ * FragmentEditableField
+ */
 class FragmentEditableField extends Component {
 
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
-
 	created() {
 		this._handleBeforeNavigate = this._handleBeforeNavigate.bind(this);
 		this._handleEditableChanged = this._handleEditableChanged.bind(this);
@@ -69,7 +69,6 @@ class FragmentEditableField extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
-
 	disposed() {
 		this._destroyProcessors();
 	}
@@ -79,7 +78,6 @@ class FragmentEditableField extends Component {
 	 * @param {!object} state
 	 * @returns {object}
 	 */
-
 	prepareStateForRender(state) {
 		const translatedContent = this.editableValues[this.languageId] ||
 			this.editableValues[this.defaultLanguageId] ||
@@ -119,7 +117,6 @@ class FragmentEditableField extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
-
 	rendered() {
 		if (this._showEditor) {
 			this._showEditor = false;
@@ -137,7 +134,6 @@ class FragmentEditableField extends Component {
 	 * @return {boolean}
 	 * @review
 	 */
-
 	shouldUpdate(changes) {
 		return !!changes._showTooltip;
 	}
@@ -147,7 +143,6 @@ class FragmentEditableField extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_destroyProcessors() {
 		Object.values(FragmentProcessors).forEach(
 			fragmentProcessor => fragmentProcessor.destroy()
@@ -159,7 +154,6 @@ class FragmentEditableField extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_enableEditor() {
 		const {init} = FragmentProcessors[this.type] ||
 			FragmentProcessors.fallback;
@@ -180,9 +174,9 @@ class FragmentEditableField extends Component {
 	 * Get the list of buttons that should be rendered inside the tooltip
 	 * @param {string} editableType
 	 * @private
+	 * @return {object}
 	 * @review
 	 */
-
 	_getTooltipButtons(editableType) {
 		const _tooltipButtons = [];
 
@@ -206,7 +200,6 @@ class FragmentEditableField extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleBeforeNavigate() {
 		if (this._beforeNavigateHandler) {
 			this._beforeNavigateHandler.detach();
@@ -221,7 +214,6 @@ class FragmentEditableField extends Component {
 	 * @param {Event} event
 	 * @private
 	 */
-
 	_handleEditableClick(event) {
 		event.preventDefault();
 		event.stopPropagation();
@@ -254,7 +246,6 @@ class FragmentEditableField extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleEditableDestroyed() {
 		this._editing = false;
 	}
@@ -264,7 +255,6 @@ class FragmentEditableField extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleEditableMouseEnter() {
 		if (
 			!this._editing &&
@@ -281,7 +271,6 @@ class FragmentEditableField extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleEditableMouseLeave() {
 		if (this._tooltipLabel && !this._editing) {
 			this._showTooltip = false;
@@ -294,7 +283,6 @@ class FragmentEditableField extends Component {
 	 * @param {string} newValue
 	 * @private
 	 */
-
 	_handleEditableChanged(newValue) {
 		this.store
 			.dispatchAction(
@@ -334,7 +322,6 @@ class FragmentEditableField extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleOutsideTooltipClick() {
 		this._showTooltip = false;
 	}
@@ -345,7 +332,6 @@ class FragmentEditableField extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleTooltipButtonClick(event) {
 		const {buttonId} = event;
 
@@ -378,7 +364,6 @@ class FragmentEditableField extends Component {
  * @static
  * @type {!Object}
  */
-
 FragmentEditableField.STATE = {
 
 	/**
@@ -389,7 +374,6 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	content: Config.string().required(),
 
 	/**
@@ -400,7 +384,6 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	defaultLanguageId: Config.string().required(),
 
 	/**
@@ -411,7 +394,6 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	editableId: Config.string().required(),
 
 	/**
@@ -422,7 +404,6 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {!object}
 	 */
-
 	editableValues: Config.object().required(),
 
 	/**
@@ -433,7 +414,6 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	fragmentEntryLinkId: Config.string().required(),
 
 	/**
@@ -444,7 +424,6 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	languageId: Config.string().required(),
 
 	/**
@@ -455,7 +434,6 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	portletNamespace: Config.string().required(),
 
 	/**
@@ -466,7 +444,6 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {!object}
 	 */
-
 	processorsOptions: Config.object().required(),
 
 	/**
@@ -477,7 +454,6 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	type: Config.string().required(),
 
 	/**
@@ -488,7 +464,6 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {!boolean}
 	 */
-
 	showMapping: Config.bool().required(),
 
 	/**
@@ -499,7 +474,6 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {Store}
 	 */
-
 	store: Config.instanceOf(Store),
 
 	/**
@@ -511,7 +485,6 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {boolean}
 	 */
-
 	_editing: Config.internal().bool().value(false),
 
 	/**
@@ -523,7 +496,6 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {boolean}
 	 */
-
 	_showEditor: Config.internal().bool().value(false),
 
 	/**
@@ -535,7 +507,6 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {boolean}
 	 */
-
 	_showTooltip: Config.internal().bool().value(false),
 
 	/**
@@ -546,7 +517,6 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {HTMLElement}
 	 */
-
 	_tooltipAlignElement: Config.internal().object(),
 
 	/**
@@ -560,7 +530,6 @@ FragmentEditableField.STATE = {
 	 *   label: !string
 	 * }>}
 	 */
-
 	_tooltipButtons: Config
 		.internal()
 		.arrayOf(
@@ -581,7 +550,6 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-
 	_tooltipLabel: Config
 		.internal()
 		.string()

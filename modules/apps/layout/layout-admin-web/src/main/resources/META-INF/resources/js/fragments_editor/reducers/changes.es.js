@@ -12,7 +12,6 @@ import {
  * @return {object}
  * @review
  */
-
 function saveChangesReducer(state, actionType, payload) {
 	const nextState = Object.assign({}, state);
 
@@ -22,7 +21,7 @@ function saveChangesReducer(state, actionType, payload) {
 		);
 	}
 	else if (actionType === UPDATE_SAVING_CHANGES_STATUS) {
-		nextState.savingChanges = !!payload.savingChanges;
+		nextState.savingChanges = Boolean(payload.savingChanges);
 	}
 
 	return nextState;

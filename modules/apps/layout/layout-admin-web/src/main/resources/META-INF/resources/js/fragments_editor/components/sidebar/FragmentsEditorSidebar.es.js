@@ -12,7 +12,6 @@ import templates from './FragmentsEditorSidebar.soy';
  * FragmentsEditorSidebar
  * @review
  */
-
 class FragmentsEditorSidebar extends Component {
 
 	/**
@@ -20,14 +19,12 @@ class FragmentsEditorSidebar extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
-
 	syncVisible() {}
 
 	/**
 	 * @private
 	 * @review
 	 */
-
 	_handleHide() {
 		this.store.dispatchAction(HIDE_SIDEBAR);
 	}
@@ -36,7 +33,6 @@ class FragmentsEditorSidebar extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleHideSidebarButtonClick() {
 		this.store.dispatchAction(HIDE_SIDEBAR);
 	}
@@ -48,7 +44,6 @@ class FragmentsEditorSidebar extends Component {
  * @static
  * @type {!Object}
  */
-
 FragmentsEditorSidebar.STATE = {
 
 	/**
@@ -59,7 +54,6 @@ FragmentsEditorSidebar.STATE = {
 	 * @review
 	 * @type {Store}
 	 */
-
 	store: Config.instanceOf(Store)
 };
 

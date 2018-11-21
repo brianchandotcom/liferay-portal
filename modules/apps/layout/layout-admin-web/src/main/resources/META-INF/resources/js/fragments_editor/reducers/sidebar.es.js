@@ -9,9 +9,8 @@ import {
  * @return {object}
  * @review
  */
-
 function hideFragmentsEditorSidebarReducer(state, actionType) {
-	let nextState = Object.assign({}, state);
+	const nextState = Object.assign({}, state);
 
 	if (actionType === HIDE_SIDEBAR) {
 		nextState.contextualSidebarVisible = false;
@@ -26,9 +25,8 @@ function hideFragmentsEditorSidebarReducer(state, actionType) {
  * @return {object}
  * @review
  */
-
 function toggleFragmentsEditorSidebarReducer(state, actionType) {
-	let nextState = Object.assign({}, state);
+	const nextState = Object.assign({}, state);
 
 	if (actionType === TOGGLE_SIDEBAR) {
 		nextState.contextualSidebarVisible = !nextState.contextualSidebarVisible;

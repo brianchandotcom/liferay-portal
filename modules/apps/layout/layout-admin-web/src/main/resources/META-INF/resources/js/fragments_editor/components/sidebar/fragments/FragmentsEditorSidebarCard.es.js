@@ -7,7 +7,6 @@ import templates from './FragmentsEditorSidebarCard.soy';
  * FragmentsEditorSidebarCard
  * @review
  */
-
 class FragmentsEditorSidebarCard extends Component {
 
 	/**
@@ -17,7 +16,6 @@ class FragmentsEditorSidebarCard extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleClick(event) {
 		const {itemId, itemName} = event.delegateTarget.dataset;
 
@@ -29,6 +27,7 @@ class FragmentsEditorSidebarCard extends Component {
 			}
 		);
 	}
+
 }
 
 /**
@@ -37,7 +36,6 @@ class FragmentsEditorSidebarCard extends Component {
  * @static
  * @type {!Object}
  */
-
 FragmentsEditorSidebarCard.STATE = {};
 
 Soy.register(FragmentsEditorSidebarCard, templates);

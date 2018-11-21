@@ -10,16 +10,12 @@ import templates from './TranslationStatus.soy';
 /**
  * TranslationStatus
  */
-
 class TranslationStatus extends Component {
 
 	/**
 	 * @inheritDoc
-	 * @param state
 	 * @review
-	 * @return state
 	 */
-
 	prepareStateForRender(state) {
 		const translationStatus = state.translationStatus || {};
 
@@ -50,7 +46,6 @@ class TranslationStatus extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleLanguageChange(event) {
 		event.preventDefault();
 
@@ -69,7 +64,6 @@ class TranslationStatus extends Component {
  * @static
  * @type {!Object}
  */
-
 TranslationStatus.STATE = {
 
 	/**
@@ -81,7 +75,6 @@ TranslationStatus.STATE = {
 	 * @review
 	 * @type {Store}
 	 */
-
 	store: Config.instanceOf(Store)
 };
 

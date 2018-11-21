@@ -14,7 +14,6 @@ import templates from './SidebarAddedFragments.soy';
 /**
  * SidebarAddedFragments
  */
-
 class SidebarAddedFragments extends Component {
 
 	/**
@@ -24,7 +23,6 @@ class SidebarAddedFragments extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleFragmentRemoveButtonClick(event) {
 		this.store
 			.dispatchAction(
@@ -60,7 +58,6 @@ class SidebarAddedFragments extends Component {
  * @static
  * @type {!Object}
  */
-
 SidebarAddedFragments.STATE = {
 
 	/**
@@ -71,7 +68,6 @@ SidebarAddedFragments.STATE = {
 	 * @review
 	 * @type {Store}
 	 */
-
 	store: Config.instanceOf(Store)
 };
 

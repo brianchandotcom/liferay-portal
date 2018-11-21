@@ -19,7 +19,6 @@ import templates from './SidebarAvailableFragments.soy';
 /**
  * SidebarAvailableFragments
  */
-
 class SidebarAvailableFragments extends Component {
 
 	/**
@@ -27,7 +26,6 @@ class SidebarAvailableFragments extends Component {
 	 * @private
 	 * @review
 	 */
-
 	attached() {
 		this._initializeDragAndDrop();
 	}
@@ -37,7 +35,6 @@ class SidebarAvailableFragments extends Component {
 	 * @private
 	 * @review
 	 */
-
 	dispose() {
 		this._dragDrop.dispose();
 	}
@@ -49,7 +46,6 @@ class SidebarAvailableFragments extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleDrag(data) {
 		const targetItem = data.target;
 
@@ -78,7 +74,6 @@ class SidebarAvailableFragments extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleDragEnd() {
 		this.store.dispatchAction(
 			CLEAR_DRAG_TARGET
@@ -92,7 +87,6 @@ class SidebarAvailableFragments extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleDrop(data, event) {
 		event.preventDefault();
 
@@ -146,7 +140,6 @@ class SidebarAvailableFragments extends Component {
 	 * }} event
 	 * @private
 	 */
-
 	_handleEntryClick(event) {
 		this.store
 			.dispatchAction(
@@ -180,7 +173,6 @@ class SidebarAvailableFragments extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_initializeDragAndDrop() {
 		if (this._dragDrop) {
 			this._dragDrop.dispose();
@@ -218,7 +210,6 @@ class SidebarAvailableFragments extends Component {
  * @type {!Object}
  * @static
  */
-
 SidebarAvailableFragments.STATE = {
 
 	/**
@@ -237,7 +228,6 @@ SidebarAvailableFragments.STATE = {
 	 *   name: !string
 	 * }>}
 	 */
-
 	fragmentCollections: Config.arrayOf(
 		Config.shapeOf(
 			{
@@ -263,7 +253,6 @@ SidebarAvailableFragments.STATE = {
 	 * @memberOf SidebarAvailableFragments
 	 * @type {!string}
 	 */
-
 	spritemap: Config.string().required(),
 
 	/**
@@ -274,7 +263,6 @@ SidebarAvailableFragments.STATE = {
 	 * @review
 	 * @type {Store}
 	 */
-
 	store: Config.instanceOf(Store),
 
 	/**
@@ -285,7 +273,6 @@ SidebarAvailableFragments.STATE = {
 	 * @review
 	 * @type {object|null}
 	 */
-
 	_dragDrop: Config.internal().value(null)
 };
 

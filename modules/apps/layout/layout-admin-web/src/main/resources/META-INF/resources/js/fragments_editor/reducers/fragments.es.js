@@ -21,15 +21,14 @@ import {
  * @return {object}
  * @review
  */
-
 function addFragmentEntryLinkReducer(state, actionType, payload) {
 	return new Promise(
 		resolve => {
 			let nextState = state;
 
 			if (actionType === ADD_FRAGMENT_ENTRY_LINK) {
-				let fragmentEntryLink;
-				let nextData;
+				let fragmentEntryLink = null;
+				let nextData = null;
 
 				_addFragmentEntryLink(
 					state.addFragmentEntryLinkURL,
@@ -117,7 +116,6 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
  * @return {object}
  * @review
  */
-
 function moveFragmentEntryLinkReducer(state, actionType, payload) {
 	return new Promise(
 		resolve => {
@@ -149,7 +147,7 @@ function moveFragmentEntryLinkReducer(state, actionType, payload) {
 				);
 
 				if (border !== DRAG_POSITIONS.top) {
-					targetIndex++;
+					targetIndex += 1;
 				}
 
 				nextData.structure.splice(targetIndex, 0, originContent);
@@ -161,7 +159,7 @@ function moveFragmentEntryLinkReducer(state, actionType, payload) {
 					state.classPK,
 					nextData
 				).then(
-					(response) => {
+					response => {
 						if (response.error) {
 							throw response.error;
 						}
@@ -195,14 +193,13 @@ function moveFragmentEntryLinkReducer(state, actionType, payload) {
  * @return {object}
  * @review
  */
-
 function removeFragmentEntryLinkReducer(state, actionType, payload) {
 	return new Promise(
 		resolve => {
 			let nextState = state;
 
 			if (actionType === REMOVE_FRAGMENT_ENTRY_LINK) {
-				const fragmentEntryLinkId = payload.fragmentEntryLinkId;
+				const {fragmentEntryLinkId} = payload;
 
 				const nextData = setIn(
 					state.layoutData,
@@ -258,17 +255,19 @@ function removeFragmentEntryLinkReducer(state, actionType, payload) {
  * @return {object}
  * @review
  */
-
 function updateEditableValueReducer(state, actionType, payload) {
 	let nextState = state;
 
 	return new Promise(
 		resolve => {
 			if (actionType === UPDATE_EDITABLE_VALUE) {
-				const editableId = payload.editableId;
-				const editableValue = payload.editableValue;
-				const editableValueId = payload.editableValueId;
-				const editableValues = state.fragmentEntryLinks[payload.fragmentEntryLinkId].editableValues;
+				const {
+					editableId,
+					editableValue,
+					editableValueId
+				} = payload;
+
+				const {editableValues} = state.fragmentEntryLinks[payload.fragmentEntryLinkId];
 
 				const nextEditableValues = setIn(
 					editableValues,
@@ -434,7 +433,6 @@ function _getFragmentEntryLinkContent(
  * @param {number} position
  * @return {object}
  */
-
 function _addSingleFragmentRow(layoutData, fragmentEntryLinkId, position) {
 	const nextColumnId = layoutData.nextColumnId || 0;
 	const nextRowId = layoutData.nextRowId || 0;

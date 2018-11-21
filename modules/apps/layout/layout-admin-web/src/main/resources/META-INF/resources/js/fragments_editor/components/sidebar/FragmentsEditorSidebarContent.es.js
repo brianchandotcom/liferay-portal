@@ -10,7 +10,6 @@ import templates from './FragmentsEditorSidebarContent.soy';
  * FragmentsEditorSidebarContent
  * @review
  */
-
 class FragmentsEditorSidebarContent extends Component {
 
 	/**
@@ -19,7 +18,6 @@ class FragmentsEditorSidebarContent extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleSectionButtonClick(event) {
 		this._sectionId = event.delegateTarget.dataset.sectionId;
 	}
@@ -31,7 +29,6 @@ class FragmentsEditorSidebarContent extends Component {
  * @static
  * @type {!Object}
  */
-
 FragmentsEditorSidebarContent.STATE = {
 
 	/**
@@ -42,7 +39,6 @@ FragmentsEditorSidebarContent.STATE = {
 	 * @review
 	 * @type {object}
 	 */
-
 	_sections: Config
 		.arrayOf(
 			Config.shapeOf(
@@ -77,7 +73,6 @@ FragmentsEditorSidebarContent.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-
 	_sectionId: Config
 		.string()
 		.internal()

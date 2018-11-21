@@ -6,13 +6,12 @@ import State, {Config} from 'metal-state';
  * @param {Store} store
  * @review
  */
-
 const connect = function(component, store) {
 	component.store = store;
 
 	store.on(
 		'change',
-		(nextState) => Object.entries(nextState).forEach(
+		nextState => Object.entries(nextState).forEach(
 			([key, value]) => {
 				component[key] = value;
 			}
@@ -21,11 +20,11 @@ const connect = function(component, store) {
 
 	component.on(
 		'stateChanged',
-		(data) => {
+		data => {
 			const nextState = Object.assign({}, store.getState());
 
 			Object.values(data.changes).forEach(
-				(change) => {
+				change => {
 					if (change.key in nextState) {
 						nextState[change.key] = change.newVal;
 					}
@@ -46,7 +45,6 @@ const connect = function(component, store) {
  * @return {Store}
  * @review
  */
-
 const createStore = function(initialState, reducers, componentIds = []) {
 	const store = new Store(initialState, reducers);
 
@@ -76,7 +74,6 @@ const createStore = function(initialState, reducers, componentIds = []) {
  *
  * @review
  */
-
 class Store extends State {
 
 	/**
@@ -84,7 +81,6 @@ class Store extends State {
 	 * @param {function[]} [reducers=[]]
 	 * @review
 	 */
-
 	constructor(initialState = {}, reducers = []) {
 		super();
 
@@ -97,22 +93,19 @@ class Store extends State {
 	 * actionType, and can contain an optional payload with any kind of
 	 * information.
 	 * @param {!string} actionType
-	 * @param {string|number|array|object|undefined} [payload=undefined]
+	 * @param {string|number|array|object} payload
 	 * @return {Store}
 	 * @review
 	 */
-
-	dispatchAction(actionType, payload = undefined) {
+	dispatchAction(actionType, payload) {
 		this._dispatchPromise = this._dispatchPromise.then(
 			() => {
 				return this._reducers.reduce(
 					(promiseNextState, reducer) => {
 						return promiseNextState.then(
-							nextState => {
-								return Promise.resolve(
-									reducer(nextState, actionType, payload)
-								);
-							}
+							nextState => Promise.resolve(
+								reducer(nextState, actionType, payload)
+							)
 						);
 					},
 					Promise.resolve(this._state)
@@ -137,7 +130,6 @@ class Store extends State {
 	 * @return {object} Current state
 	 * @review
 	 */
-
 	getState() {
 		return this._state;
 	}
@@ -152,18 +144,16 @@ class Store extends State {
 	 * @param {!function} reducer
 	 * @review
 	 */
-
 	registerReducer(reducer) {
 		this._reducers = [...this._reducers, reducer];
 	}
 
 	/**
 	 * Adds a list of reducers to the store.
-	 * @param {!function[]} reducers
+	 * @param {!Array<function>} reducers
 	 * @review
 	 * @see {Store.registerReducer}
 	 */
-
 	registerReducers(reducers) {
 		this._reducers = [...this._reducers, ...reducers];
 	}
@@ -175,7 +165,6 @@ class Store extends State {
 	 * @return {object} Frozen state
 	 * @review
 	 */
-
 	_getFrozenState(state) {
 		const frozenState = Object.assign(
 			{},
@@ -194,7 +183,6 @@ class Store extends State {
 	 * @private
 	 * @review
 	 */
-
 	_setInitialState(initialState) {
 		this._state = this._getFrozenState(initialState);
 	}

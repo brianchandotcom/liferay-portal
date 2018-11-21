@@ -161,7 +161,14 @@ public abstract class BaseProfile {
 	}
 
 	public String generateIdentifier(int length) {
-		return _identifierGenerator.generateIdentifier(length);
+		IdentifierGenerationStrategyFactory
+			identifierGenerationStrategyFactory =
+				getIdentifierGenerationStrategyFactory();
+
+		IdentifierGenerationStrategy identifierGenerationStrategy =
+			identifierGenerationStrategyFactory.create(length);
+
+		return identifierGenerationStrategy.generateIdentifier();
 	}
 
 	public IdentifierGenerator getIdentifierGenerator() {

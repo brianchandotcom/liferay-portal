@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 /**
  * @author Hugo Huijser
  */
@@ -27,7 +29,12 @@ public class JavaReturnStatement extends BaseJavaTerm {
 	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength) {
 
-		return "TODO";
+		if (_returnJavaExpression == null) {
+			return StringBundler.concat(indent, prefix, "return", suffix);
+		}
+
+		return _returnJavaExpression.toString(
+			indent, prefix + "return ", suffix, maxLineLength);
 	}
 
 	private JavaExpression _returnJavaExpression;

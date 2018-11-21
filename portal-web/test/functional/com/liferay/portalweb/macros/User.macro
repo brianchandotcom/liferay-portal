@@ -110,7 +110,6 @@
 		</if>
 
 		<!-- Addresses -->
-
 		<if>
 			<isset var="street1" />
 			<then>
@@ -147,7 +146,6 @@
 		</if>
 
 		<!-- Phone Numbers -->
-
 		<if>
 			<isset var="number" />
 			<then>
@@ -159,6 +157,14 @@
 			<isset var="extension" />
 			<then>
 				<execute function="Type" locator1="TextInput#EXTENSION" value1="${extension}" />
+			</then>
+		</if>
+
+		<!-- Additional Email Addresses -->
+		<if>
+			<isset var="address" />
+			<then>
+				<execute function="Type" locator1="TextInput#ADDRESS" value1="${address}" />
 			</then>
 		</if>
 
@@ -2110,7 +2116,6 @@
 		<var name="key_searchContainerType" value="${searchContainerType}" />
 
 		<!-- Phone Numbers -->
-
 		<if>
 			<isset var="number" />
 			<then>
@@ -2122,6 +2127,14 @@
 			<isset var="extension" />
 			<then>
 				<execute function="AssertTextEquals#assertPartialText" locator1="UsersAndOrganizations#USER_CONTACT_INFORMATION_EXTENSION_TABLE" value1="${extension}" />
+			</then>
+		</if>
+
+		<!-- Additional Email Addresses -->
+		<if>
+			<isset var="address" />
+			<then>
+				<execute function="AssertTextEquals#assertPartialText" locator1="UsersAndOrganizations#USER_CONTACT_INFORMATION_EMAIL_ADDRESS_TABLE" value1="${address}" />
 			</then>
 		</if>
 	</command>

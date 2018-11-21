@@ -274,6 +274,132 @@
 		<execute function="AssertElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" />
 	</command>
 
+	<command name="EditUserAdditionalEmailAddresses" priority="4">
+		<execute macro="JSONUser#addUser">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="UserNavigator#gotoUser">
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="UserNavigator#gotoContact" />
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Contact Information" />
+		</execute>
+
+		<execute macro="User#addContactInformation">
+			<var name="address" value="additional1@liferay.com" />
+			<var name="contactType" value="Add Email Address" />
+		</execute>
+
+		<execute macro="User#viewContactInformation">
+			<var name="address" value="additional1@liferay.com" />
+			<var name="searchContainerType" value="emailAddressesSearchContainer" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="contactInfoPrimaryValue" value="additional1@liferay.com" />
+			<var name="searchContainerType" value="emailAddressesSearchContainer" />
+		</execute>
+
+		<execute macro="User#addContactInformation">
+			<var name="address" value="additional2@liferay.com" />
+			<var name="contactType" value="Add Email Address" />
+			<var name="makePrimary" value="true" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="contactInfoPrimaryValue" value="additional2@liferay.com" />
+			<var name="searchContainerType" value="emailAddressesSearchContainer" />
+		</execute>
+
+		<execute macro="User#addContactInformation">
+			<var name="address" value="additional3@liferay.com" />
+			<var name="contactType" value="Add Email Address" />
+		</execute>
+
+		<execute macro="User#viewNotPrimary">
+			<var name="contactInfoPrimaryValue" value="additional1@liferay.com" />
+			<var name="searchContainerType" value="emailAddressesSearchContainer" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="contactInfoPrimaryValue" value="additional2@liferay.com" />
+			<var name="searchContainerType" value="emailAddressesSearchContainer" />
+		</execute>
+
+		<execute macro="User#viewNotPrimary">
+			<var name="contactInfoPrimaryValue" value="additional3@liferay.com" />
+			<var name="searchContainerType" value="emailAddressesSearchContainer" />
+		</execute>
+
+		<execute macro="UserNavigator#gotoEdit">
+			<var name="rowEntry" value="additional2@liferay.com" />
+		</execute>
+
+		<execute macro="User#editPrimary">
+			<var name="makePrimary" value="false" />
+		</execute>
+
+		<execute macro="User#viewNotPrimary">
+			<var name="contactInfoPrimaryValue" value="additional2@liferay.com" />
+			<var name="searchContainerType" value="emailAddressesSearchContainer" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="contactInfoPrimaryValue" value="additional3@liferay.com" />
+			<var name="searchContainerType" value="emailAddressesSearchContainer" />
+		</execute>
+
+		<execute macro="User#makePrimary">
+			<var name="rowEntry" value="additional2@liferay.com" />
+		</execute>
+
+		<execute macro="User#viewNotPrimary">
+			<var name="contactInfoPrimaryValue" value="additional1@liferay.com" />
+			<var name="searchContainerType" value="emailAddressesSearchContainer" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="contactInfoPrimaryValue" value="additional2@liferay.com" />
+			<var name="searchContainerType" value="emailAddressesSearchContainer" />
+		</execute>
+
+		<execute macro="User#viewNotPrimary">
+			<var name="contactInfoPrimaryValue" value="additional3@liferay.com" />
+			<var name="searchContainerType" value="emailAddressesSearchContainer" />
+		</execute>
+
+		<execute macro="User#removeContactInformation">
+			<var name="rowEntry" value="additional3@liferay.com" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="contactInfoPrimaryValue" value="additional2@liferay.com" />
+			<var name="searchContainerType" value="emailAddressesSearchContainer" />
+		</execute>
+
+		<execute macro="User#removeContactInformation">
+			<var name="rowEntry" value="additional2@liferay.com" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="contactInfoPrimaryValue" value="additional1@liferay.com" />
+			<var name="searchContainerType" value="emailAddressesSearchContainer" />
+		</execute>
+	</command>
+
 	<command name="EditUserAddresses" priority="4">
 		<execute macro="JSONUser#addUser">
 			<var name="userEmailAddress" value="userea@liferay.com" />

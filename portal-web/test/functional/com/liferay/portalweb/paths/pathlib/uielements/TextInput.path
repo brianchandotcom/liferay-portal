@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ADDRESS</td>
+	<td>//div[label[contains(.,'Address')]]/input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ALERT</td>
 	<td>//div[contains(@class,'has-error')]</td>
 	<td></td>

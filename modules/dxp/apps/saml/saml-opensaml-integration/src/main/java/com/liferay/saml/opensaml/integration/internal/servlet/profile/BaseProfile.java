@@ -406,17 +406,29 @@ public abstract class BaseProfile {
 		}
 	}
 
-	public void sendSamlMessage(SAMLMessageContext<?, ?, ?> samlMessageContext)
+	public void sendSamlMessage(
+			MessageContext<?> messageContext, HttpServletResponse response)
 		throws PortalException {
 
-		Endpoint endpoint = samlMessageContext.getPeerEntityEndpoint();
+		InOutOperationContext inOutOperationContext =
+			messageContext.getSubcontext(InOutOperationContext.class);
+
+		MessageContext<XMLObject> outboundMessageContext =
+			inOutOperationContext.getOutboundMessageContext();
+
+		SAMLPeerEntityContext samlPeerEntityContext =
+			outboundMessageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+		SAMLEndpointContext samlPeerEndpointContext =
+			samlPeerEntityContext.getSubcontext(SAMLEndpointContext.class);
+
+		Endpoint endpoint = samlPeerEndpointContext.getEndpoint();
 
 		SamlBinding samlBinding = getSamlBinding(endpoint.getBinding());
 
 		if (_log.isDebugEnabled()) {
 			try {
-				XMLObject xmlObject =
-					samlMessageContext.getOutboundSAMLMessage();
+				XMLObject xmlObject = outboundMessageContext.getMessage();
 
 				String samlMessage = OpenSamlUtil.marshall(xmlObject);
 
@@ -429,16 +441,34 @@ public abstract class BaseProfile {
 			}
 		}
 
-		MessageEncoder messageEncoder = samlBinding.getMessageEncoder();
+		Supplier<HttpServletResponseMessageEncoder> messageEncoderSupplier =
+			samlBinding.getHttpServletResponseMessageEncoderSupplier();
+
+		HttpServletResponseMessageEncoder httpServletResponseMessageEncoder =
+			messageEncoderSupplier.get();
+
+		SAMLOutboundProtocolMessageSigningHandler
+			samlOutboundProtocolMessageSigningHandler =
+				new SAMLOutboundProtocolMessageSigningHandler();
 
 		try {
-			messageEncoder.encode(samlMessageContext);
+			samlOutboundProtocolMessageSigningHandler.initialize();
+			samlOutboundProtocolMessageSigningHandler.invoke(
+				outboundMessageContext);
+
+			httpServletResponseMessageEncoder.setHttpServletResponse(response);
+			httpServletResponseMessageEncoder.setMessageContext(
+				outboundMessageContext);
+
+			httpServletResponseMessageEncoder.initialize();
+
+			httpServletResponseMessageEncoder.encode();
 		}
-		catch (MessageEncodingException mee) {
+		catch (Exception e) {
 			throw new SamlException(
 				"Unable to send SAML message to " + endpoint.getLocation() +
 					" with binding " + endpoint.getBinding(),
-				mee);
+				e);
 		}
 	}
 

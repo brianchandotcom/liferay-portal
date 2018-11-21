@@ -889,8 +889,7 @@ public class SingleLogoutProfileImpl
 	}
 
 	protected void processSpLogoutResponse(
-			HttpServletRequest request, HttpServletResponse response,
-			SAMLMessageContext<LogoutResponse, ?, ?> samlMessageContext)
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		redirectToLogout(request, response);

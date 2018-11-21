@@ -43,15 +43,25 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(immediate = true, service = OpenSamlBootstrap.class)
 public class OpenSamlBootstrap {
 
-	public static synchronized void bootstrap() throws InitializationException {
+	public static synchronized void bootstrap()
+		throws IllegalAccessException, InitializationException,
+			   InvocationTargetException, NoSuchMethodException {
+
 		InitializationService.initialize();
 
 		initializeParserPool();
+
+		Method method = Signer.class.getDeclaredMethod("getSignerProvider");
+
+		method.setAccessible(true);
+
+		method.invoke(null);
 	}
 
 	@Activate
 	public synchronized void activate(BundleContext bundleContext)
-		throws ConfigurationException {
+		throws IllegalAccessException, InitializationException,
+			   InvocationTargetException, NoSuchMethodException {
 
 		Thread currentThread = Thread.currentThread();
 

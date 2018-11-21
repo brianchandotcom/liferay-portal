@@ -966,11 +966,12 @@ public class SingleLogoutProfileImpl
 		SamlBinding samlBinding = getSamlBinding(
 			singleLogoutService.getBinding());
 
-		Supplier<HttpServletResponseMessageEncoder> messageEncoderSupplier =
-			samlBinding.getHttpServletResponseMessageEncoderSupplier();
+		Supplier<HttpServletResponseMessageEncoder>
+			httpServletResponseMessageEncoderSupplier =
+				samlBinding.getHttpServletResponseMessageEncoderSupplier();
 
-		HttpServletResponseMessageEncoder messageEncoder =
-			messageEncoderSupplier.get();
+		HttpServletResponseMessageEncoder httpServletResponseMessageEncoder =
+			httpServletResponseMessageEncoderSupplier.get();
 
 		SecurityParametersContext securityParametersContext =
 			messageContext.getSubcontext(SecurityParametersContext.class);
@@ -978,12 +979,12 @@ public class SingleLogoutProfileImpl
 		OpenSamlUtil.prepareSecurityParametersContext(
 			credential, securityParametersContext);
 
-		messageEncoder.setHttpServletResponse(response);
-		messageEncoder.setMessageContext(messageContext);
+		httpServletResponseMessageEncoder.setHttpServletResponse(response);
+		httpServletResponseMessageEncoder.setMessageContext(messageContext);
 
-		messageEncoder.initialize();
+		httpServletResponseMessageEncoder.initialize();
 
-		messageEncoder.encode();
+		httpServletResponseMessageEncoder.encode();
 	}
 
 	protected void sendIdpLogoutRequest(
@@ -1316,18 +1317,18 @@ public class SingleLogoutProfileImpl
 				@Override
 				public HttpClientMessagePipeline<Object, Object> newInstance() {
 					Supplier<HttpServletResponseMessageEncoder>
-						messageEncoderSupplier =
+						httpServletResponseMessageEncoderSupplier =
 							samlBinding.
 								getHttpServletResponseMessageEncoderSupplier();
 
 					Supplier<HttpServletRequestMessageDecoder>
-						messageDecoderSupplier =
+						httpServletResponseMessageDecoder =
 							samlBinding.
 								getHttpServletRequestMessageDecoderSupplier();
 
 					return new BasicHttpClientMessagePipeline<>(
-						messageEncoderSupplier.get(),
-						messageDecoderSupplier.get());
+						httpServletResponseMessageEncoderSupplier.get(),
+						httpServletResponseMessageDecoder.get());
 				}
 
 				@Nonnull

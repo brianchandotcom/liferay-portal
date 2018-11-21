@@ -12,27 +12,20 @@
  * details.
  */
 
-package com.liferay.exportimport.internal.search;
+package com.liferay.exportimport.internal.search.spi.model.index.contributor;
 
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
-import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.BaseIndexer;
-import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.IndexWriterHelper;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.Summary;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import java.io.Serializable;
 
@@ -41,75 +34,26 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Máté Thurzó
  * @author Akos Thurzo
- * @deprecated As of Judson (7.1.x), since 7.1.0
+ * @author Luan Maoski
  */
-@Deprecated
-public class ExportImportConfigurationIndexer
-	extends BaseIndexer<ExportImportConfiguration> {
-
-	public static final String CLASS_NAME =
-		ExportImportConfiguration.class.getName();
-
-	@Override
-	public String getClassName() {
-		return CLASS_NAME;
-	}
+@Component(
+	immediate = true,
+	property = "indexer.class.name=com.liferay.exportimport.kernel.model.ExportImportConfiguration",
+	service = ModelDocumentContributor.class
+)
+public class ExportImportConfigurationModelDocumentContributor
+	implements ModelDocumentContributor<ExportImportConfiguration> {
 
 	@Override
-	public void postProcessContextBooleanFilter(
-			BooleanFilter contextBooleanFilter, SearchContext searchContext)
-		throws Exception {
-
-		addStatus(contextBooleanFilter, searchContext);
-
-		contextBooleanFilter.addRequiredTerm(
-			Field.COMPANY_ID, searchContext.getCompanyId());
-		contextBooleanFilter.addRequiredTerm(
-			Field.GROUP_ID,
-			GetterUtil.getLong(searchContext.getAttribute(Field.GROUP_ID)));
-
-		Serializable type = searchContext.getAttribute(Field.TYPE);
-
-		if (type != null) {
-			contextBooleanFilter.addRequiredTerm(
-				Field.TYPE, GetterUtil.getInteger(type));
-		}
-	}
-
-	@Override
-	public void postProcessSearchQuery(
-			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
-			SearchContext searchContext)
-		throws Exception {
-
-		addSearchTerm(searchQuery, searchContext, Field.DESCRIPTION, false);
-		addSearchTerm(
-			searchQuery, searchContext, "exportImportConfigurationId", false);
-		addSearchTerm(searchQuery, searchContext, Field.NAME, false);
-	}
-
-	@Override
-	protected void doDelete(ExportImportConfiguration exportImportConfiguration)
-		throws Exception {
-
-		deleteDocument(
-			exportImportConfiguration.getCompanyId(),
-			exportImportConfiguration.getExportImportConfigurationId());
-	}
-
-	@Override
-	protected Document doGetDocument(
-			ExportImportConfiguration exportImportConfiguration)
-		throws Exception {
-
-		Document document = getBaseModelDocument(
-			CLASS_NAME, exportImportConfiguration);
+	public void contribute(
+		Document document,
+		ExportImportConfiguration exportImportConfiguration) {
 
 		document.addText(
 			Field.DESCRIPTION, exportImportConfiguration.getDescription());
@@ -132,48 +76,6 @@ public class ExportImportConfigurationIndexer
 		document.addKeyword(
 			_PREFIX_SETTING + Field.USER_ID,
 			MapUtil.getLong(settingsMap, "userId"));
-
-		return document;
-	}
-
-	@Override
-	protected Summary doGetSummary(
-			Document document, Locale locale, String snippet,
-			PortletRequest portletRequest, PortletResponse portletResponse)
-		throws Exception {
-
-		Summary summary = createSummary(
-			document, Field.TITLE, Field.DESCRIPTION);
-
-		return summary;
-	}
-
-	@Override
-	protected void doReindex(
-			ExportImportConfiguration exportImportConfiguration)
-		throws Exception {
-
-		Document document = getDocument(exportImportConfiguration);
-
-		_indexWriterHelper.updateDocument(
-			getSearchEngineId(), exportImportConfiguration.getCompanyId(),
-			document, isCommitImmediately());
-	}
-
-	@Override
-	protected void doReindex(String className, long classPK) throws Exception {
-		ExportImportConfiguration exportImportConfiguration =
-			_exportImportConfigurationLocalService.getExportImportConfiguration(
-				classPK);
-
-		doReindex(exportImportConfiguration);
-	}
-
-	@Override
-	protected void doReindex(String[] ids) throws Exception {
-		long companyId = GetterUtil.getLong(ids[0]);
-
-		reindexExportImportConfigurations(companyId);
 	}
 
 	protected void populateDates(
@@ -297,54 +199,14 @@ public class ExportImportConfigurationIndexer
 		}
 	}
 
-	protected void reindexExportImportConfigurations(long companyId)
-		throws PortalException {
-
-		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_exportImportConfigurationLocalService.
-				getIndexableActionableDynamicQuery();
-
-		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-			(ExportImportConfiguration exportImportConfiguration) -> {
-				try {
-					Document document = getDocument(exportImportConfiguration);
-
-					indexableActionableDynamicQuery.addDocuments(document);
-				}
-				catch (PortalException pe) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to index export import configuration " +
-								exportImportConfiguration.
-									getExportImportConfigurationId(),
-							pe);
-					}
-				}
-			});
-		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
-
-		indexableActionableDynamicQuery.performActions();
-	}
-
-	protected void setExportImportConfigurationLocalService(
-		ExportImportConfigurationLocalService
-			exportImportConfigurationLocalService) {
-
-		_exportImportConfigurationLocalService =
-			exportImportConfigurationLocalService;
-	}
-
 	private static final String _PREFIX_PARAMETER = "parameter_";
 
 	private static final String _PREFIX_SETTING = "setting_";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ExportImportConfigurationIndexer.class);
+		ExportImportConfigurationModelDocumentContributor.class);
 
-	private ExportImportConfigurationLocalService
-		_exportImportConfigurationLocalService;
+	@Reference
 	private ExportImportHelper _exportImportHelper;
-	private IndexWriterHelper _indexWriterHelper;
 
 }

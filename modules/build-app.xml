@@ -511,52 +511,22 @@
 	</target>
 
 	<target depends="get-app-names-core" name="get-app-names" unless="app.names">
-		<pathconvert pathsep="${line.separator}" property="app.names.unfiltered">
-			<flattenmapper />
-			<path>
-				<dirset
-					dir="${modules.dir}"
-					includes="private/apps/*"
-				>
-					<present targetdir="${modules.dir}/.releng/private">
-						<mapper
-							from="*"
-							to="*${file.separator}app.properties"
-							type="glob"
-						/>
-					</present>
-				</dirset>
-				<dirset
-					dir="${modules.dir}"
-					includes="apps/*"
-				>
-					<present targetdir="${modules.dir}/.releng">
-						<mapper
-							from="*"
-							to="*${file.separator}app.properties"
-							type="glob"
-						/>
-					</present>
-				</dirset>
-			</path>
+		<pathconvert property="app.names" pathsep=",">
+			<fileset dir="${modules.dir}">
+				<contains casesensitive="false" ignorewhitespace="true" text="Liferay-Releng-Bundle: true" />
+				<containsregexp casesensitive="false" expression="Liferay-Releng-Suite:\s*\w+$" multiline="true" />
+				<include name="apps/**/app.bnd" />
+				<include name="private/apps/**/app.bnd" />
+				<present targetdir="${modules.dir}/.releng">
+					<mapper
+						from="*app.bnd"
+						to="*app.properties"
+						type="glob"
+					/>
+				</present>
+			</fileset>
+			<regexpmapper from=".+${file.separator}(.+)${file.separator}app\.bnd" to="\1" />
 		</pathconvert>
-
-		<property name="app.names.unfiltered.formatted" value="${app.names.unfiltered}${line.separator}" />
-
-		<loadfile
-			property="app.names"
-		>
-			<filterchain>
-				<sortfilter />
-
-				<uniqfilter />
-
-				<tokenfilter delimoutput=",">
-					<stringtokenizer delims="${line.separator}" />
-				</tokenfilter>
-			</filterchain>
-			<propertyresource name="app.names.unfiltered.formatted" />
-		</loadfile>
 	</target>
 
 	<target if="${core.apps}" name="get-app-names-core" unless="app.names">

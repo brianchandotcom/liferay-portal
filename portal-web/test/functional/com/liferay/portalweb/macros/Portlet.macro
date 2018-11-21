@@ -329,9 +329,17 @@
 	</command>
 
 	<command name="selectTreeNode">
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="Treeview#NODE_UNSELECTED" value1="${nodeName}">
-			<var name="key_nodeName" value="${nodeName}" />
-		</execute>
+		<if>
+			<condition function="IsElementPresent" locator1="Treeview#NODE_UNSELECTED">
+				<var name="key_nodeName" value="${nodeName}" />
+			</condition>
+
+			<then>
+				<execute function="AssertClick#assertPartialTextClickAt" locator1="Treeview#NODE_UNSELECTED" value1="${nodeName}">
+					<var name="key_nodeName" value="${nodeName}" />
+				</execute>
+			</then>
+		</if>
 
 		<execute function="AssertElementPresent" locator1="Treeview#NODE_SELECTED">
 			<var name="key_nodeName" value="${nodeName}" />

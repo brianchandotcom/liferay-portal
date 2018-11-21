@@ -29,7 +29,8 @@ public class JavaSynchronizedStatement extends BaseJavaTerm {
 	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength) {
 
-		return "TODO";
+		return _synchronizedJavaExpression.toString(
+			indent, prefix + "synchronized (", ")" + suffix, maxLineLength);
 	}
 
 	private JavaExpression _synchronizedJavaExpression;

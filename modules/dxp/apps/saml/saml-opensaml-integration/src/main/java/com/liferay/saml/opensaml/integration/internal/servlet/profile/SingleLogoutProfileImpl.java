@@ -682,19 +682,32 @@ public class SingleLogoutProfileImpl
 
 	protected void processIdpLogoutResponse(
 			HttpServletRequest request, HttpServletResponse response,
-			SAMLMessageContext<LogoutResponse, ?, ?> samlMessageContext)
+			MessageContext<?> messageContext)
 		throws Exception {
 
 		SamlSloContext samlSloContext = getSamlSloContext(request, null);
 
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
 		if (samlSloContext == null) {
 			throw new UnsolicitedLogoutResponseException(
 				"Received logout response from " +
-					samlMessageContext.getPeerEntityId() +
+					samlPeerEntityContext.getEntityId() +
 						" without an active SSO session");
 		}
 
-		String entityId = samlMessageContext.getInboundMessageIssuer();
+		InOutOperationContext inOutOperationContext =
+			messageContext.getSubcontext(InOutOperationContext.class);
+
+		MessageContext<LogoutResponse> inboundMessageContext =
+			inOutOperationContext.getInboundMessageContext();
+
+		LogoutResponse logoutResponse = inboundMessageContext.getMessage();
+
+		Issuer issuer = logoutResponse.getIssuer();
+
+		String entityId = issuer.getValue();
 
 		SamlSloRequestInfo samlSloRequestInfo =
 			samlSloContext.getSamlSloRequestInfo(entityId);
@@ -702,11 +715,8 @@ public class SingleLogoutProfileImpl
 		if (samlSloRequestInfo == null) {
 			throw new UnsolicitedLogoutResponseException(
 				"Received unsolicited logout response from " +
-					samlMessageContext.getPeerEntityId());
+					samlPeerEntityContext.getEntityId());
 		}
-
-		LogoutResponse logoutResponse =
-			samlMessageContext.getInboundSAMLMessage();
 
 		Status status = logoutResponse.getStatus();
 

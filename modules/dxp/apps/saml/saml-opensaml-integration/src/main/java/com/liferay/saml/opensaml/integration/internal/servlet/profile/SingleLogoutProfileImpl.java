@@ -994,20 +994,27 @@ public class SingleLogoutProfileImpl
 			SamlSloRequestInfo samlSloRequestInfo)
 		throws Exception {
 
-		SAMLMessageContext<LogoutResponse, LogoutRequest, NameID>
-			samlMessageContext =
-				(SAMLMessageContext<LogoutResponse, LogoutRequest, NameID>)
-					getSamlMessageContext(
-						request, response, samlSloRequestInfo.getEntityId());
+		MessageContext<?> messageContext = getMessageContext(
+			request, response, samlSloRequestInfo.getEntityId());
+
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+		SAMLMetadataContext samlMetadataContext =
+			samlPeerEntityContext.getSubcontext(SAMLMetadataContext.class);
 
 		SPSSODescriptor spSSODescriptor =
-			(SPSSODescriptor)samlMessageContext.getPeerEntityRoleMetadata();
+			(SPSSODescriptor)samlMetadataContext.getRoleDescriptor();
 
 		SingleLogoutService singleLogoutService =
 			SamlUtil.resolveSingleLogoutService(
 				spSSODescriptor, SAMLConstants.SAML2_REDIRECT_BINDING_URI);
 
-		samlMessageContext.setPeerEntityEndpoint(singleLogoutService);
+		SAMLEndpointContext samlPeerEndpointContext =
+			samlPeerEntityContext.getSubcontext(
+				SAMLEndpointContext.class, true);
+
+		samlPeerEndpointContext.setEndpoint(singleLogoutService);
 
 		SamlIdpSpSession samlIdpSpSession =
 			samlSloRequestInfo.getSamlIdpSpSession();
@@ -1016,7 +1023,11 @@ public class SingleLogoutProfileImpl
 			samlIdpSpSession.getNameIdFormat(),
 			samlIdpSpSession.getNameIdValue());
 
-		samlMessageContext.setSubjectNameIdentifier(nameID);
+		SAMLSubjectNameIdentifierContext samlSubjectNameIdentifierContext =
+			messageContext.getSubcontext(
+				SAMLSubjectNameIdentifierContext.class, true);
+
+		samlSubjectNameIdentifierContext.setSubjectNameIdentifier(nameID);
 
 		samlSloRequestInfo.setInitiateTime(new DateTime(DateTimeZone.UTC));
 		samlSloRequestInfo.setStatus(
@@ -1026,7 +1037,7 @@ public class SingleLogoutProfileImpl
 
 		if (binding.equals(SAMLConstants.SAML2_SOAP11_BINDING_URI)) {
 			String statusCode = sendSyncLogoutRequest(
-				samlMessageContext, samlSloContext);
+				messageContext, samlSloContext);
 
 			samlSloRequestInfo.setStatusCode(statusCode);
 
@@ -1039,7 +1050,7 @@ public class SingleLogoutProfileImpl
 				"single-sign-out", true);
 		}
 		else {
-			sendAsyncLogoutRequest(samlMessageContext, samlSloContext);
+			sendAsyncLogoutRequest(messageContext, samlSloContext, response);
 		}
 	}
 

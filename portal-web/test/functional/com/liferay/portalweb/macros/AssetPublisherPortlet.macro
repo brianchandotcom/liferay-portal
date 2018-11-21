@@ -640,9 +640,9 @@
 		</execute>
 
 		<if>
-			<equals arg1="${queryContains}" arg2="Does not Contain" />
+			<isset var="queryContains" />
 			<then>
-				<execute function="Select" locator1="APConfiguration#FILTER_QUERY_CONTAINS" value1="Does not Contain" />
+				<execute function="Select" locator1="APConfiguration#FILTER_QUERY_CONTAINS" value1="${queryContains}" />
 			</then>
 		</if>
 

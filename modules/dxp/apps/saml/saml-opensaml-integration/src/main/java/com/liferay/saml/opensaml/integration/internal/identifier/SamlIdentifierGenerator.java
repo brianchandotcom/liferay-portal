@@ -20,6 +20,7 @@ import com.google.common.xml.XmlEscapers;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.SecureRandom;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
+import com.liferay.saml.opensaml.integration.internal.servlet.profile.IdentifierGenerationStrategyFactory;
 
 import javax.annotation.Nonnull;
 
@@ -30,38 +31,48 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Mika Koivisto
  */
-@Component(immediate = true, service = IdentifierGenerationStrategy.class)
-public class SamlIdentifierGenerator implements IdentifierGenerationStrategy {
+@Component(
+	immediate = true, service = IdentifierGenerationStrategyFactory.class
+)
+public class SamlIdentifierGenerator
+	implements IdentifierGenerationStrategyFactory {
 
-	@Nonnull
 	@Override
-	public String generateIdentifier() {
-		return generateIdentifier(16, false);
+	public IdentifierGenerationStrategy create(int length) {
+		return new IdentifierGenerationStrategy() {
+
+			@Nonnull
+			@Override
+			public String generateIdentifier() {
+				return generateIdentifier(length, false);
+			}
+
+			@Nonnull
+			@Override
+			public String generateIdentifier(boolean xmlSafe) {
+				return generateIdentifier(length, xmlSafe);
+			}
+
+			public String generateIdentifier(int size, boolean xmlSafe) {
+				byte[] bytes = new byte[size];
+
+				_secureRandom.nextBytes(bytes);
+
+				String identifier = StringPool.UNDERLINE.concat(
+					UnicodeFormatter.bytesToHex(bytes));
+
+				if (xmlSafe) {
+					Escaper escaper = XmlEscapers.xmlAttributeEscaper();
+
+					return escaper.escape(identifier);
+				}
+
+				return identifier;
+			}
+
+			private final SecureRandom _secureRandom = new SecureRandom();
+
+		};
 	}
-
-	@Nonnull
-	@Override
-	public String generateIdentifier(boolean xmlSafe) {
-		return generateIdentifier(16, xmlSafe);
-	}
-
-	public String generateIdentifier(int size, boolean xmlSafe) {
-		byte[] bytes = new byte[size];
-
-		_secureRandom.nextBytes(bytes);
-
-		String identifier = StringPool.UNDERLINE.concat(
-			UnicodeFormatter.bytesToHex(bytes));
-
-		if (xmlSafe) {
-			Escaper escaper = XmlEscapers.xmlAttributeEscaper();
-
-			return escaper.escape(identifier);
-		}
-
-		return identifier;
-	}
-
-	private final SecureRandom _secureRandom = new SecureRandom();
 
 }

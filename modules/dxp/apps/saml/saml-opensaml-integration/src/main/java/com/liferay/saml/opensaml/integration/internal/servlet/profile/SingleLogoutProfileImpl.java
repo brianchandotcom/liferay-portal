@@ -289,10 +289,12 @@ public class SingleLogoutProfileImpl
 
 	@Override
 	@Reference(unbind = "-")
-	public void setIdentifierGenerator(
-		IdentifierGenerator identifierGenerator) {
+	public void setIdentifierGenerationStrategyFactory(
+		IdentifierGenerationStrategyFactory
+			identifierGenerationStrategyFactory) {
 
-		super.setIdentifierGenerator(identifierGenerator);
+		super.setIdentifierGenerationStrategyFactory(
+			identifierGenerationStrategyFactory);
 	}
 
 	@Override

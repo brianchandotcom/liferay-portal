@@ -34,6 +34,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 			actions = {
 				"setDataType('predefinedValue', getValue('dataType'))",
 				"setValidationDataType('validation', getValue('dataType'))",
+				"setValidationFieldName('validation', getValue('name'))",
 				"setVisible('tooltip', false)"
 			},
 			condition = "TRUE"

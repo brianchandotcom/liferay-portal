@@ -568,6 +568,11 @@ public class DDMFormFieldTemplateContextFactory {
 		validation.put(
 			"expression",
 			GetterUtil.getString(ddmFormFieldValidation.getExpression()));
+		validation.put(
+			"fieldName",
+			GetterUtil.getString(
+				changedProperties.get("validationFieldName"),
+				StringPool.BLANK));
 
 		ddmFormFieldTemplateContext.put("validation", validation);
 	}

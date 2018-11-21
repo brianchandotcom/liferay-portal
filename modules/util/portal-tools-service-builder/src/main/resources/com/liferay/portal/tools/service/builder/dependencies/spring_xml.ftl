@@ -1,3 +1,9 @@
+<#assign parent = "" />
+
+<#if !serviceBuilder.isSpringConfiguratorEnabled()>
+	<#assign parent = " parent=\"basePersistence\"" />
+</#if>
+
 <#list entities as entity>
 	<#if entity.hasLocalService()>
 		<#assign sessionType = "Local" />
@@ -13,12 +19,7 @@
 
 	<#if entity.hasEntityColumns()>
 		<#if !stringUtil.equals(entity.dataSource, "liferayDataSource") || !stringUtil.equals(entity.sessionFactory, "liferaySessionFactory")>
-			<bean
-				class="${entity.persistenceClassName}" id="${apiPackagePath}.service.persistence.${entity.name}Persistence"
-				<#if !serviceBuilder.isSpringConfiguratorEnabled()>
-					parent="basePersistence"
-				</#if>
-			>
+			<bean class="${entity.persistenceClassName}" id="${apiPackagePath}.service.persistence.${entity.name}Persistence"${parent}>
 				<#if !stringUtil.equals(entity.dataSource, "liferayDataSource")>
 					<property name="dataSource" ref="${entity.getDataSource()}" />
 				</#if>
@@ -28,23 +29,13 @@
 				</#if>
 			</bean>
 		<#else>
-			<bean
-				class="${entity.persistenceClassName}" id="${apiPackagePath}.service.persistence.${entity.name}Persistence"
-				<#if !serviceBuilder.isSpringConfiguratorEnabled()>
-					parent="basePersistence"
-				</#if>
-			/>
+			<bean class="${entity.persistenceClassName}" id="${apiPackagePath}.service.persistence.${entity.name}Persistence"${parent} />
 		</#if>
 	</#if>
 
 	<#if entity.hasFinderClassName()>
 		<#if !stringUtil.equals(entity.dataSource, "liferayDataSource") || !stringUtil.equals(entity.sessionFactory, "liferaySessionFactory")>
-			<bean
-				class="${entity.finderClassName}" id="${apiPackagePath}.service.persistence.${entity.name}Finder"
-				<#if !serviceBuilder.isSpringConfiguratorEnabled()>
-					parent="basePersistence"
-				</#if>
-			>
+			<bean class="${entity.finderClassName}" id="${apiPackagePath}.service.persistence.${entity.name}Finder"${parent}>
 				<#if !stringUtil.equals(entity.dataSource, "liferayDataSource")>
 					<property name="dataSource" ref="${entity.getDataSource()}" />
 				</#if>
@@ -54,12 +45,7 @@
 				</#if>
 			</bean>
 		<#else>
-			<bean
-				class="${entity.finderClassName}" id="${apiPackagePath}.service.persistence.${entity.name}Finder"
-				<#if !serviceBuilder.isSpringConfiguratorEnabled()>
-					parent="basePersistence"
-				</#if>
-			/>
+			<bean class="${entity.finderClassName}" id="${apiPackagePath}.service.persistence.${entity.name}Finder"${parent} />
 		</#if>
 	</#if>
 </#list>

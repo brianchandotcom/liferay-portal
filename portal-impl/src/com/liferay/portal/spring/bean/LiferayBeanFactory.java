@@ -14,7 +14,6 @@
 
 package com.liferay.portal.spring.bean;
 
-import com.liferay.portal.spring.aop.DynamicProxyCreator;
 import com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator;
 
 import java.beans.PropertyDescriptor;
@@ -44,7 +43,6 @@ public class LiferayBeanFactory extends DefaultListableBeanFactory {
 
 		if ((beanPostProcessor instanceof
 				InstantiationAwareBeanPostProcessor) &&
-			!(beanPostProcessor instanceof DynamicProxyCreator) &&
 			!(beanPostProcessor instanceof ServiceBeanAutoProxyCreator)) {
 
 			_postProcessPropertyValues = true;

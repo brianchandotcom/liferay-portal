@@ -24,14 +24,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessorAdapter;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.core.Ordered;
 
 /**
  * @author Shuyang Zhou
  */
-public class DynamicProxyCreator
-	extends InstantiationAwareBeanPostProcessorAdapter implements Ordered {
+public class DynamicProxyCreator implements BeanPostProcessor, Ordered {
 
 	public static DynamicProxyCreator getDynamicProxyCreator() {
 		return _instance;
@@ -73,6 +72,13 @@ public class DynamicProxyCreator
 					invocationHandler);
 			}
 		}
+
+		return bean;
+	}
+
+	@Override
+	public Object postProcessBeforeInitialization(
+		Object bean, String beanName) {
 
 		return bean;
 	}

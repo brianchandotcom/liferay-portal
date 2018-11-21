@@ -62,11 +62,6 @@
 	</command>
 
 	<command name="addPageTranslations">
-		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="pageName" value="${page}" />
-		</execute>
-
 		<execute macro="PortletEntry#changeLocale">
 			<var name="fieldName" value="Name" />
 			<var name="locale" value="${pageTranslation}" />

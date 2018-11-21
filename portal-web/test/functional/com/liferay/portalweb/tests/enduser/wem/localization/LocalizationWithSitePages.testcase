@@ -49,6 +49,11 @@
 			<var name="pageName" value="Home" />
 		</execute>
 
+		<execute macro="SitePages#gotoPageMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="pageName" value="Home" />
+		</execute>
+
 		<execute macro="Page#addPageTranslations">
 			<var name="page" value="Home" />
 			<var name="pageTranslation" value="es_ES" />
@@ -84,6 +89,12 @@
 		<execute macro="SitePages#addPublicChildPage">
 			<var name="childPageName" value="Blog Page" />
 			<var name="parentPageName" value="Home" />
+		</execute>
+
+		<execute macro="SitePages#gotoPageMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="pageName" value="Blog Page" />
+			<var name="parentPagesHierarchy" value="Home" />
 		</execute>
 
 		<execute macro="Page#addPageTranslations">

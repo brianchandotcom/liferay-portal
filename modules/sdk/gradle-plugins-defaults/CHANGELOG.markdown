@@ -4990,6 +4990,8 @@ to version 1.1.2.
 ## 5.5.113 - 2018-11-16
 
 ### Changed
+- [LPS-86916]: Update the [Liferay Gradle Plugins] dependency to version
+3.13.15.
 - [LPS-87465]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
 2.0.12.
 

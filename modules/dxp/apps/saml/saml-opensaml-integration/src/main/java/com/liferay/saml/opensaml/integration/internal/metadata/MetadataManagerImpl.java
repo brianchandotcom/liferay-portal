@@ -309,71 +309,55 @@ public class MetadataManagerImpl
 	}
 
 	@Override
-	public SecurityPolicyResolver getSecurityPolicyResolver(
-			String communicationProfileId, boolean requireSignature)
-		throws SamlException {
+	public MessageHandler<?> getSecurityPolicyResolver(
+		String communicationProfileId, boolean requireSignature) {
 
-		SecurityPolicy securityPolicy = new BasicSecurityPolicy();
-
-		List<SecurityPolicyRule> securityPolicyRules =
-			securityPolicy.getPolicyRules();
+		List<MessageHandler<Object>> messageHandlers = new ArrayList<>();
 
 		if (requireSignature) {
-			SignatureTrustEngine signatureTrustEngine =
-				getSignatureTrustEngine();
-
 			if (communicationProfileId.equals(
-					SAMLConstants.SAML2_REDIRECT_BINDING_URI)) {
+				SAMLConstants.SAML2_REDIRECT_BINDING_URI)) {
 
-				SecurityPolicyRule securityPolicyRule =
-					new SAML2HTTPRedirectDeflateSignatureRule(
-						signatureTrustEngine);
-
-				securityPolicyRules.add(securityPolicyRule);
+				messageHandlers.add(
+					new SAML2HTTPRedirectDeflateSignatureSecurityHandler());
 			}
 			else if (communicationProfileId.equals(
-						SAMLConstants.SAML2_POST_SIMPLE_SIGN_BINDING_URI)) {
+				SAMLConstants.SAML2_POST_SIMPLE_SIGN_BINDING_URI)) {
 
-				SecurityConfiguration securityConfiguration =
-					Configuration.getGlobalSecurityConfiguration();
+				DecryptionConfiguration decryptionConfiguration =
+					SecurityConfigurationSupport.
+						getGlobalDecryptionConfiguration();
 
 				KeyInfoCredentialResolver keyInfoCredentialResolver =
-					securityConfiguration.getDefaultKeyInfoCredentialResolver();
+					decryptionConfiguration.getDataKeyInfoCredentialResolver();
 
-				SecurityPolicyRule securityPolicyRule =
-					new SAML2HTTPPostSimpleSignRule(
-						signatureTrustEngine, _parserPool,
-						keyInfoCredentialResolver);
+				SAML2HTTPPostSimpleSignSecurityHandler
+					saml2HTTPPostSimpleSignSecurityHandler =
+						new SAML2HTTPPostSimpleSignSecurityHandler();
 
-				securityPolicyRules.add(securityPolicyRule);
+				saml2HTTPPostSimpleSignSecurityHandler.setKeyInfoResolver(
+					keyInfoCredentialResolver);
+				saml2HTTPPostSimpleSignSecurityHandler.setParser(_parserPool);
+
+				messageHandlers.add(saml2HTTPPostSimpleSignSecurityHandler);
 			}
 			else {
-				SecurityPolicyRule securityPolicyRule =
-					new SAMLProtocolMessageXMLSignatureSecurityPolicyRule(
-						signatureTrustEngine);
-
-				securityPolicyRules.add(securityPolicyRule);
+				messageHandlers.add(
+					new SAMLProtocolMessageXMLSignatureSecurityHandler());
 			}
 
-			MandatoryAuthenticatedMessageRule
-				mandatoryAuthenticatedMessageRule =
-					new MandatoryAuthenticatedMessageRule();
-
-			securityPolicyRules.add(mandatoryAuthenticatedMessageRule);
+			messageHandlers.add(new CheckMandatoryAuthentication());
 		}
 
-		HTTPRule httpRule = new HTTPRule(null, null, isSSLRequired());
+		messageHandlers.add(new CheckMandatoryIssuer());
+		messageHandlers.add(new HTTPRequestValidationHandler());
 
-		securityPolicyRules.add(httpRule);
+		BasicMessageHandlerChain<Object> basicMessageHandlerChain =
+			new BasicMessageHandlerChain<>();
 
-		MandatoryIssuerRule mandatoryIssuerRule = new MandatoryIssuerRule();
+		basicMessageHandlerChain.setHandlers(messageHandlers);
 
-		securityPolicyRules.add(mandatoryIssuerRule);
-
-		StaticSecurityPolicyResolver securityPolicyResolver =
-			new StaticSecurityPolicyResolver(securityPolicy);
-
-		return securityPolicyResolver;
+		return basicMessageHandlerChain;
 	}
 
 	@Override

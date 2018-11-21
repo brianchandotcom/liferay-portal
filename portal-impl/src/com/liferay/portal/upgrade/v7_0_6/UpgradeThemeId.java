@@ -37,8 +37,9 @@ public class UpgradeThemeId extends UpgradeProcess {
 		}
 	}
 
-	private static final String[] _TABLE_NAMES =
-		{"Layout", "LayoutRevision", "LayoutSet", "LayoutSetBranch"};
+	private static final String[] _TABLE_NAMES = {
+		"Layout", "LayoutRevision", "LayoutSet", "LayoutSetBranch"
+	};
 
 	private static final String[][] _THEME_IDS = {
 		{"classic", "classic_WAR_classictheme"},

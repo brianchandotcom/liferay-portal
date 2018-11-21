@@ -86,8 +86,9 @@ import javax.portlet.PortletURL;
  */
 public class JournalUtil {
 
-	public static final String[] SELECTED_FIELD_NAMES =
-		{Field.ARTICLE_ID, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
+	public static final String[] SELECTED_FIELD_NAMES = {
+		Field.ARTICLE_ID, Field.COMPANY_ID, Field.GROUP_ID, Field.UID
+	};
 
 	public static void addAllReservedEls(
 		Element rootElement, Map<String, String> tokens, JournalArticle article,

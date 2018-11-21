@@ -87,8 +87,9 @@ public class UserInitialsGeneratorImpl implements UserInitialsGenerator {
 		return userInitialsFieldNames;
 	}
 
-	private static final String[] _DEFAULT_USER_INITIALS_FIELD_NAMES =
-		{LanguageConstants.VALUE_FIRST_NAME, LanguageConstants.VALUE_LAST_NAME};
+	private static final String[] _DEFAULT_USER_INITIALS_FIELD_NAMES = {
+		LanguageConstants.VALUE_FIRST_NAME, LanguageConstants.VALUE_LAST_NAME
+	};
 
 	private static final Map<String, Integer> _userNameIndexes =
 		new HashMap<String, Integer>(3) {

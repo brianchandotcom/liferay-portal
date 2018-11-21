@@ -88,8 +88,9 @@ public class MainTest {
 
 	@Test
 	public void testValidateRequiredArguments() throws Exception {
-		String[][] requiredArguments =
-			{{"-C", ""}, {"-O", ""}, {"-P", ""}, {"-S", ""}};
+		String[][] requiredArguments = {
+			{"-C", ""}, {"-O", ""}, {"-P", ""}, {"-S", ""}
+		};
 
 		for (String[] requiredArgument : requiredArguments) {
 			try {

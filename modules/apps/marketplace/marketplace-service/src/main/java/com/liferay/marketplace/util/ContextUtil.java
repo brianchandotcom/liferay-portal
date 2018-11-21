@@ -57,7 +57,8 @@ public class ContextUtil {
 		return -1;
 	}
 
-	private static final String[] _PLUGIN_TYPES =
-		{"-ext", "-hook", "-layouttpl", "-portlet", "-theme", "-web"};
+	private static final String[] _PLUGIN_TYPES = {
+		"-ext", "-hook", "-layouttpl", "-portlet", "-theme", "-web"
+	};
 
 }

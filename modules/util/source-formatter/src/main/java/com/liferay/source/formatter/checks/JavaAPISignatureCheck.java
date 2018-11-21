@@ -233,8 +233,9 @@ public class JavaAPISignatureCheck extends BaseJavaTermCheck {
 		"com\\.liferay\\.portal\\.layoutconfiguration(\\..*)?"
 	};
 
-	private static final String[] _SERVICE_PACKAGE_NAME_WHITELIST =
-		{".*\\.service(\\..*)?", ".*\\.test(\\..*)?"};
+	private static final String[] _SERVICE_PACKAGE_NAME_WHITELIST = {
+		".*\\.service(\\..*)?", ".*\\.test(\\..*)?"
+	};
 
 	private List<String> _allFileNames;
 	private String[] _apiSignatureExceptions;

@@ -163,8 +163,9 @@ public class HtmlImplTest {
 		ScriptEngine scriptEngine = scriptEngineManager.getEngineByName(
 			"JavaScript");
 
-		String[] stringLiterals =
-			{"'", "\"", "\\", "\n", "\r", "\u2028", "\u2029"};
+		String[] stringLiterals = {
+			"'", "\"", "\\", "\n", "\r", "\u2028", "\u2029"
+		};
 
 		for (String stringLiteral : stringLiterals) {
 			String escaped = _htmlImpl.escapeJS(stringLiteral);

@@ -451,8 +451,9 @@ public class StagingImplTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private static final Locale[] _locales =
-		{LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US};
+	private static final Locale[] _locales = {
+		LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US
+	};
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -72,8 +72,9 @@ public class KaleoDefinitionVersionIdComparator
 	private static final String _ORDER_BY_DESC =
 		"KaleoDefinitionVersion.kaleoDefinitionVersionId DESC";
 
-	private static final String[] _ORDER_BY_FIELDS =
-		{"kaleoDefinitionVersionId"};
+	private static final String[] _ORDER_BY_FIELDS = {
+		"kaleoDefinitionVersionId"
+	};
 
 	private final boolean _ascending;
 

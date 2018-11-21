@@ -47,8 +47,9 @@ public class PropertiesUtilTest {
 		}
 	}
 
-	private static final String[][] _PROPERTIES_ARRAY =
-		{{"testKey", "testValue"}, {"测试键", "测试值"}};
+	private static final String[][] _PROPERTIES_ARRAY = {
+		{"testKey", "testValue"}, {"测试键", "测试值"}
+	};
 
 	private static final String _PROPERTIES_STRING;
 

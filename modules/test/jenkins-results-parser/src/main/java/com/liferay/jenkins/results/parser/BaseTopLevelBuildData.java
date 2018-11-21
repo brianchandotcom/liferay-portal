@@ -177,7 +177,8 @@ public abstract class BaseTopLevelBuildData
 			getJobName(), "/", String.valueOf(getBuildNumber()), "/dist");
 	}
 
-	private static final String[] _REQUIRED_KEYS =
-		{"dist_nodes", "dist_path", "top_level_run_id"};
+	private static final String[] _REQUIRED_KEYS = {
+		"dist_nodes", "dist_path", "top_level_run_id"
+	};
 
 }

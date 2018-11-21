@@ -69,8 +69,8 @@ import org.dom4j.DocumentException;
  */
 public class SourceFormatter {
 
-	public static final ExcludeSyntaxPattern[]
-		DEFAULT_EXCLUDE_SYNTAX_PATTERNS = {
+	public static final ExcludeSyntaxPattern[] DEFAULT_EXCLUDE_SYNTAX_PATTERNS =
+		{
 			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/.git/**"),
 			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/.gradle/**"),
 			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/.idea/**"),

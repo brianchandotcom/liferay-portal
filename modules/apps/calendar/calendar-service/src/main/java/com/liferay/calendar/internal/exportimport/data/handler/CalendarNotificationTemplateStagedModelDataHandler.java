@@ -51,8 +51,9 @@ import org.osgi.service.component.annotations.Reference;
 public class CalendarNotificationTemplateStagedModelDataHandler
 	extends BaseStagedModelDataHandler<CalendarNotificationTemplate> {
 
-	public static final String[] CLASS_NAMES =
-		{CalendarNotificationTemplate.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		CalendarNotificationTemplate.class.getName()
+	};
 
 	@Override
 	public void deleteStagedModel(

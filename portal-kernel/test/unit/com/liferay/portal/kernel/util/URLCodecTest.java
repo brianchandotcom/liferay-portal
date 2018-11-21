@@ -123,8 +123,9 @@ public class URLCodecTest {
 		"/abc/def", "abc <def> ghi"
 	};
 
-	private static final String[] _UNICODE_CATS_AND_DOGS =
-		{"1f408", "1f431", "1f415", "1f436"};
+	private static final String[] _UNICODE_CATS_AND_DOGS = {
+		"1f408", "1f431", "1f415", "1f436"
+	};
 
 	static {
 		try {

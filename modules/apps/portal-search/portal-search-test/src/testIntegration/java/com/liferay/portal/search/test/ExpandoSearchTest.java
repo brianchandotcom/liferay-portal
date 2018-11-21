@@ -182,8 +182,9 @@ public class ExpandoSearchTest {
 		addExpandoColumn(
 			User.class, columnName, ExpandoColumnConstants.INDEX_TYPE_KEYWORD);
 
-		String[] columnValues =
-			{"Software", "SoftWare", "softWare", "software"};
+		String[] columnValues = {
+			"Software", "SoftWare", "softWare", "software"
+		};
 
 		for (String columnValue : columnValues) {
 			addUser(columnName, columnValue);

@@ -250,10 +250,12 @@ public class RecurrenceSerializerTest extends RecurrenceSerializer {
 			new DayAndPosition(Calendar.MONDAY, 0),
 			new DayAndPosition(Calendar.FRIDAY, 0)
 		};
-	private static final DayAndPosition[] _firstMondayDayAndPositions =
-		{new DayAndPosition(Calendar.MONDAY, 0)};
-	private static final DayAndPosition[] _lastMondayDayAndPositions =
-		{new DayAndPosition(Calendar.MONDAY, -1)};
+	private static final DayAndPosition[] _firstMondayDayAndPositions = {
+		new DayAndPosition(Calendar.MONDAY, 0)
+	};
+	private static final DayAndPosition[] _lastMondayDayAndPositions = {
+		new DayAndPosition(Calendar.MONDAY, -1)
+	};
 	private static final Calendar _recurrenceCalendar = new GregorianCalendar(
 		2010, 0, 2, 3, 4, 5);
 

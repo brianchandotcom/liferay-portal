@@ -30,7 +30,8 @@ public class LexiconUtil {
 			_NUMBERS[(int)(user.getUserId() % 10)]);
 	}
 
-	private static final String[] _NUMBERS =
-		{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+	private static final String[] _NUMBERS = {
+		"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"
+	};
 
 }

@@ -175,8 +175,9 @@ public class OrgLaborFormDisplay {
 		return selectOptionDisplays;
 	}
 
-	private static final String[] _SHORT_DAY_NAMES =
-		{"sun", "mon", "tue", "wed", "thu", "fri", "sat"};
+	private static final String[] _SHORT_DAY_NAMES = {
+		"sun", "mon", "tue", "wed", "thu", "fri", "sat"
+	};
 
 	private final List<DayRowDisplay> _dayRowDisplays;
 	private final Format _timeFormat;

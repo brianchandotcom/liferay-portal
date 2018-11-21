@@ -21,13 +21,15 @@ public class ParameterMapUtilTestUtil {
 
 	public static final String PARAMETER_MAP_STRING = "PARAMETER_MAP";
 
-	public static final String[] PARAMETER_MAP_STRING_ARRAY =
-		{"PARAMETER_MAP1", "PARAMETER_MAP2"};
+	public static final String[] PARAMETER_MAP_STRING_ARRAY = {
+		"PARAMETER_MAP1", "PARAMETER_MAP2"
+	};
 
 	public static final String TEST_BEAN_STRING = "TEST_BEAN";
 
-	public static final String[] TEST_BEAN_STRING_ARRAY =
-		{"TEST_BEAN1", "TEST_BEAN2"};
+	public static final String[] TEST_BEAN_STRING_ARRAY = {
+		"TEST_BEAN1", "TEST_BEAN2"
+	};
 
 	protected static TestBean getTestBean() {
 		return new TestBean() {

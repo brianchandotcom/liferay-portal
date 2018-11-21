@@ -127,8 +127,9 @@ public class RecurrenceWeeklyByDayTest extends RecurrenceTestCase {
 		Recurrence recurrence = new Recurrence(
 			dtStart, duration, Recurrence.WEEKLY);
 
-		DayAndPosition[] days =
-			{new DayAndPosition(FRIDAY, 0), new DayAndPosition(SATURDAY, 0)};
+		DayAndPosition[] days = {
+			new DayAndPosition(FRIDAY, 0), new DayAndPosition(SATURDAY, 0)
+		};
 
 		recurrence.setByDay(days);
 

@@ -467,8 +467,9 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	}
 
 	private List<String> _getTLDFileNames() throws IOException {
-		String[] excludes =
-			{"**/dependencies/**", "**/util-taglib/**", "**/portal-web/**"};
+		String[] excludes = {
+			"**/dependencies/**", "**/util-taglib/**", "**/portal-web/**"
+		};
 
 		List<String> tldFileNames = SourceFormatterUtil.filterFileNames(
 			_allFileNames, excludes, new String[] {"**/*.tld"},

@@ -50,8 +50,9 @@ import org.osgi.service.component.annotations.Reference;
 public class MDRRuleGroupInstanceStagedModelDataHandler
 	extends BaseStagedModelDataHandler<MDRRuleGroupInstance> {
 
-	public static final String[] CLASS_NAMES =
-		{MDRRuleGroupInstance.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		MDRRuleGroupInstance.class.getName()
+	};
 
 	@Override
 	public void deleteStagedModel(MDRRuleGroupInstance ruleGroupInstance) {

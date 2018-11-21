@@ -563,8 +563,9 @@ public class NettyRepositoryTest {
 	}
 
 	@AdviseWith(
-		adviceClasses =
-			{NettyUtilAdvice.class, DefaultNoticeableFutureAdvice.class}
+		adviceClasses = {
+			NettyUtilAdvice.class, DefaultNoticeableFutureAdvice.class
+		}
 	)
 	@Test
 	public void testGetFilesCovertCausedException() throws Exception {

@@ -156,8 +156,9 @@ public class Summary {
 			text, _ESCAPE_SAFE_HIGHLIGHTS, HighlightUtil.HIGHLIGHTS);
 	}
 
-	private static final String[] _ESCAPE_SAFE_HIGHLIGHTS =
-		{"[@HIGHLIGHT1@]", "[@HIGHLIGHT2@]"};
+	private static final String[] _ESCAPE_SAFE_HIGHLIGHTS = {
+		"[@HIGHLIGHT1@]", "[@HIGHLIGHT2@]"
+	};
 
 	private String _content;
 	private boolean _escape = true;

@@ -76,11 +76,13 @@ public class LanguageConstants {
 
 	public static final String[] VALUES_LINE = {VALUE_LEFT, VALUE_RIGHT};
 
-	public static final String[] VALUES_USER_DEFAULT_PORTRAIT =
-		{VALUE_IMAGE, VALUE_INITIALS};
+	public static final String[] VALUES_USER_DEFAULT_PORTRAIT = {
+		VALUE_IMAGE, VALUE_INITIALS
+	};
 
-	public static final String[] VALUES_USER_INITIALS_FIELD_NAMES =
-		{VALUE_FIRST_NAME, VALUE_LAST_NAME, VALUE_MIDDLE_NAME};
+	public static final String[] VALUES_USER_INITIALS_FIELD_NAMES = {
+		VALUE_FIRST_NAME, VALUE_LAST_NAME, VALUE_MIDDLE_NAME
+	};
 
 	public static final String[] VALUES_USER_NAME_FIELD_NAMES = {
 		VALUE_PREFIX, VALUE_FIRST_NAME, VALUE_MIDDLE_NAME, VALUE_LAST_NAME,

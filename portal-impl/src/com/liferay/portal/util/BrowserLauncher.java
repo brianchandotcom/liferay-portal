@@ -97,7 +97,8 @@ public class BrowserLauncher implements Runnable {
 	/**
 	 * Order matters. See LPS-48525.
 	 */
-	private static final String[] _BROWSERS =
-		{"xdg-open", "firefox", "mozilla", "konqueror", "opera"};
+	private static final String[] _BROWSERS = {
+		"xdg-open", "firefox", "mozilla", "konqueror", "opera"
+	};
 
 }

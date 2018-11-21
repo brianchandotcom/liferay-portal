@@ -305,8 +305,9 @@ public class DLDirectoryNameAndFileNameTest {
 			serviceContext);
 	}
 
-	private static final String[] _DL_CHAR_LAST_BLACKLIST =
-		{StringPool.SPACE, StringPool.PERIOD};
+	private static final String[] _DL_CHAR_LAST_BLACKLIST = {
+		StringPool.SPACE, StringPool.PERIOD
+	};
 
 	@DeleteAfterTestRun
 	private Group _group;

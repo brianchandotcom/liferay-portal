@@ -41,8 +41,9 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutFriendlyURLStagedModelDataHandler
 	extends BaseStagedModelDataHandler<LayoutFriendlyURL> {
 
-	public static final String[] CLASS_NAMES =
-		{LayoutFriendlyURL.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		LayoutFriendlyURL.class.getName()
+	};
 
 	@Override
 	public void deleteStagedModel(LayoutFriendlyURL layoutFriendlyURL) {

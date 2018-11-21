@@ -499,8 +499,9 @@ public class CalendarDisplayContext {
 		CalendarResourceSearch calendarResourceSearch) {
 
 		long[] groupIds = {_themeDisplay.getScopeGroupId()};
-		long[] classNameIds =
-			{PortalUtil.getClassNameId(CalendarResource.class.getName())};
+		long[] classNameIds = {
+			PortalUtil.getClassNameId(CalendarResource.class.getName())
+		};
 		CalendarResourceDisplayTerms displayTerms =
 			new CalendarResourceDisplayTerms(_renderRequest);
 
@@ -519,8 +520,9 @@ public class CalendarDisplayContext {
 		CalendarResourceSearch calendarResourceSearch) {
 
 		long[] groupIds = {_themeDisplay.getScopeGroupId()};
-		long[] classNameIds =
-			{PortalUtil.getClassNameId(CalendarResource.class.getName())};
+		long[] classNameIds = {
+			PortalUtil.getClassNameId(CalendarResource.class.getName())
+		};
 		CalendarResourceDisplayTerms displayTerms =
 			new CalendarResourceDisplayTerms(_renderRequest);
 

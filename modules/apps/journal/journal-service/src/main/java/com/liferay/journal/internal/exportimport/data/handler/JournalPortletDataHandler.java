@@ -115,8 +115,9 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class JournalPortletDataHandler extends BasePortletDataHandler {
 
-	public static final String[] CLASS_NAMES =
-		{JournalArticle.class.getName(), JournalFolder.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		JournalArticle.class.getName(), JournalFolder.class.getName()
+	};
 
 	public static final String NAMESPACE = "journal";
 

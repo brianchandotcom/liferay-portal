@@ -182,8 +182,9 @@ public class JournalArticleActivityInterpreter
 		_journalArticleLocalService = journalArticleLocalService;
 	}
 
-	private static final String[] _CLASS_NAMES =
-		{JournalArticle.class.getName()};
+	private static final String[] _CLASS_NAMES = {
+		JournalArticle.class.getName()
+	};
 
 	private JournalArticleLocalService _journalArticleLocalService;
 

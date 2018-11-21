@@ -127,8 +127,9 @@ public class OrgLaborDisplay {
 		return openHourAndMinuteString + " - " + closeHourAndMinuteString;
 	}
 
-	private static final String[] _SHORT_DAY_NAMES =
-		{"sun", "mon", "tue", "wed", "thu", "fri", "sat"};
+	private static final String[] _SHORT_DAY_NAMES = {
+		"sun", "mon", "tue", "wed", "thu", "fri", "sat"
+	};
 
 	private final KeyValuePair[] _dayKeyValuePairs;
 	private final String _title;

@@ -53,8 +53,9 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetVocabularyStagedModelDataHandler
 	extends BaseStagedModelDataHandler<AssetVocabulary> {
 
-	public static final String[] CLASS_NAMES =
-		{AssetVocabulary.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		AssetVocabulary.class.getName()
+	};
 
 	@Override
 	public void deleteStagedModel(AssetVocabulary vocabulary)

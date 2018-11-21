@@ -656,8 +656,9 @@ public class IntrabandProxyUtilTest {
 
 		ClassNode classNode = _loadClass(TestClass.class);
 
-		String[] proxyMethodSignatures =
-			{"testSignature1", "testSignature2", "testSignature3"};
+		String[] proxyMethodSignatures = {
+			"testSignature1", "testSignature2", "testSignature3"
+		};
 
 		IntrabandProxyUtil.rewriteGetProxyMethodSignaturesMethodNode(
 			classNode, proxyMethodSignatures);

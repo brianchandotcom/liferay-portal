@@ -362,8 +362,9 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			ddmFormAvailableLocales, ddmFormDefaultLocale);
 	}
 
-	private static final String[] _DDM_FORM_FIELD_INDEX_TYPES =
-		{StringPool.BLANK, "keyword", "text"};
+	private static final String[] _DDM_FORM_FIELD_INDEX_TYPES = {
+		StringPool.BLANK, "keyword", "text"
+	};
 
 	private static final Pattern _ddmFormFieldNamePattern = Pattern.compile(
 		"([^\\p{Punct}|\\p{Space}$]|_)+");

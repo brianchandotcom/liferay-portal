@@ -106,8 +106,9 @@ public class JournalFolderActivityInterpreter
 			activity.getGroupId(), activity.getClassPK(), actionId);
 	}
 
-	private static final String[] _CLASS_NAMES =
-		{JournalFolder.class.getName()};
+	private static final String[] _CLASS_NAMES = {
+		JournalFolder.class.getName()
+	};
 
 	@Reference(
 		target = "(model.class.name=com.liferay.journal.model.JournalFolder)"

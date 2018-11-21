@@ -62,8 +62,9 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class WikiAdminPortletDataHandler extends BasePortletDataHandler {
 
-	public static final String[] CLASS_NAMES =
-		{WikiNode.class.getName(), WikiPage.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		WikiNode.class.getName(), WikiPage.class.getName()
+	};
 
 	public static final String NAMESPACE = "wiki";
 

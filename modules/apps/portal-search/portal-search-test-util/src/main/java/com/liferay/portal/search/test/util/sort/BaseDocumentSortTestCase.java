@@ -224,16 +224,20 @@ public abstract class BaseDocumentSortTestCase extends BaseDocumentTestCase {
 		"sixthuser"
 	};
 
-	private static final String[] _SCREEN_NAMES_ODD_DOUBLE_ORDER =
-		{"firstuser", "fifthuser", "thirduser"};
+	private static final String[] _SCREEN_NAMES_ODD_DOUBLE_ORDER = {
+		"firstuser", "fifthuser", "thirduser"
+	};
 
-	private static final String[] _SCREEN_NAMES_ODD_FLOAT_ORDER =
-		{"fifthuser", "thirduser", "firstuser"};
+	private static final String[] _SCREEN_NAMES_ODD_FLOAT_ORDER = {
+		"fifthuser", "thirduser", "firstuser"
+	};
 
-	private static final String[] _SCREEN_NAMES_ODD_INTEGER_ORDER =
-		{"fifthuser", "thirduser", "firstuser"};
+	private static final String[] _SCREEN_NAMES_ODD_INTEGER_ORDER = {
+		"fifthuser", "thirduser", "firstuser"
+	};
 
-	private static final String[] _SCREEN_NAMES_ODD_LONG_ORDER =
-		{"firstuser", "thirduser", "fifthuser"};
+	private static final String[] _SCREEN_NAMES_ODD_LONG_ORDER = {
+		"firstuser", "thirduser", "fifthuser"
+	};
 
 }

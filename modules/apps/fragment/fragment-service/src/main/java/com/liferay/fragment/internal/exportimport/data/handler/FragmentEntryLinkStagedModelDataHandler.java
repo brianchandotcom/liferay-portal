@@ -41,8 +41,9 @@ import org.osgi.service.component.annotations.Reference;
 public class FragmentEntryLinkStagedModelDataHandler
 	extends BaseStagedModelDataHandler<FragmentEntryLink> {
 
-	public static final String[] CLASS_NAMES =
-		{FragmentEntryLink.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		FragmentEntryLink.class.getName()
+	};
 
 	@Override
 	public String[] getClassNames() {

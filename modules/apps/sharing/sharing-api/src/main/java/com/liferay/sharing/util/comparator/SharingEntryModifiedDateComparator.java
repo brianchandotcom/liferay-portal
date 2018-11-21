@@ -27,14 +27,16 @@ public class SharingEntryModifiedDateComparator
 	public static final String ORDER_BY_ASC =
 		"SharingEntry.modifiedDate ASC, SharingEntry.sharingEntryId ASC";
 
-	public static final String[] ORDER_BY_CONDITION_FIELDS =
-		{"modifiedDate", "sharingEntryId"};
+	public static final String[] ORDER_BY_CONDITION_FIELDS = {
+		"modifiedDate", "sharingEntryId"
+	};
 
 	public static final String ORDER_BY_DESC =
 		"SharingEntry.modifiedDate DESC, SharingEntry.sharingEntryId DESC";
 
-	public static final String[] ORDER_BY_FIELDS =
-		{"modifiedDate", "sharingEntryId"};
+	public static final String[] ORDER_BY_FIELDS = {
+		"modifiedDate", "sharingEntryId"
+	};
 
 	public SharingEntryModifiedDateComparator() {
 		this(false);

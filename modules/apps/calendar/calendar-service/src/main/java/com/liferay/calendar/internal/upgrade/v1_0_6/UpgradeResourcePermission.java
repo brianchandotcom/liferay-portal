@@ -181,8 +181,9 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 	private static final String _CALENDAR_RESOURCE_NAME =
 		"com.liferay.calendar.model.CalendarResource";
 
-	private static final String[] _NEW_UNSUPPORTED_ACTION_IDS =
-		{ActionKeys.PERMISSIONS, ActionKeys.VIEW};
+	private static final String[] _NEW_UNSUPPORTED_ACTION_IDS = {
+		ActionKeys.PERMISSIONS, ActionKeys.VIEW
+	};
 
 	private final ResourceActionLocalService _resourceActionLocalService;
 	private final ResourcePermissionLocalService

@@ -36,8 +36,9 @@ import org.osgi.service.component.annotations.Reference;
 public class StagedExpandoTableStagedModelDataHandler
 	extends BaseStagedModelDataHandler<StagedExpandoTable> {
 
-	public static final String[] CLASS_NAMES =
-		{StagedExpandoTable.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		StagedExpandoTable.class.getName()
+	};
 
 	@Override
 	public void deleteStagedModel(StagedExpandoTable stagedExpandoTable)

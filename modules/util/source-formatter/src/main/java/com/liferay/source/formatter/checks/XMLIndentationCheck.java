@@ -133,8 +133,9 @@ public class XMLIndentationCheck extends BaseFileCheck {
 		String[] lines = StringUtil.splitLines(content);
 
 		int level = 0;
-		String[] tokens =
-			{_COMMENT_TAG_OPEN, _DOCTYPE_TAG_OPEN, _HEADER_TAG_OPEN, _TAG_OPEN};
+		String[] tokens = {
+			_COMMENT_TAG_OPEN, _DOCTYPE_TAG_OPEN, _HEADER_TAG_OPEN, _TAG_OPEN
+		};
 
 		TokenOccurrence previousTokenOccurrence = null;
 

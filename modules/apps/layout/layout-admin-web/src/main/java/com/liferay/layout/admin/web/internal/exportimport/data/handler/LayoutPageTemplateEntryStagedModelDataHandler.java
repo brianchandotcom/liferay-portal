@@ -50,8 +50,9 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutPageTemplateEntryStagedModelDataHandler
 	extends BaseStagedModelDataHandler<LayoutPageTemplateEntry> {
 
-	public static final String[] CLASS_NAMES =
-		{LayoutPageTemplateEntry.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		LayoutPageTemplateEntry.class.getName()
+	};
 
 	@Override
 	public String[] getClassNames() {

@@ -19,8 +19,9 @@ package com.liferay.lang.builder;
  */
 public class LangBuilderArgs {
 
-	public static final String[] EXCLUDED_LANGUAGE_IDS =
-		{"da", "de", "fi", "ja", "nl", "pt_PT", "sv"};
+	public static final String[] EXCLUDED_LANGUAGE_IDS = {
+		"da", "de", "fi", "ja", "nl", "pt_PT", "sv"
+	};
 
 	public static final String LANG_DIR_NAME = "src/content";
 

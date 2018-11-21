@@ -213,8 +213,9 @@ public class SPIAgentResponseTest {
 
 		// Portal resiliency action, byte model output, native buffer
 
-		byte[] byteArray =
-			{(byte)0, (byte)1, (byte)2, (byte)3, (byte)4, (byte)5};
+		byte[] byteArray = {
+			(byte)0, (byte)1, (byte)2, (byte)3, (byte)4, (byte)5
+		};
 
 		ByteBuffer byteBuffer = ByteBuffer.allocateDirect(byteArray.length);
 

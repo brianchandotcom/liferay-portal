@@ -127,8 +127,9 @@ public abstract class BaseBatchBuildData
 		put("top_level_run_id", topLevelRunID);
 	}
 
-	private static final String[] _REQUIRED_KEYS =
-		{"batch_name", "top_level_run_id", "test_list"};
+	private static final String[] _REQUIRED_KEYS = {
+		"batch_name", "top_level_run_id", "test_list"
+	};
 
 	private TopLevelBuildData _topLevelBuildData;
 

@@ -38,8 +38,9 @@ import org.osgi.service.component.annotations.Reference;
 public class BookmarksFolderStagedModelDataHandler
 	extends BaseStagedModelDataHandler<BookmarksFolder> {
 
-	public static final String[] CLASS_NAMES =
-		{BookmarksFolder.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		BookmarksFolder.class.getName()
+	};
 
 	@Override
 	public String[] getClassNames() {

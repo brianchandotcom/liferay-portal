@@ -55,8 +55,9 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMFormInstanceRecordStagedModelDataHandler
 	extends BaseStagedModelDataHandler<DDMFormInstanceRecord> {
 
-	public static final String[] CLASS_NAMES =
-		{DDMFormInstanceRecord.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		DDMFormInstanceRecord.class.getName()
+	};
 
 	@Override
 	public String[] getClassNames() {

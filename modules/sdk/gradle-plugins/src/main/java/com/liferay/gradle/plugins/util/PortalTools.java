@@ -142,8 +142,9 @@ public class PortalTools {
 		return properties;
 	}
 
-	private static final String[] _PORTAL_VERSION_PROPERTY_NAMES =
-		{"git.working.branch.name", PORTAL_VERSION_PROPERTY_NAME};
+	private static final String[] _PORTAL_VERSION_PROPERTY_NAMES = {
+		"git.working.branch.name", PORTAL_VERSION_PROPERTY_NAME
+	};
 
 	private static final Map<String, Properties> _versionsMap;
 

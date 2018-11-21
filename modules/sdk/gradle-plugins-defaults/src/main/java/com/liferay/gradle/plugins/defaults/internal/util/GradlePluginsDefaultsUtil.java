@@ -41,8 +41,9 @@ public class GradlePluginsDefaultsUtil {
 	public static final String DEFAULT_REPOSITORY_URL =
 		"https://repository-cdn.liferay.com/nexus/content/groups/public";
 
-	public static final String[] JSON_VERSION_FILE_NAMES =
-		{"npm-shrinkwrap.json", "package-lock.json", "package.json"};
+	public static final String[] JSON_VERSION_FILE_NAMES = {
+		"npm-shrinkwrap.json", "package-lock.json", "package.json"
+	};
 
 	public static final String SNAPSHOT_PROPERTY_NAME = "snapshot";
 

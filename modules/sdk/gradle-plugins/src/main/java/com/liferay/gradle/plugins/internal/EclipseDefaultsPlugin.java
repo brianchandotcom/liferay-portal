@@ -165,7 +165,8 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 
 	private static final String _ECLIPSE_TASK_NAME = "eclipse";
 
-	private static final String[] _FILTERED_DIR_NAMES =
-		{".git", ".gradle", "build", "node_modules", "tmp"};
+	private static final String[] _FILTERED_DIR_NAMES = {
+		".git", ".gradle", "build", "node_modules", "tmp"
+	};
 
 }

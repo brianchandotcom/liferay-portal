@@ -48,8 +48,9 @@ public class Normalizer {
 
 	private static final String[] _NORMALIZED_TEXT = {"l", "'", "\""};
 
-	private static final String[] _UNICODE_TEXT =
-		{"\u0142", "\u02B9", "\u02BA"};
+	private static final String[] _UNICODE_TEXT = {
+		"\u0142", "\u02B9", "\u02BA"
+	};
 
 	private static final Transliterator _transliterator =
 		Transliterator.getInstance(

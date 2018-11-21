@@ -86,8 +86,9 @@ import org.osgi.service.component.annotations.Reference;
 public class StagedLayoutSetStagedModelDataHandler
 	extends BaseStagedModelDataHandler<StagedLayoutSet> {
 
-	public static final String[] CLASS_NAMES =
-		{StagedLayoutSet.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		StagedLayoutSet.class.getName()
+	};
 
 	@Override
 	public String[] getClassNames() {

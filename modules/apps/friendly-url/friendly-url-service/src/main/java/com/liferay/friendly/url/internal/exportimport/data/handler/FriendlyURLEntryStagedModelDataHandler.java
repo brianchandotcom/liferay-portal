@@ -39,8 +39,9 @@ import org.osgi.service.component.annotations.Reference;
 public class FriendlyURLEntryStagedModelDataHandler
 	extends BaseStagedModelDataHandler<FriendlyURLEntry> {
 
-	public static final String[] CLASS_NAMES =
-		{FriendlyURLEntry.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		FriendlyURLEntry.class.getName()
+	};
 
 	@Override
 	public FriendlyURLEntry fetchStagedModelByUuidAndGroupId(

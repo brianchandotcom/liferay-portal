@@ -346,8 +346,9 @@ public class RoleDisplayContext {
 		return tabsURLs;
 	}
 
-	private static final String[] _ASSIGNEE_TYPE_NAMES =
-		{"users", "sites", "organizations", "user-groups"};
+	private static final String[] _ASSIGNEE_TYPE_NAMES = {
+		"users", "sites", "organizations", "user-groups"
+	};
 
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;

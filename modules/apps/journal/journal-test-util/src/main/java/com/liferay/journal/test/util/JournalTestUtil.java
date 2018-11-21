@@ -1020,8 +1020,9 @@ public class JournalTestUtil {
 
 	private static final Class<?> _JOURNAL_UTIL_CLASS;
 
-	private static final Locale[] _locales =
-		{LocaleUtil.US, LocaleUtil.GERMANY, LocaleUtil.SPAIN};
+	private static final Locale[] _locales = {
+		LocaleUtil.US, LocaleUtil.GERMANY, LocaleUtil.SPAIN
+	};
 
 	static {
 		Bundle testBundle = FrameworkUtil.getBundle(JournalTestUtil.class);

@@ -128,8 +128,9 @@ public class MicroblogsActivityInterpreter
 		_microblogsEntryLocalService = microblogsEntryLocalService;
 	}
 
-	private static final String[] _CLASS_NAMES =
-		{MicroblogsEntry.class.getName()};
+	private static final String[] _CLASS_NAMES = {
+		MicroblogsEntry.class.getName()
+	};
 
 	private MicroblogsEntryLocalService _microblogsEntryLocalService;
 

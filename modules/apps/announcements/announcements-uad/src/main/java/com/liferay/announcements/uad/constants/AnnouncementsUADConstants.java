@@ -19,10 +19,12 @@ package com.liferay.announcements.uad.constants;
  */
 public class AnnouncementsUADConstants {
 
-	public static final String[] USER_ID_FIELD_NAMES_ANNOUNCEMENTS_ENTRY =
-		{"userId"};
+	public static final String[] USER_ID_FIELD_NAMES_ANNOUNCEMENTS_ENTRY = {
+		"userId"
+	};
 
-	public static final String[] USER_ID_FIELD_NAMES_ANNOUNCEMENTS_FLAG =
-		{"userId"};
+	public static final String[] USER_ID_FIELD_NAMES_ANNOUNCEMENTS_FLAG = {
+		"userId"
+	};
 
 }

@@ -39,8 +39,9 @@ import javax.servlet.http.HttpServletRequest;
 @ProviderType
 public interface DDL {
 
-	public static final String[] SELECTED_FIELD_NAMES =
-		{Field.COMPANY_ID, Field.ENTRY_CLASS_PK, Field.UID};
+	public static final String[] SELECTED_FIELD_NAMES = {
+		Field.COMPANY_ID, Field.ENTRY_CLASS_PK, Field.UID
+	};
 
 	/**
 	 * Returns the record's JSON Object representation. The latest approved

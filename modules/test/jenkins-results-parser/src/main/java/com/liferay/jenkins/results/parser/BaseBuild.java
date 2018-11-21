@@ -2562,8 +2562,9 @@ public abstract class BaseBuild implements Build {
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{new GenericFailureMessageGenerator()};
 
-	private static final String[] _HIGH_PRIORITY_CONTENT_FLAGS =
-		{"compileJSP", "SourceFormatter.format", "Unable to compile JSPs"};
+	private static final String[] _HIGH_PRIORITY_CONTENT_FLAGS = {
+		"compileJSP", "SourceFormatter.format", "Unable to compile JSPs"
+	};
 
 	private static final String _JENKINS_REPORT_TIME_ZONE_NAME;
 

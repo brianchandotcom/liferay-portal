@@ -40,8 +40,9 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetListEntryAssetEntryRelStagedModelDataHandler
 	extends BaseStagedModelDataHandler<AssetListEntryAssetEntryRel> {
 
-	public static final String[] CLASS_NAMES =
-		{AssetListEntryAssetEntryRel.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		AssetListEntryAssetEntryRel.class.getName()
+	};
 
 	@Override
 	public void deleteStagedModel(

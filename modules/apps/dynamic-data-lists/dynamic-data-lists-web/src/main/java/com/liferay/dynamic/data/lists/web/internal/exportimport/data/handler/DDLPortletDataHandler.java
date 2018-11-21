@@ -56,8 +56,9 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DDLPortletDataHandler extends BasePortletDataHandler {
 
-	public static final String[] CLASS_NAMES =
-		{DDLRecord.class.getName(), DDLRecordSet.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		DDLRecord.class.getName(), DDLRecordSet.class.getName()
+	};
 
 	public static final String NAMESPACE = "dynamic_data_lists";
 

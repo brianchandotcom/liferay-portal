@@ -51,8 +51,9 @@ public class Atom {
 
 	public static final String STCO = "stco";
 
-	public static final String[] TOP_LEVEL_ATOMS =
-		{FREE, FTYP, JUNK, MDAT, MOOV, PICT, PNOT, SKIP, Atom.WIDE};
+	public static final String[] TOP_LEVEL_ATOMS = {
+		FREE, FTYP, JUNK, MDAT, MOOV, PICT, PNOT, SKIP, Atom.WIDE
+	};
 
 	public static final String WIDE = "wide";
 

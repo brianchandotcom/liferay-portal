@@ -549,11 +549,13 @@ public abstract class BaseWorkspaceGitRepository
 
 	private static final Integer _COMMIT_HISTORY_GROUP_SIZE = 100;
 
-	private static final String[] _REQUIRED_CI_KEYS =
-		{"git_hub_dev_branch_name"};
+	private static final String[] _REQUIRED_CI_KEYS = {
+		"git_hub_dev_branch_name"
+	};
 
-	private static final String[] _REQUIRED_KEYS =
-		{"branch_head_sha", "branch_name", "branch_sha", "git_hub_url", "type"};
+	private static final String[] _REQUIRED_KEYS = {
+		"branch_head_sha", "branch_name", "branch_sha", "git_hub_url", "type"
+	};
 
 	private static final String _SHA_REGEX = "[0-9a-f]{7,40}";
 

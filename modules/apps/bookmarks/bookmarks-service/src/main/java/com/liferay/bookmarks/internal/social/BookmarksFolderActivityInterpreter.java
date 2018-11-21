@@ -99,8 +99,9 @@ public class BookmarksFolderActivityInterpreter
 			activity.getGroupId(), activity.getClassPK(), actionId);
 	}
 
-	private static final String[] _CLASS_NAMES =
-		{BookmarksFolder.class.getName()};
+	private static final String[] _CLASS_NAMES = {
+		BookmarksFolder.class.getName()
+	};
 
 	@Reference(
 		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"

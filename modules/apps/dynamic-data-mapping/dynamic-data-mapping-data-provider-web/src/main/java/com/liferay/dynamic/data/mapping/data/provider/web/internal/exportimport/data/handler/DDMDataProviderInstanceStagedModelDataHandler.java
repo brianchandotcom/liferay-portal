@@ -52,8 +52,9 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMDataProviderInstanceStagedModelDataHandler
 	extends BaseStagedModelDataHandler<DDMDataProviderInstance> {
 
-	public static final String[] CLASS_NAMES =
-		{DDMDataProviderInstance.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		DDMDataProviderInstance.class.getName()
+	};
 
 	@Override
 	public void deleteStagedModel(DDMDataProviderInstance dataProviderInstance)

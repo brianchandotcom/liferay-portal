@@ -144,8 +144,9 @@ public class PortletPreferencesSettingsTest {
 
 	private static final String _DEFAULT_SETTINGS_MULTIPLE_KEY = "defaultKeys";
 
-	private static final String[] _DEFAULT_SETTINGS_MULTIPLE_VALUES =
-		{"defaultValue0", "defaultValue1"};
+	private static final String[] _DEFAULT_SETTINGS_MULTIPLE_VALUES = {
+		"defaultValue0", "defaultValue1"
+	};
 
 	private static final String _DEFAULT_SETTINGS_SINGLE_KEY = "defaultKey";
 
@@ -154,8 +155,9 @@ public class PortletPreferencesSettingsTest {
 	private static final String _PORTLET_PREFERENCES_MULTIPLE_KEY =
 		"portletKeys";
 
-	private static final String[] _PORTLET_PREFERENCES_MULTIPLE_VALUES =
-		{"portletValue0", "portletValue1"};
+	private static final String[] _PORTLET_PREFERENCES_MULTIPLE_VALUES = {
+		"portletValue0", "portletValue1"
+	};
 
 	private static final String _PORTLET_PREFERENCES_SINGLE_KEY = "portletKey";
 

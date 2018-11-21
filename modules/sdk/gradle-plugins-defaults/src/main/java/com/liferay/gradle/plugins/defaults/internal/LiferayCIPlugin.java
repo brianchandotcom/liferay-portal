@@ -158,8 +158,9 @@ public class LiferayCIPlugin implements Plugin<Project> {
 				public void execute(Task task) {
 					Project project = task.getProject();
 
-					String[] fileNames =
-						{"bnd.bnd", "package.json", "package-lock.json"};
+					String[] fileNames = {
+						"bnd.bnd", "package.json", "package-lock.json"
+					};
 
 					for (String fileName : fileNames) {
 						File file = project.file(fileName);
@@ -234,8 +235,9 @@ public class LiferayCIPlugin implements Plugin<Project> {
 				public void execute(Task task) {
 					Project project = task.getProject();
 
-					String[] fileNames =
-						{"bnd.bnd", "package.json", "package-lock.json"};
+					String[] fileNames = {
+						"bnd.bnd", "package.json", "package-lock.json"
+					};
 
 					for (String fileName : fileNames) {
 						File file = project.file(fileName);

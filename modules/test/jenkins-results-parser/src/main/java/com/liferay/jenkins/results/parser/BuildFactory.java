@@ -100,7 +100,8 @@ public class BuildFactory {
 			archiveProperties.getProperty("top.level.build.url"), null);
 	}
 
-	private static final String[] _BATCH_INDICATORS =
-		{"-batch", "-dist", "environment-"};
+	private static final String[] _BATCH_INDICATORS = {
+		"-batch", "-dist", "environment-"
+	};
 
 }

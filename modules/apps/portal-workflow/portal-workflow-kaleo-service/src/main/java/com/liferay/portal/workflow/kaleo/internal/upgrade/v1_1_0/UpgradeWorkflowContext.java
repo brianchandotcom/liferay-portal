@@ -238,8 +238,9 @@ public class UpgradeWorkflowContext extends UpgradeProcess {
 
 		private static final Class<?>[] _JSON_CLASSES = {JSONObject.class};
 
-		private static final Class<?>[] _SERIALIZABLE_CLASSES =
-			{PortletPreferencesIds.class};
+		private static final Class<?>[] _SERIALIZABLE_CLASSES = {
+			PortletPreferencesIds.class
+		};
 
 	}
 

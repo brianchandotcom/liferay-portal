@@ -123,11 +123,13 @@ public class XMLUtil {
 			xml, _COMPACT_SAFE_OLD_SUBS, _COMPACT_SAFE_NEW_SUBS);
 	}
 
-	private static final String[] _COMPACT_SAFE_NEW_SUBS =
-		{"[$NEW_LINE$]", "[$NEW_LINE$]", "[$NEW_LINE$]"};
+	private static final String[] _COMPACT_SAFE_NEW_SUBS = {
+		"[$NEW_LINE$]", "[$NEW_LINE$]", "[$NEW_LINE$]"
+	};
 
-	private static final String[] _COMPACT_SAFE_OLD_SUBS =
-		{StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE, StringPool.RETURN};
+	private static final String[] _COMPACT_SAFE_OLD_SUBS = {
+		StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE, StringPool.RETURN
+	};
 
 	private static final String _XML_INDENT = "  ";
 

@@ -75,8 +75,9 @@ public class BaseSettingsTest {
 
 	private static final String _DEFAULT_VALUE = "defaultValue";
 
-	private static final String[] _DEFAULT_VALUES =
-		{"defaultValue0", "defaultValue1"};
+	private static final String[] _DEFAULT_VALUES = {
+		"defaultValue0", "defaultValue1"
+	};
 
 	private static final String _KEY = "key";
 

@@ -57,8 +57,9 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class BookmarksAdminPortletDataHandler extends BasePortletDataHandler {
 
-	public static final String[] CLASS_NAMES =
-		{BookmarksEntry.class.getName(), BookmarksFolder.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		BookmarksEntry.class.getName(), BookmarksFolder.class.getName()
+	};
 
 	public static final String NAMESPACE = "bookmarks";
 

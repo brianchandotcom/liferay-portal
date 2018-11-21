@@ -33,8 +33,9 @@ import org.osgi.service.component.annotations.Reference;
 public class FragmentCollectionStagedModelDataHandler
 	extends BaseStagedModelDataHandler<FragmentCollection> {
 
-	public static final String[] CLASS_NAMES =
-		{FragmentCollection.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		FragmentCollection.class.getName()
+	};
 
 	@Override
 	public void deleteStagedModel(FragmentCollection fragmentCollection)

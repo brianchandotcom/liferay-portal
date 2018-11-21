@@ -32,8 +32,9 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetDisplayPageStagedModelDataHandler
 	extends BaseStagedModelDataHandler<AssetDisplayPageEntry> {
 
-	public static final String[] CLASS_NAMES =
-		{AssetDisplayPageEntry.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		AssetDisplayPageEntry.class.getName()
+	};
 
 	@Override
 	public String[] getClassNames() {

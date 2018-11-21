@@ -605,19 +605,22 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 			StringPool.BLANK, StringPool.BLANK);
 	}
 
-	private static final String[] _LAYOUT_NAMES_CHILDREN_ASSURANCE =
-		{"Travel Insurance", "Home insurance", "Life insurance"};
+	private static final String[] _LAYOUT_NAMES_CHILDREN_ASSURANCE = {
+		"Travel Insurance", "Home insurance", "Life insurance"
+	};
 
-	private static final String[] _LAYOUT_NAMES_CHILDREN_BUSINESS =
-		{"Credit Cards for Business", "Assurance for Business"};
+	private static final String[] _LAYOUT_NAMES_CHILDREN_BUSINESS = {
+		"Credit Cards for Business", "Assurance for Business"
+	};
 
 	private static final String[] _LAYOUT_NAMES_CHILDREN_CHECKING = {
 		"All credit cards", "Check your eligibility",
 		"Balance-transfer credit cards", "Purchase credit card"
 	};
 
-	private static final String[] _LAYOUT_NAMES_CHILDREN_LOANS =
-		{"Mortgages", "All mortgage products", "Mortgate rates and charges"};
+	private static final String[] _LAYOUT_NAMES_CHILDREN_LOANS = {
+		"Mortgages", "All mortgage products", "Mortgate rates and charges"
+	};
 
 	private static final String[] _LAYOUT_NAMES_CHILDREN_PERSONAL = {
 		"Checking and Credit Cards", "Savings and Investments",
@@ -629,8 +632,9 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 		"Children's Instant Saver", "All interest rates"
 	};
 
-	private static final String[] _LAYOUT_NAMES_FRAGMENT_KEYS =
-		{"features", "links", "news", "offerings", "video"};
+	private static final String[] _LAYOUT_NAMES_FRAGMENT_KEYS = {
+		"features", "links", "news", "offerings", "video"
+	};
 
 	private static final String _PATH =
 		"com/liferay/frontend/theme/westeros/bank/site/initializer/internal" +

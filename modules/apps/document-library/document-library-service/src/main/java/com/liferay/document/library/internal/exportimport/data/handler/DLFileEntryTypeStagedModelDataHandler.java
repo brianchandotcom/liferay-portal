@@ -52,8 +52,9 @@ import org.osgi.service.component.annotations.Reference;
 public class DLFileEntryTypeStagedModelDataHandler
 	extends BaseStagedModelDataHandler<DLFileEntryType> {
 
-	public static final String[] CLASS_NAMES =
-		{DLFileEntryType.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		DLFileEntryType.class.getName()
+	};
 
 	@Override
 	public void deleteStagedModel(DLFileEntryType fileEntryType)

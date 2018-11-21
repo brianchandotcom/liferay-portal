@@ -1662,8 +1662,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	private static final String _CLASS_NAME_DDM_TEMPLATE =
 		"com.liferay.dynamic.data.mapping.model.DDMTemplate";
 
-	private static final String[] _DLFOLDER_GROUP_PERMISSIONS =
-		{"ADD_DOCUMENT", "ADD_SHORTCUT", "ADD_SUBFOLDER", "SUBSCRIBE", "VIEW"};
+	private static final String[] _DLFOLDER_GROUP_PERMISSIONS = {
+		"ADD_DOCUMENT", "ADD_SHORTCUT", "ADD_SUBFOLDER", "SUBSCRIBE", "VIEW"
+	};
 
 	private static final String[] _DLFOLDER_GUEST_PERMISSIONS = {"VIEW"};
 

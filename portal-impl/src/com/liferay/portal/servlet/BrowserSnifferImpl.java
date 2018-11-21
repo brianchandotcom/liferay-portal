@@ -405,13 +405,17 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 		return browserMetadata.isIe();
 	}
 
-	protected static String[] revisionLeadings =
-		{"rv", "it", "ra", "trident", "ie"};
-	protected static char[] revisionSeparators =
-		{CharPool.BACK_SLASH, CharPool.COLON, CharPool.SLASH, CharPool.SPACE};
-	protected static String[] versionLeadings =
-		{"edge", "chrome", "firefox", "version", "minefield", "trident"};
-	protected static char[] versionSeparators =
-		{CharPool.BACK_SLASH, CharPool.SLASH};
+	protected static String[] revisionLeadings = {
+		"rv", "it", "ra", "trident", "ie"
+	};
+	protected static char[] revisionSeparators = {
+		CharPool.BACK_SLASH, CharPool.COLON, CharPool.SLASH, CharPool.SPACE
+	};
+	protected static String[] versionLeadings = {
+		"edge", "chrome", "firefox", "version", "minefield", "trident"
+	};
+	protected static char[] versionSeparators = {
+		CharPool.BACK_SLASH, CharPool.SLASH
+	};
 
 }

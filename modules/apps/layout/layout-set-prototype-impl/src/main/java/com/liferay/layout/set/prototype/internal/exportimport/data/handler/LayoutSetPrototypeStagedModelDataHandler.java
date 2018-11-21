@@ -61,8 +61,9 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutSetPrototypeStagedModelDataHandler
 	extends BaseStagedModelDataHandler<LayoutSetPrototype> {
 
-	public static final String[] CLASS_NAMES =
-		{LayoutSetPrototype.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		LayoutSetPrototype.class.getName()
+	};
 
 	@Override
 	public void deleteStagedModel(LayoutSetPrototype layoutSetPrototype)

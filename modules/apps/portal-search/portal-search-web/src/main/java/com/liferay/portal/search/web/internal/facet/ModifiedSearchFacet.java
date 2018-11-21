@@ -223,8 +223,9 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 	@Reference
 	protected ModifiedFacetFactory modifiedFacetFactory;
 
-	private static final String[] _LABELS =
-		{"past-hour", "past-24-hours", "past-week", "past-month", "past-year"};
+	private static final String[] _LABELS = {
+		"past-hour", "past-24-hours", "past-week", "past-month", "past-year"
+	};
 
 	private static final String[] _RANGES = {
 		"[past-hour TO *]", "[past-24-hours TO *]", "[past-week TO *]",

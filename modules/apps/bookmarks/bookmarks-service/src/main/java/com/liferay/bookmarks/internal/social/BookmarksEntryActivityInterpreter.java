@@ -113,8 +113,9 @@ public class BookmarksEntryActivityInterpreter
 			permissionChecker, activity.getClassPK(), actionId);
 	}
 
-	private static final String[] _CLASS_NAMES =
-		{BookmarksEntry.class.getName()};
+	private static final String[] _CLASS_NAMES = {
+		BookmarksEntry.class.getName()
+	};
 
 	@Reference(
 		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)"

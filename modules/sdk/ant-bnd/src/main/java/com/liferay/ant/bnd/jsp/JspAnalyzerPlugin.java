@@ -535,8 +535,9 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 	private static final String _LOAD_EXTERNAL_DTD =
 		"http://apache.org/xml/features/nonvalidating/load-external-dtd";
 
-	private static final String[] _REQUIRED_PACKAGE_NAMES =
-		{"javax.servlet", "javax.servlet.http"};
+	private static final String[] _REQUIRED_PACKAGE_NAMES = {
+		"javax.servlet", "javax.servlet.http"
+	};
 
 	private static final Pattern _commentPattern = Pattern.compile(
 		"<%--[\\s\\S]*?--%>");

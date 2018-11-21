@@ -125,8 +125,9 @@ public abstract class BaseLocalGitRepository
 		put("upstream_branch_name", upstreamBranchName);
 	}
 
-	private static final String[] _REQUIRED_KEYS =
-		{"directory", "upstream_branch_name"};
+	private static final String[] _REQUIRED_KEYS = {
+		"directory", "upstream_branch_name"
+	};
 
 	private GitWorkingDirectory _gitWorkingDirectory;
 

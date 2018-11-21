@@ -128,8 +128,9 @@ public class ManagementBarDisplayButtonsTag
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
-	private static final String[] _DEFAULT_VIEWS =
-		{"icon", "descriptive", "list"};
+	private static final String[] _DEFAULT_VIEWS = {
+		"icon", "descriptive", "list"
+	};
 
 	private static final String _PAGE =
 		"/management_bar_display_buttons/page.jsp";

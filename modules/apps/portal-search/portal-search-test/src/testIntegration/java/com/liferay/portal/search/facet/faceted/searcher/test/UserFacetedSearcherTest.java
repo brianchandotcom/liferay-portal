@@ -68,8 +68,9 @@ public class UserFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		SearchContext searchContext = getSearchContext(keyword);
 
-		String[] entryClassNames =
-			{JournalArticle.class.getName(), User.class.getName()};
+		String[] entryClassNames = {
+			JournalArticle.class.getName(), User.class.getName()
+		};
 
 		searchContext.setEntryClassNames(entryClassNames);
 

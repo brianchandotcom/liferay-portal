@@ -41,8 +41,9 @@ import org.osgi.service.component.annotations.Reference;
 public class SiteNavigationMenuItemStagedModelDataHandler
 	extends BaseStagedModelDataHandler<SiteNavigationMenuItem> {
 
-	public static final String[] CLASS_NAMES =
-		{SiteNavigationMenuItem.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		SiteNavigationMenuItem.class.getName()
+	};
 
 	@Override
 	public String[] getClassNames() {

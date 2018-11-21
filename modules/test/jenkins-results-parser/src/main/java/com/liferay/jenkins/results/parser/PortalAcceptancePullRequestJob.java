@@ -51,8 +51,9 @@ public class PortalAcceptancePullRequestJob
 		Set<String> testBatchNamesSet = getSetFromString(testBatchNames);
 
 		if (_isPortalWebOnly()) {
-			String[] portalWebOnlyBatchNameMarkers =
-				{"compile-jsp", "functional", "portal-web", "source-format"};
+			String[] portalWebOnlyBatchNameMarkers = {
+				"compile-jsp", "functional", "portal-web", "source-format"
+			};
 
 			Set<String> portalWebOnlyBatchNamesSet = new TreeSet<>();
 

@@ -611,8 +611,9 @@ public class StringUtilTest {
 	public void testShortenStringWith4ByteChars() {
 		int space = CharPool.SPACE;
 
-		int[] codePoints =
-			{128515, 128516, space, 128517, 128518, 128519, 128520, 128521};
+		int[] codePoints = {
+			128515, 128516, space, 128517, 128518, 128519, 128520, 128521
+		};
 
 		String string = new String(codePoints, 0, codePoints.length);
 

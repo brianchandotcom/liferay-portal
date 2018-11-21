@@ -313,8 +313,9 @@ public class PluginsGitSvnSyncer {
 		"/docroot/WEB-INF/tld"
 	};
 
-	private static final String[] _PLUGIN_TYPES =
-		{"clients", "ext", "hooks", "layouttpl", "portlets", "themes", "webs"};
+	private static final String[] _PLUGIN_TYPES = {
+		"clients", "ext", "hooks", "layouttpl", "portlets", "themes", "webs"
+	};
 
 	private static final String _SVN_DEL_IGNORES = "svn propdel svn:ignore ";
 

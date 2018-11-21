@@ -44,7 +44,8 @@ public class PortalActivityInterpreter extends BaseSocialActivityInterpreter {
 		return LanguageResources.RESOURCE_BUNDLE_LOADER;
 	}
 
-	private static final String[] _CLASS_NAMES =
-		{PortalActivityInterpreter.class.getName()};
+	private static final String[] _CLASS_NAMES = {
+		PortalActivityInterpreter.class.getName()
+	};
 
 }

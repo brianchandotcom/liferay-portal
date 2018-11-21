@@ -60,8 +60,9 @@ import org.osgi.service.component.annotations.Reference;
 public class CalendarResourceStagedModelDataHandler
 	extends BaseStagedModelDataHandler<CalendarResource> {
 
-	public static final String[] CLASS_NAMES =
-		{CalendarResource.class.getName()};
+	public static final String[] CLASS_NAMES = {
+		CalendarResource.class.getName()
+	};
 
 	@Override
 	public void deleteStagedModel(CalendarResource calendarResource)

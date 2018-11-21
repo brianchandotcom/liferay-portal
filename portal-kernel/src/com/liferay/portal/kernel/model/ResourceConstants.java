@@ -31,7 +31,8 @@ public interface ResourceConstants {
 
 	public static final int SCOPE_INDIVIDUAL = 4;
 
-	public static final int[] SCOPES =
-		{SCOPE_COMPANY, SCOPE_GROUP, SCOPE_GROUP_TEMPLATE, SCOPE_INDIVIDUAL};
+	public static final int[] SCOPES = {
+		SCOPE_COMPANY, SCOPE_GROUP, SCOPE_GROUP_TEMPLATE, SCOPE_INDIVIDUAL
+	};
 
 }

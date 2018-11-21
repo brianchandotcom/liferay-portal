@@ -72,8 +72,9 @@ public class PortalTopLevelBuildData
 		return _TYPE;
 	}
 
-	private static final String[] _REQUIRED_KEYS =
-		{"portal_github_url", "portal_upstream_branch_name"};
+	private static final String[] _REQUIRED_KEYS = {
+		"portal_github_url", "portal_upstream_branch_name"
+	};
 
 	private static final String _TYPE = "portal_top_level";
 

@@ -1346,8 +1346,9 @@ public class WabProcessor {
 		"osgi.cdi.extension;filter:='(osgi.cdi.extension=",
 		"com.liferay.bean.portlet.cdi.extension)'");
 
-	private static final String[] _KNOWN_PROPERTY_KEYS =
-		{"jdbc.driverClassName"};
+	private static final String[] _KNOWN_PROPERTY_KEYS = {
+		"jdbc.driverClassName"
+	};
 
 	private static final String _XPATHS_HBM = StringUtil.merge(
 		new String[] {

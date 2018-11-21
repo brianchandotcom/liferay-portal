@@ -406,10 +406,7 @@ public class SingleLogoutProfileImpl
 	}
 
 	protected SamlSloContext getSamlSloContext(
-			HttpServletRequest request,
-			SAMLMessageContext<LogoutRequest, LogoutResponse, NameID>
-				samlMessageContext)
-		throws Exception {
+		HttpServletRequest request, MessageContext<?> messageContext) {
 
 		HttpSession session = request.getSession();
 
@@ -418,9 +415,14 @@ public class SingleLogoutProfileImpl
 
 		String samlSsoSessionId = getSamlSsoSessionId(request);
 
-		if (samlMessageContext != null) {
-			LogoutRequest logoutRequest =
-				samlMessageContext.getInboundSAMLMessage();
+		if (messageContext != null) {
+			InOutOperationContext inOutOperationContext =
+				messageContext.getSubcontext(InOutOperationContext.class);
+
+			MessageContext<LogoutRequest> inboundMessageContext =
+				inOutOperationContext.getInboundMessageContext();
+
+			LogoutRequest logoutRequest = inboundMessageContext.getMessage();
 
 			List<SessionIndex> sessionIndexes =
 				logoutRequest.getSessionIndexes();
@@ -439,7 +441,7 @@ public class SingleLogoutProfileImpl
 
 			if (samlIdpSsoSession != null) {
 				samlSloContext = new SamlSloContext(
-					samlIdpSsoSession, samlMessageContext,
+					samlIdpSsoSession, messageContext,
 					_samlIdpSpConnectionLocalService,
 					_samlIdpSpSessionLocalService, _userLocalService);
 

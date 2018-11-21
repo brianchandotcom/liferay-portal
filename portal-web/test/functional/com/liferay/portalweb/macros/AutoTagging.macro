@@ -1,0 +1,26 @@
+<definition>
+
+	<command name="assertAutoTagPresent">
+		<execute function="AssertElementPresent" locator1="DocumentAndMedia#TAG"/>
+	</command>
+
+	<command name="assertNoAutoTag">
+		<execute function="AssertElementNotPresent" locator1="DocumentAndMedia#TAG"/>
+	</command>
+
+	<command name="disableAutoTagging">
+		<execute function="Check" locator1="Checkbox#ENABLE_AUTO_TAGGING" />
+
+		<execute macro="PortletEntry#update" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
+	<command name="enableAutoTagging">
+		<execute function="Check" locator1="Checkbox#ENABLE_AUTO_TAGGING" />
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+</definition>

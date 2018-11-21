@@ -22,5 +22,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = UADExporter.class)
-public class ChangeCollectionUADExporter extends BaseChangeCollectionUADExporter {
+public class ChangeCollectionUADExporter
+	extends BaseChangeCollectionUADExporter {
 }

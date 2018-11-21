@@ -100,6 +100,31 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class MetadataManagerImpl
 	implements LocalEntityManager, MetadataManager, SamlHttpRequestUtil {
 
+	@Activate
+	public void activate()
+		throws ComponentInitializationException, SamlException {
+
+		_cachingChainingMetadataResolver.setId(
+			CachingChainingMetadataResolver.class.getName());
+		_cachingChainingMetadataResolver.setParserPool(_parserPool);
+		_cachingChainingMetadataResolver.initialize();
+
+		SignatureValidationConfiguration signatureValidationConfiguration =
+			ConfigurationService.get(SignatureValidationConfiguration.class);
+
+		if (signatureValidationConfiguration instanceof
+				BasicSignatureValidationConfiguration) {
+
+			BasicSignatureValidationConfiguration
+				basicSignatureValidationConfiguration =
+					(BasicSignatureValidationConfiguration)
+						signatureValidationConfiguration;
+
+			basicSignatureValidationConfiguration.setSignatureTrustEngine(
+				getSignatureTrustEngine());
+		}
+	}
+
 	@Override
 	public int getAssertionLifetime(String entityId) {
 		long companyId = CompanyThreadLocal.getCompanyId();
@@ -316,13 +341,13 @@ public class MetadataManagerImpl
 
 		if (requireSignature) {
 			if (communicationProfileId.equals(
-				SAMLConstants.SAML2_REDIRECT_BINDING_URI)) {
+					SAMLConstants.SAML2_REDIRECT_BINDING_URI)) {
 
 				messageHandlers.add(
 					new SAML2HTTPRedirectDeflateSignatureSecurityHandler());
 			}
 			else if (communicationProfileId.equals(
-				SAMLConstants.SAML2_POST_SIMPLE_SIGN_BINDING_URI)) {
+						SAMLConstants.SAML2_POST_SIMPLE_SIGN_BINDING_URI)) {
 
 				DecryptionConfiguration decryptionConfiguration =
 					SecurityConfigurationSupport.
@@ -571,6 +596,11 @@ public class MetadataManagerImpl
 
 		_cachingChainingMetadataResolver.removeMetadataResolver(
 			metadataResolver);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_cachingChainingMetadataResolver.destroy();
 	}
 
 	protected SamlProviderConfiguration getSamlProviderConfiguration() {

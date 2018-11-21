@@ -177,21 +177,6 @@ public abstract class BaseProfile {
 		return _identifierGenerationStrategyFactory;
 	}
 
-	public SamlBinding getSamlBinding(String communicationProfileId)
-		throws PortalException {
-
-		for (SamlBinding samlBinding : _samlBindings) {
-			if (communicationProfileId.equals(
-					samlBinding.getCommunicationProfileId())) {
-
-				return samlBinding;
-			}
-		}
-
-		throw new SamlException(
-			"Unsupported binding " + communicationProfileId);
-	}
-
 	public MessageContext<SAMLObject> getMessageContext(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
@@ -252,8 +237,7 @@ public abstract class BaseProfile {
 			String peerEntityId)
 		throws Exception {
 
-		MessageContext<?> messageContext = getMessageContext(
-			request, response);
+		MessageContext<?> messageContext = getMessageContext(request, response);
 
 		SAMLPeerEntityContext samlPeerEntityContext =
 			messageContext.getSubcontext(SAMLPeerEntityContext.class, true);
@@ -290,6 +274,21 @@ public abstract class BaseProfile {
 		samlPeerMetadataContext.setRoleDescriptor(roleDescriptor);
 
 		return messageContext;
+	}
+
+	public SamlBinding getSamlBinding(String communicationProfileId)
+		throws PortalException {
+
+		for (SamlBinding samlBinding : _samlBindings) {
+			if (communicationProfileId.equals(
+					samlBinding.getCommunicationProfileId())) {
+
+				return samlBinding;
+			}
+		}
+
+		throw new SamlException(
+			"Unsupported binding " + communicationProfileId);
 	}
 
 	public SamlSpSession getSamlSpSession(HttpServletRequest request) {
@@ -535,7 +534,6 @@ public abstract class BaseProfile {
 
 	private IdentifierGenerationStrategyFactory
 		_identifierGenerationStrategyFactory;
-
 	private List<SamlBinding> _samlBindings = new ArrayList<>();
 
 }

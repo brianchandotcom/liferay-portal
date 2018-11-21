@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 /**
  * @author Hugo Huijser
  */
@@ -27,7 +29,12 @@ public class JavaContinueStatement extends BaseJavaTerm {
 	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength) {
 
-		return "TODO";
+		if (_identifierName == null) {
+			return StringBundler.concat(indent, prefix, "continue", suffix);
+		}
+
+		return _identifierName.toString(
+			indent, prefix + "continue ", suffix, maxLineLength);
 	}
 
 	private JavaSimpleValue _identifierName;

@@ -1777,6 +1777,7 @@ rerun your task.
 					<propertyref name="sass.generate.source.map" />
 					<propertyref name="sass.precision" />
 					<propertyref name="sdk.dir" />
+					<propertyref name="spring.configurator.enabled" />
 					<propertyref name="timeout.app.server.wait" />
 					<propertyref name="upgrade.table.dir" />
 					<propertyref prefix="gradle.publish." />

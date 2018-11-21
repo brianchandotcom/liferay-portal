@@ -96,7 +96,7 @@ if (forcePost && (portletURL != null)) {
 							continue;
 						}
 
-						String curDeltaURL = HttpUtil.addParameter(deltaURL, namespace + deltaParam, curDelta + urlAnchor);
+						String curDeltaURL = HttpUtil.addParameter(deltaURL + urlAnchor, namespace + deltaParam, curDelta);
 					%>
 
 						<li>
@@ -330,7 +330,7 @@ if (forcePost && (portletURL != null)) {
 <%!
 private String _getHREF(String formName, String curParam, int cur, String jsCall, String url, String urlAnchor) throws Exception {
 	if (Validator.isNotNull(url)) {
-		return HttpUtil.addParameter(HttpUtil.removeParameter(url, curParam), curParam, cur + urlAnchor);
+		return HttpUtil.addParameter(HttpUtil.removeParameter(url, curParam) + urlAnchor, curParam, cur);
 	}
 
 	return "javascript:document." + formName + "." + curParam + ".value = '" + cur + "'; " + jsCall;

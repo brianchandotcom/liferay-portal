@@ -2606,7 +2606,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewPublishDocumentTypeWithConfiguredAssetTypeViaAP" priority="5">
+	<command name="ViewPublishDocumentTypeWithConfiguredAssetType" priority="5">
 		<description message="This is a use case for LPS-82355." />
 
 		<execute macro="Navigator#gotoSitePage">
@@ -2709,10 +2709,6 @@
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Portlet#viewPG">
-			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

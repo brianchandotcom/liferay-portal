@@ -16,9 +16,9 @@ package com.liferay.portal.dao.orm.hibernate.event;
 
 import com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl;
 import com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.service.persistence.UserUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -61,8 +61,8 @@ public class NestableFlushEventListenerTest {
 	public static void setUpClass() {
 		SessionFactoryImpl sessionFactoryImpl = null;
 
-		Object liferaySessionFactory = PortalBeanLocatorUtil.locate(
-			"liferaySessionFactory");
+		Object liferaySessionFactory = ReflectionTestUtil.getFieldValue(
+			UserUtil.getPersistence(), "_sessionFactory");
 
 		if (liferaySessionFactory instanceof VerifySessionFactoryWrapper) {
 			sessionFactoryImpl = ReflectionTestUtil.getFieldValue(

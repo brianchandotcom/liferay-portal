@@ -15,7 +15,6 @@
 package com.liferay.portal.dao.orm;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -23,6 +22,8 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
+import com.liferay.portal.kernel.service.persistence.UserUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -30,6 +31,7 @@ import com.liferay.portal.test.rule.TransactionalTestRule;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -502,6 +504,12 @@ public class SQLNullTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
+
+	@Before
+	public void setUp() {
+		_sessionFactory = ReflectionTestUtil.getFieldValue(
+			UserUtil.getPersistence(), "_sessionFactory");
+	}
 
 	@Test
 	public void testBlankStringEqualsNull() {
@@ -1081,7 +1089,6 @@ public class SQLNullTest {
 	private static final String _SQL_NOT_LIKE_NULL =
 		"SELECT DISTINCT 1 FROM Counter WHERE ? NOT LIKE NULL";
 
-	private final SessionFactory _sessionFactory =
-		(SessionFactory)PortalBeanLocatorUtil.locate("liferaySessionFactory");
+	private SessionFactory _sessionFactory;
 
 }

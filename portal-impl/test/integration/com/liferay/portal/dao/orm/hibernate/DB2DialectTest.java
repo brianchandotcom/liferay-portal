@@ -14,7 +14,6 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -22,6 +21,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
+import com.liferay.portal.kernel.service.persistence.UserUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -51,6 +52,9 @@ public class DB2DialectTest {
 		DB db = DBManagerUtil.getDB();
 
 		Assume.assumeTrue(db.getDBType() == DBType.DB2);
+
+		_sessionFactory = ReflectionTestUtil.getFieldValue(
+			UserUtil.getPersistence(), "_sessionFactory");
 	}
 
 	@Test
@@ -104,7 +108,6 @@ public class DB2DialectTest {
 		"SELECT tabname FROM syscat.tables WHERE tabschema = 'SYSIBM' ORDER " +
 			"BY tabname";
 
-	private final SessionFactory _sessionFactory =
-		(SessionFactory)PortalBeanLocatorUtil.locate("liferaySessionFactory");
+	private SessionFactory _sessionFactory;
 
 }

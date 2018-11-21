@@ -14,11 +14,12 @@
 
 package com.liferay.portal.dao.orm;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.service.persistence.UserUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.impl.ReleaseImpl;
@@ -35,6 +36,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -49,6 +51,12 @@ public class SQLDateTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
+
+	@Before
+	public void setUp() {
+		_sessionFactory = ReflectionTestUtil.getFieldValue(
+			UserUtil.getPersistence(), "_sessionFactory");
+	}
 
 	@Test
 	public void testMillisecondsHibernate() {
@@ -139,7 +147,6 @@ public class SQLDateTest {
 	private static final String _WRITE_RELEASE_MODIFIED_DATE =
 		"update Release_ set modifiedDate=? where releaseId = 1";
 
-	private final SessionFactory _sessionFactory =
-		(SessionFactory)PortalBeanLocatorUtil.locate("liferaySessionFactory");
+	private SessionFactory _sessionFactory;
 
 }

@@ -14,9 +14,10 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.service.persistence.UserUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -26,6 +27,7 @@ import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -53,6 +55,12 @@ public class QueryUtilTest {
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		_db.runSQL(_SQL_DROP_TABLE);
+	}
+
+	@Before
+	public void setUp() {
+		_sessionFactory = ReflectionTestUtil.getFieldValue(
+			UserUtil.getPersistence(), "_sessionFactory");
 	}
 
 	@Test
@@ -354,7 +362,6 @@ public class QueryUtilTest {
 
 	private static DB _db;
 
-	private final SessionFactory _sessionFactory =
-		(SessionFactory)PortalBeanLocatorUtil.locate("liferaySessionFactory");
+	private SessionFactory _sessionFactory;
 
 }

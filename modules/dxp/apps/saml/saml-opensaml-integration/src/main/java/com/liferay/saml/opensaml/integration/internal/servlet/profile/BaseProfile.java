@@ -214,10 +214,6 @@ public abstract class BaseProfile {
 				SAMLConstants.SAML20P_NS);
 		}
 
-		samlSelfMetadataContext.setRoleDescriptor(roleDescriptor);
-
-		samlSelfEntityContext.setEntityId(entityDescriptor.getEntityID());
-
 		SAMLPeerEntityContext samlPeerEntityContext =
 			messageContext.getSubcontext(SAMLPeerEntityContext.class);
 
@@ -228,6 +224,10 @@ public abstract class BaseProfile {
 			samlPeerEntityContext.setRole(
 				IDPSSODescriptor.DEFAULT_ELEMENT_NAME);
 		}
+
+		samlSelfEntityContext.setEntityId(entityDescriptor.getEntityID());
+
+		samlSelfMetadataContext.setRoleDescriptor(roleDescriptor);
 
 		return messageContext;
 	}

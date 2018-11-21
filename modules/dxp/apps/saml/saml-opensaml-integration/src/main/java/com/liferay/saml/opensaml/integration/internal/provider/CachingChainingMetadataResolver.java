@@ -35,7 +35,7 @@ import org.opensaml.saml.saml2.metadata.EntityDescriptor;
  */
 public class CachingChainingMetadataResolver extends AbstractMetadataResolver {
 
-	public void addMetadataProvider(MetadataResolver metadataResolver) {
+	public void addMetadataResolver(MetadataResolver metadataResolver) {
 		Lock lock = _readWriteLock.writeLock();
 
 		lock.lock();
@@ -78,13 +78,13 @@ public class CachingChainingMetadataResolver extends AbstractMetadataResolver {
 		}
 	}
 
-	public void removeMetadataProvider(MetadataResolver metadataProvider) {
+	public void removeMetadataResolver(MetadataResolver metadataResolver) {
 		Lock lock = _readWriteLock.writeLock();
 
 		lock.lock();
 
 		try {
-			_metadataResolvers.remove(metadataProvider);
+			_metadataResolvers.remove(metadataResolver);
 
 			_metadataResolversMap.clear();
 		}

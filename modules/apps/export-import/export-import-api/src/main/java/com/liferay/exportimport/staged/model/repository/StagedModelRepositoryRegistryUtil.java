@@ -55,8 +55,8 @@ public class StagedModelRepositoryRegistryUtil {
 
 		_serviceTracker = ServiceTrackerFactory.open(
 			_bundleContext,
-			(Class<StagedModelRepository<?>>)(Class<?>)
-				StagedModelRepository.class,
+			(Class<StagedModelRepository<?>>)
+				(Class<?>)StagedModelRepository.class,
 			new StagedModelRepositoryServiceTrackerCustomizer());
 	}
 

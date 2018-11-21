@@ -49,8 +49,9 @@ public class DummyXStreamConfigurator implements XStreamConfigurator {
 
 	@Activate
 	protected void activate() {
-		_xStreamAliases =
-			new XStreamAlias[] {new XStreamAlias(Dummy.class, "Dummy")};
+		_xStreamAliases = new XStreamAlias[] {
+			new XStreamAlias(Dummy.class, "Dummy")
+		};
 
 		_xStreamTypes = new XStreamType[] {new XStreamType(Dummy.class)};
 	}

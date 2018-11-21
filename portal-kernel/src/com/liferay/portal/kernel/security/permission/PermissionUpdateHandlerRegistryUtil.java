@@ -74,8 +74,8 @@ public class PermissionUpdateHandlerRegistryUtil {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(
-			(Class<PermissionUpdateHandler>)(Class<?>)
-				PermissionUpdateHandler.class,
+			(Class<PermissionUpdateHandler>)
+				(Class<?>)PermissionUpdateHandler.class,
 			new PermissionUpdateHandlerServiceTrackerCustomizer());
 
 		_serviceTracker.open();

@@ -112,8 +112,9 @@ public class EditExportConfigurationMVCActionCommand
 			actionRequest, "exportImportConfigurationId");
 
 		if (exportImportConfigurationId > 0) {
-			deleteExportImportConfigurationIds =
-				new long[] {exportImportConfigurationId};
+			deleteExportImportConfigurationIds = new long[] {
+				exportImportConfigurationId
+			};
 		}
 		else {
 			deleteExportImportConfigurationIds = StringUtil.split(

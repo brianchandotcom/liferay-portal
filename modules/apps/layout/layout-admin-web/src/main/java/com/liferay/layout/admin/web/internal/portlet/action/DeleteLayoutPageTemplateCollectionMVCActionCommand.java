@@ -51,8 +51,9 @@ public class DeleteLayoutPageTemplateCollectionMVCActionCommand
 			actionRequest, "layoutPageTemplateCollectionId");
 
 		if (layoutPageTemplateCollectionId > 0) {
-			deleteLayoutPageTemplateCollectionIds =
-				new long[] {layoutPageTemplateCollectionId};
+			deleteLayoutPageTemplateCollectionIds = new long[] {
+				layoutPageTemplateCollectionId
+			};
 		}
 		else {
 			deleteLayoutPageTemplateCollectionIds = ParamUtil.getLongValues(

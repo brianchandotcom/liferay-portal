@@ -58,8 +58,8 @@ public class PortalCacheManagerProvider {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(
-			(Class<PortalCacheManager<? extends Serializable, ?>>)(Class<?>)
-				PortalCacheManager.class,
+			(Class<PortalCacheManager<? extends Serializable, ?>>)
+				(Class<?>)PortalCacheManager.class,
 			new PortalCacheProviderServiceTrackerCustomizer());
 
 		_serviceTracker.open();

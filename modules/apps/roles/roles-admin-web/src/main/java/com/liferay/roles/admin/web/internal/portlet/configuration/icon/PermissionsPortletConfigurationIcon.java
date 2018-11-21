@@ -77,8 +77,9 @@ public class PermissionsPortletConfigurationIcon
 			int[] roleTypes = {role.getType()};
 
 			if (role.getType() != RoleConstants.TYPE_REGULAR) {
-				roleTypes =
-					new int[] {RoleConstants.TYPE_REGULAR, role.getType()};
+				roleTypes = new int[] {
+					RoleConstants.TYPE_REGULAR, role.getType()
+				};
 			}
 
 			url = PermissionsURLTag.doTag(

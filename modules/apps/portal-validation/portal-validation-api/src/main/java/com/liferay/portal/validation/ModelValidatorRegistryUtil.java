@@ -65,8 +65,7 @@ public class ModelValidatorRegistryUtil {
 
 		_serviceTracker = ServiceTrackerFactory.open(
 			_bundleContext,
-			(Class<ModelValidator<?>>)(Class<?>)
-				ModelValidator.class,
+			(Class<ModelValidator<?>>)(Class<?>)ModelValidator.class,
 			new ModelValidatorServiceTrackerCustomizer());
 
 		_serviceTracker.open();

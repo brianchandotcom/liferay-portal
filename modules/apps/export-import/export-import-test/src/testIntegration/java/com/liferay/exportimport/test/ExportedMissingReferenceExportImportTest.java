@@ -92,8 +92,9 @@ public class ExportedMissingReferenceExportImportTest
 					DummyReference.class.getName());
 
 		_dummyStagedModelRepository =
-			(StagedModelRepository<Dummy>)StagedModelRepositoryRegistryUtil.
-				getStagedModelRepository(Dummy.class.getName());
+			(StagedModelRepository<Dummy>)
+				StagedModelRepositoryRegistryUtil.getStagedModelRepository(
+					Dummy.class.getName());
 
 		DynamicQueryFactoryUtil dynamicQueryFactoryUtil =
 			new DynamicQueryFactoryUtil();

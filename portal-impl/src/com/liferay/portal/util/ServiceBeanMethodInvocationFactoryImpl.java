@@ -104,8 +104,8 @@ public class ServiceBeanMethodInvocationFactoryImpl
 			return methodInterceptors;
 		}
 
-		methodInterceptors = new MethodInterceptor[
-			methodInterceptorBeanIds.length];
+		methodInterceptors =
+			new MethodInterceptor[methodInterceptorBeanIds.length];
 
 		for (int i = 0; i < methodInterceptorBeanIds.length; i++) {
 			String methodInterceptorBeanId = methodInterceptorBeanIds[i];

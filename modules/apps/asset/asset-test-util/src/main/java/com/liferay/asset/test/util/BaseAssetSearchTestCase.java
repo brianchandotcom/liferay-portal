@@ -145,8 +145,9 @@ public abstract class BaseAssetSearchTestCase {
 
 		_travelCategoryId = travelCategory.getCategoryId();
 
-		_assetCategoryIds1 =
-			new long[] {_healthCategoryId, _sportCategoryId, _travelCategoryId};
+		_assetCategoryIds1 = new long[] {
+			_healthCategoryId, _sportCategoryId, _travelCategoryId
+		};
 
 		_assetCategoryIds2 = new long[] {
 			_fashionCategoryId, _foodCategoryId, _healthCategoryId,
@@ -180,8 +181,9 @@ public abstract class BaseAssetSearchTestCase {
 				serviceContext);
 		}
 
-		_assetTagsNames1 =
-			new String[] {"liferay", "architecture", "modularity", "osgi"};
+		_assetTagsNames1 = new String[] {
+			"liferay", "architecture", "modularity", "osgi"
+		};
 		_assetTagsNames2 = new String[] {"liferay", "architecture", "services"};
 	}
 

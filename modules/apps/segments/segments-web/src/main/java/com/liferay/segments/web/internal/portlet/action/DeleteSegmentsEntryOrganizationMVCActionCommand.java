@@ -56,8 +56,9 @@ public class DeleteSegmentsEntryOrganizationMVCActionCommand
 			actionRequest, "organizationId");
 
 		if (segmentsEntryOrganizationId > 0) {
-			deleteSegmentsEntryOrganizationIds =
-				new long[] {segmentsEntryOrganizationId};
+			deleteSegmentsEntryOrganizationIds = new long[] {
+				segmentsEntryOrganizationId
+			};
 		}
 		else {
 			deleteSegmentsEntryOrganizationIds = ParamUtil.getLongValues(

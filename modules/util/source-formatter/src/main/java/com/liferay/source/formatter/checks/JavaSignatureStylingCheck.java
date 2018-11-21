@@ -127,8 +127,8 @@ public class JavaSignatureStylingCheck extends BaseJavaTermCheck {
 
 			if (expectedTabCount == -1) {
 				if (line.endsWith(StringPool.OPEN_PARENTHESIS)) {
-					expectedTabCount = Math.max(
-						getLeadingTabCount(line), indent.length()) + 1;
+					expectedTabCount =
+						Math.max(getLeadingTabCount(line), indent.length()) + 1;
 
 					if ((throwsPos != -1) &&
 						(expectedTabCount == (indent.length() + 1))) {

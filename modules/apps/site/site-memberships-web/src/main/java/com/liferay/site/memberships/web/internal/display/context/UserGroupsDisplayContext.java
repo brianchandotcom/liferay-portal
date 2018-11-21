@@ -421,9 +421,11 @@ public class UserGroupsDisplayContext {
 						if (Objects.equals(getNavigation(), "roles") &&
 							(role != null)) {
 
-							label += StringPool.COLON + StringPool.SPACE +
-								HtmlUtil.escape(
-									role.getTitle(themeDisplay.getLocale()));
+							label +=
+								StringPool.COLON + StringPool.SPACE +
+									HtmlUtil.escape(
+										role.getTitle(
+											themeDisplay.getLocale()));
 						}
 
 						dropdownItem.setLabel(label);

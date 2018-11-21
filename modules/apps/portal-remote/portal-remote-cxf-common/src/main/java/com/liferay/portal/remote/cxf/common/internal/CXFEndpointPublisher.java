@@ -203,8 +203,9 @@ public class CXFEndpointPublisher {
 				String[] authVerifierPropertiesArray = null;
 
 				if (authVerifierPropertiesObject instanceof String) {
-					authVerifierPropertiesArray =
-						new String[] {(String)authVerifierPropertiesObject};
+					authVerifierPropertiesArray = new String[] {
+						(String)authVerifierPropertiesObject
+					};
 				}
 				else {
 					authVerifierPropertiesArray =

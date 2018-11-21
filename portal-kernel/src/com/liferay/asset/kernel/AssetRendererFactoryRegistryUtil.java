@@ -273,8 +273,8 @@ public class AssetRendererFactoryRegistryUtil {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(
-			(Class<AssetRendererFactory<?>>)(Class<?>)
-				AssetRendererFactory.class,
+			(Class<AssetRendererFactory<?>>)
+				(Class<?>)AssetRendererFactory.class,
 			new AssetRendererFactoryServiceTrackerCustomizer());
 
 		_serviceTracker.open();

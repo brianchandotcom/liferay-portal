@@ -123,8 +123,8 @@ public class PortalRequestProcessor {
 		_servletContext = servletContext;
 		_moduleConfig = moduleConfig;
 
-		_definitions = (Map<String, Definition>)
-			servletContext.getAttribute(TilesUtil.DEFINITIONS);
+		_definitions = (Map<String, Definition>)servletContext.getAttribute(
+			TilesUtil.DEFINITIONS);
 
 		// auth.forward.last.path.
 

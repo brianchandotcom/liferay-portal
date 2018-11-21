@@ -197,8 +197,8 @@ public class PullRequest {
 	public GitHubRemoteGitRepository getGitHubRemoteGitRepository() {
 		if (_gitHubRemoteGitRepository == null) {
 			_gitHubRemoteGitRepository =
-				(GitHubRemoteGitRepository)GitRepositoryFactory.
-					getRemoteGitRepository(
+				(GitHubRemoteGitRepository)
+					GitRepositoryFactory.getRemoteGitRepository(
 						"github.com", _gitHubRemoteGitRepositoryName,
 						getOwnerUsername());
 		}

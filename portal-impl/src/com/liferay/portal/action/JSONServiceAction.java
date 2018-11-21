@@ -531,8 +531,9 @@ public class JSONServiceAction extends JSONAction {
 		}
 
 		if (method != null) {
-			methodAndParameterTypes =
-				new Object[] {method, methodParameterTypes};
+			methodAndParameterTypes = new Object[] {
+				method, methodParameterTypes
+			};
 
 			_methodCache.put(key, methodAndParameterTypes);
 

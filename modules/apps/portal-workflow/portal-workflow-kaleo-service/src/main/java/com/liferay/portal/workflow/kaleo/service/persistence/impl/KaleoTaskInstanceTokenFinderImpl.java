@@ -243,19 +243,19 @@ public class KaleoTaskInstanceTokenFinderImpl
 					kaleoTaskInstanceTokenQuery,
 					ArrayUtil.isEmpty(
 						kaleoTaskInstanceTokenQuery.getAssetPrimaryKeys()) &&
-					 ArrayUtil.isEmpty(
-						 kaleoTaskInstanceTokenQuery.getAssetTypes()) &&
-					 (kaleoTaskInstanceTokenQuery.getDueDateGT() == null)));
+					ArrayUtil.isEmpty(
+						kaleoTaskInstanceTokenQuery.getAssetTypes()) &&
+					(kaleoTaskInstanceTokenQuery.getDueDateGT() == null)));
 			sql = _customSQL.appendCriteria(
 				sql,
 				getTaskName(
 					kaleoTaskInstanceTokenQuery,
 					ArrayUtil.isEmpty(
 						kaleoTaskInstanceTokenQuery.getAssetPrimaryKeys()) &&
-					 ArrayUtil.isEmpty(
-						 kaleoTaskInstanceTokenQuery.getAssetTypes()) &&
-					 (kaleoTaskInstanceTokenQuery.getDueDateGT() == null) &&
-					 (kaleoTaskInstanceTokenQuery.getDueDateLT() == null)));
+					ArrayUtil.isEmpty(
+						kaleoTaskInstanceTokenQuery.getAssetTypes()) &&
+					(kaleoTaskInstanceTokenQuery.getDueDateGT() == null) &&
+					(kaleoTaskInstanceTokenQuery.getDueDateLT() == null)));
 			sql = _customSQL.appendCriteria(
 				sql,
 				getAssetTitle(

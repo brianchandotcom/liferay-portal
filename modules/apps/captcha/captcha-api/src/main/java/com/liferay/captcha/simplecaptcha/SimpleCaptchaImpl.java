@@ -299,8 +299,8 @@ public class SimpleCaptchaImpl implements Captcha {
 		String[] backgroundProducerClassNames =
 			_captchaConfiguration.simpleCaptchaBackgroundProducers();
 
-		_backgroundProducers = new BackgroundProducer[
-			backgroundProducerClassNames.length];
+		_backgroundProducers =
+			new BackgroundProducer[backgroundProducerClassNames.length];
 
 		for (int i = 0; i < backgroundProducerClassNames.length; i++) {
 			String backgroundProducerClassName =

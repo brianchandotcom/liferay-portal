@@ -60,8 +60,9 @@ public class DummyStagedModelDataHandlerTest
 		super.setUp();
 
 		_dummyStagedModelRepository =
-			(StagedModelRepository<Dummy>)StagedModelRepositoryRegistryUtil.
-				getStagedModelRepository(Dummy.class.getName());
+			(StagedModelRepository<Dummy>)
+				StagedModelRepositoryRegistryUtil.getStagedModelRepository(
+					Dummy.class.getName());
 
 		_dummyFolderStagedModelRepository =
 			(StagedModelRepository<DummyFolder>)

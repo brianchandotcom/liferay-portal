@@ -49,8 +49,8 @@ public class AtomCollectionAdapterRegistryUtil {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(
-			(Class<AtomCollectionAdapter<?>>)(Class<?>)
-				AtomCollectionAdapter.class,
+			(Class<AtomCollectionAdapter<?>>)
+				(Class<?>)AtomCollectionAdapter.class,
 			new AtomCollectionAdapterServiceTrackerCustomizer());
 
 		_serviceTracker.open();

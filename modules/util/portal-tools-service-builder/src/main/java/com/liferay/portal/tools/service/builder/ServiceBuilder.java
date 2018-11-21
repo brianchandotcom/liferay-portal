@@ -2997,8 +2997,9 @@ public class ServiceBuilder {
 					properties.getProperty("build.number"));
 			}
 			else {
-				buildNumber = GetterUtil.getLong(
-					properties.getProperty("build.number")) + 1;
+				buildNumber =
+					GetterUtil.getLong(properties.getProperty("build.number")) +
+						1;
 			}
 		}
 

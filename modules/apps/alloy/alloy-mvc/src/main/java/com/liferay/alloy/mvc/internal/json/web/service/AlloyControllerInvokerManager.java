@@ -405,8 +405,9 @@ public class AlloyControllerInvokerManager {
 
 			simpleName = controllerClass.getSimpleName();
 
-			simpleName = simpleName.substring(
-				0, simpleName.indexOf("Controller")) + _BASE_CLASS_NAME;
+			simpleName =
+				simpleName.substring(0, simpleName.indexOf("Controller")) +
+					_BASE_CLASS_NAME;
 		}
 		else {
 			prefix = controllerClass.getName();

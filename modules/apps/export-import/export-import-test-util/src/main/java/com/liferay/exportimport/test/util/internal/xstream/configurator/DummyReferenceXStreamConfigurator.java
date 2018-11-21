@@ -53,8 +53,9 @@ public class DummyReferenceXStreamConfigurator implements XStreamConfigurator {
 			new XStreamAlias(DummyReference.class, "DummyReference")
 		};
 
-		_xStreamTypes =
-			new XStreamType[] {new XStreamType(DummyReference.class)};
+		_xStreamTypes = new XStreamType[] {
+			new XStreamType(DummyReference.class)
+		};
 	}
 
 	private XStreamAlias[] _xStreamAliases;

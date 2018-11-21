@@ -60,8 +60,9 @@ public class DeleteLayoutPageTemplateEntryMVCActionCommand
 			actionRequest, "layoutPageTemplateEntryId");
 
 		if (layoutPageTemplateEntryId > 0) {
-			deleteLayoutPageTemplateEntryIds =
-				new long[] {layoutPageTemplateEntryId};
+			deleteLayoutPageTemplateEntryIds = new long[] {
+				layoutPageTemplateEntryId
+			};
 		}
 		else {
 			deleteLayoutPageTemplateEntryIds = ParamUtil.getLongValues(

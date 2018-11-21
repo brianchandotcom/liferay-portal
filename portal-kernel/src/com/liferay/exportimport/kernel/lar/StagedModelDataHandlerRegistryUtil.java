@@ -106,8 +106,8 @@ public class StagedModelDataHandlerRegistryUtil {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(
-			(Class<StagedModelDataHandler<?>>)(Class<?>)
-				StagedModelDataHandler.class,
+			(Class<StagedModelDataHandler<?>>)
+				(Class<?>)StagedModelDataHandler.class,
 			new StagedModelDataHandlerServiceTrackerCustomizer());
 
 		_serviceTracker.open();

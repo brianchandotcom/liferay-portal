@@ -14,7 +14,6 @@ import templates from './SidebarLayoutsSection.soy';
 /**
  * SidebarLayoutsSection
  */
-
 class SidebarLayoutsSection extends Component {
 
 	/**
@@ -51,7 +50,8 @@ class SidebarLayoutsSection extends Component {
 		);
 	}
 
-	/** Handles dropLayout event and dispatches action to add a section
+	/**
+	 * Handles dropLayout event and dispatches action to add a section
 	 * @param {!object} eventData
 	 * @param {!number} eventData.layoutIndex
 	 * @private
@@ -115,6 +115,7 @@ class SidebarLayoutsSection extends Component {
 			this._handleLeaveLayoutTarget.bind(this)
 		);
 	}
+
 }
 
 /**
@@ -123,7 +124,6 @@ class SidebarLayoutsSection extends Component {
  * @static
  * @type {!Object}
  */
-
 SidebarLayoutsSection.STATE = {
 
 	/**
@@ -134,7 +134,6 @@ SidebarLayoutsSection.STATE = {
 	 * @review
 	 * @type {Store}
 	 */
-
 	store: Config.instanceOf(Store),
 
 	/**
@@ -145,7 +144,6 @@ SidebarLayoutsSection.STATE = {
 	 * @review
 	 * @type {Array}
 	 */
-
 	_layouts: Config.arrayOf(
 		Config.shapeOf(
 			{
@@ -170,7 +168,6 @@ SidebarLayoutsSection.STATE = {
 	 * @review
 	 * @type {object|null}
 	 */
-
 	_sidebarLayoutsDragDrop: Config.internal().value(null)
 };
 

@@ -11,10 +11,8 @@
 		border: $fragmentEntryLinkSectionBorder;
 		padding: $fragmentEntryLinkSpacing 0;
 
-		&.empty-section {
-			.row {
-				min-height: $sectionMinimumHeight;
-			}
+		&--empty .row {
+			min-height: $sectionMinimumHeight;
 		}
 
 		&.drag-bottom {

@@ -35,6 +35,7 @@ import com.liferay.portal.resiliency.service.PortalResiliencyAdvice;
 import com.liferay.portal.search.IndexableAdvice;
 import com.liferay.portal.security.access.control.AccessControlAdvice;
 import com.liferay.portal.service.ServiceContextAdvice;
+import com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 import com.liferay.portal.spring.hibernate.PortletTransactionManager;
@@ -91,6 +92,10 @@ public class AopConfigurableApplicationContextConfigurator
 
 				return;
 			}
+
+			configurableListableBeanFactory.addBeanPostProcessor(
+				new BeanReferenceAnnotationBeanPostProcessor(
+					configurableListableBeanFactory));
 
 			// Counter AOP for portal spring context only
 

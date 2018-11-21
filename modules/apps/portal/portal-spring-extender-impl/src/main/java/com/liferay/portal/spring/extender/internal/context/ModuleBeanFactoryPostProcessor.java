@@ -14,7 +14,6 @@
 
 package com.liferay.portal.spring.extender.internal.context;
 
-import com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor;
 import com.liferay.portal.spring.extender.internal.bean.ServiceReferenceAnnotationBeanPostProcessor;
 
 import org.osgi.framework.BundleContext;
@@ -45,10 +44,6 @@ public class ModuleBeanFactoryPostProcessor
 			beanPostProcessor);
 
 		configurableListableBeanFactory.addBeanPostProcessor(beanPostProcessor);
-
-		configurableListableBeanFactory.addBeanPostProcessor(
-			new BeanReferenceAnnotationBeanPostProcessor(
-				configurableListableBeanFactory));
 	}
 
 	private final BundleContext _bundleContext;

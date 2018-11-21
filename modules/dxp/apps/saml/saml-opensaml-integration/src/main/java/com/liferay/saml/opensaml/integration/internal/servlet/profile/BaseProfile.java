@@ -247,27 +247,34 @@ public abstract class BaseProfile {
 		return messageContext;
 	}
 
-	public SAMLMessageContext<?, ?, ?> getSamlMessageContext(
+	public MessageContext<?> getMessageContext(
 			HttpServletRequest request, HttpServletResponse response,
 			String peerEntityId)
 		throws Exception {
 
-		SAMLMessageContext<?, ?, ?> samlMessageContext = getSamlMessageContext(
+		MessageContext<?> messageContext = getMessageContext(
 			request, response);
 
-		samlMessageContext.setPeerEntityId(peerEntityId);
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class, true);
 
-		MetadataProvider metadataProvider =
-			samlMessageContext.getMetadataProvider();
+		samlPeerEntityContext.setEntityId(peerEntityId);
 
-		EntityDescriptor entityDescriptor =
-			metadataProvider.getEntityDescriptor(peerEntityId);
+		MetadataResolver metadataResolver =
+			metadataManager.getMetadataResolver();
+
+		EntityDescriptor entityDescriptor = metadataResolver.resolveSingle(
+			new CriteriaSet(new EntityIdCriterion(peerEntityId)));
 
 		if (entityDescriptor == null) {
 			throw new SamlException("Unknown peer entity ID " + peerEntityId);
 		}
 
-		samlMessageContext.setPeerEntityMetadata(entityDescriptor);
+		SAMLMetadataContext samlPeerMetadataContext =
+			samlPeerEntityContext.getSubcontext(
+				SAMLMetadataContext.class, true);
+
+		samlPeerMetadataContext.setEntityDescriptor(entityDescriptor);
 
 		RoleDescriptor roleDescriptor = null;
 
@@ -280,9 +287,9 @@ public abstract class BaseProfile {
 				SAMLConstants.SAML20P_NS);
 		}
 
-		samlMessageContext.setPeerEntityRoleMetadata(roleDescriptor);
+		samlPeerMetadataContext.setRoleDescriptor(roleDescriptor);
 
-		return samlMessageContext;
+		return messageContext;
 	}
 
 	public SamlSpSession getSamlSpSession(HttpServletRequest request) {

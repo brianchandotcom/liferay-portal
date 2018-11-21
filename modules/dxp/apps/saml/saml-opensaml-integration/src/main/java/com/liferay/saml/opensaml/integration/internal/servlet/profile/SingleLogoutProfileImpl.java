@@ -735,15 +735,14 @@ public class SingleLogoutProfileImpl
 
 	protected void processSingleLogoutRequest(
 			HttpServletRequest request, HttpServletResponse response,
-			SAMLMessageContext<LogoutRequest, LogoutResponse, NameID>
-				samlMessageContext)
+			MessageContext<?> messageContext)
 		throws Exception {
 
 		if (samlProviderConfigurationHelper.isRoleIdp()) {
-			processIdpLogoutRequest(request, response, samlMessageContext);
+			processIdpLogoutRequest(request, response, messageContext);
 		}
 		else if (samlProviderConfigurationHelper.isRoleSp()) {
-			processSpLogoutRequest(request, response, samlMessageContext);
+			processSpLogoutRequest(request, response, messageContext);
 		}
 	}
 

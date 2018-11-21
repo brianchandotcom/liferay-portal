@@ -6026,6 +6026,16 @@ version 1.0.10.
 - [LPS-87466]: Update the [Liferay Gradle Plugins XSD Builder] dependency tos
 version 1.0.6.
 
+## 3.13.16 - 2018-11-19
+
+### Changed
+- [LPS-87466]: Update the [Liferay Gradle Util] dependency to version 1.0.33.
+
+### Fixed
+- [LPS-85954]: Set the `compileJSP.destinationDir` property back to its default
+value of `${project.buildDir}/jspc`. Copy the generated JSP Java files into the
+`Liferay Home` work directory.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

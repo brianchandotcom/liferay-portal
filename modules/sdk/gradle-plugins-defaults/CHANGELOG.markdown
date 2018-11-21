@@ -5011,6 +5011,20 @@ version 2.2.6.
 - [LPS-87477]: Lazily evaluate the `replacement` property to avoid a
 `NumberFormatException` during the configuration phase.
 
+## 5.5.115 - 2018-11-19
+
+### Changed
+- [LPS-87466]: Update the [Liferay Gradle Plugins] dependency to version
+3.13.16.
+- [LPS-87466]: Update the [Liferay Gradle Plugins App Javadoc Builder]
+dependency to version 1.2.2.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Baseline] dependency to
+version 2.0.2.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Cache] dependency to version
+1.0.15.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Change Log Builder] dependency
+to version 1.1.3.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

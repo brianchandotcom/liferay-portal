@@ -256,12 +256,10 @@ public class SingleLogoutProfileImpl
 			Object inboundSamlMessage = inboundMessageContext.getMessage();
 
 			if (inboundSamlMessage instanceof LogoutRequest) {
-				processSingleLogoutRequest(
-					request, response, messageContext);
+				processSingleLogoutRequest(request, response, messageContext);
 			}
 			else if (inboundSamlMessage instanceof LogoutResponse) {
-				processSingleLogoutResponse(
-					request, response, messageContext);
+				processSingleLogoutResponse(request, response, messageContext);
 			}
 			else {
 				throw new SamlException(

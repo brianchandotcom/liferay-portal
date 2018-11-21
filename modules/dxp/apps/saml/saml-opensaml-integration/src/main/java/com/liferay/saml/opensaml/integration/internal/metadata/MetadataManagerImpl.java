@@ -338,6 +338,9 @@ public class MetadataManagerImpl
 	public MessageHandler<?> getSecurityPolicyResolver(
 		String communicationProfileId, boolean requireSignature) {
 
+		BasicMessageHandlerChain<Object> basicMessageHandlerChain =
+			new BasicMessageHandlerChain<>();
+
 		List<MessageHandler<Object>> messageHandlers = new ArrayList<>();
 
 		if (requireSignature) {
@@ -377,9 +380,6 @@ public class MetadataManagerImpl
 
 		messageHandlers.add(new CheckMandatoryIssuer());
 		messageHandlers.add(new HTTPRequestValidationHandler());
-
-		BasicMessageHandlerChain<Object> basicMessageHandlerChain =
-			new BasicMessageHandlerChain<>();
 
 		basicMessageHandlerChain.setHandlers(messageHandlers);
 

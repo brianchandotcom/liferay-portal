@@ -15,6 +15,15 @@ class Editor extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
+		editorValue: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Editor
+		 * @type {?(string|undefined)}
+		 */
+
 		fieldName: Config.string(),
 
 		/**
@@ -123,16 +132,7 @@ class Editor extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		value: Config.string(),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Editor
-		 * @type {?(string|undefined)}
-		 */
-
-		editorValue: Config.string()
+		value: Config.string()
 	};
 
 	created() {

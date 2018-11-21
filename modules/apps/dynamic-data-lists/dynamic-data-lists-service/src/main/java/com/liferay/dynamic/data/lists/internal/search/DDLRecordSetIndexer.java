@@ -35,13 +35,9 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Adam Brandizzi
  */
-@Component(immediate = true, service = Indexer.class)
 public class DDLRecordSetIndexer extends BaseIndexer<DDLRecordSet> {
 
 	public static final String CLASS_NAME = DDLRecordSet.class.getName();
@@ -139,13 +135,8 @@ public class DDLRecordSetIndexer extends BaseIndexer<DDLRecordSet> {
 		indexableActionableDynamicQuery.performActions();
 	}
 
-	@Reference
 	protected DDLRecordSetLocalService ddlRecordSetLocalService;
-
-	@Reference
 	protected IndexerRegistry indexerRegistry;
-
-	@Reference
 	protected IndexWriterHelper indexWriterHelper;
 
 	private static final Log _log = LogFactoryUtil.getLog(

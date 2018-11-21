@@ -285,8 +285,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 		}
 
 		buttons +=
-			" 'Flash', '-', 'LiferayPageBreak', '-', 'Smiley', " +
-				"'SpecialChar']";
+			" 'Flash', '-', 'LiferayPageBreak', '-', 'Smiley', 'SpecialChar']";
 
 		jsonArray.put(toJSONArray(buttons));
 

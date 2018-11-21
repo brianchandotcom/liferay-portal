@@ -539,12 +539,12 @@ public class MetadataManagerImpl
 		policyOption = ReferencePolicyOption.GREEDY,
 		unbind = "unsetMetadataProvider"
 	)
-	public void setMetadataProvider(MetadataProvider metadataProvider) {
+	public void setMetadataResolver(MetadataResolver metadataResolver) {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Adding metadata provider " + metadataProvider);
+			_log.debug("Adding metadata resolver " + metadataResolver);
 		}
 
-		_cachingChainingMetadataResolver.addMetadataProvider(metadataProvider);
+		_cachingChainingMetadataResolver.addMetadataResolver(metadataResolver);
 	}
 
 	@Reference(unbind = "-")
@@ -564,13 +564,13 @@ public class MetadataManagerImpl
 		_cachingChainingMetadataResolver.destroy();
 	}
 
-	public void unsetMetadataProvider(MetadataProvider metadataProvider) {
+	public void unsetMetadataResolver(MetadataResolver metadataResolver) {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Removing metadata provider " + metadataProvider);
+			_log.debug("Removing metadata resolver " + metadataResolver);
 		}
 
-		_cachingChainingMetadataResolver.removeMetadataProvider(
-			metadataProvider);
+		_cachingChainingMetadataResolver.removeMetadataResolver(
+			metadataResolver);
 	}
 
 	protected SamlProviderConfiguration getSamlProviderConfiguration() {

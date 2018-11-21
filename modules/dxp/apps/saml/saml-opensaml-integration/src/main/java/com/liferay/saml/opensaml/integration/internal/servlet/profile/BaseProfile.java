@@ -72,48 +72,69 @@ import org.opensaml.saml.saml2.metadata.SPSSODescriptor;
  */
 public abstract class BaseProfile {
 
-	public SAMLMessageContext<?, ?, ?> decodeSamlMessage(
+	public MessageContext decodeSamlMessage(
 			HttpServletRequest request, HttpServletResponse response,
 			SamlBinding samlBinding)
 		throws Exception {
 
-		SAMLMessageContext<SAMLObject, SAMLObject, NameID> samlMessageContext =
-			(SAMLMessageContext<SAMLObject, SAMLObject, NameID>)
-				getSamlMessageContext(request, response);
+		MessageContext<SAMLObject> messageContext = getMessageContext(
+			request, response);
 
-		samlMessageContext.setCommunicationProfileId(
-			samlBinding.getCommunicationProfileId());
+		Supplier<HttpServletRequestMessageDecoder> messageDecoderSupplier =
+			samlBinding.getHttpServletRequestMessageDecoderSupplier();
 
-		SecurityPolicyResolver securityPolicyResolver =
-			metadataManager.getSecurityPolicyResolver(
-				samlMessageContext.getCommunicationProfileId(),
-				requireSignature);
+		HttpServletRequestMessageDecoder httpServletRequestMessageDecoder =
+			messageDecoderSupplier.get();
 
-		samlMessageContext.setSecurityPolicyResolver(securityPolicyResolver);
+		httpServletRequestMessageDecoder.setHttpServletRequest(request);
 
-		MessageDecoder messageDecoder = samlBinding.getMessageDecoder();
+		httpServletRequestMessageDecoder.initialize();
 
-		messageDecoder.decode(samlMessageContext);
+		httpServletRequestMessageDecoder.decode();
+
+		MessageContext<SAMLObject> inboundMessageContext =
+			httpServletRequestMessageDecoder.getMessageContext();
+
+		InOutOperationContext<?, ?> inOutOperationContext =
+			new InOutOperationContext(
+				inboundMessageContext, new MessageContext());
+
+		messageContext.addSubcontext(inOutOperationContext);
+
+		SAMLBindingContext samlBindingContext =
+			inboundMessageContext.getSubcontext(SAMLBindingContext.class);
+
+		messageContext.addSubcontext(samlBindingContext);
 
 		if (_log.isDebugEnabled()) {
-			SAMLObject samlObject = samlMessageContext.getInboundSAMLMessage();
+			SAMLObject samlObject = inboundMessageContext.getMessage();
 
 			_log.debug(
 				"Received message using binding " +
-					samlMessageContext.getCommunicationProfileId() + " " +
+					samlBindingContext.getBindingUri() + " " +
 						OpenSamlUtil.marshall(samlObject));
 		}
 
-		EntityDescriptor entityDescriptor =
-			samlMessageContext.getPeerEntityMetadata();
+		SAMLPeerEntityContext samlPeerEntityContext =
+			inboundMessageContext.getSubcontext(
+				SAMLPeerEntityContext.class, true);
+
+		MetadataResolver metadataResolver =
+			metadataManager.getMetadataResolver();
+
+		EntityDescriptor entityDescriptor = metadataResolver.resolveSingle(
+			new CriteriaSet(
+				new EntityIdCriterion(samlPeerEntityContext.getEntityId())));
 
 		if (entityDescriptor == null) {
+			SAMLObject samlObject = messageContext.getMessage();
+
+			RequestAbstractType samlRequest = (RequestAbstractType)samlObject;
+
 			throw new SamlException(
 				"Unable to resolve metadata for issuer " +
-					samlMessageContext.getInboundMessageIssuer());
+					samlRequest.getIssuer());
 		}
-
-		samlMessageContext.setPeerEntityId(entityDescriptor.getEntityID());
 
 		RoleDescriptor roleDescriptor = null;
 
@@ -126,9 +147,17 @@ public abstract class BaseProfile {
 				SAMLConstants.SAML20P_NS);
 		}
 
-		samlMessageContext.setPeerEntityRoleMetadata(roleDescriptor);
+		SAMLMetadataContext samlMetadataContext =
+			samlPeerEntityContext.getSubcontext(
+				SAMLMetadataContext.class, true);
 
-		return samlMessageContext;
+		samlMetadataContext.setEntityDescriptor(entityDescriptor);
+		samlMetadataContext.setRoleDescriptor(roleDescriptor);
+
+		messageContext.removeSubcontext(SAMLPeerEntityContext.class);
+		messageContext.addSubcontext(samlPeerEntityContext);
+
+		return messageContext;
 	}
 
 	public String generateIdentifier(int length) {

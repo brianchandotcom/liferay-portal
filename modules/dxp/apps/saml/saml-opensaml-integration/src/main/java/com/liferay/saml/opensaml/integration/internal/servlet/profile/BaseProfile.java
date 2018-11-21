@@ -74,7 +74,7 @@ public abstract class BaseProfile {
 
 	public SAMLMessageContext<?, ?, ?> decodeSamlMessage(
 			HttpServletRequest request, HttpServletResponse response,
-			SamlBinding samlBinding, boolean requireSignature)
+			SamlBinding samlBinding)
 		throws Exception {
 
 		SAMLMessageContext<SAMLObject, SAMLObject, NameID> samlMessageContext =

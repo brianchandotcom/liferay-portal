@@ -34,6 +34,10 @@ public class ModelPermissions implements Cloneable, Serializable {
 	public ModelPermissions() {
 	}
 
+	public ModelPermissions(String resourceName) {
+		_resourceName = resourceName;
+	}
+
 	public void addRolePermissions(String roleName, String actionId) {
 		Set<String> roleNames = _roleNamesMap.get(actionId);
 
@@ -69,8 +73,8 @@ public class ModelPermissions implements Cloneable, Serializable {
 	@Override
 	public Object clone() {
 		return new ModelPermissions(
-			new HashMap<String, Set<String>>(_roleNamesMap),
-			new HashMap<String, Set<String>>(_actionIdsMap));
+			new HashMap<>(_roleNamesMap), new HashMap<>(_actionIdsMap),
+			_resourceName);
 	}
 
 	public String[] getActionIds(String roleName) {
@@ -87,6 +91,10 @@ public class ModelPermissions implements Cloneable, Serializable {
 		Set<String> actionIds = _actionIdsMap.get(roleName);
 
 		return ListUtil.fromCollection(actionIds);
+	}
+
+	public String getResourceName() {
+		return _resourceName;
 	}
 
 	public Collection<String> getRoleNames() {
@@ -107,15 +115,28 @@ public class ModelPermissions implements Cloneable, Serializable {
 		return _actionIdsMap.isEmpty();
 	}
 
+	public void setResourceName(String resourceName) {
+		_resourceName = resourceName;
+	}
+
 	protected ModelPermissions(
 		Map<String, Set<String>> roleNamesMap,
 		Map<String, Set<String>> actionIdsMap) {
 
+		this(roleNamesMap, actionIdsMap, null);
+	}
+
+	protected ModelPermissions(
+		Map<String, Set<String>> roleNamesMap,
+		Map<String, Set<String>> actionIdsMap, String resourceName) {
+
 		_roleNamesMap.putAll(roleNamesMap);
 		_actionIdsMap.putAll(actionIdsMap);
+		_resourceName = resourceName;
 	}
 
 	private final Map<String, Set<String>> _actionIdsMap = new HashMap<>();
+	private String _resourceName;
 	private final Map<String, Set<String>> _roleNamesMap = new HashMap<>();
 
 }

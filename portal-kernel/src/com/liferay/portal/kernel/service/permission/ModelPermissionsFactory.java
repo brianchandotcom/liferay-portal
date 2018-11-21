@@ -53,6 +53,12 @@ public class ModelPermissionsFactory {
 	public static ModelPermissions create(
 		Map<String, String[]> modelPermissionsParameterMap) {
 
+		return create(modelPermissionsParameterMap, null);
+	}
+
+	public static ModelPermissions create(
+		Map<String, String[]> modelPermissionsParameterMap, String className) {
+
 		ModelPermissions modelPermissions = null;
 
 		for (Map.Entry<String, String[]> entry :
@@ -63,7 +69,7 @@ public class ModelPermissionsFactory {
 					CompanyThreadLocal.getCompanyId(), entry.getKey());
 
 				if (modelPermissions == null) {
-					modelPermissions = new ModelPermissions();
+					modelPermissions = new ModelPermissions(className);
 				}
 
 				modelPermissions.addRolePermissions(
@@ -99,7 +105,14 @@ public class ModelPermissionsFactory {
 	public static ModelPermissions create(
 		String[] groupPermissions, String[] guestPermissions) {
 
-		ModelPermissions modelPermissions = new ModelPermissions();
+		return create(groupPermissions, guestPermissions, null);
+	}
+
+	public static ModelPermissions create(
+		String[] groupPermissions, String[] guestPermissions,
+		String className) {
+
+		ModelPermissions modelPermissions = new ModelPermissions(className);
 
 		modelPermissions.addRolePermissions(
 			RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE, groupPermissions);
@@ -112,7 +125,7 @@ public class ModelPermissionsFactory {
 	public static ModelPermissions createWithDefaultPermissions(
 		String className) {
 
-		ModelPermissions modelPermissions = new ModelPermissions();
+		ModelPermissions modelPermissions = new ModelPermissions(className);
 
 		List<String> modelResourceGroupDefaultActions =
 			ResourceActionsUtil.getModelResourceGroupDefaultActions(className);
@@ -150,7 +163,7 @@ public class ModelPermissionsFactory {
 			_getModelPermissionsParameterMap(parameterMap, className);
 
 		if (!modelPermissionsParameterMap.isEmpty()) {
-			return create(modelPermissionsParameterMap);
+			return create(modelPermissionsParameterMap, className);
 		}
 
 		String[] groupPermissions = parameterMap.get(
@@ -159,7 +172,7 @@ public class ModelPermissionsFactory {
 			_addClassNamePostfix("guestPermissions", className));
 
 		if ((groupPermissions != null) || (guestPermissions != null)) {
-			return create(groupPermissions, guestPermissions);
+			return create(groupPermissions, guestPermissions, className);
 		}
 
 		if (Validator.isNull(className)) {

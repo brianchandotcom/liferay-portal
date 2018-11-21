@@ -353,20 +353,6 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			return getIndent(_getLastLine(s));
 		}
 
-		if ((javaTerm instanceof JavaArray) && !lastLine.endsWith("]")) {
-			String javaTermContent = javaTerm.toString(
-				indent + "\t", prefix, suffix, -1);
-
-			if (getLineLength(javaTermContent) <= maxLineLength) {
-				sb = _stripTrailingWhitespace(sb);
-
-				sb.append("\n");
-				sb.append(javaTermContent);
-
-				return indent + "\t";
-			}
-		}
-
 		String javaTermContent = javaTerm.toString(
 			indent, "", suffix, maxLineLength, true);
 

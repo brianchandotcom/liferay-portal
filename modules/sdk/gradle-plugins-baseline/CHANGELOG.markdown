@@ -166,6 +166,11 @@ task.
 configuration with exactly one dependency to the previously released version of
 the project for baselining.
 
+## 2.0.1 - 2018-11-16
+
+### Changed
+- [LPS-87466]: Update the [Liferay Gradle Util] dependency to version 1.0.32.
+
 [Bnd Builder Gradle Plugin]: https://github.com/bndtools/bnd/tree/master/biz.aQute.bnd.gradle
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
@@ -185,3 +190,4 @@ the project for baselining.
 [LPS-85677]: https://issues.liferay.com/browse/LPS-85677
 [LPS-85678]: https://issues.liferay.com/browse/LPS-85678
 [LPS-86583]: https://issues.liferay.com/browse/LPS-86583
+[LPS-87466]: https://issues.liferay.com/browse/LPS-87466

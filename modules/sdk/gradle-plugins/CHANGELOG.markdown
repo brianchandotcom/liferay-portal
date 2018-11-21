@@ -5973,6 +5973,11 @@ to version 2.3.282.
 - [LPS-87366]: The Eclipse project name changed after upgrading Gradle to
 4.10.2. Set the Eclipse project name with the Gradle project name.
 
+## 3.13.14 - 2018-11-16
+
+### Changed
+- [LPS-87466]: Update the [Liferay Gradle Util] dependency to version 1.0.32.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -6438,4 +6443,5 @@ to version 2.3.282.
 [LPS-86916]: https://issues.liferay.com/browse/LPS-86916
 [LPS-87293]: https://issues.liferay.com/browse/LPS-87293
 [LPS-87366]: https://issues.liferay.com/browse/LPS-87366
+[LPS-87466]: https://issues.liferay.com/browse/LPS-87466
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

@@ -20,7 +20,14 @@ branches that do not contain commits older than two years.
 ### Fixed
 - [LPS-82960]: Avoid error when the only valid commit is the initial commit.
 
+## 1.1.2 - 2018-11-16
+
+### Changed
+- [LPS-87466]: Update the [Liferay Gradle Util] dependency to version 1.0.32.
+
+[Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-80950]: https://issues.liferay.com/browse/LPS-80950
 [LPS-82857]: https://issues.liferay.com/browse/LPS-82857
 [LPS-82960]: https://issues.liferay.com/browse/LPS-82960
+[LPS-87466]: https://issues.liferay.com/browse/LPS-87466

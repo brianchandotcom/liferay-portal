@@ -646,27 +646,29 @@ public class SingleLogoutProfileImpl
 
 	protected void processIdpLogoutRequest(
 			HttpServletRequest request, HttpServletResponse response,
-			SAMLMessageContext<LogoutRequest, LogoutResponse, NameID>
-				samlMessageContext)
+			MessageContext<?> messageContext)
 		throws Exception {
 
 		SamlSloContext samlSloContext = getSamlSloContext(
-			request, samlMessageContext);
+			request, messageContext);
 
 		Set<String> samlSpEntityIds = samlSloContext.getSamlSpEntityIds();
 
-		String binding = samlMessageContext.getCommunicationProfileId();
+		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
+			SAMLBindingContext.class);
+
+		String binding = samlBindingContext.getBindingUri();
 
 		if (binding.equals(SAMLConstants.SAML2_SOAP11_BINDING_URI)) {
 			sendIdpLogoutResponse(
-				request, response, StatusCode.UNSUPPORTED_BINDING_URI,
+				request, response, StatusCode.UNSUPPORTED_BINDING,
 				samlSloContext);
 		}
 		else if (samlSloContext == null) {
 			sendIdpLogoutResponse(
-				request, response, StatusCode.UNKNOWN_PRINCIPAL_URI,
+				request, response, StatusCode.UNKNOWN_PRINCIPAL,
 				new SamlSloContext(
-					null, samlMessageContext, _samlIdpSpConnectionLocalService,
+					null, messageContext, _samlIdpSpConnectionLocalService,
 					_samlIdpSpSessionLocalService, _userLocalService));
 		}
 		else if (!samlSpEntityIds.isEmpty()) {
@@ -674,7 +676,7 @@ public class SingleLogoutProfileImpl
 		}
 		else {
 			sendIdpLogoutResponse(
-				request, response, StatusCode.SUCCESS_URI, samlSloContext);
+				request, response, StatusCode.SUCCESS, samlSloContext);
 		}
 	}
 

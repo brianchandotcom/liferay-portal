@@ -511,8 +511,10 @@
 	</target>
 
 	<target depends="get-app-names-core" name="get-app-names" unless="app.names">
-		<pathconvert property="app.names" pathsep=",">
-			<fileset dir="${modules.dir}">
+		<pathconvert pathsep="," property="app.names">
+			<fileset
+				dir="${modules.dir}"
+			>
 				<contains casesensitive="false" ignorewhitespace="true" text="Liferay-Releng-Bundle: true" />
 				<containsregexp casesensitive="false" expression="Liferay-Releng-Suite:\s*\w+$" multiline="true" />
 				<include name="apps/**/app.bnd" />

@@ -1323,7 +1323,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 							<if>
 								<not>
-									<contains string="${osgi.app.includes}" substring="portal-search-solr" />
+									<contains string="${osgi.app.includes}" substring="portal-search-solr7" />
 								</not>
 								<then>
 									<prepare-suite-search-engine suite.name="${env.CI_TEST_SUITE}" />

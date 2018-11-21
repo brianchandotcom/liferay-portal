@@ -1,0 +1,51 @@
+.criterion-row {
+	padding: 8px 16px;
+	display: flex;
+	border-left: 3px solid #4B9BFF;
+}
+
+.criterion-container {
+	width: 100%;
+}
+
+.editing {
+	background-color: transparent;
+}
+
+.delete-button {
+	flex-shrink: 0;
+}
+
+.criterion-input {
+	margin-right: 16px;
+}
+
+.edit-container {
+	padding: 0;
+	margin: 0;
+	display: flex;
+	width: 100%;
+}
+
+.read-only-container {
+	padding: 0;
+	margin: 0;
+	display: flex;
+	width: 100%;
+}
+
+.operator-input {
+	flex-shrink: 0;
+	width: 240px;
+}
+
+.criteria-string {
+	font-size: 14px;
+	font-weight: 500;
+	color: #6B6C7E;
+}
+
+.property-string, .value-string {
+	font-weight: 700;
+	color: #272833;
+}

@@ -1,14 +1,13 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import QueryBuilder from "./QueryBuilder.es";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ClayODataQueryBuilder from './ClayODataQueryBuilder.es';
+import ThemeContext from './ThemeContext.es';
 
-export default function(elementId, data) {
-	console.log("data", data);
-
-	const { segmentName } = data;
-
+export default function(id, props, context) {
 	ReactDOM.render(
-		<QueryBuilder name={segmentName} />,
-		document.getElementById(elementId)
+		<ThemeContext.Provider value={context}>
+			<ClayODataQueryBuilder {...props} />
+		</ThemeContext.Provider>,
+		document.getElementById(id)
 	);
 }

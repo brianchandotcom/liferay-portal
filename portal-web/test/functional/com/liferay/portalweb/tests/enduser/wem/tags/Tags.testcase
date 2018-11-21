@@ -14,10 +14,6 @@
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Tags" />
 		</execute>
-
-		<execute macro="Tag#addCP">
-			<var name="tagName" value="tagname1" />
-		</execute>
 	</set-up>
 
 	<tear-down>
@@ -51,6 +47,10 @@
 	</command>
 
 	<command name="CannotMergeSingleTagViewWarning" priority="4">
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tagname1" />
+		</execute>
+
 		<execute macro="Tag#gotoMerge">
 			<var name="mergeMethod" value="menuItem" />
 			<var name="tagName" value="tagname1" />
@@ -60,11 +60,7 @@
 	</command>
 
 	<command name="DeleteMultipleTagsFromToolbar" priority="4">
-		<execute macro="Tag#viewCP">
-			<var name="tagName" value="tagname1" />
-		</execute>
-
-		<for list="2,3" param="i">
+		<for list="1,2,3" param="i">
 			<execute macro="Tag#addCP">
 				<var name="tagName" value="tagname${i}" />
 			</execute>
@@ -86,6 +82,10 @@
 	</command>
 
 	<command name="DeleteTagFromMenu" priority="5">
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tagname1" />
+		</execute>
+
 		<execute macro="Tag#viewCP">
 			<var name="tagName" value="tagname1" />
 		</execute>
@@ -102,6 +102,10 @@
 	</command>
 
 	<command name="DeleteTagFromToolbar" priority="4">
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tagname1" />
+		</execute>
+
 		<execute macro="Tag#viewCP">
 			<var name="tagName" value="tagname1" />
 		</execute>
@@ -118,6 +122,10 @@
 	</command>
 
 	<command name="EditTagAndCancel" priority="4">
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tagname1" />
+		</execute>
+
 		<execute macro="Tag#viewCP">
 			<var name="tagName" value="tagname1" />
 		</execute>
@@ -143,6 +151,10 @@
 	<command name="EditTagAndSave" priority="5">
 		<property name="portal.acceptance" value="true" />
 
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tagname1" />
+		</execute>
+
 		<execute macro="Tag#viewCP">
 			<var name="tagName" value="tagname1" />
 		</execute>
@@ -166,7 +178,7 @@
 	</command>
 
 	<command name="MergeMultipleTags" priority="4">
-		<for list="2,3" param="i">
+		<for list="1,2,3" param="i">
 			<execute macro="Tag#addCP">
 				<var name="tagName" value="tagname${i}" />
 			</execute>
@@ -199,7 +211,7 @@
 	</command>
 
 	<command name="MergeTagsSelectAdditionalTag" priority="3">
-		<for list="2,3,4,5,6,7" param="i">
+		<for list="1,2,3,4,5,6,7" param="i">
 			<execute macro="Tag#addCP">
 				<var name="tagName" value="tagname${i}" />
 			</execute>
@@ -246,6 +258,10 @@
 	</command>
 
 	<command name="ToggleDisplayStyles" priority="4">
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tagname1" />
+		</execute>
+
 		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="list" />
 		</execute>

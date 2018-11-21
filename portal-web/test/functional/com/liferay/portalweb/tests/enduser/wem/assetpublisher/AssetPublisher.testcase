@@ -268,6 +268,10 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
 		<execute macro="DDLRecord#viewPGViaAP">
 			<var name="ddlListName" value="New Data Definition for List: List Name" />
 			<var name="ddlRecordFieldData" value="Text Field" />

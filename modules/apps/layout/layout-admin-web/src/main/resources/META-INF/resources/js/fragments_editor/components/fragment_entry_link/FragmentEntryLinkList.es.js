@@ -25,6 +25,33 @@ import templates from './FragmentEntryLinkList.soy';
 class FragmentEntryLinkList extends Component {
 
 	/**
+	 * Checks wether a section is empty or not, sets empty parameter
+	 * and returns a new state
+	 * @param {Object} _state
+	 * @private
+	 * @return {Object}
+	 * @static
+	 */
+	static _setEmptySections(_state) {
+		return setIn(
+			_state,
+			[
+				'layoutData',
+				'structure'
+			],
+			_state.layoutData.structure.map(
+				section => setIn(
+					section,
+					['empty'],
+					section.columns.every(
+						column => column.fragmentEntryLinkIds.length === 0
+					)
+				)
+			)
+		);
+	}
+
+	/**
 	 * @inheritDoc
 	 * @private
 	 * @review
@@ -51,7 +78,7 @@ class FragmentEntryLinkList extends Component {
 	 */
 
 	prepareStateForRender(state) {
-		return FragmentEntryLinkList.setEmptySections(state);
+		return FragmentEntryLinkList._setEmptySections(state);
 	}
 
 	/**
@@ -272,36 +299,6 @@ class FragmentEntryLinkList extends Component {
 	}
 
 }
-
-/**
- * Checks wether a section is empty or not, sets empty parameter
- * and returns a new state
- * @param {Object} _state
- * @private
- * @return {Object}
- */
-FragmentEntryLinkList.setEmptySections = _state => {
-	const nextStructure = _state.layout.data.structure.map(
-		section => Object.assign(
-			{},
-			section,
-			{
-				empty: section.columns.every(
-					column => column.fragmentEntryLinkIds.length === 0
-				)
-			}
-		)
-	);
-
-	return setIn(
-		_state,
-		[
-			'layoutData',
-			'structure'
-		],
-		nextStructure
-	);
-};
 
 /**
  * State definition.

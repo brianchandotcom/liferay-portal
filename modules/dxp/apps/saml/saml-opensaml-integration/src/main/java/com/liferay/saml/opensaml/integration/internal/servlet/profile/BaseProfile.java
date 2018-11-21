@@ -154,8 +154,8 @@ public abstract class BaseProfile {
 		samlMetadataContext.setEntityDescriptor(entityDescriptor);
 		samlMetadataContext.setRoleDescriptor(roleDescriptor);
 
-		messageContext.removeSubcontext(SAMLPeerEntityContext.class);
 		messageContext.addSubcontext(samlPeerEntityContext);
+		messageContext.removeSubcontext(SAMLPeerEntityContext.class);
 
 		return messageContext;
 	}

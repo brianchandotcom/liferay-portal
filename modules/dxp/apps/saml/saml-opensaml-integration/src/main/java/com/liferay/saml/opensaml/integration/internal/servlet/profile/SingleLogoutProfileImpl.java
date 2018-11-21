@@ -1222,6 +1222,9 @@ public class SingleLogoutProfileImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		SingleLogoutProfileImpl.class);
 
+	@Reference
+	private HttpClient _httpClient;
+
 	private SamlHttpRequestUtil _samlHttpRequestUtil;
 	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;
 	private SamlIdpSpSessionLocalService _samlIdpSpSessionLocalService;

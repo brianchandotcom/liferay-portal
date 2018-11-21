@@ -171,8 +171,10 @@ public abstract class BaseProfile {
 		return identifierGenerationStrategy.generateIdentifier();
 	}
 
-	public IdentifierGenerator getIdentifierGenerator() {
-		return _identifierGenerator;
+	public IdentifierGenerationStrategyFactory
+		getIdentifierGenerationStrategyFactory() {
+
+		return _identifierGenerationStrategyFactory;
 	}
 
 	public SamlBinding getSamlBinding(String communicationProfileId)
@@ -473,10 +475,12 @@ public abstract class BaseProfile {
 		_samlBindings.remove(samlBinding);
 	}
 
-	protected void setIdentifierGenerator(
-		IdentifierGenerator identifierGenerator) {
+	protected void setIdentifierGenerationStrategyFactory(
+		IdentifierGenerationStrategyFactory
+			identifierGenerationStrategyFactory) {
 
-		_identifierGenerator = identifierGenerator;
+		_identifierGenerationStrategyFactory =
+			identifierGenerationStrategyFactory;
 	}
 
 	protected void setMetadataManager(MetadataManager metadataManager) {
@@ -504,7 +508,9 @@ public abstract class BaseProfile {
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseProfile.class);
 
-	private IdentifierGenerator _identifierGenerator;
+	private IdentifierGenerationStrategyFactory
+		_identifierGenerationStrategyFactory;
+
 	private List<SamlBinding> _samlBindings = new ArrayList<>();
 
 }

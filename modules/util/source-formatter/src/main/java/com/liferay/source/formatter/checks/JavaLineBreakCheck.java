@@ -95,8 +95,6 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 		content = _fixMultiLineComment(content);
 
-		content = _fixArrayLineBreaks(content);
-
 		content = _fixClassOrEnumLineLineBreaks(content);
 
 		content = fixRedundantCommaInsideArray(content);
@@ -319,25 +317,6 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 				}
 			}
 		}
-	}
-
-	private String _fixArrayLineBreaks(String content) {
-		Matcher matcher = _arrayPattern.matcher(content);
-
-		while (matcher.find()) {
-			String newLine =
-				matcher.group(4) + matcher.group(2) + matcher.group(5) +
-					matcher.group(6);
-
-			if (getLineLength(newLine) <= getMaxLineLength()) {
-				return StringUtil.replace(
-					content, matcher.group(),
-					StringBundler.concat(
-						matcher.group(1), "\n", newLine, "\n"));
-			}
-		}
-
-		return content;
 	}
 
 	private String _fixClassOrEnumLineLineBreaks(String content) {
@@ -931,8 +910,6 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 		return false;
 	}
 
-	private static final Pattern _arrayPattern = Pattern.compile(
-		"(\n\t*.* =) ((new \\w*\\[\\] )?\\{)\n(\t*)([^\t\\{].*)\n\t*(\\};?)\n");
 	private static final Pattern _catchStatemementPattern = Pattern.compile(
 		"\n((\t*)catch \\((.*[^{|\\s])?\n[^}]*?\\) \\{)\n");
 	private static final Pattern _classOrEnumPattern = Pattern.compile(

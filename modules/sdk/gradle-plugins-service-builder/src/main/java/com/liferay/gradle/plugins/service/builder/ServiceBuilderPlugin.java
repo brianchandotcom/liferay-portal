@@ -178,6 +178,12 @@ public class ServiceBuilderPlugin implements Plugin<Project> {
 
 			});
 
+		boolean springConfiguratorEnabled = GradleUtil.getProperty(
+			project, "spring.configurator.enabled", false);
+
+		buildServiceTask.setSpringConfiguratorEnabled(
+			springConfiguratorEnabled);
+
 		buildServiceTask.setSpringFile(
 			new Callable<File>() {
 

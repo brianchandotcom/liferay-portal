@@ -204,6 +204,11 @@ public class BuildServiceTask extends JavaExec {
 		return _osgiModule;
 	}
 
+	@Input
+	public boolean isSpringConfiguratorEnabled() {
+		return _springConfiguratorEnabled;
+	}
+
 	public BuildServiceTask modelHintsConfigs(
 		Iterable<Object> modelHintsConfigs) {
 
@@ -336,6 +341,12 @@ public class BuildServiceTask extends JavaExec {
 		_resourcesDir = resourcesDir;
 	}
 
+	public void setSpringConfiguratorEnabled(
+		boolean springConfiguratorEnabled) {
+
+		_springConfiguratorEnabled = springConfiguratorEnabled;
+	}
+
 	public void setSpringFile(Object springFile) {
 		_springFile = springFile;
 	}
@@ -462,6 +473,9 @@ public class BuildServiceTask extends JavaExec {
 					_relativize(uadTestIntegrationDir));
 		}
 
+		args.add(
+			"spring.configurator.enabled=" + isSpringConfiguratorEnabled());
+
 		return args;
 	}
 
@@ -519,6 +533,7 @@ public class BuildServiceTask extends JavaExec {
 	private final Set<Object> _readOnlyPrefixes = new HashSet<>();
 	private final Set<Object> _resourceActionsConfigs = new LinkedHashSet<>();
 	private Object _resourcesDir;
+	private boolean _springConfiguratorEnabled;
 	private Object _springFile;
 	private final Set<Object> _springNamespaces = new LinkedHashSet<>();
 	private Object _sqlDir;

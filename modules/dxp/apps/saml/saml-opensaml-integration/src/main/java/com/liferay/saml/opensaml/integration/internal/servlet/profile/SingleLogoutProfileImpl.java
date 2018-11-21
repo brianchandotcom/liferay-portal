@@ -482,8 +482,8 @@ public class SingleLogoutProfileImpl
 			SamlSloContext samlSloContext)
 		throws Exception {
 
-		if (samlSloContext.getSamlMessageContext() != null) {
-			String statusCode = StatusCode.SUCCESS_URI;
+		if (samlSloContext.getMessageContext() != null) {
+			String statusCode = StatusCode.SUCCESS;
 
 			for (SamlSloRequestInfo samlRequestInfo :
 					samlSloContext.getSamlSloRequestInfos()) {
@@ -491,8 +491,8 @@ public class SingleLogoutProfileImpl
 				String samlRequestInfoStatusCode =
 					samlRequestInfo.getStatusCode();
 
-				if (!samlRequestInfoStatusCode.equals(StatusCode.SUCCESS_URI)) {
-					statusCode = StatusCode.PARTIAL_LOGOUT_URI;
+				if (!samlRequestInfoStatusCode.equals(StatusCode.SUCCESS)) {
+					statusCode = StatusCode.PARTIAL_LOGOUT;
 
 					break;
 				}

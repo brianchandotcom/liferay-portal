@@ -790,33 +790,22 @@ public class JenkinsResultsParserUtil {
 		return excludedFiles;
 	}
 
-	public static String getGitHubAPIRateLimitStatus() {
-		StringBuilder sb = new StringBuilder();
-
+	public static String getGitHubAPIRateLimitStatusMessage() {
 		try {
 			JSONObject jsonObject = toJSONObject(
 				"https://api.github.com/rate_limit");
 
 			jsonObject = jsonObject.getJSONObject("rate");
 
-			sb.append(jsonObject.getInt("remaining"));
-
-			sb.append(" GitHub API calls out of ");
-			sb.append(jsonObject.getInt("limit"));
-
-			sb.append(" remain. GitHub API call limit will reset in ");
-			sb.append(
-				toDurationString(
-					(1000 * jsonObject.getLong("reset")) -
-						System.currentTimeMillis()));
-
-			sb.append(".");
+			return _getGitHubAPIRateLimitStatusMessage(
+				jsonObject.getInt("limit"), jsonObject.getInt("remaining"),
+				jsonObject.getLong("reset"));
 		}
 		catch (Exception e) {
 			System.out.println("Unable to get GitHub API rate limit");
 		}
 
-		return sb.toString();
+		return "";
 	}
 
 	public static String getGitHubApiUrl(
@@ -2050,6 +2039,21 @@ public class JenkinsResultsParserUtil {
 					urlConnection.setReadTimeout(timeout);
 				}
 
+				urlConnection.connect();
+
+				if (url.startsWith("https://api.github.com")) {
+					int limit = Integer.parseInt(
+						urlConnection.getHeaderField("X-RateLimit-Limit"));
+					int remaining = Integer.parseInt(
+						urlConnection.getHeaderField("X-RateLimit-Remaining"));
+					long reset = Long.parseLong(
+						urlConnection.getHeaderField("X-RateLimit-Reset"));
+
+					System.out.println(
+						_getGitHubAPIRateLimitStatusMessage(
+							limit, remaining, reset));
+				}
+
 				StringBuilder sb = new StringBuilder();
 
 				int bytes = 0;
@@ -2090,10 +2094,6 @@ public class JenkinsResultsParserUtil {
 				retryCount++;
 
 				if ((maxRetries >= 0) && (retryCount >= maxRetries)) {
-					if (url.startsWith("https://api.github.com")) {
-						System.out.println(getGitHubAPIRateLimitStatus());
-					}
-
 					throw ioe;
 				}
 
@@ -2345,6 +2345,25 @@ public class JenkinsResultsParserUtil {
 			String.valueOf(key.hashCode()), ".txt");
 
 		return new File(fileName);
+	}
+
+	private static String _getGitHubAPIRateLimitStatusMessage(
+		int limit, int remaining, long reset) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(remaining);
+
+		sb.append(" GitHub API calls out of ");
+		sb.append(limit);
+
+		sb.append(" remain. GitHub API call limit will reset in ");
+		sb.append(
+			toDurationString((1000 * reset) - System.currentTimeMillis()));
+
+		sb.append(".");
+
+		return sb.toString();
 	}
 
 	private static Properties _getProperties(File basePropertiesFile) {

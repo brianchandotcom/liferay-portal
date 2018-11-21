@@ -94,89 +94,102 @@
 	</command>
 
 	<command name="addContactInformation">
-		<var name="key_contactType" value="${contactType}" />
-
-		<execute function="Click#mouseDownMouseUp" locator1="UsersAndOrganizationsEditUser#CONTACT_ADD_BUTTON" />
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
 		<if>
-			<equals arg1="${makePrimary}" arg2="true" />
+			<isset var="contactType" />
 			<then>
-				<execute function="Check" locator1="Checkbox#ANY_CHECKBOX">
-					<var name="checkboxName" value="Make Primary" />
-				</execute>
+				<var name="key_contactType" value="${contactType}" />
+
+				<execute function="Click#mouseDownMouseUp" locator1="UsersAndOrganizationsEditUser#CONTACT_ADD_BUTTON" />
+
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+				<if>
+					<equals arg1="${makePrimary}" arg2="true" />
+					<then>
+						<execute function="Check" locator1="Checkbox#ANY_CHECKBOX">
+							<var name="checkboxName" value="Make Primary" />
+						</execute>
+					</then>
+				</if>
+
+				<!-- Addresses -->
+				<if>
+					<isset var="street1" />
+					<then>
+						<execute function="Type" locator1="TextInput#STREET_1" value1="${street1}" />
+					</then>
+				</if>
+
+				<if>
+					<isset var="city" />
+					<then>
+						<execute function="Type" locator1="TextInput#CITY" value1="${city}" />
+					</then>
+				</if>
+
+				<if>
+					<isset var="country" />
+					<then>
+						<execute function="Select" locator1="Select#COUNTRY" value1="${country}" />
+					</then>
+				</if>
+
+				<if>
+					<isset var="region" />
+					<then>
+						<execute function="Select" locator1="Select#REGION" value1="${region}" />
+					</then>
+				</if>
+
+				<if>
+					<isset var="postalCode" />
+					<then>
+						<execute function="Type" locator1="TextInput#POSTAL_CODE" value1="${postalCode}" />
+					</then>
+				</if>
+
+				<!-- Phone Numbers -->
+				<if>
+					<isset var="number" />
+					<then>
+						<execute function="Type" locator1="TextInput#NUMBER" value1="${number}" />
+					</then>
+				</if>
+
+				<if>
+					<isset var="extension" />
+					<then>
+						<execute function="Type" locator1="TextInput#EXTENSION" value1="${extension}" />
+					</then>
+				</if>
+
+				<!-- Additional Email Addresses -->
+				<if>
+					<isset var="address" />
+					<then>
+						<execute function="Type" locator1="TextInput#ADDRESS" value1="${address}" />
+					</then>
+				</if>
+
+				<!-- Websites -->
+				<if>
+					<isset var="url" />
+					<then>
+						<execute function="Type" locator1="TextInput#URL" value1="${url}" />
+					</then>
+				</if>
+
+				<execute function="SelectFrame" value1="relative=top" />
 			</then>
 		</if>
 
-		<!-- Addresses -->
+		<!-- Instant Messenger -->
 		<if>
-			<isset var="street1" />
+			<isset var="skype" />
 			<then>
-				<execute function="Type" locator1="TextInput#STREET_1" value1="${street1}" />
+				<execute function="Type" locator1="TextInput#SKYPE" value1="${skype}" />
 			</then>
 		</if>
-
-		<if>
-			<isset var="city" />
-			<then>
-				<execute function="Type" locator1="TextInput#CITY" value1="${city}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="country" />
-			<then>
-				<execute function="Select" locator1="Select#COUNTRY" value1="${country}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="region" />
-			<then>
-				<execute function="Select" locator1="Select#REGION" value1="${region}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="postalCode" />
-			<then>
-				<execute function="Type" locator1="TextInput#POSTAL_CODE" value1="${postalCode}" />
-			</then>
-		</if>
-
-		<!-- Phone Numbers -->
-		<if>
-			<isset var="number" />
-			<then>
-				<execute function="Type" locator1="TextInput#NUMBER" value1="${number}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="extension" />
-			<then>
-				<execute function="Type" locator1="TextInput#EXTENSION" value1="${extension}" />
-			</then>
-		</if>
-
-		<!-- Additional Email Addresses -->
-		<if>
-			<isset var="address" />
-			<then>
-				<execute function="Type" locator1="TextInput#ADDRESS" value1="${address}" />
-			</then>
-		</if>
-
-		<!-- Websites -->
-		<if>
-			<isset var="url" />
-			<then>
-				<execute function="Type" locator1="TextInput#URL" value1="${url}" />
-			</then>
-		</if>
-
-		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="Click" locator1="Button#SAVE" />
 
@@ -2121,36 +2134,49 @@
 	</command>
 
 	<command name="viewContactInformation">
-		<var name="key_searchContainerType" value="${searchContainerType}" />
-
-		<!-- Phone Numbers -->
 		<if>
-			<isset var="number" />
+			<isset var="searchContainerType" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="UsersAndOrganizations#USER_CONTACT_INFORMATION_PHONE_NUMBER_TABLE" value1="${number}" />
+				<var name="key_searchContainerType" value="${searchContainerType}" />
+
+				<!-- Phone Numbers -->
+				<if>
+					<isset var="number" />
+					<then>
+						<execute function="AssertTextEquals#assertPartialText" locator1="UsersAndOrganizations#USER_CONTACT_INFORMATION_PHONE_NUMBER_TABLE" value1="${number}" />
+					</then>
+				</if>
+
+				<if>
+					<isset var="extension" />
+					<then>
+						<execute function="AssertTextEquals#assertPartialText" locator1="UsersAndOrganizations#USER_CONTACT_INFORMATION_EXTENSION_TABLE" value1="${extension}" />
+					</then>
+				</if>
+
+				<!-- Additional Email Addresses -->
+				<if>
+					<isset var="address" />
+					<then>
+						<execute function="AssertTextEquals#assertPartialText" locator1="UsersAndOrganizations#USER_CONTACT_INFORMATION_EMAIL_ADDRESS_TABLE" value1="${address}" />
+					</then>
+				</if>
+
+				<!-- Websites -->
+				<if>
+					<isset var="url" />
+					<then>
+						<execute function="AssertTextEquals#assertPartialText" locator1="UsersAndOrganizations#USER_CONTACT_INFORMATION_EMAIL_ADDRESS_TABLE" value1="${url}" />
+					</then>
+				</if>
 			</then>
 		</if>
 
+		<!-- Instant Messenger -->
 		<if>
-			<isset var="extension" />
+			<isset var="skype" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="UsersAndOrganizations#USER_CONTACT_INFORMATION_EXTENSION_TABLE" value1="${extension}" />
-			</then>
-		</if>
-
-		<!-- Additional Email Addresses -->
-		<if>
-			<isset var="address" />
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="UsersAndOrganizations#USER_CONTACT_INFORMATION_EMAIL_ADDRESS_TABLE" value1="${address}" />
-			</then>
-		</if>
-
-		<!-- Websites -->
-		<if>
-			<isset var="url" />
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="UsersAndOrganizations#USER_CONTACT_INFORMATION_EMAIL_ADDRESS_TABLE" value1="${url}" />
+				<execute function="AssertTextEquals#assertValue" locator1="TextInput#SKYPE" value1="${skype}" />
 			</then>
 		</if>
 	</command>

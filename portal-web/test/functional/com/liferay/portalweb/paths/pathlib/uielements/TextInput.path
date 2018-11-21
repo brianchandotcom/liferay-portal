@@ -349,6 +349,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SKYPE</td>
+	<td>//div[label[contains(.,'Skype')]]/input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SOURCE_URL</td>
 	<td>//input[contains(@id,'_src')]</td>
 	<td></td>

@@ -4987,6 +4987,12 @@ version 2.0.1.
 - [LPS-87466]: Update the [Liferay Gradle Plugins Change Log Builder] dependency
 to version 1.1.2.
 
+## 5.5.113 - 2018-11-16
+
+### Changed
+- [LPS-87465]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
+2.0.12.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -5494,6 +5500,7 @@ to version 1.1.2.
 [LPS-87006]: https://issues.liferay.com/browse/LPS-87006
 [LPS-87293]: https://issues.liferay.com/browse/LPS-87293
 [LPS-87366]: https://issues.liferay.com/browse/LPS-87366
+[LPS-87465]: https://issues.liferay.com/browse/LPS-87465
 [LPS-87466]: https://issues.liferay.com/browse/LPS-87466
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

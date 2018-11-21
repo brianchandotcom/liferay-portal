@@ -5978,6 +5978,16 @@ to version 2.3.282.
 ### Changed
 - [LPS-87466]: Update the [Liferay Gradle Util] dependency to version 1.0.32.
 
+## 3.13.15 - 2018-11-16
+
+### Changed
+- [LPS-87465]: Update the [Liferay Gradle Plugins Gulp] dependency to version
+2.0.36.
+- [LPS-87465]: Update the [Liferay Gradle Plugins JS Module Config Generator]
+dependency to version 2.1.37.
+- [LPS-87465]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
+version 2.4.16.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -6443,5 +6453,6 @@ to version 2.3.282.
 [LPS-86916]: https://issues.liferay.com/browse/LPS-86916
 [LPS-87293]: https://issues.liferay.com/browse/LPS-87293
 [LPS-87366]: https://issues.liferay.com/browse/LPS-87366
+[LPS-87465]: https://issues.liferay.com/browse/LPS-87465
 [LPS-87466]: https://issues.liferay.com/browse/LPS-87466
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

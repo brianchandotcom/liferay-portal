@@ -748,14 +748,14 @@ public class SingleLogoutProfileImpl
 
 	protected void processSingleLogoutResponse(
 			HttpServletRequest request, HttpServletResponse response,
-			SAMLMessageContext<LogoutResponse, ?, ?> samlMessageContext)
+			MessageContext<?> messageContext)
 		throws Exception {
 
 		if (samlProviderConfigurationHelper.isRoleIdp()) {
-			processIdpLogoutResponse(request, response, samlMessageContext);
+			processIdpLogoutResponse(request, response, messageContext);
 		}
 		else if (samlProviderConfigurationHelper.isRoleSp()) {
-			processSpLogoutResponse(request, response, samlMessageContext);
+			processSpLogoutResponse(request, response, messageContext);
 		}
 	}
 

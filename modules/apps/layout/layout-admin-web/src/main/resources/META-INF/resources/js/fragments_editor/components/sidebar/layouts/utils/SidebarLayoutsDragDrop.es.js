@@ -93,10 +93,6 @@ class SidebarLayoutsDragDrop extends State {
 	 * @review
 	 */
 	_initializeDragAndDrop() {
-		if (this._dragDrop) {
-			this._dragDrop.dispose();
-		}
-
 		this._dragDrop = new DragDrop(
 			{
 				autoScroll: true,

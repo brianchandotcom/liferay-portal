@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true, service = IdentifierGenerationStrategyFactory.class
 )
-public class SamlIdentifierGenerator
+public class SamlIdentifierGeneratorStrategyFactory
 	implements IdentifierGenerationStrategyFactory {
 
 	@Override

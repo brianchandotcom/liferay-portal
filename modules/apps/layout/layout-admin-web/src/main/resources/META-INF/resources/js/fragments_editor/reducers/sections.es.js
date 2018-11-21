@@ -22,7 +22,7 @@ function addSectionReducer(state, actionType, payload) {
 					state.hoveredElementBorder
 				);
 
-				let nextData = _addSection(
+				const nextData = _addSection(
 					payload.layoutColumns,
 					state.layoutData,
 					position
@@ -34,21 +34,23 @@ function addSectionReducer(state, actionType, payload) {
 					state.classNameId,
 					state.classPK,
 					nextData
-				).then(
-					() => {
-						nextState = setIn(
-							nextState,
-							['layoutData'],
-							nextData
-						);
+				)
+					.then(
+						() => {
+							nextState = setIn(
+								nextState,
+								['layoutData'],
+								nextData
+							);
 
-						resolve(nextState);
-					}
-				).catch(
-					() => {
-						resolve(nextState);
-					}
-				);
+							resolve(nextState);
+						}
+					)
+					.catch(
+						() => {
+							resolve(nextState);
+						}
+					);
 			}
 			else {
 				resolve(nextState);
@@ -83,7 +85,7 @@ function _addSection(layoutColumns, layoutData, position) {
 				}
 			);
 
-			nextColumnId++;
+			nextColumnId += 1;
 		}
 	);
 

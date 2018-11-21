@@ -303,8 +303,8 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	}
 
 	@Override
-	public String getFilter() {
-		return _segmentsEntry.getFilter();
+	public String getFilterString() {
+		return _segmentsEntry.getFilterString();
 	}
 
 	/**

@@ -88,11 +88,13 @@ public class DDMDataProviderInstancesServlet extends BaseDDMFormBuilderServlet {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			String languageId = themeDisplay.getLanguageId();
+			String languageId = ParamUtil.getString(
+				request, "languageId", themeDisplay.getLanguageId());
 
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-			long scopeGroupId = themeDisplay.getScopeGroupId();
+			long scopeGroupId = ParamUtil.getLong(
+				request, "scopeGroupId", themeDisplay.getScopeGroupId());
 
 			long[] groupIds = _portal.getCurrentAndAncestorSiteGroupIds(
 				scopeGroupId);

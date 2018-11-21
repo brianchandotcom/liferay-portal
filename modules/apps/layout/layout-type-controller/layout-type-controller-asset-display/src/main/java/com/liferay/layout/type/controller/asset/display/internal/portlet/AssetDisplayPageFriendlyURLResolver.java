@@ -89,6 +89,7 @@ public class AssetDisplayPageFriendlyURLResolver
 
 		_portal.setPageTitle(assetEntry.getTitle(locale), request);
 		_portal.setPageDescription(assetEntry.getDescription(locale), request);
+
 		_portal.setPageKeywords(
 			_assetHelper.getAssetKeywords(
 				assetEntry.getClassName(), assetEntry.getClassPK()),

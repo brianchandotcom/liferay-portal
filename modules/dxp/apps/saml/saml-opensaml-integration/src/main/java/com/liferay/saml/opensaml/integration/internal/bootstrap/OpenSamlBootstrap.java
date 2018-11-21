@@ -76,15 +76,21 @@ public class OpenSamlBootstrap {
 
 			bootstrap();
 
+			XMLObjectProviderRegistry xmlObjectProviderRegistry =
+				ConfigurationService.get(XMLObjectProviderRegistry.class);
+
 			_parserPoolServiceRegistration = bundleContext.registerService(
-				ParserPool.class, Configuration.getParserPool(), null);
+				ParserPool.class, xmlObjectProviderRegistry.getParserPool(),
+				null);
 		}
 		finally {
 			currentThread.setContextClassLoader(classLoader);
 		}
 	}
 
-	protected static void initializeParserPool() throws ConfigurationException {
+	protected static void initializeParserPool()
+		throws InitializationException {
+
 		BasicParserPool parserPool = new BasicParserPool();
 
 		Map<String, Boolean> builderFeatures = new HashMap<>();
@@ -109,15 +115,20 @@ public class OpenSamlBootstrap {
 		parserPool.setMaxPoolSize(50);
 
 		try {
+			parserPool.initialize();
+
 			parserPool.getBuilder();
+
+			XMLObjectProviderRegistry xmlObjectProviderRegistry =
+				ConfigurationService.get(XMLObjectProviderRegistry.class);
+
+			xmlObjectProviderRegistry.setParserPool(parserPool);
 		}
-		catch (XMLParserException xmlpe) {
-			throw new ConfigurationException(
+		catch (Exception xmlpe) {
+			throw new InitializationException(
 				"Unable to initialize parser pool: " + xmlpe.getMessage(),
 				xmlpe);
 		}
-
-		Configuration.setParserPool(parserPool);
 	}
 
 	@Deactivate

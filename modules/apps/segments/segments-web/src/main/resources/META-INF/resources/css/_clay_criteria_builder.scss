@@ -1,0 +1,21 @@
+.criteria-builder {
+	max-width: 1280px;
+}
+
+.toolbar {
+	width: 100%;
+	margin-bottom: 16px;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.empty-state {
+	background-color: #F1F2F5;
+	border: 1px solid #E7E7ED;
+	border-left: 3px solid #4B9BFF;
+	border-radius: 4px;
+	color: #6B6C7E;
+	cursor: pointer;
+	font-weight: 600;
+	padding: 16px 32px;
+}

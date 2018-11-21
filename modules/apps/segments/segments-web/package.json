@@ -1,22 +1,83 @@
 {
-  "dependencies": {
-    "prop-types": "^15.6.2",
-    "react": "15.6.2",
-    "react-dom": "15.6.2"
-  },
-  "description": "Segments Web",
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "6.24.1",
-    "liferay-npm-bundler": "^2.0.0",
-    "liferay-npm-bundler-preset-liferay-dev": "^1.1.0"
-  },
-  "main": "js/index.es.js",
-  "name": "segments-web",
-  "private": true,
-  "scripts": {
-    "build": "babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler"
-  },
-  "version": "1.0.0"
+	"csfConfig": {
+		"js": {
+			"lint": {
+				"parserOptions": {
+					"ecmaVersion": 7
+				},
+				"env": {
+					"browser": true,
+					"es6": true,
+					"node": true
+				},
+				"parser": "babel-eslint",
+				"rules": {
+					"no-console": 0,
+					"require-jsdoc": 0,
+					"comma-dangle": 0,
+					"eol-last": [
+						2,
+						"never"
+					],
+					"max-len": 0,
+					"sort-vars": 2,
+					"valid-jsdoc": 0,
+					"no-invalid-this": 0,
+					"no-mixed-spaces-and-tabs": [
+						"warn",
+						"smart-tabs"
+					],
+					"no-confusing-arrow": 0
+				}
+			}
+		}
+	},
+	"version": "1.0.0",
+	"description": "",
+	"main": "js/index.es.js",
+	"name": "segments-web",
+	"scripts": {
+		"build": "babel --source-maps --verbose -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
+		"checkFormat": "npm run csf",
+		"csf": "csf src/**/*.js",
+		"format": "npm run csf -- -i"
+	},
+	"author": "",
+	"license": "BSD",
+	"dependencies": {
+		"babel-plugin-react-css-modules": "^4.0.0",
+		"prop-types": "^15.6.2",
+		"react": "^16.6.3",
+		"react-dom": "^16.6.3"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.0.0",
+		"@babel/core": "^7.1.6",
+		"@babel/plugin-proposal-class-properties": "^7.1.0",
+		"@babel/preset-env": "^7.1.6",
+		"@babel/preset-react": "^7.0.0",
+		"babel-core": "^7.0.0-bridge.0",
+		"babel-eslint": "^10.0.1",
+		"babel-loader": "^8.0.4",
+		"babel-plugin-transform-postcss": "^0.3.0",
+		"babel-preset-env": "^1.7.0",
+		"babel-preset-react": "6.24.1",
+		"check-source-formatting": "^2.0.13",
+		"css-loader": "^1.0.1",
+		"eslint": "^5.8.0",
+		"eslint-config-liferay": "^2.0.18",
+		"eslint-plugin-babel": "^5.3.0",
+		"eslint-plugin-react": "^7.11.1",
+		"eslint-plugin-sort-destructure-keys": "^1.1.0",
+		"liferay-npm-bundler": "^2.0.0",
+		"liferay-npm-bundler-preset-liferay-dev": "^1.1.0",
+		"node-sass": "^4.10.0",
+		"postcss-scss": "^2.0.0",
+		"sass-loader": "^7.1.0",
+		"style-loader": "^0.23.1",
+		"webpack": "^4.23.1",
+		"webpack-cli": "^3.1.2",
+		"webpack-config-clay": "^2.3.4"
+	},
+	"private": true
 }

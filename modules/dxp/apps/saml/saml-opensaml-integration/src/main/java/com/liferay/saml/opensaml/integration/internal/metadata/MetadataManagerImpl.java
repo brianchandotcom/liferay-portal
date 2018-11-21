@@ -107,6 +107,7 @@ public class MetadataManagerImpl
 		_cachingChainingMetadataResolver.setId(
 			CachingChainingMetadataResolver.class.getName());
 		_cachingChainingMetadataResolver.setParserPool(_parserPool);
+
 		_cachingChainingMetadataResolver.initialize();
 
 		SignatureValidationConfiguration signatureValidationConfiguration =

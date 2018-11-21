@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>DEFAULT_LANGUAGE</td>
-	<td>//div[contains(.,'Default Language')]//select</td>
+	<td>//select[contains(@id,'languageId')]</td>
 	<td></td>
 </tr>
 <tr>

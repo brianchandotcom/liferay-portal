@@ -1,0 +1,75 @@
+<definition component-name="portal-document-management">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Documents Management" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="DMDocument#tearDownCP" />
+
+				<execute macro="DMFolder#tearDownCP" />
+
+				<execute macro="User#logoutPG" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="Smoke" priority="5">
+		<property name="portal.acceptance" value="false" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Assets" />
+			<var name="configurationName" value="Asset Auto Tagging" />
+			<var name="configurationScope" value="System Scope" />
+		</execute>
+
+		<execute macro="AutoTagging#enableAutoTagging" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_4.jpg" />
+			<var name="dmDocumentTitle" value="DM Document JPG" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentCP">
+			<var name="dmDocumentTitle" value="DM Document JPG" />
+		</execute>
+
+		<execute macro="DMDocument#viewCP">
+			<var name="dmDocumentTitle" value="DM Document JPG" />
+		</execute>
+
+		<execute macro="AutoTagging#assertAutoTagPresent" />
+	</command>
+</definition>

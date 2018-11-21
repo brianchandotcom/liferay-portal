@@ -5025,6 +5025,20 @@ version 2.0.2.
 - [LPS-87466]: Update the [Liferay Gradle Plugins Change Log Builder] dependency
 to version 1.1.3.
 
+## 5.5.116 - 2018-11-19
+
+### Changed
+- [LPS-87466]: Update the [Liferay Gradle Plugins Dependency Checker] dependency
+to version 1.0.3.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Lang Merger] dependency to
+version 1.1.2.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Patcher] dependency to version
+1.0.16.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Poshi Runner] dependency to
+version 2.2.7.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Whip] dependency to version
+1.0.7.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

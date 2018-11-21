@@ -82,6 +82,11 @@ version 3.0.4.
 ### Changed
 - [LPS-87466]: Update the [Liferay Gradle Util] dependency to version 1.0.32.
 
+## 3.1.8 - 2018-11-19
+
+### Changed
+- [LPS-87466]: Update the [Liferay Gradle Util] dependency to version 1.0.33.
+
 [Command Line Tools for Metal.js]: https://github.com/metal/metal-cli
 [Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
 [Liferay Portal Tools Soy Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-soy-builder

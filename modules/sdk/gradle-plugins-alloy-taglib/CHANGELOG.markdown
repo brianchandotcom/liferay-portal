@@ -10,6 +10,11 @@
 ### Changed
 - [LPS-87466]: Update the [Liferay Gradle Util] dependency to version 1.0.32.
 
+## 2.0.2 - 2018-11-19
+
+### Changed
+- [LPS-87466]: Update the [Liferay Gradle Util] dependency to version 1.0.33.
+
 [Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-87466]: https://issues.liferay.com/browse/LPS-87466

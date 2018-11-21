@@ -6036,6 +6036,44 @@ version 1.0.6.
 value of `${project.buildDir}/jspc`. Copy the generated JSP Java files into the
 `Liferay Home` work directory.
 
+## 3.13.17 - 2018-11-19
+
+### Changed
+- [LPS-87466]: Update the [Liferay Gradle Plugins Alloy Taglib] dependency to
+version 2.0.2.
+- [LPS-87466]: Update the [Liferay Gradle Plugins CSS Builder] dependency to
+version 2.2.6.
+- [LPS-87466]: Update the [Liferay Gradle Plugins DB Support] dependency to
+version 1.0.5.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Jasper JSPC] dependency to
+version 2.0.5.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Javadoc Formatter] dependency
+to version 1.0.24.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Lang Builder] dependency to
+version 3.0.4.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.1.66.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.284.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Soy] dependency to version
+3.1.8.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Test Integration] dependency
+to version 2.4.2.
+- [LPS-87466]: Update the [Liferay Gradle Plugins TLD Formatter] dependency to
+version 1.0.9.
+- [LPS-87466]: Update the [Liferay Gradle Plugins TLDDoc Builder] dependency
+to version 1.3.3.
+- [LPS-87466]: Update the [Liferay Gradle Plugins Upgrade Table Builder]
+dependency to version 2.0.3.
+- [LPS-87466]: Update the [Liferay Gradle Plugins WSDD Builder] dependency to
+version 1.0.13.
+- [LPS-87466]: Update the [Liferay Gradle Plugins WSDL Builder] dependency to
+version 2.0.3.
+- [LPS-87466]: Update the [Liferay Gradle Plugins XML Formatter] dependency tos
+version 1.0.11.
+- [LPS-87466]: Update the [Liferay Gradle Plugins XSD Builder] dependency tos
+version 1.0.7.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

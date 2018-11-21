@@ -817,6 +817,147 @@
 		</execute>
 	</command>
 
+	<command name="StagingPublishAssetPublisherConfiguredCategoriesFilter" priority="3">
+		<description message="This is a use case for LPS-81196." />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Categorization" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name 1" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureCategoriesFilterPG">
+			<var name="categoryName" value="Category Name 1" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithCategoryCP">
+			<var name="categoryName" value="Category Name 1" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+			<var name="webContentContent" value="Web Content With One Category" />
+			<var name="webContentTitle" value="Web Content Title 1" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Categorization" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name 2" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithMultipleCategories">
+			<var name="categoryNameList" value="Category Name 1,Category Name 2" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+			<var name="webContentContent" value="Web Content With Two Categories" />
+			<var name="webContentTitle" value="Web Content Title 2" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="Web Content With One Category" />
+			<var name="assetTitle" value="Web Content Title 1" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="Web Content With Two Categories" />
+			<var name="assetTitle" value="Web Content Title 2" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#editConfigureCategoriesFilterPG">
+			<var name="categoryNames" value="Category Name 1,Category Name 2" />
+			<var name="queryContains" value="Does not Contain" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="Web Content With One Category" />
+			<var name="assetTitle" value="Web Content Title 1" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
+			<var name="assetContent" value="Web Content With Two Categories" />
+			<var name="assetTitle" value="Web Content Title 2" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="Web Content With One Category" />
+			<var name="assetTitle" value="Web Content Title 1" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
+			<var name="assetContent" value="Web Content With Two Categories" />
+			<var name="assetTitle" value="Web Content Title 2" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+	</command>
+
 	<command name="StagingPublishChildSiteWithReference" priority="4">
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Staging Test Page" />

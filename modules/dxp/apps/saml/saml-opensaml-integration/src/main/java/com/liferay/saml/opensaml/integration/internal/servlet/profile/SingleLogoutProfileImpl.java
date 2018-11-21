@@ -120,13 +120,13 @@ public class SingleLogoutProfileImpl
 	@Override
 	public boolean isSingleLogoutSupported(HttpServletRequest request) {
 		try {
-			MetadataProvider metadataProvider =
-				metadataManager.getMetadataProvider();
+			MetadataResolver metadataResolver =
+				metadataManager.getMetadataResolver();
 
 			String entityId = metadataManager.getDefaultIdpEntityId();
 
-			EntityDescriptor entityDescriptor =
-				metadataProvider.getEntityDescriptor(entityId);
+			EntityDescriptor entityDescriptor = metadataResolver.resolveSingle(
+				new CriteriaSet(new EntityIdCriterion(entityId)));
 
 			IDPSSODescriptor idpSSODescriptor =
 				entityDescriptor.getIDPSSODescriptor(SAMLConstants.SAML20P_NS);
@@ -244,23 +244,24 @@ public class SingleLogoutProfileImpl
 		}
 
 		try {
-			SAMLMessageContext<?, ?, ?> samlMessageContext = decodeSamlMessage(
-				request, response, samlBinding, true);
+			MessageContext<?> messageContext = decodeSamlMessage(
+				request, response, samlBinding);
 
-			Object inboundSamlMessage =
-				samlMessageContext.getInboundSAMLMessage();
+			InOutOperationContext inOutOperationContext =
+				messageContext.getSubcontext(InOutOperationContext.class);
+
+			MessageContext inboundMessageContext =
+				inOutOperationContext.getInboundMessageContext();
+
+			Object inboundSamlMessage = inboundMessageContext.getMessage();
 
 			if (inboundSamlMessage instanceof LogoutRequest) {
 				processSingleLogoutRequest(
-					request, response,
-					(SAMLMessageContext<LogoutRequest, LogoutResponse, NameID>)
-						samlMessageContext);
+					request, response, messageContext);
 			}
 			else if (inboundSamlMessage instanceof LogoutResponse) {
 				processSingleLogoutResponse(
-					request, response,
-					(SAMLMessageContext<LogoutResponse, ?, ?>)
-						samlMessageContext);
+					request, response, messageContext);
 			}
 			else {
 				throw new SamlException(

@@ -5367,7 +5367,9 @@ ${output.content}</echo>
 						<equals arg1="${skip.service.builder.full}" arg2="true" />
 					</not>
 					<then>
-						<ant dir="portal-impl" target="build-services" />
+						<ant dir="portal-impl" target="build-services">
+							<property name="com.liferay.portal.tools.service.builder.ignore.local" value="false" />
+						</ant>
 					</then>
 					<else>
 						<if>

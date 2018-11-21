@@ -362,20 +362,31 @@ public class MetadataManagerImpl
 
 	@Override
 	public SignatureTrustEngine getSignatureTrustEngine() throws SamlException {
-		ChainingSignatureTrustEngine chainingSignatureTrustEngine =
-			new ChainingSignatureTrustEngine();
-
-		List<SignatureTrustEngine> signatureTrustEngines =
-			chainingSignatureTrustEngine.getChain();
+		List<SignatureTrustEngine> signatureTrustEngines = new ArrayList<>();
 
 		MetadataCredentialResolver metadataCredentialResolver =
-			new MetadataCredentialResolver(getMetadataProvider());
-
-		SecurityConfiguration securityConfiguration =
-			Configuration.getGlobalSecurityConfiguration();
+			new MetadataCredentialResolver();
 
 		KeyInfoCredentialResolver keyInfoCredentialResolver =
-			securityConfiguration.getDefaultKeyInfoCredentialResolver();
+			DefaultSecurityConfigurationBootstrap.
+				buildBasicInlineKeyInfoCredentialResolver();
+
+		metadataCredentialResolver.setKeyInfoCredentialResolver(
+			keyInfoCredentialResolver);
+
+		PredicateRoleDescriptorResolver predicateRoleDescriptorResolver =
+			new PredicateRoleDescriptorResolver(getMetadataResolver());
+
+		metadataCredentialResolver.setRoleDescriptorResolver(
+			predicateRoleDescriptorResolver);
+
+		try {
+			metadataCredentialResolver.initialize();
+			predicateRoleDescriptorResolver.initialize();
+		}
+		catch (ComponentInitializationException cie) {
+			throw new SamlException(cie);
+		}
 
 		SignatureTrustEngine signatureTrustEngine =
 			new ExplicitKeySignatureTrustEngine(
@@ -388,7 +399,7 @@ public class MetadataManagerImpl
 
 		signatureTrustEngines.add(signatureTrustEngine);
 
-		return chainingSignatureTrustEngine;
+		return new ChainingSignatureTrustEngine(signatureTrustEngines);
 	}
 
 	@Override

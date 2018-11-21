@@ -63,7 +63,7 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 
 				<aui:input checked="<%= (segmentsEntry == null) ? false : segmentsEntry.isActive() %>" name="active" type="toggle-switch" />
 
-				<aui:input checked="<%= (segmentsEntry != null) && Validator.isNotNull(segmentsEntry.getFilter()) %>" disabled="<%= segmentsEntry != null %>" name="dynamic" type="toggle-switch" />
+				<aui:input checked="<%= (segmentsEntry != null) && Validator.isNotNull(segmentsEntry.getFilterString()) %>" disabled="<%= segmentsEntry != null %>" name="dynamic" type="toggle-switch" />
 
 				<div id="<portlet:namespace />criteriaWrapper">
 
@@ -96,7 +96,7 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 						}
 						%>
 
-						<aui:input label="<%= segmentsCriteriaContributor.getLabel(locale) %>" name='<%= "criterionFilter" + segmentsCriteriaContributor.getKey() %>' type="textarea" value="<%= (criterion != null) ? criterion.getFilter() : StringPool.BLANK %>" />
+						<aui:input label="<%= segmentsCriteriaContributor.getLabel(locale) %>" name='<%= "criterionFilter" + segmentsCriteriaContributor.getKey() %>' type="textarea" value="<%= (criterion != null) ? criterion.getFilterString() : StringPool.BLANK %>" />
 
 					<%
 					}

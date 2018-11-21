@@ -200,7 +200,7 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 	protected void validateCriteria(Criteria criteria, boolean dynamic)
 		throws SegmentsEntryCriteriaException {
 
-		if (dynamic && Validator.isNull(criteria.getFilter())) {
+		if (dynamic && Validator.isNull(criteria.getFilterString())) {
 			throw new SegmentsEntryCriteriaException();
 		}
 	}

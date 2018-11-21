@@ -32,14 +32,14 @@ public final class Criteria implements Serializable {
 	}
 
 	public void addCriterion(
-		String key, String filter, Conjunction conjunction) {
+		String key, String filterString, Conjunction conjunction) {
 
-		_criterionMap.put(key, new Criterion(filter, conjunction));
+		_criterionMap.put(key, new Criterion(filterString, conjunction));
 	}
 
-	public void addFilter(String filter, Conjunction conjunction) {
-		if (Validator.isNull(_filter)) {
-			_filter = filter;
+	public void addFilter(String filterString, Conjunction conjunction) {
+		if (Validator.isNull(_filterString)) {
+			_filterString = filterString;
 
 			return;
 		}
@@ -47,16 +47,16 @@ public final class Criteria implements Serializable {
 		StringBundler sb = new StringBundler(9);
 
 		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(_filter);
+		sb.append(_filterString);
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 		sb.append(StringPool.SPACE);
 		sb.append(conjunction.getValue());
 		sb.append(StringPool.SPACE);
 		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(filter);
+		sb.append(filterString);
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
-		_filter = sb.toString();
+		_filterString = sb.toString();
 	}
 
 	public Criterion getCriterion(String key) {
@@ -67,8 +67,8 @@ public final class Criteria implements Serializable {
 		return _criterionMap;
 	}
 
-	public String getFilter() {
-		return _filter;
+	public String getFilterString() {
+		return _filterString;
 	}
 
 	public static final class Criterion implements Serializable {
@@ -76,8 +76,8 @@ public final class Criteria implements Serializable {
 		public Criterion() {
 		}
 
-		public Criterion(String filter, Conjunction conjunction) {
-			_filter = filter;
+		public Criterion(String filterString, Conjunction conjunction) {
+			_filterString = filterString;
 			_conjunction = conjunction.getValue();
 		}
 
@@ -85,12 +85,12 @@ public final class Criteria implements Serializable {
 			return _conjunction;
 		}
 
-		public String getFilter() {
-			return _filter;
+		public String getFilterString() {
+			return _filterString;
 		}
 
 		private String _conjunction;
-		private String _filter;
+		private String _filterString;
 
 	}
 
@@ -127,6 +127,6 @@ public final class Criteria implements Serializable {
 	}
 
 	private Map<String, Criterion> _criterionMap = new HashMap();
-	private String _filter;
+	private String _filterString;
 
 }

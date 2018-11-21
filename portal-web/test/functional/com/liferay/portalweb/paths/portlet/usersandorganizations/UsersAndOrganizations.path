@@ -99,6 +99,22 @@
 	<td>//tr[contains(.,'${key_primaryValue}')]//span/span[contains(.,'PRIMARY')]</td>
 	<td></td>
 </tr>
+<!--USER_CONTACT_INFORMATION_TABLE-->
+<tr>
+	<td>USER_CONTACT_INFORMATION_PHONE_NUMBER_TABLE</td>
+	<td>//table[contains(@data-searchcontainerid,'${key_searchContainerType}')]//tr[1]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_CONTACT_INFORMATION_EXTENSION_TABLE</td>
+	<td>//table[contains(@data-searchcontainerid,'${key_searchContainerType}')]//tr[1]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_CONTACT_INFORMATION_PRIMARY_TABLE</td>
+	<td>//table[contains(@data-searchcontainerid,'${key_searchContainerType}')]//tr[contains(.,'${key_contactInfoPrimaryValue}')]/td/span/span[contains(.,'PRIMARY')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

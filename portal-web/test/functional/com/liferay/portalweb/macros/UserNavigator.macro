@@ -13,7 +13,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoEditAddress">
+	<command name="gotoEdit">
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#TABLE_VERTICAL_ELLIPSIS">
 			<var name="key_rowEntry" value="${rowEntry}" />
 		</execute>

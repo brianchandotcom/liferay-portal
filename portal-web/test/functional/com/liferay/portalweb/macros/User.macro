@@ -48,47 +48,6 @@
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>
 
-	<command name="addAddress">
-		<execute function="Click#mouseDownMouseUp" locator1="UsersAndOrganizationsEditUser#ADDRESSES_ADD_BUTTON" />
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<if>
-			<equals arg1="${makePrimary}" arg2="true" />
-			<then>
-				<execute function="Check" locator1="Checkbox#ANY_CHECKBOX">
-					<var name="checkboxName" value="Make Primary" />
-				</execute>
-			</then>
-		</if>
-
-		<execute function="Type" locator1="TextInput#STREET_1" value1="${street1}" />
-
-		<execute function="Type" locator1="TextInput#CITY" value1="${city}" />
-
-		<if>
-			<isset var="country" />
-			<then>
-				<execute function="Select" locator1="Select#COUNTRY" value1="${country}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="region" />
-			<then>
-				<execute function="Select" locator1="Select#REGION" value1="${region}" />
-			</then>
-		</if>
-
-		<execute function="Type" locator1="TextInput#POSTAL_CODE" value1="${postalCode}" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-
-		<execute function="Click" locator1="Button#SAVE" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
 	<command name="addAddressViaMyAccount">
 		<execute function="Click" locator1="NavBar#ADDRESSES" />
 
@@ -132,6 +91,82 @@
 		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="addContactInformation">
+		<var name="key_contactType" value="${contactType}" />
+
+		<execute function="Click#mouseDownMouseUp" locator1="UsersAndOrganizationsEditUser#CONTACT_ADD_BUTTON" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<if>
+			<equals arg1="${makePrimary}" arg2="true" />
+			<then>
+				<execute function="Check" locator1="Checkbox#ANY_CHECKBOX">
+					<var name="checkboxName" value="Make Primary" />
+				</execute>
+			</then>
+		</if>
+
+		<!-- Addresses -->
+
+		<if>
+			<isset var="street1" />
+			<then>
+				<execute function="Type" locator1="TextInput#STREET_1" value1="${street1}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="city" />
+			<then>
+				<execute function="Type" locator1="TextInput#CITY" value1="${city}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="country" />
+			<then>
+				<execute function="Select" locator1="Select#COUNTRY" value1="${country}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="region" />
+			<then>
+				<execute function="Select" locator1="Select#REGION" value1="${region}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="postalCode" />
+			<then>
+				<execute function="Type" locator1="TextInput#POSTAL_CODE" value1="${postalCode}" />
+			</then>
+		</if>
+
+		<!-- Phone Numbers -->
+
+		<if>
+			<isset var="number" />
+			<then>
+				<execute function="Type" locator1="TextInput#NUMBER" value1="${number}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="extension" />
+			<then>
+				<execute function="Type" locator1="TextInput#EXTENSION" value1="${extension}" />
+			</then>
+		</if>
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="Click" locator1="Button#SAVE" />
+
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="addCP">
@@ -241,7 +276,7 @@
 				<var name="userMiddleName" value="${userMiddleName}" />
 				<var name="userScreenName" value="${userName}" />
 				<var name="userScreenNameVariation" value="${userScreenNameVariation}" />
-			</execute>
+			</execute>fextension
 		</for>
 	</command>
 
@@ -1781,7 +1816,7 @@
 		</execute>
 	</command>
 
-	<command name="removeAddress">
+	<command name="removeContactInformation">
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#TABLE_VERTICAL_ELLIPSIS">
 			<var name="key_rowEntry" value="${rowEntry}" />
 		</execute>
@@ -2071,6 +2106,26 @@
 		</if>
 	</command>
 
+	<command name="viewContactInformation">
+		<var name="key_searchContainerType" value="${searchContainerType}" />
+
+		<!-- Phone Numbers -->
+
+		<if>
+			<isset var="number" />
+			<then>
+				<execute function="AssertTextEquals#assertPartialText" locator1="UsersAndOrganizations#USER_CONTACT_INFORMATION_PHONE_NUMBER_TABLE" value1="${number}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="extension" />
+			<then>
+				<execute function="AssertTextEquals#assertPartialText" locator1="UsersAndOrganizations#USER_CONTACT_INFORMATION_EXTENSION_TABLE" value1="${extension}" />
+			</then>
+		</if>
+	</command>
+
 	<command name="viewCP">
 		<if>
 			<equals arg1="${userEmailAddressVariation}" arg2="At" />
@@ -2126,9 +2181,24 @@
 	</command>
 
 	<command name="viewIsPrimary">
-		<var name="key_primaryValue" value="${primaryValue}" />
+		<if>
+			<isset var="primaryValue" />
+			<then>
+				<var name="key_primaryValue" value="${primaryValue}" />
 
-		<execute function="AssertElementPresent" locator1="UsersAndOrganizations#USER_ADDRESS_PRIMARY_TABLE" />
+				<execute function="AssertElementPresent" locator1="UsersAndOrganizations#USER_ADDRESS_PRIMARY_TABLE" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="searchContainerType" />
+			<then>
+				<var name="key_contactInfoPrimaryValue" value="${contactInfoPrimaryValue}" />
+				<var name="key_searchContainerType" value="${searchContainerType}" />
+
+				<execute function="AssertElementPresent" locator1="UsersAndOrganizations#USER_CONTACT_INFORMATION_PRIMARY_TABLE" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewLoggedInPG">
@@ -2185,9 +2255,24 @@
 	</command>
 
 	<command name="viewNotPrimary">
-		<var name="key_primaryValue" value="${primaryValue}" />
+		<if>
+			<isset var="primaryValue" />
+			<then>
+				<var name="key_primaryValue" value="${primaryValue}" />
 
-		<execute function="AssertElementNotPresent" locator1="UsersAndOrganizations#USER_ADDRESS_PRIMARY_TABLE" />
+				<execute function="AssertElementNotPresent" locator1="UsersAndOrganizations#USER_ADDRESS_PRIMARY_TABLE" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="searchContainerType" />
+			<then>
+				<var name="key_contactInfoPrimaryValue" value="${contactInfoPrimaryValue}" />
+				<var name="key_searchContainerType" value="${searchContainerType}" />
+
+				<execute function="AssertElementNotPresent" locator1="UsersAndOrganizations#USER_CONTACT_INFORMATION_PRIMARY_TABLE" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewNoUsersFoundCP">

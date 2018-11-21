@@ -294,8 +294,9 @@
 
 		<execute macro="UserNavigator#gotoContact" />
 
-		<execute macro="User#addAddress">
+		<execute macro="User#addContactInformation">
 			<var name="city" value="Diamond Bar" />
+			<var name="contactType" value="Add Address" />
 			<var name="country" value="United States" />
 			<var name="postalCode" value="91765" />
 			<var name="region" value="California" />
@@ -314,8 +315,9 @@
 			<var name="primaryValue" value="1400 Montefino Ave" />
 		</execute>
 
-		<execute macro="User#addAddress">
+		<execute macro="User#addContactInformation">
 			<var name="city" value="Chicago" />
+			<var name="contactType" value="Add Address" />
 			<var name="makePrimary" value="true" />
 			<var name="postalCode" value="60606" />
 			<var name="street1" value="205 West Wacker Dr" />a
@@ -325,8 +327,9 @@
 			<var name="primaryValue" value="205 West Wacker Dr" />
 		</execute>
 
-		<execute macro="User#addAddress">
+		<execute macro="User#addContactInformation">
 			<var name="city" value="Raleigh" />
+			<var name="contactType" value="Add Address" />
 			<var name="postalCode" value="27607" />
 			<var name="street1" value="4000 Westchase Blvd" />a
 		</execute>
@@ -343,7 +346,7 @@
 			<var name="primaryValue" value="4000 Westchase Blvd" />
 		</execute>
 
-		<execute macro="UserNavigator#gotoEditAddress">
+		<execute macro="UserNavigator#gotoEdit">
 			<var name="rowEntry" value="205 West Wacker Dr" />
 		</execute>
 
@@ -363,19 +366,19 @@
 			<var name="rowEntry" value="205 West Wacker Dr" />
 		</execute>
 
-		<execute macro="User#viewIsPrimary">
-			<var name="primaryValue" value="205 West Wacker Dr" />
-		</execute>
-
 		<execute macro="User#viewNotPrimary">
 			<var name="primaryValue" value="1400 Montefino Ave" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="primaryValue" value="205 West Wacker Dr" />
 		</execute>
 
 		<execute macro="User#viewNotPrimary">
 			<var name="primaryValue" value="4000 Westchase Blvd" />
 		</execute>
 
-		<execute macro="User#removeAddress">
+		<execute macro="User#removeContactInformation">
 			<var name="rowEntry" value="4000 Westchase Blvd" />
 		</execute>
 
@@ -383,12 +386,140 @@
 			<var name="primaryValue" value="205 West Wacker Dr" />
 		</execute>
 
-		<execute macro="User#removeAddress">
+		<execute macro="User#removeContactInformation">
 			<var name="rowEntry" value="205 West Wacker Dr" />
 		</execute>
 
 		<execute macro="User#viewIsPrimary">
 			<var name="primaryValue" value="1400 Montefino Ave" />
+		</execute>
+	</command>
+
+	<command name="EditUserPhoneNumbers" priority="4">
+		<execute macro="JSONUser#addUser">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="UserNavigator#gotoUser">
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="UserNavigator#gotoContact" />
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Contact Information" />
+		</execute>
+
+		<execute macro="User#addContactInformation">
+			<var name="contactType" value="Add Phone Number" />
+			<var name="extension" value="111" />
+			<var name="number" value="1111111111" />
+		</execute>
+
+		<execute macro="User#viewContactInformation">
+			<var name="extension" value="111" />
+			<var name="number" value="1111111111" />
+			<var name="searchContainerType" value="phonesSearchContainer" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="contactInfoPrimaryValue" value="1111111111" />
+			<var name="searchContainerType" value="phonesSearchContainer" />
+		</execute>
+
+		<execute macro="User#addContactInformation">
+			<var name="contactType" value="Add Phone Number" />
+			<var name="makePrimary" value="true" />
+			<var name="number" value="2222222222" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="contactInfoPrimaryValue" value="2222222222" />
+			<var name="searchContainerType" value="phonesSearchContainer" />
+		</execute>
+
+		<execute macro="User#addContactInformation">
+			<var name="contactType" value="Add Phone Number" />
+			<var name="number" value="3333333333" />
+		</execute>
+
+		<execute macro="User#viewNotPrimary">
+			<var name="contactInfoPrimaryValue" value="1111111111" />
+			<var name="searchContainerType" value="phonesSearchContainer" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="contactInfoPrimaryValue" value="2222222222" />
+			<var name="searchContainerType" value="phonesSearchContainer" />
+		</execute>
+
+		<execute macro="User#viewNotPrimary">
+			<var name="contactInfoPrimaryValue" value="3333333333" />
+			<var name="searchContainerType" value="phonesSearchContainer" />
+		</execute>
+
+		<execute macro="UserNavigator#gotoEdit">
+			<var name="rowEntry" value="2222222222" />
+		</execute>
+
+		<execute macro="User#editPrimary">
+			<var name="makePrimary" value="false" />
+		</execute>
+
+		<execute macro="User#viewNotPrimary">
+			<var name="contactInfoPrimaryValue" value="2222222222" />
+			<var name="searchContainerType" value="phonesSearchContainer" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="contactInfoPrimaryValue" value="3333333333" />
+			<var name="searchContainerType" value="phonesSearchContainer" />
+		</execute>
+
+		<execute macro="User#makePrimary">
+			<var name="rowEntry" value="2222222222" />
+		</execute>
+
+		<execute macro="User#viewNotPrimary">
+			<var name="contactInfoPrimaryValue" value="1111111111" />
+			<var name="searchContainerType" value="phonesSearchContainer" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="contactInfoPrimaryValue" value="2222222222" />
+			<var name="searchContainerType" value="phonesSearchContainer" />
+		</execute>
+
+		<execute macro="User#viewNotPrimary">
+			<var name="contactInfoPrimaryValue" value="3333333333" />
+			<var name="searchContainerType" value="phonesSearchContainer" />
+		</execute>
+
+		<execute macro="User#removeContactInformation">
+			<var name="rowEntry" value="3333333333" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="contactInfoPrimaryValue" value="2222222222" />
+			<var name="searchContainerType" value="phonesSearchContainer" />
+		</execute>
+
+		<execute macro="User#removeContactInformation">
+			<var name="rowEntry" value="2222222222" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="contactInfoPrimaryValue" value="1111111111" />
+			<var name="searchContainerType" value="phonesSearchContainer" />
 		</execute>
 	</command>
 

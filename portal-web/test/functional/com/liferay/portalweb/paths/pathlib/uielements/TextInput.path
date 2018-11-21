@@ -114,6 +114,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXTENSION</td>
+	<td>//div[label[contains(.,'Extension')]]/input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_FILTER_INPUT</td>
 	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
 	<td></td>
@@ -251,6 +256,11 @@
 <tr>
 	<td>NEW_TITLE</td>
 	<td>//input[contains(@id,'newTitle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NUMBER</td>
+	<td>//div[label[contains(.,'Number')]]/input</td>
 	<td></td>
 </tr>
 <tr>

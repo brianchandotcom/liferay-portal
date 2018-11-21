@@ -82,16 +82,15 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 		boolean active = ParamUtil.getBoolean(actionRequest, "active", true);
 		boolean dynamic = ParamUtil.getBoolean(actionRequest, "dynamic", true);
 		String key = ParamUtil.getString(actionRequest, "key", name);
-
 		String type = ParamUtil.getString(actionRequest, "type");
-
-		Criteria criteria = getCriteria(actionRequest, type);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			SegmentsEntry.class.getName(), actionRequest);
 
 		try {
 			SegmentsEntry segmentsEntry = null;
+
+			Criteria criteria = getCriteria(actionRequest, type);
 
 			validateCriteria(criteria, dynamic);
 
@@ -143,11 +142,11 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected Criteria getCriteria(ActionRequest actionRequest, String type) {
+		Criteria criteria = new Criteria();
+
 		List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
 			_segmentsCriteriaContributorRegistry.
 				getSegmentsCriteriaContributors(type);
-
-		Criteria criteria = new Criteria();
 
 		for (SegmentsCriteriaContributor segmentsCriteriaContributor :
 				segmentsCriteriaContributors) {

@@ -275,7 +275,7 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 		int total = 0;
 
 		if (Validator.isNotNull(name)) {
-			name = (CustomSQLUtil.keywords(name))[0];
+			name = CustomSQLUtil.keywords(name)[0];
 
 			vocabularies = getGroupVocabularies(groupId, name, start, end, obc);
 			total = getGroupVocabulariesCount(groupId, name);

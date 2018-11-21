@@ -374,7 +374,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		int total = 0;
 
 		if (Validator.isNotNull(name)) {
-			name = (CustomSQLUtil.keywords(name))[0];
+			name = CustomSQLUtil.keywords(name)[0];
 
 			categories = getVocabularyCategories(
 				groupId, name, vocabularyId, start, end, obc);

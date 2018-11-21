@@ -121,7 +121,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 		int total = 0;
 
 		if (Validator.isNotNull(name)) {
-			name = (CustomSQLUtil.keywords(name))[0];
+			name = CustomSQLUtil.keywords(name)[0];
 
 			tags = getTags(groupId, name, start, end);
 			total = getTagsCount(groupId, name);

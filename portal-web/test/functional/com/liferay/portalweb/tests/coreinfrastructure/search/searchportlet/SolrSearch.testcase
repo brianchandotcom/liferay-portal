@@ -1887,112 +1887,102 @@
 	</command>
 
 	<command name="ViewMultipleFacetURLs" priority="5">
-		<property name="osgi.app.includes" value="bookmarks,portal-search-solr" />
+		<property name="osgi.app.includes" value="bookmarks,portal-search-solr7" />
 
 		<var name="searchPage" value="Search Page" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Categorization" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
+		<execute macro="JSONCategory#addVocabularyByGroupName">
+			<var name="groupName" value="Guest" />
+			<var name="title" value="Fruit Vocabulary" />
 		</execute>
 
-		<execute macro="Vocabulary#addCP">
+		<execute macro="JSONCategory#addCategoryByGroupName">
+			<var name="groupName" value="Guest" />
+			<var name="title" value="organic" />
 			<var name="vocabularyName" value="Fruit Vocabulary" />
 		</execute>
 
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="organic" />
-			<var name="vocabularyName" value="Fruit Vocabulary" />
-		</execute>
-
-		<execute macro="Category#getAssetId">
+		<execute macro="JSONCategory#getCategoryId">
 			<return name="organicCategoryId" />
-			<var name="assetName" value="organic" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentFolder#addCP">
-			<var name="folderDescription" value="WC Folder Name Description 1" />
-			<var name="folderName" value="WC Folder Name 1" />
-		</execute>
-
-		<execute macro="WebContent#getAssetId">
-			<return name="webContentFolderId1" />
-			<var name="folderAsset" value="WC Folder Name 1" />
-		</execute>
-
-		<execute macro="WebContentFolder#gotoCP">
-			<var name="folderName" value="WC Folder Name 1" />
-			<var name="webContentTitle" value="WC Folder Name 1" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="organic" />
+			<var name="groupName" value="Guest" />
 			<var name="vocabularyName" value="Fruit Vocabulary" />
-			<var name="webContentTitle" value="apple" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="apple" />
+		<var name="webContentFolderName1" value="WC Folder Name 1" />
+
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+
+		<var name="curl"><![CDATA[
+			${portalURL}/api/jsonws/journal.journalfolder/add-folder \
+				-u test@liferay.com:test \
+				-d groupId=20126 \
+				-d parentFolderId=0 \
+				-d name=${webContentFolderName1} \
+				-d description=''
+		]]></var>
+
+		<var method="JSONCurlUtil#post('${curl}', '$.[?(@[\'name\'] == \'${webContentFolderName1}\')][\'folderId\']')" name="webContentFolderId1" />
+
+		<var method="StringUtil#replace('${webContentFolderId1}', '[&quot;', '')" name="webContentFolderId1" />
+
+		<var method="StringUtil#replace('${webContentFolderId1}', '&quot;]', '')" name="webContentFolderId1" />
+
+		<var name="webContentserviceContext1"><![CDATA[{"assetTagNames": ["ripe"], "assetCategoryIds": ["${organicCategoryId}"]}]]></var>
+
+		<execute macro="JSONWebcontent#addWebContent">
+			<var name="content" value="WC WebContent Content 1" />
+			<var name="folderId" value="${webContentFolderId1}" />
+			<var name="groupName" value="Guest" />
+			<var name="serviceContext" value="${webContentserviceContext1}" />
+			<var name="title" value="apple" />
 		</execute>
 
-		<execute macro="WebContent#addWithTagCP">
-			<var name="tagNameList" value="ripe" />
+		<var name="webContentFolderName2" value="WC Folder Name 2" />
+
+		<var method="PropsUtil#get('portal.url')" name="portalURL" />
+
+		<var name="curl"><![CDATA[
+			${portalURL}/api/jsonws/journal.journalfolder/add-folder \
+				-u test@liferay.com:test \
+				-d groupId=20126 \
+				-d parentFolderId=0 \
+				-d name=${webContentFolderName2} \
+				-d description=''
+		]]></var>
+
+		<var method="JSONCurlUtil#post('${curl}', '$.[?(@[\'name\'] == \'${webContentFolderName2}\')][\'folderId\']')" name="webContentFolderId2" />
+
+		<var method="StringUtil#replace('${webContentFolderId2}', '[&quot;', '')" name="webContentFolderId2" />
+
+		<var method="StringUtil#replace('${webContentFolderId2}', '&quot;]', '')" name="webContentFolderId2" />
+
+		<var name="webContentserviceContext1"><![CDATA[{"assetTagNames": ["fresh"]}]]></var>
+
+		<execute macro="JSONWebcontent#addWebContent">
+			<var name="content" value="WC WebContent Content 2" />
+			<var name="folderId" value="${webContentFolderId2}" />
+			<var name="groupName" value="Guest" />
+			<var name="serviceContext" value="${webContentserviceContext1}" />
+			<var name="title" value="orange" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentFolder#addCP">
-			<var name="folderDescription" value="WC Folder Name Description 2" />
-			<var name="folderName" value="WC Folder Name 2" />
-		</execute>
-
-		<execute macro="WebContent#getAssetId">
-			<return name="webContentFolderId2" />
-			<var name="folderAsset" value="WC Folder Name 2" />
-		</execute>
-
-		<execute macro="WebContentFolder#gotoCP">
-			<var name="folderName" value="WC Folder Name 2" />
-			<var name="webContentTitle" value="WC Folder Name 2" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addWithTagCP">
-			<var name="tagNameList" value="fresh" />
-			<var name="webContentTitle" value="orange" />
-		</execute>
-
-		<execute macro="Site#getSiteId">
+		<execute macro="JSONGroup#_getSiteIdByGroupName">
 			<return name="liferaySiteId" />
+			<var name="groupName" value="Guest" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="New Site" />
 		</execute>
 
-		<execute macro="Site#addCP">
-			<var name="siteName" value="New Site" />
-			<var name="siteType" value="Blank" />
-		</execute>
-
-		<execute macro="Site#getSiteId">
+		<execute macro="JSONGroup#_getSiteIdByGroupName">
 			<return name="newSiteId" />
+			<var name="groupName" value="New Site" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="New Site" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -2009,17 +1999,16 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
+		<execute macro="JSONUser#addUser">
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
 			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="JSONRole#assignRoleToUser">
+			<var name="roleTitle" value="Administrator" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -2030,17 +2019,6 @@
 
 		<execute macro="User#editPasswordCP">
 			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Users" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#assignRegularRoleCP">
-			<var name="roleTitle" value="Administrator" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
@@ -2060,6 +2038,7 @@
 		<execute macro="Bookmark#addWithTagCP">
 			<var name="bookmarkName" value="banana" />
 			<var name="bookmarkURL" value="https://www.liferay.com" />
+			<var name="skipViewBookmark" value="true" />
 			<var name="tagNameList" value="fresh,ripe,test" />
 		</execute>
 

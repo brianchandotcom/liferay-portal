@@ -5005,6 +5005,12 @@ version 2.2.6.
 - [LPS-87466]: Update the [Liferay Gradle Plugins Whip] dependency to version
 1.0.6.
 
+## 5.5.114 - 2018-11-16
+
+### Fixed
+- [LPS-87477]: Lazily evaluate the `replacement` property to avoid a
+`NumberFormatException` during the configuration phase.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -5515,6 +5521,7 @@ version 2.2.6.
 [LPS-87366]: https://issues.liferay.com/browse/LPS-87366
 [LPS-87465]: https://issues.liferay.com/browse/LPS-87465
 [LPS-87466]: https://issues.liferay.com/browse/LPS-87466
+[LPS-87477]: https://issues.liferay.com/browse/LPS-87477
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

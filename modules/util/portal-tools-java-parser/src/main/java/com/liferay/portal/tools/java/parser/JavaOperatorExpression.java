@@ -32,6 +32,10 @@ public class JavaOperatorExpression extends JavaExpression {
 		return _javaOperator;
 	}
 
+	public JavaExpression getRightHandJavaExpression() {
+		return _rightHandJavaExpression;
+	}
+
 	@Override
 	public String getString(
 		String indent, String prefix, String suffix, int maxLineLength,
@@ -61,19 +65,35 @@ public class JavaOperatorExpression extends JavaExpression {
 						false);
 				}
 
-				if (forceLineBreak ||
-					!(_rightHandJavaExpression instanceof
-						JavaOperatorExpression)) {
+				boolean newLine = false;
 
-					append(
-						sb, _rightHandJavaExpression, indent, "", suffix,
-						maxLineLength);
+				if (Objects.equals(
+						_javaOperator.getCategory(),
+						JavaOperator.Category.ASSIGNMENT)) {
+
+					if (_rightHandJavaExpression instanceof
+							JavaOperatorExpression) {
+
+						JavaOperatorExpression javaOperatorExpression =
+							(JavaOperatorExpression)_rightHandJavaExpression;
+
+						JavaOperator javaOperator =
+							javaOperatorExpression.getJavaOperator();
+
+						if (!javaOperator.equals(
+								JavaOperator.LOGICAL_COMPLEMENT_OPERATOR)) {
+
+							newLine = true;
+						}
+					}
 				}
 				else {
-					append(
-						sb, _rightHandJavaExpression, indent, "", suffix,
-						maxLineLength);
+					newLine = true;
 				}
+
+				append(
+					sb, _rightHandJavaExpression, indent, "", suffix,
+					maxLineLength, newLine);
 			}
 			else {
 				append(

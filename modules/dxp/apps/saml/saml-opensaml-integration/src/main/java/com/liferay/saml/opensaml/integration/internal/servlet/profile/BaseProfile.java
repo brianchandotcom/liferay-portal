@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.SamlBinding;
-import com.liferay.saml.opensaml.integration.internal.transport.ProxyPathRequestWrapper;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.opensaml.integration.metadata.MetadataManager;
 import com.liferay.saml.persistence.model.SamlSpSession;
@@ -34,32 +33,39 @@ import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.opensaml.common.IdentifierGenerator;
-import org.opensaml.common.SAMLObject;
-import org.opensaml.common.binding.BasicSAMLMessageContext;
-import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.common.xml.SAMLConstants;
-import org.opensaml.saml2.core.NameID;
-import org.opensaml.saml2.metadata.Endpoint;
-import org.opensaml.saml2.metadata.EntityDescriptor;
-import org.opensaml.saml2.metadata.IDPSSODescriptor;
-import org.opensaml.saml2.metadata.RoleDescriptor;
-import org.opensaml.saml2.metadata.SPSSODescriptor;
-import org.opensaml.saml2.metadata.provider.MetadataProvider;
-import org.opensaml.ws.message.decoder.MessageDecoder;
-import org.opensaml.ws.message.encoder.MessageEncoder;
-import org.opensaml.ws.message.encoder.MessageEncodingException;
-import org.opensaml.ws.security.SecurityPolicyResolver;
-import org.opensaml.ws.transport.http.HttpServletRequestAdapter;
-import org.opensaml.ws.transport.http.HttpServletResponseAdapter;
-import org.opensaml.xml.XMLObject;
-import org.opensaml.xml.io.MarshallingException;
+import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
+import net.shibboleth.utilities.java.support.security.IdentifierGenerationStrategy;
+
+import org.opensaml.core.criterion.EntityIdCriterion;
+import org.opensaml.core.xml.XMLObject;
+import org.opensaml.core.xml.io.MarshallingException;
+import org.opensaml.messaging.context.InOutOperationContext;
+import org.opensaml.messaging.context.MessageContext;
+import org.opensaml.messaging.decoder.servlet.HttpServletRequestMessageDecoder;
+import org.opensaml.messaging.encoder.servlet.HttpServletResponseMessageEncoder;
+import org.opensaml.saml.common.SAMLObject;
+import org.opensaml.saml.common.binding.security.impl.SAMLOutboundProtocolMessageSigningHandler;
+import org.opensaml.saml.common.messaging.context.SAMLBindingContext;
+import org.opensaml.saml.common.messaging.context.SAMLEndpointContext;
+import org.opensaml.saml.common.messaging.context.SAMLMetadataContext;
+import org.opensaml.saml.common.messaging.context.SAMLPeerEntityContext;
+import org.opensaml.saml.common.messaging.context.SAMLProtocolContext;
+import org.opensaml.saml.common.messaging.context.SAMLSelfEntityContext;
+import org.opensaml.saml.common.xml.SAMLConstants;
+import org.opensaml.saml.metadata.resolver.MetadataResolver;
+import org.opensaml.saml.saml2.core.RequestAbstractType;
+import org.opensaml.saml.saml2.metadata.Endpoint;
+import org.opensaml.saml.saml2.metadata.EntityDescriptor;
+import org.opensaml.saml.saml2.metadata.IDPSSODescriptor;
+import org.opensaml.saml.saml2.metadata.RoleDescriptor;
+import org.opensaml.saml.saml2.metadata.SPSSODescriptor;
 
 /**
  * @author Mika Koivisto

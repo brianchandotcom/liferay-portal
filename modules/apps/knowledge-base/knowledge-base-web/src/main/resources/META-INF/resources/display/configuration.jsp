@@ -17,7 +17,7 @@
 <%@ include file="/display/init.jsp" %>
 
 <%
-String tabsNames = "general,display-setting";
+String tabsNames = "general,display-settings";
 
 kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDisplayPortletInstanceConfiguration.class, kbDisplayPortletInstanceConfiguration, request.getParameterMap(), "preferences--", "--");
 %>

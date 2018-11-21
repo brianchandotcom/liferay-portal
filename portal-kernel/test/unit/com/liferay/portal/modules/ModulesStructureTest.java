@@ -33,6 +33,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -648,11 +649,54 @@ public class ModulesStructureTest {
 			Path dirPath, String buildGradleTemplate)
 		throws IOException {
 
-		if (Files.notExists(dirPath.resolve("build-ext.gradle"))) {
-			buildGradleTemplate = StringUtil.removeSubstring(
-				buildGradleTemplate,
-				StringPool.NEW_LINE + StringPool.NEW_LINE +
-					"apply from: \"build-ext.gradle\"");
+		List<String> sortedBuildExtGradleFileNames = new ArrayList<>();
+
+		if (Files.exists(dirPath.resolve("build-ext.gradle"))) {
+			sortedBuildExtGradleFileNames.add("build-ext.gradle");
+		}
+
+		Set<String> buildExtGradleFileNames = new TreeSet<>(
+			String.CASE_INSENSITIVE_ORDER);
+
+		try (DirectoryStream<Path> directoryStream =
+				Files.newDirectoryStream(dirPath)) {
+
+			for (Path path : directoryStream) {
+				if (Files.isDirectory(path)) {
+					continue;
+				}
+
+				String fileName = String.valueOf(path.getFileName());
+
+				if (!fileName.endsWith(".gradle")) {
+					continue;
+				}
+
+				if (!fileName.startsWith("build-ext-")) {
+					continue;
+				}
+
+				buildExtGradleFileNames.add(fileName);
+			}
+		}
+
+		sortedBuildExtGradleFileNames.addAll(buildExtGradleFileNames);
+
+		if (!sortedBuildExtGradleFileNames.isEmpty()) {
+			StringBundler sb = new StringBundler(
+				4 * sortedBuildExtGradleFileNames.size() + 2);
+
+			sb.append(buildGradleTemplate);
+			sb.append(StringPool.NEW_LINE);
+
+			for (String fileName : sortedBuildExtGradleFileNames) {
+				sb.append(StringPool.NEW_LINE);
+				sb.append("apply from: \"");
+				sb.append(fileName);
+				sb.append("\"");
+			}
+
+			buildGradleTemplate = sb.toString();
 		}
 
 		final Set<String> pluginNames = new TreeSet<>();

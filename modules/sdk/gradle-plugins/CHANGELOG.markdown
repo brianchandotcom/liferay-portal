@@ -5967,6 +5967,12 @@ to version 2.3.282.
 - [LPS-87293]: Update the [Liferay Source Formatter] dependency to version
 1.0.756.
 
+## 3.13.13 - 2018-11-15
+
+### Fixed
+- [LPS-87366]: The Eclipse project name changed after upgrading Gradle to
+4.10.2. Set the Eclipse project name with the Gradle project name.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -6431,4 +6437,5 @@ to version 2.3.282.
 [LPS-86835]: https://issues.liferay.com/browse/LPS-86835
 [LPS-86916]: https://issues.liferay.com/browse/LPS-86916
 [LPS-87293]: https://issues.liferay.com/browse/LPS-87293
+[LPS-87366]: https://issues.liferay.com/browse/LPS-87366
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

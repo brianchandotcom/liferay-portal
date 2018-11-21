@@ -4967,6 +4967,12 @@ the sources JAR contains invalid entries.
 - [LPS-87293]: Update the [Liferay Gradle Plugins] dependency to version
 3.13.12.
 
+## 5.5.111 - 2018-11-15
+
+### Changed
+- [LPS-87366]: Update the [Liferay Gradle Plugins] dependency to version
+3.13.13.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -5473,6 +5479,7 @@ the sources JAR contains invalid entries.
 [LPS-86916]: https://issues.liferay.com/browse/LPS-86916
 [LPS-87006]: https://issues.liferay.com/browse/LPS-87006
 [LPS-87293]: https://issues.liferay.com/browse/LPS-87293
+[LPS-87366]: https://issues.liferay.com/browse/LPS-87366
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

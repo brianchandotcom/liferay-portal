@@ -116,6 +116,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_CONTACT_INFORMATION_WEBSITE_TABLE</td>
+	<td>//table[contains(@data-searchcontainerid,'${key_searchContainerType}')]//tr[1]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_CONTACT_INFORMATION_PRIMARY_TABLE</td>
 	<td>//table[contains(@data-searchcontainerid,'${key_searchContainerType}')]//tr[contains(.,'${key_contactInfoPrimaryValue}')]/td/span/span[contains(.,'PRIMARY')]</td>
 	<td></td>

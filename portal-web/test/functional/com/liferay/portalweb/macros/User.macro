@@ -168,6 +168,14 @@
 			</then>
 		</if>
 
+		<!-- Websites -->
+		<if>
+			<isset var="url" />
+			<then>
+				<execute function="Type" locator1="TextInput#URL" value1="${url}" />
+			</then>
+		</if>
+
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="Click" locator1="Button#SAVE" />
@@ -2135,6 +2143,14 @@
 			<isset var="address" />
 			<then>
 				<execute function="AssertTextEquals#assertPartialText" locator1="UsersAndOrganizations#USER_CONTACT_INFORMATION_EMAIL_ADDRESS_TABLE" value1="${address}" />
+			</then>
+		</if>
+
+		<!-- Websites -->
+		<if>
+			<isset var="url" />
+			<then>
+				<execute function="AssertTextEquals#assertPartialText" locator1="UsersAndOrganizations#USER_CONTACT_INFORMATION_EMAIL_ADDRESS_TABLE" value1="${url}" />
 			</then>
 		</if>
 	</command>

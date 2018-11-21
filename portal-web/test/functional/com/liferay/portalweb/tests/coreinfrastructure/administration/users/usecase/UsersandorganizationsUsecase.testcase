@@ -649,6 +649,133 @@
 		</execute>
 	</command>
 
+	<command name="EditUserWebsites" priority="4">
+		<execute macro="JSONUser#addUser">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="UserNavigator#gotoUser">
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="UserNavigator#gotoContact" />
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Contact Information" />
+		</execute>
+
+		<execute macro="User#addContactInformation">
+			<var name="url" value="http://www.liferay1.com" />
+			<var name="contactType" value="Add Website" />
+		</execute>
+
+		<execute macro="User#viewContactInformation">
+			<var name="url" value="http://www.liferay1.com" />
+			<var name="searchContainerType" value="websitesSearchContainer" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="contactInfoPrimaryValue" value="http://www.liferay1.com" />
+			<var name="searchContainerType" value="websitesSearchContainer" />
+		</execute>
+
+		<execute macro="User#addContactInformation">
+			<var name="url" value="http://www.liferay2.com" />
+			<var name="contactType" value="Add Website" />
+			<var name="makePrimary" value="true" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="contactInfoPrimaryValue" value="http://www.liferay2.com" />
+			<var name="searchContainerType" value="websitesSearchContainer" />
+		</execute>
+
+		<execute macro="User#addContactInformation">
+			<var name="url" value="http://www.liferay3.com" />
+			<var name="contactType" value="Add Website" />
+		</execute>
+
+		<execute macro="User#viewNotPrimary">
+			<var name="contactInfoPrimaryValue" value="http://www.liferay1.com" />
+			<var name="searchContainerType" value="websitesSearchContainer" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="contactInfoPrimaryValue" value="http://www.liferay2.com" />
+			<var name="searchContainerType" value="websitesSearchContainer" />
+		</execute>
+
+		<execute macro="User#viewNotPrimary">
+			<var name="contactInfoPrimaryValue" value="http://www.liferay3.com" />
+			<var name="searchContainerType" value="websitesSearchContainer" />
+		</execute>
+
+
+		<execute macro="UserNavigator#gotoEdit">
+			<var name="rowEntry" value="http://www.liferay2.com" />
+		</execute>
+
+		<execute macro="User#editPrimary">
+			<var name="makePrimary" value="false" />
+		</execute>
+
+		<execute macro="User#viewNotPrimary">
+			<var name="contactInfoPrimaryValue" value="http://www.liferay2.com" />
+			<var name="searchContainerType" value="websitesSearchContainer" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="contactInfoPrimaryValue" value="http://www.liferay3.com" />
+			<var name="searchContainerType" value="websitesSearchContainer" />
+		</execute>
+
+		<execute macro="User#makePrimary">
+			<var name="rowEntry" value="http://www.liferay2.com" />
+		</execute>
+
+		<execute macro="User#viewNotPrimary">
+			<var name="contactInfoPrimaryValue" value="http://www.liferay1.com" />
+			<var name="searchContainerType" value="websitesSearchContainer" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="contactInfoPrimaryValue" value="http://www.liferay2.com" />
+			<var name="searchContainerType" value="websitesSearchContainer" />
+		</execute>
+
+		<execute macro="User#viewNotPrimary">
+			<var name="contactInfoPrimaryValue" value="http://www.liferay3.com" />
+			<var name="searchContainerType" value="websitesSearchContainer" />
+		</execute>
+
+		<execute macro="User#removeContactInformation">
+			<var name="rowEntry" value="http://www.liferay3.com" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="contactInfoPrimaryValue" value="http://www.liferay2.com" />
+			<var name="searchContainerType" value="websitesSearchContainer" />
+		</execute>
+
+		<execute macro="User#removeContactInformation">
+			<var name="rowEntry" value="http://www.liferay2.com" />
+		</execute>
+
+		<execute macro="User#viewIsPrimary">
+			<var name="contactInfoPrimaryValue" value="http://www.liferay1.com" />
+			<var name="searchContainerType" value="websitesSearchContainer" />
+		</execute>
+	</command>
+
 	<command name="ImpersonatingAdministratorandOwner" priority="4">
 		<property name="test.name.skip.portal.instance" value="UsersandorganizationsUsecase#ImpersonatingAdministratorandOwner" />
 

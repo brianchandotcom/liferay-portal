@@ -25,10 +25,11 @@
 	{@param portletNamespace: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
+	{@param? dropTargetTypes: ?}
 	{@param? highlightMapping: bool}
 	{@param? hoveredElementBorder: string}
-	{@param? hoveredFragmentEntryLinkId: string}
-	{@param? hoveredSectionId: string}
+	{@param? hoveredElementId: string}
+	{@param? hoveredElementType: string}
 	{@param? mappingFieldsURL: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
@@ -65,11 +66,12 @@
 					{param columns: $row.columns /}
 					{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 					{param defaultLanguageId: $defaultLanguageId /}
+					{param dropTargetTypes: $dropTargetTypes /}
 					{param empty: $row.empty /}
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
 					{param hoveredElementBorder: $hoveredElementBorder /}
-					{param hoveredFragmentEntryLinkId: $hoveredFragmentEntryLinkId /}
-					{param hoveredSectionId: $hoveredSectionId /}
+					{param hoveredElementId: $hoveredElementId /}
+					{param hoveredElementType: $hoveredElementType /}
 					{param imageSelectorURL: $imageSelectorURL /}
 					{param key: $row.rowId /}
 					{param languageId: $languageId /}
@@ -105,10 +107,11 @@
 	{@param rowId: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
+	{@param? dropTargetTypes: ?}
 	{@param? empty: bool}
 	{@param? hoveredElementBorder: string}
-	{@param? hoveredFragmentEntryLinkId: string}
-	{@param? hoveredSectionId: string}
+	{@param? hoveredElementId: string}
+	{@param? hoveredElementType: string}
 	{@param? mappingFieldsURL: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
@@ -123,7 +126,7 @@
 	{@param? store: ?}
 
 	{let $styleModifier kind="text"}
-		{if $hoveredSectionId == $rowId}
+		{if $hoveredElementId == $rowId and $hoveredElementType == $dropTargetTypes.section}
 			{$hoveredElementBorder}
 		{/if}
 	{/let}
@@ -150,10 +153,12 @@
 						{param columnId: $column.columnId /}
 						{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 						{param defaultLanguageId: $defaultLanguageId /}
+						{param dropTargetTypes: $dropTargetTypes /}
 						{param fragmentEntryLinkIds: $column.fragmentEntryLinkIds /}
 						{param fragmentEntryLinks: $fragmentEntryLinks /}
 						{param hoveredElementBorder: $hoveredElementBorder /}
-						{param hoveredFragmentEntryLinkId: $hoveredFragmentEntryLinkId /}
+						{param hoveredElementId: $hoveredElementId /}
+						{param hoveredElementType: $hoveredElementType /}
 						{param imageSelectorURL: $imageSelectorURL /}
 						{param key: $column.columnId /}
 						{param languageId: $languageId /}
@@ -185,8 +190,10 @@
 	{@param size: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
+	{@param? dropTargetTypes: ?}
 	{@param? hoveredElementBorder: string}
-	{@param? hoveredFragmentEntryLinkId: string}
+	{@param? hoveredElementId: string}
+	{@param? hoveredElementType: string}
 	{@param? mappingFieldsURL: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
@@ -209,10 +216,12 @@
 					{param content: $fragmentEntryLink.content /}
 					{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 					{param defaultLanguageId: $defaultLanguageId /}
+					{param dropTargetTypes: $dropTargetTypes /}
 					{param editableValues: $fragmentEntryLink.editableValues /}
 					{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
 					{param hoveredElementBorder: $hoveredElementBorder /}
-					{param hoveredFragmentEntryLinkId: $hoveredFragmentEntryLinkId /}
+					{param hoveredElementId: $hoveredElementId /}
+					{param hoveredElementType: $hoveredElementType /}
 					{param imageSelectorURL: $imageSelectorURL /}
 					{param key: $fragmentEntryLink.fragmentEntryLinkId /}
 					{param languageId: $languageId /}
@@ -239,7 +248,8 @@
 	{@param fragmentEntryLinkId: string}
 	{@param imageSelectorURL: ?}
 	{@param hoveredElementBorder: ?}
-	{@param hoveredFragmentEntryLinkId: ?}
+	{@param hoveredElementId: ?}
+	{@param hoveredElementType: ?}
 	{@param languageId: ?}
 	{@param mappingFieldsURL: ?}
 	{@param name: string}
@@ -249,9 +259,10 @@
 	{@param store: ?}
 	{@param? _handleFragmentMove: ?}
 	{@param? content: ?}
+	{@param? dropTargetTypes: ?}
 
 	{let $styleModifier kind="text"}
-		{if $hoveredFragmentEntryLinkId == $fragmentEntryLinkId}
+		{if $hoveredElementId == $fragmentEntryLinkId and $hoveredElementType == $dropTargetTypes.fragment}
 			{$hoveredElementBorder}
 		{/if}
 	{/let}

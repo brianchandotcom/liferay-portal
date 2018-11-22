@@ -18,7 +18,7 @@ function addSectionReducer(state, actionType, payload) {
 			if (actionType === ADD_SECTION) {
 				const position = _getDropSectionPosition(
 					state.layoutData.structure,
-					state.hoveredSectionId,
+					state.hoveredElementId,
 					state.hoveredElementBorder
 				);
 

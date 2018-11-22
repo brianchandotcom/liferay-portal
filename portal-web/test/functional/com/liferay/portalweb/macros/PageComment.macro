@@ -71,7 +71,7 @@
 	<command name="viewWithWorkflowPG">
 		<var name="key_commentBody" value="${commentBody}" />
 
-		<execute function="AssertTextEquals" locator1="Comments#WORKFLOW_STATUS" value1="${commentStatus}" />
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Comments#WORKFLOW_STATUS" value1="${commentStatus}" />
 
 		<var name="key_entryComment" value="${commentBody}" />
 

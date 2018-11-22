@@ -103,24 +103,24 @@ const INITIAL_STATE = {
 		.value(null),
 
 	/**
-	 * FragmentEntryLinkId where a fragment is being dragged over
+	 * Id of the element where a fragment is being dragged over
 	 * @default null
 	 * @instance
 	 * @review
 	 * @type {string}
 	 */
-	hoveredFragmentEntryLinkId: Config
+	hoveredElementId: Config
 		.string()
 		.value(null),
 
 	/**
-	 * SectionId where a fragment is being dragged over
+	 * Type of the element where a fragment is being dragged over
 	 * @default null
 	 * @instance
 	 * @review
 	 * @type {string}
 	 */
-	hoveredSectionId: Config
+	hoveredElementType: Config
 		.string()
 		.value(null),
 

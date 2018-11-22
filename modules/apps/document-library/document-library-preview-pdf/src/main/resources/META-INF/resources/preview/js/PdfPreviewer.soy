@@ -68,7 +68,10 @@
 							class="form-control form-control-sm"
 							data-onblur="{$_handleBlurPageInput}"
 							data-onkeydown="{$_handleKeyDownPageInput}"
+							max="{$totalPages}"
+							min="1"
 							ref="pageInput"
+							type="number"
 						/>
 					</div>
 				{/if}

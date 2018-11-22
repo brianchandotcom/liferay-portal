@@ -1016,11 +1016,14 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		List<AudienceRestriction> audienceRestrictions =
 			conditions.getAudienceRestrictions();
 
-		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext =
+		MessageContext messageContext =
 			samlSsoRequestContext.getSAMLMessageContext();
 
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
 		AudienceRestriction audienceRestriction = getSuccessAudienceRestriction(
-			samlMessageContext.getPeerEntityId());
+			samlPeerEntityContext.getEntityId());
 
 		audienceRestrictions.add(audienceRestriction);
 

@@ -33,14 +33,25 @@
 					Selection<DLFileEntry> selection = (Selection)request.getAttribute("selection");
 					%>
 
-					<c:if test="<%= selection.getSize() == 1 %>">
+					<c:choose>
+						<c:when test="<%= selection.getSize() == 1 %>">
 
-						<%
-						DLFileEntry dlFileEnty = selection.getFirst();
-						%>
+							<%
+							DLFileEntry dlFileEnty = selection.getFirst();
+							%>
 
-						<liferay-ui:message arguments="<%= dlFileEnty.getTitle() %>" key="you-are-editing-the-tags-for-x" />
-					</c:if>
+							<liferay-ui:message arguments="<%= dlFileEnty.getTitle() %>" key="you-are-editing-the-tags-for-x" />
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:message arguments="<%= selection.getSize() %>" key="you-are-editing-the-common-tags-for-x-items" /> <liferay-ui:message key="select-add-or-replace-current-tags" />
+
+							<div class="form-group" id="<portlet:namespace />tagOptions">
+								<aui:input checked="<%= true %>" label="add" name="add" type="radio" value="<%= true %>" />
+
+								<aui:input checked="<%= false %>" label="replace" name="add" type="radio" value="<%= false %>" />
+							</div>
+						</c:otherwise>
+					</c:choose>
 
 					<liferay-asset:asset-tags-selector
 						tagNames='<%= GetterUtil.getString((String)request.getAttribute("commonTagNames")) %>'

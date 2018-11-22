@@ -131,6 +131,15 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 			displayIndex, fieldsMap, serviceContext);
 	}
 
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
+		long userId, long groupId, long ddlRecordSetId, long ddmStorageId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordLocalService.addRecord(userId, groupId,
+			ddlRecordSetId, ddmStorageId, serviceContext);
+	}
+
 	/**
 	* Creates a new ddl record with the primary key. Does not add the ddl record to the database.
 	*
@@ -920,6 +929,15 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordLocalService.updateRecord(userId, recordId,
 			displayIndex, fieldsMap, mergeFields, serviceContext);
+	}
+
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
+		long userId, long ddlRecordId, long ddmStorageId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordLocalService.updateRecord(userId, ddlRecordId,
+			ddmStorageId, serviceContext);
 	}
 
 	/**

@@ -140,6 +140,15 @@ public class DDLRecordLocalServiceUtil {
 			fieldsMap, serviceContext);
 	}
 
+	public static com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
+		long userId, long groupId, long ddlRecordSetId, long ddmStorageId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addRecord(userId, groupId, ddlRecordSetId, ddmStorageId,
+			serviceContext);
+	}
+
 	/**
 	* Creates a new ddl record with the primary key. Does not add the ddl record to the database.
 	*
@@ -877,6 +886,15 @@ public class DDLRecordLocalServiceUtil {
 		return getService()
 				   .updateRecord(userId, recordId, displayIndex, fieldsMap,
 			mergeFields, serviceContext);
+	}
+
+	public static com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
+		long userId, long ddlRecordId, long ddmStorageId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateRecord(userId, ddlRecordId, ddmStorageId,
+			serviceContext);
 	}
 
 	/**

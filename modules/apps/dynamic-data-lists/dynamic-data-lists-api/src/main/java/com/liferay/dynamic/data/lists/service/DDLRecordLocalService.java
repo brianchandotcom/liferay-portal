@@ -154,6 +154,11 @@ public interface DDLRecordLocalService extends BaseLocalService,
 		int displayIndex, Map<String, Serializable> fieldsMap,
 		ServiceContext serviceContext) throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public DDLRecord addRecord(long userId, long groupId, long ddlRecordSetId,
+		long ddmStorageId, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new ddl record with the primary key. Does not add the ddl record to the database.
 	*
@@ -756,6 +761,11 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	public DDLRecord updateRecord(long userId, long recordId, int displayIndex,
 		Map<String, Serializable> fieldsMap, boolean mergeFields,
 		ServiceContext serviceContext) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public DDLRecord updateRecord(long userId, long ddlRecordId,
+		long ddmStorageId, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Updates the workflow status of the record version.

@@ -482,20 +482,29 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		SamlSsoRequestContext samlSsoRequestContext = decodeAuthnRequest(
 			request, response);
 
-		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext =
+		MessageContext messageContext =
 			samlSsoRequestContext.getSAMLMessageContext();
 
-		AuthnRequest authnRequest = samlMessageContext.getInboundSAMLMessage();
+		InOutOperationContext inOutOperationContext =
+			messageContext.getSubcontext(InOutOperationContext.class, false);
 
+		AuthnRequest authnRequest = null;
 		User user = samlSsoRequestContext.getUser();
 
-		if ((authnRequest != null) && authnRequest.isPassive() &&
-			(user == null)) {
+		if (inOutOperationContext != null) {
+			MessageContext<AuthnRequest> inboundMessageContext =
+				inOutOperationContext.getInboundMessageContext();
 
-			sendFailureResponse(
-				samlSsoRequestContext, StatusCode.NO_PASSIVE_URI);
+			authnRequest = inboundMessageContext.getMessage();
 
-			return;
+			if ((authnRequest != null) && authnRequest.isPassive() &&
+				(user == null)) {
+
+				sendFailureResponse(
+					samlSsoRequestContext, StatusCode.NO_PASSIVE, response);
+
+				return;
+			}
 		}
 
 		boolean sessionExpired = false;

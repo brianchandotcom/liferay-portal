@@ -1085,23 +1085,37 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		response.setDestination(assertionConsumerService.getLocation());
 		response.setID(generateIdentifier(20));
 
-		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext =
+		MessageContext messageContext =
 			samlSsoRequestContext.getSAMLMessageContext();
 
-		if (Validator.isNotNull(samlMessageContext.getInboundSAMLMessageId())) {
-			response.setInResponseTo(
-				samlMessageContext.getInboundSAMLMessageId());
+		InOutOperationContext inOutOperationContext =
+			messageContext.getSubcontext(InOutOperationContext.class, false);
+
+		if (inOutOperationContext != null) {
+			MessageContext inboundMessageContext =
+				inOutOperationContext.getInboundMessageContext();
+
+			SAMLMessageInfoContext samlMessageInfoContext =
+				inboundMessageContext.getSubcontext(
+					SAMLMessageInfoContext.class);
+
+			if (Validator.isNotNull(samlMessageInfoContext.getMessageId())) {
+				response.setInResponseTo(samlMessageInfoContext.getMessageId());
+			}
 		}
 
 		response.setIssueInstant(assertion.getIssueInstant());
 
+		SAMLSelfEntityContext samlSelfEntityContext =
+			messageContext.getSubcontext(SAMLSelfEntityContext.class);
+
 		Issuer issuer = OpenSamlUtil.buildIssuer(
-			samlMessageContext.getLocalEntityId());
+			samlSelfEntityContext.getEntityId());
 
 		response.setIssuer(issuer);
 
 		StatusCode statusCode = OpenSamlUtil.buildStatusCode(
-			StatusCode.SUCCESS_URI);
+			StatusCode.SUCCESS);
 
 		Status status = OpenSamlUtil.buildStatus(statusCode);
 

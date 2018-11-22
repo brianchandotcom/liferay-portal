@@ -70,7 +70,7 @@
 
 		<execute macro="Navigator#gotoNavTab">
 			<var name="navTab" value="Asset Auto Tagging" />
-		</execute>	
+		</execute>
 
 		<execute macro="AutoTagging#disableAutoTagging" />
 

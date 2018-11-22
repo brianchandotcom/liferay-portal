@@ -23,6 +23,8 @@ public class DDLRecordSetConstants {
 
 	public static final int SCOPE_ANY = -1;
 
+	public static final int SCOPE_DATA_ENGINE = 3;
+
 	public static final int SCOPE_DYNAMIC_DATA_LISTS = 0;
 
 	public static final int SCOPE_FORMS = 2;

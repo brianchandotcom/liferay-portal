@@ -708,10 +708,10 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 
 			CriteriaSet criteriaSet = new CriteriaSet();
 
-			EntityIdCriterion entityIDCriteria = new EntityIdCriterion(
+			EntityIdCriterion entityIDCriterion = new EntityIdCriterion(
 				entityId);
 
-			criteriaSet.add(entityIDCriteria);
+			criteriaSet.add(entityIDCriterion);
 
 			Credential credential = keyStoreCredentialResolver.resolveSingle(
 				criteriaSet);

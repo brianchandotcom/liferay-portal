@@ -509,7 +509,7 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 
 		metadataManagerImpl.setParserPool(parserPool);
 
-		metadataManagerImpl.setMetadataProvider(new MockMetadataProvider());
+		metadataManagerImpl.setMetadataResolver(new MockMetadataResolver());
 
 		metadataManagerImpl.setSamlProviderConfigurationHelper(
 			samlProviderConfigurationHelper);
@@ -688,26 +688,12 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 	protected List<Class<?>> serviceUtilClasses = new ArrayList<>();
 	protected UserLocalService userLocalService;
 
-	private class MockMetadataProvider extends DBMetadataProvider {
+	private class MockMetadataResolver extends DBMetadataResolver {
 
-		public MockMetadataProvider() {
+		public MockMetadataResolver() {
 		}
 
-		@Override
-		public EntityDescriptor getEntityDescriptor(String entityId)
-			throws MetadataProviderException {
-
-			try {
-				return doGetEntityDecriptor(entityId);
-			}
-			catch (Exception e) {
-				throw new MetadataProviderException(e);
-			}
-		}
-
-		protected EntityDescriptor doGetEntityDecriptor(String entityId)
-			throws Exception {
-
+		protected XMLObject getMetadata(String entityId) throws Exception {
 			MockHttpServletRequest mockHttpServletRequest =
 				getMockHttpServletRequest(
 					"http://localhost:8080/c/portal/saml/metadata");
@@ -717,7 +703,8 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 
 			CriteriaSet criteriaSet = new CriteriaSet();
 
-			EntityIDCriteria entityIDCriteria = new EntityIDCriteria(entityId);
+			EntityIdCriterion entityIDCriteria = new EntityIdCriterion(
+				entityId);
 
 			criteriaSet.add(entityIDCriteria);
 

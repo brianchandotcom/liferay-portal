@@ -412,6 +412,12 @@ public class FragmentEntryLinkLocalServiceWrapper
 		return _fragmentEntryLinkLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public void updateClassModel(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_fragmentEntryLinkLocalService.updateClassModel(classNameId, classPK);
+	}
+
 	/**
 	* Updates the fragment entry link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

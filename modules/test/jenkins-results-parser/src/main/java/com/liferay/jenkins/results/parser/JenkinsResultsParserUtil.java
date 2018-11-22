@@ -816,6 +816,49 @@ public class JenkinsResultsParserUtil {
 			"/", path.replaceFirst("^/*", ""));
 	}
 
+	public static String[] getGlobsFromProperty(String globProperty) {
+		Map<String, String> curlyBraceExpansionMap = new HashMap();
+
+		Matcher curlyBraceMatcher = _curlyBraceExpansionPattern.matcher(
+			globProperty);
+
+		int i = 0;
+
+		while (curlyBraceMatcher.find()) {
+			String key = "\\$\\{" + i + "\\}";
+
+			String value = curlyBraceMatcher.group();
+
+			curlyBraceExpansionMap.put(key, value);
+
+			globProperty = globProperty.replaceFirst(Pattern.quote(value), key);
+
+			i++;
+		}
+
+		List<String> tempGlobs = new ArrayList(
+			Arrays.asList(globProperty.split(",")));
+
+		List<String> globs = new ArrayList();
+
+		for (String tempGlob : tempGlobs) {
+			Matcher matcher = _nestedPropertyPattern.matcher(tempGlob);
+
+			String glob = tempGlob;
+
+			while (matcher.find()) {
+				String key = "\\$\\{" + matcher.group(1) + "\\}";
+
+				glob = glob.replace(
+					matcher.group(), curlyBraceExpansionMap.get(key));
+			}
+
+			globs.add(glob);
+		}
+
+		return globs.toArray(new String[globs.size()]);
+	}
+
 	public static String getHostName(String defaultHostName) {
 		try {
 			InetAddress inetAddress = InetAddress.getLocalHost();

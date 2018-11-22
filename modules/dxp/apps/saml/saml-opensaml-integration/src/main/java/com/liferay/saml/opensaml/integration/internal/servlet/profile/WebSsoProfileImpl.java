@@ -1270,10 +1270,11 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	protected void sendFailureResponse(
-			SamlSsoRequestContext samlSsoRequestContext, String statusURI)
+			SamlSsoRequestContext samlSsoRequestContext, String statusURI,
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
-		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext =
+		MessageContext messageContext =
 			samlSsoRequestContext.getSAMLMessageContext();
 
 		SamlBinding samlBinding = getSamlBinding(
@@ -1281,25 +1282,52 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		AssertionConsumerService assertionConsumerService =
 			SamlUtil.resolverAssertionConsumerService(
-				samlMessageContext, samlBinding.getCommunicationProfileId());
+				messageContext, samlBinding.getCommunicationProfileId());
 
-		samlMessageContext.setPeerEntityEndpoint(assertionConsumerService);
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+		SAMLEndpointContext samlPeerEndpointContext =
+			samlPeerEntityContext.getSubcontext(SAMLEndpointContext.class);
+
+		samlPeerEndpointContext.setEndpoint(assertionConsumerService);
 
 		Credential credential = metadataManager.getSigningCredential();
 
-		samlMessageContext.setOutboundSAMLMessageSigningCredential(credential);
+		InOutOperationContext inOutOperationContext =
+			messageContext.getSubcontext(InOutOperationContext.class);
+
+		MessageContext outboundMessageContext =
+			inOutOperationContext.getOutboundMessageContext();
+
+		SecurityParametersContext securityParametersContext =
+			outboundMessageContext.getSubcontext(
+				SecurityParametersContext.class, true);
+
+		OpenSamlUtil.prepareSecurityParametersContext(
+			credential, securityParametersContext);
 
 		Response response = OpenSamlUtil.buildResponse();
 
 		response.setDestination(assertionConsumerService.getLocation());
-		response.setInResponseTo(samlMessageContext.getInboundSAMLMessageId());
+
+		MessageContext inboundMessageContext =
+			inOutOperationContext.getInboundMessageContext();
+
+		SAMLMessageInfoContext samlMessageInfoContext =
+			inboundMessageContext.getSubcontext(SAMLMessageInfoContext.class);
+
+		response.setInResponseTo(samlMessageInfoContext.getMessageId());
 
 		DateTime issueInstantDateTime = new DateTime(DateTimeZone.UTC);
 
 		response.setIssueInstant(issueInstantDateTime);
 
+		SAMLSelfEntityContext samlSelfEntityContext =
+			messageContext.getSubcontext(SAMLSelfEntityContext.class);
+
 		Issuer issuer = OpenSamlUtil.buildIssuer(
-			samlMessageContext.getLocalEntityId());
+			samlSelfEntityContext.getEntityId());
 
 		response.setIssuer(issuer);
 
@@ -1309,9 +1337,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		response.setStatus(status);
 
-		samlMessageContext.setOutboundSAMLMessage(response);
+		outboundMessageContext.setMessage(response);
 
-		sendSamlMessage(samlMessageContext);
+		sendSamlMessage(messageContext, httpServletResponse);
 	}
 
 	protected void sendSuccessResponse(

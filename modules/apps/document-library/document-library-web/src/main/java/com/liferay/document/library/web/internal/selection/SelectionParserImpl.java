@@ -16,7 +16,11 @@ package com.liferay.document.library.web.internal.selection;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ParamUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -28,12 +32,23 @@ public class SelectionParserImpl implements SelectionParser<DLFileEntry> {
 
 	@Override
 	public Selection<DLFileEntry> parse(PortletRequest actionRequest) {
-		return () -> {
-			List<DLFileEntry> fileEntries =
-				DLFileEntryLocalServiceUtil.getFileEntries(
-					0, DLFileEntryLocalServiceUtil.getFileEntriesCount());
+		long[] fileEntryIds = ParamUtil.getLongValues(
+			actionRequest, "rowIdsFileEntry");
 
-			return fileEntries.stream();
+		return () -> {
+			List<DLFileEntry> dlFileEntries = new ArrayList<>();
+
+			for (long fileEntryId : fileEntryIds) {
+				try {
+					dlFileEntries.add(
+						DLFileEntryLocalServiceUtil.getFileEntry(fileEntryId));
+				}
+				catch (PortalException pe) {
+					throw new SystemException(pe);
+				}
+			}
+
+			return dlFileEntries.stream();
 		};
 	}
 

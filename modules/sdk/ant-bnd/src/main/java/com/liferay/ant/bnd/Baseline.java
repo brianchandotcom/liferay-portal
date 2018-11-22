@@ -148,6 +148,7 @@ public abstract class Baseline {
 
 				});
 
+			Set<String> ignoredPackageNames = new HashSet<>();
 			Set<String> mismatchPackageNames = new HashSet<>();
 
 			for (Info info : infosArray) {
@@ -212,7 +213,7 @@ public abstract class Baseline {
 				}
 
 				if (isIgnoredWarnings(newJar, info, delta, warnings)) {
-					mismatchPackageNames.remove(info.packageName);
+					ignoredPackageNames.add(info.packageName);
 
 					continue;
 				}
@@ -245,7 +246,13 @@ public abstract class Baseline {
 				}
 			}
 
-			if (mismatchPackageNames.isEmpty()) {
+			if (!mismatchPackageNames.isEmpty() &&
+				ignoredPackageNames.containsAll(mismatchPackageNames)) {
+
+				return true;
+			}
+
+			if (!bundleInfo.mismatch) {
 				return true;
 			}
 

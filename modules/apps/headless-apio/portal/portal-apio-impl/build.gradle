@@ -9,6 +9,5 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.http.whiteboard", version: "1.0.0"
 	compileOnly project(":apps:apio-architect:apio-architect-api")
 	compileOnly project(":apps:headless-apio:portal:portal-apio-api")
-	compileOnly project(":apps:journal:journal-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
 }

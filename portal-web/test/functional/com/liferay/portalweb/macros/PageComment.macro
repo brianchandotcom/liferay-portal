@@ -10,16 +10,6 @@
 
 		<execute function="AssertElementPresent" locator1="Comments#WORKFLOW_STATUS" />
 
-		<if>
-			<condition function="IsTextEqual" locator1="Comments#WORKFLOW_STATUS" value1="Pending (Review)" />
-			<then>
-				<execute function="AssertTextEquals" locator1="Comments#WORKFLOW_STATUS" value1="Pending (Review)" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="Comments#WORKFLOW_STATUS" value1="Pending (Created)" />
-			</else>
-		</if>
-
 		<var name="key_entryComment" value="${commentBody}" />
 
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${commentBody}" />

@@ -1754,7 +1754,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	protected void verifyReplay(
-			SAMLMessageContext<?, ?, ?> samlMessageContext, Assertion assertion)
+			MessageContext<?> messageContext, Assertion assertion)
 		throws PortalException {
 
 		Issuer issuer = assertion.getIssuer();

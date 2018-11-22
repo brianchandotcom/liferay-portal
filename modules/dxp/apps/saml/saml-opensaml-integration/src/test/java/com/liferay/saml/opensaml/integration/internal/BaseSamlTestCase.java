@@ -115,8 +115,9 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 
 		setupConfiguration();
 		setupIdentifiers();
-		setupMetadata();
 		setupParserPool();
+
+		setupMetadata();
 		setupPortal();
 
 		setupSamlBindings();

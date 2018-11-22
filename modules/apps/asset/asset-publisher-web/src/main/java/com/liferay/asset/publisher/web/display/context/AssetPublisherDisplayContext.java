@@ -312,8 +312,7 @@ public class AssetPublisherDisplayContext {
 		}
 
 		_assetLinkBehavior = GetterUtil.getString(
-			_portletPreferences.getValue(
-				"assetLinkBehavior", "showFullContent"));
+			_portletPreferences.getValue("assetLinkBehavior", "viewInPortlet"));
 
 		return _assetLinkBehavior;
 	}

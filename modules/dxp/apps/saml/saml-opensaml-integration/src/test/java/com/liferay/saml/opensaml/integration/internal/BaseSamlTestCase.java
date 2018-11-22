@@ -47,10 +47,11 @@ import com.liferay.saml.opensaml.integration.internal.binding.HttpSoap11Binding;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.OpenSamlBootstrap;
 import com.liferay.saml.opensaml.integration.internal.credential.FileSystemKeyStoreManagerImpl;
 import com.liferay.saml.opensaml.integration.internal.credential.KeyStoreCredentialResolver;
-import com.liferay.saml.opensaml.integration.internal.identifier.SamlIdentifierGenerator;
+import com.liferay.saml.opensaml.integration.internal.identifier.SamlIdentifierGeneratorStrategyFactory;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataGeneratorUtil;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManagerImpl;
-import com.liferay.saml.opensaml.integration.internal.provider.DBMetadataProvider;
+import com.liferay.saml.opensaml.integration.internal.provider.DBMetadataResolver;
+import com.liferay.saml.opensaml.integration.internal.servlet.profile.IdentifierGenerationStrategyFactory;
 import com.liferay.saml.opensaml.integration.internal.velocity.VelocityEngineFactory;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
@@ -69,6 +70,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
+import net.shibboleth.utilities.java.support.security.IdentifierGenerationStrategy;
+import net.shibboleth.utilities.java.support.xml.ParserPool;
+
 import org.apache.http.client.HttpClient;
 import org.apache.velocity.app.VelocityEngine;
 
@@ -80,17 +85,16 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import org.opensaml.common.IdentifierGenerator;
-import org.opensaml.common.xml.SAMLConstants;
-import org.opensaml.saml2.metadata.EntityDescriptor;
-import org.opensaml.saml2.metadata.IDPSSODescriptor;
-import org.opensaml.saml2.metadata.SingleLogoutService;
-import org.opensaml.saml2.metadata.SingleSignOnService;
-import org.opensaml.saml2.metadata.provider.MetadataProviderException;
-import org.opensaml.xml.parse.ParserPool;
-import org.opensaml.xml.security.CriteriaSet;
-import org.opensaml.xml.security.credential.Credential;
-import org.opensaml.xml.security.criteria.EntityIDCriteria;
+import org.opensaml.core.config.ConfigurationService;
+import org.opensaml.core.criterion.EntityIdCriterion;
+import org.opensaml.core.xml.XMLObject;
+import org.opensaml.core.xml.config.XMLObjectProviderRegistry;
+import org.opensaml.saml.common.xml.SAMLConstants;
+import org.opensaml.saml.saml2.metadata.EntityDescriptor;
+import org.opensaml.saml.saml2.metadata.IDPSSODescriptor;
+import org.opensaml.saml.saml2.metadata.SingleLogoutService;
+import org.opensaml.saml.saml2.metadata.SingleSignOnService;
+import org.opensaml.security.credential.Credential;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.modules.junit4.PowerMockRunner;

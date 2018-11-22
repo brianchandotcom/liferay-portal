@@ -1437,10 +1437,11 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	@Override
 	@Reference(unbind = "-")
-	protected void setIdentifierGenerator(
-		IdentifierGenerator identifierGenerator) {
+	protected void setIdentifierGenerationStrategyFactory(
+		IdentifierGenerationStrategyFactory identifierGenerationStrategy) {
 
-		super.setIdentifierGenerator(identifierGenerator);
+		super.setIdentifierGenerationStrategyFactory(
+			identifierGenerationStrategy);
 	}
 
 	@Override

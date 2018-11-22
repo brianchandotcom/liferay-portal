@@ -76,16 +76,28 @@ PdfPreviewer.STATE = {
 	currentPage: Config.number().required(),
 
 	/**
-	 * Pdf pages lenght
-	 * @type {Number}
+	 * Flag that indicate if 'next page' is disabled.
+	 * @type {Boolean}
 	 */
-	totalPages: Config.number().required(),
+	nextPageDisabled: Config.bool(),
+
+	/**
+	 * Flag that indicate if 'previous page' is disabled.
+	 * @type {Boolean}
+	 */
+	previousPageDisabled: Config.bool(),
 
 	/**
 	 * Path to icon images.
 	 * @type {String}
 	 */
-	spritemap: Config.string().required()
+	spritemap: Config.string().required(),
+
+	/**
+	 * Pdf pages lenght
+	 * @type {Number}
+	 */
+	totalPages: Config.number().required()
 };
 
 Soy.register(PdfPreviewer, templates);

@@ -16,9 +16,10 @@
 
 <%@ include file="/document_library/init.jsp" %>
 
-<liferay-portlet:actionURL name="/document_library/edit_tags" varImpl="editTagsURL" />
+<liferay-portlet:actionURL copyCurrentRenderParameters="<%= true %>" name="/document_library/edit_tags" varImpl="editTagsURL" />
 
-<aui:form action="<%= editTagsURL %>" cssClass="lfr-dynamic-form" method="post" name="fm">
+<aui:form action="<%= editTagsURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm">
+	<liferay-portlet:renderURLParams varImpl="editTagsURL" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 
 	<div class="lfr-form-content">

@@ -69,7 +69,7 @@ public class RenderedImageUtil {
 
 				return imageReader.read(0);
 			}
-			catch (IOException ioe) {
+			catch (Exception e) {
 				continue;
 			}
 			finally {

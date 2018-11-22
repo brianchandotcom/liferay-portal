@@ -828,17 +828,20 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		MockHttpServletRequest mockHttpServletRequest =
 			getMockHttpServletRequest(ACS_URL);
 
-		SAMLMessageContext<?, ?, ?> samlMessageContext =
-			_webSsoProfileImpl.getSamlMessageContext(
+		MessageContext<?> messageContext =
+			_webSsoProfileImpl.getMessageContext(
 				mockHttpServletRequest, new MockHttpServletResponse());
 
-		samlMessageContext.setPeerEntityId(IDP_ENTITY_ID);
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+		samlPeerEntityContext.setEntityId(IDP_ENTITY_ID);
 
 		Issuer issuer = OpenSamlUtil.buildIssuer(IDP_ENTITY_ID);
 
 		issuer.setFormat(NameIDType.UNSPECIFIED);
 
-		_webSsoProfileImpl.verifyIssuer(samlMessageContext, issuer);
+		_webSsoProfileImpl.verifyIssuer(messageContext, issuer);
 	}
 
 	@Test(expected = IssuerException.class)

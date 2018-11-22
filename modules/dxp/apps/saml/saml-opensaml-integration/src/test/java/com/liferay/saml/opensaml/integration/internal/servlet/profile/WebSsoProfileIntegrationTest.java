@@ -1046,18 +1046,29 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 	}
 
 	protected Subject getSubject(
-			SAMLMessageContext<AuthnRequest, Response, NameID>
-				samlMessageContext,
-			NameID nameID, DateTime issueDate)
+			MessageContext messageContext, NameID nameID,
+			DateTime issueDate)
 		throws Exception {
 
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+		SAMLBindingContext samlBindingContext =
+			messageContext.getSubcontext(SAMLBindingContext.class);
+
 		SamlSsoRequestContext samlSsoRequestContext = new SamlSsoRequestContext(
-			samlMessageContext.getPeerEntityId(),
-			samlMessageContext.getRelayState(), samlMessageContext,
+			samlPeerEntityContext.getEntityId(),
+			samlBindingContext.getRelayState(), messageContext,
 			userLocalService);
 
+		SAMLSelfEntityContext samlSelfEntityContext =
+			messageContext.getSubcontext(SAMLSelfEntityContext.class);
+
+		SAMLMetadataContext samlSelfMetadataContext =
+			samlSelfEntityContext.getSubcontext(SAMLMetadataContext.class);
+
 		SPSSODescriptor spSSODescriptor =
-			(SPSSODescriptor)samlMessageContext.getLocalEntityRoleMetadata();
+			(SPSSODescriptor)samlSelfMetadataContext.getRoleDescriptor();
 
 		AssertionConsumerService assertionConsumerService =
 			SamlUtil.getAssertionConsumerServiceForBinding(

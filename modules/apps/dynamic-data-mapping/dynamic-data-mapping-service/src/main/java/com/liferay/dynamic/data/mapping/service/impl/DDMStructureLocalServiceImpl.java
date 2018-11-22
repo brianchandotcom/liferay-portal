@@ -259,6 +259,55 @@ public class DDMStructureLocalServiceImpl
 			serviceContext);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public DDMStructure addStructure(
+			long userId, long groupId, long classNameId, long parentStructureId,
+			String structureKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String definition,
+			String storageType, ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		if (Validator.isNull(structureKey)) {
+			structureKey = String.valueOf(counterLocalService.increment());
+		}
+		else {
+			structureKey = StringUtil.toUpperCase(structureKey.trim());
+		}
+
+		long ddmStructureId = counterLocalService.increment();
+
+		DDMStructure ddmStructure = ddmStructurePersistence.create(
+			ddmStructureId);
+
+		ddmStructure.setUuid(serviceContext.getUuid());
+		ddmStructure.setGroupId(groupId);
+		ddmStructure.setCompanyId(user.getCompanyId());
+		ddmStructure.setUserId(user.getUserId());
+		ddmStructure.setUserName(user.getFullName());
+		ddmStructure.setVersionUserId(user.getUserId());
+		ddmStructure.setVersionUserName(user.getFullName());
+		ddmStructure.setParentStructureId(parentStructureId);
+		ddmStructure.setClassNameId(classNameId);
+		ddmStructure.setStructureKey(structureKey);
+		ddmStructure.setVersion(DDMStructureConstants.VERSION_DEFAULT);
+		ddmStructure.setDescriptionMap(descriptionMap);
+		ddmStructure.setNameMap(nameMap);
+		ddmStructure.setDefinition(definition);
+		ddmStructure.setStorageType(storageType);
+		ddmStructure.setType(DDMStructureConstants.TYPE_DEFAULT);
+
+		ddmStructurePersistence.update(ddmStructure);
+
+		addStructureVersion(
+			user, ddmStructure, DDMStructureConstants.VERSION_DEFAULT,
+			serviceContext);
+
+		return ddmStructure;
+	}
+
 	@Override
 	public DDMStructure addStructure(
 			long userId, long groupId, long classNameId,
@@ -1461,6 +1510,57 @@ public class DDMStructureLocalServiceImpl
 		return doUpdateStructure(
 			userId, parentStructureId, nameMap, descriptionMap, ddmForm,
 			ddmFormLayout, serviceContext, structure);
+	}
+
+	@Override
+	public DDMStructure updateStructure(
+			long userId, long structureId, long parentStructureId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String definition, ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMStructure ddmStructure = ddmStructurePersistence.findByPrimaryKey(
+			structureId);
+
+		User user = userLocalService.getUser(userId);
+
+		ddmStructure.setUserId(userId);
+		ddmStructure.setParentStructureId(parentStructureId);
+
+		DDMStructureVersion latestStructureVersion =
+			ddmStructureVersionLocalService.getLatestStructureVersion(
+				ddmStructure.getStructureId());
+
+		boolean majorVersion = GetterUtil.getBoolean(
+			serviceContext.getAttribute("majorVersion"));
+
+		String version = getNextVersion(
+			latestStructureVersion.getVersion(), majorVersion);
+
+		ddmStructure.setVersion(version);
+
+		ddmStructure.setNameMap(nameMap);
+		ddmStructure.setVersionUserId(user.getUserId());
+		ddmStructure.setVersionUserName(user.getFullName());
+		ddmStructure.setDescriptionMap(descriptionMap);
+		ddmStructure.setDefinition(definition);
+
+		// Structure version
+
+		DDMStructureVersion ddmStructureVersion = addStructureVersion(
+			user, ddmStructure, version, serviceContext);
+
+		if (!ddmStructureVersion.isApproved()) {
+			return ddmStructure;
+		}
+
+		ddmStructurePersistence.update(ddmStructure);
+
+		// Indexer
+
+		reindexStructure(ddmStructure, serviceContext);
+
+		return ddmStructure;
 	}
 
 	/**

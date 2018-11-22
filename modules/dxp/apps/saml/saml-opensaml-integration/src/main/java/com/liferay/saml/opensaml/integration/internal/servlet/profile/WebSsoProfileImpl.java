@@ -1585,18 +1585,21 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	protected void verifyAudienceRestrictions(
 			List<AudienceRestriction> audienceRestrictions,
-			SAMLMessageContext<?, ?, ?> samlMessageContext)
+			MessageContext<?> messageContext)
 		throws PortalException {
 
 		if (audienceRestrictions.isEmpty()) {
 			return;
 		}
 
+		SAMLSelfEntityContext samlSelfEntityContext =
+			messageContext.getSubcontext(SAMLSelfEntityContext.class);
+
 		for (AudienceRestriction audienceRestriction : audienceRestrictions) {
 			for (Audience audience : audienceRestriction.getAudiences()) {
 				String audienceURI = audience.getAudienceURI();
 
-				if (audienceURI.equals(samlMessageContext.getLocalEntityId())) {
+				if (audienceURI.equals(samlSelfEntityContext.getEntityId())) {
 					return;
 				}
 			}

@@ -177,6 +177,12 @@
 			<finder-column arrayable-operator="OR" comparator="LIKE" name="sections" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="G_P_L_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" name="parentResourcePrimKey" />
+			<finder-column name="latest" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="G_KBFI_UT_ST" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="kbFolderId" />

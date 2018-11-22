@@ -647,16 +647,17 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		MockHttpServletRequest mockHttpServletRequest =
 			getMockHttpServletRequest(SSO_URL);
 
-		SAMLMessageContext<AuthnRequest, Response, NameID>
-			idpSamlMessageContext =
-				(SAMLMessageContext<AuthnRequest, Response, NameID>)
-					_webSsoProfileImpl.getSamlMessageContext(
-						mockHttpServletRequest, new MockHttpServletResponse());
+		MessageContext<?> idpMessageContext =
+			_webSsoProfileImpl.getMessageContext(
+				mockHttpServletRequest, new MockHttpServletResponse());
 
-		idpSamlMessageContext.setPeerEntityId(SP_ENTITY_ID);
+		SAMLPeerEntityContext samlPeerEntityContext =
+			idpMessageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+		samlPeerEntityContext.setEntityId(SP_ENTITY_ID);
 
 		SamlSsoRequestContext samlSsoRequestContext = new SamlSsoRequestContext(
-			SP_ENTITY_ID, null, idpSamlMessageContext, userLocalService);
+			SP_ENTITY_ID, null, idpMessageContext, userLocalService);
 
 		Conditions conditions = _webSsoProfileImpl.getSuccessConditions(
 			samlSsoRequestContext, new DateTime(DateTimeZone.UTC).plusDays(1),
@@ -666,11 +667,11 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		mockHttpServletRequest = getMockHttpServletRequest(ACS_URL);
 
-		SAMLMessageContext<?, ?, ?> spSamlMessageContext =
-			_webSsoProfileImpl.getSamlMessageContext(
+		MessageContext<?> spMessageContext =
+			_webSsoProfileImpl.getMessageContext(
 				mockHttpServletRequest, new MockHttpServletResponse());
 
-		_webSsoProfileImpl.verifyConditions(spSamlMessageContext, conditions);
+		_webSsoProfileImpl.verifyConditions(spMessageContext, conditions);
 	}
 
 	@Test(expected = ExpiredException.class)

@@ -1549,17 +1549,16 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	protected void verifyAssertion(
-			Assertion assertion,
-			SAMLMessageContext<?, ?, NameID> samlMessageContext,
+			Assertion assertion, MessageContext<?> messageContext,
 			TrustEngine<Signature> trustEngine)
 		throws PortalException {
 
-		verifyReplay(samlMessageContext, assertion);
-		verifyIssuer(samlMessageContext, assertion.getIssuer());
+		verifyReplay(messageContext, assertion);
+		verifyIssuer(messageContext, assertion.getIssuer());
 		verifyAssertionSignature(
-			assertion.getSignature(), samlMessageContext, trustEngine);
-		verifyConditions(samlMessageContext, assertion.getConditions());
-		verifySubject(samlMessageContext, assertion.getSubject());
+			assertion.getSignature(), messageContext, trustEngine);
+		verifyConditions(messageContext, assertion.getConditions());
+		verifySubject(messageContext, assertion.getSubject());
 	}
 
 	protected void verifyAssertionSignature(

@@ -461,12 +461,6 @@ public class JavaParserUtil {
 		javaWhileStatement.setConditionJavaExpression(
 			parseJavaExpression(firstChildDetailAST.getNextSibling()));
 
-		DetailAST lastChildDetailAST = literalWhileDetailAST.getLastChild();
-
-		if (lastChildDetailAST.getType() == TokenTypes.SLIST) {
-			javaWhileStatement.setHasBody(true);
-		}
-
 		return javaWhileStatement;
 	}
 

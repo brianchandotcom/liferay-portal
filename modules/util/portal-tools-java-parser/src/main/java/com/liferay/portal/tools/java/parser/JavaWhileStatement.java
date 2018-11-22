@@ -25,10 +25,6 @@ public class JavaWhileStatement extends BaseJavaTerm {
 		_conditionJavaExpression = conditionJavaExpression;
 	}
 
-	public void setHasBody(boolean hasBody) {
-		_hasBody = hasBody;
-	}
-
 	@Override
 	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength) {
@@ -37,6 +33,5 @@ public class JavaWhileStatement extends BaseJavaTerm {
 	}
 
 	private JavaExpression _conditionJavaExpression;
-	private boolean _hasBody;
 
 }

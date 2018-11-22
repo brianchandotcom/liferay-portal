@@ -8,10 +8,13 @@
 	{@param currentPage: number}
 	{@param spritemap: string}
 	{@param totalPages: number}
-	{@param? _handleClickGoToPage: any}
+	{@param? _handleBlurPageInput: any}
+	{@param? _handleClickToolbar: any}
+	{@param? _handleKeyDownPageInput: any}
+	{@param? id: string}
 	{@param? nextPageDisabled: bool}
 	{@param? previousPageDiabled: bool}
-	{@param? id: string}
+	{@param? showPageInput: bool}
 
 	<div class="preview-file" id="{$id}">
 		<div class="preview-file-container preview-file-max-height" ref="imageContainer">
@@ -19,12 +22,15 @@
 		</div>
 
 		{call .toolbar}
+			{param _handleBlurPageInput: $_handleBlurPageInput /}
+			{param _handleClickToolbar: $_handleClickToolbar /}
+			{param _handleKeyDownPageInput: $_handleKeyDownPageInput /}
 			{param currentPage: $currentPage /}
-			{param spritemap: $spritemap /}
-			{param totalPages: $totalPages /}
-			{param _handleClickGoToPage: $_handleClickGoToPage /}
 			{param nextPageDisabled: $nextPageDisabled /}
 			{param previousPageDiabled: $previousPageDiabled /}
+			{param showPageInput: $showPageInput /}
+			{param spritemap: $spritemap /}
+			{param totalPages: $totalPages /}
 		{/call}
 	</div>
 {/template}
@@ -33,23 +39,40 @@
 	{@param currentPage: number}
 	{@param spritemap: string}
 	{@param totalPages: number}
-	{@param? _handleClickGoToPage: any}
+	{@param? _handleBlurPageInput: any}
+	{@param? _handleClickToolbar: any}
+	{@param? _handleKeyDownPageInput: any}
 	{@param? nextPageDisabled: bool}
 	{@param? previousPageDiabled: bool}
+	{@param? showPageInput: bool}
+
 	{let $baseButtonsToolbar:[
 		'elementClasses': 'btn-dark',
-		'events': [ 'click': $_handleClickGoToPage],
+		'events': [ 'click': $_handleClickToolbar],
 		'spritemap': $spritemap,
 		'style': false
 	] /}
+
 	<div class="preview-toolbar-container">
-		<div class="btn-group" role="group">
-			{call ClayButton.render data="$baseButtonsToolbar"}
-				{param label kind="text"}
-					{msg desc=""}page{/msg} {$currentPage} / {$totalPages}
-				{/param}
-				{param value: 'ask' /}
-			{/call}
+		<div class="btn-group preview-toolbar" role="group">
+			<div class="btn-group">
+				{call ClayButton.render data="$baseButtonsToolbar"}
+					{param label kind="text"}
+						{msg desc=""}page{/msg} {$currentPage} / {$totalPages}
+					{/param}
+					{param value: 'go' /}
+				{/call}
+				{if $showPageInput}
+					<div class="toolbar-input-wrapper">
+						<input
+							class="form-control form-control-sm"
+							data-onblur="{$_handleBlurPageInput}"
+							data-onkeydown="{$_handleKeyDownPageInput}"
+							ref="pageInput"
+						/>
+					</div>
+				{/if}
+			</div>
 			{call ClayButton.render data="$baseButtonsToolbar"}
 				{param disabled: $previousPageDiabled /}
 				{param icon: 'caret-top' /}

@@ -295,13 +295,22 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			_webSsoProfileImpl.decodeAuthnRequest(
 				mockHttpServletRequest, mockHttpServletResponse);
 
-		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext =
+		MessageContext<AuthnRequest> messageContext =
 			samlSsoRequestContext.getSAMLMessageContext();
 
-		Assert.assertNotNull(samlMessageContext.getInboundSAMLMessageId());
+		InOutOperationContext inOutOperationContext =
+			messageContext.getSubcontext(InOutOperationContext.class);
 
-		String inboundSamlMessageId =
-			samlMessageContext.getInboundSAMLMessageId();
+		MessageContext inboundMessageContext =
+			inOutOperationContext.getInboundMessageContext();
+
+		SAMLMessageInfoContext samlMessageInfoContext =
+			inboundMessageContext.getSubcontext(
+				SAMLMessageInfoContext.class, false);
+
+		Assert.assertNotNull(samlMessageInfoContext.getMessageId());
+
+		String inboundSamlMessageId = samlMessageInfoContext.getMessageId();
 
 		mockHttpServletRequest = getMockHttpServletRequest(
 			SSO_URL + "?saml_message_id=" + inboundSamlMessageId);
@@ -322,12 +331,26 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		samlSsoRequestContext = _webSsoProfileImpl.decodeAuthnRequest(
 			mockHttpServletRequest, mockHttpServletResponse);
 
-		samlMessageContext = samlSsoRequestContext.getSAMLMessageContext();
+		messageContext = samlSsoRequestContext.getSAMLMessageContext();
 
-		Assert.assertNotNull(samlMessageContext.getInboundSAMLMessage());
+		inOutOperationContext = messageContext.getSubcontext(
+			InOutOperationContext.class);
+
+		inboundMessageContext =
+			inOutOperationContext.getInboundMessageContext();
+
+		Assert.assertNotNull(inboundMessageContext.getMessage());
+
+		SAMLMessageInfoContext messageInfoContext =
+			inboundMessageContext.getSubcontext(SAMLMessageInfoContext.class);
+
 		Assert.assertEquals(
-			inboundSamlMessageId, samlMessageContext.getInboundSAMLMessageId());
-		Assert.assertEquals(RELAY_STATE, samlMessageContext.getRelayState());
+			inboundSamlMessageId, messageInfoContext.getMessageId());
+
+		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
+			SAMLBindingContext.class);
+
+		Assert.assertEquals(RELAY_STATE, samlBindingContext.getRelayState());
 
 		Assert.assertNull(
 			mockSession.getAttribute(SamlWebKeys.SAML_SSO_REQUEST_CONTEXT));

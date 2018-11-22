@@ -81,7 +81,7 @@ class PdfPreviewer extends Component {
 		else if (code === 27) {
 			this.showPageInput = false;
 		}
- 		else if (validKeyCodes.indexOf(code) == -1) {
+		else if (validKeyCodes.indexOf(code) == -1) {
 			event.preventDefault();
 		}
 	}

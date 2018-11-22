@@ -316,26 +316,6 @@ class FragmentEntryLinkList extends Component {
 FragmentEntryLinkList.STATE = {
 
 	/**
-	 * Nearest border of the hovered fragment entry link when dragging.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEntryLinkList
-	 * @review
-	 * @type {!string}
-	 */
-	hoveredElementBorder: Config.string(),
-
-	/**
-	 * Id of the hovered fragment entry link when dragging.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEntryLinkList
-	 * @review
-	 * @type {!string}
-	 */
-	hoveredFragmentEntryLinkId: Config.string(),
-
-	/**
 	 * Data associated to the layout
 	 * @default {object}
 	 * @instance

@@ -71,22 +71,46 @@ function getFragmentRowIndex(structure, fragmentEntryLinkId) {
  * @review
  */
 function setIn(object, keyPath, value) {
+	return updateIn(
+		object,
+		keyPath,
+		() => value
+	);
+}
+
+/**
+ * Recursively inserts the value returned from updater inside an object creating
+ * a copy of the original target. It the object (or any in the path),
+ * it's an Array, it will generate new Arrays, preserving the same structure.
+ * Updater receives the previous value or defaultValue and returns a new value.
+ * @param {!Array|Object} object Original object that will be copied
+ * @param {!Array<string>} keyPath Array of strings used for reaching the deep property
+ * @param {!function} updater
+ * @param {*} defaultValue
+ */
+function updateIn(object, keyPath, updater, defaultValue) {
 	const nextKey = keyPath[0];
 	const target = object instanceof Array ?
 		[...object] :
 		Object.assign({}, object);
 
-	let nextValue = value;
-
 	if (keyPath.length > 1) {
-		nextValue = setIn(
+		target[nextKey] = updateIn(
 			object[nextKey] || {},
 			keyPath.slice(1),
-			value
+			updater,
+			defaultValue
 		);
 	}
+	else {
+		let nextValue = target[nextKey];
 
-	target[nextKey] = nextValue;
+		if (typeof nextValue === 'undefined') {
+			nextValue = defaultValue;
+		}
+
+		target[nextKey] = updater(nextValue);
+	}
 
 	return target;
 }
@@ -133,5 +157,6 @@ export {
 	getFragmentColumn,
 	getFragmentRowIndex,
 	setIn,
+	updateIn,
 	updateLayoutData
 };

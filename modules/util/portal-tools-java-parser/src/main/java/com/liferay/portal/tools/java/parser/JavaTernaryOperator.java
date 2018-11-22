@@ -21,24 +21,6 @@ import com.liferay.portal.kernel.util.StringBundler;
  */
 public class JavaTernaryOperator extends JavaExpression {
 
-	@Override
-	protected String getString(
-		String indent, String prefix, String suffix, int maxLineLength,
-		boolean forceLineBreak) {
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(indent);
-		sb.append(prefix);
-
-		append(sb, _conditionJavaExpression, indent, "", " ? ", maxLineLength);
-		append(sb, _trueValueJavaExpression, indent, "", " : ", maxLineLength);
-		append(
-			sb, _falseValueJavaExpression, indent, "", suffix, maxLineLength);
-
-		return sb.toString();
-	}
-
 	public void setConditionJavaExpression(
 		JavaExpression conditionJavaExpression) {
 
@@ -55,6 +37,24 @@ public class JavaTernaryOperator extends JavaExpression {
 		JavaExpression trueValueJavaExpression) {
 
 		_trueValueJavaExpression = trueValueJavaExpression;
+	}
+
+	@Override
+	protected String getString(
+		String indent, String prefix, String suffix, int maxLineLength,
+		boolean forceLineBreak) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(indent);
+		sb.append(prefix);
+
+		append(sb, _conditionJavaExpression, indent, "", " ? ", maxLineLength);
+		append(sb, _trueValueJavaExpression, indent, "", " : ", maxLineLength);
+		append(
+			sb, _falseValueJavaExpression, indent, "", suffix, maxLineLength);
+
+		return sb.toString();
 	}
 
 	private JavaExpression _conditionJavaExpression;

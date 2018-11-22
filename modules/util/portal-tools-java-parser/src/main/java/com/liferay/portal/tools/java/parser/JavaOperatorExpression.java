@@ -36,6 +36,18 @@ public class JavaOperatorExpression extends JavaExpression {
 		return _rightHandJavaExpression;
 	}
 
+	public void setLeftHandJavaExpression(
+		JavaExpression leftHandJavaExpression) {
+
+		_leftHandJavaExpression = leftHandJavaExpression;
+	}
+
+	public void setRightHandJavaExpression(
+		JavaExpression rightHandJavaExpression) {
+
+		_rightHandJavaExpression = rightHandJavaExpression;
+	}
+
 	@Override
 	protected String getString(
 		String indent, String prefix, String suffix, int maxLineLength,
@@ -116,18 +128,6 @@ public class JavaOperatorExpression extends JavaExpression {
 		}
 
 		return sb.toString();
-	}
-
-	public void setLeftHandJavaExpression(
-		JavaExpression leftHandJavaExpression) {
-
-		_leftHandJavaExpression = leftHandJavaExpression;
-	}
-
-	public void setRightHandJavaExpression(
-		JavaExpression rightHandJavaExpression) {
-
-		_rightHandJavaExpression = rightHandJavaExpression;
 	}
 
 	private final JavaOperator _javaOperator;

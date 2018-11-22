@@ -25,6 +25,10 @@ public class JavaInstanceofStatement extends JavaExpression {
 		_classJavaType = classJavaType;
 	}
 
+	public void setValue(JavaExpression valueJavaExpression) {
+		_valueJavaExpression = valueJavaExpression;
+	}
+
 	@Override
 	protected String getString(
 		String indent, String prefix, String suffix, int maxLineLength,
@@ -45,10 +49,6 @@ public class JavaInstanceofStatement extends JavaExpression {
 		append(sb, _classJavaType, indent, "", suffix, maxLineLength);
 
 		return sb.toString();
-	}
-
-	public void setValue(JavaExpression valueJavaExpression) {
-		_valueJavaExpression = valueJavaExpression;
 	}
 
 	private final JavaType _classJavaType;

@@ -27,6 +27,16 @@ public class JavaClassCall extends JavaExpression {
 		_className = new JavaSimpleValue(className);
 	}
 
+	public void setGenericJavaTypes(List<JavaType> genericJavaTypes) {
+		_genericJavaTypes = genericJavaTypes;
+	}
+
+	public void setParameterValueJavaExpressions(
+		List<JavaExpression> parameterValueJavaExpressions) {
+
+		_parameterValueJavaExpressions = parameterValueJavaExpressions;
+	}
+
 	@Override
 	protected String getString(
 		String indent, String prefix, String suffix, int maxLineLength,
@@ -80,16 +90,6 @@ public class JavaClassCall extends JavaExpression {
 		}
 
 		return sb.toString();
-	}
-
-	public void setGenericJavaTypes(List<JavaType> genericJavaTypes) {
-		_genericJavaTypes = genericJavaTypes;
-	}
-
-	public void setParameterValueJavaExpressions(
-		List<JavaExpression> parameterValueJavaExpressions) {
-
-		_parameterValueJavaExpressions = parameterValueJavaExpressions;
 	}
 
 	private final JavaSimpleValue _className;

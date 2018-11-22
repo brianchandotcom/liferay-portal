@@ -30,6 +30,10 @@ public class JavaMethodReference extends JavaExpression {
 		_referenceJavaExpression = referenceJavaExpression;
 	}
 
+	public void setGenericJavaTypes(List<JavaType> genericJavaTypes) {
+		_genericJavaTypes = genericJavaTypes;
+	}
+
 	@Override
 	protected String getString(
 		String indent, String prefix, String suffix, int maxLineLength,
@@ -55,10 +59,6 @@ public class JavaMethodReference extends JavaExpression {
 		append(sb, _methodName, indent, "", suffix, maxLineLength);
 
 		return sb.toString();
-	}
-
-	public void setGenericJavaTypes(List<JavaType> genericJavaTypes) {
-		_genericJavaTypes = genericJavaTypes;
 	}
 
 	private List<JavaType> _genericJavaTypes;

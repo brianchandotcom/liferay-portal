@@ -29,6 +29,16 @@ public class JavaAnnotation extends JavaExpression {
 		_name = new JavaSimpleValue(name);
 	}
 
+	public void setJavaAnnotationMemberValuePairs(
+		List<JavaAnnotationMemberValuePair> javaAnnotationMemberValuePairs) {
+
+		_javaAnnotationMemberValuePairs = javaAnnotationMemberValuePairs;
+	}
+
+	public void setValueJavaExpression(JavaExpression valueJavaExpression) {
+		_valueJavaExpression = valueJavaExpression;
+	}
+
 	@Override
 	protected String getString(
 		String indent, String prefix, String suffix, int maxLineLength,
@@ -80,16 +90,6 @@ public class JavaAnnotation extends JavaExpression {
 		sb.append(suffix);
 
 		return sb.toString();
-	}
-
-	public void setJavaAnnotationMemberValuePairs(
-		List<JavaAnnotationMemberValuePair> javaAnnotationMemberValuePairs) {
-
-		_javaAnnotationMemberValuePairs = javaAnnotationMemberValuePairs;
-	}
-
-	public void setValueJavaExpression(JavaExpression valueJavaExpression) {
-		_valueJavaExpression = valueJavaExpression;
 	}
 
 	private List<JavaAnnotationMemberValuePair> _javaAnnotationMemberValuePairs;

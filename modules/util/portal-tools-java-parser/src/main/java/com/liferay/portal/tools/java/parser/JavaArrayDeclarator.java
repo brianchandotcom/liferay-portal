@@ -27,6 +27,16 @@ public class JavaArrayDeclarator extends JavaExpression {
 		_className = new JavaSimpleValue(className);
 	}
 
+	public void setDimensionValueJavaExpressions(
+		List<JavaExpression> dimensionValueJavaExpressions) {
+
+		_dimensionValueJavaExpressions = dimensionValueJavaExpressions;
+	}
+
+	public void setGenericJavaTypes(List<JavaType> genericJavaTypes) {
+		_genericJavaTypes = genericJavaTypes;
+	}
+
 	@Override
 	protected String getString(
 		String indent, String prefix, String suffix, int maxLineLength,
@@ -85,16 +95,6 @@ public class JavaArrayDeclarator extends JavaExpression {
 		}
 
 		return sb.toString();
-	}
-
-	public void setDimensionValueJavaExpressions(
-		List<JavaExpression> dimensionValueJavaExpressions) {
-
-		_dimensionValueJavaExpressions = dimensionValueJavaExpressions;
-	}
-
-	public void setGenericJavaTypes(List<JavaType> genericJavaTypes) {
-		_genericJavaTypes = genericJavaTypes;
 	}
 
 	private final JavaSimpleValue _className;

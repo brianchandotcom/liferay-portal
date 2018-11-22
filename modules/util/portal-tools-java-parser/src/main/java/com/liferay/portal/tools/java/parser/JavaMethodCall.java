@@ -31,6 +31,16 @@ public class JavaMethodCall extends JavaExpression {
 		return _parameterValueJavaExpressions;
 	}
 
+	public void setGenericJavaTypes(List<JavaType> genericJavaTypes) {
+		_genericJavaTypes = genericJavaTypes;
+	}
+
+	public void setParameterValueJavaExpressions(
+		List<JavaExpression> parameterValueJavaExpressions) {
+
+		_parameterValueJavaExpressions = parameterValueJavaExpressions;
+	}
+
 	@Override
 	protected String getString(
 		String indent, String prefix, String suffix, int maxLineLength,
@@ -70,16 +80,6 @@ public class JavaMethodCall extends JavaExpression {
 		}
 
 		return sb.toString();
-	}
-
-	public void setGenericJavaTypes(List<JavaType> genericJavaTypes) {
-		_genericJavaTypes = genericJavaTypes;
-	}
-
-	public void setParameterValueJavaExpressions(
-		List<JavaExpression> parameterValueJavaExpressions) {
-
-		_parameterValueJavaExpressions = parameterValueJavaExpressions;
 	}
 
 	private List<JavaType> _genericJavaTypes;

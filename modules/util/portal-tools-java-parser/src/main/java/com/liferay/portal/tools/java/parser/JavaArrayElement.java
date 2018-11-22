@@ -27,6 +27,12 @@ public class JavaArrayElement extends JavaExpression {
 		_arrayJavaExpression = arrayJavaExpression;
 	}
 
+	public void setIndexValueJavaExpressions(
+		List<JavaExpression> indexValueJavaExpressions) {
+
+		_indexValueJavaExpressions = indexValueJavaExpressions;
+	}
+
 	@Override
 	protected String getString(
 		String indent, String prefix, String suffix, int maxLineLength,
@@ -52,12 +58,6 @@ public class JavaArrayElement extends JavaExpression {
 		sb.append(suffix);
 
 		return sb.toString();
-	}
-
-	public void setIndexValueJavaExpressions(
-		List<JavaExpression> indexValueJavaExpressions) {
-
-		_indexValueJavaExpressions = indexValueJavaExpressions;
 	}
 
 	private final JavaExpression _arrayJavaExpression;

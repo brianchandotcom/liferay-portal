@@ -21,6 +21,10 @@ import com.liferay.portal.kernel.util.StringBundler;
  */
 public class JavaNewClassInstantiation extends JavaExpression {
 
+	public void setJavaClassCall(JavaClassCall javaClassCall) {
+		_javaClassCall = javaClassCall;
+	}
+
 	@Override
 	protected String getString(
 		String indent, String prefix, String suffix, int maxLineLength,
@@ -44,10 +48,6 @@ public class JavaNewClassInstantiation extends JavaExpression {
 		}
 
 		return sb.toString();
-	}
-
-	public void setJavaClassCall(JavaClassCall javaClassCall) {
-		_javaClassCall = javaClassCall;
 	}
 
 	private JavaClassCall _javaClassCall;

@@ -25,10 +25,6 @@ public abstract class JavaExpression extends BaseJavaTerm {
 		return _chainedJavaExpression;
 	}
 
-	protected abstract String getString(
-		String indent, String prefix, String suffix, int maxLineLength,
-		boolean forceLineBreak);
-
 	public void setChainedJavaExpression(JavaExpression chainedJavaExpression) {
 		if (_chainedJavaExpression == null) {
 			_chainedJavaExpression = chainedJavaExpression;
@@ -94,6 +90,10 @@ public abstract class JavaExpression extends BaseJavaTerm {
 
 		return sb.toString();
 	}
+
+	protected abstract String getString(
+		String indent, String prefix, String suffix, int maxLineLength,
+		boolean forceLineBreak);
 
 	private JavaExpression _chainedJavaExpression;
 	private boolean _hasSurroundingParentheses;

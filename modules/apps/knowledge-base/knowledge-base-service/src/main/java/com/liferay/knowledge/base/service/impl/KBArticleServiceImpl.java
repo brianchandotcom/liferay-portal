@@ -180,6 +180,22 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	}
 
 	@Override
+	public KBArticle fetchFirstChildKBArticle(
+		long groupId, long parentResourcePrimKey, int status) {
+
+		List<KBArticle> kbArticles = kbArticlePersistence.filterFindByG_P_L_S(
+			groupId, parentResourcePrimKey, true,
+			WorkflowConstants.STATUS_APPROVED, 0, 1,
+			new KBArticlePriorityComparator(true));
+
+		if (kbArticles.isEmpty()) {
+			return null;
+		}
+
+		return kbArticles.get(0);
+	}
+
+	@Override
 	public KBArticle fetchKBArticleByUrlTitle(
 			long groupId, long kbFolderId, String urlTitle)
 		throws PortalException {

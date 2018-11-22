@@ -147,11 +147,11 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 	}
 
 	protected Credential getCredential(String entityId) throws Exception {
-		EntityIDCriteria entityIDCriteria = new EntityIDCriteria(entityId);
+		EntityIdCriterion entityIdCriterion = new EntityIdCriterion(entityId);
 
 		CriteriaSet criteriaSet = new CriteriaSet();
 
-		criteriaSet.add(entityIDCriteria);
+		criteriaSet.add(entityIdCriterion);
 
 		if (entityId.equals(samlProviderConfiguration.entityId())) {
 			return credentialResolver.resolveSingle(criteriaSet);

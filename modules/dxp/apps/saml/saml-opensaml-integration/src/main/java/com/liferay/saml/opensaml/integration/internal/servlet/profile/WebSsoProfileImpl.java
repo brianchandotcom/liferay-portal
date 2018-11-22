@@ -1835,8 +1835,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	protected void verifySubject(
-			SAMLMessageContext<?, ?, NameID> samlMessageContext,
-			Subject subject)
+			MessageContext<?> messageContext, Subject subject)
 		throws PortalException {
 
 		List<SubjectConfirmation> subjectConfirmations =
@@ -1877,13 +1876,18 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				}
 				else {
 					verifyDestination(
-						samlMessageContext,
-						subjectConfirmationData.getRecipient());
+						messageContext, subjectConfirmationData.getRecipient());
 				}
 
 				NameID nameID = subject.getNameID();
 
-				samlMessageContext.setSubjectNameIdentifier(nameID);
+				SAMLSubjectNameIdentifierContext
+					samlSubjectNameIdentifierContext =
+						messageContext.getSubcontext(
+							SAMLSubjectNameIdentifierContext.class);
+
+				samlSubjectNameIdentifierContext.setSubjectNameIdentifier(
+					nameID);
 
 				return;
 			}

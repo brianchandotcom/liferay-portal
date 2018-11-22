@@ -1529,18 +1529,21 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			_samlIdpSsoSessionLocalService.updateModifiedDate(
 				samlSsoRequestContext.getSamlSsoSessionId());
 
-		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext =
+		MessageContext<?> messageContext =
 			samlSsoRequestContext.getSAMLMessageContext();
+
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
 
 		try {
 			_samlIdpSpSessionLocalService.updateModifiedDate(
 				samlIdpSsoSession.getSamlIdpSsoSessionId(),
-				samlMessageContext.getPeerEntityId());
+				samlPeerEntityContext.getEntityId());
 		}
 		catch (NoSuchIdpSpSessionException nsisse) {
 			_samlIdpSpSessionLocalService.addSamlIdpSpSession(
 				samlIdpSsoSession.getSamlIdpSsoSessionId(),
-				samlMessageContext.getPeerEntityId(), nameID.getFormat(),
+				samlPeerEntityContext.getEntityId(), nameID.getFormat(),
 				nameID.getValue(), serviceContext);
 		}
 	}

@@ -12,7 +12,10 @@ import {
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../actions/actions.es';
-import {DRAG_POSITIONS} from '../../reducers/placeholders.es';
+import {
+	DRAG_POSITIONS,
+	DROP_TARGET_TYPES
+} from '../../reducers/placeholders.es';
 import {getFragmentRowIndex, setIn} from '../../utils/utils.es';
 import state from '../../store/state.es';
 import templates from './FragmentEntryLinkList.soy';
@@ -22,6 +25,17 @@ import templates from './FragmentEntryLinkList.soy';
  * @review
  */
 class FragmentEntryLinkList extends Component {
+
+	/**
+	 * Adds drop target types to state
+	 * @param {Object} _state
+	 * @private
+	 * @return {Object}
+	 * @static
+	 */
+	static _addDropTypesToState(_state) {
+		return setIn(_state, ['dropTargetTypes'], DROP_TARGET_TYPES);
+	}
 
 	/**
 	 * Checks wether a section is empty or not, sets empty parameter
@@ -74,7 +88,11 @@ class FragmentEntryLinkList extends Component {
 	 * @review
 	 */
 	prepareStateForRender(state) {
-		return FragmentEntryLinkList._setEmptySections(state);
+		let _state = FragmentEntryLinkList._addDropTypesToState(state);
+
+		_state = FragmentEntryLinkList._setEmptySections(_state);
+
+		return _state;
 	}
 
 	/**

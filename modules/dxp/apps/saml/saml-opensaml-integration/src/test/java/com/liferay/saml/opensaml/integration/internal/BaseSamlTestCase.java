@@ -430,28 +430,13 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 		IdentifierGenerationStrategy identifierGenerationStrategy = mock(
 			IdentifierGenerationStrategy.class);
 
+		identifierGenerationStrategyFactory = mock(
+			IdentifierGenerationStrategyFactory.class);
+
 		when(
-			identifierGenerationStrategy.generateIdentifier(
-				Mockito.anyBoolean())
-		).thenAnswer(
-			new Answer<String>() {
-
-				@Override
-				public String answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					boolean xmlSafe = GetterUtil.getBoolean(
-						invocationOnMock.getArguments()[0]);
-
-					String identifier =
-						samlIdentifierGenerator.generateIdentifier(xmlSafe);
-
-					identifiers.add(identifier);
-
-					return identifier;
-				}
-
-			}
+			identifierGenerationStrategyFactory.create(Mockito.anyInt())
+		).thenReturn(
+			identifierGenerationStrategy
 		);
 
 		when(
@@ -474,13 +459,28 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 			}
 		);
 
-		identifierGenerationStrategyFactory = mock(
-			IdentifierGenerationStrategyFactory.class);
-
 		when(
-			identifierGenerationStrategyFactory.create(Mockito.anyInt())
-		).thenReturn(
-			identifierGenerationStrategy
+			identifierGenerationStrategy.generateIdentifier(
+				Mockito.anyBoolean())
+		).thenAnswer(
+			new Answer<String>() {
+
+				@Override
+				public String answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					boolean xmlSafe = GetterUtil.getBoolean(
+						invocationOnMock.getArguments()[0]);
+
+					String identifier =
+						samlIdentifierGenerator.generateIdentifier(xmlSafe);
+
+					identifiers.add(identifier);
+
+					return identifier;
+				}
+
+			}
 		);
 	}
 

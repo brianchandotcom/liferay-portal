@@ -22,7 +22,10 @@ import com.liferay.document.library.web.internal.selection.Selection;
 import com.liferay.document.library.web.internal.selection.SelectionParser;
 import com.liferay.document.library.web.internal.selection.SelectionParserImpl;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.util.SetUtil;
 
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -55,20 +58,35 @@ public class EditTagsMVCRenderCommand implements MVCRenderCommand {
 
 		Stream<DLFileEntry> dlFileEntryStream = selection.execute();
 
-		String commonTagNames = dlFileEntryStream.map(
-			dlFileEntry -> _assetTagLocalService.getTagNames(
-				DLFileEntryConstants.getClassName(),
-				dlFileEntry.getFileEntryId())
-		).flatMap(
-			Stream::of
-		).distinct(
+		List<Set<String>> tagNameSets = dlFileEntryStream.map(
+			dlFileEntry -> SetUtil.fromArray(
+				_assetTagLocalService.getTagNames(
+					DLFileEntryConstants.getClassName(),
+					dlFileEntry.getFileEntryId()))
 		).collect(
-			Collectors.joining(",")
+			Collectors.toList()
 		);
 
-		renderRequest.setAttribute("commonTagNames", commonTagNames);
+		Stream<String> tagNamesStream = _getCommonTagNames(tagNameSets);
+
+		renderRequest.setAttribute(
+			"commonTagNames", tagNamesStream.collect(Collectors.joining(",")));
 
 		return "/document_library/edit_tags.jsp";
+	}
+
+	private Stream<String> _getCommonTagNames(List<Set<String>> tagNameSets) {
+		if (tagNameSets.isEmpty()) {
+			return Stream.empty();
+		}
+
+		Set<String> commonTagNames = tagNameSets.get(0);
+
+		for (Set<String> tagNames : tagNameSets) {
+			commonTagNames = SetUtil.intersect(commonTagNames, tagNames);
+		}
+
+		return commonTagNames.stream();
 	}
 
 	@Reference

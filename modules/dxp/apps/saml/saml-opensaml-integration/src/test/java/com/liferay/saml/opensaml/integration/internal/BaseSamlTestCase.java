@@ -420,10 +420,19 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 	}
 
 	protected void setupIdentifiers() {
-		identifierGenerator = mock(IdentifierGenerator.class);
+		SamlIdentifierGeneratorStrategyFactory
+			samlIdentifierGeneratorStrategyFactory =
+				new SamlIdentifierGeneratorStrategyFactory();
+
+		samlIdentifierGenerator =
+			samlIdentifierGeneratorStrategyFactory.create(16);
+
+		IdentifierGenerationStrategy identifierGenerationStrategy =
+			mock(IdentifierGenerationStrategy.class);
 
 		when(
-			identifierGenerator.generateIdentifier(Mockito.anyInt())
+			identifierGenerationStrategy.generateIdentifier(
+				Mockito.anyBoolean())
 		).thenAnswer(
 			new Answer<String>() {
 
@@ -431,11 +440,11 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 				public String answer(InvocationOnMock invocationOnMock)
 					throws Throwable {
 
-					int length = GetterUtil.getInteger(
+					boolean xmlSafe = GetterUtil.getBoolean(
 						invocationOnMock.getArguments()[0]);
 
 					String identifier =
-						samlIdentifierGenerator.generateIdentifier(length);
+						samlIdentifierGenerator.generateIdentifier(xmlSafe);
 
 					identifiers.add(identifier);
 
@@ -443,6 +452,35 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 				}
 
 			}
+		);
+
+		when(
+			identifierGenerationStrategy.generateIdentifier()
+		).thenAnswer(
+			new Answer<String>() {
+
+				@Override
+				public String answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					String identifier =
+						samlIdentifierGenerator.generateIdentifier();
+
+					identifiers.add(identifier);
+
+					return identifier;
+				}
+
+			}
+		);
+
+		identifierGenerationStrategyFactory = mock(
+			IdentifierGenerationStrategyFactory.class);
+
+		when(
+			identifierGenerationStrategyFactory.create(Mockito.anyInt())
+		).thenReturn(
+			identifierGenerationStrategy
 		);
 	}
 
@@ -633,7 +671,8 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 	protected KeyStoreCredentialResolver credentialResolver;
 	protected GroupLocalService groupLocalService;
 	protected HttpClient httpClient;
-	protected IdentifierGenerator identifierGenerator;
+	protected IdentifierGenerationStrategyFactory
+		identifierGenerationStrategyFactory;
 	protected List<String> identifiers = new ArrayList<>();
 	protected FileSystemKeyStoreManagerImpl keyStoreManager;
 	protected MetadataManagerImpl metadataManagerImpl;
@@ -643,8 +682,7 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 	protected BeanLocator portletBeanLocator;
 	protected Props props;
 	protected List<SamlBinding> samlBindings;
-	protected IdentifierGenerator samlIdentifierGenerator =
-		new SamlIdentifierGenerator();
+	protected IdentifierGenerationStrategy samlIdentifierGenerator;
 	protected SamlProviderConfiguration samlProviderConfiguration;
 	protected SamlProviderConfigurationHelper samlProviderConfigurationHelper;
 	protected List<Class<?>> serviceUtilClasses = new ArrayList<>();

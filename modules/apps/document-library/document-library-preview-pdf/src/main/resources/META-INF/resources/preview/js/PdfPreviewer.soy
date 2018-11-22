@@ -60,6 +60,9 @@
 					{param label kind="text"}
 						{msg desc=""}page{/msg} {$currentPage} / {$totalPages}
 					{/param}
+					{param title kind="text"}
+						{msg desc=""}click-to-jump-to-a-page{/msg}
+					{/param}
 					{param value: 'go' /}
 				{/call}
 				{if $showPageInput}
@@ -70,6 +73,7 @@
 							data-onkeydown="{$_handleKeyDownPageInput}"
 							max="{$totalPages}"
 							min="1"
+							placeholder="{msg desc=""}page-...{/msg}"
 							ref="pageInput"
 							type="number"
 						/>
@@ -81,12 +85,18 @@
 				{param icon: 'caret-top' /}
 				{param monospaced: true /}
 				{param value: 'previous' /}
+				{param title kind="text"}
+					{msg desc=""}page-above{/msg}
+				{/param}
 			{/call}
 			{call ClayButton.render data="$baseButtonsToolbar"}
 				{param disabled: $nextPageDisabled /}
 				{param icon: 'caret-bottom' /}
 				{param monospaced: true /}
 				{param value: 'next' /}
+				{param title kind="text"}
+					{msg desc=""}page-below{/msg}
+				{/param}
 			{/call}
 		</div>
 	</div>

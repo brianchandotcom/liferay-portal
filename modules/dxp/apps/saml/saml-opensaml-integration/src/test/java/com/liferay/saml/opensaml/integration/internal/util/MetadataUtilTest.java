@@ -20,12 +20,12 @@ import com.liferay.saml.opensaml.integration.internal.bootstrap.OpenSamlBootstra
 
 import java.io.InputStream;
 
+import net.shibboleth.utilities.java.support.xml.BasicParserPool;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import org.opensaml.xml.parse.BasicParserPool;
 
 /**
  * @author Mika Koivisto
@@ -45,7 +45,11 @@ public class MetadataUtilTest {
 
 		_metadataUtil = new MetadataUtilImpl();
 
-		_metadataUtil.parserPool = new BasicParserPool();
+		BasicParserPool parserPool = new BasicParserPool();
+
+		parserPool.initialize();
+
+		_metadataUtil.parserPool = parserPool;
 	}
 
 	@AfterClass

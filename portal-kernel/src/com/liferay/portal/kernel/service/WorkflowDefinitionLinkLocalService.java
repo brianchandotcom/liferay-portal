@@ -291,12 +291,10 @@ public interface WorkflowDefinitionLinkLocalService extends BaseLocalService,
 	public boolean hasWorkflowDefinitionLink(long companyId, long groupId,
 		String className);
 
-	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasWorkflowDefinitionLink(long companyId, long groupId,
 		String className, long classPK);
 
-	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasWorkflowDefinitionLink(long companyId, long groupId,
 		String className, long classPK, long typePK);

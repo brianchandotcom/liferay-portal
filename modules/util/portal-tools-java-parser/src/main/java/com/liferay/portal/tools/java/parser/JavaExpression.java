@@ -25,7 +25,7 @@ public abstract class JavaExpression extends BaseJavaTerm {
 		return _chainedJavaExpression;
 	}
 
-	public abstract String getString(
+	protected abstract String getString(
 		String indent, String prefix, String suffix, int maxLineLength,
 		boolean forceLineBreak);
 

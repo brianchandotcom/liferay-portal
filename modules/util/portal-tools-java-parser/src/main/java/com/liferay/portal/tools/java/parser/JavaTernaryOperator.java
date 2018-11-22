@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 public class JavaTernaryOperator extends JavaExpression {
 
 	@Override
-	public String getString(
+	protected String getString(
 		String indent, String prefix, String suffix, int maxLineLength,
 		boolean forceLineBreak) {
 

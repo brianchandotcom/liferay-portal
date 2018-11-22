@@ -402,25 +402,50 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			_webSsoProfileImpl.decodeAuthnRequest(
 				mockHttpServletRequest, mockHttpServletResponse);
 
-		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext =
+		MessageContext<AuthnRequest> messageContext =
 			samlSsoRequestContext.getSAMLMessageContext();
 
-		Assert.assertEquals(
-			IDP_ENTITY_ID, samlMessageContext.getLocalEntityId());
-		Assert.assertNotNull(samlMessageContext.getLocalEntityMetadata());
-		Assert.assertNotNull(samlMessageContext.getLocalEntityRoleMetadata());
-		Assert.assertTrue(
-			samlMessageContext.getLocalEntityRoleMetadata() instanceof
-				IDPSSODescriptor);
-		Assert.assertEquals(SP_ENTITY_ID, samlMessageContext.getPeerEntityId());
-		Assert.assertNotNull(samlMessageContext.getPeerEntityMetadata());
-		Assert.assertNotNull(samlMessageContext.getPeerEntityRoleMetadata());
-		Assert.assertTrue(
-			samlMessageContext.getPeerEntityRoleMetadata() instanceof
-				SPSSODescriptor);
-		Assert.assertEquals(RELAY_STATE, samlMessageContext.getRelayState());
+		SAMLSelfEntityContext samlSelfEntityContext =
+			messageContext.getSubcontext(SAMLSelfEntityContext.class);
 
-		AuthnRequest authnRequest = samlMessageContext.getInboundSAMLMessage();
+		Assert.assertEquals(IDP_ENTITY_ID, samlSelfEntityContext.getEntityId());
+
+		SAMLMetadataContext samlMetadataContext =
+			samlSelfEntityContext.getSubcontext(SAMLMetadataContext.class);
+
+		Assert.assertNotNull(samlMetadataContext.getEntityDescriptor());
+		Assert.assertNotNull(samlMetadataContext.getRoleDescriptor());
+		Assert.assertTrue(
+			samlMetadataContext.getRoleDescriptor() instanceof
+				IDPSSODescriptor);
+
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+		Assert.assertEquals(SP_ENTITY_ID, samlPeerEntityContext.getEntityId());
+
+		SAMLMetadataContext samlPeerMetadataContext =
+			samlPeerEntityContext.getSubcontext(SAMLMetadataContext.class);
+
+		Assert.assertNotNull(samlPeerMetadataContext.getEntityDescriptor());
+		Assert.assertNotNull(samlPeerMetadataContext.getRoleDescriptor());
+		Assert.assertTrue(
+			samlPeerMetadataContext.getRoleDescriptor() instanceof
+				SPSSODescriptor);
+
+		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
+			SAMLBindingContext.class);
+
+		Assert.assertEquals(RELAY_STATE, samlBindingContext.getRelayState());
+
+		InOutOperationContext inOutOperationContext =
+			messageContext.getSubcontext(InOutOperationContext.class);
+
+		MessageContext inboundMessageContext =
+			inOutOperationContext.getInboundMessageContext();
+
+		AuthnRequest authnRequest =
+			(AuthnRequest)inboundMessageContext.getMessage();
 
 		Assert.assertEquals(identifiers.get(0), authnRequest.getID());
 

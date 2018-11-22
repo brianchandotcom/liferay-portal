@@ -188,7 +188,8 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 		}
 
 		KBArticle kbArticle = _kbArticleService.fetchFirstChildKBArticle(
-			groupId, kbFolder.getKbFolderId());
+			groupId, kbFolder.getKbFolderId(),
+			WorkflowConstants.STATUS_APPROVED);
 
 		return new KBArticleSelection(kbArticle, true);
 	}

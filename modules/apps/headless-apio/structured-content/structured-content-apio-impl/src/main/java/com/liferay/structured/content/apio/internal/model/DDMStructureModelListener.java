@@ -15,6 +15,7 @@
 package com.liferay.structured.content.apio.internal.model;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.FieldConstants;
@@ -189,7 +190,9 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 			);
 		}
 		else if (Objects.equals(
-					ddmFormField.getDataType(), FieldConstants.STRING)) {
+					ddmFormField.getDataType(), FieldConstants.STRING) ||
+				 Objects.equals(ddmFormField.getType(), DDMFormFieldType.RADIO
+			 )) {
 
 			return Optional.of(
 				new StringEntityField(

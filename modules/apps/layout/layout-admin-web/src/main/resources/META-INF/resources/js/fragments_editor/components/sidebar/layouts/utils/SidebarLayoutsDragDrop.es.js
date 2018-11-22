@@ -37,9 +37,8 @@ class SidebarLayoutsDragDrop extends State {
 	_handleDrag(data) {
 		const targetItem = data.target;
 
-		if (targetItem && 'layoutSection' in targetItem.dataset) {
+		if (targetItem && 'layoutSectionId' in targetItem.dataset) {
 			const mouseY = data.originalEvent.clientY;
-			const sectionRow = targetItem.querySelector('[data-row-id]');
 			const targetItemRegion = position.getRegion(targetItem);
 
 			let nearestBorder = DRAG_POSITIONS.bottom;
@@ -52,7 +51,7 @@ class SidebarLayoutsDragDrop extends State {
 				'dragLayout',
 				{
 					hoveredSectionBorder: nearestBorder,
-					hoveredSectionId: sectionRow.dataset.rowId
+					hoveredSectionId: targetItem.dataset.layoutSectionId
 				}
 			);
 		}

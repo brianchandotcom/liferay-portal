@@ -140,10 +140,10 @@
 
 	<section
 		class="{$sectionClasses}"
-		data-layout-section
+		data-layout-section-id="{$rowId}"
 	>
 		<div class="container row-container">
-			<div class="row" data-row-id="{$rowId}">
+			<div class="row">
 				{foreach $column in $columns}
 					{call .column}
 						{param _handleFragmentMove: $_handleFragmentMove /}

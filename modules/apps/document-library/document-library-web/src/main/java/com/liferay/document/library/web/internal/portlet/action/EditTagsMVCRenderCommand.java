@@ -72,6 +72,8 @@ public class EditTagsMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			"commonTagNames", tagNamesStream.collect(Collectors.joining(",")));
 
+		renderRequest.setAttribute("selection", selection);
+
 		return "/document_library/edit_tags.jsp";
 	}
 

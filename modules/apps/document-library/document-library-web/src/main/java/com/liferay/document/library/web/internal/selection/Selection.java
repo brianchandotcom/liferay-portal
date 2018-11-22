@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.web.internal.selection;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 import java.util.stream.Stream;
 
 /**
@@ -22,5 +24,9 @@ import java.util.stream.Stream;
 public interface Selection<T> {
 
 	public Stream<T> execute();
+
+	public T getFirst() throws PortalException;
+
+	public long getSize();
 
 }

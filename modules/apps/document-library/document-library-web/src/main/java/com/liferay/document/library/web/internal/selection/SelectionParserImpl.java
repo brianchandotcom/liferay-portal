@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 
@@ -35,20 +36,41 @@ public class SelectionParserImpl implements SelectionParser<DLFileEntry> {
 		long[] fileEntryIds = ParamUtil.getLongValues(
 			actionRequest, "rowIdsFileEntry");
 
-		return () -> {
-			List<DLFileEntry> dlFileEntries = new ArrayList<>();
+		return new Selection<DLFileEntry>() {
 
-			for (long fileEntryId : fileEntryIds) {
-				try {
-					dlFileEntries.add(
-						DLFileEntryLocalServiceUtil.getFileEntry(fileEntryId));
+			@Override
+			public Stream<DLFileEntry> execute() {
+				List<DLFileEntry> dlFileEntries = new ArrayList<>();
+
+				for (long fileEntryId : fileEntryIds) {
+					try {
+						dlFileEntries.add(
+							DLFileEntryLocalServiceUtil.getFileEntry(
+								fileEntryId));
+					}
+					catch (PortalException pe) {
+						throw new SystemException(pe);
+					}
 				}
-				catch (PortalException pe) {
-					throw new SystemException(pe);
-				}
+
+				return dlFileEntries.stream();
 			}
 
-			return dlFileEntries.stream();
+			@Override
+			public DLFileEntry getFirst() throws PortalException {
+				if (getSize() > 0) {
+					return DLFileEntryLocalServiceUtil.getFileEntry(
+						fileEntryIds[0]);
+				}
+
+				return null;
+			}
+
+			@Override
+			public long getSize() {
+				return fileEntryIds.length;
+			}
+
 		};
 	}
 

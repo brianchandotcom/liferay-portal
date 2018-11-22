@@ -1698,8 +1698,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		}
 	}
 
-	protected void verifyIssuer(
-			SAMLMessageContext<?, ?, ?> samlMessageContext, Issuer issuer)
+	protected void verifyIssuer(MessageContext<?> messageContext, Issuer issuer)
 		throws PortalException {
 
 		String issuerFormat = issuer.getFormat();
@@ -1708,7 +1707,10 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			throw new IssuerException("Invalid issuer format " + issuerFormat);
 		}
 
-		String peerEntityId = samlMessageContext.getPeerEntityId();
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+		String peerEntityId = samlPeerEntityContext.getEntityId();
 
 		if (!peerEntityId.equals(issuer.getValue())) {
 			throw new IssuerException(

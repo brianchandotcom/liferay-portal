@@ -269,14 +269,10 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		if (samlSsoRequestContext != null) {
 			session.removeAttribute(SamlWebKeys.SAML_SSO_REQUEST_CONTEXT);
 
-			SAMLMessageContext<AuthnRequest, Response, NameID>
-				samlMessageContext =
-					(SAMLMessageContext<AuthnRequest, Response, NameID>)
-						getSamlMessageContext(
-							request, response,
-							samlSsoRequestContext.getPeerEntityId());
+			MessageContext<?> messageContext = getMessageContext(
+				request, response, samlSsoRequestContext.getPeerEntityId());
 
-			samlSsoRequestContext.setSAMLMessageContext(samlMessageContext);
+			samlSsoRequestContext.setSAMLMessageContext(messageContext);
 
 			String authnRequestXml = samlSsoRequestContext.getAutnRequestXml();
 
@@ -284,14 +280,31 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				AuthnRequest authnRequest =
 					(AuthnRequest)OpenSamlUtil.unmarshall(authnRequestXml);
 
-				samlMessageContext.setInboundSAMLMessage(authnRequest);
-				samlMessageContext.setInboundSAMLMessageId(
+				InOutOperationContext inOutOperationContext =
+					new InOutOperationContext(
+						new MessageContext(), new MessageContext());
+
+				messageContext.addSubcontext(inOutOperationContext);
+
+				MessageContext inboundMessageContext =
+					inOutOperationContext.getInboundMessageContext();
+
+				inboundMessageContext.setMessage(authnRequest);
+
+				SAMLMessageInfoContext samlInboundMessageInfoContext =
+					inboundMessageContext.getSubcontext(
+						SAMLMessageInfoContext.class, true);
+
+				samlInboundMessageInfoContext.setMessageId(
 					authnRequest.getID());
 			}
 
 			String relayState = samlSsoRequestContext.getRelayState();
 
-			samlMessageContext.setRelayState(relayState);
+			SAMLBindingContext samlBindingContext =
+				messageContext.getSubcontext(SAMLBindingContext.class, true);
+
+			samlBindingContext.setRelayState(relayState);
 
 			String samlSsoSessionId = getSamlSsoSessionId(request);
 

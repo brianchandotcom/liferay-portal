@@ -341,13 +341,22 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				decodeAuthnConversationAfterLogin(request, response);
 
 			if (samlSsoRequestContext != null) {
-				SAMLMessageContext<AuthnRequest, Response, NameID>
-					samlMessageContext =
-						samlSsoRequestContext.getSAMLMessageContext();
+				MessageContext messageContext =
+					samlSsoRequestContext.getSAMLMessageContext();
 
-				if ((samlMessageContext != null) &&
+				InOutOperationContext inOutOperationContext =
+					messageContext.getSubcontext(InOutOperationContext.class);
+
+				MessageContext inboundMessageContext =
+					inOutOperationContext.getInboundMessageContext();
+
+				SAMLMessageInfoContext samlMessageInfoContext =
+					inboundMessageContext.getSubcontext(
+						SAMLMessageInfoContext.class, true);
+
+				if ((messageContext != null) &&
 					samlMessageId.equals(
-						samlMessageContext.getInboundSAMLMessageId())) {
+						samlMessageInfoContext.getMessageId())) {
 
 					return samlSsoRequestContext;
 				}
@@ -368,20 +377,21 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				decodeAuthnConversationAfterLogin(request, response);
 
 			if (samlSsoRequestContext != null) {
-				SAMLMessageContext<AuthnRequest, Response, NameID>
-					samlMessageContext =
-						samlSsoRequestContext.getSAMLMessageContext();
+				MessageContext<?> messageContext =
+					samlSsoRequestContext.getSAMLMessageContext();
 
-				if ((samlMessageContext != null) &&
-					entityId.equals(samlMessageContext.getPeerEntityId())) {
+				SAMLPeerEntityContext samlPeerEntityContext =
+					messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+				if ((messageContext != null) &&
+					entityId.equals(samlPeerEntityContext.getEntityId())) {
 
 					return samlSsoRequestContext;
 				}
 			}
 		}
 
-		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext =
-			null;
+		MessageContext<?> messageContext = null;
 
 		SamlBinding samlBinding = null;
 
@@ -396,40 +406,53 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		SamlSsoRequestContext samlSsoRequestContext = null;
 
 		if (idpInitiatedSSO) {
-			samlMessageContext =
-				(SAMLMessageContext<AuthnRequest, Response, NameID>)
-					getSamlMessageContext(request, response, entityId);
+			messageContext = getMessageContext(request, response, entityId);
 
-			samlMessageContext.setCommunicationProfileId(
+			SAMLBindingContext samlBindingContext =
+				messageContext.getSubcontext(SAMLBindingContext.class);
+
+			samlBindingContext.setBindingUri(
 				samlBinding.getCommunicationProfileId());
 
 			String relayState = ParamUtil.getString(request, "RelayState");
 
-			samlMessageContext.setRelayState(relayState);
+			samlBindingContext.setRelayState(relayState);
+
+			SAMLPeerEntityContext samlPeerEntityContext =
+				messageContext.getSubcontext(SAMLPeerEntityContext.class);
 
 			samlSsoRequestContext = new SamlSsoRequestContext(
-				samlMessageContext.getPeerEntityId(), relayState,
-				samlMessageContext, _userLocalService);
+				samlPeerEntityContext.getEntityId(), relayState, messageContext,
+				_userLocalService);
 		}
 		else {
-			SamlProviderConfiguration samlProviderConfiguration =
-				samlProviderConfigurationHelper.getSamlProviderConfiguration();
+			messageContext = decodeSamlMessage(request, response, samlBinding);
 
-			samlMessageContext =
-				(SAMLMessageContext<AuthnRequest, Response, NameID>)
-					decodeSamlMessage(
-						request, response, samlBinding,
-						samlProviderConfiguration.
-							authnRequestSignatureRequired());
+			InOutOperationContext inOutOperationContext =
+				messageContext.getSubcontext(InOutOperationContext.class);
 
-			AuthnRequest authnRequest =
-				samlMessageContext.getInboundSAMLMessage();
+			MessageContext<AuthnRequest> inboundMessageContext =
+				inOutOperationContext.getInboundMessageContext();
+
+			AuthnRequest authnRequest = inboundMessageContext.getMessage();
+
+			SAMLMessageInfoContext samlMessageInfoContext =
+				inboundMessageContext.getSubcontext(
+					SAMLMessageInfoContext.class, true);
+
+			samlMessageInfoContext.setMessageId(authnRequest.getID());
 
 			String authnRequestXml = OpenSamlUtil.marshall(authnRequest);
 
+			SAMLPeerEntityContext samlPeerEntityContext =
+				messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+			SAMLBindingContext samlBindingContext =
+				messageContext.getSubcontext(SAMLBindingContext.class);
+
 			samlSsoRequestContext = new SamlSsoRequestContext(
-				authnRequestXml, samlMessageContext.getPeerEntityId(),
-				samlMessageContext.getRelayState(), samlMessageContext,
+				authnRequestXml, samlPeerEntityContext.getEntityId(),
+				samlBindingContext.getRelayState(), messageContext,
 				_userLocalService);
 		}
 

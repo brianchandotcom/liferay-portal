@@ -80,6 +80,7 @@
 		<column name="html" type="String" />
 		<column name="js" type="String" />
 		<column name="previewFileEntryId" type="long" />
+		<column name="type" type="int" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />

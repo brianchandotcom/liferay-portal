@@ -373,6 +373,89 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
+	public void testSearchByDescription() throws Exception {
+		String description = StringUtil.randomString();
+
+		DDMStructure structure = addStructure(
+			_recordSetClassNameId, StringUtil.randomString());
+
+		String language = TemplateConstants.LANG_TYPE_FTL;
+
+		String script = getTestTemplateScript(language);
+
+		String type = null;
+		String mode = null;
+
+		DDMTemplate ddmTemplate = addTemplate(
+			_structureClassNameId, structure.getStructureId(),
+			_recordSetClassNameId, null, StringUtil.randomString(), description,
+			type, mode, language, script, WorkflowConstants.STATUS_ANY);
+
+		addTemplate(
+			_structureClassNameId, structure.getStructureId(),
+			_recordSetClassNameId, null, StringUtil.randomString(),
+			StringUtil.randomString(), type, mode, language, script,
+			WorkflowConstants.STATUS_ANY);
+		addTemplate(
+			_structureClassNameId, structure.getStructureId(),
+			_recordSetClassNameId, null, StringUtil.randomString(), description,
+			type, mode, language, script, WorkflowConstants.STATUS_ANY);
+
+		long[] groupIds = {group.getGroupId(), _group.getGroupId()};
+
+		List<DDMTemplate> templates = DDMTemplateServiceUtil.search(
+			TestPropsValues.getCompanyId(), groupIds,
+			new long[] {_structureClassNameId},
+			new long[] {structure.getStructureId()}, _recordSetClassNameId,
+			StringUtil.randomString(), description, type, mode, language,
+			WorkflowConstants.STATUS_ANY, true, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(templates.toString(), 2, templates.size());
+		Assert.assertEquals(ddmTemplate, templates.get(0));
+	}
+
+	@Test
+	public void testSearchByName() throws Exception {
+		String name = StringUtil.randomString();
+
+		DDMStructure structure = addStructure(
+			_recordSetClassNameId, StringUtil.randomString());
+
+		String language = TemplateConstants.LANG_TYPE_FTL;
+
+		String script = getTestTemplateScript(language);
+
+		String type = null;
+		String mode = null;
+
+		DDMTemplate template = addTemplate(
+			_structureClassNameId, structure.getStructureId(),
+			_recordSetClassNameId, null, name, StringUtil.randomString(), type,
+			mode, language, script, WorkflowConstants.STATUS_ANY);
+
+		addTemplate(
+			_structureClassNameId, structure.getStructureId(),
+			_recordSetClassNameId, null, name, StringUtil.randomString(), type,
+			mode, language, script, WorkflowConstants.STATUS_ANY);
+		addTemplate(
+			_structureClassNameId, structure.getStructureId(),
+			_recordSetClassNameId, null, StringUtil.randomString(),
+			StringUtil.randomString(), type, mode, language, script,
+			WorkflowConstants.STATUS_ANY);
+
+		List<DDMTemplate> templates = DDMTemplateServiceUtil.search(
+			TestPropsValues.getCompanyId(), group.getGroupId(),
+			_structureClassNameId, structure.getStructureId(),
+			_recordSetClassNameId, name, StringUtil.randomString(), type, mode,
+			language, WorkflowConstants.STATUS_ANY, true, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(templates.toString(), 2, templates.size());
+		Assert.assertEquals(template, templates.get(0));
+	}
+
+	@Test
 	public void testSearchByNameAndDescription1() throws Exception {
 		String name = StringUtil.randomString();
 		String description = StringUtil.randomString();
@@ -387,11 +470,10 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		String type = null;
 		String mode = null;
 
-		DDMTemplate template = addTemplate(
+		addTemplate(
 			_structureClassNameId, structure.getStructureId(),
 			_recordSetClassNameId, null, name, description, type, mode,
 			language, script, WorkflowConstants.STATUS_ANY);
-
 		addTemplate(
 			_structureClassNameId, structure.getStructureId(),
 			_recordSetClassNameId, null, name, StringUtil.randomString(), type,
@@ -405,11 +487,10 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			TestPropsValues.getCompanyId(), group.getGroupId(),
 			_structureClassNameId, structure.getStructureId(),
 			_recordSetClassNameId, name, description, type, mode, language,
-			WorkflowConstants.STATUS_ANY, true, QueryUtil.ALL_POS,
+			WorkflowConstants.STATUS_ANY, false, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(templates.toString(), 1, templates.size());
-		Assert.assertEquals(template, templates.get(0));
+		Assert.assertEquals(templates.toString(), 3, templates.size());
 	}
 
 	@Test
@@ -427,11 +508,10 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		String type = null;
 		String mode = null;
 
-		DDMTemplate ddmTemplate = addTemplate(
+		addTemplate(
 			_structureClassNameId, structure.getStructureId(),
 			_recordSetClassNameId, null, name, description, type, mode,
 			language, script, WorkflowConstants.STATUS_ANY);
-
 		addTemplate(
 			_structureClassNameId, structure.getStructureId(),
 			_recordSetClassNameId, null, name, StringUtil.randomString(), type,
@@ -448,16 +528,14 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			new long[] {_structureClassNameId},
 			new long[] {structure.getStructureId()}, _recordSetClassNameId,
 			name, description, type, mode, language,
-			WorkflowConstants.STATUS_ANY, true, QueryUtil.ALL_POS,
+			WorkflowConstants.STATUS_ANY, false, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(templates.toString(), 1, templates.size());
-		Assert.assertEquals(ddmTemplate, templates.get(0));
+		Assert.assertEquals(templates.toString(), 3, templates.size());
 	}
 
 	@Test
-	public void testSearchByNameOrDescription1() throws Exception {
-		String name = StringUtil.randomString();
+	public void testSearchCountByDescription() throws Exception {
 		String description = StringUtil.randomString();
 
 		DDMStructure structure = addStructure(
@@ -472,147 +550,69 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 		addTemplate(
 			_structureClassNameId, structure.getStructureId(),
-			_recordSetClassNameId, null, name, description, type, mode,
-			language, script, WorkflowConstants.STATUS_ANY);
+			_recordSetClassNameId, null, StringUtil.randomString(), description,
+			type, mode, language, script, WorkflowConstants.STATUS_ANY);
+		addTemplate(
+			_structureClassNameId, structure.getStructureId(),
+			_recordSetClassNameId, null, StringUtil.randomString(),
+			StringUtil.randomString(), type, mode, language, script,
+			WorkflowConstants.STATUS_ANY);
+		addTemplate(
+			_structureClassNameId, structure.getStructureId(),
+			_recordSetClassNameId, null, StringUtil.randomString(), description,
+			type, mode, language, script, WorkflowConstants.STATUS_ANY);
+
+		long[] groupIds = {group.getGroupId(), _group.getGroupId()};
+
+		int count = DDMTemplateServiceUtil.searchCount(
+			TestPropsValues.getCompanyId(), groupIds,
+			new long[] {_structureClassNameId},
+			new long[] {structure.getStructureId()}, _recordSetClassNameId,
+			StringUtil.randomString(), description, type, mode, language,
+			WorkflowConstants.STATUS_ANY, true);
+
+		Assert.assertEquals(2, count);
+	}
+
+	@Test
+	public void testSearchCountByName() throws Exception {
+		String name = StringUtil.randomString();
+
+		DDMStructure structure = addStructure(
+			_recordSetClassNameId, StringUtil.randomString());
+
+		String language = TemplateConstants.LANG_TYPE_FTL;
+
+		String script = getTestTemplateScript(language);
+
+		String type = null;
+		String mode = null;
+
 		addTemplate(
 			_structureClassNameId, structure.getStructureId(),
 			_recordSetClassNameId, null, name, StringUtil.randomString(), type,
 			mode, language, script, WorkflowConstants.STATUS_ANY);
 		addTemplate(
 			_structureClassNameId, structure.getStructureId(),
-			_recordSetClassNameId, null, StringUtil.randomString(), description,
-			type, mode, language, script, WorkflowConstants.STATUS_ANY);
+			_recordSetClassNameId, null, name, StringUtil.randomString(), type,
+			mode, language, script, WorkflowConstants.STATUS_ANY);
+		addTemplate(
+			_structureClassNameId, structure.getStructureId(),
+			_recordSetClassNameId, null, StringUtil.randomString(),
+			StringUtil.randomString(), type, mode, language, script,
+			WorkflowConstants.STATUS_ANY);
 
-		List<DDMTemplate> templates = DDMTemplateServiceUtil.search(
+		int count = DDMTemplateServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), group.getGroupId(),
 			_structureClassNameId, structure.getStructureId(),
-			_recordSetClassNameId, name, description, type, mode, language,
-			WorkflowConstants.STATUS_ANY, false, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+			_recordSetClassNameId, name, StringUtil.randomString(), type, mode,
+			language, WorkflowConstants.STATUS_ANY, true);
 
-		Assert.assertEquals(templates.toString(), 3, templates.size());
-	}
-
-	@Test
-	public void testSearchByNameOrDescription2() throws Exception {
-		String name = StringUtil.randomString();
-		String description = StringUtil.randomString();
-
-		DDMStructure structure = addStructure(
-			_recordSetClassNameId, StringUtil.randomString());
-
-		String language = TemplateConstants.LANG_TYPE_FTL;
-
-		String script = getTestTemplateScript(language);
-
-		String type = null;
-		String mode = null;
-
-		addTemplate(
-			_structureClassNameId, structure.getStructureId(),
-			_recordSetClassNameId, null, name, description, type, mode,
-			language, script, WorkflowConstants.STATUS_ANY);
-		addTemplate(
-			_structureClassNameId, structure.getStructureId(),
-			_recordSetClassNameId, null, name, StringUtil.randomString(), type,
-			mode, language, script, WorkflowConstants.STATUS_ANY);
-		addTemplate(
-			_structureClassNameId, structure.getStructureId(),
-			_recordSetClassNameId, null, StringUtil.randomString(), description,
-			type, mode, language, script, WorkflowConstants.STATUS_ANY);
-
-		long[] groupIds = {group.getGroupId(), _group.getGroupId()};
-
-		List<DDMTemplate> templates = DDMTemplateServiceUtil.search(
-			TestPropsValues.getCompanyId(), groupIds,
-			new long[] {_structureClassNameId},
-			new long[] {structure.getStructureId()}, _recordSetClassNameId,
-			name, description, type, mode, language,
-			WorkflowConstants.STATUS_ANY, false, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-
-		Assert.assertEquals(templates.toString(), 3, templates.size());
+		Assert.assertEquals(2, count);
 	}
 
 	@Test
 	public void testSearchCountByNameAndDescription1() throws Exception {
-		String name = StringUtil.randomString();
-		String description = StringUtil.randomString();
-
-		DDMStructure structure = addStructure(
-			_recordSetClassNameId, StringUtil.randomString());
-
-		String language = TemplateConstants.LANG_TYPE_FTL;
-
-		String script = getTestTemplateScript(language);
-
-		String type = null;
-		String mode = null;
-
-		addTemplate(
-			_structureClassNameId, structure.getStructureId(),
-			_recordSetClassNameId, null, name, description, type, mode,
-			language, script, WorkflowConstants.STATUS_ANY);
-		addTemplate(
-			_structureClassNameId, structure.getStructureId(),
-			_recordSetClassNameId, null, name, StringUtil.randomString(), type,
-			mode, language, script, WorkflowConstants.STATUS_ANY);
-		addTemplate(
-			_structureClassNameId, structure.getStructureId(),
-			_recordSetClassNameId, null, StringUtil.randomString(), description,
-			type, mode, language, script, WorkflowConstants.STATUS_ANY);
-
-		int count = DDMTemplateServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(), group.getGroupId(),
-			_structureClassNameId, structure.getStructureId(),
-			_recordSetClassNameId, name, description, type, mode, language,
-			WorkflowConstants.STATUS_ANY, true);
-
-		Assert.assertEquals(1, count);
-	}
-
-	@Test
-	public void testSearchCountByNameAndDescription2() throws Exception {
-		String name = StringUtil.randomString();
-		String description = StringUtil.randomString();
-
-		DDMStructure structure = addStructure(
-			_recordSetClassNameId, StringUtil.randomString());
-
-		String language = TemplateConstants.LANG_TYPE_FTL;
-
-		String script = getTestTemplateScript(language);
-
-		String type = null;
-		String mode = null;
-
-		addTemplate(
-			_structureClassNameId, structure.getStructureId(),
-			_recordSetClassNameId, null, name, description, type, mode,
-			language, script, WorkflowConstants.STATUS_ANY);
-		addTemplate(
-			_structureClassNameId, structure.getStructureId(),
-			_recordSetClassNameId, null, name, StringUtil.randomString(), type,
-			mode, language, script, WorkflowConstants.STATUS_ANY);
-		addTemplate(
-			_structureClassNameId, structure.getStructureId(),
-			_recordSetClassNameId, null, StringUtil.randomString(), description,
-			type, mode, language, script, WorkflowConstants.STATUS_ANY);
-
-		long[] groupIds = {group.getGroupId(), _group.getGroupId()};
-
-		int count = DDMTemplateServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(), groupIds,
-			new long[] {_structureClassNameId},
-			new long[] {structure.getStructureId()}, _recordSetClassNameId,
-			name, description, type, mode, language,
-			WorkflowConstants.STATUS_ANY, true);
-
-		Assert.assertEquals(1, count);
-	}
-
-	@Test
-	public void testSearchCountByNameOrDescription1() throws Exception {
 		String name = StringUtil.randomString();
 		String description = StringUtil.randomString();
 
@@ -649,7 +649,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	public void testSearchCountByNameOrDescription2() throws Exception {
+	public void testSearchCountByNameAndDescription2() throws Exception {
 		String name = StringUtil.randomString();
 		String description = StringUtil.randomString();
 

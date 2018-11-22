@@ -290,7 +290,7 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	public void testSearchByNameAndDescription() throws Exception {
+	public void testSearchByNameAndDescription1() throws Exception {
 		addDisplayTemplate(
 			_classNameId, 0, _resourceClassNameId, "Event", "Event",
 			WorkflowConstants.STATUS_APPROVED);
@@ -307,11 +307,11 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 			WorkflowConstants.STATUS_APPROVED, true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(templates.toString(), 0, templates.size());
+		Assert.assertEquals(templates.toString(), 2, templates.size());
 	}
 
 	@Test
-	public void testSearchByNameOrDescription() throws Exception {
+	public void testSearchByNameAndDescription2() throws Exception {
 		addDisplayTemplate(
 			_classNameId, 0, _resourceClassNameId, "Event", "Event",
 			WorkflowConstants.STATUS_APPROVED);

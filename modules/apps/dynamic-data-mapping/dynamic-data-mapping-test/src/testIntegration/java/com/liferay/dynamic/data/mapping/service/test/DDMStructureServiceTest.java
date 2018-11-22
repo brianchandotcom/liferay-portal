@@ -44,7 +44,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -121,10 +123,13 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 		String name = StringUtil.randomString();
 		String description = StringUtil.randomString();
 
-		DDMStructure structure = addStructure(_classNameId, name, description);
+		List<DDMStructure> expectedStructures = new ArrayList<>(3);
 
-		addStructure(_classNameId, name, StringUtil.randomString());
-		addStructure(_classNameId, StringUtil.randomString(), description);
+		expectedStructures.add(addStructure(_classNameId, name, description));
+		expectedStructures.add(
+			addStructure(_classNameId, name, StringUtil.randomString()));
+		expectedStructures.add(
+			addStructure(_classNameId, StringUtil.randomString(), description));
 
 		long[] groupIds = {group.getGroupId(), _group.getGroupId()};
 
@@ -134,29 +139,11 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 			DDMStructureConstants.TYPE_DEFAULT, WorkflowConstants.STATUS_ANY,
 			true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(structures.toString(), 1, structures.size());
-		Assert.assertEquals(structure, structures.get(0));
-	}
-
-	@Test
-	public void testSearchByNameOrDescription() throws Exception {
-		String name = StringUtil.randomString();
-		String description = StringUtil.randomString();
-
-		addStructure(_classNameId, name, description);
-
-		addStructure(_classNameId, name, StringUtil.randomString());
-		addStructure(_classNameId, StringUtil.randomString(), description);
-
-		long[] groupIds = {group.getGroupId(), _group.getGroupId()};
-
-		List<DDMStructure> structures = DDMStructureServiceUtil.search(
-			TestPropsValues.getCompanyId(), groupIds, _classNameId, name,
-			description, StorageType.JSON.getValue(),
-			DDMStructureConstants.TYPE_DEFAULT, WorkflowConstants.STATUS_ANY,
-			false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
 		Assert.assertEquals(structures.toString(), 3, structures.size());
+
+		Stream<DDMStructure> stream = expectedStructures.stream();
+
+		Assert.assertTrue(stream.allMatch(structures::contains));
 	}
 
 	@Test
@@ -222,27 +209,6 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 			description, StorageType.JSON.getValue(),
 			DDMStructureConstants.TYPE_DEFAULT, WorkflowConstants.STATUS_ANY,
 			true);
-
-		Assert.assertEquals(1, count);
-	}
-
-	@Test
-	public void testSearchCountByNameOrDescription() throws Exception {
-		String name = StringUtil.randomString();
-		String description = StringUtil.randomString();
-
-		addStructure(_classNameId, name, description);
-
-		addStructure(_classNameId, name, StringUtil.randomString());
-		addStructure(_classNameId, StringUtil.randomString(), description);
-
-		long[] groupIds = {group.getGroupId(), _group.getGroupId()};
-
-		int count = DDMStructureServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(), groupIds, _classNameId, name,
-			description, StorageType.JSON.getValue(),
-			DDMStructureConstants.TYPE_DEFAULT, WorkflowConstants.STATUS_ANY,
-			false);
 
 		Assert.assertEquals(3, count);
 	}

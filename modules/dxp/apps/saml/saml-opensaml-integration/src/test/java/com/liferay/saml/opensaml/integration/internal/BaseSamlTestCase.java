@@ -424,11 +424,11 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 			samlIdentifierGeneratorStrategyFactory =
 				new SamlIdentifierGeneratorStrategyFactory();
 
-		samlIdentifierGenerator =
-			samlIdentifierGeneratorStrategyFactory.create(16);
+		samlIdentifierGenerator = samlIdentifierGeneratorStrategyFactory.create(
+			16);
 
-		IdentifierGenerationStrategy identifierGenerationStrategy =
-			mock(IdentifierGenerationStrategy.class);
+		IdentifierGenerationStrategy identifierGenerationStrategy = mock(
+			IdentifierGenerationStrategy.class);
 
 		when(
 			identifierGenerationStrategy.generateIdentifier(

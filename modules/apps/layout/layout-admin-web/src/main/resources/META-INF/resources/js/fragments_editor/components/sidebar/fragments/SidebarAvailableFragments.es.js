@@ -12,7 +12,10 @@ import {
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../../actions/actions.es';
-import {DRAG_POSITIONS} from '../../../reducers/placeholders.es';
+import {
+	DRAG_POSITIONS,
+	DROP_TARGET_TYPES
+} from '../../../reducers/placeholders.es';
 import {Store} from '../../../store/store.es';
 import templates from './SidebarAvailableFragments.soy';
 
@@ -63,7 +66,8 @@ class SidebarAvailableFragments extends Component {
 				UPDATE_DRAG_TARGET,
 				{
 					hoveredElementBorder: nearestBorder,
-					hoveredFragmentEntryLinkId: targetItem.dataset.fragmentEntryLinkId
+					hoveredElementId: targetItem.dataset.fragmentEntryLinkId,
+					hoveredElementType: DROP_TARGET_TYPES.fragment
 				}
 			);
 		}

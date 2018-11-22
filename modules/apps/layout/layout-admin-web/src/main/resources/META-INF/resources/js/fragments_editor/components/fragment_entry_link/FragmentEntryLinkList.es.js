@@ -137,7 +137,8 @@ class FragmentEntryLinkList extends Component {
 				UPDATE_DRAG_TARGET,
 				{
 					hoveredElementBorder: this._targetBorder,
-					hoveredFragmentEntryLinkId: targetItem.dataset.fragmentEntryLinkId
+					hoveredElementId: targetItem.dataset.fragmentEntryLinkId,
+					hoveredElementType: DROP_TARGET_TYPES.fragment
 				}
 			);
 		}

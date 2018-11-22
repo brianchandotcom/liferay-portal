@@ -498,10 +498,16 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			_webSsoProfileImpl.decodeAuthnRequest(
 				mockHttpServletRequest, mockHttpServletResponse);
 
-		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext =
+		MessageContext<AuthnRequest> messageContext =
 			samlSsoRequestContext.getSAMLMessageContext();
 
-		AuthnRequest authnRequest = samlMessageContext.getInboundSAMLMessage();
+		InOutOperationContext inOutOperationContext =
+			messageContext.getSubcontext(InOutOperationContext.class);
+
+		MessageContext<AuthnRequest> inboundMessageContext =
+			inOutOperationContext.getInboundMessageContext();
+
+		AuthnRequest authnRequest = inboundMessageContext.getMessage();
 
 		Assert.assertTrue(authnRequest.isForceAuthn());
 	}

@@ -1634,14 +1634,23 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	protected void verifyDestination(
-			SAMLMessageContext<?, ?, ?> samlMessageContext, String destination)
+			MessageContext<?> messageContext, String destination)
 		throws PortalException {
 
+		SAMLSelfEntityContext samlSelfEntityContext =
+			messageContext.getSubcontext(SAMLSelfEntityContext.class);
+
+		SAMLMetadataContext samlSelfMetadataContext =
+			samlSelfEntityContext.getSubcontext(SAMLMetadataContext.class);
+
 		SPSSODescriptor spSSODescriptor =
-			(SPSSODescriptor)samlMessageContext.getLocalEntityRoleMetadata();
+			(SPSSODescriptor)samlSelfMetadataContext.getRoleDescriptor();
 
 		List<AssertionConsumerService> assertionConsumerServices =
 			spSSODescriptor.getAssertionConsumerServices();
+
+		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
+			SAMLBindingContext.class);
 
 		for (AssertionConsumerService assertionConsumerService :
 				assertionConsumerServices) {
@@ -1649,8 +1658,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			String binding = assertionConsumerService.getBinding();
 
 			if (destination.equals(assertionConsumerService.getLocation()) &&
-				binding.equals(
-					samlMessageContext.getCommunicationProfileId())) {
+				binding.equals(samlBindingContext.getBindingUri())) {
 
 				return;
 			}
@@ -1659,7 +1667,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		throw new DestinationException(
 			"Destination " + destination + " does not match any assertion " +
 				"consumer location with binding " +
-					samlMessageContext.getCommunicationProfileId());
+					samlBindingContext.getBindingUri());
 	}
 
 	protected void verifyInResponseTo(Response samlResponse)

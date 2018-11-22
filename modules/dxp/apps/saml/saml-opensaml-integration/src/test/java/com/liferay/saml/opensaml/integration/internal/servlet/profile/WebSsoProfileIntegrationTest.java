@@ -762,15 +762,17 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		MockHttpServletRequest mockHttpServletRequest =
 			getMockHttpServletRequest(ACS_URL);
 
-		SAMLMessageContext<?, ?, ?> samlMessageContext =
-			_webSsoProfileImpl.getSamlMessageContext(
+		MessageContext<?> messageContext =
+			_webSsoProfileImpl.getMessageContext(
 				mockHttpServletRequest, new MockHttpServletResponse());
 
-		samlMessageContext.setCommunicationProfileId(
-			SAMLConstants.SAML2_POST_BINDING_URI);
+		SAMLBindingContext samlBindingContext =
+			messageContext.getSubcontext(SAMLBindingContext.class);
+
+		samlBindingContext.setBindingUri(SAMLConstants.SAML2_POST_BINDING_URI);
 
 		_webSsoProfileImpl.verifyDestination(
-			samlMessageContext, "http://www.fail.com/c/portal/saml/acs");
+			messageContext, "http://www.fail.com/c/portal/saml/acs");
 	}
 
 	@Test

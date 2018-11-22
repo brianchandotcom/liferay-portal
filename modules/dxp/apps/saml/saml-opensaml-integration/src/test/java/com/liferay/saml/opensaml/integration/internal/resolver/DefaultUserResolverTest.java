@@ -31,17 +31,16 @@ import org.junit.Test;
 
 import org.mockito.Mockito;
 
-import org.opensaml.common.SAMLObject;
-import org.opensaml.common.binding.BasicSAMLMessageContext;
-import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.saml2.core.Assertion;
-import org.opensaml.saml2.core.Attribute;
-import org.opensaml.saml2.core.AttributeStatement;
-import org.opensaml.saml2.core.NameID;
-import org.opensaml.saml2.core.NameIDType;
-import org.opensaml.saml2.core.Response;
-import org.opensaml.saml2.core.Subject;
-import org.opensaml.saml2.core.SubjectConfirmation;
+import org.opensaml.messaging.context.MessageContext;
+import org.opensaml.saml.common.messaging.context.SAMLPeerEntityContext;
+import org.opensaml.saml.saml2.core.Assertion;
+import org.opensaml.saml.saml2.core.Attribute;
+import org.opensaml.saml.saml2.core.AttributeStatement;
+import org.opensaml.saml.saml2.core.NameID;
+import org.opensaml.saml.saml2.core.NameIDType;
+import org.opensaml.saml.saml2.core.Response;
+import org.opensaml.saml.saml2.core.Subject;
+import org.opensaml.saml.saml2.core.SubjectConfirmation;
 
 /**
  * @author Mika Koivisto
@@ -149,8 +148,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			OpenSamlUtil.buildAttribute(
 				"screenName", _SUBJECT_NAME_IDENTIFIER_SCREEN_NAME));
 
-		SAMLMessageContext<Response, SAMLObject, NameID> samlMessageContext =
-			new BasicSAMLMessageContext<>();
+		MessageContext<Response> messageContext = new MessageContext<>();
 
 		Response response = Mockito.mock(Response.class);
 
@@ -160,13 +158,16 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			Arrays.asList(assertion)
 		);
 
-		samlMessageContext.setInboundSAMLMessage(response);
+		messageContext.setMessage(response);
 
-		samlMessageContext.setPeerEntityId(IDP_ENTITY_ID);
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class, true);
+
+		samlPeerEntityContext.setEntityId(IDP_ENTITY_ID);
 
 		User resolvedUser = _defaultUserResolver.importUser(
 			1, _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS, "emailAddress",
-			new UserResolverSAMLContextImpl(samlMessageContext),
+			new UserResolverSAMLContextImpl(messageContext),
 			new ServiceContext());
 
 		Assert.assertNotNull(resolvedUser);

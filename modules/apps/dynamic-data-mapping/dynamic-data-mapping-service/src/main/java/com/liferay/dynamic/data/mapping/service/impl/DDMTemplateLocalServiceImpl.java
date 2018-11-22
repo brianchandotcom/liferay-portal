@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.exception.TemplateScriptException;
 import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageContentException;
 import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageNameException;
 import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageSizeException;
+import com.liferay.dynamic.data.mapping.internal.search.util.DDMSearchHelper;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
@@ -34,6 +35,7 @@ import com.liferay.dynamic.data.mapping.util.DDMXML;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -43,6 +45,9 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
@@ -167,6 +172,7 @@ public class DDMTemplateLocalServiceImpl
 	 * @return the template
 	 * @throws PortalException if a portal exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DDMTemplate addTemplate(
 			long userId, long groupId, long classNameId, long classPK,
@@ -402,9 +408,11 @@ public class DDMTemplateLocalServiceImpl
 	 * @param  template the template to be deleted
 	 * @throws PortalException if a portal exception occurred
 	 */
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public void deleteTemplate(DDMTemplate template) throws PortalException {
+	public DDMTemplate deleteTemplate(DDMTemplate template)
+		throws PortalException {
 
 		// Template
 
@@ -427,6 +435,8 @@ public class DDMTemplateLocalServiceImpl
 		resourceLocalService.deleteResource(
 			template.getCompanyId(), resourceName,
 			ResourceConstants.SCOPE_INDIVIDUAL, template.getTemplateId());
+
+		return template;
 	}
 
 	/**
@@ -812,7 +822,7 @@ public class DDMTemplateLocalServiceImpl
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
 	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -958,7 +968,7 @@ public class DDMTemplateLocalServiceImpl
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
 	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -994,9 +1004,15 @@ public class DDMTemplateLocalServiceImpl
 		int status, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 
-		return ddmTemplateFinder.findByKeywords(
-			companyId, groupId, classNameId, classPK, resourceClassNameId,
-			keywords, type, mode, status, start, end, orderByComparator);
+		SearchContext searchContext =
+			ddmSearchHelper.buildTemplateSearchContext(
+				companyId, groupId, classNameId, classPK, resourceClassNameId,
+				keywords, keywords, type, mode, null, status, start, end,
+				orderByComparator);
+
+		return ddmSearchHelper.doSearch(
+			searchContext, DDMTemplate.class,
+			ddmTemplatePersistence::findByPrimaryKey);
 	}
 
 	/**
@@ -1010,7 +1026,7 @@ public class DDMTemplateLocalServiceImpl
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
 	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -1052,10 +1068,15 @@ public class DDMTemplateLocalServiceImpl
 		String mode, String language, int status, boolean andOperator,
 		int start, int end, OrderByComparator<DDMTemplate> orderByComparator) {
 
-		return ddmTemplateFinder.findByC_G_C_C_R_N_D_T_M_L_S(
-			companyId, groupId, classNameId, classPK, resourceClassNameId, name,
-			description, type, mode, language, status, andOperator, start, end,
-			orderByComparator);
+		SearchContext searchContext =
+			ddmSearchHelper.buildTemplateSearchContext(
+				companyId, groupId, classNameId, classPK, resourceClassNameId,
+				name, description, type, mode, language, status, start, end,
+				orderByComparator);
+
+		return ddmSearchHelper.doSearch(
+			searchContext, DDMTemplate.class,
+			ddmTemplatePersistence::findByPrimaryKey);
 	}
 
 	/**
@@ -1069,7 +1090,7 @@ public class DDMTemplateLocalServiceImpl
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
 	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -1105,9 +1126,15 @@ public class DDMTemplateLocalServiceImpl
 		int status, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 
-		return ddmTemplateFinder.findByKeywords(
-			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
-			keywords, type, mode, status, start, end, orderByComparator);
+		SearchContext searchContext =
+			ddmSearchHelper.buildTemplateSearchContext(
+				companyId, groupIds, classNameIds, classPKs,
+				resourceClassNameId, keywords, keywords, type, mode, null,
+				status, start, end, orderByComparator);
+
+		return ddmSearchHelper.doSearch(
+			searchContext, DDMTemplate.class,
+			ddmTemplatePersistence::findByPrimaryKey);
 	}
 
 	/**
@@ -1121,7 +1148,7 @@ public class DDMTemplateLocalServiceImpl
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
 	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -1163,10 +1190,15 @@ public class DDMTemplateLocalServiceImpl
 		String mode, String language, int status, boolean andOperator,
 		int start, int end, OrderByComparator<DDMTemplate> orderByComparator) {
 
-		return ddmTemplateFinder.findByC_G_C_C_R_N_D_T_M_L_S(
-			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
-			name, description, type, mode, language, status, andOperator, start,
-			end, orderByComparator);
+		SearchContext searchContext =
+			ddmSearchHelper.buildTemplateSearchContext(
+				companyId, groupIds, classNameIds, classPKs,
+				resourceClassNameId, name, description, type, mode, language,
+				status, start, end, orderByComparator);
+
+		return ddmSearchHelper.doSearch(
+			searchContext, DDMTemplate.class,
+			ddmTemplatePersistence::findByPrimaryKey);
 	}
 
 	/**
@@ -1200,9 +1232,13 @@ public class DDMTemplateLocalServiceImpl
 		long resourceClassNameId, String keywords, String type, String mode,
 		int status) {
 
-		return ddmTemplateFinder.countByKeywords(
-			companyId, groupId, classNameId, classPK, resourceClassNameId,
-			keywords, type, mode, status);
+		SearchContext searchContext =
+			ddmSearchHelper.buildTemplateSearchContext(
+				companyId, groupId, classNameId, classPK, resourceClassNameId,
+				keywords, keywords, type, mode, null, status, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		return ddmSearchHelper.doSearchCount(searchContext, DDMTemplate.class);
 	}
 
 	/**
@@ -1241,9 +1277,13 @@ public class DDMTemplateLocalServiceImpl
 		long resourceClassNameId, String name, String description, String type,
 		String mode, String language, int status, boolean andOperator) {
 
-		return ddmTemplateFinder.countByC_G_C_C_R_N_D_T_M_L_S(
-			companyId, groupId, classNameId, classPK, resourceClassNameId, name,
-			description, type, mode, language, status, andOperator);
+		SearchContext searchContext =
+			ddmSearchHelper.buildTemplateSearchContext(
+				companyId, groupId, classNameId, classPK, resourceClassNameId,
+				name, description, type, mode, language, status,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		return ddmSearchHelper.doSearchCount(searchContext, DDMTemplate.class);
 	}
 
 	/**
@@ -1277,9 +1317,13 @@ public class DDMTemplateLocalServiceImpl
 		long resourceClassNameId, String keywords, String type, String mode,
 		int status) {
 
-		return ddmTemplateFinder.countByKeywords(
-			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
-			keywords, type, mode, status);
+		SearchContext searchContext =
+			ddmSearchHelper.buildTemplateSearchContext(
+				companyId, groupIds, classNameIds, classPKs,
+				resourceClassNameId, keywords, keywords, type, mode, null,
+				status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		return ddmSearchHelper.doSearchCount(searchContext, DDMTemplate.class);
 	}
 
 	/**
@@ -1319,9 +1363,13 @@ public class DDMTemplateLocalServiceImpl
 		long resourceClassNameId, String name, String description, String type,
 		String mode, String language, int status, boolean andOperator) {
 
-		return ddmTemplateFinder.countByC_G_C_C_R_N_D_T_M_L_S(
-			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
-			name, description, type, mode, language, status, andOperator);
+		SearchContext searchContext =
+			ddmSearchHelper.buildTemplateSearchContext(
+				companyId, groupIds, classNameIds, classPKs,
+				resourceClassNameId, name, description, type, mode, language,
+				status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		return ddmSearchHelper.doSearchCount(searchContext, DDMTemplate.class);
 	}
 
 	/**
@@ -1351,6 +1399,7 @@ public class DDMTemplateLocalServiceImpl
 	 * @return the updated template
 	 * @throws PortalException if a portal exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DDMTemplate updateTemplate(
 			long userId, long templateId, long classPK,
@@ -1723,6 +1772,9 @@ public class DDMTemplateLocalServiceImpl
 
 	@ServiceReference(type = DDMPermissionSupport.class)
 	protected DDMPermissionSupport ddmPermissionSupport;
+
+	@ServiceReference(type = DDMSearchHelper.class)
+	protected DDMSearchHelper ddmSearchHelper;
 
 	@ServiceReference(type = DDMXML.class)
 	protected DDMXML ddmXML;

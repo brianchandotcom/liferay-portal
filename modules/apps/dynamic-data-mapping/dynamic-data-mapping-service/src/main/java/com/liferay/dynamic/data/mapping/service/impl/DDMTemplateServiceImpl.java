@@ -14,11 +14,16 @@
 
 package com.liferay.dynamic.data.mapping.service.impl;
 
+import com.liferay.dynamic.data.mapping.internal.search.util.DDMSearchHelper;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.dynamic.data.mapping.service.base.DDMTemplateServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
@@ -30,6 +35,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -543,9 +549,28 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		int status, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 
-		return ddmTemplateFinder.filterFindByKeywords(
+		ddmTemplateFinder.filterFindByKeywords(
 			companyId, groupId, classNameId, classPK, resourceClassNameId,
 			keywords, type, mode, status, start, end, orderByComparator);
+
+		try {
+			SearchContext searchContext =
+				_ddmSearchHelper.buildTemplateSearchContext(
+					companyId, groupId, getUserId(), classNameId, classPK,
+					resourceClassNameId, keywords, keywords, type, mode, null,
+					status, start, end, orderByComparator);
+
+			return _ddmSearchHelper.doSearch(
+				searchContext, DDMTemplate.class,
+				ddmTemplatePersistence::findByPrimaryKey);
+		}
+		catch (PrincipalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return Collections.emptyList();
 	}
 
 	/**
@@ -597,10 +622,29 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		String mode, String language, int status, boolean andOperator,
 		int start, int end, OrderByComparator<DDMTemplate> orderByComparator) {
 
-		return ddmTemplateFinder.filterFindByC_G_C_C_R_N_D_T_M_L_S(
+		ddmTemplateFinder.filterFindByC_G_C_C_R_N_D_T_M_L_S(
 			companyId, groupId, classNameId, classPK, resourceClassNameId, name,
 			description, type, mode, language, status, andOperator, start, end,
 			orderByComparator);
+
+		try {
+			SearchContext searchContext =
+				_ddmSearchHelper.buildTemplateSearchContext(
+					companyId, groupId, getUserId(), classNameId, classPK,
+					resourceClassNameId, name, description, type, mode,
+					language, status, start, end, orderByComparator);
+
+			return _ddmSearchHelper.doSearch(
+				searchContext, DDMTemplate.class,
+				ddmTemplatePersistence::findByPrimaryKey);
+		}
+		catch (PrincipalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return Collections.emptyList();
 	}
 
 	/**
@@ -646,9 +690,28 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		int status, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 
-		return ddmTemplateFinder.filterFindByKeywords(
+		ddmTemplateFinder.filterFindByKeywords(
 			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
 			keywords, type, mode, status, start, end, orderByComparator);
+
+		try {
+			SearchContext searchContext =
+				_ddmSearchHelper.buildTemplateSearchContext(
+					companyId, groupIds, getUserId(), classNameIds, classPKs,
+					resourceClassNameId, keywords, keywords, type, mode, null,
+					status, start, end, orderByComparator);
+
+			return _ddmSearchHelper.doSearch(
+				searchContext, DDMTemplate.class,
+				ddmTemplatePersistence::findByPrimaryKey);
+		}
+		catch (PrincipalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return Collections.emptyList();
 	}
 
 	/**
@@ -700,10 +763,29 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		String mode, String language, int status, boolean andOperator,
 		int start, int end, OrderByComparator<DDMTemplate> orderByComparator) {
 
-		return ddmTemplateFinder.filterFindByC_G_C_C_R_N_D_T_M_L_S(
+		ddmTemplateFinder.filterFindByC_G_C_C_R_N_D_T_M_L_S(
 			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
 			name, description, type, mode, language, status, andOperator, start,
 			end, orderByComparator);
+
+		try {
+			SearchContext searchContext =
+				_ddmSearchHelper.buildTemplateSearchContext(
+					companyId, groupIds, getUserId(), classNameIds, classPKs,
+					resourceClassNameId, name, description, type, mode,
+					language, status, start, end, orderByComparator);
+
+			return _ddmSearchHelper.doSearch(
+				searchContext, DDMTemplate.class,
+				ddmTemplatePersistence::findByPrimaryKey);
+		}
+		catch (PrincipalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return Collections.emptyList();
 	}
 
 	/**
@@ -734,9 +816,27 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		long resourceClassNameId, String keywords, String type, String mode,
 		int status) {
 
-		return ddmTemplateFinder.filterCountByKeywords(
+		ddmTemplateFinder.filterCountByKeywords(
 			companyId, groupId, classNameId, classPK, resourceClassNameId,
 			keywords, type, mode, status);
+
+		try {
+			SearchContext searchContext =
+				_ddmSearchHelper.buildTemplateSearchContext(
+					companyId, groupId, getUserId(), classNameId, classPK,
+					resourceClassNameId, keywords, keywords, type, mode, null,
+					status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			return _ddmSearchHelper.doSearchCount(
+				searchContext, DDMTemplate.class);
+		}
+		catch (PrincipalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return 0;
 	}
 
 	/**
@@ -772,9 +872,27 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		long resourceClassNameId, String name, String description, String type,
 		String mode, String language, int status, boolean andOperator) {
 
-		return ddmTemplateFinder.filterCountByC_G_C_C_R_N_D_T_M_L_S(
+		ddmTemplateFinder.filterCountByC_G_C_C_R_N_D_T_M_L_S(
 			companyId, groupId, classNameId, classPK, resourceClassNameId, name,
 			description, type, mode, language, status, andOperator);
+
+		try {
+			SearchContext searchContext =
+				_ddmSearchHelper.buildTemplateSearchContext(
+					companyId, groupId, getUserId(), classNameId, classPK,
+					resourceClassNameId, name, description, type, mode, null,
+					status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			return _ddmSearchHelper.doSearchCount(
+				searchContext, DDMTemplate.class);
+		}
+		catch (PrincipalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return 0;
 	}
 
 	/**
@@ -805,9 +923,27 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		long resourceClassNameId, String keywords, String type, String mode,
 		int status) {
 
-		return ddmTemplateFinder.filterCountByKeywords(
+		ddmTemplateFinder.filterCountByKeywords(
 			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
 			keywords, type, mode, status);
+
+		try {
+			SearchContext searchContext =
+				_ddmSearchHelper.buildTemplateSearchContext(
+					companyId, groupIds, getUserId(), classNameIds, classPKs,
+					resourceClassNameId, keywords, keywords, type, mode, null,
+					status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			return _ddmSearchHelper.doSearchCount(
+				searchContext, DDMTemplate.class);
+		}
+		catch (PrincipalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return 0;
 	}
 
 	/**
@@ -843,9 +979,28 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		long resourceClassNameId, String name, String description, String type,
 		String mode, String language, int status, boolean andOperator) {
 
-		return ddmTemplateFinder.filterCountByC_G_C_C_R_N_D_T_M_L_S(
+		ddmTemplateFinder.filterCountByC_G_C_C_R_N_D_T_M_L_S(
 			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
 			name, description, type, mode, language, status, andOperator);
+
+		try {
+			SearchContext searchContext =
+				_ddmSearchHelper.buildTemplateSearchContext(
+					companyId, groupIds, getUserId(), classNameIds, classPKs,
+					resourceClassNameId, name, description, type, mode,
+					language, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null);
+
+			return _ddmSearchHelper.doSearchCount(
+				searchContext, DDMTemplate.class);
+		}
+		catch (PrincipalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return 0;
 	}
 
 	/**
@@ -936,6 +1091,9 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			type, mode, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMTemplateServiceImpl.class);
+
 	private static volatile ModelResourcePermission<DDMTemplate>
 		_ddmTemplateModelResourcePermission =
 			ModelResourcePermissionFactory.getInstance(
@@ -944,5 +1102,8 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 
 	@ServiceReference(type = DDMPermissionSupport.class)
 	private DDMPermissionSupport _ddmPermissionSupport;
+
+	@ServiceReference(type = DDMSearchHelper.class)
+	private DDMSearchHelper _ddmSearchHelper;
 
 }

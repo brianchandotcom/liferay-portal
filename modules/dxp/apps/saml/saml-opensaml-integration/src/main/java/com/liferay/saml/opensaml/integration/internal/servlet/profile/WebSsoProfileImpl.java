@@ -760,20 +760,46 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		String entityId = metadataManager.getDefaultIdpEntityId();
 
-		SAMLMessageContext<SAMLObject, AuthnRequest, SAMLObject>
-			samlMessageContext =
-				(SAMLMessageContext<SAMLObject, AuthnRequest, SAMLObject>)
-					getSamlMessageContext(request, response, entityId);
+		MessageContext<?> messageContext = getMessageContext(
+			request, response, entityId);
+
+		InOutOperationContext inOutOperationContext = new InOutOperationContext(
+			new MessageContext(), new MessageContext());
+
+		messageContext.addSubcontext(inOutOperationContext);
+
+		MessageContext outboundMessageContext =
+			inOutOperationContext.getOutboundMessageContext();
+
+		SAMLBindingContext samlBindingContext =
+			outboundMessageContext.getSubcontext(
+				SAMLBindingContext.class, true);
+
+		samlBindingContext.setRelayState(relayState);
+
+		SAMLSelfEntityContext samlSelfEntityContext =
+			messageContext.getSubcontext(SAMLSelfEntityContext.class);
+
+		SAMLMetadataContext samlSelfMetadataContext =
+			samlSelfEntityContext.getSubcontext(SAMLMetadataContext.class);
 
 		SPSSODescriptor spSSODescriptor =
-			(SPSSODescriptor)samlMessageContext.getLocalEntityRoleMetadata();
+			(SPSSODescriptor)samlSelfMetadataContext.getRoleDescriptor();
 
 		AssertionConsumerService assertionConsumerService =
 			SamlUtil.getAssertionConsumerServiceForBinding(
 				spSSODescriptor, SAMLConstants.SAML2_POST_BINDING_URI);
 
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+		outboundMessageContext.addSubcontext(samlPeerEntityContext);
+
+		SAMLMetadataContext samlPeerMetadataContext =
+			samlPeerEntityContext.getSubcontext(SAMLMetadataContext.class);
+
 		IDPSSODescriptor idpSSODescriptor =
-			(IDPSSODescriptor)samlMessageContext.getPeerEntityRoleMetadata();
+			(IDPSSODescriptor)samlPeerMetadataContext.getRoleDescriptor();
 
 		SingleSignOnService singleSignOnService =
 			SamlUtil.resolveSingleSignOnService(
@@ -785,7 +811,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		nameIDPolicy.setFormat(metadataManager.getNameIdFormat(entityId));
 
 		AuthnRequest authnRequest = OpenSamlUtil.buildAuthnRequest(
-			samlMessageContext.getLocalEntityId(), assertionConsumerService,
+			samlSelfEntityContext.getEntityId(), assertionConsumerService,
 			singleSignOnService, nameIDPolicy);
 
 		authnRequest.setID(generateIdentifier(20));
@@ -806,30 +832,38 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		authnRequest.setForceAuthn(forceAuthn);
 
-		samlMessageContext.setOutboundSAMLMessage(authnRequest);
+		outboundMessageContext.setMessage(authnRequest);
 
 		if (spSSODescriptor.isAuthnRequestsSigned() ||
 			idpSSODescriptor.getWantAuthnRequestsSigned()) {
 
 			Credential credential = metadataManager.getSigningCredential();
 
-			samlMessageContext.setOutboundSAMLMessageSigningCredential(
-				credential);
+			SecurityParametersContext securityParametersContext =
+				outboundMessageContext.getSubcontext(
+					SecurityParametersContext.class, true);
+
+			OpenSamlUtil.prepareSecurityParametersContext(
+				metadataManager.getSigningCredential(),
+				securityParametersContext);
 
 			OpenSamlUtil.signObject(authnRequest, credential);
 		}
 
-		samlMessageContext.setPeerEntityEndpoint(singleSignOnService);
-		samlMessageContext.setRelayState(relayState);
+		SAMLEndpointContext samlPeerEndpointContext =
+			samlPeerEntityContext.getSubcontext(
+				SAMLEndpointContext.class, true);
+
+		samlPeerEndpointContext.setEndpoint(singleSignOnService);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			request);
 
 		_samlSpAuthRequestLocalService.addSamlSpAuthRequest(
-			samlMessageContext.getPeerEntityId(), authnRequest.getID(),
+			samlPeerEntityContext.getEntityId(), authnRequest.getID(),
 			serviceContext);
 
-		sendSamlMessage(samlMessageContext);
+		sendSamlMessage(messageContext, response);
 	}
 
 	protected Assertion getSuccessAssertion(

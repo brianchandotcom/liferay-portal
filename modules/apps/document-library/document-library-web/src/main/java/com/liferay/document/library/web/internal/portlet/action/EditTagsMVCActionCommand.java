@@ -21,17 +21,16 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.document.library.web.internal.selection.Selection;
-import com.liferay.document.library.web.internal.selection.SelectionParser;
-import com.liferay.document.library.web.internal.selection.SelectionParserImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
@@ -62,15 +61,13 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntry.class.getName(), actionRequest);
 
-		Selection<DLFileEntry> selection = _selectionParser.parse(
-			actionRequest);
+		List<FileEntry> fileEntries = ActionUtil.getFileEntries(actionRequest);
 
-		Stream<DLFileEntry> dlFileEntryStream = selection.execute();
+		Stream<FileEntry> fileEntryStream = fileEntries.stream();
 
-		dlFileEntryStream.map(
-			dlFileEntry -> _assetEntryLocalService.fetchEntry(
-				DLFileEntryConstants.getClassName(),
-				dlFileEntry.getFileEntryId())
+		fileEntryStream.map(
+			fileEntry -> _assetEntryLocalService.fetchEntry(
+				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId())
 		).forEach(
 			assetEntry -> _addTags(assetEntry, serviceContext)
 		);
@@ -113,8 +110,5 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
-
-	private final SelectionParser<DLFileEntry> _selectionParser =
-		new SelectionParserImpl();
 
 }

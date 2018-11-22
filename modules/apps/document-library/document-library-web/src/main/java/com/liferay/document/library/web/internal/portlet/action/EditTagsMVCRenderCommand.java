@@ -16,19 +16,21 @@ package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.document.library.web.internal.selection.Selection;
-import com.liferay.document.library.web.internal.selection.SelectionParser;
-import com.liferay.document.library.web.internal.selection.SelectionParserImpl;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -51,30 +53,47 @@ public class EditTagsMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
-		Selection<DLFileEntry> selection = _selectionParser.parse(
-			renderRequest);
+		try {
+			List<FileEntry> fileEntries = ActionUtil.getFileEntries(
+				renderRequest);
 
-		Stream<DLFileEntry> dlFileEntryStream = selection.execute();
+			renderRequest.setAttribute(
+				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRIES, fileEntries);
 
-		List<Set<String>> tagNameSets = dlFileEntryStream.map(
-			dlFileEntry -> SetUtil.fromArray(
-				_assetTagLocalService.getTagNames(
-					DLFileEntryConstants.getClassName(),
-					dlFileEntry.getFileEntryId()))
-		).collect(
-			Collectors.toList()
-		);
+			Stream<FileEntry> fileEntryStream = fileEntries.stream();
 
-		Stream<String> tagNamesStream = _getCommonTagNames(tagNameSets);
+			List<Set<String>> tagNameSets = fileEntryStream.map(
+				fileEntry -> SetUtil.fromArray(
+					_assetTagLocalService.getTagNames(
+						DLFileEntryConstants.getClassName(),
+						fileEntry.getFileEntryId()))
+			).collect(
+				Collectors.toList()
+			);
 
-		renderRequest.setAttribute(
-			"commonTagNames", tagNamesStream.collect(Collectors.joining(",")));
+			Stream<String> tagNamesStream = _getCommonTagNames(tagNameSets);
 
-		renderRequest.setAttribute("selection", selection);
+			renderRequest.setAttribute(
+				"commonTagNames",
+				tagNamesStream.collect(Collectors.joining(",")));
 
-		return "/document_library/edit_tags.jsp";
+			return "/document_library/edit_tags.jsp";
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchFileEntryException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(renderRequest, e.getClass());
+
+				return "/document_library/error.jsp";
+			}
+			else {
+				throw new PortletException(e);
+			}
+		}
 	}
 
 	private Stream<String> _getCommonTagNames(List<Set<String>> tagNameSets) {
@@ -93,7 +112,5 @@ public class EditTagsMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
-
-	private final SelectionParser _selectionParser = new SelectionParserImpl();
 
 }

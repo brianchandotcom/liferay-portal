@@ -119,7 +119,6 @@ page import="com.liferay.document.library.web.internal.security.permission.resou
 page import="com.liferay.document.library.web.internal.security.permission.resource.DLFileShortcutPermission" %><%@
 page import="com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission" %><%@
 page import="com.liferay.document.library.web.internal.security.permission.resource.DLPermission" %><%@
-page import="com.liferay.document.library.web.internal.selection.Selection" %><%@
 page import="com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings" %><%@
 page import="com.liferay.document.library.web.internal.util.DLBreadcrumbUtil" %><%@
 page import="com.liferay.document.library.web.internal.util.DLSubscriptionUtil" %><%@

@@ -16,12 +16,33 @@
 
 <%@ include file="/document_library/init.jsp" %>
 
-<liferay-portlet:actionURL copyCurrentRenderParameters="<%= true %>" name="/document_library/edit_tags" varImpl="editTagsURL" />
+<%
+String redirect = ParamUtil.getString(request, "redirect");
 
-<div class="container-fluid-1280">
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle(LanguageUtil.get(request, "edit-tags"));
+}
+%>
+
+<liferay-portlet:actionURL name="/document_library/edit_tags" varImpl="editTagsURL" />
+
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<aui:form action="<%= editTagsURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm">
 		<liferay-portlet:renderURLParams varImpl="editTagsURL" />
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+
+		<c:if test="<%= !portletTitleBasedNavigation %>">
+			<liferay-ui:header
+				backURL="<%= redirect %>"
+				title="edit-tags"
+			/>
+		</c:if>
 
 		<div class="lfr-form-content">
 			<liferay-asset:asset-tags-error />
@@ -30,20 +51,22 @@
 				<aui:fieldset>
 
 					<%
-					Selection<DLFileEntry> selection = (Selection)request.getAttribute("selection");
+					List<FileEntry> fileEntries = (List<FileEntry>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRIES);
 					%>
 
+					<aui:input name="rowIdsFileEntry" type="hidden" value="<%= ListUtil.toString(fileEntries, FileEntry.FILE_ENTRY_ID_ACCESSOR) %>" />
+
 					<c:choose>
-						<c:when test="<%= selection.getSize() == 1 %>">
+						<c:when test="<%= fileEntries.size() == 1 %>">
 
 							<%
-							DLFileEntry dlFileEnty = selection.getFirst();
+							FileEntry fileEntry = fileEntries.get(0);
 							%>
 
-							<liferay-ui:message arguments="<%= dlFileEnty.getTitle() %>" key="you-are-editing-the-tags-for-x" />
+							<liferay-ui:message arguments="<%= fileEntry.getTitle() %>" key="you-are-editing-the-tags-for-x" />
 						</c:when>
 						<c:otherwise>
-							<liferay-ui:message arguments="<%= selection.getSize() %>" key="you-are-editing-the-common-tags-for-x-items" /> <liferay-ui:message key="select-add-or-replace-current-tags" />
+							<liferay-ui:message arguments="<%= fileEntries.size() %>" key="you-are-editing-the-common-tags-for-x-items" /> <liferay-ui:message key="select-add-or-replace-current-tags" />
 
 							<div class="form-group" id="<portlet:namespace />tagOptions">
 								<aui:input checked="<%= true %>" label="add" name="add" type="radio" value="<%= true %>" />
@@ -62,7 +85,7 @@
 
 		<aui:button-row>
 			<aui:button type="submit" value="save" />
-			<aui:button href='<%= ParamUtil.getString(request, "redirect") %>' type="cancel" />
+			<aui:button href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
 </div>

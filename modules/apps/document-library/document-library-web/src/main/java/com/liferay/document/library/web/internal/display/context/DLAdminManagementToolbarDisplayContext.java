@@ -190,6 +190,16 @@ public class DLAdminManagementToolbarDisplayContext {
 										_request, "checkout[document]"));
 								dropdownItem.setQuickAction(false);
 							}));
+
+					add(
+						SafeConsumer.ignore(
+							dropdownItem -> {
+								dropdownItem.putData("action", "editTags");
+								dropdownItem.setIcon("tag");
+								dropdownItem.setLabel(
+									LanguageUtil.get(_request, "edit-tags"));
+								dropdownItem.setQuickAction(true);
+							}));
 				}
 			}
 		};
@@ -220,6 +230,8 @@ public class DLAdminManagementToolbarDisplayContext {
 			else {
 				availableActionDropdownItems.add("checkout");
 			}
+
+			availableActionDropdownItems.add("editTags");
 		}
 
 		if (DLFileEntryPermission.contains(

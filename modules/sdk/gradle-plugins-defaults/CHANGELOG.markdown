@@ -5049,6 +5049,12 @@ version 2.2.7.
 - [LPS-85609]: Update the [Liferay Gradle Plugins Cache] dependency to version
 1.0.16.
 
+## 5.5.118 - 2018-11-20
+
+### Changed
+- [LPS-86806]: Update the [Liferay Gradle Plugins] dependency to version
+3.13.19.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -5552,6 +5558,7 @@ version 2.2.7.
 [LPS-86583]: https://issues.liferay.com/browse/LPS-86583
 [LPS-86669]: https://issues.liferay.com/browse/LPS-86669
 [LPS-86707]: https://issues.liferay.com/browse/LPS-86707
+[LPS-86806]: https://issues.liferay.com/browse/LPS-86806
 [LPS-86835]: https://issues.liferay.com/browse/LPS-86835
 [LPS-86916]: https://issues.liferay.com/browse/LPS-86916
 [LPS-87006]: https://issues.liferay.com/browse/LPS-87006

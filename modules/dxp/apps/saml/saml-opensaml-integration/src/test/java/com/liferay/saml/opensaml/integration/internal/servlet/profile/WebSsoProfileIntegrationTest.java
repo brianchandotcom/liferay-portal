@@ -109,7 +109,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			SamlSpSessionLocalServiceUtil.class,
 			SamlSpSessionLocalService.class);
 
-		_webSsoProfileImpl.setIdentifierGenerator(identifierGenerator);
+		_webSsoProfileImpl.setIdentifierGenerationStrategyFactory(
+			identifierGenerationStrategyFactory);
 		_webSsoProfileImpl.setMetadataManager(metadataManagerImpl);
 		_webSsoProfileImpl.setPortal(portal);
 		_webSsoProfileImpl.setSamlBindings(samlBindings);

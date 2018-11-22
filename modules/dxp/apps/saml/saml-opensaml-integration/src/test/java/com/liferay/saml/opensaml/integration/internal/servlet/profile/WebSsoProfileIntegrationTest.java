@@ -563,24 +563,33 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		MockHttpServletRequest mockHttpServletRequest =
 			getMockHttpServletRequest(ACS_URL);
 
-		SAMLMessageContext<?, ?, ?> samlMessageContext =
-			_webSsoProfileImpl.getSamlMessageContext(
+		MessageContext<?> messageContext =
+			_webSsoProfileImpl.getMessageContext(
 				mockHttpServletRequest, new MockHttpServletResponse());
 
+		SAMLSelfEntityContext samlSelfEntityContext =
+			messageContext.getSubcontext(SAMLSelfEntityContext.class);
+
+		SAMLMetadataContext samlSelfMetadataContext =
+			samlSelfEntityContext.getSubcontext(SAMLMetadataContext.class);
+
 		EntityDescriptor entityDescriptor =
-			samlMessageContext.getLocalEntityMetadata();
+			samlSelfMetadataContext.getEntityDescriptor();
 
 		SPSSODescriptor spSSODescriptor = entityDescriptor.getSPSSODescriptor(
 			SAMLConstants.SAML20P_NS);
 
 		spSSODescriptor.setWantAssertionsSigned(true);
 
-		samlMessageContext.setLocalEntityRoleMetadata(spSSODescriptor);
+		samlSelfMetadataContext.setRoleDescriptor(spSSODescriptor);
 
-		samlMessageContext.setPeerEntityId(IDP_ENTITY_ID);
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+		samlPeerEntityContext.setEntityId(IDP_ENTITY_ID);
 
 		_webSsoProfileImpl.verifyAssertionSignature(
-			null, samlMessageContext,
+			null, messageContext,
 			metadataManagerImpl.getSignatureTrustEngine());
 	}
 

@@ -1802,22 +1802,24 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	protected void verifySignature(
-			SAMLMessageContext<?, ?, ?> samlMessageContext, Signature signature,
+			MessageContext<?> messageContext, Signature signature,
 			TrustEngine<Signature> trustEngine)
 		throws PortalException {
 
 		try {
 			_samlSignatureProfileValidator.validate(signature);
 
+			SAMLPeerEntityContext samlPeerEntityContext =
+				messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
 			CriteriaSet criteriaSet = new CriteriaSet();
 
 			criteriaSet.add(
-				new EntityIDCriteria(samlMessageContext.getPeerEntityId()));
+				new EntityIdCriterion(samlPeerEntityContext.getEntityId()));
 			criteriaSet.add(
-				new MetadataCriteria(
-					IDPSSODescriptor.DEFAULT_ELEMENT_NAME,
-					SAMLConstants.SAML20P_NS));
-			criteriaSet.add(new UsageCriteria(UsageType.SIGNING));
+				new EntityRoleCriterion(IDPSSODescriptor.DEFAULT_ELEMENT_NAME));
+			criteriaSet.add(new ProtocolCriterion(SAMLConstants.SAML20P_NS));
+			criteriaSet.add(new UsageCriterion(UsageType.SIGNING));
 
 			if (!trustEngine.validate(signature, criteriaSet)) {
 				throw new SignatureException("Unable validate signature trust");

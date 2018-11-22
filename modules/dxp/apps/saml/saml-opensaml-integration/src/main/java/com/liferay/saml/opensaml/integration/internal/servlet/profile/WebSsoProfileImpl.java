@@ -1200,7 +1200,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				SamlWebKeys.FORCE_REAUTHENTICATION, Boolean.TRUE);
 		}
 
-		SAMLMessageContext samlMessageContext =
+		MessageContext samlMessageContext =
 			samlSsoRequestContext.getSAMLMessageContext();
 
 		samlSsoRequestContext.setSAMLMessageContext(null);
@@ -1228,16 +1228,33 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		redirectSB.append(themeDisplay.getPathMain());
 		redirectSB.append("/portal/saml/sso");
 
-		if (samlMessageContext.getInboundSAMLMessageId() != null) {
-			redirectSB.append("?saml_message_id=");
-			redirectSB.append(
-				URLCodec.encodeURL(
-					samlMessageContext.getInboundSAMLMessageId()));
+		SAMLPeerEntityContext samlPeerEntityContext =
+			samlMessageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+		InOutOperationContext inOutOperationContext =
+			samlMessageContext.getSubcontext(
+				InOutOperationContext.class, false);
+
+		if (inOutOperationContext != null) {
+			MessageContext inboundMessageContext =
+				inOutOperationContext.getInboundMessageContext();
+
+			SAMLMessageInfoContext samlMessageInfoContext =
+				inboundMessageContext.getSubcontext(
+					SAMLMessageInfoContext.class);
+
+			if ((samlMessageInfoContext != null) &&
+				(samlMessageInfoContext.getMessageId() != null)) {
+
+				redirectSB.append("?saml_message_id=");
+				redirectSB.append(
+					URLCodec.encodeURL(samlMessageInfoContext.getMessageId()));
+			}
 		}
-		else if (samlMessageContext.getPeerEntityId() != null) {
+		else if (samlPeerEntityContext.getEntityId() != null) {
 			redirectSB.append("?entityId=");
 			redirectSB.append(
-				URLCodec.encodeURL(samlMessageContext.getPeerEntityId()));
+				URLCodec.encodeURL(samlPeerEntityContext.getEntityId()));
 		}
 
 		sb.append(URLCodec.encodeURL(redirectSB.toString()));

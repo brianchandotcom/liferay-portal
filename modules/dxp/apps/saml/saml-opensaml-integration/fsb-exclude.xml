@@ -21,7 +21,7 @@
 		<Bug pattern="HTTP_RESPONSE_SPLITTING" />
 	</Match>
 	<Match>
-		<Class name="com.liferay.saml.opensaml.integration.internal.profile.WebSsoProfileImpl" />
+		<Class name="com.liferay.saml.opensaml.integration.internal.servlet.profile.WebSsoProfileImpl" />
 		<Method name="redirectToLogin" />
 		<Bug pattern="TRUST_BOUNDARY_VIOLATION" />
 	</Match>

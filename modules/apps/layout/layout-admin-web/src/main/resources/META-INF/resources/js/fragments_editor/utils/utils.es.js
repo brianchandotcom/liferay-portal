@@ -1,4 +1,19 @@
 /**
+ * Inserts an element in the given position of a given array and returns
+ * a copy of the array
+ * @param {!Array} array
+ * @param {*} element
+ * @param {!number} position
+ */
+function add(array, element, position) {
+	const newArray = [...array];
+
+	newArray.splice(position, 0, element);
+
+	return newArray;
+}
+
+/**
  * Returns the column with the given columnId
  * @param {Object} structure
  * @param {string} columnId
@@ -153,6 +168,7 @@ function updateLayoutData(
 }
 
 export {
+	add,
 	getColumn,
 	getFragmentColumn,
 	getFragmentRowIndex,

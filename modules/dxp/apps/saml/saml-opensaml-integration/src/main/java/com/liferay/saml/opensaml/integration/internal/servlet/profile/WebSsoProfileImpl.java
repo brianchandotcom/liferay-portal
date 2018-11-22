@@ -240,12 +240,15 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			_samlIdpSsoSessionLocalService.addSamlIdpSsoSession(
 				samlSsoRequestContext.getSamlSsoSessionId(), serviceContext);
 
-		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext =
+		MessageContext<?> messageContext =
 			samlSsoRequestContext.getSAMLMessageContext();
+
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
 
 		_samlIdpSpSessionLocalService.addSamlIdpSpSession(
 			samlIdpSsoSession.getSamlIdpSsoSessionId(),
-			samlMessageContext.getPeerEntityId(), nameID.getFormat(),
+			samlPeerEntityContext.getEntityId(), nameID.getFormat(),
 			nameID.getValue(), serviceContext);
 
 		addCookie(

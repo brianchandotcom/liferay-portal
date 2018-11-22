@@ -19,6 +19,7 @@ import com.google.template.soy.data.UnsafeSanitizedContentOrdainer;
 
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.template.soy.utils.SoyHTMLSanitizer;
 
@@ -48,7 +49,9 @@ public class ParagraphDDMFormFieldTemplateContextContributorTest
 	public void testGetParameters() {
 		DDMFormField ddmFormField = new DDMFormField("field", "paragraph");
 
-		String text = "<b>This is a header</b>\n";
+		LocalizedValue text = new LocalizedValue();
+
+		text.addString(text.getDefaultLocale(), "<b>This is a header</b>\n");
 
 		ddmFormField.setProperty("text", text);
 
@@ -59,7 +62,9 @@ public class ParagraphDDMFormFieldTemplateContextContributorTest
 		SanitizedContent sanitizedContent = (SanitizedContent)parameters.get(
 			"text");
 
-		Assert.assertEquals(text, sanitizedContent.getContent());
+		Assert.assertEquals(
+			text.getString(text.getDefaultLocale()),
+			sanitizedContent.getContent());
 	}
 
 	protected void setUpSoyHTMLSanitizer() throws Exception {

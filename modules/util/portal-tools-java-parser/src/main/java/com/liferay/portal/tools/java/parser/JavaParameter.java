@@ -47,6 +47,9 @@ public class JavaParameter extends BaseJavaTerm {
 		StringBundler sb = new StringBundler();
 
 		sb.append(indent);
+
+		indent += "\t";
+
 		sb.append(prefix);
 
 		if (ListUtil.isNotEmpty(_javaAnnotations)) {

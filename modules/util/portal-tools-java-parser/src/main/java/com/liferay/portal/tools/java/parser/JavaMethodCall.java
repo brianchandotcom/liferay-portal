@@ -39,6 +39,9 @@ public class JavaMethodCall extends JavaExpression {
 		StringBundler sb = new StringBundler();
 
 		sb.append(indent);
+
+		indent += "\t";
+
 		sb.append(prefix);
 
 		if (_genericJavaTypes != null) {
@@ -56,7 +59,7 @@ public class JavaMethodCall extends JavaExpression {
 
 			if (forceLineBreak) {
 				appendNewLine(
-					sb, _parameterValueJavaExpressions, indent + "\t", "",
+					sb, _parameterValueJavaExpressions, indent, "",
 					")" + suffix, maxLineLength);
 			}
 			else {

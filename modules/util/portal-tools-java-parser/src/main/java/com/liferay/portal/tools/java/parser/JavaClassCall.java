@@ -36,6 +36,8 @@ public class JavaClassCall extends JavaExpression {
 
 		sb.append(indent);
 
+		indent += "\t";
+
 		if (_genericJavaTypes == null) {
 			if (_parameterValueJavaExpressions.isEmpty()) {
 				append(
@@ -68,8 +70,8 @@ public class JavaClassCall extends JavaExpression {
 
 		if (forceLineBreak) {
 			appendNewLine(
-				sb, _parameterValueJavaExpressions, indent + "\t", "",
-				")" + suffix, maxLineLength);
+				sb, _parameterValueJavaExpressions, indent, "", ")" + suffix,
+				maxLineLength);
 		}
 		else {
 			append(

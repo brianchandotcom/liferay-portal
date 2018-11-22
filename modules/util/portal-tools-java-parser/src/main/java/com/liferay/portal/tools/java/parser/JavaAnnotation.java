@@ -16,6 +16,7 @@ package com.liferay.portal.tools.java.parser;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 
@@ -36,6 +37,9 @@ public class JavaAnnotation extends JavaExpression {
 		StringBundler sb = new StringBundler();
 
 		sb.append(indent);
+
+		indent += "\t";
+
 		sb.append(prefix);
 		sb.append(StringPool.AT);
 		sb.append(_name);
@@ -57,8 +61,7 @@ public class JavaAnnotation extends JavaExpression {
 			}
 
 			appendNewLine(
-				sb, _javaAnnotationMemberValuePairs, indent + "\t",
-				maxLineLength);
+				sb, _javaAnnotationMemberValuePairs, indent, maxLineLength);
 		}
 		else {
 			if (appendSingleLine(
@@ -68,12 +71,11 @@ public class JavaAnnotation extends JavaExpression {
 				return sb.toString();
 			}
 
-			appendNewLine(
-				sb, _valueJavaExpression, indent + "\t", maxLineLength);
+			appendNewLine(sb, _valueJavaExpression, indent, maxLineLength);
 		}
 
 		sb.append("\n");
-		sb.append(indent);
+		sb.append(StringUtil.replaceFirst(indent, "\t", ""));
 		sb.append(")");
 		sb.append(suffix);
 

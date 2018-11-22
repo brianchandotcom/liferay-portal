@@ -33,6 +33,9 @@ public class JavaInstanceofStatement extends JavaExpression {
 		StringBundler sb = new StringBundler();
 
 		sb.append(indent);
+
+		indent += "\t";
+
 		sb.append(prefix);
 
 		indent = append(

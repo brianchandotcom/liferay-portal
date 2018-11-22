@@ -38,6 +38,9 @@ public class JavaMethodReference extends JavaExpression {
 		StringBundler sb = new StringBundler();
 
 		sb.append(indent);
+
+		indent += "\t";
+
 		sb.append(prefix);
 
 		if (_genericJavaTypes != null) {

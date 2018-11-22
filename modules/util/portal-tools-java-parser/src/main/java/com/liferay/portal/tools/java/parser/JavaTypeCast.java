@@ -32,6 +32,8 @@ public class JavaTypeCast extends JavaExpression {
 
 		sb.append(indent);
 
+		indent += "\t";
+
 		indent = append(
 			sb, _javaTypes, " & ", indent, prefix + "(", ")", maxLineLength);
 

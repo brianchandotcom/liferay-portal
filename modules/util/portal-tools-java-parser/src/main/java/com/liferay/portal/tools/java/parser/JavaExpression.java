@@ -80,7 +80,7 @@ public abstract class JavaExpression extends BaseJavaTerm {
 				getString(indent, prefix, ".", maxLineLength, forceLineBreak));
 		}
 
-		indent = getIndent(getLastLine(sb));
+		indent = getIndent(getLastLine(sb)) + "\t";
 
 		if (forceLineBreak) {
 			appendWithLineBreak(

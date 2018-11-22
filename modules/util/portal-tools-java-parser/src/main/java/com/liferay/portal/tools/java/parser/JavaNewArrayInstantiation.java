@@ -29,6 +29,9 @@ public class JavaNewArrayInstantiation extends JavaExpression {
 		StringBundler sb = new StringBundler();
 
 		sb.append(indent);
+
+		indent += "\t";
+
 		sb.append(prefix);
 
 		if (_initialJavaArray == null) {

@@ -30,6 +30,8 @@ public class JavaNewClassInstantiation extends JavaExpression {
 
 		sb.append(indent);
 
+		indent += "\t";
+
 		if (forceLineBreak) {
 			appendWithLineBreak(
 				sb, _javaClassCall, indent, prefix + "new ", suffix,

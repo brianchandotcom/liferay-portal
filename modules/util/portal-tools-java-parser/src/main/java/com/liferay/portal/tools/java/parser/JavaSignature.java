@@ -66,6 +66,8 @@ public class JavaSignature extends BaseJavaTerm {
 
 		sb.append(indent);
 
+		indent += "\t";
+
 		if (!_modifiers.isEmpty()) {
 			appendSingleLine(sb, _modifiers, " ", "", " ", maxLineLength);
 		}
@@ -112,13 +114,13 @@ public class JavaSignature extends BaseJavaTerm {
 				}
 				else {
 					appendNewLine(
-						sb, _objectName, indent + "\t\t", "", "() ",
+						sb, _objectName, indent + "\t", "", "() ",
 						maxLineLength);
 				}
 
 				appendNewLine(
-					sb, _exceptionJavaExpressions, indent + "\t", "throws ",
-					suffix, maxLineLength);
+					sb, _exceptionJavaExpressions, indent, "throws ", suffix,
+					maxLineLength);
 
 				return sb.toString();
 			}
@@ -145,12 +147,11 @@ public class JavaSignature extends BaseJavaTerm {
 
 				appendSingleLine(sb, _objectName, "", "(", -1);
 				appendNewLine(
-					sb, _javaParameters, indent + "\t", "", ")" + suffix,
+					sb, _javaParameters, indent, "", ")" + suffix,
 					maxLineLength);
 			}
 			else {
-				appendNewLine(
-					sb, _objectName, indent + "\t", "", "(", maxLineLength);
+				appendNewLine(sb, _objectName, indent, "", "(", maxLineLength);
 				append(
 					sb, _javaParameters, indent + "\t", "", ")" + suffix,
 					maxLineLength);
@@ -169,16 +170,16 @@ public class JavaSignature extends BaseJavaTerm {
 				}
 
 				appendNewLine(
-					sb, _exceptionJavaExpressions, indent + "\t", "throws ",
-					suffix, maxLineLength);
+					sb, _exceptionJavaExpressions, indent, "throws ", suffix,
+					maxLineLength);
 
 				return sb.toString();
 			}
 
 			appendNewLine(
-				sb, _javaParameters, indent + "\t\t", "", ")", maxLineLength);
+				sb, _javaParameters, indent + "\t", "", ")", maxLineLength);
 			appendNewLine(
-				sb, _exceptionJavaExpressions, indent + "\t", "throws ", suffix,
+				sb, _exceptionJavaExpressions, indent, "throws ", suffix,
 				maxLineLength);
 
 			return sb.toString();
@@ -192,13 +193,13 @@ public class JavaSignature extends BaseJavaTerm {
 		}
 		else {
 			appendNewLine(
-				sb, _objectName, indent + "\t\t", "", "(", maxLineLength);
+				sb, _objectName, indent + "\t", "", "(", maxLineLength);
 
 			append(
 				sb, _javaParameters, indent + "\t\t", "", ")", maxLineLength);
 
 			appendNewLine(
-				sb, _exceptionJavaExpressions, indent + "\t", "throws ", suffix,
+				sb, _exceptionJavaExpressions, indent, "throws ", suffix,
 				maxLineLength);
 		}
 

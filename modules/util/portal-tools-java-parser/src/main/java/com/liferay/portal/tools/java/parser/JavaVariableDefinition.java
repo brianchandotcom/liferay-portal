@@ -73,6 +73,8 @@ public class JavaVariableDefinition extends BaseJavaTerm {
 
 		sb.append(indent);
 
+		indent += "\t";
+
 		indent = append(sb, _modifiers, " ", indent, "", " ", maxLineLength);
 		indent = append(sb, _javaType, indent, "", " ", maxLineLength, false);
 

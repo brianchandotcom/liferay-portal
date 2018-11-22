@@ -45,6 +45,8 @@ public class JavaOperatorExpression extends JavaExpression {
 
 		sb.append(indent);
 
+		indent += "\t";
+
 		if (_leftHandJavaExpression != null) {
 			if (_rightHandJavaExpression != null) {
 				if (Objects.equals(

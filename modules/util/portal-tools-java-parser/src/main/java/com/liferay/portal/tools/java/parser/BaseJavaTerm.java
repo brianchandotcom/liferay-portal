@@ -105,11 +105,13 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 			if (Validator.isNull(sb.toString())) {
 				sb.append(
-					javaTerm.toString(indent, prefix, suffix, maxLineLength));
+					javaTerm.toString(
+						StringUtil.replaceFirst(indent, "\t", ""), prefix,
+						suffix, maxLineLength));
 			}
 			else {
 				appendNewLine(
-					sb, javaTerm, "\t" + indent, prefix, suffix, maxLineLength);
+					sb, javaTerm, indent, prefix, suffix, maxLineLength);
 			}
 
 			int afterLineBreakCount = StringUtil.count(
@@ -158,19 +160,20 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			return indent;
 		}
 
-		sb = _stripTrailingWhitespace(sb);
-
 		int beforeLineBreakCount = StringUtil.count(
 			sb.toString(), CharPool.NEW_LINE);
 
-		if (Validator.isNull(sb.toString())) {
+		String lastLine = getLastLine(sb);
+
+		sb = _stripTrailingWhitespace(sb);
+
+		if (Validator.isNull(StringUtil.trim(lastLine))) {
 			appendNewLine(
-				sb, list, delimeter, indent, prefix, suffix, maxLineLength);
+				sb, list, delimeter, lastLine, prefix, suffix, maxLineLength);
 		}
 		else {
 			appendNewLine(
-				sb, list, delimeter, indent + "\t", prefix, suffix,
-				maxLineLength);
+				sb, list, delimeter, indent, prefix, suffix, maxLineLength);
 		}
 
 		int afterLineBreakCount = StringUtil.count(
@@ -336,6 +339,8 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		StringBundler sb, JavaTerm javaTerm, String indent, String prefix,
 		String suffix, int maxLineLength) {
 
+		indent = StringUtil.replaceFirst(indent, "\t", "");
+
 		String lastLine = getLastLine(sb);
 
 		if (Validator.isNull(StringUtil.trim(lastLine))) {
@@ -350,7 +355,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 			sb.append(s);
 
-			return getIndent(_getLastLine(s));
+			return "\t" + getIndent(_getLastLine(s));
 		}
 
 		String javaTermContent = javaTerm.toString(
@@ -371,13 +376,13 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			  firstLineJavaTermContent.matches("\\s*\\([^\\)]+\\)?")))) {
 
 			appendNewLine(
-				sb, javaTerm, indent + "\t", prefix, suffix, maxLineLength);
+				sb, javaTerm, "\t" + indent, prefix, suffix, maxLineLength);
 		}
 		else {
 			sb.append(javaTermContent);
 		}
 
-		return getIndent(getLastLine(sb));
+		return "\t" + getIndent(getLastLine(sb));
 	}
 
 	protected String getIndent(String s) {

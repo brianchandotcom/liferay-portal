@@ -35,6 +35,9 @@ public class JavaArrayElement extends JavaExpression {
 		StringBundler sb = new StringBundler();
 
 		sb.append(indent);
+
+		indent += "\t";
+
 		sb.append(prefix);
 
 		append(sb, _arrayJavaExpression, indent, maxLineLength);

@@ -39,8 +39,8 @@ public class JavaAnnotationMemberValuePair extends BaseJavaTerm {
 			sb.append(_name.toString(indent, prefix, " = ", -1));
 
 			append(
-				sb, _valueJavaExpression, indent, "", suffix, maxLineLength,
-				false);
+				sb, _valueJavaExpression, indent + "\t", "", suffix,
+				maxLineLength, false);
 
 			return sb.toString();
 		}

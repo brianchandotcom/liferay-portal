@@ -569,12 +569,17 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		SAMLMessageContext<Response, SAMLObject, NameID> samlMessageContext =
-			(SAMLMessageContext<Response, SAMLObject, NameID>)decodeSamlMessage(
-				request, response,
-				getSamlBinding(SAMLConstants.SAML2_POST_BINDING_URI), true);
+		MessageContext messageContext = decodeSamlMessage(
+			request, response,
+			getSamlBinding(SAMLConstants.SAML2_POST_BINDING_URI));
 
-		Response samlResponse = samlMessageContext.getInboundSAMLMessage();
+		InOutOperationContext inOutOperationContext =
+			messageContext.getSubcontext(InOutOperationContext.class);
+
+		MessageContext<Response> inboundMessageContext =
+			inOutOperationContext.getInboundMessageContext();
+
+		Response samlResponse = inboundMessageContext.getMessage();
 
 		Status status = samlResponse.getStatus();
 
@@ -582,7 +587,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		String statusCodeURI = statusCode.getValue();
 
-		if (!statusCodeURI.equals(StatusCode.SUCCESS_URI)) {
+		if (!statusCodeURI.equals(StatusCode.SUCCESS)) {
 			StatusCode childStatusCode = statusCode.getStatusCode();
 
 			if ((childStatusCode != null) &&
@@ -596,8 +601,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		}
 
 		verifyInResponseTo(samlResponse);
-		verifyDestination(samlMessageContext, samlResponse.getDestination());
-		verifyIssuer(samlMessageContext, samlResponse.getIssuer());
+		verifyDestination(messageContext, samlResponse.getDestination());
+		verifyIssuer(messageContext, samlResponse.getIssuer());
 
 		Assertion assertion = null;
 
@@ -609,7 +614,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		for (Assertion curAssertion : samlResponse.getAssertions()) {
 			try {
 				verifyAssertion(
-					curAssertion, samlMessageContext, signatureTrustEngine);
+					curAssertion, messageContext, signatureTrustEngine);
 			}
 			catch (SamlException se) {
 				if (_log.isDebugEnabled()) {
@@ -663,7 +668,12 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				"Response does not contain any acceptable assertions");
 		}
 
-		NameID nameID = samlMessageContext.getSubjectNameIdentifier();
+		SAMLSubjectNameIdentifierContext samlSubjectNameIdentifierContext =
+			messageContext.getSubcontext(
+				SAMLSubjectNameIdentifierContext.class);
+
+		NameID nameID =
+			samlSubjectNameIdentifierContext.getSAML2SubjectNameID();
 
 		if (nameID == null) {
 			throw new SamlException("Name ID not present in subject");
@@ -685,8 +695,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			request);
 
 		User user = _userResolver.resolveUser(
-			new UserResolverSAMLContextImpl(samlMessageContext),
-			serviceContext);
+			new UserResolverSAMLContextImpl(messageContext), serviceContext);
 
 		serviceContext.setUserId(user.getUserId());
 
@@ -729,8 +738,11 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		sb.append("/portal/saml/auth_redirect?redirect=");
 
+		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
+			SAMLBindingContext.class);
+
 		String relayState = portal.escapeRedirect(
-			samlMessageContext.getRelayState());
+			samlBindingContext.getRelayState());
 
 		if (Validator.isNull(relayState)) {
 			relayState = portal.getHomeURL(request);

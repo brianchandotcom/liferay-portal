@@ -53,6 +53,10 @@ long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 if (folder != null) {
 	folderId = folder.getFolderId();
+
+	if (folder.isMountPoint()) {
+		repositoryId = folder.getRepositoryId();
+	}
 }
 
 int status = WorkflowConstants.STATUS_APPROVED;

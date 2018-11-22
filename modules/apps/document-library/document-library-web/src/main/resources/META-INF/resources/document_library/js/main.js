@@ -18,6 +18,10 @@ AUI.add(
 						validator: Lang.isString
 					},
 
+					editTagsUrl: {
+						validator: Lang.isString
+					},
+
 					form: {
 						validator: Lang.isObject
 					},
@@ -106,6 +110,10 @@ AUI.add(
 						var action = event.data.item.data.action;
 
 						var url = instance.get('editEntryUrl');
+
+						if (action === 'editTags') {
+							url = instance.get('editTagsUrl');
+						}
 
 						if (action === 'move' || action === 'moveEntries') {
 							url = instance.get('moveEntryUrl');

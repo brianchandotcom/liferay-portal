@@ -1609,12 +1609,11 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	protected void verifyConditions(
-			SAMLMessageContext<?, ?, ?> samlMessageContext,
-			Conditions conditions)
+			MessageContext<?> messageContext, Conditions conditions)
 		throws PortalException {
 
 		verifyAudienceRestrictions(
-			conditions.getAudienceRestrictions(), samlMessageContext);
+			conditions.getAudienceRestrictions(), messageContext);
 
 		DateTime nowDateTime = new DateTime(DateTimeZone.UTC);
 

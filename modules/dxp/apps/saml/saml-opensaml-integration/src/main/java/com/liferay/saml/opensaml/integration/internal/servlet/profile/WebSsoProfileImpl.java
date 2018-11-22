@@ -1562,15 +1562,21 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	protected void verifyAssertionSignature(
-			Signature signature, SAMLMessageContext<?, ?, ?> samlMessageContext,
+			Signature signature, MessageContext<?> messageContext,
 			TrustEngine<Signature> trustEngine)
 		throws PortalException {
 
+		SAMLSelfEntityContext samlSelfEntityContext =
+			messageContext.getSubcontext(SAMLSelfEntityContext.class);
+
+		SAMLMetadataContext samlSelfMetadataContext =
+			samlSelfEntityContext.getSubcontext(SAMLMetadataContext.class);
+
 		SPSSODescriptor spSSODescriptor =
-			(SPSSODescriptor)samlMessageContext.getLocalEntityRoleMetadata();
+			(SPSSODescriptor)samlSelfMetadataContext.getRoleDescriptor();
 
 		if (signature != null) {
-			verifySignature(samlMessageContext, signature, trustEngine);
+			verifySignature(messageContext, signature, trustEngine);
 		}
 		else if (spSSODescriptor.getWantAssertionsSigned()) {
 			throw new SignatureException("SAML assertion is not signed");

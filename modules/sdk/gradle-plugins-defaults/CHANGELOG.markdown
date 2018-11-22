@@ -5038,6 +5038,8 @@ version 1.1.2.
 version 2.2.7.
 - [LPS-87466]: Update the [Liferay Gradle Plugins Whip] dependency to version
 1.0.7.
+- [LPS-87503]: Update the [Liferay Gradle Plugins] dependency to version
+3.13.17.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
@@ -5550,6 +5552,7 @@ version 2.2.7.
 [LPS-87465]: https://issues.liferay.com/browse/LPS-87465
 [LPS-87466]: https://issues.liferay.com/browse/LPS-87466
 [LPS-87477]: https://issues.liferay.com/browse/LPS-87477
+[LPS-87503]: https://issues.liferay.com/browse/LPS-87503
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

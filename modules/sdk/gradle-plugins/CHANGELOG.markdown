@@ -6073,6 +6073,11 @@ version 2.0.3.
 version 1.0.11.
 - [LPS-87466]: Update the [Liferay Gradle Plugins XSD Builder] dependency tos
 version 1.0.7.
+- [LPS-87503]: Update the [Liferay Ant BND] dependency to version 3.0.0.
+- [LPS-87503]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.285.
+- [LPS-87503]: Update the [Liferay Source Formatter] dependency to version
+1.0.757.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -6542,4 +6547,5 @@ version 1.0.7.
 [LPS-87366]: https://issues.liferay.com/browse/LPS-87366
 [LPS-87465]: https://issues.liferay.com/browse/LPS-87465
 [LPS-87466]: https://issues.liferay.com/browse/LPS-87466
+[LPS-87503]: https://issues.liferay.com/browse/LPS-87503
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Data Engine Service
+Bundle-SymbolicName: com.liferay.data.engine.service
+Bundle-Version: 1.0.0
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true
+Web-ContextPath: /data-engine-service

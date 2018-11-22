@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Data Engine API
+Bundle-SymbolicName: com.liferay.data.engine.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.data.engine.constants,\
+	com.liferay.data.engine.exception,\
+	com.liferay.data.engine.io,\
+	com.liferay.data.engine.model,\
+	com.liferay.data.engine.service

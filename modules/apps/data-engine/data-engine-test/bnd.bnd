@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Data Engine Test
+Bundle-SymbolicName: com.liferay.data.engine.test
+Bundle-Version: 1.0.0
+-includeresource:\
+	test-classes/integration,\
+	@lib/json.jar,\
+	@lib/jsonassert.jar

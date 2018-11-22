@@ -517,8 +517,11 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 		metadataManagerImpl.setHttp(HttpUtil.getHttp());
 	}
 
-	protected void setupParserPool() throws Exception {
-		parserPool = org.opensaml.Configuration.getParserPool();
+	protected void setupParserPool() {
+		XMLObjectProviderRegistry xmlObjectProviderRegistry =
+			ConfigurationService.get(XMLObjectProviderRegistry.class);
+
+		parserPool = xmlObjectProviderRegistry.getParserPool();
 	}
 
 	protected void setupPortal() throws Exception {

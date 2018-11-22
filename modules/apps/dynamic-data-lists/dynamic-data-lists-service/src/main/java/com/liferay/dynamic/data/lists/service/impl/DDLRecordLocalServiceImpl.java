@@ -253,6 +253,49 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			userId, groupId, recordSetId, displayIndex, fields, serviceContext);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public DDLRecord addRecord(
+			long userId, long groupId, long ddlRecordSetId, long ddmStorageId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+		DDLRecordSet ddlRecordSet = ddlRecordSetPersistence.findByPrimaryKey(
+			ddlRecordSetId);
+
+		long ddlRecordId = counterLocalService.increment();
+
+		DDLRecord ddlRecord = ddlRecordPersistence.create(ddlRecordId);
+
+		ddlRecord.setUuid(serviceContext.getUuid());
+		ddlRecord.setGroupId(groupId);
+		ddlRecord.setCompanyId(user.getCompanyId());
+		ddlRecord.setUserId(user.getUserId());
+		ddlRecord.setUserName(user.getFullName());
+		ddlRecord.setVersionUserId(user.getUserId());
+		ddlRecord.setVersionUserName(user.getFullName());
+		ddlRecord.setDDMStorageId(ddmStorageId);
+		ddlRecord.setRecordSetId(ddlRecordSetId);
+		ddlRecord.setRecordSetVersion(ddlRecordSet.getVersion());
+		ddlRecord.setVersion(DDLRecordConstants.VERSION_DEFAULT);
+		ddlRecord.setDisplayIndex(0);
+
+		ddlRecordPersistence.update(ddlRecord);
+
+		// Record version
+
+		int status = GetterUtil.getInteger(
+			serviceContext.getAttribute("status"),
+			WorkflowConstants.STATUS_APPROVED);
+
+		addRecordVersion(
+			user, ddlRecord, ddmStorageId, DDLRecordConstants.VERSION_DEFAULT,
+			0, status);
+
+		return ddlRecord;
+	}
+
 	/**
 	 * Deletes the record and its resources.
 	 *
@@ -1020,6 +1063,42 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		return ddlRecordLocalService.updateRecord(
 			userId, recordId, false, displayIndex, fields, mergeFields,
 			serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public DDLRecord updateRecord(
+			long userId, long ddlRecordId, long ddmStorageId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		// Record
+
+		User user = userLocalService.getUser(userId);
+
+		DDLRecord ddlRecord = ddlRecordPersistence.findByPrimaryKey(
+			ddlRecordId);
+
+		ddlRecord.setModifiedDate(serviceContext.getModifiedDate(null));
+		ddlRecord.setDDMStorageId(ddmStorageId);
+
+		ddlRecord = ddlRecordPersistence.update(ddlRecord);
+
+		// Record version
+
+		DDLRecordVersion ddlRecordVersion = ddlRecord.getLatestRecordVersion();
+
+		String version = getNextVersion(
+			ddlRecordVersion.getVersion(), true,
+			serviceContext.getWorkflowAction());
+
+		int status = GetterUtil.getInteger(
+			serviceContext.getAttribute("status"),
+			WorkflowConstants.STATUS_APPROVED);
+
+		addRecordVersion(user, ddlRecord, ddmStorageId, version, 0, status);
+
+		return ddlRecord;
 	}
 
 	/**

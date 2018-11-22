@@ -634,12 +634,10 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		MockHttpServletRequest mockHttpServletRequest =
 			getMockHttpServletRequest(ACS_URL);
 
-		SAMLMessageContext<?, ?, ?> samlMessageContext =
-			_webSsoProfileImpl.getSamlMessageContext(
-				mockHttpServletRequest, new MockHttpServletResponse());
-
 		_webSsoProfileImpl.verifyAudienceRestrictions(
-			audienceRestrictions, samlMessageContext);
+			audienceRestrictions,
+			_webSsoProfileImpl.getMessageContext(
+				mockHttpServletRequest, new MockHttpServletResponse()));
 	}
 
 	@Test(expected = AssertionException.class)

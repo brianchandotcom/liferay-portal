@@ -753,7 +753,7 @@ public class SingleLogoutProfileImpl
 			processIdpLogoutResponse(request, response, messageContext);
 		}
 		else if (samlProviderConfigurationHelper.isRoleSp()) {
-			processSpLogoutResponse(request, response, messageContext);
+			processSpLogoutResponse(request, response);
 		}
 	}
 

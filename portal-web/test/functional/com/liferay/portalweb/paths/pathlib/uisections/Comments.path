@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>WORKFLOW_STATUS</td>
-	<td>//div[contains(@class,'lfr-discussion-body') and contains(.,'${key_commentBody}')]//span[contains(@class,'workflow-status')]/strong</td>
+	<td>//span[contains(@class,'workflow-status')]/strong</td>
 	<td></td>
 </tr>
 </tbody>

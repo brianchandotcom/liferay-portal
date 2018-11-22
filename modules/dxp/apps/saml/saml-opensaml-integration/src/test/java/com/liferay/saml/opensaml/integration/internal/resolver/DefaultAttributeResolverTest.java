@@ -42,13 +42,11 @@ import org.junit.Test;
 
 import org.mockito.Mockito;
 
-import org.opensaml.common.binding.BasicSAMLMessageContext;
-import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.saml2.core.Attribute;
-import org.opensaml.saml2.core.AuthnRequest;
-import org.opensaml.saml2.core.NameID;
-import org.opensaml.saml2.core.Response;
-import org.opensaml.xml.XMLObject;
+import org.opensaml.core.xml.XMLObject;
+import org.opensaml.messaging.context.MessageContext;
+import org.opensaml.saml.common.messaging.context.SAMLPeerEntityContext;
+import org.opensaml.saml.saml2.core.Attribute;
+import org.opensaml.saml.saml2.core.AuthnRequest;
 
 /**
  * @author Mika Koivisto
@@ -92,9 +90,12 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 
 		_defaultAttributeResolver.setRoleLocalService(_roleLocalService);
 
-		_samlMessageContext = new BasicSAMLMessageContext<>();
+		_messageContext = new MessageContext<>();
 
-		_samlMessageContext.setPeerEntityId(SP_ENTITY_ID);
+		SAMLPeerEntityContext samlPeerEntityContext =
+			_messageContext.getSubcontext(SAMLPeerEntityContext.class, true);
+
+		samlPeerEntityContext.setEntityId(SP_ENTITY_ID);
 
 		_userGroupGroupRoleLocalService = mock(
 			UserGroupGroupRoleLocalService.class);
@@ -127,7 +128,7 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			new AttributePublisherImpl();
 
 		_defaultAttributeResolver.resolve(
-			_user, new AttributeResolverSAMLContextImpl(_samlMessageContext),
+			_user, new AttributeResolverSAMLContextImpl(_messageContext),
 			attributePublisherImpl);
 
 		assertEquals(
@@ -174,7 +175,7 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			new AttributePublisherImpl();
 
 		_defaultAttributeResolver.resolve(
-			_user, new AttributeResolverSAMLContextImpl(_samlMessageContext),
+			_user, new AttributeResolverSAMLContextImpl(_messageContext),
 			attributePublisherImpl);
 
 		List<Attribute> attributes = attributePublisherImpl.getAttributes();
@@ -270,7 +271,7 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			new AttributePublisherImpl();
 
 		_defaultAttributeResolver.resolve(
-			_user, new AttributeResolverSAMLContextImpl(_samlMessageContext),
+			_user, new AttributeResolverSAMLContextImpl(_messageContext),
 			attributePublisherImpl);
 
 		List<Attribute> attributes = attributePublisherImpl.getAttributes();
@@ -320,7 +321,7 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			new AttributePublisherImpl();
 
 		_defaultAttributeResolver.resolve(
-			_user, new AttributeResolverSAMLContextImpl(_samlMessageContext),
+			_user, new AttributeResolverSAMLContextImpl(_messageContext),
 			attributePublisherImpl);
 
 		List<Attribute> attributes = attributePublisherImpl.getAttributes();
@@ -411,7 +412,7 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			new AttributePublisherImpl();
 
 		_defaultAttributeResolver.resolve(
-			_user, new AttributeResolverSAMLContextImpl(_samlMessageContext),
+			_user, new AttributeResolverSAMLContextImpl(_messageContext),
 			attributePublisherImpl);
 
 		List<Attribute> attributes = attributePublisherImpl.getAttributes();
@@ -560,7 +561,7 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			new AttributePublisherImpl();
 
 		_defaultAttributeResolver.resolve(
-			_user, new AttributeResolverSAMLContextImpl(_samlMessageContext),
+			_user, new AttributeResolverSAMLContextImpl(_messageContext),
 			attributePublisherImpl);
 
 		List<Attribute> attributes = attributePublisherImpl.getAttributes();
@@ -585,7 +586,7 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			new AttributePublisherImpl();
 
 		_defaultAttributeResolver.resolve(
-			_user, new AttributeResolverSAMLContextImpl(_samlMessageContext),
+			_user, new AttributeResolverSAMLContextImpl(_messageContext),
 			attributePublisherImpl);
 
 		List<Attribute> attributes = attributePublisherImpl.getAttributes();
@@ -643,7 +644,7 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			new AttributePublisherImpl();
 
 		_defaultAttributeResolver.resolve(
-			_user, new AttributeResolverSAMLContextImpl(_samlMessageContext),
+			_user, new AttributeResolverSAMLContextImpl(_messageContext),
 			attributePublisherImpl);
 
 		List<Attribute> attributes = attributePublisherImpl.getAttributes();
@@ -761,7 +762,7 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			new AttributePublisherImpl();
 
 		_defaultAttributeResolver.resolve(
-			_user, new AttributeResolverSAMLContextImpl(_samlMessageContext),
+			_user, new AttributeResolverSAMLContextImpl(_messageContext),
 			attributePublisherImpl);
 
 		List<Attribute> attributes = attributePublisherImpl.getAttributes();
@@ -811,7 +812,7 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 			new AttributePublisherImpl();
 
 		_defaultAttributeResolver.resolve(
-			_user, new AttributeResolverSAMLContextImpl(_samlMessageContext),
+			_user, new AttributeResolverSAMLContextImpl(_messageContext),
 			attributePublisherImpl);
 
 		List<Attribute> attributes = attributePublisherImpl.getAttributes();
@@ -855,10 +856,9 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 	private final DefaultAttributeResolver _defaultAttributeResolver =
 		new DefaultAttributeResolver();
 	private ExpandoBridge _expandoBridge;
+	private MessageContext<AuthnRequest> _messageContext;
 	private MetadataManager _metadataManager;
 	private RoleLocalService _roleLocalService;
-	private SAMLMessageContext<AuthnRequest, Response, NameID>
-		_samlMessageContext;
 	private User _user;
 	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

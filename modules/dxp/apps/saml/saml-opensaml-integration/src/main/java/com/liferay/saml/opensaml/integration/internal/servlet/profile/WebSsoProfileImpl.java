@@ -870,7 +870,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		SamlSsoRequestContext samlSsoRequestContext,
 		AssertionConsumerService assertionConsumerService, NameID nameID) {
 
-		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext =
+		MessageContext messageContext =
 			samlSsoRequestContext.getSAMLMessageContext();
 
 		Assertion assertion = OpenSamlUtil.buildAssertion();
@@ -891,8 +891,11 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		assertion.setID(generateIdentifier(20));
 		assertion.setIssueInstant(issueInstantDateTime);
 
+		SAMLSelfEntityContext samlSelfEntityContext =
+			messageContext.getSubcontext(SAMLSelfEntityContext.class);
+
 		Issuer issuer = OpenSamlUtil.buildIssuer(
-			samlMessageContext.getLocalEntityId());
+			samlSelfEntityContext.getEntityId());
 
 		assertion.setIssuer(issuer);
 
@@ -909,8 +912,11 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		authnStatements.add(
 			getSuccessAuthnStatement(samlSsoRequestContext, assertion));
 
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
 		boolean attributesEnabled = metadataManager.isAttributesEnabled(
-			samlMessageContext.getPeerEntityId());
+			samlPeerEntityContext.getEntityId());
 
 		if (!attributesEnabled) {
 			return assertion;
@@ -920,13 +926,13 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		AttributeResolver attributeResolver =
 			_attributeResolverRegistry.getAttributeResolver(
-				samlMessageContext.getPeerEntityId());
+				samlPeerEntityContext.getEntityId());
 
 		AttributePublisherImpl attributePublisherImpl =
 			new AttributePublisherImpl();
 
 		attributeResolver.resolve(
-			user, new AttributeResolverSAMLContextImpl(samlMessageContext),
+			user, new AttributeResolverSAMLContextImpl(messageContext),
 			attributePublisherImpl);
 
 		List<Attribute> attributes = attributePublisherImpl.getAttributes();

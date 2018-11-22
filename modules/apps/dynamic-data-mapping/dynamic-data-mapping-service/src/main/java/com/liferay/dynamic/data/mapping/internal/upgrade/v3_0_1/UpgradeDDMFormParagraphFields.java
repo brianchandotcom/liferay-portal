@@ -1,9 +1,18 @@
-package com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_1;
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.HashMap;
-import java.util.Map;
+package com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_1;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -13,12 +22,18 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
- 
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author Laszlo Hudak
+ */
 public class UpgradeDDMFormParagraphFields extends UpgradeProcess {
- 
+
 	public UpgradeDDMFormParagraphFields(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
 	}
@@ -61,15 +76,15 @@ public class UpgradeDDMFormParagraphFields extends UpgradeProcess {
 					try (ResultSet rs2 = ps3.executeQuery()) {
 						while (rs2.next()) {
 							definition = rs2.getString("definition");
-	
+
 							ps4.setString(
 								1, updateFieldsToLocalizable(definition));
-	
+
 							long structureVersionId = rs2.getLong(
 								"structureVersionId");
-	
+
 							ps4.setLong(2, structureVersionId);
-	
+
 							ps4.addBatch();
 						}
 					}
@@ -81,18 +96,19 @@ public class UpgradeDDMFormParagraphFields extends UpgradeProcess {
 			ps4.executeBatch();
 		}
 	}
- 
+
 	protected void updateFieldsToLocalizable(
 		JSONArray fieldsJSONArray, JSONArray availableLanguageIds) {
 
 		for (int i = 0; i < fieldsJSONArray.length(); i++) {
 			JSONObject fieldJSONObject = fieldsJSONArray.getJSONObject(i);
 
-			if(fieldJSONObject.getString("type").equals("paragraph")) {
+			String type = fieldJSONObject.getString("type");
+
+			if (type.equals("paragraph")) {
 				String originalValue = fieldJSONObject.getString("text");
 
-				Map<String, String> localizedValue =
-					new HashMap<String, String>();
+				Map<String, String> localizedValue = new HashMap<>();
 
 				for (int j = 0; j < availableLanguageIds.length(); j++) {
 					localizedValue.put(

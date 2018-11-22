@@ -38,6 +38,10 @@ public final class Criteria implements Serializable {
 	}
 
 	public void addFilter(String filterString, Conjunction conjunction) {
+		if (Validator.isNull(filterString)) {
+			return;
+		}
+
 		if (Validator.isNull(_filterString)) {
 			_filterString = filterString;
 

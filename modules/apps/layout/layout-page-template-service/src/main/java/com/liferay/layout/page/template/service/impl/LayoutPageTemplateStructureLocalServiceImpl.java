@@ -25,9 +25,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
@@ -68,6 +70,8 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 
 		layoutPageTemplateStructurePersistence.update(
 			layoutPageTemplateStructure);
+
+		_fragmentEntryLinkLocalService.updateClassModel(classNameId, classPK);
 
 		return layoutPageTemplateStructure;
 	}
@@ -164,10 +168,18 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 		layoutPageTemplateStructurePersistence.update(
 			layoutPageTemplateStructure);
 
+		_fragmentEntryLinkLocalService.updateClassModel(classNameId, classPK);
+
 		return layoutPageTemplateStructure;
 	}
 
 	@ServiceReference(type = FragmentEntryLinkLocalService.class)
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@ServiceReference(type = LayoutLocalService.class)
+	private LayoutLocalService _layoutLocalService;
+
+	@ServiceReference(type = Portal.class)
+	private Portal _portal;
 
 }

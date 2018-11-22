@@ -515,6 +515,8 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 			samlProviderConfigurationHelper);
 
 		metadataManagerImpl.setHttp(HttpUtil.getHttp());
+
+		metadataManagerImpl.activate();
 	}
 
 	protected void setupParserPool() {

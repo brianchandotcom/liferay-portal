@@ -157,23 +157,41 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			_webSsoProfileImpl.decodeAuthnRequest(
 				mockHttpServletRequest, new MockHttpServletResponse());
 
-		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext =
+		MessageContext messageContext =
 			samlSsoRequestContext.getSAMLMessageContext();
 
-		Assert.assertEquals(
-			IDP_ENTITY_ID, samlMessageContext.getLocalEntityId());
-		Assert.assertNotNull(samlMessageContext.getLocalEntityMetadata());
-		Assert.assertNotNull(samlMessageContext.getLocalEntityRoleMetadata());
+		SAMLSelfEntityContext samlSelfEntityContext =
+			messageContext.getSubcontext(SAMLSelfEntityContext.class, false);
+
+		Assert.assertEquals(IDP_ENTITY_ID, samlSelfEntityContext.getEntityId());
+
+		SAMLMetadataContext samlMetadataContext =
+			samlSelfEntityContext.getSubcontext(SAMLMetadataContext.class);
+
+		Assert.assertNotNull(samlMetadataContext.getEntityDescriptor());
+		Assert.assertNotNull(samlMetadataContext.getRoleDescriptor());
 		Assert.assertTrue(
-			samlMessageContext.getLocalEntityRoleMetadata() instanceof
+			samlMetadataContext.getRoleDescriptor() instanceof
 				IDPSSODescriptor);
-		Assert.assertEquals(SP_ENTITY_ID, samlMessageContext.getPeerEntityId());
-		Assert.assertNotNull(samlMessageContext.getPeerEntityMetadata());
-		Assert.assertNotNull(samlMessageContext.getPeerEntityRoleMetadata());
+
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+		Assert.assertEquals(SP_ENTITY_ID, samlPeerEntityContext.getEntityId());
+
+		SAMLMetadataContext samlPeerMetadataContext =
+			samlPeerEntityContext.getSubcontext(SAMLMetadataContext.class);
+
+		Assert.assertNotNull(samlPeerMetadataContext.getEntityDescriptor());
+		Assert.assertNotNull(samlPeerMetadataContext.getRoleDescriptor());
 		Assert.assertTrue(
-			samlMessageContext.getPeerEntityRoleMetadata() instanceof
+			samlPeerMetadataContext.getRoleDescriptor() instanceof
 				SPSSODescriptor);
-		Assert.assertEquals(RELAY_STATE, samlMessageContext.getRelayState());
+
+		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
+			SAMLBindingContext.class);
+
+		Assert.assertEquals(RELAY_STATE, samlBindingContext.getRelayState());
 
 		Assert.assertTrue(samlSsoRequestContext.isNewSession());
 	}

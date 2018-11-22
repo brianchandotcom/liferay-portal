@@ -1347,7 +1347,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			SamlSsoRequestContext samlSsoRequestContext)
 		throws Exception {
 
-		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext =
+		MessageContext<?> messageContext =
 			samlSsoRequestContext.getSAMLMessageContext();
 
 		SamlBinding samlBinding = getSamlBinding(
@@ -1355,7 +1355,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		AssertionConsumerService assertionConsumerService =
 			SamlUtil.resolverAssertionConsumerService(
-				samlMessageContext, samlBinding.getCommunicationProfileId());
+				messageContext, samlBinding.getCommunicationProfileId());
 
 		NameID nameID = getSuccessNameId(samlSsoRequestContext);
 
@@ -1364,8 +1364,14 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		Credential credential = metadataManager.getSigningCredential();
 
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+		SAMLMetadataContext samlPeerMetadataContext =
+			samlPeerEntityContext.getSubcontext(SAMLMetadataContext.class);
+
 		SPSSODescriptor spSSODescriptor =
-			(SPSSODescriptor)samlMessageContext.getPeerEntityRoleMetadata();
+			(SPSSODescriptor)samlPeerMetadataContext.getRoleDescriptor();
 
 		if (spSSODescriptor.getWantAssertionsSigned()) {
 			OpenSamlUtil.signObject(assertion, credential);
@@ -1374,12 +1380,43 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		Response samlResponse = getSuccessResponse(
 			samlSsoRequestContext, assertionConsumerService, assertion);
 
-		samlMessageContext.setOutboundSAMLMessage(samlResponse);
+		InOutOperationContext inOutOperationContext =
+			messageContext.getSubcontext(InOutOperationContext.class, false);
 
-		samlMessageContext.setOutboundSAMLMessageSigningCredential(credential);
-		samlMessageContext.setOutboundSAMLProtocol(SAMLConstants.SAML20P_NS);
+		if (inOutOperationContext == null) {
+			inOutOperationContext = (InOutOperationContext)
+				messageContext.addSubcontext(
+					new InOutOperationContext<>(
+						new MessageContext<>(), new MessageContext<>()));
+		}
 
-		samlMessageContext.setPeerEntityEndpoint(assertionConsumerService);
+		MessageContext<Response> outboundMessageContext =
+			inOutOperationContext.getOutboundMessageContext();
+
+		outboundMessageContext.setMessage(samlResponse);
+
+		SecurityParametersContext securityParametersContext =
+			outboundMessageContext.getSubcontext(
+				SecurityParametersContext.class, true);
+
+		OpenSamlUtil.prepareSecurityParametersContext(
+			credential, securityParametersContext);
+
+		SAMLProtocolContext samlProtocolContext =
+			outboundMessageContext.getSubcontext(
+				SAMLProtocolContext.class, true);
+
+		samlProtocolContext.setProtocol(SAMLConstants.SAML20P_NS);
+
+		SAMLPeerEntityContext samlOutboundPeerEntityContext =
+			outboundMessageContext.getSubcontext(
+				SAMLPeerEntityContext.class, true);
+
+		SAMLEndpointContext samlPeerEndpointContext =
+			samlOutboundPeerEntityContext.getSubcontext(
+				SAMLEndpointContext.class, true);
+
+		samlPeerEndpointContext.setEndpoint(assertionConsumerService);
 
 		if (samlSsoRequestContext.isNewSession()) {
 			addSamlSsoSession(request, response, samlSsoRequestContext, nameID);
@@ -1388,7 +1425,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			updateSamlSsoSession(request, samlSsoRequestContext, nameID);
 		}
 
-		sendSamlMessage(samlMessageContext);
+		sendSamlMessage(messageContext, response);
 	}
 
 	@Reference(unbind = "-")

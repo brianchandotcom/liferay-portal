@@ -96,7 +96,7 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 						}
 						%>
 
-						<aui:input label="<%= segmentsCriteriaContributor.getLabel(locale) %>" name='<%= "criterionFilter" + segmentsCriteriaContributor.getKey() %>' type="textarea" value="<%= (criterion != null) ? criterion.getFilterString() : StringPool.BLANK %>" />
+						<aui:input label="<%= segmentsCriteriaContributor.getLabel(locale) %>" name='<%= "criterionFilterString" + segmentsCriteriaContributor.getKey() %>' type="textarea" value="<%= (criterion != null) ? criterion.getFilterString() : StringPool.BLANK %>" />
 
 					<%
 					}

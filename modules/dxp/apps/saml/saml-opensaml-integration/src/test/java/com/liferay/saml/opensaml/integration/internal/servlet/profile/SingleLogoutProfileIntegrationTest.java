@@ -48,10 +48,11 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
 
-import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.common.xml.SAMLConstants;
-import org.opensaml.saml2.core.LogoutRequest;
-import org.opensaml.saml2.core.NameID;
+import org.opensaml.messaging.context.InOutOperationContext;
+import org.opensaml.messaging.context.MessageContext;
+import org.opensaml.saml.common.xml.SAMLConstants;
+import org.opensaml.saml.saml2.core.LogoutRequest;
+import org.opensaml.saml.saml2.core.NameID;
 
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -88,7 +89,8 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 
 		_singleLogoutProfileImpl = new SingleLogoutProfileImpl();
 
-		_singleLogoutProfileImpl.setIdentifierGenerator(identifierGenerator);
+		_singleLogoutProfileImpl.setIdentifierGenerationStrategyFactory(
+			identifierGenerationStrategyFactory);
 		_singleLogoutProfileImpl.setMetadataManager(metadataManagerImpl);
 		_singleLogoutProfileImpl.setPortal(portal);
 		_singleLogoutProfileImpl.setSamlBindings(samlBindings);
@@ -232,13 +234,17 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 		SamlBinding samlBinding = _singleLogoutProfileImpl.getSamlBinding(
 			SAMLConstants.SAML2_REDIRECT_BINDING_URI);
 
-		SAMLMessageContext<?, ?, ?> samlMessageContext =
+		MessageContext<LogoutRequest> messageContext =
 			_singleLogoutProfileImpl.decodeSamlMessage(
-				mockHttpServletRequest, mockHttpServletResponse, samlBinding,
-				true);
+				mockHttpServletRequest, mockHttpServletResponse, samlBinding);
 
-		LogoutRequest logoutRequest =
-			(LogoutRequest)samlMessageContext.getInboundSAMLMessage();
+		InOutOperationContext inOutOperationContext =
+			messageContext.getSubcontext(InOutOperationContext.class);
+
+		MessageContext<LogoutRequest> inboundMessageContext =
+			inOutOperationContext.getInboundMessageContext();
+
+		LogoutRequest logoutRequest = inboundMessageContext.getMessage();
 
 		NameID nameID = logoutRequest.getNameID();
 
@@ -293,13 +299,18 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 		SamlBinding samlBinding = _singleLogoutProfileImpl.getSamlBinding(
 			SAMLConstants.SAML2_REDIRECT_BINDING_URI);
 
-		SAMLMessageContext<?, ?, ?> samlMessageContext =
+		MessageContext messageContext =
 			_singleLogoutProfileImpl.decodeSamlMessage(
-				mockHttpServletRequest, mockHttpServletResponse, samlBinding,
-				true);
+				mockHttpServletRequest, mockHttpServletResponse, samlBinding);
+
+		InOutOperationContext inOutOperationContext =
+			messageContext.getSubcontext(InOutOperationContext.class);
+
+		MessageContext inboundMessageContext =
+			inOutOperationContext.getInboundMessageContext();
 
 		LogoutRequest logoutRequest =
-			(LogoutRequest)samlMessageContext.getInboundSAMLMessage();
+			(LogoutRequest)inboundMessageContext.getMessage();
 
 		NameID nameID = logoutRequest.getNameID();
 

@@ -1159,17 +1159,23 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		SubjectConfirmationData subjectConfirmationData =
 			OpenSamlUtil.buildSubjectConfirmationData();
 
-		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext =
+		MessageContext messageContext =
 			samlSsoRequestContext.getSAMLMessageContext();
 
+		SAMLMessageInfoContext samlMessageInfoContext =
+			messageContext.getSubcontext(SAMLMessageInfoContext.class);
+
 		subjectConfirmationData.setInResponseTo(
-			samlMessageContext.getInboundSAMLMessageId());
+			samlMessageInfoContext.getMessageId());
 
 		subjectConfirmationData.setRecipient(
 			assertionConsumerService.getLocation());
 
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
 		int assertionLifetime = metadataManager.getAssertionLifetime(
-			samlMessageContext.getPeerEntityId());
+			samlPeerEntityContext.getEntityId());
 
 		DateTime notOnOrAfterDateTime = issueInstantDateTime.plusSeconds(
 			assertionLifetime);

@@ -1904,7 +1904,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static List<PathMatcher> toPathMatchers(
-		String prefix, String... globPatterns) {
+		String prefix, String... globs) {
 
 		if (prefix == null) {
 			prefix = "";
@@ -1912,12 +1912,11 @@ public class JenkinsResultsParserUtil {
 
 		FileSystem fileSystem = FileSystems.getDefault();
 
-		List<PathMatcher> pathMatchers = new ArrayList<>(globPatterns.length);
+		List<PathMatcher> pathMatchers = new ArrayList<>(globs.length);
 
-		for (String globPattern : globPatterns) {
+		for (String glob : globs) {
 			pathMatchers.add(
-				fileSystem.getPathMatcher(
-					combine("glob:", prefix, globPattern)));
+				fileSystem.getPathMatcher(combine("glob:", prefix, glob)));
 		}
 
 		return pathMatchers;

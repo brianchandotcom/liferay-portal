@@ -1011,24 +1011,34 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		MockHttpServletRequest mockHttpServletRequest =
 			getMockHttpServletRequest(ACS_URL);
 
-		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext =
-			(SAMLMessageContext<AuthnRequest, Response, NameID>)
-				_webSsoProfileImpl.getSamlMessageContext(
-					mockHttpServletRequest, new MockHttpServletResponse());
+		MessageContext<?> messageContext =
+			_webSsoProfileImpl.getMessageContext(
+				mockHttpServletRequest, new MockHttpServletResponse());
 
-		samlMessageContext.setCommunicationProfileId(
-			SAMLConstants.SAML2_POST_BINDING_URI);
-		samlMessageContext.setPeerEntityId(IDP_ENTITY_ID);
+		SAMLBindingContext samlBindingContext =
+			messageContext.getSubcontext(SAMLBindingContext.class);
+
+		samlBindingContext.setBindingUri(SAMLConstants.SAML2_POST_BINDING_URI);
+
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
+		samlPeerEntityContext.setEntityId(IDP_ENTITY_ID);
 
 		NameID nameID = OpenSamlUtil.buildNameId(
 			NameIDType.UNSPECIFIED, "test");
 
 		Subject subject = getSubject(
-			samlMessageContext, nameID, new DateTime(DateTimeZone.UTC));
+			messageContext, nameID, new DateTime(DateTimeZone.UTC));
 
-		_webSsoProfileImpl.verifySubject(samlMessageContext, subject);
+		_webSsoProfileImpl.verifySubject(messageContext, subject);
 
-		NameID resolvedNameId = samlMessageContext.getSubjectNameIdentifier();
+		SAMLSubjectNameIdentifierContext samlSubjectNameIdentifierContext =
+			messageContext.getSubcontext(
+				SAMLSubjectNameIdentifierContext.class);
+
+		NameID resolvedNameId =
+			samlSubjectNameIdentifierContext.getSAML2SubjectNameID();
 
 		Assert.assertNotNull(resolvedNameId);
 		Assert.assertEquals(nameID.getFormat(), resolvedNameId.getFormat());

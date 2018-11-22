@@ -332,10 +332,10 @@ public class DDMStructureLocalServiceUtil {
 	*
 	* @param structure the structure to be deleted
 	*/
-	public static void deleteStructure(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructure deleteStructure(
 		com.liferay.dynamic.data.mapping.model.DDMStructure structure)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteStructure(structure);
+		return getService().deleteStructure(structure);
 	}
 
 	/**

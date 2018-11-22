@@ -82,6 +82,7 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructure addDDMStructure(DDMStructure ddmStructure);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructure addStructure(long userId, long groupId,
 		long parentStructureId, long classNameId, String structureKey,
 		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
@@ -285,8 +286,9 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	*
 	* @param structure the structure to be deleted
 	*/
+	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public void deleteStructure(DDMStructure structure)
+	public DDMStructure deleteStructure(DDMStructure structure)
 		throws PortalException;
 
 	/**
@@ -1027,16 +1029,19 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructure updateDDMStructure(DDMStructure ddmStructure);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructure updateStructure(long userId, long structureId,
 		DDMForm ddmForm, DDMFormLayout ddmFormLayout,
 		ServiceContext serviceContext) throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructure updateStructure(long userId, long groupId,
 		long parentStructureId, long classNameId, String structureKey,
 		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 		DDMForm ddmForm, DDMFormLayout ddmFormLayout,
 		ServiceContext serviceContext) throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructure updateStructure(long userId, long structureId,
 		long parentStructureId, Map<Locale, String> nameMap,
 		Map<Locale, String> descriptionMap, DDMForm ddmForm,

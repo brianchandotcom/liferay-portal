@@ -284,10 +284,10 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
-	public void deleteTemplate(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplate deleteTemplate(
 		com.liferay.dynamic.data.mapping.model.DDMTemplate template)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_ddmTemplateLocalService.deleteTemplate(template);
+		return _ddmTemplateLocalService.deleteTemplate(template);
 	}
 
 	/**
@@ -818,7 +818,7 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -938,7 +938,7 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -989,7 +989,7 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -1047,7 +1047,7 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -1098,7 +1098,7 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
 	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*

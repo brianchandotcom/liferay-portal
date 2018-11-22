@@ -335,10 +335,10 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	* @param structure the structure to be deleted
 	*/
 	@Override
-	public void deleteStructure(
+	public com.liferay.dynamic.data.mapping.model.DDMStructure deleteStructure(
 		com.liferay.dynamic.data.mapping.model.DDMStructure structure)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_ddmStructureLocalService.deleteStructure(structure);
+		return _ddmStructureLocalService.deleteStructure(structure);
 	}
 
 	/**

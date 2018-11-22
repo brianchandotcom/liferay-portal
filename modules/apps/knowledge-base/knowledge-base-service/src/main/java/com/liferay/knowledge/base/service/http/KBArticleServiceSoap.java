@@ -141,6 +141,22 @@ public class KBArticleServiceSoap {
 		}
 	}
 
+	public static com.liferay.knowledge.base.model.KBArticleSoap fetchFirstChildKBArticle(
+		long groupId, long parentResourcePrimKey, int status)
+		throws RemoteException {
+		try {
+			com.liferay.knowledge.base.model.KBArticle returnValue = KBArticleServiceUtil.fetchFirstChildKBArticle(groupId,
+					parentResourcePrimKey, status);
+
+			return com.liferay.knowledge.base.model.KBArticleSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.knowledge.base.model.KBArticleSoap fetchKBArticleByUrlTitle(
 		long groupId, long kbFolderId, String urlTitle)
 		throws RemoteException {

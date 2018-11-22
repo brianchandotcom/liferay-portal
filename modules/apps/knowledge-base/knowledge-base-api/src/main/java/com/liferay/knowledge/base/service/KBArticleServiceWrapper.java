@@ -95,6 +95,13 @@ public class KBArticleServiceWrapper implements KBArticleService,
 	}
 
 	@Override
+	public com.liferay.knowledge.base.model.KBArticle fetchFirstChildKBArticle(
+		long groupId, long parentResourcePrimKey, int status) {
+		return _kbArticleService.fetchFirstChildKBArticle(groupId,
+			parentResourcePrimKey, status);
+	}
+
+	@Override
 	public com.liferay.knowledge.base.model.KBArticle fetchKBArticleByUrlTitle(
 		long groupId, long kbFolderId, String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -35,3 +35,4 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
 page import="java.util.Map" %>
 
 <liferay-theme:defineObjects />
+<portlet:defineObjects />

@@ -44,50 +44,6 @@ context.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg
 context.put("totalPages", previewFileCount);
 %>
 
-<div class="lfr-preview-file" id="<portlet:namespace /><%= randomNamespace %>previewFile">
-	<div class="lfr-preview-file-content" id="<portlet:namespace /><%= randomNamespace %>previewFileContent">
-		<div class="lfr-preview-file-image-current-column">
-			<div class="lfr-preview-file-image-container">
-				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-preview-file-image-current" id="<portlet:namespace /><%= randomNamespace %>previewFileImage" src="<%= previewFileURL + "1" %>" />
-			</div>
-
-			<span class="hide lfr-preview-file-actions" id="<portlet:namespace /><%= randomNamespace %>previewFileActions">
-				<span class="lfr-preview-file-toolbar" id="<portlet:namespace /><%= randomNamespace %>previewToolbar"></span>
-
-				<span class="lfr-preview-file-info">
-					<span class="lfr-preview-file-index" id="<portlet:namespace /><%= randomNamespace %>previewFileIndex">1</span> <liferay-ui:message key="of" /> <span class="lfr-preview-file-count"><%= previewFileCount %></span>
-				</span>
-			</span>
-		</div>
-
-		<div class="lfr-preview-file-images" id="<portlet:namespace /><%= randomNamespace %>previewImagesContent">
-			<div class="lfr-preview-file-images-content"></div>
-		</div>
-	</div>
-</div>
-
-<aui:script use="liferay-preview">
-	new Liferay.Preview(
-		{
-			actionContent: '#<portlet:namespace /><%= randomNamespace %>previewFileActions',
-			baseImageURL: '<%= previewFileURL %>',
-			boundingBox: '#<portlet:namespace /><%= randomNamespace %>previewFile',
-			contentBox: '#<portlet:namespace /><%= randomNamespace %>previewFileContent',
-			currentPreviewImage: '#<portlet:namespace /><%= randomNamespace %>previewFileImage',
-			imageListContent: '#<portlet:namespace /><%= randomNamespace %>previewImagesContent',
-			maxIndex: <%= previewFileCount %>,
-			previewFileIndexNode: '#<portlet:namespace /><%= randomNamespace %>previewFileIndex',
-			toolbar: '#<portlet:namespace /><%= randomNamespace %>previewToolbar'
-		}
-	).render();
-
-	var currentImage = A.one('.lfr-preview-file-image-current');
-
-	if (currentImage && (currentImage.get('complete') || currentImage.get('naturalWidth'))) {
-		currentImage.setStyle('background-image', 'none');
-	}
-</aui:script>
-
 <liferay-util:html-top
 	outputKey="document_library_preview_pdf_css"
 >
@@ -95,6 +51,7 @@ context.put("totalPages", previewFileCount);
 </liferay-util:html-top>
 
 <soy:component-renderer
+	componentId='<%= renderResponse.getNamespace() + randomNamespace + "previewFile" %>'
 	context="<%= context %>"
 	module="document-library-preview-pdf/preview/js/PdfPreviewer.es"
 	templateNamespace="com.liferay.document.library.preview.PdfPreviewer.render"

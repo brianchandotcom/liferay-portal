@@ -8,6 +8,7 @@
 	{@param? dataType: string}
 	{@param? enableValidation: bool}
 	{@param? errorMessage: string}
+	{@param? label: string}
 	{@param? parameterMessage: string}
 	{@param? strings: [chooseAnOption: string, email: string, errorMessage: string, ifInput: string, showErrorMessage: string, theValue: string, url: string, validationMessage: string]}
 	{@param? handleEnableValidation: any}
@@ -34,6 +35,7 @@
 		{param strings: $strings /}
 		{param enableValidation: $enableValidation /}
 		{param errorMessage: $errorMessage /}
+		{param label: $label /}
 		{param parameterMessage: $parameterMessage /}
 		{param handleEnableValidation: $handleEnableValidation /}
 		{param handleValidationValue: $handleValidationValue /}
@@ -52,6 +54,7 @@
 	{@param? dataType: string}
 	{@param? enableValidation: bool}
 	{@param? errorMessage: string}
+	{@param? label: string}
 	{@param? parameterMessage: string}
 	{@param? strings: [chooseAnOption: string, email: string, errorMessage: string, ifInput: string, showErrorMessage: string, theValue: string, url: string, validationMessage: string]}
 	{@param? handleEnableValidation: any}
@@ -75,7 +78,7 @@
 
 		{call Checkbox.render}
 			{param _handleToggleChanged: $handleEnableValidation /}
-			{param label: 'Validator' /}
+			{param label: $label /}
 			{param value: $enableValidation /}
 			{param showAsSwitcher: true /}
 			{param spritemap: $spritemap /}
@@ -89,6 +92,7 @@
 				] /}
 				{param label: $strings.ifInput /}
 				{param options: $validations /}
+				{param placeholder: $strings?.chooseAnOption /}
 				{param strings: ['chooseAnOption': $strings?.chooseAnOption] /}
 				{param spritemap: $spritemap /}
 				{param value: $selectedValidation?.value /}

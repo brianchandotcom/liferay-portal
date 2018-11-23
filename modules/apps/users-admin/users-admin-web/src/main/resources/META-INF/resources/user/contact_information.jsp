@@ -22,7 +22,7 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 Contact selContact = null;
 
 if (selUser != null) {
-	selContact = selUser.getContact();
+selContact = selUser.getContact();
 }
 
 request.setAttribute("user.selContact", selContact);

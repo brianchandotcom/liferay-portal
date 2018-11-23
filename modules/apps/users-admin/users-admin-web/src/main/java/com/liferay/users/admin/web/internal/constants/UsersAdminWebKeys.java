@@ -35,10 +35,6 @@ public class UsersAdminWebKeys {
 
 	public static final String SELECTED_USER = "SELECTED_USER";
 
-	public static final String SHOW_CONTROLS = "SHOW_CONTROLS";
-
-	public static final String SHOW_TITLE = "SHOW_TITLE";
-
 	public static final String STATUS = "STATUS";
 
 	public static final String USER_ACTION_CONTRIBUTORS =

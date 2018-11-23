@@ -14,25 +14,23 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
-
 <%
 User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 
-long selContactId = (selUser != null) ? selUser.getContactId() : 0;
+Contact selContact = null;
 
-String contactInformationRequireJS = (String)request.getAttribute(UsersAdminWebKeys.CONTACT_INFORMATION_REQUIRE_JS);
+if (selUser != null) {
+	selContact = selUser.getContact();
+}
 
-request.setAttribute("contact_information.jsp-className", Contact.class.getName());
-request.setAttribute("contact_information.jsp-classPK", selContactId);
-request.setAttribute("contact_information.jsp-contactInformationRequireJS", contactInformationRequireJS);
-request.setAttribute("contact_information.jsp-mvcActionPath", "/users_admin/update_user_contact_information");
+request.setAttribute("addresses.className", Contact.class.getName());
+
+if (selContact != null) {
+	request.setAttribute("addresses.classPK", selContact.getContactId());
+}
+else {
+	request.setAttribute("addresses.classPK", 0L);
+}
 %>
 
-<aui:input name="classPK" type="hidden" value="<%= String.valueOf(selContactId) %>" />
-
-<div class="sheet-section">
-	<liferay-util:include page="/common/addresses.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="emptyResultsMessage" value="this-user-does-not-have-any-addresses" />
-	</liferay-util:include>
-</div>
+<%@ include file="/common/addresses.jsp" %>

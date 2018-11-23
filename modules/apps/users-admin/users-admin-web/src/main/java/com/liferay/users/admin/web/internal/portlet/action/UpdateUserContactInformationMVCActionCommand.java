@@ -15,14 +15,9 @@
 package com.liferay.users.admin.web.internal.portlet.action;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.AddressCityException;
-import com.liferay.portal.kernel.exception.AddressStreetException;
-import com.liferay.portal.kernel.exception.AddressZipException;
 import com.liferay.portal.kernel.exception.DuplicateOpenIdException;
 import com.liferay.portal.kernel.exception.EmailAddressException;
-import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.NoSuchListTypeException;
-import com.liferay.portal.kernel.exception.NoSuchRegionException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PhoneNumberException;
 import com.liferay.portal.kernel.exception.PhoneNumberExtensionException;
@@ -111,14 +106,9 @@ public class UpdateUserContactInformationMVCActionCommand
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof AddressCityException ||
-					 e instanceof AddressStreetException ||
-					 e instanceof AddressZipException ||
-					 e instanceof DuplicateOpenIdException ||
+			else if (e instanceof DuplicateOpenIdException ||
 					 e instanceof EmailAddressException ||
-					 e instanceof NoSuchCountryException ||
 					 e instanceof NoSuchListTypeException ||
-					 e instanceof NoSuchRegionException ||
 					 e instanceof PhoneNumberException ||
 					 e instanceof PhoneNumberExtensionException ||
 					 e instanceof UserEmailAddressException ||

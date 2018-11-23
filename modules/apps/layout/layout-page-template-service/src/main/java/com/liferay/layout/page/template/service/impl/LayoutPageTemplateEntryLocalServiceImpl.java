@@ -77,10 +77,10 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		long groupId = company.getGroupId();
+		long groupId = serviceContext.getScopeGroupId();
 
-		if (serviceContext != null) {
-			groupId = serviceContext.getScopeGroupId();
+		if (groupId == 0) {
+			groupId = company.getGroupId();
 		}
 
 		return addLayoutPageTemplateEntry(

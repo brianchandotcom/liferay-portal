@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -68,17 +67,17 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 
 		boolean add = ParamUtil.getBoolean(actionRequest, "add");
 
-		List<String> commonTagNamesList = Arrays.asList(
+		Set<String> commonTagNamesSet = SetUtil.fromArray(
 			ParamUtil.getStringValues(actionRequest, "commonTagNames"));
 
-		List<String> newTagNamesList = Arrays.asList(
+		Set<String> newTagNamesSet = SetUtil.fromArray(
 			serviceContext.getAssetTagNames());
 
 		Set<String> toAddTagNamesSet = SetUtil.difference(
-			newTagNamesList, commonTagNamesList);
+			newTagNamesSet, commonTagNamesSet);
 
 		Set<String> toRemoveTagNamesSet = SetUtil.difference(
-			commonTagNamesList, newTagNamesList);
+			commonTagNamesSet, newTagNamesSet);
 
 		fileEntryStream.map(
 			fileEntry -> _assetEntryLocalService.fetchEntry(

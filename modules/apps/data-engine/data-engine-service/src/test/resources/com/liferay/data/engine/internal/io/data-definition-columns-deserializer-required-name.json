@@ -1,0 +1,23 @@
+[
+	{
+		"indexable": false,
+		"label": {
+			"en_US": "Name",
+			"pt_BR": "Nome"
+		},
+		"localizable": true,
+		"repeatable": false,
+		"type": "string"
+	},
+	{
+		"indexable": true,
+		"label": {
+			"en_US": "Email Address",
+			"pt_BR": "Endereço de Email"
+		},
+		"localizable": false,
+		"name": "email",
+		"repeatable": true,
+		"type": "string"
+	}
+]

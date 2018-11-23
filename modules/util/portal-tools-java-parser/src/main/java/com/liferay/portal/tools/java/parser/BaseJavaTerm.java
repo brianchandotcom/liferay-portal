@@ -243,7 +243,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			JavaTerm javaTerm = list.get(i);
 
 			if (i == 1) {
-				newLinePrefix = _getPrefixWhitespace(prefix);
+				newLinePrefix = _convertToWhitespace(prefix);
 
 				prefix = StringPool.BLANK;
 			}
@@ -481,10 +481,10 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		return s;
 	}
 
-	private String _getPrefixWhitespace(String prefix) {
-		StringBundler sb = new StringBundler(prefix.length());
+	private String _convertToWhitespace(String s) {
+		StringBundler sb = new StringBundler(s.length());
 
-		int i = getLineLength(StringUtil.trimLeading(prefix));
+		int i = getLineLength(StringUtil.trimLeading(s));
 
 		while (i >= 4) {
 			sb.append(StringPool.TAB);

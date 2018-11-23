@@ -120,7 +120,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			for (int i = 0; i < (afterLineBreakCount - beforeLineBreakCount);
 				 i++) {
 
-				indent += "\t";
+				indent = "\t" + indent;
 			}
 
 			return indent;
@@ -180,7 +180,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			sb.toString(), CharPool.NEW_LINE);
 
 		for (int i = 0; i < (afterLineBreakCount - beforeLineBreakCount); i++) {
-			indent += "\t";
+			indent = "\t" + indent;
 		}
 
 		return indent;

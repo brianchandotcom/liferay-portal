@@ -70,7 +70,7 @@ public class JavaArrayDeclarator extends JavaExpression {
 
 					sb.setIndex(index);
 
-					indent += "\t";
+					indent = "\t" + indent;
 
 					break outerLoop;
 				}

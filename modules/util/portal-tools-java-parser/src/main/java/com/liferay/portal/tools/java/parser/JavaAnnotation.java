@@ -48,7 +48,7 @@ public class JavaAnnotation extends JavaExpression {
 
 		sb.append(indent);
 
-		indent += "\t";
+		indent = "\t" + indent;
 
 		sb.append(prefix);
 		sb.append(StringPool.AT);

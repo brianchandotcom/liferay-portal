@@ -34,7 +34,7 @@ public class JavaNewClassInstantiation extends JavaExpression {
 
 		sb.append(indent);
 
-		indent += "\t";
+		indent = "\t" + indent;
 
 		if (forceLineBreak) {
 			appendWithLineBreak(

@@ -66,7 +66,7 @@ public class JavaSignature extends BaseJavaTerm {
 
 		sb.append(indent);
 
-		indent += "\t";
+		indent = "\t" + indent;
 
 		if (!_modifiers.isEmpty()) {
 			appendSingleLine(sb, _modifiers, " ", "", " ", maxLineLength);

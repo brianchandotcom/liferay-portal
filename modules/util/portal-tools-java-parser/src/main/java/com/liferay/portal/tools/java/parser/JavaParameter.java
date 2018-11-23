@@ -48,7 +48,7 @@ public class JavaParameter extends BaseJavaTerm {
 
 		sb.append(indent);
 
-		indent += "\t";
+		indent = "\t" + indent;
 
 		sb.append(prefix);
 

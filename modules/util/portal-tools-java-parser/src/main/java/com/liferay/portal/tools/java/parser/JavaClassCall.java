@@ -46,7 +46,7 @@ public class JavaClassCall extends JavaExpression {
 
 		sb.append(indent);
 
-		indent += "\t";
+		indent = "\t" + indent;
 
 		if (_genericJavaTypes == null) {
 			if (_parameterValueJavaExpressions.isEmpty()) {

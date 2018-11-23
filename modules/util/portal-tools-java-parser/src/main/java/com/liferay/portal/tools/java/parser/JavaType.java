@@ -74,7 +74,7 @@ public class JavaType extends BaseJavaTerm {
 
 		sb.append(indent);
 
-		indent += "\t";
+		indent = "\t" + indent;
 
 		if ((_genericJavaTypes == null) && (_lowerBoundJavaTypes == null) &&
 			(_upperBoundJavaTypes == null)) {
@@ -94,7 +94,7 @@ public class JavaType extends BaseJavaTerm {
 			sb.append("\n");
 			sb.append(indent);
 
-			indent += "\t";
+			indent = "\t" + indent;
 		}
 
 		if (_genericJavaTypes != null) {

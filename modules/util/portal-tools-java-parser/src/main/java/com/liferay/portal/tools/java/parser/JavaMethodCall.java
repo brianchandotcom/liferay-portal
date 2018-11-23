@@ -50,7 +50,7 @@ public class JavaMethodCall extends JavaExpression {
 
 		sb.append(indent);
 
-		indent += "\t";
+		indent = "\t" + indent;
 
 		sb.append(prefix);
 

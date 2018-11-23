@@ -29,6 +29,7 @@ create table FragmentEntry (
 	html STRING null,
 	js STRING null,
 	previewFileEntryId LONG,
+	type_ INTEGER,
 	lastPublishDate DATE null,
 	status INTEGER,
 	statusByUserId LONG,

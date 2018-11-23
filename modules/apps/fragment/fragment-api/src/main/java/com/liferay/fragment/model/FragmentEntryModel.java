@@ -314,6 +314,20 @@ public interface FragmentEntryModel extends BaseModel<FragmentEntry>,
 	public void setPreviewFileEntryId(long previewFileEntryId);
 
 	/**
+	 * Returns the type of this fragment entry.
+	 *
+	 * @return the type of this fragment entry
+	 */
+	public int getType();
+
+	/**
+	 * Sets the type of this fragment entry.
+	 *
+	 * @param type the type of this fragment entry
+	 */
+	public void setType(int type);
+
+	/**
 	 * Returns the last publish date of this fragment entry.
 	 *
 	 * @return the last publish date of this fragment entry

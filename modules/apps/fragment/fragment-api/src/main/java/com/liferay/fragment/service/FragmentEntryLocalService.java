@@ -77,8 +77,17 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 	public FragmentEntry addFragmentEntry(FragmentEntry fragmentEntry);
 
 	public FragmentEntry addFragmentEntry(long userId, long groupId,
+		long fragmentCollectionId, String name, int type, int status,
+		ServiceContext serviceContext) throws PortalException;
+
+	public FragmentEntry addFragmentEntry(long userId, long groupId,
 		long fragmentCollectionId, String name, int status,
 		ServiceContext serviceContext) throws PortalException;
+
+	public FragmentEntry addFragmentEntry(long userId, long groupId,
+		long fragmentCollectionId, String name, long previewFileEntryId,
+		int type, int status, ServiceContext serviceContext)
+		throws PortalException;
 
 	public FragmentEntry addFragmentEntry(long userId, long groupId,
 		long fragmentCollectionId, String name, long previewFileEntryId,
@@ -86,11 +95,26 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 
 	public FragmentEntry addFragmentEntry(long userId, long groupId,
 		long fragmentCollectionId, String fragmentEntryKey, String name,
+		int type, int status, ServiceContext serviceContext)
+		throws PortalException;
+
+	public FragmentEntry addFragmentEntry(long userId, long groupId,
+		long fragmentCollectionId, String fragmentEntryKey, String name,
 		int status, ServiceContext serviceContext) throws PortalException;
 
 	public FragmentEntry addFragmentEntry(long userId, long groupId,
 		long fragmentCollectionId, String fragmentEntryKey, String name,
+		long previewFileEntryId, int type, int status,
+		ServiceContext serviceContext) throws PortalException;
+
+	public FragmentEntry addFragmentEntry(long userId, long groupId,
+		long fragmentCollectionId, String fragmentEntryKey, String name,
 		long previewFileEntryId, int status, ServiceContext serviceContext)
+		throws PortalException;
+
+	public FragmentEntry addFragmentEntry(long userId, long groupId,
+		long fragmentCollectionId, String name, String css, String html,
+		String js, int type, int status, ServiceContext serviceContext)
 		throws PortalException;
 
 	public FragmentEntry addFragmentEntry(long userId, long groupId,
@@ -100,13 +124,28 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 
 	public FragmentEntry addFragmentEntry(long userId, long groupId,
 		long fragmentCollectionId, String name, String css, String html,
+		String js, long previewFileEntryId, int type, int status,
+		ServiceContext serviceContext) throws PortalException;
+
+	public FragmentEntry addFragmentEntry(long userId, long groupId,
+		long fragmentCollectionId, String name, String css, String html,
 		String js, long previewFileEntryId, int status,
+		ServiceContext serviceContext) throws PortalException;
+
+	public FragmentEntry addFragmentEntry(long userId, long groupId,
+		long fragmentCollectionId, String fragmentEntryKey, String name,
+		String css, String html, String js, int type, int status,
 		ServiceContext serviceContext) throws PortalException;
 
 	public FragmentEntry addFragmentEntry(long userId, long groupId,
 		long fragmentCollectionId, String fragmentEntryKey, String name,
 		String css, String html, String js, int status,
 		ServiceContext serviceContext) throws PortalException;
+
+	public FragmentEntry addFragmentEntry(long userId, long groupId,
+		long fragmentCollectionId, String fragmentEntryKey, String name,
+		String css, String html, String js, long previewFileEntryId, int type,
+		int status, ServiceContext serviceContext) throws PortalException;
 
 	public FragmentEntry addFragmentEntry(long userId, long groupId,
 		long fragmentCollectionId, String fragmentEntryKey, String name,

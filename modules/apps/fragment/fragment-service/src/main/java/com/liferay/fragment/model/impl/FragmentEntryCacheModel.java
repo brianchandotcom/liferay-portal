@@ -65,7 +65,7 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -97,6 +97,8 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		sb.append(js);
 		sb.append(", previewFileEntryId=");
 		sb.append(previewFileEntryId);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append(", status=");
@@ -187,6 +189,7 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		}
 
 		fragmentEntryImpl.setPreviewFileEntryId(previewFileEntryId);
+		fragmentEntryImpl.setType(type);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			fragmentEntryImpl.setLastPublishDate(null);
@@ -240,6 +243,8 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		js = objectInput.readUTF();
 
 		previewFileEntryId = objectInput.readLong();
+
+		type = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
 
 		status = objectInput.readInt();
@@ -315,6 +320,8 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		}
 
 		objectOutput.writeLong(previewFileEntryId);
+
+		objectOutput.writeInt(type);
 		objectOutput.writeLong(lastPublishDate);
 
 		objectOutput.writeInt(status);
@@ -346,6 +353,7 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 	public String html;
 	public String js;
 	public long previewFileEntryId;
+	public int type;
 	public long lastPublishDate;
 	public int status;
 	public long statusByUserId;

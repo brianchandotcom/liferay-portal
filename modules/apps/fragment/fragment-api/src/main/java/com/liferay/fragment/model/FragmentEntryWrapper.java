@@ -75,6 +75,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 		attributes.put("html", getHtml());
 		attributes.put("js", getJs());
 		attributes.put("previewFileEntryId", getPreviewFileEntryId());
+		attributes.put("type", getType());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -174,6 +175,12 @@ public class FragmentEntryWrapper implements FragmentEntry,
 
 		if (previewFileEntryId != null) {
 			setPreviewFileEntryId(previewFileEntryId);
+		}
+
+		Integer type = (Integer)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -426,6 +433,16 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	@Override
 	public Date getStatusDate() {
 		return _fragmentEntry.getStatusDate();
+	}
+
+	/**
+	* Returns the type of this fragment entry.
+	*
+	* @return the type of this fragment entry
+	*/
+	@Override
+	public int getType() {
+		return _fragmentEntry.getType();
 	}
 
 	@Override
@@ -804,6 +821,16 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	@Override
 	public void setStatusDate(Date statusDate) {
 		_fragmentEntry.setStatusDate(statusDate);
+	}
+
+	/**
+	* Sets the type of this fragment entry.
+	*
+	* @param type the type of this fragment entry
+	*/
+	@Override
+	public void setType(int type) {
+		_fragmentEntry.setType(type);
 	}
 
 	/**

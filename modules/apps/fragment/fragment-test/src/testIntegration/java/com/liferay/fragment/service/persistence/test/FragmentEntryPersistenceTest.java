@@ -152,6 +152,8 @@ public class FragmentEntryPersistenceTest {
 
 		newFragmentEntry.setPreviewFileEntryId(RandomTestUtil.nextLong());
 
+		newFragmentEntry.setType(RandomTestUtil.nextInt());
+
 		newFragmentEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
 		newFragmentEntry.setStatus(RandomTestUtil.nextInt());
@@ -198,6 +200,8 @@ public class FragmentEntryPersistenceTest {
 			newFragmentEntry.getJs());
 		Assert.assertEquals(existingFragmentEntry.getPreviewFileEntryId(),
 			newFragmentEntry.getPreviewFileEntryId());
+		Assert.assertEquals(existingFragmentEntry.getType(),
+			newFragmentEntry.getType());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingFragmentEntry.getLastPublishDate()),
 			Time.getShortTimestamp(newFragmentEntry.getLastPublishDate()));
@@ -326,9 +330,9 @@ public class FragmentEntryPersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "fragmentCollectionId", true,
 			"fragmentEntryKey", true, "name", true, "css", true, "html", true,
-			"js", true, "previewFileEntryId", true, "lastPublishDate", true,
-			"status", true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"js", true, "previewFileEntryId", true, "type", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -581,6 +585,8 @@ public class FragmentEntryPersistenceTest {
 		fragmentEntry.setJs(RandomTestUtil.randomString());
 
 		fragmentEntry.setPreviewFileEntryId(RandomTestUtil.nextLong());
+
+		fragmentEntry.setType(RandomTestUtil.nextInt());
 
 		fragmentEntry.setLastPublishDate(RandomTestUtil.nextDate());
 

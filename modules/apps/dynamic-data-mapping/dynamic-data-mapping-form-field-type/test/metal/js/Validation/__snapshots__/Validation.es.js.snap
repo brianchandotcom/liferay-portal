@@ -15,7 +15,7 @@ exports[`Validation should enable validation after click on toogle 1`] = `
     <label>if-input </label>
     <div class="form-builder-select-field input-group-container">
       <div class="form-control select-field-trigger">
-        <div class="option-selected option-selected-placeholder"></div>
+        <div class="option-selected option-selected-placeholder">choose-an-option</div>
         <a class="select-arrow-down-container" href="javascript:;">
           <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
             <title>caret-double</title>

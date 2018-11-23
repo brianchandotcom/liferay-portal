@@ -285,7 +285,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layout.setExpandoBridgeAttributes(serviceContext);
 
-		layout = layoutPersistence.update(layout);
+		layout = layoutLocalService.updateLayout(layout, true);
 
 		// Layout friendly URLs
 
@@ -2468,7 +2468,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 			layout.setPriority(priority++);
 
-			layoutPersistence.update(layout);
+			layoutLocalService.updateLayout(layout);
 		}
 
 		layoutSetLocalService.updatePageCount(groupId, privateLayout);
@@ -2530,7 +2530,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layout.setFriendlyURL(friendlyURL);
 		}
 
-		return layoutPersistence.update(layout);
+		return layoutLocalService.updateLayout(layout);
 	}
 
 	/**
@@ -2568,12 +2568,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		PortalUtil.updateImageId(layout, true, bytes, "iconImageId", 0, 0, 0);
 
-		return layoutPersistence.update(layout);
+		return layoutLocalService.updateLayout(layout);
 	}
 
 	@Override
 	public Layout updateLayout(Layout layout) {
-		return updateLayout(layout, false);
+		return layoutLocalService.updateLayout(layout, false);
 	}
 
 	@Override
@@ -2655,6 +2655,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layoutLocalServiceHelper.validateParentLayoutId(
 			groupId, privateLayout, layoutId, parentLayoutId);
 
+		boolean rebuildTree = false;
+
 		Date now = new Date();
 
 		Layout layout = layoutPersistence.findByG_P_L(
@@ -2669,6 +2671,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				layout.getSourcePrototypeLayoutUuid(), -1);
 
 			layout.setPriority(priority);
+
+			rebuildTree = true;
 		}
 
 		layout.setModifiedDate(serviceContext.getModifiedDate(now));
@@ -2715,7 +2719,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layout.setExpandoBridgeAttributes(serviceContext);
 
-		layout = layoutPersistence.update(layout);
+		layout = layoutLocalService.updateLayout(layout, rebuildTree);
 
 		// Layout friendly URLs
 
@@ -2765,7 +2769,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setModifiedDate(now);
 		layout.setTypeSettings(typeSettingsProperties.toString());
 
-		return layoutPersistence.update(layout);
+		return layoutLocalService.updateLayout(layout);
 	}
 
 	/**
@@ -2797,7 +2801,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setColorSchemeId(colorSchemeId);
 		layout.setCss(css);
 
-		return layoutPersistence.update(layout);
+		return layoutLocalService.updateLayout(layout);
 	}
 
 	/**
@@ -2821,7 +2825,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setModifiedDate(now);
 		layout.setName(name, LocaleUtil.fromLanguageId(languageId));
 
-		layout = layoutPersistence.update(layout);
+		layout = layoutLocalService.updateLayout(layout);
 
 		Group group = layout.getGroup();
 
@@ -2908,6 +2912,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layoutLocalServiceHelper.validateParentLayoutId(
 			groupId, privateLayout, layoutId, parentLayoutId);
 
+		boolean rebuildTree = false;
+
 		Date now = new Date();
 
 		Layout layout = layoutPersistence.findByG_P_L(
@@ -2922,12 +2928,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				layout.getSourcePrototypeLayoutUuid(), -1);
 
 			layout.setPriority(priority);
+
+			rebuildTree = true;
 		}
 
 		layout.setModifiedDate(now);
 		layout.setParentLayoutId(parentLayoutId);
 
-		return layoutPersistence.update(layout);
+		return layoutLocalService.updateLayout(layout, rebuildTree);
 	}
 
 	/**
@@ -2979,7 +2987,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setParentPlid(parentPlid);
 		layout.setParentLayoutId(parentLayoutId);
 
-		return layoutPersistence.update(layout);
+		return layoutLocalService.updateLayout(layout, true);
 	}
 
 	/**
@@ -3023,7 +3031,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 			layout.setPriority(nextPriority);
 
-			layoutPersistence.update(layout);
+			layoutLocalService.updateLayout(layout);
 		}
 	}
 
@@ -3057,7 +3065,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setModifiedDate(new Date());
 		layout.setPriority(nextPriority);
 
-		layout = layoutPersistence.update(layout);
+		layout = layoutLocalService.updateLayout(layout);
 
 		List<Layout> layouts = layoutPersistence.findByG_P_P(
 			layout.getGroupId(), layout.isPrivateLayout(),
@@ -3095,7 +3103,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			curLayout.setModifiedDate(layout.getModifiedDate());
 			curLayout.setPriority(curNextPriority);
 
-			curLayout = layoutPersistence.update(curLayout);
+			curLayout = layoutLocalService.updateLayout(curLayout);
 
 			if (curLayout.equals(layout)) {
 				layout = curLayout;

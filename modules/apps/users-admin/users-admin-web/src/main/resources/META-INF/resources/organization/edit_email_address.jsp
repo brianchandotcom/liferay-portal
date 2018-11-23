@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String className = ParamUtil.getString(request, "className");
-
 long emailAddressId = ParamUtil.getLong(request, "primaryKey", 0L);
 
 EmailAddress emailAddress = null;
@@ -37,7 +35,7 @@ if (emailAddressId > 0L) {
 
 	<aui:input checked="<%= (emailAddress != null)? emailAddress.isPrimary() : false %>" id="emailAddressPrimary" label="make-primary" name="emailAddressPrimary" type="checkbox" />
 
-	<aui:select inlineField="<%= true %>" label="type" listType="<%= className + ListTypeConstants.EMAIL_ADDRESS %>" name="emailAddressTypeId" />
+	<aui:select inlineField="<%= true %>" label="type" listType="<%= Organization.class.getName() + ListTypeConstants.EMAIL_ADDRESS %>" name="emailAddressTypeId" />
 
 	<aui:input fieldParam="emailAddressAddress" id="emailAddressAddress" name="address" required="<%= true %>" />
 </aui:form>

@@ -102,7 +102,6 @@ page import="com.liferay.portal.kernel.portlet.PortalPreferences" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portal.kernel.security.auth.ScreenNameValidator" %><%@
 page import="com.liferay.portal.kernel.security.ldap.LDAPSettingsUtil" %><%@
 page import="com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyUtil" %><%@
@@ -150,7 +149,9 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.webserver.WebServerServletTokenUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.model.impl.AddressImpl" %><%@
+page import="com.liferay.portal.model.impl.EmailAddressImpl" %><%@
 page import="com.liferay.portal.model.impl.OrgLaborImpl" %><%@
+page import="com.liferay.portal.model.impl.WebsiteImpl" %><%@
 page import="com.liferay.portal.security.auth.ScreenNameValidatorFactory" %><%@
 page import="com.liferay.portal.util.PrefsPropsUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
@@ -194,8 +195,7 @@ page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.Set" %>
 
-<%@ page import="javax.portlet.ActionRequest" %><%@
-page import="javax.portlet.PortletURL" %><%@
+<%@ page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
 
 <liferay-frontend:defineObjects />

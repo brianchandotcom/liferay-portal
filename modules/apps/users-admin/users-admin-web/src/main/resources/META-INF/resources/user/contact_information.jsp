@@ -22,13 +22,28 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 Contact selContact = null;
 
 if (selUser != null) {
-selContact = selUser.getContact();
+	selContact = selUser.getContact();
 }
+
+long selContactId = (selUser != null) ? selContact.getContactId() : 0;
 
 request.setAttribute("user.selContact", selContact);
 request.setAttribute("user.selUser", selUser);
 
-long selContactId = (selUser != null) ? selContact.getContactId() : 0;
+request.setAttribute("emailAddresses.className", Contact.class.getName());
+request.setAttribute("phones.className", Contact.class.getName());
+request.setAttribute("websites.className", Contact.class.getName());
+
+if (selContact != null) {
+	request.setAttribute("emailAddresses.classPK", selContact.getContactId());
+	request.setAttribute("phones.classPK", selContact.getContactId());
+	request.setAttribute("websites.classPK", selContact.getContactId());
+}
+else {
+	request.setAttribute("emailAddresses.classPK", 0L);
+	request.setAttribute("phones.classPK", 0L);
+	request.setAttribute("websites.classPK", 0L);
+}
 
 String contactInformationRequireJS = (String)request.getAttribute("contactInformationRequireJS");
 %>
@@ -46,23 +61,15 @@ String contactInformationRequireJS = (String)request.getAttribute("contactInform
 </div>
 
 <div class="sheet-section">
-	<liferay-util:include page="/common/additional_email_addresses.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="className" value="<%= Contact.class.getName() %>" />
-		<liferay-util:param name="classPK" value="<%= String.valueOf(selContactId) %>" />
-		<liferay-util:param name="contactInformationRequireJS" value="<%= contactInformationRequireJS %>" />
-		<liferay-util:param name="emptyResultsMessage" value="this-user-does-not-have-any-additional-email-addresses" />
-		<liferay-util:param name="mvcActionPath" value="/users_admin/update_user_contact_information" />
-	</liferay-util:include>
+	<h3 class="sheet-subtitle"><liferay-ui:message key="additional-email-addresses" /></h3>
+
+	<liferay-util:include page="/common/additional_email_addresses.jsp" servletContext="<%= application %>" />
 </div>
 
 <div class="sheet-section">
-	<liferay-util:include page="/common/websites.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="className" value="<%= Contact.class.getName() %>" />
-		<liferay-util:param name="classPK" value="<%= String.valueOf(selContactId) %>" />
-		<liferay-util:param name="contactInformationRequireJS" value="<%= contactInformationRequireJS %>" />
-		<liferay-util:param name="emptyResultsMessage" value="this-user-does-not-have-any-websites" />
-		<liferay-util:param name="mvcActionPath" value="/users_admin/update_user_contact_information" />
-	</liferay-util:include>
+	<h3 class="sheet-subtitle"><liferay-ui:message key="websites" /></h3>
+
+	<liferay-util:include page="/common/websites.jsp" servletContext="<%= application %>" />
 </div>
 
 <div class="sheet-section">

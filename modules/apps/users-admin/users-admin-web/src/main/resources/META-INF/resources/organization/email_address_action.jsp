@@ -17,14 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long classPK = ParamUtil.getLong(request, "classPK");
-String mvcActionPath = ParamUtil.getString(request, "mvcActionPath");
+OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayContext = (OrganizationScreenNavigationDisplayContext)request.getAttribute(UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT);
+
+long organizationId = organizationScreenNavigationDisplayContext.getOrganizationId();
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-Phone phone = (Phone)row.getObject();
+EmailAddress emailAddress = (EmailAddress)row.getObject();
 
-long phoneId = phone.getPhoneId();
+long emailAddressId = emailAddress.getEmailAddressId();
 %>
 
 <liferay-ui:icon-menu
@@ -35,25 +36,26 @@ long phoneId = phone.getPhoneId();
 	showWhenSingleIcon="<%= true %>"
 >
 	<liferay-ui:icon
-		cssClass="modify-phone-number-link"
+		cssClass="modify-email-address-link"
 		data="<%=
 			new HashMap<String, Object>() {
 				{
-					put("title", LanguageUtil.get(request, "edit-phone-number"));
-					put("primary-key", String.valueOf(phoneId));
+					put("title", LanguageUtil.get(request, "edit-email-address"));
+					put("primary-key", String.valueOf(emailAddressId));
 				}
 			}
 		%>"
+		linkCssClass="edit-email-address"
 		message="edit"
 		url="javascript:;"
 	/>
 
-	<portlet:actionURL name="<%= mvcActionPath %>" var="makePrimaryURL">
+	<portlet:actionURL name="/users_admin/update_organization_contact_information" var="makePrimaryURL">
 		<portlet:param name="<%= Constants.CMD %>" value="makePrimary" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="listType" value="<%= ListTypeConstants.PHONE %>" />
-		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-		<portlet:param name="primaryKey" value="<%= String.valueOf(phoneId) %>" />
+		<portlet:param name="listType" value="<%= ListTypeConstants.EMAIL_ADDRESS %>" />
+		<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
+		<portlet:param name="primaryKey" value="<%= String.valueOf(emailAddressId) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon
@@ -61,16 +63,16 @@ long phoneId = phone.getPhoneId();
 		url="<%= makePrimaryURL %>"
 	/>
 
-	<portlet:actionURL name="<%= mvcActionPath %>" var="removePhoneURL">
+	<portlet:actionURL name="/users_admin/update_organization_contact_information" var="removeEmailAddressURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="listType" value="<%= ListTypeConstants.PHONE %>" />
-		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-		<portlet:param name="primaryKey" value="<%= String.valueOf(phoneId) %>" />
+		<portlet:param name="listType" value="<%= ListTypeConstants.EMAIL_ADDRESS %>" />
+		<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
+		<portlet:param name="primaryKey" value="<%= String.valueOf(emailAddressId) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon
 		message="remove"
-		url="<%= removePhoneURL %>"
+		url="<%= removeEmailAddressURL %>"
 	/>
 </liferay-ui:icon-menu>

@@ -18,22 +18,10 @@
 
 <%
 OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayContext = (OrganizationScreenNavigationDisplayContext)request.getAttribute(UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT);
-
-long organizationId = organizationScreenNavigationDisplayContext.getOrganizationId();
-
-String contactInformationRequireJS = organizationScreenNavigationDisplayContext.getContactInformationJSRequire();
 %>
 
-<aui:input name="classPK" type="hidden" value="<%= String.valueOf(organizationId) %>" />
-
 <div class="sheet-section">
-	<liferay-util:include page="/common/phone_numbers.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="className" value="<%= Organization.class.getName() %>" />
-		<liferay-util:param name="classPK" value="<%= String.valueOf(organizationId) %>" />
-		<liferay-util:param name="contactInformationRequireJS" value="<%= contactInformationRequireJS %>" />
-		<liferay-util:param name="emptyResultsMessage" value="this-organization-does-not-have-any-phone-numbers" />
-		<liferay-util:param name="mvcActionPath" value="/users_admin/update_organization_contact_information" />
-	</liferay-util:include>
+	<liferay-util:include page="/organization/phone_numbers.jsp" servletContext="<%= application %>" />
 </div>
 
 <div class="sheet-section">
@@ -44,6 +32,10 @@ String contactInformationRequireJS = organizationScreenNavigationDisplayContext.
 	<liferay-util:include page="/organization/websites.jsp" servletContext="<%= application %>" />
 </div>
 
+<portlet:renderURL var="editPhoneRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcPath" value="/organization/edit_phone_number.jsp" />
+</portlet:renderURL>
+
 <portlet:renderURL var="editEmailAddressRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/organization/edit_email_address.jsp" />
 </portlet:renderURL>
@@ -53,6 +45,12 @@ String contactInformationRequireJS = organizationScreenNavigationDisplayContext.
 </portlet:renderURL>
 
 <aui:script require="<%= organizationScreenNavigationDisplayContext.getContactInformationJSRequire() %>">
+	ContactInformation.registerContactInformationListener(
+		'.modify-phone-number-link a',
+		'<%= editPhoneRenderURL.toString() %>',
+		470
+	);
+
 	ContactInformation.registerContactInformationListener(
 		'.modify-email-address-link a',
 		'<%= editEmailAddressRenderURL.toString() %>',

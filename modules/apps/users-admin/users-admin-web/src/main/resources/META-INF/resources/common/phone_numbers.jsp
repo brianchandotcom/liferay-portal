@@ -17,12 +17,47 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String className = ParamUtil.getString(request, "className");
-long classPK = ParamUtil.getLong(request, "classPK");
-String contactInformationRequireJS = ParamUtil.getString(request, "contactInformationRequireJS");
-String emptyResultsMessage = ParamUtil.getString(request, "emptyResultsMessage");
+String className = (String)request.getAttribute("phones.className");
+long classPK = (Long)request.getAttribute("phones.classPK");
 
-List<Phone> phones = PhoneServiceUtil.getPhones(className, classPK);
+List<Phone> phones = Collections.emptyList();
+
+int[] phonesIndexes = null;
+
+String phonesIndexesParam = ParamUtil.getString(request, "phonesIndexes");
+
+if (Validator.isNotNull(phonesIndexesParam)) {
+	phones = new ArrayList<Phone>();
+
+	phonesIndexes = StringUtil.split(phonesIndexesParam, 0);
+
+	for (int phonesIndex : phonesIndexes) {
+		phones.add(new PhoneImpl());
+	}
+}
+else {
+	if (classPK > 0) {
+		phones = PhoneServiceUtil.getPhones(className, classPK);
+
+		phonesIndexes = new int[phones.size()];
+
+		for (int i = 0; i < phones.size(); i++) {
+			phonesIndexes[i] = i;
+		}
+	}
+
+	if (phones.isEmpty()) {
+		phones = new ArrayList<Phone>();
+
+		phones.add(new PhoneImpl());
+
+		phonesIndexes = new int[] {0};
+	}
+
+	if (phonesIndexes == null) {
+		phonesIndexes = new int[0];
+	}
+}
 %>
 
 <liferay-ui:error-marker
@@ -30,111 +65,58 @@ List<Phone> phones = PhoneServiceUtil.getPhones(className, classPK);
 	value="phoneNumbers"
 />
 
+<div class="alert alert-info">
+	<liferay-ui:message key="phone-number-and-type-are-required-fields.-extension-must-be-numeric" />
+</div>
+
 <liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.PHONE %>" message="please-select-a-type" />
 <liferay-ui:error exception="<%= PhoneNumberException.class %>" message="please-enter-a-valid-phone-number" />
 <liferay-ui:error exception="<%= PhoneNumberExtensionException.class %>" message="please-enter-a-valid-phone-number-extension" />
 
-<h3 class="sheet-subtitle">
-	<span class="autofit-padded-no-gutters autofit-row">
-		<span class="autofit-col autofit-col-expand">
-			<span class="heading-text">
-				<liferay-ui:message key="phone-numbers" />
-			</span>
-		</span>
-		<span class="autofit-col">
-			<liferay-ui:icon
-				cssClass="modify-phone-number-link"
-				data="<%=
-					new HashMap<String, Object>() {
-						{
-							put("title", LanguageUtil.get(request, "add-phone-number"));
-						}
-					}
-				%>"
-				label="<%= true %>"
-				linkCssClass="btn btn-secondary btn-sm"
-				message="add"
-				url="javascript:;"
-			/>
-		</span>
-	</span>
-</h3>
+<aui:fieldset id='<%= renderResponse.getNamespace() + "phoneNumbers" %>'>
 
-<liferay-ui:search-container
-	compactEmptyResultsMessage="<%= true %>"
-	cssClass="lfr-search-container-wrapper"
-	curParam="phoneNumberCur"
-	deltaParam="phoneNumbersDelta"
-	emptyResultsMessage="<%= emptyResultsMessage %>"
-	headerNames="phone-number,type,extension,"
-	id="phonesSearchContainer"
-	iteratorURL="<%= currentURLObj %>"
-	total="<%= phones.size() %>"
->
-	<liferay-ui:search-container-results
-		results="<%= phones.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-	/>
+	<%
+	for (int i = 0; i < phonesIndexes.length; i++) {
+		int phonesIndex = phonesIndexes[i];
 
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.kernel.model.Phone"
-		escapedModel="<%= true %>"
-		keyProperty="phoneId"
-		modelVar="phone"
-	>
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			name="phone-number"
-			property="number"
-		/>
+		Phone phone = phones.get(i);
+	%>
 
-		<%
-		ListType phoneListType = ListTypeServiceUtil.getListType(phone.getTypeId());
+		<aui:model-context bean="<%= phone %>" model="<%= Phone.class %>" />
 
-		String phoneTypeKey = phoneListType.getName();
-		%>
+		<div class="form-group-autofit lfr-form-row">
+			<aui:input name='<%= "phoneId" + phonesIndex %>' type="hidden" value="<%= phone.getPhoneId() %>" />
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			name="type"
-			value="<%= LanguageUtil.get(request, phoneTypeKey) %>"
-		/>
+			<div class="form-group-item">
+				<aui:input fieldParam='<%= "phoneNumber" + phonesIndex %>' id='<%= "phoneNumber" + phonesIndex %>' inlineField="<%= true %>" name="number" />
+			</div>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			name="extension"
-			property="extension"
-		/>
+			<div class="form-group-item">
+				<aui:input fieldParam='<%= "phoneExtension" + phonesIndex %>' id='<%= "phoneExtension" + phonesIndex %>' inlineField="<%= true %>" name="extension" />
+			</div>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-		>
-			<c:if test="<%= phone.isPrimary() %>">
-				<span class="label label-primary">
-					<span class="label-item label-item-expand"><%= StringUtil.toUpperCase(LanguageUtil.get(request, "primary"), locale) %></span>
-				</span>
-			</c:if>
-		</liferay-ui:search-container-column-text>
+			<div class="form-group-item">
+				<aui:select inlineField="<%= true %>" label="type" listType="<%= className + ListTypeConstants.PHONE %>" name='<%= "phoneTypeId" + phonesIndex %>' />
+			</div>
 
-		<liferay-ui:search-container-column-jsp
-			cssClass="entry-action-column"
-			path="/common/phone_number_action.jsp"
-		/>
-	</liferay-ui:search-container-row>
+			<div class="form-group-item form-group-item-label-spacer">
+				<aui:input checked="<%= phone.isPrimary() %>" id='<%= "phonePrimary" + phonesIndex %>' inlineField="<%= true %>" label="primary" name="phonePrimary" type="radio" value="<%= phonesIndex %>" />
+			</div>
+		</div>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-	/>
-</liferay-ui:search-container>
+	<%
+	}
+	%>
 
-<portlet:renderURL var="editPhoneRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcPath" value="/common/edit_phone_number.jsp" />
-	<portlet:param name="className" value="<%= className %>" />
-</portlet:renderURL>
+	<aui:input name="phonesIndexes" type="hidden" value="<%= StringUtil.merge(phonesIndexes) %>" />
+</aui:fieldset>
 
-<aui:script require="<%= contactInformationRequireJS %>">
-	ContactInformation.registerContactInformationListener(
-		'.modify-phone-number-link a',
-		'<%= editPhoneRenderURL.toString() %>',
-		470
-	);
+<aui:script use="liferay-auto-fields">
+	new Liferay.AutoFields(
+		{
+			contentBox: '#<portlet:namespace />phoneNumbers',
+			fieldIndexes: '<portlet:namespace />phonesIndexes',
+			namespace: '<portlet:namespace />'
+		}
+	).render();
 </aui:script>

@@ -25,8 +25,6 @@ if (selUser != null) {
 	selContact = selUser.getContact();
 }
 
-long selContactId = (selUser != null) ? selContact.getContactId() : 0;
-
 request.setAttribute("user.selContact", selContact);
 request.setAttribute("user.selUser", selUser);
 
@@ -44,20 +42,12 @@ else {
 	request.setAttribute("phones.classPK", 0L);
 	request.setAttribute("websites.classPK", 0L);
 }
-
-String contactInformationRequireJS = (String)request.getAttribute("contactInformationRequireJS");
 %>
 
-<aui:input name="classPK" type="hidden" value="<%= String.valueOf(selContactId) %>" />
-
 <div class="sheet-section">
-	<liferay-util:include page="/common/phone_numbers.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="className" value="<%= Contact.class.getName() %>" />
-		<liferay-util:param name="classPK" value="<%= String.valueOf(selContactId) %>" />
-		<liferay-util:param name="contactInformationRequireJS" value="<%= contactInformationRequireJS %>" />
-		<liferay-util:param name="emptyResultsMessage" value="this-user-does-not-have-any-phone-numbers" />
-		<liferay-util:param name="mvcActionPath" value="/users_admin/update_user_contact_information" />
-	</liferay-util:include>
+	<h3 class="sheet-subtitle"><liferay-ui:message key="phone-numbers" /></h3>
+
+	<liferay-util:include page="/common/phone_numbers.jsp" servletContext="<%= application %>" />
 </div>
 
 <div class="sheet-section">

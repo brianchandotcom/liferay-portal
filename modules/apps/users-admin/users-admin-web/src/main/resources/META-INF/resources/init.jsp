@@ -151,6 +151,7 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.model.impl.AddressImpl" %><%@
 page import="com.liferay.portal.model.impl.EmailAddressImpl" %><%@
 page import="com.liferay.portal.model.impl.OrgLaborImpl" %><%@
+page import="com.liferay.portal.model.impl.PhoneImpl" %><%@
 page import="com.liferay.portal.model.impl.WebsiteImpl" %><%@
 page import="com.liferay.portal.security.auth.ScreenNameValidatorFactory" %><%@
 page import="com.liferay.portal.util.PrefsPropsUtil" %><%@

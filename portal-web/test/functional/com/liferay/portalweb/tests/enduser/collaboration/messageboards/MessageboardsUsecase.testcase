@@ -982,7 +982,7 @@
 		</execute>
 
 		<execute macro="Search#searchPG">
-			<var name="portletName" value="Message Boards" />
+			<var name="portletName" value="Message Boards (Message Boards Page 2)" />
 			<var name="searchTerm" value="MB Thread3 Message Subject" />
 		</execute>
 
@@ -997,7 +997,7 @@
 		</execute>
 
 		<execute macro="Search#searchPG">
-			<var name="portletName" value="Message Boards" />
+			<var name="portletName" value="Message Boards (Message Boards Page 2)" />
 			<var name="searchTerm" value="MB Thread4 Message Subject" />
 		</execute>
 
@@ -1012,7 +1012,7 @@
 		</execute>
 
 		<execute macro="Search#searchPG">
-			<var name="portletName" value="Message Boards" />
+			<var name="portletName" value="Message Boards (Message Boards Page 2)" />
 			<var name="searchTerm" value="MB Thread1 Message Subject" />
 		</execute>
 
@@ -1025,7 +1025,7 @@
 		</execute>
 
 		<execute macro="Search#searchPG">
-			<var name="portletName" value="Message Boards" />
+			<var name="portletName" value="Message Boards (Message Boards Page 2)" />
 			<var name="searchTerm" value="MB Thread2 Message Subject" />
 		</execute>
 

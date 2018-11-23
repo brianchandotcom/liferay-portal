@@ -67,6 +67,54 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		return toString(indent, prefix, suffix, maxLineLength);
 	}
 
+	protected String adjustIndent(StringBundler sb, String indent) {
+		String s = sb.toString();
+
+		String lastLine = StringUtil.trim(_getLastLine(s));
+
+		if (lastLine.endsWith("&") || lastLine.endsWith("|") ||
+			lastLine.endsWith("^")) {
+
+			int x = s.length();
+
+			while (true) {
+				x = s.lastIndexOf(CharPool.OPEN_PARENTHESIS, x - 1);
+
+				if (x == -1) {
+					return _getLeadingWhitespace(s);
+				}
+
+				if (SourceUtil.getLevel(s.substring(x)) != 0) {
+					continue;
+				}
+
+				int y = s.lastIndexOf('\n', x) + 1;
+
+				String linePart = s.substring(y, x);
+
+				int z = linePart.length();
+
+				while (true) {
+					z = linePart.lastIndexOf(CharPool.OPEN_PARENTHESIS, z - 1);
+
+					if (z == -1) {
+						return _getLeadingWhitespace(s.substring(y, x));
+					}
+
+					if (SourceUtil.getLevel(linePart.substring(z)) != 0) {
+						return _convertToWhitespace(s.substring(y, z + 1));
+					}
+				}
+			}
+		}
+
+		if (lastLine.startsWith("while (")) {
+			return indent + "\t\t";
+		}
+
+		return indent;
+	}
+
 	protected String append(
 		StringBundler sb, JavaTerm javaTerm, String indent, int maxLineLength) {
 
@@ -436,54 +484,6 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		}
 
 		return lineLength;
-	}
-
-	protected String adjustIndent(StringBundler sb, String indent) {
-		String s = sb.toString();
-
-		String lastLine = StringUtil.trim(_getLastLine(s));
-
-		if (lastLine.endsWith("&") || lastLine.endsWith("|") ||
-			lastLine.endsWith("^")) {
-
-			int x = s.length();
-
-			while (true) {
-				x = s.lastIndexOf(CharPool.OPEN_PARENTHESIS, x - 1);
-
-				if (x == -1) {
-					return _getLeadingWhitespace(s);
-				}
-
-				if (SourceUtil.getLevel(s.substring(x)) != 0) {
-					continue;
-				}
-
-				int y = s.lastIndexOf('\n', x) + 1;
-
-				String linePart = s.substring(y, x);
-
-				int z = linePart.length();
-
-				while (true) {
-					z = linePart.lastIndexOf(CharPool.OPEN_PARENTHESIS, z - 1);
-
-					if (z == -1) {
-						return _getLeadingWhitespace(s.substring(y, x));
-					}
-
-					if (SourceUtil.getLevel(linePart.substring(z)) != 0) {
-						return _convertToWhitespace(s.substring(y, z + 1));
-					}
-				}
-			}
-		}
-
-		if (lastLine.startsWith("while (")) {
-			return indent + "\t\t";
-		}
-
-		return indent;
 	}
 
 	private boolean _appendSingleLine(

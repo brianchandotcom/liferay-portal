@@ -30,16 +30,16 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"segments.criteria.contributor.key=" + EntityModelSegmentsCriteriaContributor.KEY,
-		"segments.criteria.contributor.model.class.name=*",
+		"segments.criteria.contributor.key=" + UserSegmentsCriteriaContributor.KEY,
+		"segments.criteria.contributor.model.class.name=com.liferay.portal.kernel.model.User",
 		"segments.criteria.contributor.priority:Integer=50"
 	},
 	service = SegmentsCriteriaContributor.class
 )
-public class EntityModelSegmentsCriteriaContributor
+public class UserSegmentsCriteriaContributor
 	implements SegmentsCriteriaContributor {
 
-	public static final String KEY = "entity-model";
+	public static final String KEY = "user";
 
 	@Override
 	public void contribute(

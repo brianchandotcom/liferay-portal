@@ -41,16 +41,16 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"segments.criteria.contributor.key=" + OrganizationSegmentsCriteriaContributor.KEY,
+		"segments.criteria.contributor.key=" + UserOrganizationSegmentsCriteriaContributor.KEY,
 		"segments.criteria.contributor.model.class.name=com.liferay.portal.kernel.model.User",
 		"segments.criteria.contributor.priority:Integer=60"
 	},
 	service = SegmentsCriteriaContributor.class
 )
-public class OrganizationSegmentsCriteriaContributor
+public class UserOrganizationSegmentsCriteriaContributor
 	implements SegmentsCriteriaContributor {
 
-	public static final String KEY = "organization";
+	public static final String KEY = "user-organization";
 
 	@Override
 	public void contribute(
@@ -105,7 +105,7 @@ public class OrganizationSegmentsCriteriaContributor
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OrganizationSegmentsCriteriaContributor.class);
+		UserOrganizationSegmentsCriteriaContributor.class);
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.model.Organization)"

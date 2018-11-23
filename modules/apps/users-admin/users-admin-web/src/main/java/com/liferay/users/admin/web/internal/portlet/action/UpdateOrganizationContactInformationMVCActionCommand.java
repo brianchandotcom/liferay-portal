@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -41,6 +42,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Samuel Trong Tran
@@ -68,8 +70,11 @@ public class UpdateOrganizationContactInformationMVCActionCommand
 
 			long organizationId = ParamUtil.getLong(actionRequest, "classPK");
 
+			Organization organization = _organizationService.getOrganization(
+				organizationId);
+
 			OrganizationPermissionUtil.check(
-				themeDisplay.getPermissionChecker(), organizationId,
+				themeDisplay.getPermissionChecker(), organization,
 				ActionKeys.UPDATE);
 
 			updateContactInformation(actionRequest, Organization.class);
@@ -104,5 +109,8 @@ public class UpdateOrganizationContactInformationMVCActionCommand
 			}
 		}
 	}
+
+	@Reference
+	private OrganizationService _organizationService;
 
 }

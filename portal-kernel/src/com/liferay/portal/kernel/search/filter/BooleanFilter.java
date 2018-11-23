@@ -252,7 +252,7 @@ public class BooleanFilter extends BaseFilter {
 
 		StringBundler sb = new StringBundler(2 * booleanClauses.size());
 
-		for (BooleanClause<Filter> booleanClause : _mustBooleanClauses) {
+		for (BooleanClause<Filter> booleanClause : booleanClauses) {
 			sb.append(booleanClause);
 
 			sb.append(StringPool.COMMA_AND_SPACE);

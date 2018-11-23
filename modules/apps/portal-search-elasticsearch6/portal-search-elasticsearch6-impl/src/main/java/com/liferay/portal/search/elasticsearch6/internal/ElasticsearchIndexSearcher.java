@@ -369,6 +369,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		baseSearchRequest.setExplain(searchRequest.isExplain());
 		baseSearchRequest.setIncludeResponseString(
 			searchRequest.isIncludeResponseString());
+		baseSearchRequest.setRescoreQuery(searchRequest.getRescoreQuery());
 	}
 
 	@Reference

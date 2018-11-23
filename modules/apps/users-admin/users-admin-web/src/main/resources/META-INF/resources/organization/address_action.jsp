@@ -49,7 +49,7 @@ long addressId = ParamUtil.getLong(request, "addressId");
 		<portlet:param name="<%= Constants.CMD %>" value="makePrimary" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="listType" value="<%= ListTypeConstants.ADDRESS %>" />
-		<portlet:param name="classPK" value="<%= String.valueOf(organizationId) %>" />
+		<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
 		<portlet:param name="primaryKey" value="<%= String.valueOf(addressId) %>" />
 	</portlet:actionURL>
 
@@ -62,7 +62,7 @@ long addressId = ParamUtil.getLong(request, "addressId");
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="listType" value="<%= ListTypeConstants.ADDRESS %>" />
-		<portlet:param name="classPK" value="<%= String.valueOf(organizationId) %>" />
+		<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
 		<portlet:param name="primaryKey" value="<%= String.valueOf(addressId) %>" />
 	</portlet:actionURL>
 

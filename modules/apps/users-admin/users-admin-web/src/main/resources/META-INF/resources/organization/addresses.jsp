@@ -70,8 +70,6 @@ List<Address> addresses = AddressServiceUtil.getAddresses(Organization.class.get
 	</div>
 </c:if>
 
-<aui:input name="classPK" type="hidden" value="<%= String.valueOf(organizationId) %>" />
-
 <div
 	class="<%=
 		CSSClassNames.builder(

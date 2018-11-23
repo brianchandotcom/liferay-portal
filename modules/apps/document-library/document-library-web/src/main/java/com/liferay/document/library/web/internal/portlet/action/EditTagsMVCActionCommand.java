@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -68,17 +68,17 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 
 		boolean add = ParamUtil.getBoolean(actionRequest, "add");
 
-		Set<String> commonTagNamesSet = SetUtil.fromArray(
+		List<String> commonTagNamesList = Arrays.asList(
 			ParamUtil.getStringValues(actionRequest, "commonTagNames"));
 
-		Set<String> newTagNamesSet = SetUtil.fromArray(
+		List<String> newTagNamesList = Arrays.asList(
 			serviceContext.getAssetTagNames());
 
-		Set<String> toAddTagNamesSet = _difference(
-			newTagNamesSet, commonTagNamesSet);
+		Set<String> toAddTagNamesSet = SetUtil.difference(
+			newTagNamesList, commonTagNamesList);
 
-		Set<String> toRemoveTagNamesSet = _difference(
-			commonTagNamesSet, newTagNamesSet);
+		Set<String> toRemoveTagNamesSet = SetUtil.difference(
+			commonTagNamesList, newTagNamesList);
 
 		fileEntryStream.map(
 			fileEntry -> _assetEntryLocalService.fetchEntry(
@@ -109,18 +109,6 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 		);
-	}
-
-	private Set<String> _difference(Set<String> set1, Set<String> set2) {
-		Set<String> result = new HashSet<>();
-
-		for (String string : set1) {
-			if (!set2.contains(string)) {
-				result.add(string);
-			}
-		}
-
-		return result;
 	}
 
 	@Reference

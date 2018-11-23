@@ -2159,7 +2159,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingRemoteLiveWebContentCP" priority="5">
+	<command name="StagingRemoteLiveWebContentViaPortletCP" priority="5">
 		<description message="This is a use case for LPS-82839." />
 
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=" />

@@ -230,6 +230,18 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setUserName(user.getFullName());
 		layout.setCreateDate(serviceContext.getCreateDate(now));
 		layout.setModifiedDate(serviceContext.getModifiedDate(now));
+
+		long parentPlid = 0;
+
+		if (parentLayoutId > 0) {
+			Layout parentLayout = layoutPersistence.findByG_P_L(
+				groupId, privateLayout, parentLayoutId);
+
+			parentPlid = parentLayout.getPlid();
+		}
+
+		layout.setParentPlid(parentPlid);
+
 		layout.setPrivateLayout(privateLayout);
 		layout.setLayoutId(layoutId);
 		layout.setParentLayoutId(parentLayoutId);
@@ -2642,6 +2654,19 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			groupId, privateLayout, layoutId);
 
 		if (parentLayoutId != layout.getParentLayoutId()) {
+			long parentPlid = 0;
+
+			if (parentLayoutId != LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+				Layout parentLayout = layoutPersistence.fetchByG_P_L(
+					groupId, privateLayout, parentLayoutId);
+
+				if (parentLayout != null) {
+					parentPlid = parentLayout.getPlid();
+				}
+			}
+
+			layout.setParentPlid(parentPlid);
+
 			int priority = layoutLocalServiceHelper.getNextPriority(
 				groupId, privateLayout, parentLayoutId,
 				layout.getSourcePrototypeLayoutUuid(), -1);
@@ -2892,6 +2917,19 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			groupId, privateLayout, layoutId);
 
 		if (parentLayoutId != layout.getParentLayoutId()) {
+			long parentPlid = 0;
+
+			if (parentLayoutId != LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+				Layout parentLayout = layoutPersistence.fetchByG_P_L(
+					groupId, privateLayout, parentLayoutId);
+
+				if (parentLayout != null) {
+					parentPlid = parentLayout.getPlid();
+				}
+			}
+
+			layout.setParentPlid(parentPlid);
+
 			int priority = layoutLocalServiceHelper.getNextPriority(
 				groupId, privateLayout, parentLayoutId,
 				layout.getSourcePrototypeLayoutUuid(), -1);
@@ -2951,6 +2989,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 
 		layout.setModifiedDate(now);
+		layout.setParentPlid(parentPlid);
 		layout.setParentLayoutId(parentLayoutId);
 
 		return layoutPersistence.update(layout);

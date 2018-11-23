@@ -202,7 +202,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		sb = _stripTrailingWhitespace(sb);
 
 		if (sb.index() > 0) {
-			indent = _adjustIndent(sb, indent);
+			indent = adjustIndent(sb, indent);
 
 			sb.append("\n");
 		}
@@ -438,7 +438,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		return lineLength;
 	}
 
-	private String _adjustIndent(StringBundler sb, String indent) {
+	protected String adjustIndent(StringBundler sb, String indent) {
 		String s = sb.toString();
 
 		String lastLine = StringUtil.trim(_getLastLine(s));

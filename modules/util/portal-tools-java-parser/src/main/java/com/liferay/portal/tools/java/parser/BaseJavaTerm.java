@@ -479,6 +479,10 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			}
 		}
 
+		if (lastLine.startsWith("while (")) {
+			return indent + "\t\t";
+		}
+
 		return indent;
 	}
 

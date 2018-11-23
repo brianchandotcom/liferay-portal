@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 /**
  * @author Hugo Huijser
  */
@@ -29,7 +31,17 @@ public class JavaWhileStatement extends BaseJavaTerm {
 	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength) {
 
-		return "TODO";
+		StringBundler sb = new StringBundler();
+
+		sb.append(indent);
+
+		indent = "\t" + indent;
+
+		append(
+			sb, _conditionJavaExpression, indent, "while (", ")" + suffix,
+			maxLineLength);
+
+		return sb.toString();
 	}
 
 	private JavaExpression _conditionJavaExpression;

@@ -74,11 +74,12 @@ public class EditTagsMVCRenderCommand implements MVCRenderCommand {
 				Collectors.toList()
 			);
 
-			Stream<String> tagNamesStream = _getCommonTagNames(tagNameSets);
+			Stream<String> commonTagNamesStream = _getCommonTagNames(
+				tagNameSets);
 
 			renderRequest.setAttribute(
 				"commonTagNames",
-				tagNamesStream.collect(Collectors.joining(",")));
+				commonTagNamesStream.collect(Collectors.joining(",")));
 
 			return "/document_library/edit_tags.jsp";
 		}

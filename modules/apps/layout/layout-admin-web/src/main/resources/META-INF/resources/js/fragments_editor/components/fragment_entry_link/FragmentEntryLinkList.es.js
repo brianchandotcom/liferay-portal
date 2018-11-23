@@ -38,6 +38,29 @@ class FragmentEntryLinkList extends Component {
 	}
 
 	/**
+	 * Returns whether a drop is valid or not
+	 * @param {Object} eventData
+	 * @private
+	 * @return {boolean}
+	 * @static
+	 */
+	static _dropValid(eventData) {
+		const sourceData = eventData.source.dataset;
+		const targetData = eventData.target ? eventData.target.dataset : null;
+
+		const {
+			hoveredElementType
+		} = FragmentEntryLinkList._getHoveredElementData(eventData);
+
+		const targetIsSameFragment = (
+			(hoveredElementType === DROP_TARGET_TYPES.fragment) &&
+			(sourceData.fragmentEntryLinkId === targetData.fragmentEntryLinkId)
+		);
+
+		return (hoveredElementType && !targetIsSameFragment);
+	}
+
+	/**
 	 * Get hovered element data
 	 * @param {!Object} eventData
 	 * @private

@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>ServiceAccessPolicy</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ServiceAccessPolicy</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ALLOWED_SERVICE_SIGNATURES_FIELD</td>
+	<td>//textarea[contains(@id,'allowedServiceSignatures')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POLICY_NAME</td>
+	<td>//td[contains(@class,'lfr-name-column')][contains(.,'${key_policyName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SWITCH_TO_ADVANCED_MODE</td>
+	<td>//*[contains(@class,'btn')][normalize-space(text())='Switch to Advanced Mode']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

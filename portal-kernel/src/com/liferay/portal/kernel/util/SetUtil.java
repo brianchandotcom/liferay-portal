@@ -311,10 +311,6 @@ public class SetUtil {
 	}
 
 	private static <T> Set<T> _toSet(Collection<T> collection) {
-		if (collection instanceof Set) {
-			return (Set<T>)collection;
-		}
-
 		return new HashSet<>(collection);
 	}
 

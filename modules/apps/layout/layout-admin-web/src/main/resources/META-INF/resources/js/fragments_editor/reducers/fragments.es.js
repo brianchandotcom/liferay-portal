@@ -49,7 +49,7 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 							fragmentEntryLink = response;
 
 							nextData = _addFragment(
-								fragmentEntryLink,
+								fragmentEntryLink.fragmentEntryLinkId,
 								state.hoveredElementBorder,
 								state.hoveredElementId,
 								state.hoveredElementType,
@@ -320,7 +320,7 @@ function updateEditableValueReducer(state, actionType, payload) {
 
 /**
  * Adds a fragment at the corresponding container in the layout
- * @param {object} fragmentEntryLink
+ * @param {string} fragmentEntryLinkId
  * @param {string} hoveredElementBorder
  * @param {string} hoveredElementId
  * @param {string} hoveredElementType
@@ -329,7 +329,7 @@ function updateEditableValueReducer(state, actionType, payload) {
  * @review
  */
 function _addFragment(
-	fragmentEntryLink,
+	fragmentEntryLinkId,
 	hoveredElementBorder,
 	hoveredElementId,
 	hoveredElementType,
@@ -345,7 +345,7 @@ function _addFragment(
 
 		nextData = _addFragmentToColumn(
 			layoutData,
-			fragmentEntryLink.fragmentEntryLinkId,
+			fragmentEntryLinkId,
 			hoveredElementId,
 			fragmentColumn.fragmentEntryLinkIds.length
 		);
@@ -364,7 +364,7 @@ function _addFragment(
 
 		nextData = _addFragmentToColumn(
 			layoutData,
-			fragmentEntryLink.fragmentEntryLinkId,
+			fragmentEntryLinkId,
 			fragmentColumn.columnId,
 			position
 		);
@@ -378,14 +378,14 @@ function _addFragment(
 
 		nextData = _addSingleFragmentRow(
 			layoutData,
-			fragmentEntryLink.fragmentEntryLinkId,
+			fragmentEntryLinkId,
 			position
 		);
 	}
 	else {
 		nextData = _addSingleFragmentRow(
 			layoutData,
-			fragmentEntryLink.fragmentEntryLinkId,
+			fragmentEntryLinkId,
 			layoutData.structure.length
 		);
 	}

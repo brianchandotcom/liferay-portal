@@ -277,7 +277,7 @@
 			<var name="fieldName" value="TextName" />
 		</execute>
 
-		<execute macro="Button#SUBMIT_FOR_PUBLICATION" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Global" />

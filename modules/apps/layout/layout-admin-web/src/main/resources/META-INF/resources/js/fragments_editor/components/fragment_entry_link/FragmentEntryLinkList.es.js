@@ -38,6 +38,43 @@ class FragmentEntryLinkList extends Component {
 	}
 
 	/**
+	 * Get hovered element data
+	 * @param {!Object} eventData
+	 * @private
+	 * @return {Object}
+	 * @static
+	 */
+	static _getHoveredElementData(eventData) {
+		let hoveredElementId = null;
+		let hoveredElementType = null;
+
+		const targetData = eventData.target ? eventData.target.dataset : null;
+
+		if (targetData) {
+			if ('columnId' in targetData) {
+				hoveredElementId = targetData.columnId;
+				hoveredElementType = DROP_TARGET_TYPES.column;
+			}
+			else if ('fragmentEntryLinkId' in targetData) {
+				hoveredElementId = targetData.fragmentEntryLinkId;
+				hoveredElementType = DROP_TARGET_TYPES.fragment;
+			}
+			else if ('layoutSectionId' in targetData) {
+				hoveredElementId = targetData.layoutSectionId;
+				hoveredElementType = DROP_TARGET_TYPES.section;
+			}
+			else if ('fragmentEmptyList' in targetData) {
+				hoveredElementType = DROP_TARGET_TYPES.fragmentList;
+			}
+		}
+
+		return {
+			hoveredElementId,
+			hoveredElementType
+		};
+	}
+
+	/**
 	 * Checks wether a section is empty or not, sets empty parameter
 	 * and returns a new state
 	 * @param {Object} _state

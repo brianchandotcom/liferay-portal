@@ -68,12 +68,12 @@ if (portletTitleBasedNavigation) {
 							<liferay-ui:message arguments="<%= fileEntry.getTitle() %>" key="you-are-editing-the-tags-for-x" />
 						</c:when>
 						<c:otherwise>
-							<liferay-ui:message arguments="<%= fileEntries.size() %>" key="you-are-editing-the-common-tags-for-x-items" /> <liferay-ui:message key="select-add-or-replace-current-tags" />
+							<liferay-ui:message arguments="<%= fileEntries.size() %>" key="you-are-editing-the-common-tags-for-x-items" /> <liferay-ui:message key="select-append-or-replace-current-tags" />
 
 							<div class="form-group" id="<portlet:namespace />tagOptions">
-								<aui:input checked="<%= true %>" label="add" name="add" type="radio" value="<%= true %>" />
+								<aui:input checked="<%= true %>" label="append" name="append" type="radio" value="<%= true %>" />
 
-								<aui:input checked="<%= false %>" label="replace" name="add" type="radio" value="<%= false %>" />
+								<aui:input checked="<%= false %>" label="replace" name="append" type="radio" value="<%= false %>" />
 							</div>
 						</c:otherwise>
 					</c:choose>

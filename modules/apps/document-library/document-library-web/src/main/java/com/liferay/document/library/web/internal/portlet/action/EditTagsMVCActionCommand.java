@@ -92,7 +92,7 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 
 		Stream<FileEntry> fileEntryStream = fileEntries.stream();
 
-		boolean add = ParamUtil.getBoolean(actionRequest, "add");
+		boolean append = ParamUtil.getBoolean(actionRequest, "append");
 
 		Set<String> commonTagNamesSet = SetUtil.fromArray(
 			ParamUtil.getStringValues(actionRequest, "commonTagNames"));
@@ -117,7 +117,7 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 				try {
 					String[] newTagNames = serviceContext.getAssetTagNames();
 
-					if (add) {
+					if (append) {
 						Set<String> currentTagNamesSet = SetUtil.fromArray(
 							assetEntry.getTagNames());
 

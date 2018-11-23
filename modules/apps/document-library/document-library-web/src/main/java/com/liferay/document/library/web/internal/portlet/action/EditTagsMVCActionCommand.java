@@ -14,8 +14,6 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.constants.DLPortletKeys;
@@ -28,9 +26,12 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
@@ -65,44 +66,61 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 
 		Stream<FileEntry> fileEntryStream = fileEntries.stream();
 
+		boolean add = ParamUtil.getBoolean(actionRequest, "add");
+
+		Set<String> commonTagNamesSet = SetUtil.fromArray(
+			ParamUtil.getStringValues(actionRequest, "commonTagNames"));
+
+		Set<String> newTagNamesSet = SetUtil.fromArray(
+			serviceContext.getAssetTagNames());
+
+		Set<String> toAddTagNamesSet = _difference(
+			newTagNamesSet, commonTagNamesSet);
+
+		Set<String> toRemoveTagNamesSet = _difference(
+			commonTagNamesSet, newTagNamesSet);
+
 		fileEntryStream.map(
 			fileEntry -> _assetEntryLocalService.fetchEntry(
 				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId())
 		).forEach(
-			assetEntry -> _addTags(assetEntry, serviceContext)
+			assetEntry -> {
+				try {
+					String[] newTagNames = serviceContext.getAssetTagNames();
+
+					if (add) {
+						Set<String> currentTagNamesSet = SetUtil.fromArray(
+							assetEntry.getTagNames());
+
+						currentTagNamesSet.removeAll(toRemoveTagNamesSet);
+						currentTagNamesSet.addAll(toAddTagNamesSet);
+
+						newTagNames = currentTagNamesSet.toArray(
+							new String[currentTagNamesSet.size()]);
+					}
+
+					_assetEntryLocalService.updateEntry(
+						assetEntry.getUserId(), assetEntry.getGroupId(),
+						assetEntry.getClassName(), assetEntry.getClassPK(),
+						assetEntry.getCategoryIds(), newTagNames);
+				}
+				catch (PortalException pe) {
+					throw new SystemException(pe);
+				}
+			}
 		);
 	}
 
-	private void _addTag(
-		AssetEntry assetEntry, String tagName, ServiceContext serviceContext) {
+	private Set<String> _difference(Set<String> set1, Set<String> set2) {
+		Set<String> result = new HashSet<>();
 
-		try {
-			AssetTag assetTag = _assetTagLocalService.fetchTag(
-				assetEntry.getGroupId(), StringUtil.toLowerCase(tagName));
-
-			if (assetTag == null) {
-				assetTag = _assetTagLocalService.addTag(
-					assetEntry.getUserId(), assetEntry.getGroupId(), tagName,
-					serviceContext);
+		for (String string : set1) {
+			if (!set2.contains(string)) {
+				result.add(string);
 			}
-
-			_assetTagLocalService.addAssetEntryAssetTag(
-				assetEntry.getEntryId(), assetTag);
-
-			_assetTagLocalService.incrementAssetCount(
-				assetTag.getTagId(), assetEntry.getClassNameId());
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
-		}
-	}
 
-	private void _addTags(
-		AssetEntry assetEntry, ServiceContext serviceContext) {
-
-		for (String assetTagName : serviceContext.getAssetTagNames()) {
-			_addTag(assetEntry, assetTagName, serviceContext);
-		}
+		return result;
 	}
 
 	@Reference

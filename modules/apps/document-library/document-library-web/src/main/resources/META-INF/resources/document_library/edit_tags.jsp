@@ -18,6 +18,7 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
+String commonTagNames = (String)request.getAttribute("commonTagNames");
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
@@ -55,6 +56,7 @@ if (portletTitleBasedNavigation) {
 					%>
 
 					<aui:input name="rowIdsFileEntry" type="hidden" value="<%= ListUtil.toString(fileEntries, FileEntry.FILE_ENTRY_ID_ACCESSOR) %>" />
+					<aui:input name="commonTagNames" type="hidden" value="<%= commonTagNames %>" />
 
 					<c:choose>
 						<c:when test="<%= fileEntries.size() == 1 %>">
@@ -77,7 +79,7 @@ if (portletTitleBasedNavigation) {
 					</c:choose>
 
 					<liferay-asset:asset-tags-selector
-						tagNames='<%= GetterUtil.getString((String)request.getAttribute("commonTagNames")) %>'
+						tagNames="<%= commonTagNames %>"
 					/>
 				</aui:fieldset>
 			</aui:fieldset-group>

@@ -30,7 +30,7 @@ request.setAttribute("user.selUser", selUser);
 
 long selContactId = (selUser != null) ? selContact.getContactId() : 0;
 
-String contactInformationRequireJS = (String)request.getAttribute(UsersAdminWebKeys.CONTACT_INFORMATION_REQUIRE_JS);
+String contactInformationRequireJS = (String)request.getAttribute("contactInformationRequireJS");
 
 request.setAttribute("contact_information.jsp-className", Contact.class.getName());
 request.setAttribute("contact_information.jsp-classPK", selContactId);

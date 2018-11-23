@@ -229,12 +229,7 @@ class FragmentEntryLinkList extends Component {
 	_handleDrop(data, event) {
 		event.preventDefault();
 
-		const placeholderId = data.source.dataset.fragmentEntryLinkId;
-		const targetId = data.target ?
-			data.target.dataset.fragmentEntryLinkId :
-			'';
-
-		if (targetId && targetId !== placeholderId) {
+		if (FragmentEntryLinkList._dropValid(data)) {
 			requestAnimationFrame(
 				() => {
 					this._initializeDragAndDrop();
@@ -251,9 +246,8 @@ class FragmentEntryLinkList extends Component {
 				.dispatchAction(
 					MOVE_FRAGMENT_ENTRY_LINK,
 					{
-						originFragmentEntryLinkId: placeholderId,
-						targetFragmentEntryLinkBorder: this._targetBorder,
-						targetFragmentEntryLinkId: targetId
+						fragmentEntryLinkId:
+							data.source.dataset.fragmentEntryLinkId
 					}
 				)
 				.dispatchAction(

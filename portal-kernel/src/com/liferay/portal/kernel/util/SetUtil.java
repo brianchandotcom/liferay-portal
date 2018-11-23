@@ -34,6 +34,12 @@ import java.util.Set;
  */
 public class SetUtil {
 
+	public static <T> Set<T> difference(
+		Collection<T> collection1, Collection<T> collection2) {
+
+		return _difference(collection1, collection2, false);
+	}
+
 	public static Set<Boolean> fromArray(boolean[] array) {
 		if (ArrayUtil.isEmpty(array)) {
 			return new HashSet<>();
@@ -264,6 +270,17 @@ public class SetUtil {
 	public static <T> Set<T> symmetricDifference(
 		Collection<T> collection1, Collection<T> collection2) {
 
+		return _difference(collection1, collection2, true);
+	}
+
+	public static Set<Long> symmetricDifference(long[] array1, long[] array2) {
+		return symmetricDifference(fromArray(array1), fromArray(array2));
+	}
+
+	private static <T> Set<T> _difference(
+		Collection<T> collection1, Collection<T> collection2,
+		boolean symmetric) {
+
 		if (collection1.isEmpty()) {
 			return _toSet(collection2);
 		}
@@ -277,22 +294,20 @@ public class SetUtil {
 
 		Set<T> intersection = intersect(set1, set2);
 
-		if (set1.size() > set2.size()) {
-			set1.addAll(set2);
-		}
-		else {
-			set2.addAll(set1);
+		if (symmetric) {
+			if (set1.size() > set2.size()) {
+				set1.addAll(set2);
+			}
+			else {
+				set2.addAll(set1);
 
-			set1 = set2;
+				set1 = set2;
+			}
 		}
 
 		set1.removeAll(intersection);
 
 		return set1;
-	}
-
-	public static Set<Long> symmetricDifference(long[] array1, long[] array2) {
-		return symmetricDifference(fromArray(array1), fromArray(array2));
 	}
 
 	private static <T> Set<T> _toSet(Collection<T> collection) {

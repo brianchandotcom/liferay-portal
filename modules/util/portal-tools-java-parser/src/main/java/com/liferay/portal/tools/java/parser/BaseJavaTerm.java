@@ -461,6 +461,24 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		return false;
 	}
 
+	private String _convertToWhitespace(String s) {
+		StringBundler sb = new StringBundler(s.length());
+
+		int i = getLineLength(s);
+
+		while (i >= 4) {
+			sb.append(StringPool.TAB);
+
+			i -= 4;
+		}
+
+		for (int j = 0; j < i; j++) {
+			sb.append(StringPool.SPACE);
+		}
+
+		return sb.toString();
+	}
+
 	private String _getFirstLine(String s) {
 		int x = s.indexOf("\n");
 
@@ -479,24 +497,6 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		}
 
 		return s;
-	}
-
-	private String _convertToWhitespace(String s) {
-		StringBundler sb = new StringBundler(s.length());
-
-		int i = getLineLength(s);
-
-		while (i >= 4) {
-			sb.append(StringPool.TAB);
-
-			i -= 4;
-		}
-
-		for (int j = 0; j < i; j++) {
-			sb.append(StringPool.SPACE);
-		}
-
-		return sb.toString();
 	}
 
 	private StringBundler _stripTrailingWhitespace(StringBundler sb) {

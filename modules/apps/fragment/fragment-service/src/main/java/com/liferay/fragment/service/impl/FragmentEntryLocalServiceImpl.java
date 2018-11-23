@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.service.impl;
 
+import com.liferay.fragment.constants.FragmentEntryTypeConstants;
 import com.liferay.fragment.exception.DuplicateFragmentEntryKeyException;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
@@ -53,12 +54,35 @@ public class FragmentEntryLocalServiceImpl
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId, String name,
+			int type, int status, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFragmentEntry(
+			userId, groupId, fragmentCollectionId, StringPool.BLANK, name, 0,
+			type, status, serviceContext);
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
+			long userId, long groupId, long fragmentCollectionId, String name,
 			int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		return addFragmentEntry(
 			userId, groupId, fragmentCollectionId, StringPool.BLANK, name, 0,
-			status, serviceContext);
+			FragmentEntryTypeConstants.TYPE_SECTION, status, serviceContext);
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
+			long userId, long groupId, long fragmentCollectionId, String name,
+			long previewFileEntryId, int type, int status,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFragmentEntry(
+			userId, groupId, fragmentCollectionId, StringPool.BLANK, name,
+			previewFileEntryId, type, status, serviceContext);
 	}
 
 	@Override
@@ -69,7 +93,20 @@ public class FragmentEntryLocalServiceImpl
 
 		return addFragmentEntry(
 			userId, groupId, fragmentCollectionId, StringPool.BLANK, name,
-			previewFileEntryId, status, serviceContext);
+			previewFileEntryId, FragmentEntryTypeConstants.TYPE_SECTION, status,
+			serviceContext);
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
+			long userId, long groupId, long fragmentCollectionId,
+			String fragmentEntryKey, String name, int type, int status,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFragmentEntry(
+			userId, groupId, fragmentCollectionId, fragmentEntryKey, name, 0,
+			type, status, serviceContext);
 	}
 
 	@Override
@@ -81,14 +118,14 @@ public class FragmentEntryLocalServiceImpl
 
 		return addFragmentEntry(
 			userId, groupId, fragmentCollectionId, fragmentEntryKey, name, 0,
-			status, serviceContext);
+			FragmentEntryTypeConstants.TYPE_SECTION, status, serviceContext);
 	}
 
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId,
 			String fragmentEntryKey, String name, long previewFileEntryId,
-			int status, ServiceContext serviceContext)
+			int type, int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Fragment entry
@@ -122,6 +159,7 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setFragmentEntryKey(fragmentEntryKey);
 		fragmentEntry.setName(name);
 		fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
+		fragmentEntry.setType(type);
 		fragmentEntry.setStatus(status);
 		fragmentEntry.setStatusByUserId(userId);
 		fragmentEntry.setStatusByUserName(user.getFullName());
@@ -134,6 +172,31 @@ public class FragmentEntryLocalServiceImpl
 
 	@Override
 	public FragmentEntry addFragmentEntry(
+			long userId, long groupId, long fragmentCollectionId,
+			String fragmentEntryKey, String name, long previewFileEntryId,
+			int status, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFragmentEntry(
+			userId, groupId, fragmentCollectionId, fragmentEntryKey, name,
+			previewFileEntryId, FragmentEntryTypeConstants.TYPE_SECTION, status,
+			serviceContext);
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
+			long userId, long groupId, long fragmentCollectionId, String name,
+			String css, String html, String js, int type, int status,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFragmentEntry(
+			userId, groupId, fragmentCollectionId, StringPool.BLANK, name, css,
+			html, js, type, status, serviceContext);
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId, String name,
 			String css, String html, String js, int status,
 			ServiceContext serviceContext)
@@ -141,7 +204,20 @@ public class FragmentEntryLocalServiceImpl
 
 		return addFragmentEntry(
 			userId, groupId, fragmentCollectionId, StringPool.BLANK, name, css,
-			html, js, status, serviceContext);
+			html, js, FragmentEntryTypeConstants.TYPE_SECTION, status,
+			serviceContext);
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
+			long userId, long groupId, long fragmentCollectionId, String name,
+			String css, String html, String js, long previewFileEntryId,
+			int type, int status, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFragmentEntry(
+			userId, groupId, fragmentCollectionId, StringPool.BLANK, name, css,
+			html, js, previewFileEntryId, type, status, serviceContext);
 	}
 
 	@Override
@@ -153,7 +229,20 @@ public class FragmentEntryLocalServiceImpl
 
 		return addFragmentEntry(
 			userId, groupId, fragmentCollectionId, StringPool.BLANK, name, css,
-			html, js, previewFileEntryId, status, serviceContext);
+			html, js, previewFileEntryId,
+			FragmentEntryTypeConstants.TYPE_SECTION, status, serviceContext);
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
+			long userId, long groupId, long fragmentCollectionId,
+			String fragmentEntryKey, String name, String css, String html,
+			String js, int type, int status, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFragmentEntry(
+			userId, groupId, fragmentCollectionId, fragmentEntryKey, name, css,
+			html, js, 0, type, status, serviceContext);
 	}
 
 	@Override
@@ -165,14 +254,15 @@ public class FragmentEntryLocalServiceImpl
 
 		return addFragmentEntry(
 			userId, groupId, fragmentCollectionId, fragmentEntryKey, name, css,
-			html, js, 0, status, serviceContext);
+			html, js, 0, FragmentEntryTypeConstants.TYPE_SECTION, status,
+			serviceContext);
 	}
 
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId,
 			String fragmentEntryKey, String name, String css, String html,
-			String js, long previewFileEntryId, int status,
+			String js, long previewFileEntryId, int type, int status,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -216,6 +306,7 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setHtml(html);
 		fragmentEntry.setJs(js);
 		fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
+		fragmentEntry.setType(type);
 		fragmentEntry.setStatus(status);
 		fragmentEntry.setStatusByUserId(userId);
 		fragmentEntry.setStatusByUserName(user.getFullName());
@@ -224,6 +315,20 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntryPersistence.update(fragmentEntry);
 
 		return fragmentEntry;
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
+			long userId, long groupId, long fragmentCollectionId,
+			String fragmentEntryKey, String name, String css, String html,
+			String js, long previewFileEntryId, int status,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFragmentEntry(
+			userId, groupId, fragmentCollectionId, fragmentEntryKey, name, css,
+			html, js, previewFileEntryId,
+			FragmentEntryTypeConstants.TYPE_SECTION, status, serviceContext);
 	}
 
 	@Override

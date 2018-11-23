@@ -15,7 +15,6 @@
 package com.liferay.portal.tools.java.parser;
 
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Objects;
 
@@ -61,23 +60,9 @@ public class JavaOperatorExpression extends JavaExpression {
 
 		if (_leftHandJavaExpression != null) {
 			if (_rightHandJavaExpression != null) {
-				if (Objects.equals(
-						_javaOperator.getCategory(),
-						JavaOperator.Category.CONDITIONAL)) {
-
-					append(
-						sb, _leftHandJavaExpression, indent, prefix,
-						" " + _javaOperator.getValue() + " ", maxLineLength,
-						false);
-
-					indent = StringUtil.replaceFirst(indent, "\t", "");
-				}
-				else {
-					indent = append(
-						sb, _leftHandJavaExpression, indent, prefix,
-						" " + _javaOperator.getValue() + " ", maxLineLength,
-						false);
-				}
+				indent = append(
+					sb, _leftHandJavaExpression, indent, prefix,
+					" " + _javaOperator.getValue() + " ", maxLineLength, false);
 
 				boolean newLine = false;
 

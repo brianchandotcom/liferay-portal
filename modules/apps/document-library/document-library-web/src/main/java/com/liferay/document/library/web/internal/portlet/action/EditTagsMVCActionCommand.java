@@ -26,6 +26,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -58,9 +61,21 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DLFileEntry.class.getName(), actionRequest);
+		try {
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					_editTags(actionRequest);
 
+					return null;
+				});
+		}
+		catch (Throwable throwable) {
+			throw new PortalException(throwable);
+		}
+	}
+
+	private void _editTags(ActionRequest actionRequest) throws PortalException {
 		List<FileEntry> fileEntries = ActionUtil.getFileEntries(actionRequest);
 
 		Stream<FileEntry> fileEntryStream = fileEntries.stream();
@@ -69,6 +84,9 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 
 		Set<String> commonTagNamesSet = SetUtil.fromArray(
 			ParamUtil.getStringValues(actionRequest, "commonTagNames"));
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DLFileEntry.class.getName(), actionRequest);
 
 		Set<String> newTagNamesSet = SetUtil.fromArray(
 			serviceContext.getAssetTagNames());
@@ -109,6 +127,10 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 			}
 		);
 	}
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

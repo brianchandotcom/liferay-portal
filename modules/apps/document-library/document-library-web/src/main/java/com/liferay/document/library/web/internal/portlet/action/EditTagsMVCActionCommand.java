@@ -15,7 +15,6 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -147,8 +146,5 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private AssetTagLocalService _assetTagLocalService;
 
 }

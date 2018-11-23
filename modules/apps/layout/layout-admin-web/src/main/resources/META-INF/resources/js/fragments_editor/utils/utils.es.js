@@ -108,6 +108,20 @@ function getFragmentRowIndex(structure, fragmentEntryLinkId) {
 }
 
 /**
+ * Removes from the given array the element in the given position and
+ * returns a new array
+ * @param {!Array} array
+ * @param {!number} position
+ */
+function remove(array, position) {
+	const newArray = [...array];
+
+	newArray.splice(position, 1);
+
+	return newArray;
+}
+
+/**
  * Recursively inserts a value inside an object creating
  * a copy of the original target. It the object (or any in the path),
  * it's an Array, it will generate new Arrays, preserving the same structure.
@@ -205,6 +219,7 @@ export {
 	getDropSectionPosition,
 	getFragmentColumn,
 	getFragmentRowIndex,
+	remove,
 	setIn,
 	updateIn,
 	updateLayoutData

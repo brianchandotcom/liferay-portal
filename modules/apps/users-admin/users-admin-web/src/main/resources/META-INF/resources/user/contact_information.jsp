@@ -31,30 +31,37 @@ request.setAttribute("user.selUser", selUser);
 long selContactId = (selUser != null) ? selContact.getContactId() : 0;
 
 String contactInformationRequireJS = (String)request.getAttribute("contactInformationRequireJS");
-
-request.setAttribute("contact_information.jsp-className", Contact.class.getName());
-request.setAttribute("contact_information.jsp-classPK", selContactId);
-request.setAttribute("contact_information.jsp-contactInformationRequireJS", contactInformationRequireJS);
-request.setAttribute("contact_information.jsp-mvcActionPath", "/users_admin/update_user_contact_information");
 %>
 
 <aui:input name="classPK" type="hidden" value="<%= String.valueOf(selContactId) %>" />
 
 <div class="sheet-section">
 	<liferay-util:include page="/common/phone_numbers.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="className" value="<%= Contact.class.getName() %>" />
+		<liferay-util:param name="classPK" value="<%= String.valueOf(selContactId) %>" />
+		<liferay-util:param name="contactInformationRequireJS" value="<%= contactInformationRequireJS %>" />
 		<liferay-util:param name="emptyResultsMessage" value="this-user-does-not-have-any-phone-numbers" />
+		<liferay-util:param name="mvcActionPath" value="/users_admin/update_user_contact_information" />
 	</liferay-util:include>
 </div>
 
 <div class="sheet-section">
 	<liferay-util:include page="/common/additional_email_addresses.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="className" value="<%= Contact.class.getName() %>" />
+		<liferay-util:param name="classPK" value="<%= String.valueOf(selContactId) %>" />
+		<liferay-util:param name="contactInformationRequireJS" value="<%= contactInformationRequireJS %>" />
 		<liferay-util:param name="emptyResultsMessage" value="this-user-does-not-have-any-additional-email-addresses" />
+		<liferay-util:param name="mvcActionPath" value="/users_admin/update_user_contact_information" />
 	</liferay-util:include>
 </div>
 
 <div class="sheet-section">
 	<liferay-util:include page="/common/websites.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="className" value="<%= Contact.class.getName() %>" />
+		<liferay-util:param name="classPK" value="<%= String.valueOf(selContactId) %>" />
+		<liferay-util:param name="contactInformationRequireJS" value="<%= contactInformationRequireJS %>" />
 		<liferay-util:param name="emptyResultsMessage" value="this-user-does-not-have-any-websites" />
+		<liferay-util:param name="mvcActionPath" value="/users_admin/update_user_contact_information" />
 	</liferay-util:include>
 </div>
 

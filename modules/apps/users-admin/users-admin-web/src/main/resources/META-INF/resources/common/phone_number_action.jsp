@@ -17,8 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long classPK = (long)request.getAttribute("contact_information.jsp-classPK");
-String mvcActionPath = (String)request.getAttribute("contact_information.jsp-mvcActionPath");
+long classPK = ParamUtil.getLong(request, "classPK");
+String mvcActionPath = ParamUtil.getString(request, "mvcActionPath");
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 

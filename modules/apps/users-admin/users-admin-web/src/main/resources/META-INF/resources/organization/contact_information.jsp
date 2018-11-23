@@ -21,28 +21,37 @@ OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayCo
 
 long organizationId = organizationScreenNavigationDisplayContext.getOrganizationId();
 
-request.setAttribute("contact_information.jsp-className", Organization.class.getName());
-request.setAttribute("contact_information.jsp-classPK", organizationId);
-request.setAttribute("contact_information.jsp-contactInformationRequireJS", organizationScreenNavigationDisplayContext.getContactInformationJSRequire());
-request.setAttribute("contact_information.jsp-mvcActionPath", "/users_admin/update_organization_contact_information");
+String contactInformationRequireJS = organizationScreenNavigationDisplayContext.getContactInformationJSRequire();
 %>
 
 <aui:input name="classPK" type="hidden" value="<%= String.valueOf(organizationId) %>" />
 
 <div class="sheet-section">
 	<liferay-util:include page="/common/phone_numbers.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="className" value="<%= Organization.class.getName() %>" />
+		<liferay-util:param name="classPK" value="<%= String.valueOf(organizationId) %>" />
+		<liferay-util:param name="contactInformationRequireJS" value="<%= contactInformationRequireJS %>" />
 		<liferay-util:param name="emptyResultsMessage" value="this-organization-does-not-have-any-phone-numbers" />
+		<liferay-util:param name="mvcActionPath" value="/users_admin/update_organization_contact_information" />
 	</liferay-util:include>
 </div>
 
 <div class="sheet-section">
 	<liferay-util:include page="/common/additional_email_addresses.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="className" value="<%= Organization.class.getName() %>" />
+		<liferay-util:param name="classPK" value="<%= String.valueOf(organizationId) %>" />
+		<liferay-util:param name="contactInformationRequireJS" value="<%= contactInformationRequireJS %>" />
 		<liferay-util:param name="emptyResultsMessage" value="this-organization-does-not-have-any-additional-email-addresses" />
+		<liferay-util:param name="mvcActionPath" value="/users_admin/update_organization_contact_information" />
 	</liferay-util:include>
 </div>
 
 <div class="sheet-section">
 	<liferay-util:include page="/common/websites.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="className" value="<%= Organization.class.getName() %>" />
+		<liferay-util:param name="classPK" value="<%= String.valueOf(organizationId) %>" />
+		<liferay-util:param name="contactInformationRequireJS" value="<%= contactInformationRequireJS %>" />
 		<liferay-util:param name="emptyResultsMessage" value="this-organization-does-not-have-any-websites" />
+		<liferay-util:param name="mvcActionPath" value="/users_admin/update_organization_contact_information" />
 	</liferay-util:include>
 </div>

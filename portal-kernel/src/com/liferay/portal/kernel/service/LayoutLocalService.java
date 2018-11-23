@@ -1397,6 +1397,8 @@ public interface LayoutLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Layout updateLayout(Layout layout);
 
+	public Layout updateLayout(Layout layout, boolean rebuildTree);
+
 	/**
 	* Updates the layout.
 	*

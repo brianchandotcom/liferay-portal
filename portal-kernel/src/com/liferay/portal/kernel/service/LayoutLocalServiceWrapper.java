@@ -1807,6 +1807,12 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 		return _layoutLocalService.updateLayout(layout);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Layout updateLayout(
+		com.liferay.portal.kernel.model.Layout layout, boolean rebuildTree) {
+		return _layoutLocalService.updateLayout(layout, rebuildTree);
+	}
+
 	/**
 	* Updates the layout.
 	*

@@ -1724,6 +1724,11 @@ public class LayoutLocalServiceUtil {
 		return getService().updateLayout(layout);
 	}
 
+	public static com.liferay.portal.kernel.model.Layout updateLayout(
+		com.liferay.portal.kernel.model.Layout layout, boolean rebuildTree) {
+		return getService().updateLayout(layout, rebuildTree);
+	}
+
 	/**
 	* Updates the layout.
 	*

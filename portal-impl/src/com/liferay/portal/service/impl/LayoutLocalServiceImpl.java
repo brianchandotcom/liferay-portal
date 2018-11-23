@@ -2573,7 +2573,19 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	@Override
 	public Layout updateLayout(Layout layout) {
-		return layoutPersistence.update(layout);
+		return updateLayout(layout, false);
+	}
+
+	@Override
+	public Layout updateLayout(Layout layout, boolean rebuildTree) {
+		try {
+			layoutPersistence.setRebuildTreeEnabled(rebuildTree);
+
+			return layoutPersistence.update(layout);
+		}
+		finally {
+			layoutPersistence.setRebuildTreeEnabled(true);
+		}
 	}
 
 	/**

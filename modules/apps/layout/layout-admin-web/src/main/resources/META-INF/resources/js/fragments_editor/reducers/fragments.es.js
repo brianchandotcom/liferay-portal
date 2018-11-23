@@ -11,7 +11,6 @@ import {
 	getColumn,
 	getDropSectionPosition,
 	getFragmentColumn,
-	getFragmentRowIndex,
 	remove,
 	setIn,
 	updateIn,
@@ -112,9 +111,7 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
  * @param {!object} state
  * @param {!string} actionType
  * @param {!object} payload
- * @param {!string} payload.originFragmentEntryLinkId
- * @param {!string} payload.originFragmentEntryLinkBorder
- * @param {!string} payload.targetFragmentEntryLinkId
+ * @param {!string} payload.fragmentEntryLinkId
  * @return {object}
  * @review
  */
@@ -124,35 +121,20 @@ function moveFragmentEntryLinkReducer(state, actionType, payload) {
 			let nextState = state;
 
 			if (actionType === MOVE_FRAGMENT_ENTRY_LINK) {
-				const border = payload.targetFragmentEntryLinkBorder;
-				const originId = payload.originFragmentEntryLinkId;
-				const targetId = payload.targetFragmentEntryLinkId;
+				let nextData = null;
 
-				const nextData = setIn(
+				nextData = _removeFragment(
 					state.layoutData,
-					['structure'],
-					[...state.layoutData.structure]
+					payload.fragmentEntryLinkId
 				);
 
-				const originIndex = getFragmentRowIndex(
-					nextData.structure,
-					originId
+				nextData = _addFragment(
+					payload.fragmentEntryLinkId,
+					state.hoveredElementBorder,
+					state.hoveredElementId,
+					state.hoveredElementType,
+					nextData
 				);
-
-				const originContent = nextData.structure[originIndex];
-
-				nextData.structure.splice(originIndex, 1);
-
-				let targetIndex = getFragmentRowIndex(
-					nextData.structure,
-					targetId
-				);
-
-				if (border !== DRAG_POSITIONS.top) {
-					targetIndex += 1;
-				}
-
-				nextData.structure.splice(targetIndex, 0, originContent);
 
 				_moveFragmentEntryLink(
 					state.updateLayoutPageTemplateDataURL,

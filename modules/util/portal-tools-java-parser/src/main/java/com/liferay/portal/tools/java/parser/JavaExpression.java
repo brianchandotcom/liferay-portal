@@ -76,7 +76,7 @@ public abstract class JavaExpression extends BaseJavaTerm {
 				getString(indent, prefix, ".", maxLineLength, forceLineBreak));
 		}
 
-		indent = "\t" + getIndent(getLastLine(sb));
+		indent = adjustIndent(sb, "\t" + getIndent(getLastLine(sb)));
 
 		if (forceLineBreak) {
 			appendWithLineBreak(

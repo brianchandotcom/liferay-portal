@@ -60,39 +60,77 @@ public class JavaOperatorExpression extends JavaExpression {
 
 		if (_leftHandJavaExpression != null) {
 			if (_rightHandJavaExpression != null) {
-				indent = append(
-					sb, _leftHandJavaExpression, indent, prefix,
-					" " + _javaOperator.getValue() + " ", maxLineLength, false);
-
-				boolean newLine = false;
-
 				if (Objects.equals(
 						_javaOperator.getCategory(),
-						JavaOperator.Category.ASSIGNMENT)) {
+						JavaOperator.Category.CONDITIONAL)) {
 
-					if (_rightHandJavaExpression instanceof
-							JavaOperatorExpression) {
+					if (appendSingleLine(
+							sb, _leftHandJavaExpression, prefix,
+							" " + _javaOperator.getValue() + " ",
+							maxLineLength)) {
 
-						JavaOperatorExpression javaOperatorExpression =
-							(JavaOperatorExpression)_rightHandJavaExpression;
+						append(
+							sb, _rightHandJavaExpression, indent, "", suffix,
+							maxLineLength);
+					}
+					else {
+						indent = appendWithLineBreak(
+							sb, _leftHandJavaExpression, indent, prefix,
+							" " + _javaOperator.getValue() + " ",
+							maxLineLength);
 
-						JavaOperator javaOperator =
-							javaOperatorExpression.getJavaOperator();
+						if (Objects.equals(
+								getIndent(getLastLine(sb)),
+								adjustIndent(sb, indent))) {
 
-						if (!javaOperator.equals(
-								JavaOperator.LOGICAL_COMPLEMENT_OPERATOR)) {
-
-							newLine = true;
+							append(
+								sb, _rightHandJavaExpression, indent, "",
+								suffix, maxLineLength);
+						}
+						else {
+							appendNewLine(
+								sb, _rightHandJavaExpression, indent, "",
+								suffix, maxLineLength);
 						}
 					}
 				}
 				else {
-					newLine = true;
-				}
+					indent = append(
+						sb, _leftHandJavaExpression, indent, prefix,
+						" " + _javaOperator.getValue() + " ", maxLineLength,
+						false);
 
-				append(
-					sb, _rightHandJavaExpression, indent, "", suffix,
-					maxLineLength, newLine);
+					boolean newLine = false;
+
+					if (Objects.equals(
+							_javaOperator.getCategory(),
+							JavaOperator.Category.ASSIGNMENT)) {
+
+						if (_rightHandJavaExpression instanceof
+								JavaOperatorExpression) {
+
+							JavaOperatorExpression javaOperatorExpression =
+								(JavaOperatorExpression)
+									_rightHandJavaExpression;
+
+							JavaOperator javaOperator =
+								javaOperatorExpression.getJavaOperator();
+
+							if (!javaOperator.equals(
+									JavaOperator.LOGICAL_COMPLEMENT_OPERATOR)) {
+
+								newLine = true;
+							}
+						}
+					}
+					else {
+						newLine = true;
+					}
+
+					append(
+						sb, _rightHandJavaExpression, indent, "", suffix,
+						maxLineLength, newLine);
+				}
 			}
 			else {
 				append(

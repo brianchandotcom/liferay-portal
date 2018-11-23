@@ -2953,9 +2953,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	public Layout updateParentLayoutId(long plid, long parentPlid)
 		throws PortalException {
 
-		Date now = new Date();
-
 		Layout layout = layoutPersistence.findByPrimaryKey(plid);
+
+		if (layout.getParentPlid() == parentPlid) {
+			return layout;
+		}
+
+		Date now = new Date();
 
 		long parentLayoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
 

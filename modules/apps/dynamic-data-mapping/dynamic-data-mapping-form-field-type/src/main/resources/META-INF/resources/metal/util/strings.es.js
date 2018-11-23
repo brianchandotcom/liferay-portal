@@ -32,6 +32,7 @@ export function subWords(langKey, args) {
 	for (const arg in args) {
 		if (args.hasOwnProperty(arg)) {
 			const indexKey = `{${arg}}`;
+
 			let argIndex = keyArray.indexOf(indexKey);
 
 			while (argIndex >= 0) {

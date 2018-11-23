@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.util.List;
 
@@ -201,6 +202,8 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		sb = _stripTrailingWhitespace(sb);
 
 		if (sb.index() > 0) {
+			indent = _adjustIndent(sb, indent);
+
 			sb.append("\n");
 		}
 
@@ -354,49 +357,54 @@ public abstract class BaseJavaTerm implements JavaTerm {
 				indent, prefix, suffix, maxLineLength, true);
 
 			sb.append(s);
-
-			return "\t" + getIndent(_getLastLine(s));
-		}
-
-		String javaTermContent = javaTerm.toString(
-			indent, "", suffix, maxLineLength, true);
-
-		javaTermContent = StringUtil.replaceFirst(
-			javaTermContent, indent, prefix);
-
-		String firstLineJavaTermContent = _getFirstLine(javaTermContent);
-
-		String s = lastLine + firstLineJavaTermContent;
-
-		lastLine = StringUtil.trim(lastLine);
-
-		if ((getLineLength(s) > maxLineLength) ||
-			((lastLine.endsWith("=") || lastLine.endsWith(")")) &&
-			 (firstLineJavaTermContent.endsWith(".") ||
-			  firstLineJavaTermContent.matches("\\s*\\([^\\)]+\\)?")))) {
-
-			appendNewLine(
-				sb, javaTerm, "\t" + indent, prefix, suffix, maxLineLength);
 		}
 		else {
-			sb.append(javaTermContent);
+			String javaTermContent = javaTerm.toString(
+				indent, "", suffix, maxLineLength, true);
+
+			javaTermContent = StringUtil.replaceFirst(
+				javaTermContent, indent, prefix);
+
+			String firstLineJavaTermContent = _getFirstLine(javaTermContent);
+
+			String s = lastLine + firstLineJavaTermContent;
+
+			lastLine = StringUtil.trim(lastLine);
+
+			if ((getLineLength(s) > maxLineLength) ||
+				((lastLine.endsWith("=") || lastLine.endsWith(")")) &&
+				 (firstLineJavaTermContent.endsWith(".") ||
+				  firstLineJavaTermContent.matches("\\s*\\([^\\)]+\\)?")))) {
+
+				appendNewLine(
+					sb, javaTerm, "\t" + indent, prefix, suffix, maxLineLength);
+			}
+			else {
+				sb.append(javaTermContent);
+			}
 		}
 
-		return "\t" + getIndent(getLastLine(sb));
+		indent = "\t" + getIndent(getLastLine(sb));
+
+		if (javaTerm instanceof JavaType) {
+			return _trimTrailingSpaces(indent);
+		}
+
+		return indent;
 	}
 
 	protected String getIndent(String s) {
 		StringBundler sb = new StringBundler(s.length());
 
-		for (int i = 0; i < s.length(); i++) {
-			if (s.charAt(i) != CharPool.TAB) {
-				break;
+		for (char c : s.toCharArray()) {
+			if (!Character.isWhitespace(c)) {
+				return sb.toString();
 			}
 
-			sb.append(CharPool.TAB);
+			sb.append(c);
 		}
 
-		return sb.toString();
+		return s;
 	}
 
 	protected String getLastLine(StringBundler sb) {
@@ -428,6 +436,50 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		}
 
 		return lineLength;
+	}
+
+	private String _adjustIndent(StringBundler sb, String indent) {
+		String s = sb.toString();
+
+		String lastLine = StringUtil.trim(_getLastLine(s));
+
+		if (lastLine.endsWith("&") || lastLine.endsWith("|") ||
+			lastLine.endsWith("^")) {
+
+			int x = s.length();
+
+			while (true) {
+				x = s.lastIndexOf(CharPool.OPEN_PARENTHESIS, x - 1);
+
+				if (x == -1) {
+					return _getLeadingWhitespace(s);
+				}
+
+				if (SourceUtil.getLevel(s.substring(x)) != 0) {
+					continue;
+				}
+
+				int y = s.lastIndexOf('\n', x) + 1;
+
+				String linePart = s.substring(y, x);
+
+				int z = linePart.length();
+
+				while (true) {
+					z = linePart.lastIndexOf(CharPool.OPEN_PARENTHESIS, z - 1);
+
+					if (z == -1) {
+						return _getLeadingWhitespace(s.substring(y, x));
+					}
+
+					if (SourceUtil.getLevel(linePart.substring(z)) != 0) {
+						return _convertToWhitespace(s.substring(y, z + 1));
+					}
+				}
+			}
+		}
+
+		return indent;
 	}
 
 	private boolean _appendSingleLine(
@@ -499,6 +551,21 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		return s;
 	}
 
+	private String _getLeadingWhitespace(String s) {
+		StringBundler sb = new StringBundler();
+
+		for (char c : s.toCharArray()) {
+			if (Character.isWhitespace(c)) {
+				sb.append(c);
+			}
+			else {
+				return sb.toString();
+			}
+		}
+
+		return s;
+	}
+
 	private StringBundler _stripTrailingWhitespace(StringBundler sb) {
 		while (true) {
 			if (sb.index() == 0) {
@@ -515,6 +582,16 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			}
 
 			sb.setIndex(sb.index() - 1);
+		}
+	}
+
+	private String _trimTrailingSpaces(String s) {
+		while (true) {
+			if (s.charAt(s.length() - 1) != CharPool.SPACE) {
+				return s;
+			}
+
+			s = s.substring(0, s.length() - 1);
 		}
 	}
 

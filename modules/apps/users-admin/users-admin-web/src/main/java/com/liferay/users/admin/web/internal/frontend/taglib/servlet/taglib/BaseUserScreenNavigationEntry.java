@@ -84,6 +84,7 @@ public abstract class BaseUserScreenNavigationEntry
 		request.setAttribute(
 			UsersAdminWebKeys.FORM_LABEL, getLabel(request.getLocale()));
 		request.setAttribute(UsersAdminWebKeys.JSP_PATH, getJspPath());
+
 		request.setAttribute(UsersAdminWebKeys.SHOW_CONTROLS, isShowControls());
 		request.setAttribute(UsersAdminWebKeys.SHOW_TITLE, isShowTitle());
 

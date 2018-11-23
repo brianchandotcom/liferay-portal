@@ -144,6 +144,15 @@ public class DLAdminManagementToolbarDisplayContext {
 									LanguageUtil.get(_request, "move"));
 								dropdownItem.setQuickAction(true);
 							}));
+					add(
+						SafeConsumer.ignore(
+							dropdownItem -> {
+								dropdownItem.putData("action", "editTags");
+								dropdownItem.setIcon("tag");
+								dropdownItem.setLabel(
+									LanguageUtil.get(_request, "edit-tags"));
+								dropdownItem.setQuickAction(true);
+							}));
 				}
 
 				add(
@@ -189,16 +198,6 @@ public class DLAdminManagementToolbarDisplayContext {
 									LanguageUtil.get(
 										_request, "checkout[document]"));
 								dropdownItem.setQuickAction(false);
-							}));
-
-					add(
-						SafeConsumer.ignore(
-							dropdownItem -> {
-								dropdownItem.putData("action", "editTags");
-								dropdownItem.setIcon("tag");
-								dropdownItem.setLabel(
-									LanguageUtil.get(_request, "edit-tags"));
-								dropdownItem.setQuickAction(true);
 							}));
 				}
 			}

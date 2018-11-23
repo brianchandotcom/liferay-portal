@@ -484,7 +484,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 	private String _convertToWhitespace(String s) {
 		StringBundler sb = new StringBundler(s.length());
 
-		int i = getLineLength(StringUtil.trimLeading(s));
+		int i = getLineLength(s);
 
 		while (i >= 4) {
 			sb.append(StringPool.TAB);

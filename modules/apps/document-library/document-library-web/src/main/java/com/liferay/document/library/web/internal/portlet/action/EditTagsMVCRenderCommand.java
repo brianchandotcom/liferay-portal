@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -78,7 +79,7 @@ public class EditTagsMVCRenderCommand implements MVCRenderCommand {
 				tagNameSets);
 
 			renderRequest.setAttribute(
-				"commonTagNames",
+				DLWebKeys.DOCUMENT_LIBRARY_COMMON_TAG_NAMES,
 				commonTagNamesStream.collect(Collectors.joining(",")));
 
 			return "/document_library/edit_tags.jsp";

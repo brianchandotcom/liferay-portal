@@ -18,7 +18,7 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
-String commonTagNames = (String)request.getAttribute("commonTagNames");
+String commonTagNames = (String)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_COMMON_TAG_NAMES);
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 

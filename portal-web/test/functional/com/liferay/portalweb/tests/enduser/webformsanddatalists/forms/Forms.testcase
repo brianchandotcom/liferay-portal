@@ -2233,7 +2233,7 @@
 
 		<execute macro="Form#save" />
 
-		<execute macro="ProductMenu#gotoSite">
+		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="My Account" />
 			<var name="panel" value="User" />
 			<var name="portlet" value="Account Settings" />

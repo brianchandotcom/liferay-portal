@@ -96,6 +96,8 @@ let initSPA = function() {
 		);
 	};
 
+	Liferay.initComponentCache();
+
 	Liferay.SPA.app = app;
 	Liferay.SPA.version = version;
 

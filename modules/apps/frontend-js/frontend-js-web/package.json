@@ -35,6 +35,7 @@
 		"metal-position": "^2.1.1",
 		"metal-promise": "^3.0.4",
 		"metal-soy": "^2.16.4",
+		"metal-uri": "^3.1.2",
 		"svg4everybody": "^2.1.8",
 		"uuid": "^3.3.2"
 	},

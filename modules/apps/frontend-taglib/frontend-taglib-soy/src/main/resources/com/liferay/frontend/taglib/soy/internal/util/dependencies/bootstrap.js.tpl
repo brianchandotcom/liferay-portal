@@ -3,9 +3,13 @@ Liferay.Loader.require.apply(
 	$MODULES.concat(
 		[
 			function(Component) {
-				var context = $CONTEXT;
+				var context = Object.assign(
+					$CONTEXT,
+					Liferay.getComponentCache('$ID')
+				);
 
 				var componentConfig = {
+					cacheState: context.cacheState,
 					destroyOnNavigate: true,
 					portletId: context.portletId
 				};

@@ -1,8 +1,10 @@
 import {isFunction} from 'metal';
+import Uri from 'metal-uri';
 
 let componentConfigs = {};
 let componentPromiseWrappers = {};
 let components = {};
+let componentsCache = {};
 let componentsFn = {};
 
 const _createPromiseWrapper = function(value) {
@@ -16,6 +18,7 @@ const _createPromiseWrapper = function(value) {
     }
     else {
         let promiseResolve;
+
         const promise = new Promise(
             function(resolve) {
                 promiseResolve = resolve;
@@ -29,6 +32,98 @@ const _createPromiseWrapper = function(value) {
     }
 
     return promiseWrapper;
+};
+
+/**
+ * Restores a previously cached component markup
+ *
+ * @param {object} state Stored state associated with the registered task
+ * @param {object} params Additional params passed in the task registration
+ * @param {Fragment} node Temporary fragment holding the new markup
+ * @private
+ * @review
+ */
+const _restoreTask = function(state, params, node) {
+    const cache = state.data;
+    const componentIds = Object.keys(cache);
+
+    componentIds.forEach(
+        componentId => {
+            const container = node.getElementById(componentId);
+
+            if (container) {
+                container.innerHTML = cache[componentId].html;
+            }
+        }
+    )
+};
+
+/**
+ * Runs when an SPA navigation start is detected to:
+ * - Cache the state and current markup of registered components matching that
+ * have requested it through the `cacheState` configuration option. This state
+ * can be used to initialize the component in the same state if it persists
+ * throughout navigations.
+ * - Register a DOM task to restore the markup of those components that are
+ * present in the next screen to avoid a flickering effect due to state changes.
+ * This can be done by querying the components screen cache using the
+ * `Liferay.getComponentsCache` method.
+ *
+ * @private
+ * @review
+ */
+
+const _onStartNavigate = function(event) {
+    const uri = new Uri(event.path);
+
+    const actionUri = uri.getParameterValue('p_p_lifecycle') === '1';
+
+    if (!actionUri) {
+        var componentIds = Object.keys(components);
+
+        componentIds = componentIds.filter(
+            componentId => {
+                const component = components[componentId];
+                const componentConfig = componentConfigs[componentId];
+
+                return  componentConfig &&
+                        componentConfig.cacheState &&
+                        component.element &&
+                        component.getState;
+            }
+        );
+
+        componentsCache = componentIds.reduce(
+            (cache, componentId) => {
+                const component = components[componentId];
+
+                cache[componentId] = {
+                    html: component.element.innerHTML,
+                    state: component.getState()
+                };
+
+                return cache;
+            },
+            []
+        );
+
+        Liferay.DOMTaskRunner.addTask(
+            {
+                action: _restoreTask,
+                condition: state => state.owner === "liferay.component"
+            }
+        );
+
+        Liferay.DOMTaskRunner.addTaskState(
+            {
+                data: componentsCache,
+                owner: "liferay.component"
+            }
+        );
+    }
+    else {
+        componentsCache = {};
+    }
 };
 
 /**
@@ -199,11 +294,28 @@ const destroyUnfulfilledPromises = function() {
     componentPromiseWrappers = {};
 };
 
+/**
+ * Retrieves a registered component cached state.
+ *
+ * @param {string} componentId The id used to register the component
+ * @return {object} The state the component had prior to the previous navigation
+ * @review
+ */
+
+const getComponentCache = function(componentId) {
+    const componentCache = componentsCache[componentId];
+
+    return componentCache ? componentCache.state : {};
+};
+
+Liferay.on('startNavigate', _onStartNavigate);
+
 export {
     component,
     componentReady,
     destroyComponent,
     destroyComponents,
-    destroyUnfulfilledPromises
+    destroyUnfulfilledPromises,
+    getComponentCache
 };
 export default component;

@@ -7,31 +7,33 @@ let components = {};
 let componentsCache = {};
 let componentsFn = {};
 
+const LIFERAY_COMPONENT = 'liferay.component';
+
 const _createPromiseWrapper = function(value) {
-    let promiseWrapper;
+	let promiseWrapper;
 
-    if (value) {
-        promiseWrapper = {
-            promise: Promise.resolve(value),
-            resolve: function() {}
-        };
-    }
-    else {
-        let promiseResolve;
+	if (value) {
+		promiseWrapper = {
+			promise: Promise.resolve(value),
+			resolve: function() {}
+		};
+	}
+	else {
+		let promiseResolve;
 
-        const promise = new Promise(
-            function(resolve) {
-                promiseResolve = resolve;
-            }
-        );
+		const promise = new Promise(
+			function(resolve) {
+				promiseResolve = resolve;
+			}
+		);
 
-        promiseWrapper = {
-            promise: promise,
-            resolve: promiseResolve
-        };
-    }
+		promiseWrapper = {
+			promise: promise,
+			resolve: promiseResolve
+		};
+	}
 
-    return promiseWrapper;
+	return promiseWrapper;
 };
 
 /**
@@ -44,18 +46,18 @@ const _createPromiseWrapper = function(value) {
  * @review
  */
 const _restoreTask = function(state, params, node) {
-    const cache = state.data;
-    const componentIds = Object.keys(cache);
+	const cache = state.data;
+	const componentIds = Object.keys(cache);
 
-    componentIds.forEach(
-        componentId => {
-            const container = node.getElementById(componentId);
+	componentIds.forEach(
+		componentId => {
+			const container = node.getElementById(componentId);
 
-            if (container) {
-                container.innerHTML = cache[componentId].html;
-            }
-        }
-    )
+			if (container) {
+				container.innerHTML = cache[componentId].html;
+			}
+		}
+	);
 };
 
 /**
@@ -74,56 +76,56 @@ const _restoreTask = function(state, params, node) {
  */
 
 const _onStartNavigate = function(event) {
-    const uri = new Uri(event.path);
+	const uri = new Uri(event.path);
 
-    const actionUri = uri.getParameterValue('p_p_lifecycle') === '1';
+	const actionUri = uri.getParameterValue('p_p_lifecycle') === '1';
 
-    if (!actionUri) {
-        var componentIds = Object.keys(components);
+	if (!actionUri) {
+		var componentIds = Object.keys(components);
 
-        componentIds = componentIds.filter(
-            componentId => {
-                const component = components[componentId];
-                const componentConfig = componentConfigs[componentId];
+		componentIds = componentIds.filter(
+			componentId => {
+				const component = components[componentId];
+				const componentConfig = componentConfigs[componentId];
 
-                return  componentConfig &&
-                        componentConfig.cacheState &&
-                        component.element &&
-                        component.getState;
-            }
-        );
+				return componentConfig &&
+					componentConfig.cacheState &&
+					component.element &&
+					component.getState;
+			}
+		);
 
-        componentsCache = componentIds.reduce(
-            (cache, componentId) => {
-                const component = components[componentId];
+		componentsCache = componentIds.reduce(
+			(cache, componentId) => {
+				const component = components[componentId];
 
-                cache[componentId] = {
-                    html: component.element.innerHTML,
-                    state: component.getState()
-                };
+				cache[componentId] = {
+					html: component.element.innerHTML,
+					state: component.getState()
+				};
 
-                return cache;
-            },
-            []
-        );
+				return cache;
+			},
+			[]
+		);
 
-        Liferay.DOMTaskRunner.addTask(
-            {
-                action: _restoreTask,
-                condition: state => state.owner === "liferay.component"
-            }
-        );
+		Liferay.DOMTaskRunner.addTask(
+			{
+				action: _restoreTask,
+				condition: state => state.owner === LIFERAY_COMPONENT
+			}
+		);
 
-        Liferay.DOMTaskRunner.addTaskState(
-            {
-                data: componentsCache,
-                owner: "liferay.component"
-            }
-        );
-    }
-    else {
-        componentsCache = {};
-    }
+		Liferay.DOMTaskRunner.addTaskState(
+			{
+				data: componentsCache,
+				owner: LIFERAY_COMPONENT
+			}
+		);
+	}
+	else {
+		componentsCache = {};
+	}
 };
 
 /**
@@ -140,52 +142,52 @@ const _onStartNavigate = function(event) {
  */
 
 const component = function(id, value, componentConfig) {
-    let retVal;
+	let retVal;
 
-    if (arguments.length === 1) {
-        let component = components[id];
+	if (arguments.length === 1) {
+		let component = components[id];
 
-        if (component && isFunction(component)) {
-            componentsFn[id] = component;
+		if (component && isFunction(component)) {
+			componentsFn[id] = component;
 
-            component = component();
+			component = component();
 
-            components[id] = component;
-        }
+			components[id] = component;
+		}
 
-        retVal = component;
-    }
-    else {
-        if (components[id] && value !== null) {
-            delete componentConfigs[id];
-            delete componentPromiseWrappers[id];
+		retVal = component;
+	}
+	else {
+		if (components[id] && value !== null) {
+			delete componentConfigs[id];
+			delete componentPromiseWrappers[id];
 
-            console.warn('Component with id "' + id + '" is being registered twice. This can lead to unexpected behaviour in the "Liferay.component" and "Liferay.componentReady" APIs, as well as in the "*:registered" events.');
-        }
+			console.warn('Component with id "' + id + '" is being registered twice. This can lead to unexpected behaviour in the "Liferay.component" and "Liferay.componentReady" APIs, as well as in the "*:registered" events.');
+		}
 
-        retVal = (components[id] = value);
+		retVal = (components[id] = value);
 
-        if (value === null) {
-            delete componentConfigs[id];
-            delete componentPromiseWrappers[id];
-        }
-        else {
-            componentConfigs[id] = componentConfig;
+		if (value === null) {
+			delete componentConfigs[id];
+			delete componentPromiseWrappers[id];
+		}
+		else {
+			componentConfigs[id] = componentConfig;
 
-            Liferay.fire(id + ':registered');
+			Liferay.fire(id + ':registered');
 
-            const componentPromiseWrapper = componentPromiseWrappers[id];
+			const componentPromiseWrapper = componentPromiseWrappers[id];
 
-            if (componentPromiseWrapper) {
-                componentPromiseWrapper.resolve(value);
-            }
-            else {
-                componentPromiseWrappers[id] = _createPromiseWrapper(value);
-            }
-        }
-    }
+			if (componentPromiseWrapper) {
+				componentPromiseWrapper.resolve(value);
+			}
+			else {
+				componentPromiseWrappers[id] = _createPromiseWrapper(value);
+			}
+		}
+	}
 
-    return retVal;
+	return retVal;
 };
 
 /**
@@ -198,38 +200,38 @@ const component = function(id, value, componentConfig) {
  */
 
 const componentReady = function() {
-    let component;
-    let componentPromise;
+	let component;
+	let componentPromise;
 
-    if (arguments.length === 1) {
-        component = arguments[0];
-    }
-    else {
-        component = [];
+	if (arguments.length === 1) {
+		component = arguments[0];
+	}
+	else {
+		component = [];
 
-        for (var i = 0; i < arguments.length; i++) {
-            component[i] = arguments[i];
-        }
-    }
+		for (var i = 0; i < arguments.length; i++) {
+			component[i] = arguments[i];
+		}
+	}
 
-    if (Array.isArray(component)) {
-        componentPromise = Promise.all(
-            component.map(
-                id => componentReady(id)
-            )
-        );
-    }
-    else {
-        let componentPromiseWrapper = componentPromiseWrappers[component];
+	if (Array.isArray(component)) {
+		componentPromise = Promise.all(
+			component.map(
+				id => componentReady(id)
+			)
+		);
+	}
+	else {
+		let componentPromiseWrapper = componentPromiseWrappers[component];
 
-        if (!componentPromiseWrapper) {
-            componentPromiseWrappers[component] = componentPromiseWrapper = _createPromiseWrapper();
-        }
+		if (!componentPromiseWrapper) {
+			componentPromiseWrappers[component] = componentPromiseWrapper = _createPromiseWrapper();
+		}
 
-        componentPromise = componentPromiseWrapper.promise;
-    }
+		componentPromise = componentPromiseWrapper.promise;
+	}
 
-    return componentPromise;
+	return componentPromise;
 };
 
 /**
@@ -242,20 +244,20 @@ const componentReady = function() {
  */
 
 const destroyComponent = function(componentId) {
-    const component = components[componentId];
+	const component = components[componentId];
 
-    if (component) {
-        const destroyFn = component.destroy || component.dispose;
+	if (component) {
+		const destroyFn = component.destroy || component.dispose;
 
-        if (destroyFn) {
-            destroyFn.call(component);
-        }
+		if (destroyFn) {
+			destroyFn.call(component);
+		}
 
-        delete componentConfigs[componentId];
-        delete componentPromiseWrappers[componentId];
-        delete componentsFn[componentId];
-        delete components[componentId];
-    }
+		delete componentConfigs[componentId];
+		delete componentPromiseWrappers[componentId];
+		delete componentsFn[componentId];
+		delete components[componentId];
+	}
 };
 
 /**
@@ -268,20 +270,20 @@ const destroyComponent = function(componentId) {
  */
 
 const destroyComponents = function(filterFn) {
-    var componentIds = Object.keys(components);
+	var componentIds = Object.keys(components);
 
-    if (filterFn) {
-        componentIds = componentIds.filter(
-            componentId => {
-                return filterFn(
-                    components[componentId],
-                    componentConfigs[componentId] || {}
-                );
-            }
-        );
-    }
+	if (filterFn) {
+		componentIds = componentIds.filter(
+			componentId => {
+				return filterFn(
+					components[componentId],
+					componentConfigs[componentId] || {}
+				);
+			}
+		);
+	}
 
-    componentIds.forEach(destroyComponent);
+	componentIds.forEach(destroyComponent);
 };
 
 /**
@@ -291,7 +293,7 @@ const destroyComponents = function(filterFn) {
  */
 
 const destroyUnfulfilledPromises = function() {
-    componentPromiseWrappers = {};
+	componentPromiseWrappers = {};
 };
 
 /**
@@ -303,19 +305,19 @@ const destroyUnfulfilledPromises = function() {
  */
 
 const getComponentCache = function(componentId) {
-    const componentCache = componentsCache[componentId];
+	const componentCache = componentsCache[componentId];
 
-    return componentCache ? componentCache.state : {};
+	return componentCache ? componentCache.state : {};
 };
 
 Liferay.on('startNavigate', _onStartNavigate);
 
 export {
-    component,
-    componentReady,
-    destroyComponent,
-    destroyComponents,
-    destroyUnfulfilledPromises,
-    getComponentCache
+	component,
+	componentReady,
+	destroyComponent,
+	destroyComponents,
+	destroyUnfulfilledPromises,
+	getComponentCache
 };
 export default component;

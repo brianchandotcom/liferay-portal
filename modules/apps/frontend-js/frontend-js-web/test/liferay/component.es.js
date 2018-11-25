@@ -2,9 +2,9 @@
 
 import {
 	component,
-    componentReady,
-    destroyComponent,
-    destroyComponents,
+	componentReady,
+	destroyComponent,
+	destroyComponents,
 	destroyUnfulfilledPromises
 } from '../../src/main/resources/META-INF/resources/liferay/component.es';
 
@@ -21,7 +21,7 @@ describe(
 			() => {
 				Liferay = {
 					fire: () => 0
-				}
+				};
 			}
 		);
 

@@ -21,6 +21,10 @@ import com.liferay.portal.kernel.util.StringBundler;
  */
 public class JavaReturnStatement extends BaseJavaTerm {
 
+	public JavaExpression getReturnJavaExpression() {
+		return _returnJavaExpression;
+	}
+
 	public void setReturnJavaExpression(JavaExpression returnJavaExpression) {
 		_returnJavaExpression = returnJavaExpression;
 	}

@@ -16,11 +16,12 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+
+import java.io.UnsupportedEncodingException;
 
 import java.net.URLEncoder;
 
@@ -302,8 +303,8 @@ public class URLCodecTest {
 					_ENCODED_URLS[i], CharPool.PLUS, "%20");
 			}
 		}
-		catch (Exception e) {
-			throw new LoggedExceptionInInitializerError(e);
+		catch (UnsupportedEncodingException uee) {
+			throw new ExceptionInInitializerError(uee);
 		}
 	}
 

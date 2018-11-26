@@ -146,6 +146,19 @@
 		class="{$sectionClasses}"
 		data-layout-section-id="{$rowId}"
 	>
+		<nav class="section-control tbar">
+			<ul class="tbar-nav">
+				<li class="tbar-item tbar-item-expand"></li>
+				<li class="tbar-item">
+					<button class="btn btn-small btn-unstyled">
+						<svg class="lexicon-icon">
+							<use xlink:href="{$spritemap}#times-circle"></use>
+						</svg>
+					</button>
+				</li>
+			</ul>
+		</nav>
+
 		<div class="container row-container">
 			<div class="row">
 				{foreach $column in $columns}

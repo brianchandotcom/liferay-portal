@@ -14,27 +14,16 @@
 
 package com.liferay.portal.upgrade.v7_2_x;
 
-import aQute.bnd.version.Version;
-
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
-
-import java.util.TreeMap;
 
 /**
- * @author José Ángel Jiménez
+ * @author Eudaldo Alonso
  */
-public class PortalUpgradeProcessRegistryImpl
-	implements PortalUpgradeProcessRegistry {
+public class UpgradeSchema extends UpgradeProcess {
 
 	@Override
-	public void registerUpgradeProcesses(
-		TreeMap<Version, UpgradeProcess> upgradeProcesses) {
-
-		upgradeProcesses.put(
-			new Version("3.0.0"), new UpgradeSQLServerDatetime());
-
-		upgradeProcesses.put(new Version("3.0.1"), new UpgradeSchema());
+	protected void doUpgrade() throws Exception {
+		runSQLTemplate("update-7.1.0-7.2.0.sql", false);
 	}
 
 }

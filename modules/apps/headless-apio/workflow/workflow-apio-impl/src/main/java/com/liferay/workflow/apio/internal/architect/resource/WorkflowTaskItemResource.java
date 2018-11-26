@@ -32,12 +32,15 @@ import com.liferay.workflow.apio.architect.identifier.WorkflowTaskIdentifier;
 import com.liferay.workflow.apio.internal.architect.form.AssignToMeForm;
 import com.liferay.workflow.apio.internal.architect.form.AssignToUserForm;
 import com.liferay.workflow.apio.internal.architect.form.ChangeTransitionForm;
+import com.liferay.workflow.apio.internal.architect.form.UpdateDueDateForm;
 import com.liferay.workflow.apio.internal.architect.route.AssignToMePostRoute;
 import com.liferay.workflow.apio.internal.architect.route.AssignToUserPostRoute;
 import com.liferay.workflow.apio.internal.architect.route.ChangeTransitionPostRoute;
+import com.liferay.workflow.apio.internal.architect.route.UpdateDueDatePostRoute;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,6 +82,10 @@ public class WorkflowTaskItemResource
 			new ChangeTransitionPostRoute(), this::_changeTransition,
 			CurrentUser.class, WorkflowTaskIdentifier.class,
 			(credentials, id) -> true, ChangeTransitionForm::buildForm
+		).addCustomRoute(
+			new UpdateDueDatePostRoute(), this::_updateDueDate,
+			CurrentUser.class, WorkflowTaskIdentifier.class,
+			(credentials, id) -> true, UpdateDueDateForm::buildForm
 		).build();
 	}
 
@@ -235,6 +242,19 @@ public class WorkflowTaskItemResource
 
 		return _workflowTaskManager.getWorkflowTask(
 			company.getCompanyId(), workflowTaskId);
+	}
+
+	private WorkflowTask _updateDueDate(
+			Long workflowTaskId, UpdateDueDateForm updateDueDateForm,
+			CurrentUser currentUser)
+		throws WorkflowException {
+
+		Date dueDate = updateDueDateForm.getDueDate();
+		String comment = updateDueDateForm.getComment();
+
+		return _workflowTaskManager.updateDueDate(
+			currentUser.getCompanyId(), currentUser.getUserId(), workflowTaskId,
+			comment, dueDate);
 	}
 
 	@Reference

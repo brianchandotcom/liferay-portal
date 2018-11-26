@@ -836,12 +836,9 @@ public class JenkinsResultsParserUtil {
 			i++;
 		}
 
-		List<String> tempGlobs = new ArrayList<>(
-			Arrays.asList(globProperty.split(",")));
-
 		List<String> globs = new ArrayList<>();
 
-		for (String tempGlob : tempGlobs) {
+		for (String tempGlob : globProperty.split(",")) {
 			Matcher matcher = _nestedPropertyPattern.matcher(tempGlob);
 
 			String glob = tempGlob;

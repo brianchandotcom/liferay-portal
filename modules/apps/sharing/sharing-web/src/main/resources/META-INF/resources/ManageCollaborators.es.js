@@ -26,8 +26,19 @@ class ManageCollaborators extends PortletBase {
 		tomorrow = tomorrow.setDate(tomorrow.getDate() + 1);
 
 		this._tomorrowDate = new Date(tomorrow).toISOString().split('T')[0];
+	}
 
-		this.expirationDateError = true;
+	/**
+	 * Checks if the date is after today.
+	 * @param  {String} expirationDate
+	 * @protected
+	 *
+	 * @return {Bool} returns true if the expiration date
+	 * is after today, false in other case.
+	 */
+	_checkExpirationDate(expirationDate) {
+		let date = new Date(expirationDate);
+		return date >= new Date(this._tomorrowDate);
 	}
 
 	/**
@@ -84,11 +95,19 @@ class ManageCollaborators extends PortletBase {
 	 * @param {Event} event
 	 * @protected
 	 */
-	_handleChangeExpirationDate(event) {
+	_handleBlurExpirationDate(event) {
 		let sharingEntryExpirationDate = event.target.value;
 		let sharingEntryId = event.target.getAttribute('name');
 
-		this._sharingEntryIdsAndExpirationDate.set(sharingEntryId, sharingEntryExpirationDate);
+		this.expirationDateError = !this._checkExpirationDate(sharingEntryExpirationDate);
+
+		if (this.expirationDateError) {
+			dom.addClasses(event.target.closest('.expiration-block'), 'has-error');
+		}
+		else {
+			dom.removeClasses(event.target.closest('.expiration-block'), 'has-error');
+			this._sharingEntryIdsAndExpirationDate.set(sharingEntryId, sharingEntryExpirationDate);
+		}
 	}
 
 	/**
@@ -150,6 +169,10 @@ class ManageCollaborators extends PortletBase {
 	_handleSaveButtonClick() {
 		let expirationDates = Array.from(this._sharingEntryIdsAndExpirationDate, (id, date) => id + ',' + date);
 		let permissions = Array.from(this._sharingEntryIdsAndPermissions, (id, key) => id + ',' + key);
+
+		if (this.expirationDateError) {
+			return;
+		}
 
 		this.fetch(
 			this.actionUrl,

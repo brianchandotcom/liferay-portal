@@ -8,7 +8,7 @@
 	{@param collaborators: ?}
 	{@param spritemap: string}
 	{@param? expirationDateError: bool}
-	{@param? _handleChangeExpirationDate: any}
+	{@param? _handleBlurExpirationDate: any}
 	{@param? _handleChangePermission: any}
 	{@param? _handleDeleteCollaborator: any}
 	{@param? _handleDeleteExpirationDate: any}
@@ -33,7 +33,7 @@
 					{foreach $collaborator in $collaborators}
 						<li class="list-group-item list-group-item-flex" data-onmouseout="{$_handleHoverCollaborator}" data-onmouseover="{$_handleHoverCollaborator}" id="collaborator{$collaborator.id}">
 							{call .collaborator}
-								{param _handleChangeExpirationDate: $_handleChangeExpirationDate /}
+								{param _handleBlurExpirationDate: $_handleBlurExpirationDate /}
 								{param _handleChangePermission: $_handleChangePermission /}
 								{param _handleDeleteCollaborator: $_handleDeleteCollaborator /}
 								{param _handleDeleteExpirationDate: $_handleDeleteExpirationDate /}
@@ -91,7 +91,7 @@
 {/template}
 
 {template .collaborator}
-	{@param? _handleChangeExpirationDate: any}
+	{@param? _handleBlurExpirationDate: any}
 	{@param? _handleChangePermission: any}
 	{@param? _handleDeleteCollaborator: any}
 	{@param? _handleDeleteExpirationDate: any}
@@ -168,7 +168,7 @@
 			</div>
 		</div>
 
-		<div class="autofit-float autofit-row autofit-row-center {if not $collaborator.expanded}hide{/if}" id="expiration{$collaborator.id}">
+		<div class="autofit-float autofit-row autofit-row-center expiration-block {if not $collaborator.expanded}hide{/if}" id="expiration{$collaborator.id}">
 			<div class="autofit-col">
 				<span>{msg desc=""}has-permissions-until{/msg}</span>
 			</div>
@@ -176,7 +176,7 @@
 			<div class="autofit-col no-padding">
 				<input
 					class="form-control"
-					data-onblur="{$_handleChangeExpirationDate}"
+					data-onblur="{$_handleBlurExpirationDate}"
 					min="{$_tomorrowDate}"
 					name="{$collaborator.sharingEntryId}"
 					type="date"

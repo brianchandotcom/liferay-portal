@@ -12,7 +12,7 @@
 
 		<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ROW_NUMBER_CHECKBOX" />
 
-		<execute function="AssertClick" locator1="Button#UNSUBSCRIBE" value1="Unsubscribe" />
+		<execute function="Click" locator1="Button#UNSUBSCRIBE" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

@@ -96,7 +96,7 @@ public class DataDefinitionColumnsJSONDeserializerTest extends BaseTestCase {
 		Assert.assertEquals("Informe um endereço de email", tips.get("pt_BR"));
 	}
 
-	@Test
+	@Test(expected = DataDefinitionColumnsDeserializerException.class)
 	public void testInvalidLabel() throws Exception {
 		String json = read(
 			"data-definition-columns-deserializer-invalid-label.json");
@@ -112,26 +112,11 @@ public class DataDefinitionColumnsJSONDeserializerTest extends BaseTestCase {
 		dataDefinitionColumnsJSONDeserializer.jsonFactory =
 			new JSONFactoryImpl();
 
-		try {
-			dataDefinitionColumnsJSONDeserializer.apply(
-				dataDefinitionColumnsDeserializerApplyRequest);
-
-			Assert.fail(
-				"DataDefinitionColumnsDeserializerException should be thrown");
-		}
-		catch (DataDefinitionColumnsDeserializerException ddcde)
-		{
-			Assert.assertEquals(
-				"Label property must contain localized values",
-				ddcde.getMessage());
-		}
-		catch (Exception e) {
-			Assert.fail(
-				"DataDefinitionColumnsDeserializerException should be thrown");
-		}
+		dataDefinitionColumnsJSONDeserializer.apply(
+			dataDefinitionColumnsDeserializerApplyRequest);
 	}
 
-	@Test
+	@Test(expected = DataDefinitionColumnsDeserializerException.class)
 	public void testInvalidTip() throws Exception {
 		String json = read(
 			"data-definition-columns-deserializer-invalid-tip.json");
@@ -147,26 +132,11 @@ public class DataDefinitionColumnsJSONDeserializerTest extends BaseTestCase {
 		dataDefinitionColumnsJSONDeserializer.jsonFactory =
 			new JSONFactoryImpl();
 
-		try {
-			dataDefinitionColumnsJSONDeserializer.apply(
-				dataDefinitionColumnsDeserializerApplyRequest);
-
-			Assert.fail(
-				"DataDefinitionColumnsDeserializerException should be thrown");
-		}
-		catch (DataDefinitionColumnsDeserializerException ddcde)
-		{
-			Assert.assertEquals(
-				"Tip property must contain localized values",
-				ddcde.getMessage());
-		}
-		catch (Exception e) {
-			Assert.fail(
-				"DataDefinitionColumnsDeserializerException should be thrown");
-		}
+		dataDefinitionColumnsJSONDeserializer.apply(
+			dataDefinitionColumnsDeserializerApplyRequest);
 	}
 
-	@Test
+	@Test(expected = DataDefinitionColumnsDeserializerException.class)
 	public void testRequiredName() throws Exception {
 		String json = read(
 			"data-definition-columns-deserializer-required-name.json");
@@ -182,25 +152,11 @@ public class DataDefinitionColumnsJSONDeserializerTest extends BaseTestCase {
 		dataDefinitionColumnsJSONDeserializer.jsonFactory =
 			new JSONFactoryImpl();
 
-		try {
-			dataDefinitionColumnsJSONDeserializer.apply(
-				dataDefinitionColumnsDeserializerApplyRequest);
-
-			Assert.fail(
-				"DataDefinitionColumnsDeserializerException should be thrown");
-		}
-		catch (DataDefinitionColumnsDeserializerException ddcde)
-		{
-			Assert.assertEquals(
-				"Name property is required", ddcde.getMessage());
-		}
-		catch (Exception e) {
-			Assert.fail(
-				"DataDefinitionColumnsDeserializerException should be thrown");
-		}
+		dataDefinitionColumnsJSONDeserializer.apply(
+			dataDefinitionColumnsDeserializerApplyRequest);
 	}
 
-	@Test
+	@Test(expected = DataDefinitionColumnsDeserializerException.class)
 	public void testRequiredType() throws Exception {
 		String json = read(
 			"data-definition-columns-deserializer-required-type.json");
@@ -216,22 +172,8 @@ public class DataDefinitionColumnsJSONDeserializerTest extends BaseTestCase {
 		dataDefinitionColumnsJSONDeserializer.jsonFactory =
 			new JSONFactoryImpl();
 
-		try {
-			dataDefinitionColumnsJSONDeserializer.apply(
-				dataDefinitionColumnsDeserializerApplyRequest);
-
-			Assert.fail(
-				"DataDefinitionColumnsDeserializerException should be thrown");
-		}
-		catch (DataDefinitionColumnsDeserializerException ddcde)
-		{
-			Assert.assertEquals(
-				"Type property is required", ddcde.getMessage());
-		}
-		catch (Exception e) {
-			Assert.fail(
-				"DataDefinitionColumnsDeserializerException should be thrown");
-		}
+		dataDefinitionColumnsJSONDeserializer.apply(
+			dataDefinitionColumnsDeserializerApplyRequest);
 	}
 
 }

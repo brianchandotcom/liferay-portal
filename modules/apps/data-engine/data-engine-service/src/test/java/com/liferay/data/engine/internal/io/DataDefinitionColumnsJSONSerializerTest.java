@@ -25,7 +25,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -102,8 +101,10 @@ public class DataDefinitionColumnsJSONSerializerTest extends BaseTestCase {
 			false);
 	}
 
-	@Test
-	public void testRequiredName() {
+	@Test(expected = DataDefinitionColumnsSerializerException.class)
+	public void testRequiredName()
+		throws DataDefinitionColumnsSerializerException {
+
 		DataDefinitionColumn dataDefinitionColumn1 =
 			DataDefinitionColumn.Builder.newBuilder(
 				null, DataDefinitionColumnType.BOOLEAN
@@ -120,26 +121,13 @@ public class DataDefinitionColumnsJSONSerializerTest extends BaseTestCase {
 
 		dataDefinitionColumnsJSONSerializer.jsonFactory = new JSONFactoryImpl();
 
-		try {
-			dataDefinitionColumnsJSONSerializer.apply(builder.build());
-
-			Assert.fail(
-				"DataDefinitionColumnsSerializerException should be thrown");
-		}
-		catch (DataDefinitionColumnsSerializerException ddcse)
-		{
-			Assert.assertEquals(
-				"Name property is required", ddcse.getMessage());
-		}
-		catch (Exception e)
-		{
-			Assert.fail(
-				"DataDefinitionColumnsSerializerException should be thrown");
-		}
+		dataDefinitionColumnsJSONSerializer.apply(builder.build());
 	}
 
-	@Test
-	public void testRequiredType() {
+	@Test(expected = DataDefinitionColumnsSerializerException.class)
+	public void testRequiredType()
+		throws DataDefinitionColumnsSerializerException {
+
 		DataDefinitionColumn dataDefinitionColumn1 =
 			DataDefinitionColumn.Builder.newBuilder(
 				"name", null
@@ -156,22 +144,7 @@ public class DataDefinitionColumnsJSONSerializerTest extends BaseTestCase {
 
 		dataDefinitionColumnsJSONSerializer.jsonFactory = new JSONFactoryImpl();
 
-		try {
-			dataDefinitionColumnsJSONSerializer.apply(builder.build());
-
-			Assert.fail(
-				"DataDefinitionColumnsSerializerException should be thrown");
-		}
-		catch (DataDefinitionColumnsSerializerException ddcse)
-		{
-			Assert.assertEquals(
-				"Type property is required", ddcse.getMessage());
-		}
-		catch (Exception e)
-		{
-			Assert.fail(
-				"DataDefinitionColumnsSerializerException should be thrown");
-		}
+		dataDefinitionColumnsJSONSerializer.apply(builder.build());
 	}
 
 }

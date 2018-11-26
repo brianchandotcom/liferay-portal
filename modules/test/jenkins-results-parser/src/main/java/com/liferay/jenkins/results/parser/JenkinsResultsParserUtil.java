@@ -825,13 +825,14 @@ public class JenkinsResultsParserUtil {
 		while (curlyBraceMatcher.find()) {
 			int index = curlyBraceExpansionMap.size();
 
-			String key = "\\$\\{" + index + "\\}";
-
 			String value = curlyBraceMatcher.group();
 
 			curlyBraceExpansionMap.put(index, value);
 
-			globProperty = globProperty.replace(Pattern.quote(value), key);
+			globProperty = globProperty.replace(
+				Pattern.quote(value),
+				JenkinsResultsParserUtil.combine(
+					"${", String.valueOf(index), "}"));
 		}
 
 		List<String> globs = new ArrayList<>();

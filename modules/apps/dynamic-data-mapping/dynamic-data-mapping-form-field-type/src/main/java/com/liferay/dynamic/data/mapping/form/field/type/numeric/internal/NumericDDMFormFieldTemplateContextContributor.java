@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -117,7 +118,7 @@ public class NumericDDMFormFieldTemplateContextContributor
 		DecimalFormat numberFormat = NumericDDMFormFieldUtil.getNumberFormat(
 			locale);
 
-		return numberFormat.format(value);
+		return numberFormat.format(GetterUtil.getNumber(value));
 	}
 
 	protected Map<String, String> getSymbolsMap(Locale locale) {

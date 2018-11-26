@@ -23,7 +23,7 @@ String redirect = GetterUtil.getString(request.getAttribute(WebKeys.REDIRECT), r
 %>
 
 <liferay-ui:header
-	backURL='<%= Validator.isNotNull(redirect) ? redirect : "javascript:history.go(-1)" %>'
+	backURL='<%= Validator.isNotNull(redirect) ? redirect : "javascript:history.go(-1);" %>'
 	title="error"
 />
 

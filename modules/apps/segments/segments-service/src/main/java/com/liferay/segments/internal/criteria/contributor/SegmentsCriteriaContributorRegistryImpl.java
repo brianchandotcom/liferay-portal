@@ -87,8 +87,8 @@ public class SegmentsCriteriaContributorRegistryImpl
 		_serviceTrackerMap.close();
 	}
 
-	private ServiceTrackerMap
-		<String, List<SegmentsCriteriaContributor>> _serviceTrackerMap;
+	private ServiceTrackerMap<String, List<SegmentsCriteriaContributor>>
+		_serviceTrackerMap;
 
 	private class SegmentsCriteriaContributorServiceReferenceMapper
 		implements ServiceReferenceMapper<String, SegmentsCriteriaContributor> {

@@ -831,8 +831,7 @@ public class JenkinsResultsParserUtil {
 
 			globProperty = globProperty.replace(
 				Pattern.quote(value),
-				JenkinsResultsParserUtil.combine(
-					"${", String.valueOf(index), "}"));
+				combine("${", String.valueOf(index), "}"));
 		}
 
 		List<String> globs = new ArrayList<>();

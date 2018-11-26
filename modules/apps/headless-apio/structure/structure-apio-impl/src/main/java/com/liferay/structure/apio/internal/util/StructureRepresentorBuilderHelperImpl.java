@@ -342,7 +342,7 @@ public class StructureRepresentorBuilderHelperImpl
 
 	private String _getDDMFormFieldDataType(DDMFormField ddmFormField) {
 		return _structureFieldConverter.getFieldDataType(
-			ddmFormField.getDataType());
+			ddmFormField.getDataType(), ddmFormField.getType());
 	}
 
 	private String _getDDMFormFieldInputControl(DDMFormField ddmFormField) {

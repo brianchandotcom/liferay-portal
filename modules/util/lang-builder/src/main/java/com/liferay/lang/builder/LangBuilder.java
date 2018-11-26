@@ -190,6 +190,7 @@ public class LangBuilder {
 		_createProperties(content, "in"); // Indonesian
 		_createProperties(content, "it"); // Italian
 		_createProperties(content, "ja"); // Japanese
+		_createProperties(content, "kk"); // Kazakh
 		_createProperties(content, "ko"); // Korean
 		_createProperties(content, "lo"); // Lao
 		_createProperties(content, "lt"); // Lithuanian

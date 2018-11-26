@@ -328,8 +328,8 @@ public class TemporaryFileEntriesCapabilityImpl
 
 			while ((folder.getFolderId() != mountFolder.getFolderId()) &&
 				   (_documentRepository.getFileEntriesCount(
-					   folder.getFolderId(),
-					   WorkflowConstants.STATUS_ANY) == 0)) {
+					   folder.getFolderId(), WorkflowConstants.STATUS_ANY) ==
+						   0)) {
 
 				long folderId = folder.getFolderId();
 

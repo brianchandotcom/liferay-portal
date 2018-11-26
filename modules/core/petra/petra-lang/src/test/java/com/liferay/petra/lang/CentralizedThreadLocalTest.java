@@ -456,8 +456,8 @@ public class CentralizedThreadLocalTest {
 			() -> {
 				FutureTask<?> futureTask = null;
 
-				while ((futureTask =
-							blockingQueue.take()) != poisonFutureTask) {
+				while ((futureTask = blockingQueue.take()) !=
+							poisonFutureTask) {
 
 					futureTask.run();
 				}

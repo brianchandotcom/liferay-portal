@@ -383,8 +383,8 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 		while ((reference =
 					(Reference
 						<com.liferay.osgi.service.tracker.collections.map.
-							ServiceTrackerMap<?, ?>>)
-								_referenceQueue.poll()) != null) {
+							ServiceTrackerMap<?, ?>>)_referenceQueue.poll()) !=
+								null) {
 
 			_serviceTrackerMaps.remove(reference);
 		}

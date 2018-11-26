@@ -312,8 +312,8 @@ public class CSSCompressor {
 		int fromIndex = 0;
 		int startIndex;
 
-		while ((startIndex =
-					css.indexOf(preservedToken + "(", fromIndex)) != -1) {
+		while ((startIndex = css.indexOf(preservedToken + "(", fromIndex)) !=
+					-1) {
 
 			int index = startIndex + preservedToken.length() + 1;
 			int nestingLevel = 1;

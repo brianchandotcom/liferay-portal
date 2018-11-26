@@ -196,8 +196,7 @@ public class RESTClient {
 		AtomicInteger counter = new AtomicInteger();
 		Response response = currentResponse;
 
-		while ((statusType.getFamily() ==
-					Response.Status.Family.REDIRECTION) &&
+		while ((statusType.getFamily() == Response.Status.Family.REDIRECTION) &&
 			   (counter.incrementAndGet() <= 3)) {
 
 			String location = response.getHeaderString(HttpHeaders.LOCATION);

@@ -276,8 +276,8 @@ public class SoftCircularDependencyUtil {
 						else {
 							List<Dependency> topDependencies = null;
 
-							while ((topDependencies =
-										backTrace.poll()) != null) {
+							while ((topDependencies = backTrace.poll()) !=
+										null) {
 
 								if (topDependencies.size() > 1) {
 									backTrace.push(

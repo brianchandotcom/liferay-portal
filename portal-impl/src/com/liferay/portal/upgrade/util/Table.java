@@ -410,8 +410,8 @@ public class Table {
 
 						String line = null;
 
-						while ((line =
-									unsyncBufferedReader.readLine()) != null) {
+						while ((line = unsyncBufferedReader.readLine()) !=
+									null) {
 
 							if (sb.length() != 0) {
 								sb.append(_SAFE_TABLE_NEWLINE_CHARACTER);

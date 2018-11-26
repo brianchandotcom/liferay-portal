@@ -1175,8 +1175,7 @@ public class LocalProcessExecutorTest {
 
 		while (timeUnit.convert(
 					System.currentTimeMillis() - startTime,
-					TimeUnit.MILLISECONDS) <
-						time) {
+					TimeUnit.MILLISECONDS) < time) {
 
 			if (!supplier.get()) {
 				return;

@@ -1,0 +1,21 @@
+schema {
+	query: QueryType
+}
+
+type QueryType {
+  allWorkflowInstance: [WorkflowInstance]
+  allWorkflowProcess: [WorkflowProcess]
+}
+
+type WorkflowInstance {
+	name: String!
+}
+
+type WorkflowTask {
+	name: String!
+}
+
+type WorkflowProcess {
+	name: String!
+	tasks: [WorkflowTask!]!
+}

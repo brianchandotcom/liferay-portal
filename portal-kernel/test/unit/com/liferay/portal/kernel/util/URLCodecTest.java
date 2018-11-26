@@ -163,10 +163,7 @@ public class URLCodecTest {
 	private void _testCharacterCodingException(
 		Function<String, String> codecFunction) {
 
-		Object[] oldCache1 = ReflectionTestUtil.getFieldValue(
-			Charset.class, "cache1");
-
-		ReflectionTestUtil.setFieldValue(
+		Object[] oldCache1 = ReflectionTestUtil.getAndSetFieldValue(
 			Charset.class, "cache1",
 			new Object[] {"test-charset", _testCharset});
 
@@ -228,9 +225,8 @@ public class URLCodecTest {
 		"~`!@#$%^&()+={[}]|\\:;\"'<,>?/", "中文测试", "/abc/def", "abc <def> ghi"
 	};
 
-	private static final String[] _UNICODE_CATS_AND_DOGS = {
-		"1f408", "1f431", "1f415", "1f436"
-	};
+	private static final String[] _UNICODE_CATS_AND_DOGS =
+		{"1f408", "1f431", "1f415", "1f436"};
 
 	private static final Charset _testCharset =
 		new Charset("test-charset", null) {

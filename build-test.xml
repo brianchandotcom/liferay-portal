@@ -1411,19 +1411,6 @@ war.path=${app.server.portal.dir}/</echo>
 		<sequential>
 			<var name="blacklistBundleSymbolicNames" value="com.liferay.portal.mobile.device.detection.fiftyonedegrees.api,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise.test.data,com.liferay.portal.mobile.device.detection.fiftyonedegrees" />
 
-			<get-testcase-property property.name="cluster.enabled" />
-			<get-testcase-property property.name="test.run.environment" />
-
-			<if>
-				<and>
-					<equals arg1="${cluster.enabled}" arg2="true" />
-					<equals arg1="${test.run.environment}" arg2="CE" />
-				</and>
-				<then>
-					<var name="blacklistBundleSymbolicNames" value="${blacklistBundleSymbolicNames},com.liferay.portal.cache.single,com.liferay.portal.cluster.single,com.liferay.portal.scheduler.single" />
-				</then>
-			</if>
-
 			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames=&quot;${blacklistBundleSymbolicNames}&quot;</echo>
 		</sequential>
 	</macrodef>

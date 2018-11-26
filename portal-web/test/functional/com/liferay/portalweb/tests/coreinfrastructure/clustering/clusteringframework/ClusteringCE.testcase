@@ -3,7 +3,6 @@
 	<property name="portal.upstream" value="true" />
 	<property name="app.server.bundles.size" value="1" />
 	<property name="cluster.enabled" value="true" />
-	<property name="osgi.modules.includes" value="portal-cluster-multiple,portal-cache-ehcache-multiple,portal-scheduler-multiple" />
 	<property name="remote.elasticsearch.enabled" value="true" />
 	<property name="test.run.environment" value="CE" />
 	<property name="testray.main.component.name" value="Clustering" />

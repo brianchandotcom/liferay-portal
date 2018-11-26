@@ -38,6 +38,7 @@ previewFileURLs[0] = DLUtil.getPreviewURL(fileVersion.getFileEntry(), fileVersio
 String previewFileURL = previewFileURLs[0];
 
 Map<String, Object> context = new HashMap<>();
+
 context.put("baseImageURL", previewFileURL);
 context.put("currentPage", 1);
 context.put("id", renderResponse.getNamespace() + randomNamespace + "previewFile");

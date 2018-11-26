@@ -166,7 +166,7 @@ public class URLCodecTest {
 
 		Object oldCache1 = ReflectionTestUtil.getAndSetFieldValue(
 			Charset.class, "cache1",
-			new Object[] {"test-charset", _testCharset});
+			new Object[] {_testCharset.name(), _testCharset});
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(

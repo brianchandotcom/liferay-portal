@@ -35,22 +35,22 @@ public final class AnalyticsEventsMessage implements Serializable {
 		return new AnalyticsEventsMessage.Builder(analyticsEventsMessage);
 	}
 
-	public static AnalyticsEventsMessage.Builder builder(String analyticsKey) {
-		return new AnalyticsEventsMessage.Builder(analyticsKey);
+	public static AnalyticsEventsMessage.Builder builder(String dataSourceId) {
+		return new AnalyticsEventsMessage.Builder(dataSourceId);
 	}
 
 	public static AnalyticsEventsMessage.Builder builder(
-		String analyticsKey, String userId) {
+		String dataSourceId, String userId) {
 
-		return new AnalyticsEventsMessage.Builder(analyticsKey, userId);
-	}
-
-	public String getAnalyticsKey() {
-		return _analyticsKey;
+		return new AnalyticsEventsMessage.Builder(dataSourceId, userId);
 	}
 
 	public Map<String, String> getContext() {
 		return Collections.unmodifiableMap(_context);
+	}
+
+	public String getDataSourceId() {
+		return _dataSourceId;
 	}
 
 	public List<Event> getEvents() {
@@ -107,11 +107,11 @@ public final class AnalyticsEventsMessage implements Serializable {
 		}
 
 		protected Builder(AnalyticsEventsMessage analyticsEventsMessage) {
-			_analyticsEventsMessage._analyticsKey =
-				analyticsEventsMessage.getAnalyticsKey();
-
 			_analyticsEventsMessage._context =
 				analyticsEventsMessage.getContext();
+
+			_analyticsEventsMessage._dataSourceId =
+				analyticsEventsMessage.getDataSourceId();
 
 			_analyticsEventsMessage._events =
 				analyticsEventsMessage.getEvents();
@@ -123,12 +123,12 @@ public final class AnalyticsEventsMessage implements Serializable {
 				analyticsEventsMessage.getUserId();
 		}
 
-		protected Builder(String analyticsKey) {
-			_analyticsEventsMessage._analyticsKey = analyticsKey;
+		protected Builder(String dataSourceId) {
+			_analyticsEventsMessage._dataSourceId = dataSourceId;
 		}
 
-		protected Builder(String analyticsKey, String userId) {
-			_analyticsEventsMessage._analyticsKey = analyticsKey;
+		protected Builder(String dataSourceId, String userId) {
+			_analyticsEventsMessage._dataSourceId = dataSourceId;
 			_analyticsEventsMessage._userId = userId;
 		}
 
@@ -202,8 +202,8 @@ public final class AnalyticsEventsMessage implements Serializable {
 	private AnalyticsEventsMessage() {
 	}
 
-	private String _analyticsKey;
 	private Map<String, String> _context = new HashMap<>();
+	private String _dataSourceId;
 	private List<Event> _events = new ArrayList<>();
 	private String _protocolVersion;
 	private String _userId;

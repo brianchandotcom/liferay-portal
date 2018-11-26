@@ -25,12 +25,8 @@ import java.util.Map;
  */
 public final class IdentityContextMessage implements Serializable {
 
-	public static IdentityContextMessage.Builder builder(String analyticsKey) {
-		return new IdentityContextMessage.Builder(analyticsKey);
-	}
-
-	public String getAnalyticsKey() {
-		return _analyticsKey;
+	public static IdentityContextMessage.Builder builder(String dataSourceId) {
+		return new IdentityContextMessage.Builder(dataSourceId);
 	}
 
 	public String getBrowserPluginDetails() {
@@ -39,6 +35,10 @@ public final class IdentityContextMessage implements Serializable {
 
 	public String getCanvasFingerPrint() {
 		return _canvasFingerPrint;
+	}
+
+	public String getDataSourceId() {
+		return _dataSourceId;
 	}
 
 	public String getDataSourceIdentifier() {
@@ -228,8 +228,8 @@ public final class IdentityContextMessage implements Serializable {
 			return this;
 		}
 
-		protected Builder(String analyticsKey) {
-			_identityMessage._analyticsKey = analyticsKey;
+		protected Builder(String dataSourceId) {
+			_identityMessage._dataSourceId = dataSourceId;
 		}
 
 		private final IdentityContextMessage _identityMessage =
@@ -240,10 +240,10 @@ public final class IdentityContextMessage implements Serializable {
 	private IdentityContextMessage() {
 	}
 
-	private String _analyticsKey;
 	private String _browserPluginDetails;
 	private String _canvasFingerPrint;
 	private boolean _cookiesEnabled;
+	private String _dataSourceId;
 	private String _dataSourceIdentifier;
 	private String _dataSourceIndividualIdentifier;
 	private String _domain;

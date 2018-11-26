@@ -24,6 +24,10 @@ import com.liferay.data.engine.exception.DataDefinitionException;
 @ProviderType
 public interface DataDefinitionLocalService {
 
+	public DataDefinitionGetResponse get(
+			DataDefinitionGetRequest dataDefinitionGetRequest)
+		throws DataDefinitionException;
+
 	public DataDefinitionSaveResponse save(
 			DataDefinitionSaveRequest dataDefinitionSaveRequest)
 		throws DataDefinitionException;

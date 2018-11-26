@@ -302,7 +302,6 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		jsonArray.put("paragraphJustify");
 
 		jsonArray.put("color");
-		jsonArray.put("backgroundColor");
 
 		jsonArray.put("removeFormat");
 

@@ -25,6 +25,13 @@ import org.junit.Test;
 public class StructureFieldConverterImplTest {
 
 	@Test
+	public void testGetFieldDataTypeDate() {
+		Assert.assertEquals(
+			"date",
+			_structureFieldConverter.getFieldDataType("string", "date"));
+	}
+
+	@Test
 	public void testGetFieldDataTypeDefault() {
 		Assert.assertEquals(
 			"aaa", _structureFieldConverter.getFieldDataType("aaa"));
@@ -35,6 +42,14 @@ public class StructureFieldConverterImplTest {
 		Assert.assertEquals(
 			"document",
 			_structureFieldConverter.getFieldDataType("document-library"));
+	}
+
+	@Test
+	public void testGetFieldDataTypeDocumentLibraryWithDataTypeString() {
+		Assert.assertEquals(
+			"document",
+			_structureFieldConverter.getFieldDataType(
+				"string", "document_library"));
 	}
 
 	@Test
@@ -51,6 +66,13 @@ public class StructureFieldConverterImplTest {
 	}
 
 	@Test
+	public void testGetFieldDataTypeParagraph() {
+		Assert.assertEquals(
+			"string",
+			_structureFieldConverter.getFieldDataType("string", "paragraph"));
+	}
+
+	@Test
 	public void testGetFieldDataTypeRadio() {
 		Assert.assertEquals(
 			"string", _structureFieldConverter.getFieldDataType("radio"));
@@ -64,8 +86,28 @@ public class StructureFieldConverterImplTest {
 	}
 
 	@Test
+	public void testGetFieldInputControlCheckboxMultiple() {
+		Assert.assertEquals(
+			"checkbox_multiple",
+			_structureFieldConverter.getFieldInputControl("checkbox_multiple"));
+	}
+
+	@Test
 	public void testGetFieldInputControlDefault() {
 		Assert.assertNull(_structureFieldConverter.getFieldInputControl("aaa"));
+	}
+
+	@Test
+	public void testGetFieldInputControlGrid() {
+		Assert.assertEquals(
+			"grid", _structureFieldConverter.getFieldInputControl("grid"));
+	}
+
+	@Test
+	public void testGetFieldInputControlParagraph() {
+		Assert.assertEquals(
+			"paragraph",
+			_structureFieldConverter.getFieldInputControl("paragraph"));
 	}
 
 	@Test

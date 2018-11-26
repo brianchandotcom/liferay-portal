@@ -16,11 +16,30 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
+import com.liferay.portal.kernel.test.CaptureHandler;
+import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+
+import java.io.UnsupportedEncodingException;
 
 import java.net.URLEncoder;
 
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CharsetEncoder;
+import java.nio.charset.CoderResult;
+import java.nio.charset.CodingErrorAction;
+import java.nio.charset.StandardCharsets;
+
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
@@ -29,51 +48,84 @@ import org.junit.Test;
  */
 public class URLCodecTest {
 
-	@Test
-	public void testDecodeURL() throws Exception {
-		for (int i = 0; i < _RAW_URLS.length; i++) {
-			String result = URLCodec.decodeURL(
-				_ENCODED_URLS[i], StringPool.UTF8);
+	@ClassRule
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
-			Assert.assertEquals(_RAW_URLS[i], result);
+	@Test
+	public void testConstructor() {
+		new URLCodec();
+	}
+
+	@Test
+	public void testDecodeURL() {
+		for (int i = 0; i < _RAW_URLS.length; i++) {
+			Assert.assertEquals(
+				_RAW_URLS[i], URLCodec.decodeURL(_ENCODED_URLS[i]));
+
+			Assert.assertEquals(
+				_RAW_URLS[i],
+				URLCodec.decodeURL(_ENCODED_URLS[i], StringPool.UTF8));
+
+			Assert.assertEquals(
+				_RAW_URLS[i],
+				URLCodec.decodeURL(_ESCAPE_SPACES_ENCODED_URLS[i]));
+
+			Assert.assertEquals(
+				_RAW_URLS[i],
+				URLCodec.decodeURL(
+					_ESCAPE_SPACES_ENCODED_URLS[i], StringPool.UTF8));
 		}
 
-		testDecodeURL("%");
-		testDecodeURL("%0");
-		testDecodeURL("%00%");
-		testDecodeURL("%00%0");
-		testDecodeURL("%0" + (char)(CharPool.NUMBER_0 - 1));
-		testDecodeURL("%0" + (char)(CharPool.NUMBER_9 + 1));
-		testDecodeURL("%0" + (char)(CharPool.UPPER_CASE_A - 1));
-		testDecodeURL("%0" + (char)(CharPool.UPPER_CASE_F + 1));
-		testDecodeURL("%0" + (char)(CharPool.LOWER_CASE_A - 1));
-		testDecodeURL("%0" + (char)(CharPool.LOWER_CASE_F + 1));
+		_testCharacterCodingException(
+			charsetName -> URLCodec.decodeURL("%00", charsetName));
+
+		// LPS-47334
+
+		_testDecodeURL("%", false);
+		_testDecodeURL("%0", false);
+		_testDecodeURL("%00%", false);
+		_testDecodeURL("%00%0", false);
+		_testDecodeURL("%0" + (char)(CharPool.NUMBER_0 - 1), true);
+		_testDecodeURL("%0" + (char)(CharPool.NUMBER_9 + 1), true);
+		_testDecodeURL("%0" + (char)(CharPool.UPPER_CASE_A - 1), true);
+		_testDecodeURL("%0" + (char)(CharPool.UPPER_CASE_F + 1), true);
+		_testDecodeURL("%0" + (char)(CharPool.LOWER_CASE_A - 1), true);
+		_testDecodeURL("%0" + (char)(CharPool.LOWER_CASE_F + 1), true);
+
+		// LPS-62628
+
+		_testDecodeURL("http://localhost:8080/?id=%'", false);
 	}
 
 	@Test
-	public void testDecodeURLWithPercentageInURLParameters() throws Exception {
-		testDecodeURL("http://localhost:8080/?id=%'");
-	}
-
-	@Test
-	public void testEncodeURL() throws Exception {
+	public void testEncodeURL() {
 		for (int i = 0; i < _RAW_URLS.length; i++) {
-			String result = URLCodec.encodeURL(
-				_RAW_URLS[i], StringPool.UTF8, false);
+			Assert.assertEquals(
+				_ENCODED_URLS[i], URLCodec.encodeURL(_RAW_URLS[i]));
 
-			Assert.assertTrue(
-				StringUtil.equalsIgnoreCase(_ENCODED_URLS[i], result));
+			Assert.assertEquals(
+				_ENCODED_URLS[i], URLCodec.encodeURL(_RAW_URLS[i], false));
 
-			result = URLCodec.encodeURL(_RAW_URLS[i], StringPool.UTF8, true);
+			Assert.assertEquals(
+				_ENCODED_URLS[i],
+				URLCodec.encodeURL(_RAW_URLS[i], StringPool.UTF8, false));
 
-			Assert.assertTrue(
-				StringUtil.equalsIgnoreCase(
-					_ESCAPE_SPACES_ENCODED_URLS[i], result));
+			Assert.assertEquals(
+				_ESCAPE_SPACES_ENCODED_URLS[i],
+				URLCodec.encodeURL(_RAW_URLS[i], true));
+
+			Assert.assertEquals(
+				_ESCAPE_SPACES_ENCODED_URLS[i],
+				URLCodec.encodeURL(_RAW_URLS[i], StringPool.UTF8, true));
 		}
+
+		_testCharacterCodingException(
+			charsetName -> URLCodec.encodeURL("!", charsetName, false));
 	}
 
 	@Test
-	public void testHandlingFourBytesUTFWithSurrogates() throws Exception {
+	public void testHandlingFourBytesUTFWithSurrogates() {
 		StringBundler sb = new StringBundler(
 			_UNICODE_CATS_AND_DOGS.length * 4 * 2);
 
@@ -85,9 +137,9 @@ public class URLCodecTest {
 
 		String animalsString = new String(animalsInts, 0, animalsInts.length);
 
-		byte[] animalsBytes = animalsString.getBytes(StringPool.UTF8);
+		for (byte animalsByte :
+				animalsString.getBytes(StandardCharsets.UTF_8)) {
 
-		for (byte animalsByte : animalsBytes) {
 			sb.append(StringPool.PERCENT);
 			sb.append(Integer.toHexString(0xFF & animalsByte));
 		}
@@ -98,38 +150,152 @@ public class URLCodecTest {
 			animalsString,
 			URLCodec.decodeURL(escapedAnimalsString, StringPool.UTF8));
 		Assert.assertEquals(
-			StringUtil.toLowerCase(escapedAnimalsString),
-			StringUtil.toLowerCase(
-				URLCodec.encodeURL(animalsString, StringPool.UTF8, false)));
+			StringUtil.toUpperCase(escapedAnimalsString),
+			URLCodec.encodeURL(animalsString, StringPool.UTF8, false));
+
+		// Character missing low surrogate
+
+		Assert.assertEquals(
+			"%3F", URLCodec.encodeURL(animalsString.substring(0, 1)));
+		Assert.assertEquals(
+			"%3Fx", URLCodec.encodeURL(animalsString.substring(0, 1) + "x"));
 	}
 
-	protected void testDecodeURL(String encodedURLString) {
+	private void _testCharacterCodingException(
+		Function<String, String> codecFunction) {
+
+		Object oldCache1 = ReflectionTestUtil.getAndSetFieldValue(
+			Charset.class, "cache1",
+			new Object[] {_testCharset.name(), _testCharset});
+
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					URLCodec.class.getName(), Level.ALL)) {
+
+			Assert.assertEquals(
+				"URLCodec returns blank string when ChaesetEncoder/Decoder" +
+					"throws CharacterCodingException during encoding/decoding",
+				StringPool.BLANK, codecFunction.apply("test-charset"));
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"java.nio.charset.UnmappableCharacterException: Input length " +
+					"= 1",
+				logRecord.getMessage());
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				Charset.class, "cache1", oldCache1);
+		}
+	}
+
+	private void _testDecodeURL(
+		String encodedURLString, boolean invalidHexChar) {
+
 		try {
 			URLCodec.decodeURL(encodedURLString, StringPool.UTF8);
 
 			Assert.fail(encodedURLString);
 		}
 		catch (IllegalArgumentException iae) {
+			String message = iae.getMessage();
+
+			if (invalidHexChar) {
+				Assert.assertTrue(
+					encodedURLString, message.endsWith(" is not a hex char"));
+			}
+			else {
+				Assert.assertEquals(
+					"Invalid URL encoding " + encodedURLString, message);
+			}
 		}
 	}
 
-	private static final String[] _ENCODED_URLS = new String[9];
+	private static final String[] _ENCODED_URLS;
 
-	private static final String[] _ESCAPE_SPACES_ENCODED_URLS = new String[9];
+	private static final String[] _ESCAPE_SPACES_ENCODED_URLS;
 
 	private static final String[] _RAW_URLS = {
-		"abcdefghijklmnopqrstuvwxyz", "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-		"0123456789", ".-*_", " ", "~`!@#$%^&()+={[}]|\\:;\"'<,>?/", "中文测试",
-		"/abc/def", "abc <def> ghi"
+		null, StringPool.BLANK, "abcdefghijklmnopqrstuvwxyz",
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZ", "0123456789", ".-*_", " ",
+		"~`!@#$%^&()+={[}]|\\:;\"'<,>?/", "中文测试", "/abc/def", "abc <def> ghi"
 	};
 
-	private static final String[] _UNICODE_CATS_AND_DOGS = {
-		"1f408", "1f431", "1f415", "1f436"
-	};
+	private static final String[] _UNICODE_CATS_AND_DOGS =
+		{"1f408", "1f431", "1f415", "1f436"};
+
+	private static final Charset _testCharset =
+		new Charset("test-charset", null) {
+
+			@Override
+			public boolean contains(Charset charset) {
+				return true;
+			}
+
+			@Override
+			public CharsetDecoder newDecoder() {
+				return new CharsetDecoder(this, 1, 1) {
+
+					@Override
+					protected CoderResult decodeLoop(
+						ByteBuffer byteBuffer, CharBuffer charBuffer) {
+
+						return CoderResult.unmappableForLength(1);
+					}
+
+					@Override
+					protected void implOnUnmappableCharacter(
+						CodingErrorAction codingErrorAction) {
+
+						ReflectionTestUtil.setFieldValue(
+							this, "unmappableCharacterAction",
+							CodingErrorAction.REPORT);
+					}
+
+				};
+			}
+
+			@Override
+			public CharsetEncoder newEncoder() {
+				return new CharsetEncoder(this, 1, 1) {
+
+					@Override
+					public boolean isLegalReplacement(byte[] replacement) {
+						return true;
+					}
+
+					@Override
+					protected CoderResult encodeLoop(
+						CharBuffer charBuffer, ByteBuffer byteBuffer) {
+
+						return CoderResult.unmappableForLength(1);
+					}
+
+					@Override
+					protected void implOnUnmappableCharacter(
+						CodingErrorAction codingErrorAction) {
+
+						ReflectionTestUtil.setFieldValue(
+							this, "unmappableCharacterAction",
+							CodingErrorAction.REPORT);
+					}
+
+				};
+			}
+
+		};
 
 	static {
+		_ENCODED_URLS = new String[_RAW_URLS.length];
+		_ESCAPE_SPACES_ENCODED_URLS = new String[_RAW_URLS.length];
+
 		try {
-			for (int i = 0; i < _RAW_URLS.length; i++) {
+			for (int i = 1; i < _RAW_URLS.length; i++) {
 				_ENCODED_URLS[i] = URLEncoder.encode(
 					_RAW_URLS[i], StringPool.UTF8);
 
@@ -137,8 +303,8 @@ public class URLCodecTest {
 					_ENCODED_URLS[i], CharPool.PLUS, "%20");
 			}
 		}
-		catch (Exception e) {
-			throw new LoggedExceptionInInitializerError(e);
+		catch (UnsupportedEncodingException uee) {
+			throw new ExceptionInInitializerError(uee);
 		}
 	}
 

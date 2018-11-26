@@ -47,7 +47,7 @@ public class AnalyticsEventsMessageJSONObjectMapperTest {
 			jsonString);
 
 		Assert.assertEquals(
-			"AnalyticsKey", analyticsEventsMessage.getAnalyticsKey());
+			"DataSourceId", analyticsEventsMessage.getDataSourceId());
 
 		Map<String, String> context = analyticsEventsMessage.getContext();
 
@@ -80,7 +80,7 @@ public class AnalyticsEventsMessageJSONObjectMapperTest {
 	@Test
 	public void testJSONSerialization() throws Exception {
 		AnalyticsEventsMessage.Builder messageBuilder =
-			AnalyticsEventsMessage.builder("AnalyticsKey", "UserId");
+			AnalyticsEventsMessage.builder("DataSourceId", "UserId");
 
 		messageBuilder.contextProperty("k1", "v1");
 		messageBuilder.contextProperty("k2", "v2");

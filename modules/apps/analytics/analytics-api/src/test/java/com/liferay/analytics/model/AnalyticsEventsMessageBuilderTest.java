@@ -75,18 +75,18 @@ public class AnalyticsEventsMessageBuilderTest {
 
 		// Message
 
-		String expectedAnalyticsKey = randomString();
+		String expectedDataSourceId = randomString();
 		String expectedUserId = randomString();
 		String expectedProtocolVersion = randomString();
 
 		AnalyticsEventsMessage actualAnalyticsEventsMessage =
 			createAnalyticsEventsMessage(
-				expectedAnalyticsKey, expectedUserId, expectedContext,
+				expectedDataSourceId, expectedUserId, expectedContext,
 				expectedEvents, expectedProtocolVersion);
 
 		Assert.assertEquals(
-			expectedAnalyticsKey,
-			actualAnalyticsEventsMessage.getAnalyticsKey());
+			expectedDataSourceId,
+			actualAnalyticsEventsMessage.getDataSourceId());
 		Assert.assertEquals(
 			expectedUserId, actualAnalyticsEventsMessage.getUserId());
 		Assert.assertEquals(
@@ -131,11 +131,11 @@ public class AnalyticsEventsMessageBuilderTest {
 	}
 
 	protected AnalyticsEventsMessage createAnalyticsEventsMessage(
-		String analyticsKey, String userId, Map<String, String> context,
+		String dataSourceId, String userId, Map<String, String> context,
 		List<AnalyticsEventsMessage.Event> events, String protocolVersion) {
 
 		AnalyticsEventsMessage.Builder messageBuilder =
-			AnalyticsEventsMessage.builder(analyticsKey, userId);
+			AnalyticsEventsMessage.builder(dataSourceId, userId);
 
 		messageBuilder.context(context);
 

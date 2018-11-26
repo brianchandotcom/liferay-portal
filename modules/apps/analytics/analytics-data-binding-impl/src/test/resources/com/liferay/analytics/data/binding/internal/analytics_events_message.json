@@ -1,9 +1,9 @@
 {
-	"analyticsKey": "AnalyticsKey",
 	"context": {
 		"k1": "v1",
 		"k2": "v2"
 	},
+	"dataSourceId": "DataSourceId",
 	"events": [
 		{
 			"applicationId": "ApplicationId",

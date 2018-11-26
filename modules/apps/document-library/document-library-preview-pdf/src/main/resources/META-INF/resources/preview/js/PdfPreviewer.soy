@@ -61,9 +61,15 @@
 						{msg desc=""}page{/msg} {$currentPage} / {$totalPages}
 					{/param}
 					{param title kind="text"}
-						{msg desc=""}click-to-jump-to-a-page{/msg}
+						{if $totalPages > 1}
+							{msg desc=""}click-to-jump-to-a-page{/msg}
+						{/if}
 					{/param}
-					{param value: 'go' /}
+					{param value kind="text"}
+						{if $totalPages > 1}
+							go
+						{/if}
+					{/param}
 				{/call}
 				{if $showPageInput}
 					<div class="toolbar-input-wrapper">

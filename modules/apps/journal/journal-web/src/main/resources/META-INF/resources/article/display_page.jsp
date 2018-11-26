@@ -18,22 +18,12 @@
 
 <%
 EditArticleDisplayPageDisplayContext editArticleDisplayPageDisplayContext = new EditArticleDisplayPageDisplayContext(request);
-
-DDMStructure ddmStructure = editArticleDisplayPageDisplayContext.getDDMStructure(journalDisplayContext.getDDMStructureKey());
-
-JournalArticle article = editArticleDisplayPageDisplayContext.getArticle();
-
-if ((ddmStructure == null) && (article != null)) {
-	ddmStructure = editArticleDisplayPageDisplayContext.getDDMStructure(article.getDDMStructureKey());
-}
-
-long groupId = BeanParamUtil.getLong(article, request, "groupId", scopeGroupId);
 %>
 
 <liferay-asset:select-asset-display-page
-	classNameId="<%= PortalUtil.getClassNameId(JournalArticle.class) %>"
-	classPK="<%= (article != null) ? article.getResourcePrimKey() : 0 %>"
-	classTypeId="<%= ddmStructure.getStructureId() %>"
-	groupId="<%= groupId %>"
+	classNameId="<%= editArticleDisplayPageDisplayContext.getClassNameId() %>"
+	classPK="<%= editArticleDisplayPageDisplayContext.getClassPK() %>"
+	classTypeId="<%= editArticleDisplayPageDisplayContext.getDDMStructureId() %>"
+	groupId="<%= editArticleDisplayPageDisplayContext.getGroupId() %>"
 	showPortletLayouts="<%= true %>"
 />

@@ -18,8 +18,10 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
+import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -34,7 +36,53 @@ public class EditArticleDisplayPageDisplayContext {
 		_request = request;
 	}
 
-	public JournalArticle getArticle() throws PortalException {
+	public long getClassNameId() {
+		return PortalUtil.getClassNameId(JournalArticle.class);
+	}
+
+	public long getClassPK() throws PortalException {
+		JournalArticle article = _getArticle();
+
+		if (article != null) {
+			return article.getResourcePrimKey();
+		}
+
+		return 0;
+	}
+
+	public long getDDMStructureId() throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String ddmStructureKey = ParamUtil.getString(
+			_request, "ddmStructureKey");
+
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
+			themeDisplay.getSiteGroupId(),
+			PortalUtil.getClassNameId(JournalArticle.class), ddmStructureKey,
+			true);
+
+		if (ddmStructure == null) {
+			JournalArticle article = _getArticle();
+
+			ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
+				themeDisplay.getSiteGroupId(),
+				PortalUtil.getClassNameId(JournalArticle.class),
+				article.getDDMStructureKey(), true);
+		}
+
+		return ddmStructure.getStructureId();
+	}
+
+	public long getGroupId() throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return BeanParamUtil.getLong(
+			_getArticle(), _request, "groupId", themeDisplay.getScopeGroupId());
+	}
+
+	private JournalArticle _getArticle() throws PortalException {
 		if (_article != null) {
 			return _article;
 		}
@@ -42,16 +90,6 @@ public class EditArticleDisplayPageDisplayContext {
 		_article = ActionUtil.getArticle(_request);
 
 		return _article;
-	}
-
-	public DDMStructure getDDMStructure(String ddmStructureKey) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return DDMStructureLocalServiceUtil.fetchStructure(
-			themeDisplay.getSiteGroupId(),
-			PortalUtil.getClassNameId(JournalArticle.class), ddmStructureKey,
-			true);
 	}
 
 	private JournalArticle _article;

@@ -11,11 +11,11 @@ type WorkflowInstance {
 	name: String!
 }
 
-type WorkflowTask {
-	name: String!
-}
-
 type WorkflowProcess {
 	name: String!
 	tasks: [WorkflowTask!]!
+}
+
+type WorkflowTask {
+	name: String!
 }

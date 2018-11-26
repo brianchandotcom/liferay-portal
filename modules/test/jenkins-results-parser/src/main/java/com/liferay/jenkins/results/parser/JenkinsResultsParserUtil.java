@@ -817,7 +817,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String[] getGlobsFromProperty(String globProperty) {
-		Map<String, String> curlyBraceExpansionMap = new HashMap<>();
+		Map<Integer, String> curlyBraceExpansionMap = new HashMap<>();
 
 		Matcher curlyBraceMatcher = _curlyBraceExpansionPattern.matcher(
 			globProperty);
@@ -829,7 +829,7 @@ public class JenkinsResultsParserUtil {
 
 			String value = curlyBraceMatcher.group();
 
-			curlyBraceExpansionMap.put(key, value);
+			curlyBraceExpansionMap.put(i, value);
 
 			globProperty = globProperty.replaceFirst(Pattern.quote(value), key);
 
@@ -844,7 +844,7 @@ public class JenkinsResultsParserUtil {
 			String glob = tempGlob;
 
 			while (matcher.find()) {
-				String key = "\\$\\{" + matcher.group(1) + "\\}";
+				Integer key = Integer.parseInt(matcher.group(1));
 
 				glob = glob.replace(
 					matcher.group(), curlyBraceExpansionMap.get(key));

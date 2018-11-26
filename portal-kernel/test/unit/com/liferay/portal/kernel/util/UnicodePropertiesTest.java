@@ -236,31 +236,31 @@ public class UnicodePropertiesTest {
 	}
 
 	private void _testLoad(
-		BiConsumer<String, UnicodeProperties> loadMethod, boolean safe) {
+		BiConsumer<String, UnicodeProperties> biConsumer, boolean safe) {
 
 		UnicodeProperties unicodeProperties = new UnicodeProperties(safe);
 
-		loadMethod.accept(null, unicodeProperties);
+		biConsumer.accept(null, unicodeProperties);
 
 		Assert.assertTrue(
 			"Nothing should be loaded in if props is null: " +
 				unicodeProperties.toString(),
 			unicodeProperties.isEmpty());
 
-		loadMethod.accept(_TEST_LINE_1, unicodeProperties);
+		biConsumer.accept(_TEST_LINE_1, unicodeProperties);
 
 		_assertUnicodeProperties(
 			new String[] {_TEST_VALUE_1}, new String[] {_TEST_KEY_1},
 			unicodeProperties);
 
-		loadMethod.accept(_TEST_PROPS, unicodeProperties);
+		biConsumer.accept(_TEST_PROPS, unicodeProperties);
 
 		_assertUnicodeProperties(
 			new String[] {_TEST_VALUE_1, _TEST_VALUE_2, _TEST_VALUE_3},
 			new String[] {_TEST_KEY_1, _TEST_KEY_2, _TEST_KEY_3},
 			unicodeProperties);
 
-		loadMethod.accept(
+		biConsumer.accept(
 			StringBundler.concat(
 				_TEST_LINE_1, _safeNewLineCharacter, StringPool.NEW_LINE,
 				_TEST_LINE_2, _safeNewLineCharacter, StringPool.NEW_LINE,

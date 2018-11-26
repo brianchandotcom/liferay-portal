@@ -18,7 +18,7 @@
 
 <c:choose>
 	<c:when test="<%= RoleLocalServiceUtil.hasUserRole(user.getUserId(), company.getCompanyId(), RoleConstants.ADMINISTRATOR, true) %>">
-		<liferay-util:include page="/common/phone_numbers.jsp" portletId="<%= PortletProviderUtil.getPortletId(User.class.getName(), PortletProvider.Action.VIEW) %>" />
+		<liferay-util:include page="/common/phone_numbers.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>
 		<div class="alert alert-info">

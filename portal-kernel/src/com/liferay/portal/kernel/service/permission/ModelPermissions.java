@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -130,7 +131,7 @@ public class ModelPermissions implements Cloneable, Serializable {
 		Map<String, Set<String>> roleNamesMap,
 		Map<String, Set<String>> actionIdsMap) {
 
-		this(roleNamesMap, actionIdsMap, null);
+		this(roleNamesMap, actionIdsMap, ALL_RESOURCES);
 	}
 
 	protected ModelPermissions(
@@ -139,7 +140,7 @@ public class ModelPermissions implements Cloneable, Serializable {
 
 		_roleNamesMap.putAll(roleNamesMap);
 		_actionIdsMap.putAll(actionIdsMap);
-		_resourceName = resourceName;
+		_resourceName = Objects.requireNonNull(resourceName);
 	}
 
 	private final Map<String, Set<String>> _actionIdsMap = new HashMap<>();

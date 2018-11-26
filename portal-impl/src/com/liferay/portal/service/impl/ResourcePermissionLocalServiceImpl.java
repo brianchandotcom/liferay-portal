@@ -2043,21 +2043,18 @@ public class ResourcePermissionLocalServiceImpl
 
 		String resourceName = modelPermissions.getResourceName();
 
-		if (StringUtil.equals(resourceName, ModelPermissions.ALL_RESOURCES)) {
+		if (resourceName.equals(ModelPermissions.ALL_RESOURCES) ||
+			resourceName.equals(resourcePermissionName)) {
+
 			return true;
 		}
 
-		if (StringUtil.equals(resourceName, resourcePermissionName)) {
-			return true;
-		}
-		else {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Model permissions resource name ", resourceName,
-						" does not match resource permission name ",
-						resourcePermissionName));
-			}
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Model permissions resource name ", resourceName,
+					" does not match resource permission name ",
+					resourcePermissionName));
 		}
 
 		return false;

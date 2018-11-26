@@ -300,13 +300,12 @@ public class GraphQLServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private transient GraphQL _graphQL;
-	private final ObjectMapper _objectMapper = new ObjectMapper();
-
-	{
-		_objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-
-		_objectMapper.registerModule(_JDK8_MODULE);
-	}
+	private final ObjectMapper _objectMapper = new ObjectMapper() {
+		{
+			disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+			registerModule(_JDK8_MODULE);
+		}
+	};
 
 	private static class GraphQLRequest {
 

@@ -26,7 +26,7 @@ class PdfPreviewer extends Component {
 	 */
 	rendered() {
 		if (this.showPageInput) {
-			this.refs.pageInput.focus();
+			setTimeout(() => this.refs.pageInput.focus(), 100);
 		}
 	}
 

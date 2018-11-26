@@ -156,6 +156,44 @@ public class ToolsUtil {
 		return document.asXML();
 	}
 
+	public static int getLevel(String s) {
+		return getLevel(
+			s, new String[] {StringPool.OPEN_PARENTHESIS},
+			new String[] {StringPool.CLOSE_PARENTHESIS}, 0);
+	}
+
+	public static int getLevel(
+		String s, String increaseLevelString, String decreaseLevelString) {
+
+		return getLevel(
+			s, new String[] {increaseLevelString},
+			new String[] {decreaseLevelString}, 0);
+	}
+
+	public static int getLevel(
+		String s, String[] increaseLevelStrings,
+		String[] decreaseLevelStrings) {
+
+		return getLevel(s, increaseLevelStrings, decreaseLevelStrings, 0);
+	}
+
+	public static int getLevel(
+		String s, String[] increaseLevelStrings, String[] decreaseLevelStrings,
+		int startLevel) {
+
+		int level = startLevel;
+
+		for (String increaseLevelString : increaseLevelStrings) {
+			level = _adjustLevel(level, s, increaseLevelString, 1);
+		}
+
+		for (String decreaseLevelString : decreaseLevelStrings) {
+			level = _adjustLevel(level, s, decreaseLevelString, -1);
+		}
+
+		return level;
+	}
+
 	public static String getPackagePath(File file) {
 		String fileName = StringUtil.replace(
 			file.toString(), CharPool.BACK_SLASH, CharPool.SLASH);
@@ -551,6 +589,49 @@ public class ToolsUtil {
 
 			element.add(childElement);
 		}
+	}
+
+	private static int _adjustLevel(
+		int level, String text, String s, int diff) {
+
+		boolean multiLineComment = false;
+
+		forLoop:
+		for (String line : StringUtil.splitLines(text)) {
+			line = StringUtil.trim(line);
+
+			if (line.startsWith("/*")) {
+				multiLineComment = true;
+			}
+
+			if (multiLineComment) {
+				if (line.endsWith("*/")) {
+					multiLineComment = false;
+				}
+
+				continue;
+			}
+
+			if (line.startsWith("//") || line.startsWith("*")) {
+				continue;
+			}
+
+			int x = -1;
+
+			while (true) {
+				x = line.indexOf(s, x + 1);
+
+				if (x == -1) {
+					continue forLoop;
+				}
+
+				if (!isInsideQuotes(line, x)) {
+					level += diff;
+				}
+			}
+		}
+
+		return level;
 	}
 
 	private static Document _getContentDocument(String fileName)

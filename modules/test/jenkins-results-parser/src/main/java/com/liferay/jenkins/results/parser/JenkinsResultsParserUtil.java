@@ -817,7 +817,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String[] getGlobsFromProperty(String globProperty) {
-		Map<String, String> curlyBraceExpansionMap = new HashMap();
+		Map<String, String> curlyBraceExpansionMap = new HashMap<>();
 
 		Matcher curlyBraceMatcher = _curlyBraceExpansionPattern.matcher(
 			globProperty);
@@ -836,10 +836,10 @@ public class JenkinsResultsParserUtil {
 			i++;
 		}
 
-		List<String> tempGlobs = new ArrayList(
+		List<String> tempGlobs = new ArrayList<>(
 			Arrays.asList(globProperty.split(",")));
 
-		List<String> globs = new ArrayList();
+		List<String> globs = new ArrayList<>();
 
 		for (String tempGlob : tempGlobs) {
 			Matcher matcher = _nestedPropertyPattern.matcher(tempGlob);

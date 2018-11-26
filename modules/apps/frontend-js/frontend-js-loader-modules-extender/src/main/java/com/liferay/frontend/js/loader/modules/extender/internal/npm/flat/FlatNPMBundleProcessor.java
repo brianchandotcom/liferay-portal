@@ -19,6 +19,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSBundleProcessor;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -41,8 +42,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
@@ -134,13 +133,25 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			String urlContent = _normalizeModuleContent(
 				StringUtil.read(url.openStream()));
 
-			Matcher matcher = _moduleDefinitionPattern.matcher(urlContent);
+			int x = urlContent.indexOf("Liferay.Loader.define");
 
-			if (!matcher.find()) {
+			if (x < 0) {
 				return null;
 			}
 
-			return matcher.group(1);
+			x = urlContent.indexOf(CharPool.OPEN_BRACKET, x + 21);
+
+			if (x < 0) {
+				return null;
+			}
+
+			int y = urlContent.indexOf(CharPool.CLOSE_BRACKET, x + 1);
+
+			if (y < 0) {
+				return null;
+			}
+
+			return urlContent.substring(x + 1, y);
 		}
 		catch (IOException ioe) {
 			_log.error("Unable to read URL: " + url, ioe);
@@ -522,9 +533,6 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FlatNPMBundleProcessor.class);
-
-	private static final Pattern _moduleDefinitionPattern = Pattern.compile(
-		"Liferay\\.Loader\\.define.*\\[(.*)\\].*");
 
 	@Reference
 	private JSONFactory _jsonFactory;

@@ -103,7 +103,7 @@ public class ResourcePermissionLocalServiceImpl
 		ModelPermissions modelPermissions =
 			serviceContext.getModelPermissions();
 
-		if (matches(modelPermissions, auditedModel.getModelClassName())) {
+		if (_matches(modelPermissions, auditedModel.getModelClassName())) {
 			addModelResourcePermissions(
 				auditedModel.getCompanyId(), getGroupId(auditedModel),
 				auditedModel.getUserId(), auditedModel.getModelClassName(),
@@ -178,7 +178,7 @@ public class ResourcePermissionLocalServiceImpl
 				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,
 				ownerRole.getRoleId(), userId, ownerPermissions);
 
-			if (matches(modelPermissions, name)) {
+			if (_matches(modelPermissions, name)) {
 				for (String roleName : modelPermissions.getRoleNames()) {
 					Role role = getRole(companyId, groupId, roleName);
 
@@ -1667,7 +1667,7 @@ public class ResourcePermissionLocalServiceImpl
 			ModelPermissions modelPermissions)
 		throws PortalException {
 
-		if (!matches(modelPermissions, name)) {
+		if (!_matches(modelPermissions, name)) {
 			return;
 		}
 
@@ -1781,35 +1781,6 @@ public class ResourcePermissionLocalServiceImpl
 
 		if (roleId == guestRole.getRoleId()) {
 			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean matches(
-		ModelPermissions modelPermissions, String resourcePermissionName) {
-
-		if (modelPermissions == null) {
-			return false;
-		}
-
-		String resourceName = modelPermissions.getResourceName();
-
-		if (StringUtil.equals(resourceName, ModelPermissions.ALL_RESOURCES)) {
-			return true;
-		}
-
-		if (StringUtil.equals(resourceName, resourcePermissionName)) {
-			return true;
-		}
-		else {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Model permissions resource name ", resourceName,
-						" does not match resource permission name ",
-						resourcePermissionName));
-			}
 		}
 
 		return false;
@@ -2061,6 +2032,35 @@ public class ResourcePermissionLocalServiceImpl
 				IndexWriterHelperUtil.updatePermissionFields(name, name);
 			}
 		}
+	}
+
+	private boolean _matches(
+		ModelPermissions modelPermissions, String resourcePermissionName) {
+
+		if (modelPermissions == null) {
+			return false;
+		}
+
+		String resourceName = modelPermissions.getResourceName();
+
+		if (StringUtil.equals(resourceName, ModelPermissions.ALL_RESOURCES)) {
+			return true;
+		}
+
+		if (StringUtil.equals(resourceName, resourcePermissionName)) {
+			return true;
+		}
+		else {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Model permissions resource name ", resourceName,
+						" does not match resource permission name ",
+						resourcePermissionName));
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _updateResourcePermission(

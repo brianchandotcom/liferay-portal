@@ -293,19 +293,17 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 			return false;
 		}
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		int count = workflowDefinitionLinkPersistence.countByG_C_C_C(
-			StagingUtil.getLiveGroupId(groupId), companyId, classNameId,
-			classPK);
+			StagingUtil.getLiveGroupId(groupId), companyId,
+			classNameLocalService.getClassNameId(className), classPK);
 
 		if (count > 0) {
 			return true;
 		}
 
 		count = workflowDefinitionLinkPersistence.countByG_C_C_C(
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, companyId, classNameId,
-			classPK);
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, companyId,
+			classNameLocalService.getClassNameId(className), classPK);
 
 		if (count > 0) {
 			return true;
@@ -323,19 +321,17 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 			return false;
 		}
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
 		int count = workflowDefinitionLinkPersistence.countByG_C_C_C_T(
-			StagingUtil.getLiveGroupId(groupId), companyId, classNameId,
-			classPK, typePK);
+			StagingUtil.getLiveGroupId(groupId), companyId,
+			classNameLocalService.getClassNameId(className), classPK, typePK);
 
 		if (count > 0) {
 			return true;
 		}
 
 		count = workflowDefinitionLinkPersistence.countByG_C_C_C_T(
-			WorkflowConstants.DEFAULT_GROUP_ID, companyId, classNameId, classPK,
-			typePK);
+			WorkflowConstants.DEFAULT_GROUP_ID, companyId,
+			classNameLocalService.getClassNameId(className), classPK, typePK);
 
 		if (count > 0) {
 			return true;

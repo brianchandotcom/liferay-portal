@@ -49,7 +49,7 @@
 					<div class="btn-group btn-group-nowrap mt-1 pull-right">
 						{if $status == $allowedStatus.draft}
 							{let $draftButtonAttributes kind="attributes"}
-								class="btn btn-default"
+								class="btn btn-default btn-sm"
 								type="button"
 								value="{$allowedStatus.draft}"
 								data-onclick="{$_handleSaveButtonClick}"
@@ -70,7 +70,7 @@
 
 						<div class="btn-group-item">
 							{let $publishButtonAttributes kind="attributes"}
-								class="btn btn-primary"
+								class="btn btn-primary btn-sm"
 								type="button"
 								value="{$allowedStatus.approved}"
 								data-onclick="{$_handleSaveButtonClick}"

@@ -93,7 +93,7 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 							actionJsp="/fragment_entry_action.jsp"
 							actionJspServletContext="<%= application %>"
 							cssClass="entry-display-style"
-							icon="page"
+							icon="code"
 							resultRow="<%= row %>"
 							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= fragmentEntry.getName() %>"

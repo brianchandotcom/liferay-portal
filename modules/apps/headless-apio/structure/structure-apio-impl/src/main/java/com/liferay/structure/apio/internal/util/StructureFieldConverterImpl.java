@@ -33,7 +33,15 @@ public class StructureFieldConverterImpl implements StructureFieldConverter {
 
 	@Override
 	public String getFieldDataType(String dataType) {
-		if (Objects.equals(dataType, "document-library")) {
+		return getFieldDataType(dataType, null);
+	}
+
+	@Override
+	public String getFieldDataType(String dataType, String type) {
+		if (Objects.equals(dataType, "document-library") ||
+			(Objects.equals(dataType, "string") &&
+			 Objects.equals(type, "document_library"))) {
+
 			return "document";
 		}
 		else if (Objects.equals(dataType, "journal-article")) {
@@ -42,8 +50,15 @@ public class StructureFieldConverterImpl implements StructureFieldConverter {
 		else if (Objects.equals(dataType, "link-to-page")) {
 			return "url";
 		}
-		else if (Objects.equals(dataType, "radio")) {
+		else if (Objects.equals(dataType, "radio") ||
+				 Objects.equals(type, "paragraph")) {
+
 			return "string";
+		}
+		else if (Objects.equals(dataType, "string") &&
+				 Objects.equals(type, "date")) {
+
+			return "date";
 		}
 
 		return dataType;
@@ -52,10 +67,12 @@ public class StructureFieldConverterImpl implements StructureFieldConverter {
 	@Override
 	public String getFieldInputControl(String type) {
 		if (DDMFormFieldType.CHECKBOX.equals(type) ||
+			DDMFormFieldType.CHECKBOX_MULTIPLE.equals(type) ||
 			DDMFormFieldType.RADIO.equals(type) ||
 			DDMFormFieldType.SELECT.equals(type) ||
 			DDMFormFieldType.TEXT.equals(type) ||
-			DDMFormFieldType.TEXT_AREA.equals(type)) {
+			DDMFormFieldType.TEXT_AREA.equals(type) ||
+			Objects.equals(type, "grid") || Objects.equals(type, "paragraph")) {
 
 			return type;
 		}

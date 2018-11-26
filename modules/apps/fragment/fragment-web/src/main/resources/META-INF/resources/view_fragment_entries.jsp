@@ -112,6 +112,7 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 		<liferay-ui:search-iterator
 			displayStyle="icon"
 			markupView="lexicon"
+			resultRowSplitter="<%= fragmentDisplayContext.isSearch() ? null : new FragmentEntryResultRowSplitter() %>"
 		/>
 	</liferay-ui:search-container>
 </aui:form>

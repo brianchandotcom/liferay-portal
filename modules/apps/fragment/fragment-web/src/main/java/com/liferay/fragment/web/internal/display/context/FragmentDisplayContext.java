@@ -290,7 +290,7 @@ public class FragmentDisplayContext {
 		List<FragmentEntry> fragmentEntries = null;
 		int fragmentEntriesCount = 0;
 
-		if (_isSearch()) {
+		if (isSearch()) {
 			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
 				_themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
 				_getKeywords(), fragmentEntriesSearchContainer.getStart(),
@@ -468,6 +468,14 @@ public class FragmentDisplayContext {
 		return redirect;
 	}
 
+	public boolean isSearch() {
+		if (Validator.isNotNull(_getKeywords())) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private String _getFragmentEntryRenderURL(
 			FragmentEntry fragmentEntry, String mvcRenderCommandName,
 			WindowState windowState)
@@ -533,14 +541,6 @@ public class FragmentDisplayContext {
 		}
 
 		return portletURL;
-	}
-
-	private boolean _isSearch() {
-		if (Validator.isNotNull(_getKeywords())) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private String _cssContent;

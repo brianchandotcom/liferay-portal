@@ -44,6 +44,7 @@ page import="com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil" %><
 page import="com.liferay.fragment.service.FragmentEntryLocalServiceUtil" %><%@
 page import="com.liferay.fragment.util.FragmentEntryRenderUtil" %><%@
 page import="com.liferay.fragment.web.internal.constants.FragmentWebKeys" %><%@
+page import="com.liferay.fragment.web.internal.dao.search.FragmentEntryResultRowSplitter" %><%@
 page import="com.liferay.fragment.web.internal.display.context.FragmentCollectionsDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.display.context.FragmentDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.display.context.FragmentEntryLinkDisplayContext" %><%@

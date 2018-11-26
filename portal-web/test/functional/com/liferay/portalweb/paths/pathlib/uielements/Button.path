@@ -600,7 +600,7 @@
 </tr>
 <tr>
 	<td>UNSUBSCRIBE</td>
-	<td>//button[contains(.,'Unsubscribe')]</td>
+	<td>//button[contains(.,'Unsubscribe')] | //li[contains(@class,'nav-item')]/button[contains(@class,'nav-link')]</td>
 	<td></td>
 </tr>
 <tr>

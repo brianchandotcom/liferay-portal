@@ -41,7 +41,7 @@ class PdfPreviewer extends Component {
 	 * @private
 	 * @review
 	 */
-	_setPage(page) {
+	_setCurrentPage(page) {
 		const pageNumber = Number.parseInt(page, 10);
 
 		if (pageNumber) {
@@ -60,13 +60,13 @@ class PdfPreviewer extends Component {
 	 * @review
 	 */
 	_handleBlurPageInput(event) {
-		this._setPage(event.delegateTarget.value);
+		this._setCurrentPage(event.delegateTarget.value);
 		this.showPageInput = false;
 	}
 
 	/**
 	 * Prevents from introducing non digits in input field.
-	 * And map certain acctions to escape enter (save) or (cancel)
+	 * And map certain actions to escape enter (save) or (cancel)
 	 * @param {KeyboardEvent} event The keyboard event.
 	 * @private
 	 * @review
@@ -75,7 +75,7 @@ class PdfPreviewer extends Component {
 		const code = event.keyCode || event.charCode;
 
 		if (code === 13) {
-			this._setPage(event.delegateTarget.value);
+			this._setCurrentPage(event.delegateTarget.value);
 			this.showPageInput = false;
 		}
 		else if (code === 27) {
@@ -90,10 +90,10 @@ class PdfPreviewer extends Component {
 		const action = event.currentTarget.value;
 
 		if (action === 'next') {
-			this._setPage(this.currentPage + 1);
+			this._setCurrentPage(this.currentPage + 1);
 		}
 		else if (action === 'previous') {
-			this._setPage(this.currentPage - 1);
+			this._setCurrentPage(this.currentPage - 1);
 		}
 		else if (action === 'go') {
 			this.showPageInput = true;

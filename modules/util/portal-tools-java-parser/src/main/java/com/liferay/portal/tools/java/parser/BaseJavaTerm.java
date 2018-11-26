@@ -98,7 +98,17 @@ public abstract class BaseJavaTerm implements JavaTerm {
 					z = linePart.lastIndexOf(CharPool.OPEN_PARENTHESIS, z - 1);
 
 					if (z == -1) {
-						return _getLeadingWhitespace(s.substring(y, x));
+						s = s.substring(y, x);
+
+						String leadingWhitespace = _getLeadingWhitespace(s);
+
+						if (!StringUtil.startsWith(
+								StringUtil.trim(s), "return ")) {
+
+							return leadingWhitespace;
+						}
+
+						return leadingWhitespace + "\t   ";
 					}
 
 					if (SourceUtil.getLevel(linePart.substring(z)) != 0) {

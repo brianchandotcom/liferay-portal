@@ -74,7 +74,7 @@ public class JournalSelectDDMTemplateDisplayContext {
 	}
 
 	public String getEventName() {
-		return _renderResponse.getNamespace() + "selectTemplate";
+		return _renderResponse.getNamespace() + "selectDDMTemplate";
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {

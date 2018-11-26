@@ -252,16 +252,18 @@ public abstract class Baseline {
 				return true;
 			}
 
-			if (!bundleInfo.mismatch) {
+			if (mismatchPackageNames.isEmpty() && !bundleInfo.mismatch) {
 				return true;
 			}
 
-			Version newVersion = bundleInfo.suggestedVersion;
-			Version oldVersion = bundleInfo.newerVersion;
+			if (bundleInfo.mismatch) {
+				Version newVersion = bundleInfo.suggestedVersion;
+				Version oldVersion = bundleInfo.newerVersion;
 
-			updateBundleVersion(oldVersion, newVersion);
+				updateBundleVersion(oldVersion, newVersion);
 
-			reportBundleVersion(bundleInfo);
+				reportBundleVersion(bundleInfo);
+			}
 
 			reportMode();
 

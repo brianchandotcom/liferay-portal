@@ -44,18 +44,28 @@ public class JavaArrayElement extends JavaExpression {
 
 		indent = "\t" + indent;
 
-		sb.append(prefix);
-
-		append(sb, _arrayJavaExpression, indent, maxLineLength);
-
-		for (JavaExpression indexValueJavaExpression :
-				_indexValueJavaExpressions) {
-
+		if (_indexValueJavaExpressions.isEmpty()) {
 			append(
-				sb, indexValueJavaExpression, indent, "[", "]", maxLineLength);
+				sb, _arrayJavaExpression, indent, prefix, suffix,
+				maxLineLength);
+
+			return sb.toString();
 		}
 
-		sb.append(suffix);
+		append(sb, _arrayJavaExpression, indent, prefix, "", maxLineLength);
+
+		for (int i = 0; i < _indexValueJavaExpressions.size(); i++) {
+			if (i == (_indexValueJavaExpressions.size() - 1)) {
+				append(
+					sb, _indexValueJavaExpressions.get(i), indent, "[",
+					"]" + suffix, maxLineLength);
+			}
+			else {
+				append(
+					sb, _indexValueJavaExpressions.get(i), indent, "[", "]",
+					maxLineLength);
+			}
+		}
 
 		return sb.toString();
 	}

@@ -46,7 +46,7 @@ public class UnicodePropertiesTest {
 	}
 
 	@Test
-	public void testFastLoad() throws Exception {
+	public void testFastLoad() {
 		_testLoad(
 			(props, unicodeProperties) -> unicodeProperties.fastLoad(props),
 			false);
@@ -105,7 +105,7 @@ public class UnicodePropertiesTest {
 	}
 
 	@Test
-	public void testLoad() throws Exception {
+	public void testLoad() {
 		_testLoad(
 			(props, unicodeProperties) -> {
 				try {
@@ -236,8 +236,7 @@ public class UnicodePropertiesTest {
 	}
 
 	private void _testLoad(
-			BiConsumer<String, UnicodeProperties> loadMethod, boolean safe)
-		throws Exception {
+		BiConsumer<String, UnicodeProperties> loadMethod, boolean safe) {
 
 		UnicodeProperties unicodeProperties = new UnicodeProperties(safe);
 

@@ -176,6 +176,15 @@ the project for baselining.
 ### Changed
 - [LPS-87466]: Update the [Liferay Gradle Util] dependency to version 1.0.33.
 
+## 2.0.3 - 2018-11-22
+
+### Changed
+- [LPS-87776]: Update the [Liferay Ant BND] dependency to version 3.0.1.
+
+### Fixed
+- [LPS-87776]: Allow the `baseline` task to update the `Bundle-Version` header
+when all the `packageinfo` files are correct.
+
 [Bnd Builder Gradle Plugin]: https://github.com/bndtools/bnd/tree/master/biz.aQute.bnd.gradle
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
@@ -196,3 +205,4 @@ the project for baselining.
 [LPS-85678]: https://issues.liferay.com/browse/LPS-85678
 [LPS-86583]: https://issues.liferay.com/browse/LPS-86583
 [LPS-87466]: https://issues.liferay.com/browse/LPS-87466
+[LPS-87776]: https://issues.liferay.com/browse/LPS-87776

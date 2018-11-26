@@ -2,6 +2,7 @@
 	.preview-file-container {
 		overflow: auto;
 		position: relative;
+		text-align: center;
 
 		&.preview-file-max-height {
 			height: 480px;

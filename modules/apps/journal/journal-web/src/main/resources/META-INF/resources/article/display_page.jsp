@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-EditArticleDisplayPageDisplayContext editArticleDisplayPageDisplayContext = new EditArticleDisplayPageDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+EditArticleDisplayPageDisplayContext editArticleDisplayPageDisplayContext = new EditArticleDisplayPageDisplayContext(request);
 
 DDMStructure ddmStructure = editArticleDisplayPageDisplayContext.getDDMStructure(journalDisplayContext.getDDMStructureKey());
 

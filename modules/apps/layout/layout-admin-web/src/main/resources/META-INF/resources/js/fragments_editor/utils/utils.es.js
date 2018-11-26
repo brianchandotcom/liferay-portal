@@ -108,6 +108,20 @@ function getFragmentRowIndex(structure, fragmentEntryLinkId) {
 }
 
 /**
+ * Returns the index of the section with the given rowId
+ * @param {array} structure
+ * @param {string} sectionId
+ * @return {number}
+ */
+function getSectionIndex(structure, sectionId) {
+	return structure.findIndex(
+		row => {
+			return row.rowId === sectionId;
+		}
+	);
+}
+
+/**
  * Removes from the given array the element in the given position and
  * returns a new array
  * @param {!Array} array
@@ -219,6 +233,7 @@ export {
 	getDropSectionPosition,
 	getFragmentColumn,
 	getFragmentRowIndex,
+	getSectionIndex,
 	remove,
 	setIn,
 	updateIn,

@@ -71,7 +71,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 				%>
 
 				<div class="alert alert-success">
-					<liferay-ui:message arguments="<%= amImageConfigurationEntry.getName() %>" key="x-saved-successfully" translateArguments="<%= false %>" />
+					<liferay-ui:message arguments="<%= HtmlUtil.escape(amImageConfigurationEntry.getName()) %>" key="x-saved-successfully" translateArguments="<%= false %>" />
 				</div>
 			</c:when>
 		</c:choose>

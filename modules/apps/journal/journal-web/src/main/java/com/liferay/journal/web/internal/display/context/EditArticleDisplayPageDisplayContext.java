@@ -167,6 +167,16 @@ public class EditArticleDisplayPageDisplayContext {
 		return _displayPageType;
 	}
 
+	public DDMStructure getDDMStructure(String ddmStructureKey) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return DDMStructureLocalServiceUtil.fetchStructure(
+			themeDisplay.getSiteGroupId(),
+			PortalUtil.getClassNameId(JournalArticle.class), ddmStructureKey,
+			true);
+	}
+
 	public String getDefaultAssetDisplayPageName(String ddmStructureKey)
 		throws PortalException {
 
@@ -192,7 +202,7 @@ public class EditArticleDisplayPageDisplayContext {
 			return _defaultAssetDisplayPageName;
 		}
 
-		DDMStructure ddmStructure = _getDDMStructure(ddmStructureKey);
+		DDMStructure ddmStructure = getDDMStructure(ddmStructureKey);
 
 		if (ddmStructure != null) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
@@ -423,16 +433,6 @@ public class EditArticleDisplayPageDisplayContext {
 			journalArticle.getArticleResourceUuid());
 
 		return _assetEntry;
-	}
-
-	private DDMStructure _getDDMStructure(String ddmStructureKey) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return DDMStructureLocalServiceUtil.fetchStructure(
-			themeDisplay.getSiteGroupId(),
-			PortalUtil.getClassNameId(JournalArticle.class), ddmStructureKey,
-			true);
 	}
 
 	private String _getLayoutBreadcrumb(Layout layout) throws Exception {

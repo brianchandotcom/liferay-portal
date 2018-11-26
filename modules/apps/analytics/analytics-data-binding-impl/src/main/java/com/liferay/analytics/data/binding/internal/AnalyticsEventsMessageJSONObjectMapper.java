@@ -78,11 +78,11 @@ public class AnalyticsEventsMessageJSONObjectMapper
 
 	private static final class AnalyticsEventsMessageMixIn {
 
-		@JsonProperty("analyticsKey")
-		private String _analyticsKey;
-
 		@JsonProperty("context")
 		private Map<String, String> _context;
+
+		@JsonProperty("dataSourceId")
+		private String _dataSourceId;
 
 		@JsonProperty("events")
 		private List<?> _events;

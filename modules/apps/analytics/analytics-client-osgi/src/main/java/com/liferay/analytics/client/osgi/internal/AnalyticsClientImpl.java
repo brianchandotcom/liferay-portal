@@ -60,7 +60,7 @@ public class AnalyticsClientImpl implements AnalyticsClient {
 		throws Exception {
 
 		if (analyticsEventsMessage.getUserId() == null) {
-			String userId = getUserId(analyticsEventsMessage.getAnalyticsKey());
+			String userId = getUserId(analyticsEventsMessage.getDataSourceId());
 
 			AnalyticsEventsMessage.Builder builder =
 				AnalyticsEventsMessage.builder(analyticsEventsMessage);
@@ -98,7 +98,7 @@ public class AnalyticsClientImpl implements AnalyticsClient {
 		initializeJSONWebServiceClient();
 	}
 
-	protected String getUserId(String analyticsKey) throws Exception {
+	protected String getUserId(String dataSourceId) throws Exception {
 		HttpSession session = PortalSessionThreadLocal.getHttpSession();
 
 		if ((session != null) &&
@@ -110,7 +110,7 @@ public class AnalyticsClientImpl implements AnalyticsClient {
 		}
 
 		IdentityContextMessage.Builder identityContextMessageBuilder =
-			IdentityContextMessage.builder(analyticsKey);
+			IdentityContextMessage.builder(dataSourceId);
 
 		identityContextMessageBuilder.protocolVersion("1.0");
 

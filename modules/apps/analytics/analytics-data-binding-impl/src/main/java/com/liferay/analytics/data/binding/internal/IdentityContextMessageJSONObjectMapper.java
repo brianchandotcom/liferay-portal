@@ -64,9 +64,6 @@ public class IdentityContextMessageJSONObjectMapper
 
 	private static final class IdentityContextMessageMixIn {
 
-		@JsonIgnore
-		private String _analyticsKey;
-
 		@JsonProperty("browserPluginDetails")
 		private String _browserPluginDetails;
 
@@ -75,6 +72,9 @@ public class IdentityContextMessageJSONObjectMapper
 
 		@JsonProperty("cookiesEnabled")
 		private boolean _cookiesEnabled;
+
+		@JsonIgnore
+		private String _dataSourceId;
 
 		@JsonProperty("dataSourceIdentifier")
 		private String _dataSourceIdentifier;

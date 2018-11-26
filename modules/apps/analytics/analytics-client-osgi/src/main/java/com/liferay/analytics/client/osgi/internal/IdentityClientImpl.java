@@ -51,7 +51,7 @@ public class IdentityClientImpl implements IdentityClient {
 			identityContextMessage);
 
 		String identityPath = String.format(
-			"/%s%s", identityContextMessage.getAnalyticsKey(),
+			"/%s%s", identityContextMessage.getDataSourceId(),
 			_identifyClientConfiguration.identifyGatewayPath());
 
 		if (_log.isDebugEnabled()) {

@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>MAJOR_VERSION</td>
-	<td>//input[contains(@id,'MajorVersion_1')]</td>
+	<td>//label[contains(.,'Major Version')]/input</td>
 	<td></td>
 </tr>
 <tr>

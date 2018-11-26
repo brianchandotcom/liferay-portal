@@ -44,7 +44,7 @@ public class KeyValuePairComparator implements Comparator<KeyValuePair> {
 				return key1.compareTo(key2);
 			}
 
-			return -(key1.compareTo(key2));
+			return -key1.compareTo(key2);
 		}
 		else {
 			String value1 = kvp1.getValue();
@@ -54,7 +54,7 @@ public class KeyValuePairComparator implements Comparator<KeyValuePair> {
 				return value1.compareTo(value2);
 			}
 
-			return -(value1.compareTo(value2));
+			return -value1.compareTo(value2);
 		}
 	}
 

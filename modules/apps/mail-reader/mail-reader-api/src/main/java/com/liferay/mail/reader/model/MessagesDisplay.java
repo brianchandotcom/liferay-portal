@@ -50,7 +50,7 @@ public class MessagesDisplay {
 	}
 
 	public int getPageCount() {
-		return (int)(Math.ceil(_messageCount / (double)_messagesPerPage));
+		return (int)Math.ceil(_messageCount / (double)_messagesPerPage);
 	}
 
 	public int getPageNumber() {

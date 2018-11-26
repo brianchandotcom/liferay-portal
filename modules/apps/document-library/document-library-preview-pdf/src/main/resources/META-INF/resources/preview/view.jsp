@@ -40,6 +40,7 @@ String previewFileURL = previewFileURLs[0];
 Map<String, Object> context = new HashMap<>();
 context.put("baseImageURL", previewFileURL);
 context.put("currentPage", 1);
+context.put("id", renderResponse.getNamespace() + randomNamespace + "previewFile");
 context.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 context.put("totalPages", previewFileCount);
 %>
@@ -51,8 +52,8 @@ context.put("totalPages", previewFileCount);
 </liferay-util:html-top>
 
 <soy:component-renderer
-	componentId='<%= renderResponse.getNamespace() + randomNamespace + "previewFile" %>'
 	context="<%= context %>"
 	module="document-library-preview-pdf/preview/js/PdfPreviewer.es"
 	templateNamespace="com.liferay.document.library.preview.PdfPreviewer.render"
+	wrapper="<%= false %>"
 />

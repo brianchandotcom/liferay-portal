@@ -13,7 +13,7 @@
 	{@param? _handleKeyDownPageInput: any}
 	{@param? id: string}
 	{@param? nextPageDisabled: bool}
-	{@param? previousPageDiabled: bool}
+	{@param? previousPageDisabled: bool}
 	{@param? showPageInput: bool}
 
 	<div class="preview-file" id="{$id}">
@@ -27,7 +27,7 @@
 			{param _handleKeyDownPageInput: $_handleKeyDownPageInput /}
 			{param currentPage: $currentPage /}
 			{param nextPageDisabled: $nextPageDisabled /}
-			{param previousPageDiabled: $previousPageDiabled /}
+			{param previousPageDisabled: $previousPageDisabled /}
 			{param showPageInput: $showPageInput /}
 			{param spritemap: $spritemap /}
 			{param totalPages: $totalPages /}
@@ -43,7 +43,7 @@
 	{@param? _handleClickToolbar: any}
 	{@param? _handleKeyDownPageInput: any}
 	{@param? nextPageDisabled: bool}
-	{@param? previousPageDiabled: bool}
+	{@param? previousPageDisabled: bool}
 	{@param? showPageInput: bool}
 
 	{let $baseButtonsToolbar:[
@@ -81,7 +81,7 @@
 				{/if}
 			</div>
 			{call ClayButton.render data="$baseButtonsToolbar"}
-				{param disabled: $previousPageDiabled /}
+				{param disabled: $previousPageDisabled /}
 				{param icon: 'caret-top' /}
 				{param monospaced: true /}
 				{param value: 'previous' /}

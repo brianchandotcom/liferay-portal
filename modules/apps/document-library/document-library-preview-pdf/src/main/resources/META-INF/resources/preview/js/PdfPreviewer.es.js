@@ -4,6 +4,10 @@ import Soy from 'metal-soy';
 
 import templates from './PdfPreviewer.soy';
 
+const KEY_CODE_ENTER = 13;
+
+const KEY_CODE_ESC = 27;
+
 /**
  * Valid list of keycodes
  * Includes backspace, tab, enter, escape, arrows, delete and numbers
@@ -31,7 +35,7 @@ class PdfPreviewer extends Component {
 	 */
 	syncCurrentPage(currentPage) {
 		this.refs.imageContainer.scrollTop = 0;
-		this.previousPageDiabled = currentPage === 1;
+		this.previousPageDisabled = currentPage === 1;
 		this.nextPageDisabled = currentPage === this.totalPages;
 	}
 
@@ -78,11 +82,11 @@ class PdfPreviewer extends Component {
 	_handleKeyDownPageInput(event) {
 		const code = event.keyCode || event.charCode;
 
-		if (code === 13) {
+		if (code === KEY_CODE_ENTER) {
 			this._setCurrentPage(event.delegateTarget.value);
 			this.showPageInput = false;
 		}
-		else if (code === 27) {
+		else if (code === KEY_CODE_ESC) {
 			this.showPageInput = false;
 		}
 		else if (validKeyCodes.indexOf(code) == -1) {

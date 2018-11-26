@@ -831,7 +831,7 @@ public class JenkinsResultsParserUtil {
 
 			curlyBraceExpansionMap.put(i, value);
 
-			globProperty = globProperty.replaceFirst(Pattern.quote(value), key);
+			globProperty = globProperty.replace(Pattern.quote(value), key);
 
 			i++;
 		}

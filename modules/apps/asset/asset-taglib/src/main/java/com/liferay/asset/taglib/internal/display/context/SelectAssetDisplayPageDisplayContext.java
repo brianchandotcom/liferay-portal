@@ -238,6 +238,10 @@ public class SelectAssetDisplayPageDisplayContext {
 		return _defaultAssetDisplayPageName;
 	}
 
+	public String getEventName() {
+		return _eventName;
+	}
+
 	public String getLayoutUuid() throws PortalException {
 		if (_classPK == 0) {
 			return null;

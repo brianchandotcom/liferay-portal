@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.getFragmentCollections(themeDisplay.getScopeGroupId());
+List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request.getAttribute(FragmentWebKeys.FRAGMENT_COLLECTIONS);
 %>
 
 <div class="container-fluid container-fluid-max-xl container-view">

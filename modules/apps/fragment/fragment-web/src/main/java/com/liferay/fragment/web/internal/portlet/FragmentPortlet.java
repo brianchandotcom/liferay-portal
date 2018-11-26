@@ -15,7 +15,9 @@
 package com.liferay.fragment.web.internal.portlet;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
+import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.web.internal.configuration.FragmentPortletConfiguration;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.item.selector.ItemSelector;
@@ -37,6 +39,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.IOException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -90,14 +93,24 @@ public class FragmentPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		try {
-			_createAssetDisplayLayout(renderRequest);
+			_createAssetDisplayLayout(themeDisplay);
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(pe, pe);
 			}
 		}
+
+		List<FragmentCollection> fragmentCollections =
+			_fragmentCollectionService.getFragmentCollections(
+				themeDisplay.getScopeGroupId());
+
+		renderRequest.setAttribute(
+			FragmentWebKeys.FRAGMENT_COLLECTIONS, fragmentCollections);
 
 		renderRequest.setAttribute(
 			FragmentPortletConfiguration.class.getName(),
@@ -111,11 +124,8 @@ public class FragmentPortlet extends MVCPortlet {
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
-	private void _createAssetDisplayLayout(RenderRequest renderRequest)
+	private void _createAssetDisplayLayout(ThemeDisplay themeDisplay)
 		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		Group group = themeDisplay.getScopeGroup();
 
@@ -150,6 +160,9 @@ public class FragmentPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentPortlet.class);
+
+	@Reference
+	private FragmentCollectionService _fragmentCollectionService;
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;

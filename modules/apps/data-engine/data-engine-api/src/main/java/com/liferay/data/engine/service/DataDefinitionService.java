@@ -24,6 +24,10 @@ import com.liferay.data.engine.exception.DataDefinitionException;
 @ProviderType
 public interface DataDefinitionService {
 
+	public DataDefinitionDeleteResponse delete(
+			DataDefinitionDeleteRequest dataDefinitionDeleteRequest)
+		throws DataDefinitionException;
+
 	public DataDefinitionGetResponse get(
 			DataDefinitionGetRequest dataDefinitionGetRequest)
 		throws DataDefinitionException;

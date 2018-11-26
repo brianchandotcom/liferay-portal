@@ -36,25 +36,8 @@ class PdfPreviewer extends Component {
 	}
 
 	/**
-	 * Set the current page if is valid page
-	 * @param {number|string} page
-	 * @private
-	 * @review
-	 */
-	_setCurrentPage(page) {
-		const pageNumber = Number.parseInt(page, 10);
-
-		if (pageNumber) {
-			this.currentPage = Math.min(
-				Math.max(1, pageNumber),
-				this.totalPages
-			);
-		}
-	}
-
-	/**
-	 * Event handler executed in pageInput blur
-	 * Save the current value
+	 * Event handler executed on pageInput blur.
+	 * Saves the current value.
 	 * @param {!Event} event
 	 * @private
 	 * @review
@@ -62,6 +45,27 @@ class PdfPreviewer extends Component {
 	_handleBlurPageInput(event) {
 		this._setCurrentPage(event.delegateTarget.value);
 		this.showPageInput = false;
+	}
+
+	/**
+	 * Handles click action in the toolbar.
+	 *
+	 * @param {!Event} event
+	 * @private
+	 * @review
+	 */
+	_handleClickToolbar(event) {
+		const action = event.currentTarget.value;
+
+		if (action === 'next') {
+			this._setCurrentPage(this.currentPage + 1);
+		}
+		else if (action === 'previous') {
+			this._setCurrentPage(this.currentPage - 1);
+		}
+		else if (action === 'go') {
+			this.showPageInput = true;
+		}
 	}
 
 	/**
@@ -86,17 +90,20 @@ class PdfPreviewer extends Component {
 		}
 	}
 
-	_handleClickToolbar(event) {
-		const action = event.currentTarget.value;
+	/**
+	 * Set the current page if is valid page
+	 * @param {number|string} page
+	 * @private
+	 * @review
+	 */
+	_setCurrentPage(page) {
+		const pageNumber = Number.parseInt(page, 10);
 
-		if (action === 'next') {
-			this._setCurrentPage(this.currentPage + 1);
-		}
-		else if (action === 'previous') {
-			this._setCurrentPage(this.currentPage - 1);
-		}
-		else if (action === 'go') {
-			this.showPageInput = true;
+		if (pageNumber) {
+			this.currentPage = Math.min(
+				Math.max(1, pageNumber),
+				this.totalPages
+			);
 		}
 	}
 }

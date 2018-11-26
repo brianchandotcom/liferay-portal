@@ -4954,50 +4954,10 @@ ${output.content}</echo>
 
 		<antcall inheritAll="false" target="compile" />
 
-		<java
-			classname="com.liferay.portal.tools.GitUtil"
-			classpathref="project.classpath"
-			dir="${project.dir}"
-			fork="true"
-			newenvironment="true"
-			outputProperty="baseline.current.branch.file.names"
-			resultproperty="baseline.current.branch.result"
-		>
-			<arg value="git.type=current-branch" />
-			<arg value="git.working.branch.name=${git.working.branch.name}" />
-		</java>
-
-		<if>
-			<equals arg1="${baseline.current.branch.file.names}" arg2="" />
-			<then>
-				<antcall inheritAll="false" target="run-pmd" />
-			</then>
-			<else>
-				<loadresource property="pmd.modified.java.files">
-					<filterchain>
-						<linecontainsregexp>
-							<regexp pattern=".*\.java$" />
-						</linecontainsregexp>
-						<tokenfilter delimOutput="," />
-					</filterchain>
-					<propertyresource name="baseline.current.branch.file.names" />
-				</loadresource>
-
-				<if>
-					<isset property="pmd.modified.java.files" />
-					<then>
-						<echo>Running PMD on the following files: ${pmd.modified.java.files}</echo>
-
-						<antcall inheritAll="false" target="run-pmd">
-							<param name="pmd.java.includes" value="${pmd.modified.java.files}" />
-						</antcall>
-					</then>
-					<else>
-						<echo message="No modified Java files. Skipping PMD check." />
-					</else>
-				</if>
-			</else>
-		</if>
+		<antcall inheritAll="false" target="run-pmd">
+			<param name="pmd.java.excludes" value="**/resources/**,**/third-party/**,**/tools/**,**/WEB-INF/**" />
+			<param name="pmd.java.includes" value="**/src/**/*.java,**/test/**/*.java,**/testIntegration/**/*.java" />
+		</antcall>
 
 		<if>
 			<available file="pmd-reports" />

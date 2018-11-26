@@ -163,7 +163,7 @@ public class URLCodecTest {
 	private void _testCharacterCodingException(
 		Function<String, String> codecFunction) {
 
-		Object[] oldCache1 = ReflectionTestUtil.getAndSetFieldValue(
+		Object oldCache1 = ReflectionTestUtil.getAndSetFieldValue(
 			Charset.class, "cache1",
 			new Object[] {"test-charset", _testCharset});
 

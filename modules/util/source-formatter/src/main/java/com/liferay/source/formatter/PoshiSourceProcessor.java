@@ -48,7 +48,8 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 		return super.format(file, fileName, absolutePath, content);
 	}
 
-	private static final String[] _INCLUDES =
-		{"**/*.function", "**/*.macro", "**/*.testcase"};
+	private static final String[] _INCLUDES = {
+		"**/*.function", "**/*.macro", "**/*.testcase"
+	};
 
 }

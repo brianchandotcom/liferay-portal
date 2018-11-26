@@ -86,8 +86,9 @@ public class LodashTopHeadDynamicInclude extends BaseDynamicInclude {
 			JSLodashConfiguration.class, properties);
 	}
 
-	private static final String[] _FILE_NAMES =
-		{"lodash/lodash.js", "lodash/util.js"};
+	private static final String[] _FILE_NAMES = {
+		"lodash/lodash.js", "lodash/util.js"
+	};
 
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;

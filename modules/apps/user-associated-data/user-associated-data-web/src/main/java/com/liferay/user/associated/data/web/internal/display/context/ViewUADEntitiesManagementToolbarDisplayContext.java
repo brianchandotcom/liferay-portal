@@ -112,8 +112,9 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 	protected PortletURL getPortletURL() {
 		PortletURL portletURL = searchContainer.getIteratorURL();
 
-		String[] parameterNames =
-			{"keywords", "orderByCol", "orderByType", "cur", "delta"};
+		String[] parameterNames = {
+			"keywords", "orderByCol", "orderByType", "cur", "delta"
+		};
 
 		for (String parameterName : parameterNames) {
 			String value = ParamUtil.getString(request, parameterName);

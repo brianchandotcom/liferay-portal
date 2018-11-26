@@ -154,10 +154,12 @@ public class BNDSourceUtil {
 		"Liferay-Portal-Version"
 	};
 
-	private static final String[] _SUBSYSTEM_BND_DEFINITION_KEYS =
-		{"Liferay-Releng-Marketplace", "Liferay-Releng-Subsystem-Title"};
+	private static final String[] _SUBSYSTEM_BND_DEFINITION_KEYS = {
+		"Liferay-Releng-Marketplace", "Liferay-Releng-Subsystem-Title"
+	};
 
-	private static final String[] _SUITE_BND_DEFINITION_KEYS =
-		{"Liferay-Releng-Suite-Description", "Liferay-Releng-Suite-Title"};
+	private static final String[] _SUITE_BND_DEFINITION_KEYS = {
+		"Liferay-Releng-Suite-Description", "Liferay-Releng-Suite-Title"
+	};
 
 }

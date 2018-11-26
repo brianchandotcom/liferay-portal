@@ -85,8 +85,9 @@ public class CompatClassImportsCheck extends BaseFileCheck {
 
 		_compatClassNamesMap = new HashMap<>();
 
-		String[] includes =
-			{"**/portal-compat-shared/src/com/liferay/compat/**/*.java"};
+		String[] includes = {
+			"**/portal-compat-shared/src/com/liferay/compat/**/*.java"
+		};
 
 		String baseDirName = getBaseDirName();
 

@@ -29,10 +29,7 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 				"1_WAR_wikinavigationportlet",
 				WikiNavigationPortletKeys.TREE_MENU
 			},
-			{
-				"2_WAR_wikinavigationportlet",
-				WikiNavigationPortletKeys.PAGE_MENU
-			}
+			{"2_WAR_wikinavigationportlet", WikiNavigationPortletKeys.PAGE_MENU}
 		};
 	}
 

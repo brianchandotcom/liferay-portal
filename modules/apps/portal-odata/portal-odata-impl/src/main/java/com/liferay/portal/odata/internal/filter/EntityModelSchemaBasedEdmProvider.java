@@ -190,8 +190,8 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 			return Optional.of(
 				_createPrimitiveCsdlProperty(
 					entityField,
-					EdmPrimitiveTypeKind.DateTimeOffset.getFullQualifiedName())
-			);
+					EdmPrimitiveTypeKind.DateTimeOffset.
+						getFullQualifiedName()));
 		}
 		else if (Objects.equals(
 					entityField.getType(), EntityField.Type.DOUBLE)) {
@@ -199,8 +199,7 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 			return Optional.of(
 				_createPrimitiveCsdlProperty(
 					entityField,
-					EdmPrimitiveTypeKind.Double.getFullQualifiedName())
-			);
+					EdmPrimitiveTypeKind.Double.getFullQualifiedName()));
 		}
 		else if (Objects.equals(entityField.getType(), EntityField.Type.ID) ||
 				 Objects.equals(
@@ -209,8 +208,7 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 			return Optional.of(
 				_createPrimitiveCsdlProperty(
 					entityField,
-					EdmPrimitiveTypeKind.String.getFullQualifiedName())
-			);
+					EdmPrimitiveTypeKind.String.getFullQualifiedName()));
 		}
 		else if (Objects.equals(
 					entityField.getType(), EntityField.Type.INTEGER)) {
@@ -218,8 +216,7 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 			return Optional.of(
 				_createPrimitiveCsdlProperty(
 					entityField,
-					EdmPrimitiveTypeKind.Int64.getFullQualifiedName())
-			);
+					EdmPrimitiveTypeKind.Int64.getFullQualifiedName()));
 		}
 
 		return Optional.empty();

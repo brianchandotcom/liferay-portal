@@ -40,8 +40,8 @@ public class CompanySettingsMiscellaneousFormNavigatorCategory
 
 	@Override
 	public String getKey() {
-		return
-			FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_MISCELLANEOUS;
+		return FormNavigatorConstants.
+			CATEGORY_KEY_COMPANY_SETTINGS_MISCELLANEOUS;
 	}
 
 	@Override

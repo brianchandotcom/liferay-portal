@@ -38,10 +38,7 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 				"4_WAR_knowledgebaseportlet",
 				KBPortletKeys.KNOWLEDGE_BASE_SECTION
 			},
-			{
-				"5_WAR_knowledgebaseportlet",
-				KBPortletKeys.KNOWLEDGE_BASE_SEARCH
-			}
+			{"5_WAR_knowledgebaseportlet", KBPortletKeys.KNOWLEDGE_BASE_SEARCH}
 		};
 	}
 

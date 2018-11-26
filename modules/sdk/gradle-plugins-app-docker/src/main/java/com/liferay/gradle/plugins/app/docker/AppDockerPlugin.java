@@ -140,8 +140,8 @@ public class AppDockerPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					return
-						prepareAppDockerImageInputDirTask.getDestinationDir();
+					return prepareAppDockerImageInputDirTask.
+						getDestinationDir();
 				}
 
 			});

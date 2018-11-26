@@ -43,8 +43,9 @@ public class TLiferayOutputDefinition extends LiferayBaseComponentDefinition {
 
 		return concatPropertiesClasses(
 			super.getNestedCompatibleComponentPropertiesClass(),
-			(Class<? extends ComponentProperties>[])
-				new Class<?>[] {LiferayResourceProperties.class});
+			(Class<? extends ComponentProperties>[])new Class<?>[] {
+				LiferayResourceProperties.class
+			});
 	}
 
 	@Override

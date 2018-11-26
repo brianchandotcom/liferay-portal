@@ -95,8 +95,9 @@ public class LayoutPageTemplateCollectionStagedModelRepository
 	public LayoutPageTemplateCollection fetchMissingReference(
 		String uuid, long groupId) {
 
-		return (LayoutPageTemplateCollection)_stagedModelRepositoryHelper.
-			fetchMissingReference(uuid, groupId, this);
+		return (LayoutPageTemplateCollection)
+			_stagedModelRepositoryHelper.fetchMissingReference(
+				uuid, groupId, this);
 	}
 
 	@Override

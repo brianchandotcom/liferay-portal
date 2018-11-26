@@ -1983,8 +1983,8 @@ public class StagingImpl implements Staging {
 	@Deprecated
 	@Override
 	public Map<String, String[]> getStagingParameters() {
-		return
-			_exportImportConfigurationParameterMapFactory.buildParameterMap();
+		return _exportImportConfigurationParameterMapFactory.
+			buildParameterMap();
 	}
 
 	/**

@@ -125,8 +125,8 @@ public class DefaultModelResourcePermission<T extends GroupedModel>
 
 	@Override
 	public PortletResourcePermission getPortletResourcePermission() {
-		return
-			_modelResourcePermissionDefinition.getPortletResourcePermission();
+		return _modelResourcePermissionDefinition.
+			getPortletResourcePermission();
 	}
 
 	private boolean _contains(

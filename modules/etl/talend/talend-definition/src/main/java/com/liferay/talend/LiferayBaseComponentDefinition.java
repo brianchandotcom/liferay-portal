@@ -99,8 +99,9 @@ public abstract class LiferayBaseComponentDefinition
 	public Class<? extends ComponentProperties>[]
 		getNestedCompatibleComponentPropertiesClass() {
 
-		return (Class<? extends ComponentProperties>[])
-			new Class<?>[] {LiferayConnectionProperties.class};
+		return (Class<? extends ComponentProperties>[])new Class<?>[] {
+			LiferayConnectionProperties.class
+		};
 	}
 
 	/**

@@ -59,8 +59,8 @@ public class ModularDLFileRankLocalServiceWrapper
 			DLFileRank.class,
 			_dlFileRankLocalService.addDLFileRank(
 				ModelAdapterUtil.adapt(
-					com.liferay.document.library.file.rank.model.
-						DLFileRank.class,
+					com.liferay.document.library.file.rank.model.DLFileRank.
+						class,
 					dlFileRank)));
 	}
 
@@ -93,8 +93,8 @@ public class ModularDLFileRankLocalServiceWrapper
 			DLFileRank.class,
 			_dlFileRankLocalService.deleteDLFileRank(
 				ModelAdapterUtil.adapt(
-					com.liferay.document.library.file.rank.model.
-						DLFileRank.class,
+					com.liferay.document.library.file.rank.model.DLFileRank.
+						class,
 					dlFileRank)));
 	}
 
@@ -261,8 +261,8 @@ public class ModularDLFileRankLocalServiceWrapper
 			DLFileRank.class,
 			_dlFileRankLocalService.updateDLFileRank(
 				ModelAdapterUtil.adapt(
-					com.liferay.document.library.file.rank.model.
-						DLFileRank.class,
+					com.liferay.document.library.file.rank.model.DLFileRank.
+						class,
 					dlFileRank)));
 	}
 

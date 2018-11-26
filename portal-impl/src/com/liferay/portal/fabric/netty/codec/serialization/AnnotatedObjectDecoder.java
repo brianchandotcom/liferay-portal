@@ -83,8 +83,8 @@ public class AnnotatedObjectDecoder extends LengthFieldBasedFrameDecoder {
 	}
 
 	public ObjectDecodeChannelInboundHandler<?> remove(String name) {
-		return (ObjectDecodeChannelInboundHandler<?>)
-			_channelPipeline.remove(name);
+		return (ObjectDecodeChannelInboundHandler<?>)_channelPipeline.remove(
+			name);
 	}
 
 	public ObjectDecodeChannelInboundHandler<?> removeFirst() {

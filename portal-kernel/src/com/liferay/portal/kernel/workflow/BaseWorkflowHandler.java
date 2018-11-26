@@ -70,8 +70,9 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 
 	@Override
 	public AssetRendererFactory<T> getAssetRendererFactory() {
-		return (AssetRendererFactory<T>)AssetRendererFactoryRegistryUtil.
-			getAssetRendererFactoryByClassName(getClassName());
+		return (AssetRendererFactory<T>)
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				getClassName());
 	}
 
 	@Override

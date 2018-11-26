@@ -186,9 +186,8 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 
 						@Override
 						public String call() throws Exception {
-							return
-								GradleUtil.getArchivesBaseName(project) + "." +
-									getArchiveExtension();
+							return GradleUtil.getArchivesBaseName(project) +
+								"." + getArchiveExtension();
 						}
 
 					}));

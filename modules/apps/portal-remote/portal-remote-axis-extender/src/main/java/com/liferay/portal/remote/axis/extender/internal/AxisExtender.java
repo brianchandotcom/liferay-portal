@@ -149,8 +149,8 @@ public class AxisExtender {
 									name = name.substring(1);
 								}
 
-								return
-									BundleUtil.getResourceInBundleOrFragments(
+								return BundleUtil.
+									getResourceInBundleOrFragments(
 										bundle, name);
 							}
 

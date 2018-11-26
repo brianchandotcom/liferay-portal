@@ -25,10 +25,7 @@ public class UpgradeDDMFormAdminPortletId extends BaseUpgradePortletId {
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			{
-				_OLD_PORTLET_NAME,
-				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN
-			}
+			{_OLD_PORTLET_NAME, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN}
 		};
 	}
 

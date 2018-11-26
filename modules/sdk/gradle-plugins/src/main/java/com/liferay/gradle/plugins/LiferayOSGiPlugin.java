@@ -805,8 +805,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 						@Override
 						public Boolean call() throws Exception {
-							return
-								liferayOSGiExtension.isExpandCompileInclude();
+							return liferayOSGiExtension.
+								isExpandCompileInclude();
 						}
 
 					});

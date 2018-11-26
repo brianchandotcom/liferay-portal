@@ -509,8 +509,8 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 	protected String getFieldInstanceId(
 		String[] ddmFormFieldParameterNameParts) {
 
-		return
-			ddmFormFieldParameterNameParts[_DDM_FORM_FIELD_INSTANCE_ID_INDEX];
+		return ddmFormFieldParameterNameParts
+			[_DDM_FORM_FIELD_INSTANCE_ID_INDEX];
 	}
 
 	protected String getFieldName(String[] ddmFormFieldParameterNameParts) {

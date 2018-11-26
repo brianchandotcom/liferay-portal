@@ -68,8 +68,8 @@ public class SearchToggleTag extends IncludeTag {
 	@Override
 	protected String getStartPage() {
 		if (Validator.isNotNull(_markupView)) {
-			return
-				"/html/taglib/ui/search_toggle/" + _markupView + "/start.jsp";
+			return "/html/taglib/ui/search_toggle/" + _markupView +
+				"/start.jsp";
 		}
 
 		return "/html/taglib/ui/search_toggle/start.jsp";

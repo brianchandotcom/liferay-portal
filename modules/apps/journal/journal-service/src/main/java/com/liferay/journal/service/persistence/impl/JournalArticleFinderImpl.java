@@ -1834,8 +1834,8 @@ public class JournalArticleFinderImpl
 			return false;
 		}
 
-		return
-			journalServiceConfiguration.databaseContentKeywordSearchEnabled();
+		return journalServiceConfiguration.
+			databaseContentKeywordSearchEnabled();
 	}
 
 	protected boolean isNullArray(Object[] array) {

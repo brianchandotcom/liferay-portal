@@ -53,9 +53,8 @@ public class AssetEntryImpl extends AssetEntryBaseImpl {
 
 	@Override
 	public AssetRendererFactory<?> getAssetRendererFactory() {
-		return
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				getClassName());
+		return AssetRendererFactoryRegistryUtil.
+			getAssetRendererFactoryByClassName(getClassName());
 	}
 
 	@Override

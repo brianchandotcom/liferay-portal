@@ -75,10 +75,7 @@ public class UpgradeDDLFormPortletId extends BaseUpgradePortletId {
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			{
-				"1_WAR_ddlformportlet",
-				DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY
-			}
+			{"1_WAR_ddlformportlet", DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY}
 		};
 	}
 

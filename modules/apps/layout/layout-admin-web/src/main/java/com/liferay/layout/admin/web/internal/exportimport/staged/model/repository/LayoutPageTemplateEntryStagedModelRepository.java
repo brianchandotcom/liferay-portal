@@ -101,8 +101,9 @@ public class LayoutPageTemplateEntryStagedModelRepository
 	public LayoutPageTemplateEntry fetchMissingReference(
 		String uuid, long groupId) {
 
-		return (LayoutPageTemplateEntry)_stagedModelRepositoryHelper.
-			fetchMissingReference(uuid, groupId, this);
+		return (LayoutPageTemplateEntry)
+			_stagedModelRepositoryHelper.fetchMissingReference(
+				uuid, groupId, this);
 	}
 
 	@Override
@@ -133,9 +134,8 @@ public class LayoutPageTemplateEntryStagedModelRepository
 
 	@Override
 	public LayoutPageTemplateEntry getStagedModel(long classPK) {
-		return
-			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				classPK);
+		return _layoutPageTemplateEntryLocalService.
+			fetchLayoutPageTemplateEntry(classPK);
 	}
 
 	@Override

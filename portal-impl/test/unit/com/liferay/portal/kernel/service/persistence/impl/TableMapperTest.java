@@ -2170,15 +2170,13 @@ public class TableMapperTest {
 			int count = _counter++;
 
 			if (count == 0) {
-				return (MappingSqlQuery<T>)
-					new MockGetLeftPrimaryKeysSqlQuery(
-						dataSource, sql, RowMapper.PRIMARY_KEY, paramSetters);
+				return (MappingSqlQuery<T>)new MockGetLeftPrimaryKeysSqlQuery(
+					dataSource, sql, RowMapper.PRIMARY_KEY, paramSetters);
 			}
 
 			if (count == 1) {
-				return (MappingSqlQuery<T>)
-					new MockGetRightPrimaryKeysSqlQuery(
-						dataSource, sql, RowMapper.PRIMARY_KEY, paramSetters);
+				return (MappingSqlQuery<T>)new MockGetRightPrimaryKeysSqlQuery(
+					dataSource, sql, RowMapper.PRIMARY_KEY, paramSetters);
 			}
 
 			return null;

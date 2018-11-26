@@ -40,14 +40,14 @@ public class IGDisplayExportImportPortletPreferencesProcessor
 
 	@Override
 	public List<Capability> getExportCapabilities() {
-		return
-			_dlExportImportPortletPreferencesProcessor.getExportCapabilities();
+		return _dlExportImportPortletPreferencesProcessor.
+			getExportCapabilities();
 	}
 
 	@Override
 	public List<Capability> getImportCapabilities() {
-		return
-			_dlExportImportPortletPreferencesProcessor.getImportCapabilities();
+		return _dlExportImportPortletPreferencesProcessor.
+			getImportCapabilities();
 	}
 
 	@Override

@@ -100,8 +100,8 @@ public class SecureRandomUtil {
 		}
 
 		return _gapRandom.nextLong() ^
-			BigEndianCodec.getLong(
-				_BYTES, Math.abs(index % (_BUFFER_SIZE - 7)));
+			   BigEndianCodec.getLong(
+				   _BYTES, Math.abs(index % (_BUFFER_SIZE - 7)));
 	}
 
 	private static final int _BUFFER_SIZE;

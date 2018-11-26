@@ -91,8 +91,9 @@ public class FragmentCollectionStagedModelRepository
 
 	@Override
 	public FragmentCollection fetchMissingReference(String uuid, long groupId) {
-		return (FragmentCollection)_stagedModelRepositoryHelper.
-			fetchMissingReference(uuid, groupId, this);
+		return (FragmentCollection)
+			_stagedModelRepositoryHelper.fetchMissingReference(
+				uuid, groupId, this);
 	}
 
 	@Override

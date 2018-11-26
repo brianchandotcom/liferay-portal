@@ -132,8 +132,8 @@ public class OrganizationODataRetriever
 				return hits.getLength();
 			}
 
-			return
-				(int)IndexSearcherHelperUtil.searchCount(searchContext1, query);
+			return (int)IndexSearcherHelperUtil.searchCount(
+				searchContext1, query);
 		}
 		catch (Exception e) {
 			throw new PortalException(

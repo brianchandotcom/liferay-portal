@@ -35,8 +35,8 @@ public class ExportImportConfigurationParameterMapFactoryUtil {
 	}
 
 	public static Map<String, String[]> buildParameterMap() {
-		return
-			_exportImportConfigurationParameterMapFactory.buildParameterMap();
+		return _exportImportConfigurationParameterMapFactory.
+			buildParameterMap();
 	}
 
 	public static Map<String, String[]> buildParameterMap(

@@ -680,9 +680,8 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 	@Override
 	protected StagedModel getStagedModel(String uuid, long groupId) {
-		return
-			JournalArticleLocalServiceUtil.fetchJournalArticleByUuidAndGroupId(
-				uuid, groupId);
+		return JournalArticleLocalServiceUtil.
+			fetchJournalArticleByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override

@@ -35,8 +35,8 @@ public class CompanySettingsDisplaySettingsFormNavigatorEntry
 
 	@Override
 	public String getCategoryKey() {
-		return
-			FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_MISCELLANEOUS;
+		return FormNavigatorConstants.
+			CATEGORY_KEY_COMPANY_SETTINGS_MISCELLANEOUS;
 	}
 
 	@Override

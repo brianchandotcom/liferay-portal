@@ -196,8 +196,8 @@ public class FormNavigatorTag extends IncludeTag {
 	@Override
 	protected String getPage() {
 		if (Validator.isNotNull(_markupView)) {
-			return
-				"/html/taglib/ui/form_navigator/" + _markupView + "/page.jsp";
+			return "/html/taglib/ui/form_navigator/" + _markupView +
+				"/page.jsp";
 		}
 
 		return "/html/taglib/ui/form_navigator/page.jsp";

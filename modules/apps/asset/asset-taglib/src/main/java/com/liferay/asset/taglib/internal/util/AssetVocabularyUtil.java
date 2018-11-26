@@ -37,8 +37,8 @@ public class AssetVocabularyUtil {
 
 				@Override
 				public boolean filter(AssetVocabulary assetVocabulary) {
-					return
-						assetVocabulary.isAssociatedToClassNameIdAndClassTypePK(
+					return assetVocabulary.
+						isAssociatedToClassNameIdAndClassTypePK(
 							classNameId, classTypePK);
 				}
 

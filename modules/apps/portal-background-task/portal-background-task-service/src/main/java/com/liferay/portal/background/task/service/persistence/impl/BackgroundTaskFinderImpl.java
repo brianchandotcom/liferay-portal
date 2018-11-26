@@ -77,8 +77,8 @@ public class BackgroundTaskFinderImpl
 				qPos.add(completed.booleanValue());
 			}
 
-			return (List<BackgroundTask>)
-				QueryUtil.list(q, getDialect(), start, end);
+			return (List<BackgroundTask>)QueryUtil.list(
+				q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

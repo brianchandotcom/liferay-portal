@@ -80,8 +80,8 @@ public abstract class BaseMatchQueryTranslatorImpl {
 			return org.elasticsearch.index.search.MatchQuery.ZeroTermsQuery.ALL;
 		}
 		else if (matchQueryZeroTermsQuery == MatchQuery.ZeroTermsQuery.NONE) {
-			return
-				org.elasticsearch.index.search.MatchQuery.ZeroTermsQuery.NONE;
+			return org.elasticsearch.index.search.MatchQuery.ZeroTermsQuery.
+				NONE;
 		}
 
 		throw new IllegalArgumentException(

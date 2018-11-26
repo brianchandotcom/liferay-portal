@@ -265,7 +265,7 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 					return LFR_EMBED_WIDGET_TPL.output(
 						{
 							content: content,
-							helpMessage: Liferay.Language.get('video-playback-is-disabled-during-edition-mode'),
+							helpMessage: Liferay.Language.get('video-playback-is-disabled-during-edit-mode'),
 							helpMessageIcon: Liferay.Util.getLexiconIconTpl('info-circle'),
 							url: url
 						}

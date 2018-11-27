@@ -132,20 +132,6 @@
 			<var name="portletName" value="Requests" />
 		</execute>
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="test" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#openProductMenu" />
-
-		<execute macro="ProductMenu#gotoPersonalSite" />
-
-		<execute function="AssertClick" locator1="Home#PAGE" value1="Friends Request Page" />
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Summary" />
-		</execute>
-
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">

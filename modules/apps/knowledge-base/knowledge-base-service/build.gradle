@@ -24,6 +24,7 @@ dependencies {
 	compileOnly project(":apps:staging:staging-api")
 	compileOnly project(":apps:subscription:subscription-api")
 	compileOnly project(":core:petra:petra-function")
+	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":core:registry-api")
 
@@ -31,5 +32,4 @@ dependencies {
 	testCompile group: "org.apache.tika", name: "tika-core", version: "1.14"
 	testCompile group: "org.mockito", name: "mockito-core", version: "1.10.8"
 	testCompile group: "org.pegdown", name: "pegdown", version: "1.1.0"
-	testCompile project(":core:petra:petra-lang")
 }

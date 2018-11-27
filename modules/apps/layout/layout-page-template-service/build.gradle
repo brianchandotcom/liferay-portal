@@ -22,6 +22,7 @@ dependencies {
 	compileOnly project(":apps:staging:staging-api")
 	compileOnly project(":apps:xstream:xstream-configurator-api")
 	compileOnly project(":core:petra:petra-function")
+	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":core:registry-api")
 }

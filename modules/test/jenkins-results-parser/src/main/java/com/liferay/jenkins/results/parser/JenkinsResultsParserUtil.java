@@ -102,6 +102,11 @@ public class JenkinsResultsParserUtil {
 			"/liferay-portal/test.properties"
 	};
 
+	public static final String[] DEFAULT_JENKINS_PROPERTIES_URLS = {
+		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
+			"/liferay-jenkins-ee/jenkins.properties"
+	};
+
 	public static boolean debug;
 
 	public static void clearCache() {
@@ -964,6 +969,36 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return jenkinsMasters;
+	}
+
+	public static Properties getJenkinsProperties() throws IOException {
+		Properties properties = new Properties();
+
+		if ((_jenkinsProperties != null) && !_jenkinsProperties.isEmpty()) {
+			properties.putAll(_jenkinsProperties);
+
+			return properties;
+		}
+
+		for (String url : DEFAULT_JENKINS_PROPERTIES_URLS) {
+			properties.load(
+				new StringReader(toString(getLocalURL(url), false)));
+		}
+
+		LocalGitRepository localGitRepository =
+			GitRepositoryFactory.getLocalGitRepository(
+				"liferay-jenkins-ee", "master");
+
+		File jenkinsPropertiesFile = new File(
+			localGitRepository.getDirectory(), "jenkins.properties");
+
+		if (jenkinsPropertiesFile.exists()) {
+			properties.putAll(getProperties(jenkinsPropertiesFile));
+		}
+
+		_jenkinsProperties = properties;
+
+		return properties;
 	}
 
 	public static String getJobVariant(JSONObject jsonObject) {
@@ -2537,6 +2572,7 @@ public class JenkinsResultsParserUtil {
 		"\\{.*?\\}");
 	private static final Pattern _javaVersionPattern = Pattern.compile(
 		"(\\d+\\.\\d+)");
+	private static Hashtable<?, ?> _jenkinsProperties;
 	private static final Pattern _nestedPropertyPattern = Pattern.compile(
 		"\\$\\{([^\\}]+)\\}");
 	private static Set<String> _redactTokens;

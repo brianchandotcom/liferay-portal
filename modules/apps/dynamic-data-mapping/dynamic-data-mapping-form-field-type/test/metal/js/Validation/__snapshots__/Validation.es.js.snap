@@ -26,7 +26,6 @@ exports[`Validation should enable validation after click on toogle 1`] = `
     </div>
     <div class="dropdown-menu">
       <ul class="list-unstyled">
-        <li class="dropdown-item" data-option-value="">choose-an-option</li>
         <li class="dropdown-item" data-option-value="notContains">contains</li>
         <li class="dropdown-item" data-option-value="contains">does-not-contain</li>
         <li class="dropdown-item" data-option-value="url">is-not-url</li>
@@ -75,7 +74,6 @@ exports[`Validation should not render parameter field if validation is isEmailAd
     </div>
     <div class="dropdown-menu">
       <ul class="list-unstyled">
-        <li class="dropdown-item" data-option-value="">choose-an-option</li>
         <li class="dropdown-item" data-option-value="notContains">contains</li>
         <li class="dropdown-item" data-option-value="contains">does-not-contain</li>
         <li class="dropdown-item" data-option-value="url">is-not-url</li>
@@ -83,6 +81,17 @@ exports[`Validation should not render parameter field if validation is isEmailAd
         <li class="dropdown-item" data-option-value="regularExpression">does-not-match</li>
       </ul>
     </div>
+  </div>
+  <div class="form-group">
+    <label>the-value
+      <span class="reference-mark">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk" focusable="false">
+          <title>asterisk</title>
+          <use xlink:href="icons.svg#asterisk"></use>
+        </svg>
+      </span>
+    </label>
+    <input class="form-control" name="validation_parameterMessage" placeholder="text" type="text" value="">
   </div>
   <div class="form-group">
     <label>show-error-message
@@ -124,7 +133,6 @@ exports[`Validation should not render parameter field if validation is isUrl 1`]
     </div>
     <div class="dropdown-menu">
       <ul class="list-unstyled">
-        <li class="dropdown-item" data-option-value="">choose-an-option</li>
         <li class="dropdown-item" data-option-value="notContains">contains</li>
         <li class="dropdown-item" data-option-value="contains">does-not-contain</li>
         <li class="dropdown-item" data-option-value="url">is-not-url</li>
@@ -132,6 +140,17 @@ exports[`Validation should not render parameter field if validation is isUrl 1`]
         <li class="dropdown-item" data-option-value="regularExpression">does-not-match</li>
       </ul>
     </div>
+  </div>
+  <div class="form-group">
+    <label>the-value
+      <span class="reference-mark">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk" focusable="false">
+          <title>asterisk</title>
+          <use xlink:href="icons.svg#asterisk"></use>
+        </svg>
+      </span>
+    </label>
+    <input class="form-control" name="validation_parameterMessage" placeholder="text" type="text" value="">
   </div>
   <div class="form-group">
     <label>show-error-message
@@ -173,7 +192,6 @@ exports[`Validation should render checkbox to enable Validation 1`] = `
     </div>
     <div class="dropdown-menu">
       <ul class="list-unstyled">
-        <li class="dropdown-item" data-option-value="">choose-an-option</li>
         <li class="dropdown-item" data-option-value="notContains">contains</li>
         <li class="dropdown-item" data-option-value="contains">does-not-contain</li>
         <li class="dropdown-item" data-option-value="url">is-not-url</li>
@@ -222,7 +240,6 @@ exports[`Validation should render filled fields when value is filled 1`] = `
     </div>
     <div class="dropdown-menu">
       <ul class="list-unstyled">
-        <li class="dropdown-item" data-option-value="">choose-an-option</li>
         <li class="dropdown-item" data-option-value="notContains">contains</li>
         <li class="dropdown-item" data-option-value="contains">does-not-contain</li>
         <li class="dropdown-item" data-option-value="url">is-not-url</li>
@@ -282,7 +299,6 @@ exports[`Validation should render parameter field with Numeric element 1`] = `
     </div>
     <div class="dropdown-menu">
       <ul class="list-unstyled">
-        <li class="dropdown-item" data-option-value="">choose-an-option</li>
         <li class="dropdown-item" data-option-value="lt">is-greater-than-or-equal-to</li>
         <li class="dropdown-item" data-option-value="lteq">is-greater-than</li>
         <li class="dropdown-item" data-option-value="eq">is-not-equal-to</li>
@@ -290,6 +306,17 @@ exports[`Validation should render parameter field with Numeric element 1`] = `
         <li class="dropdown-item" data-option-value="gteq">is-less-than</li>
       </ul>
     </div>
+  </div>
+  <div class="form-group">
+    <label>the-value
+      <span class="reference-mark">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk" focusable="false">
+          <title>asterisk</title>
+          <use xlink:href="icons.svg#asterisk"></use>
+        </svg>
+      </span>
+    </label>
+    <input class="form-control" name="validation_parameterMessage" placeholder="number-placeholder" type="text" value="">
   </div>
   <div class="form-group">
     <label>show-error-message
@@ -331,7 +358,6 @@ exports[`Validation should render parameter field with Text element and then wit
     </div>
     <div class="dropdown-menu">
       <ul class="list-unstyled">
-        <li class="dropdown-item" data-option-value="">choose-an-option</li>
         <li class="dropdown-item" data-option-value="notContains">contains</li>
         <li class="dropdown-item" data-option-value="contains">does-not-contain</li>
         <li class="dropdown-item" data-option-value="url">is-not-url</li>
@@ -339,6 +365,17 @@ exports[`Validation should render parameter field with Text element and then wit
         <li class="dropdown-item" data-option-value="regularExpression">does-not-match</li>
       </ul>
     </div>
+  </div>
+  <div class="form-group">
+    <label>the-value
+      <span class="reference-mark">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk" focusable="false">
+          <title>asterisk</title>
+          <use xlink:href="icons.svg#asterisk"></use>
+        </svg>
+      </span>
+    </label>
+    <input class="form-control" name="validation_parameterMessage" placeholder="text" type="text" value="">
   </div>
   <div class="form-group">
     <label>show-error-message
@@ -380,7 +417,6 @@ exports[`Validation should render parameter field with Text element and then wit
     </div>
     <div class="dropdown-menu">
       <ul class="list-unstyled">
-        <li class="dropdown-item" data-option-value="">choose-an-option</li>
         <li class="dropdown-item" data-option-value="lt">is-greater-than-or-equal-to</li>
         <li class="dropdown-item" data-option-value="lteq">is-greater-than</li>
         <li class="dropdown-item" data-option-value="eq">is-not-equal-to</li>
@@ -388,6 +424,17 @@ exports[`Validation should render parameter field with Text element and then wit
         <li class="dropdown-item" data-option-value="gteq">is-less-than</li>
       </ul>
     </div>
+  </div>
+  <div class="form-group">
+    <label>the-value
+      <span class="reference-mark">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk" focusable="false">
+          <title>asterisk</title>
+          <use xlink:href="icons.svg#asterisk"></use>
+        </svg>
+      </span>
+    </label>
+    <input class="form-control" name="validation_parameterMessage" placeholder="number-placeholder" type="text" value="">
   </div>
   <div class="form-group">
     <label>show-error-message
@@ -429,7 +476,6 @@ exports[`Validation should render parameter field with TextField element 1`] = `
     </div>
     <div class="dropdown-menu">
       <ul class="list-unstyled">
-        <li class="dropdown-item" data-option-value="">choose-an-option</li>
         <li class="dropdown-item" data-option-value="notContains">contains</li>
         <li class="dropdown-item" data-option-value="contains">does-not-contain</li>
         <li class="dropdown-item" data-option-value="url">is-not-url</li>
@@ -437,6 +483,17 @@ exports[`Validation should render parameter field with TextField element 1`] = `
         <li class="dropdown-item" data-option-value="regularExpression">does-not-match</li>
       </ul>
     </div>
+  </div>
+  <div class="form-group">
+    <label>the-value
+      <span class="reference-mark">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk" focusable="false">
+          <title>asterisk</title>
+          <use xlink:href="icons.svg#asterisk"></use>
+        </svg>
+      </span>
+    </label>
+    <input class="form-control" name="validation_parameterMessage" placeholder="text" type="text" value="">
   </div>
   <div class="form-group">
     <label>show-error-message
@@ -478,7 +535,6 @@ exports[`Validation should update error message and emit a field edited event 1`
     </div>
     <div class="dropdown-menu">
       <ul class="list-unstyled">
-        <li class="dropdown-item" data-option-value="">choose-an-option</li>
         <li class="dropdown-item" data-option-value="notContains">contains</li>
         <li class="dropdown-item" data-option-value="contains">does-not-contain</li>
         <li class="dropdown-item" data-option-value="url">is-not-url</li>
@@ -538,7 +594,6 @@ exports[`Validation should update parameter message and emit a field edited even
     </div>
     <div class="dropdown-menu">
       <ul class="list-unstyled">
-        <li class="dropdown-item" data-option-value="">choose-an-option</li>
         <li class="dropdown-item" data-option-value="notContains">contains</li>
         <li class="dropdown-item" data-option-value="contains">does-not-contain</li>
         <li class="dropdown-item" data-option-value="url">is-not-url</li>

@@ -54,6 +54,8 @@ public interface BuildData {
 
 	public String getCohortName();
 
+	public Host getHost();
+
 	public String getHostname();
 
 	public String getJenkinsGitHubURL();

@@ -157,6 +157,23 @@ public abstract class BaseBuildData implements BuildData {
 	}
 
 	@Override
+	public Host getHost() {
+		if (_host != null) {
+			return _host;
+		}
+
+		String hostname = getHostname();
+
+		if (hostname == null) {
+			return null;
+		}
+
+		_host = HostFactory.newHost(hostname);
+
+		return _host;
+	}
+
+	@Override
 	public String getHostname() {
 		return optString("hostname");
 	}
@@ -472,6 +489,7 @@ public abstract class BaseBuildData implements BuildData {
 			"(?<buildNumber>\\d+)/?"));
 
 	private Map<String, String> _buildParameters;
+	private Host _host;
 	private final JSONObject _jsonObject;
 
 }

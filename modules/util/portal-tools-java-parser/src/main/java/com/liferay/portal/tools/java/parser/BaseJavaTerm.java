@@ -102,6 +102,10 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 		String trimmedLastLine = StringUtil.trim(lastLine);
 
+		if (trimmedLastLine.startsWith("catch (")) {
+			return _getLeadingWhitespace(lastLine) + "\t\t\t";
+		}
+
 		if (trimmedLastLine.startsWith("else if (")) {
 			return _getLeadingWhitespace(lastLine) + "\t\t\t";
 		}
@@ -299,9 +303,19 @@ public abstract class BaseJavaTerm implements JavaTerm {
 				if (!appendSingleLine(
 						sb, javaTerm, prefix, suffix, maxLineLength)) {
 
-					appendNewLine(
-						sb, javaTerm, indent, newLinePrefix, suffix,
-						maxLineLength);
+					delimeter = StringUtil.trim(delimeter);
+
+					if ((i > 0) &&
+						(delimeter.endsWith("|") || delimeter.endsWith("&"))) {
+
+						appendNewLine(
+							sb, javaTerm, indent, "", suffix, maxLineLength);
+					}
+					else {
+						appendNewLine(
+							sb, javaTerm, indent, newLinePrefix, suffix,
+							maxLineLength);
+					}
 				}
 
 				return;

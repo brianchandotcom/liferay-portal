@@ -106,6 +106,10 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			return _getLeadingWhitespace(lastLine) + "\t\t\t";
 		}
 
+		if (trimmedLastLine.startsWith("for (")) {
+			return _getLeadingWhitespace(lastLine) + "\t\t";
+		}
+
 		if (trimmedLastLine.startsWith("if (")) {
 			return _getLeadingWhitespace(lastLine) + "\t\t";
 		}
@@ -162,7 +166,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 					sb, javaTerm, indent, prefix, suffix, maxLineLength);
 			}
 
-			return "\t" + getIndent(getLastLine(sb));
+			return "\t" + _trimTrailingSpaces(getIndent(getLastLine(sb)));
 		}
 
 		return appendWithLineBreak(

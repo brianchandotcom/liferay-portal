@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 /**
  * @author Hugo Huijser
  */
@@ -35,7 +37,21 @@ public class JavaEnhancedForStatement extends BaseJavaTerm {
 	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength) {
 
-		return "TODO";
+		StringBundler sb = new StringBundler();
+
+		sb.append(indent);
+
+		indent = "\t" + indent;
+
+		indent = append(
+			sb, _javaVariableDefinition, indent, prefix + "for (", " : ",
+			maxLineLength);
+
+		append(
+			sb, _collectionJavaExpression, indent, "", ")" + suffix,
+			maxLineLength);
+
+		return sb.toString();
 	}
 
 	private JavaExpression _collectionJavaExpression;

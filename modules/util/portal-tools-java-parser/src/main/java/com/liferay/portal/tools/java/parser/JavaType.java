@@ -91,10 +91,10 @@ public class JavaType extends BaseJavaTerm {
 				sb, _name, indent, prefix, "", maxLineLength, !forceLineBreak);
 		}
 		else if (forceLineBreak) {
+			indent = adjustIndent(sb, indent);
+
 			sb.append("\n");
 			sb.append(indent);
-
-			indent = "\t" + indent;
 		}
 
 		if (_genericJavaTypes != null) {

@@ -61,8 +61,6 @@ public interface UADDisplay<T> extends UADComponent<T> {
 		long userId, long[] groupIds, String keywords, String orderByField,
 		String orderByType, int start, int end);
 
-	public long searchCount(
-		long userId, long[] groupIds, String keywords, String orderByField,
-		String orderByType);
+	public long searchCount(long userId, long[] groupIds, String keywords);
 
 }

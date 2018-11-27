@@ -97,13 +97,9 @@ public abstract class BaseModelUADDisplay<T extends BaseModel>
 	}
 
 	@Override
-	public long searchCount(
-		long userId, long[] groupIds, String keywords, String orderByField,
-		String orderByType) {
-
+	public long searchCount(long userId, long[] groupIds, String keywords) {
 		return doCount(
-			getSearchDynamicQuery(
-				userId, groupIds, keywords, orderByField, orderByType));
+			getSearchDynamicQuery(userId, groupIds, keywords, null, null));
 	}
 
 	protected abstract long doCount(DynamicQuery dynamicQuery);

@@ -36,7 +36,7 @@ public interface JSLodashConfiguration {
 	 * @return <code>true</code> if lodash is enabled.
 	 * @review
 	 */
-	@Meta.AD(deflt = "true", name = "enable-lodash", required = false)
+	@Meta.AD(deflt = "false", name = "enable-lodash", required = false)
 	public boolean enableLodash();
 
 }

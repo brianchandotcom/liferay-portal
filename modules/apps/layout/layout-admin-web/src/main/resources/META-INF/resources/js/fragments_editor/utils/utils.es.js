@@ -108,6 +108,27 @@ function getFragmentRowIndex(structure, fragmentEntryLinkId) {
 }
 
 /**
+ * Get the fragmentEntryLinkIds of the fragments inside the given section
+ * @param {array} structure
+ * @param {string} sectionId
+ */
+function getSectionFragmentEntryLinkIds(structure, sectionId) {
+	const section = structure[getSectionIndex(structure, sectionId)];
+
+	let fragmentEntryLinkIds = [];
+
+	section.columns.forEach(
+		column => {
+			fragmentEntryLinkIds = fragmentEntryLinkIds.concat(
+				column.fragmentEntryLinkIds
+			);
+		}
+	);
+
+	return fragmentEntryLinkIds;
+}
+
+/**
  * Returns the index of the section with the given rowId
  * @param {array} structure
  * @param {string} sectionId
@@ -233,6 +254,7 @@ export {
 	getDropSectionPosition,
 	getFragmentColumn,
 	getFragmentRowIndex,
+	getSectionFragmentEntryLinkIds,
 	getSectionIndex,
 	remove,
 	setIn,

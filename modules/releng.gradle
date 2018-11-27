@@ -1114,6 +1114,35 @@ private boolean _contains(File dir, String fileName, String s) {
 	return false
 }
 
+private void _downloadFile(String url, File destinationDir) {
+	File file = new File(destinationDir, url.substring(url.lastIndexOf("/") + 1))
+
+	if (file.exists()) {
+		return
+	}
+
+	for (int i = 0; i < 3; i++) {
+		try {
+			download {
+				dest destinationDir
+				quiet true
+				src url
+			}
+
+			break
+		}
+		catch (Exception e) {
+			if (i == 2) {
+				logger.lifecycle "Unable to download {}", url
+
+				e.printStackTrace()
+
+				throw e
+			}
+		}
+	}
+}
+
 private boolean _executeGradle(File moduleDir, List<String> taskNames, Map<String, String> projectProperties, boolean rethrowException) {
 	Map<String, String> oldSystemProperties = projectProperties.collectEntries {
 		String key, String value ->
@@ -1401,12 +1430,7 @@ private List<File> _getPortalSourcesDependencies() {
 		}
 
 		if (artifactSourcesURL && artifactSourcesURL.endsWith(".jar")) {
-			project.download {
-				dest cacheDir
-				onlyIfModified true
-				quiet true
-				src artifactSourcesURL
-			}
+			_downloadFile(artifactSourcesURL, cacheDir)
 
 			File jarFile = new File(cacheDir, artifactSourcesURL.substring(artifactSourcesURL.lastIndexOf("/") + 1))
 
@@ -1454,11 +1478,7 @@ private List<File> _getRelengPropertiesFiles(File outputDir) {
 			return
 		}
 
-		project.download {
-			dest outputDir
-			onlyIfModified true
-			src artifactURL
-		}
+		_downloadFile(artifactURL, outputDir)
 
 		File jarFile = new File(outputDir, artifactURL.substring(artifactURL.lastIndexOf("/") + 1))
 

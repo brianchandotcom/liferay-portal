@@ -14,9 +14,6 @@
 
 package com.liferay.portal.spring.transaction;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.spring.hibernate.LastSessionRecorderHibernateTransactionManager;
 import com.liferay.portal.util.PropsUtil;
 
@@ -60,19 +57,7 @@ public class TransactionManagerFactory {
 		hibernateTransactionManager.setDataSource(dataSource);
 		hibernateTransactionManager.setSessionFactory(sessionFactory);
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Created transaction manager");
-
-			SortedProperties sortedProperties = new SortedProperties(
-				properties);
-
-			sortedProperties.list(System.out);
-		}
-
 		return hibernateTransactionManager;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		TransactionManagerFactory.class);
 
 }

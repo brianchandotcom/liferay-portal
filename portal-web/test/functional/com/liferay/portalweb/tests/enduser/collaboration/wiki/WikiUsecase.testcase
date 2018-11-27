@@ -700,6 +700,10 @@
 	</command>
 
 	<command name="WikiNavigationPortletSmoke" priority="4">
+		<execute macro="Navigator#openURL">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Tree Menu" />
 		</execute>

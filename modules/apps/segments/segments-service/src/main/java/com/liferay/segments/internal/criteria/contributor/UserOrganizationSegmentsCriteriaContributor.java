@@ -24,8 +24,12 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.segments.criteria.Criteria;
+import com.liferay.segments.criteria.Field;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
+import com.liferay.segments.internal.odata.entity.EntityModelFieldMapper;
+import com.liferay.segments.internal.odata.entity.OrganizationEntityModel;
 import com.liferay.segments.odata.retriever.ODataRetriever;
 
 import java.util.List;
@@ -34,6 +38,9 @@ import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Eduardo Garcia
@@ -92,6 +99,11 @@ public class UserOrganizationSegmentsCriteriaContributor
 	}
 
 	@Override
+	public List<Field> getFields(Locale locale) {
+		return _entityModelFieldMapper.getFields(_entityModel, locale);
+	}
+
+	@Override
 	public String getKey() {
 		return KEY;
 	}
@@ -106,6 +118,17 @@ public class UserOrganizationSegmentsCriteriaContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserOrganizationSegmentsCriteriaContributor.class);
+
+	@Reference(
+		cardinality = ReferenceCardinality.MANDATORY,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(entity.model.name=" + OrganizationEntityModel.NAME + ")"
+	)
+	private volatile EntityModel _entityModel;
+
+	@Reference
+	private EntityModelFieldMapper _entityModelFieldMapper;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.model.Organization)"

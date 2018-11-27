@@ -27,6 +27,7 @@
 	{@param? _handleFragmentMove: any}
 	{@param? _handleSectionHoverStart: any}
 	{@param? _handleSectionHoverEnd: any}
+	{@param? _handleSectionRemoveButtonClick: any}
 	{@param? dropTargetItemTypes: ?}
 	{@param? highlightMapping: bool}
 	{@param? hoveredItemId: string}
@@ -69,6 +70,7 @@
 					{param _handleFragmentMove: $_handleFragmentMove /}
 					{param _handleSectionHoverStart: $_handleSectionHoverStart /}
 					{param _handleSectionHoverEnd: $_handleSectionHoverEnd /}
+					{param _handleSectionRemoveButtonClick: $_handleSectionRemoveButtonClick /}
 					{param columns: $row.columns /}
 					{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 					{param defaultLanguageId: $defaultLanguageId /}
@@ -117,6 +119,7 @@
 	{@param? _handleFragmentMove: any}
 	{@param? _handleSectionHoverStart: any}
 	{@param? _handleSectionHoverEnd: any}
+	{@param? _handleSectionRemoveButtonClick: any}
 	{@param? dropTargetItemTypes: ?}
 	{@param? empty: bool}
 	{@param? dropTargetBorder: string}
@@ -167,7 +170,10 @@
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand"></li>
 				<li class="tbar-item">
-					<button class="btn btn-small btn-unstyled">
+					<button
+						class="btn btn-small btn-unstyled"
+						data-onclick="{$_handleSectionRemoveButtonClick}"
+					>
 						<svg class="lexicon-icon">
 							<use xlink:href="{$spritemap}#times-circle"></use>
 						</svg>

@@ -99,6 +99,78 @@ public class UserODataRetrieverCustomFieldsTest {
 	}
 
 	@Test
+	public void testGetUsersFilterByCustomFieldWithEqualsAndBooleanKeywordType()
+		throws Exception {
+
+		ExpandoColumn expandoColumn = _addExpandoColumn(
+			_expandoTable, RandomTestUtil.randomString(),
+			ExpandoColumnConstants.BOOLEAN,
+			ExpandoColumnConstants.INDEX_TYPE_KEYWORD);
+
+		Boolean columnValue = Boolean.TRUE;
+
+		User user1 = _addUser(expandoColumn.getName(), columnValue);
+
+		_users.add(user1);
+
+		User user2 = UserTestUtil.addUser();
+
+		_users.add(user2);
+
+		String filterString = String.format(
+			"(customField/%s eq %s)", _encodeName(expandoColumn),
+			String.valueOf(columnValue));
+
+		int count = _getODataRetriever().getResultsCount(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+
+		List<User> users = _getODataRetriever().getResults(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault(), 0, 1);
+
+		Assert.assertEquals(user1, users.get(0));
+	}
+
+	@Test
+	public void testGetUsersFilterByCustomFieldWithEqualsAndBooleanTextType()
+		throws Exception {
+
+		ExpandoColumn expandoColumn = _addExpandoColumn(
+			_expandoTable, RandomTestUtil.randomString(),
+			ExpandoColumnConstants.BOOLEAN,
+			ExpandoColumnConstants.INDEX_TYPE_TEXT);
+
+		Boolean columnValue = Boolean.TRUE;
+
+		User user1 = _addUser(expandoColumn.getName(), columnValue);
+
+		_users.add(user1);
+
+		User user2 = UserTestUtil.addUser();
+
+		_users.add(user2);
+
+		String filterString = String.format(
+			"(customField/%s eq %s)", _encodeName(expandoColumn),
+			String.valueOf(columnValue));
+
+		int count = _getODataRetriever().getResultsCount(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+
+		List<User> users = _getODataRetriever().getResults(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault(), 0, 1);
+
+		Assert.assertEquals(user1, users.get(0));
+	}
+
+	@Test
 	public void testGetUsersFilterByCustomFieldWithEqualsAndDateKeywordType()
 		throws Exception {
 

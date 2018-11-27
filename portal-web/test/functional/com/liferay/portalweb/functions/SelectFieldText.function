@@ -10,12 +10,4 @@
 
 		<execute selenium="assertLiferayErrors" />
 	</command>
-
-	<command name="selectFieldTextNoError">
-		<execute function="WaitForSPARefresh" />
-
-		<execute function="Click" />
-
-		<execute selenium="selectFieldText" />
-	</command>
 </definition>

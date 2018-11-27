@@ -41,20 +41,6 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="assertTextClickAtAddApplication">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="//script[contains(@src,'/liferay/dockbar_add_application.js')] | //script[contains(@src,'/liferay/dockbar_add_page.js')] | //script[contains(@src,'liferay/toggler_interaction.js')]" selenium="waitForElementPresent" />
-
-		<execute argument1="1000" selenium="pause" />
-
-		<execute function="AssertClick#assertTextClickAt" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
 	<command name="assertTextClickAtAndPause">
 		<execute function="WaitForSPARefresh" />
 
@@ -137,18 +123,6 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="pauseAssertPartialTextClickAt">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="1000" selenium="pause" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
 	<command name="pauseAssertTextClickAt">
 		<execute function="WaitForSPARefresh" />
 
@@ -167,18 +141,6 @@
 		<execute argument1="//div[contains(@id,'documentLibraryContainer')]" selenium="waitForElementPresent" />
 
 		<execute argument1="1500" selenium="pause" />
-
-		<execute function="AssertClick#assertTextClickAt" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="waitForNodeScriptAssertTextEqualsClick">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="//script[contains(@src,'/liferay/node.js')]" selenium="waitForElementPresent" />
 
 		<execute function="AssertClick#assertTextClickAt" />
 

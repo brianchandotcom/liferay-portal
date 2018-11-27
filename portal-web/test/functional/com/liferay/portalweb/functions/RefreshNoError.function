@@ -1,7 +1,0 @@
-<definition default="refresh">
-	<command name="refresh">
-		<execute function="WaitForSPARefresh" />
-
-		<execute selenium="refresh" />
-	</command>
-</definition>

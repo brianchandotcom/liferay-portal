@@ -11,22 +11,6 @@
 		<execute selenium="isElementPresentAfterWait" />
 	</command>
 
-	<command name="isElementPresentClickNavigation">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="//div[@id='navigationCollapse']" selenium="clickAt" />
-
-		<execute selenium="isElementPresent" />
-	</command>
-
-	<command name="isElementPresentCPNavigation">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="//script[contains(@src,'/liferay/message.js')]" selenium="waitForElementPresent" />
-
-		<execute function="IsElementPresent#isElementPresent" />
-	</command>
-
 	<command name="isVisible">
 		<execute function="WaitForSPARefresh" />
 
@@ -39,13 +23,5 @@
 		<execute argument1="1000" selenium="pause" />
 
 		<execute selenium="isElementPresent" />
-	</command>
-
-	<command name="waitForVisible">
-		<execute function="WaitForSPARefresh" />
-
-		<execute selenium="waitForVisible" />
-
-		<execute function="IsElementPresent#isVisible" />
 	</command>
 </definition>

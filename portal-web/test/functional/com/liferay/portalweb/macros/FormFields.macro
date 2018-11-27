@@ -31,7 +31,7 @@
 
 	<command name="disableCheckbox">
 		<if>
-			<condition function="IsChecked#isCheckedNotVisible" locator1="FormFields#CHECKBOX">
+			<condition function="IsChecked" locator1="FormFields#CHECKBOX">
 				<var name="key_fieldName" value="${fieldName}" />
 			</condition>
 

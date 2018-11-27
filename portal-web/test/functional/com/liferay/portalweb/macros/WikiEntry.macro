@@ -33,12 +33,12 @@
 					<var name="panel" value="Configuration" />
 				</execute>
 
-				<execute function="SelectNoError#pauseSelect" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="${pageFormat}" />
+				<execute function="SelectNoError" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="${pageFormat}" />
 			</then>
 			<elseif>
 				<condition function="IsVisible" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" />
 				<then>
-					<execute function="SelectNoError#pauseSelect" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="${pageFormat}" />
+					<execute function="SelectNoError" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="${pageFormat}" />
 				</then>
 			</elseif>
 		</if>

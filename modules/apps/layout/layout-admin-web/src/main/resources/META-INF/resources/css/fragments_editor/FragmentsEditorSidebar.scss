@@ -36,12 +36,14 @@ body:not(.has-contextual-sidebar) .contextual-sidebar-content {
 	}
 }
 
-.sidebar-body {
-	display: flex;
-	height: calc(100% - #{$sidebarHeaderHeight});
+.fragments-editor-sidebar {
+	.sidebar-body {
+		display: flex;
+		height: calc(100% - #{$sidebarHeaderHeight});
 
-	& > div {
-		flex-grow: 2;
+		& > div {
+			flex-grow: 2;
+		}
 	}
 }
 

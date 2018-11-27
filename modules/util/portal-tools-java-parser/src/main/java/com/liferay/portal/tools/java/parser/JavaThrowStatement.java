@@ -27,7 +27,8 @@ public class JavaThrowStatement extends BaseJavaTerm {
 	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength) {
 
-		return "TODO";
+		return _throwJavaExpression.toString(
+			indent, prefix + "throw ", suffix, maxLineLength);
 	}
 
 	private final JavaExpression _throwJavaExpression;

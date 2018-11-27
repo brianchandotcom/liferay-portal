@@ -5455,9 +5455,9 @@ public class ProjectTemplatesTest {
 
 	private static final String _BUNDLES_DIFF_IGNORES = StringTestUtil.merge(
 		Arrays.asList(
-			"*.js.map", "*pom.properties", "*pom.xml", "*package.json",
-			"Archiver-Version", "Build-Jdk", "Built-By", "Javac-Debug",
-			"Javac-Deprecation", "Javac-Encoding"),
+			"*.js.map", "*manifest.json", "*pom.properties", "*pom.xml",
+			"*package.json", "Archiver-Version", "Build-Jdk", "Built-By",
+			"Javac-Debug", "Javac-Deprecation", "Javac-Encoding"),
 		',');
 
 	private static final String _DEPENDENCY_MODULES_EXTENDER_API =

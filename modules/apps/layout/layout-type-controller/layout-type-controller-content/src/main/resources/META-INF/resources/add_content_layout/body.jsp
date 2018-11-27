@@ -25,7 +25,7 @@
 	%>
 
 	<div class="closed hidden-print lfr-add-panel lfr-admin-panel sidenav-fixed sidenav-menu-slider sidenav-right" id="<%= portletNamespace %>addContentLayoutPanelId">
-		<div class="product-menu sidebar sidebar-inverse sidenav-menu">
+		<div class="fragments-editor-sidebar product-menu sidebar sidebar-inverse sidenav-menu">
 			<div class="sidebar-header">
 				<span><liferay-ui:message key="add" /></span>
 

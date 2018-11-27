@@ -357,9 +357,6 @@ lockPrivateDependencyVersions {
 portalArtifactsJar {
 	baseName = "portal"
 	classifier = null
-	exclude "*.*"
-	exclude "META-INF/**"
-	exclude "OSGI-INF/**"
 	includeEmptyDirs = false
 	version = _getReleaseInfoVersion()
 
@@ -455,9 +452,6 @@ portalJavadocJar {
 portalSourcesJar {
 	baseName = "portal"
 	classifier = "sources"
-	exclude "*.*"
-	exclude "META-INF/**"
-	exclude "OSGI-INF/**"
 	includeEmptyDirs = false
 	version = _getReleaseInfoVersion()
 

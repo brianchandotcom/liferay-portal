@@ -22,6 +22,6 @@ TensorFlowImageAssetAutoTagProviderCompanyConfiguration tensorFlowImageAssetAuto
 
 <aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/document_library_asset_auto_tagger_tensorflow" />
 
-<aui:input id="enabled" label="enable-tensorflow-image-auto-tagging-on-this-instance" name='<%= PortalSettingsTensorflowAssetAutoTagProviderConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= tensorFlowImageAssetAutoTagProviderCompanyConfiguration.enabled() %>" />
+<aui:input label="enable-tensorflow-image-auto-tagging-on-this-instance" name='<%= PortalSettingsTensorflowAssetAutoTagProviderConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= tensorFlowImageAssetAutoTagProviderCompanyConfiguration.enabled() %>" />
 
-<aui:input id="confidence-threshold" label="confidence-threshold" name='<%= PortalSettingsTensorflowAssetAutoTagProviderConstants.FORM_PARAMETER_NAMESPACE + "confidenceThreshold" %>' value="<%= tensorFlowImageAssetAutoTagProviderCompanyConfiguration.confidenceThreshold() %>" />
+<aui:input label="confidence-threshold" name='<%= PortalSettingsTensorflowAssetAutoTagProviderConstants.FORM_PARAMETER_NAMESPACE + "confidenceThreshold" %>' value="<%= tensorFlowImageAssetAutoTagProviderCompanyConfiguration.confidenceThreshold() %>" />

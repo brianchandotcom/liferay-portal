@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.java.parser;
 
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 
 /**
@@ -50,11 +51,21 @@ public class JavaSimpleValue extends JavaExpression {
 				continue;
 			}
 
-			s = StringBundler.concat(indent, prefix, _name.substring(0, x + 1));
+			String firstLine = StringBundler.concat(
+				indent, prefix, _name.substring(0, x + 1));
 
-			if (getLineLength(s) <= maxLineLength) {
+			if (getLineLength(firstLine) <= maxLineLength) {
+				String secondLineIndent = indent + "\t";
+
+				String trimmedFirstLine = StringUtil.trim(firstLine);
+
+				if (trimmedFirstLine.startsWith("while (")) {
+					secondLineIndent += "\t\t";
+				}
+
 				return StringBundler.concat(
-					s, "\n", indent, "\t", _name.substring(x + 1), suffix);
+					firstLine, "\n", secondLineIndent, _name.substring(x + 1),
+					suffix);
 			}
 		}
 	}

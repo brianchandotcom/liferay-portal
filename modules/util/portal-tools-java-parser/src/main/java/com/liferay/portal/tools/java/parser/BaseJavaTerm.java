@@ -70,53 +70,35 @@ public abstract class BaseJavaTerm implements JavaTerm {
 	protected String adjustIndent(StringBundler sb, String indent) {
 		String s = sb.toString();
 
-		String lastLine = StringUtil.trim(_getLastLine(s));
+		String trimmedString = StringUtil.trim(s);
 
-		if (lastLine.endsWith("&") || lastLine.endsWith("|") ||
-			lastLine.endsWith("^")) {
+		if (trimmedString.endsWith("&") || trimmedString.endsWith("|") ||
+			trimmedString.endsWith("^")) {
 
-			int x = s.length();
+			if (ToolsUtil.getLevel(s) == 0) {
+				String leadingWhitespace = _getLeadingWhitespace(s);
+
+				if (!trimmedString.startsWith("return ")) {
+					return leadingWhitespace;
+				}
+
+				return leadingWhitespace + "\t   ";
+			}
+
+			int x = -1;
 
 			while (true) {
-				x = s.lastIndexOf(CharPool.OPEN_PARENTHESIS, x - 1);
+				x = s.indexOf(CharPool.OPEN_PARENTHESIS, x + 1);
 
-				if (x == -1) {
-					return _getLeadingWhitespace(s);
-				}
+				if (ToolsUtil.getLevel(s.substring(x + 1)) == 0) {
+					int y = s.lastIndexOf('\n', x) + 1;
 
-				if (ToolsUtil.getLevel(s.substring(x)) != 0) {
-					continue;
-				}
-
-				int y = s.lastIndexOf('\n', x) + 1;
-
-				String linePart = s.substring(y, x);
-
-				int z = linePart.length();
-
-				while (true) {
-					z = linePart.lastIndexOf(CharPool.OPEN_PARENTHESIS, z - 1);
-
-					if (z == -1) {
-						s = s.substring(y, x);
-
-						String leadingWhitespace = _getLeadingWhitespace(s);
-
-						if (!StringUtil.startsWith(
-								StringUtil.trim(s), "return ")) {
-
-							return leadingWhitespace;
-						}
-
-						return leadingWhitespace + "\t   ";
-					}
-
-					if (ToolsUtil.getLevel(linePart.substring(z)) != 0) {
-						return _convertToWhitespace(s.substring(y, z + 1));
-					}
+					return _convertToWhitespace(s.substring(y, x + 1));
 				}
 			}
 		}
+
+		String lastLine = StringUtil.trim(_getLastLine(s));
 
 		if (lastLine.startsWith("while (")) {
 			return indent + "\t\t";
@@ -293,6 +275,8 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		sb = _stripTrailingWhitespace(sb);
 
 		if (sb.index() > 0) {
+			indent = adjustIndent(sb, indent);
+
 			sb.append("\n");
 		}
 

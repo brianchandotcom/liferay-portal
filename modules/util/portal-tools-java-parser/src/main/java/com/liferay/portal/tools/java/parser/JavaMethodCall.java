@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
@@ -52,20 +53,22 @@ public class JavaMethodCall extends JavaExpression {
 
 		indent = "\t" + indent;
 
-		sb.append(prefix);
-
 		if (_genericJavaTypes != null) {
-			append(sb, _genericJavaTypes, indent, "<", ">", maxLineLength);
+			append(
+				sb, _genericJavaTypes, indent, prefix + "<", ">",
+				maxLineLength);
+
+			prefix = StringPool.BLANK;
 		}
 
 		if (_parameterValueJavaExpressions.isEmpty()) {
 			append(
-				sb, _methodName, indent, "", "()" + suffix, maxLineLength,
+				sb, _methodName, indent, prefix, "()" + suffix, maxLineLength,
 				false);
 		}
 		else {
 			indent = append(
-				sb, _methodName, indent, "", "(", maxLineLength, false);
+				sb, _methodName, indent, prefix, "(", maxLineLength, false);
 
 			if (forceLineBreak) {
 				appendNewLine(

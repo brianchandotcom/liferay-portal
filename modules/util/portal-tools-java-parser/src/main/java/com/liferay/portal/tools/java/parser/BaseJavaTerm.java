@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.portal.tools.ToolsUtil;
 
 import java.util.List;
 
@@ -84,7 +84,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 					return _getLeadingWhitespace(s);
 				}
 
-				if (SourceUtil.getLevel(s.substring(x)) != 0) {
+				if (ToolsUtil.getLevel(s.substring(x)) != 0) {
 					continue;
 				}
 
@@ -111,7 +111,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 						return leadingWhitespace + "\t   ";
 					}
 
-					if (SourceUtil.getLevel(linePart.substring(z)) != 0) {
+					if (ToolsUtil.getLevel(linePart.substring(z)) != 0) {
 						return _convertToWhitespace(s.substring(y, z + 1));
 					}
 				}

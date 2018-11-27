@@ -16,6 +16,7 @@ package com.liferay.fragment.model.impl;
 
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.fragment.constants.FragmentEntryTypeConstants;
 import com.liferay.fragment.constants.FragmentExportImportConstants;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.util.FragmentEntryRenderUtil;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.zip.ZipWriter;
 
 /**
@@ -62,6 +64,11 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 	}
 
 	@Override
+	public String getTypeLabel() {
+		return FragmentEntryTypeConstants.getTypeLabel(getType());
+	}
+
+	@Override
 	public int getUsageCount() {
 		return FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksCount(
 			getGroupId(), getFragmentEntryId());
@@ -79,6 +86,12 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 		jsonObject.put("htmlPath", "src/index.html");
 		jsonObject.put("jsPath", "src/index.js");
 		jsonObject.put("name", getName());
+
+		String typeLabel = getTypeLabel();
+
+		if (Validator.isNotNull(typeLabel)) {
+			jsonObject.put("type", typeLabel);
+		}
 
 		zipWriter.addEntry(
 			path + StringPool.SLASH +

@@ -79,7 +79,8 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		if (Objects.equals(
 				LiteralExpression.Type.DATE, literalExpression.getType()) ||
 			Objects.equals(
-				LiteralExpression.Type.DATE_TIME, literalExpression.getType())) {
+				LiteralExpression.Type.DATE_TIME,
+				literalExpression.getType())) {
 
 			return _normalizeDateLiteral(literalExpression.getText());
 		}

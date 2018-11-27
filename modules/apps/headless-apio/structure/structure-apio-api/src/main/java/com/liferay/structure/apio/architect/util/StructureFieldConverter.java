@@ -39,7 +39,9 @@ public interface StructureFieldConverter {
 	 * @return the field data type
 	 * @review
 	 */
-	public String getFieldDataType(String dataType, String type);
+	public default String getFieldDataType(String dataType, String type) {
+		return getFieldDataType(dataType);
+	}
 
 	/**
 	 * Gets the field input control.

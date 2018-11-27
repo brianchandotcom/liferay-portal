@@ -109,7 +109,7 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {string}
 	 */
-	hoveredElementId: Config
+	dropTargetItemId: Config
 		.string()
 		.value(null),
 
@@ -120,7 +120,7 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {string}
 	 */
-	hoveredElementType: Config
+	dropTargetItemType: Config
 		.string()
 		.value(null),
 

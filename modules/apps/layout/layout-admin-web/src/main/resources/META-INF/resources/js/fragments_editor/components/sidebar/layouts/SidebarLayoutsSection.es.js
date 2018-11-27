@@ -46,8 +46,8 @@ class SidebarLayoutsSection extends Component {
 			UPDATE_DRAG_TARGET,
 			{
 				dropTargetBorder: hoveredSectionBorder,
-				hoveredElementId: hoveredSectionId,
-				hoveredElementType: DROP_TARGET_ITEM_TYPES.section
+				dropTargetItemId: hoveredSectionId,
+				dropTargetItemType: DROP_TARGET_ITEM_TYPES.section
 			}
 		);
 	}

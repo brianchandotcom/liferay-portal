@@ -28,8 +28,8 @@
 	{@param? dropTargetItemTypes: ?}
 	{@param? highlightMapping: bool}
 	{@param? dropTargetBorder: string}
-	{@param? hoveredElementId: string}
-	{@param? hoveredElementType: string}
+	{@param? dropTargetItemId: string}
+	{@param? dropTargetItemType: string}
 	{@param? mappingFieldsURL: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
@@ -70,8 +70,8 @@
 					{param empty: $row.empty /}
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
 					{param dropTargetBorder: $dropTargetBorder /}
-					{param hoveredElementId: $hoveredElementId /}
-					{param hoveredElementType: $hoveredElementType /}
+					{param dropTargetItemId: $dropTargetItemId /}
+					{param dropTargetItemType: $dropTargetItemType /}
 					{param imageSelectorURL: $imageSelectorURL /}
 					{param key: $row.rowId /}
 					{param languageId: $languageId /}
@@ -110,8 +110,8 @@
 	{@param? dropTargetItemTypes: ?}
 	{@param? empty: bool}
 	{@param? dropTargetBorder: string}
-	{@param? hoveredElementId: string}
-	{@param? hoveredElementType: string}
+	{@param? dropTargetItemId: string}
+	{@param? dropTargetItemType: string}
 	{@param? mappingFieldsURL: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
@@ -126,7 +126,7 @@
 	{@param? store: ?}
 
 	{let $styleModifier kind="text"}
-		{if $hoveredElementId == $rowId and $hoveredElementType == $dropTargetItemTypes.section}
+		{if $dropTargetItemId == $rowId and $dropTargetItemType == $dropTargetItemTypes.section}
 			{$dropTargetBorder}
 		{/if}
 	{/let}
@@ -171,8 +171,8 @@
 						{param fragmentEntryLinkIds: $column.fragmentEntryLinkIds /}
 						{param fragmentEntryLinks: $fragmentEntryLinks /}
 						{param dropTargetBorder: $dropTargetBorder /}
-						{param hoveredElementId: $hoveredElementId /}
-						{param hoveredElementType: $hoveredElementType /}
+						{param dropTargetItemId: $dropTargetItemId /}
+						{param dropTargetItemType: $dropTargetItemType /}
 						{param imageSelectorURL: $imageSelectorURL /}
 						{param key: $column.columnId /}
 						{param languageId: $languageId /}
@@ -206,8 +206,8 @@
 	{@param? _handleFragmentMove: any}
 	{@param? dropTargetItemTypes: ?}
 	{@param? dropTargetBorder: string}
-	{@param? hoveredElementId: string}
-	{@param? hoveredElementType: string}
+	{@param? dropTargetItemId: string}
+	{@param? dropTargetItemType: string}
 	{@param? mappingFieldsURL: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
@@ -241,8 +241,8 @@
 					{param editableValues: $fragmentEntryLink.editableValues /}
 					{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
 					{param dropTargetBorder: $dropTargetBorder /}
-					{param hoveredElementId: $hoveredElementId /}
-					{param hoveredElementType: $hoveredElementType /}
+					{param dropTargetItemId: $dropTargetItemId /}
+					{param dropTargetItemType: $dropTargetItemType /}
 					{param imageSelectorURL: $imageSelectorURL /}
 					{param key: $fragmentEntryLink.fragmentEntryLinkId /}
 					{param languageId: $languageId /}
@@ -269,8 +269,8 @@
 	{@param fragmentEntryLinkId: string}
 	{@param imageSelectorURL: ?}
 	{@param dropTargetBorder: ?}
-	{@param hoveredElementId: ?}
-	{@param hoveredElementType: ?}
+	{@param dropTargetItemId: ?}
+	{@param dropTargetItemType: ?}
 	{@param languageId: ?}
 	{@param mappingFieldsURL: ?}
 	{@param name: string}
@@ -283,7 +283,7 @@
 	{@param? dropTargetItemTypes: ?}
 
 	{let $styleModifier kind="text"}
-		{if $hoveredElementId == $fragmentEntryLinkId and $hoveredElementType == $dropTargetItemTypes.fragment}
+		{if $dropTargetItemId == $fragmentEntryLinkId and $dropTargetItemType == $dropTargetItemTypes.fragment}
 			{$dropTargetBorder}
 		{/if}
 	{/let}

@@ -49,15 +49,15 @@ class FragmentEntryLinkList extends Component {
 		const targetData = eventData.target ? eventData.target.dataset : null;
 
 		const {
-			hoveredElementType
-		} = FragmentEntryLinkList._getHoveredElementData(eventData);
+			dropTargetItemType
+		} = FragmentEntryLinkList._getDropTargetItemData(eventData);
 
 		const targetIsSameFragment = (
-			(hoveredElementType === DROP_TARGET_ITEM_TYPES.fragment) &&
+			(dropTargetItemType === DROP_TARGET_ITEM_TYPES.fragment) &&
 			(sourceData.fragmentEntryLinkId === targetData.fragmentEntryLinkId)
 		);
 
-		return (hoveredElementType && !targetIsSameFragment);
+		return (dropTargetItemType && !targetIsSameFragment);
 	}
 
 	/**
@@ -67,33 +67,33 @@ class FragmentEntryLinkList extends Component {
 	 * @return {Object}
 	 * @static
 	 */
-	static _getHoveredElementData(eventData) {
-		let hoveredElementId = null;
-		let hoveredElementType = null;
+	static _getDropTargetItemData(eventData) {
+		let dropTargetItemId = null;
+		let dropTargetItemType = null;
 
 		const targetData = eventData.target ? eventData.target.dataset : null;
 
 		if (targetData) {
 			if ('columnId' in targetData) {
-				hoveredElementId = targetData.columnId;
-				hoveredElementType = DROP_TARGET_ITEM_TYPES.column;
+				dropTargetItemId = targetData.columnId;
+				dropTargetItemType = DROP_TARGET_ITEM_TYPES.column;
 			}
 			else if ('fragmentEntryLinkId' in targetData) {
-				hoveredElementId = targetData.fragmentEntryLinkId;
-				hoveredElementType = DROP_TARGET_ITEM_TYPES.fragment;
+				dropTargetItemId = targetData.fragmentEntryLinkId;
+				dropTargetItemType = DROP_TARGET_ITEM_TYPES.fragment;
 			}
 			else if ('layoutSectionId' in targetData) {
-				hoveredElementId = targetData.layoutSectionId;
-				hoveredElementType = DROP_TARGET_ITEM_TYPES.section;
+				dropTargetItemId = targetData.layoutSectionId;
+				dropTargetItemType = DROP_TARGET_ITEM_TYPES.section;
 			}
 			else if ('fragmentEmptyList' in targetData) {
-				hoveredElementType = DROP_TARGET_ITEM_TYPES.fragmentList;
+				dropTargetItemType = DROP_TARGET_ITEM_TYPES.fragmentList;
 			}
 		}
 
 		return {
-			hoveredElementId,
-			hoveredElementType
+			dropTargetItemId,
+			dropTargetItemType
 		};
 	}
 
@@ -186,9 +186,9 @@ class FragmentEntryLinkList extends Component {
 			const targetItemRegion = position.getRegion(eventData.target);
 
 			const {
-				hoveredElementId,
-				hoveredElementType
-			} = FragmentEntryLinkList._getHoveredElementData(eventData);
+				dropTargetItemId,
+				dropTargetItemType
+			} = FragmentEntryLinkList._getDropTargetItemData(eventData);
 
 			this._targetBorder = DROP_TARGET_BORDERS.bottom;
 
@@ -201,8 +201,8 @@ class FragmentEntryLinkList extends Component {
 				UPDATE_DRAG_TARGET,
 				{
 					dropTargetBorder: this._targetBorder,
-					hoveredElementId,
-					hoveredElementType
+					dropTargetItemId,
+					dropTargetItemType
 				}
 			);
 		}

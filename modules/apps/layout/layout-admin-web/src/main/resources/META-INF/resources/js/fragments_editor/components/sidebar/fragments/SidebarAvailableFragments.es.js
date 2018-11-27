@@ -86,7 +86,7 @@ class SidebarAvailableFragments extends Component {
 			this.store.dispatchAction(
 				UPDATE_DRAG_TARGET,
 				{
-					hoveredElementBorder: nearestBorder,
+					dropTargetBorder: nearestBorder,
 					hoveredElementId,
 					hoveredElementType
 				}

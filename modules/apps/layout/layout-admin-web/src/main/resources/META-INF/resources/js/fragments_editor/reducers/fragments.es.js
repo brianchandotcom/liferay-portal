@@ -49,7 +49,7 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 
 							nextData = _addFragment(
 								fragmentEntryLink.fragmentEntryLinkId,
-								state.hoveredElementBorder,
+								state.dropTargetBorder,
 								state.hoveredElementId,
 								state.hoveredElementType,
 								state.layoutData
@@ -130,7 +130,7 @@ function moveFragmentEntryLinkReducer(state, actionType, payload) {
 
 				nextData = _addFragment(
 					payload.fragmentEntryLinkId,
-					state.hoveredElementBorder,
+					state.dropTargetBorder,
 					state.hoveredElementId,
 					state.hoveredElementType,
 					nextData
@@ -303,7 +303,7 @@ function updateEditableValueReducer(state, actionType, payload) {
 /**
  * Adds a fragment at the corresponding container in the layout
  * @param {string} fragmentEntryLinkId
- * @param {string} hoveredElementBorder
+ * @param {string} dropTargetBorder
  * @param {string} hoveredElementId
  * @param {string} hoveredElementType
  * @param {object} layoutData
@@ -312,7 +312,7 @@ function updateEditableValueReducer(state, actionType, payload) {
  */
 function _addFragment(
 	fragmentEntryLinkId,
-	hoveredElementBorder,
+	dropTargetBorder,
 	hoveredElementId,
 	hoveredElementType,
 	layoutData
@@ -341,7 +341,7 @@ function _addFragment(
 		const position = _getDropFragmentPosition(
 			fragmentColumn.fragmentEntryLinkIds,
 			hoveredElementId,
-			hoveredElementBorder
+			dropTargetBorder
 		);
 
 		nextData = _addFragmentToColumn(
@@ -355,7 +355,7 @@ function _addFragment(
 		const position = getDropSectionPosition(
 			layoutData.structure,
 			hoveredElementId,
-			hoveredElementBorder
+			dropTargetBorder
 		);
 
 		nextData = _addSingleFragmentRow(

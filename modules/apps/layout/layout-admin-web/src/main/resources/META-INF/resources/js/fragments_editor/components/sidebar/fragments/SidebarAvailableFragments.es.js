@@ -7,8 +7,8 @@ import Soy from 'metal-soy';
 import './FragmentsEditorSidebarCard.es';
 import {
 	ADD_FRAGMENT_ENTRY_LINK,
-	CLEAR_DRAG_TARGET,
-	UPDATE_DRAG_TARGET,
+	CLEAR_DROP_TARGET,
+	UPDATE_DROP_TARGET,
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../../actions/actions.es';
@@ -84,7 +84,7 @@ class SidebarAvailableFragments extends Component {
 			}
 
 			this.store.dispatchAction(
-				UPDATE_DRAG_TARGET,
+				UPDATE_DROP_TARGET,
 				{
 					dropTargetBorder: nearestBorder,
 					dropTargetItemId,
@@ -101,7 +101,7 @@ class SidebarAvailableFragments extends Component {
 	 */
 	_handleDragEnd() {
 		this.store.dispatchAction(
-			CLEAR_DRAG_TARGET
+			CLEAR_DROP_TARGET
 		);
 	}
 
@@ -152,7 +152,7 @@ class SidebarAvailableFragments extends Component {
 					}
 				)
 				.dispatchAction(
-					CLEAR_DRAG_TARGET
+					CLEAR_DROP_TARGET
 				);
 		}
 	}

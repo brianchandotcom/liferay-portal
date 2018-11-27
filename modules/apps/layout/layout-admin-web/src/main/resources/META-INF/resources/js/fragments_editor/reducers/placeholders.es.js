@@ -1,6 +1,6 @@
 import {
-	CLEAR_DRAG_TARGET,
-	UPDATE_DRAG_TARGET,
+	CLEAR_DROP_TARGET,
+	UPDATE_DROP_TARGET,
 	UPDATE_HIGHLIGHT_MAPPING_STATUS
 } from '../actions/actions.es';
 
@@ -27,9 +27,9 @@ const DROP_TARGET_ITEM_TYPES = {
 };
 
 /**
- * Updates hover status with the information sent.
+ * Updates drop target element with the information sent.
  * @param {!object} state
- * @param {CLEAR_DRAG_TARGET|UPDATE_DRAG_TARGET} actionType
+ * @param {CLEAR_DROP_TARGET|UPDATE_DROP_TARGET} actionType
  * @param {!object} payload
  * @param {string} payload.dropTargetBorder
  * @param {string} payload.dropTargetItemId
@@ -37,15 +37,15 @@ const DROP_TARGET_ITEM_TYPES = {
  * @return {object}
  * @review
  */
-function updateDragTargetReducer(state, actionType, payload) {
+function updateDropTargetReducer(state, actionType, payload) {
 	const nextState = Object.assign({}, state);
 
-	if (actionType === CLEAR_DRAG_TARGET) {
+	if (actionType === CLEAR_DROP_TARGET) {
 		nextState.dropTargetBorder = null;
 		nextState.dropTargetItemId = null;
 		nextState.dropTargetItemType = null;
 	}
-	else if (actionType === UPDATE_DRAG_TARGET) {
+	else if (actionType === UPDATE_DROP_TARGET) {
 		nextState.dropTargetBorder = payload.dropTargetBorder;
 		nextState.dropTargetItemId = payload.dropTargetItemId;
 		nextState.dropTargetItemType = payload.dropTargetItemType;
@@ -81,6 +81,6 @@ function updateHighlightMappingReducer(state, actionType, payload) {
 export {
 	DROP_TARGET_BORDERS,
 	DROP_TARGET_ITEM_TYPES,
-	updateDragTargetReducer,
+	updateDropTargetReducer,
 	updateHighlightMappingReducer
 };

@@ -241,9 +241,7 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 
 			searchContainer.setTotal(
 				(int)uadDisplay.searchCount(
-					selectedUserId, null, displayTerms.getKeywords(),
-					searchContainer.getOrderByCol(),
-					searchContainer.getOrderByType()));
+					selectedUserId, null, displayTerms.getKeywords()));
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

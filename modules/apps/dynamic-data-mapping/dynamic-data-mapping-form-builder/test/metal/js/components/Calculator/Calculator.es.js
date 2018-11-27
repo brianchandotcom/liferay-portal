@@ -23,7 +23,7 @@ const options = [
 		options: [],
 		repeatable: true,
 		title: 'option1repeatablefieldName',
-		type: 'text',
+		type: 'checkbox',
 		value: 'option1repeatablefieldName'
 	},
 	{
@@ -33,7 +33,7 @@ const options = [
 		options: [],
 		repeatable: false,
 		title: 'option1nonrepeatablefieldName',
-		type: 'text',
+		type: 'checkbox',
 		value: 'option1nonrepeatablefieldName'
 	}
 ];

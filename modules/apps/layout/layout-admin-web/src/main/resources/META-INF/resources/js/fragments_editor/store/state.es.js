@@ -1,6 +1,6 @@
 import {Config} from 'metal-state';
 
-import {DRAG_POSITIONS} from '../reducers/placeholders.es';
+import {DROP_TARGET_BORDERS} from '../reducers/placeholders.es';
 
 /**
  * Initial state
@@ -99,7 +99,7 @@ const INITIAL_STATE = {
 	 * @type {string}
 	 */
 	hoveredElementBorder: Config
-		.oneOf(Object.values(DRAG_POSITIONS))
+		.oneOf(Object.values(DROP_TARGET_BORDERS))
 		.value(null),
 
 	/**

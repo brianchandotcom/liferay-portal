@@ -6,7 +6,7 @@ import Soy from 'metal-soy';
 import './LayoutBreadcrumbs.es';
 import './LayoutColumn.es';
 import {
-	DRAG_POSITIONS,
+	DROP_TARGET_BORDERS,
 	DROP_TARGET_ITEM_TYPES,
 	LayoutDragDrop
 } from './utils/LayoutDragDrop.es';
@@ -215,7 +215,7 @@ class Layout extends Component {
 			);
 
 			if (
-				this._draggingItemPosition === DRAG_POSITIONS.inside &&
+				this._draggingItemPosition === DROP_TARGET_BORDERS.inside &&
 				this._currentPathItemPlid !== targetId
 			) {
 				this._updatePathTimeout = setTimeout(
@@ -284,7 +284,7 @@ class Layout extends Component {
 					targetType
 				);
 
-				if (this._draggingItemPosition === DRAG_POSITIONS.inside) {
+				if (this._draggingItemPosition === DROP_TARGET_BORDERS.inside) {
 					const pathUpdated = !!this._currentPathItemPlid;
 
 					const dropData = dropItemInsideItem(
@@ -628,7 +628,7 @@ class Layout extends Component {
 			!targetColumnIsChild &&
 			!targetEqualsSource
 		) {
-			this._draggingItemPosition = DRAG_POSITIONS.bottom;
+			this._draggingItemPosition = DROP_TARGET_BORDERS.bottom;
 			this._hoveredLayoutColumnItemPlid = targetColumnLastItem.plid;
 		}
 	}
@@ -640,7 +640,7 @@ class Layout extends Component {
 	 * @param {string} targetItemPlid
 	 * @private
 	 * @review
-	 * @see DRAG_POSITIONS
+	 * @see DROP_TARGET_BORDERS
 	 */
 	_setItemHoveredData(position, sourceItemPlid, targetItemPlid) {
 		const targetColumnIndex = getItemColumnIndex(
@@ -657,7 +657,7 @@ class Layout extends Component {
 		const targetEqualsSource = (sourceItemPlid === targetItemPlid);
 
 		const draggingInsideParent = (
-			(position === DRAG_POSITIONS.inside) &&
+			(position === DROP_TARGET_BORDERS.inside) &&
 			itemIsParent(this.layoutColumns, sourceItemPlid, targetItemPlid)
 		);
 

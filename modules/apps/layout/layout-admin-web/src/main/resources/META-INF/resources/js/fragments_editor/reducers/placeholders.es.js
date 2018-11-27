@@ -9,7 +9,7 @@ import {
  * @review
  * @type {!object}
  */
-const DRAG_POSITIONS = {
+const DROP_TARGET_BORDERS = {
 	bottom: 'drag-bottom',
 	top: 'drag-top'
 };
@@ -79,7 +79,7 @@ function updateHighlightMappingReducer(state, actionType, payload) {
 }
 
 export {
-	DRAG_POSITIONS,
+	DROP_TARGET_BORDERS,
 	DROP_TARGET_ITEM_TYPES,
 	updateDragTargetReducer,
 	updateHighlightMappingReducer

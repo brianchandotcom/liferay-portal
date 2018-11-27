@@ -1,4 +1,4 @@
-import {DRAG_POSITIONS} from '../reducers/placeholders.es';
+import {DROP_TARGET_BORDERS} from '../reducers/placeholders.es';
 
 /**
  * Inserts an element in the given position of a given array and returns
@@ -51,7 +51,7 @@ function getDropSectionPosition(
 	);
 
 	if (targetPosition > -1 && targetBorder) {
-		if (targetBorder === DRAG_POSITIONS.top) {
+		if (targetBorder === DROP_TARGET_BORDERS.top) {
 			position = targetPosition;
 		}
 		else {

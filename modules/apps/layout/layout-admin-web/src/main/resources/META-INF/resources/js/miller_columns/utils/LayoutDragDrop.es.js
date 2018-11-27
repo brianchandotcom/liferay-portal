@@ -7,7 +7,7 @@ import State, {Config} from 'metal-state';
  * @review
  */
 
-const DRAG_POSITIONS = {
+const DROP_TARGET_BORDERS = {
 	bottom: 'layout-column-item-drag-bottom',
 	inside: 'layout-column-item-drag-inside',
 	top: 'layout-column-item-drag-top'
@@ -86,14 +86,14 @@ class LayoutDragDrop extends State {
 
 				if (placeholderItemRegion.top > targetItemRegion.top &&
 					placeholderItemRegion.bottom < targetItemRegion.bottom) {
-					this._draggingItemPosition = DRAG_POSITIONS.inside;
+					this._draggingItemPosition = DROP_TARGET_BORDERS.inside;
 				}
 				else if (Math.abs(mouseY - targetItemRegion.top) <=
 					Math.abs(mouseY - targetItemRegion.bottom)) {
-					this._draggingItemPosition = DRAG_POSITIONS.top;
+					this._draggingItemPosition = DROP_TARGET_BORDERS.top;
 				}
 				else {
-					this._draggingItemPosition = DRAG_POSITIONS.bottom;
+					this._draggingItemPosition = DROP_TARGET_BORDERS.bottom;
 				}
 			}
 
@@ -249,7 +249,7 @@ LayoutDragDrop.STATE = {
 };
 
 export {
-	DRAG_POSITIONS,
+	DROP_TARGET_BORDERS,
 	DROP_TARGET_ITEM_TYPES,
 	LayoutDragDrop
 };

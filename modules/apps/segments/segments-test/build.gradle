@@ -6,6 +6,7 @@ dependencies {
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.6.7.1"
 
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
 	testIntegrationCompile project(":apps:segments:segments-api")
 	testIntegrationCompile project(":apps:segments:segments-test-util")
 	testIntegrationCompile project(":core:registry-api")

@@ -83,4 +83,22 @@ public interface ExpressionVisitor<T> {
 			List<T> expressions, MethodExpression.Type type)
 		throws ExpressionVisitException;
 
+	/**
+	 * Called for each traversed {@link UnaryExpression} expression
+	 *
+	 * @param  operation the unary expression's operation
+	 * @param  operand the return value of the subtree
+	 * @return T the object of type {@code T}
+	 * @throws ExpressionVisitException if an expression visit exception
+	 *         occurred
+	 * @review
+	 */
+	public default T visitUnaryExpressionOperation(
+			UnaryExpression.Operation operation, T operand)
+		throws ExpressionVisitException {
+
+		throw new UnsupportedOperationException(
+			"visitUnaryExpressionOperation is not supported");
+	}
+
 }

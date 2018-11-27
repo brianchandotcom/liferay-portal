@@ -35,6 +35,7 @@ import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
 import com.liferay.portal.odata.filter.expression.LiteralExpression;
 import com.liferay.portal.odata.filter.expression.MemberExpression;
 import com.liferay.portal.odata.filter.expression.MethodExpression;
+import com.liferay.portal.odata.filter.expression.UnaryExpression;
 
 import java.text.Format;
 import java.text.ParseException;
@@ -133,6 +134,19 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		throw new UnsupportedOperationException(
 			"Unsupported method visitMethodExpression with method type " +
 				type);
+	}
+
+	@Override
+	public Filter visitUnaryExpressionOperation(
+		UnaryExpression.Operation operation, Object operand) {
+
+		if (Objects.equals(UnaryExpression.Operation.NOT, operation)) {
+			return _getNotFilter((Filter)operand);
+		}
+
+		throw new UnsupportedOperationException(
+			"Unsupported method visitUnaryExpressionOperation with operation " +
+				operation);
 	}
 
 	private Filter _contains(
@@ -265,6 +279,14 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		throw new UnsupportedOperationException(
 			"Unsupported method _getLTFilter with entity field type " +
 				entityField.getType());
+	}
+
+	private Filter _getNotFilter(Filter filter) {
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		booleanFilter.add(filter, BooleanClauseOccur.MUST_NOT);
+
+		return booleanFilter;
 	}
 
 	private Filter _getORFilter(Filter leftFilter, Filter rightFilter) {

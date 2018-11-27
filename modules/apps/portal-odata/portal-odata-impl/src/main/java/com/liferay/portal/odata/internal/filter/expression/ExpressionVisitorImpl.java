@@ -19,6 +19,7 @@ import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.odata.filter.expression.LiteralExpression;
 import com.liferay.portal.odata.filter.expression.MethodExpression;
+import com.liferay.portal.odata.filter.expression.UnaryExpression;
 
 import java.util.List;
 import java.util.Optional;
@@ -172,6 +173,11 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 	@Override
 	public Expression visitUnaryOperator(
 		UnaryOperatorKind unaryOperatorKind, Expression expression) {
+
+		if (unaryOperatorKind == UnaryOperatorKind.NOT) {
+			return new UnaryExpressionImpl(
+				expression, UnaryExpression.Operation.NOT);
+		}
 
 		throw new UnsupportedOperationException(
 			"Unary operator: " + unaryOperatorKind);

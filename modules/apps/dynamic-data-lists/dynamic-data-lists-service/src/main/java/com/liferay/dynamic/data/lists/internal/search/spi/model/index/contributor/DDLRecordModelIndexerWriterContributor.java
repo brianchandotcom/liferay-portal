@@ -52,7 +52,7 @@ public class DDLRecordModelIndexerWriterContributor
 					"recordId");
 
 				DynamicQuery recordVersionDynamicQuery =
-					recordVersionLocalService.dynamicQuery();
+					ddlRecordVersionLocalService.dynamicQuery();
 
 				recordVersionDynamicQuery.setProjection(
 					ProjectionFactoryUtil.property("recordId"));
@@ -64,7 +64,7 @@ public class DDLRecordModelIndexerWriterContributor
 					"recordSetId");
 
 				DynamicQuery recordSetDynamicQuery =
-					recordSetLocalService.dynamicQuery();
+					ddlRecordSetLocalService.dynamicQuery();
 
 				recordSetDynamicQuery.setProjection(
 					ProjectionFactoryUtil.property("recordSetId"));
@@ -82,25 +82,25 @@ public class DDLRecordModelIndexerWriterContributor
 	public BatchIndexingActionable getBatchIndexingActionable() {
 		return dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				recordLocalService.getIndexableActionableDynamicQuery());
+				ddlRecordLocalService.getIndexableActionableDynamicQuery());
 	}
 
 	@Override
-	public long getCompanyId(DDLRecord record) {
-		return record.getCompanyId();
+	public long getCompanyId(DDLRecord ddlRecord) {
+		return ddlRecord.getCompanyId();
 	}
+
+	@Reference
+	protected DDLRecordLocalService ddlRecordLocalService;
+
+	@Reference
+	protected DDLRecordSetLocalService ddlRecordSetLocalService;
+
+	@Reference
+	protected DDLRecordVersionLocalService ddlRecordVersionLocalService;
 
 	@Reference
 	protected DynamicQueryBatchIndexingActionableFactory
 		dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	protected DDLRecordLocalService recordLocalService;
-
-	@Reference
-	protected DDLRecordSetLocalService recordSetLocalService;
-
-	@Reference
-	protected DDLRecordVersionLocalService recordVersionLocalService;
 
 }

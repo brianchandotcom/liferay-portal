@@ -50,26 +50,26 @@ public class DDLRecordModelDocumentContributor
 	@Override
 	public void contribute(Document document, DDLRecord ddlRecord) {
 		try {
-			DDLRecordVersion recordVersion = ddlRecord.getRecordVersion();
+			DDLRecordVersion ddlRecordVersion = ddlRecord.getRecordVersion();
 
-			DDLRecordSet recordSet = recordVersion.getRecordSet();
+			DDLRecordSet ddlRecordSet = ddlRecordVersion.getRecordSet();
 
 			document.addKeyword(
 				Field.CLASS_NAME_ID,
 				classNameLocalService.getClassNameId(DDLRecordSet.class));
-			document.addKeyword(Field.CLASS_PK, recordSet.getRecordSetId());
+			document.addKeyword(Field.CLASS_PK, ddlRecordSet.getRecordSetId());
 			document.addKeyword(
-				Field.CLASS_TYPE_ID, recordVersion.getRecordSetId());
+				Field.CLASS_TYPE_ID, ddlRecordVersion.getRecordSetId());
 			document.addKeyword(Field.RELATED_ENTRY, true);
-			document.addKeyword(Field.STATUS, recordVersion.getStatus());
-			document.addKeyword(Field.VERSION, recordVersion.getVersion());
-			document.addKeyword("recordSetId", recordSet.getRecordSetId());
+			document.addKeyword(Field.STATUS, ddlRecordVersion.getStatus());
+			document.addKeyword(Field.VERSION, ddlRecordVersion.getVersion());
+			document.addKeyword("recordSetId", ddlRecordSet.getRecordSetId());
 
-			DDMStructure ddmStructure = recordSet.getDDMStructure();
+			DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
-			DDMFormValues ddmFormValues = recordVersion.getDDMFormValues();
+			DDMFormValues ddmFormValues = ddlRecordVersion.getDDMFormValues();
 
-			addContent(recordVersion, ddmFormValues, document);
+			addContent(ddlRecordVersion, ddmFormValues, document);
 
 			ddmIndexer.addAttributes(document, ddmStructure, ddmFormValues);
 		}
@@ -100,19 +100,19 @@ public class DDLRecordModelDocumentContributor
 	}
 
 	protected String extractContent(
-			DDLRecordVersion recordVersion, Locale locale)
+			DDLRecordVersion ddlRecordVersion, Locale locale)
 		throws Exception {
 
-		DDMFormValues ddmFormValues = recordVersion.getDDMFormValues();
+		DDMFormValues ddmFormValues = ddlRecordVersion.getDDMFormValues();
 
 		if (ddmFormValues == null) {
 			return StringPool.BLANK;
 		}
 
-		DDLRecordSet recordSet = recordVersion.getRecordSet();
+		DDLRecordSet ddlRecordSet = ddlRecordVersion.getRecordSet();
 
 		return ddmIndexer.extractIndexableAttributes(
-			recordSet.getDDMStructure(), ddmFormValues, locale);
+			ddlRecordSet.getDDMStructure(), ddmFormValues, locale);
 	}
 
 	@Reference

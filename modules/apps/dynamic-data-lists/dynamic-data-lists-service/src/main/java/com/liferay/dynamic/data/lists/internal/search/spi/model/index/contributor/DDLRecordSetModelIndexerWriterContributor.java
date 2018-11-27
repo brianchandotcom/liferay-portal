@@ -42,9 +42,9 @@ public class DDLRecordSetModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(DDLRecordSet recordSet) -> {
+			(DDLRecordSet ddlRecordSet) -> {
 				batchIndexingActionable.addDocuments(
-					modelIndexerWriterDocumentHelper.getDocument(recordSet));
+					modelIndexerWriterDocumentHelper.getDocument(ddlRecordSet));
 			});
 	}
 
@@ -52,28 +52,28 @@ public class DDLRecordSetModelIndexerWriterContributor
 	public BatchIndexingActionable getBatchIndexingActionable() {
 		return dynamicQueryBatchIndexingActionableFactory.
 			getBatchIndexingActionable(
-				recordSetLocalService.getIndexableActionableDynamicQuery());
+				ddlRecordSetLocalService.getIndexableActionableDynamicQuery());
 	}
 
 	@Override
-	public long getCompanyId(DDLRecordSet recordSet) {
-		return recordSet.getCompanyId();
+	public long getCompanyId(DDLRecordSet ddlRecordSet) {
+		return ddlRecordSet.getCompanyId();
 	}
 
 	@Override
-	public void modelIndexed(DDLRecordSet recordSet) {
-		recordBatchReindexer.reindex(
-			recordSet.getRecordSetId(), recordSet.getCompanyId());
+	public void modelIndexed(DDLRecordSet ddlRecordSet) {
+		ddlRecordBatchReindexer.reindex(
+			ddlRecordSet.getRecordSetId(), ddlRecordSet.getCompanyId());
 	}
+
+	@Reference
+	protected DDLRecordBatchReindexer ddlRecordBatchReindexer;
+
+	@Reference
+	protected DDLRecordSetLocalService ddlRecordSetLocalService;
 
 	@Reference
 	protected DynamicQueryBatchIndexingActionableFactory
 		dynamicQueryBatchIndexingActionableFactory;
-
-	@Reference
-	protected DDLRecordBatchReindexer recordBatchReindexer;
-
-	@Reference
-	protected DDLRecordSetLocalService recordSetLocalService;
 
 }

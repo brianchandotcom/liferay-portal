@@ -19,6 +19,6 @@ package com.liferay.dynamic.data.lists.internal.search.util;
  */
 public interface DDLRecordBatchReindexer {
 
-	public void reindex(long recordId, long companyId);
+	public void reindex(long ddlRecordId, long companyId);
 
 }

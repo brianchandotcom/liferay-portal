@@ -60,11 +60,11 @@ public class DDLRecordModelPreFilterContributor
 			booleanFilter.addRequiredTerm(Field.STATUS, status);
 		}
 
-		long recordId = GetterUtil.getLong(
+		long ddlRecordId = GetterUtil.getLong(
 			searchContext.getAttribute("recordId"));
 
-		if (recordId > 0) {
-			booleanFilter.addRequiredTerm("recordId", recordId);
+		if (ddlRecordId > 0) {
+			booleanFilter.addRequiredTerm("recordId", ddlRecordId);
 		}
 
 		addSearchClassTypeIds(booleanFilter, searchContext);
@@ -102,14 +102,11 @@ public class DDLRecordModelPreFilterContributor
 			return null;
 		}
 
-		TermsFilter classTypeIdsTermsFilter = new TermsFilter(
-			Field.CLASS_TYPE_ID);
+		TermsFilter termsFilter = new TermsFilter(Field.CLASS_TYPE_ID);
 
-		classTypeIdsTermsFilter.addValues(
-			ArrayUtil.toStringArray(classTypeIds));
+		termsFilter.addValues(ArrayUtil.toStringArray(classTypeIds));
 
-		return contextBooleanFilter.add(
-			classTypeIdsTermsFilter, BooleanClauseOccur.MUST);
+		return contextBooleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
 	}
 
 	@Reference

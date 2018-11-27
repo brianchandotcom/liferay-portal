@@ -49,33 +49,34 @@ public class DDLRecordModelSummaryContributor
 	public Summary getSummary(
 		Document document, Locale locale, String snippet) {
 
-		long recordId = GetterUtil.getLong(document.get("recordId"));
+		long ddlRecordId = GetterUtil.getLong(document.get("recordId"));
 
 		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
 
 		String description = document.get(
 			locale, prefix + Field.DESCRIPTION, Field.DESCRIPTION);
 
-		Summary summary = new Summary(getTitle(recordId, locale), description);
+		Summary summary = new Summary(
+			getTitle(ddlRecordId, locale), description);
 
 		summary.setMaxContentLength(200);
 
 		return summary;
 	}
 
-	protected ResourceBundle getResourceBundle(Locale defaultLocale) {
-		ResourceBundleLoader portalResourceBundleLoader =
+	protected ResourceBundle getResourceBundle(Locale locale) {
+		ResourceBundleLoader resourceBundleLoader =
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
 
-		return portalResourceBundleLoader.loadResourceBundle(defaultLocale);
+		return resourceBundleLoader.loadResourceBundle(locale);
 	}
 
-	protected String getTitle(long recordSetId, Locale locale) {
+	protected String getTitle(long ddlRecordSetId, Locale locale) {
 		try {
-			DDLRecordSet recordSet = recordSetLocalService.getRecordSet(
-				recordSetId);
+			DDLRecordSet ddlRecordSet = ddlRecordSetLocalService.getRecordSet(
+				ddlRecordSetId);
 
-			String recordSetName = recordSet.getName(locale);
+			String recordSetName = ddlRecordSet.getName(locale);
 
 			return LanguageUtil.format(
 				getResourceBundle(locale), "new-entry-for-form-x",
@@ -89,7 +90,7 @@ public class DDLRecordModelSummaryContributor
 	}
 
 	@Reference
-	protected DDLRecordSetLocalService recordSetLocalService;
+	protected DDLRecordSetLocalService ddlRecordSetLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLRecordModelSummaryContributor.class);

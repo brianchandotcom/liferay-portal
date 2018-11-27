@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DDLRecordBatchReindexerImpl implements DDLRecordBatchReindexer {
 
 	@Override
-	public void reindex(long recordId, long companyId) {
+	public void reindex(long ddlRecordId, long companyId) {
 		BatchIndexingActionable batchIndexingActionable =
 			indexerWriter.getBatchIndexingActionable();
 
@@ -42,7 +42,7 @@ public class DDLRecordBatchReindexerImpl implements DDLRecordBatchReindexer {
 				Property recordIdPropery = PropertyFactoryUtil.forName(
 					"recordId");
 
-				dynamicQuery.add(recordIdPropery.eq(recordId));
+				dynamicQuery.add(recordIdPropery.eq(ddlRecordId));
 			});
 		batchIndexingActionable.setCompanyId(companyId);
 		batchIndexingActionable.setPerformActionMethod(
@@ -56,7 +56,7 @@ public class DDLRecordBatchReindexerImpl implements DDLRecordBatchReindexer {
 	}
 
 	@Reference
-	protected DDLRecordLocalService formInstanceRecordLocalService;
+	protected DDLRecordLocalService ddlRecordLocalService;
 
 	@Reference(
 		target = "(indexer.class.name=com.liferay.dynamic.data.lists.model.DDLRecord)"

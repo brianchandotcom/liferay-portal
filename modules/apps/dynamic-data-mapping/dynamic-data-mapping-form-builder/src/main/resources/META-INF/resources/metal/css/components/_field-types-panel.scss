@@ -18,3 +18,9 @@ $c: '.ddm-field-types-panel';
 		border-bottom: none;
 	}
 }
+
+.ddm-drag-item {
+	&.dragging {
+		z-index: 99999;
+	}
+}

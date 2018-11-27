@@ -4,6 +4,8 @@ import 'dynamic-data-mapping-form-field-type/metal/Checkbox/Checkbox.es';
 import 'dynamic-data-mapping-form-field-type/metal/Select/Select.es';
 import 'dynamic-data-mapping-form-field-type/metal/Text/Text.es';
 import 'dynamic-data-mapping-form-field-type/metal/Numeric/Numeric.es';
+
+import autobind from 'autobind-decorator';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './Validation.soy.js';
@@ -32,16 +34,7 @@ class Validation extends Component {
 
 		enableValidation: Config.bool()
 			.internal()
-			.value(false),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Validation
-		 * @type {?(string|undefined)}
-		 */
-
-		errorMessage: Config.string().internal(),
+			.valueFn('_enableValidationValueFn'),
 
 		/**
 		 * @default undefined
@@ -78,34 +71,6 @@ class Validation extends Component {
 		 */
 
 		name: Config.string().required(),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Validation
-		 * @type {?(string|undefined)}
-		 */
-
-		parameterMessage: Config.string().internal(),
-
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof Validation
-		 * @type {?(string|undefined)}
-		 */
-
-		selectedValidation: Config.shapeOf(
-			{
-				checked: Config.bool(),
-				label: Config.string(),
-				name: Config.string(),
-				parameterMessage: Config.string(),
-				regex: Config.any(),
-				template: Config.string(),
-				value: Config.string()
-			}
-		).internal(),
 
 		/**
 		 * @default undefined
@@ -166,94 +131,148 @@ class Validation extends Component {
 				errorMessage: Config.string(),
 				expression: Config.string()
 			}
-		)
+		).value({})
 	};
 
-	attached() {
-		const {value} = this;
+	prepareStateForRender(state) {
+		const {enableValidation, value} = state;
+		const {errorMessage, expression} = value;
+		let parameterMessage = '';
+		let selectedValidation;
 
-		if (value) {
-			this._handleValue(this.value);
+		if (enableValidation) {
+			selectedValidation = this._parseValidationFromExpression(expression);
+
+			if (selectedValidation) {
+				parameterMessage = this._parseParameterMessageFromExpression(expression, selectedValidation);
+			}
 		}
+
+		return {
+			...state,
+			enableValidation,
+			errorMessage,
+			parameterMessage,
+			selectedValidation
+		};
 	}
 
-	willReceiveState({value, dataType, validation}) {
-		if (value) {
-			this._handleValue(value.newVal);
-		}
-
+	willReceiveState({dataType, validation}) {
 		if (
 			(dataType && dataType.newVal !== dataType.prevVal) ||
 			(validation && validation.newVal.dataType !== validation.prevVal.dataType)
 		) {
-			this.dataType = this._dataTypeValueFn();
-			this.validations = this._validationsValueFn();
+			this.setState(
+				{
+					dataType: this._dataTypeValueFn(),
+					validations: this._validationsValueFn()
+				}
+			);
 		}
 	}
 
-	handleEnableValidation() {
-		this.setState({enableValidation: !this.enableValidation});
+	_enableValidationValueFn() {
+		const {value} = this;
+
+		return !!value.expression;
 	}
 
-	handleParameterMessage({value}) {
+	@autobind
+	_handleEnableValidationEdited({value}) {
 		this.setState(
 			{
-				parameterMessage: value
+				enableValidation: value
 			},
-			this._updateValue
-		);
-	}
-
-	handleErrorMessage({value}) {
-		this.setState(
-			{
-				errorMessage: value
-			},
-			this._updateValue
-		);
-	}
-
-	handleValidationValue({value: [newVal]}) {
-		this.setState(
-			{
-				selectedValidation: this.validations.find(({value}) => value == newVal)
+			() => {
+				if (!value) {
+					this._emitFieldEdited(
+						{
+							errorMessage: '',
+							expression: ''
+						}
+					);
+				}
 			}
 		);
+	}
+
+	@autobind
+	_handleParameterMessageEdited() {
+		this._updateValue();
+	}
+
+	@autobind
+	_handleErrorMessageEdited() {
+		this._updateValue();
+	}
+
+	@autobind
+	_handleValidationValueEdited() {
+		this._updateValue();
 	}
 
 	_dataTypeValueFn() {
 		return this.validation.dataType ? this.validation.dataType : this.dataType;
 	}
 
-	_extractParameterMessage(validation, expression) {
+	_emitFieldEdited(value) {
+		this.emit(
+			'fieldEdited',
+			{
+				fieldInstance: this,
+				originalEvent: null,
+				value
+			}
+		);
+	}
+
+	_parseParameterMessageFromExpression(expression, validation) {
 		const matches = validation.regex.exec(expression);
 
 		return matches && matches[2];
 	}
 
 	_getValue() {
+		let expression = '';
 		const {
-			errorMessage,
-			parameterMessage,
 			validation: {fieldName: name}
 		} = this;
 
-		const expression = subWords(
-			this.selectedValidation.template,
-			{
-				name,
-				parameter: parameterMessage
-			}
+		let selectedValidationValue = this.refs.selectedValidation.value;
+
+		if (Array.isArray(selectedValidationValue)) {
+			selectedValidationValue = selectedValidationValue[0];
+		}
+
+		const selectedValidation = this.validations.find(
+			({name}) => name === selectedValidationValue
 		);
 
+		if (selectedValidation) {
+			const {template} = selectedValidation;
+			let parameterMessage = '';
+
+			if (this.refs.parameterMessage) {
+				parameterMessage = this.refs.parameterMessage.value;
+			}
+
+			expression = subWords(
+				template,
+				{
+					name,
+					parameter: parameterMessage
+				}
+			);
+		}
+
 		return {
-			errorMessage,
+			errorMessage: this.refs.errorMessage.value,
 			expression
 		};
 	}
 
-	_getValidation(expression) {
-		let validation = false;
+	_parseValidationFromExpression(expression) {
+		let validation;
 
 		if (expression) {
 			const {validations} = this;
@@ -262,33 +281,6 @@ class Validation extends Component {
 		}
 
 		return validation;
-	}
-
-	_getValidationsByDataType() {
-		let {dataType} = this;
-
-		dataType = dataType == 'string' ? dataType : 'numeric';
-		return VALIDATIONS[dataType];
-	}
-
-	_handleValue({expression, errorMessage}) {
-		const selectedValidation = this.selectedValidation ?
-			this.selectedValidation :
-			this._getValidation(expression);
-
-		if (selectedValidation) {
-			this.setState(
-				{
-					enableValidation: true,
-					errorMessage,
-					parameterMessage: this._extractParameterMessage(
-						selectedValidation,
-						expression
-					),
-					selectedValidation
-				}
-			);
-		}
 	}
 
 	_normalizeValidationsOptions(validations) {
@@ -303,29 +295,18 @@ class Validation extends Component {
 		);
 	}
 
-	_sendEmit(value) {
-		this.emit(
-			'fieldEdited',
-			{
-				fieldInstance: this,
-				originalEvent: null,
-				value
-			}
-		);
-	}
-
 	_updateValue() {
 		const value = this._getValue();
 
-		this.value = value;
-
-		this._sendEmit(value);
+		this._emitFieldEdited(value);
 	}
 
 	_validationsValueFn() {
-		const validationsArray = this._getValidationsByDataType();
+		let {dataType} = this;
 
-		return this._normalizeValidationsOptions(validationsArray);
+		dataType = dataType == 'string' ? dataType : 'numeric';
+
+		return this._normalizeValidationsOptions(VALIDATIONS[dataType]);
 	}
 }
 

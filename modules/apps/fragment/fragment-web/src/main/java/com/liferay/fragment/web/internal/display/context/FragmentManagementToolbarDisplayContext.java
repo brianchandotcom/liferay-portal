@@ -21,6 +21,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchCon
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -105,6 +107,7 @@ public class FragmentManagementToolbarDisplayContext
 		PortletURL clearResultsURL = getPortletURL();
 
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		clearResultsURL.setParameter("navigation", StringPool.BLANK);
 
 		return clearResultsURL.toString();
 	}
@@ -126,6 +129,44 @@ public class FragmentManagementToolbarDisplayContext
 					_getAddFragmentEntryDropdownItem(
 						FragmentEntryTypeConstants.TYPE_ELEMENT,
 						FragmentEntryTypeConstants.TYPE_ELEMENT_LABEL));
+			}
+		};
+	}
+
+	@Override
+	public List<DropdownItem> getFilterDropdownItems() {
+		return new DropdownItemList() {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							getFilterNavigationDropdownItems());
+						dropdownGroupItem.setLabel(
+							getFilterNavigationDropdownItemsLabel());
+					});
+			}
+		};
+	}
+
+	@Override
+	public List<LabelItem> getFilterLabelItems() {
+		return new LabelItemList() {
+			{
+				if (_fragmentDisplayContext.isNavigationSections()) {
+					add(
+						labelItem -> {
+							labelItem.setLabel(
+								LanguageUtil.get(request, "sections"));
+						});
+				}
+
+				if (_fragmentDisplayContext.isNavigationElements()) {
+					add(
+						labelItem -> {
+							labelItem.setLabel(
+								LanguageUtil.get(request, "elements"));
+						});
+				}
 			}
 		};
 	}
@@ -158,7 +199,7 @@ public class FragmentManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getNavigationKeys() {
-		return new String[] {"all"};
+		return new String[] {"all", "sections", "elements"};
 	}
 
 	@Override

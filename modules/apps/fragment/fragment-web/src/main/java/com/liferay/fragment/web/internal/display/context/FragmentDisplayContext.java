@@ -15,6 +15,7 @@
 package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
+import com.liferay.fragment.constants.FragmentEntryTypeConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -53,6 +54,7 @@ import com.liferay.portal.template.soy.utils.SoyContext;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -290,7 +292,24 @@ public class FragmentDisplayContext {
 		List<FragmentEntry> fragmentEntries = null;
 		int fragmentEntriesCount = 0;
 
-		if (isSearch()) {
+		if (isNavigationElements() || isNavigationSections()) {
+			int type = FragmentEntryTypeConstants.TYPE_SECTION;
+
+			if (isNavigationElements()) {
+				type = FragmentEntryTypeConstants.TYPE_ELEMENT;
+			}
+
+			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntriesByType(
+				_themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
+				type, fragmentEntriesSearchContainer.getStart(),
+				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
+
+			fragmentEntriesCount =
+				FragmentEntryServiceUtil.getFragmentCollectionsCountByType(
+					_themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
+					type);
+		}
+		else if (isSearch()) {
 			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
 				_themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
 				_getKeywords(), fragmentEntriesSearchContainer.getStart(),
@@ -438,6 +457,16 @@ public class FragmentDisplayContext {
 		return _name;
 	}
 
+	public String getNavigation() {
+		if (_navigation != null) {
+			return _navigation;
+		}
+
+		_navigation = ParamUtil.getString(_request, "navigation", "all");
+
+		return _navigation;
+	}
+
 	public String getOrderByType() {
 		if (Validator.isNotNull(_orderByType)) {
 			return _orderByType;
@@ -466,6 +495,22 @@ public class FragmentDisplayContext {
 		}
 
 		return redirect;
+	}
+
+	public boolean isNavigationElements() {
+		if (Objects.equals(getNavigation(), "elements")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isNavigationSections() {
+		if (Objects.equals(getNavigation(), "sections")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isSearch() {
@@ -557,6 +602,7 @@ public class FragmentDisplayContext {
 	private String _jsContent;
 	private String _keywords;
 	private String _name;
+	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;

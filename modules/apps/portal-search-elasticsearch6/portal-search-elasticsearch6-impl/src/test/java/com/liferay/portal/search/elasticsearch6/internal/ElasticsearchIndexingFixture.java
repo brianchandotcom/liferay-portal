@@ -29,9 +29,6 @@ import com.liferay.portal.search.elasticsearch6.internal.facet.DefaultFacetProce
 import com.liferay.portal.search.elasticsearch6.internal.facet.FacetProcessor;
 import com.liferay.portal.search.elasticsearch6.internal.index.IndexNameBuilder;
 import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.ElasticsearchEngineAdapterFixture;
-import com.liferay.portal.search.elasticsearch6.internal.suggest.ElasticsearchSuggesterTranslator;
-import com.liferay.portal.search.elasticsearch6.internal.suggest.PhraseSuggesterTranslatorImpl;
-import com.liferay.portal.search.elasticsearch6.internal.suggest.TermSuggesterTranslatorImpl;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.searcher.SearchResponseBuilderFactoryImpl;
@@ -127,16 +124,14 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 	}
 
 	protected static QuerySuggester createElasticsearchQuerySuggester(
-		ElasticsearchClientResolver elasticsearchClientResolver,
+		SearchEngineAdapter searchEngineAdapter,
 		IndexNameBuilder indexNameBuilder, Localization localization) {
 
 		return new ElasticsearchQuerySuggester() {
 			{
-				setElasticsearchClientResolver(elasticsearchClientResolver);
 				setIndexNameBuilder(indexNameBuilder);
 				setLocalization(localization);
-				setSuggesterTranslator(
-					createElasticsearchSuggesterTranslator());
+				setSearchEngineAdapter(searchEngineAdapter);
 			}
 		};
 	}
@@ -157,18 +152,6 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		};
 	}
 
-	protected static ElasticsearchSuggesterTranslator
-		createElasticsearchSuggesterTranslator() {
-
-		return new ElasticsearchSuggesterTranslator() {
-			{
-				setPhraseSuggesterTranslator(
-					new PhraseSuggesterTranslatorImpl());
-				setTermSuggesterTranslator(new TermSuggesterTranslatorImpl());
-			}
-		};
-	}
-
 	protected static ElasticsearchIndexSearcher createIndexSearcher(
 		ElasticsearchFixture elasticsearchFixture,
 		SearchEngineAdapter searchEngineAdapter,
@@ -180,7 +163,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 				setProps(createProps());
 				setQuerySuggester(
 					createElasticsearchQuerySuggester(
-						elasticsearchFixture, indexNameBuilder, localization));
+						searchEngineAdapter, indexNameBuilder, localization));
 				setSearchEngineAdapter(searchEngineAdapter);
 				setSearchRequestBuilderFactory(
 					new SearchRequestBuilderFactoryImpl());

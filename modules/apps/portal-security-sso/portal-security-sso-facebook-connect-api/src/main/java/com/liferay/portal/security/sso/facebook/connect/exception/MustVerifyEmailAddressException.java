@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.login.authentication.facebook.connect.web.internal.portlet.action;
+package com.liferay.portal.security.sso.facebook.connect.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 

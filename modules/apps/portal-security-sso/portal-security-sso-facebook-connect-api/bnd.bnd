@@ -3,4 +3,5 @@ Bundle-SymbolicName: com.liferay.portal.security.sso.facebook.connect.api
 Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.portal.security.sso.facebook.connect.configuration,\
-	com.liferay.portal.security.sso.facebook.connect.constants
+	com.liferay.portal.security.sso.facebook.connect.constants,\
+	com.liferay.portal.security.sso.facebook.connect.exception

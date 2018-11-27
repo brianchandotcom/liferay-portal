@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.sso.facebook.connect.exception.MustVerifyEmailAddressException;
+import com.liferay.portal.security.sso.facebook.connect.exception.StrangersNotAllowedException;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;

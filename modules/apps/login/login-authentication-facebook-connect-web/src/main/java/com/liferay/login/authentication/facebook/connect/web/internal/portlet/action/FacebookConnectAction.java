@@ -47,6 +47,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectWebKeys;
+import com.liferay.portal.security.sso.facebook.connect.exception.MustVerifyEmailAddressException;
+import com.liferay.portal.security.sso.facebook.connect.exception.StrangersNotAllowedException;
 
 import java.util.Calendar;
 import java.util.HashMap;

@@ -130,6 +130,9 @@ public class ProjectTemplatesTest {
 			gradleDistribution = properties.getProperty("distributionUrl");
 		}
 
+		Assert.assertTrue(
+			gradleDistribution.contains(_GRADLE_WRAPPER_VERSION));
+
 		_gradleDistribution = URI.create(gradleDistribution);
 
 		XPathFactory xPathFactory = XPathFactory.newInstance();
@@ -5485,6 +5488,8 @@ public class ProjectTemplatesTest {
 		"gradlew", "gradlew.bat", "gradle/wrapper/gradle-wrapper.jar",
 		"gradle/wrapper/gradle-wrapper.properties"
 	};
+
+	private static final String _GRADLE_WRAPPER_VERSION = "4.10.2";
 
 	private static final String _MAVEN_GOAL_BUILD_SERVICE =
 		"service-builder:build";

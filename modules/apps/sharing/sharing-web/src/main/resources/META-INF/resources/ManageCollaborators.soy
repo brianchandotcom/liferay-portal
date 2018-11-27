@@ -69,7 +69,7 @@
 
 					<div class="btn-group-item">
 						{let $submitButtonAttributes kind="attributes"}
-							{if $_loadingResponse}disabled{/if}
+							{if $_loadingResponse or $expirationDateError}disabled{/if}
 							class="btn btn-primary"
 							data-onclick="{$_handleSaveButtonClick}"
 							type="button"
@@ -168,17 +168,18 @@
 			</div>
 		</div>
 
-		<div class="autofit-float autofit-row autofit-row-center expiration-block {if not $collaborator.expanded}hide{/if}" id="expiration{$collaborator.id}">
+		<div class="autofit-float autofit-row autofit-row-center {if not $collaborator.expanded}hide{/if}" id="expiration{$collaborator.id}">
 			<div class="autofit-col">
 				<span>{msg desc=""}has-permissions-until{/msg}</span>
 			</div>
 
-			<div class="autofit-col no-padding">
+			<div class="autofit-col no-padding {if $collaborator.sharingEntryExpirationDateError}has-error{/if}">
 				<input
 					class="form-control"
 					data-onblur="{$_handleBlurExpirationDate}"
+					data-collaborator-id="{$collaborator.id}"
+					data-sharingentry-id="{$collaborator.sharingEntryId}"
 					min="{$_tomorrowDate}"
-					name="{$collaborator.sharingEntryId}"
 					type="date"
 					{if $collaborator.sharingEntryExpirationDate}
 						value="{$collaborator.sharingEntryExpirationDate}"

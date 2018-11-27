@@ -54,6 +54,22 @@ class ManageCollaborators extends PortletBase {
 	}
 
 	/**
+	 * Looks if there is a collaborator with an invalid
+	 * expiration date.
+	 *
+	 * @return {Boolean} If a collaborator has an invalid expiration date
+	 */
+	_findExpirationDateError() {
+		let collaborator = this.collaborators.find(
+			collaborator => collaborator.sharingEntryExpirationDateError === true
+		);
+
+		this.expirationDateError = collaborator != null;
+
+		return this.expirationDateError;
+	}
+
+	/**
 	 * Finds a collaborator by his id
 	 *
 	 * @param  {String} collaboratorId The id of a collaborator
@@ -96,18 +112,21 @@ class ManageCollaborators extends PortletBase {
 	 * @protected
 	 */
 	_handleBlurExpirationDate(event) {
+		let collaboratorId = event.target.dataset.collaboratorId;
 		let sharingEntryExpirationDate = event.target.value;
-		let sharingEntryId = event.target.getAttribute('name');
+		let sharingEntryId = event.target.dataset.sharingentryId;
 
-		this.expirationDateError = !this._checkExpirationDate(sharingEntryExpirationDate);
+		let dateError = !this._checkExpirationDate(sharingEntryExpirationDate);
 
-		if (this.expirationDateError) {
-			dom.addClasses(event.target.closest('.expiration-block'), 'has-error');
-		}
-		else {
-			dom.removeClasses(event.target.closest('.expiration-block'), 'has-error');
+		if (!dateError) {
 			this._sharingEntryIdsAndExpirationDate.set(sharingEntryId, sharingEntryExpirationDate);
 		}
+
+		let collaborator = this._getCollaborator(collaboratorId);
+		collaborator.sharingEntryExpirationDateError = dateError;
+
+		this.collaborators = this.collaborators;
+		this._findExpirationDateError();
 	}
 
 	/**
@@ -142,11 +161,14 @@ class ManageCollaborators extends PortletBase {
 
 			collaborator.expanded = false;
 			collaborator.sharingEntryExpirationDate = sharingEntryExpirationDate;
+			collaborator.sharingEntryExpirationDateError = false;
 			collaborator.sharingEntryExpirationDateTooltip = null;
 
 			this._sharingEntryIdsAndExpirationDate.set(collaborator.sharingEntryId, sharingEntryExpirationDate);
 
 			this.collaborators = this.collaborators;
+
+			this._findExpirationDateError();
 		}
 	}
 
@@ -170,7 +192,7 @@ class ManageCollaborators extends PortletBase {
 		let expirationDates = Array.from(this._sharingEntryIdsAndExpirationDate, (id, date) => id + ',' + date);
 		let permissions = Array.from(this._sharingEntryIdsAndPermissions, (id, key) => id + ',' + key);
 
-		if (this.expirationDateError) {
+		if (this._findExpirationDateError()) {
 			return;
 		}
 

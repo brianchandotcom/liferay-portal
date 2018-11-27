@@ -200,7 +200,7 @@ class FragmentEntryLinkList extends Component {
 			this.store.dispatchAction(
 				UPDATE_DRAG_TARGET,
 				{
-					hoveredElementBorder: this._targetBorder,
+					dropTargetBorder: this._targetBorder,
 					hoveredElementId,
 					hoveredElementType
 				}

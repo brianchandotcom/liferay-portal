@@ -7,7 +7,7 @@ import {
 	CLEAR_DRAG_TARGET,
 	UPDATE_DRAG_TARGET
 } from '../../../actions/actions.es';
-import {DROP_TARGET_TYPES} from '../../../reducers/placeholders.es';
+import {DROP_TARGET_ITEM_TYPES} from '../../../reducers/placeholders.es';
 import SidebarLayoutsDragDrop from './utils/SidebarLayoutsDragDrop.es';
 import {Store} from '../../../store/store.es';
 import templates from './SidebarLayoutsSection.soy';
@@ -47,7 +47,7 @@ class SidebarLayoutsSection extends Component {
 			{
 				hoveredElementBorder: hoveredSectionBorder,
 				hoveredElementId: hoveredSectionId,
-				hoveredElementType: DROP_TARGET_TYPES.section
+				hoveredElementType: DROP_TARGET_ITEM_TYPES.section
 			}
 		);
 	}

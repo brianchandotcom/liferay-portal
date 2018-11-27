@@ -25,7 +25,7 @@
 	{@param portletNamespace: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
-	{@param? dropTargetTypes: ?}
+	{@param? dropTargetItemTypes: ?}
 	{@param? highlightMapping: bool}
 	{@param? hoveredElementBorder: string}
 	{@param? hoveredElementId: string}
@@ -66,7 +66,7 @@
 					{param columns: $row.columns /}
 					{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 					{param defaultLanguageId: $defaultLanguageId /}
-					{param dropTargetTypes: $dropTargetTypes /}
+					{param dropTargetItemTypes: $dropTargetItemTypes /}
 					{param empty: $row.empty /}
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
 					{param hoveredElementBorder: $hoveredElementBorder /}
@@ -107,7 +107,7 @@
 	{@param rowId: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
-	{@param? dropTargetTypes: ?}
+	{@param? dropTargetItemTypes: ?}
 	{@param? empty: bool}
 	{@param? hoveredElementBorder: string}
 	{@param? hoveredElementId: string}
@@ -126,8 +126,8 @@
 	{@param? store: ?}
 
 	{let $styleModifier kind="text"}
-		{if $hoveredElementId == $rowId and $hoveredElementType == $dropTargetTypes.section}
-			{$hoveredElementBorder}
+		{if $hoveredElementId == $rowId and $hoveredElementType == $dropTargetItemTypes.section}
+			{$dropTargetBorder}
 		{/if}
 	{/let}
 
@@ -167,7 +167,7 @@
 						{param columnId: $column.columnId /}
 						{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 						{param defaultLanguageId: $defaultLanguageId /}
-						{param dropTargetTypes: $dropTargetTypes /}
+						{param dropTargetItemTypes: $dropTargetItemTypes /}
 						{param fragmentEntryLinkIds: $column.fragmentEntryLinkIds /}
 						{param fragmentEntryLinks: $fragmentEntryLinks /}
 						{param hoveredElementBorder: $hoveredElementBorder /}
@@ -204,8 +204,8 @@
 	{@param size: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
-	{@param? dropTargetTypes: ?}
-	{@param? hoveredElementBorder: string}
+	{@param? dropTargetItemTypes: ?}
+	{@param? dropTargetBorder: string}
 	{@param? hoveredElementId: string}
 	{@param? hoveredElementType: string}
 	{@param? mappingFieldsURL: string}
@@ -237,7 +237,7 @@
 					{param content: $fragmentEntryLink.content /}
 					{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 					{param defaultLanguageId: $defaultLanguageId /}
-					{param dropTargetTypes: $dropTargetTypes /}
+					{param dropTargetItemTypes: $dropTargetItemTypes /}
 					{param editableValues: $fragmentEntryLink.editableValues /}
 					{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
 					{param hoveredElementBorder: $hoveredElementBorder /}
@@ -280,11 +280,11 @@
 	{@param store: ?}
 	{@param? _handleFragmentMove: ?}
 	{@param? content: ?}
-	{@param? dropTargetTypes: ?}
+	{@param? dropTargetItemTypes: ?}
 
 	{let $styleModifier kind="text"}
-		{if $hoveredElementId == $fragmentEntryLinkId and $hoveredElementType == $dropTargetTypes.fragment}
-			{$hoveredElementBorder}
+		{if $hoveredElementId == $fragmentEntryLinkId and $hoveredElementType == $dropTargetItemTypes.fragment}
+			{$dropTargetBorder}
 		{/if}
 	{/let}
 

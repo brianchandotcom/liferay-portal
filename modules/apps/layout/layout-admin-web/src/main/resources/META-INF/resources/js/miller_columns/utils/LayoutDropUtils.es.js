@@ -9,7 +9,7 @@ import {
 	getItemColumn,
 	getItemColumnIndex
 } from './LayoutGetUtils.es';
-import {DRAG_POSITIONS, DROP_TARGET_TYPES} from './LayoutDragDrop.es';
+import {DRAG_POSITIONS, DROP_TARGET_ITEM_TYPES} from './LayoutDragDrop.es';
 
 /**
  * @param {object} sourceItem
@@ -28,14 +28,14 @@ function dropIsValid(
 	let targetColumnIsChild = false;
 	let targetEqualsSource = false;
 
-	if (targetType === DROP_TARGET_TYPES.column) {
+	if (targetType === DROP_TARGET_ITEM_TYPES.column) {
 		targetColumnIsChild = columnIsItemChild(
 			targetId,
 			sourceItem,
 			sourceItemColumnIndex
 		);
 	}
-	else if (targetType === DROP_TARGET_TYPES.item) {
+	else if (targetType === DROP_TARGET_ITEM_TYPES.item) {
 		targetEqualsSource = (sourceItem.plid === targetId);
 	}
 

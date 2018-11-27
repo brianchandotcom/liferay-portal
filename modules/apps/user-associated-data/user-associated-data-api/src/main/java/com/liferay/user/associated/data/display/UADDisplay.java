@@ -124,6 +124,13 @@ public interface UADDisplay<T> extends UADComponent<T> {
 	 */
 	public List<T> getRange(long userId, int start, int end);
 
+	/**
+	 * Returns the field names to be used as table column headers when sorting a
+	 * list of entities of type {@code T}
+	 *
+	 * @return an array of field names used for column headers for sorting
+	 * @review
+	 */
 	public String[] getSortingFieldNames();
 
 	/**
@@ -135,10 +142,38 @@ public interface UADDisplay<T> extends UADComponent<T> {
 	 */
 	public String getTypeName(Locale locale);
 
+	/**
+	 * Returns an ordered range of all the entities of type {@code T} that match
+	 * the keywords with the given user ID and group IDs.
+	 *
+	 * @param userId the primary key of the user
+	 * @param groupIds the primary keys of the groups that the entities are
+	 *                 associated with
+	 * @param keywords the keywords which may occur in the entity's fields
+	 * @param orderByField the field to sort the entities by
+	 * @param orderByType the direction to sort the entities by, ascending or
+	 *                    descending
+	 * @param start the starting index of the result set
+	 * @param end the ending index of the result set
+	 * @return the ordered range of matching entities with the user ID and
+	 * group IDs
+	 * @review
+	 */
 	public List<T> search(
 		long userId, long[] groupIds, String keywords, String orderByField,
 		String orderByType, int start, int end);
 
+	/**
+	 * Returns a count of the number of entities of type {@code T} that match
+	 * the keywords with the given user ID and group IDs.
+	 *
+	 * @param userId the primary key of the user
+	 * @param groupIds the primary keys of the groups that the entities are
+	 *                 associated with
+	 * @param keywords the keywords which may occur in the entity's fields
+	 * @return the number of matching entities with the userId and groupIds
+	 * @review
+	 */
 	public long searchCount(long userId, long[] groupIds, String keywords);
 
 }

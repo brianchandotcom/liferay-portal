@@ -219,6 +219,7 @@ function updateIn(object, keyPath, updater, defaultValue) {
  * @param {!string} classNameId
  * @param {!string} classPK
  * @param {!object} data
+ * @param {!array} fragmentEntryLinkIds
  * @return {Promise}
  * @review
  */
@@ -227,7 +228,8 @@ function updateLayoutData(
 	portletNamespace,
 	classNameId,
 	classPK,
-	data
+	data,
+	fragmentEntryLinkIds
 ) {
 	const formData = new FormData();
 
@@ -238,6 +240,13 @@ function updateLayoutData(
 		`${portletNamespace}data`,
 		JSON.stringify(data)
 	);
+
+	if (fragmentEntryLinkIds) {
+		formData.append(
+			`${portletNamespace}fragmentEntryLinkIds`,
+			JSON.stringify(fragmentEntryLinkIds)
+		);
+	}
 
 	return fetch(
 		updateLayoutPageTemplateDataURL,

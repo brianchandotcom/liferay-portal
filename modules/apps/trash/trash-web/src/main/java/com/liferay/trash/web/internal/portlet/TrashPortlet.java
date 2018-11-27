@@ -40,6 +40,7 @@ import com.liferay.trash.service.TrashEntryLocalService;
 import com.liferay.trash.service.TrashEntryService;
 import com.liferay.trash.web.internal.constants.TrashPortletKeys;
 import com.liferay.trash.web.internal.constants.TrashWebKeys;
+import com.liferay.trash.web.internal.util.TrashServiceHolder;
 import com.liferay.trash.web.internal.util.TrashUndoUtil;
 import com.liferay.trash.web.internal.util.TrashUtil;
 
@@ -178,6 +179,8 @@ public class TrashPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
+		renderRequest.setAttribute(
+			TrashWebKeys.TRASH_SERVICE_HOLDER, _trashServiceHolder);
 		renderRequest.setAttribute(TrashWebKeys.TRASH_UTIL, _trashUtil);
 
 		super.render(renderRequest, renderResponse);
@@ -361,6 +364,9 @@ public class TrashPortlet extends MVCPortlet {
 
 	@Reference
 	private TrashHelper _trashHelper;
+
+	@Reference
+	private TrashServiceHolder _trashServiceHolder;
 
 	@Reference
 	private TrashUtil _trashUtil;

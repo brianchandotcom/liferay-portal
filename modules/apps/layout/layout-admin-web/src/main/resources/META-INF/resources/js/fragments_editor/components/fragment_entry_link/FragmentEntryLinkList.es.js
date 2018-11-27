@@ -13,7 +13,7 @@ import {
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../actions/actions.es';
 import {
-	DRAG_POSITIONS,
+	DROP_TARGET_BORDERS,
 	DROP_TARGET_ITEM_TYPES
 } from '../../reducers/placeholders.es';
 import {getFragmentRowIndex, setIn} from '../../utils/utils.es';
@@ -190,11 +190,11 @@ class FragmentEntryLinkList extends Component {
 				hoveredElementType
 			} = FragmentEntryLinkList._getHoveredElementData(eventData);
 
-			this._targetBorder = DRAG_POSITIONS.bottom;
+			this._targetBorder = DROP_TARGET_BORDERS.bottom;
 
 			if (Math.abs(mouseY - targetItemRegion.top) <=
 				Math.abs(mouseY - targetItemRegion.bottom)) {
-				this._targetBorder = DRAG_POSITIONS.top;
+				this._targetBorder = DROP_TARGET_BORDERS.top;
 			}
 
 			this.store.dispatchAction(
@@ -292,10 +292,10 @@ class FragmentEntryLinkList extends Component {
 		}
 
 		if (event.direction === 1) {
-			this._targetBorder = DRAG_POSITIONS.bottom;
+			this._targetBorder = DROP_TARGET_BORDERS.bottom;
 		}
 		else {
-			this._targetBorder = DRAG_POSITIONS.top;
+			this._targetBorder = DROP_TARGET_BORDERS.top;
 		}
 
 		if (targetId && targetId !== placeholderId) {

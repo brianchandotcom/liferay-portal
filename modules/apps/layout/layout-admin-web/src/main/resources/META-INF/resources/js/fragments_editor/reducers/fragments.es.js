@@ -4,7 +4,7 @@ import {
 	REMOVE_FRAGMENT_ENTRY_LINK,
 	UPDATE_EDITABLE_VALUE
 } from '../actions/actions.es';
-import {DRAG_POSITIONS, DROP_TARGET_ITEM_TYPES} from './placeholders.es';
+import {DROP_TARGET_BORDERS, DROP_TARGET_ITEM_TYPES} from './placeholders.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLink.es';
 import {
 	add,
@@ -430,7 +430,7 @@ function _getDropFragmentPosition(
 	);
 
 	if (targetPosition > -1 && targetBorder) {
-		if (targetBorder === DRAG_POSITIONS.top) {
+		if (targetBorder === DROP_TARGET_BORDERS.top) {
 			position = targetPosition;
 		}
 		else {

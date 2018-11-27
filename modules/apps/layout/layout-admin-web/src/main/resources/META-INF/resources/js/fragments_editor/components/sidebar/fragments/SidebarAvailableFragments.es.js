@@ -13,7 +13,7 @@ import {
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../../actions/actions.es';
 import {
-	DRAG_POSITIONS,
+	DROP_TARGET_BORDERS,
 	DROP_TARGET_ITEM_TYPES
 } from '../../../reducers/placeholders.es';
 import {Store} from '../../../store/store.es';
@@ -61,10 +61,10 @@ class SidebarAvailableFragments extends Component {
 			const mouseY = eventData.originalEvent.clientY;
 			const targetItemRegion = position.getRegion(targetItem);
 
-			let nearestBorder = DRAG_POSITIONS.bottom;
+			let nearestBorder = DROP_TARGET_BORDERS.bottom;
 
 			if (Math.abs(mouseY - targetItemRegion.top) <= Math.abs(mouseY - targetItemRegion.bottom)) {
-				nearestBorder = DRAG_POSITIONS.top;
+				nearestBorder = DROP_TARGET_BORDERS.top;
 			}
 
 			let hoveredElementId = null;

@@ -205,8 +205,6 @@
 
 			<execute macro="Navigator#openURL" />
 
-			<execute macro="Navigator#openURL" />
-
 			<execute macro="ProductMenu#gotoPortlet">
 				<var name="category" value="My Account" />
 				<var name="panel" value="User" />

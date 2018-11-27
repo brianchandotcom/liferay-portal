@@ -1,7 +1,7 @@
 export const ADD_FRAGMENT_ENTRY_LINK = 'addFragmentEntryLink';
 export const ADD_SECTION = 'addSection';
 export const CHANGE_LANGUAGE_ID = 'languageId';
-export const CLEAR_DRAG_TARGET = 'clearDragTarget';
+export const CLEAR_DROP_TARGET = 'clearDragTarget';
 export const HIDE_MAPPING_TYPE_DIALOG = 'hideMappingTypeDialog';
 export const HIDE_SIDEBAR = 'hideSidebar';
 export const MOVE_FRAGMENT_ENTRY_LINK = 'moveFragmentEntryLink';
@@ -12,7 +12,7 @@ export const REMOVE_SECTION = 'removeSection';
 export const SELECT_MAPPEABLE_FIELD = 'selectMappeableField';
 export const SELECT_MAPPEABLE_TYPE = 'selectMappeableType';
 export const TOGGLE_SIDEBAR = 'toggleSidebar';
-export const UPDATE_DRAG_TARGET = 'updateDragTarget';
+export const UPDATE_DROP_TARGET = 'updateDragTarget';
 export const UPDATE_EDITABLE_VALUE = 'updateEditableValue';
 export const UPDATE_HIGHLIGHT_MAPPING_STATUS = 'updateHighlightMappingStatus';
 export const UPDATE_LAST_SAVE_DATE = 'updateLastSaveDate';

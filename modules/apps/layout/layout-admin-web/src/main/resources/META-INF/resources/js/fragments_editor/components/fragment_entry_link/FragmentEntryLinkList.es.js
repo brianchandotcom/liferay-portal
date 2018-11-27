@@ -6,9 +6,9 @@ import Soy from 'metal-soy';
 
 import './FragmentEntryLink.es';
 import {
-	CLEAR_DRAG_TARGET,
+	CLEAR_DROP_TARGET,
 	MOVE_FRAGMENT_ENTRY_LINK,
-	UPDATE_DRAG_TARGET,
+	UPDATE_DROP_TARGET,
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../actions/actions.es';
@@ -198,7 +198,7 @@ class FragmentEntryLinkList extends Component {
 			}
 
 			this.store.dispatchAction(
-				UPDATE_DRAG_TARGET,
+				UPDATE_DROP_TARGET,
 				{
 					dropTargetBorder: this._targetBorder,
 					dropTargetItemId,
@@ -215,7 +215,7 @@ class FragmentEntryLinkList extends Component {
 	 */
 	_handleDragEnd() {
 		this.store.dispatchAction(
-			CLEAR_DRAG_TARGET
+			CLEAR_DROP_TARGET
 		);
 	}
 
@@ -263,7 +263,7 @@ class FragmentEntryLinkList extends Component {
 					}
 				)
 				.dispatchAction(
-					CLEAR_DRAG_TARGET
+					CLEAR_DROP_TARGET
 				);
 		}
 	}

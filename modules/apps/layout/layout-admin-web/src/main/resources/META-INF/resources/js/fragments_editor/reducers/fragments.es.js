@@ -4,7 +4,7 @@ import {
 	REMOVE_FRAGMENT_ENTRY_LINK,
 	UPDATE_EDITABLE_VALUE
 } from '../actions/actions.es';
-import {DRAG_POSITIONS, DROP_TARGET_TYPES} from './placeholders.es';
+import {DRAG_POSITIONS, DROP_TARGET_ITEM_TYPES} from './placeholders.es';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLink.es';
 import {
 	add,
@@ -319,7 +319,7 @@ function _addFragment(
 ) {
 	let nextData = layoutData;
 
-	if (hoveredElementType === DROP_TARGET_TYPES.column) {
+	if (hoveredElementType === DROP_TARGET_ITEM_TYPES.column) {
 		const fragmentColumn = getColumn(
 			layoutData.structure,
 			hoveredElementId
@@ -332,7 +332,7 @@ function _addFragment(
 			fragmentColumn.fragmentEntryLinkIds.length
 		);
 	}
-	else if (hoveredElementType === DROP_TARGET_TYPES.fragment) {
+	else if (hoveredElementType === DROP_TARGET_ITEM_TYPES.fragment) {
 		const fragmentColumn = getFragmentColumn(
 			layoutData.structure,
 			hoveredElementId
@@ -351,7 +351,7 @@ function _addFragment(
 			position
 		);
 	}
-	else if (hoveredElementType === DROP_TARGET_TYPES.section) {
+	else if (hoveredElementType === DROP_TARGET_ITEM_TYPES.section) {
 		const position = getDropSectionPosition(
 			layoutData.structure,
 			hoveredElementId,

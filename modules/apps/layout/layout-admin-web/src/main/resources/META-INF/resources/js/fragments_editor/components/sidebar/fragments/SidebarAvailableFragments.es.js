@@ -14,7 +14,7 @@ import {
 } from '../../../actions/actions.es';
 import {
 	DRAG_POSITIONS,
-	DROP_TARGET_TYPES
+	DROP_TARGET_ITEM_TYPES
 } from '../../../reducers/placeholders.es';
 import {Store} from '../../../store/store.es';
 import templates from './SidebarAvailableFragments.soy';
@@ -72,15 +72,15 @@ class SidebarAvailableFragments extends Component {
 
 			if (targetIsColumn) {
 				hoveredElementId = data.columnId;
-				hoveredElementType = DROP_TARGET_TYPES.column;
+				hoveredElementType = DROP_TARGET_ITEM_TYPES.column;
 			}
 			else if (targetIsFragment) {
 				hoveredElementId = data.fragmentEntryLinkId;
-				hoveredElementType = DROP_TARGET_TYPES.fragment;
+				hoveredElementType = DROP_TARGET_ITEM_TYPES.fragment;
 			}
 			else if (targetIsSection) {
 				hoveredElementId = data.layoutSectionId;
-				hoveredElementType = DROP_TARGET_TYPES.section;
+				hoveredElementType = DROP_TARGET_ITEM_TYPES.section;
 			}
 
 			this.store.dispatchAction(

@@ -19,7 +19,7 @@ const DRAG_POSITIONS = {
  * @review
  * @type {!object}
  */
-const DROP_TARGET_TYPES = {
+const DROP_TARGET_ITEM_TYPES = {
 	column: 'layout-column',
 	fragment: 'fragment-entry-link',
 	fragmentList: 'fragment-entry-link-list',
@@ -80,7 +80,7 @@ function updateHighlightMappingReducer(state, actionType, payload) {
 
 export {
 	DRAG_POSITIONS,
-	DROP_TARGET_TYPES,
+	DROP_TARGET_ITEM_TYPES,
 	updateDragTargetReducer,
 	updateHighlightMappingReducer
 };

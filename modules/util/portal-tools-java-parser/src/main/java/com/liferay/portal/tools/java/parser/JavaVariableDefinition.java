@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
@@ -60,6 +61,8 @@ public class JavaVariableDefinition extends BaseJavaTerm {
 				appendNewLine(
 					sb, _javaAnnotations.get(i), indent, prefix, "",
 					maxLineLength);
+
+				prefix = StringPool.BLANK;
 			}
 			else {
 				appendNewLine(
@@ -75,8 +78,15 @@ public class JavaVariableDefinition extends BaseJavaTerm {
 
 		indent = "\t" + indent;
 
-		indent = append(sb, _modifiers, " ", indent, "", " ", maxLineLength);
-		indent = append(sb, _javaType, indent, "", " ", maxLineLength, false);
+		if (!_modifiers.isEmpty()) {
+			indent = append(
+				sb, _modifiers, " ", indent, prefix, " ", maxLineLength);
+
+			prefix = StringPool.BLANK;
+		}
+
+		indent = append(
+			sb, _javaType, indent, prefix, " ", maxLineLength, false);
 
 		if (_assignValueJavaExpression != null) {
 			indent = append(sb, _name, indent, "", " = ", maxLineLength);

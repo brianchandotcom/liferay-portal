@@ -1423,6 +1423,10 @@ private List<String> _getPortalJavadocIncludes(List<File> relengPropertiesFiles)
 				pattern = pattern.substring(0, pattern.indexOf(';'))
 			}
 
+			if (pattern.equals("org.apache.axis.enum")) {
+				continue
+			}
+
 			pattern = "**/" + pattern.replace('.', '/')
 
 			if (!pattern.endsWith("/*")) {

@@ -44,11 +44,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ASSIGNEES</td>
-	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Assignees')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONTAINER</td>
 	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//div[contains(@class,'container')] | //div[contains(@class,'navbar-collapse')]/div[contains(@class,'container')]</td>
 	<td></td>
@@ -59,43 +54,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DEFINE_PERMISSIONS</td>
-	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Define Permissions')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DETAILS</td>
 	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(@class,'dropdown-toggle')]/span[contains(.,'Details')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DOCUMENT_TYPES</td>
-	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Document Types')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILE_UPLOADS</td>
-	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'File Uploads')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>HOME</td>
 	<td>//ul[contains(@class,'breadcrumb')]/li//a[contains(.,'Home')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MAIL</td>
-	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Mail')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>METADATA_SETS</td>
-	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Metadata Sets')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAV_BAR_GENERAL</td>
-	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'${key_navItem}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -109,33 +74,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RESOURCES</td>
-	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Resources')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCOPE</td>
-	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Scope')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SEARCH_TOGGLE_ADVANCED</td>
 	<td>//button[contains(@id,'searchtoggleAdvanced')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETUP</td>
-	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Setup')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SHARING</td>
-	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Sharing')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TEMPLATES</td>
-	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Templates')]</td>
 	<td></td>
 </tr>
 <tr>

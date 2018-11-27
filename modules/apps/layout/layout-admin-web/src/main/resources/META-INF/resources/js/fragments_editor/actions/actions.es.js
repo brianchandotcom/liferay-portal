@@ -8,6 +8,7 @@ export const MOVE_FRAGMENT_ENTRY_LINK = 'moveFragmentEntryLink';
 export const OPEN_ASSET_TYPE_DIALOG = 'openAssetTypeDialog';
 export const OPEN_MAPPING_FIELDS_DIALOG = 'openMappingFieldsDialog';
 export const REMOVE_FRAGMENT_ENTRY_LINK = 'removeFragmentEntryLink';
+export const REMOVE_SECTION = 'removeSection';
 export const SELECT_MAPPEABLE_FIELD = 'selectMappeableField';
 export const SELECT_MAPPEABLE_TYPE = 'selectMappeableType';
 export const TOGGLE_SIDEBAR = 'toggleSidebar';

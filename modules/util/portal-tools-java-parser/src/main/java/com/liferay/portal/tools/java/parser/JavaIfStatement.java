@@ -38,7 +38,7 @@ public class JavaIfStatement extends BaseJavaTerm {
 		indent = "\t" + indent;
 
 		append(
-			sb, _conditionJavaExpression, indent, "if (", ")" + suffix,
+			sb, _conditionJavaExpression, indent, prefix + "if (", ")" + suffix,
 			maxLineLength);
 
 		return sb.toString();

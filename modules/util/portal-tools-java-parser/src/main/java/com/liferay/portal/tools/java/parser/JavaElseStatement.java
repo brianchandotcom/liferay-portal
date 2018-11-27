@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.petra.string.StringBundler;
+
 /**
  * @author Hugo Huijser
  */
@@ -27,7 +29,12 @@ public class JavaElseStatement extends BaseJavaTerm {
 	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength) {
 
-		return "TODO";
+		if (_javaIfStatement == null) {
+			return StringBundler.concat(indent, prefix, "else {");
+		}
+
+		return _javaIfStatement.toString(
+			indent, "else ", suffix, maxLineLength);
 	}
 
 	private JavaIfStatement _javaIfStatement;

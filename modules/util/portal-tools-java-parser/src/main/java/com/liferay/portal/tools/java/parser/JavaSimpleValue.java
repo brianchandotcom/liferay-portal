@@ -59,7 +59,10 @@ public class JavaSimpleValue extends JavaExpression {
 
 				String trimmedFirstLine = StringUtil.trim(firstLine);
 
-				if (trimmedFirstLine.startsWith("if (")) {
+				if (trimmedFirstLine.startsWith("else if (")) {
+					secondLineIndent += "\t\t";
+				}
+				else if (trimmedFirstLine.startsWith("if (")) {
 					secondLineIndent += "\t";
 				}
 				else if (trimmedFirstLine.startsWith("while (")) {

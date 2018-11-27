@@ -1,0 +1,189 @@
+<definition component-name="portal-wcm">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Content Pages" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="Test Site Name" />
+		</execute>
+
+		<execute macro="JSONLayout#addPublicLayout">
+			<var name="groupName" value="Test Site Name" />
+			<var name="layoutName" value="Search" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name/search" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Search Results" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name/search" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Type Facet" />
+		</execute>
+
+		<execute macro="FragmentsAdmin#openFragmentsAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute macro="FragmentsAdmin#importCollectionFromDependenciesFolder">
+			<var name="collectionZipFile" value="fragment-collection.zip" />
+		</execute>
+
+		<execute macro="SitePages#openPagesAdmin">
+			<var name="siteURLKey" value="test-site-name" />
+		</execute>
+
+		<execute macro="ContentPages#addPage">
+			<var name="pageName" value="Test Content Page Name" />
+		</execute>
+
+		<execute macro="PageEditor#expandContentPageFragmentSidebar" />
+	</set-up>
+
+	<tear-down>
+		<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="JSONGroup#deleteGroupByName">
+					<var name="groupName" value="Test Site Name" />
+				</execute>
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="FilterByPageFacet" priority="5">
+		<description message="This is a test for LPS-78928. Content pages will appear when users filter search results by page facet." />
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="PageEditor#addFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Static Text" />
+		</execute>
+
+		<execute macro="JSONWebcontent#addWebContent">
+			<var name="content" value="This is static text" />
+			<var name="groupName" value="Test Site Name" />
+			<var name="title" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
+		</execute>
+
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="static" />
+		</execute>
+
+		<execute macro="Search#viewResultAssetTitle">
+			<var name="searchAssetTitle" value="Test Content Page Name" />
+		</execute>
+
+		<execute macro="Search#viewResultAssetTitle">
+			<var name="searchAssetTitle" value="Web Content Title" />
+		</execute>
+
+		<execute function="Check" locator1="SearchResults#FACET_PORTLET_CHECKBOX_SPECIFIC">
+			<var name="key_checkboxName" value="Page" />
+			<var name="key_facetClass" value="Type" />
+		</execute>
+
+		<execute macro="Search#viewResultAssetTitle">
+			<var name="searchAssetTitle" value="Test Content Page Name" />
+		</execute>
+
+		<execute macro="Search#viewNoResultAssetTitle">
+			<var name="searchAssetTitle" value="Web Content Title" />
+		</execute>
+	</command>
+
+	<command name="SearchEditableText" priority="5">
+		<description message="This is a test for LPS-78928. Editable text in content pages is searchable." />
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="PageEditor#addFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Rich Text" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
+		</execute>
+
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="duis" />
+		</execute>
+
+		<execute macro="Search#viewResultAssetTitle">
+			<var name="searchAssetTitle" value="Test Content Page Name" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name/test-content-page-name?p_l_mode=edit" />
+		</execute>
+
+		<execute macro="PageEditor#editFragmentText">
+			<var name="fragmentName" value="Rich Text" />
+			<var name="id" value="rich-text" />
+			<var name="text" value="New editable fragment text" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
+		</execute>
+
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="editable" />
+		</execute>
+
+		<execute macro="Search#viewResultAssetTitle">
+			<var name="searchAssetTitle" value="Test Content Page Name" />
+		</execute>
+
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="duis" />
+		</execute>
+
+		<execute macro="Search#viewNoResultAssetTitle">
+			<var name="searchAssetTitle" value="Test Content Page Name" />
+		</execute>
+	</command>
+
+	<command name="SearchStaticText" priority="5">
+		<description message="This is a test for LPS-78928. Static text in content pages is searchable." />
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="PageEditor#addFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Static Text" />
+		</execute>
+
+		<execute macro="Navigator#openWithAppendToBaseURL">
+			<var name="urlAppend" value="web/test-site-name/test-content-page-name" />
+		</execute>
+
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="static" />
+		</execute>
+
+		<execute macro="Search#viewResultAssetTitle">
+			<var name="searchAssetTitle" value="Test Content Page Name" />
+		</execute>
+	</command>
+</definition>

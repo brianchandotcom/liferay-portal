@@ -125,6 +125,28 @@ const INITIAL_STATE = {
 		.value(null),
 
 	/**
+	 * Id of the last element that was hovered
+	 * @default null
+	 * @instance
+	 * @review
+	 * @type {string}
+	 */
+	hoveredItemId: Config
+		.string()
+		.value(null),
+
+	/**
+	 * Type of the last element that was hovered
+	 * @default null
+	 * @instance
+	 * @review
+	 * @type {string}
+	 */
+	hoveredItemType: Config
+		.string()
+		.value(null),
+
+	/**
 	 * Currently selected language id.
 	 * @default undefined
 	 * @instance

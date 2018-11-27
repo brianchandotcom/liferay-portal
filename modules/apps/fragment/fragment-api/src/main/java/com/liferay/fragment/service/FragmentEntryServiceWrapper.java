@@ -165,6 +165,13 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 	}
 
 	@Override
+	public int getFragmentCollectionsCountByType(long groupId,
+		long fragmentCollectionId, int type) {
+		return _fragmentEntryService.getFragmentCollectionsCountByType(groupId,
+			fragmentCollectionId, type);
+	}
+
+	@Override
 	public java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
 		long fragmentCollectionId) {
 		return _fragmentEntryService.getFragmentEntries(fragmentCollectionId);
@@ -217,6 +224,14 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntry> orderByComparator) {
 		return _fragmentEntryService.getFragmentEntries(groupId,
 			fragmentCollectionId, name, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntriesByType(
+		long groupId, long fragmentCollectionId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntry> orderByComparator) {
+		return _fragmentEntryService.getFragmentEntriesByType(groupId,
+			fragmentCollectionId, type, start, end, orderByComparator);
 	}
 
 	/**

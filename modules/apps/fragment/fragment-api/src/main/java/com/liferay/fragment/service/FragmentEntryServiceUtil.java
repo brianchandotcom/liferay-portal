@@ -165,6 +165,13 @@ public class FragmentEntryServiceUtil {
 			name, status);
 	}
 
+	public static int getFragmentCollectionsCountByType(long groupId,
+		long fragmentCollectionId, int type) {
+		return getService()
+				   .getFragmentCollectionsCountByType(groupId,
+			fragmentCollectionId, type);
+	}
+
 	public static java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
 		long fragmentCollectionId) {
 		return getService().getFragmentEntries(fragmentCollectionId);
@@ -215,6 +222,14 @@ public class FragmentEntryServiceUtil {
 		return getService()
 				   .getFragmentEntries(groupId, fragmentCollectionId, name,
 			start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntriesByType(
+		long groupId, long fragmentCollectionId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntry> orderByComparator) {
+		return getService()
+				   .getFragmentEntriesByType(groupId, fragmentCollectionId,
+			type, start, end, orderByComparator);
 	}
 
 	/**

@@ -257,6 +257,16 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			sb.append("\n");
 		}
 
+		sb.append(indent);
+
+		if (_appendSingleLine(
+				sb, javaTerm.toString(), prefix, suffix, maxLineLength)) {
+
+			return;
+		}
+
+		sb.setIndex(sb.index() - 1);
+
 		sb.append(javaTerm.toString(indent, prefix, suffix, maxLineLength));
 	}
 

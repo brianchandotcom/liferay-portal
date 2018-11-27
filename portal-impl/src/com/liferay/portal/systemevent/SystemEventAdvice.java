@@ -33,7 +33,6 @@ import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 
 import java.io.Serializable;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import org.aopalliance.intercept.MethodInvocation;
@@ -44,13 +43,17 @@ import org.aopalliance.intercept.MethodInvocation;
 public class SystemEventAdvice
 	extends AnnotationChainableMethodAdvice<SystemEvent> {
 
+	public SystemEventAdvice() {
+		super(SystemEvent.class);
+	}
+
 	@Override
 	public void afterReturning(MethodInvocation methodInvocation, Object result)
 		throws Throwable {
 
 		SystemEvent systemEvent = findAnnotation(methodInvocation);
 
-		if ((systemEvent == _nullSystemEvent) || !systemEvent.send()) {
+		if ((systemEvent == null) || !systemEvent.send()) {
 			return;
 		}
 
@@ -115,7 +118,7 @@ public class SystemEventAdvice
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
 		SystemEvent systemEvent = findAnnotation(methodInvocation);
 
-		if (systemEvent == _nullSystemEvent) {
+		if (systemEvent == null) {
 			return null;
 		}
 
@@ -145,7 +148,7 @@ public class SystemEventAdvice
 	public void duringFinally(MethodInvocation methodInvocation) {
 		SystemEvent systemEvent = findAnnotation(methodInvocation);
 
-		if (systemEvent == _nullSystemEvent) {
+		if (systemEvent == null) {
 			return;
 		}
 
@@ -169,11 +172,6 @@ public class SystemEventAdvice
 
 		SystemEventHierarchyEntryThreadLocal.pop(
 			getClassName(classedModel), classPK);
-	}
-
-	@Override
-	public SystemEvent getNullAnnotation() {
-		return _nullSystemEvent;
 	}
 
 	protected String getClassName(ClassedModel classedModel) {
@@ -329,29 +327,5 @@ public class SystemEventAdvice
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SystemEventAdvice.class);
-
-	private static final SystemEvent _nullSystemEvent = new SystemEvent() {
-
-		@Override
-		public int action() {
-			return SystemEventConstants.ACTION_NONE;
-		}
-
-		@Override
-		public Class<? extends Annotation> annotationType() {
-			return SystemEvent.class;
-		}
-
-		@Override
-		public boolean send() {
-			return false;
-		}
-
-		@Override
-		public int type() {
-			return 0;
-		}
-
-	};
 
 }

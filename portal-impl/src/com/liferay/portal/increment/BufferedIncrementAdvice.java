@@ -30,8 +30,6 @@ import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 
 import java.io.Serializable;
 
-import java.lang.annotation.Annotation;
-
 import java.util.concurrent.Callable;
 
 import org.aopalliance.intercept.MethodInvocation;
@@ -43,12 +41,16 @@ import org.aopalliance.intercept.MethodInvocation;
 public class BufferedIncrementAdvice
 	extends AnnotationChainableMethodAdvice<BufferedIncrement> {
 
+	public BufferedIncrementAdvice() {
+		super(BufferedIncrement.class);
+	}
+
 	@Override
 	@SuppressWarnings("rawtypes")
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
 		BufferedIncrement bufferedIncrement = findAnnotation(methodInvocation);
 
-		if (bufferedIncrement == _nullBufferedIncrement) {
+		if (bufferedIncrement == null) {
 			return null;
 		}
 
@@ -109,32 +111,7 @@ public class BufferedIncrementAdvice
 	public void destroy() {
 	}
 
-	@Override
-	public BufferedIncrement getNullAnnotation() {
-		return _nullBufferedIncrement;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		BufferedIncrementAdvice.class);
-
-	private static final BufferedIncrement _nullBufferedIncrement =
-		new BufferedIncrement() {
-
-			@Override
-			public Class<? extends Annotation> annotationType() {
-				return BufferedIncrement.class;
-			}
-
-			@Override
-			public String configuration() {
-				return "default";
-			}
-
-			@Override
-			public Class<? extends Increment<?>> incrementClass() {
-				return null;
-			}
-
-		};
 
 }

@@ -32,24 +32,20 @@ import org.aopalliance.intercept.MethodInvocation;
 public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 	extends ChainableMethodAdvice {
 
-	public AnnotationChainableMethodAdvice() {
-		_nullAnnotation = getNullAnnotation();
-
-		_annotationClass = _nullAnnotation.annotationType();
+	public AnnotationChainableMethodAdvice(Class<T> annotationClass) {
+		_annotationClass = Objects.requireNonNull(annotationClass);
 	}
 
 	public Class<? extends Annotation> getAnnotationClass() {
 		return _annotationClass;
 	}
 
-	public abstract T getNullAnnotation();
-
 	@Override
 	public boolean isEnabled(Class<?> targetClass, Method method) {
 		T annotation = serviceBeanAopCacheManager.findAnnotation(
-			targetClass, method, _annotationClass, _nullAnnotation);
+			targetClass, method, _annotationClass, null);
 
-		if (annotation == _nullAnnotation) {
+		if (annotation == null) {
 			return false;
 		}
 
@@ -61,15 +57,13 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 	protected T findAnnotation(MethodInvocation methodInvocation) {
 		Object target = methodInvocation.getThis();
 
-		return _annotations.getOrDefault(
-			new CacheKey(target.getClass(), methodInvocation.getMethod()),
-			_nullAnnotation);
+		return _annotations.get(
+			new CacheKey(target.getClass(), methodInvocation.getMethod()));
 	}
 
 	private final Class<? extends Annotation> _annotationClass;
 	private final ConcurrentMap<CacheKey, T> _annotations =
 		new ConcurrentHashMap<>();
-	private final T _nullAnnotation;
 
 	private static class CacheKey {
 

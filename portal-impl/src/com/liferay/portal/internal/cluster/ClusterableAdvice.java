@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.cluster.ClusterableInvokerUtil;
-import com.liferay.portal.kernel.cluster.NullClusterable;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 
 import java.lang.reflect.Method;
@@ -31,6 +30,10 @@ import org.aopalliance.intercept.MethodInvocation;
 public class ClusterableAdvice
 	extends AnnotationChainableMethodAdvice<Clusterable> {
 
+	public ClusterableAdvice() {
+		super(Clusterable.class);
+	}
+
 	@Override
 	public void afterReturning(MethodInvocation methodInvocation, Object result)
 		throws Throwable {
@@ -41,7 +44,7 @@ public class ClusterableAdvice
 
 		Clusterable clusterable = findAnnotation(methodInvocation);
 
-		if (clusterable == NullClusterable.NULL_CLUSTERABLE) {
+		if (clusterable == null) {
 			return;
 		}
 
@@ -58,7 +61,7 @@ public class ClusterableAdvice
 
 		Clusterable clusterable = findAnnotation(methodInvocation);
 
-		if (clusterable == NullClusterable.NULL_CLUSTERABLE) {
+		if (clusterable == null) {
 			return null;
 		}
 
@@ -86,11 +89,6 @@ public class ClusterableAdvice
 		}
 
 		return result;
-	}
-
-	@Override
-	public Clusterable getNullAnnotation() {
-		return NullClusterable.NULL_CLUSTERABLE;
 	}
 
 }

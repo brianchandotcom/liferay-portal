@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.messaging.async.Async;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import java.util.Map;
@@ -37,6 +36,10 @@ import org.aopalliance.intercept.MethodInvocation;
  */
 public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 
+	public AsyncAdvice() {
+		super(Async.class);
+	}
+
 	@Override
 	public Object before(final MethodInvocation methodInvocation)
 		throws Throwable {
@@ -47,7 +50,7 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 
 		Async async = findAnnotation(methodInvocation);
 
-		if (async == _nullAsync) {
+		if (async == null) {
 			return null;
 		}
 
@@ -98,11 +101,6 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 		return _defaultDestinationName;
 	}
 
-	@Override
-	public Async getNullAnnotation() {
-		return _nullAsync;
-	}
-
 	public void setDefaultDestinationName(String defaultDestinationName) {
 		_defaultDestinationName = defaultDestinationName;
 	}
@@ -112,15 +110,6 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(AsyncAdvice.class);
-
-	private static final Async _nullAsync = new Async() {
-
-		@Override
-		public Class<? extends Annotation> annotationType() {
-			return Async.class;
-		}
-
-	};
 
 	private String _defaultDestinationName;
 	private Map<Class<?>, String> _destinationNames;

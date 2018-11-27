@@ -15,15 +15,12 @@
 package com.liferay.portal.cache.thread.local;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCache;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
-
-import java.lang.annotation.Annotation;
 
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -34,9 +31,8 @@ import org.aopalliance.intercept.MethodInvocation;
 public class ThreadLocalCacheAdvice
 	extends AnnotationChainableMethodAdvice<ThreadLocalCachable> {
 
-	@Override
-	public ThreadLocalCachable getNullAnnotation() {
-		return _nullThreadLocalCacheable;
+	public ThreadLocalCacheAdvice() {
+		super(ThreadLocalCachable.class);
 	}
 
 	@Override
@@ -44,7 +40,7 @@ public class ThreadLocalCacheAdvice
 		ThreadLocalCachable threadLocalCachable = findAnnotation(
 			methodInvocation);
 
-		if (threadLocalCachable == _nullThreadLocalCacheable) {
+		if (threadLocalCachable == null) {
 			return methodInvocation.proceed();
 		}
 
@@ -93,20 +89,5 @@ public class ThreadLocalCacheAdvice
 
 		return sb.toString();
 	}
-
-	private static final ThreadLocalCachable _nullThreadLocalCacheable =
-		new ThreadLocalCachable() {
-
-			@Override
-			public Class<? extends Annotation> annotationType() {
-				return ThreadLocalCachable.class;
-			}
-
-			@Override
-			public Lifecycle scope() {
-				return null;
-			}
-
-		};
 
 }

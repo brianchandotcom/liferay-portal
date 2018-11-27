@@ -18,7 +18,9 @@ import java.lang.annotation.Annotation;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 @SuppressWarnings("all")
 public class NullClusterable implements Clusterable {
 

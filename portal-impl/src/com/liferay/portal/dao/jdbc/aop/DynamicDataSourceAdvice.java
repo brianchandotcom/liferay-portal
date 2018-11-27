@@ -34,13 +34,17 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
 public class DynamicDataSourceAdvice
 	extends AnnotationChainableMethodAdvice<MasterDataSource> {
 
+	public DynamicDataSourceAdvice() {
+		super(MasterDataSource.class);
+	}
+
 	@Override
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
 		Operation operation = Operation.WRITE;
 
 		MasterDataSource masterDataSource = findAnnotation(methodInvocation);
 
-		if (masterDataSource == _nullMasterDataSource) {
+		if (masterDataSource == null) {
 			TransactionAttribute transactionAttribute =
 				_transactionInterceptor.getTransactionAttribute(
 					methodInvocation);
@@ -58,11 +62,6 @@ public class DynamicDataSourceAdvice
 	@Override
 	public void duringFinally(MethodInvocation methodInvocation) {
 		_dynamicDataSourceTargetSource.popOperation();
-	}
-
-	@Override
-	public MasterDataSource getNullAnnotation() {
-		return _nullMasterDataSource;
 	}
 
 	@Override
@@ -90,7 +89,7 @@ public class DynamicDataSourceAdvice
 
 		return serviceBeanAopCacheManager.findAnnotation(
 			target.getClass(), methodInvocation.getMethod(),
-			MasterDataSource.class, _nullMasterDataSource);
+			MasterDataSource.class, null);
 	}
 
 	@Override
@@ -99,16 +98,6 @@ public class DynamicDataSourceAdvice
 
 		super.setServiceBeanAopCacheManager(serviceBeanAopCacheManager);
 	}
-
-	private static final MasterDataSource _nullMasterDataSource =
-		new MasterDataSource() {
-
-			@Override
-			public Class<? extends MasterDataSource> annotationType() {
-				return MasterDataSource.class;
-			}
-
-		};
 
 	private DynamicDataSourceTargetSource _dynamicDataSourceTargetSource;
 	private TransactionInterceptor _transactionInterceptor;

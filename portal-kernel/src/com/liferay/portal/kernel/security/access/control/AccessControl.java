@@ -38,6 +38,10 @@ public interface AccessControl {
 
 	public AuthVerifierResult.State verifyRequest() throws PortalException;
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
 	public AccessControlled NULL_ACCESS_CONTROLLED = new AccessControlled() {
 
 		@Override

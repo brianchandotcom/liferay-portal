@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.nio.intraband.rpc.IntrabandRPCUtil;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil;
-import com.liferay.portal.kernel.security.access.control.AccessControl;
 import com.liferay.portal.kernel.security.access.control.AccessControlThreadLocal;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
@@ -40,11 +39,15 @@ import org.aopalliance.intercept.MethodInvocation;
 public class PortalResiliencyAdvice
 	extends AnnotationChainableMethodAdvice<AccessControlled> {
 
+	public PortalResiliencyAdvice() {
+		super(AccessControlled.class);
+	}
+
 	@Override
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
 		AccessControlled accessControlled = findAnnotation(methodInvocation);
 
-		if (accessControlled == AccessControl.NULL_ACCESS_CONTROLLED) {
+		if (accessControlled == null) {
 			return null;
 		}
 
@@ -84,11 +87,6 @@ public class PortalResiliencyAdvice
 		}
 
 		return result;
-	}
-
-	@Override
-	public AccessControlled getNullAnnotation() {
-		return AccessControl.NULL_ACCESS_CONTROLLED;
 	}
 
 	@Override

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.security.access.control;
 
-import com.liferay.portal.kernel.security.access.control.AccessControl;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
@@ -34,13 +33,17 @@ import org.aopalliance.intercept.MethodInvocation;
 public class AccessControlAdvice
 	extends AnnotationChainableMethodAdvice<AccessControlled> {
 
+	public AccessControlAdvice() {
+		super(AccessControlled.class);
+	}
+
 	@Override
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
 		incrementServiceDepth();
 
 		AccessControlled accessControlled = findAnnotation(methodInvocation);
 
-		if (accessControlled == AccessControl.NULL_ACCESS_CONTROLLED) {
+		if (accessControlled == null) {
 			return null;
 		}
 
@@ -52,11 +55,6 @@ public class AccessControlAdvice
 	@Override
 	public void duringFinally(MethodInvocation methodInvocation) {
 		decrementServiceDepth();
-	}
-
-	@Override
-	public AccessControlled getNullAnnotation() {
-		return AccessControl.NULL_ACCESS_CONTROLLED;
 	}
 
 	protected void decrementServiceDepth() {

@@ -16,7 +16,6 @@ package com.liferay.portal.internal.cluster;
 
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.cluster.ClusterableInvokerUtil;
-import com.liferay.portal.kernel.cluster.NullClusterable;
 import com.liferay.portal.kernel.nio.intraband.rpc.IntrabandRPCUtil;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
@@ -36,13 +35,17 @@ import org.aopalliance.intercept.MethodInvocation;
 public class SPIClusterableAdvice
 	extends AnnotationChainableMethodAdvice<Clusterable> {
 
+	public SPIClusterableAdvice() {
+		super(Clusterable.class);
+	}
+
 	@Override
 	public void afterReturning(MethodInvocation methodInvocation, Object result)
 		throws Throwable {
 
 		Clusterable clusterable = findAnnotation(methodInvocation);
 
-		if (clusterable == NullClusterable.NULL_CLUSTERABLE) {
+		if (clusterable == null) {
 			return;
 		}
 
@@ -61,7 +64,7 @@ public class SPIClusterableAdvice
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
 		Clusterable clusterable = findAnnotation(methodInvocation);
 
-		if (clusterable == NullClusterable.NULL_CLUSTERABLE) {
+		if (clusterable == null) {
 			return null;
 		}
 
@@ -90,11 +93,6 @@ public class SPIClusterableAdvice
 		}
 
 		return result;
-	}
-
-	@Override
-	public Clusterable getNullAnnotation() {
-		return NullClusterable.NULL_CLUSTERABLE;
 	}
 
 }

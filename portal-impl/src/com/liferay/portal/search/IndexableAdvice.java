@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import org.aopalliance.intercept.MethodInvocation;
@@ -36,6 +35,10 @@ import org.aopalliance.intercept.MethodInvocation;
  */
 public class IndexableAdvice
 	extends AnnotationChainableMethodAdvice<Indexable> {
+
+	public IndexableAdvice() {
+		super(Indexable.class);
+	}
 
 	@Override
 	public void afterReturning(MethodInvocation methodInvocation, Object result)
@@ -63,7 +66,7 @@ public class IndexableAdvice
 
 		Indexable indexable = findAnnotation(methodInvocation);
 
-		if (indexable == _nullIndexable) {
+		if (indexable == null) {
 			return;
 		}
 
@@ -120,11 +123,6 @@ public class IndexableAdvice
 	}
 
 	@Override
-	public Indexable getNullAnnotation() {
-		return _nullIndexable;
-	}
-
-	@Override
 	public boolean isEnabled(Class<?> targetClass, Method method) {
 		if (!super.isEnabled(targetClass, method)) {
 			return false;
@@ -144,19 +142,5 @@ public class IndexableAdvice
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexableAdvice.class);
-
-	private static final Indexable _nullIndexable = new Indexable() {
-
-		@Override
-		public Class<? extends Annotation> annotationType() {
-			return Indexable.class;
-		}
-
-		@Override
-		public IndexableType type() {
-			return null;
-		}
-
-	};
 
 }

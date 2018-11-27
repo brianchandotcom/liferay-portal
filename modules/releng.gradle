@@ -13,6 +13,8 @@ import groovy.io.FileVisitResult
 
 import groovy.json.JsonSlurper
 
+import groovy.util.slurpersupport.GPathResult
+
 import java.nio.file.Path
 
 import java.util.jar.Attributes
@@ -1284,13 +1286,31 @@ private List<Dependency> _getPortalArtifactsDependencies() {
 
 	delete portalArtifactsDir
 
-	List<Dependency> dependencies = new ArrayList<>()
+	List<String> artifactURLs = new ArrayList<>()
 
 	for (File artifactPropertiesFile : _getRelengPropertiesFiles(cacheDir)) {
 		Properties artifactProperties = GUtil.loadProperties(artifactPropertiesFile)
 
-		String artifactURL = artifactProperties.getProperty("artifact.url")
+		artifactURLs.add(artifactProperties.getProperty("artifact.url"))
+	}
 
+	XmlSlurper xmlSlurper = new XmlSlurper()
+
+	for (String bundleSymbolicName : ["com.liferay.arquillian.extension.junit.bridge"]) {
+		GPathResult gPathResult = xmlSlurper.parse("https://repository.liferay.com/nexus/service/local/artifact/maven/resolve?g=com.liferay&a=${bundleSymbolicName}&v=RELEASE&r=liferay-public-releases")
+
+		VersionNumber versionNumber = VersionNumber.parse(gPathResult.data.version.text())
+
+		String artifactURL = "https://repository-cdn.liferay.com/nexus/service/local/repositories/liferay-public-releases/content/com/liferay/${bundleSymbolicName}/${versionNumber}/${bundleSymbolicName}-${versionNumber}.jar"
+
+		_downloadFile(artifactURL, cacheDir)
+
+		artifactURLs.add(artifactURL)
+	}
+
+	List<Dependency> dependencies = new ArrayList<>()
+
+	for (String artifactURL : artifactURLs) {
 		File jarFile = new File(cacheDir, artifactURL.substring(artifactURL.lastIndexOf("/") + 1))
 
 		File dir = new File(portalArtifactsDir, jarFile.name[0 .. -5])

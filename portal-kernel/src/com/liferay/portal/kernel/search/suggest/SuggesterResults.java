@@ -21,7 +21,11 @@ import java.util.Map;
 
 /**
  * @author Michael C. Han
+ * @deprecated As of Mueller (7.2.x), moved to {@link
+ *             com.liferay.portal.search.engine.adapter.search.
+ *             SuggestSearchResult}
  */
+@Deprecated
 public class SuggesterResults {
 
 	public void addSuggesterResult(SuggesterResult suggesterResult) {

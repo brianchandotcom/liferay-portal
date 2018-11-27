@@ -145,6 +145,27 @@
 		</execute>
 	</command>
 
+	<command name="AddBlogsEntryWithSpecialCharacters" priority="5">
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent"><![CDATA[Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|]]></var>
+			<var name="entryTitle"><![CDATA[Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|]]></var>
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent"><![CDATA[Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|]]></var>
+			<var name="entryTitle"><![CDATA[Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|]]></var>
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent"><![CDATA[Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|]]></var>
+			<var name="entryTitle"><![CDATA[Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|]]></var>
+		</execute>
+	</command>
+
 	<command name="AllowMultiplePortletConfigurationsPerSite" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Sites" />

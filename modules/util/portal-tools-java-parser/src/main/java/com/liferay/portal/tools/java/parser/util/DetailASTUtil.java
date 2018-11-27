@@ -36,21 +36,45 @@ public class DetailASTUtil {
 		return _getAllChildTokens(detailAST, recursive, null, tokenTypes);
 	}
 
-	public static Position getEndPosition(DetailAST detailAST) {
-		DetailAST lastChildDetailAST = detailAST.getLastChild();
+	public static DetailAST getClosingDetailAST(DetailAST detailAST) {
+		DetailAST semiDetailAST = detailAST.findFirstToken(TokenTypes.SEMI);
 
-		if (lastChildDetailAST.getType() == TokenTypes.SLIST) {
-			return new Position(
-				lastChildDetailAST.getLineNo(),
-				lastChildDetailAST.getColumnNo());
+		if (semiDetailAST != null) {
+			return semiDetailAST;
+		}
+
+		DetailAST slistDetailAST = detailAST.findFirstToken(TokenTypes.SLIST);
+
+		if (slistDetailAST != null) {
+			return slistDetailAST;
+		}
+
+		DetailAST emptyStatDetailAST = detailAST.findFirstToken(
+			TokenTypes.EMPTY_STAT);
+
+		if (emptyStatDetailAST != null) {
+			return emptyStatDetailAST;
+		}
+
+		if (detailAST.getType() == TokenTypes.LITERAL_ELSE) {
+			return getClosingDetailAST(detailAST.getFirstChild());
 		}
 
 		DetailAST nextSiblingDetailAST = detailAST.getNextSibling();
 
 		if (nextSiblingDetailAST.getType() == TokenTypes.SEMI) {
+			return nextSiblingDetailAST;
+		}
+
+		return null;
+	}
+
+	public static Position getEndPosition(DetailAST detailAST) {
+		DetailAST closingDetailAST = getClosingDetailAST(detailAST);
+
+		if (closingDetailAST != null) {
 			return new Position(
-				nextSiblingDetailAST.getLineNo(),
-				nextSiblingDetailAST.getColumnNo());
+				closingDetailAST.getLineNo(), closingDetailAST.getColumnNo());
 		}
 
 		String s = detailAST.getText();

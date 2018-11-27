@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -187,6 +188,10 @@ public class OrganizationExpandoColumnModelListener
 				encodedName,
 				locale -> Field.getLocalizedName(
 					locale, encodedIndexedFieldName));
+		}
+		else if (expandoColumn.getType() == ExpandoColumnConstants.BOOLEAN) {
+			entityField = new BooleanEntityField(
+				encodedName, locale -> encodedIndexedFieldName);
 		}
 		else {
 			entityField = new StringEntityField(

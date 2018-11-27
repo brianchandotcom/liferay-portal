@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.odata.entity.BooleanEntityField;
-import com.liferay.portal.odata.entity.DateEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;

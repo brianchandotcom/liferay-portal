@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>COMMENT_AUTHOR</td>
-	<td>//div[contains(@class,'lfr-discussion-body') and contains(.,'${key_commentBody}')]//header[@class='lfr-discussion-message-author']/a | //div/a[contains(@class,'username')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>COMMENT_FIELD</td>
 	<td>//div[contains(@class,'alloy-editor') and contains(@role,'textbox')]</td>
 	<td></td>

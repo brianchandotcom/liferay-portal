@@ -9,14 +9,14 @@
 >
 	<bean class="com.liferay.portal.reports.engine.console.service.impl.DefinitionLocalServiceImpl" id="com.liferay.portal.reports.engine.console.service.DefinitionLocalService" />
 	<bean class="com.liferay.portal.reports.engine.console.service.impl.DefinitionServiceImpl" id="com.liferay.portal.reports.engine.console.service.DefinitionService" />
-	<bean class="com.liferay.portal.reports.engine.console.service.persistence.impl.DefinitionPersistenceImpl" id="com.liferay.portal.reports.engine.console.service.persistence.DefinitionPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portal.reports.engine.console.service.persistence.impl.DefinitionFinderImpl" id="com.liferay.portal.reports.engine.console.service.persistence.DefinitionFinder" parent="basePersistence" />
+	<bean class="com.liferay.portal.reports.engine.console.service.persistence.impl.DefinitionPersistenceImpl" id="com.liferay.portal.reports.engine.console.service.persistence.DefinitionPersistence" />
+	<bean class="com.liferay.portal.reports.engine.console.service.persistence.impl.DefinitionFinderImpl" id="com.liferay.portal.reports.engine.console.service.persistence.DefinitionFinder" />
 	<bean class="com.liferay.portal.reports.engine.console.service.impl.EntryLocalServiceImpl" id="com.liferay.portal.reports.engine.console.service.EntryLocalService" />
 	<bean class="com.liferay.portal.reports.engine.console.service.impl.EntryServiceImpl" id="com.liferay.portal.reports.engine.console.service.EntryService" />
-	<bean class="com.liferay.portal.reports.engine.console.service.persistence.impl.EntryPersistenceImpl" id="com.liferay.portal.reports.engine.console.service.persistence.EntryPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portal.reports.engine.console.service.persistence.impl.EntryFinderImpl" id="com.liferay.portal.reports.engine.console.service.persistence.EntryFinder" parent="basePersistence" />
+	<bean class="com.liferay.portal.reports.engine.console.service.persistence.impl.EntryPersistenceImpl" id="com.liferay.portal.reports.engine.console.service.persistence.EntryPersistence" />
+	<bean class="com.liferay.portal.reports.engine.console.service.persistence.impl.EntryFinderImpl" id="com.liferay.portal.reports.engine.console.service.persistence.EntryFinder" />
 	<bean class="com.liferay.portal.reports.engine.console.service.impl.SourceLocalServiceImpl" id="com.liferay.portal.reports.engine.console.service.SourceLocalService" />
 	<bean class="com.liferay.portal.reports.engine.console.service.impl.SourceServiceImpl" id="com.liferay.portal.reports.engine.console.service.SourceService" />
-	<bean class="com.liferay.portal.reports.engine.console.service.persistence.impl.SourcePersistenceImpl" id="com.liferay.portal.reports.engine.console.service.persistence.SourcePersistence" parent="basePersistence" />
-	<bean class="com.liferay.portal.reports.engine.console.service.persistence.impl.SourceFinderImpl" id="com.liferay.portal.reports.engine.console.service.persistence.SourceFinder" parent="basePersistence" />
+	<bean class="com.liferay.portal.reports.engine.console.service.persistence.impl.SourcePersistenceImpl" id="com.liferay.portal.reports.engine.console.service.persistence.SourcePersistence" />
+	<bean class="com.liferay.portal.reports.engine.console.service.persistence.impl.SourceFinderImpl" id="com.liferay.portal.reports.engine.console.service.persistence.SourceFinder" />
 </beans>

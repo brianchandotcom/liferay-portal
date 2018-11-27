@@ -9,8 +9,8 @@
 >
 	<bean class="com.liferay.oauth.service.impl.OAuthApplicationLocalServiceImpl" id="com.liferay.oauth.service.OAuthApplicationLocalService" />
 	<bean class="com.liferay.oauth.service.impl.OAuthApplicationServiceImpl" id="com.liferay.oauth.service.OAuthApplicationService" />
-	<bean class="com.liferay.oauth.service.persistence.impl.OAuthApplicationPersistenceImpl" id="com.liferay.oauth.service.persistence.OAuthApplicationPersistence" parent="basePersistence" />
+	<bean class="com.liferay.oauth.service.persistence.impl.OAuthApplicationPersistenceImpl" id="com.liferay.oauth.service.persistence.OAuthApplicationPersistence" />
 	<bean class="com.liferay.oauth.service.impl.OAuthUserLocalServiceImpl" id="com.liferay.oauth.service.OAuthUserLocalService" />
 	<bean class="com.liferay.oauth.service.impl.OAuthUserServiceImpl" id="com.liferay.oauth.service.OAuthUserService" />
-	<bean class="com.liferay.oauth.service.persistence.impl.OAuthUserPersistenceImpl" id="com.liferay.oauth.service.persistence.OAuthUserPersistence" parent="basePersistence" />
+	<bean class="com.liferay.oauth.service.persistence.impl.OAuthUserPersistenceImpl" id="com.liferay.oauth.service.persistence.OAuthUserPersistence" />
 </beans>

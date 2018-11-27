@@ -16,9 +16,10 @@ package com.liferay.portal.resiliency.spi.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
+
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.resiliency.spi.model.SPIDefinition;
 
 import java.io.Externalizable;

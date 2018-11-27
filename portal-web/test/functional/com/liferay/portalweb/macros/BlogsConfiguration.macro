@@ -7,7 +7,9 @@
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
-		<execute function="AssertClick" locator1="NavBar#SCOPE" value1="Scope" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="key_navItem" value="Scope" />
+		</execute>
 
 		<execute function="Select" locator1="Select#SCOPE" value1="${scopeSelection}" />
 

@@ -86,7 +86,9 @@
 
 		<execute function="AssertClick" locator1="ListGroupItem#ITEM_NAME_LINK" value1="${roleTitle}" />
 
-		<execute function="AssertClick" locator1="NavBar#ASSIGNEES" value1="Assignees" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Assignees" />
+		</execute>
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
@@ -232,7 +234,9 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="NavBar#DEFINE_PERMISSIONS" value1="Define Permissions" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Define Permissions" />
+		</execute>
 
 		<if>
 			<and>

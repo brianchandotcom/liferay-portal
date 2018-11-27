@@ -14,7 +14,9 @@
 	<command name="configureSharingAllowUsersToAddWikiToAnyWebsite">
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
-		<execute function="AssertClick" locator1="NavBar#SHARING" value1="Sharing" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Sharing" />
+		</execute>
 
 		<if>
 			<equals arg1="${enabled}" arg2="true" />
@@ -90,7 +92,9 @@
 	<command name="viewConfigureSharingAllowUsersToAddWikiToAnyWebsite">
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
-		<execute function="AssertClick" locator1="NavBar#SHARING" value1="Sharing" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Sharing" />
+		</execute>
 
 		<if>
 			<equals arg1="${enabled}" arg2="true" />

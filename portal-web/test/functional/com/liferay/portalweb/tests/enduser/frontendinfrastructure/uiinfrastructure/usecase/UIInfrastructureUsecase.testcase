@@ -121,7 +121,9 @@
 
 			<execute macro="IFrame#selectConfigurationFrame" />
 
-			<execute function="AssertTextEquals" locator1="NavBar#SHARING" value1="Sharing" />
+			<execute function="AssertTextEquals" locator1="NavBar#NAV_ITEM_LINK" value1="Sharing">
+				<var name="key_navItem" value="Sharing" />
+			</execute>
 
 			<execute macro="IFrame#closeFrame" />
 		</task>

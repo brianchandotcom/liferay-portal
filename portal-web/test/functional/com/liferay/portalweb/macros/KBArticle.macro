@@ -1051,7 +1051,9 @@
 	<command name="selectScopePG">
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
 
-		<execute function="AssertClick" locator1="NavBar#SCOPE" value1="Scope" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Scope" />
+		</execute>
 
 		<execute function="Select" locator1="Select#SCOPE" value1="${newKBPageScope}" />
 

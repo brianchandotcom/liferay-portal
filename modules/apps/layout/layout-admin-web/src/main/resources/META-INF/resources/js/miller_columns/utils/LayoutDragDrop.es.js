@@ -18,7 +18,7 @@ const DRAG_POSITIONS = {
  * @review
  */
 
-const DROP_TARGET_TYPES = {
+const DROP_TARGET_ITEM_TYPES = {
 	column: 'layout-column',
 	item: 'layout-column-item'
 };
@@ -78,11 +78,11 @@ class LayoutDragDrop extends State {
 			if (targetItem.dataset.layoutColumnIndex) {
 				targetId = targetItem.dataset.layoutColumnIndex;
 				targetId = targetId === '0' ? null : targetId;
-				targetType = DROP_TARGET_TYPES.column;
+				targetType = DROP_TARGET_ITEM_TYPES.column;
 			}
 			else if (targetItem.dataset.layoutColumnItemPlid) {
 				targetId = targetItem.dataset.layoutColumnItemPlid;
-				targetType = DROP_TARGET_TYPES.item;
+				targetType = DROP_TARGET_ITEM_TYPES.item;
 
 				if (placeholderItemRegion.top > targetItemRegion.top &&
 					placeholderItemRegion.bottom < targetItemRegion.bottom) {
@@ -156,11 +156,11 @@ class LayoutDragDrop extends State {
 			if (data.target.dataset.layoutColumnIndex) {
 				targetId = data.target.dataset.layoutColumnIndex;
 				targetId = targetId === '0' ? null : targetId;
-				targetType = DROP_TARGET_TYPES.column;
+				targetType = DROP_TARGET_ITEM_TYPES.column;
 			}
 			else if (data.target.dataset.layoutColumnItemPlid) {
 				targetId = data.target.dataset.layoutColumnItemPlid;
-				targetType = DROP_TARGET_TYPES.item;
+				targetType = DROP_TARGET_ITEM_TYPES.item;
 			}
 		}
 
@@ -250,7 +250,7 @@ LayoutDragDrop.STATE = {
 
 export {
 	DRAG_POSITIONS,
-	DROP_TARGET_TYPES,
+	DROP_TARGET_ITEM_TYPES,
 	LayoutDragDrop
 };
 export default LayoutDragDrop;

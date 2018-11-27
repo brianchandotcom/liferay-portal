@@ -7,7 +7,7 @@ import './LayoutBreadcrumbs.es';
 import './LayoutColumn.es';
 import {
 	DRAG_POSITIONS,
-	DROP_TARGET_TYPES,
+	DROP_TARGET_ITEM_TYPES,
 	LayoutDragDrop
 } from './utils/LayoutDragDrop.es';
 import {
@@ -204,10 +204,10 @@ class Layout extends Component {
 			targetType
 		} = eventData;
 
-		if (targetType === DROP_TARGET_TYPES.column) {
+		if (targetType === DROP_TARGET_ITEM_TYPES.column) {
 			this._setColumnHoveredData(sourceItemPlid, targetId);
 		}
-		else if (targetType === DROP_TARGET_TYPES.item) {
+		else if (targetType === DROP_TARGET_ITEM_TYPES.item) {
 			this._setItemHoveredData(
 				position,
 				sourceItemPlid,
@@ -254,7 +254,7 @@ class Layout extends Component {
 			let parentPlid = null;
 			let priority = null;
 
-			if (targetType === DROP_TARGET_TYPES.column) {
+			if (targetType === DROP_TARGET_ITEM_TYPES.column) {
 				layoutColumns = clearPath(
 					layoutColumns,
 					this._draggingItem,
@@ -273,7 +273,7 @@ class Layout extends Component {
 				parentPlid = dropData.newParentPlid;
 				priority = dropData.priority;
 			}
-			else if (targetType === DROP_TARGET_TYPES.item) {
+			else if (targetType === DROP_TARGET_ITEM_TYPES.item) {
 				const targetItem = getItem(layoutColumns, targetId);
 
 				layoutColumns = clearPath(

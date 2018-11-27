@@ -14,7 +14,7 @@ import {
 } from '../../actions/actions.es';
 import {
 	DRAG_POSITIONS,
-	DROP_TARGET_TYPES
+	DROP_TARGET_ITEM_TYPES
 } from '../../reducers/placeholders.es';
 import {getFragmentRowIndex, setIn} from '../../utils/utils.es';
 import state from '../../store/state.es';
@@ -33,8 +33,8 @@ class FragmentEntryLinkList extends Component {
 	 * @return {Object}
 	 * @static
 	 */
-	static _addDropTypesToState(_state) {
-		return setIn(_state, ['dropTargetTypes'], DROP_TARGET_TYPES);
+	static _addDropTargetItemTypesToState(_state) {
+		return setIn(_state, ['dropTargetItemTypes'], DROP_TARGET_ITEM_TYPES);
 	}
 
 	/**
@@ -53,7 +53,7 @@ class FragmentEntryLinkList extends Component {
 		} = FragmentEntryLinkList._getHoveredElementData(eventData);
 
 		const targetIsSameFragment = (
-			(hoveredElementType === DROP_TARGET_TYPES.fragment) &&
+			(hoveredElementType === DROP_TARGET_ITEM_TYPES.fragment) &&
 			(sourceData.fragmentEntryLinkId === targetData.fragmentEntryLinkId)
 		);
 
@@ -76,18 +76,18 @@ class FragmentEntryLinkList extends Component {
 		if (targetData) {
 			if ('columnId' in targetData) {
 				hoveredElementId = targetData.columnId;
-				hoveredElementType = DROP_TARGET_TYPES.column;
+				hoveredElementType = DROP_TARGET_ITEM_TYPES.column;
 			}
 			else if ('fragmentEntryLinkId' in targetData) {
 				hoveredElementId = targetData.fragmentEntryLinkId;
-				hoveredElementType = DROP_TARGET_TYPES.fragment;
+				hoveredElementType = DROP_TARGET_ITEM_TYPES.fragment;
 			}
 			else if ('layoutSectionId' in targetData) {
 				hoveredElementId = targetData.layoutSectionId;
-				hoveredElementType = DROP_TARGET_TYPES.section;
+				hoveredElementType = DROP_TARGET_ITEM_TYPES.section;
 			}
 			else if ('fragmentEmptyList' in targetData) {
-				hoveredElementType = DROP_TARGET_TYPES.fragmentList;
+				hoveredElementType = DROP_TARGET_ITEM_TYPES.fragmentList;
 			}
 		}
 
@@ -148,7 +148,7 @@ class FragmentEntryLinkList extends Component {
 	 * @review
 	 */
 	prepareStateForRender(state) {
-		let _state = FragmentEntryLinkList._addDropTypesToState(state);
+		let _state = FragmentEntryLinkList._addDropTargetItemTypesToState(state);
 
 		_state = FragmentEntryLinkList._setEmptySections(_state);
 

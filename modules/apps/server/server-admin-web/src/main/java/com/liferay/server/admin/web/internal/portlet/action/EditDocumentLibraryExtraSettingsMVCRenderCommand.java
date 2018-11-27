@@ -14,13 +14,19 @@
 
 package com.liferay.server.admin.web.internal.portlet.action;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.server.admin.web.internal.constants.ServerAdminWebKeys;
+
+import java.util.List;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Philip Jones
@@ -39,7 +45,18 @@ public class EditDocumentLibraryExtraSettingsMVCRenderCommand
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		List<DLFileEntry> dlFileEntries =
+			_dlFileEntryLocalService.getExtraSettingsFileEntries(0, 1);
+
+		if (!dlFileEntries.isEmpty()) {
+			renderRequest.setAttribute(
+				ServerAdminWebKeys.DL_FILE_ENTRY, dlFileEntries.get(0));
+		}
+
 		return "/edit_document_library_extra_settings.jsp";
 	}
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 }

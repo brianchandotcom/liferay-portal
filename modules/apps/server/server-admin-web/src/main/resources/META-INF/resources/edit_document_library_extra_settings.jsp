@@ -17,16 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DLFileEntry dlFileEntry = null;
+DLFileEntry dlFileEntry = (DLFileEntry)request.getAttribute(ServerAdminWebKeys.DL_FILE_ENTRY);
 
 List<String> keys = null;
 List<String> expandoBridgeAttributeNames = null;
 
-List<DLFileEntry> dlFileEntries = DLFileEntryLocalServiceUtil.getExtraSettingsFileEntries(0, 1);
-
-if (!dlFileEntries.isEmpty()) {
-	dlFileEntry = dlFileEntries.get(0);
-
+if (dlFileEntry != null) {
 	List<DLFileVersion> dlFileVersions = dlFileEntry.getFileVersions(WorkflowConstants.STATUS_ANY);
 
 	for (DLFileVersion dlFileVersion : dlFileVersions) {

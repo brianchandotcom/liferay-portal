@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
 import com.liferay.sharing.display.context.util.SharingToolbarItemFactory;
+import com.liferay.sharing.document.library.internal.security.permission.SharingPermissionHelper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -90,7 +91,8 @@ public class SharingDLDisplayContextFactory implements DLDisplayContextFactory {
 				ResourceBundleUtil.getBundle(
 					themeDisplay.getLocale(),
 					SharingDLDisplayContextFactory.class),
-				_sharingMenuItemFactory, _sharingToolbarItemFactory);
+				_sharingMenuItemFactory, _sharingToolbarItemFactory,
+				_sharingPermissionHelper);
 		}
 		catch (PortalException pe) {
 			throw new SystemException(
@@ -102,6 +104,9 @@ public class SharingDLDisplayContextFactory implements DLDisplayContextFactory {
 
 	@Reference
 	private SharingMenuItemFactory _sharingMenuItemFactory;
+
+	@Reference
+	private SharingPermissionHelper _sharingPermissionHelper;
 
 	@Reference
 	private SharingToolbarItemFactory _sharingToolbarItemFactory;

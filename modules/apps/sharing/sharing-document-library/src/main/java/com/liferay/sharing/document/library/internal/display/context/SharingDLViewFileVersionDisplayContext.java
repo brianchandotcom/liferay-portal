@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
 import com.liferay.sharing.display.context.util.SharingToolbarItemFactory;
+import com.liferay.sharing.document.library.internal.security.permission.SharingPermissionHelper;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -53,7 +54,8 @@ public class SharingDLViewFileVersionDisplayContext
 		FileEntry fileEntry, FileVersion fileVersion,
 		ResourceBundle resourceBundle,
 		SharingMenuItemFactory sharingMenuItemFactory,
-		SharingToolbarItemFactory sharingToolbarItemFactory) {
+		SharingToolbarItemFactory sharingToolbarItemFactory,
+		SharingPermissionHelper sharingPermissionHelper) {
 
 		super(_UUID, parentDLDisplayContext, request, response, fileVersion);
 
@@ -64,6 +66,7 @@ public class SharingDLViewFileVersionDisplayContext
 			WebKeys.THEME_DISPLAY);
 		_sharingMenuItemFactory = sharingMenuItemFactory;
 		_sharingToolbarItemFactory = sharingToolbarItemFactory;
+		_sharingPermissionHelper = sharingPermissionHelper;
 	}
 
 	@Override
@@ -125,7 +128,11 @@ public class SharingDLViewFileVersionDisplayContext
 
 		_showImageEditorAction = false;
 
-		if (_themeDisplay.isSignedIn() && _isShowActions()) {
+		if (_themeDisplay.isSignedIn() && _isShowActions() &&
+			_sharingPermissionHelper.isShareable(
+				_themeDisplay.getPermissionChecker(),
+				_fileEntry.getFileEntryId())) {
+
 			_showImageEditorAction = true;
 		}
 
@@ -139,6 +146,7 @@ public class SharingDLViewFileVersionDisplayContext
 	private final HttpServletRequest _request;
 	private final ResourceBundle _resourceBundle;
 	private final SharingMenuItemFactory _sharingMenuItemFactory;
+	private final SharingPermissionHelper _sharingPermissionHelper;
 	private final SharingToolbarItemFactory _sharingToolbarItemFactory;
 	private Boolean _showImageEditorAction;
 	private final ThemeDisplay _themeDisplay;

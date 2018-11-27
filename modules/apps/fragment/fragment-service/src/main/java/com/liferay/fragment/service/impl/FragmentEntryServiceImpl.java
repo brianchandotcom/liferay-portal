@@ -239,6 +239,14 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 	}
 
 	@Override
+	public int getFragmentCollectionsCountByType(
+		long groupId, long fragmentCollectionId, int type) {
+
+		return fragmentEntryPersistence.countByG_FCI_T(
+			groupId, fragmentCollectionId, type);
+	}
+
+	@Override
 	public List<FragmentEntry> getFragmentEntries(long fragmentCollectionId) {
 		return fragmentEntryLocalService.getFragmentEntries(
 			fragmentCollectionId);
@@ -300,6 +308,15 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			groupId, fragmentCollectionId,
 			_customSQL.keywords(name, WildcardMode.SURROUND)[0], start, end,
 			orderByComparator);
+	}
+
+	@Override
+	public List<FragmentEntry> getFragmentEntriesByType(
+		long groupId, long fragmentCollectionId, int type, int start, int end,
+		OrderByComparator<FragmentEntry> orderByComparator) {
+
+		return fragmentEntryPersistence.findByG_FCI_T(
+			groupId, fragmentCollectionId, type, start, end, orderByComparator);
 	}
 
 	@Override

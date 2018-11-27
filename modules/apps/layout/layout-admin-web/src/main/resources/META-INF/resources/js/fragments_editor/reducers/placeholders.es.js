@@ -1,7 +1,9 @@
 import {
 	CLEAR_DROP_TARGET,
+	CLEAR_HOVERED_ITEM,
 	UPDATE_DROP_TARGET,
-	UPDATE_HIGHLIGHT_MAPPING_STATUS
+	UPDATE_HIGHLIGHT_MAPPING_STATUS,
+	UPDATE_HOVERED_ITEM
 } from '../actions/actions.es';
 
 /**
@@ -78,9 +80,35 @@ function updateHighlightMappingReducer(state, actionType, payload) {
 	return nextState;
 }
 
+/**
+ * Updates hovered element data with the information sent.
+ * @param {!object} state
+ * @param {UPDATE_HOVERED_ITEM} actionType
+ * @param {!object} payload
+ * @param {string} payload.hoveredItemId
+ * @param {string} payload.hoveredItemType
+ * @return {object}
+ * @review
+ */
+function updateHoveredItemReducer(state, actionType, payload) {
+	const nextState = Object.assign({}, state);
+
+	if (actionType === CLEAR_HOVERED_ITEM) {
+		nextState.hoveredItemId = null;
+		nextState.hoveredItemType = null;
+	}
+	else if (actionType === UPDATE_HOVERED_ITEM) {
+		nextState.hoveredItemId = payload.hoveredItemId;
+		nextState.hoveredItemType = payload.hoveredItemType;
+	}
+
+	return nextState;
+}
+
 export {
 	DROP_TARGET_BORDERS,
 	DROP_TARGET_ITEM_TYPES,
 	updateDropTargetReducer,
-	updateHighlightMappingReducer
+	updateHighlightMappingReducer,
+	updateHoveredItemReducer
 };

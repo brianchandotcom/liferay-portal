@@ -446,6 +446,11 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	}
 
 	@Override
+	public String getTypeLabel() {
+		return _fragmentEntry.getTypeLabel();
+	}
+
+	@Override
 	public int getUsageCount() {
 		return _fragmentEntry.getUsageCount();
 	}

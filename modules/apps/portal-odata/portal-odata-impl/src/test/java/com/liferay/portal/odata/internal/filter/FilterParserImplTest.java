@@ -33,6 +33,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.liferay.portal.odata.filter.expression.UnaryExpression;
 import org.assertj.core.api.AbstractThrowableAssert;
 import org.assertj.core.api.Assertions;
 
@@ -158,6 +159,30 @@ public class FilterParserImplTest {
 		);
 
 		exception.hasMessage("Incompatible types.");
+	}
+
+	@Test
+	public void testParseWithNotUnaryExpressionWithEqBinaryExpression()
+		throws ExpressionVisitException {
+
+		Expression expression = _filterParserImpl.parse(
+			"not (booleanExternal eq true)");
+
+		Assert.assertNotNull(expression);
+
+		UnaryExpression unaryExpression = (UnaryExpression)expression;
+
+		Assert.assertEquals(
+			UnaryExpression.Operation.NOT, unaryExpression.getOperation());
+
+		BinaryExpression binaryExpression =
+			(BinaryExpression) unaryExpression.getExpression();
+
+		Assert.assertEquals(
+			"[booleanExternal]",
+			binaryExpression.getLeftOperationExpression().toString());
+		Assert.assertEquals(
+			"true", binaryExpression.getRightOperationExpression().toString());
 	}
 
 	@Test

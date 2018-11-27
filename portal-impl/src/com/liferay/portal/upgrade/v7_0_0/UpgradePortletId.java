@@ -46,7 +46,8 @@ public class UpgradePortletId
 			{"153", PortletKeys.MY_WORKFLOW_TASK},
 			{"156", PortletKeys.GROUP_PAGES}, {"161", PortletKeys.BLOGS_ADMIN},
 			{"162", PortletKeys.MESSAGE_BOARDS_ADMIN}, {"165", _SITE_SETTINGS},
-			{"174", _SITE_MEMBERSHIPS_ADMIN},
+			{"167", _DYNAMIC_DATA_LISTS}, {"174", _SITE_MEMBERSHIPS_ADMIN},
+			{"183", PortletKeys.PORTLET_DISPLAY_TEMPLATE},
 			{"19", PortletKeys.MESSAGE_BOARDS}, {"191", _SITE_TEAMS},
 			{"192", _SITE_TEMPLATE_SETTINGS},
 			{"199", PortletKeys.DOCUMENT_LIBRARY_ADMIN},
@@ -72,6 +73,9 @@ public class UpgradePortletId
 
 	private static final String _ASSET_TAGS_ADMIN =
 		"com_liferay_asset_tags_admin_web_portlet_AssetTagsAdminPortlet";
+
+	private static final String _DYNAMIC_DATA_LISTS =
+		"com_liferay_dynamic_data_lists_web_portlet_DDLPortlet";
 
 	private static final String _LAYOUT_PROTOTYPE =
 		"com_liferay_layout_prototype_web_portlet_LayoutPrototypePortlet";

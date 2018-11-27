@@ -19,6 +19,8 @@ package com.liferay.portal.workflow.reports.web.internal.constants;
  */
 public class WorkflowReportsPortletKeys {
 
-	public static final String WORKFLOW_REPORTS = "workflow_reports_portlet";
+	public static final String WORKFLOW_REPORTS =
+		"com_liferay_portal_workflow_reports_web_internal_portlet_" +
+			"WorkflowReportsPortlet";
 
 }

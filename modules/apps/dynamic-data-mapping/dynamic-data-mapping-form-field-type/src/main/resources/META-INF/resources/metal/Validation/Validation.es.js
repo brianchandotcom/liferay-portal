@@ -146,6 +146,12 @@ class Validation extends Component {
 			if (selectedValidation) {
 				parameterMessage = this._parseParameterMessageFromExpression(expression, selectedValidation);
 			}
+			else {
+				selectedValidation = {
+					parameterMessage: this.validations[0].parameterMessage,
+					value: this.validations[0].name
+				};
+			}
 		}
 
 		return {
@@ -171,10 +177,72 @@ class Validation extends Component {
 		}
 	}
 
+	_dataTypeValueFn() {
+		return this.validation.dataType ? this.validation.dataType : this.dataType;
+	}
+
 	_enableValidationValueFn() {
 		const {value} = this;
 
 		return !!value.expression;
+	}
+
+	_emitFieldEdited(value) {
+		this.emit(
+			'fieldEdited',
+			{
+				fieldInstance: this,
+				originalEvent: null,
+				value
+			}
+		);
+	}
+
+	_getSelectedValidation() {
+		const {enableValidation} = this;
+		let selectedValidationValue = this.refs.selectedValidation.value;
+
+		if (Array.isArray(selectedValidationValue)) {
+			selectedValidationValue = selectedValidationValue[0];
+		}
+
+		let selectedValidation = this.validations.find(
+			({name}) => name === selectedValidationValue
+		);
+
+		if (enableValidation && !selectedValidation) {
+			selectedValidation = this.validations[0];
+		}
+
+		return selectedValidation;
+	}
+
+	_getValue() {
+		let expression = '';
+		const {
+			validation: {fieldName: name}
+		} = this;
+
+		const selectedValidation = this._getSelectedValidation();
+		const {template} = selectedValidation;
+		let parameterMessage = '';
+
+		if (this.refs.parameterMessage) {
+			parameterMessage = this.refs.parameterMessage.value;
+		}
+
+		expression = subWords(
+			template,
+			{
+				name,
+				parameter: parameterMessage
+			}
+		);
+
+		return {
+			errorMessage: this.refs.errorMessage.value,
+			expression
+		};
 	}
 
 	@autobind
@@ -197,90 +265,18 @@ class Validation extends Component {
 	}
 
 	@autobind
-	_handleParameterMessageEdited() {
+	_handleErrorMessageEdited() {
 		this._updateValue();
 	}
 
 	@autobind
-	_handleErrorMessageEdited() {
+	_handleParameterMessageEdited() {
 		this._updateValue();
 	}
 
 	@autobind
 	_handleValidationValueEdited() {
 		this._updateValue();
-	}
-
-	_dataTypeValueFn() {
-		return this.validation.dataType ? this.validation.dataType : this.dataType;
-	}
-
-	_emitFieldEdited(value) {
-		this.emit(
-			'fieldEdited',
-			{
-				fieldInstance: this,
-				originalEvent: null,
-				value
-			}
-		);
-	}
-
-	_parseParameterMessageFromExpression(expression, validation) {
-		const matches = validation.regex.exec(expression);
-
-		return matches && matches[2];
-	}
-
-	_getValue() {
-		let expression = '';
-		const {
-			validation: {fieldName: name}
-		} = this;
-
-		let selectedValidationValue = this.refs.selectedValidation.value;
-
-		if (Array.isArray(selectedValidationValue)) {
-			selectedValidationValue = selectedValidationValue[0];
-		}
-
-		const selectedValidation = this.validations.find(
-			({name}) => name === selectedValidationValue
-		);
-
-		if (selectedValidation) {
-			const {template} = selectedValidation;
-			let parameterMessage = '';
-
-			if (this.refs.parameterMessage) {
-				parameterMessage = this.refs.parameterMessage.value;
-			}
-
-			expression = subWords(
-				template,
-				{
-					name,
-					parameter: parameterMessage
-				}
-			);
-		}
-
-		return {
-			errorMessage: this.refs.errorMessage.value,
-			expression
-		};
-	}
-
-	_parseValidationFromExpression(expression) {
-		let validation;
-
-		if (expression) {
-			const {validations} = this;
-
-			validation = validations.find(validation => validation.regex.test(expression));
-		}
-
-		return validation;
 	}
 
 	_normalizeValidationsOptions(validations) {
@@ -293,6 +289,24 @@ class Validation extends Component {
 				};
 			}
 		);
+	}
+
+	_parseParameterMessageFromExpression(expression, validation) {
+		const matches = validation.regex.exec(expression);
+
+		return matches && matches[2];
+	}
+
+	_parseValidationFromExpression(expression) {
+		let validation;
+
+		if (expression) {
+			const {validations} = this;
+
+			validation = validations.find(validation => validation.regex.test(expression));
+		}
+
+		return validation;
 	}
 
 	_updateValue() {

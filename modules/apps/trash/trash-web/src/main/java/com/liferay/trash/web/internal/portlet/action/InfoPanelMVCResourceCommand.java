@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.model.TrashEntry;
-import com.liferay.trash.service.TrashEntryLocalService;
 import com.liferay.trash.web.internal.constants.TrashPortletKeys;
 import com.liferay.trash.web.internal.constants.TrashWebKeys;
 import com.liferay.trash.web.internal.util.TrashServiceHolder;
@@ -66,9 +65,6 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 
 		include(resourceRequest, resourceResponse, "/info_panel.jsp");
 	}
-
-	@Reference
-	private TrashEntryLocalService _trashEntryLocalService;
 
 	@Reference
 	private TrashHelper _trashHelper;

@@ -1,5 +1,5 @@
 import Text from 'source/Text/Text.es';
-import {dom as MetalTestUtil} from 'metal-dom';
+import {dom} from 'metal-dom';
 
 let component;
 const spritemap = 'icons.svg';
@@ -159,6 +159,8 @@ describe(
 		it(
 			'should emit a field edit event on field value change',
 			() => {
+				jest.useFakeTimers();
+
 				const handleFieldEdited = jest.fn();
 
 				const events = {fieldEdited: handleFieldEdited};
@@ -170,11 +172,13 @@ describe(
 					}
 				);
 
-				MetalTestUtil.triggerEvent(
+				dom.triggerEvent(
 					component.element.querySelector('input'),
 					'input',
 					{}
 				);
+
+				jest.runAllTimers();
 
 				expect(handleFieldEdited).toHaveBeenCalled();
 			}
@@ -206,7 +210,7 @@ describe(
 					}
 				);
 
-				MetalTestUtil.triggerEvent(
+				dom.triggerEvent(
 					component.element.querySelector('input'),
 					'input',
 					{}
@@ -217,6 +221,8 @@ describe(
 		it(
 			'should propagate the field edit event',
 			() => {
+				jest.useFakeTimers();
+
 				component = new Text(
 					{
 						...defaultTextConfig,
@@ -226,11 +232,13 @@ describe(
 
 				const spy = jest.spyOn(component, 'emit');
 
-				MetalTestUtil.triggerEvent(
+				dom.triggerEvent(
 					component.element.querySelector('input'),
 					'input',
 					{}
 				);
+
+				jest.runAllTimers();
 
 				expect(spy).toHaveBeenCalled();
 				expect(spy).toHaveBeenCalledWith('fieldEdited', expect.any(Object));

@@ -1,5 +1,5 @@
 import Validation from 'source/Validation/Validation.es';
-import {dom as MetalTestUtil} from 'metal-dom';
+import {dom} from 'metal-dom';
 
 let component;
 const spritemap = 'icons.svg';
@@ -45,7 +45,7 @@ describe(
 					}
 				);
 
-				MetalTestUtil.triggerEvent(
+				dom.triggerEvent(
 					component.element.querySelector('input[type=checkbox]'),
 					'change',
 					{}
@@ -72,7 +72,7 @@ describe(
 					}
 				);
 
-				component.handleValidationValue({value: ['notContains']});
+				component.refs.selectedValidation.value = 'notContains';
 
 				jest.runAllTimers();
 
@@ -95,7 +95,7 @@ describe(
 					}
 				);
 
-				component.handleValidationValue({value: ['lt']});
+				component.refs.selectedValidation.value = 'lt';
 
 				jest.runAllTimers();
 
@@ -121,7 +121,7 @@ describe(
 					}
 				);
 
-				component.handleValidationValue({value: ['notContains']});
+				component.refs.selectedValidation.value = 'notContains';
 
 				jest.runAllTimers();
 
@@ -131,7 +131,7 @@ describe(
 
 				jest.runAllTimers();
 
-				component.handleValidationValue({value: ['lt']});
+				component.refs.selectedValidation.value = 'lt';
 
 				jest.runAllTimers();
 
@@ -154,7 +154,7 @@ describe(
 					}
 				);
 
-				component.handleValidationValue({value: ['url']});
+				component.refs.selectedValidation.value = 'url';
 
 				jest.runAllTimers();
 
@@ -177,7 +177,7 @@ describe(
 					}
 				);
 
-				component.handleValidationValue({value: ['email']});
+				component.refs.selectedValidation.value = 'email';
 
 				jest.runAllTimers();
 
@@ -244,7 +244,7 @@ describe(
 
 				parameterComponent.value = 'new Parameter Message';
 
-				MetalTestUtil.triggerEvent(parameterComponent, 'input', {});
+				dom.triggerEvent(parameterComponent, 'input', {});
 
 				jest.runAllTimers();
 
@@ -288,7 +288,7 @@ describe(
 
 				errorComponent.value = 'new Error Message';
 
-				MetalTestUtil.triggerEvent(errorComponent, 'input', {});
+				dom.triggerEvent(errorComponent, 'input', {});
 
 				jest.runAllTimers();
 
@@ -328,7 +328,7 @@ describe(
 
 				errorComponent.value = 'new Error Message';
 
-				MetalTestUtil.triggerEvent(errorComponent, 'input', {});
+				dom.triggerEvent(errorComponent, 'input', {});
 
 				jest.runAllTimers();
 

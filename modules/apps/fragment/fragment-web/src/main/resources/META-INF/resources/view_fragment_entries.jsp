@@ -76,6 +76,16 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 									<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(fragmentEntry.getStatus()) %>" />
 								</span>
 							</liferay-frontend:vertical-card-footer>
+
+							<liferay-frontend:vertical-card-sticker-bottom>
+								<div class="sticker sticker-bottom-left sticker-primary <%= (fragmentEntry.getType() == FragmentEntryTypeConstants.TYPE_ELEMENT) ? "file-icon-color-4" : "file-icon-color-2" %>">
+									<liferay-ui:icon
+										cssClass="inline-item"
+										icon="cards"
+										markupView="lexicon"
+									/>
+								</div>
+							</liferay-frontend:vertical-card-sticker-bottom>
 						</liferay-frontend:vertical-card>
 					</c:when>
 					<c:otherwise>
@@ -103,6 +113,16 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 									<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(fragmentEntry.getStatus()) %>" />
 								</span>
 							</liferay-frontend:vertical-card-footer>
+
+							<liferay-frontend:vertical-card-sticker-bottom>
+								<div class="sticker sticker-bottom-left sticker-primary <%= (fragmentEntry.getType() == FragmentEntryTypeConstants.TYPE_ELEMENT) ? "file-icon-color-4" : "file-icon-color-2" %>">
+									<liferay-ui:icon
+										cssClass="inline-item"
+										icon="cards"
+										markupView="lexicon"
+									/>
+								</div>
+							</liferay-frontend:vertical-card-sticker-bottom>
 						</liferay-frontend:icon-vertical-card>
 					</c:otherwise>
 				</c:choose>

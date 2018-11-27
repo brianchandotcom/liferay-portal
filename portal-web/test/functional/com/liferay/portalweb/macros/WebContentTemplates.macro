@@ -119,6 +119,7 @@
 			<var name="templateLanguage" value="${templateLanguage}" />
 			<var name="templateName" value="${templateName}" />
 			<var name="templateScript" value="${templateScript}" />
+			<var name="templateSmallImageURL" value="${templateSmallImageURL}" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#save" />

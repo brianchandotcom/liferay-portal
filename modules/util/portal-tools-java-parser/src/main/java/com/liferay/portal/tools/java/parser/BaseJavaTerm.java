@@ -151,9 +151,6 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		if (newLine) {
 			sb = _stripTrailingWhitespace(sb);
 
-			int beforeLineBreakCount = StringUtil.count(
-				sb.toString(), CharPool.NEW_LINE);
-
 			if (Validator.isNull(sb.toString())) {
 				sb.append(
 					javaTerm.toString(
@@ -165,16 +162,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 					sb, javaTerm, indent, prefix, suffix, maxLineLength);
 			}
 
-			int afterLineBreakCount = StringUtil.count(
-				sb.toString(), CharPool.NEW_LINE);
-
-			for (int i = 0; i < (afterLineBreakCount - beforeLineBreakCount);
-				 i++) {
-
-				indent = "\t" + indent;
-			}
-
-			return indent;
+			return "\t" + getIndent(getLastLine(sb));
 		}
 
 		return appendWithLineBreak(
@@ -211,9 +199,6 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			return indent;
 		}
 
-		int beforeLineBreakCount = StringUtil.count(
-			sb.toString(), CharPool.NEW_LINE);
-
 		String lastLine = getLastLine(sb);
 
 		sb = _stripTrailingWhitespace(sb);
@@ -227,14 +212,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 				sb, list, delimeter, indent, prefix, suffix, maxLineLength);
 		}
 
-		int afterLineBreakCount = StringUtil.count(
-			sb.toString(), CharPool.NEW_LINE);
-
-		for (int i = 0; i < (afterLineBreakCount - beforeLineBreakCount); i++) {
-			indent = "\t" + indent;
-		}
-
-		return indent;
+		return "\t" + getIndent(getLastLine(sb));
 	}
 
 	protected void appendNewLine(

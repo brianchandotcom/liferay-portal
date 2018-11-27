@@ -4,14 +4,14 @@ exports[`Validation should enable validation after click on toogle 1`] = `
 <div class="form-group lfr-ddm-form-field-validation">
   <div class="form-group">
     <label class="ddm-toggle-switch toggle-switch">
-      <input class="toggle-switch-check" type="checkbox" checked="">
+      <input class="toggle-switch-check" type="checkbox">
       <span aria-hidden="true" class="toggle-switch-bar">
         <span class="toggle-switch-handle"></span>
         <span class="toggle-switch-text toggle-switch-text-right">Validator</span>
       </span>
     </label>
   </div>
-  <div class="form-group">
+  <div class="form-group" style="display: none;">
     <label>if-input </label>
     <div class="form-builder-select-field input-group-container">
       <div class="form-control select-field-trigger">
@@ -35,7 +35,7 @@ exports[`Validation should enable validation after click on toogle 1`] = `
       </ul>
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group" style="display: none;">
     <label>show-error-message
       <span class="reference-mark">
         <svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk" focusable="false">
@@ -46,7 +46,6 @@ exports[`Validation should enable validation after click on toogle 1`] = `
     </label>
     <input class="form-control" name="validation_errorMessage" placeholder="show-error-message" type="text" value="">
   </div>
-  <input name="validation" type="hidden">
 </div>
 `;
 
@@ -96,7 +95,6 @@ exports[`Validation should not render parameter field if validation is isEmailAd
     </label>
     <input class="form-control" name="validation_errorMessage" placeholder="show-error-message" type="text" value="">
   </div>
-  <input name="validation" type="hidden">
 </div>
 `;
 
@@ -146,7 +144,6 @@ exports[`Validation should not render parameter field if validation is isUrl 1`]
     </label>
     <input class="form-control" name="validation_errorMessage" placeholder="show-error-message" type="text" value="">
   </div>
-  <input name="validation" type="hidden">
 </div>
 `;
 
@@ -161,7 +158,41 @@ exports[`Validation should render checkbox to enable Validation 1`] = `
       </span>
     </label>
   </div>
-  <input name="validation" type="hidden">
+  <div class="form-group" style="display: none;">
+    <label>if-input </label>
+    <div class="form-builder-select-field input-group-container">
+      <div class="form-control select-field-trigger">
+        <div class="option-selected option-selected-placeholder">choose-an-option</div>
+        <a class="select-arrow-down-container" href="javascript:;">
+          <svg aria-hidden="true" class="lexicon-icon lexicon-icon-caret-double" focusable="false">
+            <title>caret-double</title>
+            <use xlink:href="icons.svg#caret-double"></use>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="dropdown-menu">
+      <ul class="list-unstyled">
+        <li class="dropdown-item" data-option-value="">choose-an-option</li>
+        <li class="dropdown-item" data-option-value="notContains">contains</li>
+        <li class="dropdown-item" data-option-value="contains">does-not-contain</li>
+        <li class="dropdown-item" data-option-value="url">is-not-url</li>
+        <li class="dropdown-item" data-option-value="email">is-not-email</li>
+        <li class="dropdown-item" data-option-value="regularExpression">does-not-match</li>
+      </ul>
+    </div>
+  </div>
+  <div class="form-group" style="display: none;">
+    <label>show-error-message
+      <span class="reference-mark">
+        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk" focusable="false">
+          <title>asterisk</title>
+          <use xlink:href="icons.svg#asterisk"></use>
+        </svg>
+      </span>
+    </label>
+    <input class="form-control" name="validation_errorMessage" placeholder="show-error-message" type="text" value="">
+  </div>
 </div>
 `;
 
@@ -169,7 +200,7 @@ exports[`Validation should render filled fields when value is filled 1`] = `
 <div class="form-group lfr-ddm-form-field-validation">
   <div class="form-group">
     <label class="ddm-toggle-switch toggle-switch">
-      <input class="toggle-switch-check" type="checkbox" checked="">
+      <input checked="" class="toggle-switch-check" type="checkbox">
       <span aria-hidden="true" class="toggle-switch-bar">
         <span class="toggle-switch-handle"></span>
         <span class="toggle-switch-text toggle-switch-text-right">Validator</span>
@@ -222,7 +253,6 @@ exports[`Validation should render filled fields when value is filled 1`] = `
     </label>
     <input class="form-control" name="validation_errorMessage" placeholder="show-error-message" type="text" value="Error message">
   </div>
-  <input name="validation" type="hidden" value="[object Object]">
 </div>
 `;
 
@@ -262,17 +292,6 @@ exports[`Validation should render parameter field with Numeric element 1`] = `
     </div>
   </div>
   <div class="form-group">
-    <label>the-value
-      <span class="reference-mark">
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk" focusable="false">
-          <title>asterisk</title>
-          <use xlink:href="icons.svg#asterisk"></use>
-        </svg>
-      </span>
-    </label>
-    <input class="form-control" name="validation_parameterMessage" placeholder="number-placeholder" type="text" value="">
-  </div>
-  <div class="form-group">
     <label>show-error-message
       <span class="reference-mark">
         <svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk" focusable="false">
@@ -283,7 +302,6 @@ exports[`Validation should render parameter field with Numeric element 1`] = `
     </label>
     <input class="form-control" name="validation_errorMessage" placeholder="show-error-message" type="text" value="">
   </div>
-  <input name="validation" type="hidden">
 </div>
 `;
 
@@ -323,17 +341,6 @@ exports[`Validation should render parameter field with Text element and then wit
     </div>
   </div>
   <div class="form-group">
-    <label>the-value
-      <span class="reference-mark">
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk" focusable="false">
-          <title>asterisk</title>
-          <use xlink:href="icons.svg#asterisk"></use>
-        </svg>
-      </span>
-    </label>
-    <input class="form-control" name="validation_parameterMessage" placeholder="text" type="text" value="">
-  </div>
-  <div class="form-group">
     <label>show-error-message
       <span class="reference-mark">
         <svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk" focusable="false">
@@ -344,7 +351,6 @@ exports[`Validation should render parameter field with Text element and then wit
     </label>
     <input class="form-control" name="validation_errorMessage" placeholder="show-error-message" type="text" value="">
   </div>
-  <input name="validation" type="hidden">
 </div>
 `;
 
@@ -384,17 +390,6 @@ exports[`Validation should render parameter field with Text element and then wit
     </div>
   </div>
   <div class="form-group">
-    <label>the-value
-      <span class="reference-mark">
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk" focusable="false">
-          <title>asterisk</title>
-          <use xlink:href="icons.svg#asterisk"></use>
-        </svg>
-      </span>
-    </label>
-    <input class="form-control" name="validation_parameterMessage" placeholder="number-placeholder" type="text" value="">
-  </div>
-  <div class="form-group">
     <label>show-error-message
       <span class="reference-mark">
         <svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk" focusable="false">
@@ -405,7 +400,6 @@ exports[`Validation should render parameter field with Text element and then wit
     </label>
     <input class="form-control" name="validation_errorMessage" placeholder="show-error-message" type="text" value="">
   </div>
-  <input name="validation" type="hidden">
 </div>
 `;
 
@@ -445,17 +439,6 @@ exports[`Validation should render parameter field with TextField element 1`] = `
     </div>
   </div>
   <div class="form-group">
-    <label>the-value
-      <span class="reference-mark">
-        <svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk" focusable="false">
-          <title>asterisk</title>
-          <use xlink:href="icons.svg#asterisk"></use>
-        </svg>
-      </span>
-    </label>
-    <input class="form-control" name="validation_parameterMessage" placeholder="text" type="text" value="">
-  </div>
-  <div class="form-group">
     <label>show-error-message
       <span class="reference-mark">
         <svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk" focusable="false">
@@ -466,7 +449,6 @@ exports[`Validation should render parameter field with TextField element 1`] = `
     </label>
     <input class="form-control" name="validation_errorMessage" placeholder="show-error-message" type="text" value="">
   </div>
-  <input name="validation" type="hidden">
 </div>
 `;
 
@@ -527,7 +509,6 @@ exports[`Validation should update error message and emit a field edited event 1`
     </label>
     <input class="form-control" name="validation_errorMessage" placeholder="show-error-message" type="text" value="new Error Message">
   </div>
-  <input name="validation" type="hidden" value="[object Object]">
 </div>
 `;
 
@@ -588,6 +569,5 @@ exports[`Validation should update parameter message and emit a field edited even
     </label>
     <input class="form-control" name="validation_errorMessage" placeholder="show-error-message" type="text" value="Error message">
   </div>
-  <input name="validation" type="hidden" value="[object Object]">
 </div>
 `;

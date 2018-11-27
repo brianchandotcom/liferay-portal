@@ -31,7 +31,7 @@ const DROP_TARGET_ITEM_TYPES = {
  * @param {!object} state
  * @param {CLEAR_DRAG_TARGET|UPDATE_DRAG_TARGET} actionType
  * @param {!object} payload
- * @param {string} payload.hoveredElementBorder
+ * @param {string} payload.dropTargetBorder
  * @param {string} payload.hoveredElementId
  * @param {string} payload.hoveredElementType
  * @return {object}
@@ -41,12 +41,12 @@ function updateDragTargetReducer(state, actionType, payload) {
 	const nextState = Object.assign({}, state);
 
 	if (actionType === CLEAR_DRAG_TARGET) {
-		nextState.hoveredElementBorder = null;
+		nextState.dropTargetBorder = null;
 		nextState.hoveredElementId = null;
 		nextState.hoveredElementType = null;
 	}
 	else if (actionType === UPDATE_DRAG_TARGET) {
-		nextState.hoveredElementBorder = payload.hoveredElementBorder;
+		nextState.dropTargetBorder = payload.dropTargetBorder;
 		nextState.hoveredElementId = payload.hoveredElementId;
 		nextState.hoveredElementType = payload.hoveredElementType;
 	}

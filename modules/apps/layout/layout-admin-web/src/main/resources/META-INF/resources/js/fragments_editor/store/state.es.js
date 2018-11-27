@@ -92,13 +92,13 @@ const INITIAL_STATE = {
 		.value(false),
 
 	/**
-	 * Position where a fragment is being dragged to
+	 * Border of the target item where another item is being dragged to
 	 * @default null
 	 * @instance
 	 * @review
 	 * @type {string}
 	 */
-	hoveredElementBorder: Config
+	dropTargetBorder: Config
 		.oneOf(Object.values(DROP_TARGET_BORDERS))
 		.value(null),
 

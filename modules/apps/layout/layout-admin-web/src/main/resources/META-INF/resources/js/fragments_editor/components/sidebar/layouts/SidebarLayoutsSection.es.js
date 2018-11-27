@@ -45,7 +45,7 @@ class SidebarLayoutsSection extends Component {
 		this.store.dispatchAction(
 			UPDATE_DRAG_TARGET,
 			{
-				hoveredElementBorder: hoveredSectionBorder,
+				dropTargetBorder: hoveredSectionBorder,
 				hoveredElementId: hoveredSectionId,
 				hoveredElementType: DROP_TARGET_ITEM_TYPES.section
 			}

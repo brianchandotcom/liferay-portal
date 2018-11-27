@@ -17,7 +17,9 @@ package com.liferay.segments.criteria.contributor;
 import aQute.bnd.annotation.ConsumerType;
 
 import com.liferay.segments.criteria.Criteria;
+import com.liferay.segments.criteria.Field;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -33,6 +35,8 @@ public interface SegmentsCriteriaContributor {
 	public default Criteria.Criterion getCriterion(Criteria criteria) {
 		return criteria.getCriterion(getKey());
 	}
+
+	public List<Field> getFields(Locale locale);
 
 	public String getKey();
 

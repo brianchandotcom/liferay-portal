@@ -32,10 +32,10 @@ long classPK = ParamUtil.getLong(request, "classPK");
 TrashEntry trashEntry = null;
 
 if (trashEntryId > 0) {
-	trashEntry = TrashEntryLocalServiceUtil.getEntry(trashEntryId);
+	trashEntry = trashEntryLocalService.getEntry(trashEntryId);
 }
 else if (Validator.isNotNull(className) && (classPK > 0)) {
-	trashEntry = TrashEntryLocalServiceUtil.fetchEntry(className, classPK);
+	trashEntry = trashEntryLocalService.fetchEntry(className, classPK);
 }
 
 if (trashEntry != null) {

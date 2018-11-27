@@ -55,11 +55,12 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.trash.exception.RestoreEntryException" %><%@
 page import="com.liferay.trash.exception.TrashEntryException" %><%@
 page import="com.liferay.trash.model.TrashEntry" %><%@
-page import="com.liferay.trash.service.TrashEntryLocalServiceUtil" %><%@
+page import="com.liferay.trash.service.TrashEntryLocalService" %><%@
 page import="com.liferay.trash.web.internal.constants.TrashWebKeys" %><%@
 page import="com.liferay.trash.web.internal.dao.search.TrashResultRowSplitter" %><%@
 page import="com.liferay.trash.web.internal.display.context.TrashContainerModelDisplayContext" %><%@
 page import="com.liferay.trash.web.internal.display.context.TrashDisplayContext" %><%@
+page import="com.liferay.trash.web.internal.util.TrashServiceHolder" %><%@
 page import="com.liferay.trash.web.internal.util.TrashUtil" %>
 
 <%@ page import="java.text.Format" %>
@@ -80,6 +81,10 @@ page import="java.util.Map" %>
 
 <%
 TrashDisplayContext trashDisplayContext = new TrashDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+
+TrashServiceHolder trashServiceHolder = (TrashServiceHolder)request.getAttribute(TrashWebKeys.TRASH_SERVICE_HOLDER);
+
+TrashEntryLocalService trashEntryLocalService = trashServiceHolder.getTrashEntryLocalService();
 
 TrashUtil trashUtil = (TrashUtil)request.getAttribute(TrashWebKeys.TRASH_UTIL);
 

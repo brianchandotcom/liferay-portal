@@ -27,7 +27,7 @@ PortletURL backURL = renderResponse.createRenderURL();
 
 String redirect = ParamUtil.getString(request, "redirect", backURL.toString());
 
-TrashEntry entry = TrashEntryLocalServiceUtil.getEntry(trashEntryId);
+TrashEntry entry = trashEntryLocalService.getEntry(trashEntryId);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

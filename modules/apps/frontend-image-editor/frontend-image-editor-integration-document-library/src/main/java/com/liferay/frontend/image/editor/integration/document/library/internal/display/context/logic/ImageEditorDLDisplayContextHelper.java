@@ -233,8 +233,6 @@ public class ImageEditorDLDisplayContextHelper {
 		String fileEntryPreviewURL = DLUtil.getPreviewURL(
 			_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK);
 
-		String mimeType = _fileEntry.getMimeType();
-
 		StringBundler sb = new StringBundler(12);
 
 		sb.append(liferayPortletResponse.getNamespace());
@@ -247,7 +245,7 @@ public class ImageEditorDLDisplayContextHelper {
 		sb.append("', '");
 		sb.append(fileEntryPreviewURL);
 		sb.append("&mimeType=");
-		sb.append(mimeType);
+		sb.append(_fileEntry.getMimeType());
 		sb.append("');");
 
 		return sb.toString();

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.sso.facebook.connect.exception.MustVerifyEmailAddressException;
 import com.liferay.portal.security.sso.facebook.connect.exception.StrangersNotAllowedException;
+import com.liferay.portal.security.sso.facebook.connect.exception.UnknownErrorException;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -78,7 +79,8 @@ public class FacebookConnectLoginErrorMVCRenderCommand
 			SessionErrors.add(renderRequest, error);
 		}
 		else {
-			SessionErrors.add(renderRequest, "unknownError");
+			SessionErrors.add(
+				renderRequest, UnknownErrorException.class.getSimpleName());
 		}
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(

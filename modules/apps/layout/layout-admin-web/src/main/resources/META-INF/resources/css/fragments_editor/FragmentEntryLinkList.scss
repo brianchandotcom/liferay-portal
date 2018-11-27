@@ -16,24 +16,24 @@
 			min-height: $sectionMinimumHeight;
 		}
 
-		&.drag-bottom {
-			border-bottom: 5px solid #80ACFF;
-		}
-
-		&.drag-top {
-			border-top: 5px solid #80ACFF;
-		}
-
-		&:hover {
+		&--hovered {
 			border: $fragmentEntryLinkSectionHoverBorder;
 
-			.section-control {
+			.section-control.tbar {
 				opacity: 1;
 				pointer-events: all;
 				transform: translateY(1px);
 				transition: box-shadow ease 0.3s, transform ease 0.2s, opacity ease 0.3s;
 				z-index: $sectionControlHoverZIndex;
 			}
+		}
+
+		&.drag-bottom {
+			border-bottom: 5px solid #80ACFF;
+		}
+
+		&.drag-top {
+			border-top: 5px solid #80ACFF;
 		}
 
 		.section-control {

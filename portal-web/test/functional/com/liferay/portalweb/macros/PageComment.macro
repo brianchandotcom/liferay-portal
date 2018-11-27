@@ -37,6 +37,8 @@
 		<while>
 			<condition function="IsElementPresent" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 			<then>
+				<execute function="MouseOver" locator1="Comments#COMMENT_BODY" />
+
 				<execute macro="LexiconEntry#gotoEllipsisMenuItemNoError">
 					<var name="menuItem" value="Delete" />
 				</execute>

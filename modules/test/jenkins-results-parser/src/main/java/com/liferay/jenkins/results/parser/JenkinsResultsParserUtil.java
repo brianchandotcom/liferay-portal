@@ -830,8 +830,7 @@ public class JenkinsResultsParserUtil {
 			curlyBraceExpansionList.add(value);
 
 			globProperty = globProperty.replace(
-				Pattern.quote(value),
-				combine("${", String.valueOf(index), "}"));
+				value, combine("${", String.valueOf(index), "}"));
 		}
 
 		List<String> globs = new ArrayList<>();

@@ -357,15 +357,21 @@ lockPrivateDependencyVersions {
 }
 
 portalArtifactsJar {
+	ext {
+		relengPropertiesFiles = null
+	}
+
 	baseName = "portal"
 	classifier = null
 	includeEmptyDirs = false
 	version = _getReleaseInfoVersion()
 
 	doFirst {
+		relengPropertiesFiles = _getRelengPropertiesFiles()
+
 		ConfigurationContainer configurationContainer = project.getConfigurations()
 
-		Configuration detachedConfiguration = configurationContainer.detachedConfiguration(_getPortalArtifactsDependencies() as Dependency[])
+		Configuration detachedConfiguration = configurationContainer.detachedConfiguration(_getPortalArtifactsDependencies(relengPropertiesFiles) as Dependency[])
 
 		detachedConfiguration.resolve()
 
@@ -399,7 +405,7 @@ portalJavadoc {
 	options.stylesheetFile = file("../tools/styles/javadoc.css")
 	source {
 		zipTree(portalSourcesJar.archivePath).matching {
-			include _getPortalJavadocIncludes()
+			include _getPortalJavadocIncludes(portalArtifactsJar.relengPropertiesFiles)
 		}
 	}
 	title = "Portal " + _getReleaseInfoVersion()
@@ -460,7 +466,7 @@ portalSourcesJar {
 	doFirst {
 		ConfigurationContainer configurationContainer = project.getConfigurations()
 
-		Configuration detachedConfiguration = configurationContainer.detachedConfiguration(_getPortalSourcesDependencies() as Dependency[])
+		Configuration detachedConfiguration = configurationContainer.detachedConfiguration(_getPortalSourcesDependencies(portalArtifactsJar.relengPropertiesFiles) as Dependency[])
 
 		detachedConfiguration.resolve()
 
@@ -1280,7 +1286,7 @@ private String _getModuleTaskPrefix(File moduleDir) {
 	":" + moduleTaskPrefix.replace(File.separatorChar, ':' as char) + ":"
 }
 
-private List<Dependency> _getPortalArtifactsDependencies() {
+private List<Dependency> _getPortalArtifactsDependencies(List<File> relengPropertiesFiles) {
 	File cacheDir = new File(buildDir, "releng/portalCache")
 	File portalArtifactsDir = new File(buildDir, "releng/portalArtifacts")
 
@@ -1288,7 +1294,7 @@ private List<Dependency> _getPortalArtifactsDependencies() {
 
 	List<String> artifactURLs = new ArrayList<>()
 
-	for (File artifactPropertiesFile : _getRelengPropertiesFiles(cacheDir)) {
+	for (File artifactPropertiesFile : relengPropertiesFiles) {
 		Properties artifactProperties = GUtil.loadProperties(artifactPropertiesFile)
 
 		artifactURLs.add(artifactProperties.getProperty("artifact.url"))
@@ -1374,12 +1380,12 @@ private List<Dependency> _getPortalJavadocDependencies() {
 	return dependencies
 }
 
-private List<String> _getPortalJavadocIncludes() {
+private List<String> _getPortalJavadocIncludes(List<File> relengPropertiesFiles) {
 	File cacheDir = new File(buildDir, "releng/portalCache")
 
 	List<String> includes = new ArrayList<>()
 
-	for (File artifactPropertiesFile : _getRelengPropertiesFiles(cacheDir)) {
+	for (File artifactPropertiesFile : relengPropertiesFiles) {
 		Properties artifactProperties = GUtil.loadProperties(artifactPropertiesFile)
 
 		String artifactURL = artifactProperties.getProperty("artifact.url")
@@ -1430,7 +1436,7 @@ private List<String> _getPortalJavadocIncludes() {
 	return includes
 }
 
-private List<File> _getPortalSourcesDependencies() {
+private List<File> _getPortalSourcesDependencies(List<File> relengPropertiesFiles) {
 	File cacheDir = new File(buildDir, "releng/portalCache")
 	File portalSourcesDir = new File(buildDir, "releng/portalSources")
 
@@ -1438,7 +1444,7 @@ private List<File> _getPortalSourcesDependencies() {
 
 	List<Dependency> dependencies = new ArrayList<>()
 
-	for (File artifactPropertiesFile : _getRelengPropertiesFiles(cacheDir)) {
+	for (File artifactPropertiesFile : relengPropertiesFiles) {
 		Properties artifactProperties = GUtil.loadProperties(artifactPropertiesFile)
 
 		String artifactSourcesURL = artifactProperties.getProperty("artifact.sources.url")
@@ -1480,12 +1486,14 @@ private String _getReleaseInfoVersion() {
 	return matcher[0][1]
 }
 
-private List<File> _getRelengPropertiesFiles(File outputDir) {
-	List<File> artifactPropertiesFiles = new ArrayList<>()
+private List<File> _getRelengPropertiesFiles() {
+	File cacheDir = new File(buildDir, "releng/portalCache")
 
-	if (!outputDir.exists()) {
-		outputDir.mkdirs()
+	if (!cacheDir.exists()) {
+		cacheDir.mkdirs()
 	}
+
+	List<File> artifactPropertiesFiles = new ArrayList<>()
 
 	fileTree(dir: file(".releng"), exclude: "**/test/**", include: "**/*.properties").each {
 		File relengFile ->
@@ -1498,9 +1506,9 @@ private List<File> _getRelengPropertiesFiles(File outputDir) {
 			return
 		}
 
-		_downloadFile(artifactURL, outputDir)
+		_downloadFile(artifactURL, cacheDir)
 
-		File jarFile = new File(outputDir, artifactURL.substring(artifactURL.lastIndexOf("/") + 1))
+		File jarFile = new File(cacheDir, artifactURL.substring(artifactURL.lastIndexOf("/") + 1))
 
 		aQute.bnd.osgi.Jar jar = new aQute.bnd.osgi.Jar(jarFile)
 
@@ -1521,6 +1529,8 @@ private List<File> _getRelengPropertiesFiles(File outputDir) {
 		}
 
 		artifactPropertiesFiles.add(relengFile)
+
+		logger.lifecycle relengFile.path
 	}
 
 	return artifactPropertiesFiles

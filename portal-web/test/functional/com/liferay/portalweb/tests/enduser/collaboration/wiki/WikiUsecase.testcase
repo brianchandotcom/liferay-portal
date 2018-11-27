@@ -700,8 +700,6 @@
 	</command>
 
 	<command name="WikiNavigationPortletSmoke" priority="4">
-		<var name="appName" value="Wiki Navigation" />
-
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Tree Menu" />
 		</execute>

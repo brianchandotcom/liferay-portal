@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.JavaImportsFormatter;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
@@ -92,7 +93,7 @@ public class JavaClassParser {
 				throw new ParseException("Parsing error");
 			}
 
-			if (SourceUtil.getLevel(content.substring(y, x)) == 0) {
+			if (ToolsUtil.getLevel(content.substring(y, x)) == 0) {
 				break;
 			}
 		}
@@ -155,7 +156,7 @@ public class JavaClassParser {
 					return null;
 				}
 
-				if (SourceUtil.getLevel(
+				if (ToolsUtil.getLevel(
 						content.substring(start, x + 1), "<", ">") == 0) {
 
 					break;
@@ -174,8 +175,8 @@ public class JavaClassParser {
 				return null;
 			}
 
-			if (SourceUtil.getLevel(
-					content.substring(start, x + 1), "(", ")") == 0) {
+			if (ToolsUtil.getLevel(content.substring(start, x + 1), "(", ")") ==
+					0) {
 
 				break;
 			}
@@ -196,7 +197,7 @@ public class JavaClassParser {
 
 			String anonymousClassContent = content.substring(start, x + 1);
 
-			if (SourceUtil.getLevel(anonymousClassContent, "{", "}") == 0) {
+			if (ToolsUtil.getLevel(anonymousClassContent, "{", "}") == 0) {
 				return anonymousClassContent;
 			}
 		}
@@ -353,7 +354,7 @@ public class JavaClassParser {
 		while (matcher.find()) {
 			String javaTermContent = s.substring(0, matcher.end());
 
-			if (SourceUtil.getLevel(javaTermContent, "{", "}") == 0) {
+			if (ToolsUtil.getLevel(javaTermContent, "{", "}") == 0) {
 				return lineNumber + StringUtil.count(javaTermContent, "\n") - 1;
 			}
 		}
@@ -370,7 +371,7 @@ public class JavaClassParser {
 		while (true) {
 			String line = SourceUtil.getLine(classContent, lineNumber);
 
-			level += SourceUtil.getLevel(
+			level += ToolsUtil.getLevel(
 				line, increaseLevelString, decreaseLevelString);
 
 			if (level == 0) {
@@ -405,7 +406,7 @@ public class JavaClassParser {
 			JavaClass javaClass, String s)
 		throws ParseException {
 
-		if (SourceUtil.getLevel(s, "<", ">") != 0) {
+		if (ToolsUtil.getLevel(s, "<", ">") != 0) {
 			throw new ParseException("Parsing error around class declaration");
 		}
 
@@ -422,7 +423,7 @@ public class JavaClassParser {
 			while (true) {
 				y = s.indexOf(">", y + 1);
 
-				if (SourceUtil.getLevel(s.substring(x, y + 1), "<", ">") == 0) {
+				if (ToolsUtil.getLevel(s.substring(x, y + 1), "<", ">") == 0) {
 					s = StringUtil.trim(s.substring(0, x) + s.substring(y + 1));
 
 					continue outerLoop;
@@ -464,8 +465,8 @@ public class JavaClassParser {
 		while (true) {
 			String line = SourceUtil.getLine(classContent, ++lineNumber);
 
-			annotationLevel += SourceUtil.getLevel(line);
-			level += SourceUtil.getLevel(line, "{", "}");
+			annotationLevel += ToolsUtil.getLevel(line);
+			level += ToolsUtil.getLevel(line, "{", "}");
 
 			if ((annotationLevel == 0) && (level != 0)) {
 				break;
@@ -477,7 +478,7 @@ public class JavaClassParser {
 				String line = StringUtil.trim(
 					SourceUtil.getLine(classContent, ++lineNumber));
 
-				level += SourceUtil.getLevel(line, "{", "}");
+				level += ToolsUtil.getLevel(line, "{", "}");
 
 				if (level == 0) {
 					return javaClass;

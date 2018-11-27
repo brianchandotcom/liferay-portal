@@ -325,20 +325,20 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected int getLevel(String s) {
-		return SourceUtil.getLevel(s);
+		return ToolsUtil.getLevel(s);
 	}
 
 	protected int getLevel(
 		String s, String increaseLevelString, String decreaseLevelString) {
 
-		return SourceUtil.getLevel(s, increaseLevelString, decreaseLevelString);
+		return ToolsUtil.getLevel(s, increaseLevelString, decreaseLevelString);
 	}
 
 	protected int getLevel(
 		String s, String[] increaseLevelStrings,
 		String[] decreaseLevelStrings) {
 
-		return SourceUtil.getLevel(
+		return ToolsUtil.getLevel(
 			s, increaseLevelStrings, decreaseLevelStrings);
 	}
 
@@ -346,7 +346,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		String s, String[] increaseLevelStrings, String[] decreaseLevelStrings,
 		int startLevel) {
 
-		return SourceUtil.getLevel(
+		return ToolsUtil.getLevel(
 			s, increaseLevelStrings, decreaseLevelStrings, startLevel);
 	}
 

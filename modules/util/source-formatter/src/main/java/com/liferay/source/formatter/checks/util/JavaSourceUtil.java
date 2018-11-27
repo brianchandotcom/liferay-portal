@@ -56,8 +56,8 @@ public class JavaSourceUtil extends SourceUtil {
 
 			parameters = methodCall.substring(0, x + 1);
 
-			if ((getLevel(parameters, "(", ")") == 0) &&
-				(getLevel(parameters, "{", "}") == 0)) {
+			if ((ToolsUtil.getLevel(parameters, "(", ")") == 0) &&
+				(ToolsUtil.getLevel(parameters, "{", "}") == 0)) {
 
 				break;
 			}
@@ -77,9 +77,9 @@ public class JavaSourceUtil extends SourceUtil {
 			return false;
 		}
 
-		if ((getLevel(javaParameter, "(", ")") == 0) &&
-			(getLevel(javaParameter, "<", ">") == 0) &&
-			(getLevel(javaParameter, "{", "}") == 0)) {
+		if ((ToolsUtil.getLevel(javaParameter, "(", ")") == 0) &&
+			(ToolsUtil.getLevel(javaParameter, "<", ">") == 0) &&
+			(ToolsUtil.getLevel(javaParameter, "{", "}") == 0)) {
 
 			return true;
 		}
@@ -107,8 +107,8 @@ public class JavaSourceUtil extends SourceUtil {
 
 			String linePart = parameters.substring(0, x);
 
-			if ((getLevel(linePart, "(", ")") == 0) &&
-				(getLevel(linePart, "{", "}") == 0)) {
+			if ((ToolsUtil.getLevel(linePart, "(", ")") == 0) &&
+				(ToolsUtil.getLevel(linePart, "{", "}") == 0)) {
 
 				parametersList.add(StringUtil.trim(linePart));
 

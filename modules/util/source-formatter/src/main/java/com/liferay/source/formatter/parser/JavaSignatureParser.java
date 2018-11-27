@@ -17,7 +17,7 @@ package com.liferay.source.formatter.parser;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.portal.tools.ToolsUtil;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -58,7 +58,7 @@ public class JavaSignatureParser {
 
 			parameters = content.substring(x + 1, y);
 
-			if (JavaSourceUtil.getLevel(parameters) == 0) {
+			if (ToolsUtil.getLevel(parameters) == 0) {
 				break;
 			}
 		}
@@ -88,8 +88,8 @@ public class JavaSignatureParser {
 
 				String annotation = parameters.substring(0, pos);
 
-				if ((JavaSourceUtil.getLevel(annotation) == 0) &&
-					(JavaSourceUtil.getLevel(annotation, "<", ">") == 0)) {
+				if ((ToolsUtil.getLevel(annotation) == 0) &&
+					(ToolsUtil.getLevel(annotation, "<", ">") == 0)) {
 
 					parameterAnnotations.add(annotation);
 
@@ -112,7 +112,7 @@ public class JavaSignatureParser {
 
 			String parameterType = parameters.substring(0, x);
 
-			if (JavaSourceUtil.getLevel(parameterType, "<", ">") != 0) {
+			if (ToolsUtil.getLevel(parameterType, "<", ">") != 0) {
 				continue;
 			}
 
@@ -156,7 +156,7 @@ public class JavaSignatureParser {
 
 			returnType = s.substring(z + 1);
 
-			if (JavaSourceUtil.getLevel(returnType, "<", ">") == 0) {
+			if (ToolsUtil.getLevel(returnType, "<", ">") == 0) {
 				break;
 			}
 		}

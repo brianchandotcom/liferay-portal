@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.ToolsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +57,7 @@ public class GradleSourceUtil {
 				String dependencies = content.substring(
 					matcher.start(2), y + 1);
 
-				int level = SourceUtil.getLevel(dependencies, "{", "}");
+				int level = ToolsUtil.getLevel(dependencies, "{", "}");
 
 				if (level == 0) {
 					if (!dependencies.contains("}\n")) {
@@ -89,7 +90,7 @@ public class GradleSourceUtil {
 
 			String s = content.substring(matcher.start(), x + 1);
 
-			if (SourceUtil.getLevel(s, "{", "}") != 0) {
+			if (ToolsUtil.getLevel(s, "{", "}") != 0) {
 				continue;
 			}
 

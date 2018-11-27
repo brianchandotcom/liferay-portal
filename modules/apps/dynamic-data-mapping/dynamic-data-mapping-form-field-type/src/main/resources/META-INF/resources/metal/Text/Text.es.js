@@ -136,13 +136,20 @@ class Text extends Component {
 	};
 
 	_handleFieldChanged(event) {
-		this.emit(
-			'fieldEdited',
+		const value = event.target.value;
+
+		this.setState(
 			{
-				fieldInstance: this,
-				originalEvent: event,
-				value: event.target.value
-			}
+				value
+			},
+			() => this.emit(
+				'fieldEdited',
+				{
+					fieldInstance: this,
+					originalEvent: event,
+					value
+				}
+			)
 		);
 	}
 }

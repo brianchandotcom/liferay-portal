@@ -97,7 +97,7 @@
 
 		<execute macro="WebContentTemplates#addCP">
 			<var name="templateName" value="WC Template Name" />
-			<var name="templateSmallImageURL" value="http://localhost:8080/webdav/staging-site-name/document_library/Document_1.jpg" />
+			<var name="templateSmallImageURL" value="http://localhost:8080/webdav/staging-site-name-staging/document_library/Document_1.jpg" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

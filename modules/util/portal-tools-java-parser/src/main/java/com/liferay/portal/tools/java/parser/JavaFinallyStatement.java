@@ -23,7 +23,7 @@ public class JavaFinallyStatement extends BaseJavaTerm {
 	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength) {
 
-		return "TODO";
+		return indent + "finally {";
 	}
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 import java.util.List;
 
 /**
@@ -35,7 +37,33 @@ public class JavaConstructorCall extends BaseJavaTerm {
 	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength) {
 
-		return "TODO";
+		StringBundler sb = new StringBundler();
+
+		sb.append(indent);
+
+		indent = "\t" + indent;
+
+		sb.append(prefix);
+
+		if (_superCall) {
+			sb.append("super(");
+		}
+		else {
+			sb.append("this(");
+		}
+
+		if (_parameterValueJavaExpressions.isEmpty()) {
+			sb.append(")");
+			sb.append(suffix);
+
+			return sb.toString();
+		}
+
+		append(
+			sb, _parameterValueJavaExpressions, indent, prefix, ")" + suffix,
+			maxLineLength);
+
+		return sb.toString();
 	}
 
 	private List<JavaExpression> _parameterValueJavaExpressions;

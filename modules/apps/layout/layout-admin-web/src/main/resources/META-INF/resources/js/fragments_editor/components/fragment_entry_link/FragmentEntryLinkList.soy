@@ -25,8 +25,12 @@
 	{@param portletNamespace: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
+	{@param? _handleSectionHoverStart: any}
+	{@param? _handleSectionHoverEnd: any}
 	{@param? dropTargetItemTypes: ?}
 	{@param? highlightMapping: bool}
+	{@param? hoveredItemId: string}
+	{@param? hoveredItemType: string}
 	{@param? dropTargetBorder: string}
 	{@param? dropTargetItemId: string}
 	{@param? dropTargetItemType: string}
@@ -63,12 +67,16 @@
 			{foreach $row in $layoutData.structure}
 				{call .row}
 					{param _handleFragmentMove: $_handleFragmentMove /}
+					{param _handleSectionHoverStart: $_handleSectionHoverStart /}
+					{param _handleSectionHoverEnd: $_handleSectionHoverEnd /}
 					{param columns: $row.columns /}
 					{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 					{param defaultLanguageId: $defaultLanguageId /}
 					{param dropTargetItemTypes: $dropTargetItemTypes /}
 					{param empty: $row.empty /}
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
+					{param hoveredItemId: $hoveredItemId /}
+					{param hoveredItemType: $hoveredItemType /}
 					{param dropTargetBorder: $dropTargetBorder /}
 					{param dropTargetItemId: $dropTargetItemId /}
 					{param dropTargetItemType: $dropTargetItemType /}
@@ -107,11 +115,15 @@
 	{@param rowId: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
+	{@param? _handleSectionHoverStart: any}
+	{@param? _handleSectionHoverEnd: any}
 	{@param? dropTargetItemTypes: ?}
 	{@param? empty: bool}
 	{@param? dropTargetBorder: string}
 	{@param? dropTargetItemId: string}
 	{@param? dropTargetItemType: string}
+	{@param? hoveredItemId: string}
+	{@param? hoveredItemType: string}
 	{@param? mappingFieldsURL: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
@@ -140,11 +152,16 @@
 		{if $empty}
 			{sp}fragment-entry-link-list__row-section--empty
 		{/if}
+		{if $hoveredItemId == $rowId and $hoveredItemType == $dropTargetItemTypes.section}
+			{sp}fragment-entry-link-list__row-section--hovered
+		{/if}
 	{/let}
 
 	<section
 		class="{$sectionClasses}"
 		data-layout-section-id="{$rowId}"
+		data-onmouseout="{$_handleSectionHoverEnd}"
+		data-onmouseover="{$_handleSectionHoverStart}"
 	>
 		<nav class="section-control tbar">
 			<ul class="tbar-nav">

@@ -3318,6 +3318,9 @@ public class PortalImpl implements Portal {
 
 				return url;
 			}
+
+			return addPreservedParameters(
+				themeDisplay, layout, getLayoutActualURL(layout), doAsUser);
 		}
 
 		String layoutFriendlyURL = getLayoutFriendlyURL(layout, themeDisplay);

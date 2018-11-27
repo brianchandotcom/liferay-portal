@@ -55,11 +55,14 @@ public class JavaSimpleValue extends JavaExpression {
 				indent, prefix, _name.substring(0, x + 1));
 
 			if (getLineLength(firstLine) <= maxLineLength) {
-				String secondLineIndent = indent + "\t";
+				String secondLineIndent = "\t" + indent;
 
 				String trimmedFirstLine = StringUtil.trim(firstLine);
 
-				if (trimmedFirstLine.startsWith("while (")) {
+				if (trimmedFirstLine.startsWith("if (")) {
+					secondLineIndent += "\t";
+				}
+				else if (trimmedFirstLine.startsWith("while (")) {
 					secondLineIndent += "\t\t";
 				}
 

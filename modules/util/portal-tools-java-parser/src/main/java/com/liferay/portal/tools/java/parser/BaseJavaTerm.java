@@ -98,10 +98,16 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			}
 		}
 
-		String lastLine = StringUtil.trim(_getLastLine(s));
+		String lastLine = _getLastLine(s);
 
-		if (lastLine.startsWith("while (")) {
-			return indent + "\t\t";
+		String trimmedLastLine = StringUtil.trim(lastLine);
+
+		if (trimmedLastLine.startsWith("if (")) {
+			return _getLeadingWhitespace(lastLine) + "\t\t";
+		}
+
+		if (trimmedLastLine.startsWith("while (")) {
+			return _getLeadingWhitespace(lastLine) + "\t\t\t";
 		}
 
 		return indent;
@@ -384,7 +390,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		StringBundler sb, JavaTerm javaTerm, String indent, String prefix,
 		String suffix, int maxLineLength) {
 
-		indent = StringUtil.replaceFirst(indent, "\t", "");
+		indent = StringUtil.replaceFirst(adjustIndent(sb, indent), "\t", "");
 
 		String lastLine = getLastLine(sb);
 

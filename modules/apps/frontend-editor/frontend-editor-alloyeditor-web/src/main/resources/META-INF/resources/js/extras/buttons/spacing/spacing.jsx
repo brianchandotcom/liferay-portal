@@ -140,7 +140,7 @@ const Spacing = React.createClass({
 		var editor = this.props.editor.get('nativeEditor');
 
 		var styleConfig = {
-			element: 'span',
+			element: 'div',
 			attributes: {
 				class: className
 			}

@@ -416,6 +416,6 @@ public class JavaIfStatementCheck extends IfStatementCheck {
 	private static final Pattern _ifStatementCriteriaPattern = Pattern.compile(
 		".*?( [|&^]+( |\\Z)|\\) \\{\\Z)");
 	private static final Pattern _ifStatementPattern = Pattern.compile(
-		"\t+(catch|(else )?if|while) \\(.*?(\\) \\{|;)\n", Pattern.DOTALL);
+		"\t+((else )?if|while) \\(.*?(\\) \\{|;)\n", Pattern.DOTALL);
 
 }

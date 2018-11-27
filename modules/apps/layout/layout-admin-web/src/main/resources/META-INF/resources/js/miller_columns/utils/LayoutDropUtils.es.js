@@ -9,7 +9,7 @@ import {
 	getItemColumn,
 	getItemColumnIndex
 } from './LayoutGetUtils.es';
-import {DRAG_POSITIONS, DROP_TARGET_ITEM_TYPES} from './LayoutDragDrop.es';
+import {DROP_TARGET_BORDERS, DROP_TARGET_ITEM_TYPES} from './LayoutDragDrop.es';
 
 /**
  * @param {object} sourceItem
@@ -142,7 +142,7 @@ function dropItemNextToItem(layoutColumns, sourceItem, dropPosition, targetItem)
 		(targetColumnItem) => targetColumnItem.plid === targetItem.plid
 	);
 
-	const priority = (dropPosition === DRAG_POSITIONS.bottom) ?
+	const priority = (dropPosition === DROP_TARGET_BORDERS.bottom) ?
 		(targetItemIndex + 1) : targetItemIndex;
 
 	const nextTargetColumn = [...targetColumn];

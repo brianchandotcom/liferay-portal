@@ -60,7 +60,7 @@ public abstract class TopLevelBuildRunner
 
 	@Override
 	public void tearDown() {
-		tearDownWorkspace();
+		super.tearDown();
 
 		publishJenkinsReport();
 	}

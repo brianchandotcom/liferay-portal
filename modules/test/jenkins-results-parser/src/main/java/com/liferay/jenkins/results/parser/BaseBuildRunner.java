@@ -48,6 +48,8 @@ public abstract class BaseBuildRunner<T extends BuildData, S extends Workspace>
 
 	@Override
 	public void tearDown() {
+		cleanUpHostServices();
+
 		tearDownWorkspace();
 	}
 
@@ -57,6 +59,12 @@ public abstract class BaseBuildRunner<T extends BuildData, S extends Workspace>
 		_job = JobFactory.newJob(_buildData);
 
 		_job.readJobProperties();
+	}
+
+	protected void cleanUpHostServices() {
+		Host host = _buildData.getHost();
+
+		host.cleanUpServices();
 	}
 
 	protected Job getJob() {

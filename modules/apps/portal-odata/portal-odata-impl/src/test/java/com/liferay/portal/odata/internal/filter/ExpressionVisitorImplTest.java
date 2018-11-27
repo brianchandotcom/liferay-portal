@@ -26,6 +26,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import com.liferay.portal.odata.filter.expression.LiteralExpression;
+import com.liferay.portal.odata.filter.expression.UnaryExpression;
 import com.liferay.portal.odata.internal.filter.expression.LiteralExpressionImpl;
 
 import java.text.SimpleDateFormat;
@@ -286,6 +287,31 @@ public class ExpressionVisitorImplTest {
 		Assert.assertEquals(
 			"loreal",
 			_expressionVisitorImpl.visitLiteralExpression(literalExpression));
+	}
+
+	@Test
+	public void testVisitUnaryExpressionOperation() {
+		TermFilter termFilter = new TermFilter("title", "title1");
+
+		BooleanFilter booleanFilter =
+			(BooleanFilter)
+				_expressionVisitorImpl.visitUnaryExpressionOperation(
+					UnaryExpression.Operation.NOT, termFilter);
+
+		Assert.assertTrue(booleanFilter.hasClauses());
+
+		List<BooleanClause<Filter>> booleanClauses =
+			booleanFilter.getMustNotBooleanClauses();
+
+		Assert.assertEquals(
+			booleanClauses.toString(), 1, booleanClauses.size());
+
+		BooleanClause<Filter> queryBooleanClause1 = booleanClauses.get(0);
+
+		Assert.assertEquals(termFilter, queryBooleanClause1.getClause());
+		Assert.assertEquals(
+			BooleanClauseOccur.MUST_NOT,
+			queryBooleanClause1.getBooleanClauseOccur());
 	}
 
 	private static final EntityModel _entityModel = new EntityModel() {

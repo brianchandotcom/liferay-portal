@@ -26,6 +26,7 @@ import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.odata.filter.expression.LiteralExpression;
 import com.liferay.portal.odata.filter.expression.MemberExpression;
 import com.liferay.portal.odata.filter.expression.MethodExpression;
+import com.liferay.portal.odata.filter.expression.UnaryExpression;
 
 import java.util.List;
 import java.util.Map;
@@ -307,6 +308,30 @@ public class FilterParserImplTest {
 		Assert.assertEquals(
 			"'value'",
 			binaryExpression.getRightOperationExpression().toString());
+	}
+
+	@Test
+	public void testParseWithNotUnaryExpressionWithEqBinaryExpression()
+		throws ExpressionVisitException {
+
+		Expression expression = _filterParserImpl.parse(
+			"not (booleanExternal eq true)");
+
+		Assert.assertNotNull(expression);
+
+		UnaryExpression unaryExpression = (UnaryExpression)expression;
+
+		Assert.assertEquals(
+			UnaryExpression.Operation.NOT, unaryExpression.getOperation());
+
+		BinaryExpression binaryExpression =
+			(BinaryExpression)unaryExpression.getExpression();
+
+		Assert.assertEquals(
+			"[booleanExternal]",
+			binaryExpression.getLeftOperationExpression().toString());
+		Assert.assertEquals(
+			"true", binaryExpression.getRightOperationExpression().toString());
 	}
 
 	@Test

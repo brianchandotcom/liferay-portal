@@ -44,6 +44,9 @@ import org.gradle.api.tasks.bundling.AbstractArchiveTask;
  */
 public class PoshiRunnerResourcesDefaultsPlugin implements Plugin<Project> {
 
+	public static final String ARTIFACT_VERSION_PROPERTY_NAME =
+		"artifactVersion";
+
 	@Override
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, MavenPlugin.class);
@@ -68,6 +71,13 @@ public class PoshiRunnerResourcesDefaultsPlugin implements Plugin<Project> {
 				project, PoshiRunnerResourcesExtension.class);
 
 		poshiRunnerResourcesExtension.setRootDirName(_ROOT_DIR_NAME);
+
+		if (project.hasProperty(ARTIFACT_VERSION_PROPERTY_NAME)) {
+			String artifactVersion = GradleUtil.getProperty(
+				project, ARTIFACT_VERSION_PROPERTY_NAME, (String)null);
+
+			poshiRunnerResourcesExtension.setArtifactVersion(artifactVersion);
+		}
 	}
 
 	private void _configureTaskUploadPoshiRunnerResources(

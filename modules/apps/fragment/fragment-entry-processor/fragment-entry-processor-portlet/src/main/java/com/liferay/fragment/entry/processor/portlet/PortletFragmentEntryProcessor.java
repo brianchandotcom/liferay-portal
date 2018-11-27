@@ -151,11 +151,11 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 				String defaultPreferences = _getPreferences(
 					portletName, originalFragmentEntryLink, originalInstanceId,
-					StringPool.BLANK);
+					StringPool.BLANK, true);
 
 				portletPreferences = _getPreferences(
 					portletName, fragmentEntryLink, instanceId,
-					defaultPreferences);
+					defaultPreferences, false);
 			}
 			else {
 				Portlet portlet = _portletLocalService.getPortletById(
@@ -163,7 +163,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 				portletPreferences = _getPreferences(
 					portletName, fragmentEntryLink, instanceId,
-					portlet.getDefaultPreferences());
+					portlet.getDefaultPreferences(), false);
 			}
 
 			runtimeTagElement.attr("defaultPreferences", portletPreferences);
@@ -371,21 +371,30 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	private String _getPreferences(
 			String portletName, FragmentEntryLink fragmentEntryLink,
-			String instanceId, String defaultPreferences)
+			String instanceId, String defaultPreferences, boolean controlPanel)
 		throws PortalException {
 
 		long groupId = fragmentEntryLink.getGroupId();
 
-		if (groupId == 0) {
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
+		Layout layout = null;
 
-			if (serviceContext != null) {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			if (groupId == 0) {
 				groupId = serviceContext.getScopeGroupId();
 			}
+
+			layout = _layoutLocalService.fetchLayout(serviceContext.getPlid());
 		}
 
 		Group group = _groupLocalService.getGroup(groupId);
+
+		if ((layout == null) || controlPanel) {
+			layout = _layoutLocalService.fetchLayout(
+				_portal.getControlPanelPlid(group.getCompanyId()));
+		}
 
 		String portletId = PortletIdCodec.encode(
 			PortletIdCodec.decodePortletName(portletName),
@@ -404,8 +413,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			jxPortletPreferences =
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 					group.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-					_portal.getControlPanelPlid(group.getCompanyId()),
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
 					portletId, defaultPreferences);
 
 			_updateLayoutPortletSetup(

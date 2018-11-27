@@ -45,12 +45,6 @@ public class PortalResiliencyAdvice
 
 	@Override
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
-		AccessControlled accessControlled = findAnnotation(methodInvocation);
-
-		if (accessControlled == null) {
-			return null;
-		}
-
 		boolean remoteAccess = AccessControlThreadLocal.isRemoteAccess();
 
 		if (!remoteAccess) {

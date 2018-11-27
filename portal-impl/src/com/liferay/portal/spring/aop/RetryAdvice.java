@@ -40,10 +40,6 @@ public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		Retry retry = findAnnotation(methodInvocation);
 
-		if (retry == null) {
-			return methodInvocation.proceed();
-		}
-
 		int retries = retry.retries();
 
 		if (retries < 0) {

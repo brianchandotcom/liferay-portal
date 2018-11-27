@@ -44,10 +44,6 @@ public class ClusterableAdvice
 
 		Clusterable clusterable = findAnnotation(methodInvocation);
 
-		if (clusterable == null) {
-			return;
-		}
-
 		ClusterableInvokerUtil.invokeOnCluster(
 			clusterable.acceptor(), methodInvocation.getThis(),
 			methodInvocation.getMethod(), methodInvocation.getArguments());
@@ -60,10 +56,6 @@ public class ClusterableAdvice
 		}
 
 		Clusterable clusterable = findAnnotation(methodInvocation);
-
-		if (clusterable == null) {
-			return null;
-		}
 
 		if (!clusterable.onMaster()) {
 			return null;

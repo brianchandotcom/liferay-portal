@@ -43,10 +43,6 @@ public class AccessControlAdvice
 
 		AccessControlled accessControlled = findAnnotation(methodInvocation);
 
-		if (accessControlled == null) {
-			return null;
-		}
-
 		_accessControlAdvisor.accept(methodInvocation, accessControlled);
 
 		return null;

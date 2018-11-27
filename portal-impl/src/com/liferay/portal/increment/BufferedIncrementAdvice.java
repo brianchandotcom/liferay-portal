@@ -50,10 +50,6 @@ public class BufferedIncrementAdvice
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
 		BufferedIncrement bufferedIncrement = findAnnotation(methodInvocation);
 
-		if (bufferedIncrement == null) {
-			return null;
-		}
-
 		String configuration = bufferedIncrement.configuration();
 
 		BufferedIncrementProcessor bufferedIncrementProcessor =

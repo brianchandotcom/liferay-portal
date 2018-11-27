@@ -48,12 +48,6 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 			return null;
 		}
 
-		Async async = findAnnotation(methodInvocation);
-
-		if (async == null) {
-			return null;
-		}
-
 		Method method = methodInvocation.getMethod();
 
 		if (method.getReturnType() != void.class) {

@@ -40,10 +40,6 @@ public class ThreadLocalCacheAdvice
 		ThreadLocalCachable threadLocalCachable = findAnnotation(
 			methodInvocation);
 
-		if (threadLocalCachable == null) {
-			return methodInvocation.proceed();
-		}
-
 		ThreadLocalCache<Object> threadLocalCache =
 			ThreadLocalCacheManager.getThreadLocalCache(
 				threadLocalCachable.scope(), methodInvocation.getMethod());

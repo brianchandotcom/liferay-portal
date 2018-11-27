@@ -45,10 +45,6 @@ public class SPIClusterableAdvice
 
 		Clusterable clusterable = findAnnotation(methodInvocation);
 
-		if (clusterable == null) {
-			return;
-		}
-
 		SPI spi = SPIUtil.getSPI();
 
 		IntrabandRPCUtil.execute(
@@ -63,10 +59,6 @@ public class SPIClusterableAdvice
 	@Override
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
 		Clusterable clusterable = findAnnotation(methodInvocation);
-
-		if (clusterable == null) {
-			return null;
-		}
 
 		if (!clusterable.onMaster()) {
 			return null;

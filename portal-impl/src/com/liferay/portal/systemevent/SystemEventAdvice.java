@@ -53,7 +53,7 @@ public class SystemEventAdvice
 
 		SystemEvent systemEvent = findAnnotation(methodInvocation);
 
-		if ((systemEvent == null) || !systemEvent.send()) {
+		if (!systemEvent.send()) {
 			return;
 		}
 
@@ -118,10 +118,6 @@ public class SystemEventAdvice
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
 		SystemEvent systemEvent = findAnnotation(methodInvocation);
 
-		if (systemEvent == null) {
-			return null;
-		}
-
 		if (systemEvent.action() != SystemEventConstants.ACTION_NONE) {
 			if (!isValid(methodInvocation, _PHASE_BEFORE)) {
 				return null;
@@ -147,10 +143,6 @@ public class SystemEventAdvice
 	@Override
 	public void duringFinally(MethodInvocation methodInvocation) {
 		SystemEvent systemEvent = findAnnotation(methodInvocation);
-
-		if (systemEvent == null) {
-			return;
-		}
 
 		if (!isValid(methodInvocation, _PHASE_DURING_FINALLY)) {
 			return;

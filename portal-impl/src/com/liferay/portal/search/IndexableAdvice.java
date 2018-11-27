@@ -66,10 +66,6 @@ public class IndexableAdvice
 
 		Indexable indexable = findAnnotation(methodInvocation);
 
-		if (indexable == null) {
-			return;
-		}
-
 		Method method = methodInvocation.getMethod();
 
 		Class<?> returnType = method.getReturnType();

@@ -1,0 +1,52 @@
+import com.liferay.gradle.util.OSDetector
+import java.nio.file.Paths
+
+task compileInstaller(type: Exec)
+task createInstaller(type: Copy)
+task getInstallerDependencies(type: Exec)
+task installComponentMavenArtifacts(type: Exec)
+task packageInstaller(type: Zip)
+
+def getDate() {
+	new Date().format('yyyyMMddHHmmssSSS')
+}
+
+compileInstaller {
+	commandLine _getCommand("gox -osarch=\"darwin/amd64 linux/amd64 windows/amd64\" -output \"build/talend-installer/{{.Dir}}-{{.OS}}-{{.Arch}}\" installer")
+	dependsOn getInstallerDependencies
+}
+
+createInstaller {
+	dependsOn compileInstaller
+
+	from Paths.get("..", "tos-dependencies")
+	into Paths.get("build", "talend-installer")
+}
+
+getInstallerDependencies {
+	commandLine _getCommand("go mod tidy")
+	dependsOn installComponentMavenArtifacts
+}
+
+installComponentMavenArtifacts {
+	commandLine _getCommand("mvn clean install -f ./../pom.xml")
+}
+
+packageInstaller {
+	dependsOn createInstaller
+
+	archiveName = "tLiferayComponents-TOS-7.1.1-${getDate()}.zip"
+	destinationDir = file("$buildDir/dist")
+
+	from "$buildDir/talend-installer"
+}
+
+defaultTasks "packageInstaller"
+
+private List<String> _getCommand(String command) {
+	if (OSDetector.windows) {
+		return ["cmd.exe", "/c", "${command}"]
+	}
+
+	return ["/bin/sh", "-c", "${command}"]
+}

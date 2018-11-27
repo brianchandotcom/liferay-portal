@@ -163,8 +163,8 @@ public class JavaSignature extends BaseJavaTerm {
 		if (appendSingleLine(sb, _objectName, "", "(", maxLineLength)) {
 			if (appendSingleLine(sb, _javaParameters, "", ")", maxLineLength)) {
 				if (appendSingleLine(
-						sb, _exceptionJavaExpressions,
-						" throws ", suffix, maxLineLength)) {
+						sb, _exceptionJavaExpressions, " throws ", suffix,
+						maxLineLength)) {
 
 					return sb.toString();
 				}

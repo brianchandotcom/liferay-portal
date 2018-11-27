@@ -67,28 +67,28 @@ class SidebarAvailableFragments extends Component {
 				nearestBorder = DROP_TARGET_BORDERS.top;
 			}
 
-			let hoveredElementId = null;
-			let hoveredElementType = null;
+			let dropTargetItemId = null;
+			let dropTargetItemType = null;
 
 			if (targetIsColumn) {
-				hoveredElementId = data.columnId;
-				hoveredElementType = DROP_TARGET_ITEM_TYPES.column;
+				dropTargetItemId = data.columnId;
+				dropTargetItemType = DROP_TARGET_ITEM_TYPES.column;
 			}
 			else if (targetIsFragment) {
-				hoveredElementId = data.fragmentEntryLinkId;
-				hoveredElementType = DROP_TARGET_ITEM_TYPES.fragment;
+				dropTargetItemId = data.fragmentEntryLinkId;
+				dropTargetItemType = DROP_TARGET_ITEM_TYPES.fragment;
 			}
 			else if (targetIsSection) {
-				hoveredElementId = data.layoutSectionId;
-				hoveredElementType = DROP_TARGET_ITEM_TYPES.section;
+				dropTargetItemId = data.layoutSectionId;
+				dropTargetItemType = DROP_TARGET_ITEM_TYPES.section;
 			}
 
 			this.store.dispatchAction(
 				UPDATE_DRAG_TARGET,
 				{
 					dropTargetBorder: nearestBorder,
-					hoveredElementId,
-					hoveredElementType
+					dropTargetItemId,
+					dropTargetItemType
 				}
 			);
 		}

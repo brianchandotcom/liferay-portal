@@ -1,7 +1,10 @@
 import {ADD_SECTION} from '../actions/actions.es';
 import {
 	getDropSectionPosition,
+	getSectionIndex,
+	remove,
 	setIn,
+	updateIn,
 	updateLayoutData
 } from '../utils/utils.es';
 
@@ -106,6 +109,28 @@ function _addSection(layoutColumns, layoutData, position) {
 	nextData = setIn(nextData, ['nextRowId'], nextRowId + 1);
 
 	return nextData;
+}
+
+/**
+ * Returns a new layoutData with the section with the given sectionId removed
+ * @param {object} layoutData
+ * @param {string} sectionId
+ */
+function _removeSection(layoutData, sectionId) {
+	let sectionIndex = getSectionIndex(layoutData.structure, sectionId);
+
+	sectionIndex = sectionIndex === -1 ? 0 : sectionIndex;
+
+	return updateIn(
+		layoutData,
+		[
+			'structure'
+		],
+		structure => remove(
+			structure,
+			sectionIndex
+		)
+	);
 }
 
 export {addSectionReducer};

@@ -133,13 +133,13 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 </aui:script>
 
 <c:if test="<%= segmentsEntry == null %>">
-	<aui:script sandbox="<%= true %>">
+	<aui:script sandbox="<%= true %>" use="aui-base">
 		var form = $(document.<portlet:namespace />fm);
 
 		var keyInput = form.fm('key');
 		var nameInput = form.fm('name');
 
-		var onNameInput = _.debounce(
+		var onNameInput = A.debounce(
 			function(event) {
 				keyInput.val(nameInput.val());
 			},

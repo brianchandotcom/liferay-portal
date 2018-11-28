@@ -11,9 +11,10 @@
 		<execute function="AssertElementPresent" locator1="Comments#WORKFLOW_STATUS" />
 
 		<var name="key_entryComment" value="${commentBody}" />
+		<var name="key_userFullName" value="${commentAuthor}" />
 
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${commentBody}" />
-		<execute function="AssertTextEquals" locator1="Comments#COMMENT_AUTHOR" value1="${commentAuthor}" />
+		<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${commentAuthor}" />
 	</command>
 
 	<command name="editCommentField">
@@ -63,9 +64,10 @@
 		<execute function="AssertElementNotPresent" locator1="Comments#WORKFLOW_STATUS" />
 
 		<var name="key_entryComment" value="${commentBody}" />
+		<var name="key_userFullName" value="${commentAuthor}" />
 
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${commentBody}" />
-		<execute function="AssertTextEquals" locator1="Comments#COMMENT_AUTHOR" value1="${commentAuthor}" />
+		<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${commentAuthor}" />
 	</command>
 
 	<command name="viewWithWorkflowPG">
@@ -74,8 +76,9 @@
 		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="Comments#WORKFLOW_STATUS" value1="${commentStatus}" />
 
 		<var name="key_entryComment" value="${commentBody}" />
+		<var name="key_userFullName" value="${commentAuthor}" />
 
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${commentBody}" />
-		<execute function="AssertTextEquals" locator1="Comments#COMMENT_AUTHOR" value1="${commentAuthor}" />
+		<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${commentAuthor}" />
 	</command>
 </definition>

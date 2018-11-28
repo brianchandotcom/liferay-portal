@@ -17,6 +17,16 @@
 .fragment-entry-link-wrapper {
 	position: relative;
 
+	&--hovered {
+		.fragment-entry-link-control.tbar {
+			opacity: 1;
+			pointer-events: all;
+			transform: translateY(1px);
+			transition: box-shadow ease 0.3s, transform ease 0.2s, opacity ease 0.3s;
+			z-index: $fragmentEntryLinkControlHoverZIndex;
+		}
+	}
+
 	&.drag-bottom {
 		border-bottom: 5px solid #80ACFF;
 		margin-bottom: 5px;
@@ -118,13 +128,5 @@
 
 	&:after {
 		box-shadow: inset 0 0 0 $fragmentEntryLinkBorderWidth $fragmentEntryLinkBorderColor;
-	}
-
-	.fragment-entry-link-control {
-		opacity: 1;
-		pointer-events: all;
-		transform: translateY(1px);
-		transition: box-shadow ease 0.3s, transform ease 0.2s, opacity ease 0.3s;
-		z-index: $fragmentEntryLinkControlHoverZIndex;
 	}
 }

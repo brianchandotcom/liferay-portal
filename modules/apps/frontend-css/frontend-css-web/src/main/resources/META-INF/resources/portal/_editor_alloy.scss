@@ -144,6 +144,16 @@
 	}
 }
 
+.ie11 {
+	.alloy-editor-container {
+		.alloy-editor {
+			.cke_widget_inline {
+				display: inline;
+			}
+		}
+	}
+}
+
 .has-error .alloy-editor-container .help-block {
 	font-size: 16px;
 	font-weight: normal;

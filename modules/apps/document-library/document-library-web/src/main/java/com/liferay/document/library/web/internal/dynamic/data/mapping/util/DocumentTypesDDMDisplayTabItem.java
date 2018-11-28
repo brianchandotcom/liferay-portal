@@ -61,8 +61,7 @@ public class DocumentTypesDDMDisplayTabItem implements DDMDisplayTabItem {
 			liferayPortletRequest, PortletKeys.DOCUMENT_LIBRARY_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/view_file_entry_types");
+		portletURL.setParameter("navigation", "file_entry_types");
 
 		return portletURL.toString();
 	}

@@ -64,16 +64,14 @@ public class DLAdminNavigationDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		String mvcRenderCommandName = ParamUtil.getString(
-			_liferayPortletRequest, "mvcRenderCommandName",
-			"/document_library/view");
+		String navigation = ParamUtil.getString(_request, "navigation");
 
 		return new NavigationItemList() {
 			{
 				add(
 					navigationItem -> {
 						_populateDocumentLibraryNavigationItem(
-							navigationItem, mvcRenderCommandName);
+							navigationItem, navigation);
 					});
 
 				if (DLPortletKeys.DOCUMENT_LIBRARY_ADMIN.equals(
@@ -82,7 +80,7 @@ public class DLAdminNavigationDisplayContext {
 					add(
 						navigationItem -> {
 							_populateFileEntryTypesNavigationItem(
-								navigationItem, mvcRenderCommandName);
+								navigationItem, navigation);
 						});
 
 					add(
@@ -100,11 +98,9 @@ public class DLAdminNavigationDisplayContext {
 	}
 
 	private void _populateDocumentLibraryNavigationItem(
-		NavigationItem navigationItem, String mvcRenderCommandName) {
+		NavigationItem navigationItem, String navigation) {
 
-		navigationItem.setActive(
-			!mvcRenderCommandName.equals(
-				"/document_library/view_file_entry_types"));
+		navigationItem.setActive(!navigation.equals("file_entry_types"));
 
 		PortletURL viewDocumentLibraryURL =
 			_liferayPortletResponse.createRenderURL();
@@ -123,17 +119,14 @@ public class DLAdminNavigationDisplayContext {
 	}
 
 	private void _populateFileEntryTypesNavigationItem(
-		NavigationItem navigationItem, String mvcRenderCommandName) {
+		NavigationItem navigationItem, String navigation) {
 
-		navigationItem.setActive(
-			mvcRenderCommandName.equals(
-				"/document_library/view_file_entry_types"));
+		navigationItem.setActive(navigation.equals("file_entry_types"));
 
 		PortletURL viewFileEntryTypesURL =
 			_liferayPortletResponse.createRenderURL();
 
-		viewFileEntryTypesURL.setParameter(
-			"mvcRenderCommandName", "/document_library/view_file_entry_types");
+		viewFileEntryTypesURL.setParameter("navigation", "file_entry_types");
 		viewFileEntryTypesURL.setParameter(
 			"redirect", _currentURLObj.toString());
 

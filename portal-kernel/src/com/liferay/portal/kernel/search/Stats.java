@@ -48,8 +48,8 @@ public class Stats implements Serializable {
 	}
 
 	public boolean isEnabled() {
-		if (_count || _max || _mean || _min || _missing ||
-			_standardDeviation || _sum || _sumOfSquares) {
+		if (_count || _max || _mean || _min || _missing || _standardDeviation ||
+			_sum || _sumOfSquares) {
 
 			return true;
 		}

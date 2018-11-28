@@ -60,8 +60,7 @@ public class AMImageConfigurationEntryImpl
 		if (Objects.equals(_enabled, amImageConfigurationEntryImpl._enabled) &&
 			Objects.equals(_name, amImageConfigurationEntryImpl._name) &&
 			Objects.equals(
-				_properties,
-				amImageConfigurationEntryImpl._properties) &&
+				_properties, amImageConfigurationEntryImpl._properties) &&
 			Objects.equals(_uuid, amImageConfigurationEntryImpl._uuid)) {
 
 			return true;

@@ -86,8 +86,7 @@ public class MaxAgeDependencyCheckerImpl extends BaseDependencyCheckerImpl {
 		Date currentDate = new Date(currentVersionInfo.timestamp);
 
 		if (latestVersionInfo.timestamp <=
-				(currentVersionInfo.timestamp +
-					_maxAge.toMilliseconds())) {
+				(currentVersionInfo.timestamp + _maxAge.toMilliseconds())) {
 
 			if (_logger.isWarnEnabled()) {
 				_logger.warn(

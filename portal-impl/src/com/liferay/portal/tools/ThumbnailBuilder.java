@@ -62,9 +62,7 @@ public class ThumbnailBuilder {
 		}
 
 		if (!overwrite) {
-			if (thumbnailFile.lastModified() >
-					originalFile.lastModified()) {
-
+			if (thumbnailFile.lastModified() > originalFile.lastModified()) {
 				return;
 			}
 		}

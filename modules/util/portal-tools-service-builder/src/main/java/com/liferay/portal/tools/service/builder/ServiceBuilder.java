@@ -1641,9 +1641,9 @@ public class ServiceBuilder {
 		String methodName = method.getName();
 
 		if (methodName.equals("afterPropertiesSet") ||
-			methodName.equals("clearService") ||
-			methodName.equals("destroy") || methodName.equals("equals") ||
-			methodName.equals("getClass") || methodName.equals("getService") ||
+			methodName.equals("clearService") || methodName.equals("destroy") ||
+			methodName.equals("equals") || methodName.equals("getClass") ||
+			methodName.equals("getService") ||
 			methodName.equals("getWrappedService") ||
 			methodName.equals("hashCode") || methodName.equals("notify") ||
 			methodName.equals("notifyAll") ||

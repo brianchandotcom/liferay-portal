@@ -576,8 +576,8 @@ public class LayoutPermissionImpl
 				}
 
 				if (Arrays.binarySearch(
-						userBag.getUserUserGroupsIds(),
-						group.getClassPK()) >= 0) {
+						userBag.getUserUserGroupsIds(), group.getClassPK()) >=
+							0) {
 
 					return true;
 				}

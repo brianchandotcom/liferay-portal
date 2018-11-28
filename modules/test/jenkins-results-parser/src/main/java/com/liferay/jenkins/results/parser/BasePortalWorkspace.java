@@ -71,9 +71,7 @@ public abstract class BasePortalWorkspace
 			WorkspaceUtil.getWorkspaceGitRepository(
 				"portal", portalGitHubURL, portalUpstreamBranchName);
 
-		if (!(workspaceGitRepository instanceof
-				PortalWorkspaceGitRepository)) {
-
+		if (!(workspaceGitRepository instanceof PortalWorkspaceGitRepository)) {
 			throw new RuntimeException("Invalid workspace Git repository");
 		}
 

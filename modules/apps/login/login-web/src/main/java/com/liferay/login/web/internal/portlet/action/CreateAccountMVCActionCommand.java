@@ -248,8 +248,7 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof
-					UserEmailAddressException.MustNotBeDuplicate ||
+			if (e instanceof UserEmailAddressException.MustNotBeDuplicate ||
 				e instanceof UserScreenNameException.MustNotBeDuplicate) {
 
 				String emailAddress = ParamUtil.getString(

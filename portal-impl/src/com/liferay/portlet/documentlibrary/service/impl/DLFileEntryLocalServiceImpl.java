@@ -2049,8 +2049,8 @@ public class DLFileEntryLocalServiceImpl
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 			if (DLUtil.compareVersions(
-					dlFileEntry.getVersion(),
-					dlFileVersion.getVersion()) <= 0) {
+					dlFileEntry.getVersion(), dlFileVersion.getVersion()) <=
+						0) {
 
 				dlFileEntry.setModifiedDate(dlFileVersion.getModifiedDate());
 				dlFileEntry.setFileName(dlFileVersion.getFileName());

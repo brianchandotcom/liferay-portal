@@ -121,8 +121,8 @@ public class WebSocketEndpointTracker {
 								endpointInstance.getClass();
 
 							if (endpointInstanceClass.equals(
-									ServerEndpointConfigWrapper.
-										NullEndpoint.class)) {
+									ServerEndpointConfigWrapper.NullEndpoint.
+										class)) {
 
 								serverEndpointConfigWrapper.override(
 									decoders, encoders, subprotocol);

@@ -64,9 +64,7 @@ public class NestedPortletsDisplayContext {
 		HttpServletRequest nextRequest = null;
 
 		while (currentRequest instanceof HttpServletRequestWrapper) {
-			if (currentRequest instanceof
-					PersistentHttpServletRequestWrapper) {
-
+			if (currentRequest instanceof PersistentHttpServletRequestWrapper) {
 				PersistentHttpServletRequestWrapper
 					persistentHttpServletRequestWrapper =
 						(PersistentHttpServletRequestWrapper)currentRequest;

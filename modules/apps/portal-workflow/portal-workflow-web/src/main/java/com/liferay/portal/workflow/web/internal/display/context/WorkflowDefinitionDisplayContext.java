@@ -329,8 +329,8 @@ public class WorkflowDefinitionDisplayContext {
 		workflowDefinitionSearch.setTotal(workflowDefinitions.size());
 
 		if (workflowDefinitions.size() >
-				(workflowDefinitionSearch.
-					getEnd() - workflowDefinitionSearch.getStart())) {
+				(workflowDefinitionSearch.getEnd() -
+					workflowDefinitionSearch.getStart())) {
 
 			workflowDefinitions = ListUtil.subList(
 				workflowDefinitions, workflowDefinitionSearch.getStart(),

@@ -431,14 +431,14 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 									writePropertiesTask.getProject();
 
 								if ((JavaPlugin.JAR_TASK_NAME.equals(key) &&
-										GradleUtil.hasPlugin(
-											project, JavaPlugin.class)) ||
+									 GradleUtil.hasPlugin(
+										 project, JavaPlugin.class)) ||
 									(WarPlugin.WAR_TASK_NAME.equals(key) &&
-										(GradleUtil.hasPlugin(
-											project, LiferayAntPlugin.class) ||
-										GradleUtil.hasPlugin(
-											project,
-											LiferayThemePlugin.class)))) {
+									 (GradleUtil.hasPlugin(
+										 project, LiferayAntPlugin.class) ||
+									  GradleUtil.hasPlugin(
+										  project,
+										  LiferayThemePlugin.class)))) {
 
 									key = null;
 								}

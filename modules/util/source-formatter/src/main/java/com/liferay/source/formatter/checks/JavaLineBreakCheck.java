@@ -139,7 +139,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 		String trimmedLine = StringUtil.trimLeading(line);
 
-		if (previousLine.contains("\t/*") || trimmedLine.startsWith("//") |
+		if (previousLine.contains("\t/*") || trimmedLine.startsWith("//") ||
 			trimmedLine.startsWith("/*") || trimmedLine.endsWith("*/")) {
 
 			return;

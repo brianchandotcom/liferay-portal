@@ -136,8 +136,8 @@ public class DDMDisplayContext {
 
 		if (DDMTemplatePermission.containsAddTemplatePermission(
 				_ddmWebRequestHelper.getPermissionChecker(),
-				_ddmWebRequestHelper.getScopeGroupId(),
-				getClassNameId(), scopeClassNameId) &&
+				_ddmWebRequestHelper.getScopeGroupId(), getClassNameId(),
+				scopeClassNameId) &&
 			(Validator.isNull(expectedTemplateTypeValue) ||
 			 expectedTemplateTypeValue.equals(actualTemplateTypeValue))) {
 

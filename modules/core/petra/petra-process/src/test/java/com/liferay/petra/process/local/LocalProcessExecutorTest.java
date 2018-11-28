@@ -1680,8 +1680,8 @@ public class LocalProcessExecutorTest {
 			DETACH_ON_BROKEN_PIPE_SHUTDOWN_HOOK =
 				(shutdownCode, shutdownThrowable) -> {
 					if ((shutdownCode ==
-							LocalProcessLauncher.
-								ShutdownHook.BROKEN_PIPE_CODE) &&
+							LocalProcessLauncher.ShutdownHook.
+								BROKEN_PIPE_CODE) &&
 						(shutdownThrowable instanceof IOException)) {
 
 						_unregisterHeartBeatThread();
@@ -1696,8 +1696,8 @@ public class LocalProcessExecutorTest {
 			DETACH_ON_INTERRUPTION_SHUTDOWN_HOOK =
 				(shutdownCode, shutdownThrowable) -> {
 					if ((shutdownCode ==
-							LocalProcessLauncher.
-								ShutdownHook.INTERRUPTION_CODE) &&
+							LocalProcessLauncher.ShutdownHook.
+								INTERRUPTION_CODE) &&
 						(shutdownThrowable.getClass() ==
 							InterruptedException.class)) {
 

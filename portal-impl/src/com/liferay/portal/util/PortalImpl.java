@@ -3834,9 +3834,7 @@ public class PortalImpl implements Portal {
 		HttpServletRequest originalRequest = null;
 
 		while (currentRequest instanceof HttpServletRequestWrapper) {
-			if (currentRequest instanceof
-					PersistentHttpServletRequestWrapper) {
-
+			if (currentRequest instanceof PersistentHttpServletRequestWrapper) {
 				PersistentHttpServletRequestWrapper
 					persistentHttpServletRequestWrapper =
 						(PersistentHttpServletRequestWrapper)currentRequest;
@@ -5660,9 +5658,7 @@ public class PortalImpl implements Portal {
 				break;
 			}
 
-			if (currentRequest instanceof
-					PersistentHttpServletRequestWrapper) {
-
+			if (currentRequest instanceof PersistentHttpServletRequestWrapper) {
 				PersistentHttpServletRequestWrapper
 					persistentHttpServletRequestWrapper =
 						(PersistentHttpServletRequestWrapper)currentRequest;

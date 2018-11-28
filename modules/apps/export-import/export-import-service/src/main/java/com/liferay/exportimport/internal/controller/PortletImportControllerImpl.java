@@ -1519,9 +1519,9 @@ public class PortletImportControllerImpl implements PortletImportController {
 				headerElement.attributeValue("schema-version"), "1.0.0");
 
 			if (!manifestVersionBiPredicate.test(
-				Version.getInstance(
-					ExportImportConstants.EXPORT_IMPORT_SCHEMA_VERSION),
-				Version.getInstance(importSchemaVersion))) {
+					Version.getInstance(
+						ExportImportConstants.EXPORT_IMPORT_SCHEMA_VERSION),
+					Version.getInstance(importSchemaVersion))) {
 
 				throw new LayoutImportException(
 					LayoutImportException.TYPE_WRONG_LAR_SCHEMA_VERSION,

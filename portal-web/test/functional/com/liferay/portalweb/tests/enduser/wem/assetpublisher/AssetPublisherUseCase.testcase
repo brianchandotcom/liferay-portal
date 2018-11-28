@@ -1662,7 +1662,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureTagsFilterPG">
-			<var name="tagName" value="tagname" />
+			<var name="tagNameList" value="tagname" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

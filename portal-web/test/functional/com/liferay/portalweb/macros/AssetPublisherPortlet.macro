@@ -609,7 +609,7 @@
 		<execute function="Select" locator1="APConfiguration#FILTER_CATEGORIZATION_SELECT" value1="Tags" />
 
 		<execute macro="AssetCategorization#selectTag">
-			<var name="tagName" value="${tagName}" />
+			<var name="tagNameList" value="${tagNameList}" />
 		</execute>
 
 		<execute macro="PortletEntry#save" />

@@ -128,9 +128,11 @@
 			</then>
 		</if>
 
-		<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX">
-			<var name="key_rowEntry" value="${tagName}" />
-		</execute>
+		<for list="${tagNameList}" param="tagName">
+			<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX">
+				<var name="key_rowEntry" value="${tagName}" />
+			</execute>
+		</for>
 
 		<execute function="SelectFrameTop" />
 

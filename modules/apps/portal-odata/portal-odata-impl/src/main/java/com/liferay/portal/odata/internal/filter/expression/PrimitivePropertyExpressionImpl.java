@@ -14,59 +14,36 @@
 
 package com.liferay.portal.odata.internal.filter.expression;
 
-import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
-import com.liferay.portal.odata.filter.expression.MemberExpression;
-
-import java.util.Collections;
-import java.util.List;
+import com.liferay.portal.odata.filter.expression.PrimitivePropertyExpression;
 
 /**
- * @author Cristina González
+ * @author Ruben Pulido
  */
-public class MemberExpressionImpl implements MemberExpression {
+public class PrimitivePropertyExpressionImpl
+	implements PrimitivePropertyExpression {
 
-	public MemberExpressionImpl(Expression expression) {
-		this(Collections.emptyList(), expression);
-	}
-
-	public MemberExpressionImpl(
-		List<String> resourcePath, Expression expression) {
-
-		if (resourcePath == null) {
-			_resourcePath = Collections.emptyList();
-		}
-		else {
-			_resourcePath = Collections.unmodifiableList(resourcePath);
-		}
-
-		_expression = expression;
+	public PrimitivePropertyExpressionImpl(String name) {
+		_name = name;
 	}
 
 	@Override
 	public <T> T accept(ExpressionVisitor<T> expressionVisitor)
 		throws ExpressionVisitException {
 
-		return expressionVisitor.visitMemberExpression(this);
+		return expressionVisitor.visitPrimitivePropertyExpression(this);
 	}
 
-	@Override
-	public Expression getExpression() {
-		return _expression;
-	}
-
-	@Override
-	public List<String> getResourcePath() {
-		return _resourcePath;
+	public String getName() {
+		return _name;
 	}
 
 	@Override
 	public String toString() {
-		return _expression.toString();
+		return _name;
 	}
 
-	private final Expression _expression;
-	private final List<String> _resourcePath;
+	private final String _name;
 
 }

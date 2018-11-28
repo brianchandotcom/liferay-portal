@@ -17,30 +17,18 @@ package com.liferay.portal.odata.internal.filter.expression;
 import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
-import com.liferay.portal.odata.filter.expression.MemberExpression;
-
-import java.util.Collections;
-import java.util.List;
+import com.liferay.portal.odata.filter.expression.LambdaFunctionExpression;
 
 /**
- * @author Cristina González
+ * @author Ruben Pulido
  */
-public class MemberExpressionImpl implements MemberExpression {
+public class LambdaFunctionExpressionImpl implements LambdaFunctionExpression {
 
-	public MemberExpressionImpl(Expression expression) {
-		this(Collections.emptyList(), expression);
-	}
+	public LambdaFunctionExpressionImpl(
+		Type type, String variableName, Expression expression) {
 
-	public MemberExpressionImpl(
-		List<String> resourcePath, Expression expression) {
-
-		if (resourcePath == null) {
-			_resourcePath = Collections.emptyList();
-		}
-		else {
-			_resourcePath = Collections.unmodifiableList(resourcePath);
-		}
-
+		_type = type;
+		_variableName = variableName;
 		_expression = expression;
 	}
 
@@ -48,7 +36,8 @@ public class MemberExpressionImpl implements MemberExpression {
 	public <T> T accept(ExpressionVisitor<T> expressionVisitor)
 		throws ExpressionVisitException {
 
-		return expressionVisitor.visitMemberExpression(this);
+		return expressionVisitor.visitLambdaFunctionExpression(
+			_type, _variableName, _expression);
 	}
 
 	@Override
@@ -57,16 +46,31 @@ public class MemberExpressionImpl implements MemberExpression {
 	}
 
 	@Override
-	public List<String> getResourcePath() {
-		return _resourcePath;
+	public Type getType() {
+		return _type;
+	}
+
+	@Override
+	public String getVariableName() {
+		return _variableName;
 	}
 
 	@Override
 	public String toString() {
-		return _expression.toString();
+		final StringBuilder sb = new StringBuilder(6);
+
+		sb.append(_type);
+		sb.append("(");
+		sb.append(_variableName);
+		sb.append(" -> ");
+		sb.append(_expression.toString());
+		sb.append(")");
+
+		return sb.toString();
 	}
 
 	private final Expression _expression;
-	private final List<String> _resourcePath;
+	private final Type _type;
+	private final String _variableName;
 
 }

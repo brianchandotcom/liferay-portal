@@ -110,7 +110,9 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			return _getLeadingWhitespace(lastLine) + "\t\t\t";
 		}
 
-		if (trimmedLastLine.startsWith("for (")) {
+		if (trimmedLastLine.startsWith("for (") &&
+			!trimmedLastLine.endsWith(";")) {
+
 			return _getLeadingWhitespace(lastLine) + "\t\t";
 		}
 

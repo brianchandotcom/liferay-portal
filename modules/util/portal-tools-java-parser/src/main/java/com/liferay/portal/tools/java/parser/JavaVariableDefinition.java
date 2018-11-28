@@ -85,11 +85,15 @@ public class JavaVariableDefinition extends BaseJavaTerm {
 			prefix = StringPool.BLANK;
 		}
 
-		indent = append(
-			sb, _javaType, indent, prefix, " ", maxLineLength, false);
+		if (_javaType != null) {
+			indent = append(
+				sb, _javaType, indent, prefix, " ", maxLineLength, false);
+
+			prefix = StringPool.BLANK;
+		}
 
 		if (_assignValueJavaExpression != null) {
-			indent = append(sb, _name, indent, "", " = ", maxLineLength);
+			indent = append(sb, _name, indent, prefix, " = ", maxLineLength);
 
 			if (_assignValueJavaExpression instanceof JavaOperatorExpression) {
 				JavaOperatorExpression javaOperatorExpression =

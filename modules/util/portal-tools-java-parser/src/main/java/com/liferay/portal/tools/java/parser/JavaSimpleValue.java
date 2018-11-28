@@ -65,7 +65,9 @@ public class JavaSimpleValue extends JavaExpression {
 				else if (trimmedFirstLine.startsWith("else if (")) {
 					secondLineIndent += "\t\t";
 				}
-				else if (trimmedFirstLine.startsWith("for (")) {
+				else if (trimmedFirstLine.startsWith("for (") &&
+						 !trimmedFirstLine.endsWith(";")) {
+
 					secondLineIndent += "\t";
 				}
 				else if (trimmedFirstLine.startsWith("if (")) {

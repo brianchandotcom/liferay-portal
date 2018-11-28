@@ -1045,3 +1045,32 @@ the permissions.
 This change removes old logic that is no longer used in Liferay Portal.
 
 ---------------------------------------
+
+### Lodash is no longer included by default
+- **Date:** 2018-Nov-27
+- **JIRA Ticket:** LPS-87677
+
+#### What changed?
+
+Previously, Lodash was being included in every page by default and made available
+through the global `window._` and the scoped `AUI._` variables. After this change,
+Lodash is no longer included by default and those variables will be undefined
+
+#### Who is affected?
+
+This affects any developer who used `AUI._` or `window._` in their custom scripts.
+
+#### How should I update my code?
+
+You should provide your own version `Lodash` to be used by your custom developments
+following any of the possible strategies to add third party libraries.
+
+Additionally, as a temporary measure, you can bring back the old behaviour by setting
+the `Enable Lodash` property in `System Settings > Third Party > Lodash` to `true`.
+
+#### Why was this change made?
+
+This change was made to avoid bundling and serving additional library code on
+every page that was mostly unused and redundant.
+
+---------------------------------------

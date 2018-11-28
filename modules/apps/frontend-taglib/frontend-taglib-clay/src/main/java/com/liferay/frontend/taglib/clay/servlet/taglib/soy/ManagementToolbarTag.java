@@ -62,7 +62,7 @@ public class ManagementToolbarTag extends BaseClayTag {
 			putValue("cacheState", true);
 
 			if (Validator.isNull(componentId)) {
-				setComponentId("managementToolbar_" + searchContainerId);
+				setComponentId(searchContainerId + "ManagementToolbar");
 			}
 		}
 

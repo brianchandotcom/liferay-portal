@@ -813,7 +813,7 @@ syncGitRepoReleases {
 				startParameter.projectProperties = ["syncRelease": "true"]
 				startParameter.taskNames = ["baseline"]
 
-				_executeGradle(startParameter)
+				_executeGradle(startParameter, true)
 			}
 			finally {
 				assert settingsGradleBackupFile.renameTo(settingsGradleFile)
@@ -1077,7 +1077,7 @@ private void _cherryPickPrepNext(Commit commit) {
 			startParameter.projectProperties = ["forced.update.version": newVersion]
 			startParameter.taskNames = [moduleTaskPrefix + "updateVersion"]
 
-			_executeGradle(startParameter)
+			_executeGradle(startParameter, true)
 
 			grgit.add patterns: [moduleDirName]
 
@@ -1097,7 +1097,7 @@ private void _cherryPickPrepNext(Commit commit) {
 		startParameter.taskNames = [moduleTaskPrefix + "baseline"]
 
 		try {
-			_executeGradle(startParameter)
+			_executeGradle(startParameter, true)
 		}
 		finally {
 			_setSystemProperty "baseline.ignoreFailures", baselineIgnoreFailures
@@ -1171,7 +1171,7 @@ private boolean _executeGradle(File moduleDir, List<String> taskNames, Map<Strin
 	}
 
 	try {
-		return _executeGradle(startParameter)
+		return _executeGradle(startParameter, rethrowException)
 	}
 	finally {
 		oldSystemProperties.each {
@@ -1182,7 +1182,7 @@ private boolean _executeGradle(File moduleDir, List<String> taskNames, Map<Strin
 	}
 }
 
-private boolean _executeGradle(StartParameter startParameter) {
+private boolean _executeGradle(StartParameter startParameter, boolean rethrowException) {
 	BuildDefinition buildDefinition = BuildDefinition.fromStartParameter(startParameter, gradle.services.get(PublicBuildPath))
 	BuildStateRegistry buildStateRegistry = gradle.services.get(BuildStateRegistry)
 

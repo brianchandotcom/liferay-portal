@@ -85,17 +85,13 @@ public class EditTagsMVCRenderCommand implements MVCRenderCommand {
 
 			return "/document_library/edit_tags.jsp";
 		}
+		catch (NoSuchFileEntryException | PrincipalException e) {
+			SessionErrors.add(renderRequest, e.getClass());
+
+			return "/document_library/error.jsp";
+		}
 		catch (Exception e) {
-			if (e instanceof NoSuchFileEntryException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return "/document_library/error.jsp";
-			}
-			else {
-				throw new PortletException(e);
-			}
+			throw new PortletException(e);
 		}
 	}
 

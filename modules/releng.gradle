@@ -13,8 +13,6 @@ import groovy.io.FileVisitResult
 
 import groovy.json.JsonSlurper
 
-import groovy.util.slurpersupport.GPathResult
-
 import java.nio.file.Path
 
 import java.util.jar.Attributes
@@ -1302,12 +1300,19 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 
 	XmlSlurper xmlSlurper = new XmlSlurper()
 
-	for (String bundleSymbolicName : ["com.liferay.arquillian.extension.junit.bridge"]) {
-		GPathResult gPathResult = xmlSlurper.parse("https://repository.liferay.com/nexus/service/local/artifact/maven/resolve?g=com.liferay&a=${bundleSymbolicName}&v=RELEASE&r=liferay-public-releases")
+	List<String[]> artifactProperties = [
+		["liferay-public-releases", "com.liferay", "com.liferay.arquillian.extension.junit.bridge", "1.0.10"]
+	]
 
-		VersionNumber versionNumber = VersionNumber.parse(gPathResult.data.version.text())
+	artifactProperties.each {
+		String repository = it[0]
+		String groupId = it[1]
+		String artifact = it[2]
+		String version = it[3]
 
-		String artifactURL = "https://repository-cdn.liferay.com/nexus/service/local/repositories/liferay-public-releases/content/com/liferay/${bundleSymbolicName}/${versionNumber}/${bundleSymbolicName}-${versionNumber}.jar"
+		String groupPath = groupId.replace('.' as char, '/' as char)
+
+		String artifactURL = "https://repository-cdn.liferay.com/nexus/service/local/repositories/${repository}/content/${groupPath}/${artifact}/${version}/${artifact}-${version}.jar"
 
 		_downloadFile(artifactURL, cacheDir)
 

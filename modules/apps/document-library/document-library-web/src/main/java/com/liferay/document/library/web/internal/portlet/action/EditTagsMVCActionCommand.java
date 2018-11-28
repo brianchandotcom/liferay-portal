@@ -80,6 +80,9 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 			SessionMessages.add(
 				actionRequest, "requestProcessed", successMessage);
 		}
+		catch (PortalException pe) {
+			throw pe;
+		}
 		catch (Throwable throwable) {
 			throw new PortalException(throwable);
 		}

@@ -93,8 +93,7 @@ public class PullRequest {
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(
-				"Unable to post comment in GitHub pull request " +
-					getURL(),
+				"Unable to post comment in GitHub pull request " + getURL(),
 				ioe);
 		}
 	}

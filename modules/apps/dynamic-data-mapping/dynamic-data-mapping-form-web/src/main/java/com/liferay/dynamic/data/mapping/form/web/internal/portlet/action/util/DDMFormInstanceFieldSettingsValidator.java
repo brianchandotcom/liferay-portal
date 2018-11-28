@@ -68,9 +68,8 @@ public class DDMFormInstanceFieldSettingsValidator {
 			portletRequest, ddmForm);
 
 		if (!fieldNamePropertiesMap.isEmpty()) {
-			throw new
-				FormInstanceFieldSettingsException.
-					MustSetValidValueForProperties(fieldNamePropertiesMap);
+			throw new FormInstanceFieldSettingsException.
+				MustSetValidValueForProperties(fieldNamePropertiesMap);
 		}
 	}
 

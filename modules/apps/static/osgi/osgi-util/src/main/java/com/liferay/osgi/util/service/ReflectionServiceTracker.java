@@ -199,8 +199,7 @@ public class ReflectionServiceTracker implements Closeable {
 					catch (Exception e) {
 						throw new RuntimeException(
 							"Unable to set injection point " +
-								injectionPoint.getName() + " on " +
-									target,
+								injectionPoint.getName() + " on " + target,
 							e);
 					}
 				}
@@ -230,8 +229,7 @@ public class ReflectionServiceTracker implements Closeable {
 					catch (Exception e) {
 						throw new RuntimeException(
 							"Unable to set injection point " +
-								injectionPoint.getName() + " on " +
-									target,
+								injectionPoint.getName() + " on " + target,
 							e);
 					}
 				}

@@ -29,6 +29,8 @@ if (portletTitleBasedNavigation) {
 
 	renderResponse.setTitle(LanguageUtil.get(request, "edit-tags"));
 }
+
+Selection<FileEntry> selection = (Selection<FileEntry>)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_SELECTION);
 %>
 
 <liferay-portlet:actionURL name="/document_library/edit_tags" varImpl="editTagsURL" />
@@ -50,33 +52,18 @@ if (portletTitleBasedNavigation) {
 
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
-
-					<%
-					List<FileEntry> fileEntries = (List<FileEntry>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRIES);
-					%>
-
-					<aui:input name="rowIdsFileEntry" type="hidden" value="<%= ListUtil.toString(fileEntries, FileEntry.FILE_ENTRY_ID_ACCESSOR) %>" />
+					<aui:input name="rowIdsFileEntry" type="hidden" value="<%= String.valueOf(selection.serialize()) %>" />
 					<aui:input name="commonTagNames" type="hidden" value="<%= commonTagNames %>" />
 
-					<c:choose>
-						<c:when test="<%= fileEntries.size() == 1 %>">
+					<%= selection.describe(themeDisplay.getLocale()) %>
 
-							<%
-							FileEntry fileEntry = fileEntries.get(0);
-							%>
+					<c:if test="<%= selection.isMultiple() %>">
+						<div class="form-group" id="<portlet:namespace />tagOptions">
+							<aui:input checked="<%= true %>" label="append" name="append" type="radio" value="<%= true %>" />
 
-							<liferay-ui:message arguments="<%= fileEntry.getTitle() %>" key="you-are-editing-the-tags-for-x" />
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:message arguments="<%= fileEntries.size() %>" key="you-are-editing-the-common-tags-for-x-items" /> <liferay-ui:message key="select-append-or-replace-current-tags" />
-
-							<div class="form-group" id="<portlet:namespace />tagOptions">
-								<aui:input checked="<%= true %>" label="append" name="append" type="radio" value="<%= true %>" />
-
-								<aui:input checked="<%= false %>" label="replace" name="append" type="radio" value="<%= false %>" />
-							</div>
-						</c:otherwise>
-					</c:choose>
+							<aui:input checked="<%= false %>" label="replace" name="append" type="radio" value="<%= false %>" />
+						</div>
+					</c:if>
 
 					<liferay-asset:asset-tags-selector
 						tagNames="<%= commonTagNames %>"

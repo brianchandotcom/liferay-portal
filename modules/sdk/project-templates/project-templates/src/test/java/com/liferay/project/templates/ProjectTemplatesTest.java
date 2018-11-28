@@ -130,8 +130,7 @@ public class ProjectTemplatesTest {
 			gradleDistribution = properties.getProperty("distributionUrl");
 		}
 
-		Assert.assertTrue(
-			gradleDistribution.contains(_GRADLE_WRAPPER_VERSION));
+		Assert.assertTrue(gradleDistribution.contains(_GRADLE_WRAPPER_VERSION));
 
 		_gradleDistribution = URI.create(gradleDistribution);
 

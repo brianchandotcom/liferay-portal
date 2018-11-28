@@ -94,22 +94,17 @@ public class ServiceMonitorAdvice
 
 		Class<?> declaringClass = method.getDeclaringClass();
 
-		if (_serviceClasses.contains(declaringClass.getName())) {
+		MethodSignature methodSignature = new MethodSignature(method);
+
+		if (_serviceClasses.contains(declaringClass.getName()) ||
+			_serviceClassMethods.contains(methodSignature)) {
+
 			included = true;
 		}
-		else {
-			MethodSignature methodSignature = new MethodSignature(method);
 
-			if (_serviceClassMethods.contains(methodSignature)) {
-				included = true;
-			}
-		}
-
-		if ((!_inclusiveMode && included) || (_inclusiveMode && !included)) {
+		if (_inclusiveMode != included) {
 			return null;
 		}
-
-		MethodSignature methodSignature = new MethodSignature(method);
 
 		DataSample dataSample =
 			DataSampleFactoryUtil.createServiceRequestDataSample(

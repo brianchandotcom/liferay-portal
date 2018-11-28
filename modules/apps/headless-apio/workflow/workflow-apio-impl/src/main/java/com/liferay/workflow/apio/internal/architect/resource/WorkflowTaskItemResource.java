@@ -20,6 +20,7 @@ import com.liferay.apio.architect.resource.ItemResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.message.boards.model.MBDiscussion;
+import com.liferay.portal.apio.exception.ValidationException;
 import com.liferay.portal.apio.user.CurrentUser;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -149,18 +150,25 @@ public class WorkflowTaskItemResource
 	}
 
 	private WorkflowTask _changeTransition(
-		Long workflowTaskId, ChangeTransitionForm changeTransitionForm,
-		CurrentUser currentUser) {
+			Long workflowTaskId, ChangeTransitionForm changeTransitionForm,
+			CurrentUser currentUser)
+		throws WorkflowException {
 
-		String transitionName = changeTransitionForm.getTransition();
+		String transition = changeTransitionForm.getTransition();
 
-		return Try.fromFallible(
-			() -> _workflowTaskManager.completeWorkflowTask(
-				currentUser.getCompanyId(), currentUser.getUserId(),
-				workflowTaskId, transitionName, "", null)
-		).orElse(
-			null
+		Try.fromFallible(
+			() -> _getTaskTransitionsNames(
+				_workflowTaskManager.getWorkflowTask(
+					currentUser.getCompanyId(), workflowTaskId))
+		).filter(
+			l -> l.contains(transition)
+		).orElseThrow(
+			() -> new ValidationException("Invalid transition: " + transition)
 		);
+
+		return _workflowTaskManager.completeWorkflowTask(
+			currentUser.getCompanyId(), currentUser.getUserId(), workflowTaskId,
+			transition, "", null);
 	}
 
 	private String _getResourceType(

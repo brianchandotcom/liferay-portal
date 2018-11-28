@@ -51,6 +51,16 @@ public class ServiceMonitorAdvice
 	}
 
 	@Override
+	public Set<String> getServiceClasses() {
+		return Collections.unmodifiableSet(_serviceClasses);
+	}
+
+	@Override
+	public Set<MethodSignature> getServiceClassMethods() {
+		return Collections.unmodifiableSet(_serviceClassMethods);
+	}
+
+	@Override
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		if (!_monitorServiceRequest) {
 			return methodInvocation.proceed();
@@ -97,16 +107,6 @@ public class ServiceMonitorAdvice
 		finally {
 			DataSampleThreadLocal.addDataSample(dataSample);
 		}
-	}
-
-	@Override
-	public Set<String> getServiceClasses() {
-		return Collections.unmodifiableSet(_serviceClasses);
-	}
-
-	@Override
-	public Set<MethodSignature> getServiceClassMethods() {
-		return Collections.unmodifiableSet(_serviceClassMethods);
 	}
 
 	@Override

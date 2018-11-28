@@ -14,8 +14,8 @@
 
 package com.liferay.screens.service.impl;
 
-import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
-import com.liferay.dynamic.data.mapping.kernel.DDMTemplateManagerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.screens.service.base.ScreensJournalArticleServiceBaseImpl;
 
 import java.util.Locale;
@@ -86,16 +87,10 @@ public class ScreensJournalArticleServiceImpl
 	protected String getDDMTemplateKey(long ddmTemplateId)
 		throws PortalException {
 
-		String ddmTemplateKey = null;
-
-		DDMTemplate ddmTemplate = DDMTemplateManagerUtil.getTemplate(
+		DDMTemplate ddmTemplate = _ddmTemplateLocalService.getTemplate(
 			ddmTemplateId);
 
-		if (ddmTemplate != null) {
-			ddmTemplateKey = ddmTemplate.getTemplateKey();
-		}
-
-		return ddmTemplateKey;
+		return ddmTemplate.getTemplateKey();
 	}
 
 	protected String getLanguageId(Locale locale) {
@@ -128,5 +123,8 @@ public class ScreensJournalArticleServiceImpl
 			ModelResourcePermissionFactory.getInstance(
 				ScreensJournalArticleServiceImpl.class,
 				"_journalArticleModelResourcePermission", JournalArticle.class);
+
+	@ServiceReference(type = DDMTemplateLocalService.class)
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 }

@@ -18,6 +18,7 @@ import com.liferay.portal.cache.PortalCacheBootstrapLoader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Properties;
 
@@ -95,9 +96,10 @@ public class ClusterLinkPortalCacheBootstrapLoader
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Bootstrap loader client thread for cache " +
-						portalCacheName + " from cache manager " +
-							portalCacheManagerName);
+					StringBundler.concat(
+						"Bootstrap loader client thread for cache ",
+						portalCacheName, " from cache manager ",
+						portalCacheManagerName));
 			}
 
 			_portalCacheManagerName = portalCacheManagerName;
@@ -105,8 +107,9 @@ public class ClusterLinkPortalCacheBootstrapLoader
 
 			setDaemon(true);
 			setName(
-				BootstrapLoaderClientThread.class.getName() + " - " +
-					portalCacheManagerName + " - " + portalCacheName);
+				StringBundler.concat(
+					BootstrapLoaderClientThread.class.getName(), " - ",
+					portalCacheManagerName, " - ", portalCacheName));
 			setPriority(Thread.NORM_PRIORITY);
 		}
 

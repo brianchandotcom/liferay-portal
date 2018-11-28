@@ -16,18 +16,18 @@ package com.liferay.portal.spring.aop;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.reflect.AnnotationLocator;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.transaction.TransactionsUtil;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -55,8 +55,7 @@ public class ServiceBeanAopCacheManager {
 				Class<? extends Annotation> annotationClass =
 					annotationChainableMethodAdvice.getAnnotationClass();
 
-				_registerAnnotationChainableMethodAdvice(
-					annotationClass, annotationChainableMethodAdvice);
+				_annotationClasses.add(annotationClass);
 			}
 
 			fullChainableMethodAdvices.add(chainableMethodAdvice);
@@ -91,9 +90,7 @@ public class ServiceBeanAopCacheManager {
 				Class<? extends Annotation> curAnnotationType =
 					curAnnotation.annotationType();
 
-				if (!_annotationChainableMethodAdvices.containsKey(
-						curAnnotationType)) {
-
+				if (!_annotationClasses.contains(curAnnotationType)) {
 					iterator.remove();
 				}
 				else if (annotationType == curAnnotationType) {
@@ -180,37 +177,12 @@ public class ServiceBeanAopCacheManager {
 		return new AopMethod(target, method, chainableMethodAdvices);
 	}
 
-	private void _registerAnnotationChainableMethodAdvice(
-		Class<? extends Annotation> annotationClass,
-		AnnotationChainableMethodAdvice<?> annotationChainableMethodAdvice) {
-
-		AnnotationChainableMethodAdvice<?>[] annotationChainableMethodAdvices =
-			_annotationChainableMethodAdvices.get(annotationClass);
-
-		if (annotationChainableMethodAdvices == null) {
-			annotationChainableMethodAdvices =
-				new AnnotationChainableMethodAdvice<?>[1];
-
-			annotationChainableMethodAdvices[0] =
-				annotationChainableMethodAdvice;
-		}
-		else {
-			annotationChainableMethodAdvices = ArrayUtil.append(
-				annotationChainableMethodAdvices,
-				annotationChainableMethodAdvice);
-		}
-
-		_annotationChainableMethodAdvices.put(
-			annotationClass, annotationChainableMethodAdvices);
-	}
-
 	private static final ChainableMethodAdvice[] _emptyChainableMethodAdvices =
 		new ChainableMethodAdvice[0];
 	private static final Annotation[] _nullAnnotations = new Annotation[0];
 
-	private final Map
-		<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>[]>
-			_annotationChainableMethodAdvices = new HashMap<>();
+	private final Set<Class<? extends Annotation>> _annotationClasses =
+		new HashSet<>();
 	private final Map<CacheKey, AopMethod> _aopMethods =
 		new ConcurrentHashMap<>();
 	private final ChainableMethodAdvice[] _fullChainableMethodAdvices;

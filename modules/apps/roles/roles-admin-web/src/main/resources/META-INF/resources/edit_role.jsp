@@ -196,19 +196,28 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 </aui:form>
 
 <c:if test="<%= role == null %>">
-	<aui:script sandbox="<%= true %>">
-		var form = $(document.<portlet:namespace />fm);
+	<aui:script require="metal-debounce/src/debounce">
+		const form = document.getElementById('<portlet:namespace />fm');
 
-		var nameInput = form.fm('name');
-		var titleInput = form.fm('title');
+		if (form) {
+			const nameInput = form.querySelector('#<portlet:namespace />name');
+			const titleInput = form.querySelector('#<portlet:namespace />title');
 
-		var onTitleInput = _.debounce(
-			function(event) {
-				nameInput.val(titleInput.val().substring(0, nameInput.attr('maxlength')));
-			},
-			200
-		);
+			if (nameInput && titleInput) {
+				const debounce = metalDebounceSrcDebounce.default;
 
-		titleInput.on('input', onTitleInput);
+				const handleOnInput = function(event) {
+					let value = event.target.value;
+
+					if (nameInput.hasAttribute('maxLength')) {
+						value = value.substring(0, nameInput.getAttribute('maxLength'));
+					}
+
+					nameInput.value = value;
+				};
+
+				titleInput.addEventListener('input', debounce(handleOnInput, 200));
+			}
+		}
 	</aui:script>
 </c:if>

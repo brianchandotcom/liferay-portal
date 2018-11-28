@@ -17,6 +17,7 @@ package com.liferay.structured.content.apio.internal.architect.filter;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
@@ -74,6 +75,9 @@ public class StructuredContentEntityModel implements EntityModel {
 
 					return parts.get(parts.size() - 1);
 				}),
+			new CollectionEntityField(
+				new StringEntityField(
+					"keywords", locale -> "assetTagNames.raw")),
 			new StringEntityField(
 				"title",
 				locale -> Field.getSortableFieldName(

@@ -72,10 +72,6 @@ public class StructuredContentEntityModel implements EntityModel {
 					return parts.get(parts.size() - 1);
 				}),
 			new StringEntityField(
-				"description",
-				locale -> "description_".concat(
-					LocaleUtil.toLanguageId(locale))),
-			new StringEntityField(
 				"title",
 				locale -> Field.getSortableFieldName(
 					"localized_title_".concat(LocaleUtil.toLanguageId(locale))))

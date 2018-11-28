@@ -51,9 +51,9 @@ class FragmentEntryLinkList extends Component {
 		const sourceData = eventData.source.dataset;
 		const targetData = eventData.target ? eventData.target.dataset : null;
 
-		const {
-			dropTargetItemType
-		} = FragmentEntryLinkList._getDropTargetItemData(eventData);
+		const dropTargetItemType = FragmentEntryLinkList._getItemData(
+			targetData
+		).itemType;
 
 		const targetIsSameFragment = (
 			(dropTargetItemType === DROP_TARGET_ITEM_TYPES.fragment) &&
@@ -64,39 +64,37 @@ class FragmentEntryLinkList extends Component {
 	}
 
 	/**
-	 * Get hovered element data
-	 * @param {!Object} eventData
+	 * Get id and type of an item from its dataset
+	 * @param {!Object} itemDataset
 	 * @private
 	 * @return {Object}
 	 * @static
 	 */
-	static _getDropTargetItemData(eventData) {
-		let dropTargetItemId = null;
-		let dropTargetItemType = null;
+	static _getItemData(itemDataset) {
+		let itemId = null;
+		let itemType = null;
 
-		const targetData = eventData.target ? eventData.target.dataset : null;
-
-		if (targetData) {
-			if ('columnId' in targetData) {
-				dropTargetItemId = targetData.columnId;
-				dropTargetItemType = DROP_TARGET_ITEM_TYPES.column;
+		if (itemDataset) {
+			if ('columnId' in itemDataset) {
+				itemId = itemDataset.columnId;
+				itemType = DROP_TARGET_ITEM_TYPES.column;
 			}
-			else if ('fragmentEntryLinkId' in targetData) {
-				dropTargetItemId = targetData.fragmentEntryLinkId;
-				dropTargetItemType = DROP_TARGET_ITEM_TYPES.fragment;
+			else if ('fragmentEntryLinkId' in itemDataset) {
+				itemId = itemDataset.fragmentEntryLinkId;
+				itemType = DROP_TARGET_ITEM_TYPES.fragment;
 			}
-			else if ('layoutSectionId' in targetData) {
-				dropTargetItemId = targetData.layoutSectionId;
-				dropTargetItemType = DROP_TARGET_ITEM_TYPES.section;
+			else if ('layoutSectionId' in itemDataset) {
+				itemId = itemDataset.layoutSectionId;
+				itemType = DROP_TARGET_ITEM_TYPES.section;
 			}
-			else if ('fragmentEmptyList' in targetData) {
-				dropTargetItemType = DROP_TARGET_ITEM_TYPES.fragmentList;
+			else if ('fragmentEmptyList' in itemDataset) {
+				itemType = DROP_TARGET_ITEM_TYPES.fragmentList;
 			}
 		}
 
 		return {
-			dropTargetItemId,
-			dropTargetItemType
+			itemId,
+			itemType
 		};
 	}
 
@@ -186,12 +184,12 @@ class FragmentEntryLinkList extends Component {
 	_handleDrag(eventData) {
 		if (FragmentEntryLinkList._dropValid(eventData)) {
 			const mouseY = eventData.originalEvent.clientY;
-			const targetItemRegion = position.getRegion(eventData.target);
+			const targetItem = eventData.target;
+			const targetItemRegion = position.getRegion(targetItem);
 
-			const {
-				dropTargetItemId,
-				dropTargetItemType
-			} = FragmentEntryLinkList._getDropTargetItemData(eventData);
+			const dropTargetItemData = FragmentEntryLinkList._getItemData(
+				targetItem.dataset
+			);
 
 			this._targetBorder = DROP_TARGET_BORDERS.bottom;
 
@@ -204,8 +202,8 @@ class FragmentEntryLinkList extends Component {
 				UPDATE_DROP_TARGET,
 				{
 					dropTargetBorder: this._targetBorder,
-					dropTargetItemId,
-					dropTargetItemType
+					dropTargetItemId: dropTargetItemData.itemId,
+					dropTargetItemType: dropTargetItemData.itemType
 				}
 			);
 		}

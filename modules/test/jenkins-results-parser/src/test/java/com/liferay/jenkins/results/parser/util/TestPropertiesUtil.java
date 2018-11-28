@@ -32,7 +32,7 @@ public class TestPropertiesUtil {
 	}
 
 	public static Properties getProperties() {
-		return _instance._props;
+		return _instance._properties;
 	}
 
 	public static void printProperties() {
@@ -47,7 +47,7 @@ public class TestPropertiesUtil {
 		try (InputStream is = TestPropertiesUtil.class.getResourceAsStream(
 				"/test-jenkins-results-parser-util.properties")) {
 
-			_props.load(is);
+			_properties.load(is);
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
@@ -57,23 +57,29 @@ public class TestPropertiesUtil {
 				"/test-jenkins-results-parser-util-ext.properties")) {
 
 			if (is != null) {
-				_props.load(is);
+				_properties.load(is);
 			}
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
 
+		String repositoryDir = System.getProperty("repository.dir");
+
+		if ((repositoryDir != null) && !repositoryDir.isEmpty()) {
+			_properties.setProperty("repository.dir", repositoryDir);
+		}
+
 		_printProperties(false);
 	}
 
 	private String _get(String key) {
-		return _props.getProperty(key);
+		return _properties.getProperty(key);
 	}
 
 	private void _printProperties(boolean update) {
 		List<String> keys = Collections.list(
-			(Enumeration<String>)_props.propertyNames());
+			(Enumeration<String>)_properties.propertyNames());
 
 		if (update) {
 			System.out.println("-- updated properties --");
@@ -83,19 +89,19 @@ public class TestPropertiesUtil {
 		}
 
 		for (String key : keys) {
-			System.out.println(key + "=" + _props.getProperty(key));
+			System.out.println(key + "=" + _properties.getProperty(key));
 		}
 
 		System.out.println("");
 	}
 
 	private void _set(String key, String value) {
-		_props.setProperty(key, value);
+		_properties.setProperty(key, value);
 	}
 
 	private static final TestPropertiesUtil _instance =
 		new TestPropertiesUtil();
 
-	private final Properties _props = new Properties();
+	private final Properties _properties = new Properties();
 
 }

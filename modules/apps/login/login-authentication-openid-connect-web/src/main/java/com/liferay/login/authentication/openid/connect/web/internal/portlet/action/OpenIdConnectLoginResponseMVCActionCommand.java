@@ -90,7 +90,10 @@ public class OpenIdConnectLoginResponseMVCActionCommand
 		else {
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-			if (Validator.isBlank(redirect)) {
+			if (!Validator.isBlank(redirect)) {
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else {
 				actionResponse.sendRedirect(themeDisplay.getPathMain());
 			}
 		}

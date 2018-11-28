@@ -98,6 +98,10 @@ public class DDMTemplateVersionLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
+	public static void deleteTemplateVersions(long templateId) {
+		getService().deleteTemplateVersions(templateId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
@@ -258,6 +262,11 @@ public class DDMTemplateVersionLocalServiceUtil {
 		long templateId, String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTemplateVersion(templateId, version);
+	}
+
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion> getTemplateVersions(
+		long templateId) {
+		return getService().getTemplateVersions(templateId);
 	}
 
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion> getTemplateVersions(

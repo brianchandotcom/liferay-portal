@@ -762,6 +762,11 @@ public class DDMTemplateLocalServiceUtil {
 		return getService().getTemplatesByClassPKCount(groupId, classPK);
 	}
 
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplatesByGroupId(
+		long groupId) {
+		return getService().getTemplatesByGroupId(groupId);
+	}
+
 	/**
 	* Returns an ordered range of all the templates matching the group,
 	* structure class name ID, and status.

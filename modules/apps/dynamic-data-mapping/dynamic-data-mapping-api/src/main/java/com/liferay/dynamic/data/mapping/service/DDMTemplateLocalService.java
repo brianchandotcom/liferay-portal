@@ -660,6 +660,9 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getTemplatesByClassPKCount(long groupId, long classPK);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDMTemplate> getTemplatesByGroupId(long groupId);
+
 	/**
 	* Returns an ordered range of all the templates matching the group,
 	* structure class name ID, and status.

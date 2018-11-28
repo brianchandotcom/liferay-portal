@@ -117,6 +117,8 @@ public interface DDMTemplateLinkLocalService extends BaseLocalService,
 
 	public DDMTemplateLink deleteTemplateLink(long classNameId, long classPK);
 
+	public void deleteTemplateLinks(long templateId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
 
@@ -246,6 +248,9 @@ public interface DDMTemplateLinkLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMTemplateLink> getTemplateLinks(long classNameId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDMTemplateLink> getTemplateLinksByTemplateId(long templateId);
 
 	/**
 	* Updates the ddm template link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

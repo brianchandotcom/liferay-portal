@@ -37,16 +37,16 @@ public class DetailASTUtil {
 	}
 
 	public static DetailAST getClosingDetailAST(DetailAST detailAST) {
-		DetailAST semiDetailAST = detailAST.findFirstToken(TokenTypes.SEMI);
-
-		if (semiDetailAST != null) {
-			return semiDetailAST;
-		}
-
 		DetailAST slistDetailAST = detailAST.findFirstToken(TokenTypes.SLIST);
 
 		if (slistDetailAST != null) {
 			return slistDetailAST;
+		}
+
+		DetailAST semiDetailAST = detailAST.findFirstToken(TokenTypes.SEMI);
+
+		if (semiDetailAST != null) {
+			return semiDetailAST;
 		}
 
 		DetailAST emptyStatDetailAST = detailAST.findFirstToken(
@@ -70,6 +70,12 @@ public class DetailASTUtil {
 	}
 
 	public static Position getEndPosition(DetailAST detailAST) {
+		if (detailAST.getType() == TokenTypes.LABELED_STAT) {
+			detailAST = detailAST.getFirstChild();
+
+			detailAST = detailAST.getNextSibling();
+		}
+
 		DetailAST closingDetailAST = getClosingDetailAST(detailAST);
 
 		if (closingDetailAST != null) {

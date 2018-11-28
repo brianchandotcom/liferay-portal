@@ -17,14 +17,15 @@ package com.liferay.portal.odata.internal.filter.expression;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import com.liferay.portal.odata.filter.expression.Expression;
+import com.liferay.portal.odata.filter.expression.LambdaFunctionExpression;
 import com.liferay.portal.odata.filter.expression.LiteralExpression;
 import com.liferay.portal.odata.filter.expression.MethodExpression;
+import com.liferay.portal.odata.filter.expression.PropertyExpression;
 import com.liferay.portal.odata.filter.expression.UnaryExpression;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.olingo.commons.api.edm.EdmEnumType;
 import org.apache.olingo.commons.api.edm.EdmType;
@@ -39,9 +40,16 @@ import org.apache.olingo.commons.core.edm.primitivetype.EdmInt32;
 import org.apache.olingo.commons.core.edm.primitivetype.EdmInt64;
 import org.apache.olingo.commons.core.edm.primitivetype.EdmSByte;
 import org.apache.olingo.commons.core.edm.primitivetype.EdmString;
+import org.apache.olingo.server.api.ODataApplicationException;
 import org.apache.olingo.server.api.uri.UriInfoResource;
 import org.apache.olingo.server.api.uri.UriResource;
+import org.apache.olingo.server.api.uri.UriResourceComplexProperty;
+import org.apache.olingo.server.api.uri.UriResourceKind;
+import org.apache.olingo.server.api.uri.UriResourceLambdaAny;
+import org.apache.olingo.server.api.uri.UriResourcePartTyped;
+import org.apache.olingo.server.api.uri.UriResourcePrimitiveProperty;
 import org.apache.olingo.server.api.uri.queryoption.expression.BinaryOperatorKind;
+import org.apache.olingo.server.api.uri.queryoption.expression.ExpressionVisitException;
 import org.apache.olingo.server.api.uri.queryoption.expression.ExpressionVisitor;
 import org.apache.olingo.server.api.uri.queryoption.expression.Literal;
 import org.apache.olingo.server.api.uri.queryoption.expression.Member;
@@ -85,12 +93,23 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 
 	@Override
 	public Expression visitLambdaExpression(
-		String lambdaFunction, String lambdaVariable,
-		org.apache.olingo.server.api.uri.queryoption.expression.Expression
-			expression) {
+			String lambdaFunction, String lambdaVariable,
+			org.apache.olingo.server.api.uri.queryoption.expression.Expression
+				expression)
+		throws ExpressionVisitException, ODataApplicationException {
 
-		throw new UnsupportedOperationException(
-			"Lambda expression: " + lambdaFunction);
+		if (Objects.equals(
+				StringUtil.toUpperCase(lambdaFunction),
+				LambdaFunctionExpression.Type.ANY.name())) {
+
+			return new LambdaFunctionExpressionImpl(
+				LambdaFunctionExpression.Type.ANY, lambdaVariable,
+				expression.accept(this));
+		}
+		else {
+			throw new UnsupportedOperationException(
+				"Lambda expression: " + lambdaFunction);
+		}
 	}
 
 	@Override
@@ -138,20 +157,13 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 	}
 
 	@Override
-	public Expression visitMember(Member member) {
+	public Expression visitMember(Member member)
+		throws ExpressionVisitException {
+
 		UriInfoResource uriInfoResource = member.getResourcePath();
 
-		List<UriResource> uriResources = uriInfoResource.getUriResourceParts();
-
-		Stream<UriResource> stream = uriResources.stream();
-
-		List<String> resourcePath = stream.map(
-			UriResource::getSegmentValue
-		).collect(
-			Collectors.toList()
-		);
-
-		return new MemberExpressionImpl(resourcePath);
+		return new MemberExpressionImpl(
+			_getExpression(uriInfoResource.getUriResourceParts()));
 	}
 
 	@Override
@@ -183,6 +195,67 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Expression> {
 
 		throw new UnsupportedOperationException(
 			"Unary operator: " + unaryOperatorKind);
+	}
+
+	private Expression _getExpression(List<UriResource> uriResources)
+		throws ExpressionVisitException {
+
+		UriResource uriResource = uriResources.get(0);
+
+		if ((uriResources.size() == 1) &&
+			(uriResource instanceof UriResourcePrimitiveProperty)) {
+
+			return new PrimitivePropertyExpressionImpl(
+				uriResource.getSegmentValue());
+		}
+		else if ((uriResources.size() > 1) &&
+				 (uriResource instanceof UriResourceComplexProperty)) {
+
+			return new ComplexPropertyExpressionImpl(
+				uriResource.getSegmentValue(),
+				(PropertyExpression)_getExpression(
+					uriResources.subList(1, uriResources.size())));
+		}
+		else if ((uriResources.size() > 1) &&
+				 (uriResource instanceof UriResourcePrimitiveProperty)) {
+
+			UriResource lambdaUriResource = uriResources.get(
+				uriResources.size() - 1);
+
+			if (lambdaUriResource instanceof UriResourceLambdaAny) {
+				UriResourceLambdaAny uriResourceLambdaAny =
+					(UriResourceLambdaAny)lambdaUriResource;
+
+				try {
+					return new CollectionPropertyExpressionImpl(
+						(PropertyExpression)_getExpression(
+							uriResources.subList(0, uriResources.size() - 1)),
+						(LambdaFunctionExpression)visitLambdaExpression(
+							LambdaFunctionExpression.Type.ANY.name(),
+							uriResourceLambdaAny.getLambdaVariable(),
+							uriResourceLambdaAny.getExpression()));
+				}
+				catch (ODataApplicationException odae) {
+					throw new ExpressionVisitException(odae);
+				}
+			}
+		}
+		else if (uriResource instanceof UriResourcePartTyped) {
+			UriResourcePartTyped uriResourcePartTyped =
+				(UriResourcePartTyped)uriResource;
+
+			if (Objects.equals(
+					uriResourcePartTyped.getKind(),
+					UriResourceKind.lambdaVariable)) {
+
+				return new LambdaVariableExpressionImpl(
+					uriResource.getSegmentValue());
+			}
+		}
+
+		throw new UnsupportedOperationException(
+			"An expression cannot be obtained from uri resources " +
+				uriResources);
 	}
 
 	private Optional<BinaryExpression.Operation> _getOperationOptional(

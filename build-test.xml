@@ -6542,6 +6542,25 @@ go]]></replacevalue>
 		</if>
 	</target>
 
+	<target name="portal-ext-properties-update">
+		<if>
+			<equals arg1="${add.new.properties}" arg2="true" />
+			<then>
+				<echo append="true" file="portal-impl/src/portal-ext.properties">
+${update.properties}</echo>
+			</then>
+			<else>
+				<replace
+					file="portal-impl/src/portal-ext.properties"
+					token="${update.properties.original}"
+					value="${update.properties}"
+				/>
+			</else>
+		</if>
+
+		<apply-portal-ext-properties />
+	</target>
+
 	<target name="prepare-lcs-gateway-bundle">
 		<ant antfile="build-dist.xml" inheritAll="false" target="unzip-tomcat">
 			<property name="app.server.parent.dir" value="${app.server.parent.dir}/gateway" />
@@ -7406,11 +7425,14 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 	</target>
 
 	<target name="prepare-poshi-runner-properties">
+		<get-ip-address />
+
 		<echo append="true" file="${test.ext.properties.file}">
 			component.names=${component.names}
 			get.location.max.retries=${test.get.location.max.retries}
 			get.location.timeout=${test.get.location.timeout}
 			ignore.errors.file.name=${project.dir}/portal-web/test-ignorable-error-lines.xml
+			ip.address=${ip.address}
 			liferay.home.dir.name=${liferay.home}
 			output.dir.name=${selenium.output.dir.name}
 			product.names=${product.names}

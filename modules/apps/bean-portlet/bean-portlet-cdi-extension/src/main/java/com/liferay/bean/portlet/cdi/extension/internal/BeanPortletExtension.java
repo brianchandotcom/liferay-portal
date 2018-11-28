@@ -668,9 +668,8 @@ public class BeanPortletExtension implements Extension {
 		Map<String, PublicRenderParameter> publicRenderParameters =
 			new HashMap<>();
 
-		for (PublicRenderParameterDefinition
-				publicRenderParameterDefinition:
-					portletApplication.publicParams()) {
+		for (PublicRenderParameterDefinition publicRenderParameterDefinition :
+				portletApplication.publicParams()) {
 
 			PortletQName portletQName = publicRenderParameterDefinition.qname();
 
@@ -930,8 +929,8 @@ public class BeanPortletExtension implements Extension {
 
 		Set<BeanMethod> beanMethods = new HashSet<>();
 
-		for (Map.Entry<MethodType, List<BeanMethod>>
-				entry: beanMethodMap.entrySet()) {
+		for (Map.Entry<MethodType, List<BeanMethod>> entry :
+				beanMethodMap.entrySet()) {
 
 			beanMethods.addAll(entry.getValue());
 		}
@@ -939,8 +938,8 @@ public class BeanPortletExtension implements Extension {
 		Map<MethodType, List<BeanMethod>> descriptorBeanMethodMap =
 			descriptorBeanPortlet.getBeanMethods();
 
-		for (Map.Entry<MethodType, List<BeanMethod>>
-				entry: descriptorBeanMethodMap.entrySet()) {
+		for (Map.Entry<MethodType, List<BeanMethod>> entry :
+				descriptorBeanMethodMap.entrySet()) {
 
 			beanMethods.addAll(entry.getValue());
 		}

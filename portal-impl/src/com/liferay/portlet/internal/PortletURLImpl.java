@@ -1771,8 +1771,8 @@ public class PortletURLImpl
 					Map<String, String[]> mutableRenderParametersMap =
 						_mutableRenderParametersImpl.getParameterMap();
 
-					for (Map.Entry<String, String[]>
-							entry: mutableRenderParametersMap.entrySet()) {
+					for (Map.Entry<String, String[]> entry :
+							mutableRenderParametersMap.entrySet()) {
 
 						_entrySet.add(
 							new SimpleEntry<>(

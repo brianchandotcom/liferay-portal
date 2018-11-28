@@ -120,8 +120,8 @@ public class ResourceRequestImpl
 		Map<String, String[]> liferayRenderParametersMap =
 			liferayRenderParameters.getParameterMap();
 
-		for (Map.Entry<String, String[]>
-				entry: liferayRenderParametersMap.entrySet()) {
+		for (Map.Entry<String, String[]> entry :
+				liferayRenderParametersMap.entrySet()) {
 
 			String renderParameterName = entry.getKey();
 

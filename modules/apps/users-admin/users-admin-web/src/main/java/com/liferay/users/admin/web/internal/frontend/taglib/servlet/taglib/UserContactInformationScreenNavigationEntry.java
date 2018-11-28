@@ -14,11 +14,19 @@
 
 package com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.users.admin.constants.UserFormConstants;
+import com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -32,7 +40,7 @@ public class UserContactInformationScreenNavigationEntry
 
 	@Override
 	public String getActionCommandName() {
-		return "/users_admin/update_contact_information";
+		return "/users_admin/update_user_contact_information";
 	}
 
 	@Override
@@ -58,5 +66,22 @@ public class UserContactInformationScreenNavigationEntry
 
 		return true;
 	}
+
+	@Override
+	public void render(HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		String jsModuleName = _npmResolver.resolveModuleName(
+			"users-admin-web/js/contact-information.es");
+
+		request.setAttribute(
+			UsersAdminWebKeys.CONTACT_INFORMATION_REQUIRE_JS,
+			jsModuleName + " as ContactInformation");
+
+		super.render(request, response);
+	}
+
+	@Reference
+	private NPMResolver _npmResolver;
 
 }

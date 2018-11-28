@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String className = ParamUtil.getString(request, "className");
+
 long phoneId = ParamUtil.getLong(request, "primaryKey", 0L);
 
 Phone phone = null;
@@ -35,7 +37,7 @@ if (phoneId > 0L) {
 
 	<aui:input checked="<%= (phone != null)? phone.isPrimary() : false %>" id="phonePrimary" label="make-primary" name="phonePrimary" type="checkbox" />
 
-	<aui:select inlineField="<%= true %>" label="type" listType="<%= Organization.class.getName() + ListTypeConstants.PHONE %>" name="phoneTypeId" />
+	<aui:select inlineField="<%= true %>" label="type" listType="<%= className + ListTypeConstants.PHONE %>" name="phoneTypeId" />
 
 	<aui:input fieldParam="phoneNumber" id="phoneNumber" name="number" required="<%= true %>" />
 

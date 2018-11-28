@@ -15,9 +15,14 @@
 package com.liferay.users.admin.web.internal.portlet.action;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.AddressCityException;
+import com.liferay.portal.kernel.exception.AddressStreetException;
+import com.liferay.portal.kernel.exception.AddressZipException;
 import com.liferay.portal.kernel.exception.DuplicateOpenIdException;
 import com.liferay.portal.kernel.exception.EmailAddressException;
+import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.NoSuchListTypeException;
+import com.liferay.portal.kernel.exception.NoSuchRegionException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PhoneNumberException;
 import com.liferay.portal.kernel.exception.PhoneNumberExtensionException;
@@ -27,11 +32,7 @@ import com.liferay.portal.kernel.exception.WebsiteURLException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ContactConstants;
-import com.liferay.portal.kernel.model.EmailAddress;
-import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.Website;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -41,15 +42,13 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
-
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -66,12 +65,12 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ACCOUNT,
 		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ORGANIZATIONS,
 		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
-		"mvc.command.name=/users_admin/update_contact_information"
+		"mvc.command.name=/users_admin/update_user_contact_information"
 	},
 	service = MVCActionCommand.class
 )
-public class UpdateContactInformationMVCActionCommand
-	extends BaseMVCActionCommand {
+public class UpdateUserContactInformationMVCActionCommand
+	extends BaseContactInformationMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -82,48 +81,22 @@ public class UpdateContactInformationMVCActionCommand
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			User user = _portal.getSelectedUser(actionRequest);
+			long contactId = ParamUtil.getLong(actionRequest, "classPK");
+
+			User user = _userLocalService.getUserByContactId(contactId);
 
 			UserPermissionUtil.check(
 				themeDisplay.getPermissionChecker(), user.getUserId(),
 				ActionKeys.UPDATE);
 
-			List<EmailAddress> emailAddresses = _usersAdmin.getEmailAddresses(
-				actionRequest);
-			List<Phone> phones = _usersAdmin.getPhones(actionRequest);
-			List<Website> websites = _usersAdmin.getWebsites(actionRequest);
+			String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-			if (emailAddresses != null) {
-				_usersAdmin.updateEmailAddresses(
-					Contact.class.getName(), user.getContactId(),
-					emailAddresses);
+			if (Validator.isNotNull(cmd)) {
+				updateContactInformation(actionRequest, Contact.class);
 			}
-
-			if (phones != null) {
-				_usersAdmin.updatePhones(
-					Contact.class.getName(), user.getContactId(), phones);
+			else {
+				saveContactInformationForm(actionRequest);
 			}
-
-			if (websites != null) {
-				_usersAdmin.updateWebsites(
-					Contact.class.getName(), user.getContactId(), websites);
-			}
-
-			String facebookSn = ParamUtil.getString(
-				actionRequest, "facebookSn");
-			String jabberSn = ParamUtil.getString(actionRequest, "jabberSn");
-			String skypeSn = ParamUtil.getString(actionRequest, "skypeSn");
-			String smsSn = ParamUtil.getString(actionRequest, "smsSn");
-			String twitterSn = ParamUtil.getString(actionRequest, "twitterSn");
-
-			_updateContact(
-				user, facebookSn, jabberSn, skypeSn, smsSn, twitterSn);
-
-			String openId = ParamUtil.getString(actionRequest, "openId");
-
-			_validateOpenId(user.getCompanyId(), user.getUserId(), openId);
-
-			_userLocalService.updateOpenId(user.getUserId(), openId);
 
 			String redirect = _portal.escapeRedirect(
 				ParamUtil.getString(actionRequest, "redirect"));
@@ -138,9 +111,14 @@ public class UpdateContactInformationMVCActionCommand
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof DuplicateOpenIdException ||
+			else if (e instanceof AddressCityException ||
+					 e instanceof AddressStreetException ||
+					 e instanceof AddressZipException ||
+					 e instanceof DuplicateOpenIdException ||
 					 e instanceof EmailAddressException ||
+					 e instanceof NoSuchCountryException ||
 					 e instanceof NoSuchListTypeException ||
+					 e instanceof NoSuchRegionException ||
 					 e instanceof PhoneNumberException ||
 					 e instanceof PhoneNumberExtensionException ||
 					 e instanceof UserEmailAddressException ||
@@ -157,7 +135,30 @@ public class UpdateContactInformationMVCActionCommand
 		}
 	}
 
-	private void _updateContact(
+	protected void saveContactInformationForm(ActionRequest actionRequest)
+		throws Exception {
+
+		long contactId = ParamUtil.getLong(actionRequest, "classPK");
+
+		User user = _userLocalService.getUserByContactId(contactId);
+
+		String facebookSn = ParamUtil.getString(actionRequest, "facebookSn");
+		String jabberSn = ParamUtil.getString(actionRequest, "jabberSn");
+		String skypeSn = ParamUtil.getString(actionRequest, "skypeSn");
+		String smsSn = ParamUtil.getString(actionRequest, "smsSn");
+		String twitterSn = ParamUtil.getString(actionRequest, "twitterSn");
+
+		_saveContactInformation(
+			user, facebookSn, jabberSn, skypeSn, smsSn, twitterSn);
+
+		String openId = ParamUtil.getString(actionRequest, "openId");
+
+		_validateOpenId(user.getCompanyId(), user.getUserId(), openId);
+
+		_userLocalService.updateOpenId(user.getUserId(), openId);
+	}
+
+	private void _saveContactInformation(
 			User user, String facebookSn, String jabberSn, String skypeSn,
 			String smsSn, String twitterSn)
 		throws Exception {
@@ -224,8 +225,5 @@ public class UpdateContactInformationMVCActionCommand
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private UsersAdmin _usersAdmin;
 
 }

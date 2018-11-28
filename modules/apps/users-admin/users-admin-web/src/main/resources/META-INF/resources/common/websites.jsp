@@ -17,47 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String className = (String)request.getAttribute("websites.className");
-long classPK = (Long)request.getAttribute("websites.classPK");
+String className = (String)request.getAttribute("contact_information.jsp-className");
+long classPK = (long)request.getAttribute("contact_information.jsp-classPK");
+String contactInformationRequireJS = (String)request.getAttribute("contact_information.jsp-contactInformationRequireJS");
 
-List<Website> websites = Collections.emptyList();
+String emptyResultsMessage = ParamUtil.getString(request, "emptyResultsMessage");
 
-int[] websitesIndexes = null;
-
-String websitesIndexesParam = ParamUtil.getString(request, "websitesIndexes");
-
-if (Validator.isNotNull(websitesIndexesParam)) {
-	websites = new ArrayList<Website>();
-
-	websitesIndexes = StringUtil.split(websitesIndexesParam, 0);
-
-	for (int websitesIndex : websitesIndexes) {
-		websites.add(new WebsiteImpl());
-	}
-}
-else {
-	if (classPK > 0) {
-		websites = WebsiteServiceUtil.getWebsites(className, classPK);
-
-		websitesIndexes = new int[websites.size()];
-
-		for (int i = 0; i < websites.size(); i++) {
-			websitesIndexes[i] = i;
-		}
-	}
-
-	if (websites.isEmpty()) {
-		websites = new ArrayList<Website>();
-
-		websites.add(new WebsiteImpl());
-
-		websitesIndexes = new int[] {0};
-	}
-
-	if (websitesIndexes == null) {
-		websitesIndexes = new int[0];
-	}
-}
+List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 %>
 
 <liferay-ui:error-marker
@@ -65,53 +31,104 @@ else {
 	value="websites"
 />
 
-<div class="alert alert-info">
-	<liferay-ui:message key="url-and-type-are-required-fields.-websites-must-start-with-http-or-https" />
-</div>
-
 <liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.WEBSITE %>" message="please-select-a-type" />
 <liferay-ui:error exception="<%= WebsiteURLException.class %>" message="please-enter-a-valid-url" />
 
-<aui:fieldset id='<%= renderResponse.getNamespace() + "websites" %>'>
+<h3 class="sheet-subtitle">
+	<span class="autofit-padded-no-gutters autofit-row">
+		<span class="autofit-col autofit-col-expand">
+			<span class="heading-text">
+				<liferay-ui:message key="websites" />
+			</span>
+		</span>
+		<span class="autofit-col">
+			<liferay-ui:icon
+				cssClass="modify-website-link"
+				data="<%=
+					new HashMap<String, Object>() {
+						{
+							put("title", LanguageUtil.get(request, "add-website"));
+						}
+					}
+				%>"
+				label="<%= true %>"
+				linkCssClass="btn btn-secondary btn-sm"
+				message="add"
+				url="javascript:;"
+			/>
+		</span>
+	</span>
+</h3>
 
-	<%
-	for (int i = 0; i < websitesIndexes.length; i++) {
-		int websitesIndex = websitesIndexes[i];
+<liferay-ui:search-container
+	compactEmptyResultsMessage="<%= true %>"
+	cssClass="lfr-search-container-wrapper"
+	curParam="websitesCur"
+	deltaParam="websitesDelta"
+	emptyResultsMessage="<%= emptyResultsMessage %>"
+	headerNames="website,type,"
+	id="websitesSearchContainer"
+	iteratorURL="<%= currentURLObj %>"
+	total="<%= websites.size() %>"
+>
+	<liferay-ui:search-container-results
+		results="<%= websites.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
+	/>
 
-		Website website = websites.get(i);
-	%>
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.kernel.model.Website"
+		escapedModel="<%= true %>"
+		keyProperty="websiteId"
+		modelVar="website"
+	>
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
+			name="website"
+			property="url"
+		/>
 
-		<aui:model-context bean="<%= website %>" model="<%= Website.class %>" />
+		<%
+		ListType websiteListType = ListTypeServiceUtil.getListType(website.getTypeId());
 
-		<div class="form-group-autofit lfr-form-row">
-			<aui:input name='<%= "websiteId" + websitesIndex %>' type="hidden" value="<%= website.getWebsiteId() %>" />
+		String websiteTypeKey = websiteListType.getName();
+		%>
 
-			<div class="form-group-item">
-				<aui:input cssClass="url-field" fieldParam='<%= "websiteUrl" + websitesIndex %>' id='<%= "websiteUrl" + websitesIndex %>' inlineField="<%= true %>" name="url" />
-			</div>
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
+			name="type"
+			value="<%= LanguageUtil.get(request, websiteTypeKey) %>"
+		/>
 
-			<div class="form-group-item">
-				<aui:select inlineField="<%= true %>" label="type" listType="<%= className + ListTypeConstants.WEBSITE %>" name='<%= "websiteTypeId" + websitesIndex %>' />
-			</div>
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
+		>
+			<c:if test="<%= website.isPrimary() %>">
+				<span class="label label-primary">
+					<span class="label-item label-item-expand"><%= StringUtil.toUpperCase(LanguageUtil.get(request, "primary"), locale) %></span>
+				</span>
+			</c:if>
+		</liferay-ui:search-container-column-text>
 
-			<div class="form-group-item form-group-item-label-spacer">
-				<aui:input checked="<%= website.isPrimary() %>" cssClass="primary-ctrl" id='<%= "websitePrimary" + websitesIndex %>' inlineField="<%= true %>" label="primary" name="websitePrimary" type="radio" value="<%= websitesIndex %>" />
-			</div>
-		</div>
+		<liferay-ui:search-container-column-jsp
+			cssClass="entry-action-column"
+			path="/common/website_action.jsp"
+		/>
+	</liferay-ui:search-container-row>
 
-	<%
-	}
-	%>
+	<liferay-ui:search-iterator
+		markupView="lexicon"
+	/>
+</liferay-ui:search-container>
 
-	<aui:input name="websitesIndexes" type="hidden" value="<%= StringUtil.merge(websitesIndexes) %>" />
-</aui:fieldset>
+<portlet:renderURL var="editWebsiteRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcPath" value="/common/edit_website.jsp" />
+	<portlet:param name="className" value="<%= className %>" />
+</portlet:renderURL>
 
-<aui:script use="liferay-auto-fields">
-	new Liferay.AutoFields(
-		{
-			contentBox: '#<portlet:namespace />websites',
-			fieldIndexes: '<portlet:namespace />websitesIndexes',
-			namespace: '<portlet:namespace />'
-		}
-	).render();
+<aui:script require="<%= contactInformationRequireJS %>">
+	ContactInformation.registerContactInformationListener(
+		'.modify-website-link a',
+		'<%= editWebsiteRenderURL.toString() %>',
+		460
+	);
 </aui:script>

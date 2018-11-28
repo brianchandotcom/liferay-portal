@@ -18,48 +18,31 @@
 
 <%
 OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayContext = (OrganizationScreenNavigationDisplayContext)request.getAttribute(UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT);
+
+long organizationId = organizationScreenNavigationDisplayContext.getOrganizationId();
+
+request.setAttribute("contact_information.jsp-className", Organization.class.getName());
+request.setAttribute("contact_information.jsp-classPK", organizationId);
+request.setAttribute("contact_information.jsp-contactInformationRequireJS", organizationScreenNavigationDisplayContext.getContactInformationJSRequire());
+request.setAttribute("contact_information.jsp-mvcActionPath", "/users_admin/update_organization_contact_information");
 %>
 
+<aui:input name="classPK" type="hidden" value="<%= String.valueOf(organizationId) %>" />
+
 <div class="sheet-section">
-	<liferay-util:include page="/organization/phone_numbers.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/common/phone_numbers.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="emptyResultsMessage" value="this-organization-does-not-have-any-phone-numbers" />
+	</liferay-util:include>
 </div>
 
 <div class="sheet-section">
-	<liferay-util:include page="/organization/additional_email_addresses.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/common/additional_email_addresses.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="emptyResultsMessage" value="this-organization-does-not-have-any-additional-email-addresses" />
+	</liferay-util:include>
 </div>
 
 <div class="sheet-section">
-	<liferay-util:include page="/organization/websites.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/common/websites.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="emptyResultsMessage" value="this-organization-does-not-have-any-websites" />
+	</liferay-util:include>
 </div>
-
-<portlet:renderURL var="editPhoneRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcPath" value="/organization/edit_phone_number.jsp" />
-</portlet:renderURL>
-
-<portlet:renderURL var="editEmailAddressRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcPath" value="/organization/edit_email_address.jsp" />
-</portlet:renderURL>
-
-<portlet:renderURL var="editWebsiteRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcPath" value="/organization/edit_website.jsp" />
-</portlet:renderURL>
-
-<aui:script require="<%= organizationScreenNavigationDisplayContext.getContactInformationJSRequire() %>">
-	ContactInformation.registerContactInformationListener(
-		'.modify-phone-number-link a',
-		'<%= editPhoneRenderURL.toString() %>',
-		470
-	);
-
-	ContactInformation.registerContactInformationListener(
-		'.modify-email-address-link a',
-		'<%= editEmailAddressRenderURL.toString() %>',
-		390
-	);
-
-	ContactInformation.registerContactInformationListener(
-		'.modify-website-link a',
-		'<%= editWebsiteRenderURL.toString() %>',
-		460
-	);
-</aui:script>

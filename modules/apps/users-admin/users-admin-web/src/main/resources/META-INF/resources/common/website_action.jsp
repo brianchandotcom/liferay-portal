@@ -17,9 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayContext = (OrganizationScreenNavigationDisplayContext)request.getAttribute(UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT);
-
-long organizationId = organizationScreenNavigationDisplayContext.getOrganizationId();
+long classPK = (long)request.getAttribute("contact_information.jsp-classPK");
+String mvcActionPath = (String)request.getAttribute("contact_information.jsp-mvcActionPath");
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
@@ -49,29 +48,33 @@ long websiteId = website.getWebsiteId();
 		url="javascript:;"
 	/>
 
-	<portlet:actionURL name="/users_admin/update_organization_contact_information" var="makePrimaryURL">
-		<portlet:param name="<%= Constants.CMD %>" value="makePrimary" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="listType" value="<%= ListTypeConstants.WEBSITE %>" />
-		<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
-		<portlet:param name="primaryKey" value="<%= String.valueOf(websiteId) %>" />
-	</portlet:actionURL>
+	<%
+	PortletURL portletURL = renderResponse.createActionURL();
+
+	portletURL.setParameter(ActionRequest.ACTION_NAME, mvcActionPath);
+	portletURL.setParameter("classPK", String.valueOf(classPK));
+	portletURL.setParameter("listType", ListTypeConstants.WEBSITE);
+	portletURL.setParameter("primaryKey", String.valueOf(websiteId));
+	portletURL.setParameter("redirect", currentURL);
+
+	PortletURL makePrimaryURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+	makePrimaryURL.setParameter(Constants.CMD, "makePrimary");
+	%>
 
 	<liferay-ui:icon
 		message="make-primary"
-		url="<%= makePrimaryURL %>"
+		url="<%= makePrimaryURL.toString() %>"
 	/>
 
-	<portlet:actionURL name="/users_admin/update_organization_contact_information" var="removeWebsiteURL">
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="listType" value="<%= ListTypeConstants.WEBSITE %>" />
-		<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
-		<portlet:param name="primaryKey" value="<%= String.valueOf(websiteId) %>" />
-	</portlet:actionURL>
+	<%
+	PortletURL removeWebsiteURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+	removeWebsiteURL.setParameter(Constants.CMD, Constants.DELETE);
+	%>
 
 	<liferay-ui:icon
 		message="remove"
-		url="<%= removeWebsiteURL %>"
+		url="<%= removeWebsiteURL.toString() %>"
 	/>
 </liferay-ui:icon-menu>

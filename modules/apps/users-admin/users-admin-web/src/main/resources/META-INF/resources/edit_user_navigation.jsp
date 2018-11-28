@@ -68,13 +68,15 @@ if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 	<aui:input name="screenNavigationEntryKey" type="hidden" value="<%= screenNavigationEntryKey %>" />
 
 	<div class="sheet sheet-lg">
-		<h2 class="sheet-title"><%= formLabel %></h2>
+		<c:if test="<%= (boolean)request.getAttribute(UsersAdminWebKeys.SHOW_TITLE) %>">
+			<h2 class="sheet-title"><%= formLabel %></h2>
+		</c:if>
 
 		<div class="sheet-section">
 			<liferay-util:include page="<%= jspPath %>" servletContext="<%= application %>" />
 		</div>
 
-		<c:if test="<%= editable %>">
+		<c:if test="<%= editable && (boolean)request.getAttribute(UsersAdminWebKeys.SHOW_CONTROLS) %>">
 			<div class="sheet-footer">
 				<aui:button primary="<%= true %>" type="submit" />
 

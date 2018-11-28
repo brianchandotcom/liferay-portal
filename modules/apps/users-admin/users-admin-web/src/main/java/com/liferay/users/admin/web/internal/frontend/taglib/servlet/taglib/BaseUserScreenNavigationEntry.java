@@ -61,6 +61,14 @@ public abstract class BaseUserScreenNavigationEntry
 		return true;
 	}
 
+	public boolean isShowControls() {
+		return true;
+	}
+
+	public boolean isShowTitle() {
+		return true;
+	}
+
 	@Override
 	public void render(HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
@@ -76,6 +84,8 @@ public abstract class BaseUserScreenNavigationEntry
 		request.setAttribute(
 			UsersAdminWebKeys.FORM_LABEL, getLabel(request.getLocale()));
 		request.setAttribute(UsersAdminWebKeys.JSP_PATH, getJspPath());
+		request.setAttribute(UsersAdminWebKeys.SHOW_CONTROLS, isShowControls());
+		request.setAttribute(UsersAdminWebKeys.SHOW_TITLE, isShowTitle());
 
 		jspRenderer.renderJSP(request, response, "/edit_user_navigation.jsp");
 	}

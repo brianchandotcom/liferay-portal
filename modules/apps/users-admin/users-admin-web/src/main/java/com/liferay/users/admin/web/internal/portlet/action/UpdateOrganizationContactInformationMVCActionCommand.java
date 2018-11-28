@@ -26,44 +26,21 @@ import com.liferay.portal.kernel.exception.NoSuchRegionException;
 import com.liferay.portal.kernel.exception.PhoneNumberException;
 import com.liferay.portal.kernel.exception.PhoneNumberExtensionException;
 import com.liferay.portal.kernel.exception.WebsiteURLException;
-import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.AddressLocalService;
-import com.liferay.portal.kernel.service.AddressService;
-import com.liferay.portal.kernel.service.EmailAddressLocalService;
-import com.liferay.portal.kernel.service.EmailAddressService;
-import com.liferay.portal.kernel.service.OrgLaborLocalService;
-import com.liferay.portal.kernel.service.OrgLaborService;
-import com.liferay.portal.kernel.service.OrganizationService;
-import com.liferay.portal.kernel.service.PhoneLocalService;
-import com.liferay.portal.kernel.service.PhoneService;
-import com.liferay.portal.kernel.service.WebsiteLocalService;
-import com.liferay.portal.kernel.service.WebsiteService;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
-import com.liferay.users.admin.web.internal.manager.AddressContactInfoManager;
-import com.liferay.users.admin.web.internal.manager.ContactInfoManager;
-import com.liferay.users.admin.web.internal.manager.EmailAddressContactInfoManager;
-import com.liferay.users.admin.web.internal.manager.OrgLaborContactInfoManager;
-import com.liferay.users.admin.web.internal.manager.PhoneContactInfoManager;
-import com.liferay.users.admin.web.internal.manager.WebsiteContactInfoManager;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Samuel Trong Tran
@@ -78,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class UpdateOrganizationContactInformationMVCActionCommand
-	extends BaseMVCActionCommand {
+	extends BaseContactInformationMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -86,7 +63,16 @@ public class UpdateOrganizationContactInformationMVCActionCommand
 		throws Exception {
 
 		try {
-			updateContactInformation(actionRequest);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			long organizationId = ParamUtil.getLong(actionRequest, "classPK");
+
+			OrganizationPermissionUtil.check(
+				themeDisplay.getPermissionChecker(), organizationId,
+				ActionKeys.UPDATE);
+
+			updateContactInformation(actionRequest, Organization.class);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchOrganizationException ||
@@ -118,117 +104,5 @@ public class UpdateOrganizationContactInformationMVCActionCommand
 			}
 		}
 	}
-
-	protected ContactInfoManager getContactInformationHelper(
-		ActionRequest actionRequest) {
-
-		String listType = ParamUtil.getString(actionRequest, "listType");
-		long organizationId = ParamUtil.getLong(
-			actionRequest, "organizationId");
-
-		if (listType.equals(ListTypeConstants.ADDRESS)) {
-			return new AddressContactInfoManager(
-				Organization.class, organizationId, _addressLocalService,
-				_addressService);
-		}
-		else if (listType.equals(ListTypeConstants.EMAIL_ADDRESS)) {
-			return new EmailAddressContactInfoManager(
-				Organization.class, organizationId, _emailAddressLocalService,
-				_emailAddressService, _usersAdmin);
-		}
-		else if (listType.equals(ListTypeConstants.PHONE)) {
-			return new PhoneContactInfoManager(
-				Organization.class, organizationId, _phoneLocalService,
-				_phoneService, _usersAdmin);
-		}
-		else if (listType.equals(ListTypeConstants.ORGANIZATION_SERVICE)) {
-			return new OrgLaborContactInfoManager(
-				organizationId, _orgLaborLocalService, _orgLaborService);
-		}
-		else if (listType.equals(ListTypeConstants.WEBSITE)) {
-			return new WebsiteContactInfoManager(
-				Organization.class, organizationId, _websiteLocalService,
-				_websiteService, _usersAdmin);
-		}
-
-		return null;
-	}
-
-	protected void updateContactInformation(ActionRequest actionRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long organizationId = ParamUtil.getLong(
-			actionRequest, "organizationId");
-
-		Organization organization = _organizationService.getOrganization(
-			organizationId);
-
-		OrganizationPermissionUtil.check(
-			themeDisplay.getPermissionChecker(), organization,
-			ActionKeys.UPDATE);
-
-		ContactInfoManager contactInformationHelper =
-			getContactInformationHelper(actionRequest);
-
-		if (contactInformationHelper == null) {
-			throw new NoSuchListTypeException();
-		}
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		long primaryKey = ParamUtil.getLong(actionRequest, "primaryKey");
-
-		if (cmd.equals(Constants.DELETE)) {
-			contactInformationHelper.delete(primaryKey);
-		}
-		else if (cmd.equals(Constants.EDIT)) {
-			contactInformationHelper.edit(actionRequest);
-		}
-		else if (cmd.equals("makePrimary")) {
-			contactInformationHelper.makePrimary(primaryKey);
-		}
-	}
-
-	@Reference
-	private AddressLocalService _addressLocalService;
-
-	@Reference
-	private AddressService _addressService;
-
-	@Reference
-	private EmailAddressLocalService _emailAddressLocalService;
-
-	@Reference
-	private EmailAddressService _emailAddressService;
-
-	@Reference
-	private OrganizationService _organizationService;
-
-	@Reference
-	private OrgLaborLocalService _orgLaborLocalService;
-
-	@Reference
-	private OrgLaborService _orgLaborService;
-
-	@Reference
-	private PhoneLocalService _phoneLocalService;
-
-	@Reference
-	private PhoneService _phoneService;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private UsersAdmin _usersAdmin;
-
-	@Reference
-	private WebsiteLocalService _websiteLocalService;
-
-	@Reference
-	private WebsiteService _websiteService;
 
 }

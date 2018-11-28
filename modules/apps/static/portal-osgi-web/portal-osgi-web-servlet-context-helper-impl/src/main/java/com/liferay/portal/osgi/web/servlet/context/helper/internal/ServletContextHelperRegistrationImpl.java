@@ -116,18 +116,60 @@ public class ServletContextHelperRegistrationImpl
 
 	@Override
 	public void close() {
-		_servletContextRegistration.unregister();
+		try {
+			_servletContextRegistration.unregister();
+		}
+		catch (IllegalStateException ise) {
 
-		_servletContextHelperServiceRegistration.unregister();
+			// ignore since the service has been unregistered
 
-		_servletContextListenerServiceRegistration.unregister();
+		}
 
-		_defaultServletServiceRegistration.unregister();
+		try {
+			_servletContextHelperServiceRegistration.unregister();
+		}
+		catch (IllegalStateException ise) {
 
-		_jspServletServiceRegistration.unregister();
+			// ignore since the service has been unregistered
+
+		}
+
+		try {
+			_servletContextListenerServiceRegistration.unregister();
+		}
+		catch (IllegalStateException ise) {
+
+			// ignore since the service has been unregistered
+
+		}
+
+		try {
+			_defaultServletServiceRegistration.unregister();
+		}
+		catch (IllegalStateException ise) {
+
+			// ignore since the service has been unregistered
+
+		}
+
+		try {
+			_jspServletServiceRegistration.unregister();
+		}
+		catch (IllegalStateException ise) {
+
+			// ignore since the service has been unregistered
+
+		}
 
 		if (_portletServletServiceRegistration != null) {
-			_portletServletServiceRegistration.unregister();
+			try {
+				_portletServletServiceRegistration.unregister();
+			}
+			catch (IllegalStateException ise) {
+
+				// ignore since the service has been unregistered
+
+			}
 		}
 	}
 

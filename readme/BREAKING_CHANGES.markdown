@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit ``.*
+*This document has been reviewed through commit `78a0d43e30b2`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -31,8 +31,8 @@ information:
   the capitalization rules from
   <http://en.wikibooks.org/wiki/Basic_Book_Design/Capitalizing_Words_in_Titles>.
 * **Date:** Specify the date you submitted the change. Format the date as
-  *YYYY-MMM* (e.g., 2014-Mar) or *YYYY-MMM-DD* (e.g., 2014-Feb-25).
-* **JIRA Ticket:** Reference the related JIRA ticket (e.g., LPS-123456)
+  *YYYY-MMM-DD* (e.g., 2014-Feb-25).
+* **JIRA Ticket:** Reference the related JIRA ticket (e.g., LPS-12345)
   (Optional).
 * **What changed?** Identify the affected component and the type of change that
   was made.
@@ -73,27 +73,29 @@ in ascending chronological order.
 
 ## Breaking Changes List
 
-### Lodash is no longer included by default
+### Lodash Is No Longer Included by Default
 - **Date:** 2018-Nov-27
-- **JIRA Ticket:** LPS-87677
+- **JIRA Ticket:** [LPS-87677](https://issues.liferay.com/browse/LPS-87677)
 
 #### What changed?
 
-Previously, Lodash was being included in every page by default and made available
-through the global `window._` and the scoped `AUI._` variables. After this change,
-Lodash is no longer included by default and those variables will be undefined
+Previously, Lodash was included in every page by default and made available
+through the global `window._` and scoped `AUI._` variables. Lodash is no longer
+included by default and those variables are now undefined.
 
 #### Who is affected?
 
-This affects any developer who used `AUI._` or `window._` in their custom scripts.
+This affects any developer who used the `AUI._` or `window._` variables in their
+custom scripts.
 
 #### How should I update my code?
 
-You should provide your own version `Lodash` to be used by your custom developments
+You should provide your own Lodash version for your custom developments to use
 following any of the possible strategies to add third party libraries.
 
-Additionally, as a temporary measure, you can bring back the old behaviour by setting
-the `Enable Lodash` property in `System Settings > Third Party > Lodash` to `true`.
+As a temporary measure, you can bring back the old behavior by setting the
+*Enable Lodash* property in *System Settings* &rarr; *Third Party* &rarr;
+*Lodash* to `true`.
 
 #### Why was this change made?
 

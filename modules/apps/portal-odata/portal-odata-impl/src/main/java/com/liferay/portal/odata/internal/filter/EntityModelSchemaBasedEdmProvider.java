@@ -14,6 +14,7 @@
 
 package com.liferay.portal.odata.internal.filter;
 
+import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -59,6 +60,18 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 					_NAMESPACE, entityModel.getEntityFieldsMap()),
 				_createCsdlComplexTypes(
 					_NAMESPACE, entityModel.getEntityFieldsMap())));
+	}
+
+	private CsdlProperty _createCollectionCsdlProperty(
+		EntityField entityField, FullQualifiedName fullQualifiedName) {
+
+		CsdlProperty csdlProperty = new CsdlProperty();
+
+		csdlProperty.setCollection(true);
+		csdlProperty.setName(entityField.getName());
+		csdlProperty.setType(fullQualifiedName);
+
+		return csdlProperty;
 	}
 
 	private Optional<CsdlComplexType> _createCsdlComplexType(
@@ -176,15 +189,7 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 	private Optional<CsdlProperty> _createCsdlProperty(
 		String namespace, EntityField entityField) {
 
-		if (Objects.equals(entityField.getType(), EntityField.Type.BOOLEAN)) {
-			return Optional.of(
-				_createPrimitiveCsdlProperty(
-					entityField,
-					EdmPrimitiveTypeKind.Boolean.getFullQualifiedName()));
-		}
-		else if (Objects.equals(
-					entityField.getType(), EntityField.Type.COMPLEX)) {
-
+		if (Objects.equals(entityField.getType(), EntityField.Type.COMPLEX)) {
 			CsdlProperty csdlProperty = new CsdlProperty();
 
 			csdlProperty.setName(entityField.getName());
@@ -194,48 +199,31 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 
 			return Optional.of(csdlProperty);
 		}
-		else if (Objects.equals(entityField.getType(), EntityField.Type.DATE)) {
-			return Optional.of(
-				_createPrimitiveCsdlProperty(
-					entityField,
-					EdmPrimitiveTypeKind.Date.getFullQualifiedName()));
-		}
-		else if (Objects.equals(
-					entityField.getType(), EntityField.Type.DATE_TIME)) {
+		else {
+			Optional<FullQualifiedName> fullQualifiedNameOptional =
+				_getFullQualifiedName(entityField);
 
-			return Optional.of(
-				_createPrimitiveCsdlProperty(
-					entityField,
-					EdmPrimitiveTypeKind.DateTimeOffset.
-						getFullQualifiedName()));
-		}
-		else if (Objects.equals(
-					entityField.getType(), EntityField.Type.DOUBLE)) {
+			return fullQualifiedNameOptional.map(
+				fullQualifiedName -> {
+					if (Objects.equals(
+							entityField.getType(),
+							EntityField.Type.COLLECTION)) {
 
-			return Optional.of(
-				_createPrimitiveCsdlProperty(
-					entityField,
-					EdmPrimitiveTypeKind.Double.getFullQualifiedName()));
-		}
-		else if (Objects.equals(entityField.getType(), EntityField.Type.ID) ||
-				 Objects.equals(
-					 entityField.getType(), EntityField.Type.STRING)) {
+						return Optional.of(
+							_createCollectionCsdlProperty(
+								entityField, fullQualifiedName)
+						);
+					}
 
-			return Optional.of(
-				_createPrimitiveCsdlProperty(
-					entityField,
-					EdmPrimitiveTypeKind.String.getFullQualifiedName()));
+					return Optional.of(
+						_createPrimitiveCsdlProperty(
+							entityField, fullQualifiedName)
+					);
+				}
+			).orElse(
+				Optional.empty()
+			);
 		}
-		else if (Objects.equals(
-					entityField.getType(), EntityField.Type.INTEGER)) {
-
-			return Optional.of(
-				_createPrimitiveCsdlProperty(
-					entityField,
-					EdmPrimitiveTypeKind.Int64.getFullQualifiedName()));
-		}
-
-		return Optional.empty();
 	}
 
 	private CsdlSchema _createCsdlSchema(
@@ -264,6 +252,55 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 		csdlProperty.setType(fullQualifiedName);
 
 		return csdlProperty;
+	}
+
+	private Optional<FullQualifiedName> _getFullQualifiedName(
+		EntityField entityField) {
+
+		if (Objects.equals(entityField.getType(), EntityField.Type.BOOLEAN)) {
+			return Optional.of(
+				EdmPrimitiveTypeKind.Boolean.getFullQualifiedName());
+		}
+		else if (Objects.equals(
+					entityField.getType(), EntityField.Type.COLLECTION)) {
+
+			CollectionEntityField collectionEntityField =
+				(CollectionEntityField)entityField;
+
+			return _getFullQualifiedName(
+				collectionEntityField.getEntityField());
+		}
+		else if (Objects.equals(entityField.getType(), EntityField.Type.DATE)) {
+			return Optional.of(
+				EdmPrimitiveTypeKind.Date.getFullQualifiedName());
+		}
+		else if (Objects.equals(
+					entityField.getType(), EntityField.Type.DATE_TIME)) {
+
+			return Optional.of(
+				EdmPrimitiveTypeKind.DateTimeOffset.getFullQualifiedName());
+		}
+		else if (Objects.equals(
+					entityField.getType(), EntityField.Type.DOUBLE)) {
+
+			return Optional.of(
+				EdmPrimitiveTypeKind.Double.getFullQualifiedName());
+		}
+		else if (Objects.equals(entityField.getType(), EntityField.Type.ID) ||
+				 Objects.equals(
+					 entityField.getType(), EntityField.Type.STRING)) {
+
+			return Optional.of(
+				EdmPrimitiveTypeKind.String.getFullQualifiedName());
+		}
+		else if (Objects.equals(
+					entityField.getType(), EntityField.Type.INTEGER)) {
+
+			return Optional.of(
+				EdmPrimitiveTypeKind.Int64.getFullQualifiedName());
+		}
+
+		return Optional.empty();
 	}
 
 	private static final String _NAMESPACE = "HypermediaRestApis";

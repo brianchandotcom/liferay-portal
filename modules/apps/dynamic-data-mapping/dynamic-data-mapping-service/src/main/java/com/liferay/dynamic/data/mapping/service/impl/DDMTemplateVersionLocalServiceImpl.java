@@ -32,6 +32,11 @@ public class DDMTemplateVersionLocalServiceImpl
 	extends DDMTemplateVersionLocalServiceBaseImpl {
 
 	@Override
+	public void deleteTemplateVersions(long templateId) {
+		ddmTemplateVersionPersistence.removeByTemplateId(templateId);
+	}
+
+	@Override
 	public DDMTemplateVersion getLatestTemplateVersion(long templateId)
 		throws PortalException {
 
@@ -65,6 +70,11 @@ public class DDMTemplateVersionLocalServiceImpl
 		throws PortalException {
 
 		return ddmTemplateVersionPersistence.findByT_V(templateId, version);
+	}
+
+	@Override
+	public List<DDMTemplateVersion> getTemplateVersions(long templateId) {
+		return ddmTemplateVersionPersistence.findByTemplateId(templateId);
 	}
 
 	@Override

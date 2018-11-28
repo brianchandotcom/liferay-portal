@@ -19,7 +19,10 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * Represents a segments criteria field.
+ *
  * @author Eduardo Garcia
+ * @review
  */
 public final class Field implements Comparable<Field>, Serializable {
 

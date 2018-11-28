@@ -24,7 +24,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Represents a segment criteria as a composition of {@link Criterion} objects.
+ *
  * @author Eduardo Garcia
+ * @review
  */
 public final class Criteria implements Serializable {
 

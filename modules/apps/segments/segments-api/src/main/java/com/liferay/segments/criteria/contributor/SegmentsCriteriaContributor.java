@@ -23,23 +23,61 @@ import java.util.List;
 import java.util.Locale;
 
 /**
+ * Provides an interface for extending the segment {@link Criteria} by adding
+ * more filters.
+ *
  * @author Eduardo Garcia
+ * @review
  */
 @ConsumerType
 public interface SegmentsCriteriaContributor {
 
+	/**
+	 * Contributes a criterion to a segment criteria.
+	 *
+	 * @param criteria the criteria
+	 * @param filterString the filter of the criterion as a string
+	 * @param conjunction the conjunction of the criterion
+	 * @review
+	 */
 	public void contribute(
 		Criteria criteria, String filterString,
 		Criteria.Conjunction conjunction);
 
+	/**
+	 * Returns the contributed criterion from a criteria.
+	 *
+	 * @param  criteria the criteria
+	 * @return the contributed criterion.
+	 * @review
+	 */
 	public default Criteria.Criterion getCriterion(Criteria criteria) {
 		return criteria.getCriterion(getKey());
 	}
 
+	/**
+	 * Returns the list of fields that are supported by this contributor.
+	 *
+	 * @param  locale the locale of the language
+	 * @return the list of fields that are supported by this contributor
+	 * @review
+	 */
 	public List<Field> getFields(Locale locale);
 
+	/**
+	 * Returns the contributor's key. This key must be unique.
+	 *
+	 * @return the contributor's key
+	 * @review
+	 */
 	public String getKey();
 
+	/**
+	 * Returns the label displayed in the user interface.
+	 *
+	 * @return the label
+	 * @review
+	 */
 	public String getLabel(Locale locale);
 
 }

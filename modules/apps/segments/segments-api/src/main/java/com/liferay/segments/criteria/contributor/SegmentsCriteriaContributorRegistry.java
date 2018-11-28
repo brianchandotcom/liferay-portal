@@ -19,7 +19,11 @@ import aQute.bnd.annotation.ProviderType;
 import java.util.List;
 
 /**
+ * Provides methods for retrieving segment criteria contributors defined by
+ * {@link SegmentsCriteriaContributor} implementations.
+ *
  * @author Eduardo Garcia
+ * @review
  */
 @ProviderType
 public interface SegmentsCriteriaContributorRegistry {

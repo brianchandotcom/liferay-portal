@@ -14,10 +14,10 @@
 
 package com.liferay.portal.cache.multiple.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cache.io.SerializableObjectWrapper;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 

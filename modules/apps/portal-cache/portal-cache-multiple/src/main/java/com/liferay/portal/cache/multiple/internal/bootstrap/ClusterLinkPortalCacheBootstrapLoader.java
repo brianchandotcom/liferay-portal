@@ -14,11 +14,11 @@
 
 package com.liferay.portal.cache.multiple.internal.bootstrap;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.cache.PortalCacheBootstrapLoader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Properties;
 

@@ -88,9 +88,6 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 				OpenIdConnectWebKeys.OPEN_ID_CONNECT_RESPONSE_ACTION_NAME);
 			actionURL.setParameter(
 				"saveLastPath", Boolean.FALSE.toString());
-			actionURL.setParameter(
-				"mvcRenderCommandName",
-				OpenIdConnectWebKeys.OPEN_ID_CONNECT_REQUEST_ACTION_NAME);
 
 			String redirect = ParamUtil.getString(
 				actionRequest, "redirect");

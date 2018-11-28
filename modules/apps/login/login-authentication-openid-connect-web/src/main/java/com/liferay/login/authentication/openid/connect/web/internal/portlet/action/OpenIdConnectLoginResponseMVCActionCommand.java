@@ -82,6 +82,10 @@ public class OpenIdConnectLoginResponseMVCActionCommand
 			else {
 				SessionErrors.add(actionRequest, "unknownError");
 			}
+
+			actionResponse.setRenderParameter(
+				"mvcRenderCommandName",
+				OpenIdConnectWebKeys.OPEN_ID_CONNECT_REQUEST_ACTION_NAME);
 		}
 		else {
 			String redirect = ParamUtil.getString(actionRequest, "redirect");

@@ -162,7 +162,7 @@ public class PrincipalException extends PortalException {
 			long userId, String resourceName, long resourceId,
 			String... actionIds) {
 
-			this (userId, resourceName, resourceId, null, actionIds);
+			this(userId, resourceName, resourceId, null, actionIds);
 		}
 
 		public MustHavePermission(

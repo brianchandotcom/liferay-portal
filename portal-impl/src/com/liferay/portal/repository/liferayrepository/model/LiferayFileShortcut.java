@@ -40,7 +40,7 @@ import java.util.Objects;
 public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 
 	public LiferayFileShortcut(DLFileShortcut dlFileShortcut) {
-		this (dlFileShortcut, dlFileShortcut.isEscapedModel());
+		this(dlFileShortcut, dlFileShortcut.isEscapedModel());
 	}
 
 	public LiferayFileShortcut(

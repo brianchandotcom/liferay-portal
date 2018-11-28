@@ -33,8 +33,8 @@ public class JournalMultiVMClusteredCacheConfiguratorSettings
 
 	public JournalMultiVMClusteredCacheConfiguratorSettings() {
 		super(
-			JournalMultiVMClusteredCacheConfiguratorSettings.
-				class.getClassLoader(),
+			JournalMultiVMClusteredCacheConfiguratorSettings.class.
+				getClassLoader(),
 			"META-INF/module-multi-vm-clustered.xml");
 	}
 

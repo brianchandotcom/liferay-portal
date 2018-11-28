@@ -25,7 +25,7 @@ import java.util.Objects;
 public class UserAssignment extends Assignment {
 
 	public UserAssignment() {
-		this (0, null, null);
+		this(0, null, null);
 	}
 
 	public UserAssignment(long userId, String screenName, String emailAddress) {

@@ -1331,7 +1331,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		// Company
 
-		final Company company = companyPersistence.remove(companyId);
+		final Company company = companyPersistence.findByPrimaryKey(companyId);
+
+		preunregisterCompany(company);
+
+		companyPersistence.remove(company);
 
 		// Account
 
@@ -1497,6 +1501,15 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	protected void preregisterCompany(long companyId) {
 		SearchEngineHelperUtil.initialize(companyId);
+	}
+
+	protected void preunregisterCompany(Company company) {
+		PortalInstanceLifecycleManager portalInstanceLifecycleManager =
+			_serviceTracker.getService();
+
+		if (portalInstanceLifecycleManager != null) {
+			portalInstanceLifecycleManager.preunregisterCompany(company);
+		}
 	}
 
 	protected void registerCompany(Company company) {

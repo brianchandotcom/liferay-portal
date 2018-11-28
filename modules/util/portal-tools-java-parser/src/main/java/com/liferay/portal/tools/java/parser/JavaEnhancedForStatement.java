@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 /**
  * @author Hugo Huijser
  */
-public class JavaEnhancedForStatement extends BaseJavaTerm {
+public class JavaEnhancedForStatement extends JavaLoopStatement {
 
 	public void setCollectionJavaExpression(
 		JavaExpression collectionJavaExpression) {

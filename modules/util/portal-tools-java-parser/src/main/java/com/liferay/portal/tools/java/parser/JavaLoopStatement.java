@@ -14,36 +14,19 @@
 
 package com.liferay.portal.tools.java.parser;
 
-import com.liferay.portal.kernel.util.StringBundler;
-
 /**
  * @author Hugo Huijser
  */
-public class JavaWhileStatement extends JavaLoopStatement {
+public abstract class JavaLoopStatement extends BaseJavaTerm {
 
-	public void setConditionJavaExpression(
-		JavaExpression conditionJavaExpression) {
-
-		_conditionJavaExpression = conditionJavaExpression;
+	public String getLabelName() {
+		return _labelName;
 	}
 
-	@Override
-	public String toString(
-		String indent, String prefix, String suffix, int maxLineLength) {
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(indent);
-
-		indent = "\t" + indent;
-
-		append(
-			sb, _conditionJavaExpression, indent, "while (", ")" + suffix,
-			maxLineLength);
-
-		return sb.toString();
+	public void setLabelName(String labelName) {
+		_labelName = labelName;
 	}
 
-	private JavaExpression _conditionJavaExpression;
+	private String _labelName;
 
 }

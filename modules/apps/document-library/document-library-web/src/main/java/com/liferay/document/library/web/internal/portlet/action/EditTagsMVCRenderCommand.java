@@ -21,13 +21,14 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.SetUtil;
 
-import java.util.List;
+import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -67,21 +68,24 @@ public class EditTagsMVCRenderCommand implements MVCRenderCommand {
 
 			Stream<FileEntry> fileEntryStream = selection.stream();
 
-			List<Set<String>> tagNameSets = fileEntryStream.map(
+			Set<String> commonTags = fileEntryStream.map(
 				fileEntry -> SetUtil.fromArray(
 					_assetTagLocalService.getTagNames(
 						DLFileEntryConstants.getClassName(),
 						fileEntry.getFileEntryId()))
-			).collect(
-				Collectors.toList()
+			).reduce(
+				SetUtil::intersect
+			).orElse(
+				Collections.emptySet()
 			);
 
-			Stream<String> commonTagNamesStream = _getCommonTagNames(
-				tagNameSets);
+			Stream<String> commonTagsStream = commonTags.stream();
+
+			String commonTagNames = commonTagsStream.collect(
+				Collectors.joining(StringPool.COMMA));
 
 			renderRequest.setAttribute(
-				DLWebKeys.DOCUMENT_LIBRARY_COMMON_TAG_NAMES,
-				commonTagNamesStream.collect(Collectors.joining(",")));
+				DLWebKeys.DOCUMENT_LIBRARY_COMMON_TAG_NAMES, commonTagNames);
 
 			return "/document_library/edit_tags.jsp";
 		}
@@ -93,20 +97,6 @@ public class EditTagsMVCRenderCommand implements MVCRenderCommand {
 		catch (Exception e) {
 			throw new PortletException(e);
 		}
-	}
-
-	private Stream<String> _getCommonTagNames(List<Set<String>> tagNameSets) {
-		if (tagNameSets.isEmpty()) {
-			return Stream.empty();
-		}
-
-		Set<String> commonTagNames = tagNameSets.get(0);
-
-		for (Set<String> tagNames : tagNameSets) {
-			commonTagNames = SetUtil.intersect(commonTagNames, tagNames);
-		}
-
-		return commonTagNames.stream();
 	}
 
 	@Reference

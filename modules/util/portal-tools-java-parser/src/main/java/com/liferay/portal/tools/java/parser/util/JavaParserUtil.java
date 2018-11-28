@@ -35,9 +35,9 @@ import com.liferay.portal.tools.java.parser.JavaExpression;
 import com.liferay.portal.tools.java.parser.JavaForStatement;
 import com.liferay.portal.tools.java.parser.JavaIfStatement;
 import com.liferay.portal.tools.java.parser.JavaInstanceofStatement;
-import com.liferay.portal.tools.java.parser.JavaLabeledStatement;
 import com.liferay.portal.tools.java.parser.JavaLambdaExpression;
 import com.liferay.portal.tools.java.parser.JavaLambdaParameter;
+import com.liferay.portal.tools.java.parser.JavaLoopStatement;
 import com.liferay.portal.tools.java.parser.JavaMethodCall;
 import com.liferay.portal.tools.java.parser.JavaMethodDefinition;
 import com.liferay.portal.tools.java.parser.JavaMethodReference;
@@ -320,7 +320,7 @@ public class JavaParserUtil {
 		return javaExpression;
 	}
 
-	public static JavaTerm parseJavaForStatement(
+	public static JavaLoopStatement parseJavaForStatement(
 		DetailAST literalForDetailAST) {
 
 		DetailAST firstChildDetailAST = literalForDetailAST.getFirstChild();
@@ -347,27 +347,28 @@ public class JavaParserUtil {
 		return javaIfStatement;
 	}
 
-	public static JavaLabeledStatement parseJavaLabeledStatement(
+	public static JavaLoopStatement parseJavaLabeledStatement(
 		DetailAST labeledStatementDetailAST) {
+
+		JavaLoopStatement javaLoopStatement = null;
 
 		DetailAST firstChildDetailAST =
 			labeledStatementDetailAST.getFirstChild();
 
-		JavaLabeledStatement javaLabeledStatement = new JavaLabeledStatement(
-			firstChildDetailAST.getText());
-
 		DetailAST nextSiblingDetailAST = firstChildDetailAST.getNextSibling();
 
 		if (nextSiblingDetailAST.getType() == TokenTypes.LITERAL_FOR) {
-			javaLabeledStatement.setLoopJavaTerm(
-				parseJavaForStatement(nextSiblingDetailAST));
+			javaLoopStatement = parseJavaForStatement(nextSiblingDetailAST);
 		}
 		else if (nextSiblingDetailAST.getType() == TokenTypes.LITERAL_WHILE) {
-			javaLabeledStatement.setLoopJavaTerm(
-				parseJavaWhileStatement(nextSiblingDetailAST));
+			javaLoopStatement = parseJavaWhileStatement(nextSiblingDetailAST);
 		}
 
-		return javaLabeledStatement;
+		if (javaLoopStatement != null) {
+			javaLoopStatement.setLabelName(firstChildDetailAST.getText());
+		}
+
+		return javaLoopStatement;
 	}
 
 	public static JavaMethodDefinition parseJavaMethodDefinition(

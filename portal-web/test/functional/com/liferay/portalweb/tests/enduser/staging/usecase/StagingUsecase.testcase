@@ -958,6 +958,123 @@
 		<execute macro="Staging#publishToLive" />
 	</command>
 
+	<command name="StagingPublishAssetPublisherConfiguredTagsFilter" priority="3">
+		<description message="This is a use case for LPS-82689." />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Categorization" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Tags" />
+		</execute>
+
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tag1" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureTagsFilterPG">
+			<var name="tagNameList" value="tag1" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithTagCP">
+			<var name="tagNameList" value="tag1" />
+			<var name="webContentContent" value="Web Content With Tag1" />
+			<var name="webContentTitle" value="Web Content Title 1" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="ProductMenu#gotoLiveSite" />
+
+		<execute macro="WebContent#viewPGViaAP">
+			<var name="webContentContent" value="Web Content With Tag1" />
+			<var name="webContentTitle" value="Web Content Title 1" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Categorization" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Tags" />
+		</execute>
+
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tag2" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithTagCP">
+			<var name="tagNameList" value="tag1,tag2" />
+			<var name="webContentContent" value="Web Content With Tag1 and Tag2" />
+			<var name="webContentTitle" value="Web Content Title 2" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureTagsFilterPG">
+			<var name="queryOperator" value="All" />
+			<var name="tagNameList" value="tag1,tag2" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="ProductMenu#gotoLiveSite" />
+
+		<execute macro="WebContent#viewPGViaAP">
+			<var name="webContentContent" value="Web Content With Tag1 and Tag2" />
+			<var name="webContentTitle" value="Web Content Title 2" />
+		</execute>
+	</command>
+
 	<command name="StagingPublishChildSiteWithReference" priority="4">
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Staging Test Page" />

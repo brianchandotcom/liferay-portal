@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 /**
  * @author Hugo Huijser
  */
@@ -25,6 +27,18 @@ public abstract class JavaLoopStatement extends BaseJavaTerm {
 
 	public void setLabelName(String labelName) {
 		_labelName = labelName;
+	}
+
+	protected StringBundler appendLabelName(String indent) {
+		StringBundler sb = new StringBundler(3);
+
+		if (_labelName != null) {
+			sb.append(indent);
+			sb.append(_labelName);
+			sb.append(":");
+		}
+
+		return sb;
 	}
 
 	private String _labelName;

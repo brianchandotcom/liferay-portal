@@ -46,7 +46,11 @@ public class JavaForStatement extends JavaLoopStatement {
 	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength) {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = appendLabelName(indent);
+
+		if (sb.index() > 0) {
+			sb.append("\n");
+		}
 
 		sb.append(indent);
 

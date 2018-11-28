@@ -1,5 +1,5 @@
 function ${namespace}editWithImageEditor(
-	editItemURL, uploadItemURL, fileEntryFilename, fileEntrySrc) {
+	editItemURL, uploadItemURL, fileEntryFilename, fileEntrySrc, fileEntryMimeType) {
 
 	Liferay.Util.editEntity(
 		{
@@ -13,6 +13,7 @@ function ${namespace}editWithImageEditor(
 			uri: editItemURL,
 			urlParams: {
 				entityURL: fileEntrySrc,
+				saveMimeType: fileEntryMimeType,
 				saveParamName: 'imageEditorFileName',
 				saveURL: uploadItemURL
 			}

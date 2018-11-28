@@ -85,6 +85,11 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		template.put("saveFileName", saveFileName);
 
+		String saveMimeType = ParamUtil.getString(
+			renderRequest, "saveMimeType");
+
+		template.put("saveMimeType", saveMimeType);
+
 		String saveParamName = ParamUtil.getString(
 			renderRequest, "saveParamName");
 

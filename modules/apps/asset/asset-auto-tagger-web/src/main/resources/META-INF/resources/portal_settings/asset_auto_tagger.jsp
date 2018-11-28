@@ -20,7 +20,7 @@
 AssetAutoTaggerConfiguration assetAutoTaggerConfiguration = (AssetAutoTaggerConfiguration)request.getAttribute(AssetAutoTaggerConfiguration.class.getName());
 %>
 
-<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="<%= PortalSettingsAssetAutoTaggerConstants.ACTION_NAME %>" />
+<aui:input id="<%= PortalSettingsAssetAutoTaggerConstants.FORM_PARAMETER_NAMESPACE + ActionRequest.ACTION_NAME %>" name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="<%= PortalSettingsAssetAutoTaggerConstants.ACTION_NAME %>" />
 
 <aui:input helpMessage="instance-asset-auto-tagging-help" label="enable-auto-tagging-of-assets-on-this-instance" name='<%= PortalSettingsAssetAutoTaggerConstants.FORM_PARAMETER_NAMESPACE + "enabled" %>' type="checkbox" value="<%= assetAutoTaggerConfiguration.isEnabled() %>" />
 

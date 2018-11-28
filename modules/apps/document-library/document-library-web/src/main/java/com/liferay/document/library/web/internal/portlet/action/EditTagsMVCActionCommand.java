@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.bulk.selection.Selection;
 import com.liferay.bulk.selection.SelectionFactory;
@@ -113,12 +114,13 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 
 		commonTagNamesSet.removeAll(newTagNamesSet);
 
-		fileEntryStream.map(
-			fileEntry -> _assetEntryLocalService.fetchEntry(
-				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId())
-		).forEach(
-			assetEntry -> {
+		fileEntryStream.forEach(
+			fileEntry -> {
 				try {
+					AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+						DLFileEntryConstants.getClassName(),
+						fileEntry.getFileEntryId());
+
 					String[] newTagNames = serviceContext.getAssetTagNames();
 
 					if (append) {
@@ -140,8 +142,7 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 				catch (PortalException pe) {
 					throw new SystemException(pe);
 				}
-			}
-		);
+			});
 	}
 
 	private static final TransactionConfig _transactionConfig =

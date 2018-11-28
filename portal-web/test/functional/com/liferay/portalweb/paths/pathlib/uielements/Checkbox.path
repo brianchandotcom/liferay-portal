@@ -404,6 +404,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_TEMPLATE</td>
+	<td>//tr[contains(.,'${key_siteTemplateName}')]//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SOURCE_URL_ENABLED</td>
 	<td>//label[contains(@for,'sourceURLEnabled')]//input[@type='checkbox']</td>
 	<td></td>

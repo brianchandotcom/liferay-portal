@@ -15,6 +15,8 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.bulk.selection.Selection;
+import com.liferay.bulk.selection.SelectionFactory;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -24,7 +26,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Set;
@@ -58,13 +59,13 @@ public class EditTagsMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			List<FileEntry> fileEntries = ActionUtil.getFileEntries(
-				renderRequest);
+			Selection<FileEntry> selection = _selectionFactory.create(
+				renderRequest.getParameterMap());
 
 			renderRequest.setAttribute(
-				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRIES, fileEntries);
+				DLWebKeys.DOCUMENT_LIBRARY_SELECTION, selection);
 
-			Stream<FileEntry> fileEntryStream = fileEntries.stream();
+			Stream<FileEntry> fileEntryStream = selection.stream();
 
 			List<Set<String>> tagNameSets = fileEntryStream.map(
 				fileEntry -> SetUtil.fromArray(
@@ -114,5 +115,10 @@ public class EditTagsMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
+	)
+	private SelectionFactory<FileEntry> _selectionFactory;
 
 }

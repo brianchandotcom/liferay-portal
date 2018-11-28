@@ -15,6 +15,8 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.bulk.selection.Selection;
+import com.liferay.bulk.selection.SelectionFactory;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -35,7 +37,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -97,9 +98,10 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _editTags(ActionRequest actionRequest) throws PortalException {
-		List<FileEntry> fileEntries = ActionUtil.getFileEntries(actionRequest);
+		Selection<FileEntry> selection = _selectionFactory.create(
+			actionRequest.getParameterMap());
 
-		Stream<FileEntry> fileEntryStream = fileEntries.stream();
+		Stream<FileEntry> fileEntryStream = selection.stream();
 
 		boolean append = ParamUtil.getBoolean(actionRequest, "append");
 
@@ -158,5 +160,10 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
+	)
+	private SelectionFactory<FileEntry> _selectionFactory;
 
 }

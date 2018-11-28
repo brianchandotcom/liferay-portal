@@ -1,0 +1,82 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.document.library.web.internal.bulk.selection;
+
+import com.liferay.bulk.selection.Selection;
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+
+import java.io.Serializable;
+
+import java.util.Collections;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.stream.Stream;
+
+/**
+ * @author Adolfo Pérez
+ */
+public class SingleFileEntrySelection implements Selection<FileEntry> {
+
+	public SingleFileEntrySelection(
+		long fileEntryId, ResourceBundleLoader resourceBundleLoader,
+		Language language, DLAppService dlAppService) {
+
+		_fileEntryId = fileEntryId;
+		_resourceBundleLoader = resourceBundleLoader;
+		_language = language;
+		_dlAppService = dlAppService;
+	}
+
+	@Override
+	public String describe(Locale locale) throws PortalException {
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale);
+
+		FileEntry fileEntry = _dlAppService.getFileEntry(_fileEntryId);
+
+		return _language.format(
+			resourceBundle, "you-are-editing-the-tags-for-x",
+			fileEntry.getTitle());
+	}
+
+	@Override
+	public boolean isMultiple() {
+		return false;
+	}
+
+	@Override
+	public Serializable serialize() {
+		return String.valueOf(_fileEntryId);
+	}
+
+	@Override
+	public Stream<FileEntry> stream() throws PortalException {
+		Set<FileEntry> fileEntrySet = Collections.singleton(
+			_dlAppService.getFileEntry(_fileEntryId));
+
+		return fileEntrySet.stream();
+	}
+
+	private final DLAppService _dlAppService;
+	private final long _fileEntryId;
+	private final Language _language;
+	private final ResourceBundleLoader _resourceBundleLoader;
+
+}

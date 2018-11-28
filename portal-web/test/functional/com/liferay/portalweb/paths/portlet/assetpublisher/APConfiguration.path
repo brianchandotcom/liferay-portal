@@ -192,6 +192,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FILTER_RULES</td>
+	<td>//li[contains(@class,'timeline-item')]//div[(@class='panel-body')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

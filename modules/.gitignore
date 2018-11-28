@@ -15,8 +15,6 @@ lib/
 liferay-hook.xml.processed
 node_modules/
 npm-debug.log
-!src/main/resources/META-INF/resources/lib
-!src/main/resources/META-INF/resources/lib/*
 test-classes/
 test-coverage/
 test-results/

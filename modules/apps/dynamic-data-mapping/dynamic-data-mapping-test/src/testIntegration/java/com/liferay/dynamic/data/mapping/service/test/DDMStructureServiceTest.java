@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureUtil;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -34,15 +35,19 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +70,11 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			new TransactionalTestRule(
+				Propagation.SUPPORTS,
+				"com.liferay.dynamic.data.mapping.service"));
 
 	@Before
 	@Override
@@ -100,6 +109,62 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 			WorkflowConstants.STATUS_ANY);
 
 		Assert.assertEquals(structures.toString(), 3, structures.size());
+	}
+
+	@Test
+	@Transactional
+	public void testGetStructuresWithSiteAdminPermission() throws Throwable {
+		addStructure(_classNameId, StringUtil.randomString());
+
+		DDMStructure structure = addStructure(
+			_classNameId, StringUtil.randomString());
+
+		String modelName = ResourceActionsUtil.getCompositeModelName(
+			PortalUtil.getClassName(_classNameId),
+			DDMStructure.class.getName());
+
+		List<Role> roles = RoleLocalServiceUtil.getRoles(
+			TestPropsValues.getCompanyId());
+
+		for (Role role : roles) {
+			ResourcePermissionServiceUtil.removeResourcePermission(
+				structure.getGroupId(), structure.getCompanyId(), modelName,
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(structure.getPrimaryKey()), role.getRoleId(),
+				ActionKeys.VIEW);
+		}
+
+		long[] groupIds = {group.getGroupId(), _group.getGroupId()};
+
+		User siteAdminUser = UserTestUtil.addGroupAdminUser(group);
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(siteAdminUser));
+
+			List<DDMStructure> structures =
+				DDMStructureUtil.filterFindByGroupId(groupIds);
+
+			Assert.assertEquals(structures.toString(), 2, structures.size());
+		}
+		finally {
+			UserLocalServiceUtil.deleteUser(siteAdminUser);
+		}
+
+		siteAdminUser = UserTestUtil.addGroupAdminUser(_group);
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(siteAdminUser));
+
+			List<DDMStructure> structures =
+				DDMStructureUtil.filterFindByGroupId(groupIds);
+
+			Assert.assertEquals(structures.toString(), 0, structures.size());
+		}
+		finally {
+			UserLocalServiceUtil.deleteUser(siteAdminUser);
+		}
 	}
 
 	@Test

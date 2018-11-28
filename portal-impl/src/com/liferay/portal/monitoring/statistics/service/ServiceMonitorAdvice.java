@@ -14,7 +14,6 @@
 
 package com.liferay.portal.monitoring.statistics.service;
 
-import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.monitoring.DataSample;
 import com.liferay.portal.kernel.monitoring.DataSampleThreadLocal;
 import com.liferay.portal.kernel.monitoring.MethodSignature;
@@ -52,32 +51,9 @@ public class ServiceMonitorAdvice
 	}
 
 	@Override
-	public void afterReturning(MethodInvocation methodInvocation, Object result)
-		throws Throwable {
-
-		DataSample dataSample = _dataSampleThreadLocal.get();
-
-		if (dataSample != null) {
-			dataSample.capture(RequestStatus.SUCCESS);
-		}
-	}
-
-	@Override
-	public void afterThrowing(
-			MethodInvocation methodInvocation, Throwable throwable)
-		throws Throwable {
-
-		DataSample dataSample = _dataSampleThreadLocal.get();
-
-		if (dataSample != null) {
-			dataSample.capture(RequestStatus.ERROR);
-		}
-	}
-
-	@Override
-	public Object before(MethodInvocation methodInvocation) throws Throwable {
+	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		if (!_monitorServiceRequest) {
-			return null;
+			return methodInvocation.proceed();
 		}
 
 		boolean included = false;
@@ -95,7 +71,7 @@ public class ServiceMonitorAdvice
 		}
 
 		if (_inclusiveMode != included) {
-			return null;
+			return methodInvocation.proceed();
 		}
 
 		DataSample dataSample =
@@ -104,20 +80,21 @@ public class ServiceMonitorAdvice
 
 		dataSample.prepare();
 
-		_dataSampleThreadLocal.set(dataSample);
-
 		DataSampleThreadLocal.initialize();
 
-		return null;
-	}
+		try {
+			Object returnValue = methodInvocation.proceed();
 
-	@Override
-	public void duringFinally(MethodInvocation methodInvocation) {
-		DataSample dataSample = _dataSampleThreadLocal.get();
+			dataSample.capture(RequestStatus.SUCCESS);
 
-		if (dataSample != null) {
-			_dataSampleThreadLocal.remove();
+			return returnValue;
+		}
+		catch (Throwable throwable) {
+			dataSample.capture(RequestStatus.ERROR);
 
+			throw throwable;
+		}
+		finally {
 			DataSampleThreadLocal.addDataSample(dataSample);
 		}
 	}
@@ -161,9 +138,6 @@ public class ServiceMonitorAdvice
 		_monitorServiceRequest = monitorServiceRequest;
 	}
 
-	private static final ThreadLocal<DataSample> _dataSampleThreadLocal =
-		new CentralizedThreadLocal<>(
-			ServiceMonitorAdvice.class + "._dataSampleThreadLocal");
 	private static boolean _inclusiveMode = true;
 	private static boolean _monitorServiceRequest;
 	private static final Set<String> _serviceClasses = new HashSet<>();

@@ -188,7 +188,11 @@ public class UserExpandoColumnModelListener
 
 		EntityField entityField = null;
 
-		if (expandoColumn.getType() == ExpandoColumnConstants.DATE) {
+		if (expandoColumn.getType() == ExpandoColumnConstants.BOOLEAN) {
+			entityField = new BooleanEntityField(
+				encodedName, locale -> encodedIndexedFieldName);
+		}
+		else if (expandoColumn.getType() == ExpandoColumnConstants.DATE) {
 			entityField = new DateTimeEntityField(
 				encodedName,
 				locale -> Field.getSortableFieldName(encodedIndexedFieldName),
@@ -201,10 +205,6 @@ public class UserExpandoColumnModelListener
 				encodedName,
 				locale -> Field.getLocalizedName(
 					locale, encodedIndexedFieldName));
-		}
-		else if (expandoColumn.getType() == ExpandoColumnConstants.BOOLEAN) {
-			entityField = new BooleanEntityField(
-				encodedName, locale -> encodedIndexedFieldName);
 		}
 		else {
 			entityField = new StringEntityField(

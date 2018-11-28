@@ -222,10 +222,14 @@
 	{@param spritemap: string}
 	{@param? _removeExpirationDateError: any}
 
+	{let $errorMsg kind="text"}
+		{msg desc=""}please-enter-an-expiration-date-that-comes-after-today{/msg}
+	{/let}
+
 	{call ClayStripe.render}
 		{param destroyOnHide: true /}
 		{param events: ['hide': $_removeExpirationDateError ] /}
-		{param message: 'This is an error message' /}
+		{param message: $errorMsg /}
 		{param spritemap: $spritemap /}
 		{param style: 'danger' /}
 		{param title: 'Error' /}

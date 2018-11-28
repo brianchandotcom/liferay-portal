@@ -3,7 +3,6 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "2.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.cache.api", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.configuration.metatype.api", version: "1.0.0"
-	compileOnly group: "com.liferay", name: "com.liferay.portal.profile.api", version: "2.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.java", version: "3.0.0"
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "6.0.0"

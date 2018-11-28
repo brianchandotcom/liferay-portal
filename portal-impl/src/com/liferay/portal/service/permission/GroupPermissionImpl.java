@@ -199,8 +199,8 @@ public class GroupPermissionImpl
 					 originalGroup, Group.class.getName(), groupId,
 					 ActionKeys.ASSIGN_USER_ROLES) ||
 				  permissionChecker.hasPermission(
-					 originalGroup, Group.class.getName(), groupId,
-					 ActionKeys.MANAGE_LAYOUTS))) {
+					  originalGroup, Group.class.getName(), groupId,
+					  ActionKeys.MANAGE_LAYOUTS))) {
 
 			return true;
 		}
@@ -209,14 +209,14 @@ public class GroupPermissionImpl
 					 originalGroup, Group.class.getName(), groupId,
 					 ActionKeys.MANAGE_LAYOUTS) ||
 				  permissionChecker.hasPermission(
-					 originalGroup, Group.class.getName(), groupId,
-					 ActionKeys.MANAGE_STAGING) ||
+					  originalGroup, Group.class.getName(), groupId,
+					  ActionKeys.MANAGE_STAGING) ||
 				  permissionChecker.hasPermission(
-					 originalGroup, Group.class.getName(), groupId,
-					 ActionKeys.PUBLISH_STAGING) ||
+					  originalGroup, Group.class.getName(), groupId,
+					  ActionKeys.PUBLISH_STAGING) ||
 				  permissionChecker.hasPermission(
-					 originalGroup, Group.class.getName(), groupId,
-					 ActionKeys.UPDATE))) {
+					  originalGroup, Group.class.getName(), groupId,
+					  ActionKeys.UPDATE))) {
 
 			return true;
 		}

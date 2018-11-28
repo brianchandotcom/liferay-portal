@@ -613,8 +613,8 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			else if (e instanceof ContactNameException.MustHaveLastName) {
 				message = "please-enter-a-valid-last-name";
 			}
-			else if (e instanceof UserEmailAddressException.
-						MustNotBeDuplicate) {
+			else if (e instanceof
+						UserEmailAddressException.MustNotBeDuplicate) {
 
 				message = "the-email-address-you-requested-is-already-taken";
 			}

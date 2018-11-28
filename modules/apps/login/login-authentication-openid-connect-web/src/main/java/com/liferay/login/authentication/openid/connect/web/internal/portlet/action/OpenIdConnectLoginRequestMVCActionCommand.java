@@ -76,34 +76,32 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 			HttpServletResponse httpServletResponse =
 				_portal.getHttpServletResponse(actionResponse);
 
-			HttpSession session = httpServletRequest.getSession(false);
+			HttpSession session = httpServletRequest.getSession();
 
-			if (session != null) {
-				LiferayPortletResponse liferayPortletResponse =
-					_portal.getLiferayPortletResponse(actionResponse);
+			LiferayPortletResponse liferayPortletResponse =
+				_portal.getLiferayPortletResponse(actionResponse);
 
-				ActionURL actionURL = liferayPortletResponse.createActionURL();
+			ActionURL actionURL = liferayPortletResponse.createActionURL();
 
-				actionURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					OpenIdConnectWebKeys.OPEN_ID_CONNECT_RESPONSE_ACTION_NAME);
-				actionURL.setParameter(
-					"saveLastPath", Boolean.FALSE.toString());
-				actionURL.setParameter(
-					"mvcRenderCommandName",
-					OpenIdConnectWebKeys.OPEN_ID_CONNECT_REQUEST_ACTION_NAME);
+			actionURL.setParameter(
+				ActionRequest.ACTION_NAME,
+				OpenIdConnectWebKeys.OPEN_ID_CONNECT_RESPONSE_ACTION_NAME);
+			actionURL.setParameter(
+				"saveLastPath", Boolean.FALSE.toString());
+			actionURL.setParameter(
+				"mvcRenderCommandName",
+				OpenIdConnectWebKeys.OPEN_ID_CONNECT_REQUEST_ACTION_NAME);
 
-				String redirect = ParamUtil.getString(
-					actionRequest, "redirect");
+			String redirect = ParamUtil.getString(
+				actionRequest, "redirect");
 
-				if (Validator.isNotNull(redirect)) {
-					actionURL.setParameter("redirect", redirect);
-				}
-
-				session.setAttribute(
-					OpenIdConnectWebKeys.OPEN_ID_CONNECT_ACTION_URL,
-					actionURL.toString());
+			if (Validator.isNotNull(redirect)) {
+				actionURL.setParameter("redirect", redirect);
 			}
+
+			session.setAttribute(
+				OpenIdConnectWebKeys.OPEN_ID_CONNECT_ACTION_URL,
+				actionURL.toString());
 
 			_openIdConnectServiceHandler.requestAuthentication(
 				openIdConnectProviderName, httpServletRequest,

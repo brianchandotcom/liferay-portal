@@ -109,7 +109,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Staging DM Pag" />
+			<var name="pageName" value="Staging DM Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 

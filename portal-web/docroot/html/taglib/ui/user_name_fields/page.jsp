@@ -30,79 +30,86 @@
 
 </aui:select>
 
-<aui:script sandbox="<%= true %>" use="liferay-portlet-url">
-	var formData = {};
+<aui:script use="liferay-portlet-url">
+const form = document.getElementById('<portlet:namespace />fm');
+const select = document.getElementById('<portlet:namespace />languageId');
 
-	var select = $('#<portlet:namespace />languageId');
+if (form && select) {
+	const maxLengthsCache = {};
+	const userDetailsURL = Liferay.PortletURL.createURL('<%= themeDisplay.getURLCurrent() %>');
+	const userNameFields = document.getElementById('<portlet:namespace />userNameFields');
 
-	var userDetailsURL = Liferay.PortletURL.createURL('<%= themeDisplay.getURLCurrent() %>');
-
-	var userNameFields = $('#<portlet:namespace />userNameFields');
-
-	select.on(
+	select.addEventListener(
 		'change',
 		function(event) {
-			_.forEach(
-				$('#<portlet:namespace />fm').formToArray(),
-				function(item, index) {
-					var oldField = userNameFields.find('#' + item.name);
+			const currentFormData = new FormData(form);
 
-					if (oldField.length) {
-						var data = {};
+			for (const tuple of currentFormData) {
+				const fieldName = tuple[0];
 
-						data.value = item.value;
+				const field = userNameFields.querySelector('#' + fieldName);
 
-						var maxLength = oldField.attr('maxLength');
+				if (field && field.hasAttribute('maxLength')) {
+					maxLengthsCache[fieldName] = field.getAttribute('maxLength');
+				}
+			}
 
-						if (maxLength) {
-							data.maxLength = maxLength;
+			userNameFields.insertAdjacentHTML('beforebegin', '<div class="loading-animation" id="<portlet:namespace />loadingUserNameFields"></div>');
+
+			userNameFields.style.display = 'none';
+
+			const cleanUp = function() {
+				const loadingAnimation = document.getElementById('<portlet:namespace />loadingUserNameFields');
+
+				if (loadingAnimation) {
+					loadingAnimation.parentNode.removeChild(loadingAnimation);
+				}
+
+				if (userNameFields.style.display === 'none') {
+					userNameFields.style.display = '';
+				}
+
+				for (const tuple of currentFormData) {
+					const fieldName = tuple[0];
+
+					const newField = userNameFields.querySelector('#' + fieldName);
+
+					if (newField) {
+						newField.value = tuple[1];
+
+						if (maxLengthsCache.hasOwnProperty(fieldName)) {
+							newField.setAttribute('maxLength', maxLengthsCache[fieldName]);
 						}
-
-						formData[item.name] = data;
 					}
 				}
-			);
+			};
 
-			userDetailsURL.setParameter('languageId', select.val());
+			userDetailsURL.setParameter('languageId', select.value);
 
-			$.ajax(
-				userDetailsURL.toString(),
-				{
-					beforeSend: function() {
-						userNameFields.before('<div class="loading-animation" id="<portlet:namespace />loadingUserNameFields"></div>');
+			fetch(userDetailsURL.toString())
+				.then(
+					function(response) {
+						return response.text();
+					}
+				)
+				.then(
+					function(responseData) {
+						const temp = document.implementation.createHTMLDocument();
 
-						userNameFields.hide();
-					},
-					complete: function() {
-						$('#<portlet:namespace />loadingUserNameFields').remove();
+						temp.body.innerHTML = responseData;
 
-						userNameFields.show();
+						const newUserNameFields = temp.getElementById('<portlet:namespace />userNameFields');
 
-						_.forEach(
-							formData,
-							function(item, index) {
-								var newField = userNameFields.find('#' + index);
-
-								if (newField) {
-									newField.val(item.value);
-
-									if (item.maxLength) {
-										newField.attr('maxLength', item.maxLength);
-									}
-								}
-							}
-						);
-					},
-					success: function(responseData) {
-						var responseUserNameFields = $(responseData).find('#<portlet:namespace />userNameFields').html();
-
-						userNameFields.html(responseUserNameFields);
-					},
-					timeout: 5000
-				}
-			);
+						if (newUserNameFields) {
+							userNameFields.innerHTML = newUserNameFields.innerHTML;
+						}
+					}
+				)
+				.then(cleanUp)
+				.catch(cleanUp);
 		}
 	);
+}
 </aui:script>
 
 <%

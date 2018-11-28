@@ -4,10 +4,13 @@ import {Config} from 'metal-state';
 import {addClasses, removeClasses} from 'metal-dom';
 import {isFunction, isObject} from 'metal';
 
+import {DROP_TARGET_ITEM_TYPES} from '../../reducers/placeholders.es';
 import FragmentEditableField from './FragmentEditableField.es';
 import MetalStore from '../../store/store.es';
 import {
+	CLEAR_HOVERED_ITEM,
 	REMOVE_FRAGMENT_ENTRY_LINK,
+	UPDATE_HOVERED_ITEM,
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../actions/actions.es';
@@ -207,6 +210,35 @@ class FragmentEntryLink extends Component {
 				fragmentEntryLinkId: this.fragmentEntryLinkId
 			}
 		);
+	}
+
+	/**
+	 * Callback executed when a fragment starts being hovered.
+	 * @param {object} event
+	 * @private
+	 */
+	_handleFragmentHoverStart(event) {
+		event.stopPropagation();
+
+		if (this.store) {
+			this.store.dispatchAction(
+				UPDATE_HOVERED_ITEM,
+				{
+					hoveredItemId: this.fragmentEntryLinkId,
+					hoveredItemType: DROP_TARGET_ITEM_TYPES.fragment
+				}
+			);
+		}
+	}
+
+	/**
+	 * Callback executed when a fragment ends being hovered.
+	 * @private
+	 */
+	_handleFragmentHoverEnd() {
+		if (this.store) {
+			this.store.dispatchAction(CLEAR_HOVERED_ITEM);
+		}
 	}
 
 	/**

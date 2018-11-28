@@ -90,23 +90,32 @@
 			</else>
 		</if>
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${pageName}" />
 		</execute>
 
-		<execute macro="Button#click">
-			<var name="button" value="Save" />
-		</execute>
+		<if>
+			<equals arg1="${hideFromNavMenu}" arg2="true" />
+			<then>
+				<execute function="Uncheck" locator1="Checkbox#ADD_TO_NAVIGATION_MENU" />
+			</then>
+		</if>
 
-		<execute function="SelectFrame#selectFrameTop" />
-
-		<execute macro="Button#click">
-			<var name="button" value="Save" />
-		</execute>
-
-		<execute function="WaitForSPARefresh" />
+		<if>
+			<equals arg1="${sitePageType}" arg2="Content Page" />
+			<then>
+				<execute macro="Button#click">
+					<var name="button" value="Save" />
+				</execute>
+			</then>
+			<else>
+				<for list="1,2" param="iteration">
+					<execute macro="Button#click">
+						<var name="button" value="Save" />
+					</execute>
+				</for>
+			</else>
+		</if>
 	</command>
 
 	<command name="deleteCP">

@@ -109,7 +109,7 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 
 		toAddTagNamesSet.removeAll(commonTagNamesSet);
 
-		Set<String> toRemoveTagNamesSet = new HashSet<>(commonTagNamesSet);
+		Set<String> toRemoveTagNamesSet = commonTagNamesSet;
 
 		commonTagNamesSet.removeAll(newTagNamesSet);
 

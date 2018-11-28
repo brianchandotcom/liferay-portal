@@ -296,8 +296,9 @@ public class AopConfigurableApplicationContextConfigurator
 						_classLoader, liferayDataSource);
 
 				try {
-					liferayHibernateSessionFactory = (SessionFactoryImplementor)
-						portletHibernateConfiguration.buildSessionFactory();
+					liferayHibernateSessionFactory =
+						(SessionFactoryImplementor)
+							portletHibernateConfiguration.buildSessionFactory();
 				}
 				catch (Exception e) {
 					return ReflectionUtil.throwException(e);

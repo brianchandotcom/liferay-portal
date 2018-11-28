@@ -149,8 +149,9 @@ public class DynamicDataSourceAdviceTest {
 		if (_dynamicDataSourceAdvice.isEnabled(TestClass.class, method) &&
 			_transactionInterceptor.isEnabled(TestClass.class, method)) {
 
-			chainableMethodAdvices =
-				new ChainableMethodAdvice[] {_dynamicDataSourceAdvice};
+			chainableMethodAdvices = new ChainableMethodAdvice[] {
+				_dynamicDataSourceAdvice
+			};
 		}
 
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =

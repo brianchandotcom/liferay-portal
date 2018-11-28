@@ -61,8 +61,9 @@ public class ServiceBeanAopCacheManager {
 
 			fullChainableMethodAdvices.add(chainableMethodAdvice);
 
-			chainableMethodAdvice = (ChainableMethodAdvice)
-				chainableMethodAdvice.nextMethodInterceptor;
+			chainableMethodAdvice =
+				(ChainableMethodAdvice)
+					chainableMethodAdvice.nextMethodInterceptor;
 		}
 
 		_fullChainableMethodAdvices = fullChainableMethodAdvices.toArray(
@@ -172,8 +173,8 @@ public class ServiceBeanAopCacheManager {
 
 		if (!filteredChainableMethodAdvices.isEmpty()) {
 			chainableMethodAdvices = filteredChainableMethodAdvices.toArray(
-				new ChainableMethodAdvice[
-					filteredChainableMethodAdvices.size()]);
+				new ChainableMethodAdvice
+					[filteredChainableMethodAdvices.size()]);
 		}
 
 		return new AopMethod(target, method, chainableMethodAdvices);
@@ -207,8 +208,8 @@ public class ServiceBeanAopCacheManager {
 		new ChainableMethodAdvice[0];
 	private static final Annotation[] _nullAnnotations = new Annotation[0];
 
-	private final
-		Map<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>[]>
+	private final Map
+		<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>[]>
 			_annotationChainableMethodAdvices = new HashMap<>();
 	private final Map<CacheKey, AopMethod> _aopMethods =
 		new ConcurrentHashMap<>();

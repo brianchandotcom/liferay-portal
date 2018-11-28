@@ -180,8 +180,7 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 			return Optional.of(
 				_createPrimitiveCsdlProperty(
 					entityField,
-					EdmPrimitiveTypeKind.Boolean.getFullQualifiedName())
-			);
+					EdmPrimitiveTypeKind.Boolean.getFullQualifiedName()));
 		}
 		else if (Objects.equals(
 					entityField.getType(), EntityField.Type.COMPLEX)) {

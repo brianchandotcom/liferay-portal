@@ -294,9 +294,8 @@ public class ExpressionVisitorImplTest {
 		TermFilter termFilter = new TermFilter("title", "title1");
 
 		BooleanFilter booleanFilter =
-			(BooleanFilter)
-				_expressionVisitorImpl.visitUnaryExpressionOperation(
-					UnaryExpression.Operation.NOT, termFilter);
+			(BooleanFilter)_expressionVisitorImpl.visitUnaryExpressionOperation(
+				UnaryExpression.Operation.NOT, termFilter);
 
 		Assert.assertTrue(booleanFilter.hasClauses());
 

@@ -187,6 +187,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FILTER_QUERY_OPERATOR</td>
+	<td>//select[contains(@id,'queryAndOperator0')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

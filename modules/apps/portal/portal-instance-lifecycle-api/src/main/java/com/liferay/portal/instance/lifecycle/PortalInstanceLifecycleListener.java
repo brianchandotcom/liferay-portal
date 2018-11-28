@@ -30,6 +30,10 @@ public interface PortalInstanceLifecycleListener {
 	@Deprecated
 	public void portalInstancePreregistered(long companyId);
 
+	public default void portalInstancePreunregistered(Company company)
+		throws Exception {
+	}
+
 	public void portalInstanceRegistered(Company company) throws Exception;
 
 	public void portalInstanceUnregistered(Company company) throws Exception;

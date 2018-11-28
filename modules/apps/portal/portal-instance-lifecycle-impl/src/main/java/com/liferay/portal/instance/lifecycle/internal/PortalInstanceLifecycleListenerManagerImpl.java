@@ -55,6 +55,15 @@ public class PortalInstanceLifecycleListenerManagerImpl
 	}
 
 	@Override
+	public void preunregisterCompany(Company company) {
+		for (PortalInstanceLifecycleListener portalInstanceLifecycleListener :
+				_portalInstanceLifecycleListeners) {
+
+			preunregisterCompany(portalInstanceLifecycleListener, company);
+		}
+	}
+
+	@Override
 	public void registerCompany(Company company) {
 		_companies.add(company);
 
@@ -110,6 +119,32 @@ public class PortalInstanceLifecycleListenerManagerImpl
 		}
 
 		portalInstanceLifecycleListener.portalInstancePreregistered(companyId);
+	}
+
+	protected void preunregisterCompany(
+		PortalInstanceLifecycleListener portalInstanceLifecycleListener,
+		Company company) {
+
+		if (!(portalInstanceLifecycleListener instanceof Clusterable) &&
+			!clusterMasterExecutor.isMaster()) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Skipping " + portalInstanceLifecycleListener);
+			}
+
+			return;
+		}
+
+		try {
+			portalInstanceLifecycleListener.portalInstancePreunregistered(
+				company);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to preunregister portal instance " + company, e);
+			}
+		}
 	}
 
 	protected void registerCompany(
@@ -182,7 +217,7 @@ public class PortalInstanceLifecycleListenerManagerImpl
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to register portal instance " + company, e);
+				_log.warn("Unable to unregister portal instance " + company, e);
 			}
 		}
 	}

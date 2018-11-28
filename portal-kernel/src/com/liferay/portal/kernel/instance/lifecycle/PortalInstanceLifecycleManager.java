@@ -14,11 +14,14 @@
 
 package com.liferay.portal.kernel.instance.lifecycle;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.model.Company;
 
 /**
  * @author Michael C. Han
  */
+@ProviderType
 public interface PortalInstanceLifecycleManager {
 
 	/**
@@ -26,6 +29,8 @@ public interface PortalInstanceLifecycleManager {
 	 */
 	@Deprecated
 	public void preregisterCompany(long companyId);
+
+	public void preunregisterCompany(Company company);
 
 	public void registerCompany(Company company);
 

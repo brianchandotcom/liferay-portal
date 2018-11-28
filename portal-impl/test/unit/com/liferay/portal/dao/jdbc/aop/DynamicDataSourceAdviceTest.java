@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
 import com.liferay.portal.spring.aop.AopMethod;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
@@ -33,7 +32,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
-import java.util.Map;
+import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -91,27 +90,20 @@ public class DynamicDataSourceAdviceTest {
 			_transactionInterceptor);
 
 		_serviceBeanAopCacheManager = new ServiceBeanAopCacheManager(
-			_dynamicDataSourceAdvice);
+			Arrays.asList(_dynamicDataSourceAdvice, _transactionInterceptor));
 
-		Map<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>[]>
-			registeredAnnotationChainableMethodAdvices =
-				ReflectionTestUtil.getFieldValue(
-					_serviceBeanAopCacheManager,
-					"_annotationChainableMethodAdvices");
-
-		AnnotationChainableMethodAdvice<?>[] annotationChainableMethodAdvices =
-			registeredAnnotationChainableMethodAdvices.get(
-				MasterDataSource.class);
+		Set<Class<? extends Annotation>> annotationClasses =
+			ReflectionTestUtil.getFieldValue(
+				_serviceBeanAopCacheManager, "_annotationClasses");
 
 		Assert.assertEquals(
-			Arrays.toString(annotationChainableMethodAdvices), 1,
-			annotationChainableMethodAdvices.length);
-		Assert.assertSame(
-			_dynamicDataSourceAdvice, annotationChainableMethodAdvices[0]);
-		Assert.assertSame(
-			annotationChainableMethodAdvices,
-			registeredAnnotationChainableMethodAdvices.get(
-				MasterDataSource.class));
+			annotationClasses.toString(), 2, annotationClasses.size());
+		Assert.assertTrue(
+			annotationClasses.toString(),
+			annotationClasses.contains(MasterDataSource.class));
+		Assert.assertTrue(
+			annotationClasses.toString(),
+			annotationClasses.contains(Transactional.class));
 	}
 
 	@Test

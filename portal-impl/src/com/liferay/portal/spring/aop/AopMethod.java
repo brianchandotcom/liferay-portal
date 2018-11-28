@@ -17,7 +17,6 @@ package com.liferay.portal.spring.aop;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -38,18 +37,6 @@ public class AopMethod {
 		_chainableMethodAdvices = chainableMethodAdvices;
 
 		_method.setAccessible(true);
-
-		boolean equalsMethod = false;
-
-		if (_method.getDeclaringClass() == Object.class) {
-			String methodName = _method.getName();
-
-			if (methodName.equals("equals")) {
-				equalsMethod = true;
-			}
-		}
-
-		_equalsMethod = equalsMethod;
 	}
 
 	@Override
@@ -97,24 +84,6 @@ public class AopMethod {
 	}
 
 	public Object invoke(Object... arguments) throws Throwable {
-		if (_equalsMethod) {
-			Object argument = arguments[0];
-
-			if (argument == null) {
-				return false;
-			}
-
-			ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler =
-				ProxyUtil.fetchInvocationHandler(
-					argument, ServiceBeanAopInvocationHandler.class);
-
-			if (serviceBeanAopInvocationHandler != null) {
-				argument = serviceBeanAopInvocationHandler.getTarget();
-			}
-
-			return _target.equals(argument);
-		}
-
 		try {
 			return _method.invoke(_target, arguments);
 		}
@@ -165,7 +134,6 @@ public class AopMethod {
 	}
 
 	private final ChainableMethodAdvice[] _chainableMethodAdvices;
-	private final boolean _equalsMethod;
 	private int _hashCode;
 	private final Method _method;
 	private final Object _target;

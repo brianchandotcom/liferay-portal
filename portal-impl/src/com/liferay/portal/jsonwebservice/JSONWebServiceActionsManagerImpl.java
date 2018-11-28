@@ -353,7 +353,7 @@ public class JSONWebServiceActionsManagerImpl
 		for (JSONWebServiceActionConfig jsonWebServiceActionConfig :
 				_signatureIndexedJSONWebServiceActionConfigs.values()) {
 
-			if (actionObject.equals(
+			if ((actionObject ==
 					jsonWebServiceActionConfig.getActionObject()) &&
 				_removeJSONWebServiceActionConfig(jsonWebServiceActionConfig)) {
 

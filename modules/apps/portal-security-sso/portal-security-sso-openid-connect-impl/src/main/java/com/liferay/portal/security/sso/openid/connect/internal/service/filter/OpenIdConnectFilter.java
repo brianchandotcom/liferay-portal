@@ -165,8 +165,7 @@ public class OpenIdConnectFilter extends BaseFilter {
 		String renderURL = (String)session.getAttribute(
 			OpenIdConnectWebKeys.OPEN_ID_CONNECT_ACTION_URL);
 
-		renderURL = _http.addParameter(
-			renderURL, "error", error);
+		renderURL = _http.addParameter(renderURL, "error", error);
 
 		response.sendRedirect(renderURL);
 	}

@@ -86,11 +86,9 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 			actionURL.setParameter(
 				ActionRequest.ACTION_NAME,
 				OpenIdConnectWebKeys.OPEN_ID_CONNECT_RESPONSE_ACTION_NAME);
-			actionURL.setParameter(
-				"saveLastPath", Boolean.FALSE.toString());
+			actionURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 
-			String redirect = ParamUtil.getString(
-				actionRequest, "redirect");
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			if (Validator.isNotNull(redirect)) {
 				actionURL.setParameter("redirect", redirect);

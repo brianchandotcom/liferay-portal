@@ -123,7 +123,7 @@ public class Setup {
 					"context");
 				String context = contextAttribute.getValue();
 
-				if (context.startsWith("/tck-V")) {
+				if (context.startsWith("/tck-")) {
 
 					if (_log.isInfoEnabled()) {
 						_log.info(

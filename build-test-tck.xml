@@ -82,7 +82,7 @@
 		>
 			<fileset
 				dir="${tck.home}"
-				includes="**/target/tck-V*.war"
+				includes="**/target/tck-*.war"
 			/>
 		</copy>
 

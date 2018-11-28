@@ -252,6 +252,8 @@ public int countBy${entityFinder.name}(
 						Arrays.sort(${entityColumn.names});
 					</#if>
 				}
+			<#elseif stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+				${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
 			</#if>
 		</#list>
 
@@ -581,6 +583,8 @@ public int countBy${entityFinder.name}(
 							Arrays.sort(${entityColumn.names});
 						</#if>
 					}
+				<#elseif stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+					${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
 				</#if>
 			</#list>
 

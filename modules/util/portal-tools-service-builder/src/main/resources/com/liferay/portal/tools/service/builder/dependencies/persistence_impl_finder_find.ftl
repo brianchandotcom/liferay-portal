@@ -1236,6 +1236,8 @@ that may or may not be enforced with a unique index at the database level. Case
 								Arrays.sort(${entityColumn.names});
 							</#if>
 						}
+					<#elseif stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+						${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
 					</#if>
 				</#list>
 

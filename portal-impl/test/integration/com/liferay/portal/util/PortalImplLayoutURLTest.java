@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.layouts.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
@@ -90,7 +92,10 @@ public class PortalImplLayoutURLTest extends BasePortalImplURLTestCase {
 		String virtualHostnameFriendlyURL = PortalUtil.getLayoutURL(
 			layout, themeDisplay, true);
 
-		if (!virtualHostnameFriendlyURL.startsWith(StringPool.SLASH) &&
+		if (Validator.isNotNull(
+				layout.getTypeSettingsProperty(
+					LayoutTypePortletConstants.URL)) &&
+			!virtualHostnameFriendlyURL.startsWith(StringPool.SLASH) &&
 			!virtualHostnameFriendlyURL.startsWith(
 				PortalUtil.getPortalURL(layout, themeDisplay))) {
 

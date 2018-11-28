@@ -122,31 +122,25 @@ public class WorkflowTaskItemResource
 	}
 
 	private WorkflowTask _assignToMe(
-		Long workflowTaskId, AssignToMeForm assignToMeForm,
-		CurrentUser currentUser) {
+			Long workflowTaskId, AssignToMeForm assignToMeForm,
+			CurrentUser currentUser)
+		throws WorkflowException {
 
-		return Try.fromFallible(
-			() -> _workflowTaskManager.assignWorkflowTaskToUser(
-				currentUser.getCompanyId(), currentUser.getUserId(),
-				workflowTaskId, currentUser.getUserId(), "", null, null)
-		).orElse(
-			null
-		);
+		return _workflowTaskManager.assignWorkflowTaskToUser(
+			currentUser.getCompanyId(), currentUser.getUserId(), workflowTaskId,
+			currentUser.getUserId(), "", null, null);
 	}
 
 	private WorkflowTask _assignToUser(
-		Long workflowTaskId, AssignToUserForm assignToMeForm, Company company,
-		CurrentUser currentUser) {
+			Long workflowTaskId, AssignToUserForm assignToMeForm,
+			Company company, CurrentUser currentUser)
+		throws WorkflowException {
 
 		long assigneeId = assignToMeForm.getAssigneeId();
 
-		return Try.fromFallible(
-			() -> _workflowTaskManager.assignWorkflowTaskToUser(
-				company.getCompanyId(), currentUser.getUserId(), workflowTaskId,
-				assigneeId, "", null, null)
-		).orElse(
-			null
-		);
+		return _workflowTaskManager.assignWorkflowTaskToUser(
+			company.getCompanyId(), currentUser.getUserId(), workflowTaskId,
+			assigneeId, "", null, null);
 	}
 
 	private WorkflowTask _changeTransition(

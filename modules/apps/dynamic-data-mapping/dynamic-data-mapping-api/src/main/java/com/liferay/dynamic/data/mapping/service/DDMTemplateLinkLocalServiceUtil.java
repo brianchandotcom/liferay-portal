@@ -119,6 +119,10 @@ public class DDMTemplateLinkLocalServiceUtil {
 		return getService().deleteTemplateLink(classNameId, classPK);
 	}
 
+	public static void deleteTemplateLinks(long templateId) {
+		getService().deleteTemplateLinks(templateId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
@@ -278,6 +282,11 @@ public class DDMTemplateLinkLocalServiceUtil {
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplateLink> getTemplateLinks(
 		long classNameId) {
 		return getService().getTemplateLinks(classNameId);
+	}
+
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplateLink> getTemplateLinksByTemplateId(
+		long templateId) {
+		return getService().getTemplateLinksByTemplateId(templateId);
 	}
 
 	/**

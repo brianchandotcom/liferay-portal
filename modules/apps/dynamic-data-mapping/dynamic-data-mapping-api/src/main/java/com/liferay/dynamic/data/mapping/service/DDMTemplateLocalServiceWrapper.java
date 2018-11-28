@@ -808,6 +808,12 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 			classPK);
 	}
 
+	@Override
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplatesByGroupId(
+		long groupId) {
+		return _ddmTemplateLocalService.getTemplatesByGroupId(groupId);
+	}
+
 	/**
 	* Returns an ordered range of all the templates matching the group,
 	* structure class name ID, and status.

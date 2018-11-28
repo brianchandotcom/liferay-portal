@@ -108,6 +108,8 @@ public interface DDMTemplateVersionLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
+	public void deleteTemplateVersions(long templateId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
 
@@ -238,6 +240,9 @@ public interface DDMTemplateVersionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMTemplateVersion getTemplateVersion(long templateId, String version)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDMTemplateVersion> getTemplateVersions(long templateId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMTemplateVersion> getTemplateVersions(long templateId,

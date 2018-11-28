@@ -20,6 +20,7 @@ export default function(portletNamespace) {
 		props: ['todo'],
 		template: '<li>{{ todo.text }}</li>',
 	});
+
 	new Vue({
 		el: `#${portletNamespace}-2`,
 		data: {

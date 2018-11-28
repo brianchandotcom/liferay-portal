@@ -563,7 +563,7 @@ public class MetadataManagerImpl
 	@Reference(
 		cardinality = ReferenceCardinality.AT_LEAST_ONE,
 		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unsetMetadataProvider"
+		unbind = "unsetMetadataResolver"
 	)
 	public void setMetadataResolver(MetadataResolver metadataResolver) {
 		if (_log.isDebugEnabled()) {

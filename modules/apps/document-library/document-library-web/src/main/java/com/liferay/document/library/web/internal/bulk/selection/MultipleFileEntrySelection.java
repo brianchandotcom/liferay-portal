@@ -17,6 +17,7 @@ package com.liferay.document.library.web.internal.bulk.selection;
 import com.liferay.bulk.selection.Selection;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,10 +29,11 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 /**
@@ -70,22 +72,30 @@ public class MultipleFileEntrySelection implements Selection<FileEntry> {
 	}
 
 	@Override
-	public Stream<FileEntry> stream() throws PortalException {
-		Collection<FileEntry> fileEntries = new ArrayList<>(
-			_fileEntryIds.length);
+	public Stream<FileEntry> stream() {
+		LongStream longStream = Arrays.stream(_fileEntryIds);
 
-		for (long fileEntryId : _fileEntryIds) {
-			try {
-				fileEntries.add(_dlAppService.getFileEntry(fileEntryId));
-			}
-			catch (NoSuchFileEntryException nsfee) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(nsfee, nsfee);
-				}
-			}
+		return longStream.mapToObj(
+			this::_fetchFileEntry
+		).filter(
+			Objects::nonNull
+		);
+	}
+
+	private FileEntry _fetchFileEntry(long fileEntryId) {
+		try {
+			return _dlAppService.getFileEntry(fileEntryId);
 		}
+		catch (NoSuchFileEntryException nsfee) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(nsfee, nsfee);
+			}
 
-		return fileEntries.stream();
+			return null;
+		}
+		catch (PortalException pe) {
+			return ReflectionUtil.throwException(pe);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

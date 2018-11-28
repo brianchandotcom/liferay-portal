@@ -11,7 +11,7 @@
 		<echo>prepare-tck</echo>
 	</target>
 
-	<target name="prepare-tck-appserver">
+	<target name="prepare-tck-app-server">
 
 		<propertycopy
 			from="app.server.${app.server.type}.bin.dir"
@@ -85,6 +85,9 @@
 				includes="**/target/tck-V*.war"
 			/>
 		</copy>
+
+		<update-gradle-properties />
+
 		<gradle-execute dir="modules/test/portlet-tck-theme" task="deploy" />
 
 		<propertycopy

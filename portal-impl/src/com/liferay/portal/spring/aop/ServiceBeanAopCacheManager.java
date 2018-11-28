@@ -36,12 +36,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ServiceBeanAopCacheManager {
 
 	public ServiceBeanAopCacheManager(
-		ChainableMethodAdvice chainableMethodAdvice) {
+		List<ChainableMethodAdvice> chainableMethodAdvices) {
 
-		List<ChainableMethodAdvice> fullChainableMethodAdvices =
-			new ArrayList<>();
+		for (ChainableMethodAdvice chainableMethodAdvice :
+				chainableMethodAdvices) {
 
-		while (chainableMethodAdvice != null) {
 			chainableMethodAdvice.setServiceBeanAopCacheManager(this);
 
 			if (chainableMethodAdvice instanceof
@@ -57,16 +56,10 @@ public class ServiceBeanAopCacheManager {
 
 				_annotationClasses.add(annotationClass);
 			}
-
-			fullChainableMethodAdvices.add(chainableMethodAdvice);
-
-			chainableMethodAdvice =
-				(ChainableMethodAdvice)
-					chainableMethodAdvice.nextMethodInterceptor;
 		}
 
-		_fullChainableMethodAdvices = fullChainableMethodAdvices.toArray(
-			new ChainableMethodAdvice[fullChainableMethodAdvices.size()]);
+		_fullChainableMethodAdvices = chainableMethodAdvices.toArray(
+			new ChainableMethodAdvice[chainableMethodAdvices.size()]);
 	}
 
 	public <T> T findAnnotation(

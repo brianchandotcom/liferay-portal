@@ -79,8 +79,6 @@ public class DynamicDataSourceAdvice
 	public void setTransactionInterceptor(
 		TransactionInterceptor transactionInterceptor) {
 
-		setNextMethodInterceptor(transactionInterceptor);
-
 		_transactionInterceptor = transactionInterceptor;
 	}
 

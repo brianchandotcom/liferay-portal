@@ -74,12 +74,6 @@ public abstract class ChainableMethodAdvice implements MethodInterceptor {
 		return true;
 	}
 
-	public void setNextMethodInterceptor(
-		MethodInterceptor nextMethodInterceptor) {
-
-		this.nextMethodInterceptor = nextMethodInterceptor;
-	}
-
 	protected void setServiceBeanAopCacheManager(
 		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
 
@@ -90,7 +84,6 @@ public abstract class ChainableMethodAdvice implements MethodInterceptor {
 		this.serviceBeanAopCacheManager = serviceBeanAopCacheManager;
 	}
 
-	protected MethodInterceptor nextMethodInterceptor;
 	protected Object nullResult = new Object();
 	protected ServiceBeanAopCacheManager serviceBeanAopCacheManager;
 

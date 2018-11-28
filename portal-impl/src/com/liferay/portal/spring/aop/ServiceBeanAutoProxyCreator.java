@@ -23,11 +23,10 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Constructor;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.aopalliance.intercept.MethodInterceptor;
 
 import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.BeanClassLoaderAware;
@@ -48,7 +47,7 @@ public class ServiceBeanAutoProxyCreator
 		}
 
 		_serviceBeanAopCacheManager = new ServiceBeanAopCacheManager(
-			_chainableMethodAdvice);
+			_chainableMethodAdvices);
 	}
 
 	@Override
@@ -131,12 +130,14 @@ public class ServiceBeanAutoProxyCreator
 		_beanMatcher = beanMatcher;
 	}
 
-	public void setMethodInterceptor(MethodInterceptor methodInterceptor) {
-		_chainableMethodAdvice = (ChainableMethodAdvice)methodInterceptor;
+	public void setChainableMethodAdvices(
+		List<ChainableMethodAdvice> chainableMethodAdvices) {
+
+		_chainableMethodAdvices = chainableMethodAdvices;
 	}
 
 	private BeanMatcher _beanMatcher;
-	private ChainableMethodAdvice _chainableMethodAdvice;
+	private List<ChainableMethodAdvice> _chainableMethodAdvices;
 	private ClassLoader _classLoader;
 	private final Set<CacheKey> _earlyProxyReferences =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());

@@ -3712,7 +3712,10 @@ public class DataFactory {
 		wikiPageModel.setNodeId(wikiNodeModel.getNodeId());
 		wikiPageModel.setTitle("Test Page " + index);
 		wikiPageModel.setVersion(WikiPageConstants.VERSION_DEFAULT);
-		wikiPageModel.setContent("This is test page " + index + ".");
+		wikiPageModel.setContent(
+			StringBundler.concat(
+				"This is Test Page ", String.valueOf(index), " of ",
+				wikiNodeModel.getName(), "."));
 		wikiPageModel.setFormat("creole");
 		wikiPageModel.setHead(true);
 		wikiPageModel.setLastPublishDate(new Date());

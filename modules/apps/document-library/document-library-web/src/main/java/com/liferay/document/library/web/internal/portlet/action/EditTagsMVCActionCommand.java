@@ -88,18 +88,6 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private Set<String> _difference(Set<String> set1, Set<String> set2) {
-		Set<String> result = new HashSet<>();
-
-		for (String string : set1) {
-			if (!set2.contains(string)) {
-				result.add(string);
-			}
-		}
-
-		return result;
-	}
-
 	private void _editTags(ActionRequest actionRequest) throws PortalException {
 		Selection<FileEntry> selection = _selectionFactory.create(
 			actionRequest.getParameterMap());
@@ -117,11 +105,13 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 		Set<String> newTagNamesSet = SetUtil.fromArray(
 			serviceContext.getAssetTagNames());
 
-		Set<String> toAddTagNamesSet = _difference(
-			newTagNamesSet, commonTagNamesSet);
+		Set<String> toAddTagNamesSet = new HashSet<>(newTagNamesSet);
 
-		Set<String> toRemoveTagNamesSet = _difference(
-			commonTagNamesSet, newTagNamesSet);
+		toAddTagNamesSet.removeAll(commonTagNamesSet);
+
+		Set<String> toRemoveTagNamesSet = new HashSet<>(commonTagNamesSet);
+
+		commonTagNamesSet.removeAll(newTagNamesSet);
 
 		fileEntryStream.map(
 			fileEntry -> _assetEntryLocalService.fetchEntry(

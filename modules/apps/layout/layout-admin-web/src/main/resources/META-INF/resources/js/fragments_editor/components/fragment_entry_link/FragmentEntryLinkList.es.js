@@ -48,19 +48,29 @@ class FragmentEntryLinkList extends Component {
 	 * @static
 	 */
 	static _dropValid(eventData) {
-		const sourceData = eventData.source.dataset;
-		const targetData = eventData.target ? eventData.target.dataset : null;
-
-		const dropTargetItemType = FragmentEntryLinkList._getItemData(
-			targetData
-		).itemType;
-
-		const targetIsSameFragment = (
-			(dropTargetItemType === DROP_TARGET_ITEM_TYPES.fragment) &&
-			(sourceData.fragmentEntryLinkId === targetData.fragmentEntryLinkId)
+		const sourceItemData = FragmentEntryLinkList._getItemData(
+			eventData.source.dataset
+		);
+		const targetItemData = FragmentEntryLinkList._getItemData(
+			eventData.target ? eventData.target.dataset : null
 		);
 
-		return (dropTargetItemType && !targetIsSameFragment);
+		let dropValid = false;
+
+		if (sourceItemData.itemType === DROP_TARGET_ITEM_TYPES.section) {
+			dropValid = (
+				(targetItemData.itemType === DROP_TARGET_ITEM_TYPES.section) &&
+				(sourceItemData.itemId !== targetItemData.itemId)
+			);
+		}
+		else if (sourceItemData.itemType === DROP_TARGET_ITEM_TYPES.fragment) {
+			dropValid = (
+				(targetItemData.itemType) &&
+				(sourceItemData.itemId !== targetItemData.itemId)
+			);
+		}
+
+		return dropValid;
 	}
 
 	/**

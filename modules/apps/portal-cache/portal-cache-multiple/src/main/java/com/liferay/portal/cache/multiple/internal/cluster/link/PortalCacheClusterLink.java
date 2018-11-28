@@ -52,23 +52,6 @@ public class PortalCacheClusterLink {
 		portalCacheClusterChannel.sendEvent(portalCacheClusterEvent);
 	}
 
-	@Reference(unbind = "-")
-	public void setPortalCacheClusterChannelFactory(
-		PortalCacheClusterChannelFactory portalCacheClusterChannelFactory) {
-
-		_portalCacheClusterChannelFactory = portalCacheClusterChannelFactory;
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	public void setPortalCacheClusterChannelSelector(
-		PortalCacheClusterChannelSelector portalCacheClusterChannelSelector) {
-
-		_portalCacheClusterChannelSelector = portalCacheClusterChannelSelector;
-	}
-
 	@Activate
 	@Modified
 	protected void activate(ComponentContext componentContext) {
@@ -108,14 +91,17 @@ public class PortalCacheClusterLink {
 		_portalCacheClusterChannels = null;
 	}
 
-	protected void unsetPortalCacheClusterChannelSelector(
-		PortalCacheClusterChannelSelector portalCacheClusterChannelSelector) {
-	}
-
+	@Reference
 	private PortalCacheClusterChannelFactory _portalCacheClusterChannelFactory;
+
 	private volatile List<PortalCacheClusterChannel>
 		_portalCacheClusterChannels;
-	private PortalCacheClusterChannelSelector
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC
+	)
+	private volatile PortalCacheClusterChannelSelector
 		_portalCacheClusterChannelSelector;
 
 }

@@ -70,6 +70,11 @@ public class DDMTemplateLinkLocalServiceImpl
 	}
 
 	@Override
+	public void deleteTemplateLinks(long templateId) {
+		ddmTemplateLinkPersistence.removeByTemplateId(templateId);
+	}
+
+	@Override
 	public DDMTemplateLink getTemplateLink(long templateLinkId)
 		throws PortalException {
 
@@ -86,6 +91,11 @@ public class DDMTemplateLinkLocalServiceImpl
 	@Override
 	public List<DDMTemplateLink> getTemplateLinks(long classNameId) {
 		return ddmTemplateLinkPersistence.findByClassNameId(classNameId);
+	}
+
+	@Override
+	public List<DDMTemplateLink> getTemplateLinksByTemplateId(long templateId) {
+		return ddmTemplateLinkPersistence.findByTemplateId(templateId);
 	}
 
 	@Override

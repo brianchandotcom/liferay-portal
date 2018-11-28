@@ -18,7 +18,7 @@ import java.util.Locale;
 import java.util.function.Function;
 
 /**
- * Models an date entity field. A Entity field with a type {@code
+ * Models a string entity field. An Entity field with a type {@code
  * EntityField.Type.STRING}
  *
  * @author Cristina González

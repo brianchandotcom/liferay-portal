@@ -14,24 +14,6 @@ dependencies {
 	compile group: "org.json", name: "json", version: "20140107"
 }
 
-def propertiesFile = new File("${projectDir}/src/test/resources/test-jenkins-results-parser-util-ext.properties")
-
-compileJava {
-	outputs.file(propertiesFile)
-
-	doLast {
-		def repositoryDir = System.getProperty("repository.dir")
-
-		if ((repositoryDir != null) && !repositoryDir.isEmpty()) {
-			propertiesFile.text = "repository.dir=" + repositoryDir
-		}
-	}
-}
-
 test {
-	outputs.file(propertiesFile)
-
-	doLast {
-		delete propertiesFile
-	}
+	systemProperties = System.getProperties();
 }

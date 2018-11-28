@@ -91,14 +91,7 @@ public class OpenIdConnectLoginResponseMVCActionCommand
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			if (Validator.isBlank(redirect)) {
-				HttpSession session = httpServletRequest.getSession();
-
-				LastPath lastPath = (LastPath)session.getAttribute(
-					WebKeys.LAST_PATH);
-
-				actionResponse.sendRedirect(
-					lastPath.getContextPath() + lastPath.getPath() +
-						lastPath.getParameters());
+				actionResponse.sendRedirect(themeDisplay.getPathMain());
 			}
 		}
 	}

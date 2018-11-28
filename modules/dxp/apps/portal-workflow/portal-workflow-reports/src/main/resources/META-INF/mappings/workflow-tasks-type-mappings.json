@@ -1,0 +1,26 @@
+{
+	"mappings": {
+		"WorkflowTasksType": {
+			"properties": {
+				"companyId": {
+					"type": "keyword"
+				},
+				"date": {
+					"type": "date"
+				},
+				"id": {
+					"type": "keyword"
+				},
+				"instanceId": {
+					"type": "keyword"
+				},
+				"taskId": {
+					"type": "keyword"
+				},
+				"userId": {
+					"type": "long"
+				}
+			}
+		}
+	}
+}

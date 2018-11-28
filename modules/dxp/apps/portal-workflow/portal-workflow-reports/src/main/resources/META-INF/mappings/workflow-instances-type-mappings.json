@@ -1,0 +1,26 @@
+{
+	"mappings": {
+		"WorkflowInstancesType": {
+			"properties": {
+				"companyId": {
+					"type": "keyword"
+				},
+				"date": {
+					"type": "date"
+				},
+				"id": {
+					"type": "keyword"
+				},
+				"instanceId": {
+					"type": "keyword"
+				},
+				"processId": {
+					"type": "keyword"
+				},
+				"userId": {
+					"type": "long"
+				}
+			}
+		}
+	}
+}

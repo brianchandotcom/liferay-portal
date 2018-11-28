@@ -175,14 +175,13 @@ public class InlineSQLHelperImplTest {
 
 		String sql = _replacePermissionCheckJoin(_SQL_PLAIN, _groupIds);
 
-		Role ownerRole = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.OWNER);
+		StringBundler sb = new StringBundler(5);
 
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(" OR ((ResourcePermission.primKeyId = 0) AND ");
-		sb.append("(ResourcePermission.roleId = ");
-		sb.append(ownerRole.getRoleId());
+		sb.append(" OR (");
+		sb.append(_GROUP_ID_FIELD);
+		sb.append(" IN (");
+		sb.append(_groupOne.getGroupId());
+		sb.append("))");
 
 		Assert.assertTrue(sql, sql.contains(sb.toString()));
 	}

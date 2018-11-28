@@ -504,7 +504,36 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				permissionSQLContributorsSQLSB.toString();
 		}
 
-		if (Validator.isNotNull(permissionSQLContributorsSQL)) {
+		StringBundler groupAdminResourcePermissionSB = new StringBundler(
+			groupIds.length * 2 - 1);
+
+		for (long groupId : groupIds) {
+			if (!isEnabled(groupId)) {
+				if (groupAdminResourcePermissionSB.length() > 0) {
+					groupAdminResourcePermissionSB.append(", ");
+				}
+
+				groupAdminResourcePermissionSB.append(groupId);
+			}
+		}
+
+		String groupAdminSQL = null;
+
+		if (groupAdminResourcePermissionSB.length() > 0) {
+			StringBundler groupAdminSQLSB = new StringBundler(5);
+
+			groupAdminSQLSB.append(" OR (");
+			groupAdminSQLSB.append(groupIdField);
+			groupAdminSQLSB.append(" IN (");
+			groupAdminSQLSB.append(groupAdminResourcePermissionSB);
+			groupAdminSQLSB.append(")) ");
+
+			groupAdminSQL = groupAdminSQLSB.toString();
+		}
+
+		if (Validator.isNotNull(permissionSQLContributorsSQL) ||
+			Validator.isNotNull(groupAdminSQL)) {
+
 			sb.append("(");
 		}
 
@@ -516,6 +545,15 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		if (Validator.isNotNull(permissionSQLContributorsSQL)) {
 			sb.append(permissionSQLContributorsSQL);
+		}
+
+		if (Validator.isNotNull(groupAdminSQL)) {
+			sb.append(groupAdminSQL);
+		}
+
+		if (Validator.isNotNull(permissionSQLContributorsSQL) ||
+			Validator.isNotNull(groupAdminSQL)) {
+
 			sb.append(") ");
 		}
 	}
@@ -537,49 +575,17 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		String roleIdsOrOwnerIdSQL = getRoleIdsOrOwnerIdSQL(
 			permissionChecker, groupIds, userIdField);
 
-		StringBundler groupAdminResourcePermissionSB = null;
-
-		for (long groupId : groupIds) {
-			if (!isEnabled(groupId)) {
-				groupAdminResourcePermissionSB = new StringBundler(5);
-
-				if (!roleIdsOrOwnerIdSQL.isEmpty()) {
-					groupAdminResourcePermissionSB.append(" OR ");
-				}
-
-				groupAdminResourcePermissionSB.append(
-					"((ResourcePermission.primKeyId = 0) AND ");
-
-				groupAdminResourcePermissionSB.append(
-					"(ResourcePermission.roleId = ");
-
-				groupAdminResourcePermissionSB.append(
-					permissionChecker.getOwnerRoleId());
-
-				groupAdminResourcePermissionSB.append("))");
-
-				break;
-			}
-		}
-
 		int scope = ResourceConstants.SCOPE_INDIVIDUAL;
-
-		String groupAdminSQL = StringPool.BLANK;
-
-		if (groupAdminResourcePermissionSB != null) {
-			groupAdminSQL = groupAdminResourcePermissionSB.toString();
-		}
 
 		resourcePermissionSQL = StringUtil.replace(
 			resourcePermissionSQL,
 			new String[] {
 				"[$CLASS_NAME$]", "[$COMPANY_ID$]",
-				"[$GROUP_ADMIN_RESOURCE_PERMISSION$]",
 				"[$RESOURCE_SCOPE_INDIVIDUAL$]", "[$ROLE_IDS_OR_OWNER_ID$]"
 			},
 			new String[] {
-				className, String.valueOf(companyId), groupAdminSQL,
-				String.valueOf(scope), roleIdsOrOwnerIdSQL
+				className, String.valueOf(companyId), String.valueOf(scope),
+				roleIdsOrOwnerIdSQL
 			});
 
 		return resourcePermissionSQL;

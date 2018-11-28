@@ -14,7 +14,6 @@
 				(ResourcePermission.viewActionId = [$TRUE$]) AND
 				(
 					[$ROLE_IDS_OR_OWNER_ID$]
-					[$GROUP_ADMIN_RESOURCE_PERMISSION$]
 				)
 		]]>
 	</sql>

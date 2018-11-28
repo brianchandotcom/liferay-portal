@@ -112,10 +112,10 @@ public class OpenIdConnectFilter extends BaseFilter {
 
 			HttpSession session = httpServletRequest.getSession(false);
 
-			String renderURL = (String)session.getAttribute(
+			String actionURL = (String)session.getAttribute(
 				OpenIdConnectWebKeys.OPEN_ID_CONNECT_ACTION_URL);
 
-			httpServletResponse.sendRedirect(renderURL);
+			httpServletResponse.sendRedirect(actionURL);
 		}
 		catch (StrangersNotAllowedException |
 			   UserEmailAddressException.MustNotUseCompanyMx e) {
@@ -162,12 +162,12 @@ public class OpenIdConnectFilter extends BaseFilter {
 			return;
 		}
 
-		String renderURL = (String)session.getAttribute(
+		String actionURL = (String)session.getAttribute(
 			OpenIdConnectWebKeys.OPEN_ID_CONNECT_ACTION_URL);
 
-		renderURL = _http.addParameter(renderURL, "error", error);
+		actionURL = _http.addParameter(actionURL, "error", error);
 
-		response.sendRedirect(renderURL);
+		response.sendRedirect(actionURL);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

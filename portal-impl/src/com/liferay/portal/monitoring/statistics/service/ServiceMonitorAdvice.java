@@ -80,14 +80,28 @@ public class ServiceMonitorAdvice
 			return null;
 		}
 
-		boolean included = isIncluded(methodInvocation);
+		boolean included = false;
+
+		Method method = methodInvocation.getMethod();
+
+		Class<?> declaringClass = method.getDeclaringClass();
+
+		if (_serviceClasses.contains(declaringClass.getName())) {
+			included = true;
+		}
+		else {
+			MethodSignature methodSignature = new MethodSignature(method);
+
+			if (_serviceClassMethods.contains(methodSignature)) {
+				included = true;
+			}
+		}
 
 		if ((!_inclusiveMode && included) || (_inclusiveMode && !included)) {
 			return null;
 		}
 
-		MethodSignature methodSignature = new MethodSignature(
-			methodInvocation.getMethod());
+		MethodSignature methodSignature = new MethodSignature(method);
 
 		DataSample dataSample =
 			DataSampleFactoryUtil.createServiceRequestDataSample(
@@ -150,26 +164,6 @@ public class ServiceMonitorAdvice
 		}
 
 		_monitorServiceRequest = monitorServiceRequest;
-	}
-
-	protected boolean isIncluded(MethodInvocation methodInvocation) {
-		Method method = methodInvocation.getMethod();
-
-		Class<?> declaringClass = method.getDeclaringClass();
-
-		String className = declaringClass.getName();
-
-		if (_serviceClasses.contains(className)) {
-			return true;
-		}
-
-		MethodSignature methodSignature = new MethodSignature(method);
-
-		if (_serviceClassMethods.contains(methodSignature)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final ThreadLocal<DataSample> _dataSampleThreadLocal =

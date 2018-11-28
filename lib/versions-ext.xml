@@ -949,18 +949,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/activation.jar</file-name>
-				<version>1.2.0</version>
-				<project-name>JavaBeans Activation Framework API</project-name>
-				<project-url>https://www.oracle.com/technetwork/articles/java/index-135046.html</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.1</license-name>
-						<license-url>https://oss.oracle.com/licenses/CDDL-1.1</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/ant.jar</file-name>
 				<version>1.8.2</version>
 				<project-name>Ant</project-name>

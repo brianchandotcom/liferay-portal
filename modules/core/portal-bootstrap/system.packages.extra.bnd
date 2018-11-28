@@ -127,8 +127,6 @@ Export-Package:\
 	\
 	java_cup.runtime.*;version='2.7.1',\
 	\
-	javax.activation;version='1.2.0',\
-	\
 	javax.jms.*;version='1.1',\
 	\
 	javax.jws;version='1.1',\
@@ -345,6 +343,7 @@ Provide-Capability:\
 		version:Version=3.1
 -includeresource:\
 	-@lib/com.liferay.portal.app.license.api.jar,\
+	@../../../lib/development/activation.jar,\
 	@../../../lib/development/jms.jar,\
 	@../../../lib/development/mail.jar,\
 	@../../../lib/development/persistence.jar,\

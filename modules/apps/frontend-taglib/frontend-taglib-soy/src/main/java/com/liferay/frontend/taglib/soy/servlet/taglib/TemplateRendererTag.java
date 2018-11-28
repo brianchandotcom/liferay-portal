@@ -100,10 +100,6 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	public String getComponentId() {
-		if (Validator.isNull(_componentId)) {
-			_componentId = StringUtil.randomId();
-		}
-
 		return _componentId;
 	}
 
@@ -129,6 +125,26 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 	public String getTemplateNamespace() {
 		return _templateNamespace;
+	}
+
+	public String getWrapperId() {
+		if (_wrapperId != null) {
+			return _wrapperId;
+		}
+
+		Map<String, Object> context = getContext();
+
+		_wrapperId = (String)context.get("id");
+
+		if (Validator.isNull(_wrapperId)) {
+			_wrapperId = getComponentId();
+
+			if (Validator.isNull(_wrapperId)) {
+				_wrapperId = StringUtil.randomId();
+			}
+		}
+
+		return _wrapperId;
 	}
 
 	public void putHTMLValue(String key, String value) {
@@ -202,7 +218,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	protected String getElementSelector() {
-		String selector = StringPool.POUND.concat(getComponentId());
+		String selector = StringPool.POUND.concat(getWrapperId());
 
 		if (isWrapper()) {
 			selector = selector.concat(" > *:first-child");
@@ -251,7 +267,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		}
 
 		String componentJavaScript = SoyJavaScriptRendererUtil.getJavaScript(
-			context, getComponentId(), requiredModules, isWrapper());
+			context, getWrapperId(), requiredModules, isWrapper());
 
 		ScriptTag.doTag(
 			null, null, null, componentJavaScript, getBodyContent(),
@@ -265,7 +281,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		boolean wrapper = isWrapper();
 
 		if (!wrapper && !context.containsKey("id")) {
-			context.put("id", getComponentId());
+			context.put("id", getWrapperId());
 		}
 
 		_template.putAll(context);
@@ -276,7 +292,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 		if (wrapper) {
 			jspWriter.append("<div id=\"");
-			jspWriter.append(HtmlUtil.escapeAttribute(getComponentId()));
+			jspWriter.append(HtmlUtil.escapeAttribute(getWrapperId()));
 			jspWriter.append("\">");
 		}
 
@@ -301,5 +317,6 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	private Template _template;
 	private String _templateNamespace;
 	private Boolean _wrapper;
+	private String _wrapperId;
 
 }

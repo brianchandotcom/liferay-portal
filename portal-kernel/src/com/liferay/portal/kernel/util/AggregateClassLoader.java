@@ -33,6 +33,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Brian Wing Shun Chan
@@ -157,10 +158,7 @@ public class AggregateClassLoader extends ClassLoader {
 
 		if (_classLoaderReferences.equals(
 				aggregateClassLoader._classLoaderReferences) &&
-			(((getParent() == null) &&
-			  (aggregateClassLoader.getParent() == null)) ||
-			 ((getParent() != null) &&
-			  getParent().equals(aggregateClassLoader.getParent())))) {
+			Objects.equals(getParent(), aggregateClassLoader.getParent())) {
 
 			return true;
 		}

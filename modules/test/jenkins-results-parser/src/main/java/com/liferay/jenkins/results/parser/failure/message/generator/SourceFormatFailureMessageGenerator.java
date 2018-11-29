@@ -35,7 +35,9 @@ public class SourceFormatFailureMessageGenerator
 
 		int start = consoleText.lastIndexOf(_TOKEN_SOURCE_FORMAT);
 
-		start = consoleText.lastIndexOf(_TOKEN_FORMATTING_ISSUES, start);
+		if (consoleText.contains(_TOKEN_FORMATTING_ISSUES)) {
+			start = consoleText.lastIndexOf(_TOKEN_FORMATTING_ISSUES, start);
+		}
 
 		start = consoleText.lastIndexOf("\n", start);
 

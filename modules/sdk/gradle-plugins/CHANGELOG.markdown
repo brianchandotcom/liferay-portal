@@ -6096,6 +6096,11 @@ to version 2.3.286.
 ### Changed
 - [LPS-87776]: Update the [Liferay Ant BND] dependency to version 3.0.1.
 
+## 3.13.26 - 2018-11-29
+
+### Fixed
+- [LPS-87978]: use quote literal strings when sending commands to gogo shell 
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -6567,4 +6572,5 @@ to version 2.3.286.
 [LPS-87466]: https://issues.liferay.com/browse/LPS-87466
 [LPS-87503]: https://issues.liferay.com/browse/LPS-87503
 [LPS-87776]: https://issues.liferay.com/browse/LPS-87776
+[LPS-87978]: https://issues.liferay.com/browse/LPS-87978
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

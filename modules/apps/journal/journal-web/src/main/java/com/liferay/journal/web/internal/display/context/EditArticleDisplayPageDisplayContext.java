@@ -54,6 +54,12 @@ public class EditArticleDisplayPageDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long ddmStructureId = ParamUtil.getLong(_request, "ddmStructureId");
+
+		if (ddmStructureId > 0) {
+			return ddmStructureId;
+		}
+
 		String ddmStructureKey = ParamUtil.getString(
 			_request, "ddmStructureKey");
 

@@ -6,6 +6,7 @@ export const CLEAR_HOVERED_ITEM = 'clearHoveredItem';
 export const HIDE_MAPPING_TYPE_DIALOG = 'hideMappingTypeDialog';
 export const HIDE_SIDEBAR = 'hideSidebar';
 export const MOVE_FRAGMENT_ENTRY_LINK = 'moveFragmentEntryLink';
+export const MOVE_SECTION = 'moveSection';
 export const OPEN_ASSET_TYPE_DIALOG = 'openAssetTypeDialog';
 export const OPEN_MAPPING_FIELDS_DIALOG = 'openMappingFieldsDialog';
 export const REMOVE_FRAGMENT_ENTRY_LINK = 'removeFragmentEntryLink';

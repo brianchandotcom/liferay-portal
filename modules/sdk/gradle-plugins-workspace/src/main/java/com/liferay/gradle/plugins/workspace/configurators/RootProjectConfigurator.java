@@ -403,10 +403,16 @@ public class RootProjectConfigurator implements Plugin<Project> {
 					catch (IOException ioe) {
 						Logger logger = dockerfileTask.getLogger();
 
-						logger.warn(
-							"Could not create placeholder file.  Please make " +
-								"sure you have at least one config or " +
-									"buildImage task will fail.");
+						if (logger.isWarnEnabled()) {
+							StringBuilder sb = new StringBuilder();
+
+							sb.append("Could not create a placeholder file. ");
+							sb.append("Please make sure you have at least ");
+							sb.append("one config or the buildImage task ");
+							sb.append("will fail.");
+
+							logger.warn(sb.toString());
+						}
 					}
 				}
 
@@ -795,9 +801,11 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				public void doCall(Exception e) {
 					Logger logger = project.getLogger();
 
-					logger.warn(
-						"No container with ID '" + project.getName() +
-							"-liferayapp' found.");
+					if (logger.isWarnEnabled()) {
+						logger.warn(
+							"No container with ID '" + project.getName() +
+								"-liferayapp' found.");
+					}
 				}
 
 			});

@@ -39,7 +39,7 @@ public interface MemberExpression extends Expression {
 	/**
 	 * Returns the member expression's resource path.
 	 *
-	 * @return the resource path
+	 * @return     the resource path
 	 * @deprecated As of Judson (7.1.x)
 	 * @review
 	 */

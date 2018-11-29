@@ -107,7 +107,7 @@ public interface ExpressionVisitor<T> {
 	 * @param  lambdaVariableExpression the lambda variable expression
 	 * @return the t
 	 * @throws ExpressionVisitException if an expression visit exception
-	 *                                  occurred
+	 *         occurred
 	 * @review
 	 */
 	public default T visitLambdaVariableExpression(
@@ -161,11 +161,11 @@ public interface ExpressionVisitor<T> {
 	/**
 	 * Called for each traversed {@link PrimitivePropertyExpression} expression.
 	 *
-	 * @param primitivePropertyExpression the primitive property expression
+	 * @param  primitivePropertyExpression the primitive property expression
 	 * @return T the object of type {@code T}
 	 * @throws ExpressionVisitException if an expression visit exception
 	 *         occurred
-	 *  @review
+	 * @review
 	 */
 	public default T visitPrimitivePropertyExpression(
 			PrimitivePropertyExpression primitivePropertyExpression)
